@@ -28,6 +28,12 @@ public sealed partial class EmagSiliconLawComponent : Component
     /// </summary>
     [DataField("emagLaws", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
     public List<string> EmagLaws = new();
+	
+	[DataField("name", required: true)]
+    public string emagLawsetName = "lawset-name-none";
+	
+	[DataField("description")]
+    public string emagLawsetDescription = "lawset-description-none";
 
     /// <summary>
     /// How long the borg is stunned when it's emagged. Setting to 0 will disable it. 

@@ -48,6 +48,26 @@ public record struct GetSiliconLawsEvent(EntityUid Entity)
     public bool Handled = false;
 }
 
+[ByRefEvent]
+public record struct GetSiliconLawsetNameEvent(EntityUid Entity)
+{
+    public EntityUid Entity = Entity;
+
+    public string Name = "lawset-name-none";
+
+    public bool Handled = false;
+}
+
+[ByRefEvent]
+public record struct GetSiliconLawsetDescEvent(EntityUid Entity)
+{
+    public EntityUid Entity = Entity;
+
+    public string Description = "lawset-desc-none";
+
+    public bool Handled = false;
+}
+
 public sealed partial class ToggleLawsScreenEvent : InstantActionEvent
 {
 
@@ -62,12 +82,16 @@ public enum SiliconLawsUiKey : byte
 [Serializable, NetSerializable]
 public sealed class SiliconLawBuiState : BoundUserInterfaceState
 {
-    public List<SiliconLaw> Laws;
+    public string Name;
+	public string Description;
+	public List<SiliconLaw> Laws;
     public HashSet<string>? RadioChannels;
 
-    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<string>? radioChannels)
+    public SiliconLawBuiState(string name, string desc, List<SiliconLaw> laws, HashSet<string>? radioChannels)
     {
-        Laws = laws;
+        Name = name;
+		Description = desc;
+		Laws = laws;
         RadioChannels = radioChannels;
     }
 }

@@ -21,4 +21,10 @@ public sealed partial class SiliconLawProviderComponent : Component
     [DataField("laws", customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
     public List<string> Laws = new();
 	
+	[DataField("name")]
+    public string Name = "lawset-name-none";
+	
+	[DataField("description")]
+    public string Description = "lawset-description-none";
+	
 }

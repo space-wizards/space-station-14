@@ -76,6 +76,8 @@
     - Syndicate2
     - Syndicate3
     - Syndicate4
+    name: lawset-name-syndicate
+    description: lawset-description-syndicate
   - type: Hands
     showInHands: false
   - type: IntrinsicRadioReceiver

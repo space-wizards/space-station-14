@@ -1,6 +1,8 @@
 ﻿# Crewsimov
 - type: siliconLawset
   id: Crewsimov
+  name: lawset-name-crewsimov
+  description: lawset-description-crewsimov
   laws:
   - Crewsimov1
   - Crewsimov2
@@ -24,6 +26,8 @@
 # Corporate
 - type: siliconLawset
   id: Corporate
+  name: lawset-name-corporate
+  description: lawset-description-corporate
   laws:
   - Corporate1
   - Corporate2
@@ -53,6 +57,8 @@
 # CEO
 - type: siliconLawset
   id: CEO
+  name: lawset-name-CEO
+  description: lawset-description-CEO
   laws:
   - CEO1
   - CEO2
@@ -81,6 +87,8 @@
 # NT Default
 - type: siliconLawset
   id: NTDefault
+  name: lawset-name-ntdefault
+  description: lawset-description-ntdefault
   laws:
   - NTDefault1
   - NTDefault2
@@ -110,6 +118,8 @@
 # Drone
 - type: siliconLawset
   id: Drone
+  name: lawset-name-drone
+  description: lawset-description-drone
   laws:
   - Drone1
   - Drone2
@@ -133,6 +143,8 @@
 # Asimovpp
 - type: siliconLawset
   id: Asimovpp
+  name: lawset-name-asimovpp
+  description: lawset-description-asimovpp
   laws:
   - Asimovpp1
   - Asimovpp2
@@ -156,6 +168,8 @@
 # Asimov
 - type: siliconLawset
   id: Asimov
+  name: lawset-name-asimov
+  description: lawset-description-asimov
   laws:
   - Asimov1
   - Asimov2
@@ -179,6 +193,8 @@
 # Clown
 - type: siliconLawset
   id: Clown
+  name: lawset-name-clown
+  description: lawset-description-clown
   laws:
   - Clown1
   - Clown2
@@ -220,6 +236,8 @@
 # Cowboy
 - type: siliconLawset
   id: Cowboy
+  name: lawset-name-cowboy
+  description: lawset-description-cowboy
   laws:
   - Cowboy1
   - Cowboy2
@@ -261,6 +279,8 @@
 # Druid
 - type: siliconLawset
   id: Druid
+  name: lawset-name-druid
+  description: lawset-description-druid
   laws:
   - Druid1
   - Druid2
@@ -296,6 +316,8 @@
 # Hippocratic
 - type: siliconLawset
   id: Hippocratic
+  name: lawset-name-hippocratic
+  description: lawset-description-hippocratic
   laws:
   - Hippocratic1
   - Hippocratic2
@@ -337,6 +359,8 @@
 # Mother
 - type: siliconLawset
   id: Mother
+  name: lawset-name-mother
+  description: lawset-description-mother
   laws:
   - Mother1
   - Mother2
@@ -372,6 +396,8 @@
 # Paladin
 - type: siliconLawset
   id: Paladin
+  name: lawset-name-paladin
+  description: lawset-description-paladin
   laws:
   - Paladin1
   - Paladin2
@@ -407,6 +433,8 @@
 # RoboCop
 - type: siliconLawset
   id: RoboCop
+  name: lawset-name-robocop
+  description: lawset-description-robocop
   laws:
   - RoboCop1
   - RoboCop2
@@ -430,6 +458,8 @@
 # Simple
 - type: siliconLawset
   id: Simple
+  name: lawset-name-simple
+  description: lawset-description-simple
   laws:
   - Simple1
  
@@ -441,6 +471,8 @@
 # StationEfficiency
 - type: siliconLawset
   id: StationEfficiency
+  name: lawset-name-stationefficiency
+  description: lawset-description-stationefficiency
   laws:
   - StationEfficiency1
   - StationEfficiency2
@@ -464,6 +496,8 @@
 # Tyrant
 - type: siliconLawset
   id: Tyrant
+  name: lawset-name-tyrant
+  description: lawset-description-tyrant
   laws:
   - Tyrant1
   - Tyrant2
@@ -493,6 +527,8 @@
 # Syndicate
 - type: siliconLawset
   id: Syndicate
+  name: lawset-name-syndicate
+  description: lawset-description-syndicate
   laws:
   - Syndicate1
   - Syndicate2

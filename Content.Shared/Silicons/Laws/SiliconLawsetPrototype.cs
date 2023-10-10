@@ -11,6 +11,12 @@ public partial class SiliconLawset
 {
     [DataField("laws", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
     public List<string> Laws = new();
+	
+	[DataField("name")]
+    public string? Name;
+	
+	[DataField("description")]
+    public string? Description;
 }
 
 /// <summary>

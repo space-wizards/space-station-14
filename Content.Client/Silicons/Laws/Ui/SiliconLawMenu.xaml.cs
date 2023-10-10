@@ -18,6 +18,10 @@ public sealed partial class SiliconLawMenu : FancyWindow
     {
         state.Laws.Sort();
         LawDisplayContainer.Children.Clear();
+		
+		var header = new LawsetHeader(uid, state.Name, state.Description, state.RadioChannels);
+
+        LawDisplayContainer.AddChild(header);
 
         foreach (var law in state.Laws)
         {

@@ -51,8 +51,12 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawBoundComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
+		SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsetNameEvent>(OnDirectedGetLawsetName);
+		SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsetDescEvent>(OnDirectedGetLawsetDesc);
 		SubscribeLocalEvent<SiliconLawProviderComponent, ComponentInit>(OnSiliconLawProviderInit);
         SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsEvent>(OnDirectedEmagGetLaws);
+		SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsetNameEvent>(OnDirectedEmagGetLawsetName);
+		SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsetDescEvent>(OnDirectedEmagGetLawsetDesc);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindAddedMessage>(OnEmagMindAdded);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindRemovedMessage>(OnEmagMindRemoved);
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
@@ -65,6 +69,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 			var random = IoCManager.Resolve<IRobustRandom>();
 			var lawset = _prototype.Index<SiliconLawsetPrototype>(
 				component.Lawsets.Count > 0 ? random.Pick(component.Lawsets) : component.Lawset);
+			if (!(lawset.Name is null))
+				component.Name = lawset.Name;
+			if (!(lawset.Description is null))
+				component.Description = lawset.Description;
+			
 			
 			foreach (var law in lawset.Laws)
 				component.Laws.Add(law);
@@ -108,7 +117,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
         HashSet<string>? radioChannels = intrinsicRadio?.Channels;
 
-        var state = new SiliconLawBuiState(GetLaws(uid), radioChannels);
+        var state = new SiliconLawBuiState(GetName(uid), GetDesc(uid), GetLaws(uid), radioChannels);
         _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
     }
 
@@ -147,6 +156,46 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         {
             args.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
         }
+
+        args.Handled = true;
+    }
+	
+	private void OnDirectedGetLawsetName(EntityUid uid, SiliconLawProviderComponent component, ref GetSiliconLawsetNameEvent args)
+    {
+        if (args.Handled || HasComp<EmaggedComponent>(uid) || component.Laws.Count == 0)
+            return;
+
+        args.Name = component.Name;
+
+        args.Handled = true;
+    }
+
+    private void OnDirectedEmagGetLawsetName(EntityUid uid, EmagSiliconLawComponent component, ref GetSiliconLawsetNameEvent args)
+    {
+        if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
+            return;
+
+        args.Name = component.emagLawsetName;
+
+        args.Handled = true;
+    }
+	
+	private void OnDirectedGetLawsetDesc(EntityUid uid, SiliconLawProviderComponent component, ref GetSiliconLawsetDescEvent args)
+    {
+        if (args.Handled || HasComp<EmaggedComponent>(uid) || component.Laws.Count == 0)
+            return;
+
+        args.Description = component.Description;
+
+        args.Handled = true;
+    }
+
+    private void OnDirectedEmagGetLawsetDesc(EntityUid uid, EmagSiliconLawComponent component, ref GetSiliconLawsetDescEvent args)
+    {
+        if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
+            return;
+
+        args.Description = component.emagLawsetDescription;
 
         args.Handled = true;
     }
@@ -252,6 +301,116 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         RaiseLocalEvent(ref ev);
         return ev.Laws;
+    }
+	
+	public string GetName(EntityUid uid, SiliconLawBoundComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return "lawset-name-none";
+
+        var ev = new GetSiliconLawsetNameEvent(uid);
+
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Handled)
+        {
+            component.LastLawProvider = uid;
+            return ev.Name;
+        }
+
+        var xform = Transform(uid);
+
+        if (_station.GetOwningStation(uid, xform) is { } station)
+        {
+            RaiseLocalEvent(station, ref ev);
+            if (ev.Handled)
+            {
+                component.LastLawProvider = station;
+                return ev.Name;
+            }
+        }
+
+        if (xform.GridUid is { } grid)
+        {
+            RaiseLocalEvent(grid, ref ev);
+            if (ev.Handled)
+            {
+                component.LastLawProvider = grid;
+                return ev.Name;
+            }
+        }
+
+        if (component.LastLawProvider == null ||
+            Deleted(component.LastLawProvider) ||
+            Terminating(component.LastLawProvider.Value))
+        {
+            component.LastLawProvider = null;
+        }
+        else
+        {
+            RaiseLocalEvent(component.LastLawProvider.Value, ref ev);
+            if (ev.Handled)
+            {
+                return ev.Name;
+            }
+        }
+
+        RaiseLocalEvent(ref ev);
+        return ev.Name;
+    }
+	
+	public string GetDesc(EntityUid uid, SiliconLawBoundComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return "lawset-desc-none";
+
+        var ev = new GetSiliconLawsetDescEvent(uid);
+
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Handled)
+        {
+            component.LastLawProvider = uid;
+            return ev.Description;
+        }
+
+        var xform = Transform(uid);
+
+        if (_station.GetOwningStation(uid, xform) is { } station)
+        {
+            RaiseLocalEvent(station, ref ev);
+            if (ev.Handled)
+            {
+                component.LastLawProvider = station;
+                return ev.Description;
+            }
+        }
+
+        if (xform.GridUid is { } grid)
+        {
+            RaiseLocalEvent(grid, ref ev);
+            if (ev.Handled)
+            {
+                component.LastLawProvider = grid;
+                return ev.Description;
+            }
+        }
+
+        if (component.LastLawProvider == null ||
+            Deleted(component.LastLawProvider) ||
+            Terminating(component.LastLawProvider.Value))
+        {
+            component.LastLawProvider = null;
+        }
+        else
+        {
+            RaiseLocalEvent(component.LastLawProvider.Value, ref ev);
+            if (ev.Handled)
+            {
+                return ev.Description;
+            }
+        }
+
+        RaiseLocalEvent(ref ev);
+        return ev.Description;
     }
 
     public void NotifyLawsChanged(EntityUid uid)
