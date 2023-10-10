@@ -444,6 +444,11 @@
   metabolisms:
     Poison:
       effects:
+      - !type:ChemVomit
+        probability: 0.1
+        conditions:
+          - !type:OrganType
+            type: Human
       - !type:HealthChange
         conditions:
         - !type:OrganType
@@ -454,7 +459,8 @@
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
-          type: Animal
+          type: Human
+          shouldHave: false
         reagent: Protein
         amount: 0.5
 

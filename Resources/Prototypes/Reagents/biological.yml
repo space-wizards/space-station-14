@@ -9,17 +9,21 @@
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false
   metabolisms:
-    Food:
-      effects:
-        - !type:SatiateHunger
-          conditions:
-          factor: 1.1
     Drink:
       effects:
       - !type:SatiateThirst
+        conditions:
+          - !type:OrganType
+            type: Human
+            shouldHave: false
         factor: 1.5
     Poison:
       effects:
+        - !type:ChemVomit
+          probability: 0.1
+          conditions:
+            - !type:OrganType
+              type: Human
         - !type:HealthChange
           damage:
             types:
@@ -27,6 +31,13 @@
           conditions:
             - !type:OrganType
               type: Human
+        - !type:AdjustReagent
+          conditions:
+            - !type:OrganType
+              type: Human
+              shouldHave: false
+          reagent: Protein
+          amount: 0.2
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5
