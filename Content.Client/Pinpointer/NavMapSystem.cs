@@ -26,7 +26,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
         {
             component.Chunks.Add(origin, new NavMapChunk(origin)
             {
-                TileData = data
+                TileData = data,
             });
         }
 

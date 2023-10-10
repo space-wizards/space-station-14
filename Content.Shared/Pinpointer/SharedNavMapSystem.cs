@@ -35,6 +35,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     protected sealed class NavMapComponentState : ComponentState
     {
         public Dictionary<Vector2i, int> TileData = new();
+
         public List<NavMapBeacon> Beacons = new();
     }
 
