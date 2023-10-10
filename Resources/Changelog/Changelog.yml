@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Better nuke sprite from /vg/., type: Tweak}
-  id: 4487
-  time: '2023-08-08T21:55:41.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Changed random maintenance loot spawns to be more diverse., type: Tweak}
@@ -2955,3 +2950,10 @@ Entries:
     type: Fix}
   id: 4986
   time: '2023-10-10T21:33:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Vaulting tables is now predicted., type: Fix}
+  - {message: Fix buckle sound not playing., type: Fix}
+  - {message: Buckling is now predicted., type: Fix}
+  id: 4987
+  time: '2023-10-10T23:41:12.0000000+00:00'
