@@ -9,14 +9,36 @@
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false
   metabolisms:
+    Food:
+      effects:
+        - !type:SatiateHunger
+          conditions:
+            - !type:OrganType
+              type: Animal
+          factor: 1.1
     Drink:
-      # Quenching!
       effects:
       - !type:SatiateThirst
+        conditions:
+          - !type:OrganType
+            type: Animal
         factor: 1.5
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 1
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: -1
+          conditions:
+            - !type:OrganType
+              type: Animal
   plantMetabolism:
-  - !type:PlantAdjustWater
-    amount: 0.5
+    - !type:PlantAdjustWater
+      amount: 0.5
 
 - type: reagent
   id: Slime
@@ -40,6 +62,7 @@
 
 - type: reagent
   id: SpiderBlood
+  parent: Blood
   name: reagent-name-spider-blood
   group: Biological
   desc: reagent-desc-spider-blood
@@ -48,15 +71,6 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false
-  metabolisms:
-    Drink:
-      # Quenching!
-      effects:
-      - !type:SatiateThirst
-        factor: 1.5
-  plantMetabolism:
-  - !type:PlantAdjustWater
-    amount: 0.5
 
 - type: reagent
   id: ZombieBlood
