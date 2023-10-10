@@ -12,6 +12,9 @@ namespace Content.Server.Animals.Components;
 [RegisterComponent]
 public sealed partial class EggLayerComponent : Component
 {
+    /// <summary>
+    ///     This is action that available for player in actions list
+    /// </summary>
     [DataField("eggLayAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string EggLayAction = "ActionAnimalLayEgg";
 
@@ -48,6 +51,13 @@ public sealed partial class EggLayerComponent : Component
 
     [DataField("accumulatedFrametime")]
     public float AccumulatedFrametime;
+
+    /// <summary>
+    ///     Prohibits creating more than one element in one place
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("manySpawnsForbidden")]
+    public bool IsManySpawnsForbidden = false;
 
     [DataField] public EntityUid? Action;
 }

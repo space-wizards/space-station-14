@@ -18,6 +18,8 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public override void Initialize()
     {
@@ -66,28 +68,46 @@ public sealed class EggLayerSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        // Allow infinitely laying eggs if they can't get hungry
-        if (TryComp<HungerComponent>(uid, out var hunger))
+        // check hungry value
+        if (!TryComp<HungerComponent>(uid, out var hunger)
+            || hunger.CurrentHunger < component.HungerUsage)
         {
-            if (hunger.CurrentHunger < component.HungerUsage)
+            _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
+            return false;
+        }
+
+        foreach (var protoEntId in EntitySpawnCollection.GetSpawns(component.EggSpawn, _random))
+        {
+            // check for ability spawn many items for one tile
+            if (component.IsManySpawnsForbidden)
             {
-                _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
-                return false;
+                var entitiesInTile = _lookup.GetEntitiesIntersecting(uid, LookupFlags.All);
+
+                foreach (var tileEntyUid in entitiesInTile)
+                {
+                    var metaDataComp = _entManager.GetComponent<MetaDataComponent>(tileEntyUid);
+
+                    if (metaDataComp?.EntityPrototype?.ID == protoEntId)
+                    {
+                        return false;
+                    }
+                }
             }
 
             _hunger.ModifyHunger(uid, -component.HungerUsage, hunger);
+            var spawnedUid = Spawn(protoEntId, Transform(uid).Coordinates);
+            ShowSpawnPopus(uid, spawnedUid, component);
         }
-
-        foreach (var ent in EntitySpawnCollection.GetSpawns(component.EggSpawn, _random))
-        {
-            Spawn(ent, Transform(uid).Coordinates);
-        }
-
-        // Sound + popups
-        _audio.PlayPvs(component.EggLaySound, uid);
-        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user"), uid, uid);
-        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("entity", uid)), uid, Filter.PvsExcept(uid), true);
 
         return true;
+    }
+
+    void ShowSpawnPopus(EntityUid spawnerUid, EntityUid newItemUid, EggLayerComponent comp)
+    {
+        // Sound + popups
+        _audio.PlayPvs(comp.EggLaySound, spawnerUid);
+        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user", ("newItem", newItemUid)), spawnerUid, spawnerUid);
+        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("spawner", spawnerUid), ("newItem", newItemUid)),
+            spawnerUid, Filter.PvsExcept(spawnerUid), true);
     }
 }

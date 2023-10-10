@@ -1680,20 +1680,27 @@
       Dead:
         Base: nurse_dead
   - type: NPCRetaliation
+    attackMemoryLength: 20
   - type: FactionException
   - type: NpcFactionMember
     factions:
     - Passive
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: RuminantHostileCompound
   - type: EggLayer
     eggSpawn:
     - id: SpiderWeb
-    hungerUsage: 1
-    eggLayCooldownMin: 1
-    eggLayCooldownMax: 2
+    hungerUsage: 5
+    eggLayCooldownMin: 10
+    eggLayCooldownMax: 30
     eggLayAction: ActionSpiderWebForLayer
+    manySpawnsForbidden: true
+    eggLaySound:
+      path: /Audio/Effects/drop.ogg
+  - type: MeleeChemicalInjector
+    transferAmount: 0.1
+    solution: melee
 
 - type: entity
   name: tarantula
