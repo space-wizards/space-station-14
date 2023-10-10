@@ -1,4 +1,3 @@
-using Content.Server.Administration.Commands;
 using Content.Server.Communications;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -15,7 +14,6 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Doors.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
@@ -178,8 +176,10 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
                 warps.Add(warpUid);
         }
 
-        if (warps.Count > 0)
-            role.SpiderChargeTarget = _random.Pick(warps);
+        if (warps.Count > 0 && _mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(uid, out var obj))
+        {
+            obj.SpiderChargeTarget = _random.Pick(warps);
+        }
 
         var session = mind.Session;
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);

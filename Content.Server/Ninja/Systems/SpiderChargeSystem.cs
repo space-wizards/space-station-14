@@ -35,7 +35,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     {
         var user = args.User;
 
-        if (!_mind.TryGetRole<NinjaRoleComponent>(user, out var role))
+        if (!_mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(user, out var obj))
         {
             _popup.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
             args.Handled = true;
@@ -43,11 +43,11 @@ public sealed class SpiderChargeSystem : EntitySystem
         }
 
         // allow planting anywhere if there is no target, which should never happen
-        if (role.SpiderChargeTarget == null)
+        if (obj.SpiderChargeTarget == null)
             return;
 
         // assumes warp point still exists
-        var target = Transform(role.SpiderChargeTarget.Value).MapPosition;
+        var target = Transform(obj.SpiderChargeTarget.Value).MapPosition;
         var coords = args.ClickLocation.ToMap(EntityManager, _transform);
         if (!coords.InRange(target, comp.Range))
         {

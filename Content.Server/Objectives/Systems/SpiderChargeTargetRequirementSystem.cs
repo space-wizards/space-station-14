@@ -1,11 +1,14 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Roles;
+using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;
 
 public sealed class SpiderChargeTargetRequirementSystem : EntitySystem
 {
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -18,7 +21,11 @@ public sealed class SpiderChargeTargetRequirementSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!TryComp<NinjaRoleComponent>(args.MindId, out var role) || role.SpiderChargeTarget == null)
+        if (!HasComp<NinjaRoleComponent>(args.MindId)
+            || _mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(args.MindId, out var obj, args.Mind)
+            && obj.SpiderChargeTarget == null)
+        {
             args.Cancelled = true;
+        }
     }
 }

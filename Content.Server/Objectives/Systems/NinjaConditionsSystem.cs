@@ -1,7 +1,7 @@
-using Content.Server.Roles;
 using Content.Server.Objectives.Components;
 using Content.Server.Warps;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Mind;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -13,6 +13,7 @@ public sealed class NinjaConditionsSystem : EntitySystem
 {
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -46,7 +47,7 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnSpiderChargeAfterAssign(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveAfterAssignEvent args)
     {
-        _metaData.SetEntityName(uid, SpiderChargeTitle(args.MindId), args.Meta);
+        _metaData.SetEntityName(uid, SpiderChargeTitle(args.MindId, args.Mind), args.Meta);
     }
 
     private void OnSpiderChargeGetProgress(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveGetProgressEvent args)
@@ -54,11 +55,11 @@ public sealed class NinjaConditionsSystem : EntitySystem
         args.Progress = comp.SpiderChargeDetonated ? 1f : 0f;
     }
 
-    private string SpiderChargeTitle(EntityUid mindId)
+    private string SpiderChargeTitle(EntityUid mindId, MindComponent mind)
     {
-        if (!TryComp<NinjaRoleComponent>(mindId, out var role) ||
-            role.SpiderChargeTarget == null ||
-            !TryComp<WarpPointComponent>(role.SpiderChargeTarget, out var warp) ||
+        if (!_mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(mindId, out var obj, mind) ||
+            obj.SpiderChargeTarget == null ||
+            !TryComp<WarpPointComponent>(obj.SpiderChargeTarget, out var warp) ||
             warp.Location == null)
         {
             // this should never really happen but eh
