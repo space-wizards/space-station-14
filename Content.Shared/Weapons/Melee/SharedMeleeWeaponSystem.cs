@@ -448,9 +448,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             DoLungeAnimation(user, weapon.Angle, GetCoordinates(attack.Coordinates).ToMap(EntityManager, TransformSystem), weapon.Range, animation);
         }
 
-        var attackEv = new MeleeAttackEvent(weaponUid);
-        RaiseLocalEvent(user, ref attackEv);
-
         weapon.Attacking = true;
         return true;
     }
