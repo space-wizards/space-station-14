@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Uplink codes no longer contain sharp notes., type: Remove}
-  id: 4481
-  time: '2023-08-08T00:16:49.0000000+00:00'
 - author: TotallyLemon
   changes:
   - {message: 'Nanotrasen''s R&D department have improved the RPED''s design, allowing
@@ -2953,3 +2948,8 @@ Entries:
     type: Fix}
   id: 4980
   time: '2023-10-10T03:32:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reenabled Kudzu (again) (for real this time), type: Add}
+  id: 4981
+  time: '2023-10-10T03:34:41.0000000+00:00'
