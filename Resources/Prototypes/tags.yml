@@ -3,6 +3,9 @@
 
 - type: Tag
   id: AirAlarmElectronics
+  
+- type: Tag
+  id: Airlock
 
 - type: Tag
   id: AirSensor
@@ -474,6 +477,9 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: Fruit
+
+- type: Tag
   id: Galaxythistle
 
 - type: Tag
@@ -487,6 +493,9 @@
 
 - type: Tag
   id: GeigerCounter
+  
+- type: Tag
+  id: GlassAirlock
 
 - type: Tag
   id: GlassBeaker
@@ -502,7 +511,6 @@
 
 - type: Tag
   id: GuideEmbeded
-
 
 - type: Tag
   id: Hamster
@@ -554,6 +562,9 @@
 
 - type: Tag
   id: HighRiskItem
+  
+- type: Tag
+  id: HighSecDoor
 
 - type: Tag
   id: Hoe
@@ -702,6 +713,9 @@
   id: Matchstick
 
 - type: Tag
+  id: Meat
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -766,6 +780,9 @@
   id: PetWearable
 
 - type: Tag
+  id: MonkeyWearable
+
+- type: Tag
   id: Pickaxe
 
 - type: Tag
@@ -773,6 +790,9 @@
 
 - type: Tag
   id: Pig
+
+- type: Tag
+  id: Pill
 
 - type: Tag
   id: PillCanister
@@ -891,6 +911,9 @@
 
 - type: Tag
   id: Shovel
+
+- type: Tag
+  id: Sidearm
 
 - type: Tag
   id: SkeletonMotorcycleKeys
@@ -1054,3 +1077,5 @@
 - type: Tag
   id: ModularReceiver
 
+- type: Tag
+  id: MindShield

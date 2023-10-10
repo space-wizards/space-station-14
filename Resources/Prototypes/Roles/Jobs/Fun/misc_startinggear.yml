@@ -151,7 +151,7 @@
     eyes: ClothingEyesHudMedical
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitMedic
     shoes: ClothingShoesBootsMagSyndie
     id: SyndiPDA
     pocket1: DoubleEmergencyOxygenTankFilled
@@ -282,7 +282,7 @@
     head: ClothingHeadHatTophat
     ears: ClothingHeadsetService
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
-    id: BartenderIDCard
+    id: PunPunIDCard
 
 # Passenger but without the ID, bag, or headset
 
@@ -325,3 +325,28 @@
   innerclothingskirt: ClothingUniformJumpskirtBrigmedic
   satchel: ClothingBackpackSatchelBrigmedicFilled
   duffelbag: ClothingBackpackDuffelBrigmedicFilled
+
+#Head Rev Gear
+- type: startingGear
+  id: HeadRevGear
+  equipment:
+    pocket2: Flash
+
+#Gladiator with spear
+- type: startingGear
+  id: GladiatorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitGladiator
+    back: SpearBone
+    head: ClothingHeadHatGladiator
+    shoes: ClothingShoesCult
+
+#Ash Walker
+- type: startingGear
+  id: AshWalker
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitGladiator
+    outerClothing: ClothingOuterArmorBone
+    back: SpearBone
+    head: ClothingHeadHelmetBone
+    shoes: ClothingShoesCult

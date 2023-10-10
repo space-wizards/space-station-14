@@ -38,8 +38,8 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     // This 100% makes sure that server and client have exactly same data.
     protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
-        if (string.IsNullOrEmpty(component.SelectedId) ||
-            !_proto.TryIndex(component.SelectedId, out EntityPrototype? proto))
+        if (string.IsNullOrEmpty(component.Default) ||
+            !_proto.TryIndex(component.Default, out EntityPrototype? proto))
             return;
 
         // world sprite icon
