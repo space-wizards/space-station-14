@@ -153,8 +153,8 @@ namespace Content.Client.Options.UI.Tabs
         // Do be sure to rename the setting though
         private float DBToLV100(float db, float multiplier = 1f)
         {
-            var weh = (float) (Math.Pow(10, db / 10) * 100 / multiplier);
-            return weh;
+            var beri = (float) (Math.Pow(10, db / 10) * 100 / multiplier);
+            return beri;
         }
 
         private float LV100ToDB(float lv100, float multiplier = 1f)
