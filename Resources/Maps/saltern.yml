@@ -206,7 +206,7 @@ entities:
           version: 6
         -3,-2:
           ind: -3,-2
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAcAAAAAAAGgAAAAAAGgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAGgAAAAADGgAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAbQAAAAACbQAAAAABbQAAAAACbQAAAAABbQAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAcAAAAAAAbQAAAAAAbQAAAAABbQAAAAACbQAAAAACbQAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAbQAAAAAAbQAAAAACbQAAAAABbQAAAAABbQAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAOwAAAAAAOwAAAAAAOwAAAAAAbQAAAAABbQAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAOwAAAAAAOwAAAAAAOwAAAAAAcAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAOwAAAAAAOwAAAAAAOwAAAAAAcAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAOwAAAAAAOwAAAAAAOwAAAAAAcAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAbwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAA
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAcAAAAAAAGgAAAAAAGgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAGgAAAAADGgAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAbQAAAAACbQAAAAABbQAAAAACbQAAAAABbQAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAcAAAAAAAbQAAAAAAbQAAAAABbQAAAAACbQAAAAACbQAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAbQAAAAAAbQAAAAACbQAAAAABbQAAAAABbQAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAOwAAAAAAOwAAAAAAOwAAAAAAbQAAAAABbQAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAOwAAAAAAOwAAAAAAOwAAAAAAcAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAOwAAAAAAOwAAAAAAOwAAAAAAcAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAOwAAAAAAOwAAAAAAOwAAAAAAcAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAA
           version: 6
         -3,-3:
           ind: -3,-3
@@ -884,42 +884,43 @@ entities:
           7,4:
             0: 65535
           7,5:
-            0: 65535
+            0: 65471
+            2: 64
           7,6:
             0: 61422
           8,4:
             0: 65535
           8,5:
             0: 48063
-            2: 17472
+            3: 17472
           8,6:
             0: 65535
           9,4:
             0: 65535
           9,5:
             0: 43695
-            3: 4368
-            4: 17472
+            4: 4368
+            5: 17472
           9,6:
             0: 8191
           10,4:
             0: 65535
           10,5:
             0: 43695
-            4: 4368
-            5: 17472
+            5: 4368
+            6: 17472
           11,4:
             0: 65535
           11,5:
             0: 43695
-            4: 21840
+            5: 21840
           12,4:
             0: 65535
           12,5:
             0: 13183
           13,4:
             0: 65399
-            4: 136
+            5: 136
           13,5:
             0: 7
           -8,7:
@@ -1024,7 +1025,7 @@ entities:
             0: 62463
           13,3:
             0: 32755
-            4: 32768
+            5: 32768
           14,0:
             0: 65535
           14,2:
@@ -1368,6 +1369,21 @@ entities:
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14996
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -4320,11 +4336,25 @@ entities:
       pos: 32.5,19.5
       parent: 31
       type: Transform
+    - links:
+      - 11307
+      type: DeviceLinkSink
+    - linkedPorts:
+        11306:
+        - DoorStatus: InputB
+      type: DeviceLinkSource
   - uid: 9068
     components:
     - pos: 31.5,18.5
       parent: 31
       type: Transform
+    - links:
+      - 11306
+      type: DeviceLinkSink
+    - linkedPorts:
+        11307:
+        - DoorStatus: InputB
+      type: DeviceLinkSource
 - proto: AirlockExternalGlassCargoLocked
   entities:
   - uid: 6522
@@ -4332,11 +4362,25 @@ entities:
     - pos: 29.5,20.5
       parent: 31
       type: Transform
+    - links:
+      - 11306
+      type: DeviceLinkSink
+    - linkedPorts:
+        11307:
+        - DoorStatus: InputA
+      type: DeviceLinkSource
   - uid: 9067
     components:
     - pos: 31.5,23.5
       parent: 31
       type: Transform
+    - links:
+      - 11307
+      type: DeviceLinkSink
+    - linkedPorts:
+        11306:
+        - DoorStatus: InputA
+      type: DeviceLinkSource
   - uid: 10094
     components:
     - rot: 1.5707963267948966 rad
@@ -4351,47 +4395,103 @@ entities:
       pos: 58.5,7.5
       parent: 31
       type: Transform
+    - links:
+      - 175
+      type: DeviceLinkSink
+    - linkedPorts:
+        175:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 145
     components:
     - rot: 3.141592653589793 rad
       pos: -24.5,24.5
       parent: 31
       type: Transform
+    - links:
+      - 151
+      type: DeviceLinkSink
+    - linkedPorts:
+        151:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 151
     components:
     - rot: 3.141592653589793 rad
       pos: -26.5,24.5
       parent: 31
       type: Transform
+    - links:
+      - 145
+      type: DeviceLinkSink
+    - linkedPorts:
+        145:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 172
     components:
     - rot: 3.141592653589793 rad
       pos: 17.5,-31.5
       parent: 31
       type: Transform
+    - links:
+      - 173
+      type: DeviceLinkSink
+    - linkedPorts:
+        173:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 173
     components:
     - rot: 3.141592653589793 rad
       pos: 15.5,-30.5
       parent: 31
       type: Transform
+    - links:
+      - 172
+      type: DeviceLinkSink
+    - linkedPorts:
+        172:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 174
     components:
     - rot: 3.141592653589793 rad
       pos: 53.5,8.5
       parent: 31
       type: Transform
+    - links:
+      - 9974
+      type: DeviceLinkSink
+    - linkedPorts:
+        9974:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 175
     components:
     - rot: 3.141592653589793 rad
       pos: 61.5,7.5
       parent: 31
       type: Transform
+    - links:
+      - 72
+      type: DeviceLinkSink
+    - linkedPorts:
+        72:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 9974
     components:
     - pos: 53.5,4.5
       parent: 31
       type: Transform
+    - links:
+      - 174
+      type: DeviceLinkSink
+    - linkedPorts:
+        174:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
 - proto: AirlockExternalGlassLocked
   entities:
   - uid: 182
@@ -4400,22 +4500,50 @@ entities:
       pos: -24.5,-32.5
       parent: 31
       type: Transform
+    - links:
+      - 183
+      type: DeviceLinkSink
+    - linkedPorts:
+        183:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 183
     components:
     - rot: 3.141592653589793 rad
       pos: -21.5,-32.5
       parent: 31
       type: Transform
+    - links:
+      - 182
+      type: DeviceLinkSink
+    - linkedPorts:
+        182:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 1594
     components:
     - pos: 16.5,19.5
       parent: 31
       type: Transform
+    - links:
+      - 2465
+      type: DeviceLinkSink
+    - linkedPorts:
+        2465:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
   - uid: 2465
     components:
     - pos: 16.5,22.5
       parent: 31
       type: Transform
+    - links:
+      - 1594
+      type: DeviceLinkSink
+    - linkedPorts:
+        1594:
+        - DoorStatus: DoorBolt
+      type: DeviceLinkSource
 - proto: AirlockExternalGlassShuttleArrivals
   entities:
   - uid: 1755
@@ -6385,6 +6513,8 @@ entities:
     - pos: -22.5,-21.5
       parent: 31
       type: Transform
+    - storageUsed: 5
+      type: Storage
     - containers:
         storagebase: !type:Container
           showEnts: False
@@ -6601,6 +6731,8 @@ entities:
     - pos: -35.410393,-24.380575
       parent: 31
       type: Transform
+    - storageUsed: 1
+      type: Storage
     - containers:
         storagebase: !type:Container
           showEnts: False
@@ -16104,6 +16236,13 @@ entities:
     - pos: 3.5,-24.5
       parent: 31
       type: Transform
+  - uid: 11270
+    components:
+    - pos: 36.5,14.5
+      parent: 31
+      type: Transform
+    - enabled: True
+      type: AmbientSound
   - uid: 11274
     components:
     - pos: -24.5,-15.5
@@ -30493,6 +30632,46 @@ entities:
     - pos: 16.5,-29.5
       parent: 31
       type: Transform
+- proto: CrateEngineeringSecure
+  entities:
+  - uid: 11305
+    components:
+    - desc: Stores logic gates that control the salvage-atmos airlocks.
+      name: logic gate crate
+      type: MetaData
+    - pos: 30.5,21.5
+      parent: 31
+      type: Transform
+    - air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      type: EntityStorage
+    - containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 11306
+          - 11307
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+      type: ContainerContainer
 - proto: CrateFilledSpawner
   entities:
   - uid: 1637
@@ -51578,6 +51757,46 @@ entities:
     - pos: 54.5,-1.5
       parent: 31
       type: Transform
+- proto: LogicGate
+  entities:
+  - uid: 11306
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 11305
+      type: Transform
+    - links:
+      - 9067
+      - 3052
+      type: DeviceLinkSink
+    - linkedPorts:
+        6522:
+        - Output: DoorBolt
+        9068:
+        - Output: DoorBolt
+      type: DeviceLinkSource
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+  - uid: 11307
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 11305
+      type: Transform
+    - links:
+      - 6522
+      - 9068
+      type: DeviceLinkSink
+    - linkedPorts:
+        3052:
+        - Output: DoorBolt
+        9067:
+        - Output: DoorBolt
+      type: DeviceLinkSource
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: MachineAnomalyGenerator
   entities:
   - uid: 6098
@@ -72226,27 +72445,6 @@ entities:
       type: Transform
     - location: library
       type: WarpPoint
-  - uid: 1208
-    components:
-    - pos: -36.5,5.5
-      parent: 31
-      type: Transform
-    - location: evac
-      type: WarpPoint
-  - uid: 7275
-    components:
-    - pos: -18.5,-0.5
-      parent: 31
-      type: Transform
-    - location: botany
-      type: WarpPoint
-  - uid: 7276
-    components:
-    - pos: 33.5,4.5
-      parent: 31
-      type: Transform
-    - location: engineering
-      type: WarpPoint
   - uid: 7640
     components:
     - pos: 49.5,-24.5
@@ -72254,119 +72452,323 @@ entities:
       type: Transform
     - location: observatory
       type: WarpPoint
-  - uid: 8316
-    components:
-    - pos: -36.5,15.5
-      parent: 31
-      type: Transform
-    - location: chapel
-      type: WarpPoint
-  - uid: 11268
-    components:
-    - pos: -47.5,-10.5
-      parent: 31
-      type: Transform
-    - location: arrivals
-      type: WarpPoint
-  - uid: 11270
-    components:
-    - pos: -25.5,-5.5
-      parent: 31
-      type: Transform
-    - location: dorms
-      type: WarpPoint
-- proto: WarpPointBombing
+- proto: WarpPointBeaconBar
   entities:
-  - uid: 538
+  - uid: 6995
     components:
-    - pos: 3.5,30.5
+    - pos: -7.5,12.5
       parent: 31
       type: Transform
-    - location: bridge
+    - text: security
+      type: NavMapBeacon
+    - location: security
       type: WarpPoint
-  - uid: 1136
+    - type: BombingTarget
+  - uid: 11267
+    components:
+    - pos: -12.5,19.5
+      parent: 31
+      type: Transform
+    - text: armory
+      type: NavMapBeacon
+    - location: armory
+      type: WarpPoint
+    - type: BombingTarget
+  - uid: 11319
+    components:
+    - pos: -17.5,9.5
+      parent: 31
+      type: Transform
+    - text: permabrig
+      type: NavMapBeacon
+  - uid: 11320
+    components:
+    - pos: -10.5,8.5
+      parent: 31
+      type: Transform
+    - text: cells
+      type: NavMapBeacon
+  - uid: 11321
+    components:
+    - pos: -13.5,15.5
+      parent: 31
+      type: Transform
+    - text: locker room
+      type: NavMapBeacon
+- proto: WarpPointBeaconCargo
+  entities:
+  - uid: 2142
     components:
     - pos: 27.5,19.5
       parent: 31
       type: Transform
-    - location: salvage
-      type: WarpPoint
-  - uid: 2142
+    - text: salvage
+      type: NavMapBeacon
+    - type: BombingTarget
+  - uid: 5767
     components:
     - pos: 14.5,10.5
       parent: 31
       type: Transform
     - location: cargo
       type: WarpPoint
-  - uid: 5767
+    - type: BombingTarget
+  - uid: 11324
     components:
-    - pos: -7.5,12.5
+    - pos: 21.5,17.5
       parent: 31
       type: Transform
-    - location: security
-      type: WarpPoint
-  - uid: 6995
-    components:
-    - pos: 48.5,8.5
-      parent: 31
-      type: Transform
-    - location: ame
-      type: WarpPoint
-  - uid: 7256
-    components:
-    - pos: -4.5,-1.5
-      parent: 31
-      type: Transform
-    - location: bar
-      type: WarpPoint
-  - uid: 7261
+    - text: cargo bay
+      type: NavMapBeacon
+- proto: WarpPointBeaconCommand
+  entities:
+  - uid: 7262
     components:
     - pos: 9.5,19.5
       parent: 31
       type: Transform
+    - text: hop's office
+      type: NavMapBeacon
     - location: hop's office
       type: WarpPoint
-  - uid: 7262
+    - type: BombingTarget
+  - uid: 7281
     components:
     - pos: 12.5,24.5
       parent: 31
       type: Transform
+    - text: captain's room
+      type: NavMapBeacon
     - location: captain's room
       type: WarpPoint
-  - uid: 7280
+    - type: BombingTarget
+  - uid: 7954
     components:
-    - pos: 16.5,-8.5
+    - pos: 3.5,30.5
       parent: 31
       type: Transform
-    - location: medical
+    - text: bridge
+      type: NavMapBeacon
+    - location: bridge
       type: WarpPoint
-  - uid: 7281
+    - type: BombingTarget
+  - uid: 11269
+    components:
+    - pos: -1.5,17.5
+      parent: 31
+      type: Transform
+    - text: vault
+      type: NavMapBeacon
+    - location: vault
+      type: WarpPoint
+    - type: BombingTarget
+- proto: WarpPointBeaconEngineering
+  entities:
+  - uid: 7256
+    components:
+    - pos: 33.5,4.5
+      parent: 31
+      type: Transform
+    - text: engineering lobby
+      type: NavMapBeacon
+  - uid: 7261
+    components:
+    - pos: 48.5,8.5
+      parent: 31
+      type: Transform
+    - text: ame
+      type: NavMapBeacon
+    - type: BombingTarget
+  - uid: 8316
     components:
     - pos: 38.5,15.5
       parent: 31
       type: Transform
+    - text: atmospherics
+      type: NavMapBeacon
     - location: atmospherics
       type: WarpPoint
+    - type: BombingTarget
+  - uid: 11313
+    components:
+    - pos: 32.5,-2.5
+      parent: 31
+      type: Transform
+    - text: locker room
+      type: NavMapBeacon
+  - uid: 11314
+    components:
+    - pos: 47.5,4.5
+      parent: 31
+      type: Transform
+    - text: materials
+      type: NavMapBeacon
+  - uid: 11315
+    components:
+    - pos: 58.5,2.5
+      parent: 31
+      type: Transform
+    - text: particle accelerator
+      type: NavMapBeacon
+  - uid: 11325
+    components:
+    - pos: 27.5,1.5
+      parent: 31
+      type: Transform
+    - text: drone closet
+      type: NavMapBeacon
+- proto: WarpPointBeaconMedical
+  entities:
+  - uid: 9712
+    components:
+    - pos: 16.5,-8.5
+      parent: 31
+      type: Transform
+    - type: BombingTarget
+  - uid: 11309
+    components:
+    - pos: 9.5,-1.5
+      parent: 31
+      type: Transform
+    - text: medical lobby
+      type: NavMapBeacon
+  - uid: 11310
+    components:
+    - pos: 8.5,-15.5
+      parent: 31
+      type: Transform
+    - text: cryo
+      type: NavMapBeacon
+  - uid: 11311
+    components:
+    - pos: 13.5,-16.5
+      parent: 31
+      type: Transform
+    - text: morgue
+      type: NavMapBeacon
+  - uid: 11312
+    components:
+    - pos: 16.5,-0.5
+      parent: 31
+      type: Transform
+    - text: chemistry
+      type: NavMapBeacon
+  - uid: 11323
+    components:
+    - pos: 21.5,-6.5
+      parent: 31
+      type: Transform
+    - text: locker room
+      type: NavMapBeacon
+- proto: WarpPointBeaconNeutral
+  entities:
+  - uid: 538
+    components:
+    - pos: -36.5,5.5
+      parent: 31
+      type: Transform
+    - text: evac
+      type: NavMapBeacon
+    - location: evac
+      type: WarpPoint
+  - uid: 7276
+    components:
+    - pos: -47.5,-10.5
+      parent: 31
+      type: Transform
+    - text: arrivals
+      type: NavMapBeacon
+    - location: arrivals
+      type: WarpPoint
+  - uid: 7280
+    components:
+    - pos: -25.5,-5.5
+      parent: 31
+      type: Transform
+    - text: dorms
+      type: NavMapBeacon
+    - location: dorms
+      type: WarpPoint
+  - uid: 11322
+    components:
+    - pos: 8.5,9.5
+      parent: 31
+      type: Transform
+    - text: eva
+      type: NavMapBeacon
+    - location: eva
+      type: WarpPoint
+    - type: BombingTarget
+- proto: WarpPointBeaconScience
+  entities:
+  - uid: 11316
+    components:
+    - pos: -9.5,-29.5
+      parent: 31
+      type: Transform
+    - text: xenoarch/anomalies
+      type: NavMapBeacon
+  - uid: 11317
+    components:
+    - pos: -1.5,-28.5
+      parent: 31
+      type: Transform
+    - text: robotics
+      type: NavMapBeacon
+  - uid: 11318
+    components:
+    - pos: -15.5,-22.5
+      parent: 31
+      type: Transform
+    - text: research & development
+      type: NavMapBeacon
+- proto: WarpPointBeaconService
+  entities:
+  - uid: 1136
+    components:
+    - pos: -4.5,-1.5
+      parent: 31
+      type: Transform
+    - text: bar
+      type: NavMapBeacon
+  - uid: 1208
+    components:
+    - pos: -18.5,-0.5
+      parent: 31
+      type: Transform
+    - text: botany
+      type: NavMapBeacon
+  - uid: 7275
+    components:
+    - pos: -36.5,15.5
+      parent: 31
+      type: Transform
+    - text: chapel
+      type: NavMapBeacon
+    - location: chapel
+      type: WarpPoint
+  - uid: 11268
+    components:
+    - pos: -11.5,-0.5
+      parent: 31
+      type: Transform
+    - text: kitchen
+      type: NavMapBeacon
+  - uid: 11308
+    components:
+    - pos: -18.5,-7.5
+      parent: 31
+      type: Transform
+    - text: theatre
+      type: NavMapBeacon
+- proto: WarpPointBombing
+  entities:
   - uid: 10539
     components:
     - pos: -9.5,-20.5
       parent: 31
       type: Transform
     - location: science
-      type: WarpPoint
-  - uid: 11267
-    components:
-    - pos: -12.5,19.5
-      parent: 31
-      type: Transform
-    - location: armory
-      type: WarpPoint
-  - uid: 11269
-    components:
-    - pos: -1.5,17.5
-      parent: 31
-      type: Transform
-    - location: vault
       type: WarpPoint
 - proto: WaterCooler
   entities:

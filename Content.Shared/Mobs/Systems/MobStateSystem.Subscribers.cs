@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.Damage.ForceSay;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -27,7 +28,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
         SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
         SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
@@ -114,6 +115,17 @@ public partial class MobStateSystem
             args.Multiplier /= 3;
         else if (IsCritical(target, component))
             args.Multiplier /= 2;
+    }
+
+    private void OnSpeakAttempt(EntityUid uid, MobStateComponent component, SpeakAttemptEvent args)
+    {
+        if (HasComp<AllowNextCritSpeechComponent>(uid))
+        {
+            RemCompDeferred<AllowNextCritSpeechComponent>(uid);
+            return;
+        }
+
+        CheckAct(uid, component, args);
     }
 
     private void CheckAct(EntityUid target, MobStateComponent component, CancellableEntityEventArgs args)
