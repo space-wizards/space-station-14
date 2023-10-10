@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Outline;
@@ -7,7 +8,6 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -20,15 +20,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Numerics;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
-namespace Content.Client.DragDrop;
+namespace Content.Client.Interaction;
 
 /// <summary>
 /// Handles clientside drag and drop logic
 /// </summary>
-[UsedImplicitly]
 public sealed class DragDropSystem : SharedDragDropSystem
 {
     [Dependency] private readonly IStateManager _stateManager = default!;
@@ -44,8 +42,6 @@ public sealed class DragDropSystem : SharedDragDropSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-
-    private ISawmill _sawmill = default!;
 
     // how often to recheck possible targets (prevents calling expensive
     // check logic each update)
@@ -110,7 +106,6 @@ public sealed class DragDropSystem : SharedDragDropSystem
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("drag_drop");
         UpdatesOutsidePrediction = true;
         UpdatesAfter.Add(typeof(SharedEyeSystem));
 
@@ -263,7 +258,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return;
         }
 
-        _sawmill.Warning($"Unable to display drag shadow for {ToPrettyString(_draggedEntity.Value)} because it has no sprite component.");
+        Log.Warning($"Unable to display drag shadow for {ToPrettyString(_draggedEntity.Value)} because it has no sprite component.");
     }
 
     private bool UpdateDrag(float frameTime)
@@ -392,7 +387,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             }
 
             // tell the server about the drop attempt
-            RaiseNetworkEvent(new DragDropRequestEvent(GetNetEntity(_draggedEntity.Value), GetNetEntity(entity)));
+            RaisePredictiveEvent(new DragDropRequestEvent(GetNetEntity(_draggedEntity.Value), GetNetEntity(entity)));
             EndDrag();
             return true;
         }

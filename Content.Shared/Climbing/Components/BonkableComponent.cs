@@ -2,13 +2,13 @@ using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Climbing;
+namespace Content.Shared.Climbing.Components;
 
 /// <summary>
 ///     Makes entity do damage and stun entities with ClumsyComponent
 ///     upon DragDrop or Climb interactions.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(BonkSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(Systems.BonkSystem))]
 public sealed partial class BonkableComponent : Component
 {
     /// <summary>

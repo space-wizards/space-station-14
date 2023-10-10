@@ -7,7 +7,6 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Climbing;
 using Content.Server.Medical.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
@@ -32,6 +31,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Server.Temperature.Components;
+using Content.Shared.Climbing.Systems;
 
 namespace Content.Server.Medical;
 
