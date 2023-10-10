@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Server.Popups;
@@ -35,7 +36,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     {
         var user = args.User;
 
-        if (!_mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(user, out var obj))
+        if (!HasComp<NinjaRoleComponent>(user))
         {
             _popup.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
             args.Handled = true;
@@ -43,7 +44,7 @@ public sealed class SpiderChargeSystem : EntitySystem
         }
 
         // allow planting anywhere if there is no target, which should never happen
-        if (obj.Target == null)
+        if (!_mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(user, out var obj) || obj.Target == null)
             return;
 
         // assumes warp point still exists
