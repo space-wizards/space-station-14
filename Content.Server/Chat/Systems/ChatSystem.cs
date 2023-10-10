@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
+using Content.Server.Speech.EntitySystems;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -54,6 +54,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -686,7 +687,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         var newMessage = message.Trim();
         if (replaceNetSpeak)
-            newMessage = SanitizeMessageReplaceWord(newMessage);
+            newMessage = SanitizeMessageReplaceWords(newMessage);
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
         if (capitalizeTheWordI)
@@ -734,70 +735,15 @@ public sealed partial class ChatSystem : SharedChatSystem
         return message;
     }
 
-    private static readonly Dictionary<string, string> SlangReplaceWordDictionary = new()
+    public string SanitizeMessageReplaceWords(string message)
     {
-        { "omg", "oh my god" },
-        { "omfg", "oh my fucking god" },
-        { "ong", "on god" },
-        { "wtf", "what the fuck" },
-        { "gtfo", "get the fuck out" },
-        { "ffs", "for fuck's sake" },
-        { "stfu", "shut the fuck up" },
-        { "tf", "the fuck" },
-        { "afaik", "as far as i know" },
-        { "ik", "i know" },
-        { "ikr", "i know, right" },
-        { "idc", "i don't care" },
-        { "tbh", "to be honest" },
-        { "u", "you" },
-        { "ur", "your" },
-        { "mk", "mmm, okay" },
-        { "iirc", "if i remember correctly" },
-        { "np", "no problem" },
-        { "omw", "on my way" },
-        { "nvm", "nevermind" },
-        { "imo", "in my opinion" },
-        { "pls", "please" },
-        { "plz", "please" },
-        { "plox", "please" },
-        { "fr", "for real" },
-        { "brb", "be right back" },
-        { "btw", "by the way" },
-        { "jk", "just kidding" },
-        { "thx", "thanks" },
-        { "ty", "thank you" },
-        { "afk", "ssd" }
-    };
+        if (string.IsNullOrEmpty(message)) return message;
 
-    public string SanitizeMessageReplaceWord(string message)
-    {
-        if (string.IsNullOrEmpty(message))
-            return message;
+        var msg = message;
 
-        foreach (var (first, replace) in SlangReplaceWordDictionary)
-        {
-            var f = first;
-            var r = replace;
+        msg = _wordreplacement.ApplyReplacements(msg, "chatsanitize");
 
-            for (int i = Regex.Count(message, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase); i > 0; i--)
-            {
-                Match match = Regex.Match(message, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase);
-                var replacement = r;
-
-                if (!match.Value.Any(char.IsLower) && (match.Length > 1 || replacement.Length == 1))
-                {
-                    replacement = replacement.ToUpperInvariant();
-                }
-                else if (match.Length >= 1 && replacement.Length >= 1 && char.IsUpper(match.Value[0]))
-                {
-                    replacement = replacement[0].ToString().ToUpper() + replacement[1..];
-                }
-
-                message = message.Remove(match.Index, match.Length).Insert(match.Index, replacement);
-            }
-        }
-
-        return message;
+        return msg;
     }
 
     /// <summary>
