@@ -170,4 +170,12 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingHeadHatFancyCrown
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHairflower
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatHairflower
   
