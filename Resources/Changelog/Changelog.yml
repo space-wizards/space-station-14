@@ -1,9 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: Fix radiator transfer rate in high-pressure environments., type: Fix}
-  id: 4484
-  time: '2023-08-08T08:16:23.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: Access readers can now be programmed using the access configurator.,
@@ -2953,3 +2948,10 @@ Entries:
   - {message: Resprited the librarian jumpsuit., type: Tweak}
   id: 4983
   time: '2023-10-10T16:55:31.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Lizards can eat organs again!, type: Fix}
+  - {message: Organs now contain uncooked proteins instead of edible nutriment. Animals
+      will be able to consume this., type: Tweak}
+  id: 4984
+  time: '2023-10-10T18:02:47.0000000+00:00'
