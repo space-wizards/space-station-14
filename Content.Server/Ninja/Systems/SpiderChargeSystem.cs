@@ -36,7 +36,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     {
         var user = args.User;
 
-        if (!HasComp<NinjaRoleComponent>(user))
+        if (!_mind.TryGetRole<NinjaRoleComponent>(user, out var _))
         {
             _popup.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
             args.Handled = true;
