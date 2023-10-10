@@ -16,13 +16,13 @@ namespace Content.Server.Mind.Commands
 
         public string Command => "makesentient";
         public string Description => "Makes an entity sentient (able to be controlled by a player)";
-        public string Help => "makesentient <entity id>";
+        public string Help => "makesentient <entity id> [allowMovement = false] [allowSpeech = true]";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length < 1 || args.Length > 3)
             {
-                shell.WriteLine("Wrong number of arguments.");
+                shell.WriteLine($"Wrong number of arguments.\n{Help}");
                 return;
             }
 
@@ -38,7 +38,20 @@ namespace Content.Server.Mind.Commands
                 return;
             }
 
-            MakeSentient(entId.Value, _entManager, true, true);
+            var allowMovement = false;
+            var allowSpeech = true;
+            if (args.Length >= 2 && !bool.TryParse(args[1], out allowMovement))
+            {
+                shell.WriteLine($"Optional argument 2 \"allowMovement\" must be \"true\" or \"false\".\n{Help}");
+                return;
+            }
+            if (args.Length >= 3 && !bool.TryParse(args[2], out allowSpeech))
+            {
+                shell.WriteLine($"Optional argument 3 \"allowSpeech\" must be \"true\" or \"false\".\n{Help}");
+                return;
+            }
+
+            MakeSentient(entId.Value, _entManager, allowMovement, allowSpeech);
         }
 
         public static void MakeSentient(EntityUid uid, IEntityManager entityManager, bool allowMovement = true, bool allowSpeech = true)
