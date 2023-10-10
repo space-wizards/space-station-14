@@ -1,3 +1,4 @@
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -13,6 +14,7 @@ namespace Content.Server.Ghost.Roles;
 /// </summary>
 public sealed class ToggleableGhostRoleSystem : EntitySystem
 {
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -49,10 +51,9 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
 
         UpdateAppearance(uid, ToggleableGhostRoleStatus.Searching);
 
-        var ghostRole = EnsureComp<GhostRoleComponent>(uid);
+        EnsureComp<GhostRoleComponent>(uid);
         EnsureComp<GhostTakeoverAvailableComponent>(uid);
-        ghostRole.RoleName = Loc.GetString(component.RoleName);
-        ghostRole.RoleDescription = Loc.GetString(component.RoleDescription);
+        _ghostRoleSystem.SetInformation(uid, Loc.GetString(component.RoleName), Loc.GetString(component.RoleDescription));
     }
 
     private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)

@@ -1,3 +1,4 @@
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -8,6 +9,8 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed partial class MakeSentient : ReagentEffect
 {
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-make-sentient", ("chance", Probability));
 
@@ -34,11 +37,10 @@ public sealed partial class MakeSentient : ReagentEffect
             return;
         }
 
-        ghostRole = entityManager.AddComponent<GhostRoleComponent>(uid);
+        entityManager.AddComponent<GhostRoleComponent>(uid);
         entityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
 
         var entityData = entityManager.GetComponent<MetaDataComponent>(uid);
-        ghostRole.RoleName = entityData.EntityName;
-        ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognizine-description");
+        _ghostRoleSystem.SetInformation(uid, entityData.EntityName, Loc.GetString("ghost-role-information-cognizine-description"));
     }
 }

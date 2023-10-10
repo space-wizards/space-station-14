@@ -58,11 +58,13 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            ghostRole = _entManager.AddComponent<GhostRoleComponent>(uid.Value);
+            _entManager.AddComponent<GhostRoleComponent>(uid.Value);
             _entManager.AddComponent<GhostTakeoverAvailableComponent>(uid.Value);
-            ghostRole.RoleName = name;
-            ghostRole.RoleDescription = description;
-            ghostRole.RoleRules = rules;
+            _entManager.TrySystem(out GhostRoleSystem? ghostRoleSystem);
+            if (ghostRoleSystem != null)
+            {
+                ghostRoleSystem.SetInformation(uid.Value, name, description, rules);
+            }
 
             shell.WriteLine($"Made entity {metaData.EntityName} a ghost role.");
         }

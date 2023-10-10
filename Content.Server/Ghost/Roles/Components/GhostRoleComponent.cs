@@ -1,4 +1,4 @@
-﻿using Content.Server.Mind.Commands;
+using Content.Server.Mind.Commands;
 using Content.Shared.Roles;
 
 namespace Content.Server.Ghost.Roles.Components
@@ -32,7 +32,7 @@ namespace Content.Server.Ghost.Roles.Components
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [Access(typeof(GhostRoleSystem))]
         public string RoleName
         {
             get => Loc.GetString(_roleName);
@@ -44,7 +44,7 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [Access(typeof(GhostRoleSystem))]
         public string RoleDescription
         {
             get => Loc.GetString(_roleDescription);
@@ -56,7 +56,7 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [Access(typeof(GhostRoleSystem))]
         public string RoleRules
         {
             get => Loc.GetString(_roleRules);
@@ -69,10 +69,12 @@ namespace Content.Server.Ghost.Roles.Components
 
         [DataField("allowSpeech")]
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem))]
         public bool AllowSpeech { get; set; } = true;
 
         [DataField("allowMovement")]
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem))]
         public bool AllowMovement { get; set; }
 
         [ViewVariables(VVAccess.ReadOnly)]

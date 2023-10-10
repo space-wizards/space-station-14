@@ -246,6 +246,21 @@ namespace Content.Server.Ghost.Roles
             return roles.ToArray();
         }
 
+        public void SetInformation(EntityUid roleUid, string name, string description, string rules = "", bool allowSpeech = true, bool allowMovement = false, GhostRoleComponent? role = null)
+        {
+            if (!Resolve(roleUid, ref role))
+                return;
+
+            role.RoleName = name;
+            role.RoleDescription = description;
+            if (rules == "")
+                role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
+            else
+                role.RoleRules = rules;
+            role.AllowSpeech = allowSpeech;
+            role.AllowMovement = allowMovement;
+        }
+
         private void OnPlayerAttached(PlayerAttachedEvent message)
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.

@@ -1,6 +1,7 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
@@ -9,6 +10,8 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRuleComponent>
 {
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+
     protected override void Started(EntityUid uid, RandomSentienceRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         HashSet<EntityUid> stationsToNotify = new();
@@ -26,10 +29,11 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
                 break;
 
             RemComp<SentienceTargetComponent>(target.Owner);
-            var ghostRole = EnsureComp<GhostRoleComponent>(target.Owner);
+            EnsureComp<GhostRoleComponent>(target.Owner);
             EnsureComp<GhostTakeoverAvailableComponent>(target.Owner);
-            ghostRole.RoleName = MetaData(target.Owner).EntityName;
-            ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
+            var roleName = MetaData(target.Owner).EntityName;
+            var roleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", roleName));
+            _ghostRoleSystem.SetInformation(target.Owner, roleName, roleDescription);
             groups.Add(Loc.GetString(target.FlavorKind));
         }
 

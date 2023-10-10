@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
@@ -41,6 +42,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
 
 
     public const float HydroponicsSpeedMultiplier = 1f;
@@ -623,10 +625,11 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (component.Seed.Sentient)
         {
-            var ghostRole = EnsureComp<GhostRoleComponent>(uid);
+            EnsureComp<GhostRoleComponent>(uid);
             EnsureComp<GhostTakeoverAvailableComponent>(uid);
-            ghostRole.RoleName = MetaData(uid).EntityName;
-            ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
+            var roleName = MetaData(uid).EntityName;
+            var roleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", roleName));
+            _ghostRoleSystem.SetInformation(uid, roleName, roleDescription);
         }
 
         if (component.UpdateSpriteAfterUpdate)

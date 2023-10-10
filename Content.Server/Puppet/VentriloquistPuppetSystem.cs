@@ -1,3 +1,4 @@
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction.Events;
@@ -10,6 +11,7 @@ namespace Content.Server.Puppet
 {
     public sealed class VentriloquistPuppetSystem : SharedVentriloquistPuppetSystem
     {
+        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
@@ -49,9 +51,8 @@ namespace Content.Server.Puppet
             if (!HasComp<GhostTakeoverAvailableComponent>(uid))
             {
                 AddComp<GhostTakeoverAvailableComponent>(uid);
-                var ghostRole = EnsureComp<GhostRoleComponent>(uid);
-                ghostRole.RoleName = Loc.GetString("ventriloquist-puppet-role-name");
-                ghostRole.RoleDescription = Loc.GetString("ventriloquist-puppet-role-description");
+                EnsureComp<GhostRoleComponent>(uid);
+                _ghostRoleSystem.SetInformation(uid, Loc.GetString("ventriloquist-puppet-role-name"), Loc.GetString("ventriloquist-puppet-role-description"));
             }
 
             args.Handled = true;

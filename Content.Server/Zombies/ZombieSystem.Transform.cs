@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
@@ -56,6 +57,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedRoleSystem _roles = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
 
         /// <summary>
         /// Handles an entity turning into a zombie when they die or go into crit
@@ -241,11 +243,9 @@ namespace Content.Server.Zombies
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !hasMind) //this specific component gives build test trouble so pop off, ig
             {
                 //yet more hardcoding. Visit zombie.ftl for more information.
-                var ghostRole = EnsureComp<GhostRoleComponent>(target);
+                EnsureComp<GhostRoleComponent>(target);
                 EnsureComp<GhostTakeoverAvailableComponent>(target);
-                ghostRole.RoleName = Loc.GetString("zombie-generic");
-                ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
-                ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
+                _ghostRoleSystem.SetInformation(target, Loc.GetString("zombie-generic"), Loc.GetString("zombie-role-desc"), Loc.GetString("zombie-role-rules"));
             }
 
             if (TryComp<HandsComponent>(target, out var handsComp))

@@ -6,6 +6,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Humanoid;
@@ -57,6 +58,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -956,10 +958,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             else if (addSpawnPoints)
             {
                 var spawnPoint = Spawn(component.GhostSpawnPointProto, _random.Pick(spawns));
-                var ghostRole = EnsureComp<GhostRoleComponent>(spawnPoint);
+                EnsureComp<GhostRoleComponent>(spawnPoint);
                 EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
-                ghostRole.RoleName = Loc.GetString(nukeOpsAntag.Name);
-                ghostRole.RoleDescription = Loc.GetString(nukeOpsAntag.Objective);
+                _ghostRoleSystem.SetInformation(spawnPoint, Loc.GetString(nukeOpsAntag.Name), Loc.GetString(nukeOpsAntag.Objective));
 
                 var nukeOpSpawner = EnsureComp<NukeOperativeSpawnerComponent>(spawnPoint);
                 nukeOpSpawner.OperativeName = spawnDetails.Name;
