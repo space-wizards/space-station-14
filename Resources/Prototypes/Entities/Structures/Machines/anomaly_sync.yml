@@ -4,13 +4,27 @@
   name: anomaly synchronizer
   description: A sophisticated device that reads changes in anomalous waves, and converts them into energy signals.
   components:
+  - type: AnomalySynchronizer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 300
+  - type: DeviceLinkSource
+    ports:
+      - Decaying
+      - Normalize
+      - Growing
+      - Pulse
+      - Supercrit
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/anomaly_sync.rsi
-    drawdepth: FloorObjects
     layers:
     - state: base
     - state: energy
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: stable
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: AmbientSound
@@ -46,9 +60,6 @@
     whitelist:
       components:
       - Anomaly
-  - type: DeviceNetwork
-    deviceNetId: Wired
-    receiveFrequencyId: BasicDevice
   - type: DeviceList
   - type: PointLight
     radius: 1.8
