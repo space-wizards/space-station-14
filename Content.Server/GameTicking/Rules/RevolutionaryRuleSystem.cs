@@ -149,6 +149,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             else
             {
                 _chatManager.SendAdminAnnouncement(Loc.GetString("rev-no-heads"));
+            }
         }
     }
 
