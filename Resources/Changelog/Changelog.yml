@@ -1,9 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Changed random maintenance loot spawns to be more diverse., type: Tweak}
-  id: 4488
-  time: '2023-08-09T00:47:35.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Temporarily disable the Wheelchair Bound trait until its vehicle code
@@ -2957,3 +2952,8 @@ Entries:
   - {message: Buckling is now predicted., type: Fix}
   id: 4987
   time: '2023-10-10T23:41:12.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Ninja uncloak after attacking with melee weapons., type: Tweak}
+  id: 4988
+  time: '2023-10-11T02:55:54.0000000+00:00'
