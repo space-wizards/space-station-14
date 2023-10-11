@@ -117,7 +117,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 else
                 {
                     _xformSystem.AttachToGridOrMap(entity, xform);
-                    _throwing.TryThrow(entity, _random.NextVector2(0.1f), 0.2f);
+                    _throwing.TryThrow(entity, _random.NextVector2(0.2f), 0.2f);
                 }
             }
 
