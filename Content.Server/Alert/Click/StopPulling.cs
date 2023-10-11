@@ -1,9 +1,7 @@
 using Content.Shared.Alert;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using JetBrains.Annotations;
-using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Server.Alert.Click
 {
