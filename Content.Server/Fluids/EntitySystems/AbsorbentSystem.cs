@@ -254,13 +254,6 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         _audio.PlayPvs(absorber.PickupSound, target);
         _useDelay.BeginDelay(used);
 
-        var userXform = Transform(user);
-        var targetPos = _transform.GetWorldPosition(target);
-        var localPos = _transform.GetInvWorldMatrix(userXform).Transform(targetPos);
-        localPos = userXform.LocalRotation.RotateVec(localPos);
-
-        _melee.DoLunge(user, Angle.Zero, localPos, null, false);
-
         return true;
     }
 }
