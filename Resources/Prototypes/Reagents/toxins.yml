@@ -464,7 +464,7 @@
           type: Human
         damage:
           types:
-            Poison: 2
+            Poison: 1
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
