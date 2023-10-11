@@ -82,12 +82,12 @@ public sealed class PullingSystem : EntitySystem
         if (component.Pulling == null)
             return;
 
-        if (component.Pulling == args.BlockingEntity)
+        if (component.Pulling != args.BlockingEntity)
+            return;
+
+        if (EntityManager.TryGetComponent(args.BlockingEntity, out PullableComponent? comp))
         {
-            if (EntityManager.TryGetComponent<PullableComponent>(args.BlockingEntity, out var comp))
-            {
-                TryStopPull(comp, uid);
-            }
+            TryStopPull(args.BlockingEntity, comp, uid);
         }
     }
 
@@ -106,7 +106,7 @@ public sealed class PullingSystem : EntitySystem
             Verb verb = new()
             {
                 Text = Loc.GetString("pulling-verb-get-data-text-stop-pulling"),
-                Act = () => TryStopPull(component, args.User),
+                Act = () => TryStopPull(uid, component, user: args.User),
                 DoContactInteraction = false // pulling handle its own contact interaction.
             };
             args.Verbs.Add(verb);
@@ -139,12 +139,13 @@ public sealed class PullingSystem : EntitySystem
         if (!_blocker.CanMove(entity))
             return;
 
-        TryStopPull(component);
+        TryStopPull(uid, component, user: uid);
     }
 
     private void OnPullableCollisionChange(EntityUid uid, PullableComponent component, ref CollisionChangeEvent args)
     {
-        if (component.PullJointId != null && !args.CanCollide)
+        // IDK what this is supposed to be.
+        if (!_timing.ApplyingState && component.PullJointId != null && !args.CanCollide)
         {
             _joints.RemoveJoint(uid, component.PullJointId);
         }
@@ -160,14 +161,24 @@ public sealed class PullingSystem : EntitySystem
             return;
         }
 
-        // Do we have some other join with our Puller?
-        // or alternatively:
-        // TODO track the relevant joint.
         if (args.Joint.ID != component.PullJointId)
             return;
 
+        CleanupPulling(uid, component);
+    }
+
+    private void CleanupPulling(EntityUid pullableUid, PullableComponent pullableComp)
+    {
         // No more joints with puller -> force stop pull.
-        InternalRemovePulling(uid, component.Puller.Value, component);
+        if (TryComp<PullerComponent>(pullableComp.Puller, out var pullerComp))
+        {
+            pullerComp.Pulling = null;
+            Dirty(pullableComp.Puller.Value, pullerComp);
+        }
+
+        pullableComp.PullJointId = null;
+        pullableComp.Puller = null;
+        Dirty(pullableUid, pullableComp);
     }
 
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
@@ -209,16 +220,6 @@ public sealed class PullingSystem : EntitySystem
         return false;
     }
 
-    /// <summary>
-    /// Cleans up pulling state without touching the joint.
-    /// </summary>
-    private void InternalRemovePulling(EntityUid pullable, EntityUid puller,
-        PullableComponent? pullableComp = null,
-        PullerComponent? pullerComp = null)
-    {
-
-    }
-
     public bool IsPulling(EntityUid puller, PullerComponent? component = null)
     {
         return Resolve(puller, ref component, false) && component.Pulling != null;
@@ -231,37 +232,33 @@ public sealed class PullingSystem : EntitySystem
             return;
         }
 
-        if (!TryGetPulled(player, out var pulled))
+        if (!TryComp(player, out PullerComponent? pullerComp) ||
+            !TryComp(pullerComp.Pulling, out PullableComponent? pullableComp))
         {
             return;
         }
 
-        if (!EntityManager.TryGetComponent(pulled.Value, out PullableComponent? pullable))
-        {
-            return;
-        }
-
-        TryStopPull(pullable);
+        TryStopPull(pullerComp.Pulling.Value, pullableComp, user: player);
     }
 
-    public bool CanPull(EntityUid puller, EntityUid pulled)
+    public bool CanPull(EntityUid puller, EntityUid pullableUid, PullerComponent? pullerComp = null)
     {
-        if (!EntityManager.TryGetComponent<PullerComponent>(puller, out var comp))
+        if (!Resolve(puller, ref pullerComp, false))
         {
             return false;
         }
 
-        if (comp.NeedsHands && !_handsSystem.TryGetEmptyHand(puller, out _))
+        if (pullerComp.NeedsHands && !_handsSystem.TryGetEmptyHand(puller, out _))
         {
             return false;
         }
 
-        if (!_blocker.CanInteract(puller, pulled))
+        if (!_blocker.CanInteract(puller, pullableUid))
         {
             return false;
         }
 
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(pulled, out var physics))
+        if (!EntityManager.TryGetComponent<PhysicsComponent>(pullableUid, out var physics))
         {
             return false;
         }
@@ -271,12 +268,12 @@ public sealed class PullingSystem : EntitySystem
             return false;
         }
 
-        if (puller == pulled)
+        if (puller == pullableUid)
         {
             return false;
         }
 
-        if (!_containerSystem.IsInSameOrNoContainer(puller, pulled))
+        if (!_containerSystem.IsInSameOrNoContainer(puller, pullableUid))
         {
             return false;
         }
@@ -284,26 +281,35 @@ public sealed class PullingSystem : EntitySystem
         if (EntityManager.TryGetComponent(puller, out BuckleComponent? buckle))
         {
             // Prevent people pulling the chair they're on, etc.
-            if (buckle is { PullStrap: false, Buckled: true } && (buckle.LastEntityBuckledTo == pulled))
+            if (buckle is { PullStrap: false, Buckled: true } && (buckle.LastEntityBuckledTo == pullableUid))
             {
                 return false;
             }
         }
 
-        var getPulled = new BeingPulledAttemptEvent(puller, pulled);
-        RaiseLocalEvent(pulled, getPulled, true);
-        var startPull = new StartPullAttemptEvent(puller, pulled);
+        var getPulled = new BeingPulledAttemptEvent(puller, pullableUid);
+        RaiseLocalEvent(pullableUid, getPulled, true);
+        var startPull = new StartPullAttemptEvent(puller, pullableUid);
         RaiseLocalEvent(puller, startPull, true);
         return !startPull.Cancelled && !getPulled.Cancelled;
     }
 
-    public bool TogglePull(EntityUid puller, PullableComponent pullable)
+    public bool TogglePull(EntityUid pullableUid, EntityUid pullerUid, PullableComponent pullable)
     {
-        if (pullable.Puller == puller)
+        if (pullable.Puller == pullerUid)
         {
-            return TryStopPull(pullable);
+            return TryStopPull(pullableUid, pullable);
         }
-        return TryStartPull(puller, pullable.Owner);
+
+        return TryStartPull(pullerUid, pullableUid, pullableComp: pullable);
+    }
+
+    public bool TogglePull(EntityUid pullerUid, PullerComponent puller)
+    {
+        if (!TryComp<PullableComponent>(puller.Pulling, out var pullable))
+            return false;
+
+        return TogglePull(puller.Pulling.Value, pullerUid, pullable);
     }
 
     public bool TryStartPull(EntityUid pullerUid, EntityUid pullableUid, EntityUid? user = null,
@@ -319,16 +325,10 @@ public sealed class PullingSystem : EntitySystem
             return true;
 
         if (!CanPull(pullerUid, pullableUid))
-        {
             return false;
-        }
 
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(pullerUid, out var pullerPhysics))
-        {
-            return false;
-        }
-
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(pullableUid, out var pullablePhysics))
+        if (!EntityManager.TryGetComponent<PhysicsComponent>(pullerUid, out var pullerPhysics) ||
+            !EntityManager.TryGetComponent<PhysicsComponent>(pullableUid, out var pullablePhysics))
         {
             return false;
         }
@@ -343,86 +343,60 @@ public sealed class PullingSystem : EntitySystem
                 return false;
         }
 
-        var pullAttempt = new AttemptPullEvent(pullerPhysics, pullablePhysics);
-
-        RaiseLocalEvent(pullerUid.Owner, pullAttempt, broadcast: false);
-
-        if (pullAttempt.Cancelled)
-        {
-            return false;
-        }
-
-        RaiseLocalEvent(pullableUid.Owner, pullAttempt, true);
+        var pullAttempt = new PullAttemptEvent(pullerUid, pullableUid);
+        RaiseLocalEvent(pullerUid, pullAttempt);
 
         if (pullAttempt.Cancelled)
             return false;
 
-        _interaction.DoContactInteraction(pullableUid.Owner, pullerUid.Owner);
+        RaiseLocalEvent(pullableUid, pullAttempt);
 
-        if (pullableUid != null && pullerUid != null && (pullerUid.Pulling == pullableUid.Owner))
+        if (pullAttempt.Cancelled)
+            return false;
+
+        // Pulling confirmed
+
+        _interaction.DoContactInteraction(pullableUid, pullerUid);
+
+        // Use net entity so it's consistent across client and server.
+        pullableComp.PullJointId = $"pull-joint-{GetNetEntity(pullableUid)}";
+
+        pullerComp.Pulling = pullableUid;
+        pullableComp.Puller = pullerUid;
+
+        // joint state handling will manage its own state
+        if (!_timing.ApplyingState)
         {
-            // Already done
-            return;
+            // Joint startup
+            var union = _physics.GetHardAABB(pullerUid).Union(_physics.GetHardAABB(pullableUid, body: pullablePhysics));
+            var length = Math.Max((float) union.Size.X, (float) union.Size.Y) * 0.75f;
+
+            var joint = _joints.CreateDistanceJoint(pullableUid, pullerUid, id: pullableComp.PullJointId);
+            joint.CollideConnected = false;
+            // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
+            joint.MaxLength = Math.Max(1.0f, length);
+            joint.Length = length * 0.75f;
+            joint.MinLength = 0f;
+            joint.Stiffness = 1f;
+
+            _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
         }
 
-        // Start by disconnecting the pullable from whatever it is currently connected to.
-        var pullableOldPullerE = pullableUid?.Puller;
-        if (pullableOldPullerE != null)
-        {
-            ForceDisconnect(EntityManager.GetComponent<PullerComponent>(pullableOldPullerE.Value), pullableUid!);
-        }
+        pullableComp.PrevFixedRotation = pullablePhysics.FixedRotation;
 
-        // Continue with the puller.
-        var pullerOldPullableE = pullerUid?.Pulling;
-        if (pullerOldPullableE != null)
-        {
-            ForceDisconnect(pullerUid!, EntityManager.GetComponent<PullableComponent>(pullerOldPullableE.Value));
-        }
+        // Messaging
+        var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
+        _alertsSystem.ShowAlert(pullerUid, AlertType.Pulling);
+        _alertsSystem.ShowAlert(pullableUid, AlertType.Pulled);
 
-        // And now for the actual connection (if any).
+        RaiseLocalEvent(pullerUid, message);
+        RaiseLocalEvent(pullableUid, message);
 
-        if (pullerUid != null && pullableUid != null)
-        {
-            var pullerPhysics = EntityManager.GetComponent<PhysicsComponent>(pullerUid.Owner);
-            var pullablePhysics = EntityManager.GetComponent<PhysicsComponent>(pullableUid.Owner);
-            pullableUid.PullJointId = $"pull-joint-{pullableUid.Owner}";
+        Dirty(pullerUid, pullerComp);
+        Dirty(pullableUid, pullableComp);
 
-            // State startup
-            pullerUid.Pulling = pullableUid.Owner;
-            pullableUid.Puller = pullerUid.Owner;
-
-            // joint state handling will manage its own state
-            if (!_timing.ApplyingState)
-            {
-                // Joint startup
-                var union = _physics.GetHardAABB(pullerUid.Owner).Union(_physics.GetHardAABB(pullableUid.Owner, body: pullablePhysics));
-                var length = Math.Max((float) union.Size.X, (float) union.Size.Y) * 0.75f;
-
-                var joint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner, pullerPhysics.Owner, id: pullableUid.PullJointId);
-                joint.CollideConnected = false;
-                // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
-                joint.MaxLength = Math.Max(1.0f, length);
-                joint.Length = length * 0.75f;
-                joint.MinLength = 0f;
-                joint.Stiffness = 1f;
-            }
-
-            // Messaging
-            var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
-            _alertsSystem.ShowAlert(pullerPhysics.Owner, AlertType.Pulling);
-            _alertsSystem.ShowAlert(pullableUid.Owner, AlertType.Pulled);
-
-            RaiseLocalEvent(pullerUid.Owner, message, broadcast: false);
-            RaiseLocalEvent(pullableUid.Owner, message, true);
-
-            Dirty(pullerUid);
-            Dirty(pullableUid);
-        }
-
-        pullableUid.PrevFixedRotation = pullablePhysics.FixedRotation;
-        _physics.SetFixedRotation(pullableUid.Owner, pullableUid.FixedRotationOnPull, body: pullablePhysics);
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(pullerUid.Owner):user} started pulling {ToPrettyString(pullableUid.Owner):target}");
+            $"{ToPrettyString(pullerUid):user} started pulling {ToPrettyString(pullableUid):target}");
         return true;
     }
 
@@ -441,26 +415,22 @@ public sealed class PullingSystem : EntitySystem
             return false;
 
         // Stop pulling confirmed!
-
-        if (TryComp<PhysicsComponent>(pullableUid, out var pullablePhysics))
+        if (!_timing.ApplyingState)
         {
-            _physics.SetFixedRotation(pullableUid, pullable.PrevFixedRotation, body: pullablePhysics);
+            if (TryComp<PhysicsComponent>(pullableUid, out var pullablePhysics))
+            {
+                _physics.SetFixedRotation(pullableUid, pullable.PrevFixedRotation, body: pullablePhysics);
+            }
+
+            // Joint shutdown
+            if (pullable.PullJointId != null)
+            {
+                _joints.RemoveJoint(pullableUid, pullable.PullJointId);
+                pullable.PullJointId = null;
+            }
         }
 
-        // Joint shutdown
-        if (pullable.PullJointId != null)
-        {
-            _joints.RemoveJoint(pullableUid, pullable.PullJointId);
-            pullable.PullJointId = null;
-        }
-
-        pullable.Puller = null;
-
-        if (TryComp<PullerComponent>(pullerUid, out var puller))
-        {
-            puller.Pulling = null;
-            Dirty(pullerUid, puller);
-        }
+        CleanupPulling(pullableUid, pullable);
 
         // Messaging
         var message = new PullStoppedMessage(pullerUid, pullableUid);
@@ -471,8 +441,6 @@ public sealed class PullingSystem : EntitySystem
 
         RaiseLocalEvent(pullerUid, message);
         RaiseLocalEvent(pullableUid, message);
-
-        Dirty(pullableUid, pullable);
         return true;
     }
 }
