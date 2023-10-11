@@ -23,12 +23,6 @@ public sealed partial class BuckleComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
-    /// The time that this entity buckled at.
-    /// </summary>
-    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
-    public TimeSpan BuckleTime;
-
-    /// <summary>
     /// The amount of space that this entity occupies in a
     /// <see cref="StrapComponent"/>.
     /// </summary>

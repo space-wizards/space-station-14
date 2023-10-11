@@ -12,6 +12,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
@@ -33,8 +34,8 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(OnBuckleInteractHand);
         SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnBuckleInsertIntoEntityStorageAttempt);
+        SubscribeLocalEvent<BuckleComponent, StartPullAttemptEvent>(OnBucklePullAttempt);
 
-        SubscribeLocalEvent<BuckleComponent, PreventCollideEvent>(OnBucklePreventCollide);
         SubscribeLocalEvent<BuckleComponent, DownAttemptEvent>(OnBuckleDownAttempt);
         SubscribeLocalEvent<BuckleComponent, StandAttemptEvent>(OnBuckleStandAttempt);
         SubscribeLocalEvent<BuckleComponent, ThrowPushbackAttemptEvent>(OnBuckleThrowPushbackAttempt);
@@ -50,8 +51,6 @@ public abstract partial class SharedBuckleSystem
     private void OnBuckleComponentShutdown(EntityUid uid, BuckleComponent component, ComponentShutdown args)
     {
         TryUnbuckle(uid, uid, true, component);
-
-        component.BuckleTime = default;
     }
 
     private void OnBuckleInteractHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
@@ -85,18 +84,15 @@ public abstract partial class SharedBuckleSystem
         args.Verbs.Add(verb);
     }
 
+    private void OnBucklePullAttempt(EntityUid uid, BuckleComponent component, StartPullAttemptEvent args)
+    {
+        if (component.Buckled)
+            args.Cancel();
+    }
+
     private void OnBuckleInsertIntoEntityStorageAttempt(EntityUid uid, BuckleComponent component, ref InsertIntoEntityStorageAttemptEvent args)
     {
         if (component.Buckled)
-            args.Cancelled = true;
-    }
-
-    private void OnBucklePreventCollide(EntityUid uid, BuckleComponent component, ref PreventCollideEvent args)
-    {
-        if (args.OtherEntity != component.BuckledTo)
-            return;
-
-        if (component.Buckled || component.DontCollide)
             args.Cancelled = true;
     }
 
@@ -111,13 +107,6 @@ public abstract partial class SharedBuckleSystem
         //Let entities stand back up while on vehicles so that they can be knocked down when slept/stunned
         //This prevents an exploit that allowed people to become partially invulnerable to stuns
         //while on vehicles
-
-        if (component.BuckledTo != null)
-        {
-            var buckle = component.BuckledTo;
-            if (TryComp<VehicleComponent>(buckle, out _))
-                return;
-        }
         if (component.Buckled)
             args.Cancel();
     }
@@ -130,11 +119,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleUpdateCanMove(EntityUid uid, BuckleComponent component, UpdateCanMoveEvent args)
     {
-        if (component.LifeStage > ComponentLifeStage.Running)
-            return;
-
-        if (component.Buckled &&
-            !HasComp<VehicleComponent>(component.BuckledTo)) // buckle+vehicle shitcode
+        if (component.Buckled)
             args.Cancel();
     }
 
@@ -396,11 +381,22 @@ public abstract partial class SharedBuckleSystem
     ///     true if the owner was unbuckled, otherwise false even if the owner
     ///     was previously already unbuckled.
     /// </returns>
-    public bool TryUnbuckle(EntityUid buckleUid, EntityUid userUid, bool force = false, BuckleComponent? buckleComp = null)
+    public bool TryUnbuckle(EntityUid buckleUid, EntityUid userUid, bool force = false, BuckleComponent? buckleComp = null, TransformComponent? xform = null)
     {
-        if (!Resolve(buckleUid, ref buckleComp, false) ||
-            buckleComp.BuckledTo is not { } strapUid)
+        if (!Resolve(buckleUid, ref buckleComp, ref xform, false) ||
+            !buckleComp.Buckled)
+        {
             return false;
+        }
+
+        var strapUid = xform.ParentUid;
+
+        if (!TryComp<StrapComponent>(strapUid, out var strapComp))
+        {
+            buckleComp.Buckled = false;
+            Dirty(buckleUid, buckleComp);
+            return false;
+        }
 
         if (!force)
         {
@@ -471,8 +467,7 @@ public abstract partial class SharedBuckleSystem
         if (strapComp.BuckledEntities.Remove(buckleUid))
         {
             strapComp.OccupiedSize -= buckleComp.Size;
-            //Dirty(strapUid);
-            Dirty(strapComp);
+            Dirty(strapUid, strapComp);
         }
 
         _joints.RefreshRelay(buckleUid);
