@@ -1,13 +1,10 @@
-using Content.Shared.Alert;
-using Content.Server.Abilities.Mime;
-
-namespace Content.Server.Alert.Click
+namespace Content.Shared.Alert.Click
 {
     ///<summary>
-    /// Retake your mime vows
+    /// Break your mime vows
     ///</summary>
     [DataDefinition]
-    public sealed partial class RetakeVow : IAlertClick
+    public sealed partial class BreakVow : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {
@@ -15,7 +12,7 @@ namespace Content.Server.Alert.Click
 
            if (entManager.TryGetComponent(player, out MimePowersComponent? mimePowers))
            {
-                entManager.System<MimePowersSystem>().RetakeVow(player, mimePowers);
+                entManager.System<MimePowersSystem>().BreakVow(player, mimePowers);
            }
         }
     }

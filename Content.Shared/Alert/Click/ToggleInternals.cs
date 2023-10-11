@@ -1,8 +1,6 @@
-using Content.Server.Body.Systems;
-using Content.Shared.Alert;
 using JetBrains.Annotations;
 
-namespace Content.Server.Alert.Click;
+namespace Content.Shared.Alert.Click;
 
 /// <summary>
 /// Attempts to toggle the internals for a particular entity

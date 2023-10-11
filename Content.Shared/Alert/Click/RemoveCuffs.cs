@@ -1,8 +1,6 @@
-using Content.Server.Cuffs;
-using Content.Shared.Alert;
 using JetBrains.Annotations;
 
-namespace Content.Server.Alert.Click
+namespace Content.Shared.Alert.Click
 {
     /// <summary>
     ///     Try to remove handcuffs from yourself

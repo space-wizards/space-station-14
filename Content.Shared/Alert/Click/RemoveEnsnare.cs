@@ -1,9 +1,7 @@
-﻿using Content.Server.Ensnaring;
-using Content.Shared.Alert;
-using Content.Shared.Ensnaring.Components;
+﻿using Content.Shared.Ensnaring.Components;
 using JetBrains.Annotations;
 
-namespace Content.Server.Alert.Click;
+namespace Content.Shared.Alert.Click;
 [UsedImplicitly]
 [DataDefinition]
 public sealed partial class RemoveEnsnare : IAlertClick

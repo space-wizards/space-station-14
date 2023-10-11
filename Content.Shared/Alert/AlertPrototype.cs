@@ -77,7 +77,7 @@ namespace Content.Shared.Alert
         /// Defines what to do when the alert is clicked.
         /// This will always be null on clientside.
         /// </summary>
-        [DataField("onClick", serverOnly: true)]
+        [DataField("onClick")]
         public IAlertClick? OnClick { get; private set; }
 
         void ISerializationHooks.AfterDeserialization()

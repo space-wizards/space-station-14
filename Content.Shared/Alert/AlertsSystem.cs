@@ -169,7 +169,7 @@ public abstract class AlertsSystem : EntitySystem
         SubscribeLocalEvent<AlertsComponent, ComponentStartup>(HandleComponentStartup);
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>(HandleComponentShutdown);
 
-        SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
+        SubscribeAllEvent<ClickAlertEvent>(OnClickAlert);
 
         LoadPrototypes();
         _prototypeManager.PrototypesReloaded += HandlePrototypesReloaded;
@@ -219,7 +219,7 @@ public abstract class AlertsSystem : EntitySystem
         return _typeToAlert.TryGetValue(alertType, out alert);
     }
 
-    private void HandleClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
+    private void OnClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
     {
         var player = args.SenderSession.AttachedEntity;
         if (player is null || !EntityManager.HasComponent<AlertsComponent>(player))

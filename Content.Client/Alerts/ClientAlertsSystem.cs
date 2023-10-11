@@ -94,6 +94,6 @@ public sealed class ClientAlertsSystem : AlertsSystem
 
     public void AlertClicked(AlertType alertType)
     {
-        RaiseNetworkEvent(new ClickAlertEvent(alertType));
+        RaisePredictiveEvent(new ClickAlertEvent(alertType));
     }
 }

@@ -1,8 +1,7 @@
-using Content.Shared.Alert;
 using Content.Shared.Buckle;
 using JetBrains.Annotations;
 
-namespace Content.Server.Alert.Click
+namespace Content.Shared.Alert.Click
 {
     /// <summary>
     /// Unbuckles if player is currently buckled.

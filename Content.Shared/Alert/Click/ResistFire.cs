@@ -1,9 +1,6 @@
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Alert;
 using JetBrains.Annotations;
 
-namespace Content.Server.Alert.Click
+namespace Content.Shared.Alert.Click
 {
     /// <summary>
     /// Resist fire

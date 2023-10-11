@@ -1,10 +1,9 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Alert;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 
-namespace Content.Server.Alert.Click
+namespace Content.Shared.Alert.Click
 {
     /// <summary>
     /// Stop pulling something
