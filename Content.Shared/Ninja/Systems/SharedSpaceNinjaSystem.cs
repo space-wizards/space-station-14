@@ -19,6 +19,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SpaceNinjaComponent, AttackedEvent>(OnNinjaAttacked);
+        SubscribeLocalEvent<SpaceNinjaComponent, MeleeAttackEvent>(OnNinjaAttack);
         SubscribeLocalEvent<SpaceNinjaComponent, ShotAttemptedEvent>(OnShotAttempted);
     }
 
@@ -74,7 +75,19 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     {
         if (comp.Suit != null && TryComp<StealthClothingComponent>(comp.Suit, out var stealthClothing) && stealthClothing.Enabled)
         {
-            Suit.RevealNinja(comp.Suit.Value, uid, null, stealthClothing);
+            Suit.RevealNinja(comp.Suit.Value, uid, true, null, stealthClothing);
+        }
+    }
+
+    /// <summary>
+    /// Handle revealing ninja if cloaked when attacking.
+    /// Only reveals, there is no cooldown.
+    /// </summary>
+    private void OnNinjaAttack(EntityUid uid, SpaceNinjaComponent comp, ref MeleeAttackEvent args)
+    {
+        if (comp.Suit != null && TryComp<StealthClothingComponent>(comp.Suit, out var stealthClothing) && stealthClothing.Enabled)
+        {
+            Suit.RevealNinja(comp.Suit.Value, uid, false, null, stealthClothing);
         }
     }
 
