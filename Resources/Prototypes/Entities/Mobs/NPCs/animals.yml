@@ -1,6 +1,6 @@
 - type: entity
   name: bat
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, FlyingMobBase ]
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
@@ -13,7 +13,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: bat
       sprite: Mobs/Animals/bat.rsi
-  - type: Physics
   - type: Speech
     speechSounds: Squeak
     speechVerb: SmallMob
@@ -59,7 +58,6 @@
     damage:
       types:
         Piercing: 5
-  - type: NoSlip
   - type: Puller
     needsHands: true
   - type: Tag
@@ -68,7 +66,7 @@
 
 - type: entity
   name: bee
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, FlyingMobBase ]
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
@@ -82,7 +80,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: 0
       sprite: Mobs/Animals/bee.rsi
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -112,9 +109,16 @@
     - Bee
   - type: Bloodstream
     bloodMaxVolume: 0.1
-  - type: NoSlip
   - type: MobPrice
     price: 50
+  - type: NPCRetaliation
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
   - type: Puller
     needsHands: true
 
@@ -354,7 +358,7 @@
 
 - type: entity
   name: butterfly
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, FlyingMobBase ]
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
@@ -367,7 +371,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -396,7 +399,6 @@
         Base: dead
   - type: Bloodstream
     bloodMaxVolume: 0.1
-  - type: NoSlip
   - type: MobPrice
     price: 50
   - type: Puller
@@ -526,6 +528,9 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: HTN
+    rootTask:
+      task: RuminantCompound
 
 - type: entity
   name: goat
@@ -566,6 +571,8 @@
     states:
       Alive:
         Base: goat
+      Critical:
+        Base: dead
       Dead:
         Base: dead
   - type: SolutionContainerManager
@@ -598,9 +605,12 @@
     - Passive
   - type: Body
     prototype: AnimalRuminant
+  - type: NPCRetaliation
+    attackMemoryLength: 5
+  - type: FactionException
   - type: HTN
     rootTask:
-      task: RuminantCompound
+      task: RuminantHostileCompound
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -677,6 +687,8 @@
     states:
       Alive:
         Base: crawling
+      Critical:
+        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -685,6 +697,20 @@
       amount: 4
   - type: Bloodstream
     bloodMaxVolume: 300
+    # if you fuck with the gorilla he will harambe you
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 20
+    animation: WeaponArcFist
+  - type: NPCRetaliation
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
   - type: Puller
 
 - type: entity
@@ -766,6 +792,15 @@
     soundHit:
       collection: BoxingHit
     animation: WeaponArcFist
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
 
 - type: entity
   name: boxing kangaroo
@@ -774,9 +809,6 @@
   components:
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -811,6 +843,7 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Stripping
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -862,9 +895,15 @@
   - type: MonkeyAccent
   - type: Puller
   - type: CanHostGuardian
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: FactionException
   - type: NpcFactionMember
     factions:
-    - Passive
+      - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
   - type: GhostRole
     prob: 0.05
     makeSentient: true
@@ -881,6 +920,7 @@
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
   - type: IdExaminable
+  - type: AlwaysRevolutionaryConvertible
 
 - type: entity
   name: guidebook monkey
@@ -944,9 +984,9 @@
   - type: MobStateActions
     actions:
       Critical:
-      - CritSuccumb
-      - CritFakeDeath
-      - CritLastWords
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -985,6 +1025,7 @@
     - Trash
     - VimPilot
     - Mouse
+    - Meat
   - type: Respirator
     damage:
       types:
@@ -1004,10 +1045,7 @@
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
-    combatToggleAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-combat
+    combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CanEscapeInventory
@@ -1234,7 +1272,7 @@
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
   name: parrot
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, FlyingMobBase ]
   id: MobParrot
   description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   components:
@@ -1247,7 +1285,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -1277,7 +1314,6 @@
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
-  - type: NoSlip
 
 - type: entity
   name: penguin
@@ -1497,6 +1533,11 @@
   - type: Tag
     tags:
     - VimPilot
+    - DoorBumpOpener
+  # make the player a traitor once its taken
+  - type: AutoTraitor
+    giveUplink: false
+    giveObjectives: false
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -1595,7 +1636,19 @@
     damage:
       types:
         Piercing: 6
-        Poison: 6
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 30
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 1
+  - type: MeleeChemicalInjector
+    transferAmount: 0.75
+    solution: melee
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
@@ -1672,7 +1725,6 @@
       damage:
         types:
           Piercing: 8
-          Poison: 6
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClownFast
@@ -2102,6 +2154,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
+  - type: Respirator #It just works?
+    minSaturation: 5.0
 
 - type: entity
   name: caracal cat
@@ -2278,9 +2332,9 @@
   - type: MobStateActions
     actions:
       Critical:
-      - CritSuccumb
-      - CritFakeDeath
-      - CritLastWords
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -2332,6 +2386,7 @@
     - VimPilot
     - Trash
     - Hamster
+    - Meat
   - type: Respirator
     damage:
       types:
@@ -2418,7 +2473,7 @@
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatBacon
       amount: 6
   - type: Grammar
     attributes:

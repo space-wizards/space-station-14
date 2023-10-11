@@ -38,12 +38,13 @@
     - type: Appearance
     - type: Sprite
       sprite: Structures/Power/Generation/portable_generator.rsi
+      noRot: true
 
     # Construction, interaction
     - type: WiresPanel
     - type: Wires
-      BoardName: wires-board-name-generator
-      LayoutId: Generator
+      boardName: wires-board-name-generator
+      layoutId: Generator
     - type: UserInterface
       interfaces:
         - key: enum.GeneratorComponentUiKey.Key

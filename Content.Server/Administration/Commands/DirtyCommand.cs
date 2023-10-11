@@ -6,28 +6,29 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Debug)]
 public sealed class DirtyCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
     public string Command => "dirty";
     public string Description => "Marks all components on an entity as dirty, if not specified, dirties everything";
     public string Help => $"Usage: {Command} [entityUid]";
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var entityManager = IoCManager.Resolve<IEntityManager>();
         switch (args.Length)
         {
             case 0:
-                foreach (var entity in entityManager.GetEntities())
+                foreach (var entity in _entManager.GetEntities())
                 {
-                    DirtyAll(entityManager, entity);
+                    DirtyAll(_entManager, entity);
                 }
                 break;
             case 1:
-                if (!EntityUid.TryParse(args[0], out var parsedTarget))
+                if (!NetEntity.TryParse(args[0], out var parsedTarget))
                 {
                     shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                     return;
                 }
-                DirtyAll(entityManager, parsedTarget);
+                DirtyAll(_entManager, _entManager.GetEntity(parsedTarget));
                 break;
             default:
                 shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));

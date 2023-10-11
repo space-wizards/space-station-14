@@ -18,12 +18,12 @@ namespace Content.Server.Mind;
 public sealed class MindSystem : SharedMindSystem
 {
     [Dependency] private readonly ActorSystem _actor = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly SharedGhostSystem _ghosts = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IMapManager _maps = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedGhostSystem _ghosts = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -31,6 +31,25 @@ public sealed class MindSystem : SharedMindSystem
         base.Initialize();
 
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
+        SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
+    }
+
+    private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
+    {
+        if (mind.UserId is {} user)
+        {
+            UserMinds.Remove(user);
+            if (_players.GetPlayerData(user).ContentData() is { } oldData)
+                oldData.Mind = null;
+            mind.UserId = null;
+        }
+
+        if (!TryComp(mind.OwnedEntity, out MetaDataComponent? meta) || meta.EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        RaiseLocalEvent(mind.OwnedEntity.Value, new MindRemovedMessage(uid, mind), true);
+        mind.OwnedEntity = null;
+        mind.OwnedComponent = null;
     }
 
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
@@ -195,10 +214,10 @@ public sealed class MindSystem : SharedMindSystem
     public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
         MindComponent? mind = null)
     {
-        base.TransferTo(mindId, entity, ghostCheckOverride, createGhost, mind);
-
-        if (!Resolve(mindId, ref mind))
+        if (mind == null && !Resolve(mindId, ref mind))
             return;
+
+        base.TransferTo(mindId, entity, ghostCheckOverride, createGhost, mind);
 
         if (entity == mind.OwnedEntity)
             return;
@@ -277,10 +296,13 @@ public sealed class MindSystem : SharedMindSystem
         }
     }
 
+    /// <summary>
+    /// Sets the Mind's UserId, Session, and updates the player's PlayerData. This should have no direct effect on the
+    /// entity that any mind is connected to, except as a side effect of the fact that it may change a player's
+    /// attached entity. E.g., ghosts get deleted.
+    /// </summary>
     public override void SetUserId(EntityUid mindId, NetUserId? userId, MindComponent? mind = null)
     {
-        base.SetUserId(mindId, userId, mind);
-
         if (!Resolve(mindId, ref mind))
             return;
 

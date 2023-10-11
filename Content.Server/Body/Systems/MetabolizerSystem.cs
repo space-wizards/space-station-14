@@ -128,9 +128,9 @@ namespace Content.Server.Body.Systems
             _random.Shuffle(list);
 
             int reagents = 0;
-            foreach (var reagent in list)
+            foreach (var (reagent, quantity) in list)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                     continue;
 
                 var mostToRemove = FixedPoint2.Zero;
@@ -138,7 +138,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (meta.RemoveEmpty)
                     {
-                        _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
+                        _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent,
                             FixedPoint2.New(1));
                     }
 
@@ -149,7 +149,6 @@ namespace Content.Server.Body.Systems
                 if (reagents >= meta.MaxReagentsProcessable)
                     return;
 
-                reagents += 1;
 
                 // loop over all our groups and see which ones apply
                 if (meta.MetabolismGroups == null)
@@ -161,16 +160,12 @@ namespace Content.Server.Body.Systems
                         continue;
 
                     var entry = proto.Metabolisms[group.Id];
+                    var rate = entry.MetabolismRate * group.MetabolismRateModifier;
 
-                    // we don't remove reagent for every group, just whichever had the biggest rate
-                    if (entry.MetabolismRate > mostToRemove)
-                        mostToRemove = entry.MetabolismRate;
+                    // Remove $rate, as long as there's enough reagent there to actually remove that much
+                    mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
 
-                    mostToRemove *= group.MetabolismRateModifier;
-
-                    mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, reagent.Quantity);
-
-                    float scale = (float) mostToRemove / (float) entry.MetabolismRate;
+                    float scale = (float) mostToRemove / (float) rate;
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
@@ -204,8 +199,10 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
-                    _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
-                        mostToRemove);
+                    _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent, mostToRemove);
+
+                    // We have processed a reagant, so count it towards the cap
+                    reagents += 1;
                 }
             }
         }

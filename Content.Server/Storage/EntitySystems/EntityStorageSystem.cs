@@ -3,7 +3,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
-using Content.Server.Tools.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
@@ -11,6 +10,7 @@ using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -44,7 +44,6 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
-        SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
@@ -97,12 +96,6 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         }
     }
 
-    private void OnWelded(EntityUid uid, EntityStorageComponent component, WeldableChangedEvent args)
-    {
-        component.IsWeldedShut = args.IsWelded;
-        Dirty(component);
-    }
-
     protected override void TakeGas(EntityUid uid, SharedEntityStorageComponent component)
     {
         if (!component.Airtight)
@@ -135,7 +128,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
     private TileRef? GetOffsetTileRef(EntityUid uid, EntityStorageComponent component)
     {
-        var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset).ToMap(EntityManager);
+        var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset).ToMap(EntityManager, TransformSystem);
 
         if (_map.TryFindGridAt(targetCoordinates, out _, out var grid))
         {

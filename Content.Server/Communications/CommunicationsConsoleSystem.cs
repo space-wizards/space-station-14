@@ -31,6 +31,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
@@ -151,7 +152,7 @@ namespace Content.Server.Communications
             }
 
             if (comp.UserInterface is not null)
-                UserInterfaceSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
+                _uiSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
                     CanCallOrRecall(comp),
                     levels,
@@ -174,7 +175,7 @@ namespace Content.Server.Communications
 
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
             {
-                return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
+                return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);
             }
             return true;
         }
@@ -187,7 +188,7 @@ namespace Content.Server.Communications
 
             // Calling shuttle checks
             if (_roundEndSystem.ExpectedCountdownEnd is null)
-                return comp.CanCallShuttle;
+                return comp.CanShuttle;
 
             // Recalling shuttle checks
             var recallThreshold = _cfg.GetCVar(CCVars.EmergencyRecallTurningPoint);
@@ -255,27 +256,27 @@ namespace Content.Server.Communications
                 }
             }
 
-            comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
+            comp.AnnouncementCooldownRemaining = comp.Delay;
             UpdateCommsConsoleInterface(uid, comp);
 
             var ev = new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Session.AttachedEntity);
             RaiseLocalEvent(ref ev);
 
             // allow admemes with vv
-            Loc.TryGetString(comp.AnnouncementDisplayName, out var title);
-            title ??= comp.AnnouncementDisplayName;
+            Loc.TryGetString(comp.Title, out var title);
+            title ??= comp.Title;
 
             msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
-            if (comp.AnnounceGlobal)
+            if (comp.Global)
             {
-                _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
+                _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color);
 
                 if (message.Session.AttachedEntity != null)
                     _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following global announcement: {msg}");
 
                 return;
             }
-            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
+            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color);
 
             if (message.Session.AttachedEntity != null)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following station announcement: {msg}");
