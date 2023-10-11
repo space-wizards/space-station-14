@@ -6,6 +6,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Armor;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -115,8 +116,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
         InventoryRelayedEvent<GetExplosionResistanceEvent> args)
     {
-        var a = args.Args;
-        OnGetResistance(uid, component, ref a);
+        OnGetResistance(uid, component, ref args.Args);
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)

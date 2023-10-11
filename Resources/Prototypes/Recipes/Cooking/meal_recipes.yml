@@ -482,14 +482,22 @@
   solids:
     FoodBreadPlainSlice: 2
 
-#Pizzas
+- type: microwaveMealRecipe
+  id: RecipeOnionRings
+  name: onion rings recipe
+  result: FoodOnionRings
+  time: 15
+  solids:
+    FoodOnionSlice: 1
+
+#Pizzas TODO: contruction graph based pizza
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
   name: margherita pizza recipe
   result: FoodPizzaMargherita
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodCheeseSlice: 1
     FoodTomato: 4
 
@@ -499,7 +507,7 @@
   result: FoodPizzaMushroom
   time: 25
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMushroom: 5
 
 - type: microwaveMealRecipe
@@ -508,7 +516,7 @@
   result: FoodPizzaMeat
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMeat: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -519,7 +527,7 @@
   result: FoodPizzaVegetable
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
@@ -531,7 +539,7 @@
   result: FoodPizzaPineapple
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMeatChickenCutlet: 3
     FoodPineappleSlice: 5
 
@@ -541,7 +549,7 @@
   result: FoodPizzaDank
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodAmbrosiaVulgaris: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -552,7 +560,7 @@
   result: FoodPizzaDonkpocket
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodDonkpocketWarm: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -1277,7 +1285,7 @@
     FoodButter: 2
     FoodSnackChocolateBar: 2
     FoodEgg: 3
-    
+
 #Donks i guess
 - type: microwaveMealRecipe
   id: RecipeWarmDonkpocket
@@ -1562,7 +1570,7 @@
   name: medicated suture recipe
   result: MedicatedSuture
   time: 10
-  solids: 
+  solids:
     FoodPoppy: 1
     Brutepack: 1
     MaterialCloth1: 1
@@ -1581,7 +1589,7 @@
     MaterialCloth1: 1
   reagents:
     Sigynate: 50
-    Dermaline: 50 
+    Dermaline: 50
 
 # Suppermatter
 - type: microwaveMealRecipe

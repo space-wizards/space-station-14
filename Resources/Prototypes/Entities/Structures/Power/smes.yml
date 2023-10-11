@@ -63,8 +63,8 @@
       castShadows: false
     - type: WiresPanel
     - type: Wires
-      BoardName: wires-board-name-smes
-      LayoutId: SMES
+      boardName: wires-board-name-smes
+      layoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
