@@ -60,12 +60,6 @@
     - chuckles!
     - chuckled
     - chuckling
-    - giggle
-    - giggles
-    - giggles.
-    - giggles!
-    - giggling
-    - giggled
     # Corvax-Localization-Start
     - смех
     - смеется
@@ -78,11 +72,6 @@
     - хохочет
     - хохочет.
     - хохочет!
-    - хихикает
-    - хихикает.
-    - хихикает!
-    - хихикнул
-    - хихикнула
     - ржёт
     # Corvax-Localization-End
 
@@ -401,3 +390,43 @@
   - бзданула
   - бзданула.
   - бзданула!
+
+#SS220 giggle
+- type: emote
+  id: Giggle
+  chatMessages: ["хихикает"]
+  chatTriggers:
+  - хихикает
+  - хихикает.
+  - хихикает!
+  - хихикнул
+  - хихикнула
+  - giggle
+  - giggles
+  - giggles.
+  - giggles!
+  - giggling
+  - giggled
+
+#SS220 Hiss for felinids and lizards
+- type: emote
+  id: Hiss
+  category: Vocal
+  chatMessages: ["шипит!"]
+  chatTriggers:
+  - шипение
+  - шипят
+  - шипит
+  - шипит.
+  - шипит!
+  - прошипела
+  - прошипел
+  - прошипели
+  - шуршит
+  - сипит
+  - зашипел
+  - зашипела
+  - hiss
+  - hiss!
+  - hiss.
+  - hissing

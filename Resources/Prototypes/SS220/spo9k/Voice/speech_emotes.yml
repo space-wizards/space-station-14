@@ -1,14 +1,5 @@
 ## vocal emotes
 - type: emote
-  id: Hiss
-  category: Vocal
-  chatMessages: [шипит.]
-  chatTriggers:
-    - шипит
-    - шипит.
-    - шипит!
-
-- type: emote
   id: Meow
   category: Vocal
   chatMessages: [мяукает.]

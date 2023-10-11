@@ -8,6 +8,8 @@
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
+    Giggle:
+      collection: MaleLaugh
     Sneeze:
       collection: MaleSneezes
     Cough:
@@ -53,6 +55,8 @@
     Scream:
       collection: FemaleScreams
     Laugh:
+      collection: FemaleLaugh
+    Giggle:
       collection: FemaleLaugh
     Sneeze:
       collection: FemaleSneezes
@@ -117,6 +121,12 @@
       collection: Gasp
     CritGasp:
       collection: MaleCritGasp
+    Giggle:
+      collection: LizardGiggle
+      params:
+        volume: 2
+    Hiss:
+      collection: LizardHiss
     #SS220 emote sounds end
 
 - type: emoteSounds
