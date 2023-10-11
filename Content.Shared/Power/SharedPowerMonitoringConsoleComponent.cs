@@ -11,6 +11,7 @@ namespace Content.Shared.Power;
 public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public double TotalSources;
+    public double TotalBatteryUsage;
     public double TotalLoads;
     public PowerMonitoringConsoleEntry[] AllEntries;
     public PowerMonitoringConsoleEntry[] FocusSources;
@@ -21,6 +22,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
 
     public PowerMonitoringConsoleBoundInterfaceState
         (double totalSources,
+        double totalBatteryUsage,
         double totalLoads,
         PowerMonitoringConsoleEntry[] allEntries,
         PowerMonitoringConsoleEntry[] focusSources,
@@ -30,6 +32,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
         PowerMonitoringFlags flags)
     {
         TotalSources = totalSources;
+        TotalBatteryUsage = totalBatteryUsage;
         TotalLoads = totalLoads;
         AllEntries = allEntries;
         FocusSources = focusSources;

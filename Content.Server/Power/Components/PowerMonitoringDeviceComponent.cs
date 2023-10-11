@@ -29,6 +29,12 @@ public sealed partial class PowerMonitoringDeviceComponent : Component
     public string LoadNode = string.Empty;
 
     /// <summary>
+    ///     Names of the nodes that this device can potentially distributes power to (see <see cref="NodeContainerComponent"/>)
+    /// </summary>
+    [DataField("loadNodes")]
+    public List<string>? LoadNodes;
+
+    /// <summary>
     ///     Indicates whether the location of this entity should be displayed on a power monitoring console
     /// </summary>
     [DataField("locationOnMonitor")]

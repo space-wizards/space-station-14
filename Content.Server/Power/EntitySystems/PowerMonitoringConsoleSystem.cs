@@ -13,9 +13,10 @@ using Robust.Shared.Players;
 using System.Linq;
 using Robust.Shared.Map;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
+using Robust.Shared.Utility;
+using Content.Server.Power.Nodes;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -23,7 +24,6 @@ namespace Content.Server.Power.EntitySystems;
 internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
 
     private List<EntityUid> _trackedDevices = new();
@@ -117,6 +117,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 
         // Data to be send to the client
         var totalSources = 0d;
+        var totalBatteryUsage = 0d;
         var totalLoads = 0d;
         var allEntries = new List<PowerMonitoringConsoleEntry>();
         var sourcesForFocus = new List<PowerMonitoringConsoleEntry>();
@@ -136,7 +137,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             if (powerConsumer.ReceivedPower >= RoguePowerConsumerThreshold)
                 flags |= PowerMonitoringFlags.RoguePowerConsumer;
 
-            totalLoads += powerConsumer.ReceivedPower;
+            totalLoads += powerConsumer.DrawRate;
         }
 
         // Tracked devices
@@ -175,15 +176,18 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 
                 if (TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
                 {
-                    // Load due to network battery recharging
-                    entry.PowerValue = battery.NetworkBattery.CurrentReceiving;
-                    //entry.ExternalPower = GetExternalPowerState(battery.NetworkBattery.CurrentReceiving, battery.NetworkBattery.CurrentSupply);
-                    totalLoads += Math.Max(battery.NetworkBattery.CurrentReceiving - battery.NetworkBattery.CurrentSupply, 0f);
+                    entry.PowerValue = battery.CurrentSupply;
 
-                    // Loads attached to the APC
-                    if (entry.Group == PowerMonitoringConsoleGroup.APC)
+                    // Load due to network battery recharging
+                    totalLoads += Math.Max(battery.CurrentReceiving - battery.CurrentSupply, 0f);
+
+                    // Track battery usage
+                    totalBatteryUsage += Math.Max(battery.CurrentSupply - battery.CurrentReceiving, 0f);
+
+                    // Get loads attached to the APC
+                    if (entry.Group == PowerMonitoringConsoleGroup.APC && battery.Enabled)
                     {
-                        totalLoads += battery.NetworkBattery.CurrentSupply;
+                        totalLoads += battery.NetworkBattery.LoadingNetworkDemand;
                     }
                 }
             }
@@ -206,7 +210,18 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                     reachableSourceNodes = FloodFillNode(sourceNode);
                 }
 
-                if (nodeContainer.Nodes.TryGetValue(device.LoadNode, out var loadNode))
+                var loadNodeName = device.LoadNode;
+
+                // Search for the enabled load node (required for portable generators)
+                if (device.LoadNodes != null)
+                {
+                    var foundNode = nodeContainer.Nodes.FirstOrNull(x => x.Value is CableDeviceNode && (x.Value as CableDeviceNode)?.Enabled == true);
+
+                    if (foundNode != null)
+                        loadNodeName = foundNode.Value.Key;
+                }
+
+                if (nodeContainer.Nodes.TryGetValue(loadNodeName, out var loadNode))
                 {
                     GetLoadsForNode(focus.Value, loadNode, out loadsForFocus);
                     reachableLoadNodes = FloodFillNode(loadNode);
@@ -224,6 +239,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         _userInterfaceSystem.SetUiState(bui,
             new PowerMonitoringConsoleBoundInterfaceState
                 (totalSources,
+                totalBatteryUsage,
                 totalLoads,
                 allEntries.ToArray(),
                 sourcesForFocus.ToArray(),
@@ -234,27 +250,27 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             session);
     }
 
-    private double GetSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)
+    private void GetSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)
     {
-        var totalSources = 0.0d;
         sources = new List<PowerMonitoringConsoleEntry>();
 
         if (node.NodeGroup is not PowerNet netQ)
-            return totalSources;
+            return;
 
-        foreach (PowerSupplierComponent powerSupplier in netQ.Suppliers)
+        var currentSupply = 0f;
+        var currentDemand = 0f;
+
+        foreach (var powerSupplier in netQ.Suppliers)
         {
             var ent = powerSupplier.Owner;
 
             if (uid == ent)
                 continue;
 
-            var supply = powerSupplier.Enabled ? powerSupplier.MaxSupply : 0d;
-
-            if (TryMakeConsoleEntry(ent, out var entry, supply))
+            if (TryMakeConsoleEntry(ent, out var entry, powerSupplier.CurrentSupply))
                 sources.Add(entry);
 
-            totalSources += supply;
+            currentSupply += powerSupplier.CurrentSupply;
         }
 
         foreach (var batteryDischarger in netQ.Dischargers)
@@ -264,39 +280,69 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             if (uid == ent)
                 continue;
 
-            if (!TryComp(ent, out PowerNetworkBatteryComponent? battery))
+            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
                 continue;
 
-            var rate = battery.NetworkBattery.CurrentSupply;
-
-            if (TryMakeConsoleEntry(ent, out var entry, rate))
+            if (TryMakeConsoleEntry(ent, out var entry, battery.CurrentSupply))
                 sources.Add(entry);
 
-            totalSources += rate;
+            currentSupply += battery.CurrentSupply;
         }
 
-        return totalSources;
+        // Get the total demand for the network
+        foreach (var powerConsumer in netQ.Consumers)
+        {
+            currentDemand += powerConsumer.ReceivedPower;
+        }
+
+        foreach (var batteryCharger in netQ.Chargers)
+        {
+            var ent = batteryCharger.Owner;
+
+            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
+                continue;
+
+            currentDemand += battery.CurrentReceiving;
+        }
+
+        if (MathHelper.CloseTo(currentDemand, 0))
+            return;
+
+        if (MathHelper.CloseTo(currentSupply, 0))
+            return;
+
+        if (!TryComp<PowerNetworkBatteryComponent>(uid, out var _battery))
+            return;
+
+        // Update the power value for each source based on the fraction of power the entity is actually draining from each
+        var powerFraction = Math.Min(_battery.CurrentReceiving / currentSupply, 1f) * Math.Min(currentSupply / currentDemand, 1f);
+
+        foreach (var entry in sources)
+        {
+            entry.PowerValue *= powerFraction;
+        }
     }
 
-    private double GetLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads)
+    private void GetLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads)
     {
-        var totalLoads = 0.0d;
         loads = new List<PowerMonitoringConsoleEntry>();
 
         if (node.NodeGroup is not PowerNet netQ)
-            return totalLoads;
+            return;
 
-        foreach (PowerConsumerComponent powerConsumer in netQ.Consumers)
+        var currentDemand = 0f;
+
+        foreach (var powerConsumer in netQ.Consumers)
         {
             var ent = powerConsumer.Owner;
 
             if (uid == ent)
                 continue;
 
-            if (TryMakeConsoleEntry(ent, out var entry, powerConsumer.DrawRate))
+            if (TryMakeConsoleEntry(ent, out var entry, powerConsumer.ReceivedPower))
                 loads.Add(entry);
 
-            totalLoads += powerConsumer.DrawRate;
+            currentDemand += powerConsumer.ReceivedPower;
         }
 
         foreach (var batteryCharger in netQ.Chargers)
@@ -306,18 +352,32 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             if (uid == ent)
                 continue;
 
-            if (!TryComp(ent, out PowerNetworkBatteryComponent? batteryComp))
+            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
                 continue;
 
-            var rate = batteryComp.NetworkBattery.CurrentReceiving;
-
-            if (TryMakeConsoleEntry(ent, out var entry, rate))
+            if (TryMakeConsoleEntry(ent, out var entry, battery.CurrentReceiving))
                 loads.Add(entry);
 
-            totalLoads += rate;
+            currentDemand += battery.CurrentReceiving;
         }
 
-        return totalLoads;
+        if (MathHelper.CloseTo(currentDemand, 0))
+            return;
+
+        var supplying = 0f;
+
+        if (TryComp<PowerNetworkBatteryComponent>(uid, out var _battery))
+            supplying = _battery.CurrentSupply;
+
+        else if (TryComp<PowerSupplierComponent>(uid, out var _supplier))
+            supplying = _supplier.CurrentSupply;
+
+        var powerFraction = Math.Min(supplying / currentDemand, 1f);
+
+        foreach (var entry in loads)
+        {
+            entry.PowerValue *= powerFraction;
+        }
     }
 
     private bool TryMakeConsoleEntry(EntityUid uid, [NotNullWhen(true)] out PowerMonitoringConsoleEntry? entry, double powerValue = 0d)

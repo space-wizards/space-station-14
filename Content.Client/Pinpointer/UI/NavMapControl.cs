@@ -242,9 +242,9 @@ public sealed partial class NavMapControl : MapGridControl
 
         var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
 
-        // Drawing lines is rather expensive due to the number of neighbors that need to be checked in order  
+        // Drawing lines can be rather expensive due to the number of neighbors that need to be checked in order  
         // to figure out where they should be drawn. However, we don't *need* to do check these every frame.
-        // Instead, lets periodically update where to draw each line and then cache these points in a list.
+        // Instead, lets periodically update where to draw each line and then store these points in a list.
         // Then we can just run through the list each frame and draw the lines without any extra computation.
 
         // Draw walls
@@ -381,7 +381,7 @@ public sealed partial class NavMapControl : MapGridControl
             }
         }
 
-        // Tracked entities (can use a supplied sprite as a marker)
+        // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this)
         foreach (var (coord, value) in TrackedEntities)
         {
             if (lit && value.Visible)
