@@ -58,7 +58,6 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
-        [Dependency] private readonly ExamineSystemShared _examine = default!;
 
         private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
 
