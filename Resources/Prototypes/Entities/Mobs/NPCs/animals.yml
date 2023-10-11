@@ -1672,7 +1672,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: white
-      sprite: Mobs/Animals/tamed_spider.rsi
+      sprite: Mobs/Animals/white_spider.rsi
   - type: DamageStateVisuals
     states:
       Alive:

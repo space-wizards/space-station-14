@@ -201,7 +201,7 @@
 - type: cargoProduct
   id: LivestockWhiteSpindle
   icon:
-    sprite: Mobs/Animals/tamed_spider.rsi
+    sprite: Mobs/Animals/white_spider.rsi
     state: white
   product: CrateNPCWhiteSpindle
   cost: 3900
