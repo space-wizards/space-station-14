@@ -1,9 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Diona are no longer inhibited by kudzu., type: Tweak}
-  id: 4494
-  time: '2023-08-09T15:24:41.0000000+00:00'
 - author: themias
   changes:
   - {message: Taxibots have robot speech bubbles, type: Tweak}
@@ -2957,3 +2952,9 @@ Entries:
       stack with each other, type: Tweak}
   id: 4993
   time: '2023-10-11T15:20:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed explosion resistance from clothing/equipment not being applied.,
+    type: Fix}
+  id: 4994
+  time: '2023-10-11T16:31:10.0000000+00:00'
