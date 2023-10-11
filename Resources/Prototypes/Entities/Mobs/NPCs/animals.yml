@@ -1691,7 +1691,7 @@
   - type: EggLayer
     eggSpawn:
     - id: SpiderWeb
-    hungerUsage: 5
+    hungerUsage: 10
     eggLayCooldownMin: 20
     eggLayCooldownMax: 40
     eggLayAction: ActionSpiderWebForLayer
