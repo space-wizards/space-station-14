@@ -1,12 +1,13 @@
+﻿using Content.Server.Atmos.EntitySystems;
 ﻿using Content.Shared.Atmos;
 
-namespace Content.Server.Mech.Components;
+namespace Content.Server.Atmos.Components;
 
 /// <summary>
-/// This is basically a siphon vent for mech but not using pump vent component because MechAir bad
+/// This is basically a siphon vent for <see cref="GetFilterAirEvent"/>.
 /// </summary>
-[RegisterComponent]
-public sealed partial class MechAirIntakeComponent : Component
+[RegisterComponent, Access(typeof(AirFilterSystem))]
+public sealed partial class AirIntakeComponent : Component
 {
     /// <summary>
     /// Target pressure change for a single atmos tick
@@ -21,7 +22,7 @@ public sealed partial class MechAirIntakeComponent : Component
     public float PumpPower = 2f;
 
     /// <summary>
-    /// Pressure to intake gases up to, maintains MechAir pressure.
+    /// Pressure to intake gases up to, maintains pressure of the air volume.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Pressure = Atmospherics.OneAtmosphere;

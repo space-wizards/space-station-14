@@ -1,12 +1,13 @@
+﻿using Content.Server.Atmos.EntitySystems;
 ﻿using Content.Shared.Atmos;
 
-namespace Content.Server.Mech.Components;
+namespace Content.Server.Atmos.Components;
 
 /// <summary>
-/// This is basically a reverse scrubber for MechAir
+/// This is basically a reverse scrubber but using <see cref="GetFilterAirEvent"/>.
 /// </summary>
-[RegisterComponent]
-public sealed partial class MechAirFilterComponent : Component
+[RegisterComponent, Access(typeof(AirFilterSystem))]
+public sealed partial class AirFilterComponent : Component
 {
     /// <summary>
     /// Gases that will be filtered out of internal air
@@ -31,15 +32,15 @@ public sealed partial class MechAirFilterComponent : Component
     /// Gas to consider oxygen for <see cref="TargetOxygen"/> and <see cref="OverflowGases"/> logic.
     /// </summary>
     /// <remarks>
-    /// If you make a slime mech you might want to change this to be nitrogen, and overflowgases to remove oxygen.
+    /// For slime you might want to change this to be nitrogen, and overflowgases to remove oxygen.
     /// However theres still no real danger since standard atmos is mostly nitrogen so nitrogen tends to 100% anyway.
     /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Gas Oxygen = Gas.Oxygen;
 
     /// <summary>
-    /// Target volume to transfer every second.
+    /// Fraction of target volume to transfer every second.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float TransferRate = MechAirComponent.GasMixVolume * 0.1f;
+    public float TransferRate = 0.1f;
 }
