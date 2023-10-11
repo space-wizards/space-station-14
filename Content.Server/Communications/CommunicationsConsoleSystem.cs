@@ -188,7 +188,7 @@ namespace Content.Server.Communications
 
             // Calling shuttle checks
             if (_roundEndSystem.ExpectedCountdownEnd is null)
-                return comp.CanCallShuttle;
+                return comp.CanShuttle;
 
             // Recalling shuttle checks
             var recallThreshold = _cfg.GetCVar(CCVars.EmergencyRecallTurningPoint);
@@ -256,27 +256,27 @@ namespace Content.Server.Communications
                 }
             }
 
-            comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
+            comp.AnnouncementCooldownRemaining = comp.Delay;
             UpdateCommsConsoleInterface(uid, comp);
 
             var ev = new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Session.AttachedEntity);
             RaiseLocalEvent(ref ev);
 
             // allow admemes with vv
-            Loc.TryGetString(comp.AnnouncementDisplayName, out var title);
-            title ??= comp.AnnouncementDisplayName;
+            Loc.TryGetString(comp.Title, out var title);
+            title ??= comp.Title;
 
             msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
-            if (comp.AnnounceGlobal)
+            if (comp.Global)
             {
-                _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
+                _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color);
 
                 if (message.Session.AttachedEntity != null)
                     _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following global announcement: {msg}");
 
                 return;
             }
-            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
+            _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color);
 
             if (message.Session.AttachedEntity != null)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following station announcement: {msg}");

@@ -213,7 +213,7 @@
     - machine_board
     - entity_storage
   - type: Wires
-    LayoutId: borgcharger
+    layoutId: borgcharger
   - type: WiresPanel
   - type: WiresVisuals
   - type: Machine
