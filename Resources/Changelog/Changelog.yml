@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Temporarily disable the Wheelchair Bound trait until its vehicle code
-      is fixed., type: Tweak}
-  id: 4489
-  time: '2023-08-09T03:10:47.0000000+00:00'
 - author: Doru991
   changes:
   - {message: Space cats' EVA suits are now functional! Oxygen not included., type: Tweak}
@@ -2957,3 +2951,8 @@ Entries:
   - {message: Ninja uncloak after attacking with melee weapons., type: Tweak}
   id: 4988
   time: '2023-10-11T02:55:54.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Crabs will seek out food to eat now., type: Add}
+  id: 4989
+  time: '2023-10-11T03:09:26.0000000+00:00'
