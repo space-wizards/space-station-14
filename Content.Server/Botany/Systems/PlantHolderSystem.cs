@@ -377,6 +377,13 @@ public sealed class PlantHolderSystem : EntitySystem
             component.Health = 0;
         }
 
+        if (component.Seed != null && component.Seed.TurnIntoTomatoKiller)
+        {
+            Spawn(component.Seed.TomatoKillerPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
+            component.Seed.TurnIntoTomatoKiller = false;
+            component.Health = 0;
+        }
+
         // There's a chance for a weed explosion to happen if weeds take over.
         // Plants that are themselves weeds (WeedTolerance > 8) are unaffected.
         if (component.WeedLevel >= 10 && _random.Prob(0.1f))

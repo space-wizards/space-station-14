@@ -1,0 +1,26 @@
+- type: entity
+  id: OrganTomatoStomach
+  parent: [BaseItem, OrganHumanStomach]
+  name: Желудок помидора-убийцы
+  description: "Двойной желудок повышенной вместимости с особым метаболизмом"
+  components:
+    - type: Sprite
+      sprite: SS220/Mobs/Animals/tomato_killer.rsi
+      scale: 1.1, 1.1
+      state: stomach
+    - type: Stomach
+    - type: Metabolizer
+      maxReagents: 30
+      metabolizerTypes: [ Hydroponic ]
+      removeEmpty: true
+      groups:
+        - id: Food
+        - id: Drink
+        - id: Poison
+        - id: Narcotic
+        - id: Alcohol
+          rateModifier: 0.2
+    - type: SolutionContainerManager
+      solutions:
+        stomach:
+          maxVol: 45.0

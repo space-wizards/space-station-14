@@ -1,0 +1,132 @@
+- type: entity
+  name: Помидор-убийца
+  parent: SimpleMobBase
+  description: Матушка-природа наконец-то придумала, как защититься от генетических экспериментов!
+  id: TomatoKiller
+  components:
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: SS220/Mobs/Animals/tomato_killer.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: tomatokiller
+    scale: 1.3, 1.3
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      175: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: tomatokiller
+      Dead:
+        Base: mobdead
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: TomatoKiller
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      150: 0.7
+  - type: MovementSpeedModifier
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    soundHit:
+     collection: AlienClaw
+    animation: WeaponArcBite 
+    damage:
+      types:
+        Piercing: 9
+        Radiation: 4
+        Structural: 5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 700
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tag
+    tags:
+    - CannotSuicide
+  - type: Bloodstream
+    bloodReagent: JuiceTomato
+    bloodMaxVolume: 150
+  - type: IgnoreKudzu
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [ PlantBGone ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          types:
+            Blunt: 5
+            Slash: 5
+            Piercing: 6
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "Химикаты заставляют часть вашей зелени увянуть!" ]
+        probability: 0.66
+    - reagents: [ WeedKiller ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          types:
+            Piercing: 20
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "Химикаты заставляют часть вашей зелени увянуть!" ]
+        probability: 0.66
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: Помидор-убийца
+    description: Защищайте матушку-природу!
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodMeatTomato
+      amount: 3
+  - type: NoSlip
+  - type: Puller
+    needsHands: true
+  - type: Body
+    prototype: Tomatokillers
+  - type: Hunger
+    baseDecayRate: 0.8
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 150
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 30
+  - type: Udder
+    reagentId: JuiceTomato
+    targetSolution: udder
+    quantity: 25
+    updateRate: 30
+  - type: TTS 
+    voice: Flark

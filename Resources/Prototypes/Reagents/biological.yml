@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Blood
   name: reagent-name-blood
   group: Biological
@@ -14,6 +14,15 @@
       effects:
       - !type:SatiateThirst
         factor: 1.5
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -3
+            Slash: -3
+            Piercing: -3
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 0.5

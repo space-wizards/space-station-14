@@ -1,0 +1,10 @@
+- type: body
+  id: Tomatokillers
+  name: "Помидор-убийца"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      organs:
+        stomach: OrganTomatoStomach
+        lungs: OrganAnimalLungs

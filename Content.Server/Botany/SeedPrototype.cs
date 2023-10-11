@@ -239,8 +239,10 @@ public partial class SeedData
     public float BioluminescentRadius = 2f;
 
     [DataField("kudzuPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
+    [DataField("tomatokillerPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string TomatoKillerPrototype = "TomatoKiller";
 
     [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
+    [DataField("turnIntoTomatoKiller")] public bool TurnIntoTomatoKiller;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
     #endregion
@@ -301,6 +303,7 @@ public partial class SeedData
             Bioluminescent = Bioluminescent,
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
+            TurnIntoTomatoKiller = TurnIntoTomatoKiller,
             BioluminescentColor = BioluminescentColor,
             SplatPrototype = SplatPrototype,
 
@@ -364,6 +367,7 @@ public partial class SeedData
             Bioluminescent = Bioluminescent,
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
+            TurnIntoTomatoKiller = TurnIntoTomatoKiller,
             BioluminescentColor = BioluminescentColor,
             SplatPrototype = other.SplatPrototype,
 

@@ -271,6 +271,16 @@
         damage:
           types:
             Radiation: 3
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.25
+        sprintSpeedModifier: 1.25
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
+      - !type:Jitter
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
 
 - type: reagent
   id: HeartbreakerToxin

@@ -16,6 +16,10 @@
         conditions:
         - !type:OrganType
           type: Plant
+      - !type:SatiateHunger
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
 
 - type: reagent
   id: Left4Zed
@@ -47,6 +51,32 @@
         conditions:
         - !type:OrganType
           type: Plant
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.35
+        sprintSpeedModifier: 1.35
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
+      - !type:Jitter
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 3
+        type: Remove
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 3
+        type: Remove
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
 
 - type: reagent
   id: PestKiller
@@ -145,6 +175,15 @@
             Asphyxiation: 1
             Burn: 2
             Poison: 1
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -1
+            Slash: -2
+            Piercing: -2
+        conditions:
+        - !type:OrganType
+          type: Hydroponic
     Medicine:
       effects:
       - !type:Polymorph
@@ -232,3 +271,17 @@
         damage:
           types:
             Caustic: 1
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -3
+            Slash: -3
+            Piercing: -3
+            Cold: -3
+            Heat: -3
+            Radiation: -1
+            Shock: -1
+            Caustic: -1
+        conditions:
+        - !type:OrganType
+          type: Hydroponic

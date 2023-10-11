@@ -7,3 +7,15 @@
     Cold: 1.5
     Heat: 2.0
     Poison: 1.1
+
+- type: damageModifierSet
+  id: TomatoKiller
+  coefficients:
+    Blunt: 1
+    Slash: 1.3
+    Piercing: 1.2
+    Shock: 1.3
+    Cold: 1.5
+    Poison: 0.2
+    Cellular: 1
+    Radiation: 0.6
