@@ -72,8 +72,8 @@ namespace Content.Server.Communications
 
                 comp.UIUpdateAccumulator -= UIUpdateInterval;
 
-                if (comp.UserInterface is { } ui && ui.SubscribedSessions.Count > 0)
-                    UpdateCommsConsoleInterface(uid, comp);
+                if (_uiSystem.TryGetUi(uid, CommunicationsConsoleUiKey.Key, out var ui) && ui.SubscribedSessions.Count > 0)
+                    UpdateCommsConsoleInterface(uid, comp, ui);
             }
 
             base.Update(frameTime);
@@ -121,9 +121,11 @@ namespace Content.Server.Communications
         /// <summary>
         /// Updates the UI for a particular comms console.
         /// </summary>
-        /// <param name="comp"></param>
-        public void UpdateCommsConsoleInterface(EntityUid uid, CommunicationsConsoleComponent comp)
+        public void UpdateCommsConsoleInterface(EntityUid uid, CommunicationsConsoleComponent comp, PlayerBoundUserInterface? ui = null)
         {
+            if (ui == null && !_uiSystem.TryGetUi(uid, CommunicationsConsoleUiKey.Key, out ui))
+                return;
+
             var stationUid = _stationSystem.GetOwningStation(uid);
             List<string>? levels = null;
             string currentLevel = default!;
@@ -151,15 +153,14 @@ namespace Content.Server.Communications
                 }
             }
 
-            if (comp.UserInterface is not null)
-                _uiSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
-                    CanAnnounce(comp),
-                    CanCallOrRecall(comp),
-                    levels,
-                    currentLevel,
-                    currentDelay,
-                    _roundEndSystem.ExpectedCountdownEnd
-                ));
+            _uiSystem.SetUiState(ui, new CommunicationsConsoleInterfaceState(
+                CanAnnounce(comp),
+                CanCallOrRecall(comp),
+                levels,
+                currentLevel,
+                currentDelay,
+                _roundEndSystem.ExpectedCountdownEnd
+            ));
         }
 
         private static bool CanAnnounce(CommunicationsConsoleComponent comp)
@@ -203,7 +204,9 @@ namespace Content.Server.Communications
 
         private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
         {
-            if (message.Session.AttachedEntity is not { Valid: true } mob) return;
+            if (message.Session.AttachedEntity is not { Valid: true } mob)
+                return;
+
             if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), message.Session, PopupType.Medium);
@@ -284,8 +287,12 @@ namespace Content.Server.Communications
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
         {
-            if (!CanCallOrRecall(comp)) return;
-            if (message.Session.AttachedEntity is not { Valid: true } mob) return;
+            if (!CanCallOrRecall(comp))
+                return;
+
+            if (message.Session.AttachedEntity is not { Valid: true } mob)
+                return;
+
             if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
@@ -306,8 +313,12 @@ namespace Content.Server.Communications
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
         {
-            if (!CanCallOrRecall(comp)) return;
-            if (message.Session.AttachedEntity is not { Valid: true } mob) return;
+            if (!CanCallOrRecall(comp))
+                return;
+
+            if (message.Session.AttachedEntity is not { Valid: true } mob)
+                return;
+
             if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
