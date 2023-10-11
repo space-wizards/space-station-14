@@ -1,0 +1,44 @@
+{
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/7bf2f5551269a618b20aa7312d695920dde03b41/icons/mob/simple/arachnoid.dmi",
+  "states": [
+    {
+      "name": "white",
+      "directions": 4,
+      "delays": [
+        [
+          0.01,
+          0.01,
+          0.01
+        ],
+        [
+          0.01,
+          0.01,
+          0.01
+        ],
+        [
+          0.01,
+          0.01,
+          0.01
+        ],
+        [
+          0.01,
+          0.01,
+          0.01
+        ]
+      ]
+    },
+    {
+      "name": "white_dead",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

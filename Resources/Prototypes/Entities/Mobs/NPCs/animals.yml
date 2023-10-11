@@ -1671,14 +1671,14 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: nurse
-      sprite: Mobs/Animals/spider.rsi
+      state: white
+      sprite: Mobs/Animals/tamed_spider.rsi
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: nurse
+        Base: white
       Dead:
-        Base: nurse_dead
+        Base: white_dead
   - type: NPCRetaliation
     attackMemoryLength: 20
   - type: FactionException
@@ -1692,8 +1692,8 @@
     eggSpawn:
     - id: SpiderWeb
     hungerUsage: 5
-    eggLayCooldownMin: 10
-    eggLayCooldownMax: 30
+    eggLayCooldownMin: 20
+    eggLayCooldownMax: 60
     eggLayAction: ActionSpiderWebForLayer
     manySpawnsForbidden: true
     eggLaySound:
