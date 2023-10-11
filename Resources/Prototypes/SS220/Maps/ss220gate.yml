@@ -2,7 +2,7 @@
   id: 220Gate
   mapName: 'Gate Station'
   mapPath: /Maps/ss220_gate.yml
-  minPlayers: 0 #Нужно для автоголосования
+  minPlayers: 0
   stations:
     Gate:
       stationProto: GateNanotrasenStation
@@ -11,7 +11,7 @@
           mapNameTemplate: '{0} Gate Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '-SCT'
+            prefixCreator: '-SS220'
         - type: StationJobs
           overflowJobs:
             - Passenger
@@ -43,6 +43,7 @@
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 2, 2 ]
             MedicalIntern: [ 4, 4 ]
+            Brigmedic: [ 1, 1 ] # SS220-BM
             Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
@@ -57,7 +58,6 @@
             SecurityOfficer: [ 6, 6 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
-            Brigmedic: [ 1, 1 ] # SS220-BM
             #Lawyer: [ 2, 2 ] # Corvax-IAA
             #supply
             Quartermaster: [ 1, 1 ]
