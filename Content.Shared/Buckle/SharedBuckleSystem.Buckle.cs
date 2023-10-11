@@ -30,7 +30,6 @@ public abstract partial class SharedBuckleSystem
     {
         SubscribeLocalEvent<BuckleComponent, ComponentStartup>(OnBuckleComponentStartup);
         SubscribeLocalEvent<BuckleComponent, ComponentShutdown>(OnBuckleComponentShutdown);
-        SubscribeLocalEvent<BuckleComponent, MoveEvent>(OnBuckleMove);
         SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(OnBuckleInteractHand);
         SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnBuckleInsertIntoEntityStorageAttempt);
@@ -53,21 +52,6 @@ public abstract partial class SharedBuckleSystem
         TryUnbuckle(uid, uid, true, component);
 
         component.BuckleTime = default;
-    }
-
-    private void OnBuckleMove(EntityUid uid, BuckleComponent component, ref MoveEvent ev)
-    {
-        if (component.BuckledTo is not {} strapUid)
-            return;
-
-        if (!TryComp<StrapComponent>(strapUid, out var strapComp))
-            return;
-
-        var strapPosition = Transform(strapUid).Coordinates;
-        if (ev.NewPosition.InRange(EntityManager, _transform, strapPosition, strapComp.MaxBuckleDistance))
-            return;
-
-        TryUnbuckle(uid, uid, true, component);
     }
 
     private void OnBuckleInteractHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
