@@ -274,8 +274,8 @@
     
 - type: marking
   id: LizardHornsFloppyKoboldEars
-  bodyPart: Head
-  markingCategory: Head
+  bodyPart: HeadSide
+  markingCategory: HeadSide
   speciesRestriction: [Reptilian]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
