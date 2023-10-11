@@ -75,7 +75,6 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     /// <summary>
     /// The next time this will try to update the controller UI.
     /// </summary>
-    [DataField("nextUIUpdate")]
     public TimeSpan NextUIUpdate = default!;
 
     /// <summary>
@@ -88,7 +87,6 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     /// <summary>
     /// The maximum amount of time that passes between UI updates.
     /// </summary>
-    [DataField("updateUIPeriod")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables]
     public TimeSpan UpdateUIPeriod = TimeSpan.FromSeconds(3.0);
 }
