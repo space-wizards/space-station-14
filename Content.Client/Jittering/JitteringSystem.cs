@@ -9,7 +9,7 @@ namespace Content.Client.Jittering
     public sealed class JitteringSystem : SharedJitteringSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AnimationPlayerSystem _animationPlayerSystem = default!;
+        [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
 
         private readonly float[] _sign = { -1, 1 };
         private readonly string _jitterAnimationKey = "jittering";
@@ -30,13 +30,13 @@ namespace Content.Client.Jittering
 
             var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
 
-            _animationPlayerSystem.Play(animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
+            _animationPlayer.Play(animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private void OnShutdown(EntityUid uid, JitteringComponent jittering, ComponentShutdown args)
         {
             if (EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer))
-                _animationPlayerSystem.Stop(animationPlayer, _jitterAnimationKey);
+                _animationPlayer.Stop(animationPlayer, _jitterAnimationKey);
 
             if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
                 sprite.Offset = Vector2.Zero;
@@ -49,7 +49,7 @@ namespace Content.Client.Jittering
 
             if (EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer)
             && EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
-                _animationPlayerSystem.Play(animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
+                _animationPlayer.Play(animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
