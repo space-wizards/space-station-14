@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Power;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 using System.Linq;
@@ -257,6 +258,45 @@ public sealed partial class PowerMonitoringWindow
 
             _nextScrollValue = null;
         }
+    }
+
+    private void UpdateWarningLabel(PowerMonitoringFlags flags)
+    {
+        if (flags == PowerMonitoringFlags.None)
+        {
+            SystemWarningPanel.Visible = false;
+            return;
+        }
+
+        var msg = new FormattedMessage();
+
+        if (flags.HasFlag(PowerMonitoringFlags.RoguePowerConsumer))
+        {
+            SystemWarningPanel.PanelOverride = new StyleBoxFlat
+            {
+                BackgroundColor = Color.Red,
+                BorderColor = Color.DarkRed,
+                BorderThickness = new Thickness(2),
+            };
+
+            msg.AddMarkup(Loc.GetString("power-monitoring-window-rogue-power-consumer"));
+            SystemWarningPanel.Visible = true;
+        }
+
+        else if (flags.HasFlag(PowerMonitoringFlags.PowerNetAbnormalities))
+        {
+            SystemWarningPanel.PanelOverride = new StyleBoxFlat
+            {
+                BackgroundColor = Color.Orange,
+                BorderColor = Color.DarkOrange,
+                BorderThickness = new Thickness(2),
+            };
+
+            msg.AddMarkup(Loc.GetString("power-monitoring-window-power-net-abnormalities"));
+            SystemWarningPanel.Visible = true;
+        }
+
+        SystemWarningLabel.SetMessage(msg);
     }
 }
 

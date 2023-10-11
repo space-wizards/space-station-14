@@ -14,6 +14,8 @@ using System.Linq;
 using Robust.Shared.Map;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Server.StationEvents.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -25,6 +27,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
 
     private List<EntityUid> _trackedDevices = new();
+    private bool _powerNetAbnormalities = false;
+    private const float RoguePowerConsumerThreshold = 100000;
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
 
@@ -34,6 +38,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
         SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvsEvent);
+        SubscribeLocalEvent<GameRuleStartedEvent>(OnPowerGridCheckStarted);
+        SubscribeLocalEvent<GameRuleEndedEvent>(OnPowerGridCheckEnded);
     }
 
     public override void Update(float frameTime)
@@ -66,6 +72,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         {
             if (_userInterfaceSystem.SessionHasOpenUi(uid, PowerMonitoringConsoleUiKey.Key, ev.Session))
             {
+                if (ev.Entities == null)
+                    ev.Entities = new List<EntityUid>();
+
                 foreach (var ent in _trackedDevices)
                     ev.Entities.Add(ent);
 
@@ -77,6 +86,18 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
     private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)
     {
         UpdateUIState(uid, component, GetEntity(args.FocusDevice), args.Session);
+    }
+
+    private void OnPowerGridCheckStarted(ref GameRuleStartedEvent ev)
+    {
+        if (HasComp<PowerGridCheckRuleComponent>(ev.RuleEntity))
+            _powerNetAbnormalities = true;
+    }
+
+    private void OnPowerGridCheckEnded(ref GameRuleEndedEvent ev)
+    {
+        if (HasComp<PowerGridCheckRuleComponent>(ev.RuleEntity))
+            _powerNetAbnormalities = false;
     }
 
     public void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent powerMonitoring, EntityUid? focus, ICommonSession session)
@@ -102,7 +123,23 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         var loadsForFocus = new List<PowerMonitoringConsoleEntry>();
         var cableNetwork = GetPowerCableNetworkBitMask(gridUid, mapGrid);
         var focusNetwork = new Dictionary<Vector2i, NavMapChunkPowerCables>();
+        var flags = PowerMonitoringFlags.None;
 
+        // Power grid anomalies event is in-progress
+        if (_powerNetAbnormalities)
+            flags |= PowerMonitoringFlags.PowerNetAbnormalities;
+
+        // Power consumers 
+        var powerConsumerQuery = AllEntityQuery<PowerConsumerComponent>();
+        while (powerConsumerQuery.MoveNext(out var ent, out var powerConsumer))
+        {
+            if (powerConsumer.ReceivedPower >= RoguePowerConsumerThreshold)
+                flags |= PowerMonitoringFlags.RoguePowerConsumer;
+
+            totalLoads += powerConsumer.ReceivedPower;
+        }
+
+        // Tracked devices
         foreach (var ent in _trackedDevices)
         {
             var xform = Transform(ent);
@@ -113,46 +150,48 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             if (!TryMakeConsoleEntry(ent, out var entry))
                 continue;
 
-            var device = Comp<PowerMonitoringDeviceComponent>(ent);
-
-            // Generators
-            if (device.Group == PowerMonitoringConsoleGroup.Generator)
+            if (entry.Group == PowerMonitoringConsoleGroup.Generator)
             {
-                if (TryComp<PowerSupplierComponent>(ent, out var powerSupplier))
-                    entry.PowerValue = powerSupplier.MaxSupply;
+                // Covers most power sources
+                if (TryComp<PowerSupplierComponent>(ent, out var supplier))
+                {
+                    entry.PowerValue = supplier.CurrentSupply;
+                    totalSources += entry.PowerValue;
+                }
 
-                else if (TryComp<BatteryDischargerComponent>(ent, out var batteryDischarger) &&
-                    TryComp(ent, out PowerNetworkBatteryComponent? battery))
+                // Radiation collectors
+                else if (TryComp<BatteryDischargerComponent>(ent, out var discharger) &&
+                    TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
+                {
                     entry.PowerValue = battery.NetworkBattery.CurrentSupply;
-
-                allEntries.Add(entry);
-                totalSources += entry.PowerValue;
+                    totalSources += entry.PowerValue;
+                }
             }
 
-            // SMES / substation / APC
-            else if (device.Group == PowerMonitoringConsoleGroup.SMES ||
-                device.Group == PowerMonitoringConsoleGroup.Substation ||
-                device.Group == PowerMonitoringConsoleGroup.APC)
+            else if (entry.Group == PowerMonitoringConsoleGroup.SMES ||
+                entry.Group == PowerMonitoringConsoleGroup.Substation ||
+                entry.Group == PowerMonitoringConsoleGroup.APC)
             {
+
                 if (TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
+                {
+                    // Load due to network battery recharging
                     entry.PowerValue = battery.NetworkBattery.CurrentReceiving;
+                    //entry.ExternalPower = GetExternalPowerState(battery.NetworkBattery.CurrentReceiving, battery.NetworkBattery.CurrentSupply);
+                    totalLoads += Math.Max(battery.NetworkBattery.CurrentReceiving - battery.NetworkBattery.CurrentSupply, 0f);
 
-                allEntries.Add(entry);
-                totalLoads += entry.PowerValue;
+                    // Loads attached to the APC
+                    if (entry.Group == PowerMonitoringConsoleGroup.APC)
+                    {
+                        totalLoads += battery.NetworkBattery.CurrentSupply;
+                    }
+                }
             }
 
-            // Power consumers
-            else if (device.Group == PowerMonitoringConsoleGroup.Consumer)
-            {
-                if (TryComp<PowerConsumerComponent>(ent, out var consumer))
-                    entry.PowerValue = consumer.ReceivedPower;
-
-                allEntries.Add(entry);
-                totalLoads += entry.PowerValue;
-            }
+            allEntries.Add(entry);
         }
 
-        // Get necessary data on the currently selected device on the power monitoring console (if applicable)
+        // Get data for the device currently selected on the power monitoring console (if applicable)
         if (focus != null)
         {
             if (TryComp<NodeContainerComponent>(focus, out var nodeContainer) &&
@@ -190,7 +229,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                 sourcesForFocus.ToArray(),
                 loadsForFocus.ToArray(),
                 cableNetwork,
-                focusNetwork),
+                focusNetwork,
+                flags),
             session);
     }
 

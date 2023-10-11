@@ -17,6 +17,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
     public PowerMonitoringConsoleEntry[] FocusLoads;
     public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks;
     public Dictionary<Vector2i, NavMapChunkPowerCables>? FocusCableChunks;
+    public PowerMonitoringFlags Flags;
 
     public PowerMonitoringConsoleBoundInterfaceState
         (double totalSources,
@@ -25,7 +26,8 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
         PowerMonitoringConsoleEntry[] focusSources,
         PowerMonitoringConsoleEntry[] focusLoads,
         Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
-        Dictionary<Vector2i, NavMapChunkPowerCables>? focusCableChunks)
+        Dictionary<Vector2i, NavMapChunkPowerCables>? focusCableChunks,
+        PowerMonitoringFlags flags)
     {
         TotalSources = totalSources;
         TotalLoads = totalLoads;
@@ -34,6 +36,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
         FocusLoads = focusLoads;
         PowerCableChunks = powerCableChunks;
         FocusCableChunks = focusCableChunks;
+        Flags = flags;
     }
 }
 
@@ -88,6 +91,14 @@ public enum PowerMonitoringConsoleGroup
     Substation,
     SMES,
     Generator
+}
+
+[Flags]
+public enum PowerMonitoringFlags
+{
+    None = 0,
+    RoguePowerConsumer = 1,
+    PowerNetAbnormalities = 2,
 }
 
 /// <summary>

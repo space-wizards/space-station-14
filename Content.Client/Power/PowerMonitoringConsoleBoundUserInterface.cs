@@ -42,6 +42,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             castState.FocusLoads,
             castState.PowerCableChunks,
             castState.FocusCableChunks,
+            castState.Flags,
             xform?.Coordinates);
     }
 
