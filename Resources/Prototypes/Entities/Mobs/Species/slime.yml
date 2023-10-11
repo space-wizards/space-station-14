@@ -74,6 +74,16 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 9 damage a minute or 4 for poison.
+    allowedStates:
+    - Alive
+    - Critical
+    damage:
+      types:
+        Heat: -0.15
+        Poison: -0.07
+      groups:
+        Brute: -0.15
 
 - type: entity
   parent: MobHumanDummy
