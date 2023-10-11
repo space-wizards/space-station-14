@@ -54,3 +54,6 @@ ent-CrateNPCLizard = Lizard crate
 
 ent-CrateNPCKangaroo = Kangaroo crate
     .desc = A crate containing a kangaroo.
+
+ent-CrateNPCWhiteSpindle = White spindle crate
+    .desc = A crate containing a white spindle spider.

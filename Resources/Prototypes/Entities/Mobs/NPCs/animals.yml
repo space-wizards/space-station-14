@@ -1662,10 +1662,10 @@
     speechVerb: Arachnid
 
 - type: entity
-  name: tamed web spider
+  name: white spindle
   parent: MobGiantSpider
-  id: MobTamedWebTarantula
-  description: As silkworm.
+  id: MobWhiteSpindleSpider
+  description: Hand-spider, spinning webs. A bit irritable and bites painfully.
   components:
   - type: Sprite
     drawdepth: Mobs

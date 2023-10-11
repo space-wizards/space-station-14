@@ -197,3 +197,13 @@
   cost: 2800
   category: Livestock
   group: market
+
+- type: cargoProduct
+  id: LivestockWhiteSpindle
+  icon:
+    sprite: Mobs/Animals/tamed_spider.rsi
+    state: white
+  product: CrateNPCWhiteSpindle
+  cost: 3900
+  category: Livestock
+  group: market

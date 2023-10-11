@@ -192,3 +192,11 @@
   - type: StorageFill
     contents:
       - id: MobKangaroo
+
+- type: entity
+  id: CrateNPCWhiteSpindle
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobWhiteSpindleSpider
