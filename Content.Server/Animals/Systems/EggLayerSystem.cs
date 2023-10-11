@@ -5,6 +5,7 @@ using Content.Shared.Actions.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -20,6 +21,7 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -66,6 +68,9 @@ public sealed class EggLayerSystem : EntitySystem
     public bool TryLayEgg(EntityUid uid, EggLayerComponent? component)
     {
         if (!Resolve(uid, ref component))
+            return false;
+
+        if (!_mobState.IsAlive(uid))
             return false;
 
         // check hungry value
