@@ -292,6 +292,33 @@ public abstract class SharedMindSystem : EntitySystem
         return true;
     }
 
+    public bool TryGetObjectiveComp<T>(EntityUid uid, [NotNullWhen(true)] out T? objective) where T : Component
+    {
+        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComp(mindId, out objective, mind))
+        {
+            return true;
+        }
+        objective = default;
+        return false;
+    }
+
+    public bool TryGetObjectiveComp<T>(EntityUid mindId, [NotNullWhen(true)] out T? objective, MindComponent? mind = null) where T : Component
+    {
+        if (Resolve(mindId, ref mind))
+        {
+            var query = GetEntityQuery<T>();
+            foreach (var uid in mind.AllObjectives)
+            {
+                if (query.TryGetComponent(uid, out objective))
+                {
+                    return true;
+                }
+            }
+        }
+        objective = default;
+        return false;
+    }
+
     public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
     {
         session = null;

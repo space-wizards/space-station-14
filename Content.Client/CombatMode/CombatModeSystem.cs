@@ -2,7 +2,6 @@ using Content.Client.Hands.Systems;
 using Content.Client.NPC.HTN;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
-using Content.Shared.Targeting;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -45,11 +44,6 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
         base.Shutdown();
     }
 
-    private void OnTargetingZoneChanged(TargetingZone obj)
-    {
-        EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
-    }
-
     public bool IsInCombatMode()
     {
         var entity = _playerManager.LocalPlayer?.ControlledEntity;
@@ -63,12 +57,6 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
     public override void SetInCombatMode(EntityUid entity, bool value, CombatModeComponent? component = null)
     {
         base.SetInCombatMode(entity, value, component);
-        UpdateHud(entity);
-    }
-
-    public override void SetActiveZone(EntityUid entity, TargetingZone zone, CombatModeComponent? component = null)
-    {
-        base.SetActiveZone(entity, zone, component);
         UpdateHud(entity);
     }
 
