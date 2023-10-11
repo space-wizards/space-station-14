@@ -6,7 +6,7 @@
   - type: MobMover
   - type: Mech
   - type: MechAir
-  - type: MechAirFilter
+  - type: AirFilter
     # everything except oxygen and nitrogen
     gases:
     - CarbonDioxide
@@ -28,7 +28,7 @@
     - NitrousOxide
     - Frezon
     #- Helium3 TODO: fusion
-  - type: MechAirIntake
+  - type: AirIntake
   # for intake and filter to work
   - type: AtmosDevice
     requireAnchored: false
