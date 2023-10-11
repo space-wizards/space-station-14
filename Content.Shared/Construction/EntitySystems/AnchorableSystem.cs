@@ -19,6 +19,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Construction.EntitySystems;
 

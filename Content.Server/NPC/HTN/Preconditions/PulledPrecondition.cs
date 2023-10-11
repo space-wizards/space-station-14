@@ -1,5 +1,6 @@
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Systems;
+using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 

@@ -7,11 +7,11 @@ using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Verbs;
-using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
@@ -33,13 +33,8 @@ public sealed class PullingSystem : EntitySystem
 
         SubscribeLocalEvent<PullableComponent, MoveInputEvent>(OnPullableMoveInput);
         SubscribeLocalEvent<PullableComponent, JointRemovedEvent>(OnJointRemoved);
-        SubscribeLocalEvent<PullableComponent, CollisionChangeEvent>(OnPullableCollisionChange);SubscribeLocalEvent<PullableComponent, PullStartedMessage>(PullableHandlePullStarted);
-        SubscribeLocalEvent<PullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
-
+        SubscribeLocalEvent<PullableComponent, CollisionChangeEvent>(OnPullableCollisionChange);
         SubscribeLocalEvent<PullableComponent, GetVerbsEvent<Verb>>(AddPullVerbs);
-
-        SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
-        SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
@@ -132,46 +127,9 @@ public sealed class PullingSystem : EntitySystem
         }
     }
 
-    // Raise a "you are being pulled" alert if the pulled entity has alerts.
-    private void PullableHandlePullStarted(EntityUid uid, PullableComponent component, PullStartedMessage args)
-    {
-        if (args.Pulled.Owner != uid)
-            return;
-
-        _alertsSystem.ShowAlert(uid, AlertType.Pulled);
-    }
-
-    private void PullableHandlePullStopped(EntityUid uid, PullableComponent component, PullStoppedMessage args)
-    {
-        if (args.Pulled.Owner != uid)
-            return;
-
-        _alertsSystem.ClearAlert(uid, AlertType.Pulled);
-    }
-
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
     {
         return Resolve(uid, ref component, false) && component.BeingPulled;
-    }
-
-    private void OnPullStarted(PullStartedMessage message)
-    {
-        SetPuller(message.Puller.Owner, message.Pulled.Owner);
-    }
-
-    private void OnPullStopped(PullStoppedMessage message)
-    {
-        RemovePuller(message.Puller.Owner);
-    }
-
-    protected void OnPullableMove(EntityUid uid, PullableComponent component, PullableMoveMessage args)
-    {
-        _moving.Add(component);
-    }
-
-    protected void OnPullableStopMove(EntityUid uid, PullableComponent component, PullableStopMovingMessage args)
-    {
-        _stoppedMoving.Add(component);
     }
 
     // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
@@ -213,21 +171,6 @@ public sealed class PullingSystem : EntitySystem
         return false;
     }
 
-    private void SetPuller(EntityUid puller, EntityUid pulled)
-    {
-        _pullers[puller] = pulled;
-    }
-
-    private bool RemovePuller(EntityUid puller)
-    {
-        return _pullers.Remove(puller);
-    }
-
-    public EntityUid GetPulled(EntityUid by)
-    {
-        return _pullers.GetValueOrDefault(by);
-    }
-
     public bool TryGetPulled(EntityUid by, [NotNullWhen(true)] out EntityUid? pulled)
     {
         return (pulled = GetPulled(by)) != null;
@@ -238,9 +181,6 @@ public sealed class PullingSystem : EntitySystem
         return Resolve(puller, ref component, false) && component.Pulling != null;
     }
 
-    // A WARNING:
-    // The following 2 functions are the most internal part of the pulling system's relationship management.
-    // They do not expect to be cancellable.
     private void ForceDisconnect(PullerComponent puller, PullableComponent pullable)
     {
         var pullerPhysics = EntityManager.GetComponent<PhysicsComponent>(puller.Owner);
@@ -265,6 +205,7 @@ public sealed class PullingSystem : EntitySystem
 
         // Messaging
         var message = new PullStoppedMessage(pullerPhysics, pullablePhysics);
+        _alertsSystem.ClearAlert(pullable.Owner, AlertType.Pulled);
 
         RaiseLocalEvent(puller.Owner, message, broadcast: false);
 
@@ -328,6 +269,7 @@ public sealed class PullingSystem : EntitySystem
 
             // Messaging
             var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
+            _alertsSystem.ShowAlert(pullable.Owner, AlertType.Pulled);
 
             RaiseLocalEvent(puller.Owner, message, broadcast: false);
             RaiseLocalEvent(pullable.Owner, message, true);

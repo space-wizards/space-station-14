@@ -6,8 +6,8 @@ namespace Content.Shared.Pulling.Components;
 /// Specifies an entity as being able to pull another entity with <see cref="PullableComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedPullingSystem))]
-public sealed partial class SharedPullerComponent : Component
+[Access(typeof(PullingSystem))]
+public sealed partial class PullerComponent : Component
 {
     // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
     public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.95f;

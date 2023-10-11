@@ -14,6 +14,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
+using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Buckle;
 

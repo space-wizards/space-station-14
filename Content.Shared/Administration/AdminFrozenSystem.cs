@@ -10,6 +10,7 @@ using Content.Shared.Pulling.Events;
 using Content.Shared.Pulling.Systems;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Administration;
 

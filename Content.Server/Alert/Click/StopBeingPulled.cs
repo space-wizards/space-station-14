@@ -4,6 +4,7 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Systems;
 using JetBrains.Annotations;
+using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
 
 namespace Content.Server.Alert.Click
 {

@@ -8,6 +8,7 @@ using Content.Shared.Rotatable;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
 
 namespace Content.Server.Physics.Controllers
 {

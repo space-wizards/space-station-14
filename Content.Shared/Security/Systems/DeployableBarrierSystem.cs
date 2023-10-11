@@ -4,6 +4,7 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Systems;
 using Content.Shared.Security.Components;
 using Robust.Shared.Physics.Systems;
+using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Security.Systems;
 

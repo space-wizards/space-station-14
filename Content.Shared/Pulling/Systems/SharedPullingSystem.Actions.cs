@@ -15,7 +15,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Pulling
 {
-    public abstract partial class SharedPullingSystem
+    public abstract partial class PullingSystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
