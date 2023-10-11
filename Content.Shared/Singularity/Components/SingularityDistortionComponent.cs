@@ -8,10 +8,10 @@ namespace Content.Shared.Singularity.Components
     [Access(typeof(SharedSingularitySystem))]
     public sealed partial class SingularityDistortionComponent : Component
     {
-        [DataField]
+        [DataField, AutoNetworkedField, VVAccess(VVAccess.ReadWrite)]
         public float Intensity = 31.25f;
 
-        [DataField]
+        [DataField, AutoNetworkedField, VVAccess(VVAccess.ReadWrite)]
         public float FalloffPower = MathF.Sqrt(2f);
     }
 }
