@@ -1,9 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: Space cats' EVA suits are now functional! Oxygen not included., type: Tweak}
-  id: 4490
-  time: '2023-08-09T03:35:15.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'The overhead perspective, hueshifted-looking rocks now use sprites
@@ -2956,3 +2951,9 @@ Entries:
   - {message: Crabs will seek out food to eat now., type: Add}
   id: 4989
   time: '2023-10-11T03:09:26.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Potentially fix (or hopefully at least reduce) electrical anomaly lagging
+      everyone on supercrit., type: Fix}
+  id: 4990
+  time: '2023-10-11T03:11:46.0000000+00:00'
