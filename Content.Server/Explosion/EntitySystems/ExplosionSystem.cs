@@ -116,9 +116,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
         InventoryRelayedEvent<GetExplosionResistanceEvent> args)
     {
-        args.Args.DamageCoefficient *= component.DamageCoefficient;
-        if (component.Modifiers.TryGetValue(args.Args.ExplosionPrototype, out var modifier))
-            args.Args.DamageCoefficient *= modifier;
+        OnGetResistance(uid, component, ref args.Args);
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)
