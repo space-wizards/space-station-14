@@ -3,6 +3,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Gravity;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Systems;
 using Content.Shared.Rotatable;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -39,7 +40,7 @@ namespace Content.Server.Physics.Controllers
         private const float MinimumMovementDistance = 0.005f;
 
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedPullingSystem _pullableSystem = default!;
+        [Dependency] private readonly PullingSystem _pullableSystem = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -62,14 +63,14 @@ namespace Content.Server.Physics.Controllers
         public override void Initialize()
         {
             UpdatesAfter.Add(typeof(MoverController));
-            SubscribeLocalEvent<SharedPullerComponent, MoveEvent>(OnPullerMove);
+            SubscribeLocalEvent<PullerComponent, MoveEvent>(OnPullerMove);
 
             base.Initialize();
         }
 
-        private void OnPullerMove(EntityUid uid, SharedPullerComponent component, ref MoveEvent args)
+        private void OnPullerMove(EntityUid uid, PullerComponent component, ref MoveEvent args)
         {
-            if (component.Pulling is not { } pullable || !TryComp<SharedPullableComponent>(pullable, out var pullableComponent))
+            if (component.Pulling is not { } pullable || !TryComp<PullableComponent>(pullable, out var pullableComponent))
                 return;
 
             UpdatePulledRotation(uid, pullable);

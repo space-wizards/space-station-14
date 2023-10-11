@@ -5,6 +5,7 @@ using Content.Shared.Hands;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Pulling.Systems
@@ -13,7 +14,7 @@ namespace Content.Shared.Pulling.Systems
     public sealed class SharedPullerSystem : EntitySystem
     {
         [Dependency] private readonly SharedPullingStateManagementSystem _why = default!;
-        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -22,26 +23,26 @@ namespace Content.Shared.Pulling.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedPullerComponent, PullStartedMessage>(PullerHandlePullStarted);
-            SubscribeLocalEvent<SharedPullerComponent, PullStoppedMessage>(PullerHandlePullStopped);
-            SubscribeLocalEvent<SharedPullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
-            SubscribeLocalEvent<SharedPullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
-            SubscribeLocalEvent<SharedPullerComponent, ComponentShutdown>(OnPullerShutdown);
+            SubscribeLocalEvent<PullerComponent, PullStartedMessage>(PullerHandlePullStarted);
+            SubscribeLocalEvent<PullerComponent, PullStoppedMessage>(PullerHandlePullStopped);
+            SubscribeLocalEvent<PullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
+            SubscribeLocalEvent<PullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+            SubscribeLocalEvent<PullerComponent, ComponentShutdown>(OnPullerShutdown);
         }
 
-        private void OnPullerShutdown(EntityUid uid, SharedPullerComponent component, ComponentShutdown args)
+        private void OnPullerShutdown(EntityUid uid, PullerComponent component, ComponentShutdown args)
         {
             _why.ForceDisconnectPuller(component);
         }
 
-        private void OnVirtualItemDeleted(EntityUid uid, SharedPullerComponent component, VirtualItemDeletedEvent args)
+        private void OnVirtualItemDeleted(EntityUid uid, PullerComponent component, VirtualItemDeletedEvent args)
         {
             if (component.Pulling == null)
                 return;
 
             if (component.Pulling == args.BlockingEntity)
             {
-                if (EntityManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
+                if (EntityManager.TryGetComponent<PullableComponent>(args.BlockingEntity, out var comp))
                 {
                     _pullSystem.TryStopPull(comp, uid);
                 }
@@ -50,7 +51,7 @@ namespace Content.Shared.Pulling.Systems
 
         private void PullerHandlePullStarted(
             EntityUid uid,
-            SharedPullerComponent component,
+            PullerComponent component,
             PullStartedMessage args)
         {
             if (args.Puller.Owner != uid)
@@ -63,7 +64,7 @@ namespace Content.Shared.Pulling.Systems
 
         private void PullerHandlePullStopped(
             EntityUid uid,
-            SharedPullerComponent component,
+            PullerComponent component,
             PullStoppedMessage args)
         {
             if (args.Puller.Owner != uid)
@@ -77,12 +78,12 @@ namespace Content.Shared.Pulling.Systems
             RefreshMovementSpeed(component);
         }
 
-        private void OnRefreshMovespeed(EntityUid uid, SharedPullerComponent component, RefreshMovementSpeedModifiersEvent args)
+        private void OnRefreshMovespeed(EntityUid uid, PullerComponent component, RefreshMovementSpeedModifiersEvent args)
         {
             args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 
-        private void RefreshMovementSpeed(SharedPullerComponent component)
+        private void RefreshMovementSpeed(PullerComponent component)
         {
             _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(component.Owner);
         }

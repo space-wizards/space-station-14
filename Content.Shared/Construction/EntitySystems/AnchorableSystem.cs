@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Systems;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
@@ -26,7 +27,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPullingSystem _pulling = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TagSystem _tagSystem = default!;
@@ -128,7 +129,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         var rot = xform.LocalRotation;
         xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
 
-        if (TryComp<SharedPullableComponent>(uid, out var pullable) && pullable.Puller != null)
+        if (TryComp<PullableComponent>(uid, out var pullable) && pullable.Puller != null)
         {
             _pulling.TryStopPull(pullable);
         }
@@ -171,7 +172,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     public void TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
         AnchorableComponent? anchorable = null,
         TransformComponent? transform = null,
-        SharedPullableComponent? pullable = null,
+        PullableComponent? pullable = null,
         ToolComponent? usingTool = null)
     {
         if (!Resolve(uid, ref transform))
@@ -200,7 +201,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     private void TryAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
             AnchorableComponent? anchorable = null,
             TransformComponent? transform = null,
-            SharedPullableComponent? pullable = null,
+            PullableComponent? pullable = null,
             ToolComponent? usingTool = null)
     {
         if (!Resolve(uid, ref anchorable, ref transform))

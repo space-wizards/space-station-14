@@ -15,6 +15,7 @@ using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Throwing;
@@ -83,7 +84,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             // Break any pulls
-            if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled && TryComp(pulled, out SharedPullableComponent? pullable))
+            if (TryComp(uid, out PullerComponent? puller) && puller.Pulling is EntityUid pulled && TryComp(pulled, out PullableComponent? pullable))
                 _pullingSystem.TryStopPull(pullable);
 
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
@@ -132,7 +133,7 @@ namespace Content.Server.Hands.Systems
             if (args.Puller.Owner != uid)
                 return;
 
-            if (TryComp<SharedPullerComponent>(args.Puller.Owner, out var pullerComp) && !pullerComp.NeedsHands)
+            if (TryComp<PullerComponent>(args.Puller.Owner, out var pullerComp) && !pullerComp.NeedsHands)
                 return;
 
             if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))

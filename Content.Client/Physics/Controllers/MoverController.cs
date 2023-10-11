@@ -24,7 +24,7 @@ namespace Content.Client.Physics.Controllers
 
             SubscribeLocalEvent<InputMoverComponent, UpdateIsPredictedEvent>(OnUpdatePredicted);
             SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
-            SubscribeLocalEvent<SharedPullableComponent, UpdateIsPredictedEvent>(OnUpdatePullablePredicted);
+            SubscribeLocalEvent<PullableComponent, UpdateIsPredictedEvent>(OnUpdatePullablePredicted);
         }
 
         private void OnUpdatePredicted(EntityUid uid, InputMoverComponent component, ref UpdateIsPredictedEvent args)
@@ -40,7 +40,7 @@ namespace Content.Client.Physics.Controllers
                 args.IsPredicted = true;
         }
 
-        private void OnUpdatePullablePredicted(EntityUid uid, SharedPullableComponent component, ref UpdateIsPredictedEvent args)
+        private void OnUpdatePullablePredicted(EntityUid uid, PullableComponent component, ref UpdateIsPredictedEvent args)
         {
             // Enable prediction if an entity is being pulled by the player.
             // Disable prediction if an entity is being pulled by some non-player entity.

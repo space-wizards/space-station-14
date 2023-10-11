@@ -51,7 +51,7 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
         protected EntityQuery<PhysicsComponent> PhysicsQuery;
         protected EntityQuery<RelayInputMoverComponent> RelayQuery;
-        protected EntityQuery<SharedPullableComponent> PullableQuery;
+        protected EntityQuery<PullableComponent> PullableQuery;
         protected EntityQuery<TransformComponent> XformQuery;
         protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
         protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
@@ -83,7 +83,7 @@ namespace Content.Shared.Movement.Systems
             RelayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
             PhysicsQuery = GetEntityQuery<PhysicsComponent>();
             RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
-            PullableQuery = GetEntityQuery<SharedPullableComponent>();
+            PullableQuery = GetEntityQuery<PullableComponent>();
             XformQuery = GetEntityQuery<TransformComponent>();
             NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
             CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
@@ -379,7 +379,7 @@ namespace Content.Shared.Movement.Systems
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (TryComp(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (TryComp(otherCollider.Owner, out PullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

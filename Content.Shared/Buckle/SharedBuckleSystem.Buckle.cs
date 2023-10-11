@@ -367,7 +367,7 @@ public abstract partial class SharedBuckleSystem
         RaiseLocalEvent(ev.BuckledEntity, ref ev);
         RaiseLocalEvent(ev.StrapEntity, ref ev);
 
-        if (TryComp<SharedPullableComponent>(buckleUid, out var ownerPullable))
+        if (TryComp<PullableComponent>(buckleUid, out var ownerPullable))
         {
             if (ownerPullable.Puller != null)
             {
@@ -380,7 +380,7 @@ public abstract partial class SharedBuckleSystem
             _physics.ResetDynamics(physics);
         }
 
-        if (!buckleComp.PullStrap && TryComp<SharedPullableComponent>(strapUid, out var toPullable))
+        if (!buckleComp.PullStrap && TryComp<PullableComponent>(strapUid, out var toPullable))
         {
             if (toPullable.Puller == buckleUid)
             {

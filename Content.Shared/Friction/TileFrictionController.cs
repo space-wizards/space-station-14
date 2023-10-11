@@ -57,8 +57,8 @@ namespace Content.Shared.Friction
 
             var frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
-            var pullerQuery = GetEntityQuery<SharedPullerComponent>();
-            var pullableQuery = GetEntityQuery<SharedPullableComponent>();
+            var pullerQuery = GetEntityQuery<PullerComponent>();
+            var pullableQuery = GetEntityQuery<PullableComponent>();
             var gridQuery = GetEntityQuery<MapGridComponent>();
 
             foreach (var body in mapComponent.AwakeBodies)

@@ -26,7 +26,7 @@ namespace Content.Shared.Pulling
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {
-            if (!EntityManager.TryGetComponent<SharedPullerComponent>(puller, out var comp))
+            if (!EntityManager.TryGetComponent<PullerComponent>(puller, out var comp))
             {
                 return false;
             }
@@ -77,7 +77,7 @@ namespace Content.Shared.Pulling
             return (!startPull.Cancelled && !getPulled.Cancelled);
         }
 
-        public bool TogglePull(EntityUid puller, SharedPullableComponent pullable)
+        public bool TogglePull(EntityUid puller, PullableComponent pullable)
         {
             if (pullable.Puller == puller)
             {
@@ -88,14 +88,14 @@ namespace Content.Shared.Pulling
 
         // -- Core attempted actions --
 
-        public bool TryStopPull(SharedPullableComponent pullable, EntityUid? user = null)
+        public bool TryStopPull(PullableComponent pullable, EntityUid? user = null)
         {
             if (!pullable.BeingPulled)
             {
                 return false;
             }
 
-            var msg = new StopPullingEvent(user);
+            var msg = new AttemptStopPullingEvent(user);
             RaiseLocalEvent(pullable.Owner, msg, true);
 
             if (msg.Cancelled) return false;
@@ -113,11 +113,11 @@ namespace Content.Shared.Pulling
 
         public bool TryStartPull(EntityUid puller, EntityUid pullable)
         {
-            if (!EntityManager.TryGetComponent(puller, out SharedPullerComponent? pullerComp))
+            if (!EntityManager.TryGetComponent(puller, out PullerComponent? pullerComp))
             {
                 return false;
             }
-            if (!EntityManager.TryGetComponent(pullable, out SharedPullableComponent? pullableComp))
+            if (!EntityManager.TryGetComponent(pullable, out PullableComponent? pullableComp))
             {
                 return false;
             }
@@ -125,7 +125,7 @@ namespace Content.Shared.Pulling
         }
 
         // The main "start pulling" function.
-        public bool TryStartPull(SharedPullerComponent puller, SharedPullableComponent pullable)
+        public bool TryStartPull(PullerComponent puller, PullableComponent pullable)
         {
             if (puller.Pulling == pullable.Owner)
                 return true;
@@ -154,7 +154,7 @@ namespace Content.Shared.Pulling
             var oldPullable = puller.Pulling;
             if (oldPullable != null)
             {
-                if (EntityManager.TryGetComponent(oldPullable.Value, out SharedPullableComponent? oldPullableComp))
+                if (EntityManager.TryGetComponent(oldPullable.Value, out PullableComponent? oldPullableComp))
                 {
                     if (!TryStopPull(oldPullableComp))
                     {
@@ -206,7 +206,7 @@ namespace Content.Shared.Pulling
             return true;
         }
 
-        public bool TryMoveTo(SharedPullableComponent pullable, EntityCoordinates to)
+        public bool TryMoveTo(PullableComponent pullable, EntityCoordinates to)
         {
             if (pullable.Puller == null)
             {
@@ -222,7 +222,7 @@ namespace Content.Shared.Pulling
             return true;
         }
 
-        public void StopMoveTo(SharedPullableComponent pullable)
+        public void StopMoveTo(PullableComponent pullable)
         {
             _pullSm.ForceSetMovingTo(pullable, null);
         }

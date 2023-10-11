@@ -1,6 +1,7 @@
-﻿using Robust.Shared.Physics.Components;
+﻿using Content.Shared.Physics.Pull;
+using Robust.Shared.Physics.Components;
 
-namespace Content.Shared.Physics.Pull
+namespace Content.Shared.Pulling.Events
 {
     public sealed class PullStoppedMessage : PullMessage
     {
