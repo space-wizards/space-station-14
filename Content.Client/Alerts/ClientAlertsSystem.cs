@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Alerts;
 
@@ -12,6 +13,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
 
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -47,25 +49,24 @@ public sealed class ClientAlertsSystem : AlertsSystem
         }
     }
 
-    protected override void AfterShowAlert(AlertsComponent alertsComponent)
+    protected override void AfterShowAlert(EntityUid uid, AlertsComponent alertsComponent)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != alertsComponent.Owner)
-            return;
-
-        SyncAlerts?.Invoke(this, alertsComponent.Alerts);
+        UpdateHud(uid, alertsComponent);
     }
 
-    protected override void AfterClearAlert(AlertsComponent alertsComponent)
+    protected override void AfterClearAlert(EntityUid uid, AlertsComponent alertsComponent)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != alertsComponent.Owner)
-            return;
-
-        SyncAlerts?.Invoke(this, alertsComponent.Alerts);
+        UpdateHud(uid, alertsComponent);
     }
 
     private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+        UpdateHud(uid, component);
+    }
+
+    private void UpdateHud(EntityUid uid, AlertsComponent component)
+    {
+        if (_playerManager.LocalPlayer?.ControlledEntity == uid && _timing.IsFirstTimePredicted)
             SyncAlerts?.Invoke(this, component.Alerts);
     }
 

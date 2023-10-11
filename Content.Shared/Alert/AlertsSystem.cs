@@ -94,9 +94,9 @@ public abstract class AlertsSystem : EntitySystem
             alertsComponent.Alerts[alert.AlertKey] = new AlertState
                 { Cooldown = cooldown, Severity = severity, Type = alertType };
 
-            AfterShowAlert(alertsComponent);
+            AfterShowAlert(euid, alertsComponent);
 
-            Dirty(alertsComponent);
+            Dirty(euid, alertsComponent);
         }
         else
         {
@@ -111,7 +111,7 @@ public abstract class AlertsSystem : EntitySystem
     /// </summary>
     public void ClearAlertCategory(EntityUid euid, AlertCategory category)
     {
-        if(!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return;
 
         var key = AlertKey.ForCategory(category);
@@ -120,9 +120,9 @@ public abstract class AlertsSystem : EntitySystem
             return;
         }
 
-        AfterClearAlert(alertsComponent);
+        AfterClearAlert(euid, alertsComponent);
 
-        Dirty(alertsComponent);
+        Dirty(euid, alertsComponent);
     }
 
     /// <summary>
@@ -140,9 +140,9 @@ public abstract class AlertsSystem : EntitySystem
                 return;
             }
 
-            AfterClearAlert(alertsComponent);
+            AfterClearAlert(euid, alertsComponent);
 
-            Dirty(alertsComponent);
+            Dirty(euid, alertsComponent);
         }
         else
         {
@@ -153,14 +153,12 @@ public abstract class AlertsSystem : EntitySystem
     /// <summary>
     /// Invoked after showing an alert prior to dirtying the component
     /// </summary>
-    /// <param name="alertsComponent"></param>
-    protected virtual void AfterShowAlert(AlertsComponent alertsComponent) { }
+    protected virtual void AfterShowAlert(EntityUid uid, AlertsComponent alertsComponent) { }
 
     /// <summary>
     /// Invoked after clearing an alert prior to dirtying the component
     /// </summary>
-    /// <param name="alertsComponent"></param>
-    protected virtual void AfterClearAlert(AlertsComponent alertsComponent) { }
+    protected virtual void AfterClearAlert(EntityUid uid, AlertsComponent alertsComponent) { }
 
     public override void Initialize()
     {

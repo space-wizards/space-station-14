@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -207,7 +208,7 @@ public sealed class PullingSystem : EntitySystem
         // Cap the distance
         const float range = 2f;
         var fromUserCoords = coords.WithEntityId(player, EntityManager);
-        var userCoords = Transform(player).Coordinates;
+        var userCoords = new EntityCoordinates(player, Vector2.Zero);
 
         if (!userCoords.InRange(EntityManager, _xformSys, fromUserCoords, range))
         {
@@ -215,7 +216,7 @@ public sealed class PullingSystem : EntitySystem
             fromUserCoords = userCoords.Offset(userDirection.Normalized() * range);
         }
 
-        _throwing.TryThrow(pulled.Value, fromUserCoords, user: player, playSound: false);
+        _throwing.TryThrow(pulled.Value, fromUserCoords, user: player, strength: 2f, playSound: false);
         return false;
     }
 
