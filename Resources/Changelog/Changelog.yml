@@ -1,11 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: What Moths consider to be made of cloth should now be more accurate.,
-    type: Tweak}
-  - {message: Moths are now able to squeak., type: Tweak}
-  id: 4492
-  time: '2023-08-09T04:05:06.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added toggle to hide clothing in the character editor., type: Add}
@@ -2957,3 +2950,9 @@ Entries:
       in replay mode to look similar to ingame.', type: Add}
   id: 4991
   time: '2023-10-11T03:43:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Rehargers can be examined to show the charge of the battery or weapon
+      inside., type: Tweak}
+  id: 4992
+  time: '2023-10-11T09:22:09.0000000+00:00'
