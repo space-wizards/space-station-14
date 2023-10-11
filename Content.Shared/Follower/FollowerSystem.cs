@@ -138,7 +138,17 @@ public sealed class FollowerSystem : EntitySystem
             targetXform = Transform(targetXform.ParentUid);
         }
 
-        var followerComp = EnsureComp<FollowerComponent>(follower);
+        // Cleanup old following.
+        if (TryComp<FollowerComponent>(follower, out var followerComp))
+        {
+            // Already following you goob
+            if (followerComp.Following == entity)
+                return;
+
+            StopFollowingEntity(follower, followerComp.Following, deparent: false);
+        }
+
+        followerComp = AddComp<FollowerComponent>(follower);
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
@@ -167,7 +177,7 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(follower, followerEv);
         RaiseLocalEvent(entity, entityEv);
-        Dirty(followedComp);
+        Dirty(entity, followedComp);
     }
 
     /// <summary>
