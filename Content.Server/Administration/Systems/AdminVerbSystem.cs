@@ -15,8 +15,8 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
 using Content.Shared.Configurable;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.GameTicking;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -58,6 +58,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
+        [Dependency] private readonly ExamineSystemShared _examine = default!;
 
         private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -337,7 +338,8 @@ namespace Content.Server.Administration.Systems
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
                     Act = () =>
                     {
-                        var message = args.User.InRangeUnOccluded(args.Target)
+
+                        var message = ExamineSystemShared.InRangeUnOccluded(args.User, args.Target)
                             ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
                             : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
                         args.Target.PopupMessage(args.User, message);
