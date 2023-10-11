@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Physics.Components;
 
-namespace Content.Shared.Pulling.Events;
+namespace Content.Shared.Movement.Pulling.Events;
 
 public abstract class PullMessage : EntityEventArgs
 {

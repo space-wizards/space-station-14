@@ -13,9 +13,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
-using Content.Shared.Physics.Pull;
+using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Throwing;
@@ -29,6 +28,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
 
 namespace Content.Server.Hands.Systems
 {

@@ -1,5 +1,5 @@
 using Content.Shared.Hands;
-using Content.Shared.Physics.Pull;
+using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Vehicle.Components;
 using Robust.Shared.GameStates;
 

@@ -1,10 +1,10 @@
 ﻿using Content.Shared.Lock;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Systems;
 using Content.Shared.Security.Components;
 using Robust.Shared.Physics.Systems;
-using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Security.Systems;
 

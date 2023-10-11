@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Pulling.Components;
+namespace Content.Shared.Movement.Pulling.Components;
 
 /// <summary>
 /// Specifies an entity as being pullable by an entity with <see cref="PullerComponent"/>

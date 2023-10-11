@@ -9,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Systems;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
@@ -19,7 +18,8 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Construction.EntitySystems;
 

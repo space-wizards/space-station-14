@@ -3,14 +3,13 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
-using Content.Shared.Physics.Pull;
+using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
-using Content.Shared.Pulling.Systems;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
-using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Administration;
 

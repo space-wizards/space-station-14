@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Physics;
-using Content.Shared.Physics.Pull;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;

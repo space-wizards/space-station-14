@@ -20,7 +20,6 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -39,7 +38,8 @@ using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 #pragma warning disable 618
 

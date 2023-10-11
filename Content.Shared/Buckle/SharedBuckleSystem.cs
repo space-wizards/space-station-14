@@ -6,7 +6,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
-using Content.Shared.Pulling.Systems;
 using Content.Shared.Standing;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -14,7 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
-using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
+using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Buckle;
 

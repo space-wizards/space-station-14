@@ -4,7 +4,6 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Systems;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Map;
@@ -14,7 +13,9 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using PullingSystem = Content.Shared.Pulling.Systems.PullingSystem;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
+using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
+using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Teleportation.Systems;
 

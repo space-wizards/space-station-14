@@ -6,6 +6,7 @@ using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 
 namespace Content.Client.Physics.Controllers
 {
