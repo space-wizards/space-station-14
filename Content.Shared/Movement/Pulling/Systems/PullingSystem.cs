@@ -12,7 +12,6 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
@@ -385,7 +384,7 @@ public sealed class PullingSystem : EntitySystem
         pullableComp.PrevFixedRotation = pullablePhysics.FixedRotation;
 
         // Messaging
-        var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
+        var message = new PullStartedMessage(pullerUid, pullableUid);
         _alertsSystem.ShowAlert(pullerUid, AlertType.Pulling);
         _alertsSystem.ShowAlert(pullableUid, AlertType.Pulled);
 

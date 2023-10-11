@@ -371,7 +371,7 @@ public abstract partial class SharedBuckleSystem
         {
             if (ownerPullable.Puller != null)
             {
-                _pulling.TryStopPull(ownerPullable);
+                _pulling.TryStopPull(buckleUid, ownerPullable);
             }
         }
 
@@ -385,7 +385,7 @@ public abstract partial class SharedBuckleSystem
             if (toPullable.Puller == buckleUid)
             {
                 // can't pull it and buckle to it at the same time
-                _pulling.TryStopPull(toPullable);
+                _pulling.TryStopPull(strapUid, toPullable);
             }
         }
 

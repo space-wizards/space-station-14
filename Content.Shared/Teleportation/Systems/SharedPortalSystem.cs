@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Content.Shared.Ghost;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Map;
@@ -13,9 +13,6 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
-using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -96,13 +93,13 @@ public abstract class SharedPortalSystem : EntitySystem
         // break pulls before portal enter so we dont break shit
         if (TryComp<PullableComponent>(subject, out var pullable) && pullable.BeingPulled)
         {
-            _pulling.TryStopPull(pullable);
+            _pulling.TryStopPull(subject, pullable);
         }
 
-        if (TryComp<PullerComponent>(subject, out var pulling)
-            && pulling.Pulling != null && TryComp<PullableComponent>(pulling.Pulling.Value, out var subjectPulling))
+        if (TryComp<PullerComponent>(subject, out var pullerComp)
+            && TryComp<PullableComponent>(pullerComp.Pulling, out var subjectPulling))
         {
-            _pulling.TryStopPull(subjectPulling);
+            _pulling.TryStopPull(subject, subjectPulling);
         }
 
         // if they came from another portal, just return and wait for them to exit the portal

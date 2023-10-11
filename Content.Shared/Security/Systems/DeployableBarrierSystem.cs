@@ -1,10 +1,8 @@
 ﻿using Content.Shared.Lock;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Security.Components;
 using Robust.Shared.Physics.Systems;
-using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Security.Systems;
 
@@ -61,7 +59,7 @@ public sealed class DeployableBarrierSystem : EntitySystem
         _appearance.SetData(uid, DeployableBarrierVisuals.State, state);
 
         if (TryComp(uid, out PullableComponent? pullable))
-            _pulling.TryStopPull(pullable);
+            _pulling.TryStopPull(uid, pullable);
 
         SharedPointLightComponent? pointLight = null;
         if (_pointLight.ResolveLight(uid, ref pointLight))

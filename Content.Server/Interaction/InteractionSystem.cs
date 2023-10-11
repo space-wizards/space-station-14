@@ -1,20 +1,9 @@
-
-
-using Content.Server.Administration.Logs;
-using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
-using Content.Shared.DragDrop;
-using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
-using Robust.Shared.Players;
-using Robust.Shared.Random;
 
 namespace Content.Server.Interaction
 {

@@ -22,7 +22,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
-using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
@@ -221,7 +221,7 @@ namespace Content.Shared.Cuffs
                 return;
 
             if (args.User.Value == uid && !component.CanStillInteract)
-                args.Cancel();
+                args.Cancelled = true;
         }
 
         private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)

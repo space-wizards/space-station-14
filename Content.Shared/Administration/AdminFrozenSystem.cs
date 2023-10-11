@@ -1,15 +1,11 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
-using Content.Shared.Pulling;
-using Content.Shared.Pulling.Components;
-using Content.Shared.Stunnable;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Throwing;
-using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Administration;
 
@@ -29,7 +25,7 @@ public sealed class AdminFrozenSystem : EntitySystem
         SubscribeLocalEvent<AdminFrozenComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<AdminFrozenComponent, ComponentShutdown>(UpdateCanMove);
         SubscribeLocalEvent<AdminFrozenComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
-        SubscribeLocalEvent<AdminFrozenComponent, AttemptPullEvent>(OnPullAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, PullAttemptEvent>(OnPullAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, AttackAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, ChangeDirectionAttemptEvent>(OnAttempt);
     }
@@ -39,7 +35,7 @@ public sealed class AdminFrozenSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnPullAttempt(EntityUid uid, AdminFrozenComponent component, AttemptPullEvent args)
+    private void OnPullAttempt(EntityUid uid, AdminFrozenComponent component, PullAttemptEvent args)
     {
         args.Cancelled = true;
     }
@@ -48,7 +44,7 @@ public sealed class AdminFrozenSystem : EntitySystem
     {
         if (TryComp<PullableComponent>(uid, out var pullable))
         {
-            _pulling.TryStopPull(pullable);
+            _pulling.TryStopPull(uid, pullable);
         }
 
         UpdateCanMove(uid, component, args);

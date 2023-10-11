@@ -1,13 +1,9 @@
-﻿using Content.Shared.Pulling.Events;
-using Robust.Shared.Physics.Components;
+﻿namespace Content.Shared.Movement.Pulling.Events;
 
-namespace Content.Shared.Physics.Pull
+public sealed class PullStartedMessage : PullMessage
 {
-    public sealed class PullStartedMessage : PullMessage
+    public PullStartedMessage(EntityUid pullerUid, EntityUid pullableUid) :
+        base(pullerUid, pullableUid)
     {
-        public PullStartedMessage(PhysicsComponent puller, PhysicsComponent pulled) :
-            base(puller, pulled)
-        {
-        }
     }
 }
