@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Spreader;
@@ -21,7 +20,6 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
@@ -60,7 +58,6 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
-        SubscribeLocalEvent<SmokeDissipateSpawnComponent, TimedDespawnEvent>(OnSmokeDissipate);
         SubscribeLocalEvent<SmokeAffectedComponent, EntityUnpausedEvent>(OnAffectedUnpaused);
     }
 
@@ -112,16 +109,6 @@ public sealed class SmokeSystem : EntitySystem
         }
 
         RemComp<SmokeAffectedComponent>(args.OtherEntity);
-    }
-
-    private void OnSmokeDissipate(EntityUid uid, SmokeDissipateSpawnComponent component, ref TimedDespawnEvent args)
-    {
-        if (!TryComp<TransformComponent>(uid, out var xform))
-        {
-            return;
-        }
-
-        Spawn(component.Prototype, xform.Coordinates);
     }
 
     private void OnAffectedUnpaused(EntityUid uid, SmokeAffectedComponent component, ref EntityUnpausedEvent args)

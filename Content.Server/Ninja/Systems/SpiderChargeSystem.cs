@@ -1,5 +1,6 @@
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Mind;
+using Content.Server.Objectives.Components;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.Sticky.Events;
@@ -69,10 +70,10 @@ public sealed class SpiderChargeSystem : EntitySystem
     /// </summary>
     private void OnExplode(EntityUid uid, SpiderChargeComponent comp, TriggerEvent args)
     {
-        if (comp.Planter == null || !_mind.TryGetRole<NinjaRoleComponent>(comp.Planter.Value, out var role))
+        if (comp.Planter == null || !_mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(comp.Planter.Value, out var obj))
             return;
 
         // assumes the target was destroyed, that the charge wasn't moved somehow
-        role.SpiderChargeDetonated = true;
+        obj.SpiderChargeDetonated = true;
     }
 }
