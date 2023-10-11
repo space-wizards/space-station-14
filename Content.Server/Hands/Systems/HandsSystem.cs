@@ -126,13 +126,13 @@ namespace Content.Server.Hands.Systems
         #region pulling
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
-            if (args.Puller.Owner != uid)
+            if (args.PullerUid != uid)
                 return;
 
-            if (TryComp<PullerComponent>(args.Puller.Owner, out var pullerComp) && !pullerComp.NeedsHands)
+            if (TryComp<PullerComponent>(args.PullerUid, out var pullerComp) && !pullerComp.NeedsHands)
                 return;
 
-            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))
+            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.PulledUid, uid))
             {
                 DebugTools.Assert("Unable to find available hand when starting pulling??");
             }
@@ -140,7 +140,7 @@ namespace Content.Server.Hands.Systems
 
         private void HandlePullStopped(EntityUid uid, HandsComponent component, PullStoppedMessage args)
         {
-            if (args.Puller.Owner != uid)
+            if (args.PullerUid != uid)
                 return;
 
             // Try find hand that is doing this pull.
@@ -149,8 +149,10 @@ namespace Content.Server.Hands.Systems
             {
                 if (hand.HeldEntity == null
                     || !TryComp(hand.HeldEntity, out HandVirtualItemComponent? virtualItem)
-                    || virtualItem.BlockingEntity != args.Pulled.Owner)
+                    || virtualItem.BlockingEntity != args.PulledUid)
+                {
                     continue;
+                }
 
                 QueueDel(hand.HeldEntity.Value);
                 break;

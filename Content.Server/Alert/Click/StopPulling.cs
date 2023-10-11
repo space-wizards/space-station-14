@@ -15,12 +15,12 @@ namespace Content.Server.Alert.Click
         public void AlertClicked(EntityUid player)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
-
             var ps = entManager.System<PullingSystem>();
-            var playerTarget = ps.GetPulled(player);
-            if (playerTarget != default && entManager.TryGetComponent(playerTarget, out PullableComponent? playerPullable))
+
+            if (entManager.TryGetComponent(player, out PullerComponent? puller) &&
+                entManager.TryGetComponent(puller.Pulling, out PullableComponent? pullableComp))
             {
-                ps.TryStopPull(playerPullable);
+                ps.TryStopPull(puller.Pulling.Value, pullableComp, user: player);
             }
         }
     }

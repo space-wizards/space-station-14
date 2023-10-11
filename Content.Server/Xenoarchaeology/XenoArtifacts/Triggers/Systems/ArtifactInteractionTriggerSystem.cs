@@ -22,7 +22,7 @@ public sealed class ArtifactInteractionTriggerSystem : EntitySystem
         if (!component.PullActivation)
             return;
 
-        _artifactSystem.TryActivateArtifact(uid, args.Puller.Owner);
+        _artifactSystem.TryActivateArtifact(uid, args.PullerUid);
     }
 
     private void OnAttack(EntityUid uid, ArtifactInteractionTriggerComponent component, AttackedEvent args)
