@@ -24,37 +24,6 @@
     damage:
       types:
         Blunt: 5
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Appearance
   - type: Tag
     tags:
@@ -89,6 +58,37 @@
     lightEnergy: 1.0
     lightRadius: 6
     lightSoftness: 1.1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   suffix: Broken
@@ -100,6 +100,37 @@
   - type: LightBulb
     startingState: Broken
     bulb: Bulb
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseLightTube
@@ -113,6 +144,37 @@
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   suffix: Broken
@@ -123,6 +185,37 @@
   components:
   - type: LightBulb
     startingState: Broken
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseLightTube
@@ -137,6 +230,37 @@
     lightSoftness: 0.9
     BurningTemperature: 350
     PowerUse: 12
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseLightTube
@@ -151,6 +275,37 @@
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseLightTube
@@ -165,3 +320,146 @@
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseLightTube
+  name: cyan crystal shard
+  description: A cyan crystal shard, it would likely fit in a light holder.
+  id: CrystalCyanShard
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Shards/Crystal/cyan.rsi
+  - type: LightBulb
+    color: "#47f8ff"
+    lightEnergy: 4
+    lightRadius: 6
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 0
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#47f8ff"
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: CrystalCyanShard
+  name: blue crystal shard
+  description: A blue crystal shard, it would likely fit in a light holder.
+  id: CrystalBlueShard
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Shards/Crystal/blue.rsi
+  - type: LightBulb
+    color: "#39a1ff"
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#39a1ff"
+
+- type: entity
+  parent: CrystalCyanShard
+  name: orange crystal shard
+  description: An orange crystal shard, it would likely fit in a light holder.
+  id: CrystalOrangeShard
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Shards/Crystal/orange.rsi
+  - type: LightBulb
+    color: "#ffa847"
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#ffa847"
+
+- type: entity
+  parent: CrystalCyanShard
+  name: pink crystal shard
+  description: A pink crystal shard, it would likely fit in a light holder.
+  id: CrystalPinkShard
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Shards/Crystal/pink.rsi
+  - type: LightBulb
+    color: "#ff64ff"
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#ff64ff"
+
+- type: entity
+  parent: CrystalCyanShard
+  name: green crystal shard
+  description: A green crystal shard, it would likely fit in a light holder.
+  id: CrystalGreenShard
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Shards/Crystal/green.rsi
+  - type: LightBulb
+    color: "#5fff47"
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#5fff47"
+
+- type: entity
+  parent: CrystalCyanShard
+  name: grey crystal shard
+  description: A grey crystal shard, it would likely fit in a light holder.
+  id: CrystalGreyShard
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Shards/Crystal/grey.rsi
+  - type: LightBulb
+    color: "#d8d8d8"
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#d8d8d8"

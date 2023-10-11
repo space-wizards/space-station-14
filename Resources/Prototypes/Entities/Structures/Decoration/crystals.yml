@@ -43,6 +43,11 @@
             - !type:PlaySoundBehavior
               sound:
                 collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                CrystalGreenShard:
+                  min: 0
+                  max: 2
 
 - type: entity
   id: CrystalPink
@@ -57,6 +62,22 @@
       radius: 3
       energy: 3
       color: "#DF06DC"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                CrystalPinkShard:
+                  min: 0
+                  max: 2
 
 - type: entity
   id: CrystalGrey
@@ -71,6 +92,22 @@
       radius: 3
       energy: 3
       color: "#C1B0C1"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                CrystalGreyShard:
+                  min: 0
+                  max: 2
 
 - type: entity
   id: CrystalOrange
@@ -85,6 +122,22 @@
       radius: 3
       energy: 3
       color: "#E8820F"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                CrystalOrangeShard:
+                  min: 0
+                  max: 2
 
 - type: entity
   id: CrystalBlue
@@ -99,6 +152,22 @@
       radius: 3
       energy: 3
       color: "#1843D4"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                CrystalBlueShard:
+                  min: 0
+                  max: 2
 
 - type: entity
   id: CrystalCyan
@@ -113,4 +182,20 @@
       radius: 3
       energy: 3
       color: "#18C9D4"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                CrystalCyanShard:
+                  min: 0
+                  max: 2
 

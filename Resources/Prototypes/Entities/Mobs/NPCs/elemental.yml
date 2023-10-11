@@ -167,9 +167,10 @@
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
     state: uraniumcrab
+  - type: FactionException
   - type: HTN
     rootTask:
-      task: IdleCompound
+      task: SimpleHostileCompound
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -178,14 +179,16 @@
       types:
         Blunt: 8
   - type: CombatMode
+  - type: NPCRetaliation
+    attackMemoryLength: 10
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 2.5
   - type: NpcFactionMember
     factions:
-      - SimpleHostile
+      - Passive
   - type: RadiationSource
-    intensity: 0.3
+    intensity: 0.8
   - type: Destructible
     thresholds:
     - trigger:
