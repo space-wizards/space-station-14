@@ -29,7 +29,7 @@ public sealed class AdminFrozenSystem : EntitySystem
         SubscribeLocalEvent<AdminFrozenComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<AdminFrozenComponent, ComponentShutdown>(UpdateCanMove);
         SubscribeLocalEvent<AdminFrozenComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
-        SubscribeLocalEvent<AdminFrozenComponent, PullAttemptEvent>(OnPullAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, AttemptPullEvent>(OnPullAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, AttackAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, ChangeDirectionAttemptEvent>(OnAttempt);
     }
@@ -39,7 +39,7 @@ public sealed class AdminFrozenSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnPullAttempt(EntityUid uid, AdminFrozenComponent component, PullAttemptEvent args)
+    private void OnPullAttempt(EntityUid uid, AdminFrozenComponent component, AttemptPullEvent args)
     {
         args.Cancelled = true;
     }

@@ -11,7 +11,7 @@ public abstract partial class SharedVehicleSystem
     {
         SubscribeLocalEvent<RiderComponent, ComponentGetState>(OnRiderGetState);
         SubscribeLocalEvent<RiderComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
-        SubscribeLocalEvent<RiderComponent, PullAttemptEvent>(OnPullAttempt);
+        SubscribeLocalEvent<RiderComponent, AttemptPullEvent>(OnPullAttempt);
     }
 
     private void OnRiderGetState(EntityUid uid, RiderComponent component, ref ComponentGetState args)
@@ -33,7 +33,7 @@ public abstract partial class SharedVehicleSystem
         }
     }
 
-    private void OnPullAttempt(EntityUid uid, RiderComponent component, PullAttemptEvent args)
+    private void OnPullAttempt(EntityUid uid, RiderComponent component, AttemptPullEvent args)
     {
         if (component.Vehicle != null)
             args.Cancelled = true;
