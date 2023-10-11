@@ -152,7 +152,7 @@
   icon: { sprite: SS220/Objects/ReagentInjector/capsules.rsi, state: combat }
   productEntity: CombatCapsule
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
   categories:
     - UplinkInjectors
   conditions:

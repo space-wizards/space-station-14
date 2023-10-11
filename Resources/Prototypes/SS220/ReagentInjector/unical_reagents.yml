@@ -30,8 +30,8 @@
           - !type:TotalDamage
             max: 5
         damage:
-          types:
-            Asphyxiation: 1000
+          groups:
+            Toxin: 320
       - !type:HealthChange
         damage:
           groups:
