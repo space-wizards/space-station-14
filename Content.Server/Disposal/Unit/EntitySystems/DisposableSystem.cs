@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
@@ -116,11 +117,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 else
                 {
                     _xformSystem.AttachToGridOrMap(entity, xform);
-                    _throwing.TryThrow(entity, _random.NextVector2(0.1f), 0.1f);
-                }
-                if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
-                {
-                    _physicsSystem.WakeBody(entity, body: physics);
+                    _throwing.TryThrow(entity, _random.NextVector2(0.1f), 0.2f);
                 }
             }
 
