@@ -102,6 +102,12 @@ namespace Content.Server.NodeContainer.Nodes
 
         private const float DefaultVolume = 200f;
 
+        /// <summary>
+        ///     Pressure beyond which this pipe node starts taking damage. Set to zero for no pressure damage.
+        /// </summary>
+        [DataField]
+        public float MaxPressure = 0;
+
         public override void Initialize(EntityUid owner, IEntityManager entMan)
         {
             base.Initialize(owner, entMan);
