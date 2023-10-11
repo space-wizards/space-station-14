@@ -479,17 +479,20 @@ public sealed partial class ShuttleSystem
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
         KnockOverKids(xform, ref toKnock);
+        TryComp<MapGridComponent>(xform.GridUid, out var grid);
 
         if (TryComp<PhysicsComponent>(xform.GridUid, out var shuttleBody))
         {
-
             foreach (var child in toKnock)
             {
-                if (!_statusQuery.TryGetComponent(child, out var status)) continue;
+                if (!_statusQuery.TryGetComponent(child, out var status))
+                    continue;
+
                 _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
 
                 // If the guy we knocked down is on a spaced tile, throw them too
-                TossIfSpaced(shuttleBody, child);
+                if (grid != null)
+                    TossIfSpaced(grid, shuttleBody, child);
             }
         }
     }
@@ -510,25 +513,23 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Throws people who are standing on a spaced tile, tries to throw them towards a neighbouring space tile
     /// </summary>
-    private void TossIfSpaced(PhysicsComponent shuttleBody, EntityUid tossed)
+    private void TossIfSpaced(MapGridComponent shuttleGrid, PhysicsComponent shuttleBody, EntityUid tossed)
     {
-
-        if (!_xformQuery.TryGetComponent(tossed, out var childXform))
-            return;
-
-        if (!_physicsQuery.TryGetComponent(tossed, out var phys))
+        if (!_xformQuery.TryGetComponent(tossed, out var childXform) )
             return;
 
         // only toss if its on lattice/space
-        var tile = childXform.Coordinates.GetTileRef(EntityManager, _mapManager);
+        var tile = shuttleGrid.GetTileRef(childXform.Coordinates);
 
-        if (tile != null && tile.Value.IsSpace() && _mapManager.TryGetGrid(tile.Value.GridUid, out var grid))
-        {
-            Vector2 direction = -Vector2.UnitY;
+        if (!tile.IsSpace(_tileDefManager))
+            return;
 
-            var foo = childXform.LocalPosition - shuttleBody.LocalCenter;
-            _throwing.TryThrow(tossed, foo.Normalized() * 10.0f, 50.0f);
-        }
+        var throwDirection = childXform.LocalPosition - shuttleBody.LocalCenter;
+
+        if (throwDirection == Vector2.Zero)
+            return;
+
+        _throwing.TryThrow(tossed, throwDirection.Normalized() * 10.0f, 50.0f);
     }
 
     /// <summary>
@@ -694,10 +695,8 @@ public sealed partial class ShuttleSystem
             return;
 
         // Flatten anything not parented to a grid.
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var transform = _physics.GetPhysicsTransform(uid, xform, xformQuery);
+        var transform = _physics.GetPhysicsTransform(uid, xform, _xformQuery);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
-        var mobQuery = GetEntityQuery<BodyComponent>();
         var immune = new HashSet<EntityUid>();
 
         foreach (var fixture in manager.Fixtures.Values)
@@ -717,7 +716,7 @@ public sealed partial class ShuttleSystem
                     continue;
                 }
 
-                if (mobQuery.TryGetComponent(ent, out var mob))
+                if (_bodyQuery.TryGetComponent(ent, out var mob))
                 {
                     var gibs = _bobby.GibBody(ent, body: mob);
                     immune.UnionWith(gibs);
