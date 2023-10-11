@@ -530,6 +530,9 @@
     tags:
     - VimPilot
     - CopperBlood
+  - type: HTN
+    rootTask:
+      task: RuminantCompound
 
 - type: entity
   name: goat
