@@ -1693,7 +1693,7 @@
     - id: SpiderWeb
     hungerUsage: 5
     eggLayCooldownMin: 20
-    eggLayCooldownMax: 60
+    eggLayCooldownMax: 40
     eggLayAction: ActionSpiderWebForLayer
     manySpawnsForbidden: true
     eggLaySound:
@@ -1701,6 +1701,14 @@
   - type: MeleeChemicalInjector
     transferAmount: 0.1
     solution: melee
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
+        Blunt: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1
+    baseSprintSpeed : 3
 
 - type: entity
   name: tarantula
