@@ -57,16 +57,41 @@
 
 - type: entity
   parent: BaseGameRule
-  id: Dragon
+  id: ClosetSkeleton
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+  - type: RandomEntityStorageSpawnRule
+    prototype: MobSkeletonCloset
+
+- type: entity
+  parent: BaseGameRule
+  id: DragonSpawn
   noSpawn: true
   components:
   - type: StationEvent
     weight: 5
     duration: 1
     earliestStart: 45
+    reoccurrenceDelay: 60
     minimumPlayers: 20
   - type: RandomSpawnRule
     prototype: SpawnPointGhostDragon
+
+- type: entity
+  parent: BaseGameRule
+  id: NinjaSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+    earliestStart: 30
+    reoccurrenceDelay: 60
+    minimumPlayers: 40
+  - type: NinjaSpawnRule
 
 - type: entity
   parent: BaseGameRule
@@ -152,13 +177,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.015
+      prob: 0.02
     - id: MobMouse1
-      prob: 0.015
+      prob: 0.02
     - id: MobMouse2
-      prob: 0.015
-    - id: MobRatServant
-      prob: 0.015
+      prob: 0.02
     specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.005

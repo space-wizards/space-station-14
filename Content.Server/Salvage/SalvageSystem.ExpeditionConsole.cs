@@ -1,6 +1,6 @@
+using Content.Shared.Procedural;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Salvage;
 
@@ -19,7 +19,7 @@ public sealed partial class SalvageSystem
         SpawnMission(missionparams, station.Value);
 
         data.ActiveMission = args.Index;
-        var mission = GetMission(missionparams.MissionType, missionparams.Difficulty, missionparams.Seed);
+        var mission = GetMission(_prototypeManager.Index<SalvageDifficultyPrototype>(missionparams.Difficulty), missionparams.Seed);
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
         UpdateConsoles(data);
     }
@@ -38,7 +38,7 @@ public sealed partial class SalvageSystem
     {
         var state = GetState(component);
 
-        foreach (var (console, xform, uiComp) in EntityQuery<SalvageExpeditionConsoleComponent, TransformComponent, ServerUserInterfaceComponent>(true))
+        foreach (var (console, xform, uiComp) in EntityQuery<SalvageExpeditionConsoleComponent, TransformComponent, UserInterfaceComponent>(true))
         {
             var station = _station.GetOwningStation(console.Owner, xform);
 

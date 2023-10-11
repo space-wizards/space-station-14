@@ -149,7 +149,6 @@ namespace Content.Server.Body.Systems
                 if (reagents >= meta.MaxReagentsProcessable)
                     return;
 
-                reagents += 1;
 
                 // loop over all our groups and see which ones apply
                 if (meta.MetabolismGroups == null)
@@ -161,16 +160,12 @@ namespace Content.Server.Body.Systems
                         continue;
 
                     var entry = proto.Metabolisms[group.Id];
+                    var rate = entry.MetabolismRate * group.MetabolismRateModifier;
 
-                    // we don't remove reagent for every group, just whichever had the biggest rate
-                    if (entry.MetabolismRate > mostToRemove)
-                        mostToRemove = entry.MetabolismRate;
+                    // Remove $rate, as long as there's enough reagent there to actually remove that much
+                    mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
 
-                    mostToRemove *= group.MetabolismRateModifier;
-
-                    mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, quantity);
-
-                    float scale = (float) mostToRemove / (float) entry.MetabolismRate;
+                    float scale = (float) mostToRemove / (float) rate;
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
@@ -205,6 +200,9 @@ namespace Content.Server.Body.Systems
                 if (mostToRemove > FixedPoint2.Zero)
                 {
                     _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent, mostToRemove);
+
+                    // We have processed a reagant, so count it towards the cap
+                    reagents += 1;
                 }
             }
         }

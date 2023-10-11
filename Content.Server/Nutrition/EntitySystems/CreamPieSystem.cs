@@ -41,13 +41,13 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
-                if (_solutions.TryGetSolution(uid, foodComp.SolutionName, out var solution))
+                if (_solutions.TryGetSolution(uid, foodComp.Solution, out var solution))
                 {
                     _puddle.TrySpillAt(uid, solution, out _, false);
                 }
-                if (!string.IsNullOrEmpty(foodComp.TrashPrototype))
+                if (!string.IsNullOrEmpty(foodComp.Trash))
                 {
-                    EntityManager.SpawnEntity(foodComp.TrashPrototype, Transform(uid).Coordinates);
+                    EntityManager.SpawnEntity(foodComp.Trash, Transform(uid).Coordinates);
                 }
             }
             ActivatePayload(uid);

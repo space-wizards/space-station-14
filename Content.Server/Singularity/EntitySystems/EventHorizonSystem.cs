@@ -120,7 +120,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon consume a given entity.
     /// </summary>
-    public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
+    public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
     {
         if (!EntityManager.IsQueuedForDeletion(morsel) // I saw it log twice a few times for some reason?
         && (HasComp<MindContainerComponent>(morsel)
@@ -140,7 +140,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon attempt to consume a given entity.
     /// </summary>
-    public bool AttemptConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
+    public bool AttemptConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
     {
         if (!CanConsumeEntity(hungry, morsel, eventHorizon))
             return false;
@@ -192,7 +192,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Excludes the event horizon itself.
     /// All immune entities within the container will be dumped to a given container or the map/grid if that is impossible.
     /// </summary>
-    public void ConsumeEntitiesInContainer(EntityUid hungry, IContainer container, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
+    public void ConsumeEntitiesInContainer(EntityUid hungry, BaseContainer container, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
     {
         // Removing the immune entities from the container needs to be deferred until after iteration or the iterator raises an error.
         List<EntityUid> immune = new();

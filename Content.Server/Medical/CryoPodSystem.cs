@@ -7,7 +7,6 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Climbing;
 using Content.Server.Medical.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
@@ -32,6 +31,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Server.Temperature.Components;
+using Content.Shared.Climbing.Systems;
 
 namespace Content.Server.Medical;
 
@@ -134,7 +134,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             return;
 
-        var doAfterArgs = new DoAfterArgs(args.User, cryoPodComponent.EntryDelay, new CryoPodDragFinished(), uid, target: args.Dragged, used: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cryoPodComponent.EntryDelay, new CryoPodDragFinished(), uid, target: args.Dragged, used: uid)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
@@ -184,8 +184,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         _userInterfaceSystem.TrySendUiMessage(
             uid,
             HealthAnalyzerUiKey.Key,
-            new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity,
-            temp != null ? temp.CurrentTemperature : 0, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
+            new HealthAnalyzerScannedUserMessage(GetNetEntity(cryoPodComponent.BodyContainer.ContainedEntity),
+            temp?.CurrentTemperature ?? 0, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)

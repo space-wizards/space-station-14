@@ -1,12 +1,13 @@
 ﻿using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
-using Content.Shared.Objectives;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Shared.Mind
 {
     /// <summary>
+    ///     This is added as a component to mind entities, not to player entities.
+    ///     <see cref="MindContainerComponent"/> for the one that is added to players.
     ///     A mind represents the IC "mind" of a player.
     ///     Roles are attached as components to its owning entity.
     /// </summary>
@@ -20,7 +21,7 @@ namespace Content.Shared.Mind
     [RegisterComponent]
     public sealed partial class MindComponent : Component
     {
-        internal readonly List<Objective> Objectives = new();
+        internal readonly List<EntityUid> Objectives = new();
 
         /// <summary>
         ///     The session ID of the player owning this mind.
@@ -64,8 +65,7 @@ namespace Content.Shared.Mind
         ///     The component currently owned by this mind.
         ///     Can be null.
         /// </summary>
-        [ViewVariables]
-        public MindContainerComponent? OwnedComponent { get; internal set; }
+        [ViewVariables] public MindContainerComponent? OwnedComponent;
 
         /// <summary>
         ///     The entity currently owned by this mind.
@@ -76,10 +76,10 @@ namespace Content.Shared.Mind
 
         // TODO move objectives out of mind component
         /// <summary>
-        ///     An enumerable over all the objectives this mind has.
+        ///     An enumerable over all the objective entities this mind has.
         /// </summary>
         [ViewVariables]
-        public IEnumerable<Objective> AllObjectives => Objectives;
+        public IEnumerable<EntityUid> AllObjectives => Objectives;
 
         /// <summary>
         ///     Prevents user from ghosting out

@@ -4,10 +4,24 @@
   abstract: true
   components:
   - type: Organ
+  - type: Food
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
   - type: StaticPrice
     price: 50
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - chicken # everything kinda tastes like chicken
+  - type: Tag
+    tags:
+      - Meat
 
 
 - type: entity
@@ -35,6 +49,11 @@
       Lung:
         maxVol: 100.0
         canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
 
 - type: entity
   id: OrganAnimalStomach
@@ -49,6 +68,11 @@
     solutions:
       stomach:
         maxVol: 40
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
   - type: Stomach
   - type: Metabolizer
     maxReagents: 3

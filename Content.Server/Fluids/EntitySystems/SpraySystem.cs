@@ -4,12 +4,14 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Extinguisher;
 using Content.Server.Fluids.Components;
+using Content.Server.Gravity;
 using Content.Server.Popups;
 using Content.Shared.Cooldown;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -19,6 +21,8 @@ public sealed class SpraySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly GravitySystem _gravity = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
@@ -104,7 +108,8 @@ public sealed class SpraySystem : EntitySystem
             if (distance > component.SprayDistance)
                 target = userMapPos.Offset(diffNorm * component.SprayDistance);
 
-            var newSolution = _solutionContainer.SplitSolution(uid, solution, component.TransferAmount);
+            var adjustedSolutionAmount = component.TransferAmount / component.VaporAmount;
+            var newSolution = _solutionContainer.SplitSolution(uid, solution, adjustedSolutionAmount);
 
             if (newSolution.Volume <= FixedPoint2.Zero)
                 break;
@@ -132,6 +137,12 @@ public sealed class SpraySystem : EntitySystem
             cooldownTime = MathF.Max(time, cooldownTime);
 
             _vapor.Start(vaporComponent, vaporXform, impulseDirection * diffLength, component.SprayVelocity, target, time, args.User);
+
+            if (TryComp<PhysicsComponent>(args.User, out var body))
+            {
+                if (_gravity.IsWeightless(args.User, body))
+                    _physics.ApplyLinearImpulse(args.User, -impulseDirection.Normalized() * component.PushbackAmount, body: body);
+            }
         }
 
         _audio.PlayPvs(component.SpraySound, uid, component.SpraySound.Params.WithVariation(0.125f));

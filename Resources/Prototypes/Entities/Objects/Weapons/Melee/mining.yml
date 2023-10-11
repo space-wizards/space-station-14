@@ -7,12 +7,6 @@
   components:
   - type: Sharp
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     color: "#ffeead"
     enabled: false
@@ -67,6 +61,7 @@
   - type: Tool
     qualities:
       - Prying
+  - type: Prying
 
 - type: entity
   name: crusher dagger
@@ -84,6 +79,9 @@
         Slash: 6.5
   - type: Item
     size: 10
+  - type: Tag
+    tags:
+    - Knife
 
 # Like a crusher... but better
 - type: entity
