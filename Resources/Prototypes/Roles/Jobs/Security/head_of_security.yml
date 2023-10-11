@@ -36,7 +36,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoS
     back: ClothingBackpackHOSFilled
-    shoes: ClothingShoesBootsJackSec # Corvax-Resprite
+    shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeretHoS
@@ -44,7 +44,8 @@
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58Nonlethal
+    pocket1: WeaponPistolMk58
+    pocket2: MagazinePistol
   innerclothingskirt: ClothingUniformJumpskirtHoS
   satchel: ClothingBackpackSatchelHOSFilled
   duffelbag: ClothingBackpackDuffelHOSFilled
