@@ -13,5 +13,9 @@ namespace Content.Shared.Interaction.Components
         /// </summary>
         [DataField("deleteOnDrop")]
         public bool DeleteOnDrop = true;
+
+        //SS220 Unremoveable-No-Hands
+        [DataField]
+        public bool LockToHands = true;
     }
 }

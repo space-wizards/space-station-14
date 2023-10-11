@@ -1129,6 +1129,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
   - type: Unremoveable
+    lockToHands: false
 
 - type: entity
   parent: ClothingUniformBase

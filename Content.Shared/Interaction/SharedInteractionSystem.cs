@@ -8,6 +8,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -66,6 +67,9 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+
+        //SS220 Unremoveable-No-Hands
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
@@ -134,11 +138,38 @@ namespace Content.Shared.Interaction
             }
         }
 
+        //SS220 Unremoveable-No-Hands begin
+        private bool IsHeld(EntityUid uid, UnremoveableComponent item)
+        {
+            if (!item.LockToHands)
+            {
+                if (_containerSystem.TryGetContainingContainer(uid, out var container))
+                {
+                    if (TryComp<HandsComponent>(container.Owner, out var handsComp))
+                    {
+                        foreach (var hand in handsComp.Hands.Values)
+                        {
+                            if (hand.HeldEntity == uid)
+                                return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+        //SS220 Unremoveable-No-Hands end
+
         /// <summary>
         ///     Prevents an item with the Unremovable component from being removed from a container by almost any means
         /// </summary>
         private void OnRemoveAttempt(EntityUid uid, UnremoveableComponent item, ContainerGettingRemovedAttemptEvent args)
         {
+            //SS220 Unremoveable-No-Hands begin
+            if (IsHeld(uid, item))
+                return;
+            //SS220 Unremoveable-No-Hands end
+
             args.Cancel();
         }
 
@@ -148,6 +179,9 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void OnUnequip(EntityUid uid, UnremoveableComponent item, GotUnequippedEvent args)
         {
+            if (!item.LockToHands)
+                return;
+
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else if (_net.IsServer)
@@ -156,6 +190,9 @@ namespace Content.Shared.Interaction
 
         private void OnUnequipHand(EntityUid uid, UnremoveableComponent item, GotUnequippedHandEvent args)
         {
+            if (!item.LockToHands)
+                return;
+
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else if (_net.IsServer)
@@ -164,6 +201,9 @@ namespace Content.Shared.Interaction
 
         private void OnDropped(EntityUid uid, UnremoveableComponent item, DroppedEvent args)
         {
+            if (!item.LockToHands)
+                return;
+
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else if (_net.IsServer)

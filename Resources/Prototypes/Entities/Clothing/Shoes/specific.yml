@@ -167,6 +167,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/cluwne.rsi
   - type: Unremoveable
+    lockToHands: false
 
 - type: entity
   parent: ClothingShoesClown

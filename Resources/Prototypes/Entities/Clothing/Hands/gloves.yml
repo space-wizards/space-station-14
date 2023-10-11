@@ -342,6 +342,7 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
+    lockToHands: false
 
 - type: entity
   parent: ClothingHandsBase
