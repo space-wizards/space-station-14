@@ -70,7 +70,7 @@
       TonerCartridge: !type:ContainerSlot
   - type: WiresPanel
   - type: Wires
-    boardName: "Photocopier"
+    boardName: wires-board-name-photocopier
     layoutId: Photocopier
   - type: WiresVisuals
   - type: Tag
