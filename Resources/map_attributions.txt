@@ -48,3 +48,6 @@
 
 - files: ["ss220-box.yml"]
   authors: ACJM, Emisse, TheArturZh, ZoNeSRuS
+
+- files: ["nox.yml"]
+  authors: Kit0vras, Glek3197
