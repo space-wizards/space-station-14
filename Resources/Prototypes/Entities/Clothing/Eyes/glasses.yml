@@ -82,6 +82,22 @@
 
 - type: entity
   parent: ClothingEyesBase
+  id: ClothingEyesGlassesJamjar
+  name: jamjar glasses
+  description: Also known as Virginity Protectors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/jamjar.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/jamjar.rsi
+  - type: VisionCorrection
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingEyesBase
   id: ClothingEyesGlassesOutlawGlasses
   name: outlaw glasses
   description: A must for every self-respecting undercover agent.
