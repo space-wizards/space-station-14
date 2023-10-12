@@ -55,7 +55,7 @@ public partial class SharedBodySystem
     private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
     {
         // TODO: lifestage shenanigans
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
             return;
 
         // Root body part?
@@ -74,7 +74,7 @@ public partial class SharedBodySystem
 
         if (TryComp(entity, out OrganComponent? organ))
         {
-            RemoveOrgan(entity, uid, uid, organ);
+            RemoveOrgan(entity, uid, organ);
         }
     }
 

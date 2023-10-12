@@ -22,14 +22,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SolutionInjectOnCollideComponent, ComponentInit>(HandleInit);
             SubscribeLocalEvent<SolutionInjectOnCollideComponent, StartCollideEvent>(HandleInjection);
-        }
-
-        private void HandleInit(EntityUid uid, SolutionInjectOnCollideComponent component, ComponentInit args)
-        {
-            component.Owner
-                .EnsureComponentWarn<SolutionContainerManagerComponent>($"{nameof(SolutionInjectOnCollideComponent)} requires a SolutionContainerManager on {component.Owner}!");
         }
 
         private void HandleInjection(EntityUid uid, SolutionInjectOnCollideComponent component, ref StartCollideEvent args)

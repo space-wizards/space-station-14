@@ -47,7 +47,7 @@ namespace Content.Shared.ActionBlocker
             RaiseLocalEvent(uid, ev);
 
             if (component.CanMove == ev.Cancelled)
-                Dirty(component);
+                Dirty(uid, component);
 
             component.CanMove = !ev.Cancelled;
             return !ev.Cancelled;

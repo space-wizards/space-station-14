@@ -15,7 +15,7 @@ public sealed partial class StrapComponent : Component
     /// <summary>
     /// The entities that are currently buckled
     /// </summary>
-    [AutoNetworkedField(true)]
+    [AutoNetworkedField]
     [ViewVariables] // TODO serialization
     public HashSet<EntityUid> BuckledEntities = new();
 

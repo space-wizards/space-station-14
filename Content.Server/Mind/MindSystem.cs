@@ -7,6 +7,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Players;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -25,12 +26,32 @@ public sealed class MindSystem : SharedMindSystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedGhostSystem _ghosts = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
+        SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
+    }
+
+    private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
+    {
+        if (mind.UserId is {} user)
+        {
+            UserMinds.Remove(user);
+            if (_players.GetPlayerData(user).ContentData() is { } oldData)
+                oldData.Mind = null;
+            mind.UserId = null;
+        }
+
+        if (!TryComp(mind.OwnedEntity, out MetaDataComponent? meta) || meta.EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        RaiseLocalEvent(mind.OwnedEntity.Value, new MindRemovedMessage(uid, mind), true);
+        mind.OwnedEntity = null;
+        mind.OwnedComponent = null;
     }
 
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
@@ -195,10 +216,10 @@ public sealed class MindSystem : SharedMindSystem
     public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
         MindComponent? mind = null)
     {
-        base.TransferTo(mindId, entity, ghostCheckOverride, createGhost, mind);
-
-        if (!Resolve(mindId, ref mind))
+        if (mind == null && !Resolve(mindId, ref mind))
             return;
+
+        base.TransferTo(mindId, entity, ghostCheckOverride, createGhost, mind);
 
         if (entity == mind.OwnedEntity)
             return;
@@ -239,6 +260,8 @@ public sealed class MindSystem : SharedMindSystem
         var oldEntity = mind.OwnedEntity;
         if (oldComp != null && oldEntity != null)
         {
+            if (oldComp.Mind != null)
+                _pvsOverride.ClearOverride(oldComp.Mind.Value);
             oldComp.Mind = null;
             RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(oldEntity.Value, mind), true);
         }
@@ -290,6 +313,7 @@ public sealed class MindSystem : SharedMindSystem
         if (mind.UserId == userId)
             return;
 
+        _pvsOverride.ClearOverride(mindId);
         if (userId != null && !_players.TryGetPlayerData(userId.Value, out _))
         {
             Log.Error($"Attempted to set mind user to invalid value {userId}");
@@ -331,6 +355,7 @@ public sealed class MindSystem : SharedMindSystem
         if (_players.TryGetSessionById(userId.Value, out var ret))
         {
             mind.Session = ret;
+            _pvsOverride.AddSessionOverride(mindId, ret);
             _actor.Attach(mind.CurrentEntity, ret);
         }
 
