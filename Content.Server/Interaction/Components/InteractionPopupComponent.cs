@@ -18,14 +18,14 @@ public sealed partial class InteractionPopupComponent : Component
     /// Nullable in case none is specified on the yaml prototype.
     /// </summary>
     [DataField("interactSuccessString")]
-    public LocId? InteractSuccessString;
+    public string? InteractSuccessString;
 
     /// <summary>
     /// String will be used to fetch the localized message to be played if the interaction fails.
     /// Nullable in case no message is specified on the yaml prototype.
     /// </summary>
     [DataField("interactFailureString")]
-    public LocId? InteractFailureString;
+    public string? InteractFailureString;
 
     /// <summary>
     /// Sound effect to be played when the interaction succeeds.
