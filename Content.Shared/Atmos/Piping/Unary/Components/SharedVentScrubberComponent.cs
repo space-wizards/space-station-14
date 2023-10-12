@@ -11,7 +11,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public bool IgnoreAlarms { get; set; } = false;
         public HashSet<Gas> FilterGases { get; set; } = new(DefaultFilterGases);
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
-        public float VolumeRate { get; set; } = 12500f;
+        public float VolumeRate { get; set; } = 4000f;
         public bool WideNet { get; set; } = false;
 
         public static HashSet<Gas> DefaultFilterGases = new()
@@ -32,7 +32,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Enabled = true,
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
-            VolumeRate = 12500f,
+            VolumeRate = 4000f,
             WideNet = false
         };
 
@@ -41,7 +41,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Enabled = true,
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
-            VolumeRate = 12500f,
+            VolumeRate = 4000f,
             WideNet = true
         };
 
@@ -61,7 +61,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Dirty = true,
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
-            VolumeRate = 12500f,
+            VolumeRate = 4000f,
             WideNet = false
         };
 
@@ -72,7 +72,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Dirty = true,
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
-            VolumeRate = 12500f,
+            VolumeRate = 4000f,
             WideNet = false
         };
     }

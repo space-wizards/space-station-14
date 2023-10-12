@@ -170,7 +170,7 @@
             Welded: { state: scrub_welded }
     - type: AtmosDevice
     - type: GasVentScrubber
-      maxTransferRate: 12500
+      maxTransferRate: 4000
     - type: Construction
       graph: GasUnary
       node: ventscrubber
