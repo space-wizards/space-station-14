@@ -445,7 +445,8 @@
     state: vent_off
   conditions:
     - !type:TileNotBlocked {}
-
+    - !type:NoUnstackableInTile
+    
 - type: construction
   name: passive vent
   description: Unpowered vent that equalises gases on both sides.
@@ -466,7 +467,8 @@
     state: vent_off
   conditions:
     - !type:TileNotBlocked {}
-
+    - !type:NoUnstackableInTile
+    
 - type: construction
   name: air scrubber
   description: Sucks gas into connected pipes.
@@ -487,7 +489,8 @@
     state: scrub_off
   conditions:
     - !type:TileNotBlocked {}
-
+    - !type:NoUnstackableInTile
+    
 - type: construction
   name: air injector
   description: Injects air into the atmosphere.
@@ -508,7 +511,8 @@
     state: injector
   conditions:
     - !type:TileNotBlocked {}
-
+    - !type:NoUnstackableInTile
+    
 # ATMOS BINARY
 - type: construction
   name: gas pump
