@@ -1,4 +1,5 @@
 using Content.Shared.Security;
+using Content.Shared.StationRecords;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CriminalRecords;
@@ -20,4 +21,7 @@ public sealed class GeneralCriminalRecord
     /// </summary>
     [ViewVariables]
     public string Reason = string.Empty;
+	
+	[ViewVariables]
+	public GeneralStationRecord StationRecord = new();
 }

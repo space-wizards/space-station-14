@@ -121,7 +121,7 @@
   name: research-technology-security-intercommunications
   icon:
     sprite: Structures/Machines/computers.rsi
-    state: computer-datatheory
+    state: computer-security
   discipline: Arsenal
   tier: 2
   cost: 7500
