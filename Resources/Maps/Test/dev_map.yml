@@ -5124,13 +5124,6 @@ entities:
     - pos: 3.5,7.5
       parent: 179
       type: Transform
-- proto: SpawnMobMouse
-  entities:
-  - uid: 1050
-    components:
-    - pos: 3.5,8.5
-      parent: 179
-      type: Transform
 - proto: SpawnPointCaptain
   entities:
   - uid: 954
