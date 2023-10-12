@@ -1,6 +1,6 @@
 - type: body
   id: Tomatokillers
-  name: "Помидор-убийца"
+  name: "помидор-убийца"
   root: torso
   slots:
     torso:

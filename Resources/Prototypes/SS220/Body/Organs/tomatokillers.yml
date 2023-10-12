@@ -1,8 +1,8 @@
 - type: entity
   id: OrganTomatoStomach
   parent: [BaseItem, OrganHumanStomach]
-  name: Желудок помидора-убийцы
-  description: "Двойной желудок повышенной вместимости с особым метаболизмом"
+  name: желудок помидора-убийцы
+  description: "Двойной желудок повышенной вместимости с особым метаболизмом."
   components:
     - type: Sprite
       sprite: SS220/Mobs/Animals/tomato_killer.rsi

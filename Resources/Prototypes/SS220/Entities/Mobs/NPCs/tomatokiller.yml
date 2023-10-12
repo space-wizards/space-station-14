@@ -1,5 +1,5 @@
 - type: entity
-  name: Помидор-убийца
+  name: помидор-убийца
   parent: SimpleMobBase
   description: Матушка-природа наконец-то придумала, как защититься от генетических экспериментов!
   id: TomatoKiller
@@ -51,7 +51,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.4
-        density: 700
+        density: 450
         mask:
         - MobMask
         layer:
@@ -61,7 +61,7 @@
     - CannotSuicide
   - type: Bloodstream
     bloodReagent: JuiceTomato
-    bloodMaxVolume: 150
+    bloodMaxVolume: 90
   - type: IgnoreKudzu
   - type: Reactive
     groups:
@@ -91,7 +91,8 @@
         scaled: true
         damage:
           types:
-            Piercing: 20
+            Slash: 10
+            Piercing: 10
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -108,7 +109,7 @@
     butcheringType: Knife
     spawned:
     - id: FoodMeatTomato
-      amount: 3
+      amount: 2
   - type: NoSlip
   - type: Puller
     needsHands: true
