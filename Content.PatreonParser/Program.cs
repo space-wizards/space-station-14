@@ -7,7 +7,7 @@ using CsvHelper.Configuration;
 using static System.Environment;
 
 var repository = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent!.Parent!.Parent!.Parent!;
-var patronsPath = Path.Combine(repository.FullName, "Resources/Credits/patrons.yml");
+var patronsPath = Path.Combine(repository.FullName, "Resources/Credits/Patrons.yml");
 if (!File.Exists(patronsPath))
 {
     Console.WriteLine($"File {patronsPath} not found.");
