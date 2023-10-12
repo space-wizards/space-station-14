@@ -9,7 +9,7 @@
     - to: meat steak
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 335
 
@@ -27,7 +27,7 @@
     - to: cooked penguin
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345
 
@@ -45,7 +45,7 @@
     - to: cooked chicken
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345
 
@@ -63,7 +63,7 @@
     - to: cooked duck
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 335 #duck is actually culinarily red meat IRL and has a lower min temp than other poultry
 
@@ -81,7 +81,7 @@
     - to: lizard steak
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345
 
@@ -99,7 +99,7 @@
     - to: filet migrawr
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345 #apparently trichinellosis is a concern
 
@@ -117,7 +117,7 @@
     - to: cooked crab
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 335
 
@@ -135,7 +135,7 @@
     - to: goliath steak
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345 #I dunno what this is but I don't want whatever parasites are inside
 
@@ -152,7 +152,7 @@
     - to: rouny steak
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 445 #rouny
   - node: rouny steak
@@ -168,7 +168,7 @@
     - to: bacon
       completed:
       - !type:PlaySound
-        sound: /Audio/Effects/burning.ogg
+        sound: /Audio/Effects/sizzle.ogg
       steps:
       - minTemperature: 345
   - node: bacon
