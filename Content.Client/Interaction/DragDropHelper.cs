@@ -1,7 +1,7 @@
 ﻿using Robust.Client.Input;
 using Robust.Shared.Map;
 
-namespace Content.Client.DragDrop;
+namespace Content.Client.Interaction;
 
 /// <summary>
 /// Helper for implementing drag and drop interactions.
