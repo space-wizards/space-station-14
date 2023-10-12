@@ -36,11 +36,11 @@ general-criminal-records-console-not-wanted-without-reason = {$name} больш�
 ## Filters
 
 general-criminal-records-for-filter-line-placeholder = Введите текст и нажмите «Ввод»
-general-criminal-records-name-filter = Имя
+general-criminal-records-name-filter = Имя сотрудника
 general-criminal-records-prints-filter = Отпечатки пальцев
 general-criminal-records-dna-filter = ДНК 
 general-criminal-records-console-search-records = Поиск
-general-criminal-records-console-reset-filters = Сбросить
+general-criminal-records-console-reset-filters = Сброс
 
 general-criminal-records-console-records-status-none = Не В Розыске
 general-criminal-records-console-records-status-detained = Под Заключением

@@ -21,13 +21,12 @@ public sealed class GeneralCriminalRecordsConsoleBoundUserInterface : BoundUserI
         _window.OnKeySelected += OnKeySelected;
         _window.OnFiltersChanged += OnFiltersChanged;
         _window.OnClose += Close;
-
-        _window.OpenCentered();
-
-        _window.OnArrestButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordArrestButtonPressed(reason, name));
+		_window.OnArrestButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordArrestButtonPressed(reason, name));
 		_window.OnReleaseButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordReleaseButtonPressed(reason, name));
 		_window.OnWantedButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordWantedButtonPressed(reason, name));
-    }
+    
+        _window.OpenCentered();
+        }
 
     private void OnKeySelected((NetEntity, uint)? key)
     {
