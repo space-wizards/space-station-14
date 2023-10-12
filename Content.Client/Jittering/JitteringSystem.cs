@@ -9,7 +9,7 @@ namespace Content.Client.Jittering
     public sealed class JitteringSystem : SharedJitteringSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AnimationPlayerSystem _animations = default!;
+        [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
 
         private readonly float[] _sign = { -1, 1 };
         private readonly string _jitterAnimationKey = "jittering";
@@ -29,13 +29,14 @@ namespace Content.Client.Jittering
                 return;
 
             var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
-            _animations.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
+
+            _animationPlayer.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private void OnShutdown(EntityUid uid, JitteringComponent jittering, ComponentShutdown args)
         {
             if (TryComp(uid, out AnimationPlayerComponent? animationPlayer))
-                _animations.Stop(uid, animationPlayer, _jitterAnimationKey);
+                _animationPlayer.Stop(uid, animationPlayer, _jitterAnimationKey);
 
             if (TryComp(uid, out SpriteComponent? sprite))
                 sprite.Offset = Vector2.Zero;
@@ -48,7 +49,7 @@ namespace Content.Client.Jittering
 
             if (TryComp(uid, out AnimationPlayerComponent? animationPlayer)
                 && TryComp(uid, out SpriteComponent? sprite))
-                _animations.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
+                _animationPlayer.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
@@ -71,8 +72,10 @@ namespace Content.Client.Jittering
                     offset.Y *= -1;
             }
 
-            // Animation length shouldn't be too high so we will cap it at 2 seconds...
-            var length = Math.Min((1f/jittering.Frequency), 2f);
+            var length = 0f;
+            // avoid dividing by 0 so animations don't try to be infinitely long
+            if (jittering.Frequency > 0)
+                length = 1f / jittering.Frequency;
 
             jittering.LastJitter = offset;
 

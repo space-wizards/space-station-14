@@ -18,7 +18,7 @@
   - type: Reflect
     enabled: true
     reflectProb: .5
-    spread: 90        
+    spread: 90
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
@@ -69,7 +69,6 @@
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
   - type: DashAbility
-    dashAction: ActionEnergyKatanaDash
   - type: LimitedCharges
     maxCharges: 3
     charges: 3
