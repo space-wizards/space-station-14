@@ -7,3 +7,10 @@ Entries:
   - {message: 'Created the admin changelog.', type: Add}
   id: 1
   time: '2023-10-08T04:26:00.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Added a new panic bunker UI in the F7 admin panel.', type: Add}
+  - {message: 'Added being able to toggle the panic bunker automatically depending on
+      if admins are online or not.', type: Add}
+  id: 2
+  time: '2023-10-12T22:46:00.0000000+00:00'
