@@ -1,10 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: 'Changed Dark & Bushy, Death''s-Head, Firewatch, Moffra, Plasmafire,
-      and Royal moth wings to now have two separate color layers.', type: Tweak}
-  id: 4497
-  time: '2023-08-10T01:32:01.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Added Mustard. It can be found in condiment stations., type: Add}
@@ -2958,3 +2952,8 @@ Entries:
       poisoning now gasp visibly., type: Tweak}
   id: 4996
   time: '2023-10-12T07:35:31.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Revamped the Paramedic Void Suit sprite., type: Tweak}
+  id: 4997
+  time: '2023-10-12T22:20:24.0000000+00:00'
