@@ -27,7 +27,7 @@ public sealed class TTSManager
         "Timings of TTS API requests",
         new HistogramConfiguration()
         {
-            LabelNames = new[] {"type"},
+            LabelNames = new[] { "type" },
             Buckets = Histogram.ExponentialBuckets(.1, 1.5, 10),
         });
 
@@ -58,7 +58,7 @@ public sealed class TTSManager
     private readonly HashSet<string> _cacheRadioKeysSeq = new();
 
     private static readonly ConcurrentDictionary<string, SemaphoreSlim> Locks = new();
-    private double _timeout = 1;
+    private float _timeout = 1;
 
     private int _maxCachedCount = 200;
     private string _apiUrl = string.Empty;
@@ -72,10 +72,7 @@ public sealed class TTSManager
             _maxCachedCount = val;
             ResetCache();
         }, true);
-        _cfg.OnValueChanged(CCCVars.TTSRequestTimeout, val =>
-        {
-            _timeout = val;
-        });
+        _cfg.OnValueChanged(CCCVars.TTSRequestTimeout, val => _timeout = val, true);
         _cfg.OnValueChanged(CCCVars.TTSApiUrl, v => _apiUrl = v, true);
         _cfg.OnValueChanged(CCCVars.TTSApiToken, v => _apiToken = v, true);
     }

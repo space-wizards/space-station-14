@@ -25,8 +25,9 @@ public sealed partial class TTSSystem : EntitySystem
 
     private ISawmill _sawmill = default!;
 
-    private readonly MemoryContentRoot _contentRoot = new();
+    private static readonly MemoryContentRoot ContentRoot = new();
     private static readonly ResPath Prefix = ResPath.Root / "TTS";
+    private static bool _rootSetUp = false;
 
     private float _volume = 0.0f;
     private float _radioVolume = 0.0f;
@@ -36,13 +37,18 @@ public sealed partial class TTSSystem : EntitySystem
     private const int MaxEntitiesQueued = 30;
     private readonly Dictionary<EntityUid, Queue<PlayRequest>> _playQueues = new();
     private readonly Dictionary<EntityUid, AudioSystem.PlayingStream> _playingStreams = new();
+    private static readonly AudioResource EmptyAudioResource = new();
 
     private EntityUid _fakeRecipient = new();
 
     public override void Initialize()
     {
         _sawmill = Logger.GetSawmill("tts");
-        _resourceCache.AddRoot(Prefix, _contentRoot);
+        if (!_rootSetUp)
+        {
+            _resourceCache.AddRoot(Prefix, ContentRoot);
+            _rootSetUp = true;
+        }
 
         _cfg.OnValueChanged(CCCVars.TTSVolume, OnTtsVolumeChanged, true);
         _cfg.OnValueChanged(CCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged, true);
@@ -58,7 +64,9 @@ public sealed partial class TTSSystem : EntitySystem
         base.Shutdown();
         _cfg.UnsubValueChanged(CCCVars.TTSVolume, OnTtsVolumeChanged);
         _cfg.UnsubValueChanged(CCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged);
-        _contentRoot.Dispose();
+
+        // clear virtual files
+        ContentRoot.Clear();
 
         ShutdownAnnounces();
         ResetQueuesAndEndStreams();
@@ -94,6 +102,15 @@ public sealed partial class TTSSystem : EntitySystem
 
         _playingStreams.Clear();
         _playQueues.Clear();
+        ContentRoot.Clear();
+    }
+
+    private void RemoveFileCursed(ResPath resPath)
+    {
+        ContentRoot.RemoveFile(resPath);
+
+        // Push old audio out of the cache to save memory. It is cursed, but should work.
+        _resourceCache.CacheResource(Prefix / resPath, EmptyAudioResource);
     }
 
     // Process sound queues on frame update
@@ -149,7 +166,19 @@ public sealed partial class TTSSystem : EntitySystem
                 _playingStreams.Add(uid, playingStream);
 
             if (tempFilePath.HasValue)
-                _contentRoot.RemoveFile(tempFilePath.Value);
+            {
+                RemoveFileCursed(Prefix / tempFilePath.Value);
+
+                if (_resourceCache.TryGetResource<AudioResource>(Prefix / tempFilePath.Value, out _))
+                {
+                    _sawmill.Debug("File is still in cache!");
+                }
+                _resourceCache.ReloadResource<AudioResource>(Prefix / tempFilePath.Value);
+                if (_resourceCache.TryGetResource<AudioResource>(Prefix / tempFilePath.Value, out _))
+                {
+                    _sawmill.Debug("File is still in cache, event after reloading!");
+                }
+            }
         }
 
         foreach (var queueUid in queueUidsToRemove)
@@ -194,13 +223,24 @@ public sealed partial class TTSSystem : EntitySystem
         var finalParams = audioParams ?? AudioParams.Default;
 
         var filePath = new ResPath($"{_fileIdx}.ogg");
-        _contentRoot.AddOrUpdateFile(filePath, data);
+        ContentRoot.AddOrUpdateFile(filePath, data);
+
+        // Cache does a funny.
+        // If we have disconnected and reconnected, the Idx will be reset
+        // So it will go over old filenames, and, dispite them being removed, they will still remain in cache
+        // and will be played instead of our new audio files.
+        // To prevent that we cache a file manually, to write a new file over an old file in cache.
+        // There is no way to go around the cache as of 12.10.2023
+        // -TheArturZh
+        var res = new AudioResource();
+        res.Load(_resourceCache, Prefix / filePath);
+        _resourceCache.CacheResource(Prefix / filePath, res);
 
         if (sourceUid == null)
         {
             var soundPath = new SoundPathSpecifier(Prefix / filePath, finalParams);
             _audio.PlayGlobal(soundPath, Filter.Local(), false);
-            _contentRoot.RemoveFile(filePath);
+            RemoveFileCursed(Prefix / filePath);
         }
         else
         {

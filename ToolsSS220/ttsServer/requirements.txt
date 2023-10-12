@@ -1,0 +1,6 @@
+torch
+torchaudio
+torchvision
+soundfile
+pydub
+flask
