@@ -130,6 +130,24 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterCoatParamedicWB
+      - id: ClothingHeadHatParamedicsoft
+      - id: ClothingUniformJumpsuitParamedic
+      - id: ClothingUniformJumpskirtParamedic
+      - id: ClothingEyesHudMedical
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingHeadsetMedical
+      - id: ClothingMaskSterile
+      - id: MedkitFilled
+        prob: 0.3
+
+- type: entity
+  id: LockerParamedicFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerParamedic
+  components:
+  - type: StorageFill
+    contents:
       - id: ClothingHeadHelmetVoidParamed
       - id: ClothingOuterHardsuitVoidParamed
       - id: ClothingOuterCoatParamedicWB
