@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Anomaly.Components;
 
 /// <summary>
-/// 
+/// a device that allows you to translate anomaly activity into multitool signals.
 /// </summary>
 [RegisterComponent, Access(typeof(AnomalySynchronizerSystem))]
 public sealed partial class AnomalySynchronizerComponent : Component
@@ -16,7 +16,7 @@ public sealed partial class AnomalySynchronizerComponent : Component
     /// The uid of the anomaly to which the synchronizer is connected.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public EntityUid ConnectedAnomaly;
+    public EntityUid? ConnectedAnomaly;
 
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]

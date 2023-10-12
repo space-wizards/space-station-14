@@ -39,7 +39,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (!TryComp<AnomalyComponent>(component.ConnectedAnomaly, out var anomaly))
             return;
 
-        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly, anomaly);
+        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.GetValueOrDefault(), anomaly); //<--
         DisconnetFromAnomaly(uid, component, anomaly);
     }
 
@@ -67,7 +67,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         var targetXform = _transform.GetWorldPosition(uid);
         _transform.SetWorldPosition(auid, targetXform);
 
-        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly, anomaly);
+        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.GetValueOrDefault(), anomaly); //<--
         _popup.PopupEntity(Loc.GetString("anomaly-sync-connected"), uid, PopupType.Medium);
         _audio.PlayPvs(component.ConnectedSound, uid);
     }
@@ -78,8 +78,8 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     {
         if (component.ConnectedAnomaly == default!)
             return;
-
-        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly, anomaly);
+         
+        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.GetValueOrDefault(), anomaly); //<--
         _popup.PopupEntity(Loc.GetString("anomaly-sync-disconnected"), uid, PopupType.Large);
         _audio.PlayPvs(component.ConnectedSound, uid);
 
