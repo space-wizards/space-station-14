@@ -242,7 +242,7 @@
     - type: Sprite
       state: science
     - type: MachineBoard
-      prototype: MachineAnomalySynchronizator
+      prototype: MachineAnomalySynchronizer
       requirements:
         Manipulator: 2
       materialRequirements:
