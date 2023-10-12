@@ -39,7 +39,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (!TryComp<AnomalyComponent>(component.ConnectedAnomaly, out var anomaly))
             return;
 
-        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.GetValueOrDefault(), anomaly); //<--
+        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.Value, anomaly);
         DisconnetFromAnomaly(uid, component, anomaly);
     }
 
@@ -67,7 +67,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         var targetXform = _transform.GetWorldPosition(uid);
         _transform.SetWorldPosition(auid, targetXform);
 
-        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.GetValueOrDefault(), anomaly); //<--
+        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.Value, anomaly);
         _popup.PopupEntity(Loc.GetString("anomaly-sync-connected"), uid, PopupType.Medium);
         _audio.PlayPvs(component.ConnectedSound, uid);
     }
@@ -76,10 +76,10 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     //Currently only bluespace anomaly can do this, but for some reason it is the only one that cannot be connected to the synchronizer.
     private void DisconnetFromAnomaly(EntityUid uid, AnomalySynchronizerComponent component, AnomalyComponent anomaly)
     {
-        if (component.ConnectedAnomaly == default!)
+        if (component.ConnectedAnomaly == null)
             return;
-         
-        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.GetValueOrDefault(), anomaly); //<--
+
+        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.Value, anomaly); 
         _popup.PopupEntity(Loc.GetString("anomaly-sync-disconnected"), uid, PopupType.Large);
         _audio.PlayPvs(component.ConnectedSound, uid);
 
