@@ -74,7 +74,7 @@ public sealed partial class NavMapControl : MapGridControl
         Margin = new Thickness(4f, 0f),
         VerticalAlignment = VAlignment.Center,
         HorizontalAlignment = HAlignment.Center,
-        Pressed = true,
+        Pressed = false,
     };
 
     public NavMapControl() : base(8f, 128f, 48f)

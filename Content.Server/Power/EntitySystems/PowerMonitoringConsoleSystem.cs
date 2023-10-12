@@ -115,6 +115,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
 
+        // The grid must have a NavMapComponent to visualize the map 
+        EnsureComp<NavMapComponent>(gridUid);
+
         // Data to be send to the client
         var totalSources = 0d;
         var totalBatteryUsage = 0d;

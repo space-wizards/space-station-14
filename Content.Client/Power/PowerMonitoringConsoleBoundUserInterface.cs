@@ -11,15 +11,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
 
     protected override void Open()
     {
-        EntityUid? gridUid = null;
-
-        if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
-        {
-            gridUid = xform.GridUid;
-        }
-
-        _menu = new PowerMonitoringWindow(this, gridUid);
-
+        _menu = new PowerMonitoringWindow(this, Owner);
         _menu.OpenCentered();
         _menu.OnClose += Close;
     }

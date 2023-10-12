@@ -29,7 +29,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     public event Action<NetEntity?>? RequestPowerMonitoringUpdateAction;
 
-    public PowerMonitoringWindow(PowerMonitoringConsoleBoundUserInterface userInterface, EntityUid? mapUid)
+    public PowerMonitoringWindow(PowerMonitoringConsoleBoundUserInterface userInterface, EntityUid? owner)
     {
         RobustXamlLoader.Load(this);
         var cache = IoCManager.Resolve<IResourceCache>();
@@ -38,7 +38,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         // Get grid uid
-        if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
+        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
             NavMap.MapUid = xform.GridUid;
 
         else
