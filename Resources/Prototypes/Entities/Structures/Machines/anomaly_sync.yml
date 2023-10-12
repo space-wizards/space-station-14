@@ -1,10 +1,12 @@
 - type: entity
-  id: AnomalySync
+  id: MachineAnomalySynchronizator
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: anomaly synchronizer
   description: A sophisticated device that reads changes in anomalous waves, and converts them into energy signals.
   components:
   - type: AnomalySynchronizer
+  - type: Machine
+    board: AnomalySynchronizerCircuitboard
   - type: DeviceNetwork
     deviceNetId: Wireless
   - type: WirelessNetworkConnection
@@ -22,9 +24,6 @@
     layers:
     - state: base
     - state: energy
-      shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: stable
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: AmbientSound

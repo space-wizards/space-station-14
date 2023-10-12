@@ -47,3 +47,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/machines/warning-buzzer.ogg"
+  
+- files: ["anomaly_sync_connect.ogg"]
+  license: "CC0-1.0"
+  copyright: Created by newagesoup, convert to ogg mono by TheShuEd"
+  source: "https://freesound.org/people/newagesoup/sounds/341172/"

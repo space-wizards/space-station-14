@@ -235,6 +235,22 @@
 
 - type: entity
   parent: BaseMachineCircuitboard
+  id: AnomalySynchronizerCircuitboard
+  name: anomaly synchronizer machine board
+  description: A machine printed circuit board for an anomaly synchronizer.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAnomalySynchronizator
+      requirements:
+        Manipulator: 2
+      materialRequirements:
+        Cable: 5
+        PlasmaGlass: 15
+
+- type: entity
+  parent: BaseMachineCircuitboard
   id: APECircuitboard
   name: A.P.E. machine board
   description: A machine printed circuit board for an A.P.E.

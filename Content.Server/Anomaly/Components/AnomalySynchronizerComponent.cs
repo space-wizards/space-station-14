@@ -33,4 +33,10 @@ public sealed partial class AnomalySynchronizerComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<SourcePortPrototype> SupercritPort = "Supercrit";
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier ConnectedSound = new SoundPathSpecifier("/Audio/Machines/anomaly_sync_connect.ogg");
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier DisconnectedSound = new SoundPathSpecifier("/Audio/Machines/anomaly_sync_connect.ogg");
 }

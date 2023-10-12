@@ -99,16 +99,17 @@
   - TraversalDistorterMachineCircuitboard
 
 - type: technology
-  id: MobileAnomalyTech
-  name: research-technology-mobile-anomaly-tech
+  id: AdvancedAnomalyResearch
+  name: research-technology-advanced-anomaly-research
   icon:
-    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+    sprite: Structures/Machines/anomaly_sync.rsi
     state: base
   discipline: Experimental
   tier: 2
   cost: 10000
   recipeUnlocks:
   - WeaponPistolCHIMP
+  - AnomalySynchronizerCircuitboard
   technologyPrerequisites:
   - BasicAnomalousResearch
 

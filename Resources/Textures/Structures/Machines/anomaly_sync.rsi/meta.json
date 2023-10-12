@@ -11,10 +11,7 @@
       "name": "base"
     },
 	{
-      "name": "energy"
-    },
-    {
-      "name": "pulse",
+      "name": "energy",
       "delays": [
         [
           0.2,
@@ -26,7 +23,7 @@
       ]
     },
     {
-      "name": "stable",
+      "name": "pulse",
       "delays": [
         [
           0.2,
