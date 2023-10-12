@@ -33,7 +33,7 @@
 - type: emote
   id: RobotBeep
   category: Vocal
-  chatMessages: [beeps]
+  chatMessages: [бип]
 
 - type: emote
   id: Yawn

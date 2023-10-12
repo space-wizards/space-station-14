@@ -148,3 +148,5 @@ ent-VendingMachineChemicals = ХимкоМат
     .desc = Вероятно, не кофемашина.
 ent-VendingMachineDrGibb = торгомат Др. Гибб
     .desc = Бутылированная победа вкуса здесь и сейчас!
+ent-VendingMachineCuraDrobe = КураДроб
+    .desc = Низкокачественный вендор, раздающий одежду кураторам и библиотекарям.
