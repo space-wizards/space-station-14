@@ -543,10 +543,12 @@
   name: librarian jumpskirt
   description: A cosy green jumper fit for a curator of books.
   components:
+  # Corvax-Resprite begin
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/librarian.rsi
+    sprite: Corvax/Clothing/Uniforms/Jumpskirt/librarian.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/librarian.rsi
+    sprite: Corvax/Clothing/Uniforms/Jumpskirt/librarian.rsi
+  # Corvax-Resprite end
 
 - type: entity
   parent: ClothingUniformSkirtBase
