@@ -8,7 +8,7 @@ public sealed class SponsorManager
 		new Dictionary<string, DateTime>(){
 			{"Laastrog", new DateTime(2023, 08, 15)},
 			{"Swaiper5", new DateTime(2023, 09, 26)},
-			{"Mexanik78", new DateTime(2023, 13, 10)},
+			{"Mexanik78", new DateTime(2023, 10, 13)},
 			{"localhost@JoeGenero", new DateTime(2023, 10, 07)}
 		};
 
