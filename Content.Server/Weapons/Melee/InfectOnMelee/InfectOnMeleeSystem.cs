@@ -11,8 +11,8 @@ namespace Content.Server.Weapons.Melee.InfectOnMelee;
 
 public sealed class InfectOnMeleeSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobStateSystem _mob = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
@@ -29,8 +29,8 @@ public sealed class InfectOnMeleeSystem : EntitySystem
             foreach (var entity in args.HitEntities)
             {
                 if (HasComp<HumanoidAppearanceComponent>(entity)
-                && !_mobStateSystem.IsDead(entity)
-                && _robustRandom.Prob(component.InfectionChance)
+                && !_mob.IsDead(entity)
+                && _random.Prob(component.InfectionChance)
                 && !HasComp<ClumsyComponent>(entity)
                 && !HasComp<ZombieComponent>(entity))
                 {
