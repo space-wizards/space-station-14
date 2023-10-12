@@ -109,6 +109,10 @@
           Quantity: 6
         - ReagentId: Omnizine
           Quantity: 8
+  - type: Tag
+    tags:
+    - Soup
+    - Fruit # I don't know what this is but its' a salad so sure
 
 - type: entity
   name: herb salad
@@ -133,6 +137,10 @@
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 2
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
 
 - type: entity
   name: valid salad
@@ -161,6 +169,11 @@
           Quantity: 2
         - ReagentId: DoctorsDelight
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Fruit
+    - Soup
 
 - type: entity
   name: coleslaw
@@ -264,6 +277,10 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
 
 - type: entity
   name: jungle salad
@@ -288,6 +305,10 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
 
 - type: entity
   name: citrus salad
@@ -312,6 +333,10 @@
           Quantity: 18
         - ReagentId: Vitamin
           Quantity: 15
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
 
 - type: entity
   name: salad of eden
@@ -378,6 +403,10 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
 
 - type: entity
   name: rice and pork
@@ -406,6 +435,10 @@
           Quantity: 6.5
         - ReagentId: Epinephrine
           Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
 
 - type: entity
   name: rice pudding
@@ -462,6 +495,10 @@
           Quantity: 3
         - ReagentId: CapsaicinOil
           Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
 
 # Misc
 
@@ -555,6 +592,10 @@
           Quantity: 8
         - ReagentId: Water
           Quantity: 10
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
 
 - type: entity
   name: slime soup
@@ -606,6 +647,10 @@
           Quantity: 10
         - ReagentId: Blood
           Quantity: 5
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
 
 - type: entity
   name: wing fang chu
@@ -837,6 +882,10 @@
             Quantity: 1
           - ReagentId: Blackpepper
             Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
 
 - type: entity
   name: tomato soup
@@ -862,6 +911,10 @@
             Quantity: 5
           - ReagentId: Water
             Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
 
 - type: entity
   name: eyeball soup
@@ -886,6 +939,10 @@
             Quantity: 5
           - ReagentId: Vitamin
             Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
 
 - type: entity
   name: miso soup
@@ -914,6 +971,10 @@
             Quantity: 3
           - ReagentId: Water
             Quantity: 10
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
 
 - type: entity
   name: mushroom soup
@@ -1012,6 +1073,11 @@
             Quantity: 5
           - ReagentId: Vitamin
             Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
+    - Fruit
+    - Soup
 
 - type: entity
   name: sweet potato soup
@@ -1138,4 +1204,8 @@
             Quantity: 5
           - ReagentId: CapsaicinOil
             Quantity: 5
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
 # Tastes like bungo, hot curry.

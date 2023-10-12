@@ -346,6 +346,31 @@
         Piercing: 0.9
         Heat: 0.9
 
+#Blood-red Medic Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSyndieMedic
+  noSpawn: true
+  name: blood-red medic hardsuit helmet
+  description: An advanced red hardsuit helmet specifically designed for field medic operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
+  - type: PointLight
+    color: green
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
 #Syndicate Elite Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase

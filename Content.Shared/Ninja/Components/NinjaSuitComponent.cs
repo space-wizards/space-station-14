@@ -47,7 +47,7 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("createThrowingStarAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string CreateThrowingStarAction = "ActionCreateThrowingStar";
 
-    [DataField("createThrowingStarActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? CreateThrowingStarActionEntity;
 
     /// <summary>
@@ -68,7 +68,7 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("recallKatanaAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string RecallKatanaAction = "ActionRecallKatana";
 
-    [DataField("recallKatanaActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? RecallKatanaActionEntity;
 
     /// <summary>
@@ -84,7 +84,7 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("empAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string EmpAction = "ActionNinjaEmp";
 
-    [DataField("empActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? EmpActionEntity;
 
     /// <summary>
