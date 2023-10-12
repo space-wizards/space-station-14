@@ -5,6 +5,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -17,7 +18,6 @@ public sealed class InteractionPopupSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -48,7 +48,7 @@ public sealed class InteractionPopupSystem : EntitySystem
         // TODO: Should be an attempt event
         // TODO: Need to handle pausing with an accumulator.
 
-        var msg = ""; // Stores the text to be shown in the popup message
+        string msg = ""; // Stores the text to be shown in the popup message
         string? sfx = null; // Stores the filepath of the sound to be played
 
         if (_random.Prob(component.SuccessChance))
@@ -56,25 +56,21 @@ public sealed class InteractionPopupSystem : EntitySystem
             if (component.InteractSuccessString != null)
                 msg = Loc.GetString(component.InteractSuccessString, ("target", Identity.Entity(uid, EntityManager))); // Success message (localized).
 
-            _audio.PlayPvs(component.InteractSuccessSound, uid);
-
-            if (component.InteractSuccessSpawn != null)
-                Spawn(component.InteractSuccessSpawn, Transform(uid).MapPosition);
+            if (component.InteractSuccessSound != null)
+                sfx = component.InteractSuccessSound.GetSound();
         }
         else
         {
             if (component.InteractFailureString != null)
                 msg = Loc.GetString(component.InteractFailureString, ("target", Identity.Entity(uid, EntityManager))); // Failure message (localized).
 
-            _audio.PlayPvs(component.InteractFailureSound, uid);
-
-            if (component.InteractFailureSpawn != null)
-                Spawn(component.InteractFailureSpawn, Transform(uid).MapPosition);
+            if (component.InteractFailureSound != null)
+                sfx = component.InteractFailureSound.GetSound();
         }
 
         if (component.MessagePerceivedByOthers != null)
         {
-            var msgOthers = Loc.GetString(component.MessagePerceivedByOthers,
+            string msgOthers = Loc.GetString(component.MessagePerceivedByOthers,
                 ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(uid, EntityManager)));
             _popupSystem.PopupEntity(msg, uid, args.User);
             _popupSystem.PopupEntity(msgOthers, uid, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
@@ -85,9 +81,9 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (sfx is not null) //not all cases will have sound.
         {
             if (component.SoundPerceivedByOthers)
-                _audio.Play(sfx, Filter.Pvs(args.Target), args.Target, true);//play for everyone in range
+                SoundSystem.Play(sfx, Filter.Pvs(args.Target), args.Target);//play for everyone in range
             else
-                _audio.Play(sfx, Filter.Entities(args.User, args.Target), args.Target, false);//play only for the initiating entity and its target.
+                SoundSystem.Play(sfx, Filter.Entities(args.User, args.Target), args.Target);//play only for the initiating entity and its target.
         }
 
         component.LastInteractTime = curTime;
