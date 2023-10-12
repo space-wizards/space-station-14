@@ -59,6 +59,14 @@ public sealed class DamageContactsSystem : EntitySystem
     private void OnEntityEnter(EntityUid uid, DamageContactsComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherEntity;
+        var ev = new AttemptDamageContactEvent(uid);
+
+        RaiseLocalEvent(uid, ev);
+
+        if (ev.Cancelled)
+        {
+            return;
+        }
 
         if (HasComp<DamagedByContactComponent>(otherUid))
             return;
@@ -68,5 +76,15 @@ public sealed class DamageContactsSystem : EntitySystem
 
         var damagedByContact = EnsureComp<DamagedByContactComponent>(otherUid);
         damagedByContact.Damage = component.Damage;
+    }
+}
+
+public class AttemptDamageContactEvent : CancellableEntityEventArgs
+{
+    private EntityUid Uid;
+
+    public AttemptDamageContactEvent(EntityUid uid)
+    {
+        Uid = uid;
     }
 }

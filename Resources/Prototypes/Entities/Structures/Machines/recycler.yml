@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Recycler
   parent: BaseMachinePowered
   name: recycler
@@ -111,3 +111,9 @@
   - type: MaterialStorage
   - type: Conveyor
   - type: Rotatable
+  - type: DamageContacts
+    damage:
+      types:
+        Blunt: 20
+        Piercing: 20
+        Slash: 20
