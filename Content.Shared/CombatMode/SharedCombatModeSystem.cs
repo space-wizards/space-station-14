@@ -2,7 +2,6 @@ using Content.Shared.Actions;
 using Content.Shared.MouseRotator;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
-using Content.Shared.Targeting;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -87,15 +86,6 @@ public abstract class SharedCombatModeSystem : EntitySystem
             return;
 
         SetMouseRotatorComponents(entity, value);
-    }
-
-    public virtual void SetActiveZone(EntityUid entity, TargetingZone zone,
-        CombatModeComponent? component = null)
-    {
-        if (!Resolve(entity, ref component))
-            return;
-
-        component.ActiveZone = zone;
     }
 
     private void SetMouseRotatorComponents(EntityUid uid, bool value)
