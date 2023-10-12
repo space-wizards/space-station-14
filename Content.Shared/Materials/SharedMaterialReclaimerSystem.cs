@@ -12,6 +12,7 @@ using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Shared.Materials;
 
@@ -26,6 +27,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 
@@ -205,7 +207,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     {
         return component.Powered &&
                component.Enabled &&
-               HasComp<BodyComponent>(victim) &&
+               HasComp<BodyComponent>(victim) && _mobState.IsIncapacitated(victim) &&
                HasComp<EmaggedComponent>(uid);
     }
 
