@@ -20,16 +20,16 @@ namespace Content.Server.Cluwne;
 
 public sealed class CluwneSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly AutoEmoteSystem _emote = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MetaDataSystem _meta = default!;
+    [Dependency] private readonly NpcFactionSystem _faction = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
 
     public override void Initialize()
@@ -47,19 +47,12 @@ public sealed class CluwneSystem : EntitySystem
     /// </summary>
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
-
-        if (args.NewMobState == MobState.Dead && component.IsCluwne == false)
+        if (args.NewMobState == MobState.Dead)
         {
-            RemComp<AutoEmoteComponent>(uid);
-        }
-
-        if (args.NewMobState == MobState.Dead && component.IsCluwne)
-        {
-            RemComp<CluwneComponent>(uid);
+            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Genetic"), 300);
+            _damageable.TryChangeDamage(uid, damageSpec);
             RemComp<ClumsyComponent>(uid);
-            RemComp<AutoEmoteComponent>(uid);
-            var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 300);
-            _damageableSystem.TryChangeDamage(uid, damageSpec);
+            RemComp<CluwneComponent>(uid);
         }
     }
 
@@ -72,24 +65,23 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (component.EmoteSoundsId == null)
             return;
-        _prototypeManager.TryIndex(component.EmoteSoundsId, out EmoteSounds);
+        _proto.TryIndex(component.EmoteSoundsId, out EmoteSounds);
 
         var meta = MetaData(uid);
         var name = meta.EntityName;
 
         EnsureComp<AutoEmoteComponent>(uid);
-        _autoEmote.AddEmote(uid, component.AutoEmoteSound);
+        _emote.AddEmote(uid, component.AutoEmoteSound);
         EnsureComp<ClumsyComponent>(uid);
 
         if (component.IsCluwne)
         {
-            _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
             _audio.PlayPvs(component.SpawnSound, uid);
-            _metaData.SetEntityName(uid, Loc.GetString("cluwne-name-prefix", ("target", name)), meta);
+            _meta.SetEntityName(uid, Loc.GetString("cluwne-name-prefix", ("target", name)), meta);
             SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
-            _npcFaction.RemoveFaction(uid, "NanoTrasen", false);
-            _npcFaction.AddFaction(uid, "HonkNeutral");
-
+            _faction.RemoveFaction(uid, "NanoTrasen", false);
+            _faction.AddFaction(uid, "HonkNeutral");
         }
 
         else
@@ -109,16 +101,16 @@ public sealed class CluwneSystem : EntitySystem
             return;
         args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
 
-        if (_robustRandom.Prob(component.GiggleRandomChance))
+        if (_random.Prob(component.GiggleRandomChance))
         {
             _audio.PlayPvs(component.SpawnSound, uid);
             _chat.TrySendInGameICMessage(uid, "honks", InGameICChatType.Emote, ChatTransmitRange.Normal);
         }
 
-        else if (_robustRandom.Prob(component.KnockChance))
+        else if (_random.Prob(component.KnockChance))
         {
             _audio.PlayPvs(component.KnockSound, uid);
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+            _stun.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
             _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, ChatTransmitRange.Normal);
         }
     }

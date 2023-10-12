@@ -25,26 +25,23 @@ public sealed partial class CluwneComponent : Component
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "Cluwne";
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float Cluwinification = 0.15f;
-
     /// <summary>
     /// Should be true if this is a cluwne.
     /// </summary>
-    [DataField("isCluwne")]
+    [DataField]
     public bool IsCluwne = true;
 
     /// <summary>
     /// The autoemote sound to play.
     /// </summary>
-    [DataField("autoEmoteSound")]
+    [DataField]
     public string AutoEmoteSound = "CluwneGiggle";
 
     /// <summary>
     /// Portal proto id.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("portal", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Portal = "PortalGreeny";
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public EntProtoId Portal = "PortalGreeny";
 
     /// <summary>
     /// Amount of time cluwne is paralyzed for when falling over.
@@ -55,18 +52,18 @@ public sealed partial class CluwneComponent : Component
     /// <summary>
     /// Sound specifiers for honk and knock.
     /// </summary>
-    [DataField("spawnsound")]
+    [DataField]
     public SoundSpecifier SpawnSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
 
-    [DataField("knocksound")]
+    [DataField]
     public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Items/airhorn.ogg");
 
-    [DataField("cluwnesound")]
+    [DataField]
     public SoundSpecifier CluwneSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg");
 
     /// <summary>
     /// Portal sound for beast arrival.
     /// </summary>
-    [DataField("arrivalSound")]
+    [DataField]
     public SoundSpecifier ArrivalSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
 }
