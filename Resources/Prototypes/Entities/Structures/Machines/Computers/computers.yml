@@ -558,7 +558,7 @@
   parent: ComputerComms
   id: SyndicateComputerComms
   name: syndicate communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
   components:
   - type: Sprite
     layers:
