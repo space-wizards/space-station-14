@@ -22,6 +22,8 @@
           Quantity: 5
   - type: Item
     size: 25
+  - type: CookbookDocumentation
+    catagory: "Cakes"
 
 - type: entity
   parent: FoodCakeBase

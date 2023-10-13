@@ -1,0 +1,31 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Orientation="Vertical"
+              Margin="5 5 5 5">
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer Name="NameBackground" HorizontalExpand="True" VerticalExpand="False">
+                <RichTextLabel Name="FoodName" HorizontalAlignment="Center"/>
+            </PanelContainer>
+            <LayeredTextureRect Name="FoodView" HorizontalAlignment="Center"/>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <RichTextLabel Name="FoodDescription" HorizontalAlignment="Center"/>
+            </BoxContainer>
+            <Collapsible Name="RecipesCollapsible" Orientation="Vertical">
+                <CollapsibleHeading Title="{Loc 'guidebook-food-recipes-header'}"/>
+                <CollapsibleBody>
+                    <GridContainer Name="RecipesContainer" Orientation="Vertical"/>
+                </CollapsibleBody>
+            </Collapsible>
+            <Collapsible Name="UsesCollapsible" Orientation="Vertical">
+                <CollapsibleHeading Title="{Loc 'guidebook-food-uses-header'}"/>
+                <CollapsibleBody>
+                    <GridContainer Name="UsesContainer" Orientation="Vertical"/>
+                </CollapsibleBody>
+            </Collapsible>
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

@@ -18,6 +18,8 @@
           Quantity: 8
   - type: Item
     size: 5
+  - type: CookbookDocumentation
+    catagory: "Kebabs"
 
 # Kebabs
 

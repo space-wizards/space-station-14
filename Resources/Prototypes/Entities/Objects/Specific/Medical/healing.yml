@@ -97,6 +97,8 @@
     count: 10
   - type: StackPrice
     price: 20
+  - type: CookbookDocumentation
+    catagory: "Medical"
 
 - type: entity
   id: OintmentAdvanced1
@@ -185,6 +187,8 @@
     count: 10
   - type: StackPrice
     price: 20
+  - type: CookbookDocumentation
+    catagory: "Medical"
 
 - type: entity
   id: BrutepackAdvanced1
@@ -297,6 +301,8 @@
   - type: Stack
     stackType: AloeCream
     count: 10
+  - type: CookbookDocumentation
+    catagory: "Medical"
 
 - type: entity
   parent: BaseHealingItem

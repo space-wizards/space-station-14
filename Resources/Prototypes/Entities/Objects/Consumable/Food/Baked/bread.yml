@@ -21,6 +21,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
+  - type: CookbookDocumentation
+    catagory: "Breads"
 
 - type: entity
   parent: FoodBreadBase

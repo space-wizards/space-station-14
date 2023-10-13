@@ -48,6 +48,8 @@
       - salty
   - type: Sprite
     state: fries
+  - type: CookbookDocumentation
+    catagory: "PotatoDishes"
 # Tastes like fries, salt.
 
 - type: entity
@@ -63,6 +65,8 @@
       - cheesy
   - type: Sprite
     state: fries-cheesy
+  - type: CookbookDocumentation
+    catagory: "PotatoDishes"
 # Tastes like fries, cheese.
 
 - type: entity
@@ -87,6 +91,8 @@
         reagents:
         - ReagentId: JuiceCarrot
           Quantity: 20
+  - type: CookbookDocumentation
+    catagory: "PotatoDishes"
 # Tastes like carrots, salt.
 
 - type: entity
@@ -100,6 +106,8 @@
       - nachos
   - type: Sprite
     state: nachos
+  - type: CookbookDocumentation
+    catagory: "Mexican"
 # Tastes like nachos.
 
 - type: entity
@@ -125,6 +133,8 @@
           Quantity: 3
         - ReagentId: TableSalt
           Quantity: 1
+  - type: CookbookDocumentation
+    catagory: "Mexican"
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -151,6 +161,8 @@
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 4
+  - type: CookbookDocumentation
+    catagory: "Mexican"
 # Tastes like nachos, hot pepper.
 
 - type: entity
@@ -172,6 +184,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 1
+  - type: CookbookDocumentation
+    catagory: "Snacks"
 # Tastes like parsnips, salt.
 
 - type: entity
@@ -209,6 +223,8 @@
       - potatoes
   - type: Sprite
     state: yakiimo
+  - type: CookbookDocumentation
+    catagory: "PotatoDishes"
 # Tastes like sweet potato.
 
 - type: entity
@@ -236,6 +252,8 @@
           Quantity: 6
         - ReagentId: CarpoToxin
           Quantity: 3
+  - type: CookbookDocumentation
+    catagory: "Seafood"
 # Tastes like fish, batter, hot peppers.
 
 - type: entity
@@ -354,6 +372,8 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 4
+  - type: CookbookDocumentation
+    catagory: "Breakfast"
 # Tastes like eggs, bacon, bun.
 
 - type: entity
@@ -375,6 +395,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 9
+  - type: CookbookDocumentation
+    catagory: "Breakfast"
 # Tastes like egg, cheese.
 
 - type: entity
@@ -401,6 +423,8 @@
           Quantity: 1
         - ReagentId: Blackpepper
           Quantity: 1
+  - type: CookbookDocumentation
+    catagory: "Breakfast"
 # Tastes like egg, salt, pepper.
 
 - type: entity
@@ -458,6 +482,8 @@
           Quantity: 10
         - ReagentId: Blackpepper
           Quantity: 3
+  - type: CookbookDocumentation
+    catagory: "Soups"
 # Tastes awesome.
 
 - type: entity
@@ -466,11 +492,13 @@
   id: FoodMealQueso
   description: A classic dipping sauce that you can't go wrong with.
   components:
-    - type: FlavorProfile
-      flavors:
-        - cheesy
-    - type: Sprite
-      state: queso
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+  - type: Sprite
+    state: queso
+  - type: CookbookDocumentation
+    catagory: "Mexican"
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
@@ -493,6 +521,8 @@
           Quantity: 6
         - ReagentId: CarpoToxin
           Quantity: 15
+  - type: CookbookDocumentation
+    catagory: "Seafood"
 # tastes exotic
 
 - type: entity
@@ -501,20 +531,22 @@
   id: FoodMealEnchiladas
   description: Viva La Mexico!
   components:
-    - type: FlavorProfile
-      flavors:
-        - meaty
-    - type: Sprite
-      state: enchiladas
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 10
-          reagents:
-          - ReagentId: Nutriment
-            Quantity: 8
-          - ReagentId: CapsaicinOil
-            Quantity: 6
+  - type: FlavorProfile
+    flavors:
+      - meaty
+  - type: Sprite
+    state: enchiladas
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: CapsaicinOil
+          Quantity: 6
+  - type: CookbookDocumentation
+    catagory: "Mexican"
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
 - type: entity
@@ -544,6 +576,8 @@
           Quantity: 5
         - ReagentId: Kelotane
           Quantity: 5
+  - type: CookbookDocumentation
+    catagory: "Salads"
 
 - type: entity
   name: taco
@@ -559,6 +593,8 @@
       - onion
   - type: Sprite
     state: taco
+  - type: CookbookDocumentation
+    catagory: "Mexican"
 
 - type: entity
   name: corn in butter
@@ -583,3 +619,5 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 4
+  - type: CookbookDocumentation
+    catagory: "Snacks"

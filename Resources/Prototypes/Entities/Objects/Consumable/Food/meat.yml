@@ -52,6 +52,8 @@
     entity: FoodMeatRotten
     # once it would say bloated, turn into the rotten prototype
     stage: 1
+  - type: CookbookDocumentation
+    catagory: "Meat"
 
 # bruh
 - type: Tag

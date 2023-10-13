@@ -24,6 +24,8 @@
   - type: Tag
     tags:
     - Pie
+  - type: CookbookDocumentation
+    catagory: "Pies"
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable

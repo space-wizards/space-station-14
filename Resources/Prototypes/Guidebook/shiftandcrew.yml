@@ -47,4 +47,4 @@
   id: Food Recipes
   name: guide-entry-foodrecipes
   text: "/ServerInfo/Guidebook/Service/FoodRecipes.xml"
-
+  filterEnabled: True

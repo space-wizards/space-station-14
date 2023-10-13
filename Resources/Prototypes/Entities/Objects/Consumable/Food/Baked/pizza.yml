@@ -28,6 +28,8 @@
   - type: Tag
     tags:
     - Pizza
+  - type: CookbookDocumentation
+    catagory: "Pizzas"
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable

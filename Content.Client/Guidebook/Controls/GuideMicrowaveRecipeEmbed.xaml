@@ -1,0 +1,22 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Orientation="Horizontal"
+              Margin="10 0 10 0"
+              HorizontalAlignment="Stretch"
+              HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+        <RichTextLabel Name="IngredientsLabel"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+    </BoxContainer>
+    <BoxContainer Orientation="Vertical"  VerticalAlignment="Center">
+        <TextureRect TexturePath="/Textures/Interface/Misc/microwave.png"
+                        HorizontalAlignment="Center"/>
+        <Label Name="TimeLabel" HorizontalAlignment="Center"/>
+    </BoxContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+        <RichTextLabel Name="ProductLabel"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+    </BoxContainer>
+</BoxContainer>

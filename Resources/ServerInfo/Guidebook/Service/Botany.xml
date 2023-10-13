@@ -34,4 +34,7 @@ You can use a [color=cyan]sterile swab[/color] to transfer pollen from one plant
 <GuideEntityEmbed Entity="DiseaseSwab"/>
 </Box>
 
+## Produce
+<GuideCookbookGroupEmbed Group="Produce"/>
+
 </Document>

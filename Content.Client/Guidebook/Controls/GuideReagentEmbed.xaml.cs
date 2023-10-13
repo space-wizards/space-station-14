@@ -102,39 +102,8 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
 
         if (reactionPrototype != null)
         {
-            var reactantMsg = new FormattedMessage();
-            var reactantsCount = reactionPrototype.Reactants.Count;
-            var i = 0;
-            foreach (var (product, reactant) in reactionPrototype.Reactants)
-            {
-                reactantMsg.AddMarkup(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                    ("reagent", _prototype.Index<ReagentPrototype>(product).LocalizedName), ("ratio", reactant.Amount)));
-                i++;
-                if (i < reactantsCount)
-                    reactantMsg.PushNewline();
-            }
-            reactantMsg.Pop();
-            ReactantsLabel.SetMessage(reactantMsg);
-
-            if (reactionPrototype.MinimumTemperature > 0.0f)
-            {
-                MixLabel.Text = Loc.GetString("guidebook-reagent-recipes-mix-and-heat",
-                    ("temperature", reactionPrototype.MinimumTemperature));
-            }
-
-            var productMsg = new FormattedMessage();
-            var productCount = reactionPrototype.Products.Count;
-            var u = 0;
-            foreach (var (product, ratio) in reactionPrototype.Products)
-            {
-                productMsg.AddMarkup(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                    ("reagent", _prototype.Index<ReagentPrototype>(product).LocalizedName), ("ratio", ratio)));
-                u++;
-                if (u < productCount)
-                    productMsg.PushNewline();
-            }
-            productMsg.Pop();
-            ProductsLabel.SetMessage(productMsg);
+            var reactionEmbed = new GuideReactionEmbed(reagent);
+            RecipeBody.AddChild(reactionEmbed);
         }
         else
         {

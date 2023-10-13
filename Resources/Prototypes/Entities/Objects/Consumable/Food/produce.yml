@@ -16,6 +16,8 @@
   - type: Appearance
   - type: Extractable
     grindableSolutionName: food
+  - type: CookbookDocumentation
+    catagory: "Produce"
 
 # For produce that can be immediately eaten
 

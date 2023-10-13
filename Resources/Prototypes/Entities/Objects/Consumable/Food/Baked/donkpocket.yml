@@ -20,6 +20,8 @@
   - type: Tag
     tags:
     - DonkPocket
+  - type: CookbookDocumentation
+    catagory: "DonkPockets"
 
 # Donkpocket
 

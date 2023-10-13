@@ -16,14 +16,25 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     private void OnReceiveRegistryUpdate(ReagentGuideRegistryChangedEvent message)
     {
         var data = message.Changeset;
-        foreach (var remove in data.Removed)
+        foreach (var remove in data.ReagentEffectRemoved)
         {
-            Registry.Remove(remove);
+            ReagentRegistry.Remove(remove);
         }
 
-        foreach (var (key, val) in data.GuideEntries)
+        foreach (var remove in data.ReactionSolidProductRemoved)
         {
-            Registry[key] = val;
+            ReactionRegistry.Remove(remove);
+        }
+
+        foreach (var (key, val) in data.ReagentEffectEntries)
+        {
+            ReagentRegistry[key] = val;
+        }
+
+        Logger.Error(data.ReactionSolidProductEntries.Count.ToString());
+        foreach (var (key, val) in data.ReactionSolidProductEntries)
+        {
+            ReactionRegistry[key] = val;
         }
     }
 }

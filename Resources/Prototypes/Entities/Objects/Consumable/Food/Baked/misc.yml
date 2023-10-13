@@ -102,6 +102,8 @@
   components:
   - type: Sprite
     state: COOKIE!!!
+  - type: CookbookDocumentation
+    catagory: "Cookies"
 
 - type: entity
   name: oatmeal cookie
@@ -247,6 +249,8 @@
   - type: Tag
     tags:
     - Pancake
+  - type: CookbookDocumentation
+    catagory: "Breakfast"
 
 - type: entity
   name: blueberry pancake
@@ -338,6 +342,8 @@
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 1
+  - type: CookbookDocumentation
+    catagory: "Breakfast"
 
 - type: entity
   name: soy waffles
@@ -445,6 +451,8 @@
           Quantity: 8
         - ReagentId: Protein
           Quantity: 2
+  - type: CookbookDocumentation
+    catagory: "Pasta"
 
 - type: entity
   name: chèvre chaud
@@ -495,6 +503,8 @@
   - type: SliceableFood
     count: 6
     slice: FoodBakedBrownie
+  - type: CookbookDocumentation
+    catagory: "Bakes"
 
 - type: entity
   name: brownie
@@ -581,20 +591,22 @@
   id: FoodOnionRings
   description: You can eat it or propose to your loved ones.
   components:
-    - type: FlavorProfile
-      flavors:
-        - onion
-        - oily
-    - type: Sprite
-      state: onionrings
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 1
-          reagents:
-          - ReagentId: Nutriment
-            Quantity: 1
-          - ReagentId: Allicin
-            Quantity: 1
-          - ReagentId: Vitamin
-            Quantity: 1
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - oily
+  - type: Sprite
+    state: onionrings
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Allicin
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
+  - type: CookbookDocumentation
+    catagory: "PotatoDishes"

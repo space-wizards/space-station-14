@@ -13,31 +13,7 @@
             <BoxContainer Name="RecipesContainer" HorizontalExpand="True">
                 <Collapsible Orientation="Vertical" HorizontalExpand="True">
                     <CollapsibleHeading Title="{Loc 'guidebook-reagent-recipes-header'}"/>
-                    <CollapsibleBody>
-                        <BoxContainer Name="RecipesDescriptionContainer"
-                                      Margin="10 0 10 0"
-                                      Orientation="Horizontal"
-                                      HorizontalAlignment="Stretch"
-                                      HorizontalExpand="True">
-                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
-                                <RichTextLabel Name="ReactantsLabel"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
-                            </BoxContainer>
-                            <BoxContainer Orientation="Vertical"  VerticalAlignment="Center">
-                                <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"
-                                             HorizontalAlignment="Center"/>
-                                <Label Name="MixLabel"
-                                       Text="{Loc 'guidebook-reagent-recipes-mix'}"
-                                       HorizontalAlignment="Center"/>
-                            </BoxContainer>
-                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
-                                <RichTextLabel Name="ProductsLabel"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
-                            </BoxContainer>
-                        </BoxContainer>
-                    </CollapsibleBody>
+                    <CollapsibleBody Name="RecipeBody"/>
                 </Collapsible>
             </BoxContainer>
             <BoxContainer Name="EffectsContainer" HorizontalExpand="True">
