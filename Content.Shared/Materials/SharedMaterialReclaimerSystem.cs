@@ -8,11 +8,15 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Materials;
 
@@ -24,10 +28,13 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly INetManager _net = default!; //For audio fix
     [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 
@@ -42,6 +49,21 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+    }
+
+    private void OnMobStateChanged(MobStateChangedEvent ev)
+    {
+        if (ev.NewMobState != MobState.Dead)
+            return;
+        TryComp<MaterialReclaimerComponent>(ev.Origin, out var reclaimer);
+        foreach (var entity in _entityLookupSystem.GetEntitiesInRange(ev.Target, 1, LookupFlags.Approximate | LookupFlags.Static))
+        {
+            if (HasComp<MaterialReclaimerComponent>(entity))
+            {
+                TryStartProcessItem(entity, ev.Target, reclaimer);
+            }
+        }
     }
 
     private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
@@ -120,9 +142,19 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
                 $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
         }
 
-        if (Timing.CurTime > component.NextSound)
+        /*if (Timing.CurTime > component.NextSound)
             component.Stream = _audio.PlayPvs(component.Sound, uid);
-        component.NextSound = Timing.CurTime + component.SoundCooldown;
+        component.NextSound = Timing.CurTime + component.SoundCooldown;*/
+        //vvv Temporary audio fix vvv
+        if (Timing.CurTime > component.NextSound)
+        {
+            if (_net.IsServer)
+            {
+                //don't predict sound that client couldn't have played already
+                component.Stream = _audio.PlayPvs(component.Sound, uid);
+            }
+        }
+        //^^^ Temporary audio fix ^^^
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
