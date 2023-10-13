@@ -1,11 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Added Mustard. It can be found in condiment stations., type: Add}
-  - {message: 'Mixing bleach and ammonia will now create... well, at least they got
-      the smell right.', type: Add}
-  id: 4498
-  time: '2023-08-10T01:38:37.0000000+00:00'
 - author: Doru991
   changes:
   - {message: 'Emagging the NutriMax will give a bottle of left-4-zed, for when you
@@ -2957,3 +2950,8 @@ Entries:
   - {message: Revamped the Paramedic Void Suit sprite., type: Tweak}
   id: 4997
   time: '2023-10-12T22:20:24.0000000+00:00'
+- author: pigeonpeas
+  changes:
+  - {message: Reptilians can now choose to have floppy kobold ears., type: Add}
+  id: 4998
+  time: '2023-10-13T01:30:31.0000000+00:00'
