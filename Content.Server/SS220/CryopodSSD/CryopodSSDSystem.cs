@@ -146,7 +146,9 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
                     NeedHand = false,
                 };
 
-                _doAfterSystem.TryStartDoAfter(doAfterArgs);
+                if (!_doAfterSystem.TryStartDoAfter(doAfterArgs))
+                    QueueDel(portal);
+
                 return true;
             }
         }
