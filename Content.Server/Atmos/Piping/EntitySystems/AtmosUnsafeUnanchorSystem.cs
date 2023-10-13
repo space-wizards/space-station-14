@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
@@ -21,6 +22,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         {
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, BeforeUnanchoredEvent>(OnBeforeUnanchored);
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+            SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, BreakageEventArgs>(OnBreak);
         }
 
         private void OnUnanchorAttempt(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchorAttemptEvent args)
@@ -50,6 +52,14 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         {
             if (component.Enabled)
                 LeakGas(uid);
+        }
+
+        private void OnBreak(EntityUid uid, AtmosUnsafeUnanchorComponent component, BreakageEventArgs args)
+        {
+            LeakGas(uid);
+            // Can't use DoActsBehavior["Destruction"] in the same trigger because that would prevent us
+            // from leaking. So we make up for this by queueing deletion here.
+            QueueDel(uid);
         }
 
         /// <summary>

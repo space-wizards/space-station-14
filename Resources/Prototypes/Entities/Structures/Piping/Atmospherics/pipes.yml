@@ -41,7 +41,7 @@
             max: 1
         offset: 0
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: ["Breakage"]
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: ThinPipe
