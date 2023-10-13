@@ -405,6 +405,9 @@
   id: Donut
 
 - type: Tag
+  id: DrinkCan
+
+- type: Tag
   id: DrinkSpaceGlue
 
 - type: Tag
