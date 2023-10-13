@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Admin ghosts can now analyse solutions easier., type: Tweak}
-  id: 4500
-  time: '2023-08-10T02:03:21.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Potentially fix invalid moth markings leading to issues spawning., type: Fix}
@@ -2950,3 +2945,9 @@ Entries:
   - {message: Animals now give cute hearts when you pet them., type: Add}
   id: 4999
   time: '2023-10-13T17:34:18.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: The radiation collector has been updated to provide better visual feedback
+      on its status., type: Tweak}
+  id: 5000
+  time: '2023-10-13T23:08:00.0000000+00:00'
