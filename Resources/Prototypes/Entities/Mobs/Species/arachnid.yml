@@ -8,7 +8,6 @@
   - type: Body
     prototype: Arachnid
     requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed
-  - type: Perishable
   - type: HumanoidAppearance
     species: Arachnid
   - type: Hunger
@@ -36,6 +35,7 @@
     productionLength: 3
     entityProduced: MaterialWebSilk1
     hungerCost: 9 # Should total to 12 total silk on full hunger
+  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:

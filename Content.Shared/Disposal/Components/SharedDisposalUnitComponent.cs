@@ -81,7 +81,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     ///     Delay from trying to shove someone else into disposals.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float DraggedEntryDelay = 0.5f;
+    public float DraggedEntryDelay = 2.0f;
 
     /// <summary>
     ///     Container of entities inside this disposal unit.

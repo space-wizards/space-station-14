@@ -77,10 +77,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command.rsi
-  - type: WiresPanel
-    securityLevel: Level2
-  - type: Construction
-    node: airlockMedSecurity
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
 
 - type: entity
   parent: Airlock
@@ -146,7 +144,10 @@
     group: Glass
   - type: RadiationBlocker
     resistance: 2
-
+  - type: Tag
+    tags:
+      - GlassAirlock
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
 - type: entity
   parent: AirlockGlass
   id: AirlockEngineeringGlass
@@ -236,10 +237,8 @@
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
   - type: PaintableAirlock
     group: Glass
-  - type: WiresPanel
-    securityLevel: Level2
-  - type: Construction
-    node: glassAirlockMedSecurity
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
 
 - type: entity
   parent: AirlockGlass

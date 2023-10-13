@@ -19,8 +19,11 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Tag
+    tags:
+      - Meat
 
 - type: entity
   id: OrganArachnidStomach
@@ -40,7 +43,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Metabolizer
     updateFrequency: 1.5
@@ -77,7 +80,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
 
 - type: entity
