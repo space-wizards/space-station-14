@@ -111,6 +111,10 @@
           Quantity: 6
         - ReagentId: Omnizine
           Quantity: 8
+  - type: Tag
+    tags:
+    - Soup
+    - Fruit # I don't know what this is but its' a salad so sure
   - type: CookbookDocumentation
     catagory: "Salads"
 
@@ -137,6 +141,10 @@
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 2
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Salads"
 
@@ -167,6 +175,11 @@
           Quantity: 2
         - ReagentId: DoctorsDelight
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Salads"
 
@@ -278,6 +291,10 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Salads"
 
@@ -304,6 +321,10 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Salads"
 
@@ -330,6 +351,10 @@
           Quantity: 18
         - ReagentId: Vitamin
           Quantity: 15
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Salads"
 
@@ -402,6 +427,10 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
   - type: CookbookDocumentation
     catagory: "Rice"
 
@@ -432,6 +461,10 @@
           Quantity: 6.5
         - ReagentId: Epinephrine
           Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
   - type: CookbookDocumentation
     catagory: "Rice"
 
@@ -492,6 +525,10 @@
           Quantity: 3
         - ReagentId: CapsaicinOil
           Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
   - type: CookbookDocumentation
     catagory: "Rice"
 
@@ -589,6 +626,10 @@
           Quantity: 8
         - ReagentId: Water
           Quantity: 10
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
   - type: CookbookDocumentation
     catagory: "Soups"
 
@@ -644,6 +685,10 @@
           Quantity: 10
         - ReagentId: Blood
           Quantity: 5
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Soups"
 
@@ -893,6 +938,10 @@
             Quantity: 1
           - ReagentId: Blackpepper
             Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
   - type: CookbookDocumentation
     catagory: "Soups"
 
@@ -920,6 +969,10 @@
             Quantity: 5
           - ReagentId: Water
             Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Soups"
 
@@ -946,6 +999,10 @@
             Quantity: 5
           - ReagentId: Vitamin
             Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
   - type: CookbookDocumentation
     catagory: "Soups"
 
@@ -976,6 +1033,10 @@
             Quantity: 3
           - ReagentId: Water
             Quantity: 10
+  - type: Tag
+    tags:
+    - Meat
+    - Soup
   - type: CookbookDocumentation
     catagory: "Soups"
 
@@ -1082,6 +1143,11 @@
             Quantity: 5
           - ReagentId: Vitamin
             Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Soups"
 
@@ -1218,6 +1284,10 @@
             Quantity: 5
           - ReagentId: CapsaicinOil
             Quantity: 5
+  - type: Tag
+    tags:
+    - Fruit
+    - Soup
   - type: CookbookDocumentation
     catagory: "Chilis"
 # Tastes like bungo, hot curry.

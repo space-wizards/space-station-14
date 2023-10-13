@@ -89,7 +89,7 @@
     animationTime: 0.6
     animationState: mfoam-dissolve
   - type: Smoke
-  - type: SmokeDissipateSpawn
+  - type: SpawnOnDespawn
     prototype: FoamedIronMetal
 
 - type: entity
@@ -109,7 +109,7 @@
     animationTime: 0.6
     animationState: mfoam-dissolve
   - type: Smoke
-  - type: SmokeDissipateSpawn
+  - type: SpawnOnDespawn
     prototype: FoamedAluminiumMetal
 
 - type: entity

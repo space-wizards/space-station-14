@@ -108,6 +108,9 @@
       - meaty
   - type: Sprite
     state: meat
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like meat.
 
 - type: entity
@@ -305,6 +308,9 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like jelly-donut, green apples.
 
 - type: entity
@@ -364,6 +370,9 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like jelly-donut, blumpkin.
 
 - type: entity
@@ -383,6 +392,9 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit # Apparently this is a fruit. Huh.
 # Tastes like jelly-donut, tropical sweetness.
 
 - type: entity

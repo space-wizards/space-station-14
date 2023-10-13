@@ -209,6 +209,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 2
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like eggplant, cheese.
 
 - type: entity
@@ -238,9 +241,6 @@
       - fishy
       - batter
       - spicy
-  - type: Tag
-    tags:
-    - CubanCarp
   - type: Sprite
     state: cubancarp
   - type: SolutionContainerManager
@@ -252,6 +252,10 @@
           Quantity: 6
         - ReagentId: CarpoToxin
           Quantity: 3
+  - type: Tag
+    tags:
+    - CubanCarp
+    - Meat
   - type: CookbookDocumentation
     catagory: "Seafood"
 # Tastes like fish, batter, hot peppers.
@@ -277,6 +281,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like meat, cabbage.
 
 - type: entity
@@ -300,6 +307,9 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like meat, salmon.
 
 - type: entity
@@ -323,6 +333,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like meat, butter.
 
 - type: entity
@@ -348,6 +361,9 @@
           Quantity: 10
         - ReagentId: BbqSauce
           Quantity: 10
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like meat, smokey sauce.
 
 - type: entity
@@ -372,6 +388,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Meat
   - type: CookbookDocumentation
     catagory: "Breakfast"
 # Tastes like eggs, bacon, bun.
@@ -395,6 +414,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 9
+  - type: Tag
+    tags:
+    - Meat
   - type: CookbookDocumentation
     catagory: "Breakfast"
 # Tastes like egg, cheese.
@@ -423,6 +445,9 @@
           Quantity: 1
         - ReagentId: Blackpepper
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
   - type: CookbookDocumentation
     catagory: "Breakfast"
 # Tastes like egg, salt, pepper.
@@ -521,6 +546,9 @@
           Quantity: 6
         - ReagentId: CarpoToxin
           Quantity: 15
+  - type: Tag
+    tags:
+    - Meat
   - type: CookbookDocumentation
     catagory: "Seafood"
 # tastes exotic
@@ -545,6 +573,9 @@
           Quantity: 8
         - ReagentId: CapsaicinOil
           Quantity: 6
+  - type: Tag
+    tags:
+    - Meat
   - type: CookbookDocumentation
     catagory: "Mexican"
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
@@ -576,6 +607,9 @@
           Quantity: 5
         - ReagentId: Kelotane
           Quantity: 5
+  - type: Tag
+    tags:
+    - Fruit
   - type: CookbookDocumentation
     catagory: "Salads"
 
@@ -593,6 +627,9 @@
       - onion
   - type: Sprite
     state: taco
+  - type: Tag
+    tags:
+    - Meat
   - type: CookbookDocumentation
     catagory: "Mexican"
 
