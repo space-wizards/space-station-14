@@ -136,6 +136,6 @@
   description: signal-port-description-pulse
   
 - type: sourcePort
-  id: Supercritical
+  id: SuperСritical
   name: signal-port-name-supercrit
   description: signal-port-description-supercrit
