@@ -880,9 +880,25 @@
   prototype: ClothingUniformJumpsuitLibrarian
 
 - type: loadout
-  id: LoadoutUniformClothingUniformJumpsuitLibrarianOriginal
+  id: LoadoutUniformClothingUniformJumpsuitCurator
   category: loadout-category-uniform
   cost: 2
   exclusive: true
   sponsorOnly: true
-  prototype: ClothingUniformJumpsuitLibrarianOriginal
+  prototype: ClothingUniformJumpsuitCurator
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtLibrarian
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtLibrarian
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtCurator
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtCurator
