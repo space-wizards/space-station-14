@@ -147,7 +147,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     public void SetCollectorEnabled(EntityUid uid, bool enabled, EntityUid? user = null, RadiationCollectorComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return;
 
         component.Enabled = enabled;
@@ -174,7 +174,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void UpdatePressureIndicatorAppearance(EntityUid uid, RadiationCollectorComponent component, GasTankComponent? gasTank = null, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref appearance))
+        if (!Resolve(uid, ref appearance, false))
             return;
 
         if (gasTank == null || gasTank.Air.Pressure < 10)
@@ -192,7 +192,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void UpdateTankAppearance(EntityUid uid, RadiationCollectorComponent component, GasTankComponent? gasTank = null, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref appearance))
+        if (!Resolve(uid, ref appearance, false))
             return;
 
         _appearance.SetData(uid, RadiationCollectorVisuals.TankInserted, gasTank != null, appearance);
