@@ -11,6 +11,7 @@
     deviceNetId: Wireless
   - type: WirelessNetworkConnection
     range: 300
+  - type: DeviceNetworkRequiresPower
   - type: DeviceLinkSource
     ports:
       - Decaying
