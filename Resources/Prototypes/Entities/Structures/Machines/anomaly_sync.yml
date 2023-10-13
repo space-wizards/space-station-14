@@ -18,7 +18,7 @@
       - Stabilize
       - Growing
       - Pulse
-      - Supercritical
+      - SuperCritical
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/anomaly_sync.rsi
