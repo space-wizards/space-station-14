@@ -164,8 +164,8 @@ namespace Content.Shared.Localizations
             {
                 <= 0 => string.Empty,
                 1 => list[0],
-                2 => $"{list[0]} and {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, and {list[^1]}"
+                2 => $"{list[0]} и {list[1]}", //SS220 Localize
+                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, и {list[^1]}" //SS220 Localize
             };
         }
 
