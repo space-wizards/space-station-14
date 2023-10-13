@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -74,7 +75,11 @@ namespace Content.Server.Connection
                 if (banHits is { Count: > 0 })
                     await _db.AddServerBanHitsAsync(id, banHits);
 
-                e.Deny(msg);
+                var properties = new Dictionary<string, JsonNode>();
+                if (reason == ConnectionDenyReason.Full)
+                    properties["delay"] = JsonValue.Create(_cfg.GetCVar(CCVars.GameServerFullReconnectDelay));
+
+                e.Deny(new NetDenyReason(msg, properties));
             }
             else
             {
