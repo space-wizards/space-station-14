@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that was causing entity names to not update after being
-      modified., type: Fix}
-  id: 4502
-  time: '2023-08-10T04:42:09.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'Added the SecHud to lockers, sec vendor, secfab.', type: Add}
@@ -2951,3 +2945,9 @@ Entries:
   - {message: Increased containment field duration after power loss., type: Tweak}
   id: 5001
   time: '2023-10-13T23:41:43.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: 'Increased the stability of the AME, it now takes about three minutes
+      for the AME to overload.', type: Tweak}
+  id: 5002
+  time: '2023-10-13T23:42:46.0000000+00:00'
