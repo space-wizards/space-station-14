@@ -96,7 +96,6 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
                 continue;
 
             var uid = args.Anomaly;
-
             if (_power.IsPowered(uid))
                 continue;
 
@@ -113,7 +112,6 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
                 continue;
 
             var uid = args.Anomaly;
-
             if (_power.IsPowered(uid))
                 continue;
 
@@ -129,7 +127,6 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
                 continue;
 
             var uid = args.Anomaly;
-
             if (_power.IsPowered(uid))
                 continue;
 
