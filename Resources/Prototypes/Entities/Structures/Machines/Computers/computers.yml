@@ -522,7 +522,7 @@
   parent: BaseComputer
   id: ComputerComms
   name: communications computer
-  description: A computer used to make station wide announcements, set the appropriate alert level, and call the emergency shuttle.
+  description: A computer used to set the appropriate alert level, call the emergency shuttle, and make station wide announcements via keyboard.
   components:
   - type: Sprite
     layers:
