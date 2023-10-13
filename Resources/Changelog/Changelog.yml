@@ -1,14 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: 'Emagging the NutriMax will give a bottle of left-4-zed, for when you
-      need kudzu ASAP.', type: Add}
-  - {message: 'Since it got lost in translation last time, the NutriMax also has EZ
-      nutrient to satisfy increased nutrient demand.', type: Add}
-  - {message: New and improved formulas have increased the effectiveness of EZ nutrient
-      and Left-4-Zed., type: Tweak}
-  id: 4499
-  time: '2023-08-10T01:43:07.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Admin ghosts can now analyse solutions easier., type: Tweak}
@@ -2955,3 +2945,8 @@ Entries:
   - {message: Reptilians can now choose to have floppy kobold ears., type: Add}
   id: 4998
   time: '2023-10-13T01:30:31.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Animals now give cute hearts when you pet them., type: Add}
+  id: 4999
+  time: '2023-10-13T17:34:18.0000000+00:00'
