@@ -139,6 +139,16 @@
       - Security
 
 - type: entity
+  name: synthetic flash
+  parent: Flash
+  id: SyntheticFlash
+  description: Not a standard issue Nanotrasen flash but it'll get the job done.
+  components:
+    - type: LimitedCharges
+      maxCharges: 2
+      charges: 2
+
+- type: entity
   name: portable flasher
   parent: BaseStructure
   id: PortableFlasher
