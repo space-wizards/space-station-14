@@ -12,41 +12,16 @@
     Drink:
       effects:
       - !type:SatiateThirst
+        factor: 1.5
         conditions:
           - !type:OrganType
             type: Human
             shouldHave: false
-        factor: 1.5
-    Poison:
+    Food:
       effects:
-        - !type:ChemVomit
-          probability: 0.1
-          conditions:
-            - !type:OrganType
-              type: Human
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 1
-          conditions:
-            - !type:OrganType
-              type: Human
-        - !type:PopupMessage
-          conditions:
-            - !type:OrganType
-              type: Human
-          reagent: Protein
-          type: Local
-          visualType: MediumCaution
-          messages: [ "generic-reagent-effect-sick" ]
-          probability: 0.5
         - !type:AdjustReagent
-          conditions:
-            - !type:OrganType
-              type: Human
-              shouldHave: false
-          reagent: Protein
-          amount: 0.2
+          reagent: UncookedAnimalProteins
+          amount: 0.5
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5

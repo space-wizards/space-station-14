@@ -442,7 +442,7 @@
   flavor: bitter
   color: "#FFFFE5"
   metabolisms:
-    Poison:
+    Food:
       effects:
       - !type:PopupMessage
         conditions:
