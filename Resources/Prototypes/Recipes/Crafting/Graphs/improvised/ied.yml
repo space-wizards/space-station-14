@@ -24,7 +24,7 @@
     - to: start
       completed:
       - !type:SpawnPrototype
-        prototype: DrinkCanColaEmpty
+        prototype: DrinkColaCanEmpty
       - !type:SpawnPrototype
         prototype: Igniter
       - !type:DeleteEntity {}
