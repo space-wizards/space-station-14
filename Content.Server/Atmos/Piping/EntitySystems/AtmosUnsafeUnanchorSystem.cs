@@ -48,7 +48,16 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnBeforeUnanchored(EntityUid uid, AtmosUnsafeUnanchorComponent component, BeforeUnanchoredEvent args)
         {
-            if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (component.Enabled)
+                LeakGas(uid);
+        }
+
+        /// <summary>
+        /// Leak gas from the uid's NodeContainer into the tile atmosphere.
+        /// </summary>
+        public void LeakGas(EntityUid uid)
+        {
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
             if (_atmosphere.GetContainingMixture(uid, true, true) is not {} environment)
