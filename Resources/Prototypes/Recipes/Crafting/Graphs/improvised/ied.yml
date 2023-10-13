@@ -66,6 +66,10 @@
     entity: ImprovisedExplosive
     edges:
     - to: fuel
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
       steps:
       - tool: Cutting
         doAfter: 2
