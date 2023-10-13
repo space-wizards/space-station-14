@@ -32,7 +32,7 @@ public sealed partial class AnomalySynchronizerComponent : Component
     public ProtoId<SourcePortPrototype> PulsePort = "Pulse";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<SourcePortPrototype> SupercritPort = "SuperCritical";
+    public ProtoId<SourcePortPrototype> SupercritPort = "Supercritical";
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier ConnectedSound = new SoundPathSpecifier("/Audio/Machines/anomaly_sync_connect.ogg");

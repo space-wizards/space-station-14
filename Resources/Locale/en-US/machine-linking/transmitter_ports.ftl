@@ -58,5 +58,5 @@ signal-port-description-growing = This port is invoked when a bound anomaly star
 signal-port-name-pulse = Pulse
 signal-port-description-pulse = This port is invoked when a bound anomaly is pulsing.
 
-signal-port-name-supercrit = SuperCritical
+signal-port-name-supercrit = Supercritical
 signal-port-description-supercrit = This port is invoked when a bound anomaly explode after supercrit state.
