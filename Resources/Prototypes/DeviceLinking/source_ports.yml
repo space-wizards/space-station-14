@@ -121,9 +121,9 @@
   description: signal-port-description-decaying
 
 - type: sourcePort
-  id: Normalize
-  name: signal-port-name-normalize
-  description: signal-port-description-normalize
+  id: Stabilize
+  name: signal-port-name-stabilize
+  description: signal-port-description-stabilize
 
 - type: sourcePort
   id: Growing
@@ -136,6 +136,6 @@
   description: signal-port-description-pulse
   
 - type: sourcePort
-  id: Supercrit
+  id: Supercritical
   name: signal-port-name-supercrit
   description: signal-port-description-supercrit

@@ -49,8 +49,8 @@ signal-port-description-air-normal = This port is invoked with HIGH when in norm
 signal-port-name-decaying = Decaying
 signal-port-description-decaying = This port is invoked when a bound anomaly starts to decay.
 
-signal-port-name-normalize = Normalize
-signal-port-description-normalize = This port is invoked when a bound anomaly is normalized.
+signal-port-name-stabilize = Stabilize
+signal-port-description-stabilize = This port is invoked when a bound anomaly is normalized.
 
 signal-port-name-growing = Growing
 signal-port-description-growing = This port is invoked when a bound anomaly starts to grow.
@@ -58,5 +58,5 @@ signal-port-description-growing = This port is invoked when a bound anomaly star
 signal-port-name-pulse = Pulse
 signal-port-description-pulse = This port is invoked when a bound anomaly is pulsing.
 
-signal-port-name-supercrit = Supercrit
+signal-port-name-supercrit = Supercritical
 signal-port-description-supercrit = This port is invoked when a bound anomaly explode after supercrit state.

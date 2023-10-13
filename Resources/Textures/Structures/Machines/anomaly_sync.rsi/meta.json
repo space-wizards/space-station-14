@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
+  "license": "CC0-1.0",
   "copyright": "Created by ThrShuEd (github) for Space Station 14",
   "size": {
     "x": 48,
@@ -10,7 +10,7 @@
     {
       "name": "base"
     },
-	{
+    {
       "name": "energy",
       "delays": [
         [

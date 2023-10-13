@@ -14,10 +14,10 @@
   - type: DeviceLinkSource
     ports:
       - Decaying
-      - Normalize
+      - Stabilize
       - Growing
       - Pulse
-      - Supercrit
+      - Supercritical
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/anomaly_sync.rsi

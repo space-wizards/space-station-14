@@ -23,7 +23,7 @@ public sealed partial class AnomalySynchronizerComponent : Component
     public ProtoId<SourcePortPrototype> DecayingPort = "Decaying";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<SourcePortPrototype> NormalizePort = "Normalize";
+    public ProtoId<SourcePortPrototype> StabilizePort = "Stabilize";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<SourcePortPrototype> GrowingPort = "Growing";
@@ -32,7 +32,7 @@ public sealed partial class AnomalySynchronizerComponent : Component
     public ProtoId<SourcePortPrototype> PulsePort = "Pulse";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<SourcePortPrototype> SupercritPort = "Supercrit";
+    public ProtoId<SourcePortPrototype> SupercritPort = "SuperCritical";
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier ConnectedSound = new SoundPathSpecifier("/Audio/Machines/anomaly_sync_connect.ogg");

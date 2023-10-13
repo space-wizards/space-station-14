@@ -1,6 +1,7 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -12,12 +13,13 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySynchronizerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly DeviceLinkSystem _signal = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
 
     public override void Initialize()
     {
@@ -47,18 +49,16 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     {
         foreach (var entity in _entityLookup.GetEntitiesInRange(uid, 0.15f)) //is the radius of one tile. It must not be set higher, otherwise the anomaly can be moved from tile to tile
         {
-            if (TryComp<AnomalyComponent>(entity, out var anomaly))
+            if (TryComp<AnomalyComponent>(entity, out var anomaly) && _power.IsPowered(uid))
             {
-                ConnectToAnomaly(uid, component, anomaly);
+                ConnectToAnomaly(uid, component, entity, anomaly);
                 break;
             }
         }
     }
 
-    private void ConnectToAnomaly(EntityUid uid, AnomalySynchronizerComponent component, AnomalyComponent anomaly)
+    private void ConnectToAnomaly(EntityUid uid, AnomalySynchronizerComponent component, EntityUid auid, AnomalyComponent anomaly)
     {
-        var auid = anomaly.Owner;
-
         if (component.ConnectedAnomaly == auid)
             return;
 
@@ -79,7 +79,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (component.ConnectedAnomaly == null)
             return;
 
-        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.Value, anomaly); 
+        _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.Value, anomaly);
         _popup.PopupEntity(Loc.GetString("anomaly-sync-disconnected"), uid, PopupType.Large);
         _audio.PlayPvs(component.ConnectedSound, uid);
 
@@ -88,21 +88,19 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
 
     private void OnAnomalyPulse(ref AnomalyPulseEvent args)
     {
+        
         var query = EntityQueryEnumerator<AnomalySynchronizerComponent>();
         while (query.MoveNext(out var ent, out var component))
         {
             if (args.Anomaly != component.ConnectedAnomaly)
                 continue;
 
-            var uid = component.Owner;
+            var uid = args.Anomaly;
 
-            if (!TryComp<ApcPowerReceiverComponent>(uid, out var apcPower))
+            if (_power.IsPowered(uid))
                 continue;
 
-            if (!apcPower.Powered)
-                continue;
-
-            _signalSystem.InvokePort(uid, component.PulsePort);
+            _signal.InvokePort(uid, component.PulsePort);
         }
     }
 
@@ -114,15 +112,12 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             if (args.Anomaly != component.ConnectedAnomaly)
                 continue;
 
-            var uid = component.Owner;
+            var uid = args.Anomaly;
 
-            if (!TryComp<ApcPowerReceiverComponent>(uid, out var apcPower))
+            if (_power.IsPowered(uid))
                 continue;
 
-            if (!apcPower.Powered)
-                continue;
-
-            _signalSystem.InvokePort(uid, component.SupercritPort);
+            _signal.InvokePort(uid, component.SupercritPort);
         }
     }
     private void OnAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
@@ -133,25 +128,22 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             if (args.Anomaly != component.ConnectedAnomaly)
                 continue;
 
-            var uid = component.Owner;
+            var uid = args.Anomaly;
 
-            if (!TryComp<ApcPowerReceiverComponent>(uid, out var apcPower))
-                continue;
-
-            if (!apcPower.Powered)
+            if (_power.IsPowered(uid))
                 continue;
 
             if (args.Stability < 0.25f) //I couldn't find where these values are stored, so I hardcoded them. Tell me where these variables are stored and I'll fix it
             {
-                _signalSystem.InvokePort(component.Owner, component.DecayingPort);
+                _signal.InvokePort(uid, component.DecayingPort);
             }
             else if (args.Stability > 0.5f) //I couldn't find where these values are stored, so I hardcoded them. Tell me where these variables are stored and I'll fix it
             {
-                _signalSystem.InvokePort(component.Owner, component.GrowingPort);
+                _signal.InvokePort(uid, component.GrowingPort);
             }
             else
             {
-                _signalSystem.InvokePort(component.Owner, component.NormalizePort);
+                _signal.InvokePort(uid, component.StabilizePort);
             }
         }
     }
