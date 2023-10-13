@@ -1,112 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Bounty payouts x10, type: Tweak}
-  id: 4479
-  time: '2023-08-07T21:41:57.0000000+00:00'
-- author: hord-brayden
-  changes:
-  - {message: Added Syringe Support for Chemical Analysis Goggles, type: Fix}
-  id: 4480
-  time: '2023-08-07T22:46:05.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Uplink codes no longer contain sharp notes., type: Remove}
-  id: 4481
-  time: '2023-08-08T00:16:49.0000000+00:00'
-- author: TotallyLemon
-  changes:
-  - {message: 'Nanotrasen''s R&D department have improved the RPED''s design, allowing
-      it to quickly install parts into in-progress machine frames.', type: Add}
-  id: 4482
-  time: '2023-08-08T00:26:25.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: 'Due to Nanotrasen choosing a new seed supplier, most plants consume
-      nutrients much faster.', type: Tweak}
-  - {message: Composting produce into trays actually works now., type: Fix}
-  id: 4483
-  time: '2023-08-08T00:29:59.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Fix radiator transfer rate in high-pressure environments., type: Fix}
-  id: 4484
-  time: '2023-08-08T08:16:23.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Access readers can now be programmed using the access configurator.,
-    type: Add}
-  id: 4485
-  time: '2023-08-08T18:30:46.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Stun batons and bolas can now be thrown to deal stamina damage. Stun
-      batons no longer show the damage effect when stunning., type: Fix}
-  id: 4486
-  time: '2023-08-08T20:19:31.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Better nuke sprite from /vg/., type: Tweak}
-  id: 4487
-  time: '2023-08-08T21:55:41.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Changed random maintenance loot spawns to be more diverse., type: Tweak}
-  id: 4488
-  time: '2023-08-09T00:47:35.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Temporarily disable the Wheelchair Bound trait until its vehicle code
-      is fixed., type: Tweak}
-  id: 4489
-  time: '2023-08-09T03:10:47.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Space cats' EVA suits are now functional! Oxygen not included., type: Tweak}
-  id: 4490
-  time: '2023-08-09T03:35:15.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'The overhead perspective, hueshifted-looking rocks now use sprites
-      from SS13 that match the perspective of all other walls.', type: Tweak}
-  - {message: Added ironrock for mappers to use. It is easily identifiable by its
-      bright red colors and garish appearance., type: Add}
-  id: 4491
-  time: '2023-08-09T04:00:27.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: What Moths consider to be made of cloth should now be more accurate.,
-    type: Tweak}
-  - {message: Moths are now able to squeak., type: Tweak}
-  id: 4492
-  time: '2023-08-09T04:05:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added toggle to hide clothing in the character editor., type: Add}
-  id: 4493
-  time: '2023-08-09T06:26:34.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Diona are no longer inhibited by kudzu., type: Tweak}
-  id: 4494
-  time: '2023-08-09T15:24:41.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Taxibots have robot speech bubbles, type: Tweak}
-  id: 4495
-  time: '2023-08-09T16:48:08.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: The air alarm UI now allows copying settings of one device to all similar
-      devices., type: Add}
-  id: 4496
-  time: '2023-08-09T18:20:20.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: 'Changed Dark & Bushy, Death''s-Head, Firewatch, Moffra, Plasmafire,
-      and Royal moth wings to now have two separate color layers.', type: Tweak}
-  id: 4497
-  time: '2023-08-10T01:32:01.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Added Mustard. It can be found in condiment stations., type: Add}
@@ -2951,3 +2843,117 @@ Entries:
       maint corridor.', type: Add}
   id: 4978
   time: '2023-10-09T15:22:57.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Contributors are automatically updated now once a week in the credits
+      section., type: Add}
+  id: 4979
+  time: '2023-10-09T23:42:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Fixed kudzu, foam, smoke, and puddles spreading at extremely high rates.',
+    type: Fix}
+  id: 4980
+  time: '2023-10-10T03:32:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reenabled Kudzu (again) (for real this time), type: Add}
+  id: 4981
+  time: '2023-10-10T03:34:41.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Dionas are actually the same speed as other species now., type: Fix}
+  id: 4982
+  time: '2023-10-10T14:03:20.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added the CuraDrobe., type: Add}
+  - {message: Added the sensible suit and skirt., type: Add}
+  - {message: Fixed the librarian not having their own jumpskirt., type: Fix}
+  - {message: Resprited the librarian jumpsuit., type: Tweak}
+  id: 4983
+  time: '2023-10-10T16:55:31.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Lizards can eat organs again!, type: Fix}
+  - {message: Organs now contain uncooked proteins instead of edible nutriment. Animals
+      will be able to consume this., type: Tweak}
+  id: 4984
+  time: '2023-10-10T18:02:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix shuttles sometimes clipping planet marker entities such as ore.,
+    type: Fix}
+  id: 4985
+  time: '2023-10-10T21:33:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix expedition faction sometimes not aligning with the mission faction.,
+    type: Fix}
+  id: 4986
+  time: '2023-10-10T21:33:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Vaulting tables is now predicted., type: Fix}
+  - {message: Fix buckle sound not playing., type: Fix}
+  - {message: Buckling is now predicted., type: Fix}
+  id: 4987
+  time: '2023-10-10T23:41:12.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Ninja uncloak after attacking with melee weapons., type: Tweak}
+  id: 4988
+  time: '2023-10-11T02:55:54.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Crabs will seek out food to eat now., type: Add}
+  id: 4989
+  time: '2023-10-11T03:09:26.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Potentially fix (or hopefully at least reduce) electrical anomaly lagging
+      everyone on supercrit., type: Fix}
+  id: 4990
+  time: '2023-10-11T03:11:46.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Added toggleselfghost command, which toggles being able to see your
+      own ghost.', type: Add}
+  - {message: 'Added replay_toggle_screenshot_mode command, which toggles the HUD
+      in replay mode to look similar to ingame.', type: Add}
+  id: 4991
+  time: '2023-10-11T03:43:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Rehargers can be examined to show the charge of the battery or weapon
+      inside., type: Tweak}
+  id: 4992
+  time: '2023-10-11T09:22:09.0000000+00:00'
+- author: Skarletto
+  changes:
+  - {message: Changed unary devices such as scrubbers and vents to not be able to
+      stack with each other, type: Tweak}
+  id: 4993
+  time: '2023-10-11T15:20:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed explosion resistance from clothing/equipment not being applied.,
+    type: Fix}
+  id: 4994
+  time: '2023-10-11T16:31:10.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: The nukie ship now has syndicate access airlocks, type: Add}
+  id: 4995
+  time: '2023-10-11T16:47:25.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Carbon dioxide poisoning is now more deadly. Victims of carbon dioxide
+      poisoning now gasp visibly., type: Tweak}
+  id: 4996
+  time: '2023-10-12T07:35:31.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Revamped the Paramedic Void Suit sprite., type: Tweak}
+  id: 4997
+  time: '2023-10-12T22:20:24.0000000+00:00'

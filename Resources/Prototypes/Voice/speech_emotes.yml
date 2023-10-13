@@ -76,6 +76,11 @@
     # Corvax-Localization-End
 
 - type: emote
+  id: Honk
+  category: Vocal
+  chatMessages: [хонкает] # Corvax-Localization
+
+- type: emote
   id: Sigh
   category: Vocal
   chatMessages: [вздыхает] # Corvax-Localization

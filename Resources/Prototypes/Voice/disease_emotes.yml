@@ -52,11 +52,6 @@
   category: Vocal
   chatMessages: [храпит] # Corvax-Localization
 
-- type: emote
-  id: Honk
-  category: Vocal
-  chatMessages: [хонкает] # Corvax-Localization
-
 # SS220 emotes begin
 - type: emote
   id: Gasp

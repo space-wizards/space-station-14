@@ -23,17 +23,6 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpskirtLibrarian
-  name: sensible suitskirt
-  description: It's very... sensible.
-  components:
-    - type: Sprite
-      sprite: Corvax/Clothing/Uniforms/Jumpskirt/librarian.rsi
-    - type: Clothing
-      sprite: Corvax/Clothing/Uniforms/Jumpskirt/librarian.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ClothingUniformColorJumpskirtRainbow
   name: rainbow jumpskirt
   description: A multi-colored jumpskirt!
