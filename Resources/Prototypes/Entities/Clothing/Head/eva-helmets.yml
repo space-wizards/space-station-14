@@ -54,8 +54,8 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetVoidParamed
-  name: Paramedic Void Helmet
-  description: A void helmet made for paramedics.
+  name: Reinforced Paramedic Space Helmet
+  description: A reinforced void helmet made for paramedics.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/paramedhelm.rsi
@@ -72,14 +72,33 @@
 
 - type: entity
   parent: ClothingHeadEVAHelmetBase
-  id: ClothingHeadHelmetVoidParamedAlter
+  id: ClothingHeadHelmetVoidParamedOriginal
   name: Paramedic Void Helmet
-  description: A void helmet made for paramedics. Slightly rounder than usual, how peculiar...
+  description: An outdated void helmet made for paramedics. Slightly rounder than usual, how peculiar...
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/original_paramedhelm.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/original_paramedhelm.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetVoidParamedAlter
+  name: Light Paramedic Void Helmet
+  description: An experimental modification of the paramedic helmet. Makes it slightly easier to notice you on the battleground.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/alter_paramedhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/alter_paramedhelm.rsi
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor

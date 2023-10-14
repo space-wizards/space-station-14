@@ -89,13 +89,67 @@
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitVoidParamed
-  name: Paramedic Void Suit
-  description: A void suit made for paramedics.
+  name: Reinforced Paramedic Space Suit
+  description: A reinforced void suit made for paramedics.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75
+        Caustic: 0.5
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitVoidParamedOriginal
+  name: Paramedic Void Suit
+  description: An outdated blue design of a void suit made for paramedics.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/original_paramed.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/original_paramed.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75
+        Caustic: 0.5
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitVoidParamedAlter
+  name: Light Paramedic Void Suit
+  description: Experimental version of a paramedic suit. Differs a lot from its parent and finds its use.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/alter_paramed.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/alter_paramed.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
