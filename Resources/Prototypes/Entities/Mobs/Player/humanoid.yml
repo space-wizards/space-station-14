@@ -27,14 +27,14 @@
         - !type:OverallPlaytimeRequirement
           time: 36000 # 10 hrs
         - !type:DepartmentTimeRequirement
-          department: Security
-          time: 10800 # 3 hrs
-        - !type:DepartmentTimeRequirement
           department: Command
           time: 10800 # 3 hrs
-        - !type:DepartmentTimeRequirement
-          department: Engineering
-          time: 10800 # 3 hrs
+        - !type:RoleTimeRequirement
+          role: JobSecurityOfficer
+          time: 60 # 1 min, basically mirror cadet requirements
+        - !type:RoleTimeRequirement
+          role: JobStationEngineer
+          time: 60 # 1 min, basically mirror techie requirements
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
@@ -92,7 +92,7 @@
           time: 36000 # 10 hrs
         - !type:RoleTimeRequirement
           role: JobJanitor
-          time: 10800 # 3 hrs
+          time: 1800 # 30 mins, its not exactly rocket science
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -148,9 +148,9 @@
       requirements:
         - !type:OverallPlaytimeRequirement
           time: 36000 # 10 hrs
-        - !type:DepartmentTimeRequirement
-          department: Engineering
-          time: 10800 # 3 hrs
+        - !type:RoleTimeRequirement
+          role: JobStationEngineer
+          time: 60 # 1 min, basically mirror techie requirements
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -206,9 +206,9 @@
       requirements:
         - !type:OverallPlaytimeRequirement
           time: 36000 # 10 hrs
-        - !type:DepartmentTimeRequirement
-          department: Security
-          time: 10800 # 3 hrs
+        - !type:RoleTimeRequirement
+          role: JobSecurityOfficer
+          time: 10800 # 1 min, basically mirror cadet requirements
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -264,9 +264,9 @@
       requirements:
         - !type:OverallPlaytimeRequirement
           time: 36000 # 10 hrs
-        - !type:DepartmentTimeRequirement
-          department: Medical
-          time: 10800 # 3 hrs
+        - !type:RoleTimeRequirement
+          role: JobMedicalDoctor
+          time: 60 # 1 min, basically mirror intern requirements
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
