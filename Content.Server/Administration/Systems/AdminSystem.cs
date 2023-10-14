@@ -1,15 +1,18 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Chat.Managers;
 using Content.Server.IdentityManagement;
 using Content.Server.Mind;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -18,8 +21,10 @@ namespace Content.Server.Administration.Systems
 {
     public sealed class AdminSystem : EntitySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly IConfigurationManager _config = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly MindSystem _minds = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
@@ -32,6 +37,7 @@ namespace Content.Server.Administration.Systems
         public IReadOnlySet<NetUserId> RoundActivePlayers => _roundActivePlayers;
 
         private readonly HashSet<NetUserId> _roundActivePlayers = new();
+        private readonly PanicBunkerStatus _panicBunker = new();
 
         public override void Initialize()
         {
@@ -39,6 +45,15 @@ namespace Content.Server.Administration.Systems
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
+
+            _config.OnValueChanged(CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
+            _config.OnValueChanged(CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
+            _config.OnValueChanged(CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
+            _config.OnValueChanged(CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
+            _config.OnValueChanged(CCVars.PanicBunkerShowReason, OnShowReasonChanged, true);
+            _config.OnValueChanged(CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
+            _config.OnValueChanged(CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged, true);
+
             SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
@@ -114,7 +129,9 @@ namespace Content.Server.Administration.Systems
 
         private void OnAdminPermsChanged(AdminPermsChangedEventArgs obj)
         {
-            if(!obj.IsAdmin)
+            UpdatePanicBunker();
+
+            if (!obj.IsAdmin)
             {
                 RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.ConnectedClient);
                 return;
@@ -127,14 +144,16 @@ namespace Content.Server.Administration.Systems
         {
             // If disconnected then the player won't have a connected entity to get character name from.
             // The disconnected state gets sent by OnPlayerStatusChanged.
-            if(ev.Player.Status == SessionStatus.Disconnected) return;
+            if (ev.Player.Status == SessionStatus.Disconnected)
+                return;
 
             UpdatePlayerList(ev.Player);
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent ev)
         {
-            if(ev.Player.Status == SessionStatus.Disconnected) return;
+            if (ev.Player.Status == SessionStatus.Disconnected)
+                return;
 
             _roundActivePlayers.Add(ev.Player.UserId);
             UpdatePlayerList(ev.Player);
@@ -145,11 +164,20 @@ namespace Content.Server.Administration.Systems
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
+
+            _config.UnsubValueChanged(CCVars.PanicBunkerEnabled, OnPanicBunkerChanged);
+            _config.UnsubValueChanged(CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged);
+            _config.UnsubValueChanged(CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged);
+            _config.UnsubValueChanged(CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged);
+            _config.UnsubValueChanged(CCVars.PanicBunkerShowReason, OnShowReasonChanged);
+            _config.UnsubValueChanged(CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged);
+            _config.UnsubValueChanged(CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             UpdatePlayerList(e.Session);
+            UpdatePanicBunker();
         }
 
         private void SendFullPlayerList(IPlayerSession playerSession)
@@ -185,6 +213,81 @@ namespace Content.Server.Administration.Systems
 
             return new PlayerInfo(name, entityName, identityName, startingRole, antag, GetNetEntity(session?.AttachedEntity), data.UserId,
                 connected, _roundActivePlayers.Contains(data.UserId));
+        }
+
+        private void OnPanicBunkerChanged(bool enabled)
+        {
+            _panicBunker.Enabled = enabled;
+            _chat.SendAdminAlert(Loc.GetString(enabled
+                ? "admin-ui-panic-bunker-enabled-admin-alert"
+                : "admin-ui-panic-bunker-disabled-admin-alert"
+            ));
+
+            SendPanicBunkerStatusAll();
+        }
+
+        private void OnPanicBunkerDisableWithAdminsChanged(bool enabled)
+        {
+            _panicBunker.DisableWithAdmins = enabled;
+            UpdatePanicBunker();
+        }
+
+        private void OnPanicBunkerEnableWithoutAdminsChanged(bool enabled)
+        {
+            _panicBunker.EnableWithoutAdmins = enabled;
+            UpdatePanicBunker();
+        }
+
+        private void OnPanicBunkerCountDeadminnedAdminsChanged(bool enabled)
+        {
+            _panicBunker.CountDeadminnedAdmins = enabled;
+            UpdatePanicBunker();
+        }
+
+        private void OnShowReasonChanged(bool enabled)
+        {
+            _panicBunker.ShowReason = enabled;
+            SendPanicBunkerStatusAll();
+        }
+
+        private void OnPanicBunkerMinAccountAgeChanged(int minutes)
+        {
+            _panicBunker.MinAccountAgeHours = minutes / 60;
+            SendPanicBunkerStatusAll();
+        }
+
+        private void OnPanicBunkerMinOverallHoursChanged(int hours)
+        {
+            _panicBunker.MinOverallHours = hours;
+            SendPanicBunkerStatusAll();
+        }
+
+        private void UpdatePanicBunker()
+        {
+            var admins = _panicBunker.CountDeadminnedAdmins
+                ? _adminManager.AllAdmins
+                : _adminManager.ActiveAdmins;
+            var hasAdmins = admins.Any();
+
+            if (hasAdmins && _panicBunker.DisableWithAdmins)
+            {
+                _config.SetCVar(CCVars.PanicBunkerEnabled, false);
+            }
+            else if (!hasAdmins && _panicBunker.EnableWithoutAdmins)
+            {
+                _config.SetCVar(CCVars.PanicBunkerEnabled, true);
+            }
+
+            SendPanicBunkerStatusAll();
+        }
+
+        private void SendPanicBunkerStatusAll()
+        {
+            var ev = new PanicBunkerChangedEvent(_panicBunker);
+            foreach (var admin in _adminManager.AllAdmins)
+            {
+                RaiseNetworkEvent(ev, admin);
+            }
         }
     }
 }
