@@ -3,7 +3,6 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckScarfStripedGreen
 
 - type: loadout
@@ -11,7 +10,6 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckScarfStripedBrown
 
 - type: loadout
@@ -19,7 +17,6 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckScarfStripedRed
 
 - type: loadout
@@ -27,7 +24,6 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckScarfStripedOrange
 
 - type: loadout
@@ -35,7 +31,6 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckScarfStripedPurple
 
 - type: loadout
@@ -43,7 +38,6 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckScarfStripedLightBlue
 
 - type: loadout
@@ -51,7 +45,6 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckScarfStripedBlue
 
 - type: loadout
@@ -59,5 +52,4 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckScarfStripedBlack

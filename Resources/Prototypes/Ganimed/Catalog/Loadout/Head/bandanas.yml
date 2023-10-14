@@ -56,4 +56,20 @@
   cost: 1
   exclusive: true
   prototype: ClothingHeadBandRed
+
+- type: loadout
+  id: LoadoutHeadClothingHeadBandGrey
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadBandGrey
+
+- type: loadout
+  id: LoadoutHeadClothingHeadBandBlue
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadBandBlue
   

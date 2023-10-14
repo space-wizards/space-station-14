@@ -135,7 +135,6 @@
   category: loadout-category-neck
   cost: 4
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckCloakNanotrasen
 
 - type: loadout
@@ -143,7 +142,6 @@
   category: loadout-category-neck
   cost: 4
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckCloakHerald
 
 - type: loadout
@@ -167,7 +165,6 @@
   category: loadout-category-neck
   cost: 4
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckCloakMoth
 
 - type: loadout
@@ -175,7 +172,6 @@
   category: loadout-category-neck
   cost: 4
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - SalvageSpecialist
     - CargoTechnician

@@ -113,6 +113,22 @@
   prototype: UniformScrubsColorGreen
 
 - type: loadout
+  id: LoadoutUniformUniformScrubsColorBlue
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: UniformScrubsColorBlue
+
+- type: loadout
   id: LoadoutUniformClothingUniformJumpsuitEngineering
   category: loadout-category-uniform
   cost: 1
@@ -902,3 +918,95 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingUniformJumpskirtCurator
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitMonasticRobe
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Chaplain
+  prototype: ClothingUniformJumpsuitMonasticRobe
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitMonasticRobeLight
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Chaplain
+  prototype: ClothingUniformJumpsuitMonasticRobeLight
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSecGrey
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: ClothingUniformJumpsuitSecGrey
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtSecGrey
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: ClothingUniformJumpskirtSecGrey
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtCapFormalDressAlter
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingUniformJumpskirtFormalDressAlter
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtCasualBlue
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtCasualBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCasualBlue
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitCasualBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHawaiBlue
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitHawaiBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitAncient
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitAncient

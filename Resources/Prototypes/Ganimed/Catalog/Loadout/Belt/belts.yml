@@ -69,7 +69,6 @@
   category: loadout-category-belt
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingBeltSuspenders
 
 - type: loadout
@@ -77,7 +76,6 @@
   category: loadout-category-belt
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ServiceWorker
     - Botanist
@@ -89,7 +87,6 @@
   category: loadout-category-belt
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefEngineer
     - SeniorEngineer
@@ -103,7 +100,7 @@
     - CargoTechnician
     - Quartermaster
     - SalvageSpecialist
-  prototype: ClothingBeltUtilityFilled
+  prototype: ClothingBeltUtility
 
 - type: loadout
   id: LoadoutBeltClothingBeltParamedicFilled
@@ -138,21 +135,19 @@
   prototype: ClothingBeltSecurityFilled
 
 - type: loadout
-  id: LoadoutBeltClothingBeltChiefEngineerFilled
+  id: LoadoutBeltClothingBeltChiefEngineer
   category: loadout-category-belt
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefEngineer
   prototype: ClothingBeltChiefEngineerFilled
 
 - type: loadout
-  id: LoadoutBeltClothingBeltJanitorFilled
+  id: LoadoutBeltClothingBeltJanitor
   category: loadout-category-belt
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Janitor
     - ServiceWorker
@@ -165,3 +160,13 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingBeltChampion
+
+- type: loadout
+  id: LoadoutBeltClothingBeltSheath
+  category: loadout-category-belt
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingBeltSheath

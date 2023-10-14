@@ -37,6 +37,8 @@
   category: loadout-category-shoes
   cost: 3
   exclusive: true
+  whitelistJobs:
+    - Chaplain
   prototype: ClothingShoesCult
 
 - type: loadout

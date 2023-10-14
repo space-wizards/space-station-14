@@ -177,3 +177,62 @@
     - MedicalDoctor
     - SeniorPhysician
   prototype: HandheldCrewMonitor
+
+- type: loadout
+  id: LoadoutItemsCyberPen
+  category: loadout-category-items
+  cost: 7
+  exclusive: false
+  prototype: CyberPen
+
+- type: loadout
+  id: LoadoutItemsHandheldStationMap
+  category: loadout-category-items
+  cost: 7
+  exclusive: false
+  prototype: HandheldStationMap
+
+- type: loadout
+  id: LoadoutItemsHandLabeler
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  prototype: HandLabeler
+
+- type: loadout
+  id: LoadoutItemsSaxophoneInstrument
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - Musician
+  prototype: SaxophoneInstrument
+
+- type: loadout
+  id: LoadoutItemsAnomalyScanner
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - ResearchDirector
+    - Scientist
+    - ResearchAssistant
+    - SeniorResearcher
+  prototype: AnomalyScanner
+
+- type: loadout
+  id: LoadoutItemsGeigerCounter
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericTechnician
+    - SeniorEngineer
+    - ChiefEngineer
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: GeigerCounter

@@ -256,3 +256,11 @@
   cost: 4
   exclusive: true
   prototype: ClothingOuterCoatRedCoat
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatBlueCoat
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingOuterCoatBlueCoat

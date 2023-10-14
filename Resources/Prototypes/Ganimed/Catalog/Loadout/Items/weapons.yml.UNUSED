@@ -305,4 +305,79 @@
     - SeniorOfficer
 	- Captain
   prototype: KukriKnife
+
+- type: loadout
+  id: LoadoutItemsWeaponDisabler
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+	- SecurityCadet
+	- SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+	- Captain
+  prototype: WeaponDisabler
+
+- type: loadout
+  id: LoadoutItemsToyHammer
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+	- Clown
+  prototype: ToyHammer
+
+- type: loadout
+  id: LoadoutItemsRitualDagger
+  category: loadout-category-items
+  cost: 7
+  exclusive: false
+  whitelistJobs:
+	- Chaplain
+  prototype: RitualDagger
+
+- type: loadout
+  id: LoadoutItemsRockGuitarInstrument
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+	- Musician
+  prototype: RockGuitarInstrument
+
+- type: loadout
+  id: LoadoutItemsWeaponFlareGun
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  prototype: WeaponFlareGun
+
+- type: loadout
+  id: LoadoutItemsRollingPin
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+	- Chef
+	- ServiceWorker
+  prototype: RollingPin
+
+- type: loadout
+  id: LoadoutItemsScalpel
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - Psychologist
+    - MedicalIntern
+    - MedicalDoctor
+    - SeniorPhysician
+  prototype: Scalpel
   

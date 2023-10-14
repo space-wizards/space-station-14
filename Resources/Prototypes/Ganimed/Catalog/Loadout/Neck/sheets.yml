@@ -198,6 +198,8 @@
   category: loadout-category-neck
   cost: 4
   exclusive: true
+  whitelistJobs:
+    - Chaplain
   prototype: BedsheetCult
 
 - type: loadout
@@ -206,3 +208,27 @@
   cost: 2
   exclusive: true
   prototype: BedsheetOrange
+
+- type: loadout
+  id: LoadoutNeckBedsheetGrey
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: BedsheetGrey
+
+- type: loadout
+  id: LoadoutNeckBedsheetBlue
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: BedsheetBlue
+
+- type: loadout
+  id: LoadoutNeckBedsheetRainbow
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: BedsheetRainbow

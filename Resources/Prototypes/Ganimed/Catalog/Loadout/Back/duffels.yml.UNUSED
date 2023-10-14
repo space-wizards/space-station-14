@@ -1,12 +1,12 @@
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffel
+  id: LoadoutBackClothingBackpackDuffel
   category: loadout-category-back
   cost: 1
   exclusive: true
   prototype: ClothingBackpackDuffel
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelAtmospherics
+  id: LoadoutBackClothingBackpackDuffelAtmospherics
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -18,7 +18,7 @@
   prototype: ClothingBackpackDuffelAtmospherics
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelHydroponics
+  id: LoadoutBackClothingBackpackDuffelHydroponics
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -28,7 +28,7 @@
   prototype: ClothingBackpackDuffelHydroponics
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelBrigmedic
+  id: LoadoutBackClothingBackpackDuffelBrigmedic
   category: loadout-category-back
   cost: 3
   exclusive: true
@@ -42,7 +42,7 @@
   prototype: ClothingBackpackDuffelBrigmedic
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelVirology
+  id: LoadoutBackClothingBackpackDuffelVirology
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -56,7 +56,7 @@
   prototype: ClothingBackpackDuffelVirology
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelGenetics
+  id: LoadoutBackClothingBackpackDuffelGenetics
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -70,7 +70,7 @@
   prototype: ClothingBackpackDuffelGenetics
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelChemistry
+  id: LoadoutBackClothingBackpackDuffelChemistry
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -83,7 +83,7 @@
   prototype: ClothingBackpackDuffelChemistry
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelCargo
+  id: LoadoutBackClothingBackpackDuffelCargo
   category: loadout-category-back
   cost: 1
   exclusive: true
@@ -94,7 +94,7 @@
   prototype: ClothingBackpackDuffelCargo
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelEngineering
+  id: LoadoutBackClothingBackpackDuffelEngineering
   category: loadout-category-back
   cost: 1
   exclusive: true
@@ -107,7 +107,7 @@
   prototype: ClothingBackpackDuffelEngineering
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelCaptain
+  id: LoadoutBackClothingBackpackDuffelCaptain
   category: loadout-category-back
   cost: 1
   exclusive: true
@@ -116,7 +116,7 @@
   prototype: ClothingBackpackDuffelCaptain
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelClown
+  id: LoadoutBackClothingBackpackDuffelClown
   category: loadout-category-back
   cost: 1
   exclusive: true
@@ -125,7 +125,7 @@
   prototype: ClothingBackpackDuffelClown
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelMedical
+  id: LoadoutBackClothingBackpackDuffelMedical
   category: loadout-category-back
   cost: 1
   exclusive: true
@@ -139,7 +139,7 @@
   prototype: ClothingBackpackDuffelMedical
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelMime
+  id: LoadoutBackClothingBackpackDuffelMime
   category: loadout-category-back
   cost: 1
   exclusive: true
@@ -148,7 +148,7 @@
   prototype: ClothingBackpackDuffelMime
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelSecurity
+  id: LoadoutBackClothingBackpackDuffelSecurity
   category: loadout-category-back
   cost: 1
   exclusive: true
@@ -163,7 +163,7 @@
   prototype: ClothingBackpackDuffelSecurity
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelSalvage
+  id: LoadoutBackClothingBackpackDuffelSalvage
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -174,7 +174,7 @@
   prototype: ClothingBackpackDuffelSalvage
 
 - type: loadout
-  id: LoadoutNeckClothingBackpackDuffelScience
+  id: LoadoutBackClothingBackpackDuffelScience
   category: loadout-category-back
   cost: 1
   exclusive: true

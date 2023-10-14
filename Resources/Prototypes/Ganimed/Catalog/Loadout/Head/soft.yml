@@ -196,3 +196,19 @@
   cost: 1
   exclusive: true
   prototype: ClothingHeadHatPurplesoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatGreysoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatGreysoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatBluesoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatBluesoft

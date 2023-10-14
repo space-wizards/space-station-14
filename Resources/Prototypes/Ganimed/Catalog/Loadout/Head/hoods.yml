@@ -10,6 +10,8 @@
   category: loadout-category-head
   cost: 3
   exclusive: true
+  whitelistJobs:
+    - Chaplain
   prototype: ClothingHeadHatHoodCulthood
 
 - type: loadout

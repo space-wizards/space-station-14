@@ -145,5 +145,20 @@
   category: loadout-category-neck
   cost: 4
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckBling
+
+- type: loadout
+  id: LoadoutNeckClothingNeckStethoscope
+  category: loadout-category-neck
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - Psychologist
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
+  prototype: ClothingNeckStethoscope

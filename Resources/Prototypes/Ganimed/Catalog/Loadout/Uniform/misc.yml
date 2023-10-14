@@ -52,6 +52,8 @@
   category: loadout-category-uniform
   cost: 2
   exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
   prototype: ClothingUniformJumpsuitHoSParadeMale
 
 - type: loadout
@@ -59,6 +61,8 @@
   category: loadout-category-uniform
   cost: 2
   exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
   prototype: ClothingUniformJumpskirtHoSParadeMale
 
 - type: loadout
@@ -66,6 +70,8 @@
   category: loadout-category-uniform
   cost: 3
   exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
   prototype: ClothingUniformJumpsuitHoSParadeMaleOriginal
 
 - type: loadout
@@ -73,6 +79,8 @@
   category: loadout-category-uniform
   cost: 3
   exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
   prototype: ClothingUniformJumpskirtHoSParadeMaleOriginal
 
 - type: loadout
@@ -81,3 +89,23 @@
   cost: 3
   exclusive: true
   prototype: ClothingUniformJumpsuitMilitary
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHoSGrey
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: false
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpsuitHoSGrey
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHoSBlue
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: false
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpsuitHoSBlue

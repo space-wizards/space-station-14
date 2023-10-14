@@ -48,3 +48,19 @@
   cost: 7
   exclusive: true
   prototype: ClothingOuterSuitChicken
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterSuitBomb
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingOuterSuitBomb

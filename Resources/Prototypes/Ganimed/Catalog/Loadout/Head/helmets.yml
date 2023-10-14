@@ -50,7 +50,6 @@
   category: loadout-category-head
   cost: 5
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefEngineer
     - AtmosphericTechnician
@@ -100,3 +99,19 @@
     - SeniorPhysician
     - Paramedic
   prototype: ClothingHeadHelmetVoidParamedAlter
+  
+- type: loadout
+  id: LoadoutHeadClothingHeadHelmetBombSuit
+  category: loadout-category-head
+  cost: 5
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingHeadHelmetBombSuit

@@ -1,19 +1,19 @@
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelLeather
-  category: loadout-category-back
-  cost: 3
-  exclusive: true
-  prototype: ClothingBackpackSatchelLeather
-
-- type: loadout
-  id: LoadoutBackClothingBackpackSatchel
+  id: LoadoutBackClothingBackpack
   category: loadout-category-back
   cost: 2
   exclusive: true
-  prototype: ClothingBackpackSatchel
+  prototype: ClothingBackpack
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelAtmospherics
+  id: LoadoutBackClothingBackpackIan
+  category: loadout-category-back
+  cost: 8
+  exclusive: true
+  prototype: ClothingBackpackIan
+
+- type: loadout
+  id: LoadoutBackClothingBackpackAtmospherics
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -21,19 +21,19 @@
     - ChiefEngineer
 	- SeniorEngineer
 	- AtmosphericTechnician
-  prototype: ClothingBackpackSatchelAtmospherics
+  prototype: ClothingBackpackAtmospherics
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelHydroponics
+  id: LoadoutBackClothingBackpackHydroponics
   category: loadout-category-back
   cost: 2
   exclusive: true
   whitelistJobs:
     - Botanist
-  prototype: ClothingBackpackSatchelHydroponics
+  prototype: ClothingBackpackHydroponics
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelBrigmedic
+  id: LoadoutBackClothingBackpackBrigmedic
   category: loadout-category-back
   cost: 5
   exclusive: true
@@ -52,10 +52,10 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
-  prototype: ClothingBackpackSatchelBrigmedic
+  prototype: ClothingBackpackBrigmedic
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelVirology
+  id: LoadoutBackClothingBackpackVirology
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -67,10 +67,10 @@
     - Psychologist
     - MedicalIntern
     - Paramedic
-  prototype: ClothingBackpackSatchelVirology
+  prototype: ClothingBackpackVirology
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelGenetics
+  id: LoadoutBackClothingBackpackGenetics
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -82,10 +82,10 @@
     - Psychologist
     - MedicalIntern
     - Paramedic
-  prototype: ClothingBackpackSatchelGenetics
+  prototype: ClothingBackpackGenetics
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelCargo
+  id: LoadoutBackClothingBackpackCargo
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -93,10 +93,10 @@
     - CargoTechnician
     - SalvageSpecialist
     - Quartermaster
-  prototype: ClothingBackpackSatchelCargo
+  prototype: ClothingBackpackCargo
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelEngineering
+  id: LoadoutBackClothingBackpackEngineering
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -106,19 +106,19 @@
 	- AtmosphericTechnician
 	- StationEngineer
 	- TechnicalAssistant
-  prototype: ClothingBackpackSatchelEngineering
+  prototype: ClothingBackpackEngineering
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelCaptain
+  id: LoadoutBackClothingBackpackCaptain
   category: loadout-category-back
   cost: 2
   exclusive: true
   whitelistJobs:
     - Chaptain
-  prototype: ClothingBackpackSatchelCaptain
+  prototype: ClothingBackpackCaptain
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelMedical
+  id: LoadoutBackClothingBackpackMedical
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -130,19 +130,19 @@
     - Psychologist
     - MedicalIntern
     - Paramedic
-  prototype: ClothingBackpackSatchelMedical
+  prototype: ClothingBackpackMedical
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelMime
+  id: LoadoutBackClothingBackpackMime
   category: loadout-category-back
   cost: 2
   exclusive: true
   whitelistJobs:
     - Mime
-  prototype: ClothingBackpackSatchelMime
+  prototype: ClothingBackpackMime
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelMerc
+  id: LoadoutBackClothingBackpackMerc
   category: loadout-category-back
   cost: 4
   exclusive: true
@@ -156,10 +156,10 @@
     - SeniorOfficer
     - Quartermaster
     - SalvageSpecialist
-  prototype: ClothingBackpackSatchelMerc
+  prototype: ClothingBackpackMerc
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelSecurity
+  id: LoadoutBackClothingBackpackSecurity
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -171,10 +171,10 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
-  prototype: ClothingBackpackSatchelSecurity
+  prototype: ClothingBackpackSecurity
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelSalvage
+  id: LoadoutBackClothingBackpackSalvage
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -182,10 +182,10 @@
     - Quartermaster
 	- SalvageSpecialist
 	- CargoTechnician
-  prototype: ClothingBackpackSatchelSalvage
+  prototype: ClothingBackpackSalvage
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelScience
+  id: LoadoutBackClothingBackpackScience
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -194,19 +194,10 @@
 	- ResearchAssistant
 	- ResearchDirector
 	- SeniorResearcher
-  prototype: ClothingBackpackSatchelScience
+  prototype: ClothingBackpackScience
 
 - type: loadout
-  id: LoadoutBackClothingBackpackSatchelClown
-  category: loadout-category-back
-  cost: 2
-  exclusive: true
-  whitelistJobs:
-    - Clown
-  prototype: ClothingBackpackSatchelClown
-
-- type: loadout
-  id: LoadoutBackClothingBackpackSatchelChemistry
+  id: LoadoutBackClothingBackpackChemistry
   category: loadout-category-back
   cost: 2
   exclusive: true
@@ -218,50 +209,4 @@
     - Psychologist
     - MedicalIntern
     - Paramedic
-  prototype: ClothingBackpackSatchelChemistry
-
-- type: loadout
-  id: LoadoutBackBooksBag
-  category: loadout-category-back
-  cost: 2
-  exclusive: true
-  whitelistJobs:
-    - Librarian
-	- HeadOfPersonnel
-  prototype: BooksBag
-
-- type: loadout
-  id: LoadoutBackPlantBag
-  category: loadout-category-back
-  cost: 2
-  exclusive: true
-  whitelistJobs:
-    - Botanist
-	- ServiceWorker
-	- HeadOfPersonnel
-  prototype: PlantBag
-
-- type: loadout
-  id: LoadoutBackOreBag
-  category: loadout-category-back
-  cost: 2
-  exclusive: true
-  whitelistJobs:
-    - SalvageSpecialist
-	- CargoTechnician
-	- Quartermaster
-  prototype: OreBag
-
-- type: loadout
-  id: LoadoutBackChemBag
-  category: loadout-category-back
-  cost: 5
-  exclusive: true
-  whitelistJobs:
-    - ChiefMedicalOfficer
-    - SeniorPhysician
-    - Chemist
-    - MedicalDoctor
-    - Psychologist
-    - MedicalIntern
-  prototype: ChemBag
+  prototype: ClothingBackpackChemistry

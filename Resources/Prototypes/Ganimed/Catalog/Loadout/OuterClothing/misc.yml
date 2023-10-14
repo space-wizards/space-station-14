@@ -61,7 +61,6 @@
   category: loadout-category-outerClothing
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingOuterPoncho
 
 - type: loadout
@@ -71,3 +70,71 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingOuterGhostSheet
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterClownPriest
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingOuterClownPriest
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterRobesCult
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Chaplain
+  prototype: ClothingOuterRobesCult
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterVestHazard
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingOuterVestHazard
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterHoodieGrey
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingOuterHoodieGrey
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterFlannelBlue
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingOuterFlannelBlue
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterStraightjacket
+  category: loadout-category-outerClothing
+  cost: 6
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingOuterStraightjacket
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterRobesJudge
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Lawyer
+    - Captain
+    - HeadOfPersonnel
+    - HeadOfSecurity
+    - Warden
+    - SeniorOfficer
+    - Detective
+  prototype: ClothingOuterRobesJudge

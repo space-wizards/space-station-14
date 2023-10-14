@@ -131,7 +131,6 @@
     - Chef
     - Bartender
     - ServiceWorker
-  sponsorOnly: true
   prototype: ClothingHeadHatChef
 
 - type: loadout
@@ -139,7 +138,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatWizardFake
 
 - type: loadout
@@ -147,7 +145,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefEngineer
     - SeniorEngineer
@@ -178,4 +175,67 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingHeadHatHairflower
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatXmasCrown
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatXmasCrown
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWelding
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+  prototype: ClothingHeadHatWelding
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWeldingMaskFlame
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+  prototype: ClothingHeadHatWeldingMaskFlame
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWeldingMaskFlameBlue
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+  prototype: ClothingHeadHatWeldingMaskFlameBlue
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatFedoraGrey
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatFedoraGrey
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatSombrero
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatSombrero
   

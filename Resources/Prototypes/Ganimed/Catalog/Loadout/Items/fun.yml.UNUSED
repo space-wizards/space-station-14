@@ -154,3 +154,40 @@
   exclusive: false
   prototype: WhoopieCushion
   
+  
+- type: loadout
+  id: LoadoutItemsPlushieSharkGrey
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: PlushieSharkGrey
+  
+  
+- type: loadout
+  id: LoadoutItemsPlushieSharkBlue
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: PlushieSharkBlue
+  
+- type: loadout
+  id: LoadoutItemsPlushieSharkPink
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: PlushieSharkPink
+  
+- type: loadout
+  id: LoadoutItemsSkub
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  prototype: Skub
+  
+- type: loadout
+  id: LoadoutItemsStrangePill
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: StrangePill
+  

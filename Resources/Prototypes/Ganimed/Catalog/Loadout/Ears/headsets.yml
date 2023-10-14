@@ -167,3 +167,16 @@
     - Scientist
     - SeniorResearcher
   prototype: ClothingHeadsetMedicalScience
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetRobotics
+  category: loadout-category-ears
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  sponsorOnly: true
+  prototype: ClothingHeadsetRobotics

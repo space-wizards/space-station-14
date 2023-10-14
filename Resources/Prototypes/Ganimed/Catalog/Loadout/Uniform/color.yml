@@ -95,3 +95,83 @@
   cost: 1
   exclusive: false
   prototype: ClothingUniformJumpskirtColorOrange
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorRaibow
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtColorRainbow
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorRaibow
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitColorRainbow
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorPink
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtColorPink
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorPink
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitColorPink
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorLightBrown
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitColorLightBrown
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorLightBrown
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtColorLightBrown
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorGrey
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitColorGrey
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorBlue
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtColorBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorBlue
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitColorBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorGrey
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtColorGrey

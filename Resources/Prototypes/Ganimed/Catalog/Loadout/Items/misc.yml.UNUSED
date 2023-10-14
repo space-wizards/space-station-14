@@ -127,3 +127,42 @@
   cost: 1
   exclusive: false
   prototype: CigarGold
+  
+- type: loadout
+  id: LoadoutItemsPaperCaptainThoughts
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  whitelistJobs:
+    - Captain
+  prototype: PaperCaptainThoughts
+  
+- type: loadout
+  id: LoadoutItemsSeashellInstrument
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: SeashellInstrument
+  
+- type: loadout
+  id: LoadoutItemsSprayBottleWater
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: SprayBottleWater
+  
+- type: loadout
+  id: LoadoutItemsBoxSurvivalEngineering
+  category: loadout-category-items
+  cost: 6
+  exclusive: false
+  prototype: BoxSurvivalEngineering
+  
+- type: loadout
+  id: LoadoutItemsCluwneHorn
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - Clown
+  prototype: CluwneHorn

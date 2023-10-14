@@ -5,7 +5,6 @@
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
-  sponsorOnly: true
   prototype: ClothingHeadsetAltMedical
 
 - type: loadout
@@ -15,7 +14,6 @@
   exclusive: true
   whitelistJobs:
     - Quartermaster
-  sponsorOnly: true
   prototype: ClothingHeadsetAltCargo
 
 - type: loadout
@@ -25,7 +23,6 @@
   exclusive: true
   whitelistJobs:
     - ChiefEngineer
-  sponsorOnly: true
   prototype: ClothingHeadsetAltEngineering
 
 - type: loadout
@@ -36,7 +33,6 @@
   whitelistJobs:
     - Captain
     - HeadOfPersonnnel
-  sponsorOnly: true
   prototype: ClothingHeadsetAltCommand
 
 - type: loadout
@@ -46,7 +42,6 @@
   exclusive: true
   whitelistJobs:
     - ResearchDirector
-  sponsorOnly: true
   prototype: ClothingHeadsetAltScience
 
 - type: loadout
@@ -56,5 +51,4 @@
   exclusive: true
   whitelistJobs:
     - HeadOfSecurity
-  sponsorOnly: true
   prototype: ClothingHeadsetAltSecurity

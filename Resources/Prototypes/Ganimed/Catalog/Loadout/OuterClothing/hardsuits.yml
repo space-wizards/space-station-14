@@ -87,4 +87,14 @@
     - ChiefMedicalOfficer
     - SeniorPhysician
   prototype: ClothingOuterHardsuitVoidParamedAlter
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterHardsuitLuxury
+  category: loadout-category-outerClothing
+  cost: 12
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Quartermaster
+  prototype: ClothingOuterHardsuitLuxury
   

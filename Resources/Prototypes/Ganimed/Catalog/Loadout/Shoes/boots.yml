@@ -103,5 +103,18 @@
     - Captain
     - SeniorOfficer
     - HeadOfPersonnel
-  sponsorOnly: true
   prototype: ClothingShoesBootsJack
+
+- type: loadout
+  id: LoadoutShoesClothingShoesBootsWork
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - StationEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+  sponsorOnly: true
+  prototype: ClothingShoesBootsWork

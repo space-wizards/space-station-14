@@ -64,6 +64,14 @@
   prototype: ClothingHandsGlovesBoxingYellow
 
 - type: loadout
+  id: LoadoutHandsClothingHandsGlovesBoxingBlue
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHandsGlovesBoxingBlue
+
+- type: loadout
   id: LoadoutHandsClothingHandsGlovesBoxingGreen
   category: loadout-category-hands
   cost: 2
@@ -149,3 +157,34 @@
   cost: 3
   exclusive: true
   prototype: ClothingHandsGlovesPaws
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesRobohands
+  category: loadout-category-hands
+  cost: 6
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Scientist
+    - ResearchAssistant
+    - ResearchDirector
+    - SeniorResearcher
+  prototype: ClothingHandsGlovesRobohands
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesCluwneRemoveable
+  category: loadout-category-hands
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  sponsorOnly: true
+  prototype: ClothingHandsGlovesCluwneRemoveable
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesPowerglove
+  category: loadout-category-hands
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHandsGlovesPowerglove
