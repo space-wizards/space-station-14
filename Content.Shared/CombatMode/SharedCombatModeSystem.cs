@@ -82,7 +82,7 @@ public abstract class SharedCombatModeSystem : EntitySystem
             _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
 
         // Change mouse rotator comps if flag is set
-        if (!component.ToggleMouseRotator)
+        if (!component.ToggleMouseRotator || IsNpc(entity))
             return;
 
         SetMouseRotatorComponents(entity, value);
@@ -101,6 +101,12 @@ public abstract class SharedCombatModeSystem : EntitySystem
             RemComp<NoRotateOnMoveComponent>(uid);
         }
     }
+
+    // todo: When we stop making fucking garbage abstract shared components, remove this shit too.
+    protected abstract bool IsNpc(EntityUid uid);
 }
 
-public sealed partial class ToggleCombatActionEvent : InstantActionEvent { }
+public sealed partial class ToggleCombatActionEvent : InstantActionEvent
+{
+
+}
