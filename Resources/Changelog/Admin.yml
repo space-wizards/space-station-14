@@ -27,7 +27,7 @@ Entries:
 - author: DrSmugleaf
   changes:
   - {message: 'Made the panic bunker UI also set the minimum account age/playtime
-      requirements¡ when the two inputs lose focus, not just when pressing enter.', type: Tweak}
+      requirements when the two inputs lose focus, not just when pressing enter.', type: Tweak}
   - {message: 'Added message tooltip to the erase verb.', type: Tweak}
   id: 5
   time: '2023-10-14T09:21:00.0000000+00:00'
