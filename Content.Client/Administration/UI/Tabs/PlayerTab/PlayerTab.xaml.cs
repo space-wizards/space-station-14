@@ -121,7 +121,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                     player.Antag ? "YES" : "NO",
                     new StyleBoxFlat(useAltColor ? _altColor : _defaultColor),
                     player.Connected,
-                    player.PlaytimeString());
+                    player.PlaytimeString);
                 entry.PlayerEntity = player.NetEntity;
                 entry.OnPressed += args => OnEntryPressed?.Invoke(args);
                 entry.ToolTip = Loc.GetString("player-tab-entry-tooltip");
@@ -150,6 +150,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                 Header.Character => Compare(x.CharacterName, y.CharacterName),
                 Header.Job => Compare(x.StartingJob, y.StartingJob),
                 Header.Antagonist => x.Antag.CompareTo(y.Antag),
+                Header.Playtime => Compare(x.PlaytimeString, y.PlaytimeString),
                 _ => 1
             };
         }

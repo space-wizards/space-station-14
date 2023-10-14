@@ -16,9 +16,9 @@ namespace Content.Shared.Administration
         bool ActiveThisRound,
         TimeSpan? OverallPlaytime)
     {
-        public string PlaytimeString()
-        {
-            return OverallPlaytime?.ToString("%d':'hh':'mm") ?? Loc.GetString("generic-unknown-title");
-        }
+        private string? _playtimeString;
+
+        public string PlaytimeString => _playtimeString ??=
+            OverallPlaytime?.ToString("%d':'hh':'mm") ?? Loc.GetString("generic-unknown-title");
     }
 }
