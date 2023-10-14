@@ -3,11 +3,13 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.IdentityManagement;
 using Content.Server.Mind;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.GameObjects;
@@ -25,6 +27,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly MindSystem _minds = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
@@ -210,9 +213,16 @@ namespace Content.Server.Administration.Systems
             }
 
             var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
+            TimeSpan? overallPlaytime = null;
+            if (session != null &&
+                _playTime.TryGetTrackerTimes(session, out var playTimes) &&
+                playTimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var playTime))
+            {
+                overallPlaytime = playTime;
+            }
 
             return new PlayerInfo(name, entityName, identityName, startingRole, antag, GetNetEntity(session?.AttachedEntity), data.UserId,
-                connected, _roundActivePlayers.Contains(data.UserId));
+                connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
         }
 
         private void OnPanicBunkerChanged(bool enabled)
