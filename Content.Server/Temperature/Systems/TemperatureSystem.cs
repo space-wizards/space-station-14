@@ -91,11 +91,11 @@ public sealed class TemperatureSystem : EntitySystem
         var delta = temperature.CurrentTemperature - temp;
         temperature.CurrentTemperature = temp;
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
-                true);
+            true);
     }
 
     public void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false,
-            TemperatureComponent? temperature = null)
+        TemperatureComponent? temperature = null)
     {
         if (!Resolve(uid, ref temperature))
             return;
@@ -115,17 +115,17 @@ public sealed class TemperatureSystem : EntitySystem
     }
 
     private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature,
-            ref AtmosExposedUpdateEvent args)
+        ref AtmosExposedUpdateEvent args)
     {
         var transform = args.Transform;
         if (transform.MapUid == null)
             return;
 
-        var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+        var position = _transform.GetGridOrMapTilePosition(uid, transform);
 
         var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
         var tileHeatCapacity =
-                _atmosphereSystem.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
+            _atmosphere.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
         var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity /
                                            (tileHeatCapacity + temperature.HeatCapacity));
         ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
