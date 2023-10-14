@@ -28,7 +28,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         SubscribeLocalEvent<AnomalySynchronizerComponent, PowerChangedEvent>(OnPowerChanged);
 
         SubscribeLocalEvent<AnomalyPulseEvent>(OnAnomalyPulse);
-        SubscribeLocalEvent<AnomalySupercriticalEvent>(OnAnomalySupercritical);
+        SubscribeLocalEvent<AnomalySeverityChangedEvent>(OnAnomalySeverityChanged);
         SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnAnomalyStabilityChanged);
     }
 
@@ -97,12 +97,11 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
                 continue;
 
-            var uid = args.Anomaly;
-            _signal.InvokePort(uid, component.PulsePort);
+            _signal.InvokePort(ent, component.PulsePort);
         }
     }
 
-    private void OnAnomalySupercritical(ref AnomalySupercriticalEvent args)
+    private void OnAnomalySeverityChanged(ref AnomalySeverityChangedEvent args)
     {
         var query = EntityQueryEnumerator<AnomalySynchronizerComponent>();
         while (query.MoveNext(out var ent, out var component))
@@ -111,10 +110,12 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
                 continue;
             if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
                 continue;
-
-            var uid = args.Anomaly;
-
-            _signal.InvokePort(uid, component.SupercritPort);
+            //The superscritical port is invoked not at the AnomalySupercriticalEvent,
+            //but at the moment the growth animation starts. Otherwise, there is no point in this port.
+            //ATTENTION! the console command supercriticalanomaly does not work here,
+            //as it forcefully causes growth to start without increasing severity.
+            if (args.Severity >= 1)
+                _signal.InvokePort(ent, component.SupercritPort);
         }
     }
     private void OnAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
@@ -127,19 +128,17 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
                 continue;
 
-            var uid = args.Anomaly;
-
             if (args.Stability < 0.25f) //I couldn't find where these values are stored, so I hardcoded them. Tell me where these variables are stored and I'll fix it
             {
-                _signal.InvokePort(uid, component.DecayingPort);
+                _signal.InvokePort(ent, component.DecayingPort);
             }
             else if (args.Stability > 0.5f) //I couldn't find where these values are stored, so I hardcoded them. Tell me where these variables are stored and I'll fix it
             {
-                _signal.InvokePort(uid, component.GrowingPort);
+                _signal.InvokePort(ent, component.GrowingPort);
             }
             else
             {
-                _signal.InvokePort(uid, component.StabilizePort);
+                _signal.InvokePort(ent, component.StabilizePort);
             }
         }
     }
