@@ -104,6 +104,12 @@
     - state: icon_open
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
+  - type: Tag
+    tags:
+    - Cola
+    - DrinkCan
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: DrinkCanBaseFull

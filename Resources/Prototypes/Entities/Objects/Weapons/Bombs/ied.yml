@@ -72,7 +72,9 @@
     node: empty
     defaultTarget: ied
   - type: Tag
-    tags: [] # prevent using it to make another ied
+    tags:
+    - Trash
+    # no DrinkCan, prevent using it to make another ied
 
 - type: entity
   parent: ImprovisedExplosiveEmpty
