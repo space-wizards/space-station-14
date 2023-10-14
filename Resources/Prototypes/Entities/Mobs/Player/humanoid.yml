@@ -59,7 +59,6 @@
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
 
@@ -93,7 +92,6 @@
         - !type:RoleTimeRequirement
           role: JobJanitor
           time: 1800 # 30 mins, its not exactly rocket science
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -117,7 +115,6 @@
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
 
@@ -151,7 +148,6 @@
         - !type:RoleTimeRequirement
           role: JobStationEngineer
           time: 60 # 1 min, basically mirror techie requirements
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -175,7 +171,6 @@
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
 
@@ -209,7 +204,6 @@
         - !type:RoleTimeRequirement
           role: JobSecurityOfficer
           time: 10800 # 1 min, basically mirror cadet requirements
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -233,7 +227,6 @@
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
 
@@ -267,7 +260,6 @@
         - !type:RoleTimeRequirement
           role: JobMedicalDoctor
           time: 60 # 1 min, basically mirror intern requirements
-    - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -291,7 +283,6 @@
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
 
