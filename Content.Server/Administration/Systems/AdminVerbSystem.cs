@@ -154,7 +154,7 @@ namespace Content.Server.Administration.Systems
                             _adminSystem.Erase(targetActor.PlayerSession);
                         },
                         Impact = LogImpact.Extreme,
-                        ConfirmationPopup = true,
+                        ConfirmationPopup = true
                     });
                 }
 
