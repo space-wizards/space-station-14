@@ -14,6 +14,10 @@
       reflects:
       - Energy
       spread: 75
+    - type: Anchorable
+      delay: 2
+    - type: Physics
+      bodyType: Static
     - type: Fixtures
       fixtures:
         fix1:
