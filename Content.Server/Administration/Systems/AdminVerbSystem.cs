@@ -48,6 +48,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly AdminSystem _adminSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubes = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
@@ -139,6 +140,20 @@ namespace Content.Server.Administration.Systems
                                 EnsureComp<AdminFrozenComponent>(args.Target);
                         },
                         Impact = LogImpact.Medium,
+                    });
+
+                    // Erase
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-verbs-erase"),
+                        Category = VerbCategory.Admin,
+                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                        Act = () =>
+                        {
+                            _adminSystem.Erase(targetActor.PlayerSession);
+                        },
+                        Impact = LogImpact.Extreme,
+                        ConfirmationPopup = true
                     });
                 }
 
