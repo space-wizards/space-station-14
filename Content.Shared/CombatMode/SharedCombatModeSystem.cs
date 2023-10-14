@@ -2,7 +2,6 @@ using Content.Shared.Actions;
 using Content.Shared.MouseRotator;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
-using Content.Shared.Targeting;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -83,19 +82,10 @@ public abstract class SharedCombatModeSystem : EntitySystem
             _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
 
         // Change mouse rotator comps if flag is set
-        if (!component.ToggleMouseRotator)
+        if (!component.ToggleMouseRotator || IsNpc(entity))
             return;
 
         SetMouseRotatorComponents(entity, value);
-    }
-
-    public virtual void SetActiveZone(EntityUid entity, TargetingZone zone,
-        CombatModeComponent? component = null)
-    {
-        if (!Resolve(entity, ref component))
-            return;
-
-        component.ActiveZone = zone;
     }
 
     private void SetMouseRotatorComponents(EntityUid uid, bool value)
@@ -111,6 +101,12 @@ public abstract class SharedCombatModeSystem : EntitySystem
             RemComp<NoRotateOnMoveComponent>(uid);
         }
     }
+
+    // todo: When we stop making fucking garbage abstract shared components, remove this shit too.
+    protected abstract bool IsNpc(EntityUid uid);
 }
 
-public sealed partial class ToggleCombatActionEvent : InstantActionEvent { }
+public sealed partial class ToggleCombatActionEvent : InstantActionEvent
+{
+
+}
