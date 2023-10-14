@@ -133,6 +133,7 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
+    // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
