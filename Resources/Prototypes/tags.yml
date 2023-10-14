@@ -602,6 +602,9 @@
 - type: Tag
   id: Hotsauce
 
+- type: Tag
+  id: Igniter
+
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
 

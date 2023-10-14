@@ -5,6 +5,7 @@
     Flash: 4
     ProximitySensor: 3
     RemoteSignaller: 3
+    Igniter: 3 # its more ordnance but yeah
     HandheldHealthAnalyzer: 3
     Scalpel: 2
     SawElectric: 2
