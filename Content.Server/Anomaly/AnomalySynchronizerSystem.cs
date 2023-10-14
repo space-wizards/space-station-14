@@ -19,6 +19,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     [Dependency] private readonly DeviceLinkSystem _signal = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
 
     public override void Initialize()
     {
@@ -41,17 +42,19 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             return;
 
         _anomaly.DoAnomalyPulse(component.ConnectedAnomaly.Value, anomaly);
-        DisconnetFromAnomaly(uid, component, anomaly);
+        DisconneсtFromAnomaly(uid, component, anomaly);
     }
 
     private void OnInteractHand(EntityUid uid, AnomalySynchronizerComponent component, InteractHandEvent args)
     {
+        if (!_power.IsPowered(uid))
+            return;
+
         foreach (var entity in _entityLookup.GetEntitiesInRange(uid, 0.15f)) //is the radius of one tile. It must not be set higher, otherwise the anomaly can be moved from tile to tile
         {
             if (!TryComp<AnomalyComponent>(entity, out var anomaly))
                 continue;
-            if (TryComp<ApcPowerReceiverComponent>(entity, out var apcPower) && !apcPower.Powered)
-                continue;
+
 
             ConnectToAnomaly(uid, component, entity, anomaly);
             break;
@@ -75,7 +78,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
 
     //TO DO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
     //Currently only bluespace anomaly can do this, but for some reason it is the only one that cannot be connected to the synchronizer.
-    private void DisconnetFromAnomaly(EntityUid uid, AnomalySynchronizerComponent component, AnomalyComponent anomaly)
+    private void DisconneсtFromAnomaly(EntityUid uid, AnomalySynchronizerComponent component, AnomalyComponent anomaly)
     {
         if (component.ConnectedAnomaly == null)
             return;
@@ -94,7 +97,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         {
             if (args.Anomaly != component.ConnectedAnomaly)
                 continue;
-            if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
+            if (!_power.IsPowered(ent))
                 continue;
 
             _signal.InvokePort(ent, component.PulsePort);
@@ -108,7 +111,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         {
             if (args.Anomaly != component.ConnectedAnomaly)
                 continue;
-            if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
+            if (!_power.IsPowered(ent))
                 continue;
             //The superscritical port is invoked not at the AnomalySupercriticalEvent,
             //but at the moment the growth animation starts. Otherwise, there is no point in this port.
