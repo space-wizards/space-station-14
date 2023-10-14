@@ -1,18 +1,17 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Shared.DeviceLinking;
-using Content.Server.Storage.Components;
 using Content.Shared.Placeable;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Events;
+using Content.Server.Physics;
 
 namespace Content.Server.DeviceLinking.Systems;
 
 /// <see cref="PressurePlateComponent"/>
 public sealed class PressurePlateSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private readonly WeightSystem _weight = default!;
 
     public override void Initialize()
     {
@@ -45,9 +44,9 @@ public sealed class PressurePlateSystem : EntitySystem
         var totalMass = 0f;
         foreach (var ent in itemPlacer.PlacedEntities)
         {
-            totalMass += GetEntWeightRecursive(ent);
+            totalMass += _weight.GetEntWeightRecursive(ent);
         }
-
+        Log.Debug("Вес = " + totalMass);
         var pressed = totalMass >= component.WeightRequired;
         if (pressed == component.IsPressed)
             return;
@@ -58,27 +57,5 @@ public sealed class PressurePlateSystem : EntitySystem
 
         _appearance.SetData(uid, PressurePlateVisuals.Pressed, pressed);
         _audio.PlayPvs(pressed ? component.PressedSound : component.ReleasedSound, uid);
-    }
-
-    /// <summary>
-    /// Recursively calculates the weight of the object, and all its contents, and the contents and its contents...
-    /// </summary>
-    private float GetEntWeightRecursive(EntityUid uid)
-    {
-        var totalMass = 0f;
-        if (Deleted(uid)) return 0f;
-        if (TryComp<PhysicsComponent>(uid, out var physics))
-        {
-            totalMass += physics.Mass;
-        }
-        if (TryComp<EntityStorageComponent>(uid, out var entityStorage))
-        {
-            var storage = entityStorage.Contents;
-            foreach (var ent in storage.ContainedEntities)
-            {
-                totalMass += GetEntWeightRecursive(ent);
-            }
-        }
-        return totalMass;
     }
 }

@@ -19,7 +19,7 @@ public sealed partial class PressurePlateComponent : Component
     /// The required weight of an object that happens to be above the slab to activate.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float WeightRequired = 50f;
+    public float WeightRequired = 100f;
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public float CurrentWeight;
