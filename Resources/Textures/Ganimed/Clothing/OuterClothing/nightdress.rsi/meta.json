@@ -11,11 +11,11 @@
       "name": "icon"
     },
     {
-      "name": "equipped-INNERCLOTHING",
+      "name": "equipped-OUTERCLOTHING",
       "directions": 4
     },
     {
-      "name": "equipped-INNERCLOTHING-monkey",
+      "name": "equipped-OUTERCLOTHING-monkey",
       "directions": 4
     },
     {

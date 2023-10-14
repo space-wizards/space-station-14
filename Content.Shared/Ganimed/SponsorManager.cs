@@ -1,4 +1,7 @@
 using System.Linq;
+using Robust.Shared.Players;
+using Content.Shared.Administration;
+using Content.Shared.Administration.Managers;
 
 namespace Content.Shared.Ganimed.SponsorManager;
 
@@ -12,9 +15,16 @@ public sealed class SponsorManager
 			{"localhost@JoeGenero", new DateTime(2023, 10, 07)}
 		};
 
-    public bool IsSponsor(String? nickname)
+    public bool IsSponsor(ICommonSession? session)
     {
-        if (nickname is null)
+        if (session is null)
+			return false;
+		if (session.ConnectedClient is null)
+			return false;
+		
+		var nickname = session.ConnectedClient.UserName;
+		
+		if (nickname is null)
 			return false;
 		
 		if (!sponsors.TryGetValue(nickname, out var sponsorTime))
@@ -22,6 +32,25 @@ public sealed class SponsorManager
 		
 		return IsStillSponsor(sponsorTime);
     }
+	
+	public bool IsHost(ICommonSession? session)
+	{
+		if (session is null)
+			return false;
+		
+		var adminManager = IoCManager.Resolve<ISharedAdminManager>();
+		return adminManager.HasAdminFlag(session, AdminFlags.Host);
+	}
+	
+	public bool AllowSponsor(ICommonSession? session)
+	{
+		if (session is null)
+			return false;
+		if (session.ConnectedClient is null)
+			return false;
+		
+		return IsHost(session) || IsSponsor(session);
+	}
 	
 	public bool IsStillSponsor(DateTime sponsorDate)
 	{

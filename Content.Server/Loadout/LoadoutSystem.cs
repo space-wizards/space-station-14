@@ -30,7 +30,7 @@ public sealed class LoadoutSystem : EntitySystem
     {
 		int loadoutTotal = 0;
 		int loadoutMax = !(ev.Player is null) && !(ev.Player.ConnectedClient is null) 
-			&& _sponsorManager.IsSponsor(ev.Player.ConnectedClient.UserName)
+			&& _sponsorManager.AllowSponsor(ev.Player)
 				? 20 : 14;
 		
 		foreach (var loadoutId in ev.Profile.LoadoutPreferences)
@@ -54,8 +54,8 @@ public sealed class LoadoutSystem : EntitySystem
             var isBlacklisted = ev.JobId != null &&
                                 loadout.BlacklistJobs != null &&
                                 loadout.BlacklistJobs.Contains(ev.JobId);
-			var isSponsor = !(ev.Player is null) && !(ev.Player.ConnectedClient is null) &&
-                                _sponsorManager.IsSponsor(ev.Player.ConnectedClient.UserName);
+			var isSponsor = !(ev.Player is null) &&
+                                _sponsorManager.AllowSponsor(ev.Player);
 			var sponsorRestriction = !isSponsor && loadout.SponsorOnly;
             var isSpeciesRestricted = loadout.SpeciesRestrictions != null &&
                                       loadout.SpeciesRestrictions.Contains(ev.Profile.Species);

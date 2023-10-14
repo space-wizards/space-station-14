@@ -363,7 +363,7 @@ namespace Content.Client.Preferences.UI
                 return;
 				if (_playerManager.LocalPlayer is null)
 					return;
-				if (!_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)) {
+				if (!_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session)) {
 					Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithSpeakerColor(newColor));
 					CMarkings.CurrentSpeakerColor = Profile.Appearance.EyeColor;
@@ -386,7 +386,7 @@ namespace Content.Client.Preferences.UI
                     return;
 				if (_playerManager.LocalPlayer is null)
 					return;
-				if (!_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)) {
+				if (!_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session)) {
 					newColor = Profile.Appearance.EyeColor;
 				}
                 Profile = Profile.WithCharacterAppearance(
@@ -509,7 +509,7 @@ namespace Content.Client.Preferences.UI
 			_sponsorManager = IoCManager.Resolve<SponsorManager>();	
 			
             _loadoutPoints.MaxValue = !(Profile is null) && !(_playerManager.LocalPlayer is null) &&
-				_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)
+				_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session)
 				? SponsorStartLoadoutPoints : BaseStartLoadoutPoints;
             _tabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-loadouts-tab"));
             _loadoutPreferences = new List<LoadoutPreferenceSelector>();
@@ -598,7 +598,7 @@ namespace Content.Client.Preferences.UI
 							var remain = _loadoutPoints.Value - loadout.Cost;
                             if (remain < 0)
                                 preference = false;
-                            else if (loadout.SponsorOnly && !_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName))
+                            else if (loadout.SponsorOnly && !_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session))
 								preference = false;
 							else
                                 _loadoutPoints.Value = remain;
@@ -1229,7 +1229,7 @@ namespace Content.Client.Preferences.UI
                 return;
 			if (_playerManager.LocalPlayer is null)
 				return;
-			if (!_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)) {
+			if (!_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session)) {
 				CMarkings.CurrentSpeakerColor = Profile.Appearance.EyeColor;
 				_speakerPicker.SetData(Profile.Appearance.EyeColor);
 			}
@@ -1244,7 +1244,7 @@ namespace Content.Client.Preferences.UI
                 return;
 			if (_playerManager.LocalPlayer is null)
 				return;
-			if (!_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)) {
+			if (!_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session)) {
 				CMarkings.CurrentSpeakerColor = Profile.Appearance.EyeColor;
 				_speakerPicker.SetData(Profile.Appearance.EyeColor);
 				return;
@@ -1489,18 +1489,18 @@ namespace Content.Client.Preferences.UI
 		private void UpdateLoadoutPreferences()
 		{
 			_loadoutPoints.Value = !(Profile is null) && !(_playerManager.LocalPlayer is null) &&
-				_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)
+				_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session)
 				? SponsorStartLoadoutPoints : BaseStartLoadoutPoints;
 			
             _loadoutPoints.MaxValue = !(Profile is null) && !(_playerManager.LocalPlayer is null) &&
-				_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)
+				_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session)
 				? SponsorStartLoadoutPoints : BaseStartLoadoutPoints;
 
             if (_loadoutPreferences == null)
                 return;
 
             var points = !(Profile is null) && !(_playerManager.LocalPlayer is null) &&
-				_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)
+				_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session)
 				? SponsorStartLoadoutPoints : BaseStartLoadoutPoints;
 			
             foreach (var preferenceSelector in _loadoutPreferences)

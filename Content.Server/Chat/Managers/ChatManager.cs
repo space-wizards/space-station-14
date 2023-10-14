@@ -192,8 +192,10 @@ namespace Content.Server.Chat.Managers
 
             Color? colorOverride = null;
 			var _sponsorManager = IoCManager.Resolve<SponsorManager>();
-            var wrappedMessage = _sponsorManager.IsSponsor(player.ConnectedClient.UserName) ? Loc.GetString("chat-manager-send-sponsor-ooc-wrap-message", ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message))) : Loc.GetString("chat-manager-send-ooc-wrap-message", ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
+            var wrappedMessage = _sponsorManager.IsSponsor(player) ? Loc.GetString("chat-manager-send-sponsor-ooc-wrap-message", ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message))) : Loc.GetString("chat-manager-send-ooc-wrap-message", ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
+            if (_sponsorManager.IsHost(player))
+				wrappedMessage = Loc.GetString("chat-manager-send-host-ooc-wrap-message", ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
+			if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
             {
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
                 colorOverride = prefs.AdminOOCColor;
