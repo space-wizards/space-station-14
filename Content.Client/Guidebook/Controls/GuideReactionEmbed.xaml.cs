@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Guidebook.Controls;
 
 /// <summary>
-///     Control for embedding a reagent into a guidebook.
+///     Control for embedding a chemical reaction into a guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideReactionEmbed : BoxContainer, IDocumentTag, ISearchableControl

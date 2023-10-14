@@ -517,13 +517,13 @@
   id: FoodMealQueso
   description: A classic dipping sauce that you can't go wrong with.
   components:
-  - type: FlavorProfile
-    flavors:
-      - cheesy
-  - type: Sprite
-    state: queso
-  - type: CookbookDocumentation
-    catagory: "Mexican"
+    - type: FlavorProfile
+      flavors:
+        - cheesy
+    - type: Sprite
+      state: queso
+    - type: CookbookDocumentation
+      catagory: "Mexican"
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
@@ -559,25 +559,25 @@
   id: FoodMealEnchiladas
   description: Viva La Mexico!
   components:
-  - type: FlavorProfile
-    flavors:
-      - meaty
-  - type: Sprite
-    state: enchiladas
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: CapsaicinOil
-          Quantity: 6
-  - type: Tag
-    tags:
-    - Meat
-  - type: CookbookDocumentation
-    catagory: "Mexican"
+    - type: FlavorProfile
+      flavors:
+        - meaty
+    - type: Sprite
+      state: enchiladas
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 10
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 8
+          - ReagentId: CapsaicinOil
+            Quantity: 6
+    - type: Tag
+      tags:
+      - Meat
+    - type: CookbookDocumentation
+      catagory: "Mexican"
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
 - type: entity

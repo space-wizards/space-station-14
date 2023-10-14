@@ -21,7 +21,7 @@ using System.Numerics;
 namespace Content.Client.Guidebook.Controls;
 
 /// <summary>
-///     Control for embedding a reagent into a guidebook.
+///     Control for embedding food into a guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideFoodEmbed : BoxContainer, IDocumentTag, ISearchableControl

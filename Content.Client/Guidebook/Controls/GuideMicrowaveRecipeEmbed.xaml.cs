@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Guidebook.Controls;
 
 /// <summary>
-///     Control for embedding a reagent into a guidebook.
+///     Control for embedding a microwave recipe into a guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideMicrowaveRecipeEmbed : BoxContainer, IDocumentTag, ISearchableControl

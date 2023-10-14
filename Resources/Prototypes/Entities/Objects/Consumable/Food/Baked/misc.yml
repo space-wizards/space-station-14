@@ -604,22 +604,22 @@
   id: FoodOnionRings
   description: You can eat it or propose to your loved ones.
   components:
-  - type: FlavorProfile
-    flavors:
-      - onion
-      - oily
-  - type: Sprite
-    state: onionrings
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 1
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 1
-        - ReagentId: Allicin
-          Quantity: 1
-        - ReagentId: Vitamin
-          Quantity: 1
-  - type: CookbookDocumentation
-    catagory: "PotatoDishes"
+    - type: FlavorProfile
+      flavors:
+        - onion
+        - oily
+    - type: Sprite
+      state: onionrings
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 1
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 1
+          - ReagentId: Allicin
+            Quantity: 1
+          - ReagentId: Vitamin
+            Quantity: 1
+    - type: CookbookDocumentation
+      catagory: "PotatoDishes"
