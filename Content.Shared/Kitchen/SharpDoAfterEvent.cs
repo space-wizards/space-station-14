@@ -4,6 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Kitchen;
 
 [Serializable, NetSerializable]
-public sealed class SharpDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class SharpDoAfterEvent : SimpleDoAfterEvent
 {
 }

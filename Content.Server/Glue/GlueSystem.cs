@@ -1,10 +1,12 @@
+using Content.Server.Administration.Logs;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Item;
 using Content.Shared.Glue;
 using Content.Shared.Interaction;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Robust.Shared.Timing;
 using Content.Shared.Interaction.Components;
@@ -18,12 +20,13 @@ public sealed class GlueSystem : SharedGlueSystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGluedInit);
         SubscribeLocalEvent<GluedComponent, GotEquippedHandEvent>(OnHandPickUp);
     }
@@ -37,12 +40,7 @@ public sealed class GlueSystem : SharedGlueSystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
-        {
-            return;
-        }
-
-        if (TryGlue(uid, component, target))
+        if (TryGlue(uid, component, target, args.User))
         {
             args.Handled = true;
             _audio.PlayPvs(component.Squeeze, uid);
@@ -54,7 +52,7 @@ public sealed class GlueSystem : SharedGlueSystem
         }
     }
 
-    private bool TryGlue(EntityUid uid, GlueComponent component, EntityUid target)
+    private bool TryGlue(EntityUid uid, GlueComponent component, EntityUid target, EntityUid actor)
     {
         // if item is glued then don't apply glue again so it can be removed for reasonable time
         if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target))
@@ -68,6 +66,7 @@ public sealed class GlueSystem : SharedGlueSystem
             if (quantity > 0)
             {
                 EnsureComp<GluedComponent>(target).Duration = quantity.Double() * component.DurationPerUnit;
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(uid):tool}");
                 return true;
             }
         }

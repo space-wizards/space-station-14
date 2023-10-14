@@ -11,7 +11,6 @@
     size: 30
   - type: StaticPrice
     price: 0
-  - type: ItemStatus
   - type: Tag
     tags:
     - Sheet
@@ -49,7 +48,7 @@
   - type: Sprite
     state: steel_3
     layers:
-    - state: plasteel_3
+    - state: steel_3
       map: ["base"]
   - type: Item
     heldPrefix: steel
@@ -72,6 +71,20 @@
 
 - type: entity
   parent: SheetSteel
+  id: SheetSteel10
+  name: steel
+  suffix: 10
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    state: steel
+  - type: Stack
+    stackType: Steel
+    count: 10
+
+- type: entity
+  parent: SheetSteel
   id: SheetSteel1
   name: steel
   suffix: Single
@@ -83,6 +96,17 @@
   - type: Stack
     stackType: Steel
     count: 1
+
+- type: entity
+  parent: SheetSteel
+  id: SheetSteelLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Item
+    size: 0
+  - type: Stack
+    lingering: true
+    count: 0
 
 - type: entity
   parent: SheetMetalBase
@@ -109,6 +133,20 @@
   - type: Item
     heldPrefix: plasteel
   - type: Appearance
+
+- type: entity
+  parent: SheetPlasteel
+  id: SheetPlasteel10
+  name: plasteel
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plasteel
+  - type: Stack
+    stackType: Plasteel
+    count: 10
+  - type: Item
+    size: 10
 
 - type: entity
   parent: SheetPlasteel

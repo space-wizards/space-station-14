@@ -7,7 +7,15 @@
   permanentComponents:
   - type: RadioMicrophone
     powerRequired: false
+    toggleOnInteract: false
     listenRange: 3
+  - type: Speech
+  - type: RadioSpeaker
+    toggleOnInteract: false
+  - type: ActivatableUI
+    key: enum.IntercomUiKey.Key
+  - type: Intercom
+    requiresPower: false
     supportedChannels:
     - Common
     - CentCom
@@ -18,7 +26,6 @@
     - Security
     - Service
     - Supply
-    - Syndicate
 
 - type: artifactEffect
   id: EffectRandomInstrument
@@ -106,12 +113,6 @@
     components:
     - Item
   permanentComponents:
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 125
-    gatheringTime: 0.50
-    MaxGatheringEntities: 3
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:

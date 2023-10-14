@@ -4,9 +4,8 @@
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
   components:
-  - type: Drink
-    isOpen: false
-    openSounds:
+  - type: Openable
+    sound:
       collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glue-tube.rsi
@@ -30,6 +29,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: fill
+  - type: Tag
+    tags:
+      - DrinkSpaceGlue
 
 - type: entity
   parent: DrinkBase
@@ -37,9 +39,8 @@
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
   components:
-  - type: Drink
-    isOpen: false
-    openSounds:
+  - type: Openable
+    sound:
       collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lube-tube.rsi

@@ -18,7 +18,7 @@ public sealed partial class TriggerSystem
 
     private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
     {
-        if (component.MobState != args.NewMobState)
+        if (!component.MobState.Contains(args.NewMobState))
             return;
 
         //This chains Mobstate Changed triggers with OnUseTimerTrigger if they have it

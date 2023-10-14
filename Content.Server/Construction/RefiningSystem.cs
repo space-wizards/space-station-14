@@ -44,7 +44,7 @@ namespace Content.Server.Construction
 
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
-                if (TryComp<StackComponent?>(droppedEnt, out var stack))
+                if (TryComp<StackComponent>(droppedEnt, out var stack))
                     _stackSystem.SetCount(droppedEnt, 1, stack);
             }
         }

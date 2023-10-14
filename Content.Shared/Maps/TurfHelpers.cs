@@ -90,6 +90,30 @@ namespace Content.Shared.Maps
         }
 
         /// <summary>
+        ///     Returns a weighted pick of a tile variant.
+        /// </summary>
+        public static byte PickVariant(this ContentTileDefinition tile, IRobustRandom? random = null)
+        {
+            IoCManager.Resolve(ref random);
+            var variants = tile.PlacementVariants;
+
+            var sum = variants.Sum();
+            var accumulated = 0f;
+            var rand = random.NextFloat() * sum;
+
+            for (byte i = 0; i < variants.Length; ++i)
+            {
+                accumulated += variants[i];
+
+                if (accumulated >= rand)
+                    return i;
+            }
+
+            // Shouldn't happen
+            throw new InvalidOperationException($"Invalid weighted variantize tile pick for {tile.ID}!");
+        }
+
+        /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

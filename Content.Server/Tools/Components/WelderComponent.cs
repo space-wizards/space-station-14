@@ -8,46 +8,46 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tools.Components
 {
     [RegisterComponent]
-    public sealed class WelderComponent : SharedWelderComponent
+    public sealed partial class WelderComponent : SharedWelderComponent
     {
         /// <summary>
         ///     Solution on the entity that contains the fuel.
         /// </summary>
         [DataField("fuelSolution"), ViewVariables(VVAccess.ReadWrite)]
-        public string FuelSolution { get; } = "Welder";
+        public string FuelSolution { get; private set; } = "Welder";
 
         /// <summary>
         ///     Reagent that will be used as fuel for welding.
         /// </summary>
         [DataField("fuelReagent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-        public string FuelReagent { get; } = "WeldingFuel";
+        public string FuelReagent { get; private set; } = "WeldingFuel";
 
         /// <summary>
         ///     Fuel consumption per second, while the welder is active.
         /// </summary>
         [DataField("fuelConsumption"), ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 FuelConsumption { get; } = FixedPoint2.New(2.0f);
+        public FixedPoint2 FuelConsumption { get; private set; } = FixedPoint2.New(2.0f);
 
         /// <summary>
         ///     A fuel amount to be consumed when the welder goes from being unlit to being lit.
         /// </summary>
         [DataField("fuelLitCost"), ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 FuelLitCost { get; } = FixedPoint2.New(0.5f);
+        public FixedPoint2 FuelLitCost { get; private set; } = FixedPoint2.New(0.5f);
 
         /// <summary>
         ///     Sound played when the welder is turned off.
         /// </summary>
         [DataField("welderOffSounds")]
-        public SoundSpecifier WelderOffSounds { get; } = new SoundCollectionSpecifier("WelderOff");
+        public SoundSpecifier WelderOffSounds { get; private set; } = new SoundCollectionSpecifier("WelderOff");
 
         /// <summary>
         ///     Sound played when the tool is turned on.
         /// </summary>
         [DataField("welderOnSounds")]
-        public SoundSpecifier WelderOnSounds { get; } = new SoundCollectionSpecifier("WelderOn");
+        public SoundSpecifier WelderOnSounds { get; private set; } = new SoundCollectionSpecifier("WelderOn");
 
         [DataField("welderRefill")]
-        public SoundSpecifier WelderRefill { get; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
+        public SoundSpecifier WelderRefill { get; private set; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
         /// <summary>
         ///     When the welder is lit, this damage is added to the base melee weapon damage.

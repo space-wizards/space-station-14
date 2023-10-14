@@ -155,6 +155,7 @@
       Steel: 100
   - type: StaticPrice
     price: 22
+  - type: Prying
 
 - type: entity
   parent: Crowbar
@@ -363,6 +364,19 @@
     charges: 0
 
 - type: entity
+  id: RCDRecharging
+  parent: RCD
+  name: experimental rcd
+  description: A bluespace-enhanced RCD that regenerates charges passively.
+  suffix: AutoRecharge
+  components:
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: AutoRecharge
+    rechargeDuration: 30
+
+- type: entity
   id: RCDExperimental
   parent: RCD
   suffix: Admeme
@@ -408,6 +422,8 @@
     tags:
     - Multitool
   - type: TilePrying
+  - type: Prying
+    enabled: false
   - type: Tool
     qualities:
       - Screwing
@@ -475,6 +491,7 @@
       types:
         Blunt: 14
   - type: Item
+    size: 90
     sprite: Objects/Tools/shovel.rsi
   - type: PhysicalComposition
     materialComposition:
@@ -482,3 +499,27 @@
       Wood: 50
   - type: StaticPrice
     price: 25
+
+- type: entity
+  parent: BaseItem
+  id: RollingPin
+  name: rolling pin
+  description: A tool used to shape and flatten dough.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/rolling_pin.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/rolling_pin.rsi
+    size: 10
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 7
+  - type: Tool
+    qualities:
+    - Rolling
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100

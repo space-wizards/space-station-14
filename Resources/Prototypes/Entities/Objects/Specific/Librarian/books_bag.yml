@@ -21,3 +21,5 @@
       whitelist:
         tags:
           - Book
+          - Document
+    - type: Dumpable

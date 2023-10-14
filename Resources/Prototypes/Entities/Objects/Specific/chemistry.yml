@@ -45,7 +45,6 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Drink
-    isOpen: true
     solution: beaker
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -136,7 +135,6 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Drink
-    isOpen: true
     solution: beaker
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -236,7 +234,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 300
+        maxVol: 1000
         canMix: true
 
 - type: entity
@@ -281,6 +279,26 @@
     price: 40
 
 - type: entity
+  name: borgdropper
+  parent: Dropper
+  description: Used to transfer small amounts of chemical solution between containers. Extended for use by medical borgs.
+  id: BorgDropper
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+    layers:
+      - state: borgdropper
+      - state: dropper1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 10
+  - type: Item
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+
+- type: entity
   name: syringe
   parent: BaseItem
   description: Used to draw blood samples from mobs, or to inject them with reagents.
@@ -308,6 +326,8 @@
         maxVol: 15
   - type: Injector
     injectOnly: false
+  - type: ExaminableSolution
+    solution: injector
   - type: Spillable
     solution: injector
   - type: TrashOnEmpty
@@ -324,6 +344,9 @@
   parent: BaseSyringe
   id: Syringe
   components:
+  - type: Injector
+    transferAmount: 15
+    toggleState: Draw
   - type: Tag
     tags:
     - Syringe
@@ -405,6 +428,9 @@
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Pill
 
 - type: entity
   name: pill canister

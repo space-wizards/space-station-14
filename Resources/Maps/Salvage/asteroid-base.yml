@@ -1165,13 +1165,9 @@ entities:
     - pos: 13.5,-6.5
       parent: 407
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 380
-      type: SignalReceiver
+    - links:
+      - 380
+      type: DeviceLinkSink
 - proto: BookRandom
   entities:
   - uid: 335
@@ -2379,11 +2375,10 @@ entities:
     - pos: 12.5,-9.5
       parent: 407
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 136
-      type: SignalTransmitter
+    - linkedPorts:
+        136:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SignSecureSmall
   entities:
   - uid: 382

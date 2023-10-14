@@ -5,21 +5,21 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
-    [Dependency] protected readonly MovementSpeedModifierSystem MovementSpeedModifier = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private   readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] protected  readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private   readonly SharedMoverController _mover = default!;
+    [Dependency] private   readonly SharedPopupSystem _popup = default!;
+    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -31,10 +31,15 @@ public abstract class SharedJetpackSystem : EntitySystem
 
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
         SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
-        SubscribeLocalEvent<JetpackUserComponent, ComponentGetState>(OnJetpackUserGetState);
-        SubscribeLocalEvent<JetpackUserComponent, ComponentHandleState>(OnJetpackUserHandleState);
 
         SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
+        SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, JetpackComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+        Dirty(uid, component);
     }
 
     private void OnJetpackCanWeightlessMove(EntityUid uid, JetpackComponent component, ref CanWeightlessMoveEvent args)
@@ -55,28 +60,14 @@ public abstract class SharedJetpackSystem : EntitySystem
             {
                 _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
 
-                SetEnabled(jetpack, false, uid);
+                SetEnabled(user.Jetpack, jetpack, false, uid);
             }
         }
     }
 
-    private void OnJetpackUserHandleState(EntityUid uid, JetpackUserComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not JetpackUserComponentState state) return;
-        component.Jetpack = state.Jetpack;
-    }
-
-    private void OnJetpackUserGetState(EntityUid uid, JetpackUserComponent component, ref ComponentGetState args)
-    {
-        args.State = new JetpackUserComponentState()
-        {
-            Jetpack = component.Jetpack,
-        };
-    }
-
     private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
     {
-        SetEnabled(component, false, args.User);
+        SetEnabled(uid, component, false, args.User);
     }
 
     private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
@@ -89,22 +80,31 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
             !CanEnableOnGrid(args.Transform.GridUid))
         {
-            SetEnabled(jetpack, false, uid);
+            SetEnabled(component.Jetpack, jetpack, false, uid);
 
             _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
         }
     }
 
-    private void SetupUser(EntityUid uid, JetpackComponent component)
+    private void SetupUser(EntityUid user, EntityUid jetpackUid)
     {
-        var user = EnsureComp<JetpackUserComponent>(uid);
-        _mover.SetRelay(uid, component.Owner);
-        user.Jetpack = component.Owner;
+        var userComp = EnsureComp<JetpackUserComponent>(user);
+        _mover.SetRelay(user, jetpackUid);
+
+        if (TryComp<PhysicsComponent>(user, out var physics))
+            _physics.SetBodyStatus(physics, BodyStatus.InAir);
+
+        userComp.Jetpack = jetpackUid;
     }
 
     private void RemoveUser(EntityUid uid)
     {
-        if (!RemComp<JetpackUserComponent>(uid)) return;
+        if (!RemComp<JetpackUserComponent>(uid))
+            return;
+
+        if (TryComp<PhysicsComponent>(uid, out var physics))
+            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+
         RemComp<RelayInputMoverComponent>(uid);
     }
 
@@ -120,7 +120,7 @@ public abstract class SharedJetpackSystem : EntitySystem
             return;
         }
 
-        SetEnabled(component, !IsEnabled(uid));
+        SetEnabled(uid, component, !IsEnabled(uid));
     }
 
     private bool CanEnableOnGrid(EntityUid? gridUid)
@@ -131,7 +131,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
     {
-        args.Actions.Add(component.ToggleAction);
+        args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
     }
 
     private bool IsEnabled(EntityUid uid)
@@ -139,45 +139,49 @@ public abstract class SharedJetpackSystem : EntitySystem
         return HasComp<ActiveJetpackComponent>(uid);
     }
 
-    public void SetEnabled(JetpackComponent component, bool enabled, EntityUid? user = null)
+    public void SetEnabled(EntityUid uid, JetpackComponent component, bool enabled, EntityUid? user = null)
     {
-        if (IsEnabled(component.Owner) == enabled ||
-            enabled && !CanEnable(component)) return;
+        if (IsEnabled(uid) == enabled ||
+            enabled && !CanEnable(uid, component))
+        {
+            return;
+        }
 
         if (enabled)
         {
-            EnsureComp<ActiveJetpackComponent>(component.Owner);
+            EnsureComp<ActiveJetpackComponent>(uid);
         }
         else
         {
-            RemComp<ActiveJetpackComponent>(component.Owner);
+            RemComp<ActiveJetpackComponent>(uid);
         }
 
         if (user == null)
         {
-            Container.TryGetContainingContainer(component.Owner, out var container);
+            Container.TryGetContainingContainer(uid, out var container);
             user = container?.Owner;
         }
 
         // Can't activate if no one's using.
-        if (user == null && enabled) return;
+        if (user == null && enabled)
+            return;
 
         if (user != null)
         {
             if (enabled)
             {
-                SetupUser(user.Value, component);
+                SetupUser(user.Value, uid);
             }
             else
             {
                 RemoveUser(user.Value);
             }
 
-            MovementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
-        Appearance.SetData(component.Owner, JetpackVisuals.Enabled, enabled);
-        Dirty(component);
+        Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
+        Dirty(uid, component);
     }
 
     public bool IsUserFlying(EntityUid uid)
@@ -185,15 +189,9 @@ public abstract class SharedJetpackSystem : EntitySystem
         return HasComp<JetpackUserComponent>(uid);
     }
 
-    protected virtual bool CanEnable(JetpackComponent component)
+    protected virtual bool CanEnable(EntityUid uid, JetpackComponent component)
     {
         return true;
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class JetpackUserComponentState : ComponentState
-    {
-        public EntityUid Jetpack;
     }
 }
 

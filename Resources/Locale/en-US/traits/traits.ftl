@@ -25,3 +25,12 @@ trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
 trait-archaic-accent-name = Archaic Accent
 trait-archaic-accent-desc = You speak in a way that many others find outdated
+
+trait-accentless-name = Accentless
+trait-accentless-desc = You don't have the accent that your species would usually have
+
+trait-wheelchair-bound-name = Wheelchair Bound
+trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchair included.
+
+trait-frontal-lisp-name = Frontal Lisp
+trait-frontal-lisp-desc = You thpeak with a lithp

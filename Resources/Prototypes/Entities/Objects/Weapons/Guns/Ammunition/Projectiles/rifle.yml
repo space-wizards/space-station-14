@@ -10,17 +10,6 @@
         Piercing: 17
 
 - type: entity
-  id: BulletRifleHighVelocity
-  name: bullet (0.20 rifle high-velocity)
-  parent: BaseBulletHighVelocity
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 21
-
-- type: entity
   id: BulletRiflePractice
   name: bullet (0.20 rifle practice)
   parent: BaseBulletPractice
@@ -50,5 +39,7 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Burn: 15
+      types:
+        Blunt: 2
+        Heat: 15
+        

@@ -1,10 +1,9 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
-using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -24,37 +23,11 @@ public sealed class HungerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HungerComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<HungerComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<HungerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<HungerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<HungerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<HungerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<HungerComponent, RejuvenateEvent>(OnRejuvenate);
-    }
-
-    private void OnGetState(EntityUid uid, HungerComponent component, ref ComponentGetState args)
-    {
-        args.State = new HungerComponentState(component.CurrentHunger,
-            component.BaseDecayRate,
-            component.ActualDecayRate,
-            component.LastThreshold,
-            component.CurrentThreshold,
-            component.StarvingSlowdownModifier,
-            component.NextUpdateTime);
-    }
-
-    private void OnHandleState(EntityUid uid, HungerComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not HungerComponentState state)
-            return;
-        component.CurrentHunger = state.CurrentHunger;
-        component.BaseDecayRate = state.BaseDecayRate;
-        component.ActualDecayRate = state.ActualDecayRate;
-        component.LastThreshold = state.LastHungerThreshold;
-        component.CurrentThreshold = state.CurrentThreshold;
-        component.StarvingSlowdownModifier = state.StarvingSlowdownModifier;
-        component.NextUpdateTime = state.NextUpdateTime;
     }
 
     private void OnUnpaused(EntityUid uid, HungerComponent component, ref EntityUnpausedEvent args)
@@ -156,17 +129,25 @@ public sealed class HungerSystem : EntitySystem
             _alerts.ClearAlertCategory(uid, AlertCategory.Hunger);
         }
 
-        if (component.StarvationDamage is { } damage && !_mobState.IsDead(uid))
-        {
-            _damageable.TryChangeDamage(uid, damage, true, false);
-        }
-
         if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentThreshold, out var modifier))
         {
             component.ActualDecayRate = component.BaseDecayRate * modifier;
         }
 
         component.LastThreshold = component.CurrentThreshold;
+    }
+
+    private void DoContinuousHungerEffects(EntityUid uid, HungerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.CurrentThreshold <= HungerThreshold.Starving &&
+            component.StarvationDamage is { } damage &&
+            !_mobState.IsDead(uid))
+        {
+            _damageable.TryChangeDamage(uid, damage, true, false);
+        }
     }
 
     /// <summary>
@@ -190,6 +171,17 @@ public sealed class HungerSystem : EntitySystem
             }
         }
         return result;
+    }
+
+    /// <summary>
+    /// A check that returns if the entity is below a hunger threshold.
+    /// </summary>
+    public bool IsHungerBelowState(EntityUid uid, HungerThreshold threshold, float? food = null, HungerComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return false; // It's never going to go hungry, so it's probably fine to assume that it's not... you know, hungry.
+
+        return GetHungerThreshold(comp, food) < threshold;
     }
 
     private bool GetMovementThreshold(HungerThreshold threshold)
@@ -220,6 +212,7 @@ public sealed class HungerSystem : EntitySystem
             hunger.NextUpdateTime = _timing.CurTime + hunger.UpdateRate;
 
             ModifyHunger(uid, -hunger.ActualDecayRate, hunger);
+            DoContinuousHungerEffects(uid, hunger);
         }
     }
 }

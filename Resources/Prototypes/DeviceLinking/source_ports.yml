@@ -96,3 +96,21 @@
   name: signal-port-name-logic-output-low
   description: signal-port-description-logic-output-low
   defaultLinks: [ Off, Close ]
+
+- type: sourcePort
+  id: AirDanger
+  name: signal-port-name-air-danger
+  description: signal-port-description-air-danger
+  defaultLinks: [ DoorBolt ]
+
+- type: sourcePort
+  id: AirWarning
+  name: signal-port-name-air-warning
+  description: signal-port-description-air-warning
+  defaultLinks: [ DoorBolt ]
+
+- type: sourcePort
+  id: AirNormal
+  name: signal-port-name-air-normal
+  description: signal-port-description-air-normal
+  defaultLinks: [ DoorBolt ]

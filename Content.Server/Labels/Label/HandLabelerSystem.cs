@@ -93,7 +93,8 @@ namespace Content.Server.Labels
             if (args.Session.AttachedEntity is not {Valid: true} player)
                 return;
 
-            handLabeler.AssignedLabel = args.Label.Trim().Substring(0, Math.Min(handLabeler.MaxLabelChars, args.Label.Length));
+            var label = args.Label.Trim();
+            handLabeler.AssignedLabel = label.Substring(0, Math.Min(handLabeler.MaxLabelChars, label.Length));
             DirtyUI(uid, handLabeler);
 
             // Log label change

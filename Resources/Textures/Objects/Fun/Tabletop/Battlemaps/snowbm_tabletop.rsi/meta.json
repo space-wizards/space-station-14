@@ -1,0 +1,15 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Assembled by Just-a-Unity-Dev on GitHub or eclips_e#0001 (728101795427254312) on Discord, texture from https://github.com/tgstation/tgstation/tree/8abb19545828230d92ba18827feeb42a67a55d49",
+
+    "size": {
+        "x": 288,
+        "y": 288
+    },
+    "states": [
+        {
+            "name": "tabletop"
+        }
+    ]
+}

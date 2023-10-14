@@ -1,56 +1,85 @@
-- type: faction
+- type: npcFaction
   id: Dragon
   hostile:
     - NanoTrasen
     - Syndicate
     - Xeno
     - PetsNT
+    - Zombie
+    - Revolutionary
 
-- type: faction
+- type: npcFaction
   id: NanoTrasen
   hostile:
   - SimpleHostile
   - Syndicate
   - Xeno
+  - Zombie
+  - Revolutionary
 
-- type: faction
+- type: npcFaction
   id: Mouse
   hostile:
     - PetsNT
 
-- type: faction
+- type: npcFaction
   id: Passive
 
-- type: faction
+- type: npcFaction
   id: PetsNT
   hostile:
   - Mouse
   - SimpleHostile
+  - Zombie
   - Xeno
 
-- type: faction
+- type: npcFaction
   id: SimpleHostile
   hostile:
   - NanoTrasen
   - Syndicate
   - Passive
   - PetsNT
+  - Zombie
+  - Revolutionary
 
-- type: faction
+- type: npcFaction
   id: SimpleNeutral
 
-- type: faction
+- type: npcFaction
   id: Syndicate
   hostile:
   - NanoTrasen
   - SimpleHostile
   - Xeno
   - PetsNT
+  - Zombie
 
-- type: faction
+- type: npcFaction
   id: Xeno
   hostile:
   - NanoTrasen
   - Syndicate
   - Passive
   - PetsNT
+  - Zombie
+  - Revolutionary
+
+- type: npcFaction
+  id: Zombie
+  hostile:
+  - NanoTrasen
+  - SimpleNeutral
+  - SimpleHostile
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Revolutionary
+
+- type: npcFaction
+  id: Revolutionary
+  hostile:
+  - NanoTrasen
+  - Zombie
+  - SimpleHostile
+  - Dragon

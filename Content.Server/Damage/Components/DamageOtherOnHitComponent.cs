@@ -5,7 +5,7 @@ namespace Content.Server.Damage.Components
 {
     [Access(typeof(DamageOtherOnHitSystem))]
     [RegisterComponent]
-    public sealed class DamageOtherOnHitComponent : Component
+    public sealed partial class DamageOtherOnHitComponent : Component
     {
         [DataField("ignoreResistances")]
         [ViewVariables(VVAccess.ReadWrite)]

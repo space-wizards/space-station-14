@@ -1,8 +1,7 @@
-﻿using Content.Shared.MachineLinking;
+﻿using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
@@ -10,7 +9,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// The console that is used for artifact analysis
 /// </summary>
 [RegisterComponent]
-public sealed class AnalysisConsoleComponent : Component
+public sealed partial class AnalysisConsoleComponent : Component
 {
     /// <summary>
     /// The analyzer entity the console is linked.
@@ -22,8 +21,8 @@ public sealed class AnalysisConsoleComponent : Component
     /// <summary>
     /// The machine linking port for the analyzer
     /// </summary>
-    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
-    public readonly string LinkingPort = "ArtifactAnalyzerSender";
+    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    public string LinkingPort = "ArtifactAnalyzerSender";
 
     /// <summary>
     /// The sound played when an artifact has points extracted.

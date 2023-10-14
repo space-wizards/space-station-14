@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed class AddToSolutionReaction : ReagentEffect
+    public sealed partial class AddToSolutionReaction : ReagentEffect
     {
         [DataField("solution")]
         private string _solution = "reagents";

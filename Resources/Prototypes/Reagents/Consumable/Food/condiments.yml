@@ -73,7 +73,8 @@
   group: Foods
   desc: reagent-desc-ketchunaise
   physicalDesc: reagent-physical-desc-saucey
-  flavor: piquant
+  #I love it when people just make up fake prototypes.
+  #flavor: piquant
   color: "#fba399"
   recognizable: true
 
@@ -85,6 +86,16 @@
   physicalDesc: reagent-physical-desc-thick
   flavor: sour
   color: "#f9f5e5"
+  recognizable: true
+
+- type: reagent
+  id: Mustard
+  name: reagent-name-mustard
+  group: Foods
+  desc: reagent-desc-mustard
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sour
+  color: "#ffdb58"
   recognizable: true
 
 - type: reagent
@@ -121,7 +132,7 @@
   desc: reagent-desc-table-salt
   physicalDesc: reagent-physical-desc-grainy
   flavor: salty
-  color: "#a1000b"
+  color: "#cfd1d0"
   recognizable: true
   boilingPoint: 1465.0
   meltingPoint: 800.7
@@ -142,7 +153,5 @@
     Food:
       effects:
       # eating salt on its own kinda sucks, kids
-      - !type:SatiateHunger
-        factor: 0.5
       - !type:SatiateThirst
         factor: -0.5

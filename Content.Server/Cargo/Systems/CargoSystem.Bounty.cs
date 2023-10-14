@@ -9,7 +9,6 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
-using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -256,7 +255,9 @@ public sealed partial class CargoSystem
         if (component.Bounties.Count >= component.MaxBounties)
             return false;
 
-        var endTime = _timing.CurTime + _random.Pick(component.BountyDurations) + TimeSpan.FromSeconds(_random.Next(-10, 10));
+        var duration = MathF.Round(_random.NextFloat(component.MinBountyTime, component.MaxBountyTime) / 15) * 15;
+        var endTime = _timing.CurTime + TimeSpan.FromSeconds(duration);
+
         component.Bounties.Add(new CargoBountyData(component.TotalBounties, bounty.ID, endTime));
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
         component.TotalBounties++;
@@ -312,7 +313,7 @@ public sealed partial class CargoSystem
 
     public void UpdateBountyConsoles()
     {
-        var query = EntityQueryEnumerator<CargoBountyConsoleComponent, ServerUserInterfaceComponent>();
+        var query = EntityQueryEnumerator<CargoBountyConsoleComponent, UserInterfaceComponent>();
         while (query.MoveNext(out var uid, out _, out var ui))
         {
             if (_station.GetOwningStation(uid) is not { } station ||

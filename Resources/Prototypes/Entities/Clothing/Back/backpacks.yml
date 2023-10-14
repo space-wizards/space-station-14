@@ -80,6 +80,15 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackAtmospherics
+  name: atmospherics backpack
+  description: It's a backpack made of fire resistant fibers. Smells like plasma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/atmospherics.rsi
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackMedical
   name: medical backpack
   description: It's a backpack especially designed for use in a sterile environment.
@@ -149,6 +158,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/genetics.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackCargo
+  name: cargo backpack
+  description: A robust backpack for stealing cargo's loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/cargo.rsi
 
 - type: entity
   parent: ClothingBackpack

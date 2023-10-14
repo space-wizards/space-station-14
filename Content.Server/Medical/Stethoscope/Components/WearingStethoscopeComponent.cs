@@ -6,7 +6,7 @@ namespace Content.Server.Medical.Components
     /// Used to let doctors use the stethoscope on people.
     /// </summary>
     [RegisterComponent]
-    public sealed class WearingStethoscopeComponent : Component
+    public sealed partial class WearingStethoscopeComponent : Component
     {
         public CancellationTokenSource? CancelToken;
 

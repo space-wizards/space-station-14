@@ -1,8 +1,6 @@
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Animals.Components;
@@ -12,10 +10,10 @@ namespace Content.Server.Animals.Components;
 ///     It also grants an action to players who are controlling these entities, allowing them to do it manually.
 /// </summary>
 [RegisterComponent]
-public sealed class EggLayerComponent : Component
+public sealed partial class EggLayerComponent : Component
 {
-    [DataField("eggLayAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string EggLayAction = "AnimalLayEgg";
+    [DataField("eggLayAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string EggLayAction = "ActionAnimalLayEgg";
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("hungerUsage")]
@@ -50,6 +48,6 @@ public sealed class EggLayerComponent : Component
 
     [DataField("accumulatedFrametime")]
     public float AccumulatedFrametime;
-}
 
-public sealed class EggLayInstantActionEvent : InstantActionEvent {}
+    [DataField] public EntityUid? Action;
+}

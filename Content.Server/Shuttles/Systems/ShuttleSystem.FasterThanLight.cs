@@ -1,5 +1,7 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Maps;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.StatusEffect;
@@ -10,12 +12,14 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Linq;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -74,8 +78,20 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public const float FTLDestinationMass = 500f;
 
+    private EntityQuery<BodyComponent> _bodyQuery;
+    private EntityQuery<BuckleComponent> _buckleQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<StatusEffectsComponent> _statusQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
     private void InitializeFTL()
     {
+        _bodyQuery = GetEntityQuery<BodyComponent>();
+        _buckleQuery = GetEntityQuery<BuckleComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _statusQuery = GetEntityQuery<StatusEffectsComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
     }
 
@@ -235,6 +251,7 @@ public sealed partial class ShuttleSystem
             var xform = Transform(uid);
             PhysicsComponent? body;
             ShuttleComponent? shuttle;
+            TryComp(uid, out shuttle);
 
             switch (comp.State)
             {
@@ -255,7 +272,8 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(uid, out body))
                     {
-                        Enable(uid, body);
+                        if (shuttle != null)
+                            Enable(uid, body, shuttle);
                         _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, 0f);
@@ -282,7 +300,7 @@ public sealed partial class ShuttleSystem
                     // TODO: Arrival effects
                     // For now we'll just use the ss13 bubbles but we can do fancier.
 
-                    if (TryComp(uid, out shuttle))
+                    if (shuttle != null)
                     {
                         _thruster.DisableLinearThrusters(shuttle);
                         _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
@@ -300,21 +318,36 @@ public sealed partial class ShuttleSystem
                     {
                         _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
-                        _physics.SetLinearDamping(body, ShuttleLinearDamping);
-                        _physics.SetAngularDamping(body, ShuttleAngularDamping);
+                        if (shuttle != null)
+                        {
+                            _physics.SetLinearDamping(body, shuttle.LinearDamping);
+                            _physics.SetAngularDamping(body, shuttle.AngularDamping);
+                        }
                     }
 
-                    TryComp(uid, out shuttle);
                     MapId mapId;
 
                     if (comp.TargetUid != null && shuttle != null)
                     {
-                        if (comp.Dock)
-                            TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
-                        else
-                            TryFTLProximity(uid, shuttle, comp.TargetUid.Value);
+                        if (!Deleted(comp.TargetUid))
+                        {
+                            if (comp.Dock)
+                                TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
+                            else
+                                TryFTLProximity(uid, shuttle, comp.TargetUid.Value);
 
-                        mapId = Transform(comp.TargetUid.Value).MapID;
+                            mapId = Transform(comp.TargetUid.Value).MapID;
+                        }
+                        // oh boy, fallback time
+                        else
+                        {
+                            // Pick earliest map?
+                            var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
+                            var map = maps.Min(o => o.GetHashCode());
+
+                            mapId = new MapId(map);
+                            TryFTLProximity(uid, shuttle, _mapManager.GetMapEntityId(mapId));
+                        }
                     }
                     else
                     {
@@ -333,9 +366,9 @@ public sealed partial class ShuttleSystem
                         {
                             Disable(uid, body);
                         }
-                        else
+                        else if (shuttle != null)
                         {
-                            Enable(uid, body);
+                            Enable(uid, body, shuttle);
                         }
                     }
 
@@ -443,32 +476,60 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void DoTheDinosaur(TransformComponent xform)
     {
-        var buckleQuery = GetEntityQuery<BuckleComponent>();
-        var statusQuery = GetEntityQuery<StatusEffectsComponent>();
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
+        KnockOverKids(xform, ref toKnock);
+        TryComp<MapGridComponent>(xform.GridUid, out var grid);
 
-        KnockOverKids(xform, buckleQuery, statusQuery, ref toKnock);
-
-        foreach (var child in toKnock)
+        if (TryComp<PhysicsComponent>(xform.GridUid, out var shuttleBody))
         {
-            if (!statusQuery.TryGetComponent(child, out var status)) continue;
-            _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
+            foreach (var child in toKnock)
+            {
+                if (!_statusQuery.TryGetComponent(child, out var status))
+                    continue;
+
+                _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
+
+                // If the guy we knocked down is on a spaced tile, throw them too
+                if (grid != null)
+                    TossIfSpaced(grid, shuttleBody, child);
+            }
         }
     }
 
-    private void KnockOverKids(TransformComponent xform, EntityQuery<BuckleComponent> buckleQuery, EntityQuery<StatusEffectsComponent> statusQuery, ref ValueList<EntityUid> toKnock)
+    private void KnockOverKids(TransformComponent xform, ref ValueList<EntityUid> toKnock)
     {
         // Not recursive because probably not necessary? If we need it to be that's why this method is separate.
         var childEnumerator = xform.ChildEnumerator;
-
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
+            if (!_buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
                 continue;
 
             toKnock.Add(child.Value);
         }
+    }
+
+    /// <summary>
+    /// Throws people who are standing on a spaced tile, tries to throw them towards a neighbouring space tile
+    /// </summary>
+    private void TossIfSpaced(MapGridComponent shuttleGrid, PhysicsComponent shuttleBody, EntityUid tossed)
+    {
+        if (!_xformQuery.TryGetComponent(tossed, out var childXform) )
+            return;
+
+        // only toss if its on lattice/space
+        var tile = shuttleGrid.GetTileRef(childXform.Coordinates);
+
+        if (!tile.IsSpace(_tileDefManager))
+            return;
+
+        var throwDirection = childXform.LocalPosition - shuttleBody.LocalCenter;
+
+        if (throwDirection == Vector2.Zero)
+            return;
+
+        _throwing.TryThrow(tossed, throwDirection.Normalized() * 10.0f, 50.0f);
     }
 
     /// <summary>
@@ -634,10 +695,8 @@ public sealed partial class ShuttleSystem
             return;
 
         // Flatten anything not parented to a grid.
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var transform = _physics.GetPhysicsTransform(uid, xform, xformQuery);
+        var transform = _physics.GetPhysicsTransform(uid, xform, _xformQuery);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
-        var mobQuery = GetEntityQuery<BodyComponent>();
         var immune = new HashSet<EntityUid>();
 
         foreach (var fixture in manager.Fixtures.Values)
@@ -657,7 +716,7 @@ public sealed partial class ShuttleSystem
                     continue;
                 }
 
-                if (mobQuery.TryGetComponent(ent, out var mob))
+                if (_bodyQuery.TryGetComponent(ent, out var mob))
                 {
                     var gibs = _bobby.GibBody(ent, body: mob);
                     immune.UnionWith(gibs);

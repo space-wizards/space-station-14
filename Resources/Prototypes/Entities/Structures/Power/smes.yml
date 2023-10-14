@@ -32,6 +32,9 @@
     - type: UpgradeBattery
       maxChargeMultiplier: 2
       baseMaxCharge: 8000000
+    - type: UpgradePowerSupplyRamping
+      scaling: Linear
+      supplyRampingMultiplier: 1     
     - type: Appearance
     - type: Battery
       startingCharge: 0
@@ -63,8 +66,8 @@
       castShadows: false
     - type: WiresPanel
     - type: Wires
-      BoardName: "SMES"
-      LayoutId: SMES
+      boardName: wires-board-name-smes
+      layoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
@@ -78,6 +81,15 @@
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: StrongMetallic
+    - type: BatterySensor
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-smes
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
 
 # SMES' in use
 

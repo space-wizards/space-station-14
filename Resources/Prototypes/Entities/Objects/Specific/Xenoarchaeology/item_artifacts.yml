@@ -51,6 +51,8 @@
       type: TransferAmountBoundUserInterface
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.IntercomUiKey.Key
+      type: IntercomBoundUserInterface
   - type: Appearance
   - type: Item
     size: 40

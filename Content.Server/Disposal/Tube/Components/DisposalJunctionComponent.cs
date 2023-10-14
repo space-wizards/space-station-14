@@ -3,7 +3,7 @@ namespace Content.Server.Disposal.Tube.Components;
 [RegisterComponent]
 [Access(typeof(DisposalTubeSystem))]
 [Virtual]
-public class DisposalJunctionComponent : Component
+public partial class DisposalJunctionComponent : Component
 {
     /// <summary>
     ///     The angles to connect to.

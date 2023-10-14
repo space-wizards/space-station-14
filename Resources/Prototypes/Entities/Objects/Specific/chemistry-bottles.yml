@@ -25,7 +25,6 @@
     maxFillLevels: 6
     fillBaseName: bottle-1-
   - type: Drink
-    isOpen: true
   - type: SolutionContainerManager
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent
@@ -168,6 +167,40 @@
         maxVol: 30
         reagents:
         - ReagentId: RobustHarvest
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: EZNutrientChemistryBottle
+  name: ez nutrient bottle
+  description: This will provide some nutrition to your plants.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: EZNutrient
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: Left4ZedChemistryBottle
+  name: left-4-zed bottle
+  description: This will increase the effectiveness of mutagen.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Left4Zed
           Quantity: 30
   - type: Tag
     tags:

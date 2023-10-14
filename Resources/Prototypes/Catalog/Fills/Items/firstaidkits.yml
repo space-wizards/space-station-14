@@ -23,9 +23,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyringeInaprovaline
+      - id: RegenerativeMesh
+        amount: 2
       - id: Ointment
-        amount: 4
+        amount: 2
+      - id: SyringeSigynate
+      - id: PillKelotane
+        amount: 5
       - id: PillDermaline
         amount: 5
 
@@ -36,8 +40,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: MedicatedSuture
       - id: Brutepack
-        amount: 2 # TO DO: Advanced brute pack
       - id: Gauze
       - id: Bloodpack
       - id: SyringeTranexamicAcid
@@ -53,13 +57,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyringeSpaceacillin
-        amount: 2
       - id: SyringeIpecac
-        amount: 2
+      - id: SyringeEthylredoxrazine
       - id: AntiPoisonMedipen
       - id: PillDylovene
-        amount: 7
+        amount: 5
+      - id: PillCharcoal
+        amount: 3
 
 - type: entity
   id: MedkitOxygenFilled
@@ -82,12 +86,14 @@
   components:
   - type: StorageFill
     contents:
-      - id: Ointment
-        amount: 3
+      - id: GeigerCounter
+      - id: SyringePhalanximine
+      - id: RadAutoInjector
+        amount: 1
       - id: EmergencyMedipen
-        amount: 2
+        amount: 1
       - id: PillHyronalin
-        amount: 9
+        amount: 5
 
 - type: entity
   id: MedkitAdvancedFilled
@@ -96,10 +102,10 @@
   components:
   - type: StorageFill
     contents:
-      - id: Brutepack
-        amount: 2 # TO DO: Advanced fills
-      - id: Ointment
-      - id: Gauze
+      - id: MedicatedSuture
+        amount: 2
+      - id: RegenerativeMesh
+        amount: 2
       - id: Bloodpack
         amount: 2
 
@@ -111,14 +117,14 @@
   - type: StorageFill
     contents:
       - id: HandheldHealthAnalyzer
+      - id: MedicatedSuture
+      - id: RegenerativeMesh
       - id: SyringeEphedrine
-      - id: SyringeTranexamicAcid
-      - id: SyringeBicaridine
-      - id: AntiPoisonMedipen
+      - id: SyringeSaline
+      - id: BruteAutoInjector
+      - id: BurnAutoInjector
+      - id: EmergencyMedipen
       - id: Bloodpack
-        amount: 2
-      - id: PillTricordrazine
-        amount: 2
 
 - type: entity
   id: StimkitFilled

@@ -28,7 +28,7 @@ public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
 /// Used to interact with salvage expeditions and claim them.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class SalvageExpeditionConsoleComponent : Component
+public sealed partial class SalvageExpeditionConsoleComponent : Component
 {
 
 }
@@ -43,7 +43,7 @@ public sealed class ClaimSalvageMessage : BoundUserInterfaceMessage
 /// Added per station to store data on their available salvage missions.
 /// </summary>
 [RegisterComponent]
-public sealed class SalvageExpeditionDataComponent : Component
+public sealed partial class SalvageExpeditionDataComponent : Component
 {
     /// <summary>
     /// Is there an active salvage expedition.
@@ -77,15 +77,9 @@ public sealed record SalvageMissionParams
     [ViewVariables]
     public ushort Index;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public SalvageMissionType MissionType;
-
     [ViewVariables(VVAccess.ReadWrite)] public int Seed;
 
-    /// <summary>
-    /// Base difficulty for this mission.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public DifficultyRating Difficulty;
+    public string Difficulty = string.Empty;
 }
 
 /// <summary>
@@ -94,16 +88,13 @@ public sealed record SalvageMissionParams
 /// </summary>
 public sealed record SalvageMission(
     int Seed,
-    DifficultyRating Difficulty,
     string Dungeon,
     string Faction,
-    SalvageMissionType Mission,
     string Biome,
     string Air,
     float Temperature,
     Color? Color,
     TimeSpan Duration,
-    List<string> Rewards,
     List<string> Modifiers)
 {
     /// <summary>
@@ -112,12 +103,7 @@ public sealed record SalvageMission(
     public readonly int Seed = Seed;
 
     /// <summary>
-    /// Difficulty rating.
-    /// </summary>
-    public DifficultyRating Difficulty = Difficulty;
-
-    /// <summary>
-    /// <see cref="SalvageDungeonMod"/> to be used.
+    /// <see cref="SalvageDungeonModPrototype"/> to be used.
     /// </summary>
     public readonly string Dungeon = Dungeon;
 
@@ -125,11 +111,6 @@ public sealed record SalvageMission(
     /// <see cref="SalvageFactionPrototype"/> to be used.
     /// </summary>
     public readonly string Faction = Faction;
-
-    /// <summary>
-    /// Underlying mission params that generated this.
-    /// </summary>
-    public readonly SalvageMissionType Mission = Mission;
 
     /// <summary>
     /// Biome to be used for the mission.
@@ -155,11 +136,6 @@ public sealed record SalvageMission(
     /// Mission duration.
     /// </summary>
     public TimeSpan Duration = Duration;
-
-    /// <summary>
-    /// The list of items to order on mission completion.
-    /// </summary>
-    public List<string> Rewards = Rewards;
 
     /// <summary>
     /// Modifiers (outside of the above) applied to the mission.

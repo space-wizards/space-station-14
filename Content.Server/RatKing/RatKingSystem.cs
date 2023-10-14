@@ -1,21 +1,30 @@
-using Content.Server.Actions;
+using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Nutrition.Components;
+using Content.Server.Chat.Systems;
+using Content.Server.NPC;
+using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
 using Content.Server.Popups;
-using Content.Shared.Actions;
 using Content.Shared.Atmos;
+using Content.Shared.Dataset;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Pointing;
+using Content.Shared.RatKing;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
+using Robust.Shared.Map;
+using Robust.Shared.Random;
 
 namespace Content.Server.RatKing
 {
-    public sealed class RatKingSystem : EntitySystem
+    /// <inheritdoc/>
+    public sealed class RatKingSystem : SharedRatKingSystem
     {
-        [Dependency] private readonly ActionsSystem _action = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
+        [Dependency] private readonly HTNSystem _htn = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
+        [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _xform = default!;
 
@@ -23,16 +32,9 @@ namespace Content.Server.RatKing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<RatKingComponent, ComponentStartup>(OnStartup);
-
             SubscribeLocalEvent<RatKingComponent, RatKingRaiseArmyActionEvent>(OnRaiseArmy);
             SubscribeLocalEvent<RatKingComponent, RatKingDomainActionEvent>(OnDomain);
-        }
-
-        private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
-        {
-            _action.AddAction(uid, component.ActionRaiseArmy, null);
-            _action.AddAction(uid, component.ActionDomain, null);
+            SubscribeLocalEvent<RatKingComponent, AfterPointedAtEvent>(OnPointedAt);
         }
 
         /// <summary>
@@ -54,7 +56,14 @@ namespace Content.Server.RatKing
             }
             args.Handled = true;
             _hunger.ModifyHunger(uid, -component.HungerPerArmyUse, hunger);
-            Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates); //spawn the little mouse boi
+            var servant = Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates);
+            var comp = EnsureComp<RatKingServantComponent>(servant);
+            comp.King = uid;
+            Dirty(servant, comp);
+
+            component.Servants.Add(servant);
+            _npc.SetBlackboard(servant, NPCBlackboard.FollowTarget, new EntityCoordinates(uid, Vector2.Zero));
+            UpdateServantNpc(servant, component.CurrentOrder);
         }
 
         /// <summary>
@@ -85,15 +94,42 @@ namespace Content.Server.RatKing
             var tileMix = _atmos.GetTileMixture(transform.GridUid, transform.MapUid, indices, true);
             tileMix?.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
         }
+
+        private void OnPointedAt(EntityUid uid, RatKingComponent component, ref AfterPointedAtEvent args)
+        {
+            if (component.CurrentOrder != RatKingOrderType.CheeseEm)
+                return;
+
+            foreach (var servant in component.Servants)
+            {
+                _npc.SetBlackboard(servant, NPCBlackboard.CurrentOrderedTarget, args.Pointed);
+            }
+        }
+
+        public override void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
+        {
+            base.UpdateServantNpc(uid, orderType);
+
+            if (!TryComp<HTNComponent>(uid, out var htn))
+                return;
+
+            if (htn.Plan != null)
+                _htn.ShutdownPlan(htn);
+
+            _npc.SetBlackboard(uid, NPCBlackboard.CurrentOrders, orderType);
+            _htn.Replan(htn);
+        }
+
+        public override void DoCommandCallout(EntityUid uid, RatKingComponent component)
+        {
+            base.DoCommandCallout(uid, component);
+
+            if (!component.OrderCallouts.TryGetValue(component.CurrentOrder, out var datasetId) ||
+                !PrototypeManager.TryIndex<DatasetPrototype>(datasetId, out var datasetPrototype))
+                return;
+
+            var msg = Random.Pick(datasetPrototype.Values);
+            _chat.TrySendInGameICMessage(uid, msg, InGameICChatType.Speak, true);
+        }
     }
-
-    public sealed class RatKingRaiseArmyActionEvent : InstantActionEvent
-    {
-
-    }
-
-    public sealed class RatKingDomainActionEvent : InstantActionEvent
-    {
-
-    }
-};
+}

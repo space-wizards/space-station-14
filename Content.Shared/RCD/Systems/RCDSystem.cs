@@ -95,7 +95,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var doAfterArgs = new DoAfterArgs(user, comp.Delay, new RCDDoAfterEvent(location, comp.Mode), uid, target: args.Target, used: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, comp.Delay, new RCDDoAfterEvent(GetNetCoordinates(location), comp.Mode), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             NeedHand = true,
@@ -115,7 +115,7 @@ public sealed class RCDSystem : EntitySystem
         if (args.Event?.DoAfter?.Args == null)
             return;
 
-        var location = args.Event.Location;
+        var location = GetCoordinates(args.Event.Location);
 
         var gridId = location.GetGridUid(EntityManager);
         if (!HasComp<MapGridComponent>(gridId))
@@ -140,7 +140,7 @@ public sealed class RCDSystem : EntitySystem
             return;
 
         var user = args.User;
-        var location = args.Location;
+        var location = GetCoordinates(args.Location);
 
         var gridId = location.GetGridUid(EntityManager);
         if (!HasComp<MapGridComponent>(gridId))
@@ -237,14 +237,25 @@ public sealed class RCDSystem : EntitySystem
                 if (tile.Tile.IsEmpty)
                     return false;
 
-                //They tried to decon a turf but the turf is blocked
-                if (target == null && IsTileBlocked(tile))
+                //They tried to decon a turf but...
+                if (target == null)
                 {
-                    _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
-                    return false;
+                    // the turf is blocked
+                    if (IsTileBlocked(tile))
+                    {
+                        _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
+                        return false;
+                    }
+                    // the turf can't be destroyed (planet probably)
+                    var tileDef = (ContentTileDefinition) _tileDefMan[tile.Tile.TypeId];
+                    if (tileDef.Indestructible)
+                    {
+                        _popup.PopupClient(Loc.GetString("rcd-component-tile-indestructible-message"), uid, user);
+                        return false;
+                    }
                 }
                 //They tried to decon a non-turf but it's not in the whitelist
-                if (target != null && !_tag.HasTag(target.Value, "RCDDeconstructWhitelist"))
+                else if (!_tag.HasTag(target.Value, "RCDDeconstructWhitelist"))
                 {
                     _popup.PopupClient(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), uid, user);
                     return false;
@@ -302,19 +313,19 @@ public sealed class RCDSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class RCDDoAfterEvent : DoAfterEvent
+public sealed partial class RCDDoAfterEvent : DoAfterEvent
 {
     [DataField("location", required: true)]
-    public readonly EntityCoordinates Location = default!;
+    public NetCoordinates Location = default!;
 
     [DataField("startingMode", required: true)]
-    public readonly RcdMode StartingMode = default!;
+    public RcdMode StartingMode = default!;
 
     private RCDDoAfterEvent()
     {
     }
 
-    public RCDDoAfterEvent(EntityCoordinates location, RcdMode startingMode)
+    public RCDDoAfterEvent(NetCoordinates location, RcdMode startingMode)
     {
         Location = location;
         StartingMode = startingMode;

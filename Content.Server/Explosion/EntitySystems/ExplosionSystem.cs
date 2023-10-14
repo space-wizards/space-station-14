@@ -6,6 +6,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Armor;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -61,6 +62,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     find errors. However some components, like rogue arrows, or some commands like the admin-smite need to have
     ///     a "default" option specified outside of yaml data-fields. Hence this const string.
     /// </remarks>
+    [ValidatePrototypeId<ExplosionPrototype>]
     public const string DefaultExplosionPrototypeId = "Default";
 
     public override void Initialize()
@@ -75,7 +77,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
 
         // as long as explosion-resistance mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
-        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>((e, c, ev) => OnGetResistance(e, c, ev.Args));
+        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>(RelayedResistance);
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
@@ -111,10 +113,16 @@ public sealed partial class ExplosionSystem : EntitySystem
         _pathfindingSystem.PauseUpdating = false;
     }
 
-    private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
+    private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
+        InventoryRelayedEvent<GetExplosionResistanceEvent> args)
+    {
+        OnGetResistance(uid, component, ref args.Args);
+    }
+
+    private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)
     {
         args.DamageCoefficient *= component.DamageCoefficient;
-        if (component.Modifiers.TryGetValue(args.ExplotionPrototype, out var modifier))
+        if (component.Modifiers.TryGetValue(args.ExplosionPrototype, out var modifier))
             args.DamageCoefficient *= modifier;
     }
 

@@ -25,6 +25,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Preferences.UI
 {
@@ -186,10 +187,10 @@ namespace Content.Client.Preferences.UI
 
                 var view = new SpriteView
                 {
-                    Sprite = entityManager.GetComponent<SpriteComponent>(_previewDummy),
                     Scale = new Vector2(2, 2),
                     OverrideDirection = Direction.South
                 };
+                view.SetEntity(_previewDummy);
 
                 var description = profile.Name;
 

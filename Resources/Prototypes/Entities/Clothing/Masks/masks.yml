@@ -13,6 +13,7 @@
   - type: IdentityBlocker
   - type: Tag
     tags:
+    - MonkeyWearable
     - HamsterWearable
     - WhitelistChameleon
 
@@ -39,7 +40,6 @@
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
   - type: EyeProtection
-    protectionTime: 5
 
 - type: entity
   parent: ClothingMaskGas
@@ -167,11 +167,9 @@
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
   - type: IdentityBlocker
-  # for H.O.N.K. construction
   - type: Tag
     tags:
     - ClownMask
-    - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
@@ -180,6 +178,8 @@
   components:
   - type: Tag
     tags:
+    - ClownMask
+    - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
@@ -492,3 +492,17 @@
   - type: AddAccentClothing
     accent: ReplacementAccent
     replacement: italian
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskNinja
+  name: ninja mask
+  description: A close-fitting nano-enhanced mask that acts both as an air filter and a post-modern fashion statement.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/ninja.rsi
+  - type: EyeProtection
+  - type: BreathMask
+  - type: IdentityBlocker

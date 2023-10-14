@@ -7,7 +7,7 @@ namespace Content.Server.Anomaly.Components;
 /// This is used for projectiles which affect anomalies through colliding with them.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class AnomalousParticleComponent : Component
+public sealed partial class AnomalousParticleComponent : Component
 {
     /// <summary>
     /// The type of particle that the projectile

@@ -1,7 +1,7 @@
 namespace Content.Server.Instruments;
 
 [RegisterComponent]
-public sealed class SwappableInstrumentComponent : Component
+public sealed partial class SwappableInstrumentComponent : Component
 {
     /// <summary>
     /// Used to store the different instruments that can be swapped between.
