@@ -1,11 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: 'Added the SecHud to lockers, sec vendor, secfab.', type: Add}
-  - {message: Security will now receive the correct glasses box with their security
-      supplies from cargo., type: Fix}
-  id: 4503
-  time: '2023-08-10T06:04:43.0000000+00:00'
 - author: emogarbage
   changes:
   - {message: Re-sprited grappling gun per artist request., type: Tweak}
@@ -2951,3 +2944,9 @@ Entries:
       for the AME to overload.', type: Tweak}
   id: 5002
   time: '2023-10-13T23:42:46.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added the igniter for sparking flames, can be found in the vendomat
+      and robotics vendor or produced by science.', type: Add}
+  id: 5003
+  time: '2023-10-14T07:11:50.0000000+00:00'
