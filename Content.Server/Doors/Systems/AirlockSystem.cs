@@ -152,10 +152,12 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         if (TryComp<WiresPanelComponent>(uid, out var panel) &&
             panel.Open &&
-            TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
-            wiresPanelSecurity.WiresAccessible &&
             TryComp<ActorComponent>(args.User, out var actor))
         {
+            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                !wiresPanelSecurity.WiresAccessible)
+                return;
+
             _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
             args.Handled = true;
             return;

@@ -50,8 +50,8 @@
     anchored: true
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-intercom
-    LayoutId: Intercom
+    boardName: wires-board-name-intercom
+    layoutId: Intercom
   - type: ActivatableUIRequiresPower
   - type: ActivatableUI
     key: enum.IntercomUiKey.Key

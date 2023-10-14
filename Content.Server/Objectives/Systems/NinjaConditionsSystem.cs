@@ -2,7 +2,6 @@ using Content.Server.Roles;
 using Content.Server.Objectives.Components;
 using Content.Server.Warps;
 using Content.Shared.Objectives.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -31,22 +30,16 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnDoorjackGetProgress(EntityUid uid, DoorjackConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = DoorjackProgress(args.MindId, _number.GetTarget(uid));
+        args.Progress = DoorjackProgress(comp, _number.GetTarget(uid));
     }
 
-    private float DoorjackProgress(EntityUid mindId, int target)
+    private float DoorjackProgress(DoorjackConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
             return 1f;
 
-        if (!TryComp<NinjaRoleComponent>(mindId, out var role))
-            return 0f;
-
-        if (role.DoorsJacked >= target)
-            return 1f;
-
-        return (float) role.DoorsJacked / (float) target;
+        return MathF.Min(comp.DoorsJacked / (float) target, 1f);
     }
 
     // spider charge
@@ -58,7 +51,7 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnSpiderChargeGetProgress(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = TryComp<NinjaRoleComponent>(args.MindId, out var role) && role.SpiderChargeDetonated ? 1f : 0f;
+        args.Progress = comp.SpiderChargeDetonated ? 1f : 0f;
     }
 
     private string SpiderChargeTitle(EntityUid mindId)
@@ -79,28 +72,20 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnStealResearchGetProgress(EntityUid uid, StealResearchConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = StealResearchProgress(args.MindId, _number.GetTarget(uid));
+        args.Progress = StealResearchProgress(comp, _number.GetTarget(uid));
     }
 
-    private float StealResearchProgress(EntityUid mindId, int target)
+    private float StealResearchProgress(StealResearchConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
             return 1f;
 
-        if (!TryComp<NinjaRoleComponent>(mindId, out var role))
-            return 0f;
-
-        if (role.DownloadedNodes.Count >= target)
-            return 1f;
-
-        return (float) role.DownloadedNodes.Count / (float) target;
+        return MathF.Min(comp.DownloadedNodes.Count / (float) target, 1f);
     }
-
-    // terror
 
     private void OnTerrorGetProgress(EntityUid uid, TerrorConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = TryComp<NinjaRoleComponent>(args.MindId, out var role) && role.CalledInThreat ? 1f : 0f;
+        args.Progress = comp.CalledInThreat ? 1f : 0f;
     }
 }
