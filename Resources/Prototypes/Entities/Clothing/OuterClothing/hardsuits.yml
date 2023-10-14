@@ -452,6 +452,20 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
 
+# Syndicate Medic Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitMedic
+  name: blood-red medic hardsuit
+  description: A heavily armored and agile advanced hardsuit specifically designed for field medic operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieMedic
+
 #Syndicate Elite Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase

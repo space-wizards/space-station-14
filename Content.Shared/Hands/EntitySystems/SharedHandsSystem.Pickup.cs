@@ -180,7 +180,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return false;
 
         // check can insert (including raising attempt events).
-        return _containerSystem.CanInsert(entity, handContainer);
+        return ContainerSystem.CanInsert(entity, handContainer);
     }
 
     /// <summary>
@@ -202,7 +202,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         {
             // TODO make this check upwards for any container, and parent to that.
             // Currently this just checks the direct parent, so items can still teleport through containers.
-            Transform(entity).AttachParentToContainerOrGrid(EntityManager);
+            ContainerSystem.AttachParentToContainerOrGrid(Transform(entity));
         }
     }
 
