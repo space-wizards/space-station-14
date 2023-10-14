@@ -7,8 +7,8 @@
     Glass: 300
 
 - type: latheRecipe
-  id: SyntheticFlash
-  result: SyntheticFlash
+  id: SciFlash
+  result: SciFlash
   completetime: 2
   materials:
     Glass: 100
