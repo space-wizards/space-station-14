@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
@@ -22,13 +21,12 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
-using Content.Shared.Verbs;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Content.Shared.Tag;
-using Content.Shared.Storage;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -309,7 +307,7 @@ public sealed class FoodSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        if (string.IsNullOrEmpty(component.TrashPrototype))
+        if (string.IsNullOrEmpty(component.Trash))
             QueueDel(uid);
         else
             DeleteAndSpawnTrash(component, uid, args.User);
@@ -319,7 +317,7 @@ public sealed class FoodSystem : EntitySystem
     {
         //We're empty. Become trash.
         var position = Transform(food).MapPosition;
-        var finisher = Spawn(component.TrashPrototype, position);
+        var finisher = Spawn(component.Trash, position);
 
         // If the user is holding the item
         if (user != null && _hands.IsHolding(user.Value, food, out var hand))

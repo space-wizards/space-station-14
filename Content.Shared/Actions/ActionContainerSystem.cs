@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
@@ -15,6 +16,7 @@ public sealed class ActionContainerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -96,7 +98,61 @@ public sealed class ActionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds a pre-existing action to an action container.
+    /// Transfers an action from one container to another, while keeping the attached entity the same.
+    /// </summary>
+    /// <remarks>
+    /// While the attached entity should be the same at the end, this will actually remove and then re-grant the action.
+    /// </remarks>
+    public void TransferAction(
+        EntityUid actionId,
+        EntityUid newContainer,
+        BaseActionComponent? action = null,
+        ActionsContainerComponent? container = null)
+    {
+        if (!_actions.ResolveActionData(actionId, ref action))
+            return;
+
+        if (action.Container == newContainer)
+            return;
+
+        var attached = action.AttachedEntity;
+        if (!AddAction(newContainer, actionId, action, container))
+            return;
+
+        DebugTools.AssertEqual(action.Container, newContainer);
+        DebugTools.AssertNull(action.AttachedEntity);
+
+        if (attached != null)
+            _actions.AddActionDirect(attached.Value, actionId, action: action);
+
+        DebugTools.AssertEqual(action.AttachedEntity, attached);
+    }
+
+    /// <summary>
+    /// Transfers all actions from one container to another, while keeping the attached entity the same.
+    /// </summary>
+    /// &lt;remarks&gt;
+    /// While the attached entity should be the same at the end, this will actually remove and then re-grant the action.
+    /// &lt;/remarks&gt;
+    public void TransferAllActions(
+        EntityUid from,
+        EntityUid to,
+        ActionsContainerComponent? oldContainer = null,
+        ActionsContainerComponent? newContainer = null)
+    {
+        if (!Resolve(from, ref oldContainer) || !Resolve(to, ref newContainer))
+            return;
+
+        foreach (var action in oldContainer.Container.ContainedEntities.ToArray())
+        {
+            TransferAction(action, to, container: newContainer);
+        }
+
+        DebugTools.AssertEqual(oldContainer.Container.Count, 0);
+    }
+
+    /// <summary>
+    /// Adds a pre-existing action to an action container. If the action is already in some container it will first remove it.
     /// </summary>
     public bool AddAction(EntityUid uid, EntityUid actionId, BaseActionComponent? action = null, ActionsContainerComponent? comp = null)
     {
@@ -104,10 +160,7 @@ public sealed class ActionContainerSystem : EntitySystem
             return false;
 
         if (action.Container != null)
-        {
-            Log.Error($"Attempted to insert an action {ToPrettyString(actionId)} that was already in a container {ToPrettyString(action.Container.Value)}");
-            return false;
-        }
+            RemoveAction(actionId, action);
 
         DebugTools.Assert(comp == null || comp.Owner == uid);
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
@@ -122,6 +175,35 @@ public sealed class ActionContainerSystem : EntitySystem
         DebugTools.Assert(action.Container == uid);
 
         return true;
+    }
+
+    /// <summary>
+    /// Removes an action from its container and any action-performer and moves the action to null-space
+    /// </summary>
+    public void RemoveAction(EntityUid actionId, BaseActionComponent? action = null)
+    {
+        if (!_actions.ResolveActionData(actionId, ref action))
+            return;
+
+        if (action.Container == null)
+            return;
+
+        _transform.DetachParentToNull(actionId, Transform(actionId));
+
+        // Container removal events should have removed the action from the action container.
+        // However, just in case the container was already deleted we will still manually clear the container field
+        if (action.Container != null)
+        {
+            if (Exists(action.Container))
+                Log.Error($"Failed to remove action {ToPrettyString(actionId)} from its container {ToPrettyString(action.Container)}?");
+            action.Container = null;
+        }
+
+        // If the action was granted to some entity, then the removal from the container should have automatically removed it.
+        // However, if the action was granted without ever being placed in an action container, it will not have been removed.
+        // Therefore, to ensure that the behaviour of the method is consistent we will also explicitly remove the action.
+        if (action.AttachedEntity != null)
+            _actions.RemoveAction(action.AttachedEntity.Value, actionId, action: action);
     }
 
     private void OnInit(EntityUid uid, ActionsContainerComponent component, ComponentInit args)
@@ -171,13 +253,7 @@ public sealed class ActionContainerSystem : EntitySystem
 
         var ev = new ActionRemovedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
-
-        if (_netMan.IsServer)
-        {
-            // TODO Actions
-            // log an error or warning here once gibbing code is fixed.
-            QueueDel(args.Entity);
-        }
+        data.Container = null;
     }
 }
 
