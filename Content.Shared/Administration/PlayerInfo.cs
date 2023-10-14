@@ -18,7 +18,7 @@ namespace Content.Shared.Administration
     {
         public string PlaytimeString()
         {
-            return OverallPlaytime?.ToString("%d':'hh':'mm':'ss") ?? Loc.GetString("generic-unknown-title");
+            return OverallPlaytime?.ToString("%d':'hh':'mm") ?? Loc.GetString("generic-unknown-title");
         }
     }
 }
