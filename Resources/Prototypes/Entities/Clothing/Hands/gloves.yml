@@ -125,14 +125,28 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsGlovesNitrile
-  name: nitrile gloves
-  description: High-quality nitrile gloves. Expensive medical PPE.
+  id: ClothingHandsGlovesNitrileAlt
+  name: old-fashioned nitrile gloves
+  description: Old version of the famous nitrile gloves. Still gets its use.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
+  - type: Fiber
+    fiberMaterial: fibers-nitrile
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesNitrile
+  name: nitrile gloves
+  description: High-quality nitrile gloves. Expensive medical PPE.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask

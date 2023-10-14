@@ -152,6 +152,21 @@
   prototype: ClothingHandsGlovesNitrile
 
 - type: loadout
+  id: LoadoutHandsClothingHandsGlovesNitrileAlt
+  category: loadout-category-hands
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingHandsGlovesNitrileAlt
+
+- type: loadout
   id: LoadoutHandsClothingHandsGlovesPaws
   category: loadout-category-hands
   cost: 3
