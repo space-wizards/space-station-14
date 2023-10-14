@@ -35,7 +35,7 @@ namespace Content.Client.Medical.CrewMonitoring
 
             if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
             {
-                NavMap.MapUid = xform.GridUid;
+                NavMap.SetMap(mapUid);
             }
             else
             {

@@ -39,7 +39,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         // Get grid uid
         if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
-            NavMap.MapUid = xform.GridUid;
+            NavMap.SetMap(xform.GridUid);
 
         else
             NavMap.Visible = false;
@@ -134,7 +134,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         var monitor = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(PowerMonitoringHelper.CircleIconPath)));
 
         if (monitorCoords != null)
-            NavMap.TrackedEntities.Add(monitorCoords.Value, (true, Color.Cyan, monitor));
+            NavMap.TrackedEntities.Add(monitorCoords.Value, (true, Color.Cyan, monitor, true));
 
         // Update power status text
         TotalSources.Text = Loc.GetString("power-monitoring-window-value", ("value", totalSources));
@@ -172,7 +172,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         var colorMap = useDarkColors ? PowerMonitoringHelper.DarkPowerIconColors : PowerMonitoringHelper.PowerIconColors;
         var color = uid == _trackedEntity ? Color.White : colorMap[entry.Group];
-
+        var blinks = uid == _trackedEntity;
         var iconPath = PowerMonitoringHelper.CircleIconPath;
 
         switch (entry.Group)
@@ -190,11 +190,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         var icon = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(iconPath)));
 
         // We expect a single tracked entity at a given coordinate
-        if (NavMap.TrackedEntities.ContainsKey(coords))
-            NavMap.TrackedEntities[coords] = (true, color, icon);
-
-        else
-            NavMap.TrackedEntities.Add(coords, (true, color, icon));
+        NavMap.TrackedEntities[coords] = (true, color, icon, blinks);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

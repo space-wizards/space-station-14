@@ -12,7 +12,7 @@ public sealed partial class StationMapWindow : FancyWindow
     public StationMapWindow(EntityUid? mapUid, EntityUid? trackedEntity)
     {
         RobustXamlLoader.Load(this);
-        NavMapScreen.MapUid = mapUid;
+        NavMapScreen.SetMap(mapUid);
 
         if (trackedEntity != null)
             NavMapScreen.TrackedCoordinates.Add(new EntityCoordinates(trackedEntity.Value, Vector2.Zero), (true, Color.Red));

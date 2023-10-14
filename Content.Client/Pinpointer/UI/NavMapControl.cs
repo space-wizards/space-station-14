@@ -27,11 +27,11 @@ public sealed partial class NavMapControl : MapGridControl
     [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SharedTransformSystem _transformSystem = default!;
 
-    public EntityUid? MapUid;
+    public EntityUid? MapUid { get; private set; }
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
-    public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture)> TrackedEntities = new();
+    public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture, bool Blinks)> TrackedEntities = new();
     public Dictionary<Vector2i, List<NavMapLine>> PowerCableNetwork = default!;
     public Dictionary<Vector2i, List<NavMapLine>>? FocusCableNetwork;
     public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
@@ -44,6 +44,12 @@ public sealed partial class NavMapControl : MapGridControl
     public List<NavMapLineGroup> HiddenLineGroups = new List<NavMapLineGroup>();
 
     // Local
+    private NavMapComponent? _navMap;
+    private MapGridComponent? _grid;
+    private TransformComponent? _xform;
+    private PhysicsComponent? _physics;
+    private FixturesComponent? _fixtures;
+
     private Vector2 _offset;
     private bool _draggin;
     private bool _recentering = false;
@@ -76,6 +82,17 @@ public sealed partial class NavMapControl : MapGridControl
         HorizontalAlignment = HAlignment.Center,
         Pressed = false,
     };
+
+    public void SetMap(EntityUid? mapUid)
+    {
+        MapUid = mapUid;
+
+        _entManager.TryGetComponent(MapUid, out _navMap);
+        _entManager.TryGetComponent(MapUid, out _grid);
+        _entManager.TryGetComponent(MapUid, out _xform);
+        _entManager.TryGetComponent(MapUid, out _physics);
+        _entManager.TryGetComponent(MapUid, out _fixtures);
+    }
 
     public NavMapControl() : base(8f, 128f, 48f)
     {
@@ -136,10 +153,9 @@ public sealed partial class NavMapControl : MapGridControl
 
     public void CenterToCoordinates(EntityCoordinates coordinates)
     {
-        if (_entManager.TryGetComponent<PhysicsComponent>(MapUid, out var physics))
-        {
-            _offset = new Vector2(coordinates.X, coordinates.Y) - physics.LocalCenter;
-        }
+        if (_physics != null)
+            _offset = new Vector2(coordinates.X, coordinates.Y) - _physics.LocalCenter;
+
         _recenter.Disabled = false;
     }
 
@@ -148,9 +164,7 @@ public sealed partial class NavMapControl : MapGridControl
         base.KeyBindDown(args);
 
         if (args.Function == EngineKeyFunctions.Use)
-        {
             _draggin = true;
-        }
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
@@ -158,9 +172,7 @@ public sealed partial class NavMapControl : MapGridControl
         base.KeyBindUp(args);
 
         if (args.Function == EngineKeyFunctions.Use)
-        {
             _draggin = false;
-        }
     }
 
     protected override void MouseMove(GUIMouseMoveEventArgs args)
@@ -174,13 +186,10 @@ public sealed partial class NavMapControl : MapGridControl
         _offset -= new Vector2(args.Relative.X, -args.Relative.Y) / MidPoint * WorldRange;
 
         if (_offset != Vector2.Zero)
-        {
             _recenter.Disabled = false;
-        }
+
         else
-        {
             _recenter.Disabled = true;
-        }
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -206,25 +215,20 @@ public sealed partial class NavMapControl : MapGridControl
 
         _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
 
-        if (!_entManager.TryGetComponent<NavMapComponent>(MapUid, out var navMap) ||
-            !_entManager.TryGetComponent<TransformComponent>(MapUid, out var xform))
-        {
+        if (_navMap == null || _xform == null)
             return;
-        }
 
         var offset = _offset;
 
-        if (_entManager.TryGetComponent<PhysicsComponent>(MapUid, out var physics))
-        {
-            offset += physics.LocalCenter;
-        }
+        if (_physics != null)
+            offset += _physics.LocalCenter;
 
         // Draw tiles
-        if (_entManager.TryGetComponent<FixturesComponent>(MapUid, out var manager))
+        if (_fixtures != null)
         {
             Span<Vector2> verts = new Vector2[8];
 
-            foreach (var fixture in manager.Fixtures.Values)
+            foreach (var fixture in _fixtures.Fixtures.Values)
             {
                 if (fixture.Shape is not PolygonShape poly)
                     continue;
@@ -373,7 +377,7 @@ public sealed partial class NavMapControl : MapGridControl
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    var position = _transformSystem.GetInvWorldMatrix(xform).Transform(mapPos.Position) - offset;
+                    var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
                     handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
@@ -384,13 +388,13 @@ public sealed partial class NavMapControl : MapGridControl
         // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this)
         foreach (var (coord, value) in TrackedEntities)
         {
-            if (lit && value.Visible)
+            if ((lit || !value.Blinks) && value.Visible)
             {
                 var mapPos = coord.ToMap(_entManager, _transformSystem);
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    var position = _transformSystem.GetInvWorldMatrix(xform).Transform(mapPos.Position) - offset;
+                    var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
                     float f = 2.5f;
@@ -411,7 +415,7 @@ public sealed partial class NavMapControl : MapGridControl
             var rectBuffer = new Vector2(5f, 3f);
             var beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
 
-            foreach (var beacon in navMap.Beacons)
+            foreach (var beacon in _navMap.Beacons)
             {
                 var position = beacon.Position - offset;
 
@@ -435,13 +439,10 @@ public sealed partial class NavMapControl : MapGridControl
         {
             _updateTimer -= UpdateTime;
 
-            if (!_entManager.TryGetComponent<NavMapComponent>(MapUid, out var navMap))
+            if (_navMap == null || _grid == null)
                 return;
 
-            if (!_entManager.TryGetComponent<MapGridComponent>(MapUid, out var grid))
-                return;
-
-            TileGrid = GetDecodedTileChunks(navMap.Chunks, grid);
+            TileGrid = GetDecodedTileChunks(_navMap.Chunks, _grid);
         }
     }
 

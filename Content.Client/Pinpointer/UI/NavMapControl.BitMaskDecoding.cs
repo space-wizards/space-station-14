@@ -1,6 +1,5 @@
 using Content.Client.Power;
 using Content.Shared.Pinpointer;
-using Content.Shared.Power;
 using Robust.Shared.Map.Components;
 using System.Numerics;
 
@@ -22,8 +21,8 @@ public sealed partial class NavMapControl
 
             foreach ((var cableType, var chunkMask) in chunk.CableData)
             {
-                var offset = PowerMonitoringHelper.PowerCableOffsets.TryGetValue(cableType, out var _offset) ? _offset : Vector2.Zero;
-                var color = colorMap.TryGetValue(cableType, out var _color) ? _color : Color.White;
+                var offset = PowerMonitoringHelper.PowerCableOffsets.TryGetValue(cableType, out var cableOffset) ? cableOffset : Vector2.Zero;
+                var color = colorMap.TryGetValue(cableType, out var cableColor) ? cableColor : Color.White;
 
                 for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
                 {
