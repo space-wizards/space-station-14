@@ -6,8 +6,8 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Structures/Decoration/crystal.rsi
-          state: crystal_cyan
+        - sprite: Structures/Walls/rock.rsi
+          state: rock_asteroid_ore
     - type: RandomSpawner
       prototypes:
         - AsteroidRockCrab

@@ -1,16 +1,19 @@
 - type: entity
   id: CrystalGreen
   parent: BaseStructure
-  name: green crystal
-  description: It's a shiny green crystal.
+  suffix: green
+  name: crystal
+  description: A crystaline solid.
   components:
     - type: Sprite
       sprite: Structures/Decoration/crystal.rsi
-      state: crystal_green
+      state: crystal_grey
+      color: "#52ff39"
     - type: Reflect
       reflectProb: 0.5
       reflects:
       - Energy
+      spread: 75
     - type: Fixtures
       fixtures:
         fix1:
@@ -28,40 +31,38 @@
     - type: PointLight
       radius: 3
       energy: 3
-      color: "#06DF24"
+      color: "#52ff39"
     - type: Damageable
       damageContainer: Inorganic
-      damageModifierSet: Metallic
+      damageModifierSet: Glass
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
             damage: 50
           behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
               sound:
                 collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                CrystalGreenShard:
-                  min: 0
-                  max: 2
+                ShardCrystalGreen:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
 
 - type: entity
   id: CrystalPink
   parent: CrystalGreen
-  name: pink crystal
-  description: It's a shiny pink crystal.
+  suffix: pink
   components:
     - type: Sprite
-      sprite: Structures/Decoration/crystal.rsi
-      state: crystal_pink
+      color: "#ff66cc"
     - type: PointLight
       radius: 3
       energy: 3
-      color: "#DF06DC"
+      color: "#ff66cc"
     - type: Destructible
       thresholds:
         - trigger:
@@ -75,23 +76,20 @@
                 collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                CrystalPinkShard:
-                  min: 0
-                  max: 2
+                ShardCrystalPink:
+                  min: 1
+                  max: 1
 
 - type: entity
   id: CrystalGrey
   parent: CrystalGreen
-  name: grey crystal
-  description: It's a shiny grey crystal.
+  suffix: red
   components:
     - type: Sprite
-      sprite: Structures/Decoration/crystal.rsi
       state: crystal_grey
+      color: "#fb4747"
     - type: PointLight
-      radius: 3
-      energy: 3
-      color: "#C1B0C1"
+      color: "#fb4747"
     - type: Destructible
       thresholds:
         - trigger:
@@ -105,23 +103,21 @@
                 collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                CrystalGreyShard:
-                  min: 0
+                ShardCrystalRed:
+                  min: 1
                   max: 2
 
 - type: entity
   id: CrystalOrange
   parent: CrystalGreen
-  name: orange crystal
-  description: It's a shiny orange crystal.
+  suffix: orange
   components:
     - type: Sprite
-      sprite: Structures/Decoration/crystal.rsi
-      state: crystal_orange
+      color: "#ff8227"
     - type: PointLight
       radius: 3
       energy: 3
-      color: "#E8820F"
+      color: "#ff8227"
     - type: Destructible
       thresholds:
         - trigger:
@@ -135,23 +131,21 @@
                 collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                CrystalOrangeShard:
-                  min: 0
+                ShardCrystalOrange:
+                  min: 1
                   max: 2
 
 - type: entity
   id: CrystalBlue
   parent: CrystalGreen
-  name: blue crystal
-  description: It's a shiny blue crystal.
+  suffix: blue
   components:
     - type: Sprite
-      sprite: Structures/Decoration/crystal.rsi
-      state: crystal_blue
+      color: "#39a1ff"
     - type: PointLight
       radius: 3
       energy: 3
-      color: "#1843D4"
+      color: "#39a1ff"
     - type: Destructible
       thresholds:
         - trigger:
@@ -165,37 +159,34 @@
                 collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                CrystalBlueShard:
-                  min: 0
+                ShardCrystalBlue:
+                  min: 1
                   max: 2
 
 - type: entity
   id: CrystalCyan
   parent: CrystalGreen
-  name: cyan crystal
-  description: It's a shiny cyan crystal.
+  suffix: cyan
   components:
     - type: Sprite
-      sprite: Structures/Decoration/crystal.rsi
-      state: crystal_cyan
+      color: "#47f8ff"
     - type: PointLight
       radius: 3
       energy: 3
-      color: "#18C9D4"
+      color: "#47f8ff"
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
             damage: 50
           behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
               sound:
                 collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                CrystalCyanShard:
-                  min: 0
+                ShardCrystalCyan:
+                  min: 1
                   max: 2
-
+            - !type:DoActsBehavior
+               acts: [ "Destruction" ]

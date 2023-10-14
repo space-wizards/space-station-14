@@ -8,7 +8,7 @@
       layers:
         - state: red
         - sprite: Structures/Decoration/crystal.rsi
-          state: crystal_cyan
+          state: crystal_grey
     - type: RandomSpawner
       prototypes:
         - CrystalGreen
@@ -16,4 +16,5 @@
         - CrystalOrange
         - CrystalBlue
         - CrystalCyan
+        - CrystalGrey
       chance: 0.7

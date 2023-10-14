@@ -45,6 +45,10 @@
   oreEntity: MobIronCrab
 
 - type: ore
+  id: OreSilverCrab
+  oreEntity: MobSilverCrab
+
+- type: ore
   id: OreUraniumCrab
   oreEntity: MobUraniumCrab
 
@@ -71,4 +75,5 @@
   weights:
     OreQuartzCrab: 5
     OreIronCrab: 5
-    OreUraniumCrab: 3
+    OreUraniumCrab: 2
+    OreSilverCrab: 3

@@ -354,29 +354,23 @@
 
 - type: entity
   parent: BaseLightTube
-  name: cyan crystal shard
-  description: A cyan crystal shard, it would likely fit in a light holder.
-  id: CrystalCyanShard
+  name: cyan crystal light tube
+  description: A high power high energy bulb which has a small colored crystal inside.
+  id: LightTubeCrystalCyan
   components:
-  - type: Sprite
-    sprite: Objects/Materials/Shards/Crystal/cyan.rsi
   - type: LightBulb
     color: "#47f8ff"
-    lightEnergy: 4
-    lightRadius: 6
+    lightEnergy: 3
+    lightRadius: 8
     lightSoftness: 0.5
     BurningTemperature: 350
-    PowerUse: 0
-  - type: PointLight
-    radius: 2
-    energy: 2
-    color: "#47f8ff"
+    PowerUse: 60
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -387,79 +381,256 @@
         sound:
           collection: GlassBreak
       - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: CyanLight
+    node: icon
 
 - type: entity
-  parent: CrystalCyanShard
-  name: blue crystal shard
-  description: A blue crystal shard, it would likely fit in a light holder.
-  id: CrystalBlueShard
+  parent: LightTubeCrystalCyan
+  name: blue crystal light tube
+  id: LightTubeCrystalBlue
   components:
-  - type: Sprite
-    sprite: Objects/Materials/Shards/Crystal/blue.rsi
   - type: LightBulb
     color: "#39a1ff"
-  - type: PointLight
-    radius: 2
-    energy: 2
-    color: "#39a1ff"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: BlueLight
+    node: icon
 
 - type: entity
-  parent: CrystalCyanShard
-  name: orange crystal shard
-  description: An orange crystal shard, it would likely fit in a light holder.
-  id: CrystalOrangeShard
+  parent: LightTubeCrystalCyan
+  name: pink crystal light tube
+  id: LightTubeCrystalPink
   components:
-  - type: Sprite
-    sprite: Objects/Materials/Shards/Crystal/orange.rsi
   - type: LightBulb
-    color: "#ffa847"
-  - type: PointLight
-    radius: 2
-    energy: 2
-    color: "#ffa847"
+    color: "#ff66cc"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: PinkLight
+    node: icon
 
 - type: entity
-  parent: CrystalCyanShard
-  name: pink crystal shard
-  description: A pink crystal shard, it would likely fit in a light holder.
-  id: CrystalPinkShard
+  parent: LightTubeCrystalCyan
+  name: orange crystal light tube
+  id: LightTubeCrystalOrange
   components:
-  - type: Sprite
-    sprite: Objects/Materials/Shards/Crystal/pink.rsi
   - type: LightBulb
-    color: "#ff64ff"
-  - type: PointLight
-    radius: 2
-    energy: 2
-    color: "#ff64ff"
+    color: "#ff8227"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: OrangeLight
+    node: icon
 
 - type: entity
-  parent: CrystalCyanShard
-  name: green crystal shard
-  description: A green crystal shard, it would likely fit in a light holder.
-  id: CrystalGreenShard
+  parent: LightTubeCrystalCyan
+  name: red crystal light tube
+  id: LightTubeCrystalRed
   components:
-  - type: Sprite
-    sprite: Objects/Materials/Shards/Crystal/green.rsi
   - type: LightBulb
-    color: "#5fff47"
-  - type: PointLight
-    radius: 2
-    energy: 2
-    color: "#5fff47"
+    color: "#fb4747"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: RedLight
+    node: icon
 
 - type: entity
-  parent: CrystalCyanShard
-  name: grey crystal shard
-  description: A grey crystal shard, it would likely fit in a light holder.
-  id: CrystalGreyShard
+  parent: LightTubeCrystalCyan
+  name: green crystal light tube
+  id: LightTubeCrystalGreen
   components:
-  - type: Sprite
-    sprite: Objects/Materials/Shards/Crystal/grey.rsi
   - type: LightBulb
-    color: "#d8d8d8"
-  - type: PointLight
-    radius: 2
-    energy: 2
-    color: "#d8d8d8"
+    color: "#52ff39"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: GreenLight
+    node: icon
