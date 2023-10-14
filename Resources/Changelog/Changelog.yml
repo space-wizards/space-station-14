@@ -1,17 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Obstacles to deter hackers can now be added to airlocks., type: Add}
-  - {message: Security and Atmospherics airlocks start with a moderate level of protection.
-      Command airlocks start with an even higher level of security., type: Add}
-  id: 4506
-  time: '2023-08-10T08:33:04.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Syndicate are no longer interested in stealing Cargo's request computer
-      boards., type: Remove}
-  id: 4507
-  time: '2023-08-10T08:34:38.0000000+00:00'
 - author: Equivocateur
   changes:
   - {message: 'Added an electrical disruption kit to syndicate operatives, containing
@@ -2949,3 +2936,13 @@ Entries:
   - {message: Reduced the bombsuit helmet's explosive resistance., type: Tweak}
   id: 5005
   time: '2023-10-14T17:34:58.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: mindshields to meta station armory, type: Add}
+  id: 5006
+  time: '2023-10-14T21:50:44.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'chem dispensers to barratry, you can stop crying now', type: Add}
+  id: 5007
+  time: '2023-10-14T21:51:33.0000000+00:00'
