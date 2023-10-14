@@ -1,11 +1,4 @@
 Entries:
-- author: CrigCrag
-  changes:
-  - {message: 'Advanced laser guns are now 30 size, like the antique laser gun.',
-    type: Tweak}
-  - {message: Advanced laser guns recharge 25% slower than before., type: Tweak}
-  id: 4505
-  time: '2023-08-10T07:27:02.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: Obstacles to deter hackers can now be added to airlocks., type: Add}
@@ -2951,3 +2944,8 @@ Entries:
       in-hand items dropped on the floor.', type: Fix}
   id: 5004
   time: '2023-10-14T17:28:52.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced the bombsuit helmet's explosive resistance., type: Tweak}
+  id: 5005
+  time: '2023-10-14T17:34:58.0000000+00:00'
