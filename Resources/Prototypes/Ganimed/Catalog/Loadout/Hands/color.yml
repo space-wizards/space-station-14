@@ -42,12 +42,12 @@
   prototype: ClothingHandsGlovesColorLightBrown
 
 - type: loadout
-  id: LoadoutHandsClothingHandsGlovesColorGrey
+  id: LoadoutHandsClothingHandsGlovesColorGray
   category: loadout-category-hands
   cost: 1
   exclusive: true
   sponsorOnly: true
-  prototype: ClothingHandsGlovesColorGrey
+  prototype: ClothingHandsGlovesColorGray
 
 - type: loadout
   id: LoadoutHandsClothingHandsGlovesColorBlue

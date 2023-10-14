@@ -920,14 +920,14 @@
   prototype: ClothingUniformJumpskirtCurator
 
 - type: loadout
-  id: LoadoutUniformClothingUniformJumpsuitMonasticRobe
+  id: LoadoutUniformClothingUniformJumpsuitMonasticRobeDark
   category: loadout-category-uniform
   cost: 2
   exclusive: true
   sponsorOnly: true
   whitelistJobs:
     - Chaplain
-  prototype: ClothingUniformJumpsuitMonasticRobe
+  prototype: ClothingUniformJumpsuitMonasticRobeDark
 
 - type: loadout
   id: LoadoutUniformClothingUniformJumpsuitMonasticRobeLight
@@ -977,7 +977,7 @@
   sponsorOnly: true
   whitelistJobs:
     - Captain
-  prototype: ClothingUniformJumpskirtFormalDressAlter
+  prototype: ClothingUniformJumpskirtCapFormalDressAlter
 
 - type: loadout
   id: LoadoutUniformClothingUniformJumpskirtCasualBlue

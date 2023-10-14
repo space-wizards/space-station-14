@@ -97,20 +97,12 @@
   prototype: ClothingUniformJumpskirtColorOrange
 
 - type: loadout
-  id: LoadoutUniformClothingUniformJumpskirtColorRaibow
+  id: LoadoutUniformClothingUniformColorRaibow
   category: loadout-category-uniform
   cost: 1
   exclusive: false
   sponsorOnly: true
-  prototype: ClothingUniformJumpskirtColorRainbow
-
-- type: loadout
-  id: LoadoutUniformClothingUniformJumpsuitColorRaibow
-  category: loadout-category-uniform
-  cost: 1
-  exclusive: false
-  sponsorOnly: true
-  prototype: ClothingUniformJumpsuitColorRainbow
+  prototype: ClothingUniformColorRainbow
 
 - type: loadout
   id: LoadoutUniformClothingUniformJumpskirtColorPink

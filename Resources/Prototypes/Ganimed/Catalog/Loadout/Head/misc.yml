@@ -13,12 +13,12 @@
   prototype: ClothingHeadHatAnimalCatBrown
 
 - type: loadout
-  id: LoadoutHeadClothingHeadHatAnimalCatGrey
+  id: LoadoutHeadClothingHeadHatAnimalCat
   category: loadout-category-head
   cost: 1
   exclusive: true
   sponsorOnly: true
-  prototype: ClothingHeadHatAnimalCatGrey
+  prototype: ClothingHeadHatAnimalCat
 
 - type: loadout
   id: LoadoutHeadClothingHeadHatFedoraBrown
