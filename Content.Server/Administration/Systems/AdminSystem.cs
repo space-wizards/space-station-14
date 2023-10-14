@@ -6,6 +6,7 @@ using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
 using Content.Server.IdentityManagement;
 using Content.Server.Mind;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Popups;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Administration;
@@ -14,6 +15,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Popups;
@@ -36,6 +38,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
         [Dependency] private readonly HandsSystem _hands = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -228,9 +231,16 @@ namespace Content.Server.Administration.Systems
             }
 
             var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
+            TimeSpan? overallPlaytime = null;
+            if (session != null &&
+                _playTime.TryGetTrackerTimes(session, out var playTimes) &&
+                playTimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var playTime))
+            {
+                overallPlaytime = playTime;
+            }
 
             return new PlayerInfo(name, entityName, identityName, startingRole, antag, GetNetEntity(session?.AttachedEntity), data.UserId,
-                connected, _roundActivePlayers.Contains(data.UserId));
+                connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
         }
 
         private void OnPanicBunkerChanged(bool enabled)

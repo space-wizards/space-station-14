@@ -14,3 +14,8 @@ Entries:
       if admins are online or not.', type: Add}
   id: 2
   time: '2023-10-12T22:46:00.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Added total playtime to the F7 player list and the AHelp window title.', type: Add}
+  id: 3
+  time: '2023-10-14T08:55:00.0000000+00:00'
