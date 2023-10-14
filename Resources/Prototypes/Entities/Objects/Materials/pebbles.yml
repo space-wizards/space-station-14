@@ -1,0 +1,67 @@
+- type: entity
+  parent: BaseItem
+  id: Pebble
+  name: pebble
+  description: A small but weighty pebble.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/pebble.rsi
+    state: base
+  - type: Item
+    size: 3
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 3
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 3
+
+- type: entity
+  parent: Pebble
+  id: BasaltPebble
+  name: basalt pebble
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/pebble.rsi
+    state: basalt
+    
+- type: entity
+  name: snowball
+  id: SnowPebble
+  parent: BaseItem
+  description: Ball of cold snow.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/pebble.rsi
+    state: snowball
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Cold: 2
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/gen_hit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          EffectSnowballSplash:
+            min: 1
+            max: 1
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

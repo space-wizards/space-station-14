@@ -1079,3 +1079,57 @@
     state: closed
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: cobblestone wall 
+  id: CobblestoneWall
+  graph: CobblestoneWalls
+  start: start
+  targetNode: cobblestoneWall
+  category: construction-category-structures
+  description: Stone by stone, perfectly fitted together to form a wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Walls/cobblebrick.rsi
+    state: full
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  name: basalt cobblestone wall 
+  id: BasaltCobblestoneWall
+  graph: CobblestoneWalls
+  start: start
+  targetNode: basaltCobblestoneWall
+  category: construction-category-structures
+  description: Stone by stone, perfectly fitted together to form a wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+    state: full
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  name: snowball wall 
+  id: SnowCobblestoneWall
+  graph: CobblestoneWalls
+  start: start
+  targetNode: snowCobblestoneWall
+  category: construction-category-structures
+  description: A cold, not-so-impenetrable wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+    state: full
+  conditions:
+    - !type:TileNotBlocked

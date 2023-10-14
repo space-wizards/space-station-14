@@ -1,0 +1,17 @@
+- type: entity
+  id: EffectSnowballSplash
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.18
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - sprite: Effects/snowball_splash.rsi
+      state: base
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: AnimationPlayer

@@ -153,21 +153,22 @@
   name: rock
   components:
     - type: SoundOnGather
-    - type: Gatherable
-      whitelist:
-        tags:
-          - Pickaxe
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 150
-          behaviors:
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            Pebble:
+              min: 2
+              max: 5
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - type: Occluder
     - type: Airtight
     - type: Fixtures
@@ -394,6 +395,19 @@
           state: rock_wall_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_wall_west
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
+        behaviors:
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            BasaltPebble:
+              min: 2
+              max: 5
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   id: WallRockBasaltGold
@@ -589,6 +603,19 @@
           state: rock_snow_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_snow_west
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SnowPebble:
+              min: 2
+              max: 5
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   id: WallRockSnowGold

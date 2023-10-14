@@ -1143,3 +1143,96 @@
     - type: Icon
       sprite: Structures/Magic/forcewall.rsi
       state: forcewall
+
+- type: entity
+  parent: BaseWall
+  id: WallCobblebrick
+  name: cobblestone brick wall
+  description: Stone by stone, perfectly fitted together to form a wall.
+  components:
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Pebble:
+            min: 2
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+  - type: Construction
+    graph: CobblestoneWalls
+    node: cobblestoneWall
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallBasaltCobblebrick
+  name: basalt brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BasaltPebble:
+            min: 2
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+  - type: Construction
+    graph: CobblestoneWalls
+    node: basaltCobblestoneWall
+    
+- type: entity
+  parent: WallCobblebrick
+  id: WallSnowCobblebrick
+  name: snow brick wall
+  description: A cold, not-so-impenetrable wall.
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SnowPebble:
+            min: 2
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+  - type: Construction
+    graph: CobblestoneWalls
+    node: snowCobblestoneWall
