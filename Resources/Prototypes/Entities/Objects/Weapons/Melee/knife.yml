@@ -88,7 +88,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 10
+        Slash: 15
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
@@ -104,6 +104,12 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/survival_knife.rsi
     size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 10
     state: icon
   - type: Item
     size: 10
