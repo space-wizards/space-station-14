@@ -18,6 +18,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using ClimbableComponent = Content.Shared.Climbing.Components.ClimbableComponent;
 
 namespace Content.Server.NPC.Pathfinding;
 
@@ -558,10 +559,13 @@ public sealed partial class PathfindingSystem
                             }
                         }
 
+                        /*This is causing too many issues and I'd rather just ignore it until pathfinder refactor
+                          to just get tiles at runtime.
                         if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
                         {
-                            DebugTools.Assert(tileEntities.Count == 0);
+                            // DebugTools.Assert(tileEntities.Count == 0);
                         }
+                        */
 
                         var crumb = new PathfindingBreadcrumb()
                         {

@@ -43,7 +43,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 doAfter.CancelledTime = doAfter.CancelledTime.Value + args.PausedTime;
         }
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
@@ -55,7 +55,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         {
             InternalCancel(doAfter, component);
         }
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -63,10 +63,12 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     /// </summary>
     private void OnDamage(EntityUid uid, DoAfterComponent component, DamageChangedEvent args)
     {
-        if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null)
+        // If we're applying state then let the server state handle the do_after prediction.
+        // This is to avoid scenarios where a do_after is erroneously cancelled on the final tick.
+        if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null || GameTiming.ApplyingState)
             return;
 
-        var delta = args.DamageDelta?.Total;
+        var delta = args.DamageDelta.GetTotal();
 
         var dirty = false;
         foreach (var doAfter in component.DoAfters.Values)
@@ -79,7 +81,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         if (dirty)
-            Dirty(component);
+            Dirty(uid, component);
     }
 
     private void RaiseDoAfterEvents(DoAfter doAfter, DoAfterComponent component)
@@ -207,10 +209,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
         // Networking yay
-        doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
-        doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
-
-        // Networking yay
         args.NetTarget = GetNetEntity(args.Target);
         args.NetUsed = GetNetEntity(args.Used);
         args.NetUser = GetNetEntity(args.User);
@@ -226,6 +224,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.UserPosition.TryDistance(EntityManager, targetPosition, out doAfter.TargetDistance);
         }
 
+        doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
+
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).
         if (args.NeedHand && args.BreakOnHandChange)
@@ -236,6 +236,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.InitialHand = handsComponent.ActiveHand?.Name;
             doAfter.InitialItem = handsComponent.ActiveHandEntity;
         }
+
+        doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
 
         // Initial checks
         if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<HandsComponent>()))
@@ -254,7 +256,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         comp.DoAfters.Add(doAfter.Index, doAfter);
         EnsureComp<ActiveDoAfterComponent>(args.User);
-        Dirty(comp);
+        Dirty(args.User, comp);
         args.Event.DoAfter = doAfter;
         return true;
     }

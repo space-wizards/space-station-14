@@ -4,16 +4,17 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Movement.Systems;
-using Content.Shared.Administration.Components;
 using Content.Shared.Actions.Events;
+using Content.Shared.Administration.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Events;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
+using Content.Shared.Effects;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
@@ -29,8 +30,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Content.Shared.Effects;
-using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -57,12 +56,12 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnMeleeExamineDamage(EntityUid uid, MeleeWeaponComponent component, ref DamageExamineEvent args)
     {
-        if (component.HideFromExamine)
+        if (component.Hidden)
             return;
 
         var damageSpec = GetDamage(uid, args.User, component);
 
-        if (damageSpec.Total == FixedPoint2.Zero)
+        if (damageSpec.Empty)
             return;
 
         _damageExamine.AddDamageExamine(args.Message, damageSpec, Loc.GetString("damage-melee"));

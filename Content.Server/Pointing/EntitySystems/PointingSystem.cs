@@ -3,12 +3,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Pointing.Components;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Eye;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
@@ -94,7 +94,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
             else
             {
-                return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+                return ExamineSystemShared.InRangeUnOccluded(pointer, coordinates, 15, predicate: e => e == pointer);
             }
         }
 
@@ -203,6 +203,11 @@ namespace Content.Server.Pointing.EntitySystems
                     : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
 
                 viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
+
+                var ev = new AfterPointedAtEvent(pointed);
+                RaiseLocalEvent(player, ref ev);
+                var gotev = new AfterGotPointedAtEvent(player);
+                RaiseLocalEvent(pointed, ref gotev);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {ToPrettyString(pointed):target} {Transform(pointed).Coordinates}");
             }

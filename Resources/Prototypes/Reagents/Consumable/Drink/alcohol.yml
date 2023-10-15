@@ -120,12 +120,12 @@
   boilingPoint: 78.2
   meltingPoint: -114.1
   metabolisms:
-    Poison:
+    Alcohol:
       effects:
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 5
+          min: 15
         - !type:OrganType
           type: Dwarf
           shouldHave: false
@@ -136,7 +136,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 5
+          min: 15
         - !type:OrganType
           type: Dwarf
         damage:
@@ -145,7 +145,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 5
+          min: 15
         - !type:OrganType
           type: Dwarf
         damage:
@@ -156,15 +156,13 @@
         conditions:
         - !type:ReagentThreshold
           reagent: Ethanol
-          min: 3
+          min: 12
         # dwarves immune to vomiting from alcohol
         - !type:OrganType
           type: Dwarf
           shouldHave: false
-    Alcohol:
-      effects:
       - !type:Drunk
-        boozePower: 20
+        boozePower: 2
 
 - type: reagent
   id: Gin
@@ -648,7 +646,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: DemonsBlood
@@ -775,7 +773,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: GinTonic
@@ -795,7 +793,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: Goldschlager
@@ -1142,7 +1140,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: CogChamp
@@ -1328,7 +1326,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: WhiskeyCola
@@ -1348,7 +1346,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: WhiskeySoda
@@ -1368,7 +1366,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: WhiteRussian

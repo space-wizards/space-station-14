@@ -1126,6 +1126,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: swept2
 - type: marking
+  id: HumanHairShoulderLengthOverEye
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: shoulderlengthovereye
+- type: marking
   id: HumanHairThinning
   bodyPart: Hair
   markingCategory: Hair
@@ -1181,6 +1188,13 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: twintail
+- type: marking
+  id: HumanHairTwoStrands
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: twostrands
 - type: marking
   id: HumanHairUndercut
   bodyPart: Hair

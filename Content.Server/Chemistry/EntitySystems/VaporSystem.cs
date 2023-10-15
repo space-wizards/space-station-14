@@ -1,12 +1,13 @@
 using System.Numerics;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -15,6 +16,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -67,7 +69,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _physics.SetLinearDamping(physics, 0f);
                 _physics.SetAngularDamping(physics, 0f);
 
-                _throwing.TryThrow(vapor.Owner, dir, speed, user: user, pushbackRatio: ThrowingSystem.PushbackDefault * 10f);
+                _throwing.TryThrow(vapor.Owner, dir, speed, user: user);
 
                 var distance = (target.Position - vaporXform.WorldPosition).Length();
                 var time = (distance / physics.LinearVelocity.Length());

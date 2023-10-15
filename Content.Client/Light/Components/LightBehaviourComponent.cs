@@ -24,7 +24,7 @@ namespace Content.Client.Light.Components
         [DataField("id")] public string ID { get; set; } = string.Empty;
 
         [DataField("property")]
-        public virtual string Property { get; protected set; } = "Radius";
+        public virtual string Property { get; protected set; } = nameof(PointLightComponent.AnimatedRadius);
 
         [DataField("isLooped")] public bool IsLooped { get; set; }
 
@@ -119,7 +119,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled") // special case for boolean
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean
             {
                 ApplyProperty(interpolateValue < 0.5f);
                 return (-1, playingTime);
@@ -181,7 +181,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled") // special case for boolean
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean
             {
                 ApplyProperty(interpolateValue < EndValue);
                 return (-1, playingTime);
@@ -245,7 +245,7 @@ namespace Content.Client.Light.Components
 
         public override void OnStart()
         {
-            if (Property == "Enabled") // special case for boolean, we randomize it
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean, we randomize it
             {
                 ApplyProperty(_random.NextDouble() < 0.5);
                 return;
@@ -267,7 +267,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled")
+            if (Property == nameof(PointLightComponent.AnimatedEnable))
             {
                 return (-1, playingTime);
             }
@@ -298,7 +298,7 @@ namespace Content.Client.Light.Components
     public sealed partial class ColorCycleBehaviour : LightBehaviourAnimationTrack, ISerializationHooks
     {
         [DataField("property")]
-        public override string Property { get; protected set; } = "Color";
+        public override string Property { get; protected set; } = nameof(PointLightComponent.Color);
 
         [DataField("colors")] public List<Color> ColorsToCycle { get; set; } = new();
 
@@ -431,20 +431,23 @@ namespace Content.Client.Light.Components
         /// </summary>
         public void StartLightBehaviour(string id = "")
         {
-            if (!_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            var uid = Owner;
+            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
             {
                 return;
             }
+
+            var animations = _entMan.System<AnimationPlayerSystem>();
 
             foreach (var container in Animations)
             {
                 if (container.LightBehaviour.ID == id || id == string.Empty)
                 {
-                    if (!animation.HasRunningAnimation(KeyPrefix + container.Key))
+                    if (!animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key))
                     {
                         CopyLightSettings(container.LightBehaviour.Property);
                         container.LightBehaviour.UpdatePlaybackValues(container.Animation);
-                        animation.Play(container.Animation, KeyPrefix + container.Key);
+                        animations.Play(uid, animation, container.Animation, KeyPrefix + container.Key);
                     }
                 }
             }
@@ -460,20 +463,22 @@ namespace Content.Client.Light.Components
         /// <param name="resetToOriginalSettings">Should the light have its original settings applied?</param>
         public void StopLightBehaviour(string id = "", bool removeBehaviour = false, bool resetToOriginalSettings = false)
         {
-            if (!_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            var uid = Owner;
+            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
             {
                 return;
             }
 
             var toRemove = new List<AnimationContainer>();
+            var animations = _entMan.System<AnimationPlayerSystem>();
 
             foreach (var container in Animations)
             {
                 if (container.LightBehaviour.ID == id || id == string.Empty)
                 {
-                    if (animation.HasRunningAnimation(KeyPrefix + container.Key))
+                    if (animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key))
                     {
-                        animation.Stop(KeyPrefix + container.Key);
+                        animations.Stop(uid, animation, KeyPrefix + container.Key);
                     }
 
                     if (removeBehaviour)
@@ -488,7 +493,7 @@ namespace Content.Client.Light.Components
                 Animations.Remove(container);
             }
 
-            if (resetToOriginalSettings && _entMan.TryGetComponent(Owner, out PointLightComponent? light))
+            if (resetToOriginalSettings && _entMan.TryGetComponent(uid, out PointLightComponent? light))
             {
                 foreach (var (property, value) in _originalPropertyValues)
                 {
@@ -505,12 +510,14 @@ namespace Content.Client.Light.Components
         /// <returns>Whether at least one behaviour is running, false if none is.</returns>
         public bool HasRunningBehaviours()
         {
-            if (!_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            var uid = Owner;
+            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
             {
                 return false;
             }
 
-            return Animations.Any(container => animation.HasRunningAnimation(KeyPrefix + container.Key));
+            var animations = _entMan.System<AnimationPlayerSystem>();
+            return Animations.Any(container => animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key));
         }
 
         /// <summary>

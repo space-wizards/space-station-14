@@ -152,7 +152,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                     continue;
 
                 var ev = new GetExplosionResistanceEvent(explosionType.ID);
-                RaiseLocalEvent(uid, ev, false);
+                RaiseLocalEvent(uid, ref ev);
 
                 damagePerIntensity += value * Math.Max(0, ev.DamageCoefficient);
             }

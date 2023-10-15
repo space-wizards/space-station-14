@@ -118,8 +118,8 @@
     usesApcPower: true
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-windoor
-    LayoutId: Airlock
+    boardName: wires-board-name-windoor
+    layoutId: Airlock
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

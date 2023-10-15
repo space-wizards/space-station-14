@@ -1,10 +1,11 @@
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Fluids.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -123,7 +124,7 @@ public sealed class DrainSystem : SharedDrainSystem
             if (!drain.AutoDrain)
             {
                 _ambientSoundSystem.SetAmbience(drain.Owner, false);
-                return;
+                continue;
             }
 
             if (!managerQuery.TryGetComponent(drain.Owner, out var manager))

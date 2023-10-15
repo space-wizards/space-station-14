@@ -1,15 +1,14 @@
-using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
-using Content.Server.Climbing;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.CCVar;
+using Content.Shared.Climbing.Systems;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
@@ -27,9 +26,9 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Prying.Systems;
 
 namespace Content.Server.NPC.Systems;
 
@@ -62,6 +61,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
+    [Dependency] private readonly PryingSystem _pryingSystem = default!;
 
     private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<MovementSpeedModifierComponent> _modifierQuery;
@@ -147,7 +147,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
     private void OnDebugRequest(RequestNPCSteeringDebugEvent msg, EntitySessionEventArgs args)
     {
-        if (!_admin.IsAdmin((IPlayerSession) args.SenderSession))
+        if (!_admin.IsAdmin((IPlayerSession)args.SenderSession))
             return;
 
         if (msg.Enabled)
@@ -439,7 +439,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         if (targetPoly != null &&
             steering.Coordinates.Position.Equals(Vector2.Zero) &&
             TryComp<PhysicsComponent>(uid, out var physics) &&
-            _interaction.InRangeUnobstructed(uid, steering.Coordinates.EntityId, range: 30f, (CollisionGroup) physics.CollisionMask))
+            _interaction.InRangeUnobstructed(uid, steering.Coordinates.EntityId, range: 30f, (CollisionGroup)physics.CollisionMask))
         {
             steering.CurrentPath.Clear();
             steering.CurrentPath.Enqueue(targetPoly);

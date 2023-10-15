@@ -3,16 +3,16 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Objectives;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
@@ -20,9 +20,10 @@ namespace Content.Shared.Mind;
 public abstract class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
+    [Dependency] private readonly SharedPlayerSystem _player = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -90,7 +91,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (!mindContainer.ShowExamineInfo || !args.IsInDetailsRange)
             return;
 
-        var dead = _mobStateSystem.IsDead(uid);
+        var dead = _mobState.IsDead(uid);
         var hasSession = CompOrNull<MindComponent>(mindContainer.Mind)?.Session;
 
         if (dead && !mindContainer.HasMind)
@@ -130,11 +131,10 @@ public abstract class SharedMindSystem : EntitySystem
     public EntityUid CreateMind(NetUserId? userId, string? name = null)
     {
         var mindId = Spawn(null, MapCoordinates.Nullspace);
+        _metadata.SetEntityName(mindId, name == null ? "mind" : $"mind ({name})");
         var mind = EnsureComp<MindComponent>(mindId);
         mind.CharacterName = name;
         SetUserId(mindId, userId, mind);
-
-        Dirty(mindId, MetaData(mindId));
 
         return mindId;
     }
@@ -166,7 +166,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (targetMobState == null)
             return true;
         // They might actually be alive.
-        return _mobStateSystem.IsDead(mind.OwnedEntity.Value, targetMobState);
+        return _mobState.IsDead(mind.OwnedEntity.Value, targetMobState);
     }
 
     public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
@@ -215,7 +215,7 @@ public abstract class SharedMindSystem : EntitySystem
 
     public void WipeMind(ICommonSession player)
     {
-        var mind = _playerSystem.ContentData(player)?.Mind;
+        var mind = _player.ContentData(player)?.Mind;
         DebugTools.Assert(GetMind(player.UserId) == mind);
         WipeMind(mind);
     }
@@ -251,60 +251,72 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds an objective to this mind.
+    /// Tries to create and add an objective from its prototype id.
     /// </summary>
-    public bool TryAddObjective(EntityUid mindId, MindComponent mind, ObjectivePrototype objectivePrototype)
+    /// <returns>Returns true if adding the objective succeeded.</returns>
+    public bool TryAddObjective(EntityUid mindId, MindComponent mind, string proto)
     {
-        if (!objectivePrototype.CanBeAssigned(mindId, mind))
-            return false;
-        var objective = objectivePrototype.GetObjective(mindId, mind);
-        if (mind.Objectives.Contains(objective))
+        var objective = _objectives.TryCreateObjective(mindId, mind, proto);
+        if (objective == null)
             return false;
 
-        foreach (var condition in objective.Conditions)
-        {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString(mind)}");
-        }
-
-        mind.Objectives.Add(objective);
+        AddObjective(mindId, mind, objective.Value);
         return true;
     }
 
     /// <summary>
-    /// Adds an objective, by id, to this mind.
+    /// Adds an objective that already exists, and is assumed to have had its requirements checked.
     /// </summary>
-    public bool TryAddObjective(EntityUid mindId, string name, MindComponent? mind = null)
+    public void AddObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
     {
-        if (!Resolve(mindId, ref mind))
-            return false;
-
-        if (!_proto.TryIndex<ObjectivePrototype>(name, out var objective))
-        {
-            Log.Error($"Tried to add unknown objective prototype: {name}");
-            return false;
-        }
-
-        return TryAddObjective(mindId, mind, objective);
+        var title = Name(objective);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) added to mind of {MindOwnerLoggingString(mind)}");
+        mind.Objectives.Add(objective);
     }
 
     /// <summary>
-    /// Removes an objective to this mind.
+    /// Removes an objective from this mind.
     /// </summary>
     /// <returns>Returns true if the removal succeeded.</returns>
-    public bool TryRemoveObjective(MindComponent mind, int index)
+    public bool TryRemoveObjective(EntityUid mindId, MindComponent mind, int index)
     {
         if (index < 0 || index >= mind.Objectives.Count)
             return false;
 
         var objective = mind.Objectives[index];
 
-        foreach (var condition in objective.Conditions)
-        {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {MindOwnerLoggingString(mind)}");
-        }
-
+        var title = Name(objective);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Remove(objective);
+        Del(objective);
         return true;
+    }
+
+    public bool TryGetObjectiveComp<T>(EntityUid uid, [NotNullWhen(true)] out T? objective) where T : Component
+    {
+        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComp(mindId, out objective, mind))
+        {
+            return true;
+        }
+        objective = default;
+        return false;
+    }
+
+    public bool TryGetObjectiveComp<T>(EntityUid mindId, [NotNullWhen(true)] out T? objective, MindComponent? mind = null) where T : Component
+    {
+        if (Resolve(mindId, ref mind))
+        {
+            var query = GetEntityQuery<T>();
+            foreach (var uid in mind.AllObjectives)
+            {
+                if (query.TryGetComponent(uid, out objective))
+                {
+                    return true;
+                }
+            }
+        }
+        objective = default;
+        return false;
     }
 
     public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
@@ -356,7 +368,14 @@ public abstract class SharedMindSystem : EntitySystem
     {
         mindId = default;
         mind = null;
-        return _playerSystem.ContentData(player) is { } data && TryGetMind(data, out mindId, out mind);
+        if (_player.ContentData(player) is not { } data)
+            return false;
+
+        if (TryGetMind(data, out mindId, out mind))
+            return true;
+
+        DebugTools.AssertNull(data.Mind);
+        return false;
     }
 
     /// <summary>
@@ -431,6 +450,30 @@ public abstract class SharedMindSystem : EntitySystem
     public string? GetCharacterName(NetUserId userId)
     {
         return TryGetMind(userId, out _, out var mind) ? mind.CharacterName : null;
+    }
+
+    /// <summary>
+    /// Returns a list of every living humanoid player's minds, except for a single one which is exluded.
+    /// </summary>
+    public List<EntityUid> GetAliveHumansExcept(EntityUid exclude)
+    {
+        var mindQuery = EntityQuery<MindComponent>();
+
+        var allHumans = new List<EntityUid>();
+        // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
+        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
+        {
+            // the player needs to have a mind and not be the excluded one
+            if (mc.Mind == null || mc.Mind == exclude)
+                continue;
+
+            // the player has to be alive
+            if (_mobState.IsAlive(uid, mobState))
+                allHumans.Add(mc.Mind.Value);
+        }
+
+        return allHumans;
     }
 }
 
