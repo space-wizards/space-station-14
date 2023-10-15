@@ -44,7 +44,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
-    [Dependency] protected   readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected   readonly SharedTransformSystem XformSystem = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
@@ -163,7 +163,19 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Handled || _combatMode.IsInCombatMode(args.User) || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
             return;
 
-        OpenStorageUI(uid, args.User, storageComp);
+        if (TryComp(args.User, out ActorComponent? actorComp))
+        {
+            var uiOpen = _uiSystem.SessionHasOpenUi(uid, StorageComponent.StorageUiKey.Key, actorComp.Session);
+
+            if (uiOpen)
+            {
+                _uiSystem.TryClose(uid, StorageComponent.StorageUiKey.Key, actorComp.Session);
+            }
+            else
+            {
+                OpenStorageUI(uid, args.User, storageComp);
+            }
+        }
     }
 
     /// <summary>
@@ -243,7 +255,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 var position = EntityCoordinates.FromMap(
                     parent.IsValid() ? parent : uid,
                     transformEnt.MapPosition,
-                    _transform
+                    XformSystem
                 );
 
                 if (PlayerInsertEntityInWorld(uid, args.User, target, storageComp))
@@ -286,8 +298,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
             var position = EntityCoordinates.FromMap(
                 xform.ParentUid.IsValid() ? xform.ParentUid : uid,
-                new MapCoordinates(_transform.GetWorldPosition(targetXform), targetXform.MapID),
-                _transform
+                new MapCoordinates(XformSystem.GetWorldPosition(targetXform), targetXform.MapID),
+                XformSystem
             );
 
             var angle = targetXform.LocalRotation;
@@ -316,7 +328,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)
     {
-        var coordinates = _transform.GetMoverCoordinates(uid);
+        var coordinates = XformSystem.GetMoverCoordinates(uid);
 
         // Being destroyed so need to recalculate.
         _containerSystem.EmptyContainer(storageComp.Container, destination: coordinates);
