@@ -464,7 +464,7 @@
         whitelist:
           tags:
             - Write
-        insertOnInteract: false 
+        insertOnInteract: false
   - type: Item
     sprite: Objects/Misc/clipboard.rsi
     size: 10
@@ -491,6 +491,67 @@
     damage:
       types:
         Blunt: 6
+
+- type: entity
+  id: BoxFolderQmClipboard
+  parent: BoxFolderBase
+  name: quartermaster's requisition clipboard
+  description: A bulky electric clipboard, filled with shipping orders and financing details. With so many compromising documents, you ought to keep this safe.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/qm_clipboard.rsi
+    layers:
+    - state: qm_clipboard
+    - state: qm_clipboard_paper
+      map: ["qm_clipboard_paper"]
+      visible: false
+    - state: qm_clipboard_pen
+      map: ["qm_clipboard_pen"]
+      visible: false
+    - state: qm_clipboard_penindicator
+      map: ["qm_clipboard_penindicator"]
+      shader: "unshaded"
+      visible: false
+    - state: qm_clipboard_over
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      pen_slot: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      pen_slot:
+        name: Pen
+        whitelist:
+          tags:
+            - Write
+        insertOnInteract: true
+  - type: Item
+    sprite: Objects/Misc/qm_clipboard.rsi
+    size: 30
+  - type: Clothing
+    slots: [belt]
+    quickEquip: false
+    sprite: Objects/Misc/qm_clipboard.rsi
+  - type: Storage
+    capacity: 100
+    whitelist:
+      tags:
+        - Document
+  - type: ItemMapper
+    mapLayers:
+      qm_clipboard_paper:
+        whitelist:
+          tags:
+          - Document
+      qm_clipboard_pen:
+        whitelist:
+          tags:
+          - Write
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 12
 
 # Stamps
 - type: entity
