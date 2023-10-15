@@ -61,7 +61,7 @@ namespace Content.Client.Options.UI.Tabs
             {
                 if (!first)
                 {
-                    KeybindsContainer.AddChild(new Control {MinSize = new Vector2(0, 8)});
+                    KeybindsContainer.AddChild(new Control { MinSize = new Vector2(0, 8) });
                 }
 
                 first = false;
@@ -69,7 +69,7 @@ namespace Content.Client.Options.UI.Tabs
                 {
                     Text = Loc.GetString(headerContents),
                     FontColorOverride = StyleNano.NanoGold,
-                    StyleClasses = {StyleNano.StyleClassLabelKeyText}
+                    StyleClasses = { StyleNano.StyleClassLabelKeyText }
                 });
             }
 
@@ -82,7 +82,7 @@ namespace Content.Client.Options.UI.Tabs
 
             void AddCheckBox(string checkBoxName, bool currentState, Action<BaseButton.ButtonToggledEventArgs>? callBackOnClick)
             {
-                CheckBox newCheckBox = new CheckBox() { Text = Loc.GetString(checkBoxName)};
+                CheckBox newCheckBox = new CheckBox() { Text = Loc.GetString(checkBoxName) };
                 newCheckBox.Pressed = currentState;
                 newCheckBox.OnToggled += callBackOnClick;
 
@@ -159,6 +159,7 @@ namespace Content.Client.Options.UI.Tabs
             AddHeader("ui-options-header-misc");
             AddButton(ContentKeyFunctions.TakeScreenshot);
             AddButton(ContentKeyFunctions.TakeScreenshotNoUI);
+            AddButton(ContentKeyFunctions.ToggleFullscreen);
 
             AddHeader("ui-options-header-hotbar");
             foreach (var boundKey in ContentKeyFunctions.GetHotbarBoundKeys())
@@ -409,7 +410,7 @@ namespace Content.Client.Options.UI.Tabs
 
                 BindButton1 = new BindButton(parent, this, StyleBase.ButtonOpenRight);
                 BindButton2 = new BindButton(parent, this, StyleBase.ButtonOpenLeft);
-                ResetButton = new Button {Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = {StyleBase.ButtonCaution}};
+                ResetButton = new Button { Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = { StyleBase.ButtonCaution } };
 
                 var hBox = new BoxContainer
                 {
@@ -449,7 +450,7 @@ namespace Content.Client.Options.UI.Tabs
             {
                 _tab = tab;
                 KeyControl = keyControl;
-                Button = new Button {StyleClasses = {styleClass}};
+                Button = new Button { StyleClasses = { styleClass } };
                 UpdateText();
                 AddChild(Button);
 

@@ -7,6 +7,15 @@
       - id: VendingMachineRestockBooze
 
 - type: entity
+  id: CrateVendingMachineRestockChefvendFilled
+  name: ChefVend restock crate
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockChefvend
+
+- type: entity
   id: CrateVendingMachineRestockClothesFilled
   parent: CratePlastic
   components:
@@ -14,6 +23,15 @@
     contents:
       - id: VendingMachineRestockClothes
       - id: VendingMachineRestockCostumes
+
+- type: entity
+  id: CrateVendingMachineRestockCondimentStationFilled
+  name: Condiment Station restock crate
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockCondimentStation
 
 - type: entity
   id: CrateVendingMachineRestockDinnerwareFilled
