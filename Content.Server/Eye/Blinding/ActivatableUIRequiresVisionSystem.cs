@@ -50,7 +50,7 @@ public sealed class ActivatableUIRequiresVisionSystem : EntitySystem
 
         foreach (var ui in uiList)
         {
-            if (HasComp<ActivatableUIRequiresVisionComponent>(ui.Owner))
+            if (HasComp<ActivatableUIRequiresVisionComponent>(GetEntity(ui.Owner)))
                 closeList.Enqueue(ui);
         }
 

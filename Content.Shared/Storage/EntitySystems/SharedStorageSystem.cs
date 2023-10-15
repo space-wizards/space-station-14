@@ -703,7 +703,7 @@ public abstract class SharedStorageSystem : EntitySystem
         silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.ActiveDelay(uid, useDelay);
         if (!silent)
         {
-            Audio.PlayPvs(storageComp.StorageOpenSound, uid);
+            Audio.PlayPredicted(storageComp.StorageOpenSound, uid, entity);
             if (useDelay != null)
                 UseDelay.BeginDelay(uid, useDelay);
         }
