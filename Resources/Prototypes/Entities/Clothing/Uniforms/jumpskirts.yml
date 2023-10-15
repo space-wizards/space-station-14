@@ -836,6 +836,7 @@
         maxVol: 30
   - type: ExaminableSolution
     solution: stains
+    useAltExamineText: true
   - type: Stainable
   - type: Reactive
   - type: Construction

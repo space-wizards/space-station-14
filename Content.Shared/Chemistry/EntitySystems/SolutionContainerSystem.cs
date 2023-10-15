@@ -135,7 +135,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         if (string.IsNullOrEmpty(primaryReagent?.Prototype))
         {
-            args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
+            var emptyString = "shared-solution-container-component-on-examine-empty-container";
+            if (examinableComponent.UseAltExamineText)
+            {
+                emptyString = "shared-solution-container-component-on-examine-empty-container-alt";
+            }
+            args.PushText(Loc.GetString(emptyString));
             return;
         }
 
@@ -148,6 +153,10 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         var colorHex = solution.GetColor(_prototypeManager)
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
+        if (examinableComponent.UseAltExamineText)
+        {
+            messageString = "shared-solution-container-component-on-examine-empty-container-alt";
+        }
 
         args.PushMarkup(Loc.GetString(messageString,
             ("color", colorHex),
