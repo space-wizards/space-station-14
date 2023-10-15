@@ -269,6 +269,9 @@ uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to 
 uplink-cigarettes-name = Syndicate Smokes Packet
 uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
 
+uplink-snack-box-name = Syndicate Snack Box
+uplink-snack-box-desc = A box of delicious snacks and drinks to eat alone or with your team. Includes 1 toy you didn't want.
+
 uplink-eshield-name = Energy Shield
 uplink-eshield-desc = Exotic energy shield that reflects almost all laser beams, as well as a little protection from bullets and other physical attacks.
 
