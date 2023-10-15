@@ -622,7 +622,7 @@ public sealed class WiresSystem : SharedWiresSystem
     public void OpenUserInterface(EntityUid uid, ICommonSession player)
     {
         if (_uiSystem.TryGetUi(uid, WiresUiKey.Key, out var ui))
-            _uiSystem.OpenUi(ui, player);
+            _uiSystem.Open(ui, player);
     }
 
     /// <summary>

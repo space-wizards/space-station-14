@@ -185,7 +185,7 @@ namespace Content.Server.PDA.Ringer
         public bool ToggleRingerUI(EntityUid uid, IPlayerSession session)
         {
             if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
-                _ui.ToggleUi(bui, session);
+                _ui.Toggle(bui, session);
             return true;
         }
 

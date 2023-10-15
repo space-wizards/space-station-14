@@ -712,7 +712,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         var bui = _uiSystem.GetUiOrNull(uid, StorageComponent.StorageUiKey.Key);
         if (bui != null)
-            _uiSystem.OpenUi(bui, player.Session);
+            _uiSystem.Open(bui, player.Session);
     }
 
     /// <summary>

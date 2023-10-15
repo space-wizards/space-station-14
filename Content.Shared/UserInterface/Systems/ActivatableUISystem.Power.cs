@@ -22,7 +22,7 @@ public sealed partial class ActivatableUISystem
         _cell.SetPowerCellDrawEnabled(uid, false);
 
         if (HasComp<ActivatableUIRequiresPowerCellComponent>(uid) &&
-            TryComp<Components.ActivatableUIComponent>(uid, out var activatable) &&
+            TryComp<ActivatableUIComponent>(uid, out var activatable) &&
             activatable.Key != null)
         {
             _uiSystem.TryCloseAll(uid, activatable.Key);

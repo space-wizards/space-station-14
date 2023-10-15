@@ -164,7 +164,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         RaiseLocalEvent(uiEntity, bae);
 
         SetCurrentSingleUser(uiEntity, actor.Session, aui);
-        _uiSystem.ToggleUi(ui, actor.Session);
+        _uiSystem.Toggle(ui, actor.Session);
 
         //Let the component know a user opened it so it can do whatever it needs to do
         var aae = new AfterActivatableUIOpenEvent(user, actor.Session);

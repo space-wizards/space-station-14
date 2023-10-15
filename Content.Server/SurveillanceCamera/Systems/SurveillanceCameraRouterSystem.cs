@@ -143,7 +143,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         if (!_userInterface.TryGetUi(uid, SurveillanceCameraSetupUiKey.Router, out var bui))
             return;
 
-        _userInterface.OpenUi(bui, actor.Session);
+        _userInterface.Open(bui, actor.Session);
         UpdateSetupInterface(uid, camera);
     }
 

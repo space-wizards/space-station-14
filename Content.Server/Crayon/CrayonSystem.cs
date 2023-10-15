@@ -96,7 +96,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
         }
 
-        _uiSystem.ToggleUi(ui, actor.Session);
+        _uiSystem.Toggle(ui, actor.Session);
         if (ui.SubscribedSessions.Contains(actor.Session))
         {
             // Tell the user interface the selected stuff

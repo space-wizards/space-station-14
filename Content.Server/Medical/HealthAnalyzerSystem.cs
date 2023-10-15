@@ -57,7 +57,7 @@ namespace Content.Server.Medical
             if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
                 return;
 
-            _uiSystem.OpenUi(ui ,actor.Session);
+            _uiSystem.Open(ui ,actor.Session);
         }
 
         public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)

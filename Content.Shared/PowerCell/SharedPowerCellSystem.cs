@@ -61,18 +61,15 @@ public abstract class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    public bool HasCharge(EntityUid uid, float max, EntityUid user)
+    // TODO: More power prediction without cramming networking.
+
+    public bool HasCharge(EntityUid uid, float charge, PowerCellSlotComponent? component = null, EntityUid? user = null)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
-    public void SetPowerCellDrawEnabled(EntityUid uid, bool b)
+    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool HasCharge(EntityUid uid, float drawUseRate)
-    {
-        throw new NotImplementedException();
+        return;
     }
 }

@@ -257,7 +257,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
         var ui = _ui.GetUiOrNull(uid, SharedAirAlarmInterfaceKey.Key);
         if (ui != null)
-            _ui.OpenUi(ui, actor.Session);
+            _ui.Open(ui, actor.Session);
         component.ActivePlayers.Add(actor.Session.UserId);
         AddActiveInterface(uid);
         SyncAllDevices(uid);

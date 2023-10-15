@@ -52,7 +52,7 @@ public sealed class IntrinsicUISystem : EntitySystem
         if (attempt.Cancelled)
             return false;
 
-        _uiSystem.ToggleUi(ui, actor.Session);
+        _uiSystem.Toggle(ui, actor.Session);
         return true;
     }
 

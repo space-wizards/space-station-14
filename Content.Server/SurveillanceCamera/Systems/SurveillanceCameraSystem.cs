@@ -204,7 +204,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         if (!_userInterface.TryGetUi(uid, SurveillanceCameraSetupUiKey.Camera, out var bui))
             return;
 
-        _userInterface.OpenUi(bui, actor.Session);
+        _userInterface.Open(bui, actor.Session);
         UpdateSetupInterface(uid, camera);
     }
 

@@ -474,7 +474,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!_uiSystem.TryGetUi(configuratorUid, NetworkConfiguratorUiKey.Configure, out var bui))
             return;
 
-        if (_uiSystem.OpenUi(bui, actor.Session))
+        if (_uiSystem.Open(bui, actor.Session))
             _uiSystem.SetUiState(bui, new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(configurator.ActiveDeviceList.Value)
                     .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()

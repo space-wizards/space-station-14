@@ -159,7 +159,7 @@ public sealed class MailingUnitSystem : EntitySystem
         args.Handled = true;
         UpdateTargetList(uid, component);
         if (_userInterfaceSystem.TryGetUi(uid, MailingUnitUiKey.Key, out var bui))
-            _userInterfaceSystem.OpenUi(bui, actor.Session);
+            _userInterfaceSystem.Open(bui, actor.Session);
     }
 
     /// <summary>

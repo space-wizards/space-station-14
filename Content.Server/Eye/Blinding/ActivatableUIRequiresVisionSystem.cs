@@ -56,7 +56,7 @@ public sealed class ActivatableUIRequiresVisionSystem : EntitySystem
 
         foreach (var ui in closeList)
         {
-            _userInterfaceSystem.CloseUi(ui, actor.Session);
+            _userInterfaceSystem.Close(ui, actor.Session);
         }
     }
 }

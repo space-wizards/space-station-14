@@ -73,7 +73,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         if (!_uiSystem.TryGetUi(player, VoiceMaskUIKey.Key, out var bui))
             return;
 
-        _uiSystem.OpenUi(bui, actor.Session);
+        _uiSystem.Open(bui, actor.Session);
         UpdateUI(player);
     }
 
