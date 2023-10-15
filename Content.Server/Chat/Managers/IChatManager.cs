@@ -12,12 +12,12 @@ namespace Content.Server.Chat.Managers
         ///     Keys identifying messages sent by a specific player, used when sending
         ///     <see cref="MsgChatMessage"/>
         /// </summary>
-        Dictionary<IPlayerSession, int> SenderKeys { get; }
+        Dictionary<ICommonSession, int> SenderKeys { get; }
 
         /// <summary>
         ///     Tracks which entities a player was attached to while sending messages.
         /// </summary>
-        Dictionary<IPlayerSession, HashSet<NetEntity>> SenderEntities { get; }
+        Dictionary<ICommonSession, HashSet<NetEntity>> SenderEntities { get; }
 
         void Initialize();
 
@@ -49,6 +49,6 @@ namespace Content.Server.Chat.Managers
 
         bool MessageCharacterLimit(IPlayerSession player, string message);
 
-        void DeleteMessagesBy(IPlayerSession player);
+        void DeleteMessagesBy(ICommonSession player);
     }
 }

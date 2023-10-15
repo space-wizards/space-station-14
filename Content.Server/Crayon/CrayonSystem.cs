@@ -14,6 +14,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Crayon;
 
@@ -95,8 +96,8 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
         }
 
-        _uiSystem.ToggleUi(ui, actor.PlayerSession);
-        if (ui.SubscribedSessions.Contains(actor.PlayerSession))
+        _uiSystem.ToggleUi(ui, actor.Session);
+        if (ui.SubscribedSessions.Contains(actor.Session))
         {
             // Tell the user interface the selected stuff
             _uiSystem.SetUiState(ui, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
@@ -140,7 +141,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
     private void OnCrayonDropped(EntityUid uid, CrayonComponent component, DroppedEvent args)
     {
         if (TryComp<ActorComponent>(args.User, out var actor))
-            _uiSystem.TryClose(uid, SharedCrayonComponent.CrayonUiKey.Key, actor.PlayerSession);
+            _uiSystem.TryClose(uid, SharedCrayonComponent.CrayonUiKey.Key, actor.Session);
     }
 
     private void UseUpCrayon(EntityUid uid, EntityUid user)

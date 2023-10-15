@@ -1,6 +1,7 @@
 using Content.Server.PowerCell;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Pinpointer;
 
@@ -29,7 +30,7 @@ public sealed class StationMapSystem : EntitySystem
     {
         if (TryComp<ActorComponent>(uid, out var actor))
         {
-            _ui.TryClose(component.Map, StationMapUiKey.Key, actor.PlayerSession);
+            _ui.TryClose(component.Map, StationMapUiKey.Key, actor.Session);
         }
     }
 

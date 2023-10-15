@@ -127,7 +127,7 @@ namespace Content.Client.Ghost
             PlayerRemoved?.Invoke(component);
         }
 
-        private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, PlayerAttachedEvent playerAttachedEvent)
+        private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, ref PlayerAttachedEvent playerAttachedEvent)
         {
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
@@ -158,13 +158,13 @@ namespace Content.Client.Ghost
             return true;
         }
 
-        private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
+        private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, ref PlayerDetachedEvent args)
         {
             if (PlayerDetach(uid))
                 component.IsAttached = false;
         }
 
-        private void OnPlayerAttach(PlayerAttachedEvent ev)
+        private void OnPlayerAttach(ref PlayerAttachedEvent ev)
         {
             if (!HasComp<GhostComponent>(ev.Entity))
                 PlayerDetach(ev.Entity);

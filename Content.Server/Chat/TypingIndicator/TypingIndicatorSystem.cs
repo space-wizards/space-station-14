@@ -20,7 +20,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         SubscribeNetworkEvent<TypingChangedEvent>(OnClientTypingChanged);
     }
 
-    private void OnPlayerAttached(PlayerAttachedEvent ev)
+    private void OnPlayerAttached(ref PlayerAttachedEvent ev)
     {
         // when player poses entity we want to make sure that there is typing indicator
         EnsureComp<TypingIndicatorComponent>(ev.Entity);
@@ -28,7 +28,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         EnsureComp<AppearanceComponent>(ev.Entity);
     }
 
-    private void OnPlayerDetached(EntityUid uid, TypingIndicatorComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, TypingIndicatorComponent component, ref PlayerDetachedEvent args)
     {
         // player left entity body - hide typing indicator
         SetTypingIndicatorEnabled(uid, false);

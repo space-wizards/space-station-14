@@ -17,6 +17,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -235,7 +236,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        _ui.TryOpen(uid, GasCanisterUiKey.Key, actor.PlayerSession);
+        _ui.TryOpen(uid, GasCanisterUiKey.Key, actor.Session);
         args.Handled = true;
     }
 
@@ -247,7 +248,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (CheckLocked(uid, component, args.User))
             return;
 
-        _ui.TryOpen(uid, GasCanisterUiKey.Key, actor.PlayerSession);
+        _ui.TryOpen(uid, GasCanisterUiKey.Key, actor.Session);
         args.Handled = true;
     }
 

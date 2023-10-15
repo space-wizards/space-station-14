@@ -11,6 +11,8 @@ using Content.Shared.Chat;
 using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Players;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -51,13 +53,13 @@ public sealed class PrayerSystem : EntitySystem
             {
                 if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.PlayerSession, PopupType.Large);
+                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.Session, PopupType.Large);
                     return;
                 }
 
-                _quickDialog.OpenDialog(actor.PlayerSession, Loc.GetString(comp.Verb), "Message", (string message) =>
+                _quickDialog.OpenDialog(actor.Session, Loc.GetString(comp.Verb), "Message", (string message) =>
                 {
-                    Pray(actor.PlayerSession, comp, message);
+                    Pray(actor.Session, comp, message);
                 });
             },
             Impact = LogImpact.Low,
@@ -74,7 +76,7 @@ public sealed class PrayerSystem : EntitySystem
     /// <param name="source">The IPlayerSession that sent the message</param>
     /// <param name="messageString">The main message sent to the player via the chatbox</param>
     /// <param name="popupMessage">The popup to notify the player, also prepended to the messageString</param>
-    public void SendSubtleMessage(IPlayerSession target, IPlayerSession source, string messageString, string popupMessage)
+    public void SendSubtleMessage(ICommonSession target, ICommonSession source, string messageString, string popupMessage)
     {
         if (target.AttachedEntity == null)
             return;
@@ -96,7 +98,7 @@ public sealed class PrayerSystem : EntitySystem
     /// You may be wondering, "Why the admin chat, specifically? Nobody even reads it!"
     /// Exactly.
     ///  </remarks>
-    public void Pray(IPlayerSession sender, PrayableComponent comp, string message)
+    public void Pray(ICommonSession sender, PrayableComponent comp, string message)
     {
         if (sender.AttachedEntity == null)
             return;

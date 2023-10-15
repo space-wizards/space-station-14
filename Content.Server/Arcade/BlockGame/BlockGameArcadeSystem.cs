@@ -1,8 +1,12 @@
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Players;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -30,7 +34,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         }
     }
 
-    private void UpdatePlayerStatus(EntityUid uid, IPlayerSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
+    private void UpdatePlayerStatus(EntityUid uid, ICommonSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
     {
         if (!Resolve(uid, ref blockGame))
             return;
@@ -45,14 +49,14 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         component.Game = new(uid);
     }
 
-    private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, AfterActivatableUIOpenEvent args)
+    private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, ref AfterActivatableUIOpenEvent args)
     {
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
         if (!_uiSystem.TryGetUi(uid, BlockGameUiKey.Key, out var bui))
             return;
 
-        var session = actor.PlayerSession;
+        var session = actor.Session;
         if (!bui.SubscribedSessions.Contains(session))
             return;
 

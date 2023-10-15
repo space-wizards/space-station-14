@@ -165,7 +165,7 @@ public sealed partial class ReplaySpectatorSystem
         SetSpectatorPosition(default);
     }
 
-    private void OnDetached(EntityUid uid, ReplaySpectatorComponent component, PlayerDetachedEvent args)
+    private void OnDetached(EntityUid uid, ReplaySpectatorComponent component, ref PlayerDetachedEvent args)
     {
         if (IsClientSide(uid))
             QueueDel(uid);

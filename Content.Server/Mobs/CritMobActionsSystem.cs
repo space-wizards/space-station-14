@@ -7,6 +7,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Mobs;
 
@@ -38,7 +39,7 @@ public sealed class CritMobActionsSystem : EntitySystem
         if (!TryComp<ActorComponent>(uid, out var actor) || !_mobState.IsCritical(uid))
             return;
 
-        _host.ExecuteCommand(actor.PlayerSession, "ghost");
+        _host.ExecuteCommand(actor.Session, "ghost");
         args.Handled = true;
     }
 
@@ -61,11 +62,11 @@ public sealed class CritMobActionsSystem : EntitySystem
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        _quickDialog.OpenDialog(actor.PlayerSession, Loc.GetString("action-name-crit-last-words"), "",
+        _quickDialog.OpenDialog(actor.Session, Loc.GetString("action-name-crit-last-words"), "",
             (string lastWords) =>
             {
                 // Intentionally does not check for muteness
-                if (actor.PlayerSession.AttachedEntity != uid
+                if (actor.Session.AttachedEntity != uid
                     || !_mobState.IsCritical(uid))
                     return;
 
@@ -76,7 +77,7 @@ public sealed class CritMobActionsSystem : EntitySystem
                 lastWords += "...";
 
                 _chat.TrySendInGameICMessage(uid, lastWords, InGameICChatType.Whisper, ChatTransmitRange.Normal, ignoreActionBlocker: true);
-                _host.ExecuteCommand(actor.PlayerSession, "ghost");
+                _host.ExecuteCommand(actor.Session, "ghost");
             });
 
         args.Handled = true;

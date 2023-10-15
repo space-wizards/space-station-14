@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.NukeOps;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.NukeOps;

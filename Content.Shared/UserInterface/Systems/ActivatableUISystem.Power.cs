@@ -1,12 +1,12 @@
-using Content.Server.PowerCell;
 using Content.Shared.PowerCell;
+using Content.Shared.UserInterface.Components;
 using Robust.Shared.Containers;
 
-namespace Content.Server.UserInterface;
+namespace Content.Shared.UserInterface.Systems;
 
 public sealed partial class ActivatableUISystem
 {
-    [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private readonly SharedPowerCellSystem _cell = default!;
 
     private void InitializePower()
     {
@@ -22,7 +22,7 @@ public sealed partial class ActivatableUISystem
         _cell.SetPowerCellDrawEnabled(uid, false);
 
         if (HasComp<ActivatableUIRequiresPowerCellComponent>(uid) &&
-            TryComp<ActivatableUIComponent>(uid, out var activatable) &&
+            TryComp<Components.ActivatableUIComponent>(uid, out var activatable) &&
             activatable.Key != null)
         {
             _uiSystem.TryCloseAll(uid, activatable.Key);

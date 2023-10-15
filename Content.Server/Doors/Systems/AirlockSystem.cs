@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Content.Shared.Wires;
 using Content.Shared.Prying.Components;
 using Robust.Shared.Prototypes;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Doors.Systems;
 
@@ -158,7 +159,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
                 !wiresPanelSecurity.WiresAccessible)
                 return;
 
-            _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
+            _wiresSystem.OpenUserInterface(uid, actor.Session);
             args.Handled = true;
             return;
         }

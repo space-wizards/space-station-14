@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Mind;
 
@@ -237,7 +238,7 @@ public sealed class MindSystem : SharedMindSystem
             if (TryComp<ActorComponent>(entity.Value, out var actor))
             {
                 // Happens when transferring to your currently visited entity.
-                if (actor.PlayerSession != mind.Session)
+                if (actor.Session != mind.Session)
                 {
                     throw new ArgumentException("Visit target already has a session.", nameof(entity));
                 }

@@ -20,6 +20,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -256,8 +257,8 @@ public sealed class AirAlarmSystem : EntitySystem
 
         var ui = _ui.GetUiOrNull(uid, SharedAirAlarmInterfaceKey.Key);
         if (ui != null)
-            _ui.OpenUi(ui, actor.PlayerSession);
-        component.ActivePlayers.Add(actor.PlayerSession.UserId);
+            _ui.OpenUi(ui, actor.Session);
+        component.ActivePlayers.Add(actor.Session.UserId);
         AddActiveInterface(uid);
         SyncAllDevices(uid);
         UpdateUI(uid, component);

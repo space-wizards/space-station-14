@@ -14,8 +14,10 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Players.PlayTimeTracking;
 
@@ -55,7 +57,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         _tracking.CalcTrackers -= CalcTrackers;
     }
 
-    private void CalcTrackers(IPlayerSession player, HashSet<string> trackers)
+    private void CalcTrackers(ICommonSession player, HashSet<string> trackers)
     {
         if (_afk.IsAfk(player))
             return;
@@ -67,7 +69,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         trackers.UnionWith(GetTimedRoles(player));
     }
 
-    private bool IsPlayerAlive(IPlayerSession session)
+    private bool IsPlayerAlive(ICommonSession session)
     {
         var attached = session.AttachedEntity;
         if (attached == null)
@@ -93,7 +95,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         }
     }
 
-    private IEnumerable<string> GetTimedRoles(IPlayerSession session)
+    private IEnumerable<string> GetTimedRoles(ICommonSession session)
     {
         var contentData = _playerManager.GetPlayerData(session.UserId).ContentData();
 
@@ -130,12 +132,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         _tracking.QueueRefreshTrackers(ev.Session);
     }
 
-    private void OnPlayerAttached(PlayerAttachedEvent ev)
+    private void OnPlayerAttached(ref PlayerAttachedEvent ev)
     {
         _tracking.QueueRefreshTrackers(ev.Player);
     }
 
-    private void OnPlayerDetached(PlayerDetachedEvent ev)
+    private void OnPlayerDetached(ref PlayerDetachedEvent ev)
     {
         // This doesn't fire if the player doesn't leave their body. I guess it's fine?
         _tracking.QueueRefreshTrackers(ev.Player);
@@ -146,7 +148,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (!TryComp(ev.Target, out ActorComponent? actor))
             return;
 
-        _tracking.QueueRefreshTrackers(actor.PlayerSession);
+        _tracking.QueueRefreshTrackers(actor.Session);
     }
 
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)

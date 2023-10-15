@@ -5,6 +5,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Popups
 {
@@ -26,7 +27,7 @@ namespace Content.Server.Popups
         public override void PopupCursor(string message, EntityUid recipient, PopupType type = PopupType.Small)
         {
             if (TryComp(recipient, out ActorComponent? actor))
-                RaiseNetworkEvent(new PopupCursorEvent(message, type), actor.PlayerSession);
+                RaiseNetworkEvent(new PopupCursorEvent(message, type), actor.Session);
         }
 
         public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
@@ -49,7 +50,7 @@ namespace Content.Server.Popups
         public override void PopupCoordinates(string message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small)
         {
             if (TryComp(recipient, out ActorComponent? actor))
-                RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), actor.PlayerSession);
+                RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), actor.Session);
         }
 
         public override void PopupEntity(string message, EntityUid uid, PopupType type = PopupType.Small)
@@ -61,7 +62,7 @@ namespace Content.Server.Popups
         public override void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type=PopupType.Small)
         {
             if (TryComp(recipient, out ActorComponent? actor))
-                RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), actor.PlayerSession);
+                RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), actor.Session);
         }
 
         public override void PopupClient(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)

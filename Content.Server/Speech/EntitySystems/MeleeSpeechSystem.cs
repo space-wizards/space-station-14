@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -50,7 +51,7 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
             return;
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
-        _uiSystem.TryToggleUi(source, MeleeSpeechUiKey.Key, actor.PlayerSession);
+        _uiSystem.TryToggleUi(source, MeleeSpeechUiKey.Key, actor.Session);
     }
     /// <summary>
     /// Attempts to change the battlecry of an entity.

@@ -25,12 +25,12 @@ public sealed class DrunkSystem : SharedDrunkSystem
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, DrunkComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, DrunkComponent component, ref PlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, DrunkComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, DrunkComponent component, ref PlayerDetachedEvent args)
     {
         _overlay.CurrentBoozePower = 0;
         _overlayMan.RemoveOverlay(_overlay);

@@ -67,7 +67,7 @@ namespace Content.Server.Guardian
             args.Handled = true;
         }
 
-        private void OnGuardianUnplayer(EntityUid uid, GuardianComponent component, PlayerDetachedEvent args)
+        private void OnGuardianUnplayer(EntityUid uid, GuardianComponent component, ref PlayerDetachedEvent args)
         {
             var host = component.Host;
 
@@ -77,7 +77,7 @@ namespace Content.Server.Guardian
             RetractGuardian(host, hostComponent, uid, component);
         }
 
-        private void OnGuardianPlayer(EntityUid uid, GuardianComponent component, PlayerAttachedEvent args)
+        private void OnGuardianPlayer(EntityUid uid, GuardianComponent component, ref PlayerAttachedEvent args)
         {
             var host = component.Host;
 

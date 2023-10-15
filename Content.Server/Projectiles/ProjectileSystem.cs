@@ -9,6 +9,7 @@ using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Projectiles;
 

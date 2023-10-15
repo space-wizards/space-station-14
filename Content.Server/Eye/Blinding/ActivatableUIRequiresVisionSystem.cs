@@ -3,8 +3,10 @@ using Content.Server.UserInterface;
 using Content.Server.Popups;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.UserInterface;
 using Robust.Shared.Player;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Eye.Blinding;
 
@@ -40,7 +42,7 @@ public sealed class ActivatableUIRequiresVisionSystem : EntitySystem
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        var uiList = _userInterfaceSystem.GetAllUIsForSession(actor.PlayerSession);
+        var uiList = _userInterfaceSystem.GetAllUIsForSession(actor.Session);
         if (uiList == null)
             return;
 
@@ -54,7 +56,7 @@ public sealed class ActivatableUIRequiresVisionSystem : EntitySystem
 
         foreach (var ui in closeList)
         {
-            _userInterfaceSystem.CloseUi(ui, actor.PlayerSession);
+            _userInterfaceSystem.CloseUi(ui, actor.Session);
         }
     }
 }

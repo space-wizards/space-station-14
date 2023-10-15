@@ -13,6 +13,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Administration.Commands
 {
@@ -86,7 +87,7 @@ namespace Content.Server.Administration.Commands
             // Check if we are setting the outfit of a player to respect the preferences
             if (entityManager.TryGetComponent(target, out ActorComponent? actorComponent))
             {
-                var userId = actorComponent.PlayerSession.UserId;
+                var userId = actorComponent.Session.UserId;
                 var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();
                 var prefs = preferencesManager.GetPreferences(userId);
                 profile = prefs.SelectedCharacter as HumanoidCharacterProfile;

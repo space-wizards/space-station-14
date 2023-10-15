@@ -40,7 +40,7 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
         component.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents));
     }
 
-    private void OnPlayerDetach(EntityUid uid, ParacusiaComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetach(EntityUid uid, ParacusiaComponent component, ref PlayerDetachedEvent args)
     {
         component.Stream?.Stop();
     }

@@ -5,6 +5,7 @@ using Content.Shared.Chat;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Random;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -91,7 +92,7 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
         {
             return Loc.GetString("death-match-name-player",
                 ("name", MetaData(source).EntityName),
-                ("username", actorComp.PlayerSession.Name));
+                ("username", actorComp.Session.Name));
         }
 
         return Loc.GetString("death-match-name-npc", ("name", MetaData(source).EntityName));

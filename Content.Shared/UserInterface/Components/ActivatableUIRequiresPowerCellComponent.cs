@@ -1,8 +1,6 @@
-using Content.Server.PowerCell;
 using Content.Shared.PowerCell;
-using Content.Shared.UserInterface;
 
-namespace Content.Server.UserInterface;
+namespace Content.Shared.UserInterface.Components;
 
 /// <summary>
 /// Specifies that the attached entity requires <see cref="PowerCellDrawComponent"/> power.

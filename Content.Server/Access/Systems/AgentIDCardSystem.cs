@@ -5,6 +5,8 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.StatusIcon;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -57,7 +59,7 @@ namespace Content.Server.Access.Systems
             _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
         }
 
-        private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)
+        private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, ref AfterActivatableUIOpenEvent args)
         {
             if (!_uiSystem.TryGetUi(uid, AgentIDCardUiKey.Key, out var ui))
                 return;

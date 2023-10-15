@@ -363,12 +363,12 @@ namespace Content.Client.Hands.Systems
 
         #region Gui
 
-        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
+        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, ref PlayerAttachedEvent args)
         {
             OnPlayerHandsAdded?.Invoke(component);
         }
 
-        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
+        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, ref PlayerDetachedEvent args)
         {
             OnPlayerHandsRemoved?.Invoke();
         }

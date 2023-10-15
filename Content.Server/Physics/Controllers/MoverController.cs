@@ -31,24 +31,24 @@ namespace Content.Server.Physics.Controllers
             SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
         }
 
-        private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
+        private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, ref PlayerAttachedEvent args)
         {
             if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
-        private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
+        private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, ref PlayerDetachedEvent args)
         {
             if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
-        private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, ref PlayerAttachedEvent args)
         {
             SetMoveInput(component, MoveButtons.None);
         }
 
-        private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, ref PlayerDetachedEvent args)
         {
             SetMoveInput(component, MoveButtons.None);
         }

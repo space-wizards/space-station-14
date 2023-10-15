@@ -51,8 +51,8 @@ namespace Content.Server.Chat.Managers
         private bool _oocEnabled = true;
         private bool _adminOocEnabled = true;
 
-        public Dictionary<IPlayerSession, int> SenderKeys { get; } = new();
-        public Dictionary<IPlayerSession, HashSet<NetEntity>> SenderEntities { get; } = new();
+        public Dictionary<ICommonSession, int> SenderKeys { get; } = new();
+        public Dictionary<ICommonSession, HashSet<NetEntity>> SenderEntities { get; } = new();
 
         public void Initialize()
         {
@@ -79,7 +79,7 @@ namespace Content.Server.Chat.Managers
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
         }
 
-        public void DeleteMessagesBy(IPlayerSession player)
+        public void DeleteMessagesBy(ICommonSession player)
         {
             var key = SenderKeys.GetValueOrDefault(player);
             var entities = SenderEntities.GetValueOrDefault(player) ?? new HashSet<NetEntity>();

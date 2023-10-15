@@ -20,6 +20,7 @@ using Content.Shared.Mind;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Materials;
 
@@ -106,7 +107,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         args.SetHandled(SuicideKind.Bloodloss);
         var victim = args.Victim;
         if (TryComp(victim, out ActorComponent? actor) &&
-            _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))
+            _mind.TryGetMind(actor.Session, out var mindId, out var mind))
         {
             _ticker.OnGhostAttempt(mindId, false, mind: mind);
             if (mind.OwnedEntity is { Valid: true } entity)

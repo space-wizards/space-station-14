@@ -113,12 +113,12 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerDetached(EntityUid uid, InventorySlotsComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, InventorySlotsComponent component, ref PlayerDetachedEvent args)
         {
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, ref PlayerAttachedEvent args)
         {
             if (TryGetSlots(uid, out var definitions))
             {

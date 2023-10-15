@@ -8,12 +8,15 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Robust.Shared.Audio;
+using Robust.Shared.Players;
 using static Content.Shared.Paper.SharedPaperComponent;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Paper
 {
@@ -74,7 +77,7 @@ namespace Content.Server.Paper
             if (!TryComp<ActorComponent>(args.User, out var actor))
                 return;
 
-            UpdateUserInterface(uid, paperComp, actor.PlayerSession);
+            UpdateUserInterface(uid, paperComp, actor.Session);
         }
 
         private void OnExamined(EntityUid uid, PaperComponent paperComp, ExaminedEvent args)
@@ -109,8 +112,8 @@ namespace Content.Server.Paper
                     return;
 
                 paperComp.Mode = PaperAction.Write;
-                _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.PlayerSession);
-                UpdateUserInterface(uid, paperComp, actor.PlayerSession);
+                _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.Session);
+                UpdateUserInterface(uid, paperComp, actor.Session);
                 return;
             }
 
@@ -207,7 +210,7 @@ namespace Content.Server.Paper
             _appearance.SetData(uid, PaperVisuals.Status, status, appearance);
         }
 
-        public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null, IPlayerSession? session = null)
+        public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null, ICommonSession? session = null)
         {
             if (!Resolve(uid, ref paperComp))
                 return;

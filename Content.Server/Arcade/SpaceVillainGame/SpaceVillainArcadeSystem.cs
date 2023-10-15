@@ -1,5 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -93,7 +95,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         }
     }
 
-    private void OnAfterUIOpenSV(EntityUid uid, SpaceVillainArcadeComponent component, AfterActivatableUIOpenEvent args)
+    private void OnAfterUIOpenSV(EntityUid uid, SpaceVillainArcadeComponent component, ref AfterActivatableUIOpenEvent args)
     {
         component.Game ??= new(uid, component, this);
     }

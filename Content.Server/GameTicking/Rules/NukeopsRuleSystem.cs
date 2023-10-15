@@ -50,6 +50,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -345,9 +346,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var query = EntityQueryEnumerator<NukeOperativeComponent, ActorComponent>();
         while (query.MoveNext(out _, out var nukeops, out var actor))
         {
-            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value)));
-            _audio.PlayGlobal(nukeops.GreetSoundNotification, actor.PlayerSession);
-            filter.AddPlayer(actor.PlayerSession);
+            _chatManager.DispatchServerMessage(actor.Session, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value)));
+            _audio.PlayGlobal(nukeops.GreetSoundNotification, actor.Session);
+            filter.AddPlayer(actor.Session);
         }
     }
 
@@ -741,7 +742,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         HumanoidCharacterProfile? profile = null;
         if (TryComp(args.Spawned, out ActorComponent? actor))
-            profile = _prefs.GetPreferences(actor.PlayerSession.UserId).SelectedCharacter as HumanoidCharacterProfile;
+            profile = _prefs.GetPreferences(actor.Session.UserId).SelectedCharacter as HumanoidCharacterProfile;
 
         // todo: this is kinda awful for multi-nukies
         foreach (var nukeops in EntityQuery<NukeopsRuleComponent>())

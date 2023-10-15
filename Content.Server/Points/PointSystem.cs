@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Points;
 
@@ -36,7 +37,7 @@ public sealed class PointSystem : SharedPointSystem
     {
         if (!Resolve(uid, ref component) || !Resolve(user, ref actor, false))
             return;
-        AdjustPointValue(actor.PlayerSession.UserId, value, uid, component);
+        AdjustPointValue(actor.Session.UserId, value, uid, component);
     }
 
     /// <summary>
@@ -47,7 +48,7 @@ public sealed class PointSystem : SharedPointSystem
     {
         if (!Resolve(uid, ref component) || !Resolve(user, ref actor, false))
             return;
-        SetPointValue(actor.PlayerSession.UserId, value, uid, component);
+        SetPointValue(actor.Session.UserId, value, uid, component);
     }
 
     /// <summary>
@@ -58,7 +59,7 @@ public sealed class PointSystem : SharedPointSystem
     {
         if (!Resolve(uid, ref component) || !Resolve(user, ref actor, false))
             return FixedPoint2.Zero;
-        return GetPointValue(actor.PlayerSession.UserId, uid, component);
+        return GetPointValue(actor.Session.UserId, uid, component);
     }
 
     /// <inheritdoc/>

@@ -1,6 +1,7 @@
 ﻿using Content.Server.Actions;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.UserInterface;
 
@@ -51,7 +52,7 @@ public sealed class IntrinsicUISystem : EntitySystem
         if (attempt.Cancelled)
             return false;
 
-        _uiSystem.ToggleUi(ui, actor.PlayerSession);
+        _uiSystem.ToggleUi(ui, actor.Session);
         return true;
     }
 

@@ -3,6 +3,8 @@ using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
@@ -34,7 +36,7 @@ public sealed class SignalTimerSystem : EntitySystem
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
     }
 
-    private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
+    private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, ref AfterActivatableUIOpenEvent args)
     {
         var time = TryComp<ActiveSignalTimerComponent>(uid, out var active) ? active.TriggerTime : TimeSpan.Zero;
 

@@ -24,6 +24,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Ghost
 {
@@ -217,7 +218,7 @@ namespace Content.Server.Ghost
             DeleteEntity(uid);
         }
 
-        private void OnPlayerDetached(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, GhostComponent component, ref PlayerDetachedEvent args)
         {
             DeleteEntity(uid);
         }
@@ -243,7 +244,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            _mindSystem.UnVisit(actor.PlayerSession);
+            _mindSystem.UnVisit(actor.Session);
         }
 
         #region Warp

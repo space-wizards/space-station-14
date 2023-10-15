@@ -34,6 +34,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Disposal.Unit.EntitySystems;
 
@@ -275,7 +276,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
 
         args.Handled = true;
-        _ui.TryOpen(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.PlayerSession);
+        _ui.TryOpen(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.Session);
     }
 
     private void OnAfterInteractUsing(EntityUid uid, SharedDisposalUnitComponent component, AfterInteractUsingEvent args)
@@ -795,7 +796,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (TryComp(inserted, out ActorComponent? actor))
         {
-            _ui.TryClose(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.PlayerSession);
+            _ui.TryClose(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.Session);
         }
 
         // Maybe do pullable instead? Eh still fine.

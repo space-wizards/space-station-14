@@ -20,6 +20,7 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared.Database;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -66,7 +67,7 @@ public sealed class NewsSystem : EntitySystem
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        _ui.TryToggleUi(deviceEnt, NewsWriteUiKey.Key, actor.PlayerSession);
+        _ui.TryToggleUi(deviceEnt, NewsWriteUiKey.Key, actor.Session);
     }
 
     public void OnReadUiReady(EntityUid uid, NewsReadCartridgeComponent component, CartridgeUiReadyEvent args)

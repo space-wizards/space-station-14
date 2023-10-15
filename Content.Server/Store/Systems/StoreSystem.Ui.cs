@@ -9,7 +9,9 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Store;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Store.Systems;
 
@@ -43,7 +45,7 @@ public sealed partial class StoreSystem
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        if (!_ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession))
+        if (!_ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.Session))
             return;
 
         UpdateUserInterface(user, storeEnt, component);

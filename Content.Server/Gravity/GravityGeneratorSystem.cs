@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Players;
 using Content.Server.Construction;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Gravity
 {
@@ -224,7 +225,7 @@ namespace Content.Server.Gravity
             if (!component.Intact || powerReceiver.PowerReceived < component.IdlePowerUse)
                 return;
 
-            _uiSystem.TryOpen(uid, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key, actor.PlayerSession);
+            _uiSystem.TryOpen(uid, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key, actor.Session);
             component.NeedUIUpdate = true;
         }
 

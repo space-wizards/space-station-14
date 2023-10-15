@@ -10,7 +10,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Forensics
 {
@@ -167,7 +169,7 @@ namespace Content.Server.Forensics
 
             UpdateUserInterface(component.Owner, component);
 
-            _uiSystem.TryOpen(component.Owner, ForensicScannerUiKey.Key, actor.PlayerSession);
+            _uiSystem.TryOpen(component.Owner, ForensicScannerUiKey.Key, actor.Session);
         }
 
         private void OnPrint(EntityUid uid, ForensicScannerComponent component, ForensicScannerPrintMessage args)

@@ -32,6 +32,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Server.Temperature.Components;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 
 namespace Content.Server.Medical;
 
@@ -83,6 +85,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         var itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
         var fitsInDispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
         var solutionContainerManagerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
+
+        // oh my lort this system needs jesus
         foreach (var (_, cryoPod) in EntityQuery<ActiveCryoPodComponent, CryoPodComponent>())
         {
             metaDataQuery.TryGetComponent(cryoPod.Owner, out var metaDataComponent);
@@ -176,7 +180,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         }
     }
 
-    private void OnActivateUI(EntityUid uid, CryoPodComponent cryoPodComponent, AfterActivatableUIOpenEvent args)
+    private void OnActivateUI(EntityUid uid, CryoPodComponent cryoPodComponent, ref AfterActivatableUIOpenEvent args)
     {
         TryComp<TemperatureComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var temp);
         TryComp<BloodstreamComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var bloodstream);

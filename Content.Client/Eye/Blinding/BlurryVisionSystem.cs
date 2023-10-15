@@ -26,12 +26,12 @@ public sealed class BlurryVisionSystem : EntitySystem
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, BlurryVisionComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, BlurryVisionComponent component, ref PlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, BlurryVisionComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, BlurryVisionComponent component, ref PlayerDetachedEvent args)
     {
         _overlayMan.RemoveOverlay(_overlay);
     }

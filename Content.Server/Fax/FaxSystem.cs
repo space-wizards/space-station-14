@@ -17,10 +17,13 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Fax;
 
@@ -200,7 +203,7 @@ public sealed class FaxSystem : EntitySystem
             !_toolSystem.HasQuality(args.Used, "Screwing")) // Screwing because Pulsing already used by device linking
             return;
 
-        _quickDialog.OpenDialog(actor.PlayerSession,
+        _quickDialog.OpenDialog(actor.Session,
             Loc.GetString("fax-machine-dialog-rename"),
             Loc.GetString("fax-machine-dialog-field-name"),
             (string newName) =>
@@ -285,7 +288,7 @@ public sealed class FaxSystem : EntitySystem
         }
     }
 
-    private void OnToggleInterface(EntityUid uid, FaxMachineComponent component, AfterActivatableUIOpenEvent args)
+    private void OnToggleInterface(EntityUid uid, FaxMachineComponent component, ref AfterActivatableUIOpenEvent args)
     {
         UpdateUserInterface(uid, component);
     }

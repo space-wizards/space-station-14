@@ -10,6 +10,7 @@ using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -112,7 +113,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             if (user != null && TryComp<ActorComponent>(user, out var actor))
-                _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
+                _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.Session);
 
             component.Enabled = false;
             Dirty(component);
@@ -138,7 +139,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
-            _userInterface.TryOpen(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
+            _userInterface.TryOpen(uid, GasAnalyzerUiKey.Key, actor.Session);
         }
 
         /// <summary>

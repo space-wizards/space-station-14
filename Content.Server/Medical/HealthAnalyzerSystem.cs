@@ -8,6 +8,7 @@ using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
 using Content.Server.Temperature.Components;
 using Content.Server.Body.Components;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Medical
 {
@@ -56,7 +57,7 @@ namespace Content.Server.Medical
             if (!TryComp<ActorComponent>(user, out var actor) || !_uiSystem.TryGetUi(analyzer, HealthAnalyzerUiKey.Key, out var ui))
                 return;
 
-            _uiSystem.OpenUi(ui ,actor.PlayerSession);
+            _uiSystem.OpenUi(ui ,actor.Session);
         }
 
         public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)

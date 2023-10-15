@@ -30,6 +30,8 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Administration.Systems
 {
@@ -135,10 +137,10 @@ namespace Content.Server.Administration.Systems
 
         private void OnIdentityChanged(IdentityChangedEvent ev)
         {
-            if (!TryComp<ActorComponent>(ev.CharacterEntity, out var actor))
+            if (!TryComp<ActorComponent>(ev.CharacterEntity, out var actor) ||  actor.Session is not IPlayerSession pSession)
                 return;
 
-            UpdatePlayerList(actor.PlayerSession);
+            UpdatePlayerList(pSession);
         }
 
         private void OnRoleEvent(RoleEvent ev)
@@ -163,23 +165,23 @@ namespace Content.Server.Administration.Systems
             SendFullPlayerList(obj.Player);
         }
 
-        private void OnPlayerDetached(PlayerDetachedEvent ev)
+        private void OnPlayerDetached(ref PlayerDetachedEvent ev)
         {
             // If disconnected then the player won't have a connected entity to get character name from.
             // The disconnected state gets sent by OnPlayerStatusChanged.
-            if (ev.Player.Status == SessionStatus.Disconnected)
+            if (ev.Player.Status == SessionStatus.Disconnected || ev.Player is not IPlayerSession pSession)
                 return;
 
-            UpdatePlayerList(ev.Player);
+            UpdatePlayerList(pSession);
         }
 
-        private void OnPlayerAttached(PlayerAttachedEvent ev)
+        private void OnPlayerAttached(ref PlayerAttachedEvent ev)
         {
-            if (ev.Player.Status == SessionStatus.Disconnected)
+            if (ev.Player.Status == SessionStatus.Disconnected || ev.Player is not IPlayerSession pSession)
                 return;
 
             _roundActivePlayers.Add(ev.Player.UserId);
-            UpdatePlayerList(ev.Player);
+            UpdatePlayerList(pSession);
         }
 
         public override void Shutdown()
@@ -326,7 +328,7 @@ namespace Content.Server.Administration.Systems
         ///     chat messages and showing a popup to other players.
         ///     Their items are dropped on the ground.
         /// </summary>
-        public void Erase(IPlayerSession player)
+        public void Erase(ICommonSession player)
         {
             var entity = player.AttachedEntity;
             _chat.DeleteMessagesBy(player);
@@ -391,7 +393,7 @@ namespace Content.Server.Administration.Systems
             _minds.WipeMind(player);
             QueueDel(entity);
 
-            _gameTicker.SpawnObserver(player);
+            _gameTicker.SpawnObserver((IPlayerSession) player);
         }
     }
 }

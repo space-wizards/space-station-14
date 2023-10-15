@@ -9,6 +9,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Administration.Notes;
 
@@ -32,8 +33,8 @@ public sealed class AdminNotesSystem : EntitySystem, IPostInjectInit
 
     private void AddVerbs(GetVerbsEvent<Verb> ev)
     {
-        if (EntityManager.GetComponentOrNull<ActorComponent>(ev.User) is not {PlayerSession: var user} ||
-            EntityManager.GetComponentOrNull<ActorComponent>(ev.Target) is not {PlayerSession: var target})
+        if (EntityManager.GetComponentOrNull<ActorComponent>(ev.User) is not {Session: var user} ||
+            EntityManager.GetComponentOrNull<ActorComponent>(ev.Target) is not {Session: var target})
         {
             return;
         }

@@ -49,6 +49,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration.Systems;
@@ -84,7 +85,7 @@ public sealed partial class AdminVerbSystem
         if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
-        var player = actor.PlayerSession;
+        var player = actor.Session;
 
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
@@ -497,7 +498,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/gavel.svg.192dpi.png")),
                 Act = () =>
                 {
-                    _ghostKickManager.DoDisconnect(actorComponent.PlayerSession.ConnectedClient, "Smitten.");
+                    _ghostKickManager.DoDisconnect(actorComponent.Session.ConnectedClient, "Smitten.");
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-ghostkick-description")

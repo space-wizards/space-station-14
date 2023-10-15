@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using System.Text;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.PAI;
 
@@ -104,7 +105,7 @@ public sealed class PAISystem : SharedPAISystem
         //  before closing
         if (HasComp<ActiveInstrumentComponent>(uid) && TryComp<ActorComponent>(uid, out var actor))
         {
-            _instrumentSystem.ToggleInstrumentUi(uid, actor.PlayerSession);
+            _instrumentSystem.ToggleInstrumentUi(uid, actor.Session);
         }
 
         //  Stop instrument

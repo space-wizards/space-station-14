@@ -7,6 +7,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Clothing.Systems;
 
@@ -54,7 +55,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
         if (!TryComp(user, out ActorComponent? actor))
             return;
-        _uiSystem.TryToggleUi(uid, ChameleonUiKey.Key, actor.PlayerSession);
+        _uiSystem.TryToggleUi(uid, ChameleonUiKey.Key, actor.Session);
     }
 
     private void UpdateUi(EntityUid uid, ChameleonClothingComponent? component = null)

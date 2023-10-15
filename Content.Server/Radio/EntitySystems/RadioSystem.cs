@@ -13,6 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -49,7 +50,7 @@ public sealed class RadioSystem : EntitySystem
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
     {
         if (TryComp(uid, out ActorComponent? actor))
-            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
+            _netMan.ServerSendMessage(args.ChatMsg, actor.Session.ConnectedClient);
     }
 
     /// <summary>

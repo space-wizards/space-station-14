@@ -23,6 +23,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Ghost.Roles
 {
@@ -111,7 +112,7 @@ namespace Content.Server.Ghost.Roles
             eui.StateDirty();
         }
 
-        public void OpenMakeGhostRoleEui(IPlayerSession session, EntityUid uid)
+        public void OpenMakeGhostRoleEui(ICommonSession session, EntityUid uid)
         {
             if (session.AttachedEntity == null)
                 return;
@@ -246,11 +247,13 @@ namespace Content.Server.Ghost.Roles
             return roles.ToArray();
         }
 
-        private void OnPlayerAttached(PlayerAttachedEvent message)
+        private void OnPlayerAttached(ref PlayerAttachedEvent message)
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
-            if (!_openUis.ContainsKey(message.Player)) return;
-            if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
+            if (!_openUis.ContainsKey(message.Player))
+                return;
+            if (EntityManager.HasComponent<GhostComponent>(message.Entity))
+                return;
             CloseEui(message.Player);
         }
 

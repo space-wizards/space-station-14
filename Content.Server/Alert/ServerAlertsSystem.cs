@@ -12,7 +12,7 @@ internal sealed class ServerAlertsSystem : AlertsSystem
         SubscribeLocalEvent<AlertsComponent, PlayerAttachedEvent>(OnPlayerAttached);
     }
 
-    private void OnPlayerAttached(EntityUid uid, AlertsComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, AlertsComponent component, ref PlayerAttachedEvent args)
     {
         Dirty(component);
     }

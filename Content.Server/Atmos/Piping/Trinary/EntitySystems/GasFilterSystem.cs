@@ -15,6 +15,7 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
@@ -108,7 +109,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             if (EntityManager.GetComponent<TransformComponent>(filter.Owner).Anchored)
             {
-                _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.Session);
                 DirtyUI(uid, filter);
             }
             else

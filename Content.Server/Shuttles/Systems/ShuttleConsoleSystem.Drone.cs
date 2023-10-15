@@ -3,6 +3,8 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
 using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -21,7 +23,7 @@ public sealed partial class ShuttleConsoleSystem
         }
     }
 
-    private void OnDronePilotConsoleOpen(EntityUid uid, DroneConsoleComponent component, AfterActivatableUIOpenEvent args)
+    private void OnDronePilotConsoleOpen(EntityUid uid, DroneConsoleComponent component, ref AfterActivatableUIOpenEvent args)
     {
         component.Entity = GetShuttleConsole(uid);
     }

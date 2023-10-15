@@ -14,6 +14,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Tabletop
 {
@@ -134,7 +135,7 @@ namespace Content.Server.Tabletop
             {
                 Text = Loc.GetString("tabletop-verb-play-game"),
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
-                Act = () => OpenSessionFor(actor.PlayerSession, uid)
+                Act = () => OpenSessionFor(actor.Session, uid)
             };
 
             args.Verbs.Add(playVerb);
@@ -146,7 +147,7 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            OpenSessionFor(actor.PlayerSession, uid);
+            OpenSessionFor(actor.Session, uid);
         }
 
         private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)
@@ -159,7 +160,7 @@ namespace Content.Server.Tabletop
             CloseSessionFor((IPlayerSession)args.SenderSession, GetEntity(msg.TableUid));
         }
 
-        private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, ref PlayerDetachedEvent args)
         {
             if(component.Tabletop.IsValid())
                 CloseSessionFor(args.Player, component.Tabletop);
@@ -171,7 +172,7 @@ namespace Content.Server.Tabletop
                 return;
 
             if(component.Tabletop.IsValid())
-                CloseSessionFor(actor.PlayerSession, component.Tabletop);
+                CloseSessionFor(actor.Session, component.Tabletop);
         }
 
         public override void Update(float frameTime)
@@ -191,8 +192,8 @@ namespace Content.Server.Tabletop
 
                 var gamerUid = (gamer).Owner;
 
-                if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(gamerUid, gamer.Tabletop))
-                    CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
+                if (actor.Session.Status != SessionStatus.InGame || !CanSeeTable(gamerUid, gamer.Tabletop))
+                    CloseSessionFor(actor.Session, gamer.Tabletop);
             }
         }
     }

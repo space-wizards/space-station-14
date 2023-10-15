@@ -15,6 +15,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Interaction
 {
@@ -53,7 +54,7 @@ namespace Content.Server.Interaction
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return _uiSystem.SessionHasOpenUi(container.Owner, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
+            return _uiSystem.SessionHasOpenUi(container.Owner, StorageComponent.StorageUiKey.Key, actor.Session);
         }
 
         private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)

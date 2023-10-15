@@ -4,6 +4,7 @@ using Content.Server.Wires;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.ParticleAccelerator.Wires;
 
@@ -23,7 +24,7 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
     public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
-        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
+        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.Session : null;
 
         controller.CanBeEnabled = false;
         paSystem.SwitchOff(wire.Owner, userSession, controller);
@@ -39,7 +40,7 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
     public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
-        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
+        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.Session : null;
 
         if (controller.Enabled)
             paSystem.SwitchOff(wire.Owner, userSession, controller);

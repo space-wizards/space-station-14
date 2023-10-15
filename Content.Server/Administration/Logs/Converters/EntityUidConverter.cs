@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Administration.Logs.Converters;
 
@@ -28,7 +29,7 @@ public sealed class EntityUidConverter : AdminLogConverter<EntityUid>
 
         if (entities.TryGetComponent(value, out ActorComponent? actor))
         {
-            writer.WriteString("player", actor.PlayerSession.UserId.UserId);
+            writer.WriteString("player", actor.Session.UserId.UserId);
         }
 
         writer.WriteEndObject();

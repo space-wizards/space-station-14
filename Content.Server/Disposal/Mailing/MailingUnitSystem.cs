@@ -7,6 +7,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Disposal;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Disposal.Mailing;
 
@@ -158,7 +159,7 @@ public sealed class MailingUnitSystem : EntitySystem
         args.Handled = true;
         UpdateTargetList(uid, component);
         if (_userInterfaceSystem.TryGetUi(uid, MailingUnitUiKey.Key, out var bui))
-            _userInterfaceSystem.OpenUi(bui, actor.PlayerSession);
+            _userInterfaceSystem.OpenUi(bui, actor.Session);
     }
 
     /// <summary>

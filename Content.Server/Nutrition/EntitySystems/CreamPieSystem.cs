@@ -14,6 +14,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -86,7 +87,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var otherPlayers = Filter.Empty().AddPlayersByPvs(uid);
             if (TryComp<ActorComponent>(args.Target, out var actor))
             {
-                otherPlayers.RemovePlayer(actor.PlayerSession);
+                otherPlayers.RemovePlayer(actor.Session);
             }
             _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", uid),("thrower", args.Thrown)), uid, otherPlayers, false);
         }

@@ -15,6 +15,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -118,7 +120,7 @@ namespace Content.Server.Cloning
             UpdateUserInterface(uid, component);
         }
 
-        private void OnUIOpen(EntityUid uid, CloningConsoleComponent component, AfterActivatableUIOpenEvent args)
+        private void OnUIOpen(EntityUid uid, CloningConsoleComponent component, ref AfterActivatableUIOpenEvent args)
         {
             UpdateUserInterface(uid, component);
         }

@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Holiday.Christmas;
 
@@ -25,7 +26,7 @@ public sealed class LimitedItemGiverSystem : EntitySystem
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
-        if (component.GrantedPlayers.Contains(actor.PlayerSession.UserId) || (component.RequiredHoliday is not null && !_holiday.IsCurrentlyHoliday(component.RequiredHoliday)))
+        if (component.GrantedPlayers.Contains(actor.Session.UserId) || (component.RequiredHoliday is not null && !_holiday.IsCurrentlyHoliday(component.RequiredHoliday)))
         {
             _popup.PopupEntity(Loc.GetString(component.DeniedPopup), uid, args.User);
             return;
@@ -43,7 +44,7 @@ public sealed class LimitedItemGiverSystem : EntitySystem
             _hands.PickupOrDrop(args.User, spawned);
         }
 
-        component.GrantedPlayers.Add(actor.PlayerSession.UserId);
+        component.GrantedPlayers.Add(actor.Session.UserId);
         _popup.PopupEntity(Loc.GetString(component.ReceivedPopup), uid, args.User);
     }
 }

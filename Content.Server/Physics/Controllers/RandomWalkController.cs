@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 using Content.Server.Physics.Components;
 using Content.Shared.Follower.Components;
 using Content.Shared.Throwing;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Physics.Controllers;
 

@@ -1,12 +1,11 @@
-using Robust.Server.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.UserInterface
+namespace Content.Shared.UserInterface.Components
 {
     [RegisterComponent]
-    public sealed partial class ActivatableUIComponent : Component,
-            ISerializationHooks
+    public sealed partial class ActivatableUIComponent : Component, ISerializationHooks
     {
         [ViewVariables]
         public Enum? Key { get; set; }
@@ -65,7 +64,7 @@ namespace Content.Server.UserInterface
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
         [ViewVariables]
-        public IPlayerSession? CurrentSingleUser;
+        public ICommonSession? CurrentSingleUser;
 
         void ISerializationHooks.AfterDeserialization()
         {

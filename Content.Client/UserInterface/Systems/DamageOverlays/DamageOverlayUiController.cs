@@ -31,7 +31,7 @@ public sealed class DamageOverlayUiController : UIController
         SubscribeLocalEvent<MobThresholdChecked>(OnThresholdCheck);
     }
 
-    private void OnPlayerAttach(PlayerAttachedEvent args)
+    private void OnPlayerAttach(ref PlayerAttachedEvent args)
     {
         ClearOverlay();
         if (!EntityManager.TryGetComponent<MobStateComponent>(args.Entity, out var mobState))
@@ -41,7 +41,7 @@ public sealed class DamageOverlayUiController : UIController
         _overlayManager.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(PlayerDetachedEvent args)
+    private void OnPlayerDetached(ref PlayerDetachedEvent args)
     {
         _overlayManager.RemoveOverlay(_overlay);
         ClearOverlay();

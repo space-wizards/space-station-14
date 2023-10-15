@@ -6,6 +6,7 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Silicons.Borgs;
 

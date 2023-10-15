@@ -37,6 +37,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Administration.Systems;
 
@@ -60,7 +61,7 @@ public sealed partial class AdminVerbSystem
         if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
-        var player = actor.PlayerSession;
+        var player = actor.Session;
 
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Admin))
             return;

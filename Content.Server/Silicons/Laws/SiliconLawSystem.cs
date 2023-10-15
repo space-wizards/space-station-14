@@ -21,6 +21,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Silicons.Laws;
 
@@ -76,7 +77,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         var msg = Loc.GetString("laws-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false,
-            actor.PlayerSession.ConnectedClient, colorOverride: Color.FromHex("#2ed2fd"));
+            actor.Session.ConnectedClient, colorOverride: Color.FromHex("#2ed2fd"));
     }
 
     private void OnToggleLawsScreen(EntityUid uid, SiliconLawBoundComponent component, ToggleLawsScreenEvent args)
@@ -85,7 +86,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             return;
         args.Handled = true;
 
-        _userInterface.TryToggleUi(uid, SiliconLawsUiKey.Key, actor.PlayerSession);
+        _userInterface.TryToggleUi(uid, SiliconLawsUiKey.Key, actor.Session);
     }
 
     private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
@@ -246,7 +247,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         var msg = Loc.GetString("laws-update-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.ConnectedClient, colorOverride: Color.Red);
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.Session.ConnectedClient, colorOverride: Color.Red);
     }
 }
 

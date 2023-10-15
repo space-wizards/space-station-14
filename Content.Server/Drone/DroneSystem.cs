@@ -20,6 +20,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Content.Shared.UserInterface;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone

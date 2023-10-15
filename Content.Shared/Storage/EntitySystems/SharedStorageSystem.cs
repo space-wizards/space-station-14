@@ -1,9 +1,12 @@
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration;
+using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -19,27 +22,31 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedStorageSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private   readonly SharedInteractionSystem _sharedInteractionSystem = default!;
-    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
+    [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
@@ -55,6 +62,8 @@ public abstract class SharedStorageSystem : EntitySystem
         _stackQuery = GetEntityQuery<StackComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
+        SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
+        SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
         SubscribeLocalEvent<StorageComponent, ComponentInit>(OnComponentInit, before: new[] { typeof(SharedContainerSystem) });
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
         SubscribeLocalEvent<StorageComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ItemSlotsSystem) });
@@ -99,8 +108,6 @@ public abstract class SharedStorageSystem : EntitySystem
     }
 
     public virtual void UpdateUI(EntityUid uid, StorageComponent component) {}
-
-    public virtual void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false) { }
 
     private void AddTransferVerbs(EntityUid uid, StorageComponent component, GetVerbsEvent<UtilityVerb> args)
     {
@@ -616,4 +623,121 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     public abstract void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates,
         EntityCoordinates finalCoordinates, Angle initialRotation, EntityUid? user = null);
+
+    private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
+    {
+        var silent = false;
+        if (!args.CanAccess || !args.CanInteract || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
+        {
+            // we allow admins to open the storage anyways
+            if (!_admin.HasAdminFlag(args.User, AdminFlags.Admin))
+                return;
+
+            silent = true;
+        }
+
+        silent |= HasComp<GhostComponent>(args.User);
+
+        // Get the session for the user
+        if (!TryComp<ActorComponent>(args.User, out var actor))
+            return;
+
+        // Does this player currently have the storage UI open?
+        var uiOpen = _uiSystem.SessionHasOpenUi(uid, StorageComponent.StorageUiKey.Key, actor.Session);
+
+        ActivationVerb verb = new()
+        {
+            Act = () =>
+            {
+                if (uiOpen)
+                {
+                    _uiSystem.TryClose(uid, StorageComponent.StorageUiKey.Key, actor.Session);
+                }
+                else
+                {
+                    OpenStorageUI(uid, args.User, component, silent);
+                }
+            }
+        };
+        if (uiOpen)
+        {
+            verb.Text = Loc.GetString("verb-common-close-ui");
+            verb.Icon = new SpriteSpecifier.Texture(
+                new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+        }
+        else
+        {
+            verb.Text = Loc.GetString("verb-common-open-ui");
+            verb.Icon = new SpriteSpecifier.Texture(
+                new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+        }
+        args.Verbs.Add(verb);
+    }
+
+    private void OnBoundUIClosed(EntityUid uid, StorageComponent storageComp, BoundUIClosedEvent args)
+    {
+        if (TryComp<ActorComponent>(args.Session.AttachedEntity, out var actor) && actor?.Session != null)
+            CloseNestedInterfaces(uid, actor.Session, storageComp);
+
+        // If UI is closed for everyone
+        if (!_uiSystem.IsUiOpen(uid, args.UiKey))
+        {
+            storageComp.IsUiOpen = false;
+            UpdateStorageVisualization(uid, storageComp);
+
+            if (storageComp.StorageCloseSound is not null)
+                Audio.PlayPredicted(storageComp.StorageCloseSound, uid, args.Session.AttachedEntity, storageComp.StorageCloseSound.Params);
+        }
+    }
+
+    /// <summary>
+    ///     Opens the storage UI for an entity
+    /// </summary>
+    /// <param name="entity">The entity to open the UI for</param>
+    public void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
+    {
+        if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
+            return;
+
+        // prevent spamming bag open / honkerton honk sound
+        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.ActiveDelay(uid, useDelay);
+        if (!silent)
+        {
+            Audio.PlayPvs(storageComp.StorageOpenSound, uid);
+            if (useDelay != null)
+                UseDelay.BeginDelay(uid, useDelay);
+        }
+
+        Log.Debug($"Storage (UID {uid}) \"used\" by player session (UID {player.Session.AttachedEntity}).");
+
+        var bui = _uiSystem.GetUiOrNull(uid, StorageComponent.StorageUiKey.Key);
+        if (bui != null)
+            _uiSystem.OpenUi(bui, player.Session);
+    }
+
+    /// <summary>
+    ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
+    /// </summary>
+    /// <param name="session"></param>
+    public void CloseNestedInterfaces(EntityUid uid, ICommonSession session, StorageComponent? storageComp = null)
+    {
+        if (!Resolve(uid, ref storageComp))
+            return;
+
+        // for each containing thing
+        // if it has a storage comp
+        // ensure unsubscribe from session
+        // if it has a ui component
+        // close ui
+        foreach (var entity in storageComp.Container.ContainedEntities)
+        {
+            if (!TryComp(entity, out UserInterfaceComponent? ui))
+                continue;
+
+            foreach (var bui in ui.Interfaces.Values)
+            {
+                _uiSystem.TryClose(entity, bui.UiKey, session, ui);
+            }
+        }
+    }
 }

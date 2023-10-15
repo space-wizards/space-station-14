@@ -6,6 +6,7 @@ using Content.Server.Database;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Administration.Logs;
 
@@ -77,7 +78,7 @@ public sealed partial class AdminLogManager
 
             if (_entityManager.TryGetComponent(uid, out ActorComponent? actor))
             {
-                players.Add(actor.PlayerSession.UserId.UserId);
+                players.Add(actor.Session.UserId.UserId);
             }
         }
 

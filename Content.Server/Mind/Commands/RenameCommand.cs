@@ -12,6 +12,7 @@ using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Mind.Commands;
 
@@ -100,7 +101,7 @@ public sealed class RenameCommand : IConsoleCommand
         if (_entManager.TrySystem<AdminSystem>(out var adminSystem)
             && _entManager.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
         {
-            adminSystem.UpdatePlayerList(actorComp.PlayerSession);
+            adminSystem.UpdatePlayerList((IPlayerSession) actorComp.Session);
         }
     }
 

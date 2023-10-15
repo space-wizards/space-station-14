@@ -19,6 +19,7 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Strip
 {
@@ -115,9 +116,9 @@ namespace Content.Server.Strip
 
             if (TryComp<ActorComponent>(user, out var actor))
             {
-                if (_userInterfaceSystem.SessionHasOpenUi(component.Owner, StrippingUiKey.Key, actor.PlayerSession))
+                if (_userInterfaceSystem.SessionHasOpenUi(component.Owner, StrippingUiKey.Key, actor.Session))
                     return;
-                _userInterfaceSystem.TryOpen(component.Owner, StrippingUiKey.Key, actor.PlayerSession);
+                _userInterfaceSystem.TryOpen(component.Owner, StrippingUiKey.Key, actor.Session);
             }
         }
 

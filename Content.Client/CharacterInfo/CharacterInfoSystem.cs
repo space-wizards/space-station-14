@@ -17,7 +17,7 @@ public sealed class CharacterInfoSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlayerAttachSysMessage>(OnPlayerAttached);
+        SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
 
         SubscribeNetworkEvent<CharacterInfoEvent>(OnCharacterInfoEvent);
     }
@@ -33,9 +33,9 @@ public sealed class CharacterInfoSystem : EntitySystem
         RaiseNetworkEvent(new RequestCharacterInfoEvent(GetNetEntity(entity.Value)));
     }
 
-    private void OnPlayerAttached(PlayerAttachSysMessage msg)
+    private void OnPlayerAttached(ref PlayerAttachedEvent msg)
     {
-        if (msg.AttachedEntity == default)
+        if (msg.Entity == default)
         {
             OnCharacterDetached?.Invoke();
         }

@@ -4,6 +4,7 @@ using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using static Content.Shared.Configurable.ConfigurationComponent;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Configurable;
 
@@ -32,7 +33,7 @@ public sealed class ConfigurationSystem : EntitySystem
         if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
-        args.Handled = _uiSystem.TryOpen(uid, ConfigurationUiKey.Key, actor.PlayerSession);
+        args.Handled = _uiSystem.TryOpen(uid, ConfigurationUiKey.Key, actor.Session);
     }
 
     private void OnStartup(EntityUid uid, ConfigurationComponent component, ComponentStartup args)

@@ -6,6 +6,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
 using Content.Shared.VoiceMask;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.VoiceMask;
 
@@ -72,7 +73,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         if (!_uiSystem.TryGetUi(player, VoiceMaskUIKey.Key, out var bui))
             return;
 
-        _uiSystem.OpenUi(bui, actor.PlayerSession);
+        _uiSystem.OpenUi(bui, actor.Session);
         UpdateUI(player);
     }
 

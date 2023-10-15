@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
 using System.Diagnostics;
 using Content.Shared.CCVar;
+using Robust.Shared.Players;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -60,7 +61,7 @@ public sealed partial class ParticleAcceleratorSystem
         FireEmitter(comp.StarboardEmitter!.Value, strength);
     }
 
-    public void SwitchOn(EntityUid uid, IPlayerSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void SwitchOn(EntityUid uid, ICommonSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -83,7 +84,7 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateUI(uid, comp);
     }
 
-    public void SwitchOff(EntityUid uid, IPlayerSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void SwitchOff(EntityUid uid, ICommonSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -131,7 +132,7 @@ public sealed partial class ParticleAcceleratorSystem
         UpdateUI(uid, comp);
     }
 
-    public void SetStrength(EntityUid uid, ParticleAcceleratorPowerState strength, IPlayerSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
+    public void SetStrength(EntityUid uid, ParticleAcceleratorPowerState strength, ICommonSession? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;

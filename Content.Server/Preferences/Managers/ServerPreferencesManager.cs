@@ -11,6 +11,7 @@ using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 
@@ -167,7 +168,7 @@ namespace Content.Server.Preferences.Managers
         }
 
         // Should only be called via UserDbDataManager.
-        public async Task LoadData(IPlayerSession session, CancellationToken cancel)
+        public async Task LoadData(ICommonSession session, CancellationToken cancel)
         {
             if (!ShouldStorePrefs(session.ConnectedClient.AuthType))
             {
@@ -207,12 +208,12 @@ namespace Content.Server.Preferences.Managers
             }
         }
 
-        public void OnClientDisconnected(IPlayerSession session)
+        public void OnClientDisconnected(ICommonSession session)
         {
             _cachedPlayerPrefs.Remove(session.UserId);
         }
 
-        public bool HavePreferencesLoaded(IPlayerSession session)
+        public bool HavePreferencesLoaded(ICommonSession session)
         {
             return _cachedPlayerPrefs.ContainsKey(session.UserId);
         }

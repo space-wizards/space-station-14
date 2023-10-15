@@ -419,7 +419,7 @@ namespace Content.Server.Administration.Managers
             return false;
         }
 
-        public bool CanCommand(IPlayerSession session, string cmdName)
+        public bool CanCommand(ICommonSession session, string cmdName)
         {
             if (_commandPermissions.AnyCommands.Contains(cmdName))
             {
@@ -520,27 +520,27 @@ namespace Content.Server.Administration.Managers
             return (attribs.Length != 0, attribs);
         }
 
-        public bool CanViewVar(IPlayerSession session)
+        public bool CanViewVar(ICommonSession session)
         {
             return CanCommand(session, "vv");
         }
 
-        public bool CanAdminPlace(IPlayerSession session)
+        public bool CanAdminPlace(ICommonSession session)
         {
             return GetAdminData(session)?.CanAdminPlace() ?? false;
         }
 
-        public bool CanScript(IPlayerSession session)
+        public bool CanScript(ICommonSession session)
         {
             return GetAdminData(session)?.CanScript() ?? false;
         }
 
-        public bool CanAdminMenu(IPlayerSession session)
+        public bool CanAdminMenu(ICommonSession session)
         {
             return GetAdminData(session)?.CanAdminMenu() ?? false;
         }
 
-        public bool CanAdminReloadPrototypes(IPlayerSession session)
+        public bool CanAdminReloadPrototypes(ICommonSession session)
         {
             return GetAdminData(session)?.CanAdminReloadPrototypes() ?? false;
         }

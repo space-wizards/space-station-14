@@ -11,12 +11,13 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Exceptions;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Players.PlayTimeTracking;
 
-public delegate void CalcPlayTimeTrackersCallback(IPlayerSession player, HashSet<string> trackers);
+public delegate void CalcPlayTimeTrackersCallback(ICommonSession player, HashSet<string> trackers);
 
 /// <summary>
 /// Tracks play time for players, across all roles.
@@ -66,7 +67,7 @@ public sealed class PlayTimeTrackingManager
     private ISawmill _sawmill = default!;
 
     // List of players that need some kind of update (refresh timers or resend).
-    private ValueList<IPlayerSession> _playersDirty;
+    private ValueList<ICommonSession> _playersDirty;
 
     // DB auto-saving logic.
     private TimeSpan _saveInterval;
@@ -76,7 +77,7 @@ public sealed class PlayTimeTrackingManager
     // We must block server shutdown on these to avoid losing data.
     private readonly List<Task> _pendingSaveTasks = new();
 
-    private readonly Dictionary<IPlayerSession, PlayTimeData> _playTimeData = new();
+    private readonly Dictionary<ICommonSession, PlayTimeData> _playTimeData = new();
 
     public event CalcPlayTimeTrackersCallback? CalcTrackers;
 
@@ -139,7 +140,7 @@ public sealed class PlayTimeTrackingManager
         _playersDirty.Clear();
     }
 
-    private void RefreshSingleTracker(IPlayerSession dirty, PlayTimeData data, TimeSpan time)
+    private void RefreshSingleTracker(ICommonSession dirty, PlayTimeData data, TimeSpan time)
     {
         DebugTools.Assert(data.Initialized);
 
@@ -201,7 +202,7 @@ public sealed class PlayTimeTrackingManager
         }
     }
 
-    private void SendPlayTimes(IPlayerSession pSession)
+    private void SendPlayTimes(ICommonSession pSession)
     {
         var roles = GetTrackerTimes(pSession);
 
@@ -299,7 +300,7 @@ public sealed class PlayTimeTrackingManager
         _sawmill.Debug($"Saved {log.Count} trackers for {session.Name}");
     }
 
-    public async Task LoadData(IPlayerSession session, CancellationToken cancel)
+    public async Task LoadData(ICommonSession session, CancellationToken cancel)
     {
         var data = new PlayTimeData();
         _playTimeData.Add(session, data);
@@ -364,7 +365,7 @@ public sealed class PlayTimeTrackingManager
         return true;
     }
 
-    public Dictionary<string, TimeSpan> GetTrackerTimes(IPlayerSession id)
+    public Dictionary<string, TimeSpan> GetTrackerTimes(ICommonSession id)
     {
         if (!_playTimeData.TryGetValue(id, out var data) || !data.Initialized)
             throw new InvalidOperationException("Play time info is not yet loaded for this player!");
@@ -372,7 +373,7 @@ public sealed class PlayTimeTrackingManager
         return data.TrackerTimes;
     }
 
-    public TimeSpan GetPlayTimeForTracker(IPlayerSession id, string tracker)
+    public TimeSpan GetPlayTimeForTracker(ICommonSession id, string tracker)
     {
         if (!_playTimeData.TryGetValue(id, out var data) || !data.Initialized)
             throw new InvalidOperationException("Play time info is not yet loaded for this player!");
@@ -383,7 +384,7 @@ public sealed class PlayTimeTrackingManager
     /// <summary>
     /// Queue for play time trackers to be refreshed on a player, in case the set of active trackers may have changed.
     /// </summary>
-    public void QueueRefreshTrackers(IPlayerSession player)
+    public void QueueRefreshTrackers(ICommonSession player)
     {
         if (DirtyPlayer(player) is { } data)
             data.NeedRefreshTackers = true;
@@ -392,13 +393,13 @@ public sealed class PlayTimeTrackingManager
     /// <summary>
     /// Queue for play time information to be sent to a client, for showing in UIs etc.
     /// </summary>
-    public void QueueSendTimers(IPlayerSession player)
+    public void QueueSendTimers(ICommonSession player)
     {
         if (DirtyPlayer(player) is { } data)
             data.NeedSendTimers = true;
     }
 
-    private PlayTimeData? DirtyPlayer(IPlayerSession player)
+    private PlayTimeData? DirtyPlayer(ICommonSession player)
     {
         if (!_playTimeData.TryGetValue(player, out var data) || !data.Initialized)
             return null;

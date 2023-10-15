@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
 using Content.Server.GameTicking.Rules.Components;
 using System.Linq;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Administration.Systems;
 
@@ -30,7 +31,7 @@ public sealed partial class AdminVerbSystem
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
-        var player = actor.PlayerSession;
+        var player = actor.Session;
 
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;

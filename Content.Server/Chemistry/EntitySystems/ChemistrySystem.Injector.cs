@@ -17,6 +17,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Content.Shared.Popups;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Chemistry.EntitySystems;
 

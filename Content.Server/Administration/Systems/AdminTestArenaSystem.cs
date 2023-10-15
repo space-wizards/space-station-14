@@ -3,6 +3,7 @@ using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
 
 namespace Content.Server.Administration.Systems;
 
@@ -20,7 +21,7 @@ public sealed class AdminTestArenaSystem : EntitySystem
     public Dictionary<NetUserId, EntityUid> ArenaMap { get; private set; } = new();
     public Dictionary<NetUserId, EntityUid?> ArenaGrid { get; private set; } = new();
 
-    public (EntityUid Map, EntityUid? Grid) AssertArenaLoaded(IPlayerSession admin)
+    public (EntityUid Map, EntityUid? Grid) AssertArenaLoaded(ICommonSession admin)
     {
         if (ArenaMap.TryGetValue(admin.UserId, out var arenaMap) && !Deleted(arenaMap) && !Terminating(arenaMap))
         {

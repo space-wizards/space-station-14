@@ -5,6 +5,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Humanoid;
 
@@ -20,7 +21,7 @@ public sealed partial class HumanoidAppearanceSystem
             return;
         }
 
-        if (!_adminManager.HasAdminFlag(actor.PlayerSession, AdminFlags.Fun))
+        if (!_adminManager.HasAdminFlag(actor.Session, AdminFlags.Fun))
         {
             return;
         }
@@ -32,7 +33,7 @@ public sealed partial class HumanoidAppearanceSystem
             Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Customization/reptilian_parts.rsi"), "tail_smooth"),
             Act = () =>
             {
-                _uiSystem.TryOpen(uid, HumanoidMarkingModifierKey.Key, actor.PlayerSession);
+                _uiSystem.TryOpen(uid, HumanoidMarkingModifierKey.Key, actor.Session);
                 _uiSystem.TrySetUiState(
                     uid,
                     HumanoidMarkingModifierKey.Key,

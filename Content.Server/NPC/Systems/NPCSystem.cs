@@ -7,6 +7,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.NPC.Systems
 {
@@ -37,12 +38,12 @@ namespace Content.Server.NPC.Systems
             _configurationManager.OnValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates, true);
         }
 
-        public void OnPlayerNPCAttach(EntityUid uid, HTNComponent component, PlayerAttachedEvent args)
+        public void OnPlayerNPCAttach(EntityUid uid, HTNComponent component, ref PlayerAttachedEvent args)
         {
             SleepNPC(uid, component);
         }
 
-        public void OnPlayerNPCDetach(EntityUid uid, HTNComponent component, PlayerDetachedEvent args)
+        public void OnPlayerNPCDetach(EntityUid uid, HTNComponent component, ref PlayerDetachedEvent args)
         {
             if (_mobState.IsIncapacitated(uid) || TerminatingOrDeleted(uid))
                 return;

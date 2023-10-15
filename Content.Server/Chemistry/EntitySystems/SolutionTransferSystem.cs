@@ -10,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -56,7 +57,7 @@ namespace Content.Server.Chemistry.EntitySystems
             AlternativeVerb custom = new();
             custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
             custom.Category = VerbCategory.SetTransferAmount;
-            custom.Act = () => _userInterfaceSystem.TryOpen(args.Target, TransferAmountUiKey.Key, actor.PlayerSession);
+            custom.Act = () => _userInterfaceSystem.TryOpen(args.Target, TransferAmountUiKey.Key, actor.Session);
             custom.Priority = 1;
             args.Verbs.Add(custom);
 

@@ -4,9 +4,12 @@ using Content.Server.UserInterface;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.MagicMirror;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Players;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.MagicMirror;
 
@@ -170,7 +173,7 @@ public sealed class MagicMirrorSystem : EntitySystem
         _uiSystem.TrySendUiMessage(uid, MagicMirrorUiKey.Key, msg, player);
     }
 
-    private void AfterUIOpen(EntityUid uid, MagicMirrorComponent component, AfterActivatableUIOpenEvent args)
+    private void AfterUIOpen(EntityUid uid, MagicMirrorComponent component, ref AfterActivatableUIOpenEvent args)
     {
         var looks = Comp<HumanoidAppearanceComponent>(args.User);
         var actor = Comp<ActorComponent>(args.User);

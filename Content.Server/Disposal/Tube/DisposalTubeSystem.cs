@@ -11,6 +11,7 @@ using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;

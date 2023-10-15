@@ -10,6 +10,7 @@ using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -142,7 +143,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         if (!_userInterface.TryGetUi(uid, SurveillanceCameraSetupUiKey.Router, out var bui))
             return;
 
-        _userInterface.OpenUi(bui, actor.PlayerSession);
+        _userInterface.OpenUi(bui, actor.Session);
         UpdateSetupInterface(uid, camera);
     }
 

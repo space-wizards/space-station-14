@@ -30,12 +30,12 @@ public sealed class DrugOverlaySystem : EntitySystem
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, SeeingRainbowsComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, SeeingRainbowsComponent component, ref PlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, SeeingRainbowsComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, SeeingRainbowsComponent component, ref PlayerDetachedEvent args)
     {
         _overlay.Intoxication = 0;
         _overlayMan.RemoveOverlay(_overlay);

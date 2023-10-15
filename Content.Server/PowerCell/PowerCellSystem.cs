@@ -16,6 +16,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
+using ActivatableUISystem = Content.Shared.UserInterface.Systems.ActivatableUISystem;
 
 namespace Content.Server.PowerCell;
 

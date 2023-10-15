@@ -8,11 +8,14 @@ using Content.Server.Wires;
 using Content.Shared.Interaction;
 using Content.Shared.Speech;
 using Content.Shared.SurveillanceCamera;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -196,8 +199,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
     }
 
-    private void OnToggleInterface(EntityUid uid, SurveillanceCameraMonitorComponent component,
-        AfterActivatableUIOpenEvent args)
+    private void OnToggleInterface(EntityUid uid, SurveillanceCameraMonitorComponent component, ref AfterActivatableUIOpenEvent args)
     {
         AfterOpenUserInterface(uid, args.User, component);
     }

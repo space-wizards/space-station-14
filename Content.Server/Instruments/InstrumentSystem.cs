@@ -15,6 +15,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.GameStates;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Instruments;
@@ -447,7 +448,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         }
     }
 
-    public void ToggleInstrumentUi(EntityUid uid, IPlayerSession session, InstrumentComponent? component = null)
+    public void ToggleInstrumentUi(EntityUid uid, ICommonSession session, InstrumentComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;

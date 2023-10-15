@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Access.Systems;
 
@@ -68,7 +69,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (args.Args.Target != null)
         {
             component.TargetAccessReaderId = args.Args.Target.Value;
-            _userInterface.TryOpen(uid, AccessOverriderUiKey.Key, actor.PlayerSession);
+            _userInterface.TryOpen(uid, AccessOverriderUiKey.Key, actor.Session);
             UpdateUserInterface(uid, component, args);
         }
 

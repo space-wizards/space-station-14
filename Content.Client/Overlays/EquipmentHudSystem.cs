@@ -65,12 +65,12 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
         RefreshOverlay(uid);
     }
 
-    private void OnPlayerAttached(PlayerAttachedEvent args)
+    private void OnPlayerAttached(ref PlayerAttachedEvent args)
     {
         RefreshOverlay(args.Entity);
     }
 
-    private void OnPlayerDetached(PlayerDetachedEvent args)
+    private void OnPlayerDetached(ref PlayerDetachedEvent args)
     {
         if (_player.LocalPlayer?.ControlledEntity == null)
             Deactivate();

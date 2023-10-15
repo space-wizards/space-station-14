@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Robust.Server.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Tabletop
@@ -66,7 +67,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         /// <param name="player">The player session in question.</param>
         /// <param name="uid">The UID of the tabletop game entity.</param>
-        public void OpenSessionFor(IPlayerSession player, EntityUid uid)
+        public void OpenSessionFor(ICommonSession player, EntityUid uid)
         {
             if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {Valid: true} attachedEntity)
                 return;
@@ -98,7 +99,7 @@ namespace Content.Server.Tabletop
         /// <param name="player">The player in question.</param>
         /// <param name="uid">The UID of the tabletop game entity.</param>
         /// <param name="removeGamerComponent">Whether to remove the <see cref="TabletopGamerComponent"/> from the player's attached entity.</param>
-        public void CloseSessionFor(IPlayerSession player, EntityUid uid, bool removeGamerComponent = true)
+        public void CloseSessionFor(ICommonSession player, EntityUid uid, bool removeGamerComponent = true)
         {
             if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
@@ -129,7 +130,7 @@ namespace Content.Server.Tabletop
         /// <param name="player">The player in question.</param>
         /// <param name="offset">An offset from the tabletop position for the camera. Zero by default.</param>
         /// <returns>The UID of the camera entity.</returns>
-        private EntityUid CreateCamera(TabletopGameComponent tabletop, IPlayerSession player, Vector2 offset = default)
+        private EntityUid CreateCamera(TabletopGameComponent tabletop, ICommonSession player, Vector2 offset = default)
         {
             DebugTools.AssertNotNull(tabletop.Session);
 
@@ -144,7 +145,7 @@ namespace Content.Server.Tabletop
             _eye.SetZoom(camera, tabletop.CameraZoom, eyeComponent);
 
             // Add the user to the view subscribers. If there is no player session, just skip this step
-            _viewSubscriberSystem.AddViewSubscriber(camera, player);
+            _viewSubscriberSystem.AddViewSubscriber(camera, (IPlayerSession) player);
 
             return camera;
         }

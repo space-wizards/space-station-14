@@ -1,8 +1,10 @@
 using Content.Shared.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using JetBrains.Annotations;
 using Content.Shared.Wires;
+using ActivatableUISystem = Content.Shared.UserInterface.Systems.ActivatableUISystem;
 
 namespace Content.Server.Power.EntitySystems;
 

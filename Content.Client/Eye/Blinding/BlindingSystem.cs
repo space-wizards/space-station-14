@@ -39,12 +39,12 @@ public sealed class BlindingSystem : EntitySystem
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, BlindableComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, BlindableComponent component, ref PlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, BlindableComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, BlindableComponent component, ref PlayerDetachedEvent args)
     {
         _overlayMan.RemoveOverlay(_overlay);
         _lightManager.Enabled = true;

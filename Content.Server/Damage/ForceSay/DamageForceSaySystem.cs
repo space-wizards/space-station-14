@@ -10,6 +10,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Damage.ForceSay;
 
@@ -62,7 +63,7 @@ public sealed class DamageForceSaySystem : EntitySystem
 
         // set cooldown & raise event
         component.NextAllowedTime = _timing.CurTime + component.Cooldown;
-        RaiseNetworkEvent(new DamageForceSayEvent { Suffix = useSuffix ? suffix : null }, actor.PlayerSession);
+        RaiseNetworkEvent(new DamageForceSayEvent { Suffix = useSuffix ? suffix : null }, actor.Session);
     }
 
     private void AllowNextSpeech(EntityUid uid)
@@ -73,7 +74,7 @@ public sealed class DamageForceSaySystem : EntitySystem
         var nextCrit = EnsureComp<AllowNextCritSpeechComponent>(uid);
 
         // timeout is *3 ping to compensate for roundtrip + leeway
-        nextCrit.Timeout = _timing.CurTime + TimeSpan.FromMilliseconds(actor.PlayerSession.Ping * 3);
+        nextCrit.Timeout = _timing.CurTime + TimeSpan.FromMilliseconds(actor.Session.Ping * 3);
     }
 
     private void OnSleep(EntityUid uid, DamageForceSayComponent component, SleepStateChangedEvent args)

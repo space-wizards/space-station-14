@@ -5,6 +5,7 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.ParticleAccelerator.Wires;
 
@@ -34,7 +35,7 @@ public sealed partial class ParticleAcceleratorStrengthWireAction : ComponentWir
     public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
-        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
+        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.Session : null;
         paSystem.SetStrength(wire.Owner, (ParticleAcceleratorPowerState) ((int) controller.SelectedStrength + 1), userSession, controller);
     }
 }

@@ -26,6 +26,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Server.Weapons.Ranged.Systems;
@@ -353,7 +354,7 @@ public sealed partial class GunSystem : SharedGunSystem
         var filter = Filter.Pvs(uid, entityManager: EntityManager);
 
         if (TryComp<ActorComponent>(user, out var actor))
-            filter.RemovePlayer(actor.PlayerSession);
+            filter.RemovePlayer(actor.Session);
 
         RaiseNetworkEvent(message, filter);
     }

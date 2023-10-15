@@ -11,6 +11,7 @@ using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -41,7 +42,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         var query = EntityQueryEnumerator<RespawnTrackerComponent>();
         while (query.MoveNext(out _, out var respawn))
         {
-            if (respawn.Players.Remove(actor.PlayerSession.UserId))
+            if (respawn.Players.Remove(actor.Session.UserId))
                 QueueDel(ev.Victim);
         }
     }
@@ -99,7 +100,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         if (!Resolve(tracker, ref component) || !Resolve(player, ref actor, false))
             return;
 
-        AddToTracker(actor.PlayerSession.UserId, tracker, component);
+        AddToTracker(actor.Session.UserId, tracker, component);
     }
 
     /// <summary>
@@ -121,7 +122,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         if (!Resolve(respawnTracker, ref component) || !Resolve(player, ref actor, false))
             return false;
 
-        if (!component.Players.Contains(actor.PlayerSession.UserId) || component.RespawnQueue.ContainsKey(actor.PlayerSession.UserId))
+        if (!component.Players.Contains(actor.Session.UserId) || component.RespawnQueue.ContainsKey(actor.Session.UserId))
             return false;
 
         if (component.RespawnDelay == TimeSpan.Zero)
@@ -130,14 +131,14 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
                 return false;
 
             QueueDel(player);
-            GameTicker.MakeJoinGame(actor.PlayerSession, station, silent: true);
+            GameTicker.MakeJoinGame(actor.Session, station, silent: true);
             return false;
         }
 
         var msg = Loc.GetString("rule-respawn-in-seconds", ("second", component.RespawnDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.PlayerSession.ConnectedClient, Color.LimeGreen);
-        component.RespawnQueue[actor.PlayerSession.UserId] = _timing.CurTime + component.RespawnDelay;
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.Session.ConnectedClient, Color.LimeGreen);
+        component.RespawnQueue[actor.Session.UserId] = _timing.CurTime + component.RespawnDelay;
         return true;
     }
 }

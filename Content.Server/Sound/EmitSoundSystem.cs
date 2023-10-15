@@ -2,6 +2,8 @@
 using Content.Server.Sound.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Sound;
+using Content.Shared.UserInterface;
+using Content.Shared.UserInterface.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Sound;
@@ -42,7 +44,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
         SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
     }
 
-    private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
+    private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, ref AfterActivatableUIOpenEvent args)
     {
         TryEmitSound(uid, component, args.User);
     }

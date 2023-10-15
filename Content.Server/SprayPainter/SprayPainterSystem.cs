@@ -11,6 +11,7 @@ using Content.Shared.SprayPainter;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.SprayPainter;
 
@@ -82,7 +83,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
         DirtyUI(uid, component);
 
-        _userInterfaceSystem.TryOpen(uid, SprayPainterUiKey.Key, actor.PlayerSession);
+        _userInterfaceSystem.TryOpen(uid, SprayPainterUiKey.Key, actor.Session);
         args.Handled = true;
     }
 

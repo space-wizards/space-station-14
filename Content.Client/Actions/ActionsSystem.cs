@@ -196,12 +196,12 @@ namespace Content.Client.Actions
             return GetActions(user);
         }
 
-        private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, ActionsComponent component, ref PlayerAttachedEvent args)
         {
             LinkAllActions(component);
         }
 
-        private void OnPlayerDetached(EntityUid uid, ActionsComponent component, PlayerDetachedEvent? args = null)
+        private void OnPlayerDetached(EntityUid uid, ActionsComponent component, ref PlayerDetachedEvent args)
         {
             UnlinkAllActions();
         }

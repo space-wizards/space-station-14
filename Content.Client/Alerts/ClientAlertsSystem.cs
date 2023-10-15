@@ -69,7 +69,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
             SyncAlerts?.Invoke(this, component.Alerts);
     }
 
-    private void OnPlayerAttached(EntityUid uid, AlertsComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, AlertsComponent component, ref PlayerAttachedEvent args)
     {
         if (_playerManager.LocalPlayer?.ControlledEntity != uid)
             return;
@@ -87,7 +87,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
         ClearAlerts?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnPlayerDetached(EntityUid uid, AlertsComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, AlertsComponent component, ref PlayerDetachedEvent args)
     {
         ClearAlerts?.Invoke(this, EventArgs.Empty);
     }

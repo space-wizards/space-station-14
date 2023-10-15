@@ -34,6 +34,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using static Content.Shared.Configurable.ConfigurationComponent;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Administration.Systems
 {
@@ -83,7 +84,7 @@ namespace Content.Server.Administration.Systems
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            var player = actor.PlayerSession;
+            var player = actor.Session;
 
             if (_adminManager.IsAdmin(player))
             {
@@ -103,7 +104,7 @@ namespace Content.Server.Administration.Systems
                     verb.Category = VerbCategory.Admin;
                     verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/gavel.svg.192dpi.png"));
                     verb.Act = () =>
-                        _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
+                        _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.Session.UserId}\"");
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
 
@@ -116,7 +117,7 @@ namespace Content.Server.Administration.Systems
                     {
                         _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>
                         {
-                            _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, popupMessage == "" ? Loc.GetString("prayer-popup-subtle-default") : popupMessage);
+                            _prayerSystem.SendSubtleMessage(targetActor.Session, player, message, popupMessage == "" ? Loc.GetString("prayer-popup-subtle-default") : popupMessage);
                         });
                     };
                     prayerVerb.Impact = LogImpact.Low;
@@ -151,7 +152,7 @@ namespace Content.Server.Administration.Systems
                         Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
                         Act = () =>
                         {
-                            _adminSystem.Erase(targetActor.PlayerSession);
+                            _adminSystem.Erase(targetActor.Session);
                         },
                         Impact = LogImpact.Extreme,
                         ConfirmationPopup = true
@@ -220,7 +221,7 @@ namespace Content.Server.Administration.Systems
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
-                            _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
+                            _console.ExecuteCommand(player, $"respawn {actor.Session.Name}");
                         },
                         ConfirmationPopup = true,
                         // No logimpact as the command does it internally.
@@ -234,7 +235,7 @@ namespace Content.Server.Administration.Systems
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            var player = actor.PlayerSession;
+            var player = actor.Session;
 
             // Delete verb
             if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("delete"), null), player, out _) ?? false)
@@ -399,7 +400,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("configure-verb-get-data-text"),
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
                     Category = VerbCategory.Debug,
-                    Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.PlayerSession)
+                    Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.Session)
                 };
                 args.Verbs.Add(verb);
             }
@@ -430,13 +431,13 @@ namespace Content.Server.Administration.Systems
             }
         }
 
-        public void OpenEditSolutionsEui(IPlayerSession session, EntityUid uid)
+        public void OpenEditSolutionsEui(ICommonSession session, EntityUid uid)
         {
             if (session.AttachedEntity == null)
                 return;
 
-            if (_openSolutionUis.ContainsKey(session))
-                _openSolutionUis[session].Close();
+            if (_openSolutionUis.TryGetValue(session, out var ui))
+                ui.Close();
 
             var eui = _openSolutionUis[session] = new EditSolutionsEui(uid);
             _euiManager.OpenEui(eui, session);

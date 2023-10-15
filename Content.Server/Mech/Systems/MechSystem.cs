@@ -20,6 +20,7 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Mech.Systems;
 
@@ -276,7 +277,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        _ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);
+        _ui.TryToggleUi(uid, MechUiKey.Key, actor.Session);
         UpdateUserInterface(uid, component);
     }
 

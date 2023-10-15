@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Examine
 {
@@ -31,7 +32,7 @@ namespace Content.Server.Examine
             if (!TryComp<ActorComponent>(player, out var actor))
                 return;
 
-            var session = actor.PlayerSession;
+            var session = actor.Session;
 
             SortedSet<Verb>? verbs = null;
             if (getVerbs)

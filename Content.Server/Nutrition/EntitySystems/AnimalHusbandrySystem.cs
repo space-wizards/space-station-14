@@ -13,6 +13,7 @@ using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Nutrition.EntitySystems;
 

@@ -14,11 +14,15 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.UserInterface;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using ActivatableUISystem = Content.Shared.UserInterface.Systems.ActivatableUISystem;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.Wires;
 
@@ -472,7 +476,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
             if (TryComp(args.User, out ActorComponent? actor))
             {
-                _uiSystem.TryOpen(uid, WiresUiKey.Key, actor.PlayerSession);
+                _uiSystem.TryOpen(uid, WiresUiKey.Key, actor.Session);
                 args.Handled = true;
             }
         }
@@ -615,7 +619,7 @@ public sealed class WiresSystem : SharedWiresSystem
             wires.WireSeed), ui: ui);
     }
 
-    public void OpenUserInterface(EntityUid uid, IPlayerSession player)
+    public void OpenUserInterface(EntityUid uid, ICommonSession player)
     {
         if (_uiSystem.TryGetUi(uid, WiresUiKey.Key, out var ui))
             _uiSystem.OpenUi(ui, player);

@@ -13,12 +13,14 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
@@ -421,7 +423,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
 
 
-        _uiSystem.TryOpen(configuratorUid, NetworkConfiguratorUiKey.Link, actor.PlayerSession);
+        _uiSystem.TryOpen(configuratorUid, NetworkConfiguratorUiKey.Link, actor.Session);
         configurator.DeviceLinkTarget = targetUid;
 
 
@@ -472,7 +474,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!_uiSystem.TryGetUi(configuratorUid, NetworkConfiguratorUiKey.Configure, out var bui))
             return;
 
-        if (_uiSystem.OpenUi(bui, actor.PlayerSession))
+        if (_uiSystem.OpenUi(bui, actor.Session))
             _uiSystem.SetUiState(bui, new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(configurator.ActiveDeviceList.Value)
                     .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()

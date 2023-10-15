@@ -94,7 +94,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         AddEye(ev.Entity, ev.Component, true);
     }
 
-    private void OnDetached(EntityUid uid, LerpingEyeComponent component, PlayerDetachedEvent args)
+    private void OnDetached(EntityUid uid, LerpingEyeComponent component, ref PlayerDetachedEvent args)
     {
         if (!component.ManuallyAdded)
             RemCompDeferred(uid, component);

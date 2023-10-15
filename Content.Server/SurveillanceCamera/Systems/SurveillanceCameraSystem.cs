@@ -8,7 +8,9 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Prototypes;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -58,7 +60,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
-        
+
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemoved>(OnEmpDisabledRemoved);
     }
@@ -202,7 +204,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         if (!_userInterface.TryGetUi(uid, SurveillanceCameraSetupUiKey.Camera, out var bui))
             return;
 
-        _userInterface.OpenUi(bui, actor.PlayerSession);
+        _userInterface.OpenUi(bui, actor.Session);
         UpdateSetupInterface(uid, camera);
     }
 
@@ -297,7 +299,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             return;
         }
 
-        _viewSubscriberSystem.AddViewSubscriber(camera, actor.PlayerSession);
+        _viewSubscriberSystem.AddViewSubscriber(camera, (IPlayerSession) actor.Session);
         component.ActiveViewers.Add(player);
 
         if (monitor != null)
@@ -353,7 +355,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             return;
         }
 
-        _viewSubscriberSystem.RemoveViewSubscriber(camera, actor.PlayerSession);
+        _viewSubscriberSystem.RemoveViewSubscriber(camera, (IPlayerSession) actor.Session);
         component.ActiveViewers.Remove(player);
 
         if (monitor != null)

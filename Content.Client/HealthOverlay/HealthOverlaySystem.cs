@@ -45,7 +45,7 @@ namespace Content.Client.HealthOverlay
             base.Initialize();
 
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
+            SubscribeLocalEvent<PlayerAttachedEvent>(HandlePlayerAttached);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -59,9 +59,9 @@ namespace Content.Client.HealthOverlay
             _attachedEntity = default;
         }
 
-        private void HandlePlayerAttached(PlayerAttachSysMessage message)
+        private void HandlePlayerAttached(ref PlayerAttachedEvent message)
         {
-            _attachedEntity = message.AttachedEntity;
+            _attachedEntity = message.Entity;
         }
 
         public override void FrameUpdate(float frameTime)

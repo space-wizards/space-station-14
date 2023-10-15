@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Robust.Server.GameObjects;
+using ActorComponent = Robust.Shared.GameObjects.ActorComponent;
 
 namespace Content.Server.KillTracking;
 
@@ -85,9 +86,9 @@ public sealed class KillTrackingSystem : EntitySystem
         // - the entity that died had an assist on themselves
         var suicide = args.Origin == uid ||
                       killSource is KillNpcSource npc && npc.NpcEnt == uid ||
-                      killSource is KillPlayerSource player && player.PlayerId == CompOrNull<ActorComponent>(uid)?.PlayerSession.UserId ||
+                      killSource is KillPlayerSource player && player.PlayerId == CompOrNull<ActorComponent>(uid)?.Session.UserId ||
                       assistSource is KillNpcSource assistNpc && assistNpc.NpcEnt == uid ||
-                      assistSource is KillPlayerSource assistPlayer && assistPlayer.PlayerId == CompOrNull<ActorComponent>(uid)?.PlayerSession.UserId;
+                      assistSource is KillPlayerSource assistPlayer && assistPlayer.PlayerId == CompOrNull<ActorComponent>(uid)?.Session.UserId;
 
         var ev = new KillReportedEvent(uid, killSource, assistSource, suicide);
         RaiseLocalEvent(uid, ref ev, true);
@@ -96,7 +97,7 @@ public sealed class KillTrackingSystem : EntitySystem
     private KillSource GetKillSource(EntityUid? sourceEntity)
     {
         if (TryComp<ActorComponent>(sourceEntity, out var actor))
-            return new KillPlayerSource(actor.PlayerSession.UserId);
+            return new KillPlayerSource(actor.Session.UserId);
         if (HasComp<HTNComponent>(sourceEntity))
             return new KillNpcSource(sourceEntity.Value);
         return new KillEnvironmentSource();

@@ -60,4 +60,19 @@ public abstract class SharedPowerCellSystem : EntitySystem
         _appearance.SetData(uid, PowerCellSlotVisuals.Enabled, false);
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
+
+    public bool HasCharge(EntityUid uid, float max, EntityUid user)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetPowerCellDrawEnabled(EntityUid uid, bool b)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool HasCharge(EntityUid uid, float drawUseRate)
+    {
+        throw new NotImplementedException();
+    }
 }

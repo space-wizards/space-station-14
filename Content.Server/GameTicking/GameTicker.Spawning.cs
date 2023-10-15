@@ -16,6 +16,7 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -276,7 +277,7 @@ namespace Content.Server.GameTicking
         /// <param name="station">The station they're spawning on</param>
         /// <param name="jobId">An optional job for them to spawn as</param>
         /// <param name="silent">Whether or not the player should be greeted upon joining</param>
-        public void MakeJoinGame(IPlayerSession player, EntityUid station, string? jobId = null, bool silent = false)
+        public void MakeJoinGame(ICommonSession player, EntityUid station, string? jobId = null, bool silent = false)
         {
             if (!_playerGameStatuses.ContainsKey(player.UserId))
                 return;
@@ -284,7 +285,7 @@ namespace Content.Server.GameTicking
             if (!_userDb.IsLoadComplete(player))
                 return;
 
-            SpawnPlayer(player, station, jobId, silent: silent);
+            SpawnPlayer((IPlayerSession) player, station, jobId, silent: silent);
         }
 
         /// <summary>
