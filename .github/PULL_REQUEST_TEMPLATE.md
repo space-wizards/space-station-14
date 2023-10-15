@@ -31,13 +31,11 @@ List any breaking changes, including namespace, public class/method/field change
 **Changelog**
 <!--
 Make players aware of new features and changes that could affect how they play the game by adding a Changelog entry. Please read the Changelog guidelines located at: https://docs.spacestation14.io/en/getting-started/pr-guideline#changelog
--->
 
-<!--
-Make sure to take this Changelog template out of the comment block in order for it to show up.
+Be sure to change the template with whatever entries you want.
+--!>
 :cl:
 - add: Added fun!
 - remove: Removed fun!
 - tweak: Changed fun!
 - fix: Fixed fun!
--->
