@@ -13,6 +13,8 @@
     tags:
     - HidesHair
     - WhitelistChameleon
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -25,6 +27,8 @@
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -37,6 +41,8 @@
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -49,6 +55,8 @@
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -61,6 +69,8 @@
     sprite: Clothing/Head/Hoods/Bio/security.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/security.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -73,6 +83,8 @@
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Bio/virology.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadBase
@@ -131,6 +143,8 @@
       coefficients:
         Heat: 0.95
         Radiation: 0.65
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadBase
@@ -145,8 +159,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Heat: 0.95
         Radiation: 0.65
+        Heat: 0.95
 
 - type: entity
   parent: ClothingHeadBase

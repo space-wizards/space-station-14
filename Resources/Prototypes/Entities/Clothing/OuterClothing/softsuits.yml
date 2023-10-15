@@ -13,6 +13,8 @@
     tags:
     - SuitEVA
     - WhitelistChameleon
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #Syndicate EVA
 - type: entity
@@ -29,6 +31,8 @@
     tags:
     - SuitEVA
     - WhitelistChameleon
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #Emergency EVA
 - type: entity
@@ -52,6 +56,8 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #Prisoner EVA
 - type: entity
@@ -68,6 +74,8 @@
     tags:
     - SuitEVA
     - WhitelistChameleon
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #NTSRA Voidsuit / Ancient Voidsuit
 - type: entity
@@ -83,6 +91,8 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
+  - type: StaminaProtection
+    coefficient: 0.9
 
 #Paramedic Voidsuit
 #Despite having resistances and looking like one, this is two-piece and parents off the EVA suit so it goes here.
@@ -112,6 +122,8 @@
         Radiation: 0.75
         Caustic: 0.5
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingOuterEVASuitBase
@@ -139,6 +151,8 @@
         Radiation: 0.75
         Caustic: 0.5
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingOuterEVASuitBase
@@ -166,3 +180,5 @@
         Radiation: 0.75
         Caustic: 0.5
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.9

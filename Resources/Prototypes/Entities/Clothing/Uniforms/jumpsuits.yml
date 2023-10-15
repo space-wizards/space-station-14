@@ -15,6 +15,8 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.8
+  - type: StaminaProtection
+    coefficient: 0.8
 
 - type: entity
   parent: ClothingUniformBase
@@ -1148,6 +1150,8 @@
     modifiers:
       coefficients:
         Radiation: 0.8
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1159,6 +1163,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1176,6 +1182,8 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1187,6 +1195,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1204,6 +1214,8 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1219,6 +1231,8 @@
     modifiers:
       coefficients:
         Radiation: 0.8
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1230,6 +1244,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/original_ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/original_ert_janitor.rsi
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1247,6 +1263,8 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1258,6 +1276,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/original_ert_medic.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/original_ert_medic.rsi
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformBase
@@ -1275,6 +1295,8 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingUniformJumpsuitClown

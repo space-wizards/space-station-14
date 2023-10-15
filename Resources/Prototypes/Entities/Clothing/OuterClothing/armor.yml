@@ -21,6 +21,8 @@
         Heat: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.90
+  - type: StaminaProtection
+    coefficient: 0.9
 
 #Basic armor vest
 - type: entity
@@ -42,6 +44,8 @@
         Heat: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.85
+  - type: StaminaProtection
+    coefficient: 0.9
 
 #Alternate / slim basic armor vest
 - type: entity
@@ -64,6 +68,8 @@
         Heat: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.95
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -86,6 +92,8 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.8
 
 - type: entity
   parent: ClothingOuterArmorBasic
@@ -106,6 +114,8 @@
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.80
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingOuterArmorBasic
@@ -128,6 +138,8 @@
     reflectProb: 1
     reflects:
       - Energy
+  - type: StaminaProtection
+    coefficient: 0.8
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -147,6 +159,8 @@
         Piercing: 0.6
         Heat: 0.5
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -168,6 +182,8 @@
         Radiation: 0
         Caustic: 0.75
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -179,6 +195,8 @@
     sprite: Clothing/OuterClothing/Armor/heavygreen.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/heavygreen.rsi
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -190,6 +208,8 @@
     sprite: Clothing/OuterClothing/Armor/heavyred.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/heavyred.rsi
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -201,6 +221,8 @@
     sprite: Clothing/OuterClothing/Armor/magusblue.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/magusblue.rsi
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -212,6 +234,8 @@
     sprite: Clothing/OuterClothing/Armor/magusred.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/magusred.rsi
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -238,6 +262,8 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -260,6 +286,8 @@
   - type: ExplosionResistance
     damageCoefficient: 0.65
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.85
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -285,6 +313,8 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.85
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -310,3 +340,5 @@
   - type: Construction
     graph: BoneArmor
     node: armor
+  - type: StaminaProtection
+    coefficient: 0.9

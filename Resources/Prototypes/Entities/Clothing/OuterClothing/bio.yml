@@ -13,6 +13,8 @@
     modifiers:
       coefficients:
         Caustic: 0.5
+  - type: StaminaProtection
+    coefficient: 0.8
 
 - type: entity
   parent: ClothingOuterBioGeneral

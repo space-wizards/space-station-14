@@ -22,6 +22,8 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #Mercenary Helmet
 - type: entity
@@ -89,6 +91,8 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.95
+  - type: StaminaProtection
+    coefficient: 0.9
 
 #Bombsuit Helmet
 - type: entity
@@ -110,6 +114,8 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+  - type: StaminaProtection
+    coefficient: 0.9
 
 #Cult Helmet
 - type: entity
@@ -301,6 +307,8 @@
     sprite: Clothing/Head/Helmets/ert_leader.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_leader.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #ERT Security Helmet
 - type: entity
@@ -313,6 +321,8 @@
     sprite: Clothing/Head/Helmets/ert_security.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_security.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #ERT Medic Helmet
 - type: entity
@@ -325,6 +335,8 @@
     sprite: Clothing/Head/Helmets/ert_medic.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_medic.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #ERT Engineer Helmet
 - type: entity
@@ -337,6 +349,8 @@
     sprite: Clothing/Head/Helmets/ert_engineer.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_engineer.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #ERT Janitor Helmet
 - type: entity
@@ -349,6 +363,8 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #Bone Helmet
 - type: entity

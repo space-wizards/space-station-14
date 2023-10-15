@@ -22,6 +22,8 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: StaminaProtection
+    coefficient: 0.8
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -47,6 +49,8 @@
     walkModifier: 0.8
     sprintModifier: 0.7
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.85
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -72,6 +76,8 @@
     walkModifier: 0.8
     sprintModifier: 0.7
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.85
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -98,6 +104,8 @@
       walkModifier: 0.8
       sprintModifier: 0.8
     - type: GroupExamine
+    - type: StaminaProtection
+      coefficient: 0.85
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
@@ -115,6 +123,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.85
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
@@ -132,6 +142,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/original_rad.rsi
   - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.85
 
 - type: entity
   parent: ClothingOuterBase
@@ -172,6 +184,8 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellSmall
         disableEject: true
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase

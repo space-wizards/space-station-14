@@ -6,6 +6,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cap.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -15,6 +17,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/original_cap.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -24,6 +28,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hos.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -33,6 +39,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/original_hos.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -42,6 +50,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ce.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -51,6 +61,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/original_ce.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -60,6 +72,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cmo.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -69,6 +83,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/rd.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -78,6 +94,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/original_rd.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -87,6 +105,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/qm.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -96,6 +116,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hop.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -105,6 +127,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/original_hop.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -114,6 +138,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/herald.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -123,6 +149,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/nanotrasen.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -132,6 +160,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -141,6 +171,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admin.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -150,6 +182,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/miner.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -159,6 +193,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/trans.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -176,6 +212,8 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -185,6 +223,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/piratecap.rsi
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingNeckBase
@@ -204,3 +244,5 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: TypingIndicatorClothing
     proto: moth
+  - type: StaminaProtection
+    coefficient: 0.95

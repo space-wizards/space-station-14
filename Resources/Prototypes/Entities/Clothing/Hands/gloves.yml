@@ -107,6 +107,8 @@
     fiberMaterial: fibers-durathread
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #### Medical
 - type: entity
@@ -229,6 +231,8 @@
   - type: NinjaGloves
   # not actually electrified, just used to make stun ability work
   - type: Electrified
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHandsGlovesColorBlack
@@ -239,6 +243,8 @@
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
+  - type: StaminaProtection
+    coefficient: 0.95
 
 # can't parent combat gloves since they are butcherable
 - type: entity
@@ -256,6 +262,8 @@
   - type: Insulated
   - type: Fiber
     fiberColor: fibers-black
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHandsGlovesCombat
@@ -274,6 +282,8 @@
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHandsBase

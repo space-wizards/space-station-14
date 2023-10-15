@@ -96,6 +96,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -120,6 +122,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -135,6 +139,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -210,6 +216,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -234,6 +242,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -258,6 +268,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -284,6 +296,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -308,6 +322,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -332,6 +348,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieCommander
@@ -353,6 +371,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
@@ -373,6 +393,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieElite
@@ -386,6 +408,8 @@
     sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
@@ -406,6 +430,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
@@ -419,6 +445,8 @@
     sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -457,6 +485,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: StaminaProtection
+    coefficient: 0.9
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -483,6 +513,8 @@
         Heat: 0.80
         Radiation: 0.80
         Caustic: 0.95
+  - type: StaminaProtection
+    coefficient: 0.85
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSecurity

@@ -18,6 +18,8 @@
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #Mercenary web vest
 - type: entity
@@ -39,6 +41,8 @@
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: StaminaProtection
+    coefficient: 0.95
 
 #Detective's vest
 - type: entity

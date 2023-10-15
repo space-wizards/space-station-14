@@ -29,6 +29,8 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmosAlter
+  - type: StaminaProtection
+    coefficient: 0.8
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -61,6 +63,8 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringAlter
+  - type: StaminaProtection
+    coefficient: 0.8
 
 #Salvage Hardsuit
 - type: entity
@@ -91,6 +95,8 @@
     sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvageAlter
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -119,6 +125,8 @@
     sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityAlter
+  - type: StaminaProtection
+    coefficient: 0.55
 
 #Warden's Hardsuit
 - type: entity
@@ -148,6 +156,8 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWardenAlter
+  - type: StaminaProtection
+    coefficient: 0.55
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -178,6 +188,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCapAlter
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -208,6 +220,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhiteAlter
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -231,6 +245,8 @@
     sprintModifier: 0.95
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedicalAlter
+  - type: StaminaProtection
+    coefficient: 0.85
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -269,6 +285,8 @@
     clothingPrototype: ClothingHeadHelmetHardsuitRdAlter
   - type: StaticPrice
     price: 750
+  - type: StaminaProtection
+    coefficient: 0.65
 
 - type: entity
   parent: ClothingOuterHardsuitSecurity
@@ -298,6 +316,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRedAlter
+  - type: StaminaProtection
+    coefficient: 0.5
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -328,6 +348,8 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieAlter
+  - type: StaminaProtection
+    coefficient: 0.3
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -358,6 +380,8 @@
     sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersunAlter
+  - type: StaminaProtection
+    coefficient: 0.15
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -390,6 +414,8 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieEliteAlter
+  - type: StaminaProtection
+    coefficient: 0.3
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -420,6 +446,8 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommanderAlter
+  - type: StaminaProtection
+    coefficient: 0.25
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -450,6 +478,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizardAlter
+  - type: StaminaProtection
+    coefficient: 0.55
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -479,6 +509,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
+  - type: StaminaProtection
+    coefficient: 0.7
 
 
 - type: entity
@@ -573,6 +605,8 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquadAlter
+  - type: StaminaProtection
+    coefficient: 0.15
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -607,6 +641,8 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURNAlter
+  - type: StaminaProtection
+    coefficient: 0.6
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -638,33 +674,8 @@
     node: clownHardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitClownAlter
-
-- type: entity
-  parent: ClothingOuterEVASuitBase
-  id: ClothingOuterHardsuitVoidParamedAlter
-  name: Paramedic Void Suit
-  description: A void suit made for paramedics.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/alter_paramed.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/alter_paramed.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Radiation: 0.75
-        Caustic: 0.5
-  - type: GroupExamine
+  - type: StaminaProtection
+    coefficient: 0.9
 
 
 - type: entity
@@ -696,6 +707,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhiteAlter2
+  - type: StaminaProtection
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -725,3 +738,5 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxuryAlter
+  - type: StaminaProtection
+    coefficient: 0.85

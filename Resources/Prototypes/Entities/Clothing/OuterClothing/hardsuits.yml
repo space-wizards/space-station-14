@@ -26,6 +26,8 @@
     sprintModifier: 0.80
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBasic
+  - type: StaminaProtection
+    coefficient: 0.8
 
 #Atmospherics Hardsuit
 - type: entity
@@ -59,6 +61,8 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
+  - type: StaminaProtection
+    coefficient: 0.8
 
 #Engineering Hardsuit
 - type: entity
@@ -92,6 +96,8 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
+  - type: StaminaProtection
+    coefficient: 0.8
 
 #Spationaut Hardsuit
 - type: entity
@@ -120,6 +126,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
+  - type: StaminaProtection
+    coefficient: 0.8
 
 #Salvage Hardsuit
 - type: entity
@@ -150,6 +158,8 @@
     sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
+  - type: StaminaProtection
+    coefficient: 0.7
 
 #Security Hardsuit
 - type: entity
@@ -179,6 +189,8 @@
     sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
+  - type: StaminaProtection
+    coefficient: 0.55
 
 #Brigmedic Hardsuit
 - type: entity
@@ -205,6 +217,8 @@
     sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
+  - type: StaminaProtection
+    coefficient: 0.75
 
 #Warden's Hardsuit
 - type: entity
@@ -234,6 +248,8 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
+  - type: StaminaProtection
+    coefficient: 0.55
 
 #Captain's Hardsuit
 - type: entity
@@ -265,6 +281,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
+  - type: StaminaProtection
+    coefficient: 0.7
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -296,6 +314,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
+  - type: StaminaProtection
+    coefficient: 0.7
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -320,6 +340,8 @@
     sprintModifier: 0.95
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
+  - type: StaminaProtection
+    coefficient: 0.85
 
 #Research Director's Hardsuit
 - type: entity
@@ -359,6 +381,8 @@
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
     price: 750
+  - type: StaminaProtection
+    coefficient: 0.65
 
 #Head of Security's Hardsuit
 - type: entity
@@ -389,6 +413,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
+  - type: StaminaProtection
+    coefficient: 0.5
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -419,6 +445,8 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxury
+  - type: StaminaProtection
+    coefficient: 0.85
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -451,6 +479,8 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
+  - type: StaminaProtection
+    coefficient: 0.3
 
 # Syndicate Medic Hardsuit
 - type: entity
@@ -498,6 +528,8 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
+  - type: StaminaProtection
+    coefficient: 0.3
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -529,6 +561,8 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
+  - type: StaminaProtection
+    coefficient: 0.25
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
@@ -560,6 +594,8 @@
     sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
+  - type: StaminaProtection
+    coefficient: 0.15
 
 #Wizard Hardsuit
 - type: entity
@@ -591,6 +627,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
+  - type: StaminaProtection
+    coefficient: 0.55
 
 #Ling Space Suit
 - type: entity
@@ -620,6 +658,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
+  - type: StaminaProtection
+    coefficient: 0.9
 
 #Pirate EVA Suit (Deep Space EVA Suit)
 #Despite visually appearing like a softsuit, it functions exactly like a hardsuit would (parents off of base hardsuit, has resistances and toggleable clothing, etc.) so it goes here.
@@ -649,6 +689,8 @@
     sprintModifier: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
+  - type: StaminaProtection
+    coefficient: 0.75
 
 #Pirate Captain Hardsuit
 - type: entity
@@ -679,6 +721,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
+  - type: StaminaProtection
+    coefficient: 0.7
 
 
 #CENTCOMM / ERT HARDSUITS
@@ -780,6 +824,8 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
+  - type: StaminaProtection
+    coefficient: 0.15
 
 #CBURN Hardsuit
 - type: entity
@@ -815,6 +861,8 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
+  - type: StaminaProtection
+    coefficient: 0.6
 
 #MISC. HARDSUITS
 #Clown Hardsuit
@@ -848,3 +896,5 @@
     node: clownHardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitClown
+  - type: StaminaProtection
+    coefficient: 0.9
