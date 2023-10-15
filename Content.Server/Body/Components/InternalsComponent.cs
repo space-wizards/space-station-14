@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 namespace Content.Server.Body.Components
 {
     /// <summary>
@@ -16,5 +16,13 @@ namespace Content.Server.Body.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("delay")]
         public float Delay = 3;
+
+        /// <summary>
+        /// Whether the mob should automatically attempt to activate its internals after spawning.
+        /// Intended for respirator mobs that may spawn in space or a spaced area.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("auto")]
+        public bool Auto = false;
     }
 }

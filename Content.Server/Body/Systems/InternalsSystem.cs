@@ -143,6 +143,11 @@ public sealed class InternalsSystem : EntitySystem
             // TODO: Should listen to gas tank updates instead I guess?
             _alerts.ShowAlert(uid, AlertType.Internals, GetSeverity(component));
         }
+        else if (component.Auto)
+        {
+            ToggleInternals(uid, uid, true, component);
+            component.Auto = false;
+        }
     }
     public void DisconnectBreathTool(InternalsComponent component)
     {
