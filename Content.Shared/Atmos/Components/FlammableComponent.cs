@@ -1,9 +1,10 @@
 using Content.Shared.Damage;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Collision.Shapes;
 
-namespace Content.Server.Atmos.Components;
+namespace Content.Shared.Atmos.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class FlammableComponent : Component
 {
     [ViewVariables]

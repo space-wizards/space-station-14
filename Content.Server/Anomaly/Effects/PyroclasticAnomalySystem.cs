@@ -2,6 +2,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Map;
 
 namespace Content.Server.Anomaly.Effects;

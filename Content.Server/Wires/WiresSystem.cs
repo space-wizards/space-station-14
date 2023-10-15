@@ -14,6 +14,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.UserInterface;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

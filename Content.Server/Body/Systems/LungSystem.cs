@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Systems;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Body.Systems;

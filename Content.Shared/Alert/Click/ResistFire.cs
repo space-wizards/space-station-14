@@ -1,3 +1,6 @@
+using Content.Server.Atmos.Components;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Alert.Click

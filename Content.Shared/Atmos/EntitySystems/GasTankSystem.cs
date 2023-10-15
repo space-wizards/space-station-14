@@ -3,29 +3,31 @@ using Content.Server.Body.Components;
 using Content.Shared.Actions;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
+using Content.Shared.Cargo;
 using Content.Shared.Examine;
 using Content.Shared.Toggleable;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
 public sealed class GasTankSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosions = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedExplosionSystem _explosions = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly SharedAudioSystem _audioSys = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedAtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     private const float TimerDelay = 0.5f;
     private float _timer = 0f;
@@ -53,8 +55,8 @@ public sealed class GasTankSystem : EntitySystem
 
     private void OnGasTankToggleInternals(EntityUid uid, GasTankComponent component, GasTankToggleInternalsMessage args)
     {
-        if (args.Session is not IPlayerSession playerSession ||
-            playerSession.AttachedEntity is not {} player) return;
+        if (args.Session.AttachedEntity is not {} player)
+            return;
 
         ToggleInternals(component);
     }

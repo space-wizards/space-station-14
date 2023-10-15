@@ -14,6 +14,7 @@ using Content.Server.Audio;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Shared.Atmos;
 using Content.Shared.Database;
 
 namespace Content.Server.Atmos.Portable

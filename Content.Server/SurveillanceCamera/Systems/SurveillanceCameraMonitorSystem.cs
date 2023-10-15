@@ -8,6 +8,7 @@ using Content.Server.Wires;
 using Content.Shared.Interaction;
 using Content.Shared.Speech;
 using Content.Shared.SurveillanceCamera;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;

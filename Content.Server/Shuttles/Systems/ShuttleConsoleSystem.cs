@@ -14,6 +14,7 @@ using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;

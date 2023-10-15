@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -7,13 +8,13 @@ namespace Content.Shared.Roles.Actions;
 /// <summary>
 /// Lets its owner entity use mime powers, like placing invisible walls.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MimePowersComponent : Component
 {
     /// <summary>
     /// Whether this component is active or not.
     /// </summarY>
-    [DataField("enabled")]
+    [DataField("enabled"), AutoNetworkedField]
     public bool Enabled = true;
 
     /// <summary>
@@ -25,7 +26,8 @@ public sealed partial class MimePowersComponent : Component
     [DataField("invisibleWallAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? InvisibleWallAction = "ActionMimeInvisibleWall";
 
-    [DataField("invisibleWallActionEntity")] public EntityUid? InvisibleWallActionEntity;
+    [DataField("invisibleWallActionEntity"), AutoNetworkedField]
+    public EntityUid? InvisibleWallActionEntity;
 
     // The vow zone lies below
     public bool VowBroken = false;
@@ -39,12 +41,12 @@ public sealed partial class MimePowersComponent : Component
     /// <summary>
     /// Time when the mime can repent their vow
     /// </summary>
-    [DataField("vowRepentTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField("vowRepentTime", customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan VowRepentTime = TimeSpan.Zero;
 
     /// <summary>
     /// How long it takes the mime to get their powers back
     /// </summary>
-    [DataField("vowCooldown")]
+    [DataField("vowCooldown"), AutoNetworkedField]
     public TimeSpan VowCooldown = TimeSpan.FromMinutes(5);
 }

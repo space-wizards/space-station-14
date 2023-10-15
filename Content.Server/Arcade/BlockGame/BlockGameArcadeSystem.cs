@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 

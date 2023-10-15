@@ -6,6 +6,7 @@ using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
+using Content.Shared.Cargo;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;

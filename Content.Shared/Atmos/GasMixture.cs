@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Server.Atmos.Reactions;
-using Content.Shared.Atmos;
+using Content.Shared.Atmos.Reactions;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Atmos
+namespace Content.Shared.Atmos
 {
     /// <summary>
     ///     A general-purpose, variable volume gas mixture.

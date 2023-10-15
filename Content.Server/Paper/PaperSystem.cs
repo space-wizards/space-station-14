@@ -8,6 +8,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Player;

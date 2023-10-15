@@ -9,6 +9,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.VoiceMask;
 using Content.Shared.Actions;
+using Content.Shared.Body.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;

@@ -14,6 +14,7 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.UserInterface;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;

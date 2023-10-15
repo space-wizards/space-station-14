@@ -1,42 +1,38 @@
-using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
-using Content.Server.Stunnable;
-using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Stunnable;
 using Content.Shared.Temperature;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Server.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Server.Atmos.EntitySystems;
+namespace Content.Shared.Atmos.EntitySystems;
 
 public sealed class FlammableSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly StunSystem _stunSystem = default!;
-    [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixture = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly FixtureSystem _fixture = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly SharedTemperatureSystem _temperatureSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public const float MinimumFireStacks = -10f;
     public const float MaximumFireStacks = 20f;
@@ -51,7 +47,7 @@ public sealed class FlammableSystem : EntitySystem
 
     public override void Initialize()
     {
-        UpdatesAfter.Add(typeof(AtmosphereSystem));
+        UpdatesAfter.Add(typeof(SharedAtmosphereSystem));
 
         SubscribeLocalEvent<FlammableComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsing);
@@ -233,7 +229,7 @@ public sealed class FlammableSystem : EntitySystem
         if (!flammable.OnFire || !flammable.CanExtinguish)
             return;
 
-        _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} stopped being on fire damage");
+        _adminLogger.Add(LogType.Flammable, $"{ToPrettyString((EntityUid) flammable.Owner):entity} stopped being on fire damage");
         flammable.OnFire = false;
         flammable.FireStacks = 0;
 
@@ -250,7 +246,7 @@ public sealed class FlammableSystem : EntitySystem
 
         if (flammable.AlwaysCombustible)
         {
-            flammable.FireStacks = Math.Max(flammable.FirestacksOnIgnite, flammable.FireStacks);
+            flammable.FireStacks = Math.Max((float) flammable.FirestacksOnIgnite, (float) flammable.FireStacks);
         }
 
         if (flammable.FireStacks > 0 && !flammable.OnFire)
@@ -265,22 +261,21 @@ public sealed class FlammableSystem : EntitySystem
         UpdateAppearance(uid, flammable);
     }
 
-    public void Resist(EntityUid uid,
-        FlammableComponent? flammable = null)
+    public void Resist(EntityUid uid, FlammableComponent? flammable = null)
     {
         if (!Resolve(uid, ref flammable))
             return;
 
-        if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner, null) || flammable.Resisting)
+        if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(uid, null) || flammable.Resisting)
             return;
 
         flammable.Resisting = true;
 
-        flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
+        SharedPopupExtensions.PopupMessage(flammable.Owner, Loc.GetString("flammable-component-resist-message"));
         _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
 
         // TODO FLAMMABLE: Make this not use TimerComponent...
-        flammable.Owner.SpawnTimer(2000, () =>
+        TimerExtensions.SpawnTimer(flammable.Owner, 2000, () =>
         {
             flammable.Resisting = false;
             flammable.FireStacks -= 1f;

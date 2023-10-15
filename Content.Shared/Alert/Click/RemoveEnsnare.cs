@@ -1,4 +1,5 @@
-﻿using Content.Shared.Ensnaring.Components;
+﻿using Content.Shared.Ensnaring;
+using Content.Shared.Ensnaring.Components;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Alert.Click;
@@ -16,7 +17,7 @@ public sealed partial class RemoveEnsnare : IAlertClick
                 if (!entManager.TryGetComponent(ensnare, out EnsnaringComponent? ensnaringComponent))
                     return;
 
-                entManager.EntitySysManager.GetEntitySystem<EnsnareableSystem>().TryFree(player, player, ensnare, ensnaringComponent);
+                entManager.EntitySysManager.GetEntitySystem<SharedEnsnareableSystem>().TryFree(player, player, ensnare, ensnaringComponent);
 
                 // Only one snare at a time.
                 break;

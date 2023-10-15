@@ -18,6 +18,7 @@ using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;
+using Content.Shared.UserInterface;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;

@@ -31,7 +31,9 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Server.Temperature.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Medical;
 

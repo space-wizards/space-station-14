@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;

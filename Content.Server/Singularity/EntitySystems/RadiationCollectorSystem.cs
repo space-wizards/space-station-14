@@ -10,6 +10,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Server.Atmos;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Singularity.EntitySystems;
 

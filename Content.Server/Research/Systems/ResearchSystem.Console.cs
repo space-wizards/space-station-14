@@ -3,6 +3,7 @@ using Content.Server.Research.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Research.Components;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Research.Systems;
 

@@ -10,6 +10,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 
 namespace Content.Server.Forensics

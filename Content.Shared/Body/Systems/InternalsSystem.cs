@@ -18,7 +18,7 @@ public sealed class InternalsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly SharedAtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;

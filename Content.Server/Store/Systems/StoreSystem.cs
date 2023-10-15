@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Store.Systems;
 

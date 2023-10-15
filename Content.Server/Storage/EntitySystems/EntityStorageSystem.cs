@@ -3,6 +3,8 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.Body;
+using Content.Shared.Body.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;

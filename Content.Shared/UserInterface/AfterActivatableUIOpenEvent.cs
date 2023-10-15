@@ -1,11 +1,13 @@
+using Robust.Shared.Players;
+
 namespace Content.Shared.UserInterface;
 
 public sealed class AfterActivatableUIOpenEvent : EntityEventArgs
 {
-    public EntityUid User { get; }
-    public readonly IPlayerSession Session;
+    public readonly EntityUid User;
+    public readonly ICommonSession Session;
 
-    public AfterActivatableUIOpenEvent(EntityUid who, IPlayerSession session)
+    public AfterActivatableUIOpenEvent(EntityUid who, ICommonSession session)
     {
         User = who;
         Session = session;

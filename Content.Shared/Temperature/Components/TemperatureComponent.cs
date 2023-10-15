@@ -1,10 +1,9 @@
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Handles changing temperature,

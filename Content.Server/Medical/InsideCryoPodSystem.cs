@@ -1,5 +1,7 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Server.Medical.Components;
+using Content.Shared.Body;
+using Content.Shared.Body.Systems;
 using Content.Shared.Medical.Cryogenics;
 
 namespace Content.Server.Medical

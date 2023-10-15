@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Content.Server.Atmos;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Administration.Logs.Converters;
 

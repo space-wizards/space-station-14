@@ -5,7 +5,9 @@ using Content.Server.Body.Components;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.Body;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
@@ -130,7 +132,7 @@ namespace Content.Server.Body.Systems
             // exhale gas
 
             var ev = new ExhaleLocationEvent();
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ev);
 
             if (ev.Gas == null)
             {
@@ -208,14 +210,4 @@ namespace Content.Server.Body.Systems
                 component.AccumulatedFrametime = component.CycleDelay;
         }
     }
-}
-
-public sealed class InhaleLocationEvent : EntityEventArgs
-{
-    public GasMixture? Gas;
-}
-
-public sealed class ExhaleLocationEvent : EntityEventArgs
-{
-    public GasMixture? Gas;
 }

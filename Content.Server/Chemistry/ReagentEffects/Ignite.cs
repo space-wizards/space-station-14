@@ -1,4 +1,5 @@
 ﻿using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Robust.Shared.Prototypes;

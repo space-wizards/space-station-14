@@ -1,6 +1,7 @@
 using Content.Shared.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.UserInterface;
 using JetBrains.Annotations;
 using Content.Shared.Wires;
 

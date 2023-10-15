@@ -17,6 +17,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
