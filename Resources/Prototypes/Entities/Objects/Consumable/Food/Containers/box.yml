@@ -584,9 +584,9 @@
   name: syndicate snack box
   components:
   - type: Item
-    size: 60
+    size: 64
   - type: Storage
-    capacity: 60 # need more room for goodies
+    capacity: 64 # need more room for goodies
   - type: StorageFill
     contents:
     # toy
