@@ -1,7 +1,7 @@
 - type: entity
   id: LockerGeneric
   parent: LockerBase
-  name: a locker
+  name: locker
   description: Tall box with a lock.
   components:
   - type: Appearance
