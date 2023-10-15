@@ -61,6 +61,9 @@ public sealed class StatusIconOverlay : Overlay
             if (icons.Count == 0)
                 continue;
 
+            if (!_statusIcon.IsVisible(uid))
+                continue;
+
             var worldMatrix = Matrix3.CreateTranslation(worldPos);
             Matrix3.Multiply(scaleMatrix, worldMatrix, out var scaledWorld);
             Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);

@@ -67,5 +67,21 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         RaiseLocalEvent(uid, ref ev);
         return ev.StatusIcons;
     }
+
+    /// <summary>
+    /// For overlay to check if an entity can be seen.
+    /// </summary>
+    public bool IsVisible(EntityUid uid)
+    {
+        var ev = new StatusIconVisibleEvent(true);
+        RaiseLocalEvent(uid, ref ev);
+        return ev.Visible;
+    }
 }
 
+/// <summary>
+/// Raised on an entity to check if it should draw hud icons.
+/// Used to check invisibility etc inside the screen bounds.
+/// </summary>
+[ByRefEvent]
+public record struct StatusIconVisibleEvent(bool Visible);
