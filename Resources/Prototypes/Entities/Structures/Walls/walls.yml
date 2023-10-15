@@ -1164,11 +1164,6 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Pebble:
-            min: 2
-            max: 5
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
@@ -1184,19 +1179,6 @@
     sprite: Structures/Walls/cobblebrick_basalt.rsi
   - type: Icon
     sprite: Structures/Walls/cobblebrick_basalt.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 120
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          BasaltPebble:
-            min: 2
-            max: 5
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: cobblebrick
@@ -1211,19 +1193,32 @@
     sprite: Structures/Walls/cobblebrick_snow.rsi
   - type: Icon
     sprite: Structures/Walls/cobblebrick_snow.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 30
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SnowPebble:
-            min: 2
-            max: 5
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+    
+- type: entity
+  parent: WallCobblebrick
+  id: WallAsteroidCobblebrick
+  name: asteroid stone brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_asteroid.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_asteroid.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+    
+- type: entity
+  parent: WallCobblebrick
+  id: WallSandCobblebrick
+  name: sandstone brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_sand.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_sand.rsi
   - type: IconSmooth
     key: walls
     base: cobblebrick
