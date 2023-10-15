@@ -95,6 +95,7 @@
     - /PhotocopierForms/nanotrasen_station/medical/med_rcp.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_rep_death.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_rep_psych.xml
+    - /PhotocopierForms/nanotrasen_station/medical/med_rep_psych_tourette.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_sitrep.xml
   - Id: engineering
     Name: Инженерный отдел

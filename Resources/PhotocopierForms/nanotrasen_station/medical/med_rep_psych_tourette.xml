@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>med_rep_psych_tourette</FormId>
+  <PrototypeId>PaperNtFormMed</PrototypeId>
+  <EntityName>форма НТ-МЕД-ТРТТ</EntityName>
+  <PhotocopierTitle>Справка о синдроме Туретта</PhotocopierTitle>
+  <Content><![CDATA[[bold]Форма НТ-МЕД-ТРТТ[/bold]
+[head=2]Справка о синдроме Туретта[/head]
+
+[italic]Дата: ДЕНЬ/МЕСЯЦ/ГОД[/italic]
+
+[bold]Психолог:[/bold] (ПОЛНОЕ ИМЯ ПСИХОЛОГА)
+[bold]Полное имя и должность пациента:[/bold]
+[bold]Состояние синдрома:[/bold]
+(Стадия развития, степень выраженности, навязчивость)
+[bold]Проявляющиеся тики:[/bold]
+(Описание тиков)
+
+[italic]Место для печатей - Психолог[/italic]]]></Content>
+</Form>
