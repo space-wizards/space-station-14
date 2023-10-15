@@ -5,9 +5,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Climbing;
 using Content.Server.Medical.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
@@ -17,6 +14,8 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
@@ -32,6 +31,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Server.Temperature.Components;
+using Content.Shared.Climbing.Systems;
 
 namespace Content.Server.Medical;
 

@@ -29,7 +29,6 @@ namespace Content.Client.Actions
 
         public event Action<EntityUid>? OnActionAdded;
         public event Action<EntityUid>? OnActionRemoved;
-        public event OnActionReplaced? ActionReplaced;
         public event Action? ActionsUpdated;
         public event Action<ActionsComponent>? LinkActions;
         public event Action? UnlinkActions;

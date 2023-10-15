@@ -4,6 +4,9 @@ ent-MedicalSupplies = { ent-CrateMedicalSupplies }
 ent-MedicalChemistrySupplies = { ent-CrateChemistrySupplies }
     .desc = { ent-CrateChemistrySupplies.desc }
 
+ent-MedicalMindShieldImplants = { ent-MedicalMindShieldImplants }
+    .desc = { ent-MedicalMindShieldImplants.desc }
+
 ent-EmergencyBurnKit = { ent-CrateEmergencyBurnKit }
     .desc = { ent-CrateEmergencyBurnKit.desc }
 

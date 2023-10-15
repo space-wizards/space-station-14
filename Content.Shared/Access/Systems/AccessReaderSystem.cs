@@ -71,7 +71,7 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         args.Handled = true;
         reader.Enabled = false;
-        Dirty(reader);
+        Dirty(uid, reader);
     }
 
     /// <summary>
@@ -183,16 +183,16 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         FindAccessItemsInventory(uid, out var items);
 
-        foreach (var item in new ValueList<EntityUid>(items))
-        {
-            items.UnionWith(FindPotentialAccessItems(item));
-        }
-
         var ev = new GetAdditionalAccessEvent
         {
             Entities = items
         };
         RaiseLocalEvent(uid, ref ev);
+
+        foreach (var item in new ValueList<EntityUid>(items))
+        {
+            items.UnionWith(FindPotentialAccessItems(item));
+        }
         items.Add(uid);
         return items;
     }
