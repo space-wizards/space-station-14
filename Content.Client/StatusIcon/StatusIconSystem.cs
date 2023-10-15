@@ -1,6 +1,7 @@
 using Content.Shared.CCVar;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 
@@ -14,12 +15,16 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
 
+    private EntityQuery<SpriteComponent> _spriteQuery;
+
     private bool _globalEnabled;
     private bool _localEnabled;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        _spriteQuery = GetEntityQuery<SpriteComponent>();
+
         _configuration.OnValueChanged(CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged, true);
         _configuration.OnValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);
     }
@@ -73,6 +78,9 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     /// </summary>
     public bool IsVisible(EntityUid uid)
     {
+        if (_spriteQuery.TryGetComponent(uid, out var sprite) && !sprite.Visible)
+            return false;
+
         var ev = new StatusIconVisibleEvent(true);
         RaiseLocalEvent(uid, ref ev);
         return ev.Visible;
