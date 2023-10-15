@@ -15,6 +15,7 @@ using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -26,12 +27,13 @@ public sealed partial class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SharedTransformSystem _transformSystem = default!;
+    private readonly SpriteSystem _spriteSystem;
 
     public EntityUid? MapUid { get; private set; }
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
-    public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture, bool Blinks)> TrackedEntities = new();
+    public Dictionary<EntityCoordinates, NavMapTrackableComponent> TrackedEntities = new();
     public Dictionary<Vector2i, List<NavMapLine>> PowerCableNetwork = default!;
     public Dictionary<Vector2i, List<NavMapLine>>? FocusCableNetwork;
     public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
@@ -100,6 +102,7 @@ public sealed partial class NavMapControl : MapGridControl
         var cache = IoCManager.Resolve<IResourceCache>();
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
+        _spriteSystem = _entManager.System<SpriteSystem>();
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 16);
 
         RectClipContent = true;
@@ -401,7 +404,7 @@ public sealed partial class NavMapControl : MapGridControl
                     var rect = new UIBox2(position.X - float.Sqrt(MinimapScale) * f, position.Y - float.Sqrt(MinimapScale) * f, position.X + float.Sqrt(MinimapScale) * f, position.Y + float.Sqrt(MinimapScale) * f);
 
                     if (value.Texture != null)
-                        handle.DrawTextureRect(value.Texture, rect, value.Color);
+                        handle.DrawTextureRect(_spriteSystem.Frame0(value.Texture), rect, value.Color);
                     else
                         handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
                 }

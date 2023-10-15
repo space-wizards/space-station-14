@@ -114,6 +114,9 @@
       loadNodes:
         - output_hv
         - output_mv
+    - type: NavMapTrackable
+      color: Purple
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
 
 - type: entity
   name: P.A.C.M.A.N.-type portable generator
@@ -295,6 +298,9 @@
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
+    - type: NavMapTrackable
+      color: Purple
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
     - type: PowerSupplier
       # No ramping needed on this bugger.
       voltage: Apc

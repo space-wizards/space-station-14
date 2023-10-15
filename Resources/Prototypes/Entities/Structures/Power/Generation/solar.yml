@@ -39,6 +39,9 @@
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: output
+  - type: NavMapTrackable
+    color: Purple
+    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png    
   - type: Anchorable
   - type: Pullable
   - type: Electrified

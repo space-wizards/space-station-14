@@ -245,6 +245,10 @@
       hv:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: NavMapTrackable
+    color: Cyan
+    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png 
+    blinks: true
   - type: ActivatableUI
     key: enum.PowerMonitoringConsoleUiKey.Key
   - type: UserInterface

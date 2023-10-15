@@ -1,5 +1,6 @@
 using Content.Client.Power;
 using Content.Shared.Pinpointer;
+using Content.Shared.Power;
 using Robust.Shared.Map.Components;
 using System.Numerics;
 
@@ -7,13 +8,26 @@ namespace Content.Client.Pinpointer.UI;
 
 public sealed partial class NavMapControl
 {
+    private Dictionary<CableType, Color> _powerCableColors = new Dictionary<CableType, Color>
+    {
+        [CableType.HighVoltage] = Color.Orange,
+        [CableType.MediumVoltage] = Color.Yellow,
+        [CableType.Apc] = Color.LimeGreen,
+    };
+
+    private Dictionary<CableType, Vector2> _powerCableOffsets = new Dictionary<CableType, Vector2>
+    {
+        [CableType.HighVoltage] = Vector2.Zero,
+        [CableType.MediumVoltage] = new Vector2(-0.2f, -0.2f),
+        [CableType.Apc] = new Vector2(0.2f, 0.2f),
+    };
+
     public Dictionary<Vector2i, List<NavMapLine>> GetDecodedPowerCableChunks
         (Dictionary<Vector2i, NavMapChunkPowerCables> chunks,
         MapGridComponent grid,
         bool useDarkColors = false)
     {
         var decodedOutput = new Dictionary<Vector2i, List<NavMapLine>>();
-        var colorMap = useDarkColors ? PowerMonitoringHelper.DarkPowerCableColors : PowerMonitoringHelper.PowerCableColors;
 
         foreach ((var chunkOrigin, var chunk) in chunks)
         {
@@ -21,8 +35,10 @@ public sealed partial class NavMapControl
 
             foreach ((var cableType, var chunkMask) in chunk.CableData)
             {
-                var offset = PowerMonitoringHelper.PowerCableOffsets.TryGetValue(cableType, out var cableOffset) ? cableOffset : Vector2.Zero;
-                var color = colorMap.TryGetValue(cableType, out var cableColor) ? cableColor : Color.White;
+                Vector2 offset = _powerCableOffsets.TryGetValue(cableType, out offset) ? offset : Vector2.Zero;
+                Color color = _powerCableColors.TryGetValue(cableType, out color) ? color : Color.White;
+
+                color *= useDarkColors ? Color.DimGray : Color.White;
 
                 for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
                 {

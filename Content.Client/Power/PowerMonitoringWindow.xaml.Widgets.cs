@@ -10,6 +10,9 @@ namespace Content.Client.Power;
 
 public sealed partial class PowerMonitoringWindow
 {
+    private SpriteSpecifier.Texture _sourceIcon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/PowerMonitoring/source_arrow.png"));
+    private SpriteSpecifier.Texture _loadIconPath = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/PowerMonitoring/load_arrow.png"));
+
     private void UpdateAllConsoleEntries
         (BoxContainer masterContainer,
         PowerMonitoringConsoleEntry[] entries,
@@ -67,8 +70,8 @@ public sealed partial class PowerMonitoringWindow
             {
                 castChild.MainContainer.Visible = true;
 
-                UpdateEntrySourcesAndLoads(masterContainer, castChild.SourcesContainer, focusSources, PowerMonitoringHelper.SourceIconPath);
-                UpdateEntrySourcesAndLoads(masterContainer, castChild.LoadsContainer, focusLoads, PowerMonitoringHelper.LoadIconPath);
+                UpdateEntrySourcesAndLoads(masterContainer, castChild.SourcesContainer, focusSources, _sourceIcon);
+                UpdateEntrySourcesAndLoads(masterContainer, castChild.LoadsContainer, focusLoads, _loadIconPath);
             }
 
             else
@@ -105,7 +108,7 @@ public sealed partial class PowerMonitoringWindow
         button.PowerValue.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
     }
 
-    private void UpdateEntrySourcesAndLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, string iconPath)
+    private void UpdateEntrySourcesAndLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, SpriteSpecifier.Texture icon)
     {
         if (currentContainer == null)
             return;
@@ -145,7 +148,7 @@ public sealed partial class PowerMonitoringWindow
                 continue;
 
             if (castChild.Icon != null)
-                castChild.Icon.Texture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(iconPath)));
+                castChild.Icon.Texture = _spriteSystem.Frame0(icon);
 
             var entry = entries[child.GetPositionInParent()];
             var uid = _entManager.GetEntity(entry.NetEntity);

@@ -24,8 +24,12 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
 
+    private EntityUid? _owner;
     private EntityUid? _trackedEntity;
     private float? _nextScrollValue;
+
+    private Color _wallColor = new Color(102, 164, 217);
+    private Color _tileColor = new Color(30, 57, 67);
 
     public event Action<NetEntity?>? RequestPowerMonitoringUpdateAction;
 
@@ -36,6 +40,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         _entManager = IoCManager.Resolve<IEntityManager>();
         _gameTiming = IoCManager.Resolve<IGameTiming>();
         _spriteSystem = _entManager.System<SpriteSystem>();
+
+        _owner = owner;
 
         // Get grid uid
         if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
@@ -56,8 +62,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         ShowLVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.Apc);
 
         // Set colors
-        NavMap.TileColor = PowerMonitoringHelper.TileColor;
-        NavMap.WallColor = PowerMonitoringHelper.WallColor;
+        NavMap.TileColor = _tileColor;
+        NavMap.WallColor = _wallColor;
 
         // Set power monitoring update request action
         RequestPowerMonitoringUpdateAction += userInterface.RequestPowerMonitoringUpdate;
@@ -131,10 +137,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         }
 
         // Show monitor location
-        var monitor = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(PowerMonitoringHelper.CircleIconPath)));
-
-        if (monitorCoords != null)
-            NavMap.TrackedEntities.Add(monitorCoords.Value, (true, Color.Cyan, monitor, true));
+        if (monitorCoords != null && _entManager.TryGetComponent<NavMapTrackableComponent>(_owner, out var trackable))
+            NavMap.TrackedEntities[monitorCoords.Value] = trackable;
 
         // Update power status text
         TotalSources.Text = Loc.GetString("power-monitoring-window-value", ("value", totalSources));
@@ -170,27 +174,13 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (!NavMap.Visible)
             return;
 
-        var colorMap = useDarkColors ? PowerMonitoringHelper.DarkPowerIconColors : PowerMonitoringHelper.PowerIconColors;
-        var color = uid == _trackedEntity ? Color.White : colorMap[entry.Group];
-        var blinks = uid == _trackedEntity;
-        var iconPath = PowerMonitoringHelper.CircleIconPath;
-
-        switch (entry.Group)
-        {
-            case PowerMonitoringConsoleGroup.Generator:
-                iconPath = PowerMonitoringHelper.CircleIconPath; break;
-            case PowerMonitoringConsoleGroup.SMES:
-                iconPath = PowerMonitoringHelper.HexagonIconPath; break;
-            case PowerMonitoringConsoleGroup.Substation:
-                iconPath = PowerMonitoringHelper.SquareIconPath; break;
-            case PowerMonitoringConsoleGroup.APC:
-                iconPath = PowerMonitoringHelper.TriangleIconPath; break;
-        }
-
-        var icon = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(iconPath)));
-
         // We expect a single tracked entity at a given coordinate
-        NavMap.TrackedEntities[coords] = (true, color, icon, blinks);
+        if (_entManager.TryGetComponent<NavMapTrackableComponent>(uid, out var trackable))
+        {
+            trackable.Modulate = uid != _trackedEntity && useDarkColors ? Color.DimGray : Color.White;
+            trackable.Blinks = uid == _trackedEntity;
+            NavMap.TrackedEntities[coords] = trackable;
+        }
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
