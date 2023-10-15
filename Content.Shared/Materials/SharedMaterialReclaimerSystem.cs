@@ -15,8 +15,6 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Materials;
 
@@ -33,7 +31,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";

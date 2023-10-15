@@ -16,14 +16,14 @@
       brrt:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.15,-0.15,0.15,0.15"
+          bounds: "-0.23,-0.23,0.23,0.23"
         hard: false
         layer:
         - FullTileLayer
       collision:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"
+          bounds: "-0.25,-0.25,0.25,0.25"
         hard: true
         mask:
         - Impassable
@@ -114,6 +114,6 @@
   - type: DamageContacts
     damage:
       types:
-        Blunt: 20
-        Piercing: 20
-        Slash: 20
+        Blunt: 17
+        Piercing: 25
+        Slash: 33
