@@ -14,8 +14,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Diagnostics;
-using System.IO;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
@@ -26,8 +24,6 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly SpriteSystem _spriteSystem;
         private readonly IPrototypeManager _prototypes;
         private readonly IResourceCache _cache;
-
-        private bool _isSettledWidth = false;
 
         private const int AnalyzerHeight = 430;
         private const int AnalyzerWidth = 300;
