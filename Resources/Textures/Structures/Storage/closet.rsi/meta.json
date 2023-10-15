@@ -347,6 +347,7 @@
     {
       "name": "hydro_open"
     },
+    { "name": "icon" },
     {
       "name": "locked"
     },

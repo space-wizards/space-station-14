@@ -1,4 +1,16 @@
 - type: entity
+  id: LockerGeneric
+  parent: LockerBase
+  name: a locker
+  description: Tall box with a lock.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: tac
+    stateDoorOpen: tac_open
+    stateDoorClosed: tac_door
+
+- type: entity
   id: LockerBooze
   parent: LockerBase
   name: booze storage

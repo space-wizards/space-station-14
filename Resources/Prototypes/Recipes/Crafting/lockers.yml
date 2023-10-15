@@ -1,0 +1,10 @@
+- type: construction
+  name: locker
+  id: LockerGeneric
+  graph: LockerGeneric
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A locker for storing things. Requires no special access, can be configured with an Access Configurator.
+  icon: { sprite: Structures/Storage/closet.rsi, state: icon }
+  objectType: Structure

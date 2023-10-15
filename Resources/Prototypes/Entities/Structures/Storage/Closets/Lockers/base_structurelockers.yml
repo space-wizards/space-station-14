@@ -41,6 +41,16 @@
           SheetSteel1:
             min: 1
             max: 2
+  - type: Construction
+    graph: LockerBase
+    node: done
+    containers:
+    - entity_storage
+  - type: Reflect
+    reflects:
+    - Energy
+    reflectProb: 0.2
+    spread: 90
 
 - type: entity
   id: LockerBaseSecure
@@ -58,3 +68,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  # - type: Construction
+  #   graph: LockerBase
+  #   node: done
+  #   containers:
+  #   - entity_storage
