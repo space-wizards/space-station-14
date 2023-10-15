@@ -1174,9 +1174,6 @@
   - type: IconSmooth
     key: walls
     base: cobblebrick
-  - type: Construction
-    graph: CobblestoneWalls
-    node: cobblestoneWall
 
 - type: entity
   parent: WallCobblebrick
@@ -1203,9 +1200,6 @@
   - type: IconSmooth
     key: walls
     base: cobblebrick
-  - type: Construction
-    graph: CobblestoneWalls
-    node: basaltCobblestoneWall
     
 - type: entity
   parent: WallCobblebrick
@@ -1233,6 +1227,3 @@
   - type: IconSmooth
     key: walls
     base: cobblebrick
-  - type: Construction
-    graph: CobblestoneWalls
-    node: snowCobblestoneWall
