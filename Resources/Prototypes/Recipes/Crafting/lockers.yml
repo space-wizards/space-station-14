@@ -8,3 +8,14 @@
   description: A locker for storing things. Requires no special access, can be configured with an Access Configurator.
   icon: { sprite: Structures/Storage/closet.rsi, state: icon }
   objectType: Structure
+
+- type: construction
+  name: secure locker
+  id: LockerSecure
+  graph: LockerSecure
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A locker that is harder to break. Requires no special access, can be configured with an Access Configurator.
+  icon: { sprite: Structures/Storage/closet.rsi, state: icon }
+  objectType: Structure
