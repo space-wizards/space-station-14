@@ -155,7 +155,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         var messageString = "shared-solution-container-component-on-examine-main-text";
         if (examinableComponent.UseAltExamineText)
         {
-            messageString = "shared-solution-container-component-on-examine-empty-container-alt";
+            messageString = "shared-solution-container-component-on-examine-main-text-alt";
         }
 
         args.PushMarkup(Loc.GetString(messageString,
