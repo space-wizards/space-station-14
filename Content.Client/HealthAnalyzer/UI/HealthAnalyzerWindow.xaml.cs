@@ -11,8 +11,11 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Diagnostics;
+using System.IO;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
@@ -22,6 +25,7 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly IEntityManager _entityManager;
         private readonly SpriteSystem _spriteSystem;
         private readonly IPrototypeManager _prototypes;
+        private readonly IResourceCache _cache;
 
         private bool _isSettledWidth = false;
 
@@ -35,6 +39,7 @@ namespace Content.Client.HealthAnalyzer.UI
             _entityManager = IoCManager.Resolve<IEntityManager>();
             _spriteSystem = _entityManager.System<SpriteSystem>();
             _prototypes = IoCManager.Resolve<IPrototypeManager>();
+            _cache = IoCManager.Resolve<IResourceCache>();
         }
 
         public void Populate(HealthAnalyzerScannedUserMessage msg)
@@ -144,8 +149,16 @@ namespace Content.Client.HealthAnalyzer.UI
 
         private Texture GetTexture(string texture)
         {
-            var sprite = new SpriteSpecifier.Rsi(new("/Textures/Objects/Devices/health_analyzer.rsi"), texture);
-            return _spriteSystem.Frame0(sprite);
+            var rsiPath = new ResPath("/Textures/Objects/Devices/health_analyzer.rsi");
+            var rsiSprite = new SpriteSpecifier.Rsi(rsiPath, texture);
+
+            var rsi = _cache.GetResource<RSIResource>(rsiSprite.RsiPath).RSI;
+            if (!rsi.TryGetState(rsiSprite.RsiState, out var state))
+            {
+                rsiSprite = new SpriteSpecifier.Rsi(rsiPath, "unknown");
+            }
+
+            return _spriteSystem.Frame0(rsiSprite);
         }
 
         private static Label CreateDiagnosticItemLabel(string text)
