@@ -1,26 +1,18 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
-using Content.Server.Cargo.Systems;
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.UserInterface;
 using Content.Shared.Actions;
-using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Atmos.EntitySystems;
+namespace Content.Shared.Atmos.EntitySystems;
 
 [UsedImplicitly]
 public sealed class GasTankSystem : EntitySystem
@@ -69,7 +61,7 @@ public sealed class GasTankSystem : EntitySystem
 
     private void OnGasTankSetPressure(EntityUid uid, GasTankComponent component, GasTankSetPressureMessage args)
     {
-        var pressure = Math.Min(args.Pressure, component.MaxOutputPressure);
+        var pressure = Math.Min(args.Pressure, (float) component.MaxOutputPressure);
 
         component.OutputPressure = pressure;
 
@@ -110,7 +102,7 @@ public sealed class GasTankSystem : EntitySystem
     private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
     {
         if (args.IsInDetailsRange)
-            args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
+            args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round((double) (component.Air?.Pressure ?? 0)))));
         if (component.IsConnected)
             args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
         args.PushMarkup(Loc.GetString(component.IsValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
@@ -319,7 +311,7 @@ public sealed class GasTankSystem : EntitySystem
                 if(environment != null)
                     _atmosphereSystem.Merge(environment, component.Air);
 
-                _audioSys.Play(component.RuptureSound, Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, true, AudioParams.Default.WithVariation(0.125f));
+                _audioSys.Play((SoundSpecifier?) component.RuptureSound, Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, true, AudioParams.Default.WithVariation(0.125f));
 
                 QueueDel(component.Owner);
                 return;
