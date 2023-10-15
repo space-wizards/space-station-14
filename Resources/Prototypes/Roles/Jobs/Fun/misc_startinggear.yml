@@ -350,3 +350,10 @@
     back: SpearBone
     head: ClothingHeadHelmetBone
     shoes: ClothingShoesCult
+
+#Space pets
+- type: startingGear
+  id: SpacePet
+  equipment:
+    suitstorage: OxygenTankFilled
+    mask: ClothingMaskBreath

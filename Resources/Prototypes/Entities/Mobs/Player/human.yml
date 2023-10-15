@@ -79,3 +79,5 @@
     nameSegments:
     - names_ninja_title
     - names_ninja
+  - type: Internals
+    auto: true
