@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Shared.Actions;
 using Content.Shared.Atmos.Components;
@@ -14,7 +15,6 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
-[UsedImplicitly]
 public sealed class GasTankSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;

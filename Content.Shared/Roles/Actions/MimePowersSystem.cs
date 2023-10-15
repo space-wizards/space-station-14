@@ -1,5 +1,3 @@
-using Content.Server.Popups;
-using Content.Server.Speech.Muting;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
@@ -11,7 +9,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Abilities.Mime;
+namespace Content.Shared.Roles.Actions;
 
 public sealed class MimePowersSystem : EntitySystem
 {

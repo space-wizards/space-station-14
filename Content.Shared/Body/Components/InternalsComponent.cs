@@ -1,14 +1,15 @@
-﻿using System.Threading;
+﻿using Robust.Shared.GameStates;
+
 namespace Content.Server.Body.Components;
 
 /// <summary>
 /// Handles hooking up a mask (breathing tool) / gas tank together and allowing the Owner to breathe through it.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class InternalsComponent : Component
 {
-    [ViewVariables] public EntityUid? GasTankEntity { get; set; }
-    [ViewVariables] public EntityUid? BreathToolEntity { get; set; }
+    [ViewVariables] public EntityUid? GasTankEntity;
+    [ViewVariables] public EntityUid? BreathToolEntity;
 
     /// <summary>
     /// Toggle Internals delay (seconds) when the target is not you.
