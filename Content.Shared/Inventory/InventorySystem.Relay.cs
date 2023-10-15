@@ -24,11 +24,13 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(RelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeStripEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
+
+        // by-ref events
+        SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);
@@ -41,22 +43,24 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowHungerIconsComponent>>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowThirstIconsComponent>>(RelayInventoryEvent);
 
-        SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetStrippingVerbs);
+        SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetEquipmentVerbs);
     }
 
     protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent
     {
-        // Just so I don't have to update 20 morbillion events at once.
-        if (args.TargetSlots == SlotFlags.NONE)
-            return;
-
         var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this, args.TargetSlots);
+
+        // this copies the by-ref event
         var ev = new InventoryRelayedEvent<T>(args);
+
         while (containerEnumerator.MoveNext(out var container))
         {
             if (!container.ContainedEntity.HasValue) continue;
-            RaiseLocalEvent(container.ContainedEntity.Value, ev, broadcast: false);
+            RaiseLocalEvent(container.ContainedEntity.Value, ev);
         }
+
+        // and now we copy it back
+        args = ev.Args;
     }
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : IInventoryRelayEvent
@@ -69,11 +73,11 @@ public partial class InventorySystem
         while (containerEnumerator.MoveNext(out var container))
         {
             if (!container.ContainedEntity.HasValue) continue;
-            RaiseLocalEvent(container.ContainedEntity.Value, ev, broadcast: false);
+            RaiseLocalEvent(container.ContainedEntity.Value, ev);
         }
     }
 
-    private void OnGetStrippingVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<EquipmentVerb> args)
+    private void OnGetEquipmentVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
         // Automatically relay stripping related verbs to all equipped clothing.
 
@@ -112,7 +116,7 @@ public partial class InventorySystem
 /// </remarks>
 public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs
 {
-    public readonly TEvent Args;
+    public TEvent Args;
 
     public InventoryRelayedEvent(TEvent args)
     {

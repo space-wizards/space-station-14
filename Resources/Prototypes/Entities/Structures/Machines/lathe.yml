@@ -243,6 +243,7 @@
       - Signaller
       - SignalTrigger
       - VoiceTrigger
+      - Igniter
       - PowerCellMedium
       - PowerCellHigh
       - WeaponPistolCHIMP

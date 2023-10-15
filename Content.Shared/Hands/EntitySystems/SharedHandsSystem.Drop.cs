@@ -103,7 +103,7 @@ public abstract partial class SharedHandsSystem
         }
 
         var target = targetDropLocation.Value.ToMap(EntityManager, TransformSystem);
-        TransformSystem.SetWorldPosition(userXform, GetFinalDropCoordinates(uid, userXform.MapPosition, target));
+        TransformSystem.SetWorldPosition(itemXform, GetFinalDropCoordinates(uid, userXform.MapPosition, target));
         return true;
     }
 
