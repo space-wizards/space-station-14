@@ -508,10 +508,6 @@
     - state: qm_clipboard_pen
       map: ["qm_clipboard_pen"]
       visible: false
-    - state: qm_clipboard_penindicator
-      map: ["qm_clipboard_penindicator"]
-      shader: "unshaded"
-      visible: false
     - state: qm_clipboard_over
   - type: ContainerContainer
     containers:
