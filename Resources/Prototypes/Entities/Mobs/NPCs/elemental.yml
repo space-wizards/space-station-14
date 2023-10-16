@@ -198,7 +198,8 @@
     factions:
       - Passive
   - type: RadiationSource
-    intensity: 0.8
+    intensity: 2
+    slope: 0.3
   - type: Destructible
     thresholds:
     - trigger:
@@ -211,7 +212,7 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           UraniumOre1:
-            min: 4
+            min: 3
             max: 6
       - !type:DoActsBehavior
         acts: [ "Destruction" ]

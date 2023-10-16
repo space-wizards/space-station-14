@@ -9,7 +9,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Spreader;
@@ -19,12 +18,9 @@ namespace Content.Server.Spreader;
 /// </summary>
 public sealed class SpreaderSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-    private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(SpreadCooldownSeconds);
 
     /// <summary>
     /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
@@ -36,7 +32,7 @@ public sealed class SpreaderSystem : EntitySystem
     /// </summary>
     private Dictionary<EntityUid, Dictionary<string, int>> _gridUpdates = new();
 
-    private const float SpreadCooldownSeconds = 1;
+    public const float SpreadCooldownSeconds = 1;
 
     [ValidatePrototypeId<TagPrototype>]
     private const string IgnoredTag = "SpreaderIgnore";
@@ -46,8 +42,6 @@ public sealed class SpreaderSystem : EntitySystem
     {
         SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-
-        SubscribeLocalEvent<SpreaderGridComponent, EntityUnpausedEvent>(OnGridUnpaused);
 
         SubscribeLocalEvent<EdgeSpreaderComponent, EntityTerminatingEvent>(OnTerminating);
         SetupPrototypes();
@@ -87,11 +81,6 @@ public sealed class SpreaderSystem : EntitySystem
         }
     }
 
-    private void OnGridUnpaused(EntityUid uid, SpreaderGridComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdate += args.PausedTime;
-    }
-
     private void OnGridInit(GridInitializeEvent ev)
     {
         EnsureComp<SpreaderGridComponent>(ev.EntityUid);
@@ -111,19 +100,18 @@ public sealed class SpreaderSystem : EntitySystem
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
-        var curTime = _timing.CurTime;
-
         // Check which grids are valid for spreading
         var spreadGrids = EntityQueryEnumerator<SpreaderGridComponent>();
 
         _gridUpdates.Clear();
         while (spreadGrids.MoveNext(out var uid, out var grid))
         {
-            if (grid.NextUpdate > curTime)
+            grid.UpdateAccumulator -= frameTime;
+            if (grid.UpdateAccumulator > 0)
                 continue;
 
             _gridUpdates[uid] = _prototypeUpdates.ShallowClone();
-            grid.NextUpdate += SpreadCooldown;
+            grid.UpdateAccumulator += SpreadCooldownSeconds;
         }
 
         if (_gridUpdates.Count == 0)

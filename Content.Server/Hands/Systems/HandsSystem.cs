@@ -169,9 +169,9 @@ namespace Content.Server.Hands.Systems
 
             if (playerSession.AttachedEntity is not {Valid: true} player ||
                 !Exists(player) ||
-                player.IsInContainer() ||
+                ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
-                hands.ActiveHandEntity is not EntityUid throwEnt ||
+                hands.ActiveHandEntity is not { } throwEnt ||
                 !_actionBlockerSystem.CanThrow(player, throwEnt))
                 return false;
 
