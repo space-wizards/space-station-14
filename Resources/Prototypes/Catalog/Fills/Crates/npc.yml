@@ -30,6 +30,7 @@
         orGroup: MobCat
       - id: MobCatCaracal
         prob: 0.5
+        orGroup: MobCat
       - id: MobCatKitten
         prob: 0.5
         orGroup: MobCat
