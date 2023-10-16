@@ -73,7 +73,7 @@ public sealed partial class ChemistrySystem
     private void UseInjector(EntityUid target, EntityUid user, EntityUid injector, InjectorComponent component)
     {
         // Handle injecting/drawing for solutions
-        if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
+        if (component.ToggleState == SharedTransferToggleMode.Inject)
         {
             if (_solutions.TryGetInjectableSolution(target, out var injectableSolution))
             {
@@ -93,7 +93,7 @@ public sealed partial class ChemistrySystem
                     ("target", Identity.Entity(target, EntityManager))), injector, user);
             }
         }
-        else if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Draw)
+        else if (component.ToggleState == SharedTransferToggleMode.Draw)
         {
             // Draw from a bloodstream, if the target has that
             if (TryComp<BloodstreamComponent>(target, out var stream))
@@ -192,12 +192,12 @@ public sealed partial class ChemistrySystem
         string msg;
         switch (component.ToggleState)
         {
-            case SharedInjectorComponent.InjectorToggleMode.Inject:
-                component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Draw;
+            case SharedTransferToggleMode.Inject:
+                component.ToggleState = SharedTransferToggleMode.Draw;
                 msg = "injector-component-drawing-text";
                 break;
-            case SharedInjectorComponent.InjectorToggleMode.Draw:
-                component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Inject;
+            case SharedTransferToggleMode.Draw:
+                component.ToggleState = SharedTransferToggleMode.Inject;
                 msg = "injector-component-injecting-text";
                 break;
             default:
@@ -245,7 +245,7 @@ public sealed partial class ChemistrySystem
             }
 
             // Add an admin log, using the "force feed" log type. It's not quite feeding, but the effect is the same.
-            if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
+            if (component.ToggleState == SharedTransferToggleMode.Inject)
             {
                 _adminLogger.Add(LogType.ForceFeed,
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject {EntityManager.ToPrettyString(target):target} with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}");
@@ -256,7 +256,7 @@ public sealed partial class ChemistrySystem
             // Self-injections take half as long.
             actualDelay /= 2;
 
-            if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
+            if (component.ToggleState == SharedTransferToggleMode.Inject)
                 _adminLogger.Add(LogType.Ingestion, $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
         }
 
@@ -339,7 +339,7 @@ public sealed partial class ChemistrySystem
         if (_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution)
             && solution.Volume == 0)
         {
-            component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Draw;
+            component.ToggleState = SharedTransferToggleMode.Draw;
         }
     }
 
@@ -349,7 +349,7 @@ public sealed partial class ChemistrySystem
         if (_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution)
             && solution.AvailableVolume == 0)
         {
-            component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Inject;
+            component.ToggleState = SharedTransferToggleMode.Inject;
         }
     }
 

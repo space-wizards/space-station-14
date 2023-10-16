@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 
@@ -62,7 +63,7 @@ namespace Content.Server.Chemistry.Components
         [DataField("delay")]
         public float Delay = 5;
 
-        [DataField("toggleState")] private InjectorToggleMode _toggleState;
+        [DataField("toggleState")] private SharedTransferToggleMode _toggleState;
 
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the
@@ -70,7 +71,7 @@ namespace Content.Server.Chemistry.Components
         /// only ever be set to Inject
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public InjectorToggleMode ToggleState
+        public SharedTransferToggleMode ToggleState
         {
             get => _toggleState;
             set

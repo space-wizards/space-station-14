@@ -1,5 +1,7 @@
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using Content.Client.Chemistry.UI;
 
 namespace Content.Client.Chemistry.Components
 {
@@ -7,15 +9,15 @@ namespace Content.Client.Chemistry.Components
     /// Client behavior for injectors & syringes. Used for item status on injectors
     /// </summary>
     [RegisterComponent]
-    public sealed partial class InjectorComponent : SharedInjectorComponent
+    public sealed partial class InjectorComponent : SharedInjectorComponent, ITransferControlValues
     {
         [ViewVariables]
-        public FixedPoint2 CurrentVolume;
+        public FixedPoint2 CurrentVolume { get; set; }
         [ViewVariables]
-        public FixedPoint2 TotalVolume;
+        public FixedPoint2 TotalVolume { get; set; }
         [ViewVariables]
-        public InjectorToggleMode CurrentMode;
+        public SharedTransferToggleMode CurrentMode { get; set; }
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool UiUpdateNeeded;
+        public bool UiUpdateNeeded { get; set; }
     }
 }

@@ -1,19 +1,21 @@
 using Content.Client.Chemistry.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.FixedPoint;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chemistry.UI;
 
-public sealed class InjectorStatusControl : Control
+public sealed class TransferStatucControl : Control
 {
-    private readonly InjectorComponent _parent;
+    private readonly ITransferControlValues _parent;
     private readonly RichTextLabel _label;
 
-    public InjectorStatusControl(InjectorComponent parent)
+    public TransferStatucControl(ITransferControlValues parent)
     {
         _parent = parent;
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
@@ -37,8 +39,8 @@ public sealed class InjectorStatusControl : Control
         //Update current volume and injector state
         var modeStringLocalized = _parent.CurrentMode switch
         {
-            SharedInjectorComponent.InjectorToggleMode.Draw => Loc.GetString("injector-draw-text"),
-            SharedInjectorComponent.InjectorToggleMode.Inject => Loc.GetString("injector-inject-text"),
+            SharedTransferToggleMode.Draw => Loc.GetString("injector-draw-text"),
+            SharedTransferToggleMode.Inject => Loc.GetString("injector-inject-text"),
             _ => Loc.GetString("injector-invalid-injector-toggle-mode")
         };
         _label.SetMarkup(Loc.GetString("injector-volume-label",
@@ -47,3 +49,21 @@ public sealed class InjectorStatusControl : Control
             ("modeString", modeStringLocalized)));
     }
 }
+
+public struct TransferControlTranlates
+{
+    public string drawModeText;
+    public string injectModeText;
+    public string invalidModeText;
+    public string volumeLabelText;
+}
+
+public interface ITransferControlValues
+{
+    public FixedPoint2 CurrentVolume { get; set; }
+    public FixedPoint2 TotalVolume { get; set; }
+    public SharedTransferToggleMode CurrentMode { get; set; }
+    public bool UiUpdateNeeded { get; set; }
+}
+
+

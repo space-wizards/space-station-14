@@ -24,21 +24,15 @@ namespace Content.Shared.Chemistry.Components
         {
             public FixedPoint2 CurrentVolume { get; }
             public FixedPoint2 TotalVolume { get; }
-            public InjectorToggleMode CurrentMode { get; }
+            public SharedTransferToggleMode CurrentMode { get; }
 
             public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume,
-                InjectorToggleMode currentMode)
+                SharedTransferToggleMode currentMode)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;
                 CurrentMode = currentMode;
             }
-        }
-
-        public enum InjectorToggleMode : byte
-        {
-            Inject,
-            Draw
         }
     }
 }

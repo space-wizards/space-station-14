@@ -32,7 +32,7 @@ public sealed class InjectorSystem : EntitySystem
 
     private void OnItemInjectorStatus(EntityUid uid, InjectorComponent component, ItemStatusCollectMessage args)
     {
-        args.Controls.Add(new InjectorStatusControl(component));
+        args.Controls.Add(new TransferStatucControl(component));
     }
 
     private void OnHandleHyposprayState(EntityUid uid, HyposprayComponent component, ref ComponentHandleState args)
