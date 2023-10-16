@@ -2,7 +2,7 @@
   id: Recycler
   parent: BaseMachinePowered
   name: recycler
-  description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
+  description: A large crushing machine used to recycle small items inefficiently. Seems like you'd have to crawl to look inside it.
   components:
   - type: AmbientSound
     enabled: false
@@ -33,8 +33,8 @@
       conveyor:
         shape: !type:PolygonShape
           vertices:
-          - -0.55,-0.55
-          - 0.55,-0.55
+          - -0.35,-0.55
+          - 0.35,-0.55
           - 0.55,0.55
           - -0.55,0.55
         layer:
@@ -110,10 +110,14 @@
         maxVol: 0 #exists only for the overflow stuff on material reclaimer
   - type: MaterialStorage
   - type: Conveyor
+    speed: 0.2
   - type: Rotatable
   - type: DamageContacts
     damage:
       types:
-        Blunt: 17
-        Piercing: 25
-        Slash: 33
+        Blunt: 19
+        Piercing: 26
+        Slash: 36
+  - type: SlowContacts
+    sprintSpeedModifier: 0.1
+    walkSpeedModifier: 0.5

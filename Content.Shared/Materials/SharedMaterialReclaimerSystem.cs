@@ -42,6 +42,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
+
         SubscribeLocalEvent<MaterialReclaimerComponent, AttemptDamageContactEvent>(OnAttemptDamageContact);
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
@@ -54,7 +55,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (ev.NewMobState != MobState.Dead)
             return;
         TryComp<MaterialReclaimerComponent>(ev.Origin, out var reclaimer);
-        foreach (var entity in _entityLookupSystem.GetEntitiesInRange(ev.Target, 1, LookupFlags.Approximate | LookupFlags.Static))
+        foreach (var entity in _entityLookupSystem.GetEntitiesInRange(ev.Target, 0.4f, LookupFlags.Approximate | LookupFlags.Static))
         {
             if (HasComp<MaterialReclaimerComponent>(entity))
             {
@@ -139,19 +140,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
                 $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
         }
 
-        /*if (Timing.CurTime > component.NextSound)
-            component.Stream = _audio.PlayPvs(component.Sound, uid);
-        component.NextSound = Timing.CurTime + component.SoundCooldown;*/
-        //vvv Temporary audio fix vvv
-        if (Timing.CurTime > component.NextSound)
-        {
-            if (_net.IsServer)
-            {
-                //don't predict sound that client couldn't have played already
-                component.Stream = _audio.PlayPvs(component.Sound, uid);
-            }
-        }
-        //^^^ Temporary audio fix ^^^
+        
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
