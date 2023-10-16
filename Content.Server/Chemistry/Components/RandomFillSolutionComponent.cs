@@ -2,7 +2,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Chemistry.Components.SolutionManager;
+namespace Content.Server.Chemistry.Components;
 
 /// <summary>
 ///     Fills a solution container randomly using a weighted random prototype
