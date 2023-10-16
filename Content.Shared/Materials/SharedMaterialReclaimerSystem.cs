@@ -14,7 +14,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Content.Shared.Mobs.Systems;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Materials;
 
@@ -26,7 +25,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly INetManager _net = default!; //For audio fix
     [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -42,12 +40,8 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
-<<<<<<< HEAD
-
         SubscribeLocalEvent<MaterialReclaimerComponent, AttemptDamageContactEvent>(OnAttemptDamageContact);
-=======
         SubscribeLocalEvent<MaterialReclaimerComponent, MapInitEvent>(OnMapInit);
->>>>>>> upstream/master
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
@@ -149,16 +143,12 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
                 $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
         }
 
-<<<<<<< HEAD
-        
-=======
         if (Timing.CurTime > component.NextSound)
         {
             component.Stream = _audio.PlayPredicted(component.Sound, uid, user);
 
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
->>>>>>> upstream/master
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
