@@ -9,9 +9,11 @@ machine-upgrade-not-upgraded = Параметр [color=yellow]{ $upgraded }[/col
 machine-part-name-capacitor = Конденсатор
 machine-part-name-manipulator = Манипулятор
 machine-part-name-matter-bin = Ёмкость материи
+machine-part-name-power-cell = Батарея
 upgrade-power-draw = потребление энергии
 upgrade-max-charge = максимальный запас энергии
 upgrade-power-supply = производство энергии
+upgrade-power-supply-ramping = постепенное изменение мощности
 two-way-lever-left = Вы сдвигаете рычаг влево
 two-way-lever-right = Вы сдвигаете рычаг вправо
 two-way-lever-cant = Рычаг не может быть сдвинут в эту сторону!
