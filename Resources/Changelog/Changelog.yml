@@ -1,13 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'You can now construct chain link fencing. Bullets pass through it,
-      it''s very slowly vaultable, and you can construct gates. Expect to see it mapped
-      eventually.', type: Add}
-  id: 4510
-  time: '2023-08-10T14:16:26.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Liquid plasma rivers now spawn on snow planets (you may have noticed
       foreshadowing from the planet background sprites). They''re just as dangerous
       as lava, so be careful.', type: Add}
@@ -2944,3 +2937,8 @@ Entries:
   - {message: Secure crates are now weldable!, type: Fix}
   id: 5009
   time: '2023-10-16T05:27:23.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Behonkers are fixed (in combat use right click to fire laser), type: Fix}
+  id: 5010
+  time: '2023-10-16T05:29:14.0000000+00:00'
