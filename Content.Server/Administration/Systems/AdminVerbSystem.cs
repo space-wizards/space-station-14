@@ -59,6 +59,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -357,7 +358,8 @@ namespace Content.Server.Administration.Systems
                         var message = ExamineSystemShared.InRangeUnOccluded(args.User, args.Target)
                             ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
                             : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
-                        args.Target.PopupMessage(args.User, message);
+                        
+                        _popup.PopupEntity(message, args.Target, args.User);
                     }
                 };
                 args.Verbs.Add(verb);
