@@ -162,6 +162,36 @@
         },
         {
             "name": "rock_sand_west"
+        },
+        {
+            "name": "rock_chromite"
+        },
+        {
+            "name": "rock_chromite_south"
+        },
+        {
+            "name": "rock_chromite_east"
+        },
+        {
+            "name": "rock_chromite_north"
+        },
+        {
+            "name": "rock_chromite_west"
+        },
+        {
+            "name": "rock_andesite"
+        },
+        {
+            "name": "rock_andesite_south"
+        },
+        {
+            "name": "rock_andesite_east"
+        },
+        {
+            "name": "rock_andesite_north"
+        },
+        {
+            "name": "rock_andesite_west"
         }
     ]
 }
