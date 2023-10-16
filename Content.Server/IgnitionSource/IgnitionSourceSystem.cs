@@ -48,7 +48,7 @@ public sealed class IgnitionSourceSystem : EntitySystem
             if (xform.GridUid is { } gridUid)
             {
                 var position = _transform.GetGridOrMapTilePosition(uid, xform);
-                _atmosphere.HotspotExpose(gridUid, position, comp.Temperature, 50, source, true);
+                _atmosphere.HotspotExpose(gridUid, position, comp.Temperature, 50, uid, true);
             }
         }
     }
