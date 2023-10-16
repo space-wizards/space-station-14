@@ -4,7 +4,7 @@ stamp-component-stamped-name-captain = Капитан
 stamp-component-stamped-name-centcom = Центком
 stamp-component-stamped-name-chaplain = Священник
 stamp-component-stamped-name-clown = Клоун
-stamp-component-stamped-name-cmo = Главврач
+stamp-component-stamped-name-cmo = Главный врач
 stamp-component-stamped-name-denied = ОТКАЗАНО
 stamp-component-stamped-name-approved = ОДОБРЕНО
 stamp-component-stamped-name-hop = Глава персонала
@@ -15,3 +15,7 @@ stamp-component-stamped-name-warden = Смотритель
 stamp-component-stamped-name-trader = Торговец
 stamp-component-stamped-name-syndicate = Синдикат
 stamp-component-stamped-name-ce = Старший инженер
+stamp-component-stamped-name-iaa = Агент внутренних дел
+stamp-component-stamped-name-legal = Юридический департамент
+stamp-component-stamped-name-psychologist = Психолог
+

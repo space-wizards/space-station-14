@@ -392,6 +392,26 @@
 
 - type: entity
   parent: BasePDA
+  id: IAAPDA
+  name: internal affairs agent PDA
+  description: Corporation and profit are best friends.
+  components:
+  - type: Pda
+    id: IAAIDCard
+    state: pda-iaa
+    penSlot:
+      startingItem: CyberPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#50645c"
+  - type: Icon
+    state: pda-iaa
+
+- type: entity
+  parent: BasePDA
   id: JanitorPDA
   name: janitor PDA
   description: Smells like bleach.
@@ -403,6 +423,27 @@
     borderColor: "#5D2D56"
   - type: Icon
     state: pda-janitor
+
+- type: entity
+  parent: BasePDA
+  id: CoronerPDA
+  name: coroner PDA
+  description: Smells like mold and cold and everything inbetween.
+  components:
+  - type: Pda
+    id: CoronerIDCard
+    state: pda-coroner
+  - type: PdaBorderColor
+    borderColor: "#597789"
+  - type: Icon
+    state: pda-coroner
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: BasePDA
@@ -615,6 +656,21 @@
     accentVColor: "#949137"
   - type: Icon
     state: pda-warden
+
+- type: entity
+  parent: BasePDA
+  id: BlueShieldPDA
+  name: blue shield PDA
+  description: For when it is that time of the day to show cartoons to a bored head.
+  components:
+  - type: Pda
+    id: BlueShieldIDCard
+    state: pda-blueshield
+  - type: PdaBorderColor
+    borderColor: "#38507D"
+    accentVColor: "#dfdfdf"
+  - type: Icon
+    state: pda-blueshield
 
 - type: entity
   parent: BasePDA
@@ -914,6 +970,22 @@
     accentVColor: "#8900c9"
   - type: Icon
     state: pda-seniorresearcher
+
+- type: entity
+  parent: BasePDA
+  id: RoboPDA
+  name: RoboPDA
+  description: You can never know if there's a rogue ai inside. Hopefully, there's none.
+  components:
+  - type: Pda
+    id: RoboticistIDCard
+    state: pda-roboticist
+  - type: PdaBorderColor
+    borderColor: "#484848"
+    accentHColor: "#8b2400"
+    accentVColor: "#8b2400"
+  - type: Icon
+    state: pda-roboticist
 
 - type: entity
   parent: BasePDA

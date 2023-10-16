@@ -1460,8 +1460,10 @@ namespace Content.Client.Preferences.UI
                 };
                 var jobIcon = protoMan.Index<StatusIconPrototype>(proto.Icon);
                 icon.Texture = jobIcon.Icon.Frame0();
+				
+				var jobName = proto.SponsorOnly ? proto.LocalizedName + " ★" : proto.LocalizedName;
 
-                Setup(items, proto.LocalizedName, 200, proto.LocalizedDescription, icon);
+                Setup(items, jobName, 200, proto.LocalizedDescription, icon);
             }
         }
 

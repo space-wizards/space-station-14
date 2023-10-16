@@ -759,3 +759,63 @@
     - state: idseniorofficer
   - type: PresetIdCard
     job: SeniorOfficer
+
+- type: entity
+  parent: PassengerIDCard
+  id: PrisonerIDCard
+  name: prisoner ID card
+  components:
+  - type: PresetIdCard
+    job: Prisoner
+  - type: Sprite
+    layers:
+    - state: orange
+    - state: idprisoner
+
+- type: entity
+  parent: PassengerIDCard
+  id: RoboticistIDCard
+  name: roboticist ID card
+  components:
+  - type: PresetIdCard
+    job: Roboticist
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idroboticist
+
+- type: entity
+  parent: PassengerIDCard
+  id: IAAIDCard
+  name: internal affairs agent ID card
+  components:
+  - type: PresetIdCard
+    job: IAA
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idiaa
+
+- type: entity
+  parent: PassengerIDCard
+  id: BlueShieldIDCard
+  name: blue shield officer ID card
+  components:
+  - type: PresetIdCard
+    job: BlueShield
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idblueshield
+
+- type: entity
+  parent: PassengerIDCard
+  id: CoronerIDCard
+  name: coroner ID card
+  components:
+  - type: PresetIdCard
+    job: Coroner
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcoroner

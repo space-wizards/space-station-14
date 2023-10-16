@@ -28,6 +28,7 @@
   - Reporter
   - Zookeeper
   - ServiceWorker
+  - Prisoner
 
 - type: department
   id: Command
@@ -41,6 +42,8 @@
   - HeadOfPersonnel
   - HeadOfSecurity
   - ResearchDirector
+  - IAA
+  - BlueShield
 
 - type: department
   id: Engineering
@@ -65,6 +68,7 @@
   - Psychologist
   - Paramedic
   - SeniorPhysician
+  - Coroner
 
 - type: department
   id: Security
@@ -75,6 +79,7 @@
   - SecurityCadet
   - SecurityOfficer
   - SeniorOfficer
+  - Brigmedic
   - Detective
   - Warden
 
@@ -85,6 +90,7 @@
   roles:
   - ResearchDirector
   - SeniorResearcher
+  - Roboticist
   - Scientist
   - ResearchAssistant
 
@@ -97,3 +103,9 @@
   - Reporter
   - Zookeeper
   - Psychologist
+  - Brigmedic
+  - Roboticist
+  - IAA
+  - Prisoner
+  - BlueShield
+  - Coroner

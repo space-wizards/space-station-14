@@ -6,6 +6,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Loadout;
 using Content.Shared.Inventory;
 using Robust.Shared.Prototypes;
+using Content.Shared.Roles;
 using Content.Shared.Ganimed.SponsorManager;
 
 namespace Content.Server.Loadout;
@@ -32,6 +33,9 @@ public sealed class LoadoutSystem : EntitySystem
 		int loadoutMax = !(ev.Player is null) && !(ev.Player.ConnectedClient is null) 
 			&& _sponsorManager.AllowSponsor(ev.Player)
 				? 20 : 14;
+		
+		if (ev.JobId is null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job) || !job.DoLoadout)
+			return;
 		
 		foreach (var loadoutId in ev.Profile.LoadoutPreferences)
         {

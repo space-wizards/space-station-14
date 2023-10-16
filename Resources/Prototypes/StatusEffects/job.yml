@@ -381,3 +381,24 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: SeniorResearcher
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconCoroner
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: Coroner
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconBlueShield
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: BlueShield
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconIAA
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: IAA

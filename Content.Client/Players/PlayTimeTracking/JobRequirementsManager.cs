@@ -11,6 +11,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Ganimed.SponsorManager;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
@@ -22,6 +23,7 @@ public sealed class JobRequirementsManager
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+	[Dependency] private readonly SponsorManager _sponsorManager = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
     private readonly List<string> _roleBans = new();
@@ -83,8 +85,17 @@ public sealed class JobRequirementsManager
     public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
+		
+		if (_sponsorManager.IsHost(_playerManager.LocalPlayer?.Session))
+			return true;
 
-        if (_roleBans.Contains($"Job:{job.ID}"))
+        if (job.SponsorOnly && !_sponsorManager.AllowSponsor(_playerManager.LocalPlayer?.Session))
+		{
+			reason = FormattedMessage.FromUnformatted(Loc.GetString("sponsor-only"));
+			return false;
+		}
+		
+		if (_roleBans.Contains($"Job:{job.ID}"))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;

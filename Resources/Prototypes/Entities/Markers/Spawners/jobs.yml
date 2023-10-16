@@ -643,3 +643,63 @@
     layers:
       - state: green
       - state: zookeeper
+
+- type: entity
+  id: SpawnPointPrisoner
+  parent: SpawnPointJobBase
+  name: prisoner
+  components:
+  - type: SpawnPoint
+    job_id: Prisoner
+  - type: Sprite
+    layers:
+      - state: green
+      - state: zookeeper
+
+- type: entity
+  id: SpawnPointRoboticist
+  parent: SpawnPointJobBase
+  name: roboticist
+  components:
+  - type: SpawnPoint
+    job_id: Roboticist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: zookeeper
+
+- type: entity
+  id: SpawnPointIAA
+  parent: SpawnPointJobBase
+  name: IAA
+  components:
+  - type: SpawnPoint
+    job_id: Roboticist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: zookeeper
+
+- type: entity
+  id: SpawnPointCoroner
+  parent: SpawnPointJobBase
+  name: coroner
+  components:
+  - type: SpawnPoint
+    job_id: Coroner
+  - type: Sprite
+    layers:
+      - state: green
+      - state: zookeeper
+
+- type: entity
+  id: SpawnPointBlueShield
+  parent: SpawnPointJobBase
+  name: coroner
+  components:
+  - type: SpawnPoint
+    job_id: BlueShield
+  - type: Sprite
+    layers:
+      - state: green
+      - state: zookeeper

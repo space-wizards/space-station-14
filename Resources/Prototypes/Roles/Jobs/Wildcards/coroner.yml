@@ -1,0 +1,30 @@
+- type: job
+  id: Coroner
+  name: job-name-coroner
+  description: job-description-coroner
+  playTimeTracker: JobCoroner
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 18000 #5 hrs
+  startingGear: CoronerGear
+  icon: "JobIconCoroner"
+  supervisors: job-supervisors-cmo
+  access:
+  - Medical
+  - Maintenance
+  sponsorOnly: true
+
+- type: startingGear
+  id: CoronerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoroner
+    back: ClothingBackpackMedicalFilled
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesLatex
+    outerClothing: ClothingOuterCoatLabCoroner
+    id: CoronerPDA
+    ears: ClothingHeadsetMedical
+  innerclothingskirt: ClothingUniformJumpskirtCoroner
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled

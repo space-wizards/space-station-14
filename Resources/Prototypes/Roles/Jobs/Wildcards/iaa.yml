@@ -1,0 +1,52 @@
+- type: job
+  id: IAA
+  name: job-name-iaa
+  description: job-description-iaa
+  playTimeTracker: JobIAA
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Command
+    time: 72000
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 36000 #10 hours
+  - !type:RoleTimeRequirement
+    role: JobLawyer
+    time: 18000 #5 hours
+  startingGear: IAAGear
+  icon: "JobIconIAA"
+  supervisors: job-supervisors-centcom
+  weight: 10
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  canBeAntag: false
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+  access:
+  - Service
+  - Brig
+  - Maintenance
+  - Command
+  - External
+  sponsorOnly: true
+
+- type: startingGear
+  id: IAAGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerGood
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesBootsLaceup
+    id: IAAPDA
+    eyes: ClothingEyesGlassesSunglasses
+    neck: ClothingNeckLawyerbadge
+    ears: ClothingHeadsetIAA
+    pocket1: RubberStampIAA
+  inhand:
+    right hand: BriefcaseBrownLegalFilled
+  innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

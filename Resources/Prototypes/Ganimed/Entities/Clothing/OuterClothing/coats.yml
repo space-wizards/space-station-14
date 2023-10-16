@@ -37,3 +37,57 @@
     sprite: Ganimed/Clothing/OuterClothing/nightdress.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/OuterClothing/nightdress.rsi
+
+- type: entity
+  parent: ClothingOuterCoatLab
+  id: ClothingOuterCoatLabBrigmedic
+  name: brig lab coat
+  description: A high-sanity white clothing where it can easily be stained with red.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Coats/labcoat_brigmedic.rsi
+    heldPrefix: open
+    state: icon-open
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Coats/labcoat_brigmedic.rsi
+    equippedPrefix: open
+
+
+- type: entity
+  parent: ClothingOuterCoatLab
+  id: ClothingOuterCoatLabCoroner
+  name: coroner lab coat
+  description: A slightly sturdier than usual lab coat made not for the laboratories, but for the wet basements.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Coats/labcoat_coroner.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Coats/labcoat_coroner.rsi
+
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterBlueShield
+  name: blue shield heavy coat
+  description: Indeed quite heavy, it is mostly filled with sturdy synthetic nanofibers and works well to protect you from a bullet just as much as to protect you from the harsh winter. Bonus points for the extra fluffiness.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Coats/coatblueshield.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Coats/coatblueshield.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.7
+        Brute: 0.7
+        Piercing: 0.75
+        Radiation: 0.7
+        Heat: 0.7
+        Caustic: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: StaminaProtection
+    coefficient: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9

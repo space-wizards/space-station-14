@@ -26,3 +26,14 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesPrisoner
+  name: prisoner's shoes
+  description: Sturdy orange leather shoes that minimize injury for the wearer. But not for its victims.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/chef.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/chef.rsi

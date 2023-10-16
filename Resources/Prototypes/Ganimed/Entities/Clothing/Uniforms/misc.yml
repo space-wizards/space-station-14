@@ -30,3 +30,63 @@
     sprite: Ganimed/Clothing/Uniforms/capformaldress.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/capformaldress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCoroner
+  name: coroner jumpsuit
+  description: A special modification of the medical doctor uniform. Its wearer can be easily denoted as a trained post-mortem professional.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/coroner.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/coroner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtCoroner
+  name: coroner jumpskirt
+  description: A special modification of the medical doctor uniform. Its wearer can be easily denoted as a trained post-mortem professional.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/coroner.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/coroner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBlueShield
+  name: blueshield jumpsuit
+  description: A high-tech tactical modification of the standart-issue security uniform in blue colors. For the most professional of the bodyguards out there.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.85
+        Piercing: 0.85
+  - type: StaminaProtection
+    coefficient: 0.9
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtBlueShield
+  name: blueshield jumpskirt
+  description: A high-tech tactical modification of the standart-issue security uniform in blue colors. For the most professional of the bodyguards out there.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blueshield.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/Jumpskirt/blueshield.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.85
+        Piercing: 0.85
+  - type: StaminaProtection
+    coefficient: 0.9

@@ -2,7 +2,7 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesChef
   name: chef shoes
-  description: Sturdy shoes that minimize injury from falling objects or knives.
+  description: Sturdy shoes that minimize injury from falling objects or knives. No, they are not from a prison.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Specific/chef.rsi

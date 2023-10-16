@@ -10,7 +10,9 @@
          amount: 2
        - id: ClothingUniformJumpskirtPrisoner
          amount: 2
-       - id: ClothingShoesColorBlack
+       - id: ClothingShoesPrisoner
+         amount: 2
+       - id: ClothingGlovesColorOrange
          amount: 2
        - id: ClothingMaskMuzzle
 

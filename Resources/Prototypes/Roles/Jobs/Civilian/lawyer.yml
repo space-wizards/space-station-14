@@ -6,13 +6,19 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 14400 #4 hours
   startingGear: LawyerGear
   icon: "JobIconLawyer"
-  supervisors: job-supervisors-hop
+  supervisors: job-supervisors-iaa
   access:
   - Service
   - Brig
   - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: LawyerGear
@@ -24,7 +30,7 @@
     ears: ClothingHeadsetSecurity
     # TODO add copy of space law
   inhand:
-    right hand: BriefcaseBrownFilled
+    right hand: BriefcaseBrownLegalFilled
   innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

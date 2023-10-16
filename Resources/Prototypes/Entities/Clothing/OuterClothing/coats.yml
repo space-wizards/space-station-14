@@ -129,6 +129,20 @@
         Caustic: 0.75
 
 - type: entity
+  parent: ClothingOuterCoatLab
+  id: ClothingOuterCoatLabOpen
+  name: lab coat
+  description: A suit that protects against minor chemical spills.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat.rsi
+    heldPrefix: open
+    state: icon-open
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat.rsi
+    equippedPrefix: open
+
+- type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabChem
   name: chemist lab coat

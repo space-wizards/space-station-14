@@ -1,0 +1,20 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesBlueShield
+  name: blue shield sunglasses
+  description: Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Special modifications may prove useful for blue shield officers.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Eyes/blueshieldglasses.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Eyes/blueshieldglasses.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: GuideHelp
+    guides:
+    - Security

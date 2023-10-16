@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretBlueShield
+  name: blue shield beret
+  description: A navy-style beret with a small depiction of a white shield. It is an honor to be with the blue shields. Take it as such.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Head/Hats/beret_blueshield.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Head/Hats/beret_blueshield.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

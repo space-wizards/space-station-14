@@ -10,6 +10,18 @@
         amount: 3
 
 - type: entity
+  id: BriefcaseBrownLegalFilled
+  name: brown briefcase
+  parent: BriefcaseBrown
+  suffix: Filled, Legal
+  components:
+  - type: StorageFill
+    contents:
+      - id: RubberStampLegal
+      - id: Paper
+        amount: 3
+
+- type: entity
   id: BriefcaseSyndieSniperBundleFilled
   name: brown briefcase
   parent: BriefcaseSyndie

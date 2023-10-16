@@ -545,6 +545,34 @@
     state: stamp-cap
 
 - type: entity
+  name: iaa's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampIAA
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-iaa
+    stampedColor: "#508e6e"
+    stampState: "paper_stamp-iaa"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-iaa
+
+- type: entity
+  name: legal department rubber stamp
+  parent: RubberStampBase
+  id: RubberStampLegal
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-legal
+    stampedColor: "#30b680"
+    stampState: "paper_stamp-legal"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-legal
+
+- type: entity
   name: CentCom rubber stamp
   parent: RubberStampBase
   id: RubberStampCentcom

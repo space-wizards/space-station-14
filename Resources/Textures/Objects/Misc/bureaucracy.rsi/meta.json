@@ -106,6 +106,12 @@
       "name": "paper_stamp-chaplain"
     },
     {
+      "name": "paper_stamp-legal"
+    },
+    {
+      "name": "paper_stamp-iaa"
+    },
+    {
       "name": "paper_stamp-clown"
     },
     {
@@ -250,6 +256,12 @@
     },
     {
       "name": "stamp-centcom"
+    },
+    {
+      "name": "stamp-iaa"
+    },
+    {
+      "name": "stamp-legal"
     },
     {
       "name": "stamp-chaplain"

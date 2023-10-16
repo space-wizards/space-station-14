@@ -110,3 +110,14 @@ ent-PunPunIDCard = ID карта Пун Пуна
 ent-NukieAgentIDCard = { ent-PassengerIDCard.desc }
     .desc = { ent-PassengerIDCard.desc }
 	.suffix = Ядерный оперативник
+ent-PrisonerIDCard = ID карта заключённого
+    .desc = { ent-PassengerIDCard.desc }
+ent-IAAIDCard = ID карта агента внутренних дел
+    .desc = { ent-IDCardStandard.desc }
+ent-RoboticistIDCard = ID карта робототехника
+    .desc = { ent-IDCardStandard.desc }
+ent-CoronerIDCard = ID карта патологоанатома
+    .desc = { ent-IDCardStandard.desc }
+ent-BlueShieldIDCard = ID карта офицера синего щита
+    .desc = { ent-IDCardStandard.desc }
+

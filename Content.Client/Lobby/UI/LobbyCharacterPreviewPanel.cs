@@ -178,7 +178,10 @@ namespace Content.Client.Lobby.UI
             foreach (var loadoutId in profile.LoadoutPreferences)
             {
 
-                if (!protoMan.TryIndex<LoadoutPrototype>(loadoutId, out var loadout))
+                if (!(highPriorityJobId is null) && (!protoMan.TryIndex<JobPrototype>(highPriorityJobId, out var job) || !job.DoLoadout))
+					return;
+				
+				if (!protoMan.TryIndex<LoadoutPrototype>(loadoutId, out var loadout))
                     continue;
 
                 var isWhitelisted = loadout.WhitelistJobs != null &&

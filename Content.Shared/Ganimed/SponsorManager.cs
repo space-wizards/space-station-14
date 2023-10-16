@@ -9,10 +9,10 @@ public sealed class SponsorManager
 {
     private Dictionary<string, DateTime> sponsors =
 		new Dictionary<string, DateTime>(){
-			{"Laastrog", new DateTime(2023, 08, 15)},
+		new Dictionary<string, DateTime>(){
 			{"Swaiper5", new DateTime(2023, 09, 26)},
 			{"Mexanik78", new DateTime(2023, 10, 13)},
-			{"localhost@JoeGenero", new DateTime(2023, 10, 07)}
+			{"Vixen", new DateTime(2023, 10, 17)}
 		};
 
     public bool IsSponsor(ICommonSession? session)
