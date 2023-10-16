@@ -7,6 +7,7 @@ using Content.Shared.Inventory;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Physics;
+
 public sealed class WeightSystem : EntitySystem
 {
     /// <summary>
