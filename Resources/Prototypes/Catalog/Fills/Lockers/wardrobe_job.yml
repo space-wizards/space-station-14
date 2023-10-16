@@ -12,7 +12,7 @@
          amount: 2
        - id: ClothingShoesPrisoner
          amount: 2
-       - id: ClothingGlovesColorOrange
+       - id: ClothingHandsGlovesColorOrange
          amount: 2
        - id: ClothingMaskMuzzle
 
