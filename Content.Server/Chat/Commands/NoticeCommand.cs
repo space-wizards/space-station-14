@@ -38,7 +38,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().ChatMessageToOne(ChatChannel.Emotes, message, message, EntityUid.Invalid, false, player.ConnectedClient, recordReplay: false);
+            IoCManager.Resolve<IChatManager>().ChatMessageToOne(ChatChannel.Visual, message, message, EntityUid.Invalid, false, player.ConnectedClient, recordReplay: false);
         }
     }
 }
