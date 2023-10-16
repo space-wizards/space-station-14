@@ -46,6 +46,6 @@
     pocket1: RubberStampIAA
   inhand:
     - BriefcaseBrownLegalFilled
-  innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
+  innerClothingskirt: ClothingUniformJumpskirtLawyerBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

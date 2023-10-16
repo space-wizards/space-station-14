@@ -58,3 +58,5 @@ marking-LizardFrillsHood-frills_hood = Унатх, воротник (Капюш�
 marking-LizardFrillsHood = Унатх, воротник (Капюшон)
 marking-LizardHornsKoboldEars-horns_kobold_ears = Унатх, рожки (Кобольд)
 marking-LizardHornsKoboldEars = Унатх, рожки (Кобольд)
+marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Унатх, ушки (Кобольд)
+marking-LizardHornsFloppyKoboldEars = Унатх, ушки (Кобольд)

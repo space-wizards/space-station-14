@@ -25,6 +25,6 @@
     outerClothing: ClothingOuterCoatLabCoroner
     id: CoronerPDA
     ears: ClothingHeadsetMedical
-  innerclothingskirt: ClothingUniformJumpskirtCoroner
+  innerClothingskirt: ClothingUniformJumpskirtCoroner
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

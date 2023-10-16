@@ -7,3 +7,5 @@ generic-unknown = неизвестно
 generic-unknown-title = Неизвестно
 generic-error = ошибка
 generic-invalid = недействительно
+generic-hours = часов
+generic-playtime-title = Игровое время
