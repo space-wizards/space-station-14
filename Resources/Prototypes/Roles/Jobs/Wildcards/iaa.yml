@@ -32,7 +32,6 @@
   - Maintenance
   - Command
   - External
-  sponsorOnly: true
 
 - type: startingGear
   id: IAAGear

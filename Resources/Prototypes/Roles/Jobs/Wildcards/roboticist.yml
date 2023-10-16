@@ -13,7 +13,6 @@
   access:
   - Research
   - Maintenance
-  sponsorOnly: true
 
 - type: startingGear
   id: RoboticistGear

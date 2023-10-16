@@ -7,7 +7,6 @@
   icon: "JobIconPrisoner"
   supervisors: job-supervisors-self
   doLoadout: false
-  sponsorOnly: true
 
 - type: startingGear
   id: PrisonerGear
