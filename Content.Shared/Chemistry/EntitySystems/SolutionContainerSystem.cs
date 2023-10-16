@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Examine;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
@@ -15,7 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Chemistry.EntitySystems;
+namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
 /// This event alerts system that the solution was changed
@@ -38,14 +36,12 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 [UsedImplicitly]
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
-    [Dependency]
-    private readonly ChemicalReactionSystem _chemistrySystem = default!;
+    [Dependency] private readonly ChemicalReactionSystem _chemistrySystem = default!;
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-    [Dependency]
-    private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ExamineSystem _examine = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
 
     public override void Initialize()
     {
@@ -145,8 +141,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         if (!_prototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
         {
-            Logger.Error(
-                $"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
+            Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
             return;
         }
 
@@ -646,7 +641,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         var removedSolution = new Solution();
 
         // RemoveReagent does a RemoveSwap, meaning we don't have to copy the list if we iterate it backwards.
-        for (var i = solution.Contents.Count-1; i >= 0; i--)
+        for (var i = solution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagent, _) = solution.Contents[i];
             var removedQuantity = solution.RemoveReagent(reagent, quantity);
@@ -685,7 +680,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(uid);
         RaiseLocalEvent(uid, ref getMixableSolutionAttempt);
-        if(getMixableSolutionAttempt.MixedSolution != null)
+        if (getMixableSolutionAttempt.MixedSolution != null)
         {
             solution = getMixableSolutionAttempt.MixedSolution;
             return true;

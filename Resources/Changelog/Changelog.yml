@@ -1,85 +1,4 @@
 Entries:
-- author: emogarbage
-  changes:
-  - {message: Re-sprited grappling gun per artist request., type: Tweak}
-  id: 4504
-  time: '2023-08-10T06:16:57.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Advanced laser guns are now 30 size, like the antique laser gun.',
-    type: Tweak}
-  - {message: Advanced laser guns recharge 25% slower than before., type: Tweak}
-  id: 4505
-  time: '2023-08-10T07:27:02.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Obstacles to deter hackers can now be added to airlocks., type: Add}
-  - {message: Security and Atmospherics airlocks start with a moderate level of protection.
-      Command airlocks start with an even higher level of security., type: Add}
-  id: 4506
-  time: '2023-08-10T08:33:04.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Syndicate are no longer interested in stealing Cargo's request computer
-      boards., type: Remove}
-  id: 4507
-  time: '2023-08-10T08:34:38.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: 'Added an electrical disruption kit to syndicate operatives, containing
-      3 EMP grenades and an EMP implanter. Costs 6 telecrystals.', type: Add}
-  - {message: Changed EMP grenade pricing to 2 telecrystals., type: Tweak}
-  - {message: Changed EMP implant pricing to 3 telecrystals., type: Tweak}
-  id: 4508
-  time: '2023-08-10T08:40:17.0000000+00:00'
-- author: kxvvv
-  changes:
-  - {message: Added a homemade stun weapon., type: Add}
-  id: 4509
-  time: '2023-08-10T09:33:34.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'You can now construct chain link fencing. Bullets pass through it,
-      it''s very slowly vaultable, and you can construct gates. Expect to see it mapped
-      eventually.', type: Add}
-  id: 4510
-  time: '2023-08-10T14:16:26.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Liquid plasma rivers now spawn on snow planets (you may have noticed
-      foreshadowing from the planet background sprites). They''re just as dangerous
-      as lava, so be careful.', type: Add}
-  id: 4511
-  time: '2023-08-10T14:16:51.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
-  - {message: Added supermatter grenade analog from SS13 and brand new whitehole grenade
-      for special operations., type: Add}
-  id: 4512
-  time: '2023-08-10T14:29:47.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
-      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
-  - {message: Updated pried tiles to match the appearance of the new tiles better.,
-    type: Tweak}
-  id: 4513
-  time: '2023-08-10T17:46:44.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
-      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
-  - {message: Updated pried tiles to match the appearance of the new tiles better.,
-    type: Tweak}
-  id: 4514
-  time: '2023-08-10T18:33:15.435911+00:00'
-- author: juliangiebel & mirrorcult
-  changes:
-  - {message: 'You may notice that chat text in general has become much prettier and
-      dynamic. Whispered text is smaller, announcements are larger, and names should
-      pop out more.', type: Tweak}
-  id: 4515
-  time: '2023-08-10T18:33:15.436963+00:00'
 - author: EmoGarbage404
   changes:
   - {message: All crates have a brand new look., type: Tweak}
@@ -2950,3 +2869,69 @@ Entries:
       and robotics vendor or produced by science.', type: Add}
   id: 5003
   time: '2023-10-14T07:11:50.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fixed librarians, lawyers, ninjas and nukeops having their starting
+      in-hand items dropped on the floor.', type: Fix}
+  id: 5004
+  time: '2023-10-14T17:28:52.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced the bombsuit helmet's explosive resistance., type: Tweak}
+  id: 5005
+  time: '2023-10-14T17:34:58.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: mindshields to meta station armory, type: Add}
+  id: 5006
+  time: '2023-10-14T21:50:44.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'chem dispensers to barratry, you can stop crying now', type: Add}
+  id: 5007
+  time: '2023-10-14T21:51:33.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'All non-high-security airlocks can now be pried open by hand when unpowered,
+      albeit much slower than using a crowbar', type: Tweak}
+  id: 5008
+  time: '2023-10-15T22:17:45.0000000+00:00'
+- author: iacore
+  changes:
+  - {message: Secure crates are now weldable!, type: Fix}
+  id: 5009
+  time: '2023-10-16T05:27:23.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Behonkers are fixed (in combat use right click to fire laser), type: Fix}
+  id: 5010
+  time: '2023-10-16T05:29:14.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed material reclaimer sound error when processing something., type: Fix}
+  - {message: Fixed duplicate gib sound when the material reclaimer processes a mob.,
+    type: Fix}
+  id: 5011
+  time: '2023-10-16T05:30:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being permanently cuffed if you transformed into a zombie with
+      cuffs on., type: Fix}
+  id: 5012
+  time: '2023-10-16T05:31:04.0000000+00:00'
+- author: Lomcastar
+  changes:
+  - {message: Uranium crabs are more radioactive!, type: Tweak}
+  id: 5013
+  time: '2023-10-16T05:34:18.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Stun batons now take three hits to stun and have had their battery use
+      dropped by half, type: Tweak}
+  id: 5014
+  time: '2023-10-16T11:39:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item drops mispredicting., type: Fix}
+  id: 5015
+  time: '2023-10-16T11:49:41.0000000+00:00'

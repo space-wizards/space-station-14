@@ -204,7 +204,7 @@ namespace Content.Shared.Examine
             return true;
         }
 
-        public static bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
@@ -213,7 +213,7 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(EntityUid origin, IComponent other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, IComponent other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
@@ -222,7 +222,7 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
@@ -231,7 +231,7 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
