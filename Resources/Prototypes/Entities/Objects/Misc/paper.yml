@@ -547,7 +547,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 12
+        Blunt: 10
 
 # Stamps
 - type: entity
