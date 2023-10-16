@@ -13,9 +13,9 @@
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
         mask:
-        - ItemMask
+        - SmallMobMask
         layer:
-        - LowImpassable
+        - SmallMobLayer
         hard: false
   - type: Physics
     bodyType: Static
