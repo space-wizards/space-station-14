@@ -90,13 +90,15 @@ namespace Content.Client.HealthAnalyzer.UI
         }
 
         private void DrawDiagnosticGroups(
-            Dictionary<string, FixedPoint2> groups, IReadOnlyDictionary<string, FixedPoint2> damageDict)
+            Dictionary<string, FixedPoint2> sortedGroups, IReadOnlyDictionary<string, FixedPoint2> damageDict)
         {
             HashSet<string> shownTypes = new();
 
             // Show the total damage and type breakdown for each damage group.
-            foreach (var (damageGroupId, damageAmount) in groups.Reverse())
+            foreach (var (damageGroupId, damageAmount) in sortedGroups.Reverse())
             {
+                // groups are sorted, if the damageAmount == 0
+                // else you can end the cycle
                 if (damageAmount == 0)
                     return;
 
@@ -127,7 +129,7 @@ namespace Content.Client.HealthAnalyzer.UI
                         // If damage types are allowed to belong to more than one damage group,
                         // they may appear twice here. Mark them as duplicate.
                         if (shownTypes.Contains(type))
-                            return;
+                            continue;
 
                         shownTypes.Add(type);
 
