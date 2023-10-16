@@ -32,7 +32,7 @@
         prob: 0.5
         orGroup: MobCat
       - id: MobCatKitten
-        prob: 0.5
+        prob: 0.25
         orGroup: MobCat
       - id: MobBingus
         prob: 0.005
