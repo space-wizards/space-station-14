@@ -5,14 +5,6 @@ Entries:
       more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
   - {message: Updated pried tiles to match the appearance of the new tiles better.,
     type: Tweak}
-  id: 4513
-  time: '2023-08-10T17:46:44.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
-      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
-  - {message: Updated pried tiles to match the appearance of the new tiles better.,
-    type: Tweak}
   id: 4514
   time: '2023-08-10T18:33:15.435911+00:00'
 - author: juliangiebel & mirrorcult
@@ -2942,3 +2934,8 @@ Entries:
       cuffs on., type: Fix}
   id: 5012
   time: '2023-10-16T05:31:04.0000000+00:00'
+- author: Lomcastar
+  changes:
+  - {message: Uranium crabs are more radioactive!, type: Tweak}
+  id: 5013
+  time: '2023-10-16T05:34:18.0000000+00:00'
