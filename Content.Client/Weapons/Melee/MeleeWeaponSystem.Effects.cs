@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Weapons.Melee.Components;
+using Content.Shared.Weapons.Melee;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -16,7 +17,7 @@ public sealed partial class MeleeWeaponSystem
     /// <summary>
     /// Does all of the melee effects for a player that are predicted, i.e. character lunge and weapon animation.
     /// </summary>
-    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
+    public override void DoLunge(EntityUid user, EntityUid weapon, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
     {
         if (!Timing.IsFirstTimePredicted)
             return;
@@ -41,6 +42,11 @@ public sealed partial class MeleeWeaponSystem
             return;
         }
 
+        if (TryComp<MeleeWeaponComponent>(weapon, out var meleeWeaponComponent)
+            && meleeWeaponComponent.UseWeaponAsAttackAnimation)
+        {
+            
+        }
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);

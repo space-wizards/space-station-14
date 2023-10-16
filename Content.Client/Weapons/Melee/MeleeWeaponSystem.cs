@@ -17,8 +17,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -238,6 +236,6 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         // Entity might not have been sent by PVS.
         if (Exists(ent))
-            DoLunge(ent, ev.Angle, ev.LocalPos, ev.Animation);
+            DoLunge(ent, ev.Weapon, ev.Angle, ev.LocalPos, ev.Animation);
     }
 }

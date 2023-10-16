@@ -96,6 +96,9 @@ public sealed partial class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("wideAnimation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string WideAnimation = "WeaponArcSlash";
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("useWeaponAsAttackAnimation")]
+    public bool UseWeaponAsAttackAnimation;
+
     // Sounds
 
     /// <summary>
