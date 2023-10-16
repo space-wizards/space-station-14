@@ -267,7 +267,7 @@ public partial class SharedBodySystem
     }
 
     public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
-        BodyComponent? body = null, bool deleteItems = false)
+        BodyComponent? body = null, bool deleteItems = false, bool deleteBrain = false)
     {
         var gibs = new HashSet<EntityUid>();
 
