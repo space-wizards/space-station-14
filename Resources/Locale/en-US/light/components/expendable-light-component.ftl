@@ -12,3 +12,6 @@ expendable-light-spent-purple-glowstick-name = spent purple glowstick
 expendable-light-spent-yellow-glowstick-name = spent purple glowstick
 expendable-light-spent-blue-glowstick-name = spent blue glowstick
 expendable-light-spent-glowstick-desc = It looks like this glowstick has stopped glowing. How tragic.
+
+expendable-light-melted-candle-name = melted candle
+expendable-light-melted-candle-desc = All that's left of this candle is liquid.

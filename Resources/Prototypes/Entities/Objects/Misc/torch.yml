@@ -74,3 +74,139 @@
           maxDuration: 4.0
           startValue: 6.0
           endValue: 1.0
+
+- type: entity
+  name: candle
+  parent: BaseItem
+  id: Candle
+  description: A thin wick threaded through fat.
+  components:
+    - type: ExpendableLight
+      spentName: expendable-light-melted-candle-name
+      spentDesc: expendable-light-melted-candle-desc
+      glowDuration: 30 # time in seconds
+      fadeOutDuration: 8
+      turnOnBehaviourID: turn_on
+      fadeOutBehaviourID: fade_out
+      iconStateLit: unlit-small
+      iconStateSpent: unlit-small-out
+      litSound:
+        path: /Audio/Items/Flare/flare_on.ogg
+    - type: Sprite
+      noRot: true
+      sprite: Objects/Misc/candles.rsi
+      layers:
+        - map: [ enum.ExpendableLightVisualLayers.Base ]
+          state: unlit-small
+        - map: [ enum.ExpendableLightVisualLayers.Glow ]
+          state: fire-small
+          visible: false
+          shader: unshaded
+        - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+          state: fire-small
+          visible: false
+          shader: unshaded
+    - type: Icon
+      sprite: Objects/Misc/candles.rsi
+      state: unlit-small
+    - type: Item
+      sprite: Objects/Misc/candles.rsi
+    #- type: Construction
+    #  graph: LightTorch
+    #  node: torch
+    - type: Appearance
+    - type: PointLight
+      enabled: false
+      color: "#c7852e"
+      radius: 1.7
+      energy: 3.0
+      netsync: false
+    - type: IgnitionSource
+      temperature: 400
+      ignited: false
+    - type: LightBehaviour
+      behaviours:
+        - !type:RandomizeBehaviour # immediately make it bright and flickery
+          id: turn_on
+          interpolate: Nearest
+          minDuration: 0.02
+          maxDuration: 0.06
+          startValue: 1.0
+          endValue: 3.0
+          property: Energy
+          isLooped: true
+        - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
+          id: turn_on
+          maxDuration: 8.0
+          startValue: 1.0
+          endValue: 3.0
+        - !type:RandomizeBehaviour # weaker flicker as it fades out
+          id: fade_out
+          interpolate: Nearest
+          minDuration: 0.02
+          maxDuration: 0.06
+          startValue: 1.0
+          endValue: 1.5
+          property: Energy
+          isLooped: true
+        - !type:FadeBehaviour # fade out radius as it burns out
+          id: fade_out
+          maxDuration: 8.0
+          startValue: 3.0
+          endValue: 1.0
+        
+#- type: entity
+#  name: candle
+#  parent: Candle
+#  id: CandleBig
+#  description: A thin wick threaded through fat.
+#  components:
+#    - type: ExpendableLight
+#      glowDuration: 40
+#      fadeOutDuration: 8
+#      iconStateSpent: unlit-big-out
+#    - type: Sprite
+#      sprite: Objects/Misc/candles.rsi
+#      layers:
+#        - map: [ enum.ExpendableLightVisualLayers.Base ]
+#          state: unlit-big
+#        - map: [ enum.ExpendableLightVisualLayers.Glow ]
+#          state: fire-big
+#          visible: false
+#          shader: unshaded
+#    - type: Icon
+#      sprite: Objects/Misc/candles.rsi
+#      state: unlit-big
+#    - type: PointLight
+#      radius: 2.0
+#      energy: 5.0
+#    - type: LightBehaviour
+#      behaviours:
+#        - !type:RandomizeBehaviour # immediately make it bright and flickery
+#          id: turn_on
+#          interpolate: Nearest
+#          minDuration: 0.02
+#          maxDuration: 0.06
+#          startValue: 1.0
+#          endValue: 5.0
+#          property: Energy
+#          isLooped: true
+#        - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
+#          id: turn_on
+#          maxDuration: 8.0
+#          startValue: 1.0
+#          endValue: 5.0
+#        - !type:RandomizeBehaviour # weaker flicker as it fades out
+#          id: fade_out
+#          interpolate: Nearest
+#          minDuration: 0.02
+#          maxDuration: 0.06
+#          startValue: 1.0
+#          endValue: 2
+#          property: Energy
+#          isLooped: true
+#        - !type:FadeBehaviour # fade out radius as it burns out
+#          id: fade_out
+#          maxDuration: 8.0
+#          startValue: 5.0
+#          endValue: 1.0
