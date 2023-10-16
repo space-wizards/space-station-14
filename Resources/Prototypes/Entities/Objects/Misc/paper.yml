@@ -530,7 +530,7 @@
     quickEquip: false
     sprite: Objects/Misc/qm_clipboard.rsi
   - type: Storage
-    capacity: 100
+    capacity: 90
     quickInsert: true
     whitelist:
       tags:
