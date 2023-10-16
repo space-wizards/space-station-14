@@ -42,11 +42,11 @@ public sealed partial class MeleeWeaponSystem
             return;
         }
 
-        if (TryComp<MeleeWeaponComponent>(weapon, out var meleeWeaponComponent)
-            && meleeWeaponComponent.UseWeaponAsAttackAnimation)
-        {
-            
-        }
+        if (arcComponent.Animation != WeaponArcAnimation.None
+            && TryComp<SpriteComponent>(weapon, out var weaponSpriteComponent)
+            && TryComp<MeleeWeaponComponent>(weapon, out var meleeWeaponComponent))
+            // && meleeWeaponComponent.UseWeaponAsAttackAnimation)
+            sprite.CopyFrom(weaponSpriteComponent);
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);

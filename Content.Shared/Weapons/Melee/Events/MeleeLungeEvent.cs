@@ -14,7 +14,7 @@ public sealed class MeleeLungeEvent : EntityEventArgs
     /// <summary>
     /// The weapon used.
     /// </summary>
-    public EntityUid Weapon;
+    public NetEntity Weapon;
 
     /// <summary>
     /// Width of the attack angle.
@@ -31,7 +31,7 @@ public sealed class MeleeLungeEvent : EntityEventArgs
     /// </summary>
     public string? Animation;
 
-    public MeleeLungeEvent(NetEntity entity, EntityUid weapon, Angle angle, Vector2 localPos, string? animation)
+    public MeleeLungeEvent(NetEntity entity, NetEntity weapon, Angle angle, Vector2 localPos, string? animation)
     {
         Entity = entity;
         Weapon = weapon;
