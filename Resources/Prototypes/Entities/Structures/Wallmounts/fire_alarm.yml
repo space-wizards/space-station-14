@@ -66,8 +66,8 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-firealarm
-    LayoutId: FireAlarm
+    boardName: wires-board-name-firealarm
+    layoutId: FireAlarm
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:

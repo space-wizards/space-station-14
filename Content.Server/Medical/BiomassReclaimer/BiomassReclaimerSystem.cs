@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Server.Body.Components;
-using Content.Server.Climbing;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
@@ -9,6 +8,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Climbing.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -160,7 +160,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             });
         }
 
-        private void OnClimbedOn(EntityUid uid, BiomassReclaimerComponent component, ClimbedOnEvent args)
+        private void OnClimbedOn(EntityUid uid, BiomassReclaimerComponent component, ref ClimbedOnEvent args)
         {
             if (!CanGib(uid, args.Climber, component))
             {
