@@ -27,9 +27,9 @@
     - Trigger
   - type: Explosive # Weak explosion in a very small radius. Doesn't break underplating.
     explosionType: Default
-    totalIntensity: 20
-    intensitySlope: 5
-    maxIntensity: 5
+    totalIntensity: 29.5
+    intensitySlope: 3
+    maxIntensity: 3.5
     canCreateVacuum: false
   - type: ExplodeOnTrigger
   - type: Damageable
