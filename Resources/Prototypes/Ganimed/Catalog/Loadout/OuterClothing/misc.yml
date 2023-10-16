@@ -137,4 +137,6 @@
     - Warden
     - SeniorOfficer
     - Detective
+    - IAA
+    - BlueShield
   prototype: ClothingOuterRobesJudge

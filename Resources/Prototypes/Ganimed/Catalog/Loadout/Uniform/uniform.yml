@@ -110,6 +110,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: UniformScrubsColorGreen
 
 - type: loadout
@@ -126,6 +128,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: UniformScrubsColorBlue
 
 - type: loadout
@@ -164,6 +168,8 @@
     - Lawyer
     - HeadOfSecurity
     - HeadOfPersonnel
+    - IAA
+    - BlueShield
   prototype: ClothingUniformJumpsuitNanotrasen
 
 - type: loadout
@@ -216,8 +222,10 @@
     - SecurityOfficer
     - Warden
     - Detective
+    - BlueShield
     - HeadOfSecurity
     - SeniorOfficer
+    - Brigmedic
   prototype: ClothingUniformJumpsuitBrigmedic
 
 - type: loadout
@@ -233,6 +241,8 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+    - Brigmedic
+    - Coroner
   prototype: ClothingUniformJumpsuitBrigmedicOriginal
 
 - type: loadout
@@ -245,8 +255,10 @@
     - SecurityOfficer
     - Warden
     - Detective
+    - BlueShield
     - HeadOfSecurity
     - SeniorOfficer
+    - Brigmedic
   prototype: ClothingUniformJumpskirtBrigmedic
 
 - type: loadout
@@ -262,6 +274,8 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+    - Brigmedic
+    - Coroner
   prototype: ClothingUniformJumpskirtBrigmedicOriginal
 
 - type: loadout
@@ -287,6 +301,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: ClothingUniformJumpsuitVirology
 
 - type: loadout
@@ -302,6 +318,8 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: ClothingUniformJumpsuitGenetics
 
 - type: loadout
@@ -317,6 +335,8 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: ClothingUniformJumpsuitParamedicNT
 
 - type: loadout
@@ -332,6 +352,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: ClothingUniformJumpsuitParamedic
 
 - type: loadout
@@ -347,6 +369,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: ClothingUniformJumpsuitMedicalDoctor
 
 - type: loadout
@@ -362,6 +386,8 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: ClothingUniformJumpsuitChemistry
 
 - type: loadout
@@ -499,6 +525,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingUniformJumpsuitScientist
 
 - type: loadout
@@ -511,6 +538,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingUniformJumpskirtScientist
 
 - type: loadout
@@ -523,6 +551,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingUniformJumpsuitScientistOriginal
 
 - type: loadout
@@ -535,6 +564,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingUniformJumpskirtScientistOriginal
 
 - type: loadout
@@ -552,6 +582,8 @@
     - SeniorOfficer
     - SalvageSpecialist
     - Quartermaster
+    - BlueShield
+    - Brigmedic
   prototype: ClothingUniformJumpsuitScientist
 
 - type: loadout
@@ -581,7 +613,7 @@
   exclusive: true
   whitelistJobs:
     - SeniorResearcher
-    - ResearchAssistant
+    - Roboticist
     - ResearchDirector
     - Scientist
   prototype: ClothingUniformJumpsuitRoboticist
@@ -609,6 +641,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - BlueShield
+    - Brigmedic
   prototype: ClothingUniformJumpsuitSec
 
 - type: loadout
@@ -758,6 +792,8 @@
     - HeadOfPersonnel
     - Warden
     - SeniorOfficer
+    - IAA
+    - BlueShield
   prototype: ClothingUniformJumpsuitLawyerRed
 
 - type: loadout
@@ -771,6 +807,8 @@
     - HeadOfPersonnel
     - Warden
     - SeniorOfficer
+    - IAA
+    - BlueShield
   prototype: ClothingUniformJumpskirtLawyerRed
 
 - type: loadout
@@ -784,6 +822,8 @@
     - HeadOfPersonnel
     - Warden
     - SeniorOfficer
+    - IAA
+    - BlueShield
   prototype: ClothingUniformJumpsuitLawyerBlue
 
 - type: loadout
@@ -797,6 +837,8 @@
     - HeadOfPersonnel
     - Warden
     - SeniorOfficer
+    - IAA
+    - BlueShield
   prototype: ClothingUniformJumpskirtLawyerBlue
 
 - type: loadout
@@ -857,6 +899,8 @@
     - Captain
     - HeadOfSecurity
     - HeadOfPersonnel
+    - BlueShield
+    - IAA
   prototype: ClothingUniformJumpsuitBridgeOfficer
 
 - type: loadout
@@ -952,6 +996,8 @@
     - Detective
     - HeadOfSecurity
     - SeniorOfficer
+    - BlueShield
+    - Brigmedic
   prototype: ClothingUniformJumpsuitSecGrey
 
 - type: loadout
@@ -967,6 +1013,8 @@
     - Detective
     - HeadOfSecurity
     - SeniorOfficer
+    - BlueShield
+    - Brigmedic
   prototype: ClothingUniformJumpskirtSecGrey
 
 - type: loadout

@@ -20,6 +20,14 @@
   prototype: ClothingNeckTieRed
 
 - type: loadout
+  id: LoadoutNeckClothingNeckTieBlueShield
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckTieBlueShield
+
+- type: loadout
   id: LoadoutNeckClothingNeckLawyerbadge
   category: loadout-category-neck
   cost: 3
@@ -32,6 +40,7 @@
     - Warden
     - SeniorOfficer
     - Detective
+    - IAA
   prototype: ClothingNeckLawyerbadge
 
 - type: loadout
@@ -46,6 +55,7 @@
     - ChiefMedicalOfficer
     - ChiefEngineer
     - ResearchDirector
+    - IAA
   prototype: ClothingNeckGoldmedal
 
 - type: loadout
@@ -90,6 +100,8 @@
     - MedicalDoctor
     - MedicalIntern
     - Paramedic
+    - Brigmedic
+    - Coroner
   prototype: ClothingNeckMedicalmedal
 
 - type: loadout
@@ -103,6 +115,7 @@
     - ResearchAssistant
     - SeniorResearcher
     - Scientist
+    - Roboticist
   prototype: ClothingNeckSciencemedal
 
 - type: loadout
@@ -118,6 +131,8 @@
     - SecurityCadet
     - SecurityOfficer
     - Detective
+    - Brigmedic
+    - BlueShield
   prototype: ClothingNeckSecuritymedal
 
 - type: loadout
@@ -161,4 +176,6 @@
     - MedicalDoctor
     - MedicalIntern
     - Paramedic
+    - Brigmedic
+    - Coroner
   prototype: ClothingNeckStethoscope

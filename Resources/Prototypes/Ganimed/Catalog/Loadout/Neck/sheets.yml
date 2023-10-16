@@ -53,6 +53,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: BedsheetMedical
 
 - type: loadout
@@ -86,23 +88,10 @@
 - type: loadout
   id: LoadoutNeckBedsheetBrigmedic
   category: loadout-category-neck
-  cost: 4
+  cost: 2
   exclusive: true
   whitelistJobs:
-    - ChiefMedicalOfficer
-    - SeniorPhysician
-    - Chemist
-    - MedicalDoctor
-    - Psychologist
-    - MedicalIntern
-    - Paramedic
-    - SecurityCadet
-    - SecurityOfficer
-    - Warden
-    - Detective
-    - HeadOfSecurity
-    - Captain
-    - SeniorOfficer
+    - Brigmedic
   prototype: BedsheetBrigmedic
 
 - type: loadout

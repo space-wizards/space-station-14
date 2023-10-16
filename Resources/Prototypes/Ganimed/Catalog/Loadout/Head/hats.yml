@@ -150,6 +150,7 @@
     - SeniorEngineer
     - AtmosphericTechnician
     - StationEngineer
+    - Roboticist
   prototype: ClothingHeadHatWeldingMaskPainted
 
 - type: loadout
@@ -195,6 +196,7 @@
     - SeniorEngineer
     - AtmosphericTechnician
     - StationEngineer
+    - Roboticist
   prototype: ClothingHeadHatWelding
 
 - type: loadout
@@ -208,6 +210,7 @@
     - SeniorEngineer
     - AtmosphericTechnician
     - StationEngineer
+    - Roboticist
   prototype: ClothingHeadHatWeldingMaskFlame
 
 - type: loadout
@@ -221,6 +224,7 @@
     - SeniorEngineer
     - AtmosphericTechnician
     - StationEngineer
+    - Roboticist
   prototype: ClothingHeadHatWeldingMaskFlameBlue
 
 - type: loadout

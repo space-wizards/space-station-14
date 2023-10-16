@@ -16,6 +16,7 @@
     - ChiefEngineer
     - AtmosphericTechnician
     - TechnicalAssistant
+	- Roboticist
   prototype: ToolboxEmergencyFilled
 
 - type: loadout
@@ -38,6 +39,8 @@
     - MedicalIntern
     - MedicalDoctor
     - SeniorPhysician
+	- Coroner
+	- Brigmedic
   prototype: ToolboxEmergencyFilled
 
 - type: loadout
@@ -97,6 +100,7 @@
 	- HeadOfSecurity
 	- Warden
 	- SeniorOfficer
+	- BlueShield
   prototype: ForensicScanner
 
 - type: loadout
@@ -112,6 +116,7 @@
 	- SeniorEngineer
 	- AtmosphericTechnician
 	- ChiefEngineer
+	- Roboticist
   prototype: ForensicScanner
 
 - type: loadout
@@ -140,6 +145,8 @@
     - Detective
     - HeadOfSecurity
     - SeniorOfficer
+	- BlueShield
+	- Brigmedic
   prototype: Handcuffs
 
 - type: loadout
@@ -176,6 +183,9 @@
     - MedicalIntern
     - MedicalDoctor
     - SeniorPhysician
+	- Coroner
+	- Brigmedic
+	- BlueShield
   prototype: HandheldCrewMonitor
 
 - type: loadout
@@ -218,6 +228,7 @@
     - Scientist
     - ResearchAssistant
     - SeniorResearcher
+	- Roboticist
   prototype: AnomalyScanner
 
 - type: loadout
@@ -235,4 +246,5 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+	- Roboticist
   prototype: GeigerCounter

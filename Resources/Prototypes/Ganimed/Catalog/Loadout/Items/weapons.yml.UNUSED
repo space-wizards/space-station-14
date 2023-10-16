@@ -8,6 +8,7 @@
     - HeadOfSecurity
     - Detective
     - SeniorOfficer
+	- BlueShield
   prototype: WeaponRevolverDeckard
 
 - type: loadout
@@ -20,6 +21,7 @@
     - Scientist
     - ResearchAssistant
     - SeniorResearcher
+	- Roboticist
   prototype: WeaponPistolCHIMP
 
 - type: loadout
@@ -35,6 +37,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+	- BlueShield
+	- Brigmedic
   prototype: WeaponPistolMk58Nonlethal
 
 - type: loadout
@@ -55,6 +59,8 @@
     - Captain
     - Botanist
     - ChiefMedicalOfficer
+	- Brigmedic
+	- BlueShield
   prototype: Chainsaw
 
 - type: loadout
@@ -72,6 +78,8 @@
     - SeniorOfficer
     - SalvageSpecialist
     - Quartermaster
+	- BlueShield
+	- Brigmedic
   prototype: CombatKnife
 
 - type: loadout
@@ -87,6 +95,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+	- BlueShield
+	- Brigmedic
   prototype: Bola
 
 - type: loadout
@@ -113,6 +123,9 @@
     - ChiefMedicalOfficer
     - ChiefEngineer
     - HeadOfPersonnel
+	- BlueShield
+	- Brigmedic
+	- IAA
   prototype: Flash
   
 
@@ -162,6 +175,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+	- Coroner
+	- Brigmedic
   prototype: SawElectric
 
 - type: loadout
@@ -177,6 +192,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+	- BlueShield
+	- Brigmedic
   prototype: Truncheon
 
 - type: loadout
@@ -192,6 +209,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+	- BlueShield
+	- Brigmedic
   prototype: Stunbaton
 
 - type: loadout
@@ -270,6 +289,8 @@
     - Captain
     - SeniorOfficer
 	- Captain
+	- BlueShield
+	- Brigmedic
   prototype: Machete
 
 - type: loadout
@@ -288,6 +309,8 @@
     - Captain
     - SeniorOfficer
 	- Captain
+	- BlueShield
+	- Brigmedic
   prototype: SurvivalKnife
 
 - type: loadout
@@ -304,6 +327,8 @@
     - Captain
     - SeniorOfficer
 	- Captain
+	- BlueShield
+	- Brigmedic
   prototype: KukriKnife
 
 - type: loadout
@@ -320,6 +345,8 @@
     - Captain
     - SeniorOfficer
 	- Captain
+	- BlueShield
+	- Brigmedic
   prototype: WeaponDisabler
 
 - type: loadout
@@ -379,5 +406,7 @@
     - MedicalIntern
     - MedicalDoctor
     - SeniorPhysician
+	- Coroner
+	- Brigmedic
   prototype: Scalpel
   

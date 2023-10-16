@@ -24,6 +24,8 @@
     - Detective
     - HeadOfSecurity
     - SeniorOfficer
+    - Brigmedic
+    - BlueShield
   prototype: ClothingHeadHatSecsoft
 
 - type: loadout
@@ -50,6 +52,8 @@
     - MedicalIntern
     - Psychologist
     - SeniorPhysician
+    - Brigmedic
+    - Coroner
   prototype: ClothingHeadHatParamedicsoft
 
 - type: loadout
@@ -113,6 +117,8 @@
     - Detective
     - HeadOfSecurity
     - SeniorOfficer
+    - Brigmedic
+    - BlueShield
   prototype: ClothingHeadHatSecsoftFlipped
 
 - type: loadout
@@ -139,6 +145,8 @@
     - MedicalIntern
     - Psychologist
     - SeniorPhysician
+    - Brigmedic
+    - Coroner
   prototype: ClothingHeadHatParamedicsoftFlipped
 
 - type: loadout

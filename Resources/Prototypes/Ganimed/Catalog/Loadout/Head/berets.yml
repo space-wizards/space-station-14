@@ -49,6 +49,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: ClothingHeadHatBeretBrigmedic
 
 - type: loadout
@@ -66,6 +68,8 @@
     - SeniorOfficer
     - SalvageSpecialist
     - Quartermaster
+    - Blueshield
+    - Brigmedic
   prototype: ClothingHeadHatBeretMerc
 
 - type: loadout
@@ -81,6 +85,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Blueshield
+    - Brigmedic
   prototype: ClothingHeadHatBeretSecurity
 
 - type: loadout
@@ -103,5 +109,6 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingHeadHatBeretRND
   

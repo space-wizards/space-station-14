@@ -35,23 +35,17 @@
 - type: loadout
   id: LoadoutBackClothingBackpackBrigmedic
   category: loadout-category-back
-  cost: 5
+  cost: 3
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
-    - SeniorPhysician
     - Chemist
-    - MedicalDoctor
-    - Psychologist
-    - MedicalIntern
     - Paramedic
-    - SecurityCadet
-    - SecurityOfficer
-    - Warden
-    - Detective
-    - HeadOfSecurity
-    - Captain
-    - SeniorOfficer
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+	- Brigmedic
+	- Coroner
   prototype: ClothingBackpackBrigmedic
 
 - type: loadout
@@ -67,6 +61,8 @@
     - Psychologist
     - MedicalIntern
     - Paramedic
+	- Coroner
+	- Brigmedic
   prototype: ClothingBackpackVirology
 
 - type: loadout
@@ -82,6 +78,8 @@
     - Psychologist
     - MedicalIntern
     - Paramedic
+	- Coroner
+	- Brigmedic
   prototype: ClothingBackpackGenetics
 
 - type: loadout
@@ -130,6 +128,8 @@
     - Psychologist
     - MedicalIntern
     - Paramedic
+	- Coroner
+	- Brigmedic
   prototype: ClothingBackpackMedical
 
 - type: loadout
@@ -156,6 +156,8 @@
     - SeniorOfficer
     - Quartermaster
     - SalvageSpecialist
+	- Brigmedic
+	- BlueShield
   prototype: ClothingBackpackMerc
 
 - type: loadout
@@ -171,6 +173,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+	- Brigmedic
+	- BlueShield
   prototype: ClothingBackpackSecurity
 
 - type: loadout
@@ -194,6 +198,7 @@
 	- ResearchAssistant
 	- ResearchDirector
 	- SeniorResearcher
+	- Roboticist
   prototype: ClothingBackpackScience
 
 - type: loadout
@@ -209,4 +214,6 @@
     - Psychologist
     - MedicalIntern
     - Paramedic
+	- Coroner
+	- Brigmedic
   prototype: ClothingBackpackChemistry

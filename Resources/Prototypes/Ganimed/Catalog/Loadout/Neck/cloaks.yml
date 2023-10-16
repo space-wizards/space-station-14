@@ -90,6 +90,7 @@
     - SeniorResearcher
     - Scientist
     - ResearchAssistant
+    - Roboticist
   prototype: ClothingNeckCloakRdOriginal
 
 - type: loadout

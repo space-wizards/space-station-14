@@ -11,6 +11,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Brigmedic
+    - BlueShield
   prototype: ClothingHeadHelmetRiot
   
 - type: loadout
@@ -29,6 +31,8 @@
     - SalvageSpecialist
     - Chef
     - Bartender
+    - Brigmedic
+    - BlueShield
   prototype: ClothingHeadHelmetBone
   
 - type: loadout
@@ -114,4 +118,6 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Brigmedic
+    - BlueShield
   prototype: ClothingHeadHelmetBombSuit

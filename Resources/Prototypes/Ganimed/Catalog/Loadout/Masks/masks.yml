@@ -8,43 +8,32 @@
     - SeniorEngineer
     - ChiefEngineer
     - AtmosphericTechnician
+    - Roboticist
   prototype: ClothingMaskGasAtmos
 
 - type: loadout
   id: LoadoutMasksClothingMaskBreathMedicalSecurity
   category: loadout-category-masks
-  cost: 5
+  cost: 4
   exclusive: true
   whitelistJobs:
-    - SecurityCadet
-    - SecurityOfficer
-    - Warden
-    - Detective
-    - HeadOfSecurity
-    - Captain
-    - SeniorOfficer
+    - Brigmedic
     - ChiefMedicalOfficer
-    - Chemist
     - Paramedic
-    - MedicalDoctor
-    - Psychologist
-    - MedicalIntern
     - SeniorPhysician
   prototype: ClothingMaskBreathMedicalSecurity
-
-
 
 - type: loadout
   id: LoadoutMasksClothingMaskBreathMedical
   category: loadout-category-masks
-  cost: 5
+  cost: 6
   exclusive: true
   prototype: ClothingMaskBreathMedical
 
 - type: loadout
   id: LoadoutMasksClothingMaskBreath
   category: loadout-category-masks
-  cost: 1
+  cost: 2
   exclusive: true
   prototype: ClothingMaskBreath
 
@@ -140,6 +129,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Brigmedic
+    - BlueShield
   prototype: ClothingMaskGasSecurity
 
 - type: loadout
@@ -169,6 +160,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Brigmedic
+    - BlueShield
   prototype: ClothingMaskGasMerc
 
 - type: loadout

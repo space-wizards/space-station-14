@@ -97,7 +97,8 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyStationMaster
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing

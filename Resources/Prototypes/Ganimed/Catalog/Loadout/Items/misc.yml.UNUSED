@@ -39,6 +39,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+	- Coroner
+	- Brigmedic
   prototype: CheapRollerBedSpawnFolded
 
 - type: loadout
@@ -77,6 +79,7 @@
   whitelistJobs:
     - Captain
     - HeadOfSecurity
+	- IAA
   prototype: PhoneInstrument
 
 - type: loadout

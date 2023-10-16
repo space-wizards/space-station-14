@@ -27,6 +27,8 @@
     - SeniorOfficer
     - Quartermaster
     - SalvageSpecialist
+    - Brigmedic
+    - Blueshield
   prototype: ClothingHandsGlovesMercFingerless
 
 - type: loadout
@@ -37,6 +39,7 @@
   whitelistJobs:
     - HeadOfSecurity
     - Captain
+    - Blueshield
   prototype: ClothingHandsGlovesCombat
 
 - type: loadout
@@ -47,6 +50,7 @@
   whitelistJobs:
     - HeadOfSecurity
     - Captain
+    - Blueshield
   prototype: ClothingHandsMercGlovesCombat
 
 - type: loadout
@@ -108,6 +112,7 @@
   whitelistJobs:
     - Botanist
     - ServiceWorker
+    - IAA
   prototype: ClothingHandsGlovesLeather
 
 - type: loadout
@@ -127,6 +132,7 @@
     - Detective
     - SeniorOfficer
     - Warden
+    - Blueshield
   prototype: ClothingHandsGlovesForensic
 
 - type: loadout
@@ -149,6 +155,7 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
   prototype: ClothingHandsGlovesNitrile
 
 - type: loadout
@@ -164,6 +171,7 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
   prototype: ClothingHandsGlovesNitrileAlt
 
 - type: loadout
@@ -180,10 +188,9 @@
   exclusive: true
   sponsorOnly: true
   whitelistJobs:
-    - Scientist
-    - ResearchAssistant
     - ResearchDirector
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingHandsGlovesRobohands
 
 - type: loadout

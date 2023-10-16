@@ -27,6 +27,8 @@
     - SeniorOfficer
     - SalvageSpecialist
     - Quartermaster
+    - Blueshield
+    - Brigmedic
   prototype: ClothingHeadBandMerc
 
 - type: loadout

@@ -39,6 +39,8 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+	- Brigmedic
+	- Coroner
   prototype: ClothingBackpackDuffelBrigmedic
 
 - type: loadout
@@ -53,6 +55,8 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+	- Brigmedic
+	- Coroner
   prototype: ClothingBackpackDuffelVirology
 
 - type: loadout
@@ -67,6 +71,8 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+	- Brigmedic
+	- Coroner
   prototype: ClothingBackpackDuffelGenetics
 
 - type: loadout
@@ -80,6 +86,8 @@
     - Paramedic
     - MedicalDoctor
     - SeniorPhysician
+	- Brigmedic
+	- Coroner
   prototype: ClothingBackpackDuffelChemistry
 
 - type: loadout
@@ -136,6 +144,7 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+	- Brigmedic
   prototype: ClothingBackpackDuffelMedical
 
 - type: loadout
@@ -160,6 +169,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+	- Brigmedic
+	- BlueShield
   prototype: ClothingBackpackDuffelSecurity
 
 - type: loadout
@@ -183,4 +194,5 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+	- Roboticist
   prototype: ClothingBackpackDuffelScience

@@ -16,6 +16,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingEyesHudDiagnostic
 
 - type: loadout
@@ -42,6 +43,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Brigmedic
+    - Coroner
   prototype: ClothingEyesHudMedical
 
 - type: loadout
@@ -56,4 +59,6 @@
     - Detective
     - HeadOfSecurity
     - Captain
+    - Brigmedic
+    - Blueshield
   prototype: ClothingEyesHudSecurity

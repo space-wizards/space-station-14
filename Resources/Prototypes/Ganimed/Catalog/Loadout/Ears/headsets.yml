@@ -17,6 +17,15 @@
   prototype: ClothingHeadsetQM
 
 - type: loadout
+  id: LoadoutEarsClothingHeadsetIAA
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - IAA
+  prototype: ClothingHeadsetIAA
+
+- type: loadout
   id: LoadoutEarsClothingHeadsetCE
   category: loadout-category-ears
   cost: 1
@@ -31,17 +40,7 @@
   cost: 4
   exclusive: true
   whitelistJobs:
-    - MedicalDoctor
-    - ChiefMedicalOfficer
-    - Paramedic
-    - Chemist
-    - SeniorPhysician
-    - Psychologist
-    - HeadOfSecurity
-    - SeniorOfficer
-    - Warden
-    - SecurityOfficer
-    - Detective
+    - Brigmedic
   prototype: ClothingHeadsetBrigmedic
 
 - type: loadout
@@ -65,6 +64,8 @@
   whitelistJobs:
     - Captain
     - HeadOfPersonnnel
+    - IAA
+    - Blueshield
   prototype: ClothingHeadsetCommand
 
 - type: loadout
@@ -80,6 +81,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
+    - Brigmedic
   prototype: ClothingHeadsetMedical
 
 - type: loadout
@@ -92,6 +95,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingHeadsetScience
 
 - type: loadout
@@ -147,6 +151,8 @@
     - Detective
     - HeadOfSecurity
     - SeniorOfficer
+    - Brigmedic
+    - Blueshield
   prototype: ClothingHeadsetSecurity
 
 - type: loadout
@@ -166,6 +172,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Coroner
   prototype: ClothingHeadsetMedicalScience
 
 - type: loadout
@@ -175,8 +182,7 @@
   exclusive: true
   whitelistJobs:
     - ResearchDirector
-    - ResearchAssistant
-    - Scientist
+    - Roboticist
     - SeniorResearcher
   sponsorOnly: true
   prototype: ClothingHeadsetRobotics

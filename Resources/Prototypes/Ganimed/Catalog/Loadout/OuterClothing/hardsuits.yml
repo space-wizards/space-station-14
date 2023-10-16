@@ -89,6 +89,17 @@
   prototype: ClothingOuterHardsuitVoidParamedAlter
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterHardsuitVoidParamedOriginal
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - Paramedic
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+  prototype: ClothingOuterHardsuitVoidParamedOriginal
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterHardsuitLuxury
   category: loadout-category-outerClothing
   cost: 12

@@ -43,6 +43,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingHeadHatHoodRad
 
 - type: loadout
@@ -60,6 +61,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingHeadHatHoodRadOriginal
 
 - type: loadout
@@ -81,6 +83,8 @@
     - SecurityCadet
     - SecurityOfficer
     - Warden
+    - Brigmedic
+    - BlueShield
   prototype: ClothingHeadHatHoodBioSecurity
 
 - type: loadout
@@ -111,6 +115,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
+    - Roboticist
   prototype: ClothingHeadHatHoodBioScientist
 
 - type: loadout
@@ -126,4 +131,5 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+    - Coroner
   prototype: ClothingHeadHatHoodBioVirology

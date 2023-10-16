@@ -11,6 +11,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Brigmedic
+    - Blueshield
   prototype: ClothingBeltMilitaryWebbing
 
 - type: loadout
@@ -23,6 +25,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Brigmedic
+    - Blueshield
   prototype: ClothingBeltMilitaryWebbingMed
 
 - type: loadout
@@ -40,6 +44,8 @@
     - SeniorOfficer
     - Bartender
     - ServiceWorker
+    - Brigmedic
+    - Blueshield
   prototype: ClothingBeltBandolier
 
 - type: loadout
@@ -100,6 +106,7 @@
     - CargoTechnician
     - Quartermaster
     - SalvageSpecialist
+    - Roboticist
   prototype: ClothingBeltUtility
 
 - type: loadout
@@ -116,6 +123,8 @@
     - Psychologist
     - MedicalIntern
     - SeniorPhysician
+    - Brigmedic
+    - Coroner
   prototype: ClothingBeltParamedicFilled
 
 - type: loadout
@@ -132,6 +141,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Brigmedic
+    - Blueshield
   prototype: ClothingBeltSecurityFilled
 
 - type: loadout
