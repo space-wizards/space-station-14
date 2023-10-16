@@ -144,13 +144,10 @@
       puddle: { maxVol: 1000 }
   - type: Puddle
   - type: Appearance
+  - type: ActiveEdgeSpreader
   - type: EdgeSpreader
+    id: Puddle
   - type: StepTrigger
-  - type: NodeContainer
-    nodes:
-      puddle:
-        !type:SpreaderNode
-        nodeGroupID: Spreader
   - type: Drink
     delay: 3
     transferAmount: 1

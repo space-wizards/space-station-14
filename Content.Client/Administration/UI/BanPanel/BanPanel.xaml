@@ -22,6 +22,7 @@
                     <LineEdit Name="HwidLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc ban-panel-hwid}" ToolTip="{Loc ban-panel-ip-hwid-tooltip}" />
                 </BoxContainer>
                 <CheckBox Name="LastConnCheckbox" Margin="2" Text="{Loc ban-panel-last-conn}" Pressed="True" />
+                <CheckBox Name="EraseCheckbox" Margin="2" Text="{Loc ban-panel-erase}" Pressed="False" />
                 <BoxContainer Orientation="Horizontal" Margin="2">
                     <LineEdit Name="TimeLine" MaxWidth="150" MinWidth="70" PlaceHolder="0" />
                     <OptionButton Name="MultiplierOption" />
@@ -30,7 +31,7 @@
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="4">
                     <OptionButton Name="TypeOption" />
-                    <Control MinWidth="30"></Control>
+                    <Control MinWidth="30" />
                     <Label Text="{Loc ban-panel-severity}" />
                     <OptionButton Name="SeverityOption" />
                 </BoxContainer>

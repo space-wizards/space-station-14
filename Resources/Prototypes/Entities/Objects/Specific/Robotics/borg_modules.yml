@@ -338,6 +338,22 @@
     items:
     - DefibrillatorOneHandedUnpowered
 
+- type: entity
+  id: BorgModuleAdvancedTreatment
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: advanced treatment cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-chemist
+  - type: ItemBorgModule
+    items:
+    - Beaker
+    - Beaker
+    - BorgDropper
+    - BorgHypo
+
 # science modules
 # todo: if science ever gets their own custom robot, add more "sci" modules.
 - type: entity

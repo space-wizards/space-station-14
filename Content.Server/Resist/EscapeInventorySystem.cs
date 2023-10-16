@@ -80,7 +80,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.DoAfter))
             return;
 
-        Dirty(component);
+        Dirty(user, component);
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, user);
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
     }
@@ -88,12 +88,12 @@ public sealed class EscapeInventorySystem : EntitySystem
     private void OnEscape(EntityUid uid, CanEscapeInventoryComponent component, EscapeInventoryEvent args)
     {
         component.DoAfter = null;
-        Dirty(component);
+        Dirty(uid, component);
 
         if (args.Handled || args.Cancelled)
             return;
 
-        Transform(uid).AttachParentToContainerOrGrid(EntityManager);
+        _containerSystem.AttachParentToContainerOrGrid(Transform(uid));
         args.Handled = true;
     }
 

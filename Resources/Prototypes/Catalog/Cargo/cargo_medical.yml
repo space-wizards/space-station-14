@@ -99,6 +99,16 @@
   group: market
 
 - type: cargoProduct
+  id: MedicalMindShieldImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateMindShieldImplants
+  cost: 3000
+  category: Medical
+  group: market
+
+- type: cargoProduct
   id: ChemistryP
   icon:
     sprite: Structures/Storage/Crates/chemcrate_secure.rsi
