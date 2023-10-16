@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Content.Shared.Corvax.CCCVars;
@@ -108,7 +108,8 @@ public sealed class TTSSystem : EntitySystem
         if (!TryCreateAudioSource(ev.Data, volume, out var source))
             return;
 
-        var stream = new AudioStream(ev.Uid, source);
+        var entUid = new EntityUid(ev.Uid.Id);
+        var stream = new AudioStream(entUid, source);
         AddEntityStreamToQueue(stream);
     }
 
