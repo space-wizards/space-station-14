@@ -46,7 +46,6 @@ public sealed class PressurePlateSystem : EntitySystem
         {
             totalMass += _weight.GetEntWeightRecursive(ent);
         }
-        Log.Debug("Вес = " + totalMass);
         var pressed = totalMass >= component.WeightRequired;
         if (pressed == component.IsPressed)
             return;
