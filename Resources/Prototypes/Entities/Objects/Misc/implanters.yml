@@ -24,15 +24,15 @@
       sprite: Objects/Specific/Medical/implanter.rsi
       state: implanter0
       layers:
-        - state: implanter1
-          map: [ "implantFull" ]
-          color: '#1cd94e'
-          visible: false
         - state: implanter0
           map: [ "implantOnly" ]
+          visible: true
+        - state: implanter1
+          map: [ "implantFull" ]
+          visible: false
     - type: Item
       sprite: Objects/Specific/Medical/implanter.rsi
-      size: 3
+      heldPrefix: 0
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -66,7 +66,6 @@
       layers:
         - state: implanter1
           map: [ "implantFull" ]
-          color: '#1cd94e'
           visible: true
         - state: implanter0
           map: [ "implantOnly" ]
