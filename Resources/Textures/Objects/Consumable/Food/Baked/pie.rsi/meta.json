@@ -59,6 +59,14 @@
             "name": "mimetart-slice"
         },
         {
+            "name": "mime-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "mime-inhand-left",
+            "directions": 4
+        },
+        {
             "name": "inhand-right",
             "directions": 4
         },

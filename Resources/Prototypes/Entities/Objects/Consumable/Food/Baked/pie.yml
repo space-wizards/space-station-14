@@ -375,6 +375,8 @@
       - nothing
   - type: Sprite
     state: mime
+  - type: Item
+    heldPrefix: mime
   - type: SliceableFood
     slice: FoodTartMimeSlice
 
@@ -389,6 +391,8 @@
   - type: Sprite
     layers:
     - state: mimetart-slice
+  - type: Item
+    heldPrefix: mime
 # Tastes like nothing.
 
 # No Slice
