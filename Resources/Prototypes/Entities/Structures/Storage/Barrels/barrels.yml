@@ -4,7 +4,7 @@
   suffix: Empty
   components:
     - type: StaticPrice
-      price: 40
+      price: 10
     - type: Sprite
       sprite: Structures/Storage/barrels.rsi
       layers:
@@ -25,7 +25,7 @@
           damage: 10
         behaviors:
         - !type:SpillBehavior
-          solution: tank
+          solution: drainBuffer
         - !type:DoActsBehavior
           acts: ["Destruction"]
         - !type:PlaySoundBehavior
@@ -37,13 +37,12 @@
               min: 2
               max: 5
     - type: ExaminableSolution
-      solution: tank
+      solution: drainBuffer
     - type: Drink
-      solution: tank
+      solution: drainBuffer
     - type: DrawableSolution
-      solution: tank
-    - type: Pourable
-      solution: tank
+      solution: drainBuffer
+
 
 - type: entity
   parent: WoodenOpenBarrel
@@ -55,10 +54,10 @@
       generated:
         reagents:
         - ReagentId: Water
-          Quantity: 0.5
+          Quantity: 1
     - type: SolutionContainerManager
       solutions:
-        tank:
+        drainBuffer:
           reagents:
             - ReagentId: Water
               Quantity: 1000

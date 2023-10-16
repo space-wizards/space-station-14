@@ -34,13 +34,15 @@
             damage: 5
           behaviors:
           - !type:SolutionExplosionBehavior
-            solution: tank
+            solution: drainBuffer
     - type: SolutionContainerManager
       solutions:
-        tank:
+        drainBuffer:
           maxVol: 1000
     - type: DrainableSolution
-      solution: tank
+      solution: drainBuffer
+    - type: Drain
+      autoDrain: false
     - type: ReagentTank
     - type: Transform
       noRot: true
