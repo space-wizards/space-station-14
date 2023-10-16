@@ -10,15 +10,15 @@ public sealed partial class NavMapControl
 {
     private Dictionary<CableType, Color> _powerCableColors = new Dictionary<CableType, Color>
     {
-        [CableType.HighVoltage] = Color.Orange,
+        [CableType.HighVoltage] = Color.OrangeRed,
         [CableType.MediumVoltage] = Color.Yellow,
         [CableType.Apc] = Color.LimeGreen,
     };
 
     private Dictionary<CableType, Vector2> _powerCableOffsets = new Dictionary<CableType, Vector2>
     {
-        [CableType.HighVoltage] = Vector2.Zero,
-        [CableType.MediumVoltage] = new Vector2(-0.2f, -0.2f),
+        [CableType.HighVoltage] = new Vector2(-0.2f, -0.2f),
+        [CableType.MediumVoltage] = Vector2.Zero,
         [CableType.Apc] = new Vector2(0.2f, 0.2f),
     };
 
