@@ -9,6 +9,12 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
 [GenerateTypedNameReferences]
 public sealed partial class ChannelFilterPopup : Popup
 {
+    // Channels that are disabled by default.
+    private static readonly ChatChannel[] ChannelFilterDisabledByDefault =
+    {
+        ChatChannel.Visual
+    };
+
     // order in which the available channel filters show up when available
     private static readonly ChatChannel[] ChannelFilterOrder =
     {
@@ -66,7 +72,7 @@ public sealed partial class ChannelFilterPopup : Popup
                 checkbox = new ChannelFilterCheckbox(channel);
                 _filterStates.Add(channel, checkbox);
                 checkbox.OnPressed += CheckboxPressed;
-                checkbox.Pressed = true;
+                checkbox.Pressed = Array.IndexOf(ChannelFilterDisabledByDefault, channel) == -1;
             }
 
             if ((channels & channel) == 0)
