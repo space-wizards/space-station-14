@@ -22,9 +22,6 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 2
-          conditions:
-            - !type:EntityAnchored
-              anchored: false
           steps:
             - tool: Screwing
               doAfter: 1
