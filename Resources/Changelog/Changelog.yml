@@ -1,17 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Liquid plasma rivers now spawn on snow planets (you may have noticed
-      foreshadowing from the planet background sprites). They''re just as dangerous
-      as lava, so be careful.', type: Add}
-  id: 4511
-  time: '2023-08-10T14:16:51.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
-  - {message: Added supermatter grenade analog from SS13 and brand new whitehole grenade
-      for special operations., type: Add}
-  id: 4512
-  time: '2023-08-10T14:29:47.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
@@ -2942,3 +2929,16 @@ Entries:
   - {message: Behonkers are fixed (in combat use right click to fire laser), type: Fix}
   id: 5010
   time: '2023-10-16T05:29:14.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed material reclaimer sound error when processing something., type: Fix}
+  - {message: Fixed duplicate gib sound when the material reclaimer processes a mob.,
+    type: Fix}
+  id: 5011
+  time: '2023-10-16T05:30:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being permanently cuffed if you transformed into a zombie with
+      cuffs on., type: Fix}
+  id: 5012
+  time: '2023-10-16T05:31:04.0000000+00:00'
