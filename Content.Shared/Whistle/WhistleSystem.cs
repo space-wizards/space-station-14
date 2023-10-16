@@ -1,6 +1,7 @@
 using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Stealth.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -47,6 +48,9 @@ public abstract class SharedWhistleSystem : EntitySystem
         foreach (var iterator in
             _entityLookup.GetComponentsInRange<HumanoidAppearanceComponent>(Transform(uid).Coordinates, component.Distance))
         {
+            if (HasComp<StealthComponent>(iterator.Owner))
+                continue;
+
             if (iterator.Owner == owner)
                 continue;
 
