@@ -57,7 +57,7 @@ namespace Content.Shared.Roles
         public bool CanBeAntag { get; private set; } = true;
 
         [DataField("doLoadout")]
-        public bool DoLoadout { get; private set; } = false;
+        public bool DoLoadout { get; private set; } = true;
 
         [DataField("sponsorOnly")]
         public bool SponsorOnly { get; private set; } = false;
