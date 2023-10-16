@@ -139,6 +139,15 @@
       - Security
 
 - type: entity
+  name: flash
+  parent: Flash
+  id: SciFlash
+  components:
+    - type: LimitedCharges
+      maxCharges: 2
+      charges: 2
+
+- type: entity
   name: portable flasher
   parent: BaseStructure
   id: PortableFlasher

@@ -2,7 +2,7 @@
   id: RoboticsInventory
   startingInventory:
     CableApcStack: 4
-    Flash: 4
+    SciFlash: 4
     ProximitySensor: 3
     RemoteSignaller: 3
     Igniter: 3 # its more ordnance but yeah
