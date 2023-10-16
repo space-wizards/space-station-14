@@ -1,11 +1,4 @@
 Entries:
-- author: juliangiebel & mirrorcult
-  changes:
-  - {message: 'You may notice that chat text in general has become much prettier and
-      dynamic. Whispered text is smaller, announcements are larger, and names should
-      pop out more.', type: Tweak}
-  id: 4515
-  time: '2023-08-10T18:33:15.436963+00:00'
 - author: EmoGarbage404
   changes:
   - {message: All crates have a brand new look., type: Tweak}
@@ -2937,3 +2930,8 @@ Entries:
       dropped by half, type: Tweak}
   id: 5014
   time: '2023-10-16T11:39:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item drops mispredicting., type: Fix}
+  id: 5015
+  time: '2023-10-16T11:49:41.0000000+00:00'
