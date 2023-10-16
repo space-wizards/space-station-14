@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Anomaly.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
 
 namespace Content.Server.Anomaly.Effects;
