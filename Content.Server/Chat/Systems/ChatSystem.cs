@@ -689,11 +689,11 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true, bool replaceNetSpeak = true)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
     {
         var newMessage = message.Trim();
-        if (replaceNetSpeak)
-            newMessage = SanitizeMessageReplaceWords(newMessage);
+        newMessage = SanitizeMessageReplaceWords(newMessage);
+        
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
         if (capitalizeTheWordI)
