@@ -42,8 +42,12 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
+<<<<<<< HEAD
 
         SubscribeLocalEvent<MaterialReclaimerComponent, AttemptDamageContactEvent>(OnAttemptDamageContact);
+=======
+        SubscribeLocalEvent<MaterialReclaimerComponent, MapInitEvent>(OnMapInit);
+>>>>>>> upstream/master
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
@@ -62,6 +66,11 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
                 TryStartProcessItem(entity, ev.Target, reclaimer);
             }
         }
+    }
+
+    private void OnMapInit(EntityUid uid, MaterialReclaimerComponent component, MapInitEvent args)
+    {
+        component.NextSound = Timing.CurTime;
     }
 
     private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
@@ -140,7 +149,16 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
                 $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
         }
 
+<<<<<<< HEAD
         
+=======
+        if (Timing.CurTime > component.NextSound)
+        {
+            component.Stream = _audio.PlayPredicted(component.Sound, uid, user);
+
+            component.NextSound = Timing.CurTime + component.SoundCooldown;
+        }
+>>>>>>> upstream/master
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.
