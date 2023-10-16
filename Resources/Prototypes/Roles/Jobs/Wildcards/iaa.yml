@@ -45,7 +45,7 @@
     ears: ClothingHeadsetIAA
     pocket1: RubberStampIAA
   inhand:
-    right hand: BriefcaseBrownLegalFilled
-  innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
+    - BriefcaseBrownLegalFilled
+  innerClothingskirt: ClothingUniformJumpskirtLawyerBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

@@ -25,6 +25,6 @@
     eyes: ClothingEyesHudDiagnostic
     id: RoboPDA
     ears: ClothingHeadsetRobotics
-  innerclothingskirt: ClothingUniformJumpskirtScientist
+  innerClothingskirt: ClothingUniformJumpskirtScientist
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled

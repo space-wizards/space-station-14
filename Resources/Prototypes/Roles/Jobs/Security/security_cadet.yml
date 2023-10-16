@@ -27,6 +27,7 @@
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
-  innerclothingskirt: ClothingUniformJumpskirtSecGrey
+    pocket1: WeaponPistolMk58Nonlethal
+  innerClothingskirt: ClothingUniformJumpskirtSecGrey
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

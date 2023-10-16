@@ -53,6 +53,6 @@
     ears: ClothingHeadsetCommand
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponRevolverDeckard
-  innerclothingskirt: ClothingUniformJumpskirtBlueShield
+  innerClothingskirt: ClothingUniformJumpskirtBlueShield
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled
