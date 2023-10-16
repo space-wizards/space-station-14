@@ -41,14 +41,13 @@ public sealed partial class GatewayComponent : Component
     public HashSet<EntityUid> Destinations = new();
 
     /// <summary>
-    /// The time at which the portal will be closed.
+    /// Cooldown between opening portal / closing.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextClose;
+    [DataField]
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// The time at which the portal was last opened.
-    /// Only used for UI.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastOpen;

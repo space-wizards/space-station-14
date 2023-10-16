@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Gateway;
 
@@ -26,7 +27,7 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     /// <summary>
     /// List of enabled destinations and information about them.
     /// </summary>
-    public readonly List<(NetEntity, string, TimeSpan, bool)> Destinations;
+    public readonly List<GatewayDestinationData> Destinations;
 
     /// <summary>
     /// Which destination it is currently linked to, if any.
@@ -34,23 +35,27 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     public readonly NetEntity? Current;
 
     /// <summary>
-    /// Time the portal will close at.
-    /// </summary>
-    public readonly TimeSpan NextClose;
-
-    /// <summary>
     /// Time the portal last opened at.
     /// </summary>
     public readonly TimeSpan LastOpen;
 
-    public GatewayBoundUserInterfaceState(List<(NetEntity, string, TimeSpan, bool)> destinations,
+    public GatewayBoundUserInterfaceState(List<GatewayDestinationData> destinations,
         NetEntity? current, TimeSpan nextClose, TimeSpan lastOpen)
     {
         Destinations = destinations;
         Current = current;
-        NextClose = nextClose;
         LastOpen = lastOpen;
     }
+}
+
+[Serializable, NetSerializable]
+public record struct GatewayDestinationData
+{
+    public NetEntity Entity;
+
+    public FormattedMessage Name;
+
+    public bool Portal;
 }
 
 [Serializable, NetSerializable]

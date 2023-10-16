@@ -1,5 +1,6 @@
 using Content.Server.Gateway.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Gateway.Components;
 
@@ -17,28 +18,22 @@ public sealed partial class GatewayDestinationComponent : Component
     public bool Enabled;
 
     /// <summary>
+    /// When the destination will unlock if applicable.
+    /// </summary>
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
+    public TimeSpan? UnlockTime;
+
+    /// <summary>
     /// Name as it shows up on the ui of station gateways.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string Name = string.Empty;
-
-    /// <summary>
-    /// Time at which this destination is ready to be linked to.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextReady;
+    public FormattedMessage Name = new();
 
     /// <summary>
     /// How long the portal will be open for after linking.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan OpenTime = TimeSpan.FromSeconds(600);
-
-    /// <summary>
-    /// How long the destination is not ready for after the portal closes.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(60);
 
     /// <summary>
     /// If true, the portal can be closed by alt clicking it.

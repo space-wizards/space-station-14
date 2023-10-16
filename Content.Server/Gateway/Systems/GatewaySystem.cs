@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Gateway.Systems;
 
@@ -70,14 +71,19 @@ public sealed class GatewaySystem : EntitySystem
 
     private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)
     {
-        var destinations = new List<(NetEntity, string, TimeSpan, bool)>();
+        var destinations = new List<GatewayDestinationData>();
         foreach (var destUid in comp.Destinations)
         {
             var dest = Comp<GatewayDestinationComponent>(destUid);
             if (!dest.Enabled)
                 continue;
 
-            destinations.Add((GetNetEntity(destUid), dest.Name, dest.NextReady, HasComp<PortalComponent>(destUid)));
+            destinations.Add(new GatewayDestinationData()
+            {
+                Entity = GetNetEntity(destUid),
+                Name = dest.Name,
+                Portal = HasComp<PortalComponent>(destUid)
+            });
         }
 
         _linkedEntity.GetLink(uid, out var current);
