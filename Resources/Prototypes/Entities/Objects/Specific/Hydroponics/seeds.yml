@@ -477,4 +477,24 @@
       seedId: cocoa
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cocoa.rsi
-      
+
+- type: entity
+  parent: SeedBase
+  name: packet of berry seeds
+  id: BerrySeeds
+  components:
+    - type: Seed
+      seedId: berries
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/berries.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of bungo seeds
+  description: "Don't eat the pits."
+  id: BungoSeeds
+  components:
+    - type: Seed
+      seedId: bungo
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/bungo.rsi

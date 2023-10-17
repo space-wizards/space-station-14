@@ -136,12 +136,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
 
     protected bool TryGetRandomStation([NotNullWhen(true)] out EntityUid? station, Func<EntityUid, bool>? filter = null)
     {
-        var stations = new ValueList<EntityUid>();
-
-        if (filter == null)
-        {
-            stations.EnsureCapacity(Count<StationEventEligibleComponent>());
-        }
+        var stations = new ValueList<EntityUid>(Count<StationEventEligibleComponent>());
 
         filter ??= _ => true;
         var query = AllEntityQuery<StationEventEligibleComponent>();

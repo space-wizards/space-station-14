@@ -27,16 +27,9 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var bodySystem = _entManager.System<BodySystem>();
-
-            if (bodySystem.DropOrgan(entityUid))
-            {
-                shell.WriteLine($"Removed organ {_entManager.ToPrettyString(entityUid.Value)}");
-            }
-            else
-            {
-                shell.WriteError("Was not a mechanism, or did not have a parent.");
-            }
+            var xformSystem = _entManager.System<SharedTransformSystem>();
+            xformSystem.AttachToGridOrMap(entityUid.Value);
+            shell.WriteLine($"Removed organ {_entManager.ToPrettyString(entityUid.Value)}");
         }
     }
 }

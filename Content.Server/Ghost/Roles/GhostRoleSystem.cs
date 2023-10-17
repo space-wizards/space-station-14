@@ -240,7 +240,7 @@ namespace Content.Server.Ghost.Roles
                 if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
-                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules});
+                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules, Requirements = role.Requirements});
             }
 
             return roles.ToArray();
@@ -343,7 +343,7 @@ namespace Content.Server.Ghost.Roles
             if (ghostRole.MakeSentient)
                 MakeSentientCommand.MakeSentient(mob, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
 
-            mob.EnsureComponent<MindContainerComponent>();
+            EnsureComp<MindContainerComponent>(mob);
 
             GhostRoleInternalCreateMindAndTransfer(args.Player, uid, mob, ghostRole);
 

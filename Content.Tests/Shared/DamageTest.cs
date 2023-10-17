@@ -17,15 +17,15 @@ namespace Content.Tests.Shared
     public sealed class DamageTest : ContentUnitTest
     {
 
-        static private Dictionary<string, float> _resistanceCoefficientDict = new()
+        private static Dictionary<string, float> _resistanceCoefficientDict = new()
         {
             // "missing" blunt entry
-            { "Piercing", -2 },// Turn Piercing into Healing
+            { "Piercing", -2 }, // negative multipliers just cause the damage to be ignored.
             { "Slash", 3 },
             { "Radiation", 1.5f },
         };
 
-        static private Dictionary<string, float> _resistanceReductionDict = new()
+        private static Dictionary<string, float> _resistanceReductionDict = new()
         {
             { "Blunt", - 5 },
             // "missing" piercing entry
@@ -152,14 +152,14 @@ namespace Content.Tests.Shared
             // Apply once
             damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, modifierSet);
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(25)));
-            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(-40))); // became healing
+            Assert.That(!damageSpec.DamageDict.ContainsKey("Piercing"));  // Cannot convert damage into healing.
             Assert.That(damageSpec.DamageDict["Slash"], Is.EqualTo(FixedPoint2.New(6)));
             Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(44.25)));
 
             // And again, checking for some other behavior
             damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, modifierSet);
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(30)));
-            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(-40))); // resistances don't apply to healing
+            Assert.That(!damageSpec.DamageDict.ContainsKey("Piercing"));
             Assert.That(!damageSpec.DamageDict.ContainsKey("Slash"));  // Reduction reduced to 0, and removed from specifier
             Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(65.63)));
         }
