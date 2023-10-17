@@ -90,17 +90,15 @@ namespace Content.Client.HealthAnalyzer.UI
         }
 
         private void DrawDiagnosticGroups(
-            Dictionary<string, FixedPoint2> sortedGroups, IReadOnlyDictionary<string, FixedPoint2> damageDict)
+            Dictionary<string, FixedPoint2> groups, IReadOnlyDictionary<string, FixedPoint2> damageDict)
         {
             HashSet<string> shownTypes = new();
 
             // Show the total damage and type breakdown for each damage group.
-            foreach (var (damageGroupId, damageAmount) in sortedGroups.Reverse())
+            foreach (var (damageGroupId, damageAmount) in groups.Reverse())
             {
-                // groups are sorted, if the damageAmount == 0
-                // else you can end the cycle
                 if (damageAmount == 0)
-                    return;
+                    continue;
 
                 var groupTitleText = $"{Loc.GetString(
                     "health-analyzer-window-damage-group-text",
