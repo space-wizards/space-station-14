@@ -22,3 +22,10 @@
     - type: LizardAccent
     - type: ReplacementAccent
       accent: dwarf
+
+- type: trait
+  id: LoudMouth
+  name: trait-loud-mouth-name
+  description: trait-loud-mouth-desc
+  components:
+    - type: LoudAccent
