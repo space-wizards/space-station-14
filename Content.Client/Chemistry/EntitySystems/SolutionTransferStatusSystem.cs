@@ -6,7 +6,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Chemistry.EntitySystems;
 
-public sealed class SolutionTransferControlEvents : EntitySystem
+public sealed class SolutionTransferStatusSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -41,7 +41,7 @@ public sealed class SolutionTransferControlEvents : EntitySystem
             InvalidModeText = "injector-invalid-injector-toggle-mode",
             VolumeLabelText = "injector-volume-label"
         };
-        args.Controls.Add(new TransferStatusControl(component, tranlates, true, true));
+        args.Controls.Add(new SolutionTransferStatusControl(component, tranlates, true, true));
     }
 
     private void OnHandleHyposprayState(EntityUid uid, HyposprayComponent component, ref ComponentHandleState args)
@@ -64,7 +64,7 @@ public sealed class SolutionTransferControlEvents : EntitySystem
             InvalidModeText = "",
             VolumeLabelText = "hypospray-volume-text"
         };
-        args.Controls.Add(new TransferStatusControl(component, tranlates, true, false));
+        args.Controls.Add(new SolutionTransferStatusControl(component, tranlates, true, false));
     }
 
     private void OnHandleTransferState(EntityUid uid, SolutionTransferComponent component, ref ComponentHandleState args)
