@@ -135,7 +135,7 @@ public sealed class BodySystem : SharedBodySystem
         {
             if (deleteItems)
             {
-                if(TryComp<BrainComponent>(entity, out _) == false || deleteBrain == true)
+                if (!HasComp<BrainComponent>(entity) || deleteBrain)
                 {
                     QueueDel(entity);
                 }
