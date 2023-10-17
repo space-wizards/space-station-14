@@ -8,16 +8,16 @@
   },
   "states": [
     {
-      "name": "unlit-small"
+      "name": "stand-small"
     },
     {
-      "name": "unlit-big"
+      "name": "stand-big"
     },
     {
-      "name": "unlit-small-out"
+      "name": "candle-small"
     },
     {
-      "name": "unlit-big-out"
+      "name": "candle-big"
     },
     {
       "name": "inhand-left",
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "name": "fire-inhand-left",
+      "name": "inhand-left-flame",
       "directions": 4,
       "delays": [
         [
@@ -72,7 +72,7 @@
       ]
     },
     {
-      "name": "fire-inhand-right",
+      "name": "inhand-right-flame",
       "directions": 4,
       "delays": [
         [

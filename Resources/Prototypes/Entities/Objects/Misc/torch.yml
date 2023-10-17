@@ -81,132 +81,90 @@
   id: Candle
   description: A thin wick threaded through fat.
   components:
-    - type: ExpendableLight
-      spentName: expendable-light-melted-candle-name
-      spentDesc: expendable-light-melted-candle-desc
-      glowDuration: 30 # time in seconds
-      fadeOutDuration: 8
-      turnOnBehaviourID: turn_on
-      fadeOutBehaviourID: fade_out
-      iconStateLit: unlit-small
-      iconStateSpent: unlit-small-out
-      litSound:
-        path: /Audio/Items/Flare/flare_on.ogg
     - type: Sprite
       noRot: true
       sprite: Objects/Misc/candles.rsi
       layers:
-        - map: [ enum.ExpendableLightVisualLayers.Base ]
-          state: unlit-small
-        - map: [ enum.ExpendableLightVisualLayers.Glow ]
-          state: fire-small
-          visible: false
-          shader: unshaded
-        - map: [ enum.ExpendableLightVisualLayers.Overlay ]
-          state: fire-small
-          visible: false
-          shader: unshaded
-    - type: Icon
-      sprite: Objects/Misc/candles.rsi
-      state: unlit-small
+        - state: candle-big
+          color: "#decb8e"
     - type: Item
+      size: 2
       sprite: Objects/Misc/candles.rsi
-    #- type: Construction
-    #  graph: LightTorch
-    #  node: torch
     - type: Appearance
+    - type: Reactive
+      groups:
+        Flammable: [ Touch ]
+        Extinguish: [ Touch ]
+    - type: ExtinguishOnInteract
+      extinguishSound: 
+        path: /Audio/Items/candle_blowing.ogg
+        params:
+          variation: 0.05
+    - type: UseDelay
+    - type: Flammable
+      fireSpread: false
+      canResistFire: false
+      alwaysCombustible: true
+      canExtinguish: true 
+      firestacksOnIgnite: 3.0
+      firestackFade: 0.0 #the candle will not extinguish itself until it is destroyed.
+      damage:
+        types:
+          Heat: 0.1
+    - type: FireVisuals
+      sprite: Objects/Misc/candles.rsi
+      normalState: fire-big
+    - type: ToggleableLightVisuals
+      spriteLayer: blade
+      inhandVisuals:
+        left:
+        - state: inhand-left-blade
+          shader: unshaded
+        right:
+        - state: inhand-right-blade
+          shader: unshaded
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:SpawnEntitiesBehavior
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+          
+#Purely decorative candles for mappers. Do not have any functionality.
+
+- type: entity 
+  name: magic candle 
+  description: It's either magic or high tech, but this candle never goes out. On the other hand, its flame is quite cold.
+  parent: BaseItem
+  id: CandleInfinite
+  components:
+    - type: Sprite
+      noRot: true
+      sprite: Objects/Misc/candles.rsi
+      layers:
+        - state: candle-big
+          color: "#decb8e"
+        - state: fire-big
+          shader: unshaded
     - type: PointLight
-      enabled: false
-      color: "#c7852e"
-      radius: 1.7
-      energy: 3.0
-      netsync: false
-    - type: IgnitionSource
-      temperature: 400
-      ignited: false
-    - type: LightBehaviour
-      behaviours:
-        - !type:RandomizeBehaviour # immediately make it bright and flickery
-          id: turn_on
-          interpolate: Nearest
-          minDuration: 0.02
-          maxDuration: 0.06
-          startValue: 1.0
-          endValue: 3.0
-          property: Energy
-          isLooped: true
-        - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
-          id: turn_on
-          maxDuration: 8.0
-          startValue: 1.0
-          endValue: 3.0
-        - !type:RandomizeBehaviour # weaker flicker as it fades out
-          id: fade_out
-          interpolate: Nearest
-          minDuration: 0.02
-          maxDuration: 0.06
-          startValue: 1.0
-          endValue: 1.5
-          property: Energy
-          isLooped: true
-        - !type:FadeBehaviour # fade out radius as it burns out
-          id: fade_out
-          maxDuration: 8.0
-          startValue: 3.0
-          endValue: 1.0
-        
+      color: "#e39c40"
+      radius: 2.5
+      power: 10
 #- type: entity
-#  name: candle
-#  parent: Candle
-#  id: CandleBig
-#  description: A thin wick threaded through fat.
+#  name: red candle
+#  id: CandleRed
 #  components:
-#    - type: ExpendableLight
-#      glowDuration: 40
-#      fadeOutDuration: 8
-#      iconStateSpent: unlit-big-out
-#    - type: Sprite
-#      sprite: Objects/Misc/candles.rsi
-#      layers:
-#        - map: [ enum.ExpendableLightVisualLayers.Base ]
-#          state: unlit-big
-#        - map: [ enum.ExpendableLightVisualLayers.Glow ]
-#          state: fire-big
-#          visible: false
-#          shader: unshaded
-#    - type: Icon
-#      sprite: Objects/Misc/candles.rsi
-#      state: unlit-big
-#    - type: PointLight
-#      radius: 2.0
-#      energy: 5.0
-#    - type: LightBehaviour
-#      behaviours:
-#        - !type:RandomizeBehaviour # immediately make it bright and flickery
-#          id: turn_on
-#          interpolate: Nearest
-#          minDuration: 0.02
-#          maxDuration: 0.06
-#          startValue: 1.0
-#          endValue: 5.0
-#          property: Energy
-#          isLooped: true
-#        - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
-#          id: turn_on
-#          maxDuration: 8.0
-#          startValue: 1.0
-#          endValue: 5.0
-#        - !type:RandomizeBehaviour # weaker flicker as it fades out
-#          id: fade_out
-#          interpolate: Nearest
-#          minDuration: 0.02
-#          maxDuration: 0.06
-#          startValue: 1.0
-#          endValue: 2
-#          property: Energy
-#          isLooped: true
-#        - !type:FadeBehaviour # fade out radius as it burns out
-#          id: fade_out
-#          maxDuration: 8.0
-#          startValue: 5.0
-#          endValue: 1.0
+#  - type: Sprite
+#    noRot: true
+#    sprite: Objects/Misc/candles.rsi
+#    layers:
+#      - state: candle-big
+#        color: "#a12349"
+#      - state: fire-big
+#        visible: true
+#        shader: unshaded
