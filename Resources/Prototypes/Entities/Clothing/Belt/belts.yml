@@ -208,6 +208,8 @@
         - TrashBag
         - WetFloorSign
         - HolosignProjector
+        - LightReplacer
+        - JanicartKeys
       components:
         - LightReplacer
   - type: ItemMapper
