@@ -425,11 +425,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("eye_color");
 
-                    b.Property<string>("SpeakerColor")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("speaker_color");
-
                     b.Property<string>("FacialHairColor")
                         .IsRequired()
                         .HasColumnType("text")

@@ -235,11 +235,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("eye_color")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("SpeakerColor")
-                        .IsRequired()
-                        .HasColumnName("speaker_color")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("FacialHairColor")
                         .IsRequired()
                         .HasColumnName("facial_hair_color")
