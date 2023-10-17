@@ -22,6 +22,14 @@ public sealed partial class SignalTimerComponent : Component
     [DataField("label"), ViewVariables(VVAccess.ReadWrite)]
     public string Label = "";
 
+    //SS220-brig-timer-description begin
+    /// <summary>
+    ///     The text used for displaying on examination.
+    /// </summary>
+    [DataField("descriptionText"), ViewVariables(VVAccess.ReadWrite)]
+    public string DescriptionText = "";
+    //SS220-brig-timer-description end
+
     /// <summary>
     ///     The port that gets signaled when the timer triggers.
     /// </summary>

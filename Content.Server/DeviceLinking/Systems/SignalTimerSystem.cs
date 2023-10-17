@@ -1,6 +1,7 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
+using Content.Shared.Examine;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
 using Robust.Server.GameObjects;
@@ -25,14 +26,27 @@ public sealed class SignalTimerSystem : EntitySystem
         SubscribeLocalEvent<SignalTimerComponent, AfterActivatableUIOpenEvent>(OnAfterActivatableUIOpen);
 
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerTextChangedMessage>(OnTextChangedMessage);
+        SubscribeLocalEvent<SignalTimerComponent, SignalTimerDescriptionTextChangedMessage>(OnDescriptionTextChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerDelayChangedMessage>(OnDelayChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerStartMessage>(OnTimerStartMessage);
+        SubscribeLocalEvent<SignalTimerComponent, ExaminedEvent>(OnExamined); //SS220-brig-timer-description
     }
 
     private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
     {
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
     }
+
+    //SS220-brig-timer-description begin
+    private void OnExamined(EntityUid uid, SignalTimerComponent component, ExaminedEvent args)
+    {
+        if (component.DescriptionText.Length == 0)
+            return;
+
+        var message = Loc.GetString("signal-timer-examine-description", ("description", component.DescriptionText));
+        args.PushMarkup(message);
+    }
+    //SS220-brig-timer-description end
 
     private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
     {
@@ -41,6 +55,7 @@ public sealed class SignalTimerSystem : EntitySystem
         if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
         {
             _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(component.Label,
+                component.DescriptionText, //SS220-brig-timer-description
                 TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"),
                 TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"),
                 component.CanEditLabel,
@@ -61,6 +76,7 @@ public sealed class SignalTimerSystem : EntitySystem
         if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
         {
             _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(signalTimer.Label,
+                signalTimer.DescriptionText, //SS220-brig-timer-description
                 TimeSpan.FromSeconds(signalTimer.Delay).Minutes.ToString("D2"),
                 TimeSpan.FromSeconds(signalTimer.Delay).Seconds.ToString("D2"),
                 signalTimer.CanEditLabel,
@@ -116,6 +132,18 @@ public sealed class SignalTimerSystem : EntitySystem
         component.Label = args.Text[..Math.Min(5, args.Text.Length)];
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
     }
+
+    //SS220-brig-timer-description begin
+    private void OnDescriptionTextChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerDescriptionTextChangedMessage args)
+    {
+        if (!IsMessageValid(uid, args))
+            return;
+
+        //100 is the max description text length
+        component.DescriptionText = args.Text[..Math.Min(100, args.Text.Length)];
+        Log.Log(LogLevel.Info, component.DescriptionText);
+    }
+    //SS220-brig-timer-description end
 
     private void OnDelayChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerDelayChangedMessage args)
     {

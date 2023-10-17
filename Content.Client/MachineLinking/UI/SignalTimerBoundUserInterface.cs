@@ -27,6 +27,7 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
         _window.OpenCentered();
         _window.OnClose += Close;
         _window.OnCurrentTextChanged += OnTextChanged;
+        _window.OnDescriptionTextChanged += OnDescriptionTextChanged; //SS220-brig-timer-description
         _window.OnCurrentDelayMinutesChanged += OnDelayChanged;
         _window.OnCurrentDelaySecondsChanged += OnDelayChanged;
     }
@@ -40,6 +41,13 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
     {
         SendMessage(new SignalTimerTextChangedMessage(newText));
     }
+
+    //SS220-brig-timer-description begin
+    private void OnDescriptionTextChanged(string newText)
+    {
+        SendMessage(new SignalTimerDescriptionTextChangedMessage(newText));
+    }
+    //SS220-brig-timer-description end
 
     private void OnDelayChanged(string newDelay)
     {
@@ -65,9 +73,11 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
             return;
 
         _window.SetCurrentText(cast.CurrentText);
+        _window.SetCurrentDescriptionText(cast.CurrentDescriptionText); //SS220-brig-timer-description
         _window.SetCurrentDelayMinutes(cast.CurrentDelayMinutes);
         _window.SetCurrentDelaySeconds(cast.CurrentDelaySeconds);
         _window.SetShowText(cast.ShowText);
+        _window.SetShowDescriptionText(cast.ShowText); //SS220-brig-timer-description
         _window.SetTriggerTime(cast.TriggerTime);
         _window.SetTimerStarted(cast.TimerStarted);
         _window.SetHasAccess(cast.HasAccess);

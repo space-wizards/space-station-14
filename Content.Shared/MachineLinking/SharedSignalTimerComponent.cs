@@ -15,6 +15,7 @@ public enum SignalTimerUiKey : byte
 public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
 {
     public string CurrentText;
+    public string CurrentDescriptionText; //SS220-brig-timer-description
     public string CurrentDelayMinutes;
     public string CurrentDelaySeconds;
     public bool ShowText;
@@ -23,6 +24,7 @@ public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
     public bool HasAccess;
 
     public SignalTimerBoundUserInterfaceState(string currentText,
+        string currentDescriptionText,
         string currentDelayMinutes,
         string currentDelaySeconds,
         bool showText,
@@ -31,6 +33,7 @@ public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
         bool hasAccess)
     {
         CurrentText = currentText;
+        CurrentDescriptionText = currentDescriptionText; //SS220-brig-timer-description
         CurrentDelayMinutes = currentDelayMinutes;
         CurrentDelaySeconds = currentDelaySeconds;
         ShowText = showText;
@@ -50,6 +53,19 @@ public sealed class SignalTimerTextChangedMessage : BoundUserInterfaceMessage
         Text = text;
     }
 }
+
+//SS220-brig-timer-description begin
+[Serializable, NetSerializable]
+public sealed class SignalTimerDescriptionTextChangedMessage : BoundUserInterfaceMessage
+{
+    public string Text { get; }
+
+    public SignalTimerDescriptionTextChangedMessage(string text)
+    {
+        Text = text;
+    }
+}
+//SS220-brig-timer-description end
 
 [Serializable, NetSerializable]
 public sealed class SignalTimerDelayChangedMessage : BoundUserInterfaceMessage

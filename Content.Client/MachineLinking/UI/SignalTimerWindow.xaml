@@ -5,6 +5,12 @@
             <Label Name="CurrentLabel" Text="{Loc signal-timer-menu-label}" />
             <LineEdit Name="CurrentTextEdit" MinWidth="80" />
         </BoxContainer>
+        <!--SS220-brig-timer-description-begin-->
+        <BoxContainer Name="DescriptionTextEdit" Orientation="Horizontal">
+            <Label Name="CurrentDescription" Text="{Loc signal-timer-menu-description}" />
+            <LineEdit Name="CurrentDescriptionTextEdit" MinWidth="100" />
+        </BoxContainer>
+        <!--SS220-brig-timer-description-end-->
         <BoxContainer Name="DelayEdit" Orientation="Horizontal">
             <Label Name="CurrentDelay" Text="{Loc signal-timer-menu-delay}" />
             <LineEdit Name="CurrentDelayEditMinutes" MinWidth="32" />

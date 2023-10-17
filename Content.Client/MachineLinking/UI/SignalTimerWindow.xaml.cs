@@ -10,8 +10,10 @@ namespace Content.Client.MachineLinking.UI;
 public sealed partial class SignalTimerWindow : DefaultWindow
 {
     private const int MaxTextLength = 5;
+    private const int MaxDescriptionTextLength = 100; //SS220-brig-timer-description
 
     public event Action<string>? OnCurrentTextChanged;
+    public event Action<string>? OnDescriptionTextChanged; //SS220-brig-timer-description
     public event Action<string>? OnCurrentDelayMinutesChanged;
     public event Action<string>? OnCurrentDelaySecondsChanged;
 
@@ -28,6 +30,7 @@ public sealed partial class SignalTimerWindow : DefaultWindow
         _owner = owner;
 
         CurrentTextEdit.OnTextChanged += e => OnCurrentTextChange(e.Text);
+        CurrentDescriptionTextEdit.OnTextChanged += e => OnCurrentDescriptionTextChange(e.Text); //SS220-brig-timer-description
         CurrentDelayEditMinutes.OnTextChanged += e => OnCurrentDelayMinutesChange(e.Text);
         CurrentDelayEditSeconds.OnTextChanged += e => OnCurrentDelaySecondsChange(e.Text);
         StartTimer.OnPressed += _ => OnStartTimer();
@@ -73,6 +76,18 @@ public sealed partial class SignalTimerWindow : DefaultWindow
         }
         OnCurrentTextChanged?.Invoke(text);
     }
+
+    //SS220-brig-timer-description begin
+    public void OnCurrentDescriptionTextChange(string text)
+    {
+        if (CurrentDescriptionTextEdit.Text.Length > MaxDescriptionTextLength)
+        {
+            CurrentDescriptionTextEdit.Text = CurrentDescriptionTextEdit.Text.Remove(MaxDescriptionTextLength);
+            CurrentDescriptionTextEdit.CursorPosition = MaxDescriptionTextLength;
+        }
+        OnDescriptionTextChanged?.Invoke(text);
+    }
+    //SS220-brig-timer-description begin
 
     public void OnCurrentDelayMinutesChange(string text)
     {
@@ -139,6 +154,13 @@ public sealed partial class SignalTimerWindow : DefaultWindow
         CurrentTextEdit.Text = text;
     }
 
+    //SS220-brig-timer-description begin
+    public void SetCurrentDescriptionText(string text)
+    {
+        CurrentDescriptionTextEdit.Text = text;
+    }
+    //SS220-brig-timer-description end
+
     public void SetCurrentDelayMinutes(string delay)
     {
         CurrentDelayEditMinutes.Text = delay;
@@ -153,6 +175,13 @@ public sealed partial class SignalTimerWindow : DefaultWindow
     {
         TextEdit.Visible = showTime;
     }
+
+    //SS220-brig-timer-description begin
+    public void SetShowDescriptionText(bool showTime)
+    {
+        DescriptionTextEdit.Visible = showTime;
+    }
+    //SS220-brig-timer-description end
 
     public void SetTriggerTime(TimeSpan timeSpan)
     {
@@ -173,6 +202,7 @@ public sealed partial class SignalTimerWindow : DefaultWindow
     public void SetHasAccess(bool hasAccess)
     {
         CurrentTextEdit.Editable = hasAccess;
+        CurrentDescriptionTextEdit.Editable = hasAccess; //SS220-brig-timer-description
         CurrentDelayEditMinutes.Editable = hasAccess;
         CurrentDelayEditSeconds.Editable = hasAccess;
         StartTimer.Disabled = !hasAccess;
