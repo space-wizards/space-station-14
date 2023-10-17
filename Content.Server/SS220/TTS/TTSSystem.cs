@@ -48,7 +48,7 @@ public sealed partial class TTSSystem : EntitySystem
             return;
 
         var voiceId = senderComponent.VoicePrototypeId;
-        if(voiceId == null)
+        if (voiceId == null)
             return;
 
         var voiceEv = new TransformSpeakerVoiceEvent(args.Source, voiceId);
@@ -67,7 +67,7 @@ public sealed partial class TTSSystem : EntitySystem
             args.Message.Length > MaxMessageChars * 2 ||
             !_prototypeManager.TryIndex<TTSVoicePrototype>(_voiceId, out var protoVoice))
         {
-            RaiseNetworkEvent(new AnnounceTTSEvent(new byte[]{}, args.AnnouncementSound, args.AnnouncementSoundParams), args.Source);
+            RaiseNetworkEvent(new AnnounceTTSEvent(new byte[] { }, args.AnnouncementSound, args.AnnouncementSoundParams), args.Source);
             return;
         }
 

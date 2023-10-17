@@ -88,6 +88,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [ValidatePrototypeId<TagPrototype>]
     private const string NukeOpsUplinkTagPrototype = "NukeOpsUplink";
 
+    [ValidatePrototypeId<TagPrototype>]
+    private const string LoneOpsUplinkTagPrototype = "LoneOpsUplink"; //SS220 Lone-Ops-War
+
     [ValidatePrototypeId<AntagPrototype>]
     public const string NukeopsId = "Nukeops";
 
@@ -246,7 +249,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var enumerator = EntityQueryEnumerator<StoreComponent>();
         while (enumerator.MoveNext(out var uid, out var component))
         {
-            if (!_tag.HasTag(uid, NukeOpsUplinkTagPrototype))
+            if (!_tag.HasAnyTag(uid, NukeOpsUplinkTagPrototype, LoneOpsUplinkTagPrototype)) // SS220 Lone-Ops-War
                 continue;
 
             // SS220 lone-ops-war begin

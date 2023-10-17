@@ -1,6 +1,5 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
-using Content.Shared.Actions;
 using Content.Shared.Popups;
 using Robust.Shared.Console;
 using Robust.Shared.Utility;
@@ -9,11 +8,11 @@ using Content.Shared.SS220.GhostRoleCast;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.SS220.GhostRoleCast
+
 {
     public sealed class GhostRoleCastSystem : EntitySystem
     {
         [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly IConsoleHost _consoleHost = default!;
         [Dependency] private readonly IUserInterfaceManager _uimanager = default!;
@@ -22,18 +21,9 @@ namespace Content.Client.SS220.GhostRoleCast
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GhostRoleCastComponent, ComponentStartup>(OnGhostRoleCastInit);
-
             SubscribeLocalEvent<GhostRoleCastComponent, ToggleGhostRoleCastActionEvent>(OnToggleGhostRoleCast);
             SubscribeLocalEvent<GhostRoleCastComponent, ToggleGhostRoleRemoveActionEvent>(OnToggleGhostRoleRemove);
             SubscribeLocalEvent<GhostRoleCastComponent, ToggleGhostRoleCastSettingsEvent>(OnToggleGhostRoleSettings);
-        }
-
-        private void OnGhostRoleCastInit(EntityUid uid, GhostRoleCastComponent component, ComponentStartup args)
-        {
-            _actions.AddAction(uid, ref component.ToggleGhostRoleNameAction, GhostRoleCastComponent.ToggleGhostRoleNameActionId);
-            _actions.AddAction(uid, ref component.ToggleGhostRoleCastAction, GhostRoleCastComponent.ToggleGhostRoleCastActionId);
-            _actions.AddAction(uid, ref component.ToggleGhostRoleRemoveAction, GhostRoleCastComponent.ToggleGhostRoleRemoveActionId);
         }
 
         private void OnToggleGhostRoleCast(EntityUid uid, GhostRoleCastComponent component, ToggleGhostRoleCastActionEvent args)
@@ -58,9 +48,11 @@ namespace Content.Client.SS220.GhostRoleCast
             if (rolerule == "")
                 rolerule = Loc.GetString("ghost-role-component-default-rules");
 
+            var targetNetUid = GetNetEntity(args.Target);
+
             var makeGhostRoleCommand =
                 $"makeghostrole " +
-                $"\"{CommandParsing.Escape(args.Target.ToString())}\" " +
+                $"\"{CommandParsing.Escape(targetNetUid.ToString())}\" " +
                 $"\"{CommandParsing.Escape(rolename)}\" " +
                 $"\"{CommandParsing.Escape(roledesc)}\" " +
                 $"\"{CommandParsing.Escape(rolerule)}\"";
@@ -89,16 +81,18 @@ namespace Content.Client.SS220.GhostRoleCast
                 return;
             }
 
+            var targetNetUid = GetNetEntity(args.Target);
+
             var removeGhostRoleCommand =
                 $"rmcomp " +
-                $"\"{CommandParsing.Escape(args.Target.ToString())}\" " +
+                $"\"{CommandParsing.Escape(targetNetUid.ToString())}\" " +
                 $"\"{CommandParsing.Escape("GhostRole")}\"";
 
             _consoleHost.ExecuteCommand(playersession, removeGhostRoleCommand);
 
             var removeGhostTakeoverAvailableCommand =
                 $"rmcomp " +
-                $"\"{CommandParsing.Escape(args.Target.ToString())}\" " +
+                $"\"{CommandParsing.Escape(targetNetUid.ToString())}\" " +
                 $"\"{CommandParsing.Escape("GhostTakeoverAvailable")}\"";
 
             _consoleHost.ExecuteCommand(playersession, removeGhostTakeoverAvailableCommand);
