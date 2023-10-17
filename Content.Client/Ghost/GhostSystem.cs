@@ -115,11 +115,13 @@ namespace Content.Client.Ghost
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
 
-            _lightManager.Enabled = true;
-            _eye.CurrentEye.DrawFov = true;
-
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
+
+            // SS220 no-ghost-lighting-abuse begin
+            _lightManager.Enabled = true;
+            _eye.CurrentEye.DrawFov = true;
+            // SS220 no-ghost-lighting-abuse end
 
             if (component.IsAttached)
             {
