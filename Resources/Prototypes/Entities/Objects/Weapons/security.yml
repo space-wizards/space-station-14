@@ -10,7 +10,7 @@
     - state: stunbaton_off
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
-    energyPerUse: 100
+    energyPerUse: 50
   - type: MeleeWeapon
     damage:
       types:
@@ -19,10 +19,10 @@
     angle: 60
     animation: WeaponArcSlash
   - type: StaminaDamageOnHit
-    damage: 55
+    damage: 35
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 55
+    damage: 35
     sound: /Audio/Weapons/egloves.ogg
   - type: Battery
     maxCharge: 1000
@@ -137,6 +137,15 @@
     - type: GuideHelp
       guides:
       - Security
+
+- type: entity
+  name: flash
+  parent: Flash
+  id: SciFlash
+  components:
+    - type: LimitedCharges
+      maxCharges: 2
+      charges: 2
 
 - type: entity
   name: portable flasher

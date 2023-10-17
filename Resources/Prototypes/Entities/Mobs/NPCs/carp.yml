@@ -129,6 +129,18 @@
       proto: robot
 
 - type: entity
+  parent: MobCarp
+  id: MobCarpRainbow
+  name: rainbow carp
+  description: Wow such a shiny fishie!
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 0.5
+  - type: RgbLightController
+    layers: [ 0 ]
+
+- type: entity
   id: MobCarpSalvage
   parent: MobCarp
   suffix: "Salvage Ruleset"
