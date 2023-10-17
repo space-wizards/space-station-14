@@ -219,6 +219,8 @@ public sealed partial class TTSSystem : EntitySystem
     private void PlayTTSBytes(byte[] data, EntityUid? sourceUid = null, AudioParams? audioParams = null, bool globally = false)
     {
         _sawmill.Debug($"Play TTS audio {data.Length} bytes from {sourceUid} entity");
+        if (data.Length == 0)
+            return;
 
         var finalParams = audioParams ?? AudioParams.Default;
 
