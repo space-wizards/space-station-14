@@ -16,7 +16,7 @@ public sealed class NukeLabelSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, NukeLabelComponent nuke, MapInitEvent args)
     {
-        var label = Loc.GetString(nuke.NukeLabel, ("serial", _nuke.GenerateRandomNumberString(nuke.SerialLength)));
+        var label = Loc.GetString(nuke.Prefix, ("serial", _nuke.GenerateRandomNumberString(nuke.SerialLength)));
         var meta = MetaData(uid);
         _metaData.SetEntityName(uid, $"{meta.EntityName} ({label})", meta);
     }

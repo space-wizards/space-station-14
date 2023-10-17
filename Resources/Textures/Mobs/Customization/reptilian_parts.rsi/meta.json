@@ -170,6 +170,10 @@
 	{
 	  "name": "r_leg_tiger",
 	  "directions": 4
-    }
+    },
+	{
+	  "name": "horns_floppy_kobold_ears",
+	  "directions": 4
+	}
   ]
 }
