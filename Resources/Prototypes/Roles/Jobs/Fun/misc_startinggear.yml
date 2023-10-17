@@ -137,7 +137,7 @@
     belt: ClothingBeltMilitaryWebbing
   inhand:
   - NukeOpsDeclarationOfWar
-  innerclothingskirt: ClothingUniformJumpskirtOperative
+  innerClothingSkirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
@@ -329,7 +329,7 @@
     id: CaptainPDA
     back: ClothingBackpackFilled
     #SS220 deathmatch loadout end
-  innerclothingskirt: ClothingUniformJumpskirtColorWhite
+  innerClothingSkirt: ClothingUniformJumpskirtColorWhite
   inhand:
     - WeaponMeleeToolboxRobust
 

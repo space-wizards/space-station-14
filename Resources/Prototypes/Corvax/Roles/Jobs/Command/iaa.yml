@@ -33,7 +33,7 @@
     eyes: ClothingEyesGlassesSunglasses
     ears: ClothingHeadsetIAA
     neck: ClothingNeckLawyerbadge
-  innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
+  innerClothingSkirt: ClothingUniformJumpskirtLawyerBlack
   inhand:
     - BriefcaseIAAFilled
   satchel: ClothingBackpackSatchelIAAFilled
