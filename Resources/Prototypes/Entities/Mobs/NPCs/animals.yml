@@ -534,10 +534,11 @@
   - type: Tag
     tags:
     - VimPilot
-    - CopperBlood
   - type: HTN
     rootTask:
       task: RuminantCompound
+  - type: Body
+    prototype: AnimalHemocyanin
 
 - type: entity
   name: goat
@@ -1638,6 +1639,8 @@
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
+  - type: Body
+    prototype: AnimalHemocyanin
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -1683,7 +1686,6 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
-    - CopperBlood
 
 - type: entity
   name: tarantula

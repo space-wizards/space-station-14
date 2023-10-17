@@ -63,18 +63,19 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:HasTag
-          invert: true
-          tag: CopperBlood
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
         damage:
           types:
             Poison: 0.1
     Medicine:
       effects:
       - !type:ModifyBloodLevel
-        conditions:
-        - !type:HasTag
-          tag: CopperBlood
+        condition:
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: true
         amount: 4
 
 - type: reagent
@@ -153,8 +154,9 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:HasTag
-          tag: CopperBlood
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: true
         damage:
           types:
             Poison: 0.1
@@ -162,9 +164,9 @@
       effects:
       - !type:ModifyBloodLevel
         condition:
-        - !type:HasTag
-          invert: true
-          tag: CopperBlood
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
         amount: 4
 
 - type: reagent

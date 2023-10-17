@@ -318,9 +318,6 @@
   id: Coldsauce
 
 - type: Tag
-  id: CopperBlood
-
-- type: Tag
   id: Cow
 
 - type: Tag
