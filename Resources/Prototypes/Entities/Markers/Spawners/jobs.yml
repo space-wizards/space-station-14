@@ -67,12 +67,12 @@
   parent: SpawnPointJobBase
   name: salvagespecialist
   components:
-    - type: SpawnPoint
-      job_id: SalvageSpecialist
-    - type: Sprite
-      layers:
-        - state: green
-        - state: miner
+  - type: SpawnPoint
+    job_id: SalvageSpecialist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: salvagespecialist
 
 # Civilian
 
@@ -93,16 +93,24 @@
   parent: SpawnPointAssistant
   name: technical assistant
   components:
-    - type: SpawnPoint
-      job_id: TechnicalAssistant
+  - type: SpawnPoint
+    job_id: TechnicalAssistant
+  - type: Sprite
+    layers:
+      - state: green
+      - state: technicalassistant
 
 - type: entity
   id: SpawnPointMedicalIntern
   parent: SpawnPointAssistant
   name: medical intern
   components:
-    - type: SpawnPoint
-      job_id: MedicalIntern
+  - type: SpawnPoint
+    job_id: MedicalIntern
+  - type: Sprite
+    layers:
+      - state: green
+      - state: medicalintern
 
 - type: entity
   id: SpawnPointSecurityCadet
@@ -121,16 +129,24 @@
   parent: SpawnPointAssistant
   name: research assistant
   components:
-    - type: SpawnPoint
-      job_id: ResearchAssistant
+  - type: SpawnPoint
+    job_id: ResearchAssistant
+  - type: Sprite
+    layers:
+      - state: green
+      - state: researchassistant
 
 - type: entity
   id: SpawnPointServiceWorker
   parent: SpawnPointAssistant
   name: service worker
   components:
-    - type: SpawnPoint
-      job_id: ServiceWorker
+  - type: SpawnPoint
+    job_id: ServiceWorker
+  - type: Sprite
+    layers:
+      - state: green
+      - state: serviceworker
 
 - type: entity
   id: SpawnPointBartender
@@ -245,24 +261,24 @@
   parent: SpawnPointJobBase
   name: musician
   components:
-    - type: SpawnPoint
-      job_id: Musician
-    - type: Sprite
-      layers:
-        - state: green
-        - state: musician
+  - type: SpawnPoint
+    job_id: Musician
+  - type: Sprite
+    layers:
+      - state: green
+      - state: musician
 
 - type: entity
   id: SpawnPointBoxer
   parent: SpawnPointJobBase
   name: boxer
   components:
-    - type: SpawnPoint
-      job_id: Boxer
-    - type: Sprite
-      layers:
-        - state: green
-        - state: boxer
+  - type: SpawnPoint
+    job_id: Boxer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: boxer
 
 - type: entity
   id: SpawnPointBorg
@@ -348,12 +364,12 @@
   parent: SpawnPointJobBase
   name: atmospherics
   components:
-    - type: SpawnPoint
-      job_id: AtmosphericTechnician
-    - type: Sprite
-      layers:
-        - state: green
-        - state: atmospherics
+  - type: SpawnPoint
+    job_id: AtmosphericTechnician
+  - type: Sprite
+    layers:
+      - state: green
+      - state: atmospherics
 
 # Medical
 

@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Construction
 {
@@ -298,8 +299,22 @@ namespace Content.Server.Construction
                 throw new Exception("Missing construction components");
             }
 
+            // Exit if the new entity's prototype is the same as the original, or the prototype is invalid
             if (newEntity == metaData.EntityPrototype?.ID || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
                 return null;
+
+            // [Optional] Exit if the new entity's prototype is a parent of the original
+            // E.g., if an entity with the 'AirlockCommand' prototype was to be replaced with a new entity that 
+            // had the 'Airlock' prototype, and DoNotReplaceInheritingEntities was true, the code block would 
+            // exit here because 'AirlockCommand' is derived from 'Airlock'
+            if (GetCurrentNode(uid, construction)?.DoNotReplaceInheritingEntities == true &&
+                metaData.EntityPrototype?.ID != null)
+            {
+                var parents = _prototypeManager.EnumerateParents<EntityPrototype>(metaData.EntityPrototype.ID)?.ToList();
+
+                if (parents != null && parents.Any(x => x.ID == newEntity))
+                    return null;
+            }
 
             // Optional resolves.
             Resolve(uid, ref containerManager, false);

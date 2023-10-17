@@ -85,7 +85,7 @@ public sealed partial class GunSystem
             {
                 var p = (ProjectileComponent) projectile.Component;
 
-                if (p.Damage.Total > FixedPoint2.Zero)
+                if (!p.Damage.Empty)
                 {
                     return p.Damage;
                 }

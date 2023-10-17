@@ -53,7 +53,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
         {
-            if (modifiedDamage.Total > FixedPoint2.Zero && !deleted)
+            if (modifiedDamage.Any() && !deleted)
             {
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }

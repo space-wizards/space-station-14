@@ -2,10 +2,11 @@ using Content.Shared.FootPrints;
 using Content.Shared.Fluids;
 using Robust.Shared.Physics.Events;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.FootPrints
 {

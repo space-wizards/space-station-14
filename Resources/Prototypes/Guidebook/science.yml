@@ -3,10 +3,17 @@
   name: guide-entry-science
   text: "/ServerInfo/Guidebook/Science/Science.xml"
   children:
+  - Technologies
   - AnomalousResearch
   - Xenoarchaeology
   - Robotics
   - MachineUpgrading
+
+- type: guideEntry
+  id: Technologies
+  name: guide-entry-technologies
+  text: "/ServerInfo/Guidebook/Science/Technologies.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: AnomalousResearch

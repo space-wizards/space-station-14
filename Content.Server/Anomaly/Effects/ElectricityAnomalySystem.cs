@@ -48,7 +48,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
             if (mobQuery.HasComponent(ent))
                 validEnts.Add(ent);
 
-            if (_random.Prob(0.2f) && poweredQuery.HasComponent(ent))
+            if (_random.Prob(0.01f) && poweredQuery.HasComponent(ent))
                 validEnts.Add(ent);
         }
 

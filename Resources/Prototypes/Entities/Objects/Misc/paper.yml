@@ -435,6 +435,63 @@
       color: "#3f3f3f"
     - state: folder-base
 
+- type: entity
+  id: BoxFolderClipboard
+  parent: BoxFolderBase
+  name: clipboard
+  description: The weapon of choice for those on the front lines of bureaucracy.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/clipboard.rsi
+    layers:
+    - state: clipboard
+    - state: clipboard_paper
+      map: ["clipboard_paper"]
+      visible: false
+    - state: clipboard_pen
+      map: ["clipboard_pen"]
+      visible: false
+    - state: clipboard_over
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      pen_slot: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      pen_slot:
+        name: Pen
+        whitelist:
+          tags:
+            - Write
+        insertOnInteract: false 
+  - type: Item
+    sprite: Objects/Misc/clipboard.rsi
+    size: 10
+  - type: Clothing
+    slots: [belt]
+    quickEquip: false
+    sprite: Objects/Misc/clipboard.rsi
+  - type: Storage
+    capacity: 20
+    whitelist:
+      tags:
+        - Document
+  - type: ItemMapper
+    mapLayers:
+      clipboard_paper:
+        whitelist:
+          tags:
+          - Document
+      clipboard_pen:
+        whitelist:
+          tags:
+          - Write
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+
 # Stamps
 - type: entity
   name: generic rubber stamp
