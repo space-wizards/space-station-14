@@ -61,8 +61,8 @@
   # Machine / Construction stuff
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-chemmaster
-    LayoutId: chem_master
+    boardName: wires-board-name-chemmaster
+    layoutId: chem_master
   - type: Machine
     board: ChemMasterMachineCircuitboard
   - type: ContainerContainer

@@ -121,8 +121,8 @@
             max: 1
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-minigravitygenerator
-    LayoutId: MiniGravityGenerator
+    boardName: wires-board-name-minigravitygenerator
+    layoutId: MiniGravityGenerator
   - type: Machine
     board: MiniGravityGeneratorCircuitboard
   - type: ApcPowerReceiver

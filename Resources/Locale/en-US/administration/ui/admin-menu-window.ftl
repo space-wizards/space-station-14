@@ -6,5 +6,6 @@ admin-menu-adminbus-tab = Adminbus
 admin-menu-atmos-tab = Atmos
 admin-menu-round-tab = Round
 admin-menu-server-tab = Server
+admin-menu-panic-bunker-tab = Panic Bunker
 admin-menu-players-tab = Players
 admin-menu-objects-tab = Objects

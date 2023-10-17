@@ -206,3 +206,13 @@
   components:
     - type: Implanter
       implant: DeathRattleImplant
+
+# Security and Command implanters
+
+- type: entity
+  id: MindShieldImplanter
+  name: mind-shield implanter
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: MindShieldImplant

@@ -553,6 +553,15 @@
     Durathread: 150
 
 - type: latheRecipe
+  id: ClothingNeckMantleQM
+  result: ClothingNeckMantleQM
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
+
+- type: latheRecipe
   id: ClothingOuterWinterMusician
   result: ClothingOuterWinterMusician
   completetime: 3.2

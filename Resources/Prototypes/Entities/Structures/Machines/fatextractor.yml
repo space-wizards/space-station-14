@@ -96,8 +96,8 @@
     board: FatExtractorMachineCircuitboard
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-fatextractor
-    LayoutId: FatExtractor
+    boardName: wires-board-name-fatextractor
+    layoutId: FatExtractor
   - type: Appearance
   - type: Speech
     speechVerb: Robotic

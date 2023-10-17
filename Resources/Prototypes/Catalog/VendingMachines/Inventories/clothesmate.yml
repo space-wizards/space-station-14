@@ -5,6 +5,7 @@
     ClothingBackpackDuffel: 5
     ClothingBackpackSatchel: 3
     ClothingBackpackSatchelLeather: 2
+    ClothingHeadHatBeret: 4
     ClothingHeadBandBlack: 2
     ClothingHeadBandBlue: 2
     ClothingHeadBandGreen: 2
@@ -37,6 +38,12 @@
     ClothingUniformJumpsuitHawaiRed: 2
     ClothingUniformJumpsuitHawaiYellow: 2
     ClothingUniformJumpsuitFlannel: 2
+    ClothingUniformJumpsuitCasualBlue: 2
+    ClothingUniformJumpskirtCasualBlue: 2
+    ClothingUniformJumpsuitCasualPurple: 2
+    ClothingUniformJumpskirtCasualPurple: 2
+    ClothingUniformJumpsuitCasualRed: 2
+    ClothingUniformJumpskirtCasualRed: 2
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
     ClothingShoesColorWhite: 3
