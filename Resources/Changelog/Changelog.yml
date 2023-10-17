@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: All crates have a brand new look., type: Tweak}
-  id: 4516
-  time: '2023-08-11T00:12:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Job icons now ignore lighting., type: Fix}
   id: 4517
   time: '2023-08-11T00:36:26.0000000+00:00'
@@ -2935,3 +2930,8 @@ Entries:
   - {message: Fix item drops mispredicting., type: Fix}
   id: 5015
   time: '2023-10-16T11:49:41.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Pneumatic Cannons can no longer shoot arrows., type: Tweak}
+  id: 5016
+  time: '2023-10-17T22:58:05.0000000+00:00'
