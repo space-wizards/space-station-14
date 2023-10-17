@@ -26,7 +26,7 @@ public sealed partial class EmagSiliconLawComponent : Component
     /// The laws that the borg is given when emagged.
     /// Law 0 is prepended to this, so this can only include the static laws.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<SiliconLawsetPrototype> EmagLaws = string.Empty;
 
     /// <summary>
