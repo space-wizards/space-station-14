@@ -127,6 +127,14 @@
     Steel: 300
 
 - type: latheRecipe
+  id: WhiteCane
+  result: WhiteCane
+  completetime: 2
+  materials:
+    Steel: 150
+    Plastic: 150
+
+- type: latheRecipe
   id: Medkit
   result: Medkit
   name: first aid kit (empty)
