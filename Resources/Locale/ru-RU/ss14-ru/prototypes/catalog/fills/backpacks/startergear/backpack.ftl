@@ -59,3 +59,5 @@ ent-ClothingBackpackPirateFilled = { ent-ClothingBackpackSatchelLeather }
     .desc = { ent-ClothingBackpackSatchelLeather.desc }
 ent-ClothingBackpackSecurityFilledDetective = { ent-ClothingBackpackSecurity }
 	.desc = { ent-ClothingBackpackSecurity.desc }
+ent-ClothingBackpackBrigmedicFilled = { ent-ClothingBackpackBrigmedic }
+	.desc = { ent-ClothingBackpackBrigmedic.desc }
