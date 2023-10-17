@@ -1,5 +1,6 @@
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
