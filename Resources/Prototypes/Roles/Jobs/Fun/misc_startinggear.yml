@@ -123,7 +123,7 @@
   id: SyndicateOperativeGearLone
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
-    back: ClothingBackpackDuffelSyndicateOperative
+    back: ClothingBackpackDuffelSyndicateOperativeLone
     mask: ClothingMaskGasSyndicate
   # eyes: Night Vision Goggles whenever they're made
     eyes: ClothingEyesGlassesMeson
@@ -135,11 +135,6 @@
     pocket1: DoubleEmergencyOxygenTankFilled
     pocket2: LoneOpsUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbing
-  inhand:
-  - NukeOpsDeclarationOfWar
-  innerClothingSkirt: ClothingUniformJumpskirtOperative
-  satchel: ClothingBackpackDuffelSyndicateOperative
-  duffelbag: ClothingBackpackDuffelSyndicateOperative
 
 #Nuclear Operative Commander Gear
 - type: startingGear
