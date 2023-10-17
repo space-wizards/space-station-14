@@ -4,11 +4,10 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 
 namespace Content.Server.Projectiles;
 
@@ -39,7 +38,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         RaiseLocalEvent(target, ref attemptEv);
         if (attemptEv.Cancelled)
         {
-            SetShooter(component, target);
+            SetShooter(uid, component, target);
             return;
         }
 
