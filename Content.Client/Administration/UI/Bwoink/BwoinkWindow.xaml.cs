@@ -19,6 +19,11 @@ namespace Content.Client.Administration.UI.Bwoink
                 if (sel is not null)
                 {
                     Title = $"{sel.CharacterName} / {sel.Username}";
+
+                    if (sel.OverallPlaytime != null)
+                    {
+                        Title += $" | {Loc.GetString("generic-playtime-title")}: {sel.PlaytimeString}";
+                    }
                 }
             };
 
