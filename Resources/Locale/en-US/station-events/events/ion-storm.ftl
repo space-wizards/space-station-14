@@ -21,11 +21,11 @@ ion-storm-law-having-harmful = HAVING {$adjective} {$thing} IS HARMFUL TO THE CR
 ion-storm-law-having-harmful = NOT HAVING {$adjective} {$thing} IS HARMFUL TO THE CREW
 
 # thing is a concept or require
-ion-storm-law-requires = {$who} {$require} {$thing}
-ion-storm-law-requires-subjects = {$who} {$require} {$joined} {$subjects}
+ion-storm-law-requires = {$who} {$word} {$thing}
+ion-storm-law-requires-subjects = {$who} {$word} {$joined} {$subjects}
 
-ion-storm-law-allergic = {$who} {$is} {$severity} ALLERGIC TO {$allergy}
-ion-storm-law-allergic-subjects = {$who} {$is} {$severity} ALLERGIC TO {$adjective} {$subjects}
+ion-storm-law-allergic = {$who} {$word} {$severity} ALLERGIC TO {$allergy}
+ion-storm-law-allergic-subjects = {$who} {$word} {$severity} ALLERGIC TO {$adjective} {$subjects}
 
 ion-storm-law-feeling = {$who} {$feeling} {$concept}
 ion-storm-law-feeling-subjects = {$who} {$feeling} {$joined} {$subjects}
