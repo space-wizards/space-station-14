@@ -36,7 +36,7 @@
                     <TextureRect Stretch="KeepAspectCentered"
                                  TexturePath="/Textures/Interface/PowerMonitoring/beveled_hexagon.png"
                                  SetSize="16 16"
-                                 Modulate="#ffa500"                               
+                                 Modulate="#ff4500"                               
                                  Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-smes'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
