@@ -35,6 +35,6 @@
     neck: ClothingNeckLawyerbadge
   innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
   inhand:
-    right hand: BriefcaseIAAFilled
+    - BriefcaseIAAFilled
   satchel: ClothingBackpackSatchelIAAFilled
   duffelbag: ClothingBackpackDuffelIAAFilled
