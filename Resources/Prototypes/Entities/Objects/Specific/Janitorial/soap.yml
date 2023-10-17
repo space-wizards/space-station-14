@@ -26,14 +26,14 @@
       slips:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
         layer:
         - SlipLayer
         hard: false
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
         density: 10
         mask:
         - ItemMask
