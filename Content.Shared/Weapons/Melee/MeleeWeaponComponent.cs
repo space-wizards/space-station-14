@@ -96,8 +96,19 @@ public sealed partial class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public EntProtoId WideAnimation = "WeaponArcSlash";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("useWeaponAsAttackAnimation")]
-    public bool UseWeaponAsAttackAnimation;
+    /// <summary>
+    /// Angle that the weapon will be rotated to relative to the attacker.
+    /// 0 degrees means the top faces the attacker.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public Angle WideAnimationRotation = Angle.Zero;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public bool UseWeaponAsAttackAnimation = true;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public bool SwingRight;
+
 
     // Sounds
 
