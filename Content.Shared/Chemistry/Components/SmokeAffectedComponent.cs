@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Chemistry.Components;
@@ -6,7 +7,7 @@ namespace Content.Shared.Chemistry.Components;
 /// This is used for entities which are currently being affected by smoke.
 /// Manages the gradual metabolism every second.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SmokeAffectedComponent : Component
 {
     /// <summary>

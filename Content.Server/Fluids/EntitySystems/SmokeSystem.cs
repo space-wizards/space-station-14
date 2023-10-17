@@ -46,6 +46,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private EntityQuery<SmokeComponent> _smokeQuery;
+    private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -53,6 +54,7 @@ public sealed class SmokeSystem : EntitySystem
         base.Initialize();
 
         _smokeQuery = GetEntityQuery<SmokeComponent>();
+        _smokeAffectedQuery = GetEntityQuery<SmokeAffectedComponent>();
 
         SubscribeLocalEvent<SmokeComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SmokeComponent, EndCollideEvent>(OnEndCollide);
@@ -80,16 +82,23 @@ public sealed class SmokeSystem : EntitySystem
 
     private void OnStartCollide(EntityUid uid, SmokeComponent component, ref StartCollideEvent args)
     {
-        if (HasComp<SmokeAffectedComponent>(args.OtherEntity))
+        if (_smokeAffectedQuery.HasComponent(args.OtherEntity))
             return;
 
-        var smokeAffected = EnsureComp<SmokeAffectedComponent>(args.OtherEntity);
+        var smokeAffected = AddComp<SmokeAffectedComponent>(args.OtherEntity);
         smokeAffected.SmokeEntity = uid;
         smokeAffected.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
     }
 
     private void OnEndCollide(EntityUid uid, SmokeComponent component, ref EndCollideEvent args)
     {
+        // if we are already in smoke, make sure the thing we are exiting is the current smoke we are in.
+        if (_smokeAffectedQuery.TryGetComponent(args.OtherEntity, out var smokeAffectedComponent))
+        {
+            if (smokeAffectedComponent.SmokeEntity != uid)
+                return;
+        }
+
         var exists = Exists(uid);
 
         if (!TryComp<PhysicsComponent>(args.OtherEntity, out var body))
@@ -103,12 +112,13 @@ public sealed class SmokeSystem : EntitySystem
             if (!_smokeQuery.HasComponent(ent))
                 continue;
 
-            var smokeAffected = EnsureComp<SmokeAffectedComponent>(args.OtherEntity);
-            smokeAffected.SmokeEntity = ent;
+            smokeAffectedComponent ??= EnsureComp<SmokeAffectedComponent>(args.OtherEntity);
+            smokeAffectedComponent.SmokeEntity = ent;
             return; // exit the function so we don't remove the component.
         }
 
-        RemComp<SmokeAffectedComponent>(args.OtherEntity);
+        if (smokeAffectedComponent != null)
+            RemComp(args.OtherEntity, smokeAffectedComponent);
     }
 
     private void OnAffectedUnpaused(EntityUid uid, SmokeAffectedComponent component, ref EntityUnpausedEvent args)
