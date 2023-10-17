@@ -239,7 +239,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             if (!Deleted(hitEntity))
                             {
-                                if (dmg.Total > FixedPoint2.Zero)
+                                if (dmg.Any())
                                 {
                                     _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
                                 }

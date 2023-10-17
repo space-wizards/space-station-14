@@ -45,6 +45,9 @@
       - tomato
   - type: Sprite
     state: tomato
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like pasta, tomato.
 
 - type: entity
@@ -61,7 +64,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 25
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 12
@@ -84,12 +87,15 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like pasta, meat.
 
 - type: entity
@@ -107,7 +113,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
@@ -132,7 +138,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 7
@@ -155,7 +161,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 8

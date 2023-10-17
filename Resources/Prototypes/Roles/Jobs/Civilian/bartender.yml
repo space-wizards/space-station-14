@@ -27,6 +27,6 @@
     shoes: ClothingShoesColorBlack
     id: BartenderPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtBartender
+  innerClothingSkirt: ClothingUniformJumpskirtBartender
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

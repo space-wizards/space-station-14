@@ -8,13 +8,13 @@
 <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
 <GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
 </Box>
-Самыми важными устройствами вашего отдела являются сервер РнД, на котором хранятся все изученные технологии, и исследовательская консоль, который позволяет вам эти технологии открывать.
+	Самыми важными устройствами вашего отдела являются сервер РнД, на котором хранятся все изученные технологии, и исследовательская консоль, который позволяет вам эти технологии открывать.
 
-Каждая технология стоит определённое число [color=#a4885c]Очков исследований[/color], и их изучение открывает новые рецепты для печати на производственных станках. Некоторые технологии нельзя разблокировать, не изучив технологии им предшествующие.
+	Каждая технология стоит определённое число [color=#a4885c]Очков исследований[/color], и их изучение открывает новые рецепты для печати на производственных станках. Некоторые технологии нельзя разблокировать, не изучив технологии им предшествующие.
 
-## Disciplines
-Technologies are spread over 5 different Disciplines:
-<Box>
+	## Disciplines
+	Technologies are spread over 5 different Disciplines:
+	<Box>
 <GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
 <GuideEntityEmbed Entity="Syringe" Caption="Biochemical"/>
 <GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
@@ -30,6 +30,9 @@ Each Discipline tree has up to 3 tiers of technologies. At the start the only ti
 In order to progress further, you have to research up to [color=brown]75%[/color] of the current tier to move to the next one. So in order to unlock T2 researches you need to research 75% of T1.
 
 
+Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequisites you have to unlock before you can research them.
+
+Information about the different technologies can be viewed [textlink="on the technology guidebook page" link="Technologies"].
 
 ## Disciplines
 Technologies are spread over 5 different Disciplines:
@@ -60,6 +63,6 @@ Now [color=green]Tier 3[/color] is where it gets interesting. If you research a 
 <GuideEntityEmbed Entity="MedicalTechFab"/>
 <GuideEntityEmbed Entity="SecurityTechFab"/>
 </Box>
-Воспользовавшись производственным станком (например, протолатом или принтером схем), вы можете синхронизировать его с сервером РнД, чтобы разблокировать новые рецепты для печати. Печать требует различные материалы (сталь, стекло, пластик, золото, или плазму), которые можно заказать в отделе снабжения или попросить у утилизаторов.
+	Воспользовавшись производственным станком (например, протолатом или принтером схем), вы можете синхронизировать его с сервером РнД, чтобы разблокировать новые рецепты для печати. Печать требует различные материалы (сталь, стекло, пластик, золото, или плазму), которые можно заказать в отделе снабжения или попросить у утилизаторов.
 
 </Document>

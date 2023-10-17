@@ -44,6 +44,7 @@ namespace Content.Server.Bed
                 AddComp<HealOnBuckleHealingComponent>(uid);
                 component.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(component.HealTime);
                 _actionsSystem.AddAction(args.BuckledEntity, ref component.SleepAction, SleepingSystem.SleepActionId, uid);
+                Dirty(uid, component);
                 return;
             }
 

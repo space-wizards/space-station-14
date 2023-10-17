@@ -20,6 +20,12 @@
   - External
   - ChiefEngineer
   - Atmospherics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: ChiefEngineerGear
@@ -32,6 +38,6 @@
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetCE
     belt: ClothingBeltUtilityEngineering
-  innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
+  innerClothingSkirt: ClothingUniformJumpskirtChiefEngineer
   satchel: ClothingBackpackSatchelChiefEngineerFilled
   duffelbag: ClothingBackpackDuffelChiefEngineerFilled
