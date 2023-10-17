@@ -32,7 +32,14 @@ public sealed class InjectorSystem : EntitySystem
 
     private void OnItemInjectorStatus(EntityUid uid, InjectorComponent component, ItemStatusCollectMessage args)
     {
-        args.Controls.Add(new TransferStatucControl(component));
+        var tranlates = new TransferControlTranlates
+        {
+            DrawModeText = "injector-draw-text",
+            InjectModeText = "injector-inject-text",
+            InvalidModeText = "injector-invalid-injector-toggle-mode",
+            VolumeLabelText = "injector-volume-label"
+        };
+        args.Controls.Add(new TransferStatucControl(component, tranlates, true, true));
     }
 
     private void OnHandleHyposprayState(EntityUid uid, HyposprayComponent component, ref ComponentHandleState args)
@@ -47,6 +54,14 @@ public sealed class InjectorSystem : EntitySystem
 
     private void OnItemHyposprayStatus(EntityUid uid, HyposprayComponent component, ItemStatusCollectMessage args)
     {
-        args.Controls.Add(new HyposprayStatusControl(component));
+
+        var tranlates = new TransferControlTranlates
+        {
+            DrawModeText = "",
+            InjectModeText = "",
+            InvalidModeText = "",
+            VolumeLabelText = "hypospray-volume-text"
+        };
+        args.Controls.Add(new TransferStatucControl(component, tranlates, true, false));
     }
 }

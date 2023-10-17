@@ -1,8 +1,6 @@
-using Content.Client.Chemistry.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -14,10 +12,18 @@ public sealed class TransferStatucControl : Control
 {
     private readonly ITransferControlValues _parent;
     private readonly RichTextLabel _label;
+    private readonly TransferControlTranlates _translates;
+    private readonly bool _isShowVolume;
+    private readonly bool _isShowToggle;
 
-    public TransferStatucControl(ITransferControlValues parent)
+    public TransferStatucControl(ITransferControlValues parent,
+        TransferControlTranlates tranlates, bool isShowVolume, bool isShowToggleMode)
     {
         _parent = parent;
+        _translates = tranlates;
+        _isShowVolume = isShowVolume;
+        _isShowToggle = isShowToggleMode;
+
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
 
@@ -36,26 +42,42 @@ public sealed class TransferStatucControl : Control
     {
         _parent.UiUpdateNeeded = false;
 
+        var mainLabelTranslate = "transfer-status-control";
+
         //Update current volume and injector state
-        var modeStringLocalized = _parent.CurrentMode switch
+        var modeStringLocalized = "";
+        if (_isShowToggle)
         {
-            SharedTransferToggleMode.Draw => Loc.GetString("injector-draw-text"),
-            SharedTransferToggleMode.Inject => Loc.GetString("injector-inject-text"),
-            _ => Loc.GetString("injector-invalid-injector-toggle-mode")
-        };
-        _label.SetMarkup(Loc.GetString("injector-volume-label",
-            ("currentVolume", _parent.CurrentVolume),
-            ("totalVolume", _parent.TotalVolume),
-            ("modeString", modeStringLocalized)));
+            mainLabelTranslate += "-toggle-mode";
+            modeStringLocalized = _parent.CurrentMode switch
+            {
+                SharedTransferToggleMode.Draw => Loc.GetString(_translates.DrawModeText),
+                SharedTransferToggleMode.Inject => Loc.GetString(_translates.InjectModeText),
+                _ => Loc.GetString(_translates.InvalidModeText)
+            };
+        }
+
+        var volumeLabelLocalized = "";
+        if (_isShowVolume)
+        {
+            mainLabelTranslate += "-volume-label";
+            volumeLabelLocalized = Loc.GetString(_translates.VolumeLabelText,
+                ("currentVolume", _parent.CurrentVolume),
+                ("totalVolume", _parent.TotalVolume));
+        }
+
+        _label.SetMarkup(Loc.GetString(mainLabelTranslate,
+                ("volumeLabel", volumeLabelLocalized),
+                ("modeString", modeStringLocalized)));
     }
 }
 
 public struct TransferControlTranlates
 {
-    public string drawModeText;
-    public string injectModeText;
-    public string invalidModeText;
-    public string volumeLabelText;
+    public string DrawModeText;
+    public string InjectModeText;
+    public string InvalidModeText;
+    public string VolumeLabelText;
 }
 
 public interface ITransferControlValues
