@@ -2500,7 +2500,7 @@
     description: ghost-role-information-mothroach-description
   - type: GhostTakeoverAvailable
   - type: Speech
-    speechSounds: Chitter
+    speechSounds: Squeak
     speechVerb: SmallMob
   - type: Sprite
     drawdepth: SmallMobs
@@ -2534,8 +2534,8 @@
       15: Critical
       30: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5.5
-    baseSprintSpeed : 5.5
+    baseWalkSpeed : 5.0
+    baseSprintSpeed : 5.0
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2547,12 +2547,11 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  - type: ReplacementAccent
-    accent: mothroach
   - type: Tag
     tags:
     - Trash
     - DoorBumpOpener
+    - VimPilot
   - type: Respirator
     damage:
       types:
@@ -2581,3 +2580,18 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/mothroach.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
+  - type: Item
+    size: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: CanEscapeInventory
