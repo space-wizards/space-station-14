@@ -6,7 +6,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Chemistry.EntitySystems;
 
-public sealed class InjectorSystem : EntitySystem
+public sealed class SolutionTransferControlEvents : EntitySystem
 {
     public override void Initialize()
     {
@@ -15,6 +15,8 @@ public sealed class InjectorSystem : EntitySystem
         SubscribeLocalEvent<InjectorComponent, ItemStatusCollectMessage>(OnItemInjectorStatus);
         SubscribeLocalEvent<HyposprayComponent, ComponentHandleState>(OnHandleHyposprayState);
         SubscribeLocalEvent<HyposprayComponent, ItemStatusCollectMessage>(OnItemHyposprayStatus);
+        SubscribeLocalEvent<SolutionTransferComponent, ComponentHandleState>(OnHandleTransferState);
+        SubscribeLocalEvent<SolutionTransferComponent, ItemStatusCollectMessage>(OnItemTransferStatus);
     }
 
     private void OnHandleInjectorState(EntityUid uid, InjectorComponent component, ref ComponentHandleState args)
@@ -39,7 +41,7 @@ public sealed class InjectorSystem : EntitySystem
             InvalidModeText = "injector-invalid-injector-toggle-mode",
             VolumeLabelText = "injector-volume-label"
         };
-        args.Controls.Add(new TransferStatucControl(component, tranlates, true, true));
+        args.Controls.Add(new TransferStatusControl(component, tranlates, true, true));
     }
 
     private void OnHandleHyposprayState(EntityUid uid, HyposprayComponent component, ref ComponentHandleState args)
@@ -62,6 +64,32 @@ public sealed class InjectorSystem : EntitySystem
             InvalidModeText = "",
             VolumeLabelText = "hypospray-volume-text"
         };
-        args.Controls.Add(new TransferStatucControl(component, tranlates, true, false));
+        args.Controls.Add(new TransferStatusControl(component, tranlates, true, false));
+    }
+
+    private void OnHandleTransferState(EntityUid uid, SolutionTransferComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not SharedSolutionTransferComponent.SolutionTransferComponentState cState)
+            return;
+
+        component.CurrentVolume = cState.CurrentVolume;
+        component.TotalVolume = cState.TotalVolume;
+        component.CurrentMode = cState.CurrentMode;
+        component.UiUpdateNeeded = true;
+
+        Logger.Debug($"need to update status for SolutionTransferComponentState {component.CurrentVolume}");
+    }
+
+    private void OnItemTransferStatus(EntityUid uid, SolutionTransferComponent component, ItemStatusCollectMessage args)
+    {
+
+        // var tranlates = new TransferControlTranlates
+        // {
+        //     DrawModeText = "",
+        //     InjectModeText = "",
+        //     InvalidModeText = "",
+        //     VolumeLabelText = "hypospray-volume-text"
+        // };
+        // args.Controls.Add(new TransferStatucControl(component, tranlates, true, false));
     }
 }

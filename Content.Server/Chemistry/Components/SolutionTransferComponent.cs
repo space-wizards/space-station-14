@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry.Components;
 ///     Gives click behavior for transferring to/from other reagent containers.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class SolutionTransferComponent : Component
+public sealed partial class SolutionTransferComponent : SharedSolutionTransferComponent
 {
     /// <summary>
     ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
@@ -50,4 +50,10 @@ public sealed partial class SolutionTransferComponent : Component
     [DataField("canChangeTransferAmount")]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CanChangeTransferAmount { get; set; } = false;
+
+    /// <summary>
+    /// pure solutions (inject or draw something) 
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    private SharedTransferToggleMode ToggleState { get; set; }
 }

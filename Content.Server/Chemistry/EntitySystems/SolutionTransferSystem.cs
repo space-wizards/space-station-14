@@ -4,12 +4,13 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Hands;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -24,7 +25,7 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <summary>
         ///     Default transfer amounts for the set-transfer verb.
         /// </summary>
-        public static readonly List<int> DefaultTransferAmounts = new() { 1, 5, 10, 25, 50, 100, 250, 500, 1000};
+        public static readonly List<int> DefaultTransferAmounts = new() { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
 
         public override void Initialize()
         {
@@ -33,6 +34,8 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<SolutionTransferComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
             SubscribeLocalEvent<SolutionTransferComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<SolutionTransferComponent, TransferAmountSetValueMessage>(OnTransferAmountSetValueMessage);
+            SubscribeLocalEvent<SolutionTransferComponent, ComponentGetState>(OnSolutionTransferGetState);
+            SubscribeLocalEvent<SolutionTransferComponent, HandSelectedEvent>(OnSolutionTransferHandSelected);
         }
 
         private void OnTransferAmountSetValueMessage(EntityUid uid, SolutionTransferComponent solutionTransfer, TransferAmountSetValueMessage message)
@@ -40,7 +43,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var newTransferAmount = FixedPoint2.Clamp(message.Value, solutionTransfer.MinimumTransferAmount, solutionTransfer.MaximumTransferAmount);
             solutionTransfer.TransferAmount = newTransferAmount;
 
-            if (message.Session.AttachedEntity is {Valid: true} user)
+            if (message.Session.AttachedEntity is { Valid: true } user)
                 _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), uid, user);
         }
 
@@ -64,7 +67,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var priority = 0;
             foreach (var amount in DefaultTransferAmounts)
             {
-                if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
+                if (amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
                     continue;
 
                 AlternativeVerb verb = new();
@@ -84,6 +87,19 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
+        private void OnSolutionTransferGetState(EntityUid uid, SolutionTransferComponent component,
+            ref ComponentGetState args)
+        {
+            Logger.Debug($"startup for component SolutionTransferComponent {component}");
+            args.State = new SharedSolutionTransferComponent.SolutionTransferComponentState(
+                20, 20, SharedTransferToggleMode.Draw);
+        }
+
+        private void OnSolutionTransferHandSelected(EntityUid uid, SolutionTransferComponent component, HandSelectedEvent args)
+        {
+            Dirty(uid, component);
+        }
+
         private void OnAfterInteract(EntityUid uid, SolutionTransferComponent component, AfterInteractEvent args)
         {
             if (!args.CanReach || args.Target == null)
@@ -92,7 +108,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var target = args.Target!.Value;
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
-            if (component.CanReceive  && !EntityManager.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
+            if (component.CanReceive && !EntityManager.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
                                       && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
                                       && EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
                                       && _solutionContainerSystem.TryGetRefillableSolution(uid, out var ownerRefill, refillable: refillComp))

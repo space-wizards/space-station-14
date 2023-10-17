@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Chemistry.UI;
 
-public sealed class TransferStatucControl : Control
+public sealed class TransferStatusControl : Control
 {
     private readonly ITransferControlValues _parent;
     private readonly RichTextLabel _label;
@@ -16,7 +16,7 @@ public sealed class TransferStatucControl : Control
     private readonly bool _isShowVolume;
     private readonly bool _isShowToggle;
 
-    public TransferStatucControl(ITransferControlValues parent,
+    public TransferStatusControl(ITransferControlValues parent,
         TransferControlTranlates tranlates, bool isShowVolume, bool isShowToggleMode)
     {
         _parent = parent;
