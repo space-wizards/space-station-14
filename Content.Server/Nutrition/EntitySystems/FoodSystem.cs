@@ -1,6 +1,5 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Inventory;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
@@ -9,6 +8,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;

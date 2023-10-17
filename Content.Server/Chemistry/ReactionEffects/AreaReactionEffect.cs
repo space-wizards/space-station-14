@@ -1,6 +1,6 @@
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
@@ -9,7 +9,6 @@ using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -73,7 +72,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             var smoke = args.EntityManager.System<SmokeSystem>();
             smoke.StartSmoke(ent, splitSolution, _duration, spreadAmount);
 
-            SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
+            args.EntityManager.System<SharedAudioSystem>().PlayPvs(_sound, args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

@@ -27,6 +27,6 @@
     id: TechnicalAssistantPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  innerclothingskirt: ClothingUniformJumpskirtColorYellow
+  innerClothingSkirt: ClothingUniformJumpskirtColorYellow
   satchel: ClothingBackpackSatchelEngineeringFilled
   duffelbag: ClothingBackpackDuffelEngineeringFilled
