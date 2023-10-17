@@ -19,8 +19,10 @@ public sealed partial class ExtinguishOnInteractComponent : Component
     public float Probability = 0.9f;
 
     /// <summary>
-    /// Number of fire stacks to be removed on successful interaction
+    /// Number of fire stacks to be changed on successful interaction.
     /// </summary>
+    // With positive values, the interaction will conversely fan the fire,
+    // which is useful for any blacksmithing mechs
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float StackDelta = -5.0f;
 }
