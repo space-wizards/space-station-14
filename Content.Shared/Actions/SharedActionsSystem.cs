@@ -7,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -35,6 +36,7 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
         SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
+        // SubscribeLocalEvent<ActionsComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(OnActionsGetState);
 
@@ -47,6 +49,15 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
+    }
+
+    private void OnRejuvenate(EntityUid uid, ActionsComponent component, RejuvenateEvent args)
+    {
+        throw new NotImplementedException();
+        //foreach (var actionEntity in component.Actions)
+        //{
+        //    SetCooldown(actionEntity, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
+        //}
     }
 
     private void OnInstantGetState(EntityUid uid, InstantActionComponent component, ref ComponentGetState args)
@@ -105,6 +116,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetCooldown(EntityUid? actionId, TimeSpan start, TimeSpan end)
     {
+        // TODO: set both timespans to null?
         if (actionId == null)
             return;
 
