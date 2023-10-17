@@ -25,6 +25,24 @@
         ]
       ]
     },
+	{
+      "name": "rubber",
+      "delays": [
+        [
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "practice",
+      "delays": [
+        [
+          0.05,
+          0.05
+        ]
+      ]
+    },
     {
       "name": "frag"
     },
