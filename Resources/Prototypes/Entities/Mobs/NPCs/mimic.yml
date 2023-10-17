@@ -33,6 +33,7 @@
         - MachineLayer
   - type: AnimationPlayer
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     angle: 0
     animation: WeaponArcFist

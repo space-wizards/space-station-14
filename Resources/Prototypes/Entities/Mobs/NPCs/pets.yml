@@ -570,6 +570,7 @@
       0: Alive
       150: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     angle: 0
     animation: WeaponArcBite
@@ -675,6 +676,7 @@
     heatDamageThreshold: 800
     coldDamageThreshold: 0
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 1

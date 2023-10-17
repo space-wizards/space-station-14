@@ -52,7 +52,7 @@ public sealed partial class MeleeWeaponSystem
 
             spriteRotation = meleeWeaponComponent.WideAnimationRotation;
 
-            if (meleeWeaponComponent.SwingRight)
+            if (meleeWeaponComponent.SwingLeft)
                 angle *= -1;
         }
         sprite.NoRotation = true;
@@ -92,8 +92,8 @@ public sealed partial class MeleeWeaponSystem
         const float slashStart = 0.03f;
         const float slashEnd = 0.065f;
         const float length = slashEnd + 0.05f;
-        var startRotation = sprite.Rotation - arc / 2;
-        var endRotation = sprite.Rotation + arc / 2;
+        var startRotation = sprite.Rotation + arc / 2;
+        var endRotation = sprite.Rotation - arc / 2;
         var startRotationOffset = startRotation.RotateVec(new Vector2(0f, -1f));
         var endRotationOffset = endRotation.RotateVec(new Vector2(0f, -1f));
         startRotation += spriteRotation;

@@ -99,6 +99,7 @@
     requiredLegs: 1
   - type: CombatMode
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
         path: /Audio/Weapons/punch3.ogg
@@ -163,6 +164,7 @@
         Dead:
           Base: green_adult_slime_dead
     - type: MeleeWeapon
+      useWeaponAsAttackAnimation: false
       damage:
         types:
           Blunt: 6
@@ -198,6 +200,7 @@
         Dead:
           Base: yellow_adult_slime_dead
     - type: MeleeWeapon
+      useWeaponAsAttackAnimation: false
       damage:
         types:
           Blunt: 6

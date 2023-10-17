@@ -40,6 +40,7 @@
     damageContainer: Biological
     damageModifierSet: Scale
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
       path: /Audio/Weapons/pierce.ogg

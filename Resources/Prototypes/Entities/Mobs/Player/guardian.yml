@@ -81,6 +81,7 @@
       proto: guardian
     - type: Pullable
     - type: MeleeWeapon
+      useWeaponAsAttackAnimation: false
       hidden: true
       angle: 30
       animation: WeaponArcFist
@@ -130,7 +131,7 @@
           color: "#40a7d7"
           shader: unshaded
     - type: NpcFactionMember
-      factions: 
+      factions:
         - Syndicate
     - type: HTN
       rootTask:
@@ -225,6 +226,7 @@
           Burn: 3
     - type: InventorySlots
     - type: MeleeWeapon
+      useWeaponAsAttackAnimation: false
       hidden: true
       angle: 30
       animation: WeaponArcFist
@@ -238,7 +240,7 @@
       nameSegments:
       - names_clown
     - type: NpcFactionMember
-      factions: 
+      factions:
         - Syndicate
     - type: HTN
       rootTask:

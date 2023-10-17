@@ -73,6 +73,7 @@
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     altDisarm: false
     hidden: true
     angle: 0
@@ -175,6 +176,7 @@
     speedModifierThresholds:
       40: 0.7
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       groups:
         Brute: 6
@@ -213,6 +215,7 @@
       150: 0.7
   - type: MovementSpeedModifier
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     damage:
      groups:
@@ -251,6 +254,7 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 4
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     damage:
      groups:
@@ -285,6 +289,7 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 6.0
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     damage:
      groups:
@@ -396,6 +401,7 @@
     factions:
     - Xeno
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     angle: 0
     animation: WeaponArcBite

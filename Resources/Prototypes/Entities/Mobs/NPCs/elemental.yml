@@ -88,6 +88,7 @@
     rootTask:
       task: SimpleHostileCompound
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -128,6 +129,7 @@
     rootTask:
       task: SimpleHostileCompound
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -171,6 +173,7 @@
     rootTask:
       task: IdleCompound
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -217,7 +220,7 @@
   components:
   - type: NpcFactionMember
     factions:
-    - SimpleHostile 
+    - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/elemental.rsi
@@ -241,13 +244,14 @@
     speedModifierThresholds:
       50: 0.4
   - type: Bloodstream
-    bloodReagent: Water 
+    bloodReagent: Water
     chemicalMaxVolume: 100
   - type: StatusEffects
     allowed:
     - SlowedDown
     - Electrocution
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     soundHit:
       collection: AlienClaw
     animation: WeaponArcBite
@@ -351,7 +355,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#128e80"
-        
+
 - type: entity
   id: ReagentSlimeTHC
   parent: ReagentSlime
@@ -368,7 +372,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#808080"
-        
+
 - type: entity
   id: ReagentSlimeBicaridine
   parent: ReagentSlime
@@ -419,7 +423,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#FA00AF"
-     
+
 - type: entity
   id: ReagentSlimeOmnizine
   parent: ReagentSlime

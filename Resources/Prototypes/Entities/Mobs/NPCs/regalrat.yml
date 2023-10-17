@@ -45,6 +45,7 @@
       0: Alive
       200: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
@@ -133,6 +134,7 @@
       0: Alive
       350: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
@@ -208,6 +210,7 @@
   - type: Stamina
     critThreshold: 60
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg

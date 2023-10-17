@@ -48,6 +48,7 @@
     rootTask:
       task: IdleCompound
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     angle: 0
     animation: WeaponArcBite
   - type: Body

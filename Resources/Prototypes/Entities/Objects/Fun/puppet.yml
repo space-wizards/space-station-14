@@ -23,6 +23,7 @@
     allowedStates:
       - Alive
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
       path: /Audio/Weapons/boxingpunch1.ogg

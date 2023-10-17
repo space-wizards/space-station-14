@@ -55,6 +55,7 @@
         - id: FoodMeatFish
           amount: 2
     - type: MeleeWeapon
+      useWeaponAsAttackAnimation: false
       altDisarm: false
       hidden: true
       angle: 0
@@ -184,6 +185,7 @@
     speedModifierThresholds:
       25: 0.7
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Slash: 6

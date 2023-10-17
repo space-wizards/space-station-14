@@ -45,6 +45,7 @@
     bloodMaxVolume: 100
   - type: CombatMode
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -73,6 +74,7 @@
       Dead:
         Base: dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -103,6 +105,7 @@
       0: Alive
       50: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -190,6 +193,7 @@
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg

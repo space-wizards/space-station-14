@@ -161,6 +161,7 @@
   - type: CombatMode
     canDisarm: true
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     soundHit:
       collection: Punch

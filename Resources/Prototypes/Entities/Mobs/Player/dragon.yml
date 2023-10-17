@@ -102,6 +102,7 @@
       path: /Audio/Animals/space_dragon_roar.ogg
     soundPerceivedByOthers: false # A 75% chance for a loud roar would get old fast.
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     altDisarm: false
     hidden: true
     soundHit:
@@ -159,6 +160,7 @@
     - id: FoodMeatDragon
       amount: 1
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       groups:
         Brute: 12

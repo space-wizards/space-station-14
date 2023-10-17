@@ -31,6 +31,7 @@
   - type: Insulated
   - type: CombatMode
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     hidden: true
     angle: 0
     animation: WeaponArcBite
@@ -80,6 +81,7 @@
     baseSprintSpeed : 3.5
     baseWalkSpeed : 3
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 3
@@ -118,6 +120,7 @@
         layer:
         - MobLayer
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 3
@@ -154,6 +157,7 @@
         layer:
         - MobLayer
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Slash: 3
@@ -224,6 +228,7 @@
       0: Alive
       100: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 2.5
@@ -249,6 +254,7 @@
       0: Alive
       100: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 3.5
@@ -277,6 +283,7 @@
       0: Alive
       150: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 5
@@ -304,6 +311,7 @@
       0: Alive
       150: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 15
@@ -333,6 +341,7 @@
       0: Alive
       300: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 10
@@ -375,6 +384,7 @@
       0: Alive
       500: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 25
@@ -416,6 +426,7 @@
       0: Alive
       1000: Dead
   - type: MeleeWeapon
+    useWeaponAsAttackAnimation: false
     damage:
       types:
         Blunt: 75

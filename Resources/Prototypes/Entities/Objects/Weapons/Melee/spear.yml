@@ -34,6 +34,7 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 12
@@ -117,6 +118,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 15
@@ -136,6 +138,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 18
@@ -155,6 +158,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_spear.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Piercing: 10
