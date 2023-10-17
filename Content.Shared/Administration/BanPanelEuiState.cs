@@ -1,8 +1,7 @@
-using System.Collections.Immutable;
+using System.Net;
 using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
-using System.Net;
 
 namespace Content.Shared.Administration;
 
@@ -34,8 +33,9 @@ public static class BanPanelEuiStateMsg
         public bool UseLastIp { get; set; }
         public bool UseLastHwid { get; set; }
         public int StatedRound { get; set; }
+        public bool Erase { get; set; }
 
-        public CreateBanRequest(string? player, (IPAddress, int)? ipAddress, bool useLastIp, byte[]? hwid, bool useLastHwid, uint minutes, string reason, NoteSeverity severity, int statedRound, string[]? roles)
+        public CreateBanRequest(string? player, (IPAddress, int)? ipAddress, bool useLastIp, byte[]? hwid, bool useLastHwid, uint minutes, string reason, NoteSeverity severity, int statedRound, string[]? roles, bool erase)
         {
             Player = player;
             IpAddress = ipAddress == null ? null : $"{ipAddress.Value.Item1}/{ipAddress.Value.Item2}";
@@ -47,6 +47,7 @@ public static class BanPanelEuiStateMsg
             Severity = severity;
             Roles = roles;
             StatedRound = statedRound;
+            Erase = erase;
         }
     }
 

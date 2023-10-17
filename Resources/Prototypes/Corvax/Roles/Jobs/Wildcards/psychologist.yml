@@ -24,6 +24,6 @@
     shoes: ClothingShoesLeather
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
-  innerclothingskirt: ClothingUniformJumpskirtPsychologist # Corvax-Resprite
+  innerClothingSkirt: ClothingUniformJumpskirtPsychologist # Corvax-Resprite
   satchel: ClothingBackpackSatchelPsychologistFilled
   duffelbag: ClothingBackpackDuffelPsychologistFilled

@@ -513,6 +513,11 @@
   - type: Item
     sprite: Objects/Tools/rolling_pin.rsi
     size: 10
+  - type: Clothing
+    sprite: Objects/Tools/rolling_pin.rsi
+    quickEquip: false
+    slots:
+    - Belt
   - type: ItemCooldown
   - type: MeleeWeapon
     soundHit: !type:SoundCollectionSpecifier

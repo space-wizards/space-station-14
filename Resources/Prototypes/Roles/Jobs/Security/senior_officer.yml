@@ -44,6 +44,6 @@
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-  innerclothingskirt: ClothingUniformJumpskirtSeniorOfficer
+  innerClothingSkirt: ClothingUniformJumpskirtSeniorOfficer
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

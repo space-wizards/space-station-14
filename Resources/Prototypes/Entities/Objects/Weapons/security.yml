@@ -10,7 +10,7 @@
     - state: stunbaton_off
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
-    energyPerUse: 100
+    energyPerUse: 50
   - type: MeleeWeapon
     damage:
       types:
@@ -162,6 +162,15 @@
     - type: GuideHelp
       guides:
       - Security
+
+- type: entity
+  name: flash
+  parent: Flash
+  id: SciFlash
+  components:
+    - type: LimitedCharges
+      maxCharges: 2
+      charges: 2
 
 - type: entity
   name: portable flasher
