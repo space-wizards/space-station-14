@@ -11,6 +11,28 @@
       name: ghost-role-information-behonker-name
       description: ghost-role-information-behonker-description
     - type: GhostTakeoverAvailable
+    - type: HTN
+      rootTask:
+        task: SimpleRangedHostileCompound
+    - type: HitscanBatteryAmmoProvider
+      proto: RedLaser
+      fireCost: 62.5
+    - type: Battery
+      maxCharge: 1000
+      startingCharge: 1000
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 40
+    - type: Gun
+      fireRate: 0.75
+      useKey: false
+      selectedMode: SemiAuto
+      availableModes:
+        - SemiAuto
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
+    - type: SpamEmitSound
+      sound:
+        collection: BikeHorn
     - type: NpcFactionMember
       factions:
         - HonkHostile
@@ -71,6 +93,8 @@
       spawned:
         - id: MaterialBananium1
           amount: 2
+        - id: WeaponBehonkerLaser
+          amount: 1
     - type: MeleeWeapon
       hidden: true
       soundHit:
@@ -89,10 +113,6 @@
           Radiation: 10
     - type: Input
       context: "human"
-    - type: Hands
-      showInHands: false
-    - type: Body
-      prototype: Behonker
 
 - type: entity
   name: behonker
