@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.SS220.Cart.Components;

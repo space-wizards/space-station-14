@@ -22,7 +22,7 @@
     contents:
     - id: WeaponDisabler
     - id: MedkitAdvancedFilled
-  
+
 - type: entity
   parent: GunSafe
   id: GunSafeBlueshield

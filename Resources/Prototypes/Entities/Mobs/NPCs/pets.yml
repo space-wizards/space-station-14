@@ -572,7 +572,6 @@
       0: Alive
       150: Dead
   - type: MeleeWeapon
-    hidden: true
     angle: 0
     animation: WeaponArcBite
     soundHit:
