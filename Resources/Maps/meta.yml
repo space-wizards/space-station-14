@@ -7032,7 +7032,8 @@ entities:
           -4,-12:
             0: 65535
           -3,-12:
-            0: 65535
+            0: 65519
+            8: 16
           -2,-12:
             0: 65535
           -1,-12:
@@ -8040,6 +8041,21 @@ entities:
           moles:
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 24.665516
+          - 92.78932
           - 0
           - 0
           - 0
@@ -59656,6 +59672,11 @@ entities:
       type: Transform
 - proto: ClothingBackpackDuffelSurgeryFilled
   entities:
+  - uid: 9248
+    components:
+    - pos: 6.8728313,-42.317707
+      parent: 5350
+      type: Transform
   - uid: 15816
     components:
     - pos: -23.496162,-49.315388
@@ -59713,6 +59734,11 @@ entities:
   - uid: 17351
     components:
     - pos: -35.5,-38.5
+      parent: 5350
+      type: Transform
+  - uid: 22286
+    components:
+    - pos: 8.500981,-39.348957
       parent: 5350
       type: Transform
 - proto: ClothingBeltUtilityFilled
@@ -59997,6 +60023,11 @@ entities:
     - pos: -16.580141,-51.42727
       parent: 5350
       type: Transform
+  - uid: 19447
+    components:
+    - pos: 8.404081,-42.442707
+      parent: 5350
+      type: Transform
 - proto: ClothingHandsGlovesLeather
   entities:
   - uid: 3133
@@ -60063,6 +60094,13 @@ entities:
   - uid: 24117
     components:
     - pos: 45.50863,41.570244
+      parent: 5350
+      type: Transform
+- proto: ClothingHeadHatBeretBrigmedic
+  entities:
+  - uid: 23959
+    components:
+    - pos: -26.498873,-33.888706
       parent: 5350
       type: Transform
 - proto: ClothingHeadHatBunny
@@ -62906,6 +62944,13 @@ entities:
       - EntityStorageComponent
       - entity_storage
       type: Construction
+- proto: CrateMindShieldImplants
+  entities:
+  - uid: 22284
+    components:
+    - pos: -6.5,40.5
+      parent: 5350
+      type: Transform
 - proto: CrateNPCHamlet
   entities:
   - uid: 5346
@@ -69706,6 +69751,20 @@ entities:
   - uid: 5013
     components:
     - pos: -48.518745,1.6357079
+      parent: 5350
+      type: Transform
+- proto: DrinkMugMoebius
+  entities:
+  - uid: 24122
+    components:
+    - pos: 16.475971,-35.413982
+      parent: 5350
+      type: Transform
+- proto: DrinkMugOne
+  entities:
+  - uid: 24119
+    components:
+    - pos: 23.373695,-35.101482
       parent: 5350
       type: Transform
 - proto: DrinkShaker
@@ -114515,13 +114574,6 @@ entities:
     - pos: 29.518621,-60.391666
       parent: 5350
       type: Transform
-- proto: Hemostat
-  entities:
-  - uid: 22265
-    components:
-    - pos: 7.4486217,-42.45404
-      parent: 5350
-      type: Transform
 - proto: HighSecCommandLocked
   entities:
   - uid: 1668
@@ -116530,6 +116582,14 @@ entities:
         - 0
         - 0
       type: EntityStorage
+  - uid: 22285
+    components:
+    - desc: Not for casual browsing.
+      name: contraband locker
+      type: MetaData
+    - pos: -2.5,40.5
+      parent: 5350
+      type: Transform
 - proto: LockerFreezer
   entities:
   - uid: 1932
@@ -117999,6 +118059,13 @@ entities:
     - pos: -40.5,-5.5
       parent: 5350
       type: Transform
+- proto: MMI
+  entities:
+  - uid: 22265
+    components:
+    - pos: 7.5759563,-42.348957
+      parent: 5350
+      type: Transform
 - proto: ModularGrenade
   entities:
   - uid: 22321
@@ -118263,8 +118330,6 @@ entities:
         immutable: False
         temperature: 293.14938
         moles:
-        - 2.8406363
-        - 10.686202
         - 0
         - 0
         - 0
@@ -118275,6 +118340,9 @@ entities:
         - 0
         - 0
         - 0
+        - 0
+        - 0
+      open: True
       type: EntityStorage
   - uid: 15014
     components:
@@ -131274,13 +131342,6 @@ entities:
       pos: -43.5,26.5
       parent: 5350
       type: Transform
-- proto: Saw
-  entities:
-  - uid: 22266
-    components:
-    - pos: 8.432997,-42.407166
-      parent: 5350
-      type: Transform
 - proto: SaxophoneInstrument
   entities:
   - uid: 3129
@@ -131293,11 +131354,6 @@ entities:
   - uid: 15039
     components:
     - pos: -15.564329,-46.42406
-      parent: 5350
-      type: Transform
-  - uid: 22267
-    components:
-    - pos: 6.5892467,-42.51654
       parent: 5350
       type: Transform
 - proto: ScalpelShiv
@@ -136414,6 +136470,13 @@ entities:
     - pos: -53.5,-30.5
       parent: 5350
       type: Transform
+- proto: SpawnMobParrot
+  entities:
+  - uid: 25993
+    components:
+    - pos: 44.5,8.5
+      parent: 5350
+      type: Transform
 - proto: SpawnMobRaccoonMorticia
   entities:
   - uid: 4006
@@ -138032,6 +138095,16 @@ entities:
       nameSet: True
       id: EVA
       type: SurveillanceCamera
+  - uid: 24485
+    components:
+    - pos: 104.5,-13.5
+      parent: 5350
+      type: Transform
+    - setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Telecomms
+      type: SurveillanceCamera
   - uid: 26400
     components:
     - rot: 1.5707963267948966 rad
@@ -138055,6 +138128,11 @@ entities:
     - pos: 103.5,4.5
       parent: 5350
       type: Transform
+    - setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI chamber south
+      type: SurveillanceCamera
   - uid: 26404
     components:
     - rot: 3.141592653589793 rad
@@ -138067,6 +138145,11 @@ entities:
       pos: 105.5,12.5
       parent: 5350
       type: Transform
+    - setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI chamber north
+      type: SurveillanceCamera
   - uid: 26406
     components:
     - rot: 1.5707963267948966 rad
@@ -138120,6 +138203,10 @@ entities:
       pos: 96.5,-0.5
       parent: 5350
       type: Transform
+    - setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      type: SurveillanceCamera
+    - type: ActiveUserInterface
   - uid: 26415
     components:
     - rot: 3.141592653589793 rad
@@ -144235,18 +144322,16 @@ entities:
       type: Transform
 - proto: VendingMachineWallMedical
   entities:
-  - uid: 9248
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -16.5,32.5
-      parent: 5350
-      type: Transform
   - uid: 14901
     components:
     - flags: SessionSpecific
       type: MetaData
     - pos: -18.5,-33.5
+      parent: 5350
+      type: Transform
+  - uid: 22266
+    components:
+    - pos: -16.5,32.5
       parent: 5350
       type: Transform
 - proto: VendingMachineWinter
@@ -161863,13 +161948,6 @@ entities:
       type: Transform
     - location: AI Upload
       type: WarpPoint
-  - uid: 24238
-    components:
-    - pos: -20.5,14.5
-      parent: 5350
-      type: Transform
-    - location: Tool Room
-      type: WarpPoint
   - uid: 24239
     components:
     - pos: -40.5,17.5
@@ -161981,6 +162059,22 @@ entities:
       parent: 5350
       type: Transform
     - location: Evac
+      type: WarpPoint
+- proto: WarpPointBombing
+  entities:
+  - uid: 22267
+    components:
+    - pos: -20.5,14.5
+      parent: 5350
+      type: Transform
+    - location: Tool room
+      type: WarpPoint
+  - uid: 24238
+    components:
+    - pos: 104.5,9.5
+      parent: 5350
+      type: Transform
+    - location: AI chamber
       type: WarpPoint
 - proto: WaterCooler
   entities:
