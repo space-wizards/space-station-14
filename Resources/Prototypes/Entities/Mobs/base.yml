@@ -98,7 +98,6 @@
   components:
   - type: CombatMode
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
     hidden: true
     damage:
       groups:

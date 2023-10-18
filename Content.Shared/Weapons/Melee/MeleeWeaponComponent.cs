@@ -104,9 +104,6 @@ public sealed partial class MeleeWeaponComponent : Component
     public Angle WideAnimationRotation = Angle.Zero;
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public bool UseWeaponAsAttackAnimation = true;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool SwingLeft;
 
 

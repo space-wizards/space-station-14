@@ -81,7 +81,6 @@
       proto: guardian
     - type: Pullable
     - type: MeleeWeapon
-      useWeaponAsAttackAnimation: false
       hidden: true
       angle: 30
       animation: WeaponArcFist
