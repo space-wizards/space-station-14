@@ -125,16 +125,19 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
-                if (_entityManager.TryGetComponent(playerInfo.PlayerEntityUid, out SpriteComponent? sprite))
+                var playerUid = _entityManager.GetEntity(playerInfo.PlayerNetEntity);
+
+                if (_entityManager.HasComponent<SpriteComponent>(playerUid))
                 {
-                    hBox.AddChild(new SpriteView
+                    var spriteView = new SpriteView
                     {
-                        Sprite = sprite,
                         OverrideDirection = Direction.South,
                         VerticalAlignment = VAlignment.Center,
                         SetSize = new Vector2(32, 32),
                         VerticalExpand = true,
-                    });
+                    };
+                    spriteView.SetEntity(playerUid);
+                    hBox.AddChild(spriteView);
                 }
 
                 if (playerInfo.PlayerICName != null)

@@ -3,6 +3,9 @@
 
 - type: Tag
   id: AirAlarmElectronics
+  
+- type: Tag
+  id: Airlock
 
 - type: Tag
   id: AirSensor
@@ -17,6 +20,9 @@
   id: ArtifactFragment
 
 - type: Tag
+  id: Arrow
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag
@@ -26,7 +32,7 @@
   id: Balloon
 
 - type: Tag
-  id: BaseballBat 
+  id: BaseballBat
 
 - type: Tag
   id: BBQsauce
@@ -306,7 +312,7 @@
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
-  id: Corn 
+  id: Corn
 
 - type: Tag
   id: Coldsauce
@@ -471,6 +477,9 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: Fruit
+
+- type: Tag
   id: Galaxythistle
 
 - type: Tag
@@ -484,6 +493,9 @@
 
 - type: Tag
   id: GeigerCounter
+  
+- type: Tag
+  id: GlassAirlock
 
 - type: Tag
   id: GlassBeaker
@@ -499,7 +511,6 @@
 
 - type: Tag
   id: GuideEmbeded
-
 
 - type: Tag
   id: Hamster
@@ -531,7 +542,6 @@
 - type: Tag
   id: HappyHonk
 
-
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
@@ -545,10 +555,16 @@
   id: HideContextMenu
 
 - type: Tag
+  id: HideCorgi # corgi hide for crafting, not for making corgis invisible
+
+- type: Tag
   id: HidesHair # for headwear.
 
 - type: Tag
   id: HighRiskItem
+  
+- type: Tag
+  id: HighSecDoor
 
 - type: Tag
   id: Hoe
@@ -582,6 +598,9 @@
 
 - type: Tag
   id: Hotsauce
+
+- type: Tag
+  id: Igniter
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -697,6 +716,9 @@
   id: Matchstick
 
 - type: Tag
+  id: Meat
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -716,6 +738,12 @@
 
 - type: Tag
   id: Mop
+
+- type: Tag
+  id: MopAdv
+
+- type: Tag
+  id: MopBasic
 
 - type: Tag
   id: Mouse
@@ -755,6 +783,9 @@
   id: PetWearable
 
 - type: Tag
+  id: MonkeyWearable
+
+- type: Tag
   id: Pickaxe
 
 - type: Tag
@@ -762,6 +793,9 @@
 
 - type: Tag
   id: Pig
+
+- type: Tag
+  id: Pill
 
 - type: Tag
   id: PillCanister
@@ -793,6 +827,14 @@
 - type: Tag
   id: PlushieGhost
 
+- type: Tag
+  id: PlushieSharkBlue
+
+- type: Tag
+  id: PlushieSharkPink
+
+- type: Tag
+  id: PlushieSharkGrey
 
 - type: Tag
   id: PowerCellSmall
@@ -872,6 +914,9 @@
 
 - type: Tag
   id: Shovel
+
+- type: Tag
+  id: Sidearm
 
 - type: Tag
   id: SkeletonMotorcycleKeys
@@ -998,7 +1043,7 @@
 
 - type: Tag
   id: WallmountSubstationElectronics
-  
+
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
 
@@ -1035,3 +1080,5 @@
 - type: Tag
   id: ModularReceiver
 
+- type: Tag
+  id: MindShield

@@ -8,6 +8,8 @@
           steps:
             - material: Steel
               amount: 5
+            - material: Cable
+              amount: 2
               doAfter: 5
 
 
@@ -27,5 +29,8 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 5
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
             - !type:EmptyAllContainers
             - !type:DeleteEntity

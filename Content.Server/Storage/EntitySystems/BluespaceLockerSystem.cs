@@ -1,16 +1,16 @@
 using System.Linq;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Mind.Components;
 using Content.Server.Resist;
 using Content.Server.Station.Components;
 using Content.Server.Storage.Components;
-using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
+using Content.Shared.Mind.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -284,7 +284,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         {
             EnsureComp<DoAfterComponent>(uid);
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.BehaviorProperties.Delay, new BluespaceLockerDoAfterEvent(), uid));
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.BehaviorProperties.Delay, new BluespaceLockerDoAfterEvent(), uid));
             return;
         }
 
@@ -327,13 +327,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
         else
         {
-            if (target.Value.storageComponent.IsWeldedShut)
+            if (_weldableSystem.IsWelded(target.Value.uid))
             {
                 // It gets bluespaced open...
-                _weldableSystem.ForceWeldedState(target.Value.uid, false);
-                if (target.Value.storageComponent.IsWeldedShut)
-                    target.Value.storageComponent.IsWeldedShut = false;
+                _weldableSystem.SetWeldedState(target.Value.uid, false);
             }
+
             LockComponent? lockComponent = null;
             if (Resolve(target.Value.uid, ref lockComponent, false) && lockComponent.Locked)
                 _lockSystem.Unlock(target.Value.uid, target.Value.uid, lockComponent);

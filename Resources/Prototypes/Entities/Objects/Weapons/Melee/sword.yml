@@ -9,6 +9,7 @@
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.5
     damage:
       types:
@@ -18,7 +19,7 @@
   - type: Reflect
     enabled: true
     reflectProb: .5
-    spread: 90        
+    spread: 90
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
@@ -41,6 +42,7 @@
     sprite: Objects/Weapons/Melee/katana.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Slash: 25
@@ -50,6 +52,37 @@
     size: 15
     sprite: Objects/Weapons/Melee/katana.rsi
   - type: DisarmMalus
+
+- type: entity
+  name: energy katana
+  parent: Katana
+  id: EnergyKatana
+  description: A katana infused with strong energy.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -60
+    damage:
+      types:
+        Slash: 30
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+  - type: EnergyKatana
+  - type: DashAbility
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: AutoRecharge
+    rechargeDuration: 20
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+    slots:
+    - Back
+    - Belt
+  - type: Reflect
 
 - type: entity
   name: machete
@@ -65,6 +98,7 @@
     sprite: Objects/Weapons/Melee/machete.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Slash: 20
@@ -86,6 +120,7 @@
     sprite: Objects/Weapons/Melee/claymore.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 0.75
     damage:
       types:
@@ -114,6 +149,7 @@
     sprite: Objects/Weapons/Melee/cutlass.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Slash: 16

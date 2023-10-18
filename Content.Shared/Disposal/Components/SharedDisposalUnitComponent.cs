@@ -55,7 +55,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// Removes the pressure requirement for flushing.
     /// </summary>
     [DataField("disablePressure"), ViewVariables(VVAccess.ReadWrite)]
-    public bool DisablePressure = false;
+    public bool DisablePressure;
 
     /// <summary>
     ///     Last time that an entity tried to exit this disposal unit.
@@ -81,7 +81,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     ///     Delay from trying to shove someone else into disposals.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float DraggedEntryDelay = 0.5f;
+    public float DraggedEntryDelay = 2.0f;
 
     /// <summary>
     ///     Container of entities inside this disposal unit.

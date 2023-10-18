@@ -51,7 +51,6 @@ namespace Content.Server.Power.Components
         }
 
         public bool? PoweredLastUpdate;
-        public float LastPowerReceived;
 
         [ViewVariables]
         public PowerState.Load NetworkLoad { get; } = new PowerState.Load
@@ -60,13 +59,6 @@ namespace Content.Server.Power.Components
         };
 
         public float PowerReceived => NetworkLoad.ReceivingPower;
-
-        protected override void OnRemove()
-        {
-            Provider?.RemoveReceiver(this);
-
-            base.OnRemove();
-        }
     }
 
     /// <summary>

@@ -1,29 +1,31 @@
+using System.Linq;
 using Content.Server.Announcements;
+using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
-using Content.Server.Players;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
+using Content.Shared.Mind;
+using Content.Shared.Players;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using System.Linq;
-using Content.Shared.Database;
-using Robust.Shared.Asynchronous;
-using PlayerData = Content.Server.Players.PlayerData;
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly DiscordWebhook _discord = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
@@ -115,7 +117,7 @@ namespace Content.Server.GameTicking
 
             if (CurrentPreset?.MapPool != null &&
                 _prototypeManager.TryIndex<GameMapPoolPrototype>(CurrentPreset.MapPool, out var pool) &&
-                pool.Maps.Contains(mainStationMap.ID))
+                !pool.Maps.Contains(mainStationMap.ID))
             {
                 var msg = Loc.GetString("game-ticker-start-round-invalid-map",
                     ("map", mainStationMap.MapName),
@@ -250,6 +252,7 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             AnnounceRound();
             UpdateInfoText();
+            SendRoundStartedDiscordMessage();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -303,6 +306,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
 
             ShowRoundEndScoreboard(text);
+            SendRoundEndDiscordMessage();
         }
 
         public void ShowRoundEndScoreboard(string text = "")
@@ -325,8 +329,8 @@ namespace Content.Server.GameTicking
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
-            var allMinds = _mindTracker.AllMinds;
-            foreach (var mind in allMinds)
+            var allMinds = EntityQueryEnumerator<MindComponent>();
+            while (allMinds.MoveNext(out var mindId, out var mind))
             {
                 // TODO don't list redundant observer roles?
                 // I.e., if a player was an observer ghost, then a hamster ghost role, maybe just list hamster and not
@@ -334,7 +338,7 @@ namespace Content.Server.GameTicking
                 var userId = mind.UserId ?? mind.OriginalOwnerUserId;
 
                 var connected = false;
-                var observer = mind.AllRoles.Any(role => role is ObserverRole);
+                var observer = HasComp<ObserverRoleComponent>(mindId);
                 // Continuing
                 if (userId != null && _playerManager.ValidSessionId(userId.Value))
                 {
@@ -346,7 +350,8 @@ namespace Content.Server.GameTicking
                     contentPlayerData = playerData.ContentData();
                 }
                 // Finish
-                var antag = mind.AllRoles.Any(role => role.Antagonist);
+
+                var antag = _roles.MindIsAntagonist(mindId);
 
                 var playerIcName = "Unknown";
 
@@ -359,6 +364,8 @@ namespace Content.Server.GameTicking
                 if (Exists(entity))
                     _pvsOverride.AddGlobalOverride(entity.Value, recursive: true);
 
+                var roles = _roles.MindGetAllRoles(mindId);
+
                 var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                 {
                     // Note that contentPlayerData?.Name sticks around after the player is disconnected.
@@ -366,10 +373,10 @@ namespace Content.Server.GameTicking
                     PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     // Character name takes precedence over current entity name
                     PlayerICName = playerIcName,
-                    PlayerEntityUid = entity,
+                    PlayerNetEntity = GetNetEntity(entity),
                     Role = antag
-                        ? mind.AllRoles.First(role => role.Antagonist).Name
-                        : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
+                        ? roles.First(role => role.Antagonist).Name
+                        : roles.FirstOrDefault().Name ?? Loc.GetString("game-ticker-unknown-role"),
                     Antag = antag,
                     Observer = observer,
                     Connected = connected
@@ -383,6 +390,38 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
+        }
+
+        private async void SendRoundEndDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var duration = RoundDuration();
+                var content = Loc.GetString("discord-round-notifications-end",
+                    ("id", RoundId),
+                    ("hours", Math.Truncate(duration.TotalHours)),
+                    ("minutes", duration.Minutes),
+                    ("seconds", duration.Seconds));
+                var payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+
+                if (DiscordRoundEndRole == null)
+                    return;
+
+                content = Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
+                payload = new WebhookPayload { Content = content };
+                payload.AllowedMentions.AllowRoleMentions();
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round end message:\n{e}");
+            }
         }
 
         public void RestartRound()
@@ -409,6 +448,7 @@ namespace Content.Server.GameTicking
             RandomizeLobbyBackground();
             ResettingCleanup();
             IncrementRoundNumber();
+            SendRoundStartingDiscordMessage();
 
             if (!LobbyEnabled)
             {
@@ -428,6 +468,25 @@ namespace Content.Server.GameTicking
             }
         }
 
+        private async void SendRoundStartingDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var content = Loc.GetString("discord-round-notifications-new");
+
+                var payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round starting message:\n{e}");
+            }
+        }
+
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.
@@ -439,6 +498,13 @@ namespace Content.Server.GameTicking
             {
                 PlayerJoinLobby(player);
             }
+
+            // Round restart cleanup event, so entity systems can reset.
+            var ev = new RoundRestartCleanupEvent();
+            RaiseLocalEvent(ev);
+
+            // So clients' entity systems can clean up too...
+            RaiseNetworkEvent(ev, Filter.Broadcast());
 
             // Delete all entities.
             foreach (var entity in EntityManager.GetEntities().ToArray())
@@ -473,13 +539,6 @@ namespace Content.Server.GameTicking
             CurrentPreset = null;
 
             _allPreviousGameRules.Clear();
-
-            // Round restart cleanup event, so entity systems can reset.
-            var ev = new RoundRestartCleanupEvent();
-            RaiseLocalEvent(ev);
-
-            // So clients' entity systems can clean up too...
-            RaiseNetworkEvent(ev, Filter.Broadcast());
 
             DisallowLateJoin = false;
             _playerGameStatuses.Clear();
@@ -553,6 +612,26 @@ namespace Content.Server.GameTicking
 
             if (proto.Sound != null)
                 SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
+        }
+
+        private async void SendRoundStartedDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
+                var content = Loc.GetString("discord-round-notifications-started", ("id", RoundId), ("map", mapName));
+
+                var payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round start message:\n{e}");
+            }
         }
     }
 

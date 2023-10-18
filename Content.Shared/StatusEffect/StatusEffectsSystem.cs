@@ -1,8 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -61,7 +58,8 @@ namespace Content.Shared.StatusEffect
             if (args.Current is not StatusEffectsComponentState state)
                 return;
 
-            component.AllowedEffects = new(state.AllowedEffects);
+            component.AllowedEffects.Clear();
+            component.AllowedEffects.AddRange(state.AllowedEffects);
 
             // Remove non-existent effects.
             foreach (var effect in component.ActiveEffects.Keys)
@@ -106,7 +104,7 @@ namespace Content.Shared.StatusEffect
         /// <typeparam name="T">The component type to add and remove from the entity.</typeparam>
         public bool TryAddStatusEffect<T>(EntityUid uid, string key, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null)
-            where T : Component, new()
+            where T : IComponent, new()
         {
             if (!Resolve(uid, ref status, false))
                 return false;
