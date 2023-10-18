@@ -169,7 +169,7 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ace.rsi
     
- - type: entity
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAro
   name: werewolf cape
@@ -187,7 +187,7 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/bi.rsi
     
- - type: entity
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakIntersex
   name: cyclops cape
@@ -196,7 +196,7 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/intersex.rsi
     
- - type: entity
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakLesbian
   name: poet cape
@@ -205,7 +205,7 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/les.rsi
     
- - type: entity
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakGay
   name: multi-level marketing cape
@@ -214,7 +214,7 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/gay.rsi
     
- - type: entity
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakEnby
   name: treasure hunter cape
@@ -223,7 +223,7 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/enby.rsi
    
-    - type: entity
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakPan
   name: chef's cape
