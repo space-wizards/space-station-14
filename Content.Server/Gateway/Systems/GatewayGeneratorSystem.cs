@@ -35,31 +35,36 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent component, MapInitEvent args)
     {
-        var loadRadius = 8;
         var tiles = new List<(Vector2i Index, Tile Tile)>();
         var tileDef = _tileDefManager["FloorSteel"];
 
-        for (var x = -loadRadius; x < loadRadius; x++)
-        {
-            for (var y = -loadRadius; y < loadRadius; y++)
-            {
-                tiles.Add((new Vector2i(x, y), new Tile(tileDef.TileId, variant: _random.NextByte(tileDef.Variants))));
-            }
-        }
-
         for (var i = 0; i < 3; i++)
         {
+            tiles.Clear();
             var mapId = _mapManager.CreateMap();
             var mapUid = _mapManager.GetMapEntityId(mapId);
+            var origin = _random.NextVector2(512f).Floored();
+            var restriction = AddComp<RestrictedRangeComponent>(mapUid);
+            restriction.Origin = origin;
+            var tileOrigin = (Vector2i) origin;
             // TODO: Not this.
             _console.ExecuteCommand($"planet {mapId} Continental");
 
             var grid = Comp<MapGridComponent>(mapUid);
+
+            for (var x = -2; x <= 2; x++)
+            {
+                for (var y = -2; y <= 2; y++)
+                {
+                    tiles.Add((new Vector2i(x, y) + tileOrigin, new Tile(tileDef.TileId, variant: _random.NextByte(tileDef.Variants))));
+                }
+            }
+
             _maps.SetTiles(mapUid, grid, tiles);
-            var gatewayUid = SpawnAtPosition("GatewayDestination", new EntityCoordinates(mapUid, Vector2.Zero));
+
+            var gatewayUid = SpawnAtPosition("GatewayDestination", new EntityCoordinates(mapUid, origin));
             var gatewayComp = Comp<GatewayDestinationComponent>(gatewayUid);
             _gateway.SetEnabled(gatewayUid, true, gatewayComp);
-            AddComp<RestrictedRangeComponent>(mapUid);
             component.Generated.Add(mapUid);
         }
 

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Salvage;
@@ -9,5 +10,8 @@ namespace Content.Shared.Salvage;
 public sealed partial class RestrictedRangeComponent : Component
 {
     [DataField(required: true), AutoNetworkedField]
-    public float Range = 72f;
+    public float Range = 54f;
+
+    [DataField, AutoNetworkedField]
+    public Vector2 Origin;
 }

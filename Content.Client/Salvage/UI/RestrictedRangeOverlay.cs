@@ -52,7 +52,7 @@ public sealed class RestrictedRangeOverlay : Overlay
         var bufferRange = MathF.Min(10f, rangeComp.Range);
 
         var viewMatrix = args.Viewport.GetWorldToLocalMatrix();
-        var pixelCenter = viewMatrix.Transform(Vector2.Zero);
+        var pixelCenter = viewMatrix.Transform(rangeComp.Origin);
         // Something something offset?
         var vertical = args.Viewport.Size.Y;
 
