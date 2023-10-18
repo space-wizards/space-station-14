@@ -29,7 +29,7 @@
       alwaysCombustible: true
       canExtinguish: true 
       firestacksOnIgnite: 3.0
-      firestackFade: 0.0 #the candle will not extinguish itself until it is destroyed.
+      firestackFade: -0.01 
       damage:
         types:
           Heat: 0.1
