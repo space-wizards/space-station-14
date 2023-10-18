@@ -1,46 +1,65 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from TauCetiStation at https://github.com/TauCetiStation/TauCetiClassic/commit/ed880fc5f1c41623906f39bf8b74e3db9911cc56",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "ca_off"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from goonstation at https://github.com/goonstation/goonstation/commit/cbe076402ed43b1cd861295bbcb95608c453de7a. Edited by chromiumboy",
+    "size": {
+      "x": 32,
+      "y": 32
     },
-    {
-      "name": "ca_on"
-    },
-    {
-      "name": "ca_active",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+    "states": [
+      {
+        "name": "ca_off"
+      },
+      {
+        "name": "ca_on"
+      },
+      {
+        "name": "ca_active",
+        "delays": [
+          [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
         ]
-      ]
-    },
-    {
-      "name": "ca_deactive",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+      },
+      {
+        "name": "ca_deactive",
+        "delays": [
+          [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
         ]
-      ]
-    },
-    {
-      "name": "cu"
-    }
-  ]
-}
+      },
+      {
+        "name": "cu"
+      },
+      {
+        "name": "ca-o0",
+        "delays": [
+          [
+            0.2,
+            0.2
+          ]
+        ]
+      },
+      {
+        "name": "ca-o1"
+      },
+      {
+        "name": "ca-o2"
+      },
+      {
+        "name": "ca-o3"
+      },
+      {
+        "name": "ca-tank"
+      }
+    ]
+  }
