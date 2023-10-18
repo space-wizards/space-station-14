@@ -10,7 +10,7 @@ namespace Content.Shared.Salvage;
 public sealed partial class RestrictedRangeComponent : Component
 {
     [DataField(required: true), AutoNetworkedField]
-    public float Range = 54f;
+    public float Range = 72f;
 
     [DataField, AutoNetworkedField]
     public Vector2 Origin;

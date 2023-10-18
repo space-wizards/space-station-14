@@ -27,6 +27,26 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly SalvageSystem _salvage = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
 
+    // TODO:
+    // Use fog instead of blackness for barrier.
+    // Fix names / colouring on gateway thing
+    // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
+    // Add dungeon name to thing
+    // Add biome template to thing
+    // Add biome template options.
+    // Make continental bigger areas probably?
+    // Think of something for resources
+    // Fix next ready
+    // Fix selecting
+    // Fix unlocks / locking
+    // Make a planet helper instead of calling command
+    // Spawn dungeon / make an await for dungeons or something
+    // apply biome templates
+    // Add mob templates like lizards or aliens or w/e
+    // Probably need reduced ore spawn rate.
+    // Add an initial 15min lockout or something on roundstart
+    // Need chain shape for barrier.
+
     public override void Initialize()
     {
         base.Initialize();
@@ -46,7 +66,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             var origin = _random.NextVector2(512f).Floored();
             var restriction = AddComp<RestrictedRangeComponent>(mapUid);
             restriction.Origin = origin;
-            var tileOrigin = (Vector2i) origin;
             // TODO: Not this.
             _console.ExecuteCommand($"planet {mapId} Continental");
 
@@ -56,7 +75,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             {
                 for (var y = -2; y <= 2; y++)
                 {
-                    tiles.Add((new Vector2i(x, y) + tileOrigin, new Tile(tileDef.TileId, variant: _random.NextByte(tileDef.Variants))));
+                    tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: _random.NextByte(tileDef.Variants))));
                 }
             }
 
