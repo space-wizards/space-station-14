@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Nanotrasen has designed the new Vim exosuit for all your beloved pets!
-      Research it alongside the HAMTR in the new "Critters Mechs" research technology,
-    type: Add}
-  id: 4523
-  time: '2023-08-11T16:20:16.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'After a flurry of memos, the Atmospheric Technician''s remote no longer
@@ -2930,3 +2923,9 @@ Entries:
   - {message: Changed naming of the original taco to soft shell taco, type: Tweak}
   id: 5022
   time: '2023-10-18T21:03:23.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Electric shocks now scale with the amount of power in the cables instead
+      of the type of cable., type: Tweak}
+  id: 5023
+  time: '2023-10-18T21:04:47.0000000+00:00'
