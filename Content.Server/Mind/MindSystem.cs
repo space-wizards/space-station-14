@@ -125,6 +125,7 @@ public sealed class MindSystem : SharedMindSystem
             DebugTools.Assert(_players.GetPlayerData(user).ContentData() is not { } data || data.Mind == mindId);
             return true;
         }
+
         DebugTools.Assert(_players.GetPlayerData(user).ContentData()?.Mind == null);
         return false;
     }
