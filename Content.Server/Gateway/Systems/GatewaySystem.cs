@@ -35,6 +35,15 @@ public sealed class GatewaySystem : EntitySystem
         SubscribeLocalEvent<GatewayDestinationComponent, GetVerbsEvent<AlternativeVerb>>(OnDestinationGetVerbs);
     }
 
+    public void SetEnabled(EntityUid uid, bool value, GatewayDestinationComponent? component = null)
+    {
+        if (!Resolve(uid, ref component) || component.Enabled == value)
+            return;
+
+        component.Enabled = value;
+        UpdateAllGateways();
+    }
+
     private void OnGatewayUnpaused(EntityUid uid, GatewayComponent component, ref EntityUnpausedEvent args)
     {
         component.NextReady += args.PausedTime;
@@ -49,6 +58,16 @@ public sealed class GatewaySystem : EntitySystem
     private void UpdateUserInterface<T>(EntityUid uid, GatewayComponent comp, T args)
     {
         UpdateUserInterface(uid, comp);
+    }
+
+    private void UpdateAllGateways()
+    {
+        var query = AllEntityQuery<GatewayComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            UpdateUserInterface(uid, comp);
+        }
     }
 
     private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)

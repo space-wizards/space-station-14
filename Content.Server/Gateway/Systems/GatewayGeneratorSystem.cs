@@ -1,6 +1,8 @@
 using System.Numerics;
+using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
 using Content.Server.Salvage;
+using Content.Shared.Salvage;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -21,6 +23,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly BiomeSystem _biome = default!;
+    [Dependency] private readonly GatewaySystem _gateway = default!;
     [Dependency] private readonly SalvageSystem _salvage = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
 
@@ -53,7 +56,10 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
             var grid = Comp<MapGridComponent>(mapUid);
             _maps.SetTiles(mapUid, grid, tiles);
-            SpawnAtPosition("GatewayDestination", new EntityCoordinates(mapUid, Vector2.Zero));
+            var gatewayUid = SpawnAtPosition("GatewayDestination", new EntityCoordinates(mapUid, Vector2.Zero));
+            var gatewayComp = Comp<GatewayDestinationComponent>(gatewayUid);
+            _gateway.SetEnabled(gatewayUid, true, gatewayComp);
+            AddComp<RestrictedRangeComponent>(mapUid);
             component.Generated.Add(mapUid);
         }
 
