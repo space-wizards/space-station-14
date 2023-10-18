@@ -35,16 +35,16 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     public readonly NetEntity? Current;
 
     /// <summary>
-    /// Time the portal last opened at.
+    /// Next time the portal is ready to be used.
     /// </summary>
-    public readonly TimeSpan LastOpen;
+    public readonly TimeSpan NextReady;
 
     public GatewayBoundUserInterfaceState(List<GatewayDestinationData> destinations,
-        NetEntity? current, TimeSpan lastOpen)
+        NetEntity? current, TimeSpan nextReady)
     {
         Destinations = destinations;
         Current = current;
-        LastOpen = lastOpen;
+        NextReady = nextReady;
     }
 }
 
@@ -54,6 +54,8 @@ public record struct GatewayDestinationData
     public NetEntity Entity;
 
     public FormattedMessage Name;
+
+    public TimeSpan NextReady;
 
     public bool Portal;
 }

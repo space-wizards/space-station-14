@@ -30,10 +30,16 @@ public sealed partial class GatewayDestinationComponent : Component
     public FormattedMessage Name = new();
 
     /// <summary>
-    /// How long the portal will be open for after linking.
+    /// Next time the destination can have its linked portal changed.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan OpenTime = TimeSpan.FromSeconds(600);
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
+    public TimeSpan NextReady;
+
+    /// <summary>
+    /// Cooldown to change configuration.
+    /// </summary>
+    [DataField]
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// If true, the portal can be closed by alt clicking it.

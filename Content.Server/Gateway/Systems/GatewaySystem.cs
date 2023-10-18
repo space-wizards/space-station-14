@@ -6,10 +6,7 @@ using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Gateway.Systems;
 
@@ -20,6 +17,7 @@ public sealed class GatewaySystem : EntitySystem
     [Dependency] private readonly LinkedEntitySystem _linkedEntity = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -27,6 +25,7 @@ public sealed class GatewaySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<GatewayComponent, EntityUnpausedEvent>(OnGatewayUnpaused);
         SubscribeLocalEvent<GatewayComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<GatewayComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GatewayComponent, GatewayOpenPortalMessage>(OnOpenPortal);
@@ -34,6 +33,11 @@ public sealed class GatewaySystem : EntitySystem
         SubscribeLocalEvent<GatewayDestinationComponent, ComponentStartup>(OnDestinationStartup);
         SubscribeLocalEvent<GatewayDestinationComponent, ComponentShutdown>(OnDestinationShutdown);
         SubscribeLocalEvent<GatewayDestinationComponent, GetVerbsEvent<AlternativeVerb>>(OnDestinationGetVerbs);
+    }
+
+    private void OnGatewayUnpaused(EntityUid uid, GatewayComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextReady += args.PausedTime;
     }
 
     private void OnStartup(EntityUid uid, GatewayComponent comp, ComponentStartup args)
@@ -65,15 +69,8 @@ public sealed class GatewaySystem : EntitySystem
             });
         }
 
-        var ev = new GetGatewayDestinationsEvent()
-        {
-            GatewayEntity = uid,
-            Data = destinations,
-        };
-        RaiseLocalEvent(uid, ref ev);
-
         _linkedEntity.GetLink(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.LastOpen);
+        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextReady);
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
@@ -99,8 +96,10 @@ public sealed class GatewaySystem : EntitySystem
             HasComp<PortalComponent>(desto) ||
             !TryComp<GatewayDestinationComponent>(desto, out var dest) ||
             !dest.Enabled ||
-            _timing.CurTime < dest.NextReady)
+            _timing.CurTime < _metadata.GetPauseTime(desto) + dest.NextReady)
+        {
             return;
+        }
 
         // TODO: admin log???
         OpenPortal(uid, comp, desto, dest);
@@ -113,9 +112,7 @@ public sealed class GatewaySystem : EntitySystem
         EnsureComp<PortalComponent>(dest).CanTeleportToOtherMaps = true;
 
         // for ui
-        comp.LastOpen = _timing.CurTime;
-        // close automatically after time is up
-        comp.NextClose = comp.LastOpen + destComp.OpenTime;
+        comp.NextReady = _timing.CurTime;
 
         _audio.PlayPvs(comp.OpenSound, uid);
         _audio.PlayPvs(comp.OpenSound, dest);
@@ -152,10 +149,9 @@ public sealed class GatewaySystem : EntitySystem
 
     private void OnDestinationStartup(EntityUid uid, GatewayDestinationComponent comp, ComponentStartup args)
     {
-        var query = EntityQueryEnumerator<GatewayComponent>();
+        var query = AllEntityQuery<GatewayComponent>();
         while (query.MoveNext(out var gatewayUid, out var gateway))
         {
-            gateway.Destinations.Add(uid);
             UpdateUserInterface(gatewayUid, gateway);
         }
 
@@ -164,10 +160,9 @@ public sealed class GatewaySystem : EntitySystem
 
     private void OnDestinationShutdown(EntityUid uid, GatewayDestinationComponent comp, ComponentShutdown args)
     {
-        var query = EntityQueryEnumerator<GatewayComponent>();
+        var query = AllEntityQuery<GatewayComponent>();
         while (query.MoveNext(out var gatewayUid, out var gateway))
         {
-            gateway.Destinations.Remove(uid);
             UpdateUserInterface(gatewayUid, gateway);
         }
     }

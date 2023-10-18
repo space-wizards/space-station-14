@@ -38,8 +38,8 @@ public sealed partial class GatewayComponent : Component
     public TimeSpan Cooldown = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// The time at which the portal was last opened.
+    /// The time at which the portal can next be opened.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan LastOpen;
+    public TimeSpan NextReady;
 }

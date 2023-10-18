@@ -29,7 +29,7 @@ public sealed class PlanetCommand : IConsoleCommand
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    public string Command => $"planet";
+    public string Command => "planet";
     public string Description => Loc.GetString("cmd-planet-desc");
     public string Help => Loc.GetString("cmd-planet-help", ("command", Command));
     public void Execute(IConsoleShell shell, string argStr, string[] args)

@@ -4,10 +4,10 @@
                       MinSize="800 360">
     <BoxContainer Orientation="Vertical">
 	    <BoxContainer Orientation="Horizontal">
-	        <Label Name="NextCloseLabel"
-	               Text="{Loc 'gateway-window-portal-closing'}"
+	        <Label Name="NextReadyLabel"
+	               Text="{Loc 'gateway-window-portal-cooldown'}"
 	               Margin="5"></Label>
-	        <ProgressBar Name="NextCloseBar"
+	        <ProgressBar Name="NextReadyBar"
 	                     HorizontalExpand="True"
 	                     MinValue="0"
 	                     MaxValue="1"

@@ -1,6 +1,10 @@
-using Content.Server.Administration.Commands;
+using System.Numerics;
+using Content.Server.Parallax;
 using Content.Server.Salvage;
-using Robust.Shared.GameStates;
+using Robust.Shared.Console;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -11,41 +15,49 @@ namespace Content.Server.Gateway.Systems;
 /// </summary>
 public sealed class GatewayGeneratorSystem : EntitySystem
 {
+    [Dependency] private readonly IConsoleHost _console = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly BiomeSystem _biome = default!;
+    [Dependency] private readonly SalvageSystem _salvage = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<GatewayGeneratorComponent, MapInitEvent>(OnGeneratorMapInit);
-        SubscribeLocalEvent<GatewayGeneratorComponent, GetGatewayDestinationsEvent>(OnGeneratorGetDestinations);
-    }
-
-    private void OnGeneratorGetDestinations(EntityUid uid, GatewayGeneratorComponent component, ref GetGatewayDestinationsEvent args)
-    {
-        throw new NotImplementedException();
     }
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent component, MapInitEvent args)
     {
+        var loadRadius = 8;
+        var tiles = new List<(Vector2i Index, Tile Tile)>();
+        var tileDef = _tileDefManager["FloorSteel"];
+
+        for (var x = -loadRadius; x < loadRadius; x++)
+        {
+            for (var y = -loadRadius; y < loadRadius; y++)
+            {
+                tiles.Add((new Vector2i(x, y), new Tile(tileDef.TileId, variant: _random.NextByte(tileDef.Variants))));
+            }
+        }
+
         for (var i = 0; i < 3; i++)
         {
-            component.Seeds.Add(_random.Next());
+            var mapId = _mapManager.CreateMap();
+            var mapUid = _mapManager.GetMapEntityId(mapId);
+            // TODO: Not this.
+            _console.ExecuteCommand($"planet {mapId} Continental");
+
+            var grid = Comp<MapGridComponent>(mapUid);
+            _maps.SetTiles(mapUid, grid, tiles);
+            SpawnAtPosition("GatewayDestination", new EntityCoordinates(mapUid, Vector2.Zero));
+            component.Generated.Add(mapUid);
         }
 
         Dirty(uid, component);
-    }
-
-    public void TakeOption(EntityUid uid, GatewayGeneratorComponent component, int index)
-    {
-        if (component.Seeds.Count >= index)
-        {
-            Log.Error($"Tried to take invalid seed option {index} for {ToPrettyString(uid)}");
-            return;
-        }
-
-        var seed = component.Seeds[index];
-        component.Seeds.RemoveAt(index);
-        component.TakenSeeds.Add(seed);
     }
 }
 
@@ -67,9 +79,9 @@ public sealed partial class GatewayGeneratorComponent : Component
     [DataField]
     public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(45);
 
+    /// <summary>
+    /// Maps we've generated.
+    /// </summary>
     [DataField]
-    public List<int> Seeds = new();
-
-    [DataField]
-    public List<int> TakenSeeds = new();
+    public List<EntityUid> Generated = new();
 }
