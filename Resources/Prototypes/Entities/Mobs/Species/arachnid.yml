@@ -114,7 +114,6 @@
     - CanPilot
     - FootstepSound
     - DoorBumpOpener
-    - CopperBlood
 
 - type: entity
   parent: BaseSpeciesDummy
