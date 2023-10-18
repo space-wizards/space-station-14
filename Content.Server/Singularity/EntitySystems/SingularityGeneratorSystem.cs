@@ -1,4 +1,4 @@
-﻿using Content.Server.ParticleAccelerator.Components;
+using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics.Events;
@@ -45,6 +45,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
 
         SetPower(uid, 0, comp);
         EntityManager.SpawnEntity(comp.SpawnPrototype, Transform(uid).Coordinates);
+        QueueDel(uid); //For tesla
     }
 
     #region Getters/Setters

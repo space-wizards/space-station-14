@@ -1,0 +1,53 @@
+- type: entity
+  id: TeslaEnergyBall
+  name: energy ball
+  description: A giant ball of pure energy. The space around it is humming and melting.
+  components: 
+  - type: Clickable
+  - type: AmbientSound
+    volume: -4
+    range: 14
+    sound:
+      path: /Audio/Effects/singularity.ogg #TO DO: new sound
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: Fixtures
+    fixtures:
+      EventHorizonCollider:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.35
+        hard: true
+        restitution: 0.8
+        density: 99999
+        mask:
+        - AllMask
+        layer:
+        - AllMask
+      EventHorizonConsumer:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.35
+        hard: false
+        mask:
+        - AllMask
+        layer:
+        - AllMask #Возможно нужно заменить маски
+  - type: RandomWalk # To make the singularity move around.
+    maxSpeed: 2.5
+    minSpeed: 1.875
+  - type: PointLight
+    enabled: true
+    radius: 10
+  - type: Appearance
+  #- type: GuideHelp
+  - type: WarpPoint
+    follow: true
+    location: tesla ball
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/energy_ball.rsi
+    shader: unshaded
+    layers:
+    - state: energy_ball

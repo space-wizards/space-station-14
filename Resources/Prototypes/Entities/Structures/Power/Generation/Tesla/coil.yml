@@ -1,0 +1,107 @@
+- type: entity
+  id: TeslaCoil
+  name: tesla coil
+  description: A machine that converts lightning strikes into an electric current.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    snapCardinals: true
+    layers:
+      - state: coil0
+  - type: Appearance
+  #- type: GenericVisualizer
+  #- type: AnimationPlayer #что это вообще?
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: Battery
+    maxCharge: 100000
+    startingCharge: 0
+  - type: BatteryDischarger
+    # This is JUST copy from Radiation Collector
+    activeSupplyRate: 100000
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
+  - type: PowerNetworkBattery
+    maxSupply: 1000000000
+    supplyRampTolerance: 1000000000
+  #- type: GuideHelp
+  #  guides: [ Singularity, Power ]
+  
+- type: entity
+  id: GroundingRod
+  name: grounding rod
+  description: A machine that keeps lightning from striking too far away.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    snapCardinals: true
+    layers:
+      - state: grounding_rod0
+  - type: Appearance
+  #- type: GenericVisualizer
+  #- type: AnimationPlayer #что это вообще?
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: Battery
+    maxCharge: 100000
+    startingCharge: 0
+  - type: BatteryDischarger
+    # This is JUST copy from Radiation Collector
+    activeSupplyRate: 100000
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
+  - type: PowerNetworkBattery
+    maxSupply: 1000000000
+    supplyRampTolerance: 1000000000
+  #- type: GuideHelp
+  #  guides: [ Singularity, Power ]

@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA 3.0",
+  "copyright": "taken from tgstation https://github.com/tgstation/tgstation/blob/master/icons/obj/machines/engine/tesla_coil.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "coil_open0"
+    },
+    {
+      "name": "coil_open1"
+    },
+    {
+      "name": "coil0"
+    },
+    {
+      "name": "coil1"
+    },
+    {
+      "name": "coilhit",
+      "delays": [
+        [
+          0.1,
+          0.08,
+          0.08,
+          0.08,
+          0.120000005,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "grounding_rod_open0"
+    },
+    {
+      "name": "grounding_rod_open1"
+    },
+    {
+      "name": "grounding_rod0"
+    },
+    {
+      "name": "grounding_rod1"
+    },
+    {
+      "name": "grounding_rodhit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}
