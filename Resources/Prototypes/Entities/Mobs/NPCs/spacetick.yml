@@ -59,7 +59,6 @@
     bloodMaxVolume: 50
   - type: CombatMode
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Effects/bite.ogg
     angle: 0
