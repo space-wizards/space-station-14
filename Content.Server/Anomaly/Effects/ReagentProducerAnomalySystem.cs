@@ -1,8 +1,8 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Sprite;
 using Robust.Server.GameObjects;
@@ -32,7 +32,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    
+
     public const string FallbackReagent = "Water";
 
     public override void Initialize()
