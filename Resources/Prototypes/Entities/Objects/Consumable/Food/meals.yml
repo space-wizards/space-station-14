@@ -614,9 +614,9 @@
     catagory: "Salads"
 
 - type: entity
-  name: taco
+  name: soft taco
   parent: FoodMealBase
-  id: FoodMealTaco
+  id: FoodMealSoftTaco
   description: Take a bite!
   components:
   - type: FlavorProfile
@@ -626,7 +626,7 @@
       - meaty
       - onion
   - type: Sprite
-    state: taco
+    state: softtaco
   - type: Tag
     tags:
     - Meat
