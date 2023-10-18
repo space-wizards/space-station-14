@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using System.Numerics;
 using Content.Shared.DoAfter;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
@@ -19,6 +21,7 @@ public sealed class DoAfterOverlay : Overlay
 
     private readonly Texture _barTexture;
     private readonly ShaderInstance _shader;
+    private readonly IPlayerManager _player; // SS220 Invisible-DoAfter
 
     /// <summary>
     ///     Flash time for cancelled DoAfters
@@ -31,7 +34,7 @@ public sealed class DoAfterOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IGameTiming timing)
+    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IGameTiming timing, IPlayerManager player)
     {
         _entManager = entManager;
         _timing = timing;
@@ -39,6 +42,7 @@ public sealed class DoAfterOverlay : Overlay
         _meta = _entManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
         var sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
+        _player = player; // SS220 Invisible-DoAfter
 
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
@@ -48,6 +52,8 @@ public sealed class DoAfterOverlay : Overlay
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+
+        var controlled = _player.LocalPlayer?.ControlledEntity; // SS220 Invisible-Doafter
 
         // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
         const float scale = 1f;
@@ -88,6 +94,11 @@ public sealed class DoAfterOverlay : Overlay
 
             foreach (var doAfter in comp.DoAfters.Values)
             {
+                // SS220 Invisible-DoAfter begin
+                if (doAfter.Args.VisibleOnlyToUser && _entManager.GetEntity(doAfter.Args.NetUser) != controlled)
+                    continue;
+                // SS220 Invisible-DoAfter end
+
                 // Use the sprite itself if we know its bounds. This means short or tall sprites don't get overlapped
                 // by the bar.
                 float yOffset = sprite.Bounds.Height / 2f + 0.05f;

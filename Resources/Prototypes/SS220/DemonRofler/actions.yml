@@ -1,0 +1,59 @@
+- type: entity
+  id: ActionDarkReaperRofl
+  name: Запугивание
+  description: Чем больше страха, тем слаще добыча.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:ReaperRoflEvent
+    itemIconStyle: NoItem
+    icon: Interface/Actions/scream.png
+    useDelay: 25
+
+- type: entity
+  id: ActionDarkReaperStun
+  name: Крик
+  description: Громкий вопль, оглушающий добычу.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:ReaperStunEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: icon_jnecscream }
+    useDelay: 30
+
+- type: entity
+  id: ActionDarkReaperConsume
+  noSpawn: true
+  name: Жатва
+  description: Растерзать и поглотить добычу.
+  components:
+  - type: EntityTargetAction
+    event: !type:ReaperConsumeEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: icon_jneceat }
+    useDelay: 10
+
+- type: entity
+  id: ActionDarkReaperMaterialize
+  name: Врата
+  description: Проход между материальным миром и не материальным.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:ReaperMaterializeEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: jnecexit }
+    useDelay: 15
+
+- type: entity
+  id: ActionDarkReaperSpawn
+  name: Явить себя
+  description: Смертные не будут вас дожидаться.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    event: !type:ReaperSpawnEvent
+    itemIconStyle: NoItem
+    icon: { sprite: SS220/DemonRofler/dark_reaper.rsi, state: jnecexit }
+    useDelay: 1

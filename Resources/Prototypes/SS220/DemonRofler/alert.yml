@@ -1,0 +1,35 @@
+- type: alert
+  id: DeadscoreStage1
+  icons:
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_1-1
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_1-2
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_1-3
+  maxSeverity: 3
+  name: требуемые поглощения
+  description: Показывает количество поглощений, требуемых для следующего уровня.
+  
+- type: alert
+  id: DeadscoreStage2
+  icons:
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_2-1
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_2-2
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_2-3
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_2-4
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_2-5
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_2-6
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_2-7
+  - sprite: /Textures/SS220/DemonRofler/deadscore.rsi
+    state: ds_2-8
+  maxSeverity: 8
+  name: требуемые поглощения
+  description: Показывает количество поглощений, требуемых для следующего уровня.

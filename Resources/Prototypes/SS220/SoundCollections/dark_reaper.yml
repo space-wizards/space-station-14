@@ -1,0 +1,13 @@
+- type: soundCollection
+  id: DarkReaperSwing
+  files:
+    - /Audio/SS220/DarkReaper/jnec_strike1.ogg
+    - /Audio/SS220/DarkReaper/jnec_strike2.ogg
+    - /Audio/SS220/DarkReaper/jnec_strike3.ogg
+
+- type: soundCollection
+  id: DarkReaperHit
+  files:
+    - /Audio/SS220/DarkReaper/jnec_strike1_hit.ogg
+    - /Audio/SS220/DarkReaper/jnec_strike2_hit.ogg
+    - /Audio/SS220/DarkReaper/jnec_strike3_hit.ogg

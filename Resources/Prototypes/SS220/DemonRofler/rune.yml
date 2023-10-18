@@ -1,0 +1,38 @@
+- type: entity
+  id: DarkReaperRune
+  name: странная руна
+  description: Жуткая руна, нарисованная кровью.
+  save: false
+  components:
+  - type: DarkReaperRune
+  - type: Actions
+  - type: ActionsContainer
+  - type: ContainerContainer
+  - type: Input
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    name: Тёмный Жнец
+    description: "Вы Тёмный Жнец - Демон, слуга Бога Тиндала. Пожирайте существ этой реальности, сводите их с ума и растите, пока не поглотите их всех!"
+    rules: "Вы Тёмный Жнец - Демон, слуга Бога Тиндала. Пожирайте существ этой реальности, сводите их с ума и растите, пока не поглотите их всех!"
+    makeSentient: false
+    allowSpeech: false
+  - type: Transform
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    sprite: SS220/DemonRofler/dark_reaper.rsi
+    layers:
+    - state: rune
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.48,-0.48,0.48,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false

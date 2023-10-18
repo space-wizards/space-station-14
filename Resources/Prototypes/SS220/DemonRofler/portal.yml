@@ -1,0 +1,36 @@
+- type: entity
+  id: DarkReaperPortalEffect
+  name: пространственный разлом
+  description: Это дыра в... пространстве?!
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    sprite: SS220/DemonRofler/dark_reaper.rsi
+    layers:
+    - state: jnecexit
+      shader: unshaded
+  - type: PointLight
+    color: White
+    radius: 2
+    softness: 1
+    netsync: false
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: AmbientSound
+    volume: -7
+    range: 5
+    sound:
+      path: /Audio/SS220/DarkReaper/jnec_gate_ambience.ogg

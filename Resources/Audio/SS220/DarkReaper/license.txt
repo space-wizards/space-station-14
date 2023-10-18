@@ -1,0 +1,3 @@
+Licensed under an EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+Made by MIXnikita for SS220

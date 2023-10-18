@@ -49,7 +49,9 @@ namespace Content.Shared.Alert
         Debug5,
         Debug6,
         SuitPower,
-        BorgHealth
+        BorgHealth,
+		DeadscoreStage1, //SS220 DarkReaper
+		DeadscoreStage2, //SS220 DarkReaper
     }
 
 }

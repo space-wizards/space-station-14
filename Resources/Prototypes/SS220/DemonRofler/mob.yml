@@ -1,0 +1,136 @@
+- type: entity
+  id: MobDarkReaper
+  parent:
+  - BaseMob
+  - FlyingMobBase
+  name: Тёмный Жнец
+  description: Ужасающая тварь, выглядящая так, словно её сшили из случайных кусков человеческой плоти.
+  components:
+  - type: DarkReaper
+    healPerConsume:
+      types:
+        Piercing: -80
+        Blunt: -80
+        Heat: -50
+        Poison: -50
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: StatusEffects
+    allowed: []
+  - type: ContainerContainer
+    containers:
+      consumed: !type:Container
+        ents: []
+        showEnts: false
+        occludes: true
+
+  # Visuals and appearance
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Ghosts
+    sprite: SS220/DemonRofler/dark_reaper.rsi
+    layers:
+    - state: jnec_s1
+      map: [ "enum.DarkReaperVisual.Stage" ]
+    - state: eyes_glow
+      map: [ "enum.DarkReaperVisual.StunEffect" ]
+      visible: false
+      shader: unshaded
+    - state: eyes_solo
+      map: [ "enum.DarkReaperVisual.GhostCooldown" ]
+      visible: false
+      shader: unshaded
+  - type: Icon
+    sprite: SS220/DemonRofler/dark_reaper.rsi
+    state: jnec_s3
+  - type: Appearance
+  - type: PointLight
+    color: Red
+    radius: 2
+    softness: 1
+    netsync: false
+  - type: LightBehaviour
+    behaviours:
+      - !type:RandomizeBehaviour # weaker flicker as it fades out
+        id: flicker
+        interpolate: Nearest
+        minDuration: 0.001
+        maxDuration: 0.001
+        startValue: 3.0
+        endValue: 6.0
+        property: Energy
+        isLooped: true
+#  - type: Visibility
+#    layer: 2 #ghost vis layer
+  - type: Eye
+    drawFov: false
+    visMask:
+    - Normal
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: Examiner
+  - type: Alerts
+  - type: GenericVisualizer
+    visuals:
+      enum.DarkReaperVisual.Stage:
+        enum.DarkReaperVisual.Stage:
+          1: {state: jnec_s1}
+          2: {state: jnec_s2}
+          3: {state: jnec_s3}
+      enum.DarkReaperVisual.StunEffect:
+        enum.DarkReaperVisual.StunEffect:
+          True: {visible: True}
+          False: {visible: False}
+      enum.DarkReaperVisual.GhostCooldown:
+        enum.DarkReaperVisual.GhostCooldown:
+          True: {visible: True}
+          False: {visible: False}
+
+  #Movement
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 6
+    baseSprintSpeed: 6
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+        - GhostImpassable
+  - type: MovementIgnoreGravity
+  - type: DoAfter
+
+  # Combat
+  - type: CombatMode
+  #weapon is added during the game, when reaper is material.
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile #Doesn't get attacked by flesh anomaly spawns
+
+  # Damageable
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 800
+      behaviors:
+      - !type:GibBehavior { }
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
