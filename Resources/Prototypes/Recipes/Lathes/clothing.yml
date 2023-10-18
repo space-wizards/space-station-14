@@ -700,3 +700,66 @@
   completetime: 3.2
   materials:
     Cloth: 500
+
+- type: latheRecipe
+  id: ClothingNeckCloakAce
+  result: ClothingNeckCloakAce
+  completetime: 2.8
+  materials:
+    Cloth: 300
+    
+ - type: latheRecipe
+  id: ClothingNeckCloakAro
+  result: ClothingNeckCloakAro
+  completetime: 2.8
+  materials:
+    Cloth: 300
+    
+ - type: latheRecipe
+  id: ClothingNeckCloakBi
+  result: ClothingNeckCloakBi
+  completetime: 2.8
+  materials:
+    Cloth: 300
+
+ - type: latheRecipe
+  id: ClothingNeckCloakIntersex
+  result: ClothingNeckCloakIntersex
+  completetime: 2.8
+  materials:
+    Cloth: 300
+
+ - type: latheRecipe
+  id: ClothingNeckCloakLesbian
+  result: ClothingNeckCloakLesbian
+  completetime: 2.8
+  materials:
+    Cloth: 300
+
+ - type: latheRecipe
+  id: ClothingNeckCloakGay
+  result: ClothingNeckCloakGay
+  completetime: 2.8
+  materials:
+    Cloth: 300
+
+ - type: latheRecipe
+  id: ClothingNeckCloakEnby
+  result: ClothingNeckCloakEnby
+  completetime: 2.8
+  materials:
+    Cloth: 300
+    
+ - type: latheRecipe
+  id: ClothingNeckCloakPan
+  result: ClothingNeckCloakPan
+  completetime: 2.8
+  materials:
+    Cloth: 300
+
+ - type: latheRecipe
+  id: ClothingNeckCloakTrans
+  result: ClothingNeckCloakTrans
+  completetime: 2.8
+  materials:
+    Cloth: 300

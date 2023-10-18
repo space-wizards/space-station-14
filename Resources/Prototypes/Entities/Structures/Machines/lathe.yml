@@ -807,6 +807,15 @@
       - ClothingOuterWinterSci
       - ClothingOuterWinterRobo
       - ClothingOuterWinterSec
+      -ClothingNeckCloakAro
+      -ClothingNeckCloakAce
+      -ClothingNeckCloakBi
+      -ClothingNeckCloakIntersex
+      -ClothingNeckCloakLesbian
+      -ClothingNeckCloakGay
+      -ClothingNeckCloakEnby
+      -ClothingNeckCloakPan
+      -ClothingNeckCloakTrans
   - type: MaterialStorage
     whitelist:
       tags:
