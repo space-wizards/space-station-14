@@ -17,7 +17,7 @@
             <Collapsible Name="RecipesCollapsible" Orientation="Vertical">
                 <CollapsibleHeading Title="{Loc 'guidebook-food-recipes-header'}"/>
                 <CollapsibleBody>
-                    <GridContainer Name="RecipesContainer" Orientation="Vertical"/>
+                    <GridContainer Name="RecipesContainer"/>
                 </CollapsibleBody>
             </Collapsible>
             <Collapsible Name="UsesCollapsible" Orientation="Vertical">
