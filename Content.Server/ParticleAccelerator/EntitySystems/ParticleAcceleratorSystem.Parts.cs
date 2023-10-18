@@ -149,7 +149,7 @@ public sealed partial class ParticleAcceleratorSystem
         }
 
         part = null;
-        comp = null;
+        comp = default;
         return false;
     }
 
