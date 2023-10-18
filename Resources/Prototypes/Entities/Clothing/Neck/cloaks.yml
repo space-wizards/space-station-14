@@ -159,3 +159,76 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: TypingIndicatorClothing
     proto: moth
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakAce
+  name: pilot's cape
+  description: Cape awarded to Nanotrasen's finest space aces.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/ace.rsi
+    
+ - type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakAro
+  name: werewolf cape
+  description: This cape lets others know you're a lone wolf.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/aro.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakBi
+  name: poison cape
+  description: The purple color is a clear indicator you are poisonous.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/bi.rsi
+    
+ - type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakIntersex
+  name: cyclops cape
+  description: The circle on this cape represents a cyclops' eye.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/intersex.rsi
+    
+ - type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakLesbian
+  name: poet cape
+  description: This cape belonged to an ancient poet, you forgot which one.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/les.rsi
+    
+ - type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakGay
+  name: multi-level marketing cape
+  description: This cape is highly sought after in the Nanotrasen Marketing Offices.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/gay.rsi
+    
+ - type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakEnby
+  name: treasure hunter cape
+  description: This cape belonged to a greedy treasure hunter.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/enby.rsi
+   
+    - type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakPan
+  name: chef's cape
+  description: Meant to be worn alongside a frying pan.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/pan.rsi
+   
