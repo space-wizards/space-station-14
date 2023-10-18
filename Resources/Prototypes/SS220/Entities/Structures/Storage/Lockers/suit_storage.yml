@@ -11,3 +11,5 @@
         - id: JetpackSecurityFilled
         - id: ClothingOuterHardsuitBlueshield
         - id: ClothingMaskBreath
+  - type: AccessReader
+    access: [["Blueshield"]]
