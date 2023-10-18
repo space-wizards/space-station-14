@@ -24,7 +24,6 @@ namespace Content.Shared.PDA
 
         [DataField("penSlot")]
         public ItemSlot PenSlot = new();
-        //DeltaV Code adds PAI slot
         [DataField("pAISlot")]
         public ItemSlot PAISlot = new();
 
