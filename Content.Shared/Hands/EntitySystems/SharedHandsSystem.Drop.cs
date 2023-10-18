@@ -104,8 +104,6 @@ public abstract partial class SharedHandsSystem
 
         var target = targetDropLocation.Value.ToMap(EntityManager, TransformSystem);
         TransformSystem.SetWorldPosition(itemXform, GetFinalDropCoordinates(uid, userXform.MapPosition, target));
-        // TODO: Temporary measure until we get engine method for setworldpos nolerp.
-        TransformSystem.DeactivateLerp(itemXform);
         return true;
     }
 
