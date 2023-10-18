@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry;
+using Content.Shared.Chemistry;
 
 namespace Content.Client.Chemistry.EntitySystems;
 
@@ -31,7 +31,6 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             ReagentRegistry[key] = val;
         }
 
-        Logger.Error(data.ReactionSolidProductEntries.Count.ToString());
         foreach (var (key, val) in data.ReactionSolidProductEntries)
         {
             ReactionRegistry[key] = val;
