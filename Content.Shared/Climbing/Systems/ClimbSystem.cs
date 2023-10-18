@@ -253,15 +253,23 @@ public sealed partial class ClimbSystem : VirtualController
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
         var worldDirection = _xformSystem.GetWorldPosition(climbable) - worldPos;
         var distance = worldDirection.Length();
-        var parentRot = (worldRot - xform.LocalRotation);
-        // Need direction relative to climber's parent.
-        var localDirection = (-parentRot).RotateVec(worldDirection);
 
         climbing.IsClimbing = true;
         var climbDuration = TimeSpan.FromSeconds(distance / climbing.TransitionRate);
         climbing.NextTransition = _timing.CurTime + climbDuration;
 
-        climbing.Direction = localDirection.Normalized() * climbing.TransitionRate;
+        if (distance > 0)
+        {
+            var parentRot = (worldRot - xform.LocalRotation);
+            // Need direction relative to climber's parent.
+            var localDirection = (-parentRot).RotateVec(worldDirection);
+            climbing.Direction = localDirection.Normalized() * climbing.TransitionRate;
+        }
+        else
+        {
+            climbing.Direction = Vector2.Zero;
+        }
+
         Dirty(uid, climbing);
 
         _audio.PlayPredicted(comp.FinishClimbSound, climbable, user);
