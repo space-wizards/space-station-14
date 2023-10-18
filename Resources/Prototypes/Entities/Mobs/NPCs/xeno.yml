@@ -73,9 +73,7 @@
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
     altDisarm: false
-    hidden: true
     angle: 0
     soundHit:
      collection: AlienClaw
@@ -176,7 +174,6 @@
     speedModifierThresholds:
       40: 0.7
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
     damage:
       groups:
         Brute: 6
@@ -215,8 +212,6 @@
       150: 0.7
   - type: MovementSpeedModifier
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
-    hidden: true
     damage:
      groups:
        Brute: 12
@@ -254,8 +249,6 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 4
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
-    hidden: true
     damage:
      groups:
        Brute: 10
@@ -289,8 +282,6 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 6.0
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
-    hidden: true
     damage:
      groups:
        Brute: 5
@@ -401,8 +392,6 @@
     factions:
     - Xeno
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
-    hidden: true
     angle: 0
     animation: WeaponArcBite
     damage:

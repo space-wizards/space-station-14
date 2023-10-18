@@ -226,8 +226,6 @@
           Burn: 3
     - type: InventorySlots
     - type: MeleeWeapon
-      useWeaponAsAttackAnimation: false
-      hidden: true
       angle: 30
       animation: WeaponArcFist
       attackRate: 1.8

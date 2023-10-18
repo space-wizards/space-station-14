@@ -76,7 +76,7 @@
   - type: ZombieImmune
 
 - type: entity
-  parent: MobElementalBase
+  parent: [ MobElementalBase, MobCombat ]
   id: MobQuartzCrab
   name: quartz crab
   description: An ore crab made from quartz.
@@ -88,8 +88,6 @@
     rootTask:
       task: SimpleHostileCompound
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
@@ -117,7 +115,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: MobElementalBase
+  parent: [ MobElementalBase, MobCombat ]
   id: MobIronCrab
   name: ore crab
   description: An ore crab made from iron.
@@ -129,8 +127,6 @@
     rootTask:
       task: SimpleHostileCompound
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
@@ -161,7 +157,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: MobElementalBase
+  parent: [ MobElementalBase, MobCombat ]
   id: MobUraniumCrab
   name: ore crab
   description: An ore crab made from uranium.
@@ -173,8 +169,6 @@
     rootTask:
       task: IdleCompound
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
@@ -215,7 +209,7 @@
   name: Reagent slime
   id: ReagentSlime
   suffix: Water
-  parent: MobAdultSlimes
+  parent: [ MobAdultSlimes, MobCombat ]
   description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
   - type: NpcFactionMember
@@ -251,7 +245,6 @@
     - SlowedDown
     - Electrocution
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
     soundHit:
       collection: AlienClaw
     animation: WeaponArcBite

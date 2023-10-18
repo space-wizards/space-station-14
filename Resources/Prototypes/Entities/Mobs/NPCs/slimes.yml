@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: basic slime
   id: MobAdultSlimes
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
@@ -97,10 +97,7 @@
   - type: Body
     prototype: Slimes
     requiredLegs: 1
-  - type: CombatMode
   - type: MeleeWeapon
-    useWeaponAsAttackAnimation: false
-    hidden: true
     soundHit:
         path: /Audio/Weapons/punch3.ogg
     angle: 0
@@ -164,7 +161,6 @@
         Dead:
           Base: green_adult_slime_dead
     - type: MeleeWeapon
-      useWeaponAsAttackAnimation: false
       damage:
         types:
           Blunt: 6
@@ -200,7 +196,6 @@
         Dead:
           Base: yellow_adult_slime_dead
     - type: MeleeWeapon
-      useWeaponAsAttackAnimation: false
       damage:
         types:
           Blunt: 6
