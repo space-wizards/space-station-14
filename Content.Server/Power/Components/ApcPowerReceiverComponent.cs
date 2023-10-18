@@ -59,13 +59,6 @@ namespace Content.Server.Power.Components
         };
 
         public float PowerReceived => NetworkLoad.ReceivingPower;
-
-        public override void OnRemove()
-        {
-            Provider?.RemoveReceiver(this);
-
-            base.OnRemove();
-        }
     }
 
     /// <summary>
