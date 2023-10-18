@@ -9,6 +9,44 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
+    private void InitializeOrgans()
+    {
+        SubscribeLocalEvent<OrganComponent, EntGotInsertedIntoContainerMessage>(OnOrganInserted);
+        SubscribeLocalEvent<OrganComponent, EntGotRemovedFromContainerMessage>(OnOrganRemoved);
+    }
+
+    private void OnOrganInserted(EntityUid uid, OrganComponent component, EntGotInsertedIntoContainerMessage args)
+    {
+        // No recursive updates for these as you can't insert organs into organsTM.
+        var parentUid = args.Container.Owner;
+
+        if (HasComp<BodyComponent>(parentUid))
+        {
+            component.Body = parentUid;
+            Dirty(uid, component);
+        }
+
+        // Organ inserted into body part.
+        if (TryComp(parentUid, out BodyPartComponent? partComp))
+        {
+            component.Body = partComp.Body;
+            Dirty(uid, component);
+        }
+    }
+
+    private void OnOrganRemoved(EntityUid uid, OrganComponent component, EntGotRemovedFromContainerMessage args)
+    {
+        // TODO: lifestage shenanigans
+        if (TerminatingOrDeleted(uid))
+            return;
+
+        if (component.Body != null)
+        {
+            component.Body = null;
+            Dirty(uid, component);
+        }
+    }
+
     private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
     {
         component.Body = bodyUid;

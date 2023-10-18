@@ -19,50 +19,41 @@ public partial class SharedBodySystem
         // TODO: This doesn't handle comp removal on child ents.
 
         // If you modify this also see the Body partial for root parts.
-        SubscribeLocalEvent<BodyPartComponent, EntInsertedIntoContainerMessage>(OnBodyPartInserted);
-        SubscribeLocalEvent<BodyPartComponent, EntRemovedFromContainerMessage>(OnBodyPartRemoved);
+        SubscribeLocalEvent<BodyPartComponent, EntGotInsertedIntoContainerMessage>(OnBodyPartInserted);
+        SubscribeLocalEvent<BodyPartComponent, EntGotRemovedFromContainerMessage>(OnBodyPartRemoved);
     }
 
-    private void OnBodyPartInserted(EntityUid uid, BodyPartComponent component, EntInsertedIntoContainerMessage args)
+    private void OnBodyPartInserted(EntityUid uid, BodyPartComponent component, EntGotInsertedIntoContainerMessage args)
     {
-        // Body part inserted into another body part.
-        var entity = args.Entity;
-        var slotId = args.Container.ID;
+        var parentUid = args.Container.Owner;
 
-        if (component.Body != null)
+        if (HasComp<BodyComponent>(parentUid))
         {
-            if (TryComp(entity, out BodyPartComponent? childPart))
-            {
-                AddPart(component.Body.Value, entity, slotId, childPart);
-                RecursiveBodyUpdate(entity, component.Body.Value, childPart);
-            }
+            component.Body = parentUid;
+            Dirty(uid, component);
+            RecursiveBodyUpdate(uid, parentUid, component);
+        }
 
-            if (TryComp(entity, out OrganComponent? organ))
-            {
-                AddOrgan(entity, component.Body.Value, uid, organ);
-            }
+        // Body part inserted into another body part.
+        if (TryComp(parentUid, out BodyPartComponent? partComp))
+        {
+            component.Body = partComp.Body;
+            Dirty(uid, component);
+            RecursiveBodyUpdate(uid, component.Body, component);
         }
     }
 
-    private void OnBodyPartRemoved(EntityUid uid, BodyPartComponent component, EntRemovedFromContainerMessage args)
+    private void OnBodyPartRemoved(EntityUid uid, BodyPartComponent component, EntGotRemovedFromContainerMessage args)
     {
         // TODO: lifestage shenanigans
         if (TerminatingOrDeleted(uid))
             return;
 
-        // Body part removed from another body part.
-        var entity = args.Entity;
-        var slotId = args.Container.ID;
-
-        if (TryComp(entity, out BodyPartComponent? childPart) && childPart.Body != null)
+        if (component.Body != null)
         {
-            RemovePart(childPart.Body.Value, entity, slotId, childPart);
-            RecursiveBodyUpdate(entity, null, childPart);
-        }
-
-        if (TryComp(entity, out OrganComponent? organ))
-        {
-            RemoveOrgan(entity, uid, organ);
+            component.Body = null;
+            Dirty(uid, component);
+            RecursiveBodyUpdate(uid, null, component);
         }
     }
 
