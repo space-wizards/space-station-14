@@ -1,0 +1,6 @@
+Entries:
+- author: Mirton
+  changes:
+  - {message: 'Добавлено ещё одно место где нужно писать чейнджлоги', type: Add}
+  id: 1
+  time: '2023-10-18T15:21:52'
