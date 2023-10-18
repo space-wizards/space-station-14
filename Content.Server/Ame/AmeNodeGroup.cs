@@ -178,11 +178,10 @@ public sealed class AmeNodeGroup : BaseNodeGroup
     /// </summary>
     public float CalculatePower(int fuel, int cores)
     {
-        // Note the float conversions. The maths will completely fail if not done using floats.
-        // Oh, and don't ever stuff the result of this in an int. Seriously.
-        var floatFuel = (float) fuel;
-        var floatCores = (float) cores;
-        return 20000f * floatFuel * floatFuel / floatCores;
+        // Fuel is squared so more fuel vastly increases power and efficiency
+        // We divide by the number of cores so a larger AME is less efficient at the same fuel settings
+        // this results in all AMEs having the same efficiency at the same fuel-per-core setting
+        return 20000f * fuel * fuel / cores;
     }
 
     public int GetTotalStability()
