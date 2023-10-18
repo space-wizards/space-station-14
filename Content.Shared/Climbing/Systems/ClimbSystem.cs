@@ -101,7 +101,7 @@ public sealed partial class ClimbSystem : VirtualController
             }
 
             var xform = _xformQuery.GetComponent(uid);
-            _xformSystem.SetLocalPositionNoLerp(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
+            _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
         }
     }
 
