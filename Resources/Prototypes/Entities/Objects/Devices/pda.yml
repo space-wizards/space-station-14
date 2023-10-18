@@ -23,6 +23,11 @@
     state: pda
   - type: Pda
     state: pda
+    pAISlot:
+      priority: -2
+      whitelist:
+        tags:
+        - PAISlot
     penSlot:
       startingItem: Pen
       priority: -1

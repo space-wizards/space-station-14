@@ -67,6 +67,9 @@
           Off: { state: pai-off-overlay }
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
+  - type: Tag
+    tags:
+    - PAISlot
 
 - type: entity
   parent: PersonalAI

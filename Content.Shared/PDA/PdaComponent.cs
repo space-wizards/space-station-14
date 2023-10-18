@@ -11,6 +11,7 @@ namespace Content.Shared.PDA
     {
         public const string PdaIdSlotId = "PDA-id";
         public const string PdaPenSlotId = "PDA-pen";
+        public const string PdaPAISlotId = "PDA-pai";
 
         /// <summary>
         /// The base PDA sprite state, eg. "pda", "pda-clown"
@@ -23,6 +24,9 @@ namespace Content.Shared.PDA
 
         [DataField("penSlot")]
         public ItemSlot PenSlot = new();
+        //DeltaV Code adds PAI slot
+        [DataField("pAISlot")]
+        public ItemSlot PAISlot = new();
 
         // Really this should just be using ItemSlot.StartingItem. However, seeing as we have so many different starting
         // PDA's and no nice way to inherit the other fields from the ItemSlot data definition, this makes the yaml much
