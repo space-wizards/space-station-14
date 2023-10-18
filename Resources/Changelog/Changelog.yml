@@ -1,37 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
-      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
-  - {message: Updated pried tiles to match the appearance of the new tiles better.,
-    type: Tweak}
-  id: 4514
-  time: '2023-08-10T18:33:15.435911+00:00'
-- author: juliangiebel & mirrorcult
-  changes:
-  - {message: 'You may notice that chat text in general has become much prettier and
-      dynamic. Whispered text is smaller, announcements are larger, and names should
-      pop out more.', type: Tweak}
-  id: 4515
-  time: '2023-08-10T18:33:15.436963+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: All crates have a brand new look., type: Tweak}
-  id: 4516
-  time: '2023-08-11T00:12:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Job icons now ignore lighting., type: Fix}
-  id: 4517
-  time: '2023-08-11T00:36:26.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: 'As disease has been eradicated, Spaceacillin can no longer be created
-      or found.', type: Remove}
-  - {message: Creating medicated suture now required Cryptobiolin in place of Spaceacillin.,
-    type: Tweak}
-  id: 4518
-  time: '2023-08-11T03:04:49.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Added missing emergency security orders to the hardsuit version of HoS's
@@ -2939,3 +2906,31 @@ Entries:
   - {message: Uranium crabs are more radioactive!, type: Tweak}
   id: 5013
   time: '2023-10-16T05:34:18.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Stun batons now take three hits to stun and have had their battery use
+      dropped by half, type: Tweak}
+  id: 5014
+  time: '2023-10-16T11:39:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item drops mispredicting., type: Fix}
+  id: 5015
+  time: '2023-10-16T11:49:41.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Pneumatic Cannons can no longer shoot arrows., type: Tweak}
+  id: 5016
+  time: '2023-10-17T22:58:05.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Spears and arrows can now only hold up to 2u of liquids instead of 5u.,
+    type: Tweak}
+  id: 5017
+  time: '2023-10-17T23:01:25.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: The grey stick that shows up when you wide swing a weapon now looks
+      like the weapon used., type: Tweak}
+  id: 5018
+  time: '2023-10-18T01:12:00.0000000+00:00'
