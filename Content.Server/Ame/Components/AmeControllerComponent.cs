@@ -73,9 +73,20 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     public TimeSpan NextUpdate = default!;
 
     /// <summary>
+    /// The next time this will try to update the controller UI.
+    /// </summary>
+    public TimeSpan NextUIUpdate = default!;
+
+    /// <summary>
     /// The the amount of time that passes between injection attempts.
     /// </summary>
     [DataField("updatePeriod")]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UpdatePeriod = TimeSpan.FromSeconds(10.0);
+
+    /// <summary>
+    /// The maximum amount of time that passes between UI updates.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan UpdateUIPeriod = TimeSpan.FromSeconds(3.0);
 }
