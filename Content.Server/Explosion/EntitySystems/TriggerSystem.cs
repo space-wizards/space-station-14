@@ -148,7 +148,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (!TryComp<TransformComponent>(uid, out var xform))
                 return;
 
-            _body.GibBody(xform.ParentUid, deleteItems: component.DeleteItems);
+            _body.GibBody(xform.ParentUid, true, deleteItems: component.DeleteItems);
 
             args.Handled = true;
         }
