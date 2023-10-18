@@ -95,6 +95,12 @@
   components:
   - type: Sprite
     state: plushie_h
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_h
+  - type: Item
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_h
   - type: Extractable
     grindableSolutionName: bee
   - type: SolutionContainerManager
@@ -103,6 +109,14 @@
         reagents:
           - ReagentId: GroundBee
             Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: bee
+    slots:
+    - HEAD
+  - type: Item
+    heldPrefix: bee
 
 - type: entity
   parent: BasePlushie
@@ -167,6 +181,7 @@
     radius: 1.5
     energy: 2
     netsync: false
+
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!
