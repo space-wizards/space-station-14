@@ -28,11 +28,11 @@ public sealed class TemperatureSystem : EntitySystem
     ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
     ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
     /// </summary>
-    public HashSet<EntityUid> ShouldUpdateDamage = new();
+    public HashSet<TemperatureComponent> ShouldUpdateDamage = new();
 
     public float UpdateInterval = 1.0f;
 
-    private float _accumulatedFrameTime;
+    private float _accumulatedFrametime;
 
     public override void Initialize()
     {
@@ -51,28 +51,24 @@ public sealed class TemperatureSystem : EntitySystem
             OnParentThresholdShutdown);
     }
 
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        _accumulatedFrameTime += frameTime;
+        _accumulatedFrametime += frameTime;
 
-        if (_accumulatedFrameTime < UpdateInterval)
+        if (_accumulatedFrametime < UpdateInterval)
             return;
-        _accumulatedFrameTime -= UpdateInterval;
+        _accumulatedFrametime -= UpdateInterval;
 
         if (!ShouldUpdateDamage.Any())
             return;
 
-
-        foreach (var uid in ShouldUpdateDamage)
+        foreach (var comp in ShouldUpdateDamage)
         {
             MetaDataComponent? metaData = null;
 
-            if (!TryComp<TemperatureComponent>(uid, out var comp))
-                return;
-
+            var uid = comp.Owner;
             if (Deleted(uid, metaData) || Paused(uid, metaData))
                 continue;
 
@@ -87,8 +83,8 @@ public sealed class TemperatureSystem : EntitySystem
         if (!Resolve(uid, ref temperature))
             return;
 
-        var lastTemp = temperature.CurrentTemperature;
-        var delta = temperature.CurrentTemperature - temp;
+        float lastTemp = temperature.CurrentTemperature;
+        float delta = temperature.CurrentTemperature - temp;
         temperature.CurrentTemperature = temp;
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
             true);
@@ -103,13 +99,13 @@ public sealed class TemperatureSystem : EntitySystem
         if (!ignoreHeatResistance)
         {
             var ev = new ModifyChangedTemperatureEvent(heatAmount);
-            RaiseLocalEvent(uid, ev);
+            RaiseLocalEvent(uid, ev, false);
             heatAmount = ev.TemperatureDelta;
         }
 
-        var lastTemp = temperature.CurrentTemperature;
+        float lastTemp = temperature.CurrentTemperature;
         temperature.CurrentTemperature += heatAmount / temperature.HeatCapacity;
-        var delta = temperature.CurrentTemperature - lastTemp;
+        float delta = temperature.CurrentTemperature - lastTemp;
 
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
     }
@@ -127,7 +123,7 @@ public sealed class TemperatureSystem : EntitySystem
         var tileHeatCapacity =
             _atmosphere.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
         var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity /
-                                           (tileHeatCapacity + temperature.HeatCapacity));
+                                       (tileHeatCapacity + temperature.HeatCapacity));
         ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
     }
 
@@ -195,7 +191,7 @@ public sealed class TemperatureSystem : EntitySystem
 
     private void EnqueueDamage(EntityUid uid, TemperatureComponent component, OnTemperatureChangeEvent args)
     {
-        ShouldUpdateDamage.Add(uid);
+        ShouldUpdateDamage.Add(component);
     }
 
     private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
@@ -252,7 +248,8 @@ public sealed class TemperatureSystem : EntitySystem
         args.Args.TemperatureDelta *= component.Coefficient;
     }
 
-    private void OnParentChange(EntityUid uid, TemperatureComponent component, ref EntParentChangedMessage args)
+    private void OnParentChange(EntityUid uid, TemperatureComponent component,
+        ref EntParentChangedMessage args)
     {
         var temperatureQuery = GetEntityQuery<TemperatureComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
