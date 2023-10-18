@@ -8,8 +8,7 @@
   },
   "states": [
     {
-      "name": "closed",
-      "directions": 4
+      "name": "closed"
     }
   ]
 }

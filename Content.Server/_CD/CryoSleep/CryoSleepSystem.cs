@@ -1,28 +1,24 @@
+using System.Linq;
+using Content.Server.Climbing;
 using Content.Server.Mind;
+using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Systems;
-using Content.Server.Forensics;
-using Content.Server.StationRecords.Systems;
-using Content.Server.Chat.Systems;
-using Content.Server.Storage.Components;
-using Content.Server.Storage.EntitySystems;
-using Content.Server.Station.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.DragDrop;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Destructible;
 using Content.Shared.Mind;
 using Content.Server.EUI;
-using Content.Server.GameTicking;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
-using Content.Shared.Climbing.Systems;
-using Content.Shared.PDA;
-using Content.Shared.Inventory;
-using Content.Shared.StationRecords;
+using Content.Server.GameTicking;
+using Robust.Server.GameObjects;
+using Robust.Shared.Random;
 using Robust.Shared.Enums;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Content.Server._CD.Storage.Components;
+using Content.Server.Warps;
 
 namespace Content.Server.CryoSleep;
 
@@ -30,17 +26,18 @@ public sealed class CryoSleepSystem : EntitySystem
 {
     [Dependency] private readonly EuiManager _euiManager = null!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
     [Dependency] private readonly SharedJobSystem _sharedJobSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {
@@ -48,13 +45,33 @@ public sealed class CryoSleepSystem : EntitySystem
 
         SubscribeLocalEvent<CryoSleepComponent, ComponentInit>(ComponentInit);
         SubscribeLocalEvent<CryoSleepComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
         SubscribeLocalEvent<CryoSleepComponent, DestructionEventArgs>((e, c, _) => EjectBody(e, c));
-        SubscribeLocalEvent<CryoSleepComponent, DragDropTargetEvent>(OnDragDrop);
     }       
 
     private void ComponentInit(EntityUid uid, CryoSleepComponent component, ComponentInit args)
     {
-        component.BodyContainer = _container.EnsureContainer<ContainerSlot>(uid, "body_container");
+        component.BodyContainer = _container.EnsureContainer<ContainerSlot>(uid, "body");
+    }
+
+    private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
+    {
+        // Ensure they have a job, ie. stuff like skeletons (hopefully?) shouldn't be yoinked. 
+        if (args.JobId == null)
+            return;
+
+        var validPods = EntityQuery<CryoSleepComponent>().ToArray();
+        _random.Shuffle(validPods);
+
+        if (!validPods.Any())
+            return;
+
+        var pod = validPods.First();
+        _audio.PlayPvs(pod.ArrivalSound, pod.Owner);
+
+        InsertBody(pod.Owner, args.Mob, pod);
+        var duration = _random.NextFloat(pod.InitialSleepDurationRange.X, pod.InitialSleepDurationRange.Y);
+        _statusEffects.TryAddStatusEffect<SleepingComponent>(args.Mob, "ForcedSleep", TimeSpan.FromSeconds(duration), false);
     }
 
     private bool InsertBody(EntityUid uid, EntityUid? toInsert, CryoSleepComponent component)
@@ -108,58 +125,32 @@ public sealed class CryoSleepSystem : EntitySystem
         var body = mind.CurrentEntity;
         var job = prototype;
 
-        var name = mind.CharacterName;
-
-        if (body == null)
-            return;
-
-        // Remove the record. Hopefully.
-        foreach (var item in _inventory.GetHandOrInventoryEntities(body.Value))
-        {
-            if (TryComp(item, out PdaComponent? pda) && TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) && keyStorage.Key is { } key && _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
-            {
-                if (TryComp(body, out DnaComponent? dna) &&
-                    dna.DNA != record.DNA)
-                {
-                    continue;
-                }
-
-                if (TryComp(body, out FingerprintComponent? fingerPrint) &&
-                    fingerPrint.Fingerprint != record.Fingerprint)
-                {
-                    continue;
-                }
-
-                _stationRecords.RemoveRecord(key);
-                Del(item);
-            }
-        }
-
-        // Move their items
-        MoveItems(body.Value);
-
         _gameTicker.OnGhostAttempt(mindId, false, true, mind: mind);
         EntityManager.DeleteEntity(body);
 
-        if (!TryComp<MindComponent>(mindId, out var mindComp) || mindComp.UserId == null)
+        // This is awful, it feels awful, and I hate it. Warp points are really the only thing I can confirm exists on every station, though CC might cause issues so ideally I'd use one with a var set
+        var query = EntityQuery<WarpPointComponent>().ToArray();
+
+        var entity = query.First();
+
+        // sets job slot
+        var xform = Transform(entity.Owner);
+
+        if (!xform.GridUid.HasValue)
             return;
 
-        foreach (var station in _station.GetStationsSet())
-        {
-            if (!TryComp<StationJobsComponent>(station, out var stationJobs))
-               continue;
+        var station = _stationSystem.GetOwningStation(xform.GridUid.Value);
+        if (!station.HasValue)
+           return;
 
-            if (!_stationJobsSystem.TryGetPlayerJobs(station, mindComp.UserId.Value, out var jobs, stationJobs))
-                continue;
+        if (job == null)
+            return;
 
-            foreach (var item in jobs)
-            {
-               _stationJobsSystem.TryAdjustJobSlot(station, item, 1, clamp: true);
-               _chatSystem.DispatchStationAnnouncement(station, Loc.GetString("cryo-leave-announcement", ("character", name!), ("job", job.LocalizedName)), "Cryo Pod", false);
-            }
+        _stationJobsSystem.TryGetJobSlot(station.Value, job, out var amount);
+        if (!amount.HasValue)
+            return;
 
-            _stationJobsSystem.TryRemovePlayerJobs(station, mindComp.UserId.Value, stationJobs);
-        }
+        _stationJobsSystem.TrySetJobSlot(station.Value, job, (int) amount.Value + 1, true);
     }
 
     private bool EjectBody(EntityUid pod, CryoSleepComponent component)
@@ -187,19 +178,6 @@ public sealed class CryoSleepSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        // Insert self verb
-        if (!IsOccupied(component) &&
-            _actionBlocker.CanMove(args.User))
-        {
-            AlternativeVerb verb = new()
-            {
-                Act = () => RespawnUser(args.User, component, false),
-                Category = VerbCategory.Insert,
-                Text = Loc.GetString("medical-scanner-verb-enter")
-            };
-            args.Verbs.Add(verb);
-        }
-
         // Eject somebody verb
         if (IsOccupied(component))
         {
@@ -211,44 +189,18 @@ public sealed class CryoSleepSystem : EntitySystem
             };
             args.Verbs.Add(verb);
         }
-    }
 
-    private void OnDragDrop(EntityUid uid, CryoSleepComponent component, ref DragDropTargetEvent args)
-    {
-        if (args.Handled || args.User != args.Dragged)
-            return;
-
-        RespawnUser(args.User, component, false);
-    }
-
-    private void MoveItems(EntityUid uid)
-    {
-        //// Make sure the entity being cryo'd has an inventory
-        //if (!HasComp<EntityStorageComponent>(uid))
-        //    return;
-
-        // Get the locker
-        var query = EntityQueryEnumerator<LostAndFoundComponent>();
-        query.MoveNext(out var locker, out var lostAndFoundComponent);
-
-        // Make sure the locker exists and has storage
-        if (!locker.Valid)
-            return;
-
-        TryComp<EntityStorageComponent>(uid, out var lockerStorageComp);
-
-        var coordinates = Transform(locker).Coordinates;
-
-        // Go through their inventory and put everything in a locker
-        foreach (var item in _inventory.GetHandOrInventoryEntities(uid))
+        // Insert self verb
+        if (!IsOccupied(component) &&
+            _actionBlocker.CanMove(args.User))
         {
-            if (!item.IsValid() || !TryComp<MetaDataComponent>(item, out var comp))
-                continue;
-
-            var proto = comp.EntityPrototype;
-            var ent = EntityManager.SpawnEntity(proto!.ID, coordinates);
-
-            _entityStorage.Insert(ent, locker, lockerStorageComp);
+            AlternativeVerb verb = new()
+            {
+                Act = () => RespawnUser(args.User, component, false),
+                Category = VerbCategory.Insert,
+                Text = Loc.GetString("medical-scanner-verb-enter")
+            };
+            args.Verbs.Add(verb);
         }
     }
 }
