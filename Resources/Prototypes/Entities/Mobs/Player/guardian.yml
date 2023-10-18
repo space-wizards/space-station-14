@@ -130,7 +130,7 @@
           color: "#40a7d7"
           shader: unshaded
     - type: NpcFactionMember
-      factions: 
+      factions:
         - Syndicate
     - type: HTN
       rootTask:
@@ -225,7 +225,6 @@
           Burn: 3
     - type: InventorySlots
     - type: MeleeWeapon
-      hidden: true
       angle: 30
       animation: WeaponArcFist
       attackRate: 1.8
@@ -238,7 +237,7 @@
       nameSegments:
       - names_clown
     - type: NpcFactionMember
-      factions: 
+      factions:
         - Syndicate
     - type: HTN
       rootTask:

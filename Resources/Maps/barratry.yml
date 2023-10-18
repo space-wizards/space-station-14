@@ -37982,6 +37982,13 @@ entities:
     - pos: -4.5,25.5
       parent: 1
       type: Transform
+- proto: ChemDispenserMachineCircuitboard
+  entities:
+  - uid: 8631
+    components:
+    - pos: -0.44726107,21.388016
+      parent: 1
+      type: Transform
 - proto: ChemistryHotplate
   entities:
   - uid: 1967
@@ -41860,6 +41867,13 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: CrateMindShieldImplants
+  entities:
+  - uid: 8648
+    components:
+    - pos: -43.5,63.5
+      parent: 1
+      type: Transform
 - proto: CrateNPCCow
   entities:
   - uid: 6919
@@ -100923,48 +100937,12 @@ entities:
       type: Transform
 - proto: WarpPoint
   entities:
-  - uid: 13298
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 3.5,25.5
-      parent: 1
-      type: Transform
-    - location: med
-      type: WarpPoint
-  - uid: 13777
-    components:
-    - pos: -37.5,37.5
-      parent: 1
-      type: Transform
-    - location: bar
-      type: WarpPoint
   - uid: 13783
     components:
     - pos: -32.5,26.5
       parent: 1
       type: Transform
     - location: theatre
-      type: WarpPoint
-  - uid: 13784
-    components:
-    - pos: -21.5,40.5
-      parent: 1
-      type: Transform
-    - location: HoP
-      type: WarpPoint
-  - uid: 13785
-    components:
-    - pos: -16.5,60.5
-      parent: 1
-      type: Transform
-    - location: bridge
-      type: WarpPoint
-  - uid: 13787
-    components:
-    - pos: 27.5,13.5
-      parent: 1
-      type: Transform
-    - location: evac
       type: WarpPoint
   - uid: 13788
     components:
@@ -100973,33 +100951,98 @@ entities:
       type: Transform
     - location: chapel
       type: WarpPoint
-  - uid: 13789
+- proto: WarpPointBombing
+  entities:
+  - uid: 7647
+    components:
+    - pos: 3.5,25.5
+      parent: 1
+      type: Transform
+    - location: Med
+      type: WarpPoint
+  - uid: 7868
+    components:
+    - pos: -37.5,37.5
+      parent: 1
+      type: Transform
+    - location: Bar
+      type: WarpPoint
+  - uid: 7870
+    components:
+    - pos: -21.5,40.5
+      parent: 1
+      type: Transform
+    - location: HoP
+      type: WarpPoint
+  - uid: 7899
+    components:
+    - pos: -16.5,60.5
+      parent: 1
+      type: Transform
+    - location: Bridge
+      type: WarpPoint
+  - uid: 7900
+    components:
+    - pos: 27.5,13.5
+      parent: 1
+      type: Transform
+    - location: Evac
+      type: WarpPoint
+  - uid: 7901
     components:
     - pos: -7.5,-1.5
       parent: 1
       type: Transform
-    - location: sci
+    - location: Sci
       type: WarpPoint
-  - uid: 13790
+  - uid: 7957
     components:
     - pos: -38.5,-5.5
       parent: 1
       type: Transform
-    - location: cargo
+    - location: Cargo
       type: WarpPoint
-  - uid: 14931
+  - uid: 7959
     components:
     - pos: -53.5,55.5
       parent: 1
       type: Transform
-    - location: sec
+    - location: Security
       type: WarpPoint
-  - uid: 14932
+  - uid: 8032
     components:
-    - pos: -70.5,26.5
+    - pos: -65.5,27.5
       parent: 1
       type: Transform
-    - location: eng
+    - location: Eng
+      type: WarpPoint
+  - uid: 9022
+    components:
+    - pos: -42.5,63.5
+      parent: 1
+      type: Transform
+    - location: Armory
+      type: WarpPoint
+  - uid: 9025
+    components:
+    - pos: -42.5,44.5
+      parent: 1
+      type: Transform
+    - location: Botany
+      type: WarpPoint
+  - uid: 9027
+    components:
+    - pos: 2.5,38.5
+      parent: 1
+      type: Transform
+    - location: Cloning
+      type: WarpPoint
+  - uid: 9055
+    components:
+    - pos: -25.5,28.5
+      parent: 1
+      type: Transform
+    - location: Tool storage
       type: WarpPoint
 - proto: WaterCooler
   entities:

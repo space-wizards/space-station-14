@@ -12,7 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -20,6 +20,7 @@ namespace Content.Server.Storage.EntitySystems;
 public sealed partial class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
