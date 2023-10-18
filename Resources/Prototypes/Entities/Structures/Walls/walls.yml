@@ -1182,7 +1182,7 @@
   - type: IconSmooth
     key: walls
     base: cobblebrick
-    
+
 - type: entity
   parent: WallCobblebrick
   id: WallSnowCobblebrick
@@ -1196,7 +1196,7 @@
   - type: IconSmooth
     key: walls
     base: cobblebrick
-    
+
 - type: entity
   parent: WallCobblebrick
   id: WallAsteroidCobblebrick
@@ -1209,7 +1209,7 @@
   - type: IconSmooth
     key: walls
     base: cobblebrick
-    
+
 - type: entity
   parent: WallCobblebrick
   id: WallSandCobblebrick
@@ -1235,7 +1235,7 @@
   - type: IconSmooth
     key: walls
     base: cobblebrick
-    
+
 - type: entity
   parent: WallCobblebrick
   id: WallAndesiteCobblebrick
