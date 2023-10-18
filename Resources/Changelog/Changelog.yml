@@ -1,15 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: Air Technicians will find a new fire-fighting door remote in their locker.
-      It controls FireLocks Let space in and fire out using a handy remote from a
-      safe distance!, type: Add}
-  - {message: 'FireDoors can be bolted and unbolted by fire-fighting, engineering
-      and command door remotes', type: Add}
-  - {message: 'Door remotes add your ID card access to their own. If you have access
-      to open a door, you can control that door with any door remote.', type: Tweak}
-  id: 4522
-  time: '2023-08-11T09:29:33.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Nanotrasen has designed the new Vim exosuit for all your beloved pets!
@@ -2933,3 +2922,11 @@ Entries:
   - {message: Temperature alerts are now more accurate for different species., type: Fix}
   id: 5021
   time: '2023-10-18T18:05:15.0000000+00:00'
+- author: Phunny
+  changes:
+  - {message: Added Tortilla doughs and variants., type: Add}
+  - {message: Added Taco shells and recipe, type: Add}
+  - {message: Added various types of Tacos, type: Add}
+  - {message: Changed naming of the original taco to soft shell taco, type: Tweak}
+  id: 5022
+  time: '2023-10-18T21:03:23.0000000+00:00'
