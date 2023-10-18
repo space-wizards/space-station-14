@@ -44,10 +44,10 @@ public sealed partial class MeleeWeaponSystem
 
         var spriteRotation = Angle.Zero;
         if (arcComponent.Animation != WeaponArcAnimation.None
-            && TryComp<MeleeWeaponComponent>(weapon, out var meleeWeaponComponent))
+            && TryComp(weapon, out MeleeWeaponComponent? meleeWeaponComponent))
         {
             if (meleeWeaponComponent.UseWeaponAsAttackAnimation
-                && TryComp<SpriteComponent>(weapon, out var weaponSpriteComponent))
+                && TryComp(weapon, out SpriteComponent? weaponSpriteComponent))
                 sprite.CopyFrom(weaponSpriteComponent);
 
             spriteRotation = meleeWeaponComponent.WideAnimationRotation;
