@@ -78,9 +78,9 @@
 - type: entity
   save: false
   abstract: true
-  parent: MobElementalBase
   id: MobOreCrab
   name: ore crab
+  parent: [ MobElementalBase, MobCombat ]
   components:
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
@@ -88,14 +88,6 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-  - type: MeleeWeapon
-    hidden: true
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
-    damage:
-      types:
-        Blunt: 8
-  - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 2.5
@@ -106,8 +98,7 @@
 - type: entity
   parent: MobOreCrab
   id: MobQuartzCrab
-  name: ore crab
-  description: An ore crab made from quartz.
+  description: An ore crab made from Quartz.
   components:
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
@@ -139,14 +130,12 @@
 - type: entity
   parent: MobOreCrab
   id: MobIronCrab
-  name: ore crab
   description: An ore crab made from iron.
   components:
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
     state: ironcrab
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
@@ -175,7 +164,6 @@
 - type: entity
   parent: MobOreCrab
   id: MobUraniumCrab
-  name: ore crab
   description: An ore crab made from uranium.
   components:
   - type: Sprite
@@ -183,7 +171,6 @@
     state: uraniumcrab
   - type: FactionException
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
@@ -258,12 +245,12 @@
   name: Reagent slime
   id: ReagentSlime
   suffix: Water
-  parent: MobAdultSlimes
+  parent: [ MobAdultSlimes, MobCombat ]
   description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
   - type: NpcFactionMember
     factions:
-    - SimpleHostile 
+    - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/elemental.rsi
@@ -287,7 +274,7 @@
     speedModifierThresholds:
       50: 0.4
   - type: Bloodstream
-    bloodReagent: Water 
+    bloodReagent: Water
     chemicalMaxVolume: 100
   - type: StatusEffects
     allowed:
@@ -397,7 +384,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#128e80"
-        
+
 - type: entity
   id: ReagentSlimeTHC
   parent: ReagentSlime
@@ -414,7 +401,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#808080"
-        
+
 - type: entity
   id: ReagentSlimeBicaridine
   parent: ReagentSlime
@@ -465,7 +452,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#FA00AF"
-     
+
 - type: entity
   id: ReagentSlimeOmnizine
   parent: ReagentSlime
