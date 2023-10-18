@@ -1,3 +1,4 @@
+using Content.Server.Administration.Commands;
 using Content.Server.Salvage;
 using Robust.Shared.GameStates;
 using Robust.Shared.Random;
@@ -16,6 +17,12 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GatewayGeneratorComponent, MapInitEvent>(OnGeneratorMapInit);
+        SubscribeLocalEvent<GatewayGeneratorComponent, GetGatewayDestinationsEvent>(OnGeneratorGetDestinations);
+    }
+
+    private void OnGeneratorGetDestinations(EntityUid uid, GatewayGeneratorComponent component, ref GetGatewayDestinationsEvent args)
+    {
+        throw new NotImplementedException();
     }
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent component, MapInitEvent args)

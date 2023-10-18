@@ -36,30 +36,8 @@ public sealed class GatewaySystem : EntitySystem
         SubscribeLocalEvent<GatewayDestinationComponent, GetVerbsEvent<AlternativeVerb>>(OnDestinationGetVerbs);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // close portals after theyve been open long enough
-        var query = EntityQueryEnumerator<GatewayComponent, PortalComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var _))
-        {
-            if (_timing.CurTime < comp.NextClose)
-                continue;
-
-            ClosePortal(uid, comp);
-        }
-    }
-
     private void OnStartup(EntityUid uid, GatewayComponent comp, ComponentStartup args)
     {
-        // add existing destinations
-        var query = EntityQueryEnumerator<GatewayDestinationComponent>();
-        while (query.MoveNext(out var dest, out _))
-        {
-            comp.Destinations.Add(dest);
-        }
-
         // no need to update ui since its just been created, just do portal
         UpdateAppearance(uid);
     }
@@ -72,9 +50,10 @@ public sealed class GatewaySystem : EntitySystem
     private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)
     {
         var destinations = new List<GatewayDestinationData>();
-        foreach (var destUid in comp.Destinations)
+        var query = AllEntityQuery<GatewayDestinationComponent>();
+
+        while (query.MoveNext(out var destUid, out var dest))
         {
-            var dest = Comp<GatewayDestinationComponent>(destUid);
             if (!dest.Enabled)
                 continue;
 
@@ -86,8 +65,15 @@ public sealed class GatewaySystem : EntitySystem
             });
         }
 
+        var ev = new GetGatewayDestinationsEvent()
+        {
+            GatewayEntity = uid,
+            Data = destinations,
+        };
+        RaiseLocalEvent(uid, ref ev);
+
         _linkedEntity.GetLink(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextClose, comp.LastOpen);
+        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.LastOpen);
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 

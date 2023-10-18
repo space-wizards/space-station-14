@@ -40,7 +40,7 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     public readonly TimeSpan LastOpen;
 
     public GatewayBoundUserInterfaceState(List<GatewayDestinationData> destinations,
-        NetEntity? current, TimeSpan nextClose, TimeSpan lastOpen)
+        NetEntity? current, TimeSpan lastOpen)
     {
         Destinations = destinations;
         Current = current;

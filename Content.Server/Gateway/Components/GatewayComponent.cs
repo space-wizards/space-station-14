@@ -32,15 +32,6 @@ public sealed partial class GatewayComponent : Component
     public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
     /// <summary>
-    /// Every other gateway destination on the server.
-    /// </summary>
-    /// <remarks>
-    /// Added on startup and when a new destination portal is created.
-    /// </remarks>
-    [DataField]
-    public HashSet<EntityUid> Destinations = new();
-
-    /// <summary>
     /// Cooldown between opening portal / closing.
     /// </summary>
     [DataField]
