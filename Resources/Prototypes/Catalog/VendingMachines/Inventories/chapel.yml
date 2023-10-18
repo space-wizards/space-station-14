@@ -16,6 +16,7 @@
     ClothingOuterPlagueSuit: 1
     ClothingMaskPlague: 1
     ClothingHeadsetService: 2
+    BoxCandle: 2
   emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1
@@ -25,3 +26,4 @@
     BedsheetCult: 4
     BibleNecronomicon: 1
     ClothingNeckScarfStripedBlack: 3
+    
