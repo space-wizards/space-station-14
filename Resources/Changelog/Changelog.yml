@@ -1,12 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'After a flurry of memos, the Atmospheric Technician''s remote no longer
-      opens the Chief Engineer''s door. So I guess fires in that room are considered
-      "totally normal" by command. To compensate, the remotes are more widely available
-      in more stations. Thanks Wookyskill.', type: Tweak}
-  id: 4524
-  time: '2023-08-11T22:18:40.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Mobs with crit states that die will now perform a visible emote., type: Add}
@@ -2929,3 +2921,9 @@ Entries:
       of the type of cable., type: Tweak}
   id: 5023
   time: '2023-10-18T21:04:47.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Being gibbed through normal means will no longer delete all items on
+      the body., type: Fix}
+  id: 5024
+  time: '2023-10-18T21:15:17.0000000+00:00'
