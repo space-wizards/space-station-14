@@ -88,6 +88,7 @@
   - Detective
   - Warden
   - Brigmedic
+  - SecurityPilot
 
 - type: department
   id: Science

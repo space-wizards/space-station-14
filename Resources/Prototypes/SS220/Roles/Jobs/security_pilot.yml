@@ -1,0 +1,41 @@
+- type: job
+  id: SecurityPilot
+  name: пилот СБ
+  description: Ловите преступников на станции, бороздите просторы космоса в поисках... Чего-нибудь.
+  playTimeTracker: JobSecurityPilot
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # SS220-RoleTime
+  startingGear: SecurityPilotGear
+  icon: "JobIconSecurityOfficer"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  access:
+  - Security
+  - Brig
+  - Maintenance
+  - Service
+  - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: SecurityPilotGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSec
+    back: ClothingBackpackSecurityPilotFilled
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretSecurity # Corvax-Resprite
+    outerClothing: ClothingOuterHardsuitSecurity
+    suitstorage: YellowOxygenTankFilled
+    id: SecurityPDA
+    ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled
+    pocket1: WeaponPistolMk58Nonlethal
+    pocket2: HandheldGPSBasic
+  innerClothingSkirt: ClothingUniformJumpskirtSec
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

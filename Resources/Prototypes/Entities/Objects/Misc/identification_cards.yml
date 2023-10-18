@@ -136,6 +136,18 @@
     - state: idsecurityofficer
   - type: PresetIdCard
     job: SecurityOfficer
+    
+- type: entity
+  parent: IDCardStandard
+  id: SecurityPilotIDCard
+  name: ID карта (пилот СБ)
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idsecurityofficer
+  - type: PresetIdCard
+    job: SecurityPilot
 
 - type: entity
   parent: IDCardStandard

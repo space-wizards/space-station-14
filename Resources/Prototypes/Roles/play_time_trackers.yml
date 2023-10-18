@@ -66,6 +66,9 @@
 
 - type: playTimeTracker
   id: JobHeadOfSecurity
+  
+- type: playTimeTracker 
+  id: JobSecurityPilot
 
 - type: playTimeTracker
   id: JobBrigmedic

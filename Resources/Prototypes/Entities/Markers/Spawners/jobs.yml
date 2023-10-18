@@ -73,7 +73,7 @@
   - type: Sprite
     layers:
       - state: green
-      - state: salvagespecialist
+      - state: miner
 
 # Civilian
 
@@ -96,10 +96,6 @@
   components:
   - type: SpawnPoint
     job_id: TechnicalAssistant
-  - type: Sprite
-    layers:
-      - state: green
-      - state: technicalassistant
 
 - type: entity
   id: SpawnPointMedicalIntern
@@ -108,10 +104,6 @@
   components:
   - type: SpawnPoint
     job_id: MedicalIntern
-  - type: Sprite
-    layers:
-      - state: green
-      - state: medicalintern
 
 - type: entity
   id: SpawnPointSecurityCadet
@@ -132,10 +124,6 @@
   components:
   - type: SpawnPoint
     job_id: ResearchAssistant
-  - type: Sprite
-    layers:
-      - state: green
-      - state: researchassistant
 
 - type: entity
   id: SpawnPointServiceWorker
@@ -144,10 +132,6 @@
   components:
   - type: SpawnPoint
     job_id: ServiceWorker
-  - type: Sprite
-    layers:
-      - state: green
-      - state: serviceworker
 
 - type: entity
   id: SpawnPointBartender
@@ -262,24 +246,24 @@
   parent: SpawnPointJobBase
   name: musician
   components:
-  - type: SpawnPoint
-    job_id: Musician
-  - type: Sprite
-    layers:
-      - state: green
-      - state: musician
+    - type: SpawnPoint
+      job_id: Musician
+    - type: Sprite
+      layers:
+        - state: green
+        - state: musician
 
 - type: entity
   id: SpawnPointBoxer
   parent: SpawnPointJobBase
   name: boxer
   components:
-  - type: SpawnPoint
-    job_id: Boxer
-  - type: Sprite
-    layers:
-      - state: green
-      - state: boxer
+    - type: SpawnPoint
+      job_id: Boxer
+    - type: Sprite
+      layers:
+        - state: green
+        - state: boxer
 
 - type: entity
   id: SpawnPointBorg
@@ -376,12 +360,12 @@
   parent: SpawnPointJobBase
   name: atmospherics
   components:
-  - type: SpawnPoint
-    job_id: AtmosphericTechnician
-  - type: Sprite
-    layers:
-      - state: green
-      - state: atmospherics
+    - type: SpawnPoint
+      job_id: AtmosphericTechnician
+    - type: Sprite
+      layers:
+        - state: green
+        - state: atmospherics
 
 # Medical
 
@@ -520,6 +504,18 @@
     layers:
       - state: green
       - state: seniorofficer
+      
+- type: entity
+  id: SpawnPointPilot
+  parent: SpawnPointJobBase
+  name: Пилот
+  components:
+  - type: SpawnPoint
+    job_id: SecurityPilot
+  - type: Sprite
+    layers:
+      - state: green
+      - state: security_officer
 
 - type: entity
   id: SpawnPointSecurityOfficer

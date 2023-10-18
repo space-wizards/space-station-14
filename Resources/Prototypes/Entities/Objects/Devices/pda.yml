@@ -643,6 +643,20 @@
     borderColor: "#A32D26"
   - type: Icon
     state: pda-security
+    
+- type: entity
+  parent: BasePDA
+  id: SecurityPilotPDA
+  name: КПК пилота СБ
+  description: Красный, чтобы скрыть пятна крови ассистента.
+  components:
+  - type: Pda
+    id: SecurityPilotIDCard
+    state: pda-security
+  - type: PdaBorderColor
+    borderColor: "#DC143C"
+  - type: Icon
+    state: pda-security
 
 - type: entity
   parent: BasePDA
