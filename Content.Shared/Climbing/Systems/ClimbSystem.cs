@@ -264,21 +264,26 @@ public sealed partial class ClimbSystem : VirtualController
             // Need direction relative to climber's parent.
             var localDirection = (-parentRot).RotateVec(worldDirection);
             climbing.Direction = localDirection.Normalized() * climbing.TransitionRate;
+            Dirty(uid, climbing);
+
+            _actionBlockerSystem.UpdateCanMove(uid);
         }
         else
         {
             climbing.Direction = Vector2.Zero;
         }
 
-        Dirty(uid, climbing);
-
         _audio.PlayPredicted(comp.FinishClimbSound, climbable, user);
-        _actionBlockerSystem.UpdateCanMove(uid);
 
         var startEv = new StartClimbEvent(climbable);
         var climbedEv = new ClimbedOnEvent(uid, user);
         RaiseLocalEvent(uid, ref startEv);
         RaiseLocalEvent(climbable, ref climbedEv);
+
+        // Calling FinishTransition before StartClimbEvent feels weird
+        // and may lead to bugs in future, so we do it here
+        if (distance == 0)
+            FinishTransition(uid, climbing);
 
         if (silent)
             return;
