@@ -20,7 +20,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      175: Dead
+      110: Dead
   - type: DamageStateVisuals
     states:
       Alive:
@@ -83,7 +83,7 @@
         type: Local
         visualType: Large
         messages: [ "Химикаты заставляют часть вашей зелени увянуть!" ]
-        probability: 0.66
+        probability: 1
     - reagents: [ WeedKiller ]
       methods: [ Touch ]
       effects:
@@ -97,14 +97,7 @@
         type: Local
         visualType: Large
         messages: [ "Химикаты заставляют часть вашей зелени увянуть!" ]
-        probability: 0.66
-  - type: GhostTakeoverAvailable
-  - type: GhostRole
-    allowMovement: true
-    allowSpeech: true
-    makeSentient: true
-    name: Помидор-убийца
-    description: Защищайте матушку-природу!
+        probability: 1
   - type: Butcherable
     butcheringType: Knife
     spawned:
