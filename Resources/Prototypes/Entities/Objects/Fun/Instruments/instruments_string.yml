@@ -83,6 +83,7 @@
     tags:
     - StringInstrument
   - type: MeleeWeapon
+    wideAnimationRotation: 45
     damage:
       types:
         Blunt: 6
@@ -121,7 +122,7 @@
     - back
     sprite: Objects/Fun/Instruments/guitar.rsi
   - type: Wieldable
-  - type: Damageable # Smash it! Does 20 damage a hit, but breaks after 1 hit. 
+  - type: Damageable # Smash it! Does 20 damage a hit, but breaks after 1 hit.
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -144,6 +145,7 @@
       types:
         Blunt: 20
   - type: MeleeWeapon
+    wideAnimationRotation: 45
     damage:
       types:
         Blunt: 5
