@@ -28,28 +28,6 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<SharedPullableComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<SharedPullableComponent, ComponentHandleState>(OnHandleState);
-            SubscribeLocalEvent<SharedPullableComponent, ComponentRemove>(OnPullableRemove);
-            SubscribeLocalEvent<SharedPullerComponent, ComponentRemove>(OnPullerRemove);
-        }
-
-        private void OnPullerRemove(EntityUid uid, SharedPullerComponent component, ComponentRemove args)
-        {
-            if (component.Pulling != default)
-            {
-                // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
-                // this is absolutely not necessary but it is absolutely paranoia, make the code better instead - Smug
-                Log.Error("PULLING STATE CORRUPTION IMMINENT IN PULLER {0} - OnRemove called when Pulling is set!", uid);
-            }
-        }
-
-        private void OnPullableRemove(EntityUid uid, SharedPullableComponent component, ComponentRemove args)
-        {
-            if (component.Puller != null)
-            {
-                // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
-                // this is absolutely not necessary but it is absolutely paranoia, make the code better instead - Smug
-                Log.Error("PULLING STATE CORRUPTION IMMINENT IN PULLABLE {0} - OnRemove called when Puller is set!", uid);
-            }
         }
 
         private void OnGetState(EntityUid uid, SharedPullableComponent component, ref ComponentGetState args)
