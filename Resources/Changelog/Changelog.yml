@@ -1,9 +1,4 @@
 Entries:
-- author: terezi4real
-  changes:
-  - {message: Fixed errant transparency on jester outfit, type: Fix}
-  id: 4528
-  time: '2023-08-12T17:06:46.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Vim exosuit is now smaller and lighter for better maneuverability.,
@@ -2923,3 +2918,9 @@ Entries:
   - {message: Added dart game!, type: Add}
   id: 5027
   time: '2023-10-19T03:55:30.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'C4 now costs 2 TC instead of 4TC, the bundle costs 12TC instead of
+      20TC', type: Tweak}
+  id: 5028
+  time: '2023-10-19T15:19:33.0000000+00:00'
