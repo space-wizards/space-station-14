@@ -24,7 +24,6 @@ public sealed class LightningArcShooterSystem : EntitySystem
     {
         base.Initialize();
 
-        //SubscribeLocalEvent<TeslaEnergyBallComponent, StartCollideEvent>(HandleParticleCollide);
     }
     public override void Update(float frameTime)
     {
@@ -47,7 +46,7 @@ public sealed class LightningArcShooterSystem : EntitySystem
     private void ArcShoot(EntityUid uid, LightningArcShooterComponent component)
     {
         var arcs = _random.Next(component.MaxLightningArc);
-        _lightning.ShootRandomLightnings(uid, 20, arcs);
+        _lightning.ShootRandomLightnings(uid, component.ShootRange, arcs);
         //var range = 20;
         //var xform = Transform(uid);
         //var targets = _lookup.GetComponentsInRange<LightningPriorityTargetComponent>(xform.MapPosition, range);

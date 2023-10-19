@@ -2,7 +2,9 @@ using System.Linq;
 using Content.Server.Beam;
 using Content.Server.Beam.Components;
 using Content.Server.Lightning.Components;
+using Content.Server.Lightning.Events;
 using Content.Shared.Lightning;
+using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
@@ -72,6 +74,10 @@ public sealed class LightningSystem : SharedLightningSystem
     {
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
+
+        var ev = new HittedByLightningEvent(user, target);
+        RaiseLocalEvent(target, ref ev, true);
+        Log.Debug("Отправлен ивент");
     }
 
     /// <summary>
@@ -79,21 +85,22 @@ public sealed class LightningSystem : SharedLightningSystem
     /// </summary>
     /// <param name="user">Where the lightning fires from</param>
     /// <param name="range">Targets selection radius</param>
-    /// <param name="count">Number of lightning bolts</param>
+    /// <param name="arcCount">Number of lightning bolts</param>
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
-    public void ShootRandomLightnings(EntityUid user, float range, int count, string lightningPrototype = "Lightning")
+    public void ShootRandomLightnings(EntityUid user, float range, int arcCount, string lightningPrototype = "Lightning")
     {
         var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).Coordinates, range);
         var sortedTargets = targets
             .OrderByDescending(target => target.Priority)
             .ThenBy(_ => _random.Next())
             .ToList();
-        var arcCount = Math.Min(targets.Count, count);
+        var realCount = Math.Min(targets.Count, arcCount);
 
-        if (arcCount <= 0)
+
+        if (realCount <= 0)
             return;
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < realCount; i++)
         {
             ShootLightning(user, sortedTargets[i].Owner, lightningPrototype);
         }

@@ -2,6 +2,7 @@ using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Server.Tesla.Components;
 using Robust.Shared.Physics.Events;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -14,7 +15,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TeslaEnergyBallComponent, StartCollideEvent>(HandleParticleCollide);
+        SubscribeLocalEvent<TeslaEnergyBallComponent, StartCollideEvent>(OnStartCollide);
     }
 
     public override void Update(float frameTime)
@@ -35,14 +36,18 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         }
     }
 
-    private void HandleParticleCollide(EntityUid uid, TeslaEnergyBallComponent component, ref StartCollideEvent args)
+    private void OnStartCollide(EntityUid uid, TeslaEnergyBallComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<SinguloFoodComponent>(args.OtherEntity, out var singuloFood))
-            return;
-
-        AdjustEnergy(uid, component, singuloFood.Energy);
-        EntityManager.QueueDeleteEntity(args.OtherEntity);
-
+        if (TryComp<SinguloFoodComponent>(args.OtherEntity, out var singuloFood))
+        {
+            AdjustEnergy(uid, component, singuloFood.Energy);
+            EntityManager.QueueDeleteEntity(args.OtherEntity);
+        }
+        if (TryComp<MobThresholdsComponent>(args.OtherEntity, out var mob))
+        {
+            //Popup here 
+            EntityManager.QueueDeleteEntity(args.OtherEntity);
+        }
     }
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
     {

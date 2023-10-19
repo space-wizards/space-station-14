@@ -68,3 +68,5 @@
     containers:
     - machine_parts
     - machine_board
+  - type: LightningTarget
+    priority: 1

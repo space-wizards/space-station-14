@@ -15,26 +15,17 @@
   - type: CanMoveInAir
   - type: Fixtures
     fixtures:
-      EventHorizonCollider:
+      TeslaCollider:
         shape:
           !type:PhysShapeCircle
             radius: 0.35
         hard: true
         restitution: 0.8
-        density: 99999
+        density: 10
         mask:
-        - AllMask
+        - None
         layer:
         - AllMask
-      EventHorizonConsumer:
-        shape:
-          !type:PhysShapeCircle
-            radius: 0.35
-        hard: false
-        mask:
-        - AllMask
-        layer:
-        - AllMask #Возможно нужно заменить маски
   - type: TeslaEnergyBall
     energyLoss: 3
     spawnProto: TeslaMiniEnergyBall 
@@ -46,7 +37,7 @@
     minSpeed: 1.875
   - type: PointLight
     enabled: true
-    radius: 10
+    radius: 5
   - type: Appearance
   #- type: GuideHelp
   - type: WarpPoint
@@ -75,26 +66,17 @@
   - type: CanMoveInAir
   - type: Fixtures
     fixtures:
-      EventHorizonCollider:
+      TeslaCollider:
         shape:
           !type:PhysShapeCircle
             radius: 0.35
         hard: true
         restitution: 0.8
-        density: 99999
+        density: 5
         mask:
-        - AllMask
+        - None
         layer:
-        - AllMask
-      EventHorizonConsumer:
-        shape:
-          !type:PhysShapeCircle
-            radius: 0.25
-        hard: false
-        mask:
-        - AllMask
-        layer:
-        - AllMask #Возможно нужно заменить маски
+        - MobMask
   - type: RandomWalk # To make the singularity move around.
     maxSpeed: 3.5
     minSpeed: 2
@@ -108,7 +90,7 @@
     maxLightningArc: 2
     shootMinInterval: 2
     shootMaxInterval: 8
-    shootRange: 5
+    shootRange: 3
   #- type: GuideHelp
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi

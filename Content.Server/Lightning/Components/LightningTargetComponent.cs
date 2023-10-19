@@ -13,4 +13,10 @@ public sealed partial class LightningTargetComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Priority;
+
+    /// <summary>
+    /// Is the target active? If the mob is dead or grounded not powered, inactive.
+    /// </summary>
+    [DataField]
+    public bool Active;
 }
