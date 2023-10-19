@@ -27,6 +27,7 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -74,7 +75,7 @@ public sealed class CluwneSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
         _audio.PlayPvs(component.SpawnSound, uid);
 
-        meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", name));
+        _metaData.SetEntityName(uid, Loc.GetString("cluwne-name-prefix", ("target", name)), meta);
 
         SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
     }

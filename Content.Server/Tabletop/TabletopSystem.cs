@@ -21,7 +21,7 @@ namespace Content.Server.Tabletop
     public sealed partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly EyeSystem _eye = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -46,16 +46,19 @@ namespace Content.Server.Tabletop
             if (args.SenderSession is not IPlayerSession playerSession)
                 return;
 
-            if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
-                return;
+            var table = GetEntity(msg.TableUid);
 
+            if (!TryComp(table, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+                return;
 
             if (!msg.Entity.IsValid())
                 return;
 
-            if (!TryComp(msg.Entity, out TabletopHologramComponent? hologram))
+            var entity = GetEntity(msg.Entity);
+
+            if (!TryComp(entity, out TabletopHologramComponent? hologram))
             {
-                _popupSystem.PopupEntity(Loc.GetString("tabletop-error-remove-non-hologram"), msg.TableUid, args.SenderSession);
+                _popupSystem.PopupEntity(Loc.GetString("tabletop-error-remove-non-hologram"), table, args.SenderSession);
                 return;
             }
 
@@ -64,9 +67,9 @@ namespace Content.Server.Tabletop
                 return;
 
             // Find the entity, remove it from the session and set it's position to the tabletop
-            session.Entities.TryGetValue(msg.Entity, out var result);
+            session.Entities.TryGetValue(entity, out var result);
             session.Entities.Remove(result);
-            _entityManager.QueueDeleteEntity(result);
+            QueueDel(result);
         }
 
         private void OnInteractUsing(EntityUid uid, TabletopGameComponent component, InteractUsingEvent args)
@@ -91,7 +94,7 @@ namespace Content.Server.Tabletop
             var meta = MetaData(handEnt);
             var protoId = meta.EntityPrototype?.ID;
 
-            var hologram = _entityManager.SpawnEntity(protoId, session.Position.Offset(-1, 0));
+            var hologram = Spawn(protoId, session.Position.Offset(-1, 0));
 
             // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap
             EnsureComp<TabletopDraggableComponent>(hologram);
@@ -106,7 +109,7 @@ namespace Content.Server.Tabletop
             if (args.SenderSession is not IPlayerSession playerSession)
                 return;
 
-            if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+            if (!TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
 
             // Check if player is actually playing at this table
@@ -124,7 +127,7 @@ namespace Content.Server.Tabletop
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var playVerb = new ActivationVerb()
@@ -153,7 +156,7 @@ namespace Content.Server.Tabletop
 
         private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
         {
-            CloseSessionFor((IPlayerSession)args.SenderSession, msg.TableUid);
+            CloseSessionFor((IPlayerSession)args.SenderSession, GetEntity(msg.TableUid));
         }
 
         private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)

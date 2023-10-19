@@ -414,3 +414,40 @@
     layers:
       - state: box
       - state: syringe
+
+- type: entity
+  name: lead-lined box
+  parent: BoxCardboard
+  suffix: Debug
+  id: BoxLeadLined
+  description: This box stymies the transmission of harmful radiation.
+  components:
+  - type: Sprite
+    state: box
+  - type: RadiationBlockingContainer
+    resistance: 2
+
+- type: entity
+  name: darts box
+  parent: BoxCardboard
+  id: BoxDarts
+  description: This box filled with colorful darts.
+  components:
+  - type: Item
+    size: 40
+  - type: StorageFill
+    contents:
+      - id: Dart
+        amount: 5
+      - id: DartBlue
+        amount: 5
+      - id: DartPurple
+        amount: 5
+      - id: DartYellow
+        amount: 5
+  - type: Storage
+    capacity: 40
+  - type: Sprite
+    layers:
+      - state: box
+      - state: darts

@@ -2,6 +2,7 @@
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 
 namespace Content.Server.Item;
 
@@ -14,9 +15,10 @@ public sealed class ItemSystem : SharedItemSystem
         base.OnStackCountChanged(uid, component, args);
 
         if (!Container.TryGetContainingContainer(uid, out var container) ||
-            !TryComp<ServerStorageComponent>(container.Owner, out var storage))
+            !TryComp<StorageComponent>(container.Owner, out var storage))
             return;
-        _storage.RecalculateStorageUsed(storage);
-        _storage.UpdateStorageUI(container.Owner, storage);
+
+        _storage.RecalculateStorageUsed(container.Owner, storage);
+        _storage.UpdateUI(container.Owner, storage);
     }
 }

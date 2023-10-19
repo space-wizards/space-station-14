@@ -21,14 +21,14 @@ namespace Content.Client.Administration.UI.ManageSolutions
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-        private readonly EntityUid _targetEntity;
+        private readonly NetEntity _targetEntity;
         private string _targetSolution;
         private ReagentPrototype? _selectedReagent;
 
         // FloatSpinBox does not (yet?) play nice with xaml
         private FloatSpinBox _quantitySpin = new(1, 2) { Value = 10, HorizontalExpand = true};
 
-        public AddReagentWindow(EntityUid targetEntity, string targetSolution)
+        public AddReagentWindow(NetEntity targetEntity, string targetSolution)
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);

@@ -25,6 +25,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Tools.Components;
 using Robust.Server.Maps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -36,12 +37,12 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AnchorableSystem _anchorable = default!;
         [Dependency] private readonly BiomeSystem _biome = default!;
-        [Dependency] private readonly CargoSystem _cargo = default!;
         [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -53,6 +54,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly ShuttleConsoleSystem _shuttleConsoles = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private const int SalvageLocationPlaceAttempts = 25;
 
@@ -67,6 +69,7 @@ namespace Content.Server.Salvage
             SubscribeLocalEvent<SalvageMagnetComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<SalvageMagnetComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<SalvageMagnetComponent, ToolUseAttemptEvent>(OnToolUseAttempt);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
 
@@ -228,6 +231,15 @@ namespace Content.Server.Salvage
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void OnToolUseAttempt(EntityUid uid, SalvageMagnetComponent comp, ToolUseAttemptEvent args)
+        {
+            // prevent reconstruct exploit to "leak" wrecks or skip cooldowns
+            if (comp.MagnetState != MagnetState.Inactive)
+            {
+                args.Cancel();
             }
         }
 

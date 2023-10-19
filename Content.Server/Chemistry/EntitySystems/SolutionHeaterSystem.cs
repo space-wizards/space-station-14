@@ -1,16 +1,16 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Placeable;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class SolutionHeaterSystem : EntitySystem
 {
-    [Dependency] private readonly ItemPlacerSystem _itemPlacer = default!;
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SolutionContainerSystem _solution = default!;

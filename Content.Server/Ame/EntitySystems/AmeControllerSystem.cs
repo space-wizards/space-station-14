@@ -1,7 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.Mind.Components;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Shared.Ame;
@@ -9,14 +10,13 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Server.Ame.EntitySystems;
 
@@ -50,6 +50,8 @@ public sealed class AmeControllerSystem : EntitySystem
         {
             if (controller.NextUpdate <= curTime)
                 UpdateController(uid, curTime, controller, nodes);
+            else if (controller.NextUIUpdate <= curTime)
+                UpdateUi(uid, controller);
         }
     }
 
@@ -60,6 +62,8 @@ public sealed class AmeControllerSystem : EntitySystem
 
         controller.LastUpdate = curTime;
         controller.NextUpdate = curTime + controller.UpdatePeriod;
+        // update the UI regardless of other factors to update the power readings
+        UpdateUi(uid, controller);
 
         if (!controller.Injecting)
             return;
@@ -68,17 +72,28 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
-            var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-            var powerOutput = group.InjectFuel(availableInject, out var overloading);
-            if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
-                powerOutlet.MaxSupply = powerOutput;
-            fuelJar.FuelAmount -= availableInject;
-            _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
-            UpdateUi(uid, controller);
+            // if the jar is empty shut down the AME
+            if (fuelJar.FuelAmount <= 0)
+            {
+                SetInjecting(uid, false, null, controller);
+            }
+            else
+            {
+                var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
+                var powerOutput = group.InjectFuel(availableInject, out var overloading);
+                if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
+                    powerOutlet.MaxSupply = powerOutput;
+                fuelJar.FuelAmount -= availableInject;
+                // only play audio if we actually had an injection
+                if (availableInject > 0)
+                    _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+                UpdateUi(uid, controller);
+            }
         }
 
         controller.Stability = group.GetTotalStability();
 
+        group.UpdateCoreVisuals();
         UpdateDisplay(uid, controller.Stability, controller);
 
         if (controller.Stability <= 0)
@@ -94,19 +109,36 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         var state = GetUiState(uid, controller);
-        UserInterfaceSystem.SetUiState(bui, state);
+        _userInterfaceSystem.SetUiState(bui, state);
+
+        controller.NextUIUpdate = _gameTiming.CurTime + controller.UpdateUIPeriod;
     }
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
     {
         var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
-        var coreCount = TryGetAMENodeGroup(uid, out var group) ? group.CoreCount : 0;
+        var coreCount = 0;
+        // how much power can be produced at the current settings, in kW
+        // we don't use max. here since this is what is set in the Controller, not what the AME is actually producing
+        float targetedPowerSupply = 0;
+        if (TryGetAMENodeGroup(uid, out var group))
+        {
+            coreCount = group.CoreCount;
+            targetedPowerSupply = group.CalculatePower(controller.InjectionAmount, group.CoreCount) / 1000;
+        }
+
+        // set current power statistics in kW
+        float currentPowerSupply = 0;
+        if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet) && coreCount > 0)
+        {
+            currentPowerSupply = powerOutlet.CurrentSupply / 1000;
+        }
 
         var hasJar = Exists(controller.JarSlot.ContainedEntity);
         if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount);
+            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount);
+        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
     }
 
     private bool IsMasterController(EntityUid uid)
@@ -155,7 +187,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         controller.Injecting = value;
-        _appearanceSystem.SetData(uid, AmeControllerVisuals.DisplayState, value ? AmeControllerState.On : AmeControllerState.Off);
+        UpdateDisplay(uid, controller.Stability, controller);
         if (!value && TryComp<PowerSupplierComponent>(uid, out var powerOut))
             powerOut.MaxSupply = 0;
 
@@ -201,7 +233,7 @@ public sealed class AmeControllerSystem : EntitySystem
             safeLimit = group.CoreCount * 2;
 
         if (oldValue <= safeLimit && value > safeLimit)
-            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}", mindContainer);
+            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
     }
 
     public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
@@ -215,15 +247,20 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Resolve(uid, ref controller, ref appearance))
             return;
 
+        var ameControllerState = stability switch
+        {
+            < 10 => AmeControllerState.Fuck,
+            < 50 => AmeControllerState.Critical,
+            _ => AmeControllerState.On,
+        };
+
+        if (!controller.Injecting)
+            ameControllerState = AmeControllerState.Off;
+
         _appearanceSystem.SetData(
             uid,
             AmeControllerVisuals.DisplayState,
-            stability switch
-            {
-                < 10 => AmeControllerState.Fuck,
-                < 50 => AmeControllerState.Critical,
-                _ => AmeControllerState.On,
-            },
+            ameControllerState,
             appearance
         );
     }
@@ -242,7 +279,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
         }
 
-        if (!HasComp<AmeFuelContainerComponent?>(args.Used))
+        if (!HasComp<AmeFuelContainerComponent>(args.Used))
         {
             _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-fail"), uid, args.User);
             return;

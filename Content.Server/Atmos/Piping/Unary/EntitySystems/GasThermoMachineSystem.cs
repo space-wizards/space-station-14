@@ -24,7 +24,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
@@ -151,7 +150,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             DirtyUI(uid, thermoMachine);
         }
 
-        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, ServerUserInterfaceComponent? ui=null)
+        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, UserInterfaceComponent? ui=null)
         {
             if (!Resolve(uid, ref thermoMachine, ref ui, false))
                 return;

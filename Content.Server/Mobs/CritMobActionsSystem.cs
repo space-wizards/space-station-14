@@ -1,16 +1,12 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Chat.Systems;
-using Content.Server.GameTicking;
-using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Speech.Muting;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Actions;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
-using System;
 
 namespace Content.Server.Mobs;
 
@@ -19,7 +15,6 @@ namespace Content.Server.Mobs;
 /// </summary>
 public sealed class CritMobActionsSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DeathgaspSystem _deathgasp = default!;
     [Dependency] private readonly IServerConsoleHost _host = default!;
@@ -86,25 +81,4 @@ public sealed class CritMobActionsSystem : EntitySystem
 
         args.Handled = true;
     }
-}
-
-/// <summary>
-///     Only applies to mobs in crit capable of ghosting/succumbing
-/// </summary>
-public sealed partial class CritSuccumbEvent : InstantActionEvent
-{
-}
-
-/// <summary>
-///     Only applies/has functionality to mobs in crit that have <see cref="DeathgaspComponent"/>
-/// </summary>
-public sealed partial class CritFakeDeathEvent : InstantActionEvent
-{
-}
-
-/// <summary>
-///     Only applies to mobs capable of speaking, as a last resort in crit
-/// </summary>
-public sealed partial class CritLastWordsEvent : InstantActionEvent
-{
 }

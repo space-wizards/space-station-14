@@ -53,55 +53,86 @@ public sealed class HeatExchangerSystem : EntitySystem
             return;
         }
 
-        // Positive dN flows from inlet to outlet
         var dt = args.dt;
-        var dP = inlet.Air.Pressure - outlet.Air.Pressure;
 
-        // What we want is dN/dt = G*dP (first-order constant-coefficient differential equation w.r.t. P).
-        // However, by approximating dN = G*dP*dt using Forward Euler dN can be larger than all of the gas
-        // available for sufficiently large dP. However, we know that dN cannot exceed:
-        //
-        //   dNMax = (n2T2/V2 - n1T1/V1)/(T2/V1 + T2/V2) = Δp/R/T2/(1/V1 + 1/V2)
-        //
-        // Because that is the amount of gas that needs to be transferred to equalize pressures [citation needed].
-        // So we just limit abs(dN) < abs(dNMax).
-        //
-        // Also, by factoring out dP we can avoid taking any abs().
-        // transferLimit below is equal to dNMax/dP
-        var transferLimit = 1/Atmospherics.R/outlet.Air.Temperature/(1/inlet.Air.Volume + 1/outlet.Air.Volume);
-        var dN = dP*Math.Min(comp.G*dt, transferLimit);
+        // Let n = moles(inlet) - moles(outlet), really a Δn
+        var P = inlet.Air.Pressure - outlet.Air.Pressure; // really a ΔP
+        // Such that positive P causes flow from the inlet to the outlet.
+
+        // We want moles transferred to be proportional to the pressure difference, i.e.
+        // dn/dt = G*P
+
+        // To solve this we need to write dn in terms of P. Since PV=nRT, dP/dn=RT/V.
+        // This assumes that the temperature change from transferring dn moles is negligible.
+        // Since we have P=Pi-Po, then dP/dn = dPi/dn-dPo/dn = R(Ti/Vi - To/Vo):
+        float dPdn = Atmospherics.R * (outlet.Air.Temperature / outlet.Air.Volume + inlet.Air.Temperature / inlet.Air.Volume);
+
+        // Multiplying both sides of the differential equation by dP/dn:
+        // dn/dt * dP/dn = dP/dt = G*P * (dP/dn)
+        // Which is a first-order linear differential equation with constant (heh...) coefficients:
+        // dP/dt + kP = 0, where k = -G*(dP/dn).
+        // This differential equation has a closed-form solution, namely:
+        float Pfinal = P * MathF.Exp(-comp.G * dPdn * dt);
+
+        // Finally, back out n, the moles transferred in this tick:
+        float n = (P - Pfinal) / dPdn;
 
         GasMixture xfer;
-        if (dN > 0)
-            xfer = inlet.Air.Remove(dN);
+        if (n > 0)
+            xfer = inlet.Air.Remove(n);
         else
-            xfer = outlet.Air.Remove(-dN);
+            xfer = outlet.Air.Remove(-n);
+
+        float CXfer = _atmosphereSystem.GetHeatCapacity(xfer);
+        if (CXfer < Atmospherics.MinimumHeatCapacity)
+            return;
 
         var radTemp = Atmospherics.TCMB;
 
-        // Convection
         var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
-        if (environment != null && environment.TotalMoles != 0)
+        bool hasEnv = false;
+        float CEnv = 0f;
+        if (environment != null)
         {
-            radTemp = environment.Temperature;
-
-            // Positive dT is from pipe to surroundings
-            var dT = xfer.Temperature - environment.Temperature;
-            var dE = comp.K * dT * dt;
-            var envLim = Math.Abs(_atmosphereSystem.GetHeatCapacity(environment) * dT * dt);
-            var xferLim = Math.Abs(_atmosphereSystem.GetHeatCapacity(xfer) * dT * dt);
-            var dEactual = Math.Sign(dE) * Math.Min(Math.Abs(dE), Math.Min(envLim, xferLim));
-            _atmosphereSystem.AddHeat(xfer, -dEactual);
-            _atmosphereSystem.AddHeat(environment, dEactual);
+            CEnv = _atmosphereSystem.GetHeatCapacity(environment);
+            hasEnv = CEnv >= Atmospherics.MinimumHeatCapacity && environment.TotalMoles > 0f;
+            if (hasEnv)
+                radTemp = environment.Temperature;
         }
+
+        // How ΔT' scales in respect to heat transferred
+        float TdivQ = 1f / CXfer;
+        // Since it's ΔT, also account for the environment's temperature change
+        if (hasEnv)
+            TdivQ += 1f / CEnv;
 
         // Radiation
         float dTR = xfer.Temperature - radTemp;
+        float dTRA = MathF.Abs(dTR);
         float a0 = tileLoss / MathF.Pow(Atmospherics.T20C, 4);
-        float dER = comp.alpha * a0 * MathF.Pow(dTR, 4) * dt;
+        // ΔT' = -kΔT^4, k = -ΔT'/ΔT^4
+        float kR = comp.alpha * a0 * TdivQ;
+        // Based on the fact that ((3t)^(-1/3))' = -(3t)^(-4/3) = -((3t)^(-1/3))^4, and ΔT' = -kΔT^4.
+        float dT2R = dTR * MathF.Pow((1f + 3f * kR * dt * dTRA * dTRA * dTRA), -1f/3f);
+        float dER = (dTR - dT2R) / TdivQ;
         _atmosphereSystem.AddHeat(xfer, -dER);
+        if (hasEnv && environment != null)
+        {
+            _atmosphereSystem.AddHeat(environment, dER);
 
-        if (dN > 0)
+            // Convection
+
+            // Positive dT is from pipe to surroundings
+            float dT = xfer.Temperature - environment.Temperature;
+            // ΔT' = -kΔT, k = -ΔT' / ΔT
+            float k = comp.K * TdivQ;
+            float dT2 = dT * MathF.Exp(-k * dt);
+            float dE = (dT - dT2) / TdivQ;
+            _atmosphereSystem.AddHeat(xfer, -dE);
+            _atmosphereSystem.AddHeat(environment, dE);
+        }
+
+        if (n > 0)
             _atmosphereSystem.Merge(outlet.Air, xfer);
         else
             _atmosphereSystem.Merge(inlet.Air, xfer);

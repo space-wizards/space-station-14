@@ -1,7 +1,12 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.Players;
+using Content.Shared.Mind;
+using Content.Shared.Players;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -15,10 +20,6 @@ namespace Content.IntegrationTests.Pair;
 /// </summary>
 public sealed partial class TestPair
 {
-    // TODO remove this.
-    [Obsolete("Field access is redundant")]
-    public TestPair Pair => this;
-
     public readonly int Id;
     private bool _initialized;
     private TextWriter _testOut = default!;
@@ -29,9 +30,12 @@ public sealed partial class TestPair
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; private set; } = default!;
     public RobustIntegrationTest.ClientIntegrationInstance Client { get;  private set; } = default!;
 
+    public IPlayerSession? Player => (IPlayerSession?) Server.PlayerMan.Sessions.FirstOrDefault();
+    public PlayerData? PlayerData => Player?.Data.ContentData();
+
     public PoolTestLogHandler ServerLogHandler { get;  private set; } = default!;
     public PoolTestLogHandler ClientLogHandler { get;  private set; } = default!;
-    
+
     public TestPair(int id)
     {
         Id = id;
@@ -72,7 +76,7 @@ public sealed partial class TestPair
             await Client.WaitRunTicks(1);
         }
     }
-    
+
     public void Kill()
     {
         State = PairState.Dead;
@@ -100,7 +104,7 @@ public sealed partial class TestPair
             throw new InvalidOperationException($"Pair is not ready to use. State: {State}");
         State = PairState.InUse;
     }
-    
+
     public enum PairState : byte
     {
         Ready = 0,

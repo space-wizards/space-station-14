@@ -1,4 +1,4 @@
-using Content.Shared.Actions.ActionTypes;
+using Content.Client.Actions;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -20,17 +20,9 @@ public class ActionButtonContainer : GridContainer
     public ActionButton this[int index]
     {
         get => (ActionButton) GetChild(index);
-        set
-        {
-            AddChild(value);
-            value.SetPositionInParent(index);
-            value.ActionPressed += ActionPressed;
-            value.ActionUnpressed += ActionUnpressed;
-            value.ActionFocusExited += ActionFocusExited;
-        }
     }
 
-    public void SetActionData(params ActionType?[] actionTypes)
+    public void SetActionData(ActionsSystem system, params EntityUid?[] actionTypes)
     {
         ClearActionData();
 
@@ -40,7 +32,7 @@ public class ActionButtonContainer : GridContainer
             if (action == null)
                 continue;
 
-            ((ActionButton) GetChild(i)).UpdateData(action);
+            ((ActionButton) GetChild(i)).UpdateData(action.Value, system);
         }
     }
 
@@ -62,6 +54,16 @@ public class ActionButtonContainer : GridContainer
         button.ActionPressed += ActionPressed;
         button.ActionUnpressed += ActionUnpressed;
         button.ActionFocusExited += ActionFocusExited;
+    }
+
+    protected override void ChildRemoved(Control newChild)
+    {
+        if (newChild is not ActionButton button)
+            return;
+
+        button.ActionPressed -= ActionPressed;
+        button.ActionUnpressed -= ActionUnpressed;
+        button.ActionFocusExited -= ActionFocusExited;
     }
 
     public bool TryGetButtonIndex(ActionButton button, out int position)
