@@ -41,8 +41,14 @@ public sealed partial class TeslaEnergyBallComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EnergyToDespawn = -1000f;
     /// <summary>
-    /// 
+    /// Entities that spawn when the energy limit is reached
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<EntityPrototype>? SpawnProto = "TeslaMiniEnergyBall";
+
+    /// <summary>
+    /// Entity, spun when tesla gobbles with touch.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<EntityPrototype>? ConsumeEffectProto = "EffectEmpPulse";
 }

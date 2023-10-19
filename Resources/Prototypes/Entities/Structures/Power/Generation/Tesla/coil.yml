@@ -45,6 +45,7 @@
     activeSupplyRate: 100000
   - type: LightningTarget
     priority: 4
+    lightningExplode: false
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
@@ -98,6 +99,7 @@
     startingCharge: 0
   - type: LightningTarget
     priority: 3
+    lightningExplode: false
   - type: BatteryDischarger
     # This is JUST copy from Radiation Collector
     activeSupplyRate: 100000

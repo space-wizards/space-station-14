@@ -29,10 +29,12 @@ public sealed class LightningArcShooterSystem : EntitySystem
             if (arcShooter.NextShootTime > _gameTiming.CurTime)
                 return;
 
+            Log.Debug("Ща бахнем");
             ArcShoot(uid, arcShooter);
-
+            Log.Debug("Бахнули!");
             var delay = TimeSpan.FromSeconds(_random.NextFloat(arcShooter.ShootMinInterval, arcShooter.ShootMaxInterval));
             arcShooter.NextShootTime = _gameTiming.CurTime + delay;
+            Log.Debug("закончили бахать");
         }
     }
 

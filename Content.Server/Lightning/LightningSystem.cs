@@ -42,11 +42,16 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning")
     {
+        if (Deleted(user) || Deleted(target))
+            return;
+
+        Log.Debug("ПИУ");
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
-
+        Log.Debug("Пиу получился");
         var ev = new HittedByLightningEvent(user, target);
         RaiseLocalEvent(target, ref ev, true);
+        Log.Debug("Пиу отправил ивент");
     }
 
     /// <summary>
@@ -59,6 +64,7 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="arcDepth">how many times to recursively fire lightning bolts from the target points of the first shot.</param>
     public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
     {
+        Log.Debug("Внутри процесса случайных молний");
         //To Do: add support to different priority target tablem for different lightning types
         var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).Coordinates, range);
         var sortedTargets = targets
@@ -67,12 +73,13 @@ public sealed class LightningSystem : SharedLightningSystem
             .ToList();
         var realCount = Math.Min(targets.Count, boltCount);
 
-
+        Log.Debug("Целей: " + realCount);
         if (realCount <= 0)
             return;
 
         for (int i = 0; i < realCount; i++)
         {
+            Log.Debug("Целимся в " + sortedTargets[i].Owner.ToString());
             ShootLightning(user, sortedTargets[i].Owner, lightningPrototype);
 
             if (arcDepth > 0)

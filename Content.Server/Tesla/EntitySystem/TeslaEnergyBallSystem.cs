@@ -6,6 +6,8 @@ using Content.Shared.Mobs.Components;
 using Microsoft.Extensions.DependencyModel;
 using Content.Server.Physics.Controllers;
 using Content.Server.Lightning.Components;
+using Content.Server.Explosion.EntitySystems;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -48,8 +50,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         }
         if (TryComp<LightningTargetComponent>(args.OtherEntity, out var target))
         {
-            //Sound here
-            //Effect here
+            Spawn(component.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
             EntityManager.QueueDeleteEntity(args.OtherEntity);
             AdjustEnergy(uid, component, 50f);
         }
@@ -58,7 +59,8 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
     {
         component.Energy += delta;
 
-        if (component.Energy > component.NeedEnergyToSpawn) {
+        if (component.Energy > component.NeedEnergyToSpawn)
+        {
             component.Energy -= component.NeedEnergyToSpawn;
             Spawn(component.SpawnProto, Transform(uid).Coordinates);
         }

@@ -13,10 +13,26 @@ public sealed class LightningTargetSystem : EntitySystem
 {
 
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<LightningTargetComponent, HittedByLightningEvent>(OnHittedByLightning);
     }
 
+    private void OnHittedByLightning(EntityUid uid, LightningTargetComponent component, ref HittedByLightningEvent args)
+    {
+        Log.Debug("јй, мен€ ударила молни€");
+        if (!component.LightningExplode)
+            return;
+        Log.Debug("придетс€ взрыватьс€");
+        _explosionSystem.QueueExplosion(
+            uid,
+            component.ExplosionPrototype,
+            component.TotalIntensity,
+            component.Dropoff,
+            component.MaxTileIntensity
+            );
+        Log.Debug("взорвалс€");
+    }
 }

@@ -33,6 +33,7 @@
     shootRange: 10
     shootMinInterval: 2
     shootMaxInterval: 5
+    lightningPrototype: HyperchargedLightning
   - type: ChasingWalk # To make the tesla move around.
     maxSpeed: 2.5
     minSpeed: 1.875
@@ -95,6 +96,7 @@
     shootMinInterval: 4
     shootMaxInterval: 10
     shootRange: 3
+    lightningPrototype: ChargedLightning
   #- type: GuideHelp
   - type: Sprite
     drawdepth: Effects
