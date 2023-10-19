@@ -1,9 +1,6 @@
 using Content.Server.Shuttles.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Players;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -35,7 +32,7 @@ public sealed partial class DockingSystem
             if (dockable == null)
                 continue;
 
-            TryDock(dockUid, dock, dockable.Owner, dockable);
+            TryDock(dockUid, dock, dockable.Value);
         }
 
         // Work out recent docks that have gone past their designated threshold.
@@ -114,7 +111,8 @@ public sealed partial class DockingSystem
         var player = args.Session.AttachedEntity;
 
         // TODO: Validation
-        if (player == null || !TryComp<AutoDockComponent>(dork, out var comp)) return;
+        if (player == null || !TryComp<AutoDockComponent>(dork, out var comp))
+            return;
 
         comp.Requesters.Remove(player.Value);
 

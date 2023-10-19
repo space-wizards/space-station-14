@@ -96,8 +96,6 @@ public sealed class PayloadSystem : EntitySystem
             if (_componentFactory.GetComponent(registration.Type) is not Component component)
                 continue;
 
-            component.Owner = uid;
-
             var temp = (object) component;
             _serializationManager.CopyTo(data.Component, ref temp);
             EntityManager.AddComponent(uid, (Component)temp!);
