@@ -50,7 +50,7 @@ public sealed partial class EmergencyShuttleSystem
     public float MaximumTransitTime { get; private set; }
 
     /// <summary>
-    /// How long it will take for the emergency shuttle to arrive at CentComm.
+    /// How long it will take for the emergency shuttle to arrive at CentCom.
     /// </summary>
     public float TransitTime { get; private set; }
 
@@ -162,23 +162,23 @@ public sealed partial class EmergencyShuttleSystem
             while (dataQuery.MoveNext(out var stationUid, out var comp))
             {
                 if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle) ||
-                    !TryComp<StationCentcomComponent>(stationUid, out var centcomm))
+                    !TryComp<StationCentcomComponent>(stationUid, out var centcom))
                 {
                     continue;
                 }
 
-                if (Deleted(centcomm.Entity))
+                if (Deleted(centcom.Entity))
                 {
                     // TODO: Need to get non-overlapping positions.
                     _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                         new EntityCoordinates(
-                            _mapManager.GetMapEntityId(centcomm.MapId),
+                            _mapManager.GetMapEntityId(centcom.MapId),
                             _random.NextVector2(1000f)), _consoleAccumulator, TransitTime);
                 }
                 else
                 {
                     _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                        centcomm.Entity, _consoleAccumulator, TransitTime, true);
+                        centcom.Entity, _consoleAccumulator, TransitTime, true);
                 }
             }
 
@@ -199,14 +199,14 @@ public sealed partial class EmergencyShuttleSystem
         {
             var stationUid = _station.GetOwningStation(uid);
 
-            if (!TryComp<StationCentcomComponent>(stationUid, out var centcomm) ||
-                Deleted(centcomm.Entity) || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
+            if (!TryComp<StationCentcomComponent>(stationUid, out var centcom) ||
+                Deleted(centcom.Entity) || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
             {
                 continue;
             }
 
             // Don't dock them. If you do end up doing this then stagger launch.
-            _shuttle.FTLTravel(uid, shuttle, centcomm.Entity, hyperspaceTime: TransitTime);
+            _shuttle.FTLTravel(uid, shuttle, centcom.Entity, hyperspaceTime: TransitTime);
             RemCompDeferred<EscapePodComponent>(uid);
         }
 

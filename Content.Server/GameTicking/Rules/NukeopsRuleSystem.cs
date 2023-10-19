@@ -361,7 +361,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         var nukeQuery = AllEntityQuery<NukeComponent, TransformComponent>();
-        var centcomms = _emergency.GetCentcommMaps();
+        var centcomms = _emergency.GetCentcomMaps();
 
         while (nukeQuery.MoveNext(out var nuke, out var nukeTransform))
         {
