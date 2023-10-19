@@ -24,7 +24,7 @@
     ears: ClothingHeadsetSecurity
     # TODO add copy of space law
   inhand:
-    right hand: BriefcaseBrownFilled
-  innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
+    - BriefcaseBrownFilled
+  innerClothingSkirt: ClothingUniformJumpskirtLawyerBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

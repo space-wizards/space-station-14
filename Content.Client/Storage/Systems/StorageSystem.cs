@@ -11,6 +11,7 @@ namespace Content.Client.Storage.Systems;
 public sealed class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
 
     public event Action<EntityUid, StorageComponent>? StorageUpdated;
 
@@ -57,7 +58,7 @@ public sealed class StorageSystem : SharedStorageSystem
         var finalMapPos = finalCoords.ToMapPos(EntityManager, _transform);
         var finalPos = _transform.GetInvWorldMatrix(initialCoords.EntityId).Transform(finalMapPos);
 
-        ReusableAnimations.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
+        _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
     }
 
     /// <summary>
@@ -75,7 +76,7 @@ public sealed class StorageSystem : SharedStorageSystem
             var initialPosition = msg.EntityPositions[i];
             if (EntityManager.EntityExists(entity) && transformComp != null)
             {
-                ReusableAnimations.AnimateEntityPickup(entity, GetCoordinates(initialPosition), transformComp.LocalPosition, msg.EntityAngles[i], EntityManager);
+                _entityPickupAnimation.AnimateEntityPickup(entity, GetCoordinates(initialPosition), transformComp.LocalPosition, msg.EntityAngles[i]);
             }
         }
     }

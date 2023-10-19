@@ -2,9 +2,9 @@
 using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
@@ -94,8 +94,9 @@ public sealed class PricingSystem : EntitySystem
             return;
         }
 
-        var partList = _bodySystem.GetBodyAllSlots(uid, body).ToList();
-        var totalPartsPresent = partList.Sum(x => x.Child != null ? 1 : 0);
+        // TODO: Better handling of missing.
+        var partList = _bodySystem.GetBodyChildren(uid, body).ToList();
+        var totalPartsPresent = partList.Sum(_ => 1);
         var totalParts = partList.Count;
 
         var partRatio = totalPartsPresent / (double) totalParts;

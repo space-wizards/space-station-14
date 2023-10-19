@@ -76,4 +76,22 @@ public sealed partial class TestPair
 
         return otherUid.Value;
     }
+
+    /// <summary>
+    /// Execute a command on the server and wait some number of ticks.
+    /// </summary>
+    public async Task WaitCommand(string cmd, int numTicks = 10)
+    {
+        await Server.ExecuteCommand(cmd);
+        await RunTicksSync(numTicks);
+    }
+
+    /// <summary>
+    /// Execute a command on the client and wait some number of ticks.
+    /// </summary>
+    public async Task WaitClientCommand(string cmd, int numTicks = 10)
+    {
+        await Client.ExecuteCommand(cmd);
+        await RunTicksSync(numTicks);
+    }
 }

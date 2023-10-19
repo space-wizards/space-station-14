@@ -1,13 +1,11 @@
 ﻿using System.Linq;
 using Content.Shared.Ghost;
-using Content.Shared.Pinpointer;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Dynamics;
@@ -42,9 +40,6 @@ public abstract class SharedPortalSystem : EntitySystem
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<PortalComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
-
-        SubscribeLocalEvent<PortalTimeoutComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<PortalTimeoutComponent, ComponentHandleState>(OnHandleState);
     }
 
     private void OnGetVerbs(EntityUid uid, PortalComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -75,17 +70,6 @@ public abstract class SharedPortalSystem : EntitySystem
                 : Loc.GetString("portal-component-can-ghost-traverse"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"))
         });
-    }
-
-    private void OnGetState(EntityUid uid, PortalTimeoutComponent component, ref ComponentGetState args)
-    {
-        args.State = new PortalTimeoutComponentState(GetNetEntity(component.EnteredPortal));
-    }
-
-    private void OnHandleState(EntityUid uid, PortalTimeoutComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is PortalTimeoutComponentState state)
-            component.EnteredPortal = EnsureEntity<PortalTimeoutComponent>(state.EnteredPortal, uid);
     }
 
     private bool ShouldCollide(string ourId, string otherId, Fixture our, Fixture other)

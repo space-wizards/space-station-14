@@ -76,9 +76,9 @@ public sealed class WarDeclaratorSystem : EntitySystem
         {
             message = Loc.GetString("war-declarator-default-message");
         }
-        var title = Loc.GetString(component.DeclarementTitle);
+        var title = Loc.GetString(component.Title);
 
-        _nukeopsRuleSystem.DeclareWar(args.Session.AttachedEntity.Value, message, title, component.DeclarementSound, component.DeclarementColor);
+        _nukeopsRuleSystem.DeclareWar(args.Session.AttachedEntity.Value, message, title, component.Sound, component.Color);
 
         if (args.Session.AttachedEntity != null)
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has declared war with this text: {message}");

@@ -127,6 +127,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared.CompNetworkGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Serialization.Generator", "RobustToolbox\Robust.Serialization.Generator\Robust.Serialization.Generator.csproj", "{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.PatreonParser", "Content.PatreonParser\Content.PatreonParser.csproj", "{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arch", "RobustToolbox\Arch\Arch.csproj", "{FCF7C99C-EC56-4DF4-A101-8C42E8EDB6EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arch.SourceGen", "RobustToolbox\Arch\Arch\src\Arch.SourceGen\Arch.SourceGen.csproj", "{6EA70D29-EE1B-431B-A396-294CBD52D2D4}"
@@ -434,6 +435,14 @@ Global
 		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.DebugOpt|Any CPU.Build.0 = Debug|Any CPU
 		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.Tools|Any CPU.ActiveCfg = Debug|Any CPU
 		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.Tools|Any CPU.Build.0 = Debug|Any CPU
+		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.DebugOpt|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.DebugOpt|Any CPU.Build.0 = Debug|Any CPU
+		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Tools|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Tools|Any CPU.Build.0 = Debug|Any CPU
 		{FCF7C99C-EC56-4DF4-A101-8C42E8EDB6EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FCF7C99C-EC56-4DF4-A101-8C42E8EDB6EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCF7C99C-EC56-4DF4-A101-8C42E8EDB6EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
