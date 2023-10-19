@@ -1,0 +1,57 @@
+#© SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+- type: entity
+  name: crossbow
+  parent: BaseItem
+  id: BaseWeaponCrossbow 
+  abstract: true
+  description: Energy crossbow.
+  components:
+  - type: AmmoCounter
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 4
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 4
+    rechargeSound:
+      path: /Audio/SS220/Weapons/Guns/MagIn/draw_bow2.ogg
+  - type: Gun
+    fireRate: 1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: Item
+    size: 10
+
+- type: entity
+  name: mini energy crossbow
+  parent: BaseWeaponCrossbow
+  id: WeaponMiniEnergyCrossbow
+  description: A weapon favored by syndicate specialists who prefer to work covertly.
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Guns/Crossbow/minicrossbow.rsi
+    state: icon
+  - type: BasicEntityAmmoProvider
+    proto: BulletMiniEnergyCrossbow
+    capacity: 1
+    count: 1
+
+- type: entity
+  name: energy crossbow
+  parent: WeaponMiniEnergyCrossbow
+  id: WeaponEnergyCrossbow
+  description: A weapon designed by reverse engineering using syndicate technology. Medium-sized and weaker than the "original".
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Guns/Crossbow/crossbow.rsi
+    state: icon
+  - type: Item
+    size: 30
+  - type: BasicEntityAmmoProvider
+    proto: BulletEnergyCrossbow
+    capacity: 1
+    count: 1
+  - type: Wieldable
+    wieldTime: 0.5
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
+  - type: GunRequiresWield

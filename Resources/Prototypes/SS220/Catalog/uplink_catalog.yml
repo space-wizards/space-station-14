@@ -1,0 +1,10 @@
+- type: listing
+  id: UplinkEcrossbow
+  name: uplink-ecrossbow-name
+  description: uplink-ecrossbow-desc
+  icon: { sprite: /Textures/SS220/Objects/Weapons/Guns/Crossbow/minicrossbow.rsi, state: icon }
+  productEntity: WeaponMiniEnergyCrossbow
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkWeapons

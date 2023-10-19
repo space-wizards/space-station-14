@@ -1,0 +1,55 @@
+- type: entity
+  name: mini energy crossbow bolt
+  id: BulletMiniEnergyCrossbow
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    noRot: false
+    sprite: SS220/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    color: "#00cb00"
+    layers:
+    - state: cbbolt
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+  - type: StaminaDamageOnCollide
+    damage: 25
+  - type: Ammo
+  - type: Projectile
+    impactEffect: BulletImpactEffectGreenLaser
+    damage:
+      types:
+        Poison: 15
+    soundHit:
+      path: "/Audio/Weapons/tap.ogg"
+    soundForce: true
+  - type: StunOnCollide
+    stunAmount: 1
+    knockdownAmount: 1
+
+- type: entity
+  name: energy crossbow bolt
+  id: BulletEnergyCrossbow
+  parent: BulletMiniEnergyCrossbow
+  noSpawn: true
+  components:
+  - type: StaminaDamageOnCollide
+    damage: 20
+  - type: Projectile
+    damage:
+      types:
+        Poison: 10

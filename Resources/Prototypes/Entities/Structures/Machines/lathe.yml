@@ -276,6 +276,7 @@
       - WeaponLaserCannon
       - WeaponXrayCannon
       - WeaponTaser
+      - WeaponEnergyCrossbow #SS220 Energy Crossbow
 
 - type: entity
   id: CircuitImprinter
@@ -581,6 +582,7 @@
       - WeaponLaserCarbinePractice
       - WeaponTaser
       - WeaponXrayCannon
+      - WeaponEnergyCrossbow #SS220 Energy Crossbow
   - type: MaterialStorage
     whitelist:
       tags:

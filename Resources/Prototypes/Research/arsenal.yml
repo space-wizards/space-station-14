@@ -168,3 +168,5 @@
   cost: 15000
   recipeUnlocks:
   - WeaponAdvancedLaser
+  - WeaponEnergyCrossbow #SS220 Energy crossbow
+  
