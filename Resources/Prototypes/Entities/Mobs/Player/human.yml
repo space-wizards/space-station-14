@@ -3,9 +3,6 @@
   name: Urist McHands
   parent: BaseMobHuman
   id: MobHuman
-  components:
-  #Imperial foot prints
-  - type: FootPrints
 
 #Syndie
 - type: entity
