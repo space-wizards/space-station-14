@@ -1,29 +1,26 @@
-using Content.Server.Shuttles.Components;
-using Content.Server.Station.Systems;
-using Content.Shared.Body.Components;
-using Content.Shared.Maps;
-using Content.Shared.Parallax;
-using Content.Shared.Shuttles.Systems;
-using Content.Shared.StatusEffect;
-using Robust.Shared.Audio;
-using Robust.Shared.Collections;
-using Robust.Shared.Map;
-using Robust.Shared.Player;
-using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using System.Linq;
+using System.Numerics;
+using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Maps;
+using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Components;
-using Content.Shared.Throwing;
+using Content.Shared.Shuttles.Systems;
+using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
+using Robust.Shared.Collections;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -231,7 +228,7 @@ public sealed partial class ShuttleSystem
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
         // TODO: Need BroadcastGrid to not be bad.
-        SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
+        SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(uid)), _startupSound.Params);
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         SetupHyperspace();
         return true;
@@ -608,16 +605,20 @@ public sealed partial class ShuttleSystem
         var iteration = 0;
         var lastCount = nearbyGrids.Count;
         var mapId = targetXform.MapID;
+        var grids = new List<Entity<MapGridComponent>>();
 
         while (iteration < FTLProximityIterations)
         {
-            foreach (var grid in _mapManager.FindGridsIntersecting(mapId, targetAABB))
+            grids.Clear();
+            _mapManager.FindGridsIntersecting(mapId, targetAABB, ref grids);
+
+            foreach (var grid in grids)
             {
-                if (!nearbyGrids.Add(grid.Owner))
+                if (!nearbyGrids.Add(grid))
                     continue;
 
-                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.Owner, xformQuery)
-                    .TransformBox(Comp<MapGridComponent>(grid.Owner).LocalAABB));
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid, xformQuery)
+                    .TransformBox(Comp<MapGridComponent>(grid).LocalAABB));
             }
 
             // Can do proximity
@@ -634,14 +635,15 @@ public sealed partial class ShuttleSystem
             if (iteration != FTLProximityIterations)
                 continue;
 
-            foreach (var grid in _mapManager.GetAllGrids())
+            var query = AllEntityQuery<MapGridComponent>();
+            while (query.MoveNext(out var uid, out var grid))
             {
                 // Don't add anymore as it is irrelevant, but that doesn't mean we need to re-do existing work.
-                if (nearbyGrids.Contains(grid.Owner))
+                if (nearbyGrids.Contains(uid))
                     continue;
 
-                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.Owner, xformQuery)
-                    .TransformBox(Comp<MapGridComponent>(grid.Owner).LocalAABB));
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(uid, xformQuery)
+                    .TransformBox(Comp<MapGridComponent>(uid).LocalAABB));
             }
 
             break;

@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.Anomaly.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Anomaly.Effects;
 /// <summary>
@@ -44,7 +44,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
         //We get all the entity in the radius into which the reagent will be injected.
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
-        var allEnts = _lookup.GetComponentsInRange<InjectableSolutionComponent>(xform.MapPosition, injectRadius)
+        var allEnts = _lookup.GetEntitiesInRange<InjectableSolutionComponent>(xform.MapPosition, injectRadius)
             .Select(x => x.Owner).ToList();
 
         //for each matching entity found

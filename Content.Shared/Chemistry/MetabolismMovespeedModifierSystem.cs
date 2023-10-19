@@ -10,7 +10,7 @@ namespace Content.Shared.Chemistry
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movespeed = default!;
 
-        private readonly List<MovespeedModifierMetabolismComponent> _components = new();
+        private readonly List<Entity<MovespeedModifierMetabolismComponent>> _components = new();
 
         public override void Initialize()
         {
@@ -27,9 +27,9 @@ namespace Content.Shared.Chemistry
             args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 
-        private void AddComponent(EntityUid uid, MovespeedModifierMetabolismComponent component, ComponentStartup args)
+        private void AddComponent(Entity<MovespeedModifierMetabolismComponent> metabolism, ref ComponentStartup args)
         {
-            _components.Add(component);
+            _components.Add(metabolism);
         }
 
         public override void Update(float frameTime)
@@ -40,20 +40,21 @@ namespace Content.Shared.Chemistry
 
             for (var i = _components.Count - 1; i >= 0; i--)
             {
-                var component = _components[i];
+                var metabolism = _components[i];
 
-                if (component.Deleted)
+                if (metabolism.Comp.Deleted)
                 {
                     _components.RemoveAt(i);
                     continue;
                 }
 
-                if (component.ModifierTimer > currentTime) continue;
+                if (metabolism.Comp.ModifierTimer > currentTime)
+                    continue;
 
                 _components.RemoveAt(i);
-                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.Owner);
+                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(metabolism);
 
-                _movespeed.RefreshMovementSpeedModifiers(component.Owner);
+                _movespeed.RefreshMovementSpeedModifiers(metabolism);
             }
         }
     }

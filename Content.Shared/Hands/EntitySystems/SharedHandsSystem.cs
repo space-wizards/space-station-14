@@ -21,7 +21,7 @@ public abstract partial class SharedHandsSystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
-    protected event Action<HandsComponent?>? OnHandSetActive;
+    protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 
     public override void Initialize()
     {
@@ -216,7 +216,7 @@ public abstract partial class SharedHandsSystem
         }
 
         handComp.ActiveHand = hand;
-        OnHandSetActive?.Invoke(handComp);
+        OnHandSetActive?.Invoke((uid, handComp));
 
         if (hand.HeldEntity != null)
             RaiseLocalEvent(hand.HeldEntity.Value, new HandSelectedEvent(uid));

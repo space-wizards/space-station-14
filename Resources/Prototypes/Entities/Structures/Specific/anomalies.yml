@@ -305,6 +305,7 @@
     solution: anomaly
   - type: InjectionAnomaly
     solution: anomaly
+    superCriticalInjectRadius: 10
   - type: ReagentProducerAnomaly
     solution: anomaly
     needRecolor: true
@@ -354,6 +355,7 @@
     - Cognizine
     - Beer
     - SpaceGlue
+    - SpaceLube
     - CogChamp
     - Honk
     - Carpetium

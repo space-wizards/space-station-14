@@ -37,6 +37,7 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
+        SubscribeLocalEvent<RecordRemovedEvent>(OnRecordRemoved);
         SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
@@ -78,6 +79,12 @@ public sealed class CrewManifestSystem : EntitySystem
     }
 
     private void OnRecordModified(RecordModifiedEvent ev)
+    {
+        BuildCrewManifest(ev.Key.OriginStation);
+        UpdateEuis(ev.Key.OriginStation);
+    }
+
+    private void OnRecordRemoved(RecordRemovedEvent ev)
     {
         BuildCrewManifest(ev.Key.OriginStation);
         UpdateEuis(ev.Key.OriginStation);
@@ -263,14 +270,13 @@ public sealed class CrewManifestCommand : IConsoleCommand
             return CompletionResult.Empty;
         }
 
-        var stations = _entityManager
-            .EntityQuery<StationDataComponent>()
-            .Select(stationData =>
-            {
-                var meta = _entityManager.GetComponent<MetaDataComponent>(stationData.Owner);
-
-                return new CompletionOption(stationData.Owner.ToString(), meta.EntityName);
-            });
+        var stations = new List<CompletionOption>();
+        var query = _entityManager.EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            var meta = _entityManager.GetComponent<MetaDataComponent>(uid);
+            stations.Add(new CompletionOption(uid.ToString(), meta.EntityName));
+        }
 
         return CompletionResult.FromHintOptions(stations, null);
     }

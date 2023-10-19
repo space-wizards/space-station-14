@@ -769,10 +769,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_actionsSystem != null && _actionsSystem.TryGetActionData(_menuDragHelper.Dragged?.ActionId, out var action))
         {
-            if (action.EntityIcon is {} entIcon)
+            if (EntityManager.TryGetComponent(action.EntityIcon, out SpriteComponent? sprite))
             {
-                _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(entIcon).Icon?
-                    .GetFrame(RsiDirection.South, 0);
+                _dragShadow.Texture = sprite.Icon?.GetFrame(RsiDirection.South, 0);
             }
             else if (action.Icon != null)
             {
