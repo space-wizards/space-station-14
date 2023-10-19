@@ -1,13 +1,8 @@
-using Content.Server.Preferences.Managers;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.Preferences;
-using Content.Shared.Roles;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Salvage;
 
@@ -48,9 +43,9 @@ sealed class SalvageRulerCommand : IConsoleCommand
         var entityTransform = _entities.GetComponent<TransformComponent>(entity.Value);
         var total = Box2.UnitCentered;
         var first = true;
-        foreach (var mapGrid in _maps.GetAllMapGrids(entityTransform.MapID))
+        foreach (var mapGrid in _maps.GetAllGrids(entityTransform.MapID))
         {
-            var aabb = _entities.GetComponent<TransformComponent>(mapGrid.Owner).WorldMatrix.TransformBox(mapGrid.LocalAABB);
+            var aabb = _entities.GetComponent<TransformComponent>(mapGrid).WorldMatrix.TransformBox(mapGrid.Comp.LocalAABB);
             if (first)
             {
                 total = aabb;

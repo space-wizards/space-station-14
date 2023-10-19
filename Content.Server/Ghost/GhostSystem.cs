@@ -297,8 +297,7 @@ namespace Content.Server.Ghost
 
             while (allQuery.MoveNext(out var uid, out var warp))
             {
-                if (warp.Location != null)
-                    yield return new GhostWarp(GetNetEntity(uid), warp.Location, true);
+                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
             }
         }
 

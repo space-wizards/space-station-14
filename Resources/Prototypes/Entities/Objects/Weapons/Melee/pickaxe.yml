@@ -12,6 +12,7 @@
     state: pickaxe
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       groups:
         Brute: 5

@@ -12,14 +12,15 @@ public sealed class ThermalRegulatorSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var regulator in EntityManager.EntityQuery<ThermalRegulatorComponent>())
+        var query = EntityQueryEnumerator<ThermalRegulatorComponent>();
+        while (query.MoveNext(out var uid, out var regulator))
         {
             regulator.AccumulatedFrametime += frameTime;
             if (regulator.AccumulatedFrametime < 1)
                 continue;
 
             regulator.AccumulatedFrametime -= 1;
-            ProcessThermalRegulation(regulator.Owner, regulator);
+            ProcessThermalRegulation(uid, regulator);
         }
     }
 
