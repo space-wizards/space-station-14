@@ -168,3 +168,5 @@ ent-PortableGeneratorJrPacmanMachineCircuitboard = портативный ген
     .desc = { ent-BaseMachineCircuitboard.desc }
 ent-BorgChargerCircuitboard = Станция подзарядки боргов (машинная плата)
     .desc = { ent-BaseMachineCircuitboard.desc }
+ent-ElectricGrillMachineCircuitboard = электрический гриль (машинная плата)
+    .desc = { ent-BaseMachineCircuitboard.desc }

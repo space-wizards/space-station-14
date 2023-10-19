@@ -1,4 +1,6 @@
-ninja-katana-rereached = Ваша Энергетическая Катана телепортируется в вашу руку!
-ninja-katana-not-hold = Ты не держишь свою катану!
-ninja-katana-cant-see = Вы не видите что там!
-ninja-hands-full = У вас заняты руки!
+ninja-katana-recalled = Ваша энергетическая катана телепортируется вам в руку!
+ninja-hands-full = Ваши руки заняты!
+
+dash-ability-not-held = Вы не держите катану!
+dash-ability-no-charges = Зарядов не осталось!
+dash-ability-cant-see = Ты не видишь что там!

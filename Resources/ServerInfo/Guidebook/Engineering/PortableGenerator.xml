@@ -1,42 +1,42 @@
 ﻿<Document>
-  # Portable Generators
+  # Портативные генераторы
 
-  Need power? No engine running? The "P.A.C.M.A.N." line of portable generators has you covered.
+  Нужна мощность? Двигатель не работает? "ПАКМАН" линейка портативных генераторов поможет вам.
 
   <Box>
-    <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="J.R.P.A.C.M.A.N." />
-    <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
-    <GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="S.U.P.E.R.P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="МИНИПАКМАН" />
+    <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="ПАКМАН" />
+    <GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="СУПЕРПАКМАН" />
   </Box>
 
-  # The Junior
+  # Мини
 
   <Box>
-    <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="J.R.P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="МИНИПАКМАН" />
     <GuideEntityEmbed Entity="WeldingFuelTank" />
   </Box>
 
-  The J.R.P.A.C.M.A.N. can be found across the station in maintenance areas, and is ideal for crew to set up themselves whenever there are power issues.
-  Setup is incredibly easy: wrench it down above an [color=green]LV[/color] power cable, give it some welding fuel, and start it up.
+  МИНИПАКМАН можно найти по всей станции в зонах технического обслуживания, и он идеально подходит для экипажа, который может подготовиться в случае проблем с электропитанием.
+  Настройка невероятно проста: наденьте его над силовым кабелем [color=green]НВ[/color], добавьте немного сварочного топлива и запустите.
 
-  Welding fuel should be plentiful to find around the station. In a pinch, you can even transfer some from the big tanks with a soda can. Just remember to empty the soda can first, I don't think it likes soda as fuel.
+  На станции должно быть много сварочного топлива. В крайнем случае, вы даже можете перелить немного из больших резервуаров с помощью банки из-под газировки. Только не забудьте сначала опорожнить банку из-под газировки, я не думаю, что она любит газировку в качестве топлива.
 
-  # The Big Ones
+  # Большие
 
   <Box>
-    <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="ПАКМАН" />
     <GuideEntityEmbed Entity="SheetPlasma" />
   </Box>
 
   <Box>
-    <GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="S.U.P.E.R.P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="СУПЕРПАКМАН" />
     <GuideEntityEmbed Entity="SheetUranium" />
   </Box>
 
-  The (S.U.P.E.R.)P.A.C.M.A.N. is intended for usage by engineering for advanced power scenarios. Bootstrapping the engine, powering departments, and so on.
+  (СУПЕР)ПАКМАН. предназначен для использования инженерами в сложных сценариях электропитания. Начальная настройка двигателя, силовых агрегатов и так далее.
 
-  The S.U.P.E.R.P.A.C.M.A.N. boasts larger power output and longer runtime at maximum output, but scales down to lower outputs less efficiently.
+  СУПЕРПАКМАН. может похвастаться большей выходной мощностью и более длительным временем работы при максимальной мощности, но масштабирование до более низких выходных мощностей менее эффективно.
 
-  They connect directly to [color=yellow]MV[/color] or [color=orange]HV[/color] power cables, able to switch between them for flexibility.
+  Они подключаются напрямую к силовым кабелям [color=yellow]СВ[/color] или [color=orange]ВВ[/color] с возможностью переключения между ними для обеспечения гибкости.
 
 </Document>

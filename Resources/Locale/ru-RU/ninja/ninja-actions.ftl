@@ -3,7 +3,6 @@ action-desc-toggle-ninja-gloves = Переключает все действия
 
 action-name-toggle-phase-cloak = Фазовый плащ
 action-desc-toggle-phase-cloak = Переключает фазовый плащ вашего костюма. Учтите, что при попадании в вас все способности отключаются на 5 секунд, включая плащ!
-ninja-no-power = Недостаточно заряда батареи костюма!
 
 action-name-create-soap = Создать мыло
 action-desc-create-soap = Направляет силу костюма на создание куска мыла ниндзя. Будущее уже наступило, клоун!
@@ -25,3 +24,8 @@ ninja-download-fail = Никаких новых исследовательски
 ninja-download-success = Скопировано {$count} новых узлов с ($server).
 
 ninja-terror-already-called = Вы уже объявили об угрозе!
+
+ninja-no-power = Батарея костюма недостаточно заряжена!
+
+ninja-research-steal-fail = Ни одной новой технологий не было украдено...
+ninja-research-steal-success = Украл {$count} новых технологий с {$server}.

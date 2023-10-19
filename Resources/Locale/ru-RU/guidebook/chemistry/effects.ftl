@@ -26,6 +26,11 @@ reagent-effect-guidebook-explosion-reaction-effect =
         [1] Вызывает
        *[other] вызывают
     } взрыв
+reagent-effect-guidebook-emp-reaction-effect =
+    { $chance ->
+        [1] Вызывает
+       *[other] вызывают
+    } электромагнитный импульс
 reagent-effect-guidebook-foam-area-reaction-effect =
     { $chance ->
         [1] Создаёт
@@ -188,13 +193,13 @@ reagent-effect-guidebook-cure-eye-damage =
     { $chance ->
         [1]
             { $deltasign ->
-                [1] Излечивает
-               *[-1] Наносит
+                [1] Наносит
+               *[-1] Излечивает
             }
        *[other]
             { $deltasign ->
-                [1] излечивают
-               *[-1] наносят
+                [1] наносят
+               *[-1] излечивают
             }
     } повреждения глаз
 reagent-effect-guidebook-chem-vomit =
@@ -240,6 +245,11 @@ reagent-effect-guidebook-make-sentient =
         [1] Делает
        *[other] делают
     } употребившего разумным
+reagent-effect-guidebook-make-polymorph =
+    { $chance ->
+        [1] Превращает
+       *[other] превращают
+    } употребившего в { $entityname }
 reagent-effect-guidebook-modify-bleed-amount =
     { $chance ->
         [1]
@@ -286,6 +296,21 @@ reagent-effect-guidebook-wash-cream-pie-reaction =
         [1] Смывает
        *[other] смывают
     } кремовый пирог с лица
+reagent-effect-guidebook-cure-zombie-infection =
+    { $chance ->
+        [1] Лечит
+       *[other] лечат
+    } зомби-вирус
+reagent-effect-guidebook-cause-zombie-infection =
+    { $chance ->
+        [1] Заражает
+       *[other] заражают
+    } человека зомби-вирусом
+reagent-effect-guidebook-innoculate-zombie-infection =
+    { $chance ->
+        [1] Лечит
+       *[other] лечат
+    } зомби-вирус и обеспечивает иммунитет к нему в будущем
 reagent-effect-guidebook-missing =
     { $chance ->
         [1] Вызывает

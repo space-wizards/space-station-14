@@ -34,12 +34,14 @@ research-technology-cloning = Клонирование
 research-technology-salvage-weapons = Утилизаторское оружие
 research-technology-draconic-munitions = Драконьи боеприпасы
 research-technology-explosive-technology = Взрывчатые вещества
-research-technology-advanced-laser-manipulation = Продвинутые лазерные манипуляции
+research-technology-weaponized-laser-manipulation = Вооружённое лазерное манипулирование
 research-technology-nonlethal-ammunition = Нелетальные боеприпасы
+research-technology-practice-ammunition = Практика боеприпасов
 research-technology-concentrated-laser-weaponry = Концентрированное лазерное оружие
 research-technology-wave-particle-harnessing = Использование волновых частиц
 research-technology-advanced-riot-control = Продвинутый контроль над беспорядками
 research-technology-handheld-electrical-propulsion = Ручные электродвигатели
+research-technology-portable-microfusion-weaponry = Портативное микротермическое оружие
 
 research-technology-basic-robotics = Основы робототехники
 research-technology-basic-anomalous-research = Основы исследования аномалий
@@ -67,5 +69,3 @@ research-technology-meat-manipulation = Манипуляции с мясом
 research-technology-honk-mech = Х.О.Н.К. мех
 research-technology-advanced-spray = Расширенный спрей
 research-technology-bluespace-cargo-transport = Блюспейс транспортировка карго
-
-research-technology-advanced-riot-control = Продвинутый контроль беспорядков
