@@ -33,7 +33,7 @@ public sealed partial class PortalComponent : Component
     ///     If false, this portal will fail to teleport and fizzle out if attempting to send an entity to a different map
     /// </summary>
     /// <remarks>
-    ///     Shouldn't be able to teleport people to centcomm or the eshuttle from the station
+    ///     Shouldn't be able to teleport people to centcom or the eshuttle from the station
     /// </remarks>
     [DataField("canTeleportToOtherMaps"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanTeleportToOtherMaps = false;

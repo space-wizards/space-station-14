@@ -1299,13 +1299,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.emergency_authorize_time", 10f, CVar.SERVERONLY);
 
         /// <summary>
-        /// The minimum time for the emergency shuttle to arrive at centcomm.
+        /// The minimum time for the emergency shuttle to arrive at centcom.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleMinTransitTime =
             CVarDef.Create("shuttle.emergency_transit_time_min", 60f, CVar.SERVERONLY);
 
         /// <summary>
-        /// The maximum time for the emergency shuttle to arrive at centcomm.
+        /// The maximum time for the emergency shuttle to arrive at centcom.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleMaxTransitTime =
             CVarDef.Create("shuttle.emergency_transit_time_max", 180f, CVar.SERVERONLY);
