@@ -116,14 +116,13 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         var antags = Math.Clamp(allPlayers.Count / antagsPerPlayer, 1, maxAntags);
         for (var antag = 0; antag < antags; antag++)
         {
-            IPlayerSession chosenPlayer;
+            IPlayerSession chosenPlayer = null!;
             if (prefList.Count == 0)
             {
                 if (playerList.Count == 0)
                 {
                     break;
                 }
-                chosenPlayer = _random.PickAndTake(playerList);
             }
             else
             {

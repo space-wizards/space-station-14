@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ame;
 
@@ -17,8 +17,10 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
     public readonly int FuelAmount;
     public readonly int InjectionAmount;
     public readonly int CoreCount;
+    public readonly float CurrentPowerSupply;
+    public readonly float TargetedPowerSupply;
 
-    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount)
+    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount, float currentPowerSupply, float targetedPowerSupply)
     {
         HasPower = hasPower;
         IsMaster = isMaster;
@@ -27,6 +29,8 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
         FuelAmount = fuelAmount;
         InjectionAmount = injectionAmount;
         CoreCount = coreCount;
+        CurrentPowerSupply = currentPowerSupply;
+        TargetedPowerSupply = targetedPowerSupply;
     }
 }
 
