@@ -15,7 +15,7 @@ public sealed partial class BiomeComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("seed")]
     [AutoNetworkedField]
-    public int Seed;
+    public int Seed = -1;
 
     /// <summary>
     /// The underlying entity, decal, and tile layers for the biome.

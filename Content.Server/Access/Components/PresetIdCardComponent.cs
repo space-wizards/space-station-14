@@ -5,5 +5,8 @@ namespace Content.Server.Access.Components
     {
         [DataField("job")]
         public string? JobName;
+
+        [DataField("name")]
+        public string? IdName;
     }
 }

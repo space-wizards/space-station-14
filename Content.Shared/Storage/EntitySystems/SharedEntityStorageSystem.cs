@@ -15,7 +15,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
-using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -23,6 +22,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -41,7 +41,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     [Dependency] private   readonly SharedJointSystem _joints = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private   readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly WeldableSystem _weldable = default!;
 
     public const string ContainerName = "entity_storage";
@@ -103,7 +103,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     protected void OnDestruction(EntityUid uid, SharedEntityStorageComponent component, DestructionEventArgs args)
     {
         component.Open = true;
-        Dirty(component);
+        Dirty(uid, component);
         if (!component.DeleteContentsOnDestruction)
         {
             EmptyContents(uid, component);
@@ -199,7 +199,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         var beforeev = new StorageBeforeOpenEvent();
         RaiseLocalEvent(uid, ref beforeev);
         component.Open = true;
-        Dirty(component);
+        Dirty(uid, component);
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
         if (_net.IsClient && _timing.IsFirstTimePredicted)
@@ -215,7 +215,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return;
 
         component.Open = false;
-        Dirty(component);
+        Dirty(uid, component);
 
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
 
@@ -228,7 +228,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         {
             if (!ev.BypassChecks.Contains(entity))
             {
-                if (!CanFit(entity, uid, component.Whitelist))
+                if (!CanInsert(entity, uid, component))
                     continue;
             }
 
@@ -256,14 +256,17 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         if (component.Open)
         {
-            _transform.SetWorldPosition(toInsert, _transform.GetWorldPosition(container));
+            TransformSystem.SetWorldPosition(toInsert, TransformSystem.GetWorldPosition(container));
             return true;
         }
 
         _joints.RecursiveClearJoints(toInsert);
+        if (!component.Contents.Insert(toInsert, EntityManager))
+            return false;
+
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
         inside.Storage = container;
-        return component.Contents.Insert(toInsert, EntityManager);
+        return true;
     }
 
     public bool Remove(EntityUid toRemove, EntityUid container, SharedEntityStorageComponent? component = null, TransformComponent? xform = null)
@@ -276,12 +279,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         RemComp<InsideEntityStorageComponent>(toRemove);
         component.Contents.Remove(toRemove, EntityManager);
-        var pos = _transform.GetWorldPosition(xform) + _transform.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
-        _transform.SetWorldPosition(toRemove, pos);
+        var pos = TransformSystem.GetWorldPosition(xform) + TransformSystem.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
+        TransformSystem.SetWorldPosition(toRemove, pos);
         return true;
     }
 
-    public bool CanInsert(EntityUid container, SharedEntityStorageComponent? component = null)
+    public bool CanInsert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
     {
         if (!ResolveStorage(container, ref component))
             return false;
@@ -292,7 +295,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (component.Contents.ContainedEntities.Count >= component.Capacity)
             return false;
 
-        return true;
+        return CanFit(toInsert, container, component);
     }
 
     public bool TryOpenStorage(EntityUid user, EntityUid target, bool silent = false)
@@ -376,8 +379,11 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return Insert(toAdd, container, component);
     }
 
-    public bool CanFit(EntityUid toInsert, EntityUid container, EntityWhitelist? whitelist)
+    private bool CanFit(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
     {
+        if (!Resolve(container, ref component))
+            return false;
+
         // conditions are complicated because of pizzabox-related issues, so follow this guide
         // 0. Accomplish your goals at all costs.
         // 1. AddToContents can block anything
@@ -395,7 +401,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         var targetIsMob = HasComp<BodyComponent>(toInsert);
         var storageIsItem = HasComp<ItemComponent>(container);
-        var allowedToEat = whitelist?.IsValid(toInsert) ?? HasComp<ItemComponent>(toInsert);
+        var allowedToEat = component.Whitelist?.IsValid(toInsert) ?? HasComp<ItemComponent>(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
         // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.

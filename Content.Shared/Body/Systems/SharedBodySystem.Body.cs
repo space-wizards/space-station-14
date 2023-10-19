@@ -5,10 +5,10 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.DragDrop;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using MapInitEvent = Robust.Shared.GameObjects.MapInitEvent;
 
 namespace Content.Shared.Body.Systems;
 
@@ -21,6 +21,8 @@ public partial class SharedBodySystem
      * - Each "connection" is a body part (e.g. arm, hand, etc.) and each part can also contain organs.
      */
 
+    [Dependency] private readonly InventorySystem _inventory = default!;
+
     private void InitializeBody()
     {
         // Body here to handle root body parts.
@@ -30,8 +32,6 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
         SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
         SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
-        SubscribeLocalEvent<BodyComponent, ComponentGetState>(OnBodyGetState);
-        SubscribeLocalEvent<BodyComponent, ComponentHandleState>(OnBodyHandleState);
     }
 
     private void OnBodyInserted(EntityUid uid, BodyComponent component, EntInsertedIntoContainerMessage args)
@@ -59,7 +59,7 @@ public partial class SharedBodySystem
     private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
     {
         // TODO: lifestage shenanigans
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
             return;
 
         // Root body part?
@@ -78,30 +78,8 @@ public partial class SharedBodySystem
 
         if (TryComp(entity, out OrganComponent? organ))
         {
-            RemoveOrgan(entity, uid, uid, organ);
+            RemoveOrgan(entity, uid, organ);
         }
-    }
-
-    private void OnBodyHandleState(EntityUid uid, BodyComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not BodyComponentState state)
-            return;
-
-        component.Prototype = state.Prototype != null ? state.Prototype : null!;
-        component.GibSound = state.GibSound;
-        component.RequiredLegs = state.RequiredLegs;
-        component.LegEntities = EntityManager.EnsureEntitySet<BodyComponent>(state.LegNetEntities, uid);
-    }
-
-    private void OnBodyGetState(EntityUid uid, BodyComponent component, ref ComponentGetState args)
-    {
-        args.State = new BodyComponentState(
-            component.Prototype,
-            component.RootPartSlot,
-            component.GibSound,
-            component.RequiredLegs,
-            EntityManager.GetNetEntitySet(component.LegEntities)
-        );
     }
 
     private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
@@ -289,7 +267,7 @@ public partial class SharedBodySystem
     }
 
     public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
-        BodyComponent? body = null, bool deleteItems = false)
+        BodyComponent? body = null, bool deleteItems = false, bool deleteBrain = false)
     {
         var gibs = new HashSet<EntityUid>();
 
@@ -313,7 +291,14 @@ public partial class SharedBodySystem
                 gibs.Add(organ.Id);
             }
         }
-
+        if(TryComp<InventoryComponent>(bodyId, out var inventory))
+        {
+            foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
+            {
+                SharedTransform.AttachToGridOrMap(item);
+                gibs.Add(item);
+            }
+        }
         return gibs;
     }
 }

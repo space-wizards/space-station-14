@@ -12,7 +12,7 @@ public partial class SharedBodySystem
     private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
     {
         component.Body = bodyUid;
-        RaiseLocalEvent(uid, new AddedToPartEvent(bodyUid));
+        RaiseLocalEvent(uid, new AddedToPartEvent(parentPartUid));
 
         if (component.Body != null)
             RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, parentPartUid));
@@ -20,12 +20,14 @@ public partial class SharedBodySystem
         Dirty(uid, component);
     }
 
-    private void RemoveOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
+    private void RemoveOrgan(EntityUid uid, EntityUid parentPartUid, OrganComponent component)
     {
-        RaiseLocalEvent(uid, new RemovedFromPartEvent(bodyUid));
+        RaiseLocalEvent(uid, new RemovedFromPartEvent(parentPartUid));
 
         if (component.Body != null)
+        {
             RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(component.Body.Value, parentPartUid));
+        }
 
         component.Body = null;
         Dirty(uid, component);
@@ -149,7 +151,7 @@ public partial class SharedBodySystem
     public List<(T Comp, OrganComponent Organ)> GetBodyOrganComponents<T>(
         EntityUid uid,
         BodyComponent? body = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(uid, ref body))
             return new List<(T Comp, OrganComponent Organ)>();
@@ -178,7 +180,7 @@ public partial class SharedBodySystem
         EntityUid uid,
         [NotNullWhen(true)] out List<(T Comp, OrganComponent Organ)>? comps,
         BodyComponent? body = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(uid, ref body))
         {

@@ -25,6 +25,11 @@
     speed: 1.5
     qualities:
       - Prying
+  - type: Prying
+    pryPowered: !type:Bool
+        true
+    force: !type:Bool
+      true
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: Reactive
@@ -69,7 +74,6 @@
     bloodReagent: FluorosulfuricAcid
   - type: MeleeWeapon
     altDisarm: false
-    hidden: true
     angle: 0
     soundHit:
      collection: AlienClaw
@@ -208,7 +212,6 @@
       150: 0.7
   - type: MovementSpeedModifier
   - type: MeleeWeapon
-    hidden: true
     damage:
      groups:
        Brute: 12
@@ -246,7 +249,6 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 4
   - type: MeleeWeapon
-    hidden: true
     damage:
      groups:
        Brute: 10
@@ -280,7 +282,6 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 6.0
   - type: MeleeWeapon
-    hidden: true
     damage:
      groups:
        Brute: 5
@@ -305,6 +306,11 @@
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/rouny.rsi
     offset: 0,0.6
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatRouny
+      amount: 3
 
 - type: entity
   name: Spitter
@@ -386,7 +392,6 @@
     factions:
     - Xeno
   - type: MeleeWeapon
-    hidden: true
     angle: 0
     animation: WeaponArcBite
     damage:
