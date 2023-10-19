@@ -32,7 +32,7 @@
   noSpawn: true
   parent: BaseNinjaObjective
   id: StealResearchObjective
-  description: Your gloves can be used to hack a research server and steal its precious data. If science has been slacking you'll have to get to work.
+  description: Ваши перчатки могут быть использованы для взлома исследовательского сервера и кражи ценных данных. Если наука слабеет, вам придется самим изучить технологии.
   components:
   - type: Objective
     icon:
@@ -48,7 +48,7 @@
   noSpawn: true
   parent: BaseNinjaObjective
   id: SpiderChargeObjective
-  description: This bomb can be detonated in a specific location. Note that the bomb will not work anywhere else!
+  description: Взорвите заряд паука в определенном месте. Обратите внимание, что бомба больше нигде не сработает!
   components:
   - type: Objective
     icon:
@@ -61,8 +61,8 @@
   noSpawn: true
   parent: [BaseNinjaObjective, BaseSurviveObjective]
   id: NinjaSurviveObjective
-  name: Survive
-  description: You wouldn't be a very good ninja if you died, now would you?
+  name: Выжить
+  description: Ты бы не был лучшим ниндзей, если бы умер, не так ли?
   components:
   - type: Objective
     icon:
@@ -73,8 +73,8 @@
   noSpawn: true
   parent: BaseNinjaObjective
   id: TerrorObjective
-  name: Call in a threat
-  description: Use your gloves on a communication console in order to bring another threat to the station.
+  name: Объявить угрозу
+  description: Используйте свои перчатки на коммуникационном пульте, чтобы принести еще больше бед на станцию
   components:
   - type: Objective
     icon:

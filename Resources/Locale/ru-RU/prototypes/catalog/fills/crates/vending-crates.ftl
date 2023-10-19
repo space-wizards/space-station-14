@@ -69,3 +69,9 @@ ent-CrateVendingMachineRestockDonutFilled = Ящик пополнения Пон
 
 ent-CrateVendingMachineRestockChemVendFilled = Ящик пополнения ХимТорг
     .desc = Содержит набор пополнения торгомата ХимТорг
+
+ent-CrateVendingMachineRestockCondimentStationFilled = Ящик пополнения Островок соусов
+    .desc = Содержит набор пополнения торгомата Островок соусов
+
+ent-CrateVendingMachineRestockChefvendFilled = Ящик пополнения ШефВенд
+    .desc = Содержит набор пополнения торгомата ШефВенд

@@ -31,3 +31,7 @@ ent-ClothingEyesGlassesMercenary = очки наёмника
     .desc = Очки, созданные для ведения боя, для защиты глаз от ярких ослепляющих вспышек.
 ent-ClothingEyesGlassesChemical = очки для химического анализа
     .desc = Очки, которые могут сканировать химический состав раствора.
+ent-ClothingEyesVisorNinja = очки ниндзя
+    .desc = Усовершенствованные очки, защищающие глаза ниндзя от вспышек света.
+ent-ClothingEyesGlassesJamjar = толстые очки
+    .desc = Также известны как...

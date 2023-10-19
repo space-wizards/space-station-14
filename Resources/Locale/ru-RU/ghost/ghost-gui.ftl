@@ -11,6 +11,9 @@ ghost-gui-toggle-fov-name = Переключить поле зрения
 ghost-gui-toggle-fov-desc = Переключить поле зрения чтобы видеть то же, что и игроки.
 ghost-gui-toggle-fov-popup = Поле зрения было переключено.
 
+ghost-gui-toggle-hearing-popup-on = Теперь вы можете прослушивать все сообщения.
+ghost-gui-toggle-hearing-popup-off = Теперь вы можете слышать только радио и сообщения поблизости.
+
 ghost-target-window-title = Телепорт призрака
 ghost-target-window-current-button = Телепорт в: {$name}
 

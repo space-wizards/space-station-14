@@ -1,40 +1,40 @@
 <Document>
-# Gravitational Singularity Engine
+# Двигатель гравитационной сингулярности
 
-The Gravitational Singularity Engine can yield infinite power, with no fueling required. It can also destroy the whole station with equal ease. It uses a Particle Accelerator to fire high energy particles at a Singularity Generator to form a singularity. The singularity then pulses radiation which is absorbed by Radiation Collectors.
+Двигатель гравитационной сингулярности может выдавать бесконечную мощность без необходимости заправки. Он также может с такой же легкостью уничтожить всю станцию. Он использует ускоритель частиц для запуска частиц высокой энергии в генератор сингулярности, чтобы сформировать сингулярность. Затем сингулярность излучает излучение, которое поглощается коллекторами излучения.
 
-## Setting it up
+## Настройка
 
-The Gravitational Singularity Engine requires 4 subsystems to work properly:
+Для правильной работы двигателя гравитационной сингулярности требуется 4 подсистемы:
 
-## Gravitational singularity generator
+## Генератор гравитационной сингулярности
 <Box>
 <GuideEntityEmbed Entity="SingularityGenerator"/>
 </Box>
-The generator should be anchored at the center of the containment area since this is where the singularity will appear at.
+Генератор следует закрепить в центре зоны содержания, поскольку именно здесь появится сингулярность.
 
-## Containment field generators and emitters
+## Генераторы и излучатели поля сдерживания
 <Box>
 <GuideEntityEmbed Entity="Emitter"/>
 <GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
 <GuideEntityEmbed Entity="ContainmentField"/>
 </Box>
-The emitters connect to MV cables and fire lasers as long as they have power and are turned on.
-Fire emitters at containment field generators to activate them.
-If two containment field generators are active, in range and in the same cardinal axis, a containment field will appear.
-The containment field will repell the singularity, keeping it from escaping, and yield a little bit of power every time anything bounces off of them.
-Emitter lasers and containment field can cause damage, avoid touching them when active.
+Излучатели подключаются к кабелям среднего напряжения и лазерам, если на них есть питание и они включены.
+Огненные излучатели у генераторов сдерживающего поля, чтобы активировать их.
+Если активны два генератора поля сдерживания, находящиеся в радиусе действия и на одной кардинальной оси, появится поле сдерживания.
+Сдерживающее поле будет отталкивать сингулярность, не давая ей ускользнуть, и выделять немного энергии каждый раз, когда что-нибудь от них отскакивает.
+Лазеры-излучатели и сдерживающее поле могут нанести ущерб, поэтому не прикасайтесь к ним, когда они активны.
 
-## Radition collectors
+## Коллекционеры радиации
 <Box>
 <GuideEntityEmbed Entity="RadiationCollector"/>
 <GuideEntityEmbed Entity="PlasmaTank"/>
 </Box>
-They connect to HV cables and generate power from nearby radiation sources when turned on. 
-Radiation collectors require a tank full of gaseous plasma in order to operate.
-Continous radiation exposure will gradually convert the stored plasma into tritium, so replace depleted plasma tanks with fresh ones to maintain a high power output.
+Они подключаются к ВВ кабелям и при включении генерируют энергию от близлежащих источников излучения.
+Для работы коллекторов радиации требуется резервуар, полный газообразной плазмы.
+Постоянное радиационное воздействие постепенно преобразует хранящуюся плазму в тритий, поэтому замените истощенные резервуары с плазмой свежими, чтобы поддерживать высокую выходную мощность.
 
-## Particle accelerator
+## Ускоритель частиц
 
 <Box>
 <GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/>
@@ -56,25 +56,25 @@ Continous radiation exposure will gradually convert the stored plasma into triti
 <GuideEntityEmbed Entity="ParticleAcceleratorEmitterPort" Caption="Port Emitter"/>
 </Box>
 
-The Particle Accelerator (PA) is a multi-tile structure that launches accelerated particles from its emitters. Its emitters should always face the gravitational singularity generator.
-Some stations already have an unfinished PA. To complete, first ensure there is HV cable beneath the PA power box, anchor all parts, then add LV cable to each part.
+Ускоритель частиц (УЧ) — это многоячеечная структура, которая запускает ускоренные частицы из своих эмиттеров. Его излучатели всегда должны быть обращены к генератору гравитационной сингулярности.
+На некоторых станциях уже есть недостроенная ПА. Для завершения сначала убедитесь, что под блоком питания УЧ находится кабель высокого напряжения, закрепите все детали, а затем подключите кабель низкого напряжения к каждой части.
 <Box>
 <GuideEntityEmbed Entity="CableApcStack"/>
 </Box>
-Then use a screwdriver to screw back the panels.
-Scan parts using the PA control computer to check if it's operational. If it shows up as incomplete, examine for what's missing.
+Затем с помощью отвертки прикрутите панели.
+Сканируйте детали с помощью управляющего компьютера УЧ, чтобы проверить их работоспособность. Если он окажется неполным, проверьте, чего не хватает.
 <Box>
 <GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
 </Box>
 
-## Turing on the Gravitational Singularity Engine
+## Тьюринг о машине гравитационной сингулярности
 
-[color=#a4885c]Do not[/color] turn the PA on unless all other subsystems are working properly.
+[color=#a4885c]Не[/color] включайте УЧ, если все остальные подсистемы не работают должным образом.
 
-Turn power on using the PA control computer. Set strength to an appropiate level. Currently the only appropriate level is [color=#f0684d]1[/color], anything above that will ensure that singularity grows too strong to handle.
-The higher the output stength is set on PA control computer, the bigger the singularity will be.
+Включите питание с помощью компьютера управления УЧ. Установите силу на соответствующий уровень. В настоящее время единственным подходящим уровнем является [color=#f0684d]1[/color], все, что выше, приведет к тому, что сингулярность станет слишком сильной, чтобы с ней можно было справиться.
+Чем выше выходная мощность установлена на управляющем компьютере УЧ, тем больше будет сингулярность.
 
-The PA will now draw power from the power net and start firing particles at the Gravitational singularity generator.
+Теперь ПА будет получать энергию из энергосети и начнет стрелять частицами в генератор гравитационной сингулярности.
 
 <Box>
 <GuideEntityEmbed Entity="ParticlesProjectile" Caption=""/>
@@ -82,15 +82,15 @@ The PA will now draw power from the power net and start firing particles at the 
 <GuideEntityEmbed Entity="ParticlesProjectile" Caption=""/>
 </Box>
 
-A singularity will soon appear at the position of the Gravitational singularity generator.
+В месте расположения генератора гравитационной сингулярности вскоре появится сингулярность.
 <Box>
 <GuideEntityEmbed Entity="Singularity"/>
 </Box>
 
-If no particle is hitting the singularity generator, the singularity will start to slowly decay until it disappear.
+Если ни одна частица не попадает в генератор сингулярности, сингулярность начнет медленно затухать, пока не исчезнет.
 
-## Safety
-Singularity emits radiation around it, so always keep a distance. Consider getting radiation shielding gear beforehand. Seek medical attention if experiencing health issues.
+## Безопасность
+Сингулярность излучает вокруг себя радиацию, поэтому всегда держитесь на расстоянии. Подумайте заранее о приобретении средств защиты от радиации. Обратитесь за медицинской помощью, если у вас возникли проблемы со здоровьем.
 
 <Box>
 <GuideEntityEmbed Entity="ClothingOuterHardsuitEngineering"/>
@@ -102,5 +102,7 @@ Singularity emits radiation around it, so always keep a distance. Consider getti
 <GuideEntityEmbed Entity="GeigerCounter"/>
 </Box>
 
-A singularity might move around, but the containment field will repel it.
-If a singularity escapes its containment field, often referred to as a "singuloose," it will attract and then consume everything in its way.
+Сингулярность может двигаться, но сдерживающее поле будет е` отталкивать.
+Если сингулярность выходит за пределы своего сдерживающего поля, часто называемого «сингулясией», она притягивает, а затем поглощает все на своем пути.
+
+</Document>

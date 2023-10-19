@@ -1,33 +1,33 @@
 <Document>
-# Plant Genetics
-Like all other forms of life known to NanoTrasen, plants pass traits to offspring in their genes. By manipulating plant genetics, botanists can produce plant varieties with desirable mutations that increase plant health and yield.
+# Генетика растений
+Как и все другие формы жизни, известные NanoTrasen, растения передают признаки потомству в своих генах. Манипулируя генетикой растений, ботаники могут создавать сорта растений с желаемыми мутациями, которые улучшают здоровье растений и урожайность.
 
-## Traits
-The phenotype, or set of observable characteristics and traits of a plant, can be determined through careful observation and study. A few common traits include:
+## Черты
+Фенотип, или набор наблюдаемых характеристик и признаков растения, можно определить путем тщательного наблюдения и изучения. Несколько общих черт включают в себя:
 
-- [color=lightgreen]Bioluminescence[/color]: plants with this trait glow in the dark
-- [color=lightgreen]High yield[/color]: plants with this trait yield more fruit per harvest
-- [color=lightgreen]Less water[/color]: plants with this trait require less water than normal to grow
-- [color=lightgreen]Ligneous[/color]: plants with this trait require sharp tools to harvest
-- [color=lightgreen]Long life[/color]: plants with this trait live for more harvest cycles before dying
-- [color=lightgreen]Low light[/color]: plants with this trait need less light than normal to grow
-- [color=lightgreen]Pest resistance[/color]: plants with this trait are more resistant to pests
-- [color=lightgreen]Seedless[/color]: plants with this trait do not produce viable seeds
-- [color=lightgreen]Weed resistance[/color]: plants with this trait suppress weed growth
+- [color=lightgreen]Биолюминесценция[/color]: растения с этой чертой светятся в темноте.
+- [color=lightgreen]Высокая урожайность[/color]: растения с этой чертой дают больше плодов за урожай.
+- [color=lightgreen]Меньше воды[/color]: растениям с этим признаком для роста требуется меньше воды, чем обычно.
+- [color=lightgreen]Древесный[/color]: растения с этим признаком требуют острых инструментов для сбора урожая.
+- [color=lightgreen]Долгая жизнь[/color]: растения с этой чертой живут дольше, прежде чем погибнут.
+- [color=lightgreen]Низкое освещение[/color]: растениям с этой чертой для роста требуется меньше света, чем обычно.
+- [color=lightgreen]Устойчивость к вредителям[/color]: растения с этим признаком более устойчивы к вредителям.
+- [color=lightgreen]Бессемянные[/color]: растения с этим признаком не дают жизнеспособных семян.
+- [color=lightgreen]Сопротивление сорнякам[/color]: растения с этой чертой подавляют рост сорняков.
 
-You can determine the phenotype of a plant simply by growing them and observing them! This is how Gregor Mendel, father of genetics, studied them in 1866.
+Вы можете определить фенотип растения, просто выращивая его и наблюдая за ним! Именно так их изучал в 1866 году Грегор Мендель, отец генетики.
 
-## Mutations
-Plants treated with [color=cyan]unstable mutagen[/color] will experience random genetic mutations, which can alter their genes and result in changes to their traits. You can save the plants with mutations you want by harvesting their seeds.
+## Мутации
+Растения, обработанные [color=cyan]нестабильным мутагеном[/color], будут испытывать случайные генетические мутации, которые могут изменить их гены и привести к изменению их характеристик. Вы можете сохранить растения с желаемыми мутациями, собрав их семена.
 
-The more unstable mutagen you use, the more mutations you will get. Since many genes are vital to a plant's survival, most mutations will cause a plant to die.
+Чем более нестабильный мутаген вы используете, тем больше мутаций вы получите. Поскольку многие гены жизненно важны для выживания растения, большинство мутаций приводят к его гибели.
 
 <Box>
 <GuideEntityEmbed Entity="UnstableMutagenChemistryBottle"/>
 </Box>
 
-## Cross-Pollination
-You can use a [color=cyan]sterile swab[/color] to transfer pollen from one plant to another. Plants that are cross-pollinated have a chance to transfer traits. Be careful re-using swabs; pollen is sticky!
+## Перекрестное опыление
+Вы можете использовать [color=cyan]стерильный тампон[/color] для переноса пыльцы с одного растения на другое. Растения, которые подвергаются перекрестному опылению, имеют шанс передать признаки. Будьте осторожны при повторном использовании тампонов; пыльца липкая!
 
 <Box>
 <GuideEntityEmbed Entity="BoxMouthSwab"/>

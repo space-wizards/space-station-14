@@ -3,4 +3,10 @@ admin-verb-make-traitor = Превратить цель в агента синд
 admin-verb-make-zombie = Превратить цель в зомби.
 admin-verb-make-nuclear-operative = Превратить цель в ядерного оперативника.
 admin-verb-make-pirate = Превратить цель в пирата.
-admin-verb-make-space-ninja = Превратите цель в космического ниндзя. Обратите внимание, что вы должны включить правило игры «Предатель» для сводки итогов раунда, так как космический ниндзя использует его.
+admin-verb-make-head-rev = Превратите цель в главу-революционера.
+
+admin-verb-text-make-traitor = Сделать предателем
+admin-verb-text-make-zombie = Сделать зомби
+admin-verb-text-make-nuclear-operative = Сделать ядерным оперативником
+admin-verb-text-make-pirate = Сделать пиратом
+admin-verb-text-make-head-rev = Сделать Главой Революции

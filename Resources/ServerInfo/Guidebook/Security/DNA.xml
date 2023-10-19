@@ -1,30 +1,29 @@
 ﻿<Document>
-  # DNA and Fingerprints
+  # ДНК и отпечатки пальцев
 
-  ## How to get someone’s DNA?
+  ## Как получить чью-то ДНК?
 
-  You can scan blood puddles, vomit, glasses, bottles, cans and other liquid containers using the [color=#a4885c]forensic scanner[/color] to get DNA of any person.
+  Вы можете сканировать лужи крови, рвоту, стаканы, бутылки, банки и другие емкости с жидкостью с помощью [color=#a4885c]криминалистического сканера[/color], чтобы получить ДНК любого человека.
   <Box>
     <GuideEntityEmbed Entity="ForensicScanner"/>
   </Box>
-  So be careful before fighting with someone.
-  
-  Same scanner can also get fingerprint information about who touched pretty much any object. If the possible perpetrator was using gloves, then your scanner will print out which fibers were left on the crimescene.
+  Так что будьте осторожны, прежде чем ссориться с кем-то.
 
-  ## I got DNA. How do I recognize whose it is?
+  Тот же сканер может также получить информацию о отпечатках пальцев о том, кто прикасался практически к любому объекту. Если возможный преступник использовал перчатки, ваш сканер распечатает, какие волокна остались на месте преступления.
 
-  You can print the forensic information of the object you scanned so you never miss it. Now with the paper containing DNA you can simply find a [color=#a4885c]Station Records Computer[/color] and look for a person whose DNA matches. Same applies to finding whose fingerprint is is.
-  
-  ## Taking Fingerprints
-  It is also possible to take someones fingerprints while on scene if you make them take off their gloves and appy a forensic pad to their fingers. No need to run back to [color=#a4885c]Station Records Computer[/color] check if the butler did it!
-  
+  ## У меня есть ДНК. Как узнать, чье оно?
+
+  Вы можете распечатать криминалистическую информацию об отсканированном объекте, чтобы никогда ее не пропустить. Теперь, имея бумагу, содержащую ДНК, вы можете просто найти [color=#a4885c]Компьютер записей станции[/color] и найти человека, чья ДНК совпадает. То же самое относится и к выяснению того, чей это отпечаток пальца.
+
+  ## Снятие отпечатков пальцев
+  Также можно снять чьи-то отпечатки пальцев прямо на месте происшествия, если вы заставите их снять перчатки и приложить к пальцам судебно-медицинскую подушечку. Не нужно бежать обратно к [color=#a4885c]Станционному компьютеру записей[/color] и проверять, сделал ли это дворецкий!
   <GuideEntityEmbed Entity="ForensicPad"/>
-  
-  ## Fibers
-  Whenenever people wearing gloves touch anything on the station, they are bound to leave behind some fibers. This complicates things, but nothing is unsolvable for a real detective.
-  
-  There are up to [color=red]16[/color] different types of fibers possible. Can that stop you from solving the case?
-  
+
+  ## Волокна
+  Когда люди в перчатках прикасаются к чему-либо на станции, они обязательно оставляют после себя волокна. Это усложняет ситуацию, но для настоящего детектива нет ничего неразрешимого.
+
+  Возможно до [color=red]16[/color] различных типов волокон. Может ли это помешать вам раскрыть дело?
+
   <Box>
     <GuideEntityEmbed Entity="ComputerStationRecords"/>
   </Box>

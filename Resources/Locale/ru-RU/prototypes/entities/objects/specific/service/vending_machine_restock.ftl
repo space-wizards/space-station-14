@@ -72,3 +72,7 @@ ent-VendingMachineRestockHappyHonk = набор пополнения Хэппи 
     .suffix = { "" }
 ent-VendingMachineRestockChemVend = набор пополнения ХимТорг
     .desc = Коробка, наполненная химикатами и покрытая опасными на вид бриллиантами NFPA. Загрузите его в ХимТорг, чтобы начать.
+ent-VendingMachineRestockChefvend = набор пополнения ШевВенд
+    .desc = Пополните ШефВенд. Только больше не разбивайте яйца.
+ent-VendingMachineRestockCondimentStation = набор пополнения Островка соусов
+    .desc = Пополните станцию для приправ. Мммм, холодный соус.
