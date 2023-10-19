@@ -237,6 +237,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 
         // Sort found devices alphabetically (not by power usage; otherwise their position on the UI will shift)
         allEntries.Sort(AlphabeticalSort);
+        sourcesForFocus.Sort(AlphabeticalSort);
+        loadsForFocus.Sort(AlphabeticalSort);
 
         // Set the UI state
         _userInterfaceSystem.SetUiState(bui,

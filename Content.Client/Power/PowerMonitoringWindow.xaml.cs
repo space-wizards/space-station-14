@@ -26,7 +26,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     private EntityUid? _owner;
     private EntityUid? _trackedEntity;
-    private float? _nextScrollValue;
+    //private float? _nextScrollPosition;
 
     private Color _wallColor = new Color(102, 164, 217);
     private Color _tileColor = new Color(30, 57, 67);
@@ -115,7 +115,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             if (entry.Coordinates == null)
                 continue;
 
-            AddTrackedEntityToNavMap(_entManager.GetEntity(entry.NetEntity), _entManager.GetCoordinates(entry.Coordinates.Value), entry, useDarkColors);
+            AddTrackedEntityToNavMap(_entManager.GetEntity(entry.NetEntity), _entManager.GetCoordinates(entry.Coordinates.Value), useDarkColors);
         }
 
         // Draw the sources for the focused device
@@ -124,7 +124,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             if (source.Coordinates == null)
                 continue;
 
-            AddTrackedEntityToNavMap(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates.Value), source);
+            AddTrackedEntityToNavMap(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates.Value));
         }
 
         // Draw the loads for the focused device
@@ -133,7 +133,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             if (load.Coordinates == null)
                 continue;
 
-            AddTrackedEntityToNavMap(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates.Value), load);
+            AddTrackedEntityToNavMap(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates.Value));
         }
 
         // Show monitor location
@@ -169,7 +169,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         UpdateWarningLabel(flags);
     }
 
-    private void AddTrackedEntityToNavMap(EntityUid uid, EntityCoordinates coords, PowerMonitoringConsoleEntry entry, bool useDarkColors = false)
+    private void AddTrackedEntityToNavMap(EntityUid uid, EntityCoordinates coords, bool useDarkColors = false)
     {
         if (!NavMap.Visible)
             return;

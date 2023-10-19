@@ -3,6 +3,7 @@ using Content.Shared.Power;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 
@@ -12,6 +13,8 @@ public sealed partial class PowerMonitoringWindow
 {
     private SpriteSpecifier.Texture _sourceIcon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/PowerMonitoring/source_arrow.png"));
     private SpriteSpecifier.Texture _loadIconPath = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/PowerMonitoring/load_arrow.png"));
+
+    private bool _tryToScroll = false;
 
     private void UpdateAllConsoleEntries
         (BoxContainer masterContainer,
@@ -211,26 +214,30 @@ public sealed partial class PowerMonitoringWindow
         }
 
         // Get the scroll position of the selected entity on the selected button the UI
-        TryGetNextScrollValue(out _nextScrollValue);
+        _tryToScroll = true;
 
         // Request an update from the power monitoring system
         RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity));
         _updateTimer = 0f;
     }
 
-    private bool TryGetNextScrollValue(out float? nextScrollValue)
+    private bool TryGetNextScrollPosition([NotNullWhen(true)] out float? nextScrollPosition)
     {
-        nextScrollValue = null;
+        nextScrollPosition = null;
 
         var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
         if (scroll == null)
             return false;
 
         var container = scroll.Children.ElementAt(0) as BoxContainer;
-        if (container == null)
+        if (container == null || !container.Children.Any())
             return false;
 
-        nextScrollValue = 0;
+        // Exit if the heights of the children haven't been initialized yet
+        if (!container.Children.Any(x => x.Height > 0))
+            return false;
+
+        nextScrollPosition = 0;
 
         foreach (var control in container.Children)
         {
@@ -240,26 +247,37 @@ public sealed partial class PowerMonitoringWindow
             if (((PowerMonitoringWindowEntry) control).EntityUid == _trackedEntity)
                 return true;
 
-            nextScrollValue += control.Height;
+            nextScrollPosition += control.Height;
         }
 
         // Failed to find control
-        nextScrollValue = null;
+        nextScrollPosition = null;
 
         return false;
     }
 
     private void TryToScrollToFocus()
     {
-        if (_nextScrollValue != null)
+        if (!_tryToScroll)
+            return;
+
+        var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
+        if (scroll == null)
+            return;
+
+        var vScroll = scroll.GetVerticalScrollBar();
+        if (vScroll == null)
+            return;
+
+        if (TryGetNextScrollPosition(out float? nextScrollPosition))
         {
-            var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
-            if (scroll == null)
+            vScroll.ValueTarget = nextScrollPosition.Value;
+
+            if (MathHelper.CloseToPercent(vScroll.Value, vScroll.ValueTarget))
+            {
+                _tryToScroll = false;
                 return;
-
-            scroll.SetScrollValue(new Vector2(0, _nextScrollValue.Value));
-
-            _nextScrollValue = null;
+            }
         }
     }
 
