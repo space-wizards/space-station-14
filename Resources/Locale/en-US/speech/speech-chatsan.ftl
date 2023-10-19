@@ -108,3 +108,9 @@ chatsan-replacement-38 = motherfucker
 chatsan-word-39 = etc
 chatsan-word-40 = etc.
 chatsan-replacement-etcetera = etcetera
+
+chatsan-word-41 = fyi
+chatsan-replacement-41 = for your information
+
+chatsan-word-42 = wyd
+chatsan-replacement-42 = what you doing
