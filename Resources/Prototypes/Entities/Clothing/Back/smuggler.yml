@@ -14,67 +14,67 @@
     canCollide: false
     bodyType: Static
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi 
+    sprite: Clothing/Back/Satchels/smuggler.rsi
     state: icon
   - type: StorageFill
-    contents:       
-  #number after each group is potential max weight. If combined PMW is too high, it could result in an over-filled bag/error.  
+    contents:
+  #number after each group is potential max weight. If combined PMW is too high, it could result in an over-filled bag/error.
       - id: SpaceCash100
-        prob: 0.95  
-        orGroup: Generic1 
+        prob: 0.95
+        orGroup: Generic1
       - id: DrinkSpaceGlue
         prob: 0.05
-        maxAmount: 2  
-        orGroup: Generic1      
+        maxAmount: 2
+        orGroup: Generic1
       - id: DrinkSpaceLube
         prob: 0.05
-        maxAmount: 2  
-        orGroup: Generic1         
+        maxAmount: 2
+        orGroup: Generic1
       - id: CrazyGlue
         prob: 0.05
-        maxAmount: 2  
+        maxAmount: 2
         orGroup: Generic1
       - id: SpaceCash
         prob: 0.05
-        orGroup: Generic1  #10    
+        orGroup: Generic1  #10
 
       - id: SpaceCash100
-        prob: 0.90  
+        prob: 0.90
         orGroup: Generic3
       - id: WhoopieCushion
-        prob: 0.025   
-        orGroup: Generic3 
+        prob: 0.025
+        orGroup: Generic3
       - id: PlasticBanana
-        prob: 0.025 
-        maxAmount: 5  
-        orGroup: Generic3           
+        prob: 0.025
+        maxAmount: 5
+        orGroup: Generic3
       - id: PillSpaceDrugs
         prob: 0.025
-        maxAmount: 5  
-        orGroup: Generic3               
+        maxAmount: 5
+        orGroup: Generic3
       - id: StrangePill
         prob: 0.025
-        maxAmount: 5   
+        maxAmount: 5
         orGroup: Generic3
       - id: SpaceCash
         prob: 0.025
-        orGroup: Generic3  #25     
+        orGroup: Generic3  #25
 
       - id: SpaceCash100
-        prob: 0.85 
+        prob: 0.85
         orGroup: Clothing1
       #- id: ClothingHeadHatCatEars
-      #  prob: 0.15 
+      #  prob: 0.15
       #  orGroup: Clothing1
       - id: ClothingHeadHatOutlawHat
-        prob: 0.15 
-        orGroup: Clothing1             
+        prob: 0.15
+        orGroup: Clothing1
       - id: ClothingMaskItalianMoustache
-        prob: 0.15 
-        orGroup: Clothing1             
+        prob: 0.15
+        orGroup: Clothing1
       - id: ClothingHandsGlovesCombat
         prob: 0.15
-        orGroup: Clothing1          
+        orGroup: Clothing1
       - id: ClothingNeckScarfStripedSyndieRed
         prob: 0.15
         orGroup: Clothing1
@@ -99,7 +99,7 @@
         orGroup: Cannabis
       - id: GroundCannabis
         prob: 0.25
-        maxAmount: 15 
+        maxAmount: 15
         orGroup: Cannabis
       - id: SpaceCash
         prob: 0.25
@@ -167,65 +167,65 @@
         orGroup: Chems
       - id: SpaceCash
         prob: 0.05
-        orGroup: Chems #15  
+        orGroup: Chems #15
 
 - type: entity
   parent: ClothingBackpackSatchelSmuggler
   id: ClothingBackpackSatchelSmugglerTwo
   name: Smuggler's Satchel
-  suffix: No Map, Use Spawner 
+  suffix: No Map, Use Spawner
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi 
-    state: icon 
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
   - type: StorageFill
-    contents:     
+    contents:
 
       - id: SpaceCash100
-        prob: 0.90  
+        prob: 0.90
         orGroup: Generic4
       - id: GlowstickBase
         prob: 0.1
-        maxAmount: 5  
-        orGroup: Generic4               
+        maxAmount: 5
+        orGroup: Generic4
       - id: GlowstickRed
         prob: 0.1
-        maxAmount: 5  
-        orGroup: Generic4               
+        maxAmount: 5
+        orGroup: Generic4
       - id: GlowstickPurple
         prob: 0.1
-        maxAmount: 5  
-        orGroup: Generic4               
+        maxAmount: 5
+        orGroup: Generic4
       - id: GlowstickYellow
         prob: 0.1
-        maxAmount: 5  
-        orGroup: Generic4               
+        maxAmount: 5
+        orGroup: Generic4
       - id: GlowstickBlue
         prob: 0.1
-        maxAmount: 5  
+        maxAmount: 5
         orGroup: Generic4
       - id: SpaceCash
         prob: 0.1
         orGroup: Generic4  #25
 
       - id: SpaceCash100
-        prob: 0.85 
+        prob: 0.85
         orGroup: Clothing2
       - id: ClothingEyesGlassesOutlawGlasses
-        prob: 0.15 
-        orGroup: Clothing2          
+        prob: 0.15
+        orGroup: Clothing2
       - id: ClothingEyesChameleon
-        prob: 0.15 
+        prob: 0.15
         orGroup: Clothing2
       - id: ClothingEyesEyepatch
         prob: 0.15
         orGroup: Clothing2
       - id: ClothingHandsGlovesNitrile
         prob: 0.15
-        orGroup: Clothing2 
+        orGroup: Clothing2
       - id: SpaceCash
         prob: 0.15
-        orGroup: Clothing2  #5 
+        orGroup: Clothing2  #5
 
       - id: SpaceCash100
         prob: 0.90
@@ -311,10 +311,10 @@
       - id: DawInstrumentMachineCircuitboard
         prob: 0.05
         orGroup: Circuitboards
-      - id: GeneratorPlasmaMachineCircuitboard
+      - id: PortableGeneratorPacmanMachineCircuitboard
         prob: 0.05
         orGroup: Circuitboards
-      - id: GeneratorUraniumMachineCircuitboard
+      - id: PortableGeneratorSuperPacmanMachineCircuitboard
         prob: 0.05
         orGroup: Circuitboards
       - id: ReagentGrinderMachineCircuitboard
@@ -337,21 +337,21 @@
         orGroup: Circuitboards
       - id: SpaceCash
         prob: 0.05
-        orGroup: Circuitboards #5 
+        orGroup: Circuitboards #5
 
 - type: entity
   parent: ClothingBackpackSatchelSmuggler
   id: ClothingBackpackSatchelSmugglerThree
   name: Smuggler's Satchel
-  suffix: No Map, Use Spawner 
+  suffix: No Map, Use Spawner
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi 
-    state: icon 
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
   - type: StorageFill
     contents:
 
-      - id: SpaceCash100 
+      - id: SpaceCash100
         prob: 0.90
         orGroup: PresentsOrToys
       - id: PresentRandom
@@ -377,7 +377,7 @@
         prob: 0.01
         orGroup: PresentsOrToys #15
 
-      - id: SpaceCash100 
+      - id: SpaceCash100
         prob: 0.95
         orGroup: Instrument
       - id: SeashellInstrument
@@ -405,44 +405,44 @@
         prob: 0.05
         orGroup: Instrument #24
 
-      - id: SpaceCash100 
-        prob: 0.10  
+      - id: SpaceCash100
+        prob: 0.10
         orGroup: Cash
       - id: SpaceCash1000
         prob: 0.10
-        maxAmount: 4  
-        orGroup: Cash 
+        maxAmount: 4
+        orGroup: Cash
       - id: SpaceCash2500
-        prob: 0.05 
-        maxAmount: 4  
+        prob: 0.05
+        maxAmount: 4
         orGroup: Cash
       - id: SpaceCash5000
-        prob: 0.01 
-        maxAmount: 4  
+        prob: 0.01
+        maxAmount: 4
         orGroup: Cash
       - id: SpaceCash10000
-        prob: 0.005 
-        maxAmount: 4  
+        prob: 0.005
+        maxAmount: 4
         orGroup: Cash
       - id: SpaceCash1000000
         prob: 0.000001 #1:1,000,000 chance to win the lottery
       - id: SpaceCash
         prob: 0.01
-        orGroup: Cash #5      
+        orGroup: Cash #5
 
       - id: SpaceCash100
-        prob: 0.9875 
+        prob: 0.9875
         orGroup: Weapon
       - id: Katana
-        prob: 0.0125  
-        orGroup: Weapon 
+        prob: 0.0125
+        orGroup: Weapon
       - id: ThrowingStar
         prob: 0.0125
-        maxAmount: 5  
+        maxAmount: 5
         orGroup: Weapon
       - id: SpaceCash
         prob: 0.0125
-        orGroup: Weapon  #25   
+        orGroup: Weapon  #25
 
       - id: SpaceCash100
         prob: 0.95
@@ -465,29 +465,29 @@
         orGroup: Burger
       - id: SpaceCash
         prob: 0.05
-        orGroup: Burger #25            
+        orGroup: Burger #25
 
       - id: SpaceCash100
-        prob: 0.95  
+        prob: 0.95
         orGroup: Generic2
       - id: RemoteSignaller
-        prob: 0.05  
-        orGroup: Generic2     
+        prob: 0.05
+        orGroup: Generic2
       - id: PersonalAI
-        prob: 0.05  
-        orGroup: Generic2 
+        prob: 0.05
+        orGroup: Generic2
       - id: WeaponFlareGun
-        prob: 0.05  
-        orGroup: Generic2 
+        prob: 0.05
+        orGroup: Generic2
       - id: ModularReceiver
-        prob: 0.05  
-        orGroup: Generic2 
+        prob: 0.05
+        orGroup: Generic2
       - id: RifleStock
-        prob: 0.05  
+        prob: 0.05
         orGroup: Generic2
       - id: SpaceCash
         prob: 0.05
-        orGroup: Generic2  #10 
+        orGroup: Generic2  #10
 
       - id: SpaceCash100
         prob: 0.99
@@ -527,17 +527,17 @@
         orGroup: Keys
       - id: SpaceCash
         prob: 0.02
-        orGroup: Keys  #5  
+        orGroup: Keys  #5
 
 - type: entity
   parent: ClothingBackpackSatchelSmuggler
   id: ClothingBackpackSatchelSmugglerFour
   name: Smuggler's Satchel
-  suffix: No Map, Use Spawner 
+  suffix: No Map, Use Spawner
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi 
-    state: icon 
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
   - type: StorageFill
     contents:
 
@@ -743,7 +743,7 @@
         orGroup: Tools
       - id: WelderExperimental
         prob: 0.5
-        orGroup: Tools #10 
+        orGroup: Tools #10
 
 - type: entity
   id: RandomSatchel
@@ -753,7 +753,7 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Clothing/Back/Satchels/smuggler.rsi 
+      - sprite: Clothing/Back/Satchels/smuggler.rsi
         state: icon
   - type: RandomSpawner
     prototypes:
@@ -789,4 +789,4 @@
   - type: StorageFill
     contents:
       - id: SpaceCash10000
-        maxAmount: 4    
+        maxAmount: 4
