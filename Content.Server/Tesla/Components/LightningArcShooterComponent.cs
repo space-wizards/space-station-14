@@ -16,8 +16,14 @@ public sealed partial class LightningArcShooterComponent : Component
     public float ShootMaxInterval = 5.0f;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float ShootRange = 5f;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int ArcDepth = 1;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextShootTime;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ShootRange;
+    public string LightningPrototype = "Lightning";
 }
