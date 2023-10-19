@@ -5,7 +5,7 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
 
 - type: entity
   parent: BizarreDrinkGlassBase

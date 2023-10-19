@@ -7,7 +7,7 @@
   flavor: plasmshake
   color: "#ffDAff"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: plasmshake
   metabolisms:
     Poison:
@@ -40,7 +40,7 @@
   flavor: aos
   color: "#FF173D"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: aos
   metabolisms:
     Food:
@@ -69,7 +69,7 @@
   flavor: aos
   color: "#CC2B29"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: pps
   metabolisms:
     Food:
@@ -98,7 +98,7 @@
   flavor: icespirits
   color: "#A7BBBD"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: icespirits
   metabolisms:
     Poison:
@@ -115,7 +115,7 @@
   flavor: bloodbrandy
   color: "#E1432F"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: bloodbrandy
 
 - type: reagent
@@ -127,7 +127,7 @@
   flavor: scumslim
   color: "#586B00"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: scumslim
 
 - type: reagent
@@ -139,7 +139,7 @@
   flavor: meatwine
   color: "#645547"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: meatwine
   metabolisms:
     Drink:
@@ -157,7 +157,7 @@
   flavor: magmawhiskey
   color: "#D67F29"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: magmawhiskey
   metabolisms:
     Poison:
@@ -174,7 +174,7 @@
   flavor: shadowspirits
   color: "#461F55"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: shadowspirits
 
 - type: reagent
@@ -186,7 +186,7 @@
   flavor: radiumbeer
   color: "#AEEFFF"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: radiumbeer
   plantMetabolism:
   - !type:PlantAdjustMutationLevel
@@ -251,7 +251,7 @@
   flavor: ambrosia
   color: "#D8C524"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: ambrosia
   metabolisms:
     Medicine:
@@ -296,7 +296,7 @@
   flavor: protofuel
   color: "#C8FF77"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: protofuel
   metabolisms:
     Poison:
@@ -321,7 +321,7 @@
   flavor: ksspecialblend
   color: "#B7541A"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: ksspecialblend
     Drink:
       effects:
@@ -346,7 +346,7 @@
   flavor: miracleambrosia
   color: "#D8C524"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/bizarrecooking.rsi
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
     state: ambrosia
   metabolisms:
     Medicine:
