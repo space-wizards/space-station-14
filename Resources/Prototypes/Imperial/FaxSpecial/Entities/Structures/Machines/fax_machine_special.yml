@@ -6,14 +6,14 @@
   suffix: Centcom, codes, goal
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_cent.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_cent.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_cent.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_cent.rsi
     state: icon
   - type: FaxMachine
     name: "ЦК"
@@ -29,14 +29,14 @@
   suffix: Syndicate
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_syn.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_syn.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_syn.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_syn.rsi
     state: icon
   - type: FaxMachine
     name: "ERR*?*%!"
@@ -52,14 +52,14 @@
   suffix: NukeCodes, goal, codes
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_captain.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_captain.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_captain.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_captain.rsi
     state: icon
   - type: FaxMachine
     name: "Капитан"
@@ -74,14 +74,14 @@
   suffix: Bridge
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_bridge.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_bridge.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_bridge.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_bridge.rsi
     state: icon
   - type: FaxMachine
     name: "Мостик"
@@ -94,14 +94,14 @@
   suffix: CE
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_ce.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_ce.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_ce.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_ce.rsi
     state: icon
   - type: FaxMachine
     name: "СИ"
@@ -114,14 +114,14 @@
   suffix: CMO
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_cmo.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_cmo.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_cmo.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_cmo.rsi
     state: icon
   - type: FaxMachine
     name: "ГВ"
@@ -134,14 +134,14 @@
   suffix: HoP
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_hop.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_hop.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_hop.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_hop.rsi
     state: icon
   - type: FaxMachine
     name: "ГП"
@@ -154,14 +154,14 @@
   suffix: HoS
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_hos.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_hos.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_hos.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_hos.rsi
     state: icon
   - type: FaxMachine
     name: "ГСБ"
@@ -174,14 +174,14 @@
   suffix: RD
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_rd.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_rd.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_rd.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_rd.rsi
     state: icon
   - type: FaxMachine
     name: "НР"
@@ -194,14 +194,14 @@
   suffix: Quart
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_quart.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_quart.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_quart.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_quart.rsi
     state: icon
   - type: FaxMachine
     name: "КМ"
@@ -214,14 +214,14 @@
   suffix: IAA
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_iaa.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_iaa.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_iaa.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_iaa.rsi
     state: icon
   - type: FaxMachine
     name: "АВД"
@@ -234,14 +234,14 @@
   suffix: ERT
   components:
   - type: Sprite
-    sprite: Structures/Machines/fax_machine_special/fax_machine_ert.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_ert.rsi
     drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
       map: ["base"]
   - type: Icon
-    sprite: Structures/Machines/fax_machine_special/fax_machine_ert.rsi
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_ert.rsi
     state: icon
   - type: FaxMachine
     name: "ОБР"
