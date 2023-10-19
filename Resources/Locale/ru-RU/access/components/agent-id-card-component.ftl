@@ -4,7 +4,7 @@ agent-id-new =
         {CAPITALIZE($card)} дала {$number} {$number ->
         [one] новый доступ.
         [few] новых доступа.
-       *[other] новых доступо.
+       *[other] новых доступов.
     }.
 agent-id-card-current-name = Имя:
 agent-id-card-current-job = Должность:
