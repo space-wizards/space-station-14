@@ -1,14 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Mobs with crit states that die will now perform a visible emote., type: Add}
-  - {message: 'Succumbing in crit is more accessible, as it''s also an action now',
-    type: Tweak}
-  - {message: 'You can now say your ''last words'' while in crit. This action will
-      let you whisper up to 30 characters, then kill you.', type: Add}
-  - {message: You can fake your own deathgasp emote using an action in crit., type: Add}
-  id: 4525
-  time: '2023-08-12T05:56:34.0000000+00:00'
 - author: CrigCrag
   changes:
   - {message: Pickaxes are now 80 size and take more wood and steel to manufacture.,
@@ -2927,3 +2917,8 @@ Entries:
       the body., type: Fix}
   id: 5024
   time: '2023-10-18T21:15:17.0000000+00:00'
+- author: KingFroozy
+  changes:
+  - {message: Atmospheric technician's casual jumpsuit was resprited., type: Tweak}
+  id: 5025
+  time: '2023-10-19T03:44:58.0000000+00:00'
