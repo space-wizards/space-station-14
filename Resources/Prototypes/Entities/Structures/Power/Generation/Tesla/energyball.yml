@@ -5,10 +5,10 @@
   components: 
   - type: Clickable
   - type: AmbientSound
-    volume: -4
+    volume: 2
     range: 14
     sound:
-      path: /Audio/Effects/singularity.ogg #TO DO: new sound
+      path: /Audio/Effects/tesla.ogg
   - type: Physics
     bodyType: Dynamic
     bodyStatus: InAir
@@ -25,13 +25,14 @@
         mask:
         - None
         layer:
-        - MobMask
+        - AllMask 
   - type: TeslaEnergyBall
     energyLoss: 3
     spawnProto: TeslaMiniEnergyBall 
-    updateInterval: 0.5 # For testing, increase to 3.0
   - type: LightningArcShooter
     shootRange: 10
+    shootMinInterval: 2
+    shootMaxInterval: 5
   - type: ChasingWalk # To make the tesla move around.
     maxSpeed: 2.5
     minSpeed: 1.875
@@ -45,6 +46,7 @@
     follow: true
     location: tesla ball
   - type: Sprite
+    drawdepth: Effects
     sprite: Structures/Power/Generation/Tesla/energy_ball.rsi
     shader: unshaded
     layers:
@@ -57,10 +59,10 @@
   components: 
   - type: Clickable
   - type: AmbientSound
-    volume: -4
-    range: 14
+    volume: -2
+    range: 6
     sound:
-      path: /Audio/Effects/singularity.ogg #TO DO: new sound
+      path: /Audio/Effects/tesla.ogg
   - type: Physics
     bodyType: Dynamic
     bodyStatus: InAir
@@ -77,7 +79,7 @@
         mask:
         - None
         layer:
-        - MobMask
+        - AllMask   
   - type: ChasingWalk # To make the tesla move around.
     maxSpeed: 2.8
     minSpeed: 2
@@ -90,11 +92,12 @@
   - type: Appearance
   - type: LightningArcShooter
     maxLightningArc: 2
-    shootMinInterval: 2
-    shootMaxInterval: 8
+    shootMinInterval: 4
+    shootMaxInterval: 10
     shootRange: 3
   #- type: GuideHelp
   - type: Sprite
+    drawdepth: Effects
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
     shader: unshaded
     layers:

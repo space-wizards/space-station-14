@@ -17,10 +17,6 @@ public sealed class LightningTargetSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-
-        //SubscribeLocalEvent<LightningTargetComponent, damageeven
-        //SubscribeLocalEvent<TeslaEnergyBallComponent, StartCollideEvent>(HandleParticleCollide);
     }
 
 }

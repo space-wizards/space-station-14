@@ -51,6 +51,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
             //Sound here
             //Effect here
             EntityManager.QueueDeleteEntity(args.OtherEntity);
+            AdjustEnergy(uid, component, 50f);
         }
     }
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
