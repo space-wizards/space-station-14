@@ -33,14 +33,14 @@ namespace Content.Shared.StatusEffect
             var curTime = _gameTiming.CurTime;
             var enumerator = EntityQueryEnumerator<ActiveStatusEffectsComponent, StatusEffectsComponent>();
 
-            while (enumerator.MoveNext(out _, out var status))
+            while (enumerator.MoveNext(out var uid, out _, out var status))
             {
                 foreach (var state in status.ActiveEffects.ToArray())
                 {
                     // if we're past the end point of the effect
                     if (curTime > state.Value.Cooldown.Item2)
                     {
-                        TryRemoveStatusEffect(status.Owner, state.Key, status);
+                        TryRemoveStatusEffect(uid, state.Key, status);
                     }
                 }
             }
@@ -134,10 +134,7 @@ namespace Content.Shared.StatusEffect
                 // If they already have the comp, we just won't bother updating anything.
                 if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
                 {
-                    // Fuck this shit I hate it
                     var newComponent = (Component) _componentFactory.GetComponent(component);
-                    newComponent.Owner = uid;
-
                     EntityManager.AddComponent(uid, newComponent);
                     status.ActiveEffects[key].RelevantComponent = component;
                 }
