@@ -256,6 +256,27 @@ public sealed partial class PowerMonitoringWindow
         return false;
     }
 
+    private bool TryGetVerticalScrollbar(ScrollContainer scroll, [NotNullWhen(true)] out VScrollBar? vScrollBar)
+    {
+        vScrollBar = null;
+
+        foreach (var child in scroll.Children)
+        {
+            if (child is not VScrollBar)
+                continue;
+
+            var castChild = child as VScrollBar;
+
+            if (castChild != null)
+            {
+                vScrollBar = castChild;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void TryToScrollToFocus()
     {
         if (!_tryToScroll)
@@ -265,15 +286,14 @@ public sealed partial class PowerMonitoringWindow
         if (scroll == null)
             return;
 
-        var vScroll = scroll.GetVerticalScrollBar();
-        if (vScroll == null)
+        if (!TryGetVerticalScrollbar(scroll, out var vScrollbar))
             return;
 
         if (TryGetNextScrollPosition(out float? nextScrollPosition))
         {
-            vScroll.ValueTarget = nextScrollPosition.Value;
+            vScrollbar.ValueTarget = nextScrollPosition.Value;
 
-            if (MathHelper.CloseToPercent(vScroll.Value, vScroll.ValueTarget))
+            if (MathHelper.CloseToPercent(vScrollbar.Value, vScrollbar.ValueTarget))
             {
                 _tryToScroll = false;
                 return;
