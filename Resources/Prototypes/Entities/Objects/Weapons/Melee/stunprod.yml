@@ -12,6 +12,7 @@
   - type: Stunbaton
     energyPerUse: 70
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 9
