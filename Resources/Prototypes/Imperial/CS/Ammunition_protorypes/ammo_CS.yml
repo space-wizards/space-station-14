@@ -1,0 +1,52 @@
+#Base cartridge pistol
+- type: entity
+  id: CSBaseCartridge
+  name: cartridge (.35 auto)
+  suffix: CS
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+  - type: CartridgeAmmo
+    proto: BulletPistol
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 1 #Imperial price balance
+
+#Beretta
+- type: entity
+  id: CSCartridgePistolBeretta
+  name: cartridge (beretta)
+  suffix: CS
+  parent: CSBaseCartridge
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgePistol
+  - type: CartridgeAmmo
+    proto: BulletPistolBeretta #Piercing: 12
+
+#AWP
+- type: entity
+  id: CSCartridgeAWP
+  name: cartridge (AWP)
+  suffix: CS
+  parent: CSBaseCartridge
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
+  - type: Tag
+    tags:
+    - Cartridge
+    - CartridgeAntiMateriel
+  - type: CartridgeAmmo
+    proto: BulletAWP #Piercing: 100 + ignores armor

@@ -1,0 +1,138 @@
+# P90
+- type: entity
+  name: P90
+  parent: BaseWeaponSubMachineGun
+  id: CSWeaponP90
+  suffix: CS
+  description: Expensive, high quality, a lot of bullets... a lot of inconvenience.
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/p90.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    minAngle: 2
+    maxAngle: 16
+    fireRate: 10
+    angleIncrease: 5
+    andgleDecay: 19
+    selectedMode: FullAuto
+    availableMode:
+    - FullAuto
+    soundGunShot:
+      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: p90-Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGunP90
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: true
+  - type: Appearance
+
+# MP-5
+- type: entity
+  name: MP5
+  parent: BaseWeaponSubMachineGun
+  id: CSWeaponMP5
+  suffix: CS
+  description: Not the most reliable German. It happens?
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/mp5.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/SMG/mp5.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: mp5-Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGun
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+#bizon
+- type: entity
+  name: bizon
+  parent: BaseWeaponSubMachineGun
+  id: CSWeaponBizon
+  suffix: CS
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/bizon.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/SMG/mp5.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: bizon-Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGunBizon
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance

@@ -1,0 +1,28 @@
+#Beretta bullet
+- type: entity
+  id: BulletPistolBeretta
+  name: bullet (beretta)
+  suffix: CS
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 12
+
+#AWP bullet
+- type: entity
+  id: BulletAWP
+  name: bullet (AWP)
+  suffix: CS
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 100
+    ignoreResistances: true
+#  - type: StaminaDamageOnCollide
+#    damage: 35
