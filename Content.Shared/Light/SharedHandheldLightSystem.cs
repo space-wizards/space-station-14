@@ -52,10 +52,10 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (makeNoise)
         {
             var sound = component.Activated ? component.TurnOnSound : component.TurnOffSound;
-            _audio.PlayPvs(sound, component.Owner);
+            _audio.PlayPvs(sound, uid);
         }
 
-        Dirty(component);
+        Dirty(uid, component);
         UpdateVisuals(uid, component);
     }
 

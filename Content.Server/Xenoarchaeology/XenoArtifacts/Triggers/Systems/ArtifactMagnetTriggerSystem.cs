@@ -29,12 +29,11 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
         List<EntityUid> toActivate = new();
 
         //assume that there's more instruments than artifacts
-        foreach (var magboot in EntityQuery<MagbootsComponent>())
+        var query = EntityQueryEnumerator<MagbootsComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var magboot, out var magXform))
         {
             if (!magboot.On)
                 continue;
-
-            var magXform = Transform(magboot.Owner);
 
             foreach (var (trigger, xform) in artifactQuery)
             {
@@ -44,7 +43,7 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
                 if (distance > trigger.Range)
                     continue;
 
-                toActivate.Add(trigger.Owner);
+                toActivate.Add(uid);
             }
         }
 
@@ -59,7 +58,8 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
         var magXform = Transform(ev.Magnet);
 
         var toActivate = new List<EntityUid>();
-        foreach (var (artifact, xform) in EntityQuery<ArtifactMagnetTriggerComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<ArtifactMagnetTriggerComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var artifact, out var xform))
         {
             if (!magXform.Coordinates.TryDistance(EntityManager, xform.Coordinates, out var distance))
                 continue;
@@ -67,7 +67,7 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
             if (distance > artifact.Range)
                 continue;
 
-            toActivate.Add(artifact.Owner);
+            toActivate.Add(uid);
         }
 
         foreach (var a in toActivate)

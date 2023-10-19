@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Decals;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
@@ -5,8 +6,8 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Shared.Chunking;
 
@@ -87,10 +88,12 @@ public sealed class ChunkingSystem : EntitySystem
 
             var pos = _transform.GetWorldPosition(xform);
             var bounds = _baseViewBounds.Translated(pos).Enlarged(viewEnlargement);
+            var grids = new List<Entity<MapGridComponent>>();
+            _mapManager.FindGridsIntersecting(xform.MapID, bounds, ref grids, true);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, bounds, true))
+            foreach (var grid in grids)
             {
-                var netGrid = GetNetEntity(grid.Owner);
+                var netGrid = GetNetEntity(grid);
 
                 if (!chunks.TryGetValue(netGrid, out var set))
                 {
@@ -98,7 +101,7 @@ public sealed class ChunkingSystem : EntitySystem
                     DebugTools.Assert(set.Count == 0);
                 }
 
-                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.Owner).TransformBox(bounds), chunkSize);
+                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid).TransformBox(bounds), chunkSize);
 
                 while (enumerator.MoveNext(out var indices))
                 {

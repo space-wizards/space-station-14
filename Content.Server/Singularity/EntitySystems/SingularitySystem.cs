@@ -1,15 +1,13 @@
-using Robust.Shared.GameStates;
-using Robust.Shared.Player;
-using Robust.Shared.Timing;
-using Robust.Server.GameStates;
-
-using Content.Shared.Singularity.Components;
-using Content.Shared.Singularity.EntitySystems;
-using Content.Shared.Singularity.Events;
-
 using Content.Server.Physics.Components;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.Events;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
+using Content.Shared.Singularity.Events;
+using Robust.Server.GameStates;
+using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -75,11 +73,12 @@ public sealed class SingularitySystem : SharedSingularitySystem
         if(!_timing.IsFirstTimePredicted)
             return;
 
-        foreach(var singularity in EntityManager.EntityQuery<SingularityComponent>())
+        var query = EntityQueryEnumerator<SingularityComponent>();
+        while (query.MoveNext(out var uid, out var singularity))
         {
             var curTime = _timing.CurTime;
             if (singularity.NextUpdateTime <= curTime)
-                Update(singularity.Owner, curTime - singularity.LastUpdateTime, singularity);
+                Update(uid, curTime - singularity.LastUpdateTime, singularity);
         }
     }
 
@@ -129,14 +128,15 @@ public sealed class SingularitySystem : SharedSingularitySystem
             return;
 
         singularity.Energy = value;
-        SetLevel(uid, value switch {
-                >= 2400 => 6,
-                >= 1600 => 5,
-                >= 900 => 4,
-                >= 300 => 3,
-                >= 200 => 2,
-                > 0 => 1,
-                _ => 0
+        SetLevel(uid, value switch
+        {
+            >= 2400 => 6,
+            >= 1600 => 5,
+            >= 900 => 4,
+            >= 300 => 3,
+            >= 200 => 2,
+            > 0 => 1,
+            _ => 0
         }, singularity);
     }
 
@@ -204,9 +204,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.Play(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+            _audio.Play(comp.FormationSound, Filter.Pvs(uid), uid, true);
 
-        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(uid), uid, true);
         UpdateSingularityLevel(uid, comp);
     }
 
@@ -236,7 +236,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
-            _audio.Play(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+            _audio.Play(comp.DissipationSound, Filter.Pvs(uid), uid, true);
     }
 
     /// <summary>
@@ -283,7 +283,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         // Should be slightly more efficient than checking literally everything we consume for a singularity component and doing the reverse.
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
         {
-            AdjustEnergy(singulo.Owner, comp.Energy, singularity: singulo);
+            AdjustEnergy(uid, comp.Energy, singularity: singulo);
             SetEnergy(uid, 0.0f, comp);
         }
     }
