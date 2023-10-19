@@ -56,7 +56,7 @@ public abstract class SharedActionsSystem : EntitySystem
         throw new NotImplementedException();
         //foreach (var actionEntity in component.Actions)
         //{
-        //    SetCooldown(actionEntity, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
+        //    SetCooldown(actionEntity, TimeSpan.Zero, GameTiming.CurTime);
         //}
     }
 
