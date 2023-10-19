@@ -17,6 +17,7 @@ public sealed class RulesSystem : EntitySystem
 
     public bool IsTrue(EntityUid uid, RulesPrototype rules)
     {
+        var inRange = new HashSet<Entity<IComponent>>();
         foreach (var rule in rules.Rules)
         {
             switch (rule)
@@ -114,9 +115,9 @@ public sealed class RulesSystem : EntitySystem
 
                     foreach (var compType in nearbyComps.Components.Values)
                     {
-                        // TODO: Update this when we get the callback version
-                        foreach (var comp in _lookup.GetComponentsInRange(compType.Component.GetType(), xform.MapID,
-                                     worldPos, nearbyComps.Range))
+                        inRange.Clear();
+                        _lookup.GetEntitiesInRange(compType.Component.GetType(), xform.MapID, worldPos, nearbyComps.Range, inRange);
+                        foreach (var comp in inRange)
                         {
                             if (nearbyComps.Anchored &&
                                 (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||

@@ -210,15 +210,6 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(EntityUid origin, IComponent other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
-        {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
-            var otherPos = entMan.GetComponent<TransformComponent>(other.Owner).MapPosition;
-
-            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
-        }
-
         public static bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();

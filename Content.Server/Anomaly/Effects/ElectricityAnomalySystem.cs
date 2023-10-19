@@ -31,9 +31,8 @@ public sealed class ElectricityAnomalySystem : EntitySystem
     {
         var range = component.MaxElectrocuteRange * args.Stability;
         var xform = Transform(uid);
-        foreach (var comp in _lookup.GetComponentsInRange<MobStateComponent>(xform.MapPosition, range))
+        foreach (var (ent, comp) in _lookup.GetEntitiesInRange<MobStateComponent>(xform.MapPosition, range))
         {
-            var ent = comp.Owner;
             _lightning.ShootLightning(uid, ent);
         }
     }
@@ -80,10 +79,8 @@ public sealed class ElectricityAnomalySystem : EntitySystem
             var damage = (int) (elec.MaxElectrocuteDamage * anom.Severity);
             var duration = elec.MaxElectrocuteDuration * anom.Severity;
 
-            foreach (var comp in _lookup.GetComponentsInRange<StatusEffectsComponent>(xform.MapPosition, range))
+            foreach (var (ent, comp) in _lookup.GetEntitiesInRange<StatusEffectsComponent>(xform.MapPosition, range))
             {
-                var ent = comp.Owner;
-
                 _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
             }
         }
