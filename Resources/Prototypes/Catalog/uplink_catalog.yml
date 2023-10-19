@@ -189,7 +189,7 @@
   description: uplink-c4-desc
   productEntity: C4
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkExplosives
 
@@ -214,7 +214,7 @@
   description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
-    Telecrystal: 20
+    Telecrystal: 12 #you're buying bulk so its a 25% discount
   categories:
   - UplinkExplosives
 
