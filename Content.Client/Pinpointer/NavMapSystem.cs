@@ -62,7 +62,7 @@ public sealed class NavMapOverlay : Overlay
 
         foreach (var grid in _grids)
         {
-            if (!query.TryGetComponent(grid.Owner, out var navMap) || !xformQuery.TryGetComponent(grid.Owner, out var xform))
+            if (!query.TryGetComponent(grid, out var navMap) || !xformQuery.TryGetComponent(grid.Owner, out var xform))
                 continue;
 
             // TODO: Faster helper method

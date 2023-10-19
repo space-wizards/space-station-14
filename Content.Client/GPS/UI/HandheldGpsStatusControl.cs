@@ -39,7 +39,7 @@ public sealed class HandheldGpsStatusControl : Control
     private void UpdateGpsDetails()
     {
         var posText = "Error";
-        if (_entMan.TryGetComponent(_parent.Owner, out TransformComponent? transComp))
+        if (_entMan.TryGetComponent(_parent, out TransformComponent? transComp))
         {
             var pos =  transComp.MapPosition;
             var x = (int) pos.X;

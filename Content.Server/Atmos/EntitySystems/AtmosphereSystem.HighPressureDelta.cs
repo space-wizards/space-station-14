@@ -120,7 +120,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             // Used by ExperiencePressureDifference to correct push/throw directions from tile-relative to physics world.
-            var gridWorldRotation = xforms.GetComponent(gridAtmosphere.Owner).WorldRotation;
+            var gridWorldRotation = xforms.GetComponent(gridAtmosphere).WorldRotation;
 
             // If we're using monstermos, smooth out the yeet direction to follow the flow
             if (MonstermosEqualization)

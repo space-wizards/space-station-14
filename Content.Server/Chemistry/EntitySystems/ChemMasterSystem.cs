@@ -127,10 +127,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void TransferReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
         {
-            var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
+            var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
             if (container is null ||
                 !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution) ||
-                !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
+                !_solutionContainerSystem.TryGetSolution(chemMaster, SharedChemMaster.BufferSolutionName, out var bufferSolution))
             {
                 return;
             }
@@ -155,14 +155,14 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (fromBuffer)
             {
-                if (_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
+                if (_solutionContainerSystem.TryGetSolution(chemMaster, SharedChemMaster.BufferSolutionName, out var bufferSolution))
                     bufferSolution.RemoveReagent(id, amount);
                 else
                     return;
             }
             else
             {
-                var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
+                var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
                 if (container is not null &&
                     _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
                 {
@@ -178,7 +178,7 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnCreatePillsMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePillsMessage message)
         {
             var user = message.Session.AttachedEntity;
-            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !TryComp(container, out StorageComponent? storage)
                 || storage.Container is null)
@@ -240,7 +240,7 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
         {
             var user = message.Session.AttachedEntity;
-            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+            var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !_solutionContainerSystem.TryGetSolution(
                     container, SharedChemMaster.BottleSolutionName, out var solution))
@@ -288,7 +288,7 @@ namespace Content.Server.Chemistry.EntitySystems
             outputSolution = null;
 
             if (!_solutionContainerSystem.TryGetSolution(
-                    chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var solution))
+                    chemMaster, SharedChemMaster.BufferSolutionName, out var solution))
             {
                 return false;
             }
@@ -314,7 +314,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(Entity<ChemMasterComponent> chemMaster)
         {
-            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster, AudioParams.Default.WithVolume(-2f));
         }
 
         private ContainerInfo? BuildInputContainerInfo(EntityUid? container)

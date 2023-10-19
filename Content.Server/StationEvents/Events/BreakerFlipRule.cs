@@ -45,7 +45,7 @@ public sealed class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponen
 
         for (var i = 0; i < toDisable; i++)
         {
-            _apcSystem.ApcToggleBreaker(stationApcs[i].Owner, stationApcs[i]);
+            _apcSystem.ApcToggleBreaker(stationApcs[i], stationApcs[i]);
         }
     }
 }

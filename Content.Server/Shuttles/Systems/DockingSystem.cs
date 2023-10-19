@@ -448,10 +448,10 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         private void TryDock(EntityUid dockAUid, DockingComponent dockA, Entity<DockingComponent> dockB)
         {
-            if (!CanDock(dockAUid, dockB.Owner, dockA, dockB))
+            if (!CanDock(dockAUid, dockB, dockA, dockB))
                 return;
 
-            Dock(dockAUid, dockA, dockB.Owner, dockB);
+            Dock(dockAUid, dockA, dockB, dockB);
         }
 
         public void Undock(EntityUid dockUid, DockingComponent dock)

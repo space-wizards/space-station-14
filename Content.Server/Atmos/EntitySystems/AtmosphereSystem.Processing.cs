@@ -368,7 +368,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                RaiseLocalEvent(device.Owner, new AtmosDeviceUpdateEvent(RealAtmosTime()));
+                RaiseLocalEvent(device, new AtmosDeviceUpdateEvent(RealAtmosTime()));
                 device.Comp.LastProcess = time;
 
                 if (number++ < LagCheckIterations)

@@ -40,17 +40,17 @@ namespace Content.Server.Light.EntitySystems
 
             foreach (var match in _litMatches)
             {
-                if (match.Comp.CurrentState != SmokableState.Lit || Paused(match.Owner) || match.Comp.Deleted)
+                if (match.Comp.CurrentState != SmokableState.Lit || Paused(match) || match.Comp.Deleted)
                     continue;
 
-                var xform = Transform(match.Owner);
+                var xform = Transform(match);
 
                 if (xform.GridUid is not {} gridUid)
                     return;
 
-                var position = _transformSystem.GetGridOrMapTilePosition(match.Owner, xform);
+                var position = _transformSystem.GetGridOrMapTilePosition(match, xform);
 
-                _atmosphereSystem.HotspotExpose(gridUid, position, 400, 50, match.Owner, true);
+                _atmosphereSystem.HotspotExpose(gridUid, position, 400, 50, match, true);
             }
         }
 

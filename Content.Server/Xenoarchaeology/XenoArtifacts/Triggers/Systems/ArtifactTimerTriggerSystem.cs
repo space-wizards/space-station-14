@@ -38,7 +38,7 @@ public sealed class ArtifactTimerTriggerSystem : EntitySystem
 
         foreach (var a in toUpdate)
         {
-            _artifactSystem.TryActivateArtifact(a.Owner, null, a);
+            _artifactSystem.TryActivateArtifact(a, null, a);
         }
     }
 }

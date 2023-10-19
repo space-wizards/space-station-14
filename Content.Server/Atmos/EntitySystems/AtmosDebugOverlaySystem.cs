@@ -169,7 +169,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
                     }
 
-                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(GetNetEntity(grid.Owner), baseTile, debugOverlayContent), session.ConnectedClient);
+                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(GetNetEntity(grid), baseTile, debugOverlayContent), session.ConnectedClient);
                 }
             }
         }

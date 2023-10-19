@@ -118,7 +118,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             var time = _gameTiming.CurTime;
             foreach (var device in _joinedDevices)
             {
-                RaiseLocalEvent(device.Owner, new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime));
+                RaiseLocalEvent(device, new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime));
                 device.Comp.LastProcess = time;
             }
         }

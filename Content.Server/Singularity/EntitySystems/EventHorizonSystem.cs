@@ -310,7 +310,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         foreach (var grid in grids)
         {
             // TODO: Remover grid.Owner when this iterator returns entityuids as well.
-            AttemptConsumeTiles(uid, grid.Comp.GetTilesIntersecting(circle), grid.Owner, grid, eventHorizon);
+            AttemptConsumeTiles(uid, grid.Comp.GetTilesIntersecting(circle), grid, grid, eventHorizon);
         }
     }
 

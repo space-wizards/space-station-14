@@ -159,10 +159,10 @@ public class DockingControl : Control
                 continue;
 
             // Draw the fixtures before drawing any docks in range.
-            if (!_entManager.TryGetComponent<FixturesComponent>(grid.Owner, out var gridFixtures))
+            if (!_entManager.TryGetComponent<FixturesComponent>(grid, out var gridFixtures))
                 continue;
 
-            var gridMatrix = xformQuery.GetComponent(grid.Owner).WorldMatrix;
+            var gridMatrix = xformQuery.GetComponent(grid).WorldMatrix;
 
             Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
 
@@ -209,7 +209,7 @@ public class DockingControl : Control
             }
 
             // Draw any docks on that grid
-            if (Docks.TryGetValue(_entManager.GetNetEntity(grid.Owner), out var gridDocks))
+            if (Docks.TryGetValue(_entManager.GetNetEntity(grid), out var gridDocks))
             {
                 foreach (var dock in gridDocks)
                 {

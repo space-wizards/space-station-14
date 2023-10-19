@@ -79,7 +79,7 @@ public sealed class RulesSystem : EntitySystem
                     {
                         if (!_reader.AreAccessTagsAllowed(access.Access, comp) ||
                             access.Anchored &&
-                            (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                            (!xformQuery.TryGetComponent(comp, out var compXform) ||
                              !compXform.Anchored))
                         {
                             continue;
@@ -120,7 +120,7 @@ public sealed class RulesSystem : EntitySystem
                         foreach (var comp in inRange)
                         {
                             if (nearbyComps.Anchored &&
-                                (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                                (!xformQuery.TryGetComponent(comp, out var compXform) ||
                                  !compXform.Anchored))
                             {
                                 continue;

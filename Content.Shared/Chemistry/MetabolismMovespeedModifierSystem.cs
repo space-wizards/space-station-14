@@ -52,9 +52,9 @@ namespace Content.Shared.Chemistry
                     continue;
 
                 _components.RemoveAt(i);
-                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(metabolism.Owner);
+                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(metabolism);
 
-                _movespeed.RefreshMovementSpeedModifiers(metabolism.Owner);
+                _movespeed.RefreshMovementSpeedModifiers(metabolism);
             }
         }
     }

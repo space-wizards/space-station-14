@@ -332,7 +332,7 @@ namespace Content.Client.IconSmoothing
             if ((dirs & CardinalConnectDirs.West) != 0x0)
                 directions |= DirectionFlag.West;
 
-            CalculateEdge(sprite.Owner, directions, sprite);
+            CalculateEdge(sprite, directions, sprite);
         }
 
         private bool MatchingEntity(IconSmoothComponent smooth, AnchoredEntitiesEnumerator candidates, EntityQuery<IconSmoothComponent> smoothQuery)
@@ -381,7 +381,7 @@ namespace Content.Client.IconSmoothing
             if ((cornerNW & cornerSW) != CornerFill.None)
                 directions |= DirectionFlag.West;
 
-            CalculateEdge(spriteEnt.Owner, directions, sprite);
+            CalculateEdge(spriteEnt, directions, sprite);
         }
 
         private (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(MapGridComponent grid, IconSmoothComponent smooth, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)

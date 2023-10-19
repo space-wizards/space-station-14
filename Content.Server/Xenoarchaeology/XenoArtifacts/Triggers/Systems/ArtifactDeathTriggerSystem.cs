@@ -35,7 +35,7 @@ public sealed class ArtifactDeathTriggerSystem : EntitySystem
 
         foreach (var a in toActivate)
         {
-            _artifact.TryActivateArtifact(a.Owner);
+            _artifact.TryActivateArtifact(a);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverConnected(Entity<ApcPowerProviderComponent> provider, ref ExtensionCableSystem.ReceiverConnectedEvent args)
         {
-            if (EntityManager.TryGetComponent(args.Receiver.Owner, out ApcPowerReceiverComponent? receiver))
+            if (EntityManager.TryGetComponent(args.Receiver, out ApcPowerReceiverComponent? receiver))
             {
                 provider.Comp.AddReceiver(receiver);
             }
@@ -101,7 +101,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverDisconnected(EntityUid uid, ApcPowerProviderComponent provider, ExtensionCableSystem.ReceiverDisconnectedEvent args)
         {
-            if (EntityManager.TryGetComponent(args.Receiver.Owner, out ApcPowerReceiverComponent? receiver))
+            if (EntityManager.TryGetComponent(args.Receiver, out ApcPowerReceiverComponent? receiver))
             {
                 provider.RemoveReceiver(receiver);
             }

@@ -51,7 +51,7 @@ public sealed partial class SalvageSystem
 
     private void UpdateConsole(Entity<SalvageExpeditionConsoleComponent> component)
     {
-        var station = _station.GetOwningStation(component.Owner);
+        var station = _station.GetOwningStation(component);
         SalvageExpeditionConsoleState state;
 
         if (TryComp<SalvageExpeditionDataComponent>(station, out var dataComponent))
@@ -63,6 +63,6 @@ public sealed partial class SalvageSystem
             state = new SalvageExpeditionConsoleState(TimeSpan.Zero, false, true, 0, new List<SalvageMissionParams>());
         }
 
-        _ui.TrySetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);
+        _ui.TrySetUiState(component, SalvageConsoleUiKey.Expedition, state);
     }
 }

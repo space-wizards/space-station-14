@@ -160,11 +160,11 @@ public sealed class AtmosMonitorSystem : EntitySystem
         {
             if (!args.Powered)
             {
-                _atmosDeviceSystem.LeaveAtmosphere((ent.Owner, atmosDeviceComponent));
+                _atmosDeviceSystem.LeaveAtmosphere((ent, atmosDeviceComponent));
             }
             else
             {
-                _atmosDeviceSystem.JoinAtmosphere((ent.Owner, atmosDeviceComponent));
+                _atmosDeviceSystem.JoinAtmosphere((ent, atmosDeviceComponent));
                 Alert(ent, ent.Comp.LastAlarmState);
             }
         }

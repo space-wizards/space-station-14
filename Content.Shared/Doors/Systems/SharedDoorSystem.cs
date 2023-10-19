@@ -602,7 +602,7 @@ public abstract class SharedDoorSystem : EntitySystem
             {
                 // If something bumped into us during closing then start to re-open, otherwise, remove it from active.
                 _activeDoors.Remove(ent);
-                CheckDoorBump((ent.Owner, door, doorBody));
+                CheckDoorBump((ent, door, doorBody));
             }
         }
     }

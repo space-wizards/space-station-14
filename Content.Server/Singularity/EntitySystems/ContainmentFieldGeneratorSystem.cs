@@ -126,14 +126,14 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         generator.Comp.Enabled = true;
         ChangeFieldVisualizer(generator);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), generator.Owner);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), generator);
     }
 
     private void TurnOff(Entity<ContainmentFieldGeneratorComponent> generator)
     {
         generator.Comp.Enabled = false;
         ChangeFieldVisualizer(generator);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), generator.Owner);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), generator);
     }
 
     private void OnComponentRemoved(Entity<ContainmentFieldGeneratorComponent> generator, ref ComponentRemove args)
@@ -347,7 +347,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         foreach (var (_, generators) in generator.Comp.Connections)
         {
             var gen1ParentGrid = xFormQuery.GetComponent(generator).ParentUid;
-            var gent2ParentGrid = xFormQuery.GetComponent(generators.Item1.Owner).ParentUid;
+            var gent2ParentGrid = xFormQuery.GetComponent(generators.Item1).ParentUid;
 
             if (gen1ParentGrid != gent2ParentGrid)
                 RemoveConnections(generator);

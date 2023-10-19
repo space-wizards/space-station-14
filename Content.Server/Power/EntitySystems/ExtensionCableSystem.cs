@@ -76,7 +76,7 @@ namespace Content.Server.Power.EntitySystems
                 receiver.Comp.Provider?.LinkedReceivers.Remove(receiver);
                 receiver.Comp.Provider = provider;
                 provider.LinkedReceivers.Add(receiver);
-                RaiseLocalEvent(receiver.Owner, new ProviderConnectedEvent(provider), broadcast: false);
+                RaiseLocalEvent(receiver, new ProviderConnectedEvent(provider), broadcast: false);
                 RaiseLocalEvent(uid, new ReceiverConnectedEvent(receiver), broadcast: false);
             }
         }

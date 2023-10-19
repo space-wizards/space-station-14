@@ -59,16 +59,16 @@ namespace Content.Server.Chemistry.EntitySystems
         public void Start(Entity<VaporComponent> vapor, TransformComponent vaporXform, Vector2 dir, float speed, MapCoordinates target, float aliveTime, EntityUid? user = null)
         {
             vapor.Comp.Active = true;
-            var despawn = EnsureComp<TimedDespawnComponent>(vapor.Owner);
+            var despawn = EnsureComp<TimedDespawnComponent>(vapor);
             despawn.Lifetime = aliveTime;
 
             // Set Move
-            if (EntityManager.TryGetComponent(vapor.Owner, out PhysicsComponent? physics))
+            if (EntityManager.TryGetComponent(vapor, out PhysicsComponent? physics))
             {
                 _physics.SetLinearDamping(physics, 0f);
                 _physics.SetAngularDamping(physics, 0f);
 
-                _throwing.TryThrow(vapor.Owner, dir, speed, user: user);
+                _throwing.TryThrow(vapor, dir, speed, user: user);
 
                 var distance = (target.Position - vaporXform.WorldPosition).Length();
                 var time = (distance / physics.LinearVelocity.Length());
@@ -83,13 +83,13 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, VaporComponent.SolutionName,
+            if (!_solutionContainerSystem.TryGetSolution(vapor, VaporComponent.SolutionName,
                 out var vaporSolution))
             {
                 return false;
             }
 
-            return _solutionContainerSystem.TryAddSolution(vapor.Owner, vaporSolution, solution);
+            return _solutionContainerSystem.TryAddSolution(vapor, vaporSolution, solution);
         }
 
         public override void Update(float frameTime)

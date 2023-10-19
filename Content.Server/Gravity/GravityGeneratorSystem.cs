@@ -206,7 +206,7 @@ namespace Content.Server.Gravity
                 return;
 
             UpdatePowerState(ent, powerReceiver);
-            UpdateState((ent.Owner, ent.Comp, powerReceiver));
+            UpdateState((ent, ent.Comp, powerReceiver));
         }
 
         private void OnInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)
@@ -264,28 +264,28 @@ namespace Content.Server.Gravity
 
         private void MakeBroken(Entity<GravityGeneratorComponent> ent, AppearanceComponent? appearance)
         {
-            _ambientSoundSystem.SetAmbience(ent.Owner, false);
+            _ambientSoundSystem.SetAmbience(ent, false);
 
             _appearance.SetData(ent, GravityGeneratorVisuals.State, GravityGeneratorStatus.Broken);
         }
 
         private void MakeUnpowered(Entity<GravityGeneratorComponent> ent, AppearanceComponent? appearance)
         {
-            _ambientSoundSystem.SetAmbience(ent.Owner, false);
+            _ambientSoundSystem.SetAmbience(ent, false);
 
             _appearance.SetData(ent, GravityGeneratorVisuals.State, GravityGeneratorStatus.Unpowered, appearance);
         }
 
         private void MakeOff(Entity<GravityGeneratorComponent> ent, AppearanceComponent? appearance)
         {
-            _ambientSoundSystem.SetAmbience(ent.Owner, false);
+            _ambientSoundSystem.SetAmbience(ent, false);
 
             _appearance.SetData(ent, GravityGeneratorVisuals.State, GravityGeneratorStatus.Off, appearance);
         }
 
         private void MakeOn(Entity<GravityGeneratorComponent> ent, AppearanceComponent? appearance)
         {
-            _ambientSoundSystem.SetAmbience(ent.Owner, true);
+            _ambientSoundSystem.SetAmbience(ent, true);
 
             _appearance.SetData(ent, GravityGeneratorVisuals.State, GravityGeneratorStatus.On, appearance);
         }

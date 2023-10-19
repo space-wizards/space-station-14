@@ -120,7 +120,7 @@ namespace Content.Server.Solar.EntitySystems
 
         private void UpdatePanelCoverage(Entity<SolarPanelComponent> panel)
         {
-            EntityUid entity = panel.Owner;
+            var entity = panel.Owner;
             var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
             // So apparently, and yes, I *did* only find this out later,
@@ -165,7 +165,7 @@ namespace Content.Server.Solar.EntitySystems
 
             // Total coverage calculated; apply it to the panel.
             panel.Comp.Coverage = coverage;
-            UpdateSupply(panel.Owner, panel);
+            UpdateSupply(panel, panel);
         }
 
         public void UpdateSupply(

@@ -53,13 +53,13 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void UpdateUiState(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
             var outputContainerInfo = BuildOutputContainerInfo(outputContainer);
 
             var inventory = GetInventory(reagentDispenser);
 
             var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo, inventory, reagentDispenser.Comp.DispenseAmount);
-            _userInterfaceSystem.TrySetUiState(reagentDispenser.Owner, ReagentDispenserUiKey.Key, state);
+            _userInterfaceSystem.TrySetUiState(reagentDispenser, ReagentDispenserUiKey.Key, state);
         }
 
         private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
@@ -120,7 +120,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!GetInventory(reagentDispenser).Contains(message.ReagentId))
                 return;
 
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not {Valid: true} || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution))
                 return;
 
@@ -137,7 +137,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnClearContainerSolutionMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserClearContainerSolutionMessage message)
         {
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not {Valid: true} || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution))
                 return;
 
@@ -148,7 +148,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, AudioParams.Default.WithVolume(-2f));
         }
     }
 }

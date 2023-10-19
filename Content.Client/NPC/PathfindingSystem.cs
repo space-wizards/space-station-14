@@ -194,9 +194,9 @@ namespace Content.Client.NPC
 
                 foreach (var grid in _grids)
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
+                    var netGrid = _entManager.GetNetEntity(grid);
 
-                    if (found || !_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) || !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
+                    if (found || !_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) || !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -348,10 +348,10 @@ namespace Content.Client.NPC
 
                 foreach (var grid in _grids)
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
+                    var netGrid = _entManager.GetNetEntity(grid);
 
                     if (!_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) ||
-                        !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
+                        !xformQuery.TryGetComponent(grid, out var gridXform))
                     {
                         continue;
                     }
@@ -410,10 +410,10 @@ namespace Content.Client.NPC
 
                 foreach (var grid in _grids)
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
+                    var netGrid = _entManager.GetNetEntity(grid);
 
                     if (!_system.Polys.TryGetValue(netGrid, out var data) ||
-                        !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
+                        !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -449,10 +449,10 @@ namespace Content.Client.NPC
 
                 foreach (var grid in _grids)
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
+                    var netGrid = _entManager.GetNetEntity(grid);
 
                     if (!_system.Polys.TryGetValue(netGrid, out var data) ||
-                        !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
+                        !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -508,10 +508,10 @@ namespace Content.Client.NPC
 
                 foreach (var grid in _grids)
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
+                    var netGrid = _entManager.GetNetEntity(grid);
 
                     if (!_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) ||
-                        !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
+                        !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();

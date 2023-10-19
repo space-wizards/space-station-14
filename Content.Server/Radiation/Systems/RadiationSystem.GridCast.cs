@@ -98,7 +98,7 @@ public partial class RadiationSystem
 
             // also send an event with combination of total rad
             if (rads > 0)
-                IrradiateEntity(receiver.Owner, rads, GridcastUpdateRate);
+                IrradiateEntity(receiver, rads, GridcastUpdateRate);
         }
 
         // raise broadcast event that radiation system has updated
@@ -159,7 +159,7 @@ public partial class RadiationSystem
         // the ray will be updated with each grid that has some blockers
         foreach (var grid in grids)
         {
-            ray = Gridcast(grid, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(grid.Owner));
+            ray = Gridcast(grid, ray, saveVisitedTiles, resistanceQuery, sourceTrs, destTrs, transformQuery.GetComponent(grid));
 
             // looks like last grid blocked all radiation
             // we can return right now

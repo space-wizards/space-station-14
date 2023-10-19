@@ -75,12 +75,12 @@ namespace Content.Server.Ghost.Roles
                 case MobState.Alive:
                 {
                     if (!ghostRole.Taken)
-                        RegisterGhostRole((component.Owner, ghostRole));
+                        RegisterGhostRole((component, ghostRole));
                     break;
                 }
                 case MobState.Critical:
                 case MobState.Dead:
-                    UnregisterGhostRole((component.Owner, ghostRole));
+                    UnregisterGhostRole((component, ghostRole));
                     break;
             }
         }
@@ -202,7 +202,7 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             var ev = new TakeGhostRoleEvent(player);
-            RaiseLocalEvent(role.Owner, ref ev);
+            RaiseLocalEvent(role, ref ev);
 
             if (!ev.TookRole)
                 return;
@@ -221,7 +221,7 @@ namespace Content.Server.Ghost.Roles
             if (player.AttachedEntity == null)
                 return;
 
-            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role.Owner);
+            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role);
         }
 
         public void GhostRoleInternalCreateMindAndTransfer(ICommonSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)

@@ -105,7 +105,7 @@ public sealed class WeatherOverlay : Overlay
 
             foreach (var grid in grids)
             {
-                var matrix = _transform.GetWorldMatrix(grid.Owner, xformQuery);
+                var matrix = _transform.GetWorldMatrix(grid, xformQuery);
                 Matrix3.Multiply(in matrix, in invMatrix, out var matty);
                 worldHandle.SetTransform(matty);
 

@@ -111,7 +111,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
         component.Comp.User = user;
         Dirty(component);
-        UpdateSound(component.Owner, component);
+        UpdateSound(component, component);
     }
 
     private void SetEnabled(Entity<GeigerComponent> geiger, bool isEnabled)

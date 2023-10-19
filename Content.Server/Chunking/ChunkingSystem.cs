@@ -93,7 +93,7 @@ public sealed class ChunkingSystem : EntitySystem
 
             foreach (var grid in grids)
             {
-                var netGrid = GetNetEntity(grid.Owner);
+                var netGrid = GetNetEntity(grid);
 
                 if (!chunks.TryGetValue(netGrid, out var set))
                 {
@@ -101,7 +101,7 @@ public sealed class ChunkingSystem : EntitySystem
                     DebugTools.Assert(set.Count == 0);
                 }
 
-                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.Owner).TransformBox(bounds), chunkSize);
+                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid).TransformBox(bounds), chunkSize);
 
                 while (enumerator.MoveNext(out var indices))
                 {

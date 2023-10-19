@@ -263,12 +263,12 @@ public sealed partial class PathfindingSystem
 
     private void OnCollisionLayerChange(ref CollisionLayerChangeEvent ev)
     {
-        var xform = Transform(ev.Body.Owner);
+        var xform = Transform(ev.Body);
 
         if (xform.GridUid == null)
             return;
 
-        var aabb = _lookup.GetAABBNoContainer(ev.Body.Owner, xform.Coordinates.Position, xform.LocalRotation);
+        var aabb = _lookup.GetAABBNoContainer(ev.Body, xform.Coordinates.Position, xform.LocalRotation);
         DirtyChunkArea(xform.GridUid.Value, aabb);
     }
 

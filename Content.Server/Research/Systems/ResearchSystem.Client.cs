@@ -65,7 +65,7 @@ public sealed partial class ResearchSystem
         }
 
         if (allServers.Count > 0)
-            RegisterClient(uid, allServers[0].Owner, component, allServers[0]);
+            RegisterClient(uid, allServers[0], component, allServers[0]);
     }
 
     private void OnClientShutdown(EntityUid uid, ResearchClientComponent component, ComponentShutdown args)

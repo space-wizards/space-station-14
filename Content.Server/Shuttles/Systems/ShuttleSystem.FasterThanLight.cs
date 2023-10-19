@@ -614,11 +614,11 @@ public sealed partial class ShuttleSystem
 
             foreach (var grid in grids)
             {
-                if (!nearbyGrids.Add(grid.Owner))
+                if (!nearbyGrids.Add(grid))
                     continue;
 
-                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.Owner, xformQuery)
-                    .TransformBox(Comp<MapGridComponent>(grid.Owner).LocalAABB));
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid, xformQuery)
+                    .TransformBox(Comp<MapGridComponent>(grid).LocalAABB));
             }
 
             // Can do proximity
