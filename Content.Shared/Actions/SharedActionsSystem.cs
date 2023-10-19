@@ -96,7 +96,7 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         if (result != null)
         {
-            DebugTools.Assert(result.Owner == uid);
+            DebugTools.AssertOwner(uid, result);
             return true;
         }
 
@@ -494,7 +494,7 @@ public abstract class SharedActionsSystem : EntitySystem
                           (TryComp(action.Container, out ActionsContainerComponent? containerComp)
                            && containerComp.Container.Contains(actionId)));
 
-        DebugTools.Assert(comp == null || comp.Owner == performer);
+        DebugTools.AssertOwner(performer, comp);
         comp ??= EnsureComp<ActionsComponent>(performer);
         action.AttachedEntity = performer;
         comp.Actions.Add(actionId);
@@ -523,7 +523,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!Resolve(container, ref containerComp))
             return;
 
-        DebugTools.Assert(comp == null || comp.Owner == performer);
+        DebugTools.AssertOwner(performer, comp);
         comp ??= EnsureComp<ActionsComponent>(performer);
 
         foreach (var actionId in actions)

@@ -1,10 +1,10 @@
+using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Audio;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using System.Linq;
-using Content.Shared.Storage.Components;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -28,13 +28,19 @@ public sealed class CursedEntityStorageSystem : EntitySystem
         if (storage.Open || storage.Contents.ContainedEntities.Count <= 0)
             return;
 
-        var lockerQuery = EntityQuery<EntityStorageComponent>().ToList();
-        lockerQuery.Remove(storage);
+        var lockers = new List<Entity<EntityStorageComponent>>();
+        var query = EntityQueryEnumerator<EntityStorageComponent>();
+        while (query.MoveNext(out var storageUid, out var storageComp))
+        {
+            lockers.Add((storageUid, storageComp));
+        }
 
-        if (lockerQuery.Count == 0)
+        lockers.RemoveAll(e => e.Owner == uid);
+
+        if (lockers.Count == 0)
             return;
 
-        var lockerEnt = _random.Pick(lockerQuery).Owner;
+        var lockerEnt = _random.Pick(lockers).Owner;
 
         foreach (var entity in storage.Contents.ContainedEntities.ToArray())
         {

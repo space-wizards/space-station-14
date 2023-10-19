@@ -151,7 +151,7 @@ public sealed class FollowerSystem : EntitySystem
         {
             followerComp = AddComp<FollowerComponent>(follower);
         }
-        
+
         followerComp.Following = entity;
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
@@ -165,7 +165,7 @@ public sealed class FollowerSystem : EntitySystem
         _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         var xform = Transform(follower);
-        _containerSystem.AttachParentToContainerOrGrid(xform);
+        _containerSystem.AttachParentToContainerOrGrid((follower, xform));
 
         // If we didn't get to parent's container.
         if (xform.ParentUid != Transform(xform.ParentUid).ParentUid)

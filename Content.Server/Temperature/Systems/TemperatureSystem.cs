@@ -1,6 +1,8 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -10,7 +12,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
-using System.Linq;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -27,7 +28,7 @@ public sealed class TemperatureSystem : EntitySystem
     ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
     ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
     /// </summary>
-    public HashSet<TemperatureComponent> ShouldUpdateDamage = new();
+    public HashSet<Entity<TemperatureComponent>> ShouldUpdateDamage = new();
 
     public float UpdateInterval = 1.0f;
 
@@ -98,7 +99,7 @@ public sealed class TemperatureSystem : EntitySystem
         if (!ignoreHeatResistance)
         {
             var ev = new ModifyChangedTemperatureEvent(heatAmount);
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ev);
             heatAmount = ev.TemperatureDelta;
         }
 
@@ -133,48 +134,64 @@ public sealed class TemperatureSystem : EntitySystem
 
     private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
     {
-        switch (args.CurrentTemperature)
+        AlertType type;
+        float threshold;
+        float idealTemp;
+
+        if (!TryComp<TemperatureComponent>(uid, out var temperature))
         {
-            // Cold strong.
-            case <= 260:
-                _alerts.ShowAlert(uid, AlertType.Cold, 3);
+            _alerts.ClearAlertCategory(uid, AlertCategory.Temperature);
+            return;
+        }
+
+        if (TryComp<ThermalRegulatorComponent>(uid, out var regulator) &&
+            regulator.NormalBodyTemperature > temperature.ColdDamageThreshold &&
+            regulator.NormalBodyTemperature < temperature.HeatDamageThreshold)
+        {
+            idealTemp = regulator.NormalBodyTemperature;
+        }
+        else
+        {
+            idealTemp = (temperature.ColdDamageThreshold + temperature.HeatDamageThreshold) / 2;
+        }
+
+        if (args.CurrentTemperature <= idealTemp)
+        {
+            type = AlertType.Cold;
+            threshold = temperature.ColdDamageThreshold;
+        }
+        else
+        {
+            type = AlertType.Hot;
+            threshold = temperature.HeatDamageThreshold;
+        }
+
+        // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
+        // The cold and hot scales will differ in their range if the ideal temperature is not exactly halfway between the thresholds
+        var tempScale = (args.CurrentTemperature - threshold) / (idealTemp - threshold);
+        switch (tempScale)
+        {
+            case <= 0f:
+                _alerts.ShowAlert(uid, type, 3);
                 break;
 
-            // Cold mild.
-            case <= 280 and > 260:
-                _alerts.ShowAlert(uid, AlertType.Cold, 2);
+            case <= 0.4f:
+                _alerts.ShowAlert(uid, type, 2);
                 break;
 
-            // Cold weak.
-            case <= 292 and > 280:
-                _alerts.ShowAlert(uid, AlertType.Cold, 1);
+            case <= 0.66f:
+                _alerts.ShowAlert(uid, type, 1);
                 break;
 
-            // Safe.
-            case <= 327 and > 292:
+            case > 0.66f:
                 _alerts.ClearAlertCategory(uid, AlertCategory.Temperature);
-                break;
-
-            // Heat weak.
-            case <= 335 and > 327:
-                _alerts.ShowAlert(uid, AlertType.Hot, 1);
-                break;
-
-            // Heat mild.
-            case <= 360 and > 335:
-                _alerts.ShowAlert(uid, AlertType.Hot, 2);
-                break;
-
-            // Heat strong.
-            case > 360:
-                _alerts.ShowAlert(uid, AlertType.Hot, 3);
                 break;
         }
     }
 
-    private void EnqueueDamage(EntityUid uid, TemperatureComponent component, OnTemperatureChangeEvent args)
+    private void EnqueueDamage(Entity<TemperatureComponent> temperature, ref OnTemperatureChangeEvent args)
     {
-        ShouldUpdateDamage.Add(component);
+        ShouldUpdateDamage.Add(temperature);
     }
 
     private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)

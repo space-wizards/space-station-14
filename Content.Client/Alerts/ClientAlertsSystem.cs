@@ -47,20 +47,20 @@ public sealed class ClientAlertsSystem : AlertsSystem
         }
     }
 
-    protected override void AfterShowAlert(AlertsComponent alertsComponent)
+    protected override void AfterShowAlert(Entity<AlertsComponent> alerts)
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity != alertsComponent.Owner)
+        if (_playerManager.LocalPlayer?.ControlledEntity != alerts.Owner)
             return;
 
-        SyncAlerts?.Invoke(this, alertsComponent.Alerts);
+        SyncAlerts?.Invoke(this, alerts.Comp.Alerts);
     }
 
-    protected override void AfterClearAlert(AlertsComponent alertsComponent)
+    protected override void AfterClearAlert(Entity<AlertsComponent> alertsComponent)
     {
         if (_playerManager.LocalPlayer?.ControlledEntity != alertsComponent.Owner)
             return;
 
-        SyncAlerts?.Invoke(this, alertsComponent.Alerts);
+        SyncAlerts?.Invoke(this, alertsComponent.Comp.Alerts);
     }
 
     private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref AfterAutoHandleStateEvent args)
