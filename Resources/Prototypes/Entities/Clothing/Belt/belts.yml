@@ -208,7 +208,7 @@
         - TrashBag
         - WetFloorSign
         - HolosignProjector
-        - LightReplacer
+        - Plunger
         - JanicartKeys
       components:
         - LightReplacer
