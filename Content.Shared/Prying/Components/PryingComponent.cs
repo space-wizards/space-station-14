@@ -52,7 +52,7 @@ public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force,
     public readonly bool Force = Force;
 
     /// <summary>
-    /// Whether to supress popup messages.
+    /// Whether to suppress popup messages.
     /// </summary>
     public readonly bool Silent = Silent;
 
