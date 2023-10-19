@@ -130,7 +130,7 @@ entities:
       type: Physics
     - fixtures: {}
       type: Fixtures
-    - id: centcomm
+    - id: centcom
       type: BecomesStation
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
@@ -21965,7 +21965,7 @@ entities:
     - pos: -2.5,-2.5
       parent: 1668
       type: Transform
-    - name: CentComm
+    - name: CentCom
       type: FaxMachine
 - proto: filingCabinet
   entities:
@@ -42745,7 +42745,7 @@ entities:
     - pos: -0.5,3.5
       parent: 1668
       type: Transform
-    - location: Centcomm
+    - location: Centcom
       type: WarpPoint
 - proto: WaterCooler
   entities:

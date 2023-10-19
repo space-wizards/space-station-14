@@ -1,10 +1,10 @@
 - type: gameMap
-  id: CentComm
+  id: CentCom
   mapName: 'Central Command'
-  mapPath: /Maps/centcomm.yml
+  mapPath: /Maps/centcom.yml
   minPlayers: 10
   stations:
-    centcomm:
+    centcom:
       stationProto: NanotrasenCentralCommand
       components:
         - type: StationNameSetup

@@ -16,10 +16,10 @@ public sealed partial class StationCentcomComponent : Component
     public float ShuttleIndex;
 
     [DataField("map")]
-    public ResPath Map = new("/Maps/centcomm.yml");
+    public ResPath Map = new("/Maps/centcom.yml");
 
     /// <summary>
-    /// Centcomm entity that was loaded.
+    /// Centcom entity that was loaded.
     /// </summary>
     [DataField("entity")]
     public EntityUid Entity = EntityUid.Invalid;

@@ -30,13 +30,13 @@ namespace Content.IntegrationTests.Tests
 
         private static readonly string[] NoSpawnMaps =
         {
-            "CentComm",
+            "CentCom",
             "Dart",
         };
 
         private static readonly string[] Grids =
         {
-            "/Maps/centcomm.yml",
+            "/Maps/centcom.yml",
             "/Maps/Shuttles/cargo.yml",
             "/Maps/Shuttles/emergency.yml",
             "/Maps/infiltrator.yml",
@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests
             "Omega",
             "Bagel",
             "Origin",
-            "CentComm",
+            "CentCom",
             "Box",
             "Europa",
             "Barratry",
