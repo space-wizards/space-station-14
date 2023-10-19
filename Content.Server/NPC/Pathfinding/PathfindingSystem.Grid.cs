@@ -1,24 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
 using Content.Shared.Access.Components;
-using Content.Shared.Climbing;
+using Content.Shared.Climbing.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
-using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using ClimbableComponent = Content.Shared.Climbing.Components.ClimbableComponent;
 
 namespace Content.Server.NPC.Pathfinding;
 
@@ -254,13 +250,13 @@ public sealed partial class PathfindingSystem
 
     private void OnCollisionChange(ref CollisionChangeEvent ev)
     {
-        var xform = Transform(ev.Body.Owner);
+        var xform = Transform(ev.BodyUid);
 
         if (xform.GridUid == null)
             return;
 
         // This will also rebuild on door open / closes which I think is good?
-        var aabb = _lookup.GetAABBNoContainer(ev.Body.Owner, xform.Coordinates.Position, xform.LocalRotation);
+        var aabb = _lookup.GetAABBNoContainer(ev.BodyUid, xform.Coordinates.Position, xform.LocalRotation);
         DirtyChunkArea(xform.GridUid.Value, aabb);
     }
 

@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using Content.Server.GameTicking.Rules.Components;
+﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -29,12 +27,13 @@ public sealed class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponen
         if (!TryGetRandomStation(out var chosenStation))
             return;
 
-        var stationApcs = new List<ApcComponent>();
-        foreach (var (apc, transform) in EntityQuery<ApcComponent, TransformComponent>())
+        var stationApcs = new List<Entity<ApcComponent>>();
+        var query = EntityQueryEnumerator<ApcComponent, TransformComponent>();
+        while (query.MoveNext(out var apcUid, out var apc, out var xform))
         {
-            if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
+            if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(xform.GridUid)?.Station == chosenStation)
             {
-                stationApcs.Add(apc);
+                stationApcs.Add((apcUid, apc));
             }
         }
 

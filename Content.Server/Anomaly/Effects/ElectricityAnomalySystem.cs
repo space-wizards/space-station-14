@@ -1,5 +1,5 @@
 ﻿using Content.Server.Electrocution;
-﻿using Content.Server.Emp;
+using Content.Server.Emp;
 using Content.Server.Lightning;
 using Content.Server.Power.Components;
 using Content.Shared.Anomaly.Components;
@@ -66,13 +66,12 @@ public sealed class ElectricityAnomalySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (elec, anom, xform) in EntityQuery<ElectricityAnomalyComponent, AnomalyComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<ElectricityAnomalyComponent, AnomalyComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var elec, out var anom, out var xform))
         {
             if (_timing.CurTime < elec.NextSecond)
                 continue;
             elec.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
-
-            var owner = xform.Owner;
 
             if (!_random.Prob(elec.PassiveElectrocutionChance * anom.Stability))
                 continue;
@@ -85,7 +84,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
             {
                 var ent = comp.Owner;
 
-                _electrocution.TryDoElectrocution(ent, owner, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
+                _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
             }
         }
     }

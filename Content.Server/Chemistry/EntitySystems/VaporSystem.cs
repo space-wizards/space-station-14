@@ -7,7 +7,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
-using Robust.Shared.Spawners;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -16,7 +15,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
-using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
+using Robust.Shared.Spawners;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -57,9 +56,9 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        public void Start(VaporComponent vapor, TransformComponent vaporXform, Vector2 dir, float speed, MapCoordinates target, float aliveTime, EntityUid? user = null)
+        public void Start(Entity<VaporComponent> vapor, TransformComponent vaporXform, Vector2 dir, float speed, MapCoordinates target, float aliveTime, EntityUid? user = null)
         {
-            vapor.Active = true;
+            vapor.Comp.Active = true;
             var despawn = EnsureComp<TimedDespawnComponent>(vapor.Owner);
             despawn.Lifetime = aliveTime;
 
@@ -77,7 +76,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        internal bool TryAddSolution(VaporComponent vapor, Solution solution)
+        internal bool TryAddSolution(Entity<VaporComponent> vapor, Solution solution)
         {
             if (solution.Volume == 0)
             {
@@ -95,22 +94,21 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (vaporComp, solution, xform) in EntityManager
-                .EntityQuery<VaporComponent, SolutionContainerManagerComponent, TransformComponent>())
+            var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out var vaporComp, out var solution, out var xform))
             {
                 foreach (var (_, value) in solution.Solutions)
                 {
-                    Update(frameTime, vaporComp, value, xform);
+                    Update(frameTime, (uid, vaporComp), value, xform);
                 }
             }
         }
 
-        private void Update(float frameTime, VaporComponent vapor, Solution contents, TransformComponent xform)
+        private void Update(float frameTime, Entity<VaporComponent> ent, Solution contents, TransformComponent xform)
         {
+            var (entity, vapor) = ent;
             if (!vapor.Active)
                 return;
-
-            var entity = vapor.Owner;
 
             vapor.ReactTimer += frameTime;
 
@@ -133,7 +131,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         reaction = reagentQuantity.Quantity;
                     }
 
-                    _solutionContainerSystem.RemoveReagent(vapor.Owner, contents, reagentQuantity.Reagent, reaction);
+                    _solutionContainerSystem.RemoveReagent(entity, contents, reagentQuantity.Reagent, reaction);
                 }
             }
 

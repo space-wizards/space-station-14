@@ -107,7 +107,7 @@ namespace Content.Client.Inventory
 
         private void OnShutdown(EntityUid uid, InventoryComponent component, ComponentShutdown args)
         {
-            if (component.Owner != _playerManager.LocalPlayer?.ControlledEntity)
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
             OnUnlinkInventory?.Invoke();

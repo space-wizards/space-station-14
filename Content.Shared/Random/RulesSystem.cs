@@ -72,8 +72,9 @@ public sealed class RulesSystem : EntitySystem
                     var count = 0;
 
                     // TODO: Update this when we get the callback version
-                    foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(xform.MapID,
-                                 worldPos, access.Range))
+                    var entities = new HashSet<Entity<AccessReaderComponent>>();
+                    _lookup.GetEntitiesInRange(xform.MapID, worldPos, access.Range, entities);
+                    foreach (var comp in entities)
                     {
                         if (!_reader.AreAccessTagsAllowed(access.Access, comp) ||
                             access.Anchored &&

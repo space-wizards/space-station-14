@@ -4,6 +4,7 @@ using Content.Shared.Shuttles.BUIStates;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 
@@ -42,6 +43,8 @@ public class DockingControl : Control
     /// Stored by GridID then by docks
     /// </summary>
     public Dictionary<NetEntity, List<DockingInterfaceState>> Docks = new();
+
+    private List<Entity<MapGridComponent>> _grids = new();
 
     public DockingControl()
     {
@@ -147,8 +150,10 @@ public class DockingControl : Control
         // TODO: Getting some overdraw so need to fix that.
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
-                     new Box2(worldPos - RangeVector, worldPos + RangeVector)))
+        _grids.Clear();
+        _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(worldPos - RangeVector, worldPos + RangeVector));
+
+        foreach (var grid in _grids)
         {
             if (grid.Owner == GridEntity)
                 continue;
