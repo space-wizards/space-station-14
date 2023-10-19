@@ -11,7 +11,3 @@
       damageRecovery:
         types:
           Asphyxiation: -1.0
-    #Imperial foot prints
-    - type: FootPrints
-      leftBarePrint: "footprint-left-bare-diona"
-      rightBarePrint: "footprint-right-bare-diona"
