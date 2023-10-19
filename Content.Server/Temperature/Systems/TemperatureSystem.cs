@@ -12,6 +12,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Temperature.Systems;
 
