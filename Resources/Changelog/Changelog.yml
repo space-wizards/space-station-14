@@ -1,30 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Mobs with crit states that die will now perform a visible emote., type: Add}
-  - {message: 'Succumbing in crit is more accessible, as it''s also an action now',
-    type: Tweak}
-  - {message: 'You can now say your ''last words'' while in crit. This action will
-      let you whisper up to 30 characters, then kill you.', type: Add}
-  - {message: You can fake your own deathgasp emote using an action in crit., type: Add}
-  id: 4525
-  time: '2023-08-12T05:56:34.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: Pickaxes are now 80 size and take more wood and steel to manufacture.,
-    type: Tweak}
-  id: 4526
-  time: '2023-08-12T06:17:26.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Traitors can now exist along with nuclear operatives., type: Add}
-  id: 4527
-  time: '2023-08-12T09:54:46.0000000+00:00'
-- author: terezi4real
-  changes:
-  - {message: Fixed errant transparency on jester outfit, type: Fix}
-  id: 4528
-  time: '2023-08-12T17:06:46.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Vim exosuit is now smaller and lighter for better maneuverability.,
@@ -2927,3 +2901,26 @@ Entries:
       the body., type: Fix}
   id: 5024
   time: '2023-10-18T21:15:17.0000000+00:00'
+- author: KingFroozy
+  changes:
+  - {message: Atmospheric technician's casual jumpsuit was resprited., type: Tweak}
+  id: 5025
+  time: '2023-10-19T03:44:58.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: You will no longer be picked as a head revolutionary if you have not
+      checked it in the antag picker. Note you can still become a revolutionary if
+      someone converts you., type: Fix}
+  id: 5026
+  time: '2023-10-19T03:48:56.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added dart game!, type: Add}
+  id: 5027
+  time: '2023-10-19T03:55:30.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'C4 now costs 2 TC instead of 4TC, the bundle costs 12TC instead of
+      20TC', type: Tweak}
+  id: 5028
+  time: '2023-10-19T15:19:33.0000000+00:00'
