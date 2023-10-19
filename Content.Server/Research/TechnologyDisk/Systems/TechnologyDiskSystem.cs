@@ -72,7 +72,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         var tier = int.Parse(weightedRandom.Pick(_random));
 
         //get a list of every distinct recipe in all the technologies.
-        var techs = new List<string>();
+        var techs = new List<ProtoId<LatheRecipePrototype>>();
         foreach (var tech in _prototype.EnumeratePrototypes<TechnologyPrototype>())
         {
             if (tech.Tier != tier)

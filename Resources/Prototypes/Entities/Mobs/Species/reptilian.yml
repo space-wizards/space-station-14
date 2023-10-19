@@ -40,7 +40,6 @@
     damageContainer: Biological
     damageModifierSet: Scale
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
@@ -59,9 +58,6 @@
     heatDamage:
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
 
 - type: entity
   parent: BaseSpeciesDummy
