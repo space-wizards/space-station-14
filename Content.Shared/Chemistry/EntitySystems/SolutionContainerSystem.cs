@@ -576,7 +576,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         FixedPoint2 overflowThreshold,
         [NotNullWhen(true)] out Solution? overflowingSolution)
     {
-        if (toAdd.Volume == 0)
+        if (toAdd.Volume == 0 || overflowThreshold > targetSolution.MaxVolume)
         {
             overflowingSolution = null;
             return false;
