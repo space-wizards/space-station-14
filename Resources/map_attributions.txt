@@ -10,7 +10,7 @@
 - files: ["box.yml"]
   authors: ACJM, Emisse
 
-- files: ["centcomm.yml"]
+- files: ["centcom.yml"]
   authors: Emisse
 
 - files: ["cluster.yml"]

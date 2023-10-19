@@ -42,10 +42,10 @@
         - /Maps/Shuttles/mining.yml
 
 - type: entity
-  id: BaseStationCentcomm
+  id: BaseStationCentcom
   abstract: true
   components:
-    - type: StationCentcomm
+    - type: StationCentcom
 
 - type: entity
   id: BaseStationEvacuation

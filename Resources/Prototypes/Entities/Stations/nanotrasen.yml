@@ -15,7 +15,7 @@
     - BaseStationRecords
     - BaseStationArrivals
     - BaseStationShuttles
-    - BaseStationCentcomm
+    - BaseStationCentcom
     - BaseStationEvacuation
     - BaseStationAlertLevels
     - BaseStationExpeditions
