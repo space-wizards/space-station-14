@@ -89,6 +89,8 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Pullable
+  - type: LightningTarget
+    priority: 2
 
 # Used for mobs that can enter combat mode and can attack.
 - type: entity

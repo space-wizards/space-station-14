@@ -43,6 +43,8 @@
   - type: BatteryDischarger
     # This is JUST copy from Radiation Collector
     activeSupplyRate: 100000
+  - type: LightningTarget
+    priority: 4
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
@@ -53,7 +55,7 @@
   #  guides: [ Singularity, Power ]
   
 - type: entity
-  id: GroundingRod
+  id: TeslaGroundingRod
   name: grounding rod
   description: A machine that keeps lightning from striking too far away.
   placement:
@@ -94,6 +96,8 @@
   - type: Battery
     maxCharge: 100000
     startingCharge: 0
+  - type: LightningTarget
+    priority: 3
   - type: BatteryDischarger
     # This is JUST copy from Radiation Collector
     activeSupplyRate: 100000

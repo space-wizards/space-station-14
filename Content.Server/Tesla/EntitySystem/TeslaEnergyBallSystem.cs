@@ -1,6 +1,6 @@
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
-using Content.Shared.Tesla.Components;
+using Content.Server.Tesla.Components;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Tesla.EntitySystems;

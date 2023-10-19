@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Beam;
 using Content.Server.Beam.Components;
 using Content.Server.Lightning.Components;
@@ -16,6 +16,7 @@ public sealed class LightningSystem : SharedLightningSystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {
@@ -74,6 +75,31 @@ public sealed class LightningSystem : SharedLightningSystem
     }
 
     /// <summary>
+    /// Fires lightning bolts at random targets in a radius.
+    /// </summary>
+    /// <param name="user">Where the lightning fires from</param>
+    /// <param name="range">Targets selection radius</param>
+    /// <param name="count">Number of lightning bolts</param>
+    /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
+    public void ShootRandomLightnings(EntityUid user, float range, int count, string lightningPrototype = "Lightning")
+    {
+        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).Coordinates, range);
+        var sortedTargets = targets
+            .OrderByDescending(target => target.Priority)
+            .ThenBy(_ => _random.Next())
+            .ToList();
+        var arcCount = Math.Min(targets.Count, count);
+
+        if (arcCount <= 0)
+            return;
+
+        for (int i = 0; i < count; i++)
+        {
+            ShootLightning(user, sortedTargets[i].Owner, lightningPrototype);
+        }
+    }
+
+    /// <summary>
     /// Looks for a target to arc to in all 8 directions, adds the closest to a local dictionary and picks at random
     /// </summary>
     /// <param name="component"></param>
@@ -106,7 +132,8 @@ public sealed class LightningSystem : SharedLightningSystem
 
             foreach (var result in rayCastResults)
             {
-                if (lightningQuery.HasComponent(result.HitEntity)
+                if (!TryComp<LightningTargetComponent>(result.HitEntity, out var priorityTarget)
+                    || lightningQuery.HasComponent(result.HitEntity)
                     || beamQuery.HasComponent(result.HitEntity)
                     || component.ArcTargets.Contains(result.HitEntity)
                     || controller.HitTargets.Contains(result.HitEntity)

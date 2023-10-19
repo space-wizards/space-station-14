@@ -5,7 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Tesla.Components;
+namespace Content.Server.Tesla.Components;
 
 /// <summary>
 /// A component that makes the associated entity accumulate energy when an associated event horizon consumes things.

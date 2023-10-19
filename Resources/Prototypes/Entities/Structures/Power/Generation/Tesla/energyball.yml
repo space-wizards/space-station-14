@@ -39,7 +39,9 @@
     energyLoss: 3
     spawnProto: TeslaMiniEnergyBall 
     updateInterval: 0.5 # For testing, increase to 3.0
-  - type: RandomWalk # To make the singularity move around.
+  - type: LightningArcShooter
+    shootRange: 10
+  - type: RandomWalk # To make the tesla move around.
     maxSpeed: 2.5
     minSpeed: 1.875
   - type: PointLight
@@ -102,6 +104,11 @@
     enabled: true
     radius: 5
   - type: Appearance
+  - type: LightningArcShooter
+    maxLightningArc: 2
+    shootMinInterval: 2
+    shootMaxInterval: 8
+    shootRange: 5
   #- type: GuideHelp
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
