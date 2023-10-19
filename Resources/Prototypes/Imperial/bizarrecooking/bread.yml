@@ -10,7 +10,7 @@
       - slimy
   - type: Food
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/bread.rsi
+    sprite: Imperial/BizarreCooking/bread.rsi
     layers:
     - state: slime
   - type: SliceableFood
@@ -35,7 +35,7 @@
       - slimy
   - type: Food
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/bread.rsi
+    sprite: Imperial/BizarreCooking/bread.rsi
     layers:
     - state: slime-slice
   - type: SolutionContainerManager
@@ -59,7 +59,7 @@
       - metallic
   - type: Food
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/bread.rsi
+    sprite: Imperial/BizarreCooking/bread.rsi
     layers:
     - state: bloodyslime
   - type: SliceableFood
@@ -85,7 +85,7 @@
       - metallic
   - type: Food
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/bread.rsi
+    sprite: Imperial/BizarreCooking/bread.rsi
     layers:
     - state: bloodyslime-slice
   - type: SolutionContainerManager

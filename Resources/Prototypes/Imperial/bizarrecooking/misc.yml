@@ -9,7 +9,7 @@
       - sweet
       - bpaper
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: caramelized-paper
   - type: SolutionContainerManager
     solutions:
@@ -29,7 +29,7 @@
     flavors:
       - dunce
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: dunce
   - type: SolutionContainerManager
     solutions:
@@ -49,7 +49,7 @@
     flavors:
       - savory
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: magma
   - type: SolutionContainerManager
     solutions:
@@ -71,7 +71,7 @@
     flavors:
       - metallic
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: uranium
   - type: SolutionContainerManager
     solutions:
@@ -99,7 +99,7 @@
       - sweet
       - meaty
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: sentient
   - type: SolutionContainerManager
     solutions:
@@ -121,7 +121,7 @@
       - spooky
       - elder
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: elder
   - type: SolutionContainerManager
     solutions:
@@ -143,7 +143,7 @@
     flavors:
       - terrible
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: ppp
   - type: SolutionContainerManager
     solutions:
@@ -165,7 +165,7 @@
       - meaty
       - bread
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: idiot
   - type: SolutionContainerManager
     solutions:
@@ -189,7 +189,7 @@
     flavors:
       - cold
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/misc.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/misc.rsi
     state: iscream
   - type: SolutionContainerManager
     solutions:

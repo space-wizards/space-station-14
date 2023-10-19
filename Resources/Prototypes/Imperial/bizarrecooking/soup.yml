@@ -9,7 +9,7 @@
       - meaty
       - salty
   - type: Sprite
-    sprite: Objects/Consumable/Food/BizarreCooking/bowl.rsi
+    sprite: Imperial/Bizarre/BizarreCooking/bowl.rsi
     layers:
     - state: bowl
     - state: brain
