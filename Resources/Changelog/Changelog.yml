@@ -701,7 +701,7 @@ Entries:
   time: '2023-08-18T23:53:45.0000000+00:00'
 - author: Alekshhh
   changes:
-  - {message: The legendary John Barber came to Centcomm with a business proposal.
+  - {message: The legendary John Barber came to Centcom with a business proposal.
       All human hairs have been cut with love!, type: Tweak}
   id: 4629
   time: '2023-08-19T22:37:56.0000000+00:00'
@@ -806,7 +806,7 @@ Entries:
 - author: EnDecc
   changes:
   - {message: 'Three "plastic crates" in cargo have now been given appropriate labels,
-      after Centcomm forgot to use tape on them. Disaster pizza crate, Softdrinks
+      after Centcom forgot to use tape on them. Disaster pizza crate, Softdrinks
       crate, and Softdrinks bulk crate will now show up in orders appropriately.',
     type: Fix}
   id: 4646
@@ -845,7 +845,7 @@ Entries:
   time: '2023-08-22T02:05:24.0000000+00:00'
 - author: func_kenobi
   changes:
-  - {message: "CentComm allowed the station architectors to place Schr\xF6dinger's\
+  - {message: "CentCom allowed the station architectors to place Schr\xF6dinger's\
       \ grilles.", type: Add}
   id: 4653
   time: '2023-08-22T02:21:45.0000000+00:00'
@@ -2096,7 +2096,7 @@ Entries:
   time: '2023-09-20T19:40:41.0000000+00:00'
 - author: waylon531
   changes:
-  - {message: Centcomm is tired of the crew drunkenly wandering the station and starting
+  - {message: Centcom is tired of the crew drunkenly wandering the station and starting
       brawls. Many mixed drinks now have half as much alcohol., type: Tweak}
   id: 4868
   time: '2023-09-21T00:58:57.0000000+00:00'
@@ -2138,7 +2138,7 @@ Entries:
   time: '2023-09-22T20:01:05.0000000+00:00'
 - author: waylon531
   changes:
-  - {message: The surgeons at Centcomm have made it so drinking too much alcohol will
+  - {message: The surgeons at Centcom have made it so drinking too much alcohol will
       now cause liver failure instead of heart failure. Alcoholics rejoice!, type: Fix}
   id: 4874
   time: '2023-09-22T20:01:42.0000000+00:00'

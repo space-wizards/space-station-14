@@ -521,7 +521,7 @@
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
 
-#CENTCOMM / ERT HARDSUITS
+#CENTCOM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieCommander

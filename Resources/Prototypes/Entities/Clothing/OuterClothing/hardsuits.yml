@@ -681,7 +681,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
 
 
-#CENTCOMM / ERT HARDSUITS
+#CENTCOM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitSyndieCommander
