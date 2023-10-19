@@ -14,7 +14,6 @@ public sealed class LightningArcShooterSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     public override void Initialize()
     {
         base.Initialize();

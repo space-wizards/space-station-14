@@ -3,11 +3,14 @@ using Content.Shared.Singularity.EntitySystems;
 using Content.Server.Tesla.Components;
 using Robust.Shared.Physics.Events;
 using Content.Shared.Mobs.Components;
+using Microsoft.Extensions.DependencyModel;
+using Content.Server.Physics.Controllers;
+using Content.Server.Lightning.Components;
 
 namespace Content.Server.Tesla.EntitySystems;
 
 /// <summary>
-/// A component that takes energy and spends it to spawn mini energy balls
+/// A component that takes energy and spends it to spawn mini energy balls.
 /// </summary>
 public sealed class TeslaEnergyBallSystem : EntitySystem
 {
@@ -43,9 +46,10 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
             AdjustEnergy(uid, component, singuloFood.Energy);
             EntityManager.QueueDeleteEntity(args.OtherEntity);
         }
-        if (TryComp<MobThresholdsComponent>(args.OtherEntity, out var mob))
+        if (TryComp<LightningTargetComponent>(args.OtherEntity, out var target))
         {
-            //Popup here 
+            //Sound here
+            //Effect here
             EntityManager.QueueDeleteEntity(args.OtherEntity);
         }
     }

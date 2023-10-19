@@ -19,22 +19,23 @@
         shape:
           !type:PhysShapeCircle
             radius: 0.35
-        hard: true
+        hard: false
         restitution: 0.8
         density: 10
         mask:
         - None
         layer:
-        - AllMask
+        - MobMask
   - type: TeslaEnergyBall
     energyLoss: 3
     spawnProto: TeslaMiniEnergyBall 
     updateInterval: 0.5 # For testing, increase to 3.0
   - type: LightningArcShooter
     shootRange: 10
-  - type: RandomWalk # To make the tesla move around.
+  - type: ChasingWalk # To make the tesla move around.
     maxSpeed: 2.5
     minSpeed: 1.875
+    chasingComponent: LightningTarget
   - type: PointLight
     enabled: true
     radius: 5
@@ -70,16 +71,17 @@
         shape:
           !type:PhysShapeCircle
             radius: 0.35
-        hard: true
+        hard: false
         restitution: 0.8
         density: 5
         mask:
         - None
         layer:
         - MobMask
-  - type: RandomWalk # To make the singularity move around.
-    maxSpeed: 3.5
+  - type: ChasingWalk # To make the tesla move around.
+    maxSpeed: 2.8
     minSpeed: 2
+    chasingComponent: LightningTarget
   - type: TimedDespawn
     lifetime: 120
   - type: PointLight
