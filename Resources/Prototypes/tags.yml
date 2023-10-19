@@ -768,6 +768,9 @@
   id: Ore
 
 - type: Tag
+  id: PAISlot
+
+- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
@@ -1082,6 +1085,3 @@
 
 - type: Tag
   id: MindShield
-
-- type: Tag
-  id: PAISlot
