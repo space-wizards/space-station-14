@@ -101,13 +101,13 @@ public sealed class PryingSystem : EntitySystem
 
         if (comp != null)
         {
-            canev = new BeforePryEvent(user, comp.PryPowered, comp.Force);
+            canev = new BeforePryEvent(user, comp.PryPowered, comp.Force, false);
         }
         else
         {
             if (!TryComp<PryUnpoweredComponent>(target, out _))
                 return false;
-            canev = new BeforePryEvent(user, false, false);
+            canev = new BeforePryEvent(user, false, false, true);
         }
 
         RaiseLocalEvent(target, ref canev);

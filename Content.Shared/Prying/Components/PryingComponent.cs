@@ -43,13 +43,18 @@ public sealed partial class PryingComponent : Component
 /// Cancel to stop the entity from being pried open.
 /// </summary>
 [ByRefEvent]
-public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force)
+public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force, bool Silent)
 {
     public readonly EntityUid User = User;
 
     public readonly bool PryPowered = PryPowered;
 
     public readonly bool Force = Force;
+
+    /// <summary>
+    /// Whether to supress popup messages.
+    /// </summary>
+    public readonly bool Silent = Silent;
 
     public bool Cancelled;
 }
