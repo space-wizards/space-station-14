@@ -2144,6 +2144,8 @@
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: MobPrice
+    price: 100
   - type: MeleeWeapon
     damage:
       types:
