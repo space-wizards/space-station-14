@@ -742,7 +742,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     [ValidatePrototypeId<AccentPrototype>]
-    public const string ChatSanitize_Accent = "chatsanitize"
+    public const string ChatSanitize_Accent = "chatsanitize";
 
     public string SanitizeMessageReplaceWords(string message)
     {
