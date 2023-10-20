@@ -1,3 +1,4 @@
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
@@ -11,7 +12,7 @@ namespace Content.Shared.SS220.DarkReaper;
 [Access(typeof(SharedDarkReaperSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
 public sealed partial class DarkReaperComponent : Component
 {
-    public const string BrainContainerId = "consumed";
+    public const string ConsumedContainerId = "consumed";
 
     [ViewVariables, DataField]
     public EntProtoId PortalEffectPrototype = "DarkReaperPortalEffect";
@@ -140,6 +141,8 @@ public sealed partial class DarkReaperComponent : Component
         TimeSpan.FromSeconds(40)
     };
 
+    public TimeSpan CooldownAfterMaterialize = TimeSpan.FromSeconds(3);
+
     [ViewVariables, DataField, AutoNetworkedField]
     public float MaterialMovementSpeed = 4f;
 
@@ -206,8 +209,8 @@ public sealed partial class DarkReaperComponent : Component
         // Stage 3
         new()
         {
-            { "Slash", 18 },
-            { "Piercing", 10 }
+            { "Slash", 20 },
+            { "Piercing", 16 }
         }
     };
 

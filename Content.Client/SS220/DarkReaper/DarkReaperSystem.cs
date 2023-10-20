@@ -1,5 +1,7 @@
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using Content.Client.Light.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Revenant.Components;
 using Content.Shared.SS220.DarkReaper;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -60,7 +62,12 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
     private void UpdateAppearance(EntityUid uid, DarkReaperComponent comp, SpriteComponent sprite, bool isPhysical, bool hasGlare, bool ghostCooldown)
     {
         var controlled = _playerManager.LocalPlayer?.ControlledEntity;
-        var canSeeGhosted = controlled == uid || (controlled.HasValue && HasComp<GhostComponent>(controlled));
+        var isOwn = controlled == uid;
+        var canSeeOthers = controlled.HasValue &&
+                          (HasComp<GhostComponent>(controlled) ||
+                           HasComp<DarkReaperComponent>(controlled) ||
+                           HasComp<RevenantComponent>(controlled));
+        var canSeeGhosted = isOwn || canSeeOthers;
 
         if (TryComp<LightBehaviourComponent>(uid, out var lightBehaviour))
         {
@@ -72,7 +79,7 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
 
         if (sprite.LayerMapTryGet(DarkReaperVisual.Stage, out var layerIndex))
         {
-            sprite.LayerSetVisible(layerIndex, canSeeGhosted || isPhysical);
+            sprite.LayerSetVisible(layerIndex, (canSeeGhosted || isPhysical) && !ghostCooldown);
             sprite.LayerSetColor(layerIndex, (canSeeGhosted && !isPhysical) ? ReaperGhostColor : Color.White);
         }
 

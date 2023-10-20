@@ -1,3 +1,4 @@
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
@@ -236,6 +237,11 @@ public abstract class SharedDarkReaperSystem : EntitySystem
             ChangeForm(uid, comp, true);
             comp.MaterializedStart = _timing.CurTime;
 
+            var cooldownStart = _timing.CurTime;
+            var cooldownEnd = cooldownStart + comp.CooldownAfterMaterialize;
+
+            _actions.SetCooldown(comp.MaterializeActionEntity, cooldownStart, cooldownEnd);
+
             if (_net.IsServer)
             {
                 CreatePortal(uid, comp);
@@ -274,6 +280,14 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         {
             if (IsPaused(uid))
                 continue;
+
+            if (_net.IsServer && _actions.TryGetActionData(comp.MaterializeActionEntity, out var materializeData, false))
+            {
+                var visibleEyes = materializeData.Cooldown.HasValue &&
+                materializeData.Cooldown.Value.End > _timing.CurTime &&
+                !comp.PhysicalForm;
+                _appearance.SetData(uid, DarkReaperVisual.GhostCooldown, visibleEyes);
+            }
 
             if (comp.StunScreamStart != null)
             {
@@ -446,16 +460,17 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
         if (_net.IsServer)
         {
+            QueueDel(component.ActivePortal);
+
             // play at coordinates because entity is getting deleted
             var coordinates = Transform(uid).Coordinates;
             _audio.Play(component.SoundDeath, Filter.Pvs(coordinates), coordinates, true);
 
-            if (_container.TryGetContainer(uid, DarkReaperComponent.BrainContainerId, out var container))
+            // Get everthing that was consumed out before deleting
+            if (_container.TryGetContainer(uid, DarkReaperComponent.ConsumedContainerId, out var container))
             {
                 _container.EmptyContainer(container);
             }
-
-            QueueDel(component.ActivePortal);
 
             // Make it blow up on pieces after deth
             EntProtoId[] gibPoolAsArray = component.SpawnOnDeathPool.ToArray();
@@ -474,6 +489,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
                 _physics.ApplyLinearImpulse(goreEntity, impulseVec);
             }
 
+            // insallah
             QueueDel(uid);
         }
     }

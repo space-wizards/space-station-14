@@ -1,0 +1,6 @@
+- type: antag
+  id: DarkReaper
+  name: roles-antag-darkreaper-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-darkreaper-objective

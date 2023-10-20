@@ -1,5 +1,5 @@
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using Content.Server.Actions;
-using Content.Server.Body.Components;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
@@ -61,26 +61,22 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
     {
         base.OnAfterConsumed(uid, comp, args);
 
-        if (!args.Cancelled && args.Target.HasValue && comp.PhysicalForm && _mobState.IsDead(args.Target.Value))
+        if (!args.Cancelled && args.Target is EntityUid target)
         {
-            var gibs = _body.GibBody(args.Target.Value, true);
-            if (_container.TryGetContainer(uid, DarkReaperComponent.BrainContainerId, out var container))
+            if (comp.PhysicalForm && target.IsValid() && !EntityManager.IsQueuedForDeletion(target) && _mobState.IsDead(target))
             {
-                foreach (var part in gibs)
+                if (_container.TryGetContainer(uid, DarkReaperComponent.ConsumedContainerId, out var container))
                 {
-                    if (!TryComp<BrainComponent>(part, out _))
-                        continue;
-
-                    container.Insert(part);
+                    container.Insert(target);
                 }
+
+                _damageable.TryChangeDamage(uid, comp.HealPerConsume, true, origin: args.Args.User);
+
+                comp.Consumed++;
+                UpdateStage(uid, comp);
+                UpdateAlert(uid, comp);
+                Dirty(uid, comp);
             }
-
-            _damageable.TryChangeDamage(uid, comp.HealPerConsume, true, origin: args.Args.User);
-
-            comp.Consumed++;
-            UpdateStage(uid, comp);
-            UpdateAlert(uid, comp);
-            Dirty(uid, comp);
         }
     }
 
@@ -129,7 +125,7 @@ public sealed class DarkReaperSystem : SharedDarkReaperSystem
     {
         base.OnCompInit(uid, comp, args);
 
-        _container.EnsureContainer<Container>(uid, DarkReaperComponent.BrainContainerId);
+        _container.EnsureContainer<Container>(uid, DarkReaperComponent.ConsumedContainerId);
 
         if (!comp.RoflActionEntity.HasValue)
             _actions.AddAction(uid, ref comp.RoflActionEntity, comp.RoflAction);

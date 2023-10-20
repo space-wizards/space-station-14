@@ -1,0 +1,11 @@
+- type: gamePreset
+  id: DarkReaper
+  alias:
+    - darkreaper
+  name: roles-antag-darkreaper-name
+  description: darkreaper-preset-description
+  showInVote: false
+  minPlayers: 30
+  rules:
+    - DarkReaperSpawnMajor
+    - BasicStationEventScheduler

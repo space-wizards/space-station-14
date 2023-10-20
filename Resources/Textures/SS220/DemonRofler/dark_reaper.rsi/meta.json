@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
-  "copyright": "Made by MIXnikita for SS220",
+  "copyright": "Made by MIXnikita for SS220, randomgibs and rune are taken from Paradise build of SS13",
   "size": {
     "x": 32,
     "y": 32
@@ -37,6 +37,9 @@
 	},
 	{
 	  "name": "rune"
+	},
+	{
+	  "name": "randomgibs"
 	}
   ]
 }
