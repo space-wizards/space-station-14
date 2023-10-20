@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Client.HealthOverlay.UI;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
@@ -6,8 +5,6 @@ using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.HealthOverlay
 {
@@ -80,10 +77,9 @@ namespace Content.Client.HealthOverlay
 
             var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-            foreach (var (mobState, _) in EntityManager.EntityQuery<MobStateComponent, DamageableComponent>())
+            var query = EntityQueryEnumerator<MobStateComponent, DamageableComponent>();
+            while (query.MoveNext(out var entity, out var mobState, out _))
             {
-                var entity = mobState.Owner;
-
                 if (_entities.GetComponent<TransformComponent>(ent).MapID != _entities.GetComponent<TransformComponent>(entity).MapID ||
                     !viewBox.Contains(_entities.GetComponent<TransformComponent>(entity).WorldPosition))
                 {

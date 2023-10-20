@@ -42,11 +42,13 @@ namespace Content.Server.Research.Systems
         {
             serverUid = null;
             serverComponent = null;
-            foreach (var server in EntityQuery<ResearchServerComponent>())
+
+            var query = EntityQueryEnumerator<ResearchServerComponent>();
+            while (query.MoveNext(out var uid, out var server))
             {
                 if (server.Id != id)
                     continue;
-                serverUid = server.Owner;
+                serverUid = uid;
                 serverComponent = server;
                 return true;
             }
@@ -89,13 +91,14 @@ namespace Content.Server.Research.Systems
 
         public override void Update(float frameTime)
         {
-            foreach (var server in EntityQuery<ResearchServerComponent>())
+            var query = EntityQueryEnumerator<ResearchServerComponent>();
+            while (query.MoveNext(out var uid, out var server))
             {
                 if (server.NextUpdateTime > _timing.CurTime)
                     continue;
                 server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
 
-                UpdateServer(server.Owner, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
+                UpdateServer(uid, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
             }
         }
     }

@@ -22,8 +22,9 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    protected override void OnComponentInit(EntityUid uid, DoorComponent comp, ComponentInit args)
+    protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
     {
+        var comp = ent.Comp;
         comp.OpenSpriteStates = new(2);
         comp.ClosedSpriteStates = new(2);
 

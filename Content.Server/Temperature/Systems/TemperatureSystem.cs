@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -11,7 +12,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
-using System.Linq;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -28,7 +28,7 @@ public sealed class TemperatureSystem : EntitySystem
     ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
     ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
     /// </summary>
-    public HashSet<TemperatureComponent> ShouldUpdateDamage = new();
+    public HashSet<Entity<TemperatureComponent>> ShouldUpdateDamage = new();
 
     public float UpdateInterval = 1.0f;
 
@@ -99,7 +99,7 @@ public sealed class TemperatureSystem : EntitySystem
         if (!ignoreHeatResistance)
         {
             var ev = new ModifyChangedTemperatureEvent(heatAmount);
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ev);
             heatAmount = ev.TemperatureDelta;
         }
 
@@ -189,9 +189,9 @@ public sealed class TemperatureSystem : EntitySystem
         }
     }
 
-    private void EnqueueDamage(EntityUid uid, TemperatureComponent component, OnTemperatureChangeEvent args)
+    private void EnqueueDamage(Entity<TemperatureComponent> temperature, ref OnTemperatureChangeEvent args)
     {
-        ShouldUpdateDamage.Add(component);
+        ShouldUpdateDamage.Add(temperature);
     }
 
     private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
