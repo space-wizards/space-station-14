@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(GameDirectorSystem))]
-public sealed class GameDirectorComponent : Component
+public sealed partial class GameDirectorComponent : Component
 {
     public const float MinimumTimeUntilFirstEvent = 300;
 
@@ -41,7 +41,7 @@ public sealed class GameDirectorComponent : Component
     /// <summary>
     ///   Remaining beats in the story we are currently executing (a list of beat IDs)
     /// </summary>
-    [DataField("currStory"), ViewVariables(VVAccess.ReadWrite)]
+    // Stack is not compatible with DataField [DataField("currStory"), ViewVariables(VVAccess.ReadWrite)]
     public Stack<string> CurrStory = new();
 
     /// <summary>
@@ -76,7 +76,7 @@ public sealed class GameDirectorComponent : Component
 ///   Gated by various settings such as the number of players
 /// </summary>
 [DataDefinition]
-public sealed class Story
+public sealed partial class Story
 {
     /// <summary>
     ///   A human-readable description string for logging / admins
@@ -116,7 +116,7 @@ public sealed class Story
 ///   the next round of chaos.
 /// </summary>
 [DataDefinition]
-public sealed class StoryBeat
+public sealed partial class StoryBeat
 {
     /// <summary>
     ///   A human-readable description string for logging / admins
@@ -182,7 +182,7 @@ public sealed class StoryBeat
 ///   A list of PossibleEvents are built and cached by the game director.
 /// </summary>
 [DataDefinition]
-public sealed class PossibleEvent
+public sealed partial class PossibleEvent
 {
     /// <summary>
     ///   ID of a station event prototype (anomaly, spiders, pizzas, etc) that could occur

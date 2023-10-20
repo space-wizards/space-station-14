@@ -1,10 +1,7 @@
-﻿using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids.Components;
 
 namespace Content.Server.StationEvents.Metric;
 
@@ -17,8 +14,6 @@ namespace Content.Server.StationEvents.Metric;
 /// </summary>
 public sealed class DoorMetric : ChaosMetricSystem<DoorMetricComponent>
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, DoorMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)
     {

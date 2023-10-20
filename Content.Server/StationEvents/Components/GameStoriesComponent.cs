@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(GameDirectorSystem))]
-public sealed class GameStoriesComponent : Component
+public sealed partial class GameStoriesComponent : Component
 {
     /// <summary>
     ///   All possible story beats, by ID. These will be copied into GameDirectorSystemComponent

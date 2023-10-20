@@ -1,6 +1,6 @@
-﻿using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.StationEvents.Metric.Components;
+﻿using Content.Server.StationEvents.Metric.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 
@@ -30,7 +30,7 @@ public sealed class JaniMetric : ChaosMetricSystem<JaniMetricComponent>
             FixedPoint2 puddleChaos = 0.0f;
             foreach (var substance in puddleSolution.Contents)
             {
-                FixedPoint2 substanceChaos = component.Puddles.GetValueOrDefault(substance.ReagentId, component.PuddleDefault);
+                FixedPoint2 substanceChaos = component.Puddles.GetValueOrDefault(substance.Reagent.Prototype, component.PuddleDefault);
                 puddleChaos += substanceChaos * substance.Quantity;
             }
 

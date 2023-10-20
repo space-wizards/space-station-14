@@ -1,13 +1,12 @@
-﻿using Content.Server.Chemistry.EntitySystems;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind.Components;
+﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Roles;
 using Content.Shared.Zombies;
 
 namespace Content.Server.StationEvents.Metric;
@@ -28,11 +27,13 @@ namespace Content.Server.StationEvents.Metric;
 /// </summary>
 public sealed class CombatMetric : ChaosMetricSystem<CombatMetricComponent>
 {
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)
     {
         // Add up the pain of all the puddles
-        var query = EntityQueryEnumerator<MindComponent, MobStateComponent, DamageableComponent>();
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, DamageableComponent>();
         var hostiles = FixedPoint2.Zero;
         var friendlies = FixedPoint2.Zero;
 
@@ -50,7 +51,7 @@ public sealed class CombatMetric : ChaosMetricSystem<CombatMetricComponent>
             if (mind.Mind == null)
                 continue;
 
-            if (mind.Mind.HasAntag)
+            if (_roles.MindIsAntagonist(mind.Mind))
             {
                 if (mobState.CurrentState != MobState.Alive)
                     continue;
@@ -72,11 +73,6 @@ public sealed class CombatMetric : ChaosMetricSystem<CombatMetricComponent>
             else
             {
                 // This is a friendly
-                // Quick filter for non-pets
-                if (!humanoidQ.TryGetComponent(uid, out var humanoid))
-                {
-                    continue;
-                }
 
                 if (mobState.CurrentState == MobState.Dead)
                 {

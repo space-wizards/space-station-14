@@ -12,7 +12,7 @@ namespace Content.Server.StationEvents.Metric;
 ///   This is similar to the DamageSpecifier class.
 /// </remarks>
 [DataDefinition]
-public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
+public sealed partial class ChaosMetrics : IEquatable<ChaosMetrics>
 {
     /// <summary>
     ///   Main chaos dictionary. Most ChaosMetrics functions exist to somehow modifying this.

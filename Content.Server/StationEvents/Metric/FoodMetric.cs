@@ -1,16 +1,11 @@
-﻿using Content.Server.Chemistry.EntitySystems;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind.Components;
-using Content.Server.Nutrition.Components;
-using Content.Server.StationEvents.Metric.Components;
-using Content.Shared.Damage;
+﻿using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids.Components;
-using Content.Shared.Humanoid;
-using Content.Shared.Mobs;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Zombies;
+using Content.Shared.Roles;
+using YamlDotNet.Serialization.NodeDeserializers;
 
 namespace Content.Server.StationEvents.Metric;
 
@@ -22,25 +17,23 @@ namespace Content.Server.StationEvents.Metric;
 /// </summary>
 public sealed class FoodMetric : ChaosMetricSystem<FoodMetricComponent>
 {
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, FoodMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)
     {
         // Add up the pain of all the puddles
-        var query = EntityQueryEnumerator<MindComponent, MobStateComponent>();
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent>();
         var hungerSc = FixedPoint2.Zero;
         var thirstSc = FixedPoint2.Zero;
 
         var thirstQ = GetEntityQuery<ThirstComponent>();
         var hungerQ = GetEntityQuery<HungerComponent>();
 
-        while (query.MoveNext(out var uid, out var mind, out var mobState))
+        while (query.MoveNext(out var uid, out var mindContainer, out var mobState))
         {
-            // Don't count anything that is mindless
-            if (mind.Mind == null)
-                continue;
-
-            // Not too worried about feeding enemies
-            if (mind.Mind.HasAntag)
+            // Don't count anything that is mindless, not too worried about feeding enemies
+            if (_roles.MindIsAntagonist(mindContainer.Mind))
                 continue;
 
             if (thirstQ.TryGetComponent(uid, out var thirst))

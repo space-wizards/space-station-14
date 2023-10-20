@@ -133,8 +133,6 @@ public sealed partial class AnomalySystem
             break;
         }
 
-        _adminLogger.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {toSpawn} was spawned at {targetCoords}.");
-        _chat.SendAdminAnnouncement($"Anomaly {toSpawn} was spawned at {targetCoords}.");
         Spawn(toSpawn, targetCoords);
     }
 

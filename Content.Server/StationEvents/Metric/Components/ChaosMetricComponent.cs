@@ -4,7 +4,7 @@
 ///   Defines basic data for a station metric
 /// </summary>
 [RegisterComponent]
-public sealed class ChaosMetricComponent : Component
+public sealed partial class ChaosMetricComponent : Component
 {
 
 }

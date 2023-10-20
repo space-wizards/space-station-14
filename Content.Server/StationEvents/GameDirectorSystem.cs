@@ -7,6 +7,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents.Metric;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;

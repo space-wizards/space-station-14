@@ -4,13 +4,13 @@ using Content.Shared.FixedPoint;
 namespace Content.Server.StationEvents.Metric.Components;
 
 [RegisterComponent, Access(typeof(JaniMetric))]
-public sealed class JaniMetricComponent : Component
+public sealed partial class JaniMetricComponent : Component
 {
     /// <summary>
     ///   The cost of each puddle
     /// </summary>
     [DataField("puddles"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<string, FixedPoint2> Puddles =
+    public Dictionary<string, FixedPoint2> Puddles =
         new()
         {
             { "Water", 2 },
@@ -29,12 +29,12 @@ public sealed class JaniMetricComponent : Component
         };
 
     [DataField("puddleDefault"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly FixedPoint2 PuddleDefault = 4.0f;
+    public FixedPoint2 PuddleDefault = 4.0f;
 
     /// <summary>
     ///   How many ml of the substance qualify as the point values described above
     /// </summary>
     [DataField("baselineQty"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly float BaselineQty = 200.0f;
+    public float BaselineQty = 200.0f;
 
 }
