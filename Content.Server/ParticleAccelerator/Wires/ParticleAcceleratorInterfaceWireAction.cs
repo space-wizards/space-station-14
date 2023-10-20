@@ -16,20 +16,20 @@ public sealed partial class ParticleAcceleratorKeyboardWireAction : ComponentWir
         return component.InterfaceDisabled ? StatusLightState.BlinkingFast : StatusLightState.On;
     }
 
-    public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Cut(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> controller)
     {
-        controller.InterfaceDisabled = true;
+        controller.Comp.InterfaceDisabled = true;
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Mend(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> controller)
     {
-        controller.InterfaceDisabled = false;
+        controller.Comp.InterfaceDisabled = false;
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override void Pulse(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> controller)
     {
-        controller.InterfaceDisabled = !controller.InterfaceDisabled;
+        controller.Comp.InterfaceDisabled = !controller.Comp.InterfaceDisabled;
     }
 }

@@ -29,20 +29,20 @@ public sealed partial class DoorTimingWireAction : ComponentWireAction<AirlockCo
 
     public override object StatusKey { get; } = AirlockWireStatus.TimingIndicator;
 
-    public override bool Cut(EntityUid user, Wire wire, AirlockComponent door)
+    public override bool Cut(EntityUid user, Wire wire, Entity<AirlockComponent> door)
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
         EntityManager.System<SharedAirlockSystem>().SetAutoCloseDelayModifier(door, 0.01f);
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, AirlockComponent door)
+    public override bool Mend(EntityUid user, Wire wire, Entity<AirlockComponent> door)
     {
         EntityManager.System<SharedAirlockSystem>().SetAutoCloseDelayModifier(door, 1f);
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, AirlockComponent door)
+    public override void Pulse(EntityUid user, Wire wire, Entity<AirlockComponent> door)
     {
         EntityManager.System<SharedAirlockSystem>().SetAutoCloseDelayModifier(door, 0.5f);
         WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitTimingTimerFinish, wire));

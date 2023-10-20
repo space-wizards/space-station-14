@@ -32,15 +32,15 @@ public sealed partial class ParticleAcceleratorLimiterWireAction : ComponentWire
         return StatusLightState.On;
     }
 
-    public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Cut(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> controller)
     {
-        controller.MaxStrength = ParticleAcceleratorPowerState.Level3;
+        controller.Comp.MaxStrength = ParticleAcceleratorPowerState.Level3;
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Mend(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> ent)
     {
-
+        var controller = ent.Comp;
         controller.MaxStrength = ParticleAcceleratorPowerState.Level2;
         if (controller.SelectedStrength <= controller.MaxStrength || controller.StrengthLocked)
             return true;
@@ -53,7 +53,7 @@ public sealed partial class ParticleAcceleratorLimiterWireAction : ComponentWire
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override void Pulse(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> controller)
     {
         EntityManager.System<PopupSystem>().PopupEntity(
             Loc.GetString("particle-accelerator-control-box-component-wires-update-limiter-on-pulse"),

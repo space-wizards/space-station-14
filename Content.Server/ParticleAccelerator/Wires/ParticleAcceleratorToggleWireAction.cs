@@ -20,30 +20,30 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
         return component.Enabled ? StatusLightState.On : StatusLightState.BlinkingSlow;
     }
 
-    public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Cut(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
         var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
 
-        controller.CanBeEnabled = false;
+        controller.Comp.CanBeEnabled = false;
         paSystem.SwitchOff(wire.Owner, userSession, controller);
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Mend(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> controller)
     {
-        controller.CanBeEnabled = true;
+        controller.Comp.CanBeEnabled = true;
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override void Pulse(EntityUid user, Wire wire, Entity<ParticleAcceleratorControlBoxComponent> controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
         var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
 
-        if (controller.Enabled)
+        if (controller.Comp.Enabled)
             paSystem.SwitchOff(wire.Owner, userSession, controller);
-        else if (controller.Assembled)
+        else if (controller.Comp.Assembled)
             paSystem.SwitchOn(wire.Owner, userSession, controller);
     }
 }

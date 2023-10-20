@@ -1,4 +1,3 @@
-using Content.Server.Medical.Components;
 using Content.Server.Wires;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.Wires;
@@ -15,23 +14,23 @@ public sealed partial class CryoPodEjectLockWireAction: ComponentWireAction<Cryo
     public override bool LightRequiresPower { get; set; } = false;
 
     public override object? StatusKey { get; } = CryoPodWireActionKey.Key;
-    public override bool Cut(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent)
+    public override bool Cut(EntityUid user, Wire wire, Entity<CryoPodComponent> cryoPodComponent)
     {
-        if (!cryoPodComponent.PermaLocked)
-            cryoPodComponent.Locked = true;
+        if (!cryoPodComponent.Comp.PermaLocked)
+            cryoPodComponent.Comp.Locked = true;
 
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent)
+    public override bool Mend(EntityUid user, Wire wire, Entity<CryoPodComponent> cryoPodComponent)
     {
-        if (!cryoPodComponent.PermaLocked)
-            cryoPodComponent.Locked = false;
+        if (!cryoPodComponent.Comp.PermaLocked)
+            cryoPodComponent.Comp.Locked = false;
 
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent) { }
+    public override void Pulse(EntityUid user, Wire wire, Entity<CryoPodComponent> cryoPodComponent) { }
 
     public override StatusLightState? GetLightState(Wire wire, CryoPodComponent comp)
         => comp.Locked ? StatusLightState.On : StatusLightState.Off;

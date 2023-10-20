@@ -1,10 +1,8 @@
 using Content.Server.Defusable.Components;
 using Content.Server.Defusable.Systems;
-using Content.Server.Popups;
 using Content.Server.Wires;
 using Content.Shared.Defusable;
 using Content.Shared.Wires;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Defusable.WireActions;
 
@@ -21,17 +19,17 @@ public sealed partial class BoltWireAction : ComponentWireAction<DefusableCompon
 
     public override object StatusKey { get; } = DefusableWireStatus.BoltIndicator;
 
-    public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
+    public override bool Cut(EntityUid user, Wire wire, Entity<DefusableComponent> comp)
     {
         return EntityManager.System<DefusableSystem>().BoltWireCut(user, wire, comp);
     }
 
-    public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
+    public override bool Mend(EntityUid user, Wire wire, Entity<DefusableComponent> comp)
     {
         return EntityManager.System<DefusableSystem>().BoltWireMend(user, wire, comp);
     }
 
-    public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public override void Pulse(EntityUid user, Wire wire, Entity<DefusableComponent> comp)
     {
         EntityManager.System<DefusableSystem>().BoltWirePulse(user, wire, comp);
     }
