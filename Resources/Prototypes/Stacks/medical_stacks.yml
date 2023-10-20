@@ -12,7 +12,7 @@
   icon: { sprite: "/Textures/Objects/Specific/Hydroponics/aloe.rsi", state: cream }
   spawn: AloeCream
   maxCount: 10
-  itemSize: 1
+  itemSize: 3
 
 - type: stack
   id: Gauze
