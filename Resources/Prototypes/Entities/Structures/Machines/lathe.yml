@@ -114,6 +114,10 @@
       - FoodPlateSmallPlastic
       - SprayBottle
       - PowerCellSmall
+      - VehicleWheelchairFolded
+      - RollerBedSpawnFolded
+      - CheapRollerBedSpawnFolded
+      - EmergencyRollerBedSpawnFolded
       - MicroManipulatorStockPart
       - MatterBinStockPart
       - CapacitorStockPart
@@ -398,7 +402,7 @@
     staticRecipes:
     - MMI
     - PositronicBrain
-    - Flash
+    - SciFlash
     - BorgModuleCable
     - BorgModuleFireExtinguisher
     - BorgModuleGPS
@@ -664,6 +668,10 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
+      - VehicleWheelchairFolded
+      - RollerBedSpawnFolded
+      - CheapRollerBedSpawnFolded
+      - EmergencyRollerBedSpawnFolded
       - Medkit
       - MedkitBurn
       - MedkitToxin

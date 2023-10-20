@@ -174,12 +174,13 @@ public sealed class CrematoriumSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (act, crem) in EntityQuery<ActiveCrematoriumComponent, CrematoriumComponent>())
+        var query = EntityQueryEnumerator<ActiveCrematoriumComponent, CrematoriumComponent>();
+        while (query.MoveNext(out var uid, out var act, out var crem))
         {
             act.Accumulator += frameTime;
 
             if (act.Accumulator >= crem.CookTime)
-                FinishCooking(act.Owner, crem);
+                FinishCooking(uid, crem);
         }
     }
 }

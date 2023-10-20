@@ -133,7 +133,7 @@ public sealed class DumpableSystem : EntitySystem
         foreach (var entity in dumpQueue)
         {
             var transform = Transform(entity);
-            _container.AttachParentToContainerOrGrid(transform);
+            _container.AttachParentToContainerOrGrid((entity, transform));
             _transformSystem.SetLocalPositionRotation(transform, transform.LocalPosition + _random.NextVector2Box() / 2, _random.NextAngle());
         }
 

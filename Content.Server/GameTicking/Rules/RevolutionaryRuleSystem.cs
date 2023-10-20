@@ -142,9 +142,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var query = QueryActiveRules();
         while (query.MoveNext(out _, out var comp, out _))
         {
-            _antagSelection.EligiblePlayers(comp.RevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
+            _antagSelection.EligiblePlayers(comp.HeadRevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
                 "head-rev-role-greeting", "#5e9cff", out var chosen);
-            GiveHeadRev(chosen, comp.RevPrototypeId, comp);
+            if (chosen.Any())
+                GiveHeadRev(chosen, comp.HeadRevPrototypeId, comp);
+            else
+            {
+                _chatManager.SendAdminAnnouncement(Loc.GetString("rev-no-heads"));
+            }
         }
     }
 
