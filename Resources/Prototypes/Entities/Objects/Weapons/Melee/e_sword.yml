@@ -7,8 +7,7 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 15
-            Heat: 15
+            Heat: 30
             Structural: 4
             Blunt: -4.5
     litDisarmMalus: 0.6
@@ -54,6 +53,9 @@
     malus: 0
   - type: Reflect
     enabled: false
+    reflectProb: 0.50
+    reflects:
+        - Energy
 
 - type: entity
   name: pen
@@ -66,8 +68,7 @@
     secret: true
     litDamageBonus:
         types:
-            Slash: 9
-            Heat: 9
+            Heat: 18
             Blunt: -1
     litDisarmMalus: 0.4
     activateSound: !type:SoundPathSpecifier
@@ -147,8 +148,7 @@
     secret: true
     litDamageBonus:
         types:
-            Slash: 7.5
-            Heat: 7.5
+            Heat: 15
             Blunt: -1
     litDisarmMalus: 0.6
   - type: Sprite
@@ -175,9 +175,7 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 9
-            Heat: 9
-            Structural: 20
+            Heat: 34
             Blunt: -4.5
     litDisarmMalus: 0.7
   - type: MeleeWeapon
@@ -203,5 +201,7 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
     enabled: true
-    reflectProb: .75
+    reflectProb: 1
     spread: 75
+    reflects:
+        - Energy
