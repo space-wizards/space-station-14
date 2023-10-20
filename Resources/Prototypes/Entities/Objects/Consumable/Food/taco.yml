@@ -16,6 +16,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6.66 # Just using the same values as the bun values, since the recipe for taco shells is roughly the same as buns.
+  - type: CookbookDocumentation
+    catagory: "Ingredients"
 # Base
 
 - type: entity
@@ -42,6 +44,8 @@
           Quantity: 4
   - type: Item
     sprite: Objects/Consumable/Food/taco.rsi
+  - type: CookbookDocumentation
+    catagory: "Mexican"
 
 - type: entity
   name: beef taco

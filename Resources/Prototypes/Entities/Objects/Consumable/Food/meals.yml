@@ -34,6 +34,8 @@
       - potatoes
   - type: Sprite
     state: loadedbakedpotato
+  - type: CookbookDocumentation
+    catagory: "PotatoDishes"
 # Tastes like potato.
 
 - type: entity
@@ -212,6 +214,8 @@
   - type: Tag
     tags:
     - Fruit
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 # Tastes like eggplant, cheese.
 
 - type: entity
@@ -284,6 +288,8 @@
   - type: Tag
     tags:
     - Meat
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 # Tastes like meat, cabbage.
 
 - type: entity
@@ -310,6 +316,8 @@
   - type: Tag
     tags:
     - Meat
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 # Tastes like meat, salmon.
 
 - type: entity
@@ -336,6 +344,8 @@
   - type: Tag
     tags:
     - Meat
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 # Tastes like meat, butter.
 
 - type: entity
@@ -364,6 +374,8 @@
   - type: Tag
     tags:
     - Meat
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 # Tastes like meat, smokey sauce.
 
 - type: entity
@@ -464,6 +476,8 @@
       - chocolate
   - type: Sprite
     state: milkape
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 # Tastes like milk, chocolate, the jungle.
 
 - type: entity
@@ -486,6 +500,8 @@
           Quantity: 10
         - ReagentId: Allicin
           Quantity: 5
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 # Tastes like pain.
 
 - type: entity

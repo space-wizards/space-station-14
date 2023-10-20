@@ -4,8 +4,8 @@
               Margin="10 0 10 0"
               HorizontalAlignment="Stretch"
               HorizontalExpand="True">
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
-        <RichTextLabel Name="IngredientsLabel"
+    <BoxContainer Name="IngredientsLabel" Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+        <RichTextLabel 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"/>
     </BoxContainer>
@@ -15,8 +15,11 @@
         <Label Name="TimeLabel" HorizontalAlignment="Center"/>
     </BoxContainer>
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
-        <RichTextLabel Name="ProductLabel"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+        <BoxContainer>
+            <LayeredTextureRect Name="ProductIcon"/>
+            <RichTextLabel Name="ProductLabel"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+        </BoxContainer>
     </BoxContainer>
 </BoxContainer>

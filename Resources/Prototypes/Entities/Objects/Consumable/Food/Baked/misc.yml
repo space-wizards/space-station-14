@@ -17,6 +17,8 @@
           Quantity: 5
   - type: Item
     size: 1
+  - type: CookbookDocumentation
+    catagory: "Bakes"
 
 # Muffins/Buns
 
@@ -131,6 +133,8 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+  - type: CookbookDocumentation
+    catagory: "Cookies"
 
 - type: entity
   name: raisin cookie
@@ -152,6 +156,8 @@
   - type: Tag
     tags:
     - Fruit
+  - type: CookbookDocumentation
+    catagory: "Cookies"
 
 - type: entity
   name: sugar cookie
@@ -161,6 +167,8 @@
   components:
   - type: Sprite
     state: cookie-sugar
+  - type: CookbookDocumentation
+    catagory: "Cookies"
 
 # Nuggets
 
@@ -202,6 +210,8 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 
 # Waffles/Pancakes
 
@@ -516,8 +526,6 @@
   - type: SliceableFood
     count: 6
     slice: FoodBakedBrownie
-  - type: CookbookDocumentation
-    catagory: "Bakes"
 
 - type: entity
   name: brownie

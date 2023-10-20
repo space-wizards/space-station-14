@@ -14,5 +14,6 @@ guidebook-reagent-effects-metabolism-group-rate = [bold]{$group}[/bold] [color=g
 guidebook-reagent-physical-description = Seems to be {$description}.
 
 guidebook-reaction-prototype-display = [bold]{$name}[/bold] \[{$ratio}\]
+guidebook-catalyst-prototype-display = [bolditalic]{$name}[/bolditalic] \[{$ratio}\]
 guidebook-reaction-mix = Mix
 guidebook-reaction-mix-and-heat = Mix at above {$temperature}K

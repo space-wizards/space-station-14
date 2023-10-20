@@ -576,6 +576,8 @@
     layers:
     - state: bowl
     - state: spacelibertyduff
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 
 - type: entity
   name: amanita jelly
@@ -599,6 +601,8 @@
           Quantity: 6
         - ReagentId: Amatoxin
           Quantity: 6
+  - type: CookbookDocumentation
+    catagory: "OtherMeals"
 
 # Soup
 

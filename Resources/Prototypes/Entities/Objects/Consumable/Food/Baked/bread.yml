@@ -43,6 +43,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
+  - type: CookbookDocumentation
+    catagory: "Slices"
 
 # Custom Bread Example
 

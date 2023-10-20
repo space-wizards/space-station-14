@@ -46,6 +46,8 @@
           Quantity: 1
   - type: Item
     size: 5
+  - type: CookbookDocumentation
+    catagory: "Slices"
 
 # Custom Cake Example
 

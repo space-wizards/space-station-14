@@ -98,7 +98,7 @@ public sealed partial class GuideReactionEmbed : BoxContainer, IDocumentTag, ISe
         var i = 0;
         foreach (var (product, reactant) in reactionPrototype.Reactants)
         {
-            reactantMsg.AddMarkup(Loc.GetString("guidebook-reaction-prototype-display",
+            reactantMsg.AddMarkup(Loc.GetString(reactant.Catalyst ? "guidebook-catalyst-prototype-display" : "guidebook-reaction-prototype-display",
                 ("name", _prototype.Index<ReagentPrototype>(product).LocalizedName), ("ratio", reactant.Amount.ToString() + (reactionPrototype.Quantized ? "u" : ""))));
             i++;
             if (i < reactantsCount)

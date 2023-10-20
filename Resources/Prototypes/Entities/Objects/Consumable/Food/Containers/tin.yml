@@ -50,6 +50,8 @@
     damageContainer: Inorganic
   - type: StaticPrice
     price: 50
+  - type: CookbookDocumentation
+    catagory: "Snacks"
 
 - type: entity
   abstract: true

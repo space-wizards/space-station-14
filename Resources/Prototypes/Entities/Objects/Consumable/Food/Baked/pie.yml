@@ -47,6 +47,8 @@
           Quantity: 1.2
         - ReagentId: Vitamin
           Quantity: 1
+  - type: CookbookDocumentation
+    catagory: "Slices"
 
 # Pie
 
