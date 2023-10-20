@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Payload.Components;
@@ -95,8 +95,6 @@ public sealed class PayloadSystem : EntitySystem
 
             if (_componentFactory.GetComponent(registration.Type) is not Component component)
                 continue;
-
-            component.Owner = uid;
 
             var temp = (object) component;
             _serializationManager.CopyTo(data.Component, ref temp);

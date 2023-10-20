@@ -408,9 +408,9 @@ namespace Content.Client.Light.Components
         /// <summary>
         /// If we disable all the light behaviours we want to be able to revert the light to its original state.
         /// </summary>
-        private void CopyLightSettings(string property)
+        private void CopyLightSettings(EntityUid uid, string property)
         {
-            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
+            if (_entMan.TryGetComponent(uid, out PointLightComponent? light))
             {
                 var propertyValue = AnimationHelper.GetAnimatableProperty(light, property);
                 if (propertyValue != null)
@@ -420,7 +420,7 @@ namespace Content.Client.Light.Components
             }
             else
             {
-                Logger.Warning($"{_entMan.GetComponent<MetaDataComponent>(Owner).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
+                Logger.Warning($"{_entMan.GetComponent<MetaDataComponent>(uid).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
             }
         }
 
@@ -431,20 +431,23 @@ namespace Content.Client.Light.Components
         /// </summary>
         public void StartLightBehaviour(string id = "")
         {
-            if (!_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            var uid = Owner;
+            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
             {
                 return;
             }
+
+            var animations = _entMan.System<AnimationPlayerSystem>();
 
             foreach (var container in Animations)
             {
                 if (container.LightBehaviour.ID == id || id == string.Empty)
                 {
-                    if (!animation.HasRunningAnimation(KeyPrefix + container.Key))
+                    if (!animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key))
                     {
-                        CopyLightSettings(container.LightBehaviour.Property);
+                        CopyLightSettings(uid, container.LightBehaviour.Property);
                         container.LightBehaviour.UpdatePlaybackValues(container.Animation);
-                        animation.Play(container.Animation, KeyPrefix + container.Key);
+                        animations.Play(uid, animation, container.Animation, KeyPrefix + container.Key);
                     }
                 }
             }
@@ -460,20 +463,22 @@ namespace Content.Client.Light.Components
         /// <param name="resetToOriginalSettings">Should the light have its original settings applied?</param>
         public void StopLightBehaviour(string id = "", bool removeBehaviour = false, bool resetToOriginalSettings = false)
         {
-            if (!_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            var uid = Owner;
+            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
             {
                 return;
             }
 
             var toRemove = new List<AnimationContainer>();
+            var animations = _entMan.System<AnimationPlayerSystem>();
 
             foreach (var container in Animations)
             {
                 if (container.LightBehaviour.ID == id || id == string.Empty)
                 {
-                    if (animation.HasRunningAnimation(KeyPrefix + container.Key))
+                    if (animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key))
                     {
-                        animation.Stop(KeyPrefix + container.Key);
+                        animations.Stop(uid, animation, KeyPrefix + container.Key);
                     }
 
                     if (removeBehaviour)
@@ -488,7 +493,7 @@ namespace Content.Client.Light.Components
                 Animations.Remove(container);
             }
 
-            if (resetToOriginalSettings && _entMan.TryGetComponent(Owner, out PointLightComponent? light))
+            if (resetToOriginalSettings && _entMan.TryGetComponent(uid, out PointLightComponent? light))
             {
                 foreach (var (property, value) in _originalPropertyValues)
                 {
@@ -505,12 +510,14 @@ namespace Content.Client.Light.Components
         /// <returns>Whether at least one behaviour is running, false if none is.</returns>
         public bool HasRunningBehaviours()
         {
-            if (!_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            var uid = Owner;
+            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
             {
                 return false;
             }
 
-            return Animations.Any(container => animation.HasRunningAnimation(KeyPrefix + container.Key));
+            var animations = _entMan.System<AnimationPlayerSystem>();
+            return Animations.Any(container => animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key));
         }
 
         /// <summary>

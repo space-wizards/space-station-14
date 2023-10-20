@@ -9,6 +9,7 @@
   parent: MobHuman
   id: MobHumanSyndicateAgent
   name: Syndicate Agent
+  suffix: Human
   components:
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]

@@ -88,7 +88,7 @@ namespace Content.Shared.Containers.ItemSlots
         public void AddItemSlot(EntityUid uid, string id, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
         {
             itemSlots ??= EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
-            DebugTools.Assert(itemSlots.Owner == uid);
+            DebugTools.AssertOwner(uid, itemSlots);
 
             if (itemSlots.Slots.TryGetValue(id, out var existing))
             {

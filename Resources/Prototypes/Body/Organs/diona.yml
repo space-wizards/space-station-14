@@ -19,7 +19,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: FlavorProfile
     flavors:
@@ -46,9 +46,11 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Brain
+  - type: InputMover
+  - type: Examiner
   - type: Lung #lungs in they head. why they there tho?
   - type: Metabolizer
     removeEmpty: true
@@ -85,7 +87,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Stomach
   - type: Metabolizer
