@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Weather;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -17,6 +18,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -75,8 +77,9 @@ public sealed class WeatherSystem : SharedWeatherSystem
         // Work out tiles nearby to determine volume.
         if (TryComp<MapGridComponent>(entXform.GridUid, out var grid))
         {
+            var gridId = entXform.GridUid.Value;
             // Floodfill to the nearest tile and use that for audio.
-            var seed = grid.GetTileRef(entXform.Coordinates);
+            var seed = _mapSystem.GetTileRef(gridId, grid, entXform.Coordinates);
             var frontier = new Queue<TileRef>();
             frontier.Enqueue(seed);
             // If we don't have a nearest node don't play any sound.
@@ -101,12 +104,12 @@ public sealed class WeatherSystem : SharedWeatherSystem
                         {
                             if (Math.Abs(x) == 1 && Math.Abs(y) == 1 ||
                                 x == 0 && y == 0 ||
-                                (new Vector2(x, y) + node.GridIndices - seed.GridIndices).Length > 3)
+                                (new Vector2(x, y) + node.GridIndices - seed.GridIndices).Length() > 3)
                             {
                                 continue;
                             }
 
-                            frontier.Enqueue(grid.GetTileRef(new Vector2i(x, y) + node.GridIndices));
+                            frontier.Enqueue(_mapSystem.GetTileRef(gridId, grid, new Vector2i(x, y) + node.GridIndices));
                         }
                     }
 
@@ -114,7 +117,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 }
 
                 nearestNode = new EntityCoordinates(entXform.GridUid.Value,
-                    (Vector2) node.GridIndices + (grid.TileSize / 2f));
+                    (Vector2) node.GridIndices + (grid.TileSizeHalfVector));
                 break;
             }
 
@@ -125,11 +128,11 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 var entPos = _transform.GetWorldPosition(entXform);
                 var sourceRelative = nearestNode.Value.ToMap(EntityManager).Position - entPos;
 
-                if (sourceRelative.LengthSquared > 1f)
+                if (sourceRelative.LengthSquared() > 1f)
                 {
                     occlusion = _physics.IntersectRayPenetration(entXform.MapID,
-                        new CollisionRay(entPos, sourceRelative.Normalized, _audio.OcclusionCollisionMask),
-                        sourceRelative.Length, stream.TrackingEntity);
+                        new CollisionRay(entPos, sourceRelative.Normalized(), _audio.OcclusionCollisionMask),
+                        sourceRelative.Length(), stream.TrackingEntity);
                 }
             }
         }

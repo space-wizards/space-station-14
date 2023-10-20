@@ -42,6 +42,7 @@ flavor-base-cheap = cheap
 flavor-base-piquant = piquant
 flavor-base-sharp = sharp
 flavor-base-syrupy = syrupy
+flavor-base-spaceshroom = mysterious
 
 # lmao
 flavor-base-terrible = terrible
@@ -102,6 +103,7 @@ flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
 flavor-complex-garlic = like garlic
 flavor-complex-grape = like grapes
+flavor-complex-berry = like berries
 flavor-complex-meatballs = like meatballs
 flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
@@ -145,6 +147,8 @@ flavor-complex-electrons = like electrons
 flavor-complex-parents = like someone's parents
 flavor-complex-plastic = like plastic
 flavor-complex-glue = like glue
+flavor-complex-spaceshroom-cooked = like space umami
+flavor-complex-lost-friendship = like lost friendship
 
 # Drink-specific flavors.
 
@@ -166,6 +170,7 @@ flavor-complex-rum = like fermented sugar
 flavor-complex-coffee-liquor = like strong, bitter coffee
 flavor-complex-whiskey = like molasses
 flavor-complex-shitty-wine = like grape rinds
+flavor-complex-champagne = like freshly baked bread
 flavor-complex-iced-tea = like iced tea
 flavor-complex-coffee = like coffee
 flavor-complex-milk = like milk

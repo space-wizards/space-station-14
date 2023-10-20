@@ -5,13 +5,15 @@ using Content.Shared.Construction;
 using Content.Shared.Tag;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Construction.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    sealed class FixRotationsCommand : IConsoleCommand
+    public sealed class FixRotationsCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         // ReSharper disable once StringLiteralTypo
         public string Command => "fixrotations";
         public string Description => "Sets the rotation of all occluders, low walls and windows to south.";
@@ -20,9 +22,8 @@ namespace Content.Server.Construction.Commands
         public void Execute(IConsoleShell shell, string argsOther, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            var entityManager = IoCManager.Resolve<IEntityManager>();
             EntityUid? gridId;
-            var xformQuery = entityManager.GetEntityQuery<TransformComponent>();
+            var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
             switch (args.Length)
             {
@@ -36,7 +37,7 @@ namespace Content.Server.Construction.Commands
                     gridId = xformQuery.GetComponent(playerEntity).GridUid;
                     break;
                 case 1:
-                    if (!EntityUid.TryParse(args[0], out var id))
+                    if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
                     {
                         shell.WriteError($"{args[0]} is not a valid entity.");
                         return;
@@ -49,25 +50,24 @@ namespace Content.Server.Construction.Commands
                     return;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
             {
                 shell.WriteError($"No grid exists with id {gridId}");
                 return;
             }
 
-            if (!entityManager.EntityExists(grid.Owner))
+            if (!_entManager.EntityExists(gridId))
             {
                 shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
             }
 
             var changed = 0;
-            var tagSystem = entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
+            var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
 
-            foreach (var child in xformQuery.GetComponent(grid.Owner).ChildEntities)
+            foreach (var child in xformQuery.GetComponent(gridId.Value).ChildEntities)
             {
-                if (!entityManager.EntityExists(child))
+                if (!_entManager.EntityExists(child))
                 {
                     continue;
                 }
@@ -76,14 +76,14 @@ namespace Content.Server.Construction.Commands
 
                 // Occluders should only count if the state of it right now is enabled.
                 // This prevents issues with edge firelocks.
-                if (entityManager.TryGetComponent<OccluderComponent>(child, out var occluder))
+                if (_entManager.TryGetComponent<OccluderComponent>(child, out var occluder))
                 {
                     valid |= occluder.Enabled;
                 }
                 // low walls & grilles
-                valid |= entityManager.HasComponent<SharedCanBuildWindowOnTopComponent>(child);
+                valid |= _entManager.HasComponent<SharedCanBuildWindowOnTopComponent>(child);
                 // cables
-                valid |= entityManager.HasComponent<CableComponent>(child);
+                valid |= _entManager.HasComponent<CableComponent>(child);
                 // anything else that might need this forced
                 valid |= tagSystem.HasTag(child, "ForceFixRotations");
                 // override

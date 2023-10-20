@@ -1,4 +1,4 @@
-﻿- type: guideEntry
+- type: guideEntry
   id: Jobs
   name: guide-entry-jobs
   text: "/ServerInfo/Guidebook/Jobs.xml"
@@ -10,6 +10,7 @@
   - Science
   - Security
   - Janitorial
+  - Cargo
   - Salvage
   - Medical
 
@@ -22,6 +23,7 @@
   id: Chemicals
   name: guide-entry-chemicals
   text: "/ServerInfo/Guidebook/Chemicals.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Janitorial
@@ -32,6 +34,7 @@
   id: Bartender
   name: guide-entry-bartender
   text: "/ServerInfo/Guidebook/Service/Bartender.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Chef

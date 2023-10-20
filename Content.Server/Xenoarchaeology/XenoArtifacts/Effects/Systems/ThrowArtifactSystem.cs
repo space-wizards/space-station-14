@@ -1,9 +1,13 @@
-﻿using Content.Server.Maps;
+﻿using System.Numerics;
+using Content.Server.Maps;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Ghost;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
@@ -28,7 +32,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
         if (_map.TryGetGrid(xform.GridUid, out var grid))
         {
             var tiles = grid.GetTilesIntersecting(
-                Box2.CenteredAround(xform.WorldPosition, (component.Range*2, component.Range)));
+                Box2.CenteredAround(xform.WorldPosition, new Vector2(component.Range * 2, component.Range)));
 
             foreach (var tile in tiles)
             {
@@ -40,8 +44,13 @@ public sealed class ThrowArtifactSystem : EntitySystem
         }
 
         var lookup = _lookup.GetEntitiesInRange(uid, component.Range, LookupFlags.Dynamic | LookupFlags.Sundries);
+        var physQuery = GetEntityQuery<PhysicsComponent>();
         foreach (var ent in lookup)
         {
+            if (physQuery.TryGetComponent(ent, out var phys)
+                && (phys.CollisionMask & (int) CollisionGroup.GhostImpassable) != 0)
+                continue;
+
             var tempXform = Transform(ent);
 
             var foo = tempXform.MapPosition.Position - xform.MapPosition.Position;

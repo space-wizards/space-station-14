@@ -1,10 +1,9 @@
 using Content.Client.NetworkConfigurator.Systems;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Random;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 
 namespace Content.Client.NetworkConfigurator;
 
@@ -14,7 +13,8 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
     [Dependency] private readonly IRobustRandom _random = default!;
     private readonly DeviceListSystem _deviceListSystem;
 
-    private Dictionary<EntityUid, Color> _colors = new();
+    public Dictionary<EntityUid, Color> Colors = new();
+    public EntityUid? Action;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -25,31 +25,27 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
         _deviceListSystem = _entityManager.System<DeviceListSystem>();
     }
 
-    public void ClearEntity(EntityUid uid)
-    {
-        _colors.Remove(uid);
-    }
-
     protected override void Draw(in OverlayDrawArgs args)
     {
-        foreach (var tracker in _entityManager.EntityQuery<NetworkConfiguratorActiveLinkOverlayComponent>())
+        var query = _entityManager.EntityQueryEnumerator<NetworkConfiguratorActiveLinkOverlayComponent>();
+        while (query.MoveNext(out var uid, out _))
         {
-            if (_entityManager.Deleted(tracker.Owner) || !_entityManager.TryGetComponent(tracker.Owner, out DeviceListComponent? deviceList))
+            if (_entityManager.Deleted(uid) || !_entityManager.TryGetComponent(uid, out DeviceListComponent? deviceList))
             {
-                _entityManager.RemoveComponentDeferred<NetworkConfiguratorActiveLinkOverlayComponent>(tracker.Owner);
+                _entityManager.RemoveComponentDeferred<NetworkConfiguratorActiveLinkOverlayComponent>(uid);
                 continue;
             }
 
-            if (!_colors.TryGetValue(tracker.Owner, out var color))
+            if (!Colors.TryGetValue(uid, out var color))
             {
                 color = new Color(
                     _random.Next(0, 255),
                     _random.Next(0, 255),
                     _random.Next(0, 255));
-                _colors.Add(tracker.Owner, color);
+                Colors.Add(uid, color);
             }
 
-            var sourceTransform = _entityManager.GetComponent<TransformComponent>(tracker.Owner);
+            var sourceTransform = _entityManager.GetComponent<TransformComponent>(uid);
             if (sourceTransform.MapID == MapId.Nullspace)
             {
                 // Can happen if the item is outside the client's view. In that case,
@@ -57,7 +53,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
                 continue;
             }
 
-            foreach (var device in _deviceListSystem.GetAllDevices(tracker.Owner, deviceList))
+            foreach (var device in _deviceListSystem.GetAllDevices(uid, deviceList))
             {
                 if (_entityManager.Deleted(device))
                 {
@@ -70,7 +66,7 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
                     continue;
                 }
 
-                args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, _colors[tracker.Owner]);
+                args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, Colors[uid]);
             }
         }
     }

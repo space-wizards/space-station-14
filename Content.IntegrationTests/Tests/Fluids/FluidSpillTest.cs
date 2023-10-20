@@ -1,14 +1,9 @@
 #nullable enable
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -23,10 +18,15 @@ public sealed class FluidSpill
 {
     private static PuddleComponent? GetPuddle(IEntityManager entityManager, MapGridComponent mapGrid, Vector2i pos)
     {
+        return GetPuddleEntity(entityManager, mapGrid, pos)?.Comp;
+    }
+
+    private static Entity<PuddleComponent>? GetPuddleEntity(IEntityManager entityManager, MapGridComponent mapGrid, Vector2i pos)
+    {
         foreach (var uid in mapGrid.GetAnchoredEntities(pos))
         {
             if (entityManager.TryGetComponent(uid, out PuddleComponent? puddleComponent))
-                return puddleComponent;
+                return (uid, puddleComponent);
         }
 
         return null;
@@ -35,8 +35,8 @@ public sealed class FluidSpill
     [Test]
     public async Task SpillCorner()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
@@ -53,19 +53,19 @@ public sealed class FluidSpill
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
-            var grid = mapManager.CreateGrid(mapId);
+            var grid = mapManager.CreateGridEntity(mapId);
             gridId = grid.Owner;
 
             for (var x = 0; x < 3; x++)
             {
                 for (var y = 0; y < 3; y++)
                 {
-                    grid.SetTile(new Vector2i(x, y), new Tile(1));
+                    grid.Comp.SetTile(new Vector2i(x, y), new Tile(1));
                 }
             }
 
-            entityManager.SpawnEntity("WallReinforced", grid.GridTileToLocal(new Vector2i(0, 1)));
-            entityManager.SpawnEntity("WallReinforced", grid.GridTileToLocal(new Vector2i(1, 0)));
+            entityManager.SpawnEntity("WallReinforced", grid.Comp.GridTileToLocal(new Vector2i(0, 1)));
+            entityManager.SpawnEntity("WallReinforced", grid.Comp.GridTileToLocal(new Vector2i(1, 0)));
         });
 
 
@@ -75,8 +75,10 @@ public sealed class FluidSpill
             var grid = mapManager.GetGrid(gridId);
             var solution = new Solution("Blood", FixedPoint2.New(100));
             var tileRef = grid.GetTileRef(puddleOrigin);
+#pragma warning disable NUnit2045 // Interdependent tests
             Assert.That(puddleSystem.TrySpillAt(tileRef, solution, out _), Is.True);
             Assert.That(GetPuddle(entityManager, grid, puddleOrigin), Is.Not.Null);
+#pragma warning restore NUnit2045
         });
 
         var sTimeToWait = (int) Math.Ceiling(2f * gameTiming.TickRate);
@@ -85,10 +87,12 @@ public sealed class FluidSpill
         await server.WaitAssertion(() =>
         {
             var grid = mapManager.GetGrid(gridId);
-            var puddle = GetPuddle(entityManager, grid, puddleOrigin);
+            var puddle = GetPuddleEntity(entityManager, grid, puddleOrigin);
 
+#pragma warning disable NUnit2045 // Interdependent tests
             Assert.That(puddle, Is.Not.Null);
-            Assert.That(puddleSystem.CurrentVolume(puddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(100)));
+            Assert.That(puddleSystem.CurrentVolume(puddle!.Value.Owner, puddle), Is.EqualTo(FixedPoint2.New(100)));
+#pragma warning restore NUnit2045
 
             for (var x = 0; x < 3; x++)
             {
@@ -106,6 +110,6 @@ public sealed class FluidSpill
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

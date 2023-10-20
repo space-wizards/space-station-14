@@ -1,4 +1,3 @@
-using Content.Shared.Parallax.Biomes;
 using Content.Shared.Weather;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -7,24 +6,23 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
 [Prototype("salvageWeatherMod")]
-public sealed class SalvageWeatherMod : IPrototype, ISalvageMod
+public sealed class SalvageWeatherMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; } = string.Empty;
+    [DataField("desc")] public string Description { get; private set; } = string.Empty;
+
+    /// <inheritdoc/>
+    [DataField("cost")]
+    public float Cost { get; private set; } = 0f;
+
+    /// <inheritdoc/>
+    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeModPrototype>))]
+    public List<string>? Biomes { get; private set; } = null;
 
     /// <summary>
-    /// Cost for difficulty modifiers.
+    /// Weather prototype to use on the planet.
     /// </summary>
-    [DataField("cost")]
-    public float Cost { get; } = 0f;
-
     [DataField("weather", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<WeatherPrototype>))]
     public string WeatherPrototype = string.Empty;
-
-    /// <summary>
-    /// Whitelist for biomes. If empty assumed any allowed.
-    /// </summary>
-    [DataField("biomes", customTypeSerializer:typeof(PrototypeIdListSerializer<BiomeTemplatePrototype>))]
-    public List<string> Biomes = new();
 }

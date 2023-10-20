@@ -58,7 +58,7 @@ namespace Content.Client.Physics.Controllers
         {
             Physics.UpdateIsPredicted(uid);
             Physics.UpdateIsPredicted(component.RelayEntity);
-            if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
+            if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
@@ -66,7 +66,7 @@ namespace Content.Client.Physics.Controllers
         {
             Physics.UpdateIsPredicted(uid);
             Physics.UpdateIsPredicted(component.RelayEntity);
-            if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
+            if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
@@ -87,7 +87,7 @@ namespace Content.Client.Physics.Controllers
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player)
                 return;
 
-            if (TryComp<RelayInputMoverComponent>(player, out var relayMover))
+            if (RelayQuery.TryGetComponent(player, out var relayMover))
                 HandleClientsideMovement(relayMover.RelayEntity, frameTime);
 
             HandleClientsideMovement(player, frameTime);
@@ -95,15 +95,8 @@ namespace Content.Client.Physics.Controllers
 
         private void HandleClientsideMovement(EntityUid player, float frameTime)
         {
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var moverQuery = GetEntityQuery<InputMoverComponent>();
-            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
-            var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
-            var pullableQuery = GetEntityQuery<SharedPullableComponent>();
-            var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
-
-            if (!moverQuery.TryGetComponent(player, out var mover) ||
-                !xformQuery.TryGetComponent(player, out var xform))
+            if (!MoverQuery.TryGetComponent(player, out var mover) ||
+                !XformQuery.TryGetComponent(player, out var xform))
             {
                 return;
             }
@@ -112,17 +105,17 @@ namespace Content.Client.Physics.Controllers
             PhysicsComponent? body;
             var xformMover = xform;
 
-            if (mover.ToParent && HasComp<RelayInputMoverComponent>(xform.ParentUid))
+            if (mover.ToParent && RelayQuery.HasComponent(xform.ParentUid))
             {
-                if (!TryComp(xform.ParentUid, out body) ||
-                    !TryComp(xform.ParentUid, out xformMover))
+                if (!PhysicsQuery.TryGetComponent(xform.ParentUid, out body) ||
+                    !XformQuery.TryGetComponent(xform.ParentUid, out xformMover))
                 {
                     return;
                 }
 
                 physicsUid = xform.ParentUid;
             }
-            else if (!TryComp(player, out body))
+            else if (!PhysicsQuery.TryGetComponent(player, out body))
             {
                 return;
             }
@@ -134,13 +127,7 @@ namespace Content.Client.Physics.Controllers
                 physicsUid,
                 body,
                 xformMover,
-                frameTime,
-                xformQuery,
-                moverQuery,
-                mobMoverQuery,
-                relayTargetQuery,
-                pullableQuery,
-                modifierQuery);
+                frameTime);
         }
 
         protected override bool CanSound()

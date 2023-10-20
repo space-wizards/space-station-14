@@ -37,6 +37,9 @@
   components:
   - type: Sprite
     state: muffin-berry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: cherry muffin
@@ -46,6 +49,9 @@
   components:
   - type: Sprite
     state: muffin-cherry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: bluecherry muffin
@@ -55,6 +61,9 @@
   components:
   - type: Sprite
     state: muffin-bluecherry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: honey bun #TODO honey
@@ -138,6 +147,9 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: sugar cookie
@@ -199,8 +211,6 @@
   id: FoodBakedPancake
   description: A fluffy pancake. The softer, superior relative of the waffle.
   components:
-  # - type: Food
-  #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
     count: 1
@@ -246,6 +256,9 @@
       map: ["pancakes9"]
       visible: false
   - type: Appearance
+  - type: Tag
+    tags:
+    - Pancake
 
 - type: entity
   name: blueberry pancake
@@ -253,8 +266,6 @@
   id: FoodBakedPancakeBb
   description: A fluffy and delicious blueberry pancake.
   components:
-  # - type: Food
-  #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
     count: 1
@@ -276,6 +287,10 @@
       map: ["pancakesbb3"]
       visible: false
   - type: Appearance
+  - type: Tag
+    tags:
+    - Pancake
+    - Fruit
 
 - type: entity
   name: chocolate chip pancake
@@ -283,8 +298,6 @@
   id: FoodBakedPancakeCc
   description: A fluffy and delicious chocolate chip pancake.
   components:
-  # - type: Food
-  #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
     count: 1
@@ -315,6 +328,9 @@
           Quantity: 5
         - ReagentId: Theobromine
           Quantity: 1
+  - type: Tag
+    tags:
+    - Pancake
 
 - type: entity
   name: waffles
@@ -424,7 +440,7 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
-      
+
 - type: entity
   name: dumplings
   parent: FoodBakedBase
@@ -432,7 +448,7 @@
   description: Average recipe for meat in doughs.
   components:
   - type: Sprite
-    state: dumplings 
+    state: dumplings
   - type: SolutionContainerManager
     solutions:
       food:
@@ -442,4 +458,156 @@
           Quantity: 8
         - ReagentId: Protein
           Quantity: 2
-            
+
+- type: entity
+  name: chèvre chaud
+  parent: FoodBakedBase
+  id: FoodBakedChevreChaud
+  description: A disk of slightly melted chèvre flopped on top of a crostini, and toasted all-round.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - nutty
+      - creamy
+      - smokey
+  - type: Sprite
+    state: chevrechaud
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 0.5
+
+- type: entity
+  name: brownies
+  parent: FoodBakedBase
+  id: FoodBakedBrownieBatch
+  description: A pan of brownies.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - chocolate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/brownie.rsi
+    state: brownie-batch
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 78
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Theobromine
+          Quantity: 18
+  - type: SliceableFood
+    count: 6
+    slice: FoodBakedBrownie
+
+- type: entity
+  name: brownie
+  parent: FoodBakedBase
+  id: FoodBakedBrownie
+  suffix: Fresh
+  description: A fresh baked brownie.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - chocolate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: mre-brownie-open
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 13
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Theobromine
+          Quantity: 3
+
+- type: entity
+  name: special brownies
+  parent: FoodBakedBase
+  id: FoodBakedCannabisBrownieBatch
+  description: A pan of "special" brownies.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - magical
+      - chocolate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/brownie.rsi
+    state: brownie-batch
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 228
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Theobromine
+          Quantity: 18
+        - ReagentId: THC
+          Quantity: 150
+  - type: SliceableFood
+    count: 6
+    slice: FoodBakedCannabisBrownie
+
+- type: entity
+  name: special brownie
+  parent: FoodBakedBase
+  id: FoodBakedCannabisBrownie
+  description: A "special" brownie.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - magical
+      - chocolate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: mre-brownie-open
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 38
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Theobromine
+          Quantity: 3
+        - ReagentId: THC
+          Quantity: 25
+
+- type: entity
+  name: onion rings
+  parent: FoodBakedBase
+  id: FoodOnionRings
+  description: You can eat it or propose to your loved ones.
+  components:
+    - type: FlavorProfile
+      flavors:
+        - onion
+        - oily
+    - type: Sprite
+      state: onionrings
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 1
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 1
+          - ReagentId: Allicin
+            Quantity: 1
+          - ReagentId: Vitamin
+            Quantity: 1

@@ -44,21 +44,22 @@ namespace Content.Client.Shuttles.Systems
         {
             if (args.Current is not PilotComponentState state) return;
 
-            var console = state.Console.GetValueOrDefault();
-            if (!console.IsValid())
+            var console = EnsureEntity<PilotComponent>(state.Console, uid);
+
+            if (console == null)
             {
                 component.Console = null;
                 _input.Contexts.SetActiveContext("human");
                 return;
             }
 
-            if (!TryComp<ShuttleConsoleComponent>(console, out var shuttleConsoleComponent))
+            if (!HasComp<ShuttleConsoleComponent>(console))
             {
-                Logger.Warning($"Unable to set Helmsman console to {console}");
+                Log.Warning($"Unable to set Helmsman console to {console}");
                 return;
             }
 
-            component.Console = shuttleConsoleComponent;
+            component.Console = console;
             ActionBlockerSystem.UpdateCanMove(uid);
             _input.Contexts.SetActiveContext("shuttle");
         }

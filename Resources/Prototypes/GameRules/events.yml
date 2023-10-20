@@ -30,7 +30,7 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 0
+    weight: 1
     reoccurrenceDelay: 5
     earliestStart: 1
     duration: 1
@@ -64,32 +64,26 @@
   - type: BureaucraticErrorRule
 
 - type: entity
-  id: Dragon
   parent: BaseGameRule
+  id: ClosetSkeleton
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 1
+    weight: 10
     duration: 1
-    earliestStart: 45
-    minimumPlayers: 20
-    chaos:
-      Hostile: 20
-      Friend: 20
-      Combat: 40
-      Death: 100
-      Medical: 100
-  - type: DragonRule
+  - type: RandomEntityStorageSpawnRule
+    prototype: MobSkeletonCloset
 
 - type: entity
-  id: RevenantSpawn
   parent: BaseGameRule
+  id: DragonSpawn
   noSpawn: true
   components:
   - type: StationEvent
     weight: 5
     duration: 1
     earliestStart: 45
+    reoccurrenceDelay: 60
     minimumPlayers: 20
     chaos:
       Hostile: 20
@@ -97,7 +91,40 @@
       Combat: 40
       Death: 100
       Medical: 100
-  - type: RevenantSpawnRule
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostDragon
+
+- type: entity
+  parent: BaseGameRule
+  id: NinjaSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+    earliestStart: 30
+    reoccurrenceDelay: 60
+    minimumPlayers: 40
+  - type: NinjaSpawnRule
+
+- type: entity
+  parent: BaseGameRule
+  id: RevenantSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 7.5
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+    chaos:
+      Hostile: 20
+      Friend: 20
+      Combat: 40
+      Death: 100
+      Medical: 100
+  - type: RandomSpawnRule
+    prototype: MobRevenant
 
 - type: entity
   id: FalseAlarm
@@ -152,8 +179,8 @@
   components:
   - type: StationEvent
     earliestStart: 30
-    weight: 5
-    minimumPlayers: 20
+    weight: 7.5
+    minimumPlayers: 10 #Enough to hopefully have at least one engineering guy
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
     startAudio:
@@ -178,7 +205,17 @@
     minimumPlayers: 35
     weight: 5
     duration: 50
-  - type: MouseMigrationRule
+  - type: VentCrittersRule
+    entries:
+    - id: MobMouse
+      prob: 0.02
+    - id: MobMouse1
+      prob: 0.02
+    - id: MobMouse2
+      prob: 0.02
+    specialEntries:
+    - id: SpawnPointGhostRatKing
+      prob: 0.005
 
 - type: entity
   id: PowerGridCheck
@@ -193,7 +230,7 @@
       path: /Audio/Announcements/power_off.ogg
       params:
        volume: -4
-    startDelay: 12
+    startDelay: 24
     duration: 60
     maxDuration: 120
     chaos:
@@ -213,8 +250,8 @@
   - type: RandomSentienceRule
 
 - type: entity
-  id: SolarFlare
   parent: BaseGameRule
+  id: SolarFlare
   noSpawn: true
   components:
   - type: StationEvent
@@ -231,7 +268,15 @@
     onlyJamHeadsets: true
     affectedChannels:
     - Common
+    extraChannels:
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
     - Service
+    - Supply
+    extraCount: 2
     lightBreakChancePerSecond: 0.0003
     doorToggleChancePerSecond: 0.001
 
@@ -267,14 +312,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
     - id: MobMouse1
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
     - id: MobMouse2
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
 
 - type: entity
   id: SlimesSpawn
@@ -292,15 +334,12 @@
       Medical: 50
   - type: VentCrittersRule
     entries:
-      - id: MobAdultSlimesBlueAngry
-        amount: 6
-        maxAmount: 10
-      - id: MobAdultSlimesGreenAngry
-        amount: 6
-        maxAmount: 10
-      - id: MobAdultSlimesYellowAngry
-        amount: 6
-        maxAmount: 10
+    - id: MobAdultSlimesBlueAngry
+      prob: 0.02
+    - id: MobAdultSlimesGreenAngry
+      prob: 0.02
+    - id: MobAdultSlimesYellowAngry
+      prob: 0.02
 
 - type: entity
   id: SpiderSpawn
@@ -318,9 +357,8 @@
       Medical: 150
   - type: VentCrittersRule
     entries:
-      - id: MobGiantSpiderAngry
-        amount: 4
-        maxAmount: 8
+    - id: MobGiantSpiderAngry
+      prob: 0.05
 
 - type: entity
   id: SpiderClownSpawn
@@ -330,13 +368,12 @@
   - type: StationEvent
     earliestStart: 20
     minimumPlayers: 15
-    weight: 2
+    weight: 1
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobClownSpider
-        amount: 4
-        maxAmount: 8
+    - id: MobClownSpider
+      prob: 0.05
 
 - type: entity
   id: ZombieOutbreak
@@ -345,7 +382,7 @@
   components:
   - type: StationEvent
     earliestStart: 50
-    weight: 2.5
+    weight: 5
     duration: 1
     chaos:
       Hostile: 40
@@ -353,6 +390,11 @@
       Medical: 200
       Death: 200
   - type: ZombieRule
+    minStartDelay: 0 #let them know immediately
+    maxStartDelay: 10
+    maxInitialInfected: 3 #fewer zombies
+    minInitialInfectedGrace: 300 #less time to prepare
+    maxInitialInfectedGrace: 450
 
 - type: entity
   id: LoneOpsSpawn
@@ -360,10 +402,10 @@
   noSpawn: true
   components:
   - type: StationEvent
-    earliestStart: 55
+    earliestStart: 45
     weight: 5
     minimumPlayers: 10
-    reoccurrenceDelay: 25
+    reoccurrenceDelay: 30
     duration: 1
     chaos:
       Hostile: 20
@@ -387,3 +429,18 @@
     maxSoundDistance: 7
     sounds:
       collection: Paracusia
+
+- type: entity
+  id: ImmovableRodSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 5
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+  - type: ImmovableRodRule

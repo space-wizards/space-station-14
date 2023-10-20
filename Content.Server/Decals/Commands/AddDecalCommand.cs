@@ -1,9 +1,12 @@
+using System.Numerics;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
+using Robust.Server.GameObjects;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Decals.Commands
@@ -11,6 +14,9 @@ namespace Content.Server.Decals.Commands
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class AddDecalCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
         public string Command => "adddecal";
         public string Description => "Creates a decal on the map";
         public string Help => $"{Command} <id> <x position> <y position> <gridId> [angle=<angle> zIndex=<zIndex> color=<color>]";
@@ -22,7 +28,7 @@ namespace Content.Server.Decals.Commands
                 return;
             }
 
-            if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<DecalPrototype>(args[0]))
+            if (!_protoManager.HasIndex<DecalPrototype>(args[0]))
             {
                 shell.WriteError($"Cannot find decalprototype '{args[0]}'.");
             }
@@ -39,15 +45,17 @@ namespace Content.Server.Decals.Commands
                 return;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!EntityUid.TryParse(args[3], out var gridIdRaw) || !mapManager.TryGetGrid(gridIdRaw, out var grid))
+            if (!NetEntity.TryParse(args[3], out var gridIdNet) ||
+                !_entManager.TryGetEntity(gridIdNet, out var gridIdRaw) ||
+                !_entManager.TryGetComponent(gridIdRaw, out MapGridComponent? grid))
             {
                 shell.WriteError($"Failed parsing gridId '{args[3]}'.");
                 return;
             }
 
-            var coordinates = new EntityCoordinates(grid.Owner, new Vector2(x, y));
-            if (grid.GetTileRef(coordinates).IsSpace())
+            var mapSystem = _entManager.System<MapSystem>();
+            var coordinates = new EntityCoordinates(gridIdRaw.Value, new Vector2(x, y));
+            if (mapSystem.GetTileRef(gridIdRaw.Value, grid, coordinates).IsSpace())
             {
                 shell.WriteError($"Cannot create decal on space tile at {coordinates}.");
                 return;
@@ -100,7 +108,7 @@ namespace Content.Server.Decals.Commands
                 }
             }
 
-            if(EntitySystem.Get<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
+            if (_entManager.System<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
             {
                 shell.WriteLine($"Successfully created decal {uid}.");
             }

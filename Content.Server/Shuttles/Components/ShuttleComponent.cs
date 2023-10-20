@@ -1,7 +1,9 @@
+using System.Numerics;
+
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    public sealed class ShuttleComponent : Component
+    public sealed partial class ShuttleComponent : Component
     {
         [ViewVariables]
         public bool Enabled = true;
@@ -14,7 +16,11 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public const float BrakeCoefficient = 1.5f;
 
-        public const float MaxLinearVelocity = 20f;
+        /// <summary>
+        /// Maximum velocity assuming unupgraded, tier 1 thrusters
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseMaxLinearVelocity = 20f;
 
         public const float MaxAngularVelocity = 4f;
 
@@ -25,9 +31,22 @@ namespace Content.Server.Shuttles.Components
         public readonly float[] LinearThrust = new float[4];
 
         /// <summary>
+        /// The cached thrust available for each cardinal direction, if all thrusters are T1
+        /// </summary>
+        [ViewVariables]
+        public readonly float[] BaseLinearThrust = new float[4];
+
+        /// <summary>
         /// The thrusters contributing to each direction for impulse.
         /// </summary>
-        public readonly List<EntityUid>[] LinearThrusters = new List<EntityUid>[4];
+        // No touchy
+        public readonly List<EntityUid>[] LinearThrusters = new List<EntityUid>[]
+        {
+            new(),
+            new(),
+            new(),
+            new(),
+        };
 
         /// <summary>
         /// The thrusters contributing to the angular impulse of the shuttle.
@@ -42,5 +61,14 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [ViewVariables]
         public DirectionFlag ThrustDirections = DirectionFlag.None;
+
+        /// <summary>
+        /// Damping applied to the shuttle's physics component when not in FTL.
+        /// </summary>
+        [DataField("linearDamping"), ViewVariables(VVAccess.ReadWrite)]
+        public float LinearDamping = 0.05f;
+
+        [DataField("angularDamping"), ViewVariables(VVAccess.ReadWrite)]
+        public float AngularDamping = 0.05f;
     }
 }

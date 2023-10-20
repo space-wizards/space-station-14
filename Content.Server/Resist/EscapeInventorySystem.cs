@@ -1,15 +1,15 @@
 using Content.Server.Contests;
-using Robust.Shared.Containers;
 using Content.Server.Popups;
-using Content.Shared.Storage;
-using Content.Shared.Inventory;
-using Content.Shared.Hands.EntitySystems;
+using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
-using Content.Shared.Movement.Events;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
+using Content.Shared.Movement.Events;
 using Content.Shared.Resist;
-using Content.Server.Storage.Components;
+using Content.Shared.Storage;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Resist;
 
@@ -60,7 +60,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         }
 
         // Uncontested
-        if (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SecretStashComponent>(container.Owner))
+        if (HasComp<StorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SecretStashComponent>(container.Owner))
             AttemptEscape(uid, container.Owner, component);
     }
 
@@ -69,7 +69,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (component.IsEscaping)
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(user, component.BaseResistTime * multiplier, new EscapeInventoryEvent(), user, target: container)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, component.BaseResistTime * multiplier, new EscapeInventoryEvent(), user, target: container)
         {
             BreakOnTargetMove = false,
             BreakOnUserMove = true,
@@ -80,7 +80,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.DoAfter))
             return;
 
-        Dirty(component);
+        Dirty(user, component);
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, user);
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
     }
@@ -88,12 +88,12 @@ public sealed class EscapeInventorySystem : EntitySystem
     private void OnEscape(EntityUid uid, CanEscapeInventoryComponent component, EscapeInventoryEvent args)
     {
         component.DoAfter = null;
-        Dirty(component);
+        Dirty(uid, component);
 
         if (args.Handled || args.Cancelled)
             return;
 
-        Transform(uid).AttachParentToContainerOrGrid(EntityManager);
+        _containerSystem.AttachParentToContainerOrGrid((uid, Transform(uid)));
         args.Handled = true;
     }
 

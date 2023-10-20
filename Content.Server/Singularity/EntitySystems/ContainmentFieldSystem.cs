@@ -26,24 +26,24 @@ public sealed class ContainmentFieldSystem : EntitySystem
     {
         var otherBody = args.OtherEntity;
 
-        if (TryComp<SpaceGarbageComponent>(otherBody, out var garbage))
+        if (HasComp<SpaceGarbageComponent>(otherBody))
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), component.Owner, PopupType.LargeCaution);
-            QueueDel(garbage.Owner);
+            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), uid, PopupType.LargeCaution);
+            QueueDel(otherBody);
         }
 
         if (TryComp<PhysicsComponent>(otherBody, out var physics) && physics.Mass <= component.MaxMass && physics.Hard)
         {
-            var fieldDir = Transform(component.Owner).WorldPosition;
+            var fieldDir = Transform(uid).WorldPosition;
             var playerDir = Transform(otherBody).WorldPosition;
 
             _throwing.TryThrow(otherBody, playerDir-fieldDir, strength: component.ThrowForce);
         }
     }
 
-    private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, EventHorizonAttemptConsumeEntityEvent args)
+    private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, ref EventHorizonAttemptConsumeEntityEvent args)
     {
         if(!args.Cancelled && !args.EventHorizon.CanBreachContainment)
-            args.Cancel();
+            args.Cancelled = true;
     }
 }

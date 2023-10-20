@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EmptyContainer : IGraphAction
+    public sealed partial class EmptyContainer : IGraphAction
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 

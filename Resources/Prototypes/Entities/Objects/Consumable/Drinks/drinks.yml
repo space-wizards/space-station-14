@@ -40,8 +40,6 @@
   id: DrinkGlassBase
   abstract: true
   components:
-  - type: Drink
-    isOpen: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -107,6 +105,7 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
+  - type: TransformableContainer
 
 - type: entity
   name: Coupe glass

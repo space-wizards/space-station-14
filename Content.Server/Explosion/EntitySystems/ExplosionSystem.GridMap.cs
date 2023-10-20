@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -58,8 +59,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         // if the explosion is centered on some grid (and not just space), get the transforms.
         if (referenceGrid != null)
         {
-            var targetGrid = _mapManager.GetGrid(referenceGrid.Value);
-            var xform = Transform(targetGrid.Owner);
+            var targetGrid = Comp<MapGridComponent>(referenceGrid.Value);
+            var xform = Transform(referenceGrid.Value);
             targetAngle = xform.WorldRotation;
             targetMatrix = xform.InvWorldMatrix;
             tileSize = targetGrid.TileSize;
@@ -83,24 +84,24 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (!_gridEdges.TryGetValue(gridToTransform, out var edges))
                 continue;
 
-            if (!_mapManager.TryGetGrid(gridToTransform, out var grid))
+            if (!TryComp(gridToTransform, out MapGridComponent? grid))
                 continue;
 
             if (grid.TileSize != tileSize)
             {
-                Logger.Error($"Explosions do not support grids with different grid sizes. GridIds: {gridToTransform} and {referenceGrid}");
+                Log.Error($"Explosions do not support grids with different grid sizes. GridIds: {gridToTransform} and {referenceGrid}");
                 continue;
             }
 
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-            var xform = xforms.GetComponent(grid.Owner);
+            var xform = xforms.GetComponent(gridToTransform);
             var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
             var matrix = offsetMatrix * gridWorldMatrix * targetMatrix;
             var angle = gridWorldRotation - targetAngle;
 
-            var (x, y) = angle.RotateVec((tileSize / 4f, tileSize / 4f));
+            var (x, y) = angle.RotateVec(new Vector2(tileSize / 4f, tileSize / 4f));
 
             foreach (var (tile, dir) in edges)
             {
@@ -166,9 +167,9 @@ public sealed partial class ExplosionSystem : EntitySystem
                 data.UnblockedDirections = AtmosDirection.Invalid; // all directions are blocked automatically.
 
                 if ((dir & NeighborFlag.Cardinal) == 0)
-                    data.BlockingGridEdges.Add(new(default, null, ((Vector2) tile + 0.5f) * tileSize, 0, tileSize));
+                    data.BlockingGridEdges.Add(new(default, null, (tile + Vector2Helpers.Half) * tileSize, 0, tileSize));
                 else
-                    data.BlockingGridEdges.Add(new(tile, referenceGrid.Value, ((Vector2) tile + 0.5f) * tileSize, 0, tileSize));
+                    data.BlockingGridEdges.Add(new(tile, referenceGrid.Value, (tile + Vector2Helpers.Half) * tileSize, 0, tileSize));
             }
         }
 
@@ -189,7 +190,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (data.UnblockedDirections == AtmosDirection.Invalid)
                 continue; // already all blocked.
 
-            var tileCenter = ((Vector2) tile + 0.5f) * tileSize;
+            var tileCenter = (tile + new Vector2(0.5f, 0.5f)) * tileSize;
             foreach (var edge in data.BlockingGridEdges)
             {
                 // if a blocking edge contains the center of the tile, block all directions
@@ -200,19 +201,19 @@ public sealed partial class ExplosionSystem : EntitySystem
                 }
 
                 // check north
-                if (edge.Box.Contains(tileCenter + (0, tileSize / 2f)))
+                if (edge.Box.Contains(tileCenter + new Vector2(0, tileSize / 2f)))
                     data.UnblockedDirections &= ~AtmosDirection.North;
 
                 // check south
-                if (edge.Box.Contains(tileCenter + (0, -tileSize / 2f)))
+                if (edge.Box.Contains(tileCenter + new Vector2(0, -tileSize / 2f)))
                     data.UnblockedDirections &= ~AtmosDirection.South;
 
                 // check east
-                if (edge.Box.Contains(tileCenter + (tileSize / 2f, 0)))
+                if (edge.Box.Contains(tileCenter + new Vector2(tileSize / 2f, 0)))
                     data.UnblockedDirections &= ~AtmosDirection.East;
 
                 // check west
-                if (edge.Box.Contains(tileCenter + (-tileSize / 2f, 0)))
+                if (edge.Box.Contains(tileCenter + new Vector2(-tileSize / 2f, 0)))
                     data.UnblockedDirections &= ~AtmosDirection.West;
             }
         }
@@ -227,7 +228,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
             return;
 
-        if (!_mapManager.TryGetGrid(ev.Entity, out var grid))
+        if (!TryComp(ev.Entity, out MapGridComponent? grid))
             return;
 
         var tileRef = ev.NewTile;
@@ -382,7 +383,7 @@ public sealed class BlockedSpaceTile
         {
             Tile = tile;
             Grid = grid;
-            Box = new(Box2.CenteredAround(center, (size, size)), angle, center);
+            Box = new(Box2.CenteredAround(center, new Vector2(size, size)), angle, center);
         }
     }
 }

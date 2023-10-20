@@ -1,35 +1,99 @@
-﻿namespace Content.Server.GameTicking.Rules.Components;
+using Content.Shared.Roles;
+using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
+namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(ZombieRuleSystem))]
-public sealed class ZombieRuleComponent : Component
+public sealed partial class ZombieRuleComponent : Component
 {
+    [DataField("initialInfectedNames")]
     public Dictionary<string, string> InitialInfectedNames = new();
 
-    public string PatientZeroPrototypeID = "InitialInfected";
-    public const string ZombifySelfActionPrototype = "TurnUndead";
+    [DataField("patientZeroPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    public string PatientZeroPrototypeId = "InitialInfected";
 
     /// <summary>
-    ///   After this many seconds the players will be forced to turn into zombies (at minimum)
-    ///   Defaults to 20 minutes. 20*60 = 1200 seconds.
-    ///
-    ///   Zombie time for a given player is:
-    ///   random MinZombieForceSecs to MaxZombieForceSecs + up to PlayerZombieForceVariation
+    /// Whether or not the initial infected have been chosen.
     /// </summary>
-    [DataField("minZombieForceSecs"), ViewVariables(VVAccess.ReadWrite)]
-    public float MinZombieForceSecs = 1200;
+    [DataField("infectedChosen")]
+    public bool InfectedChosen;
 
     /// <summary>
-    ///   After this many seconds the players will be forced to turn into zombies (at maximum)
-    ///   Defaults to 30 minutes. 30*60 = 1800 seconds.
+    /// When the round will next check for round end.
     /// </summary>
-    [DataField("maxZombieForceSecs"), ViewVariables(VVAccess.ReadWrite)]
-    public float MaxZombieForceSecs = 1800;
+    [DataField("nextRoundEndCheck", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextRoundEndCheck;
 
     /// <summary>
-    ///   How many additional seconds each player will get (at random) to scatter forced zombies over time.
-    ///   Defaults to 2 minutes. 2*60 = 120 seconds.
+    /// The amount of time between each check for the end of the round.
     /// </summary>
-    [DataField("playerZombieForceVariationSecs"), ViewVariables(VVAccess.ReadWrite)]
-    public float PlayerZombieForceVariationSecs = 120;
+    [DataField("endCheckDelay")]
+    public TimeSpan EndCheckDelay = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// The time at which the initial infected will be chosen.
+    /// </summary>
+    [DataField("startTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan? StartTime;
+
+    /// <summary>
+    /// The minimum amount of time after the round starts that the initial infected will be chosen.
+    /// </summary>
+    [DataField("minStartDelay")]
+    public TimeSpan MinStartDelay = TimeSpan.FromMinutes(10);
+
+    /// <summary>
+    /// The maximum amount of time after the round starts that the initial infected will be chosen.
+    /// </summary>
+    [DataField("maxStartDelay")]
+    public TimeSpan MaxStartDelay = TimeSpan.FromMinutes(15);
+
+    /// <summary>
+    /// The sound that plays when someone becomes an initial infected.
+    /// todo: this should have a unique sound instead of reusing the zombie one.
+    /// </summary>
+    [DataField("initialInfectedSound")]
+    public SoundSpecifier InitialInfectedSound = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
+
+    /// <summary>
+    /// The minimum amount of time initial infected have before they start taking infection damage.
+    /// </summary>
+    [DataField("minInitialInfectedGrace")]
+    public TimeSpan MinInitialInfectedGrace = TimeSpan.FromMinutes(12.5f);
+
+    /// <summary>
+    /// The maximum amount of time initial infected have before they start taking damage.
+    /// </summary>
+    [DataField("maxInitialInfectedGrace")]
+    public TimeSpan MaxInitialInfectedGrace = TimeSpan.FromMinutes(15f);
+
+    /// <summary>
+    /// How many players for each initial infected.
+    /// </summary>
+    [DataField("playersPerInfected")]
+    public int PlayersPerInfected = 10;
+
+    /// <summary>
+    /// The maximum number of initial infected.
+    /// </summary>
+    [DataField("maxInitialInfected")]
+    public int MaxInitialInfected = 6;
+
+    /// <summary>
+    /// After this amount of the crew become zombies, the shuttle will be automatically called.
+    /// </summary>
+    [DataField("zombieShuttleCallPercentage")]
+    public float ZombieShuttleCallPercentage = 0.5f;
+
+    /// <summary>
+    /// Have we called the evac shuttle yet?
+    /// </summary>
+    [DataField("shuttleCalled")]
+    public bool ShuttleCalled;
+
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string ZombifySelfActionPrototype = "ActionTurnUndead";
 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Administration;
 using Content.Shared.Explosion;
 using Robust.Shared.Map;
@@ -80,7 +81,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         HashSet<EntityUid> encounteredGrids = new();
         Dictionary<EntityUid, HashSet<Vector2i>>? previousGridJump;
 
-        // variables for transforming between grid and space-coordiantes
+        // variables for transforming between grid and space-coordinates
         var spaceMatrix = Matrix3.Identity;
         var spaceAngle = Angle.Zero;
         if (referenceGrid != null)
@@ -272,7 +273,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // First attempt to find a grid that is relatively close to the explosion's center. Instead of looking in a
         // diameter x diameter sized box, use a smaller box with radius sized sides:
-        var box = Box2.CenteredAround(epicenter.Position, (radius, radius));
+        var box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
 
         foreach (var grid in _mapManager.FindGridsIntersecting(epicenter.MapId, box))
         {
@@ -293,7 +294,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // and using that for the grid look-up, we will just arbitrarily fudge the lookup size to be twice the diameter.
 
         radius *= 4;
-        box = Box2.CenteredAround(epicenter.Position, (radius, radius));
+        box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
         var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
         var grids = mapGrids.Select(x => x.Owner).ToList();
 
@@ -330,12 +331,12 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
 
-        Logger.Info($"Generated explosion preview with {area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
+        Log.Info($"Generated explosion preview with {area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
 
-        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
+        Dictionary<NetEntity, Dictionary<int, List<Vector2i>>> tileLists = new();
         foreach (var (grid, data) in gridData)
         {
-            tileLists.Add(grid, data.TileLists);
+            tileLists.Add(GetNetEntity(grid), data.TileLists);
         }
 
         return new ExplosionVisualsState(

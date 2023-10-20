@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
@@ -28,11 +29,11 @@ public sealed class ListContainerTest : RobustUnitTest
     [Test]
     public void TestLayoutBasic()
     {
-        var root = new Control { MinSize = (50, 60) };
+        var root = new Control { MinSize = new Vector2(50, 60) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
         listContainer.GenerateItem += (_, button) => {
-            button.AddChild(new Control { MinSize = (10, 10) });
+            button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
         var list = new List<TestListData> {new(0), new(1)};
@@ -53,11 +54,11 @@ public sealed class ListContainerTest : RobustUnitTest
     {
         const int x = 50;
         const int y = 10;
-        var root = new Control { MinSize = (x, y) };
+        var root = new Control { MinSize = new Vector2(x, y) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
         listContainer.GenerateItem += (_, button) => {
-            button.AddChild(new Control { MinSize = (10, 10) });
+            button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
         var list = new List<TestListData>();
@@ -79,14 +80,14 @@ public sealed class ListContainerTest : RobustUnitTest
     {
         /*
          * 6 items * 10 height + 5 separation * 3 height = 75
-         * One items should be off the render
+         * One item should be off the render
          * 0 13 26 39 52 65 | 75 height
          */
-        var root = new Control { MinSize = (50, 60) };
+        var root = new Control { MinSize = new Vector2(50, 60) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
         listContainer.GenerateItem += (_, button) => {
-            button.AddChild(new Control { MinSize = (10, 10) });
+            button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
         var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
@@ -121,11 +122,11 @@ public sealed class ListContainerTest : RobustUnitTest
          * One items should be off the render
          * 0 13 26 39 52 65 | 75 height
          */
-        var root = new Control { MinSize = (50, 60) };
+        var root = new Control { MinSize = new Vector2(50, 60) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
         listContainer.GenerateItem += (_, button) => {
-            button.AddChild(new Control { MinSize = (10, 10) });
+            button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
         var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
@@ -169,11 +170,11 @@ public sealed class ListContainerTest : RobustUnitTest
          * One items should be off the render
          * 0 13 26 39 52 65 | 75 height
          */
-        var root = new Control { MinSize = (50, 60) };
+        var root = new Control { MinSize = new Vector2(50, 60) };
         var listContainer = new ListContainer { SeparationOverride = 3 };
         root.AddChild(listContainer);
         listContainer.GenerateItem += (_, button) => {
-            button.AddChild(new Control { MinSize = (10, 10) });
+            button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
         var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
@@ -222,17 +223,17 @@ public sealed class ListContainerTest : RobustUnitTest
         var root = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
-            MinSize = (50, height)
+            MinSize = new Vector2(50, height)
         };
         var listContainer = new ListContainer
         {
             SeparationOverride = 0,
-            GenerateItem = (_, button) => { button.AddChild(new Control {MinSize = (10, 10)}); }
+            GenerateItem = (_, button) => { button.AddChild(new Control {MinSize = new Vector2(10, 10)}); }
         };
         root.AddChild(listContainer);
         var button = new ContainerButton
         {
-            MinSize = (10, 10)
+            MinSize = new Vector2(10, 10)
         };
         root.AddChild(button);
 
@@ -255,11 +256,11 @@ public sealed class ListContainerTest : RobustUnitTest
     public void TestSelectedItemStillSelectedWhenScrolling()
     {
         var height = 10;
-        var root = new Control { MinSize = (50, height) };
+        var root = new Control { MinSize = new Vector2(50, height) };
         var listContainer = new ListContainer { SeparationOverride = 0, Toggle = true };
         root.AddChild(listContainer);
         listContainer.GenerateItem += (_, button) => {
-            button.AddChild(new Control { MinSize = (10, 10) });
+            button.AddChild(new Control { MinSize = new Vector2(10, 10) });
         };
 
         var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};

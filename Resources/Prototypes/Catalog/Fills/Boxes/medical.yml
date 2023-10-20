@@ -72,7 +72,7 @@
     layers:
       - state: box
       - state: latex
-      
+
 - type: entity
   name: nitrile gloves box
   parent: BoxCardboard
@@ -101,6 +101,10 @@
     layers:
       - state: box
       - state: swab
+  - type: GuideHelp
+    guides:
+  # - Virology (when it's back)
+    - Botany
 
 - type: entity
   name: body bag box

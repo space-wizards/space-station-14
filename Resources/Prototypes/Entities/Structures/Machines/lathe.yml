@@ -1,6 +1,58 @@
 - type: entity
+  id: BaseLathe
   parent: [ BaseMachinePowered, ConstructibleMachine ]
+  abstract: true
+  name: lathe
+  components:
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+          - MachineLayer
+  - type: Lathe
+  - type: MaterialStorage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-autolathe
+    layoutId: Autolathe
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: StaticPrice
+    price: 800
+  - type: ResearchClient
+  - type: TechnologyDatabase
+
+- type: entity
   id: Autolathe
+  parent: BaseLathe
   name: autolathe
   description: It produces items using metal and glass.
   components:
@@ -17,31 +69,6 @@
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Machine
     board: AutolatheMachineCircuitboard
   - type: MaterialStorage
@@ -50,20 +77,6 @@
         - Sheet
         - RawMaterial
         - Ingot
-  - type: WiresPanel
-  - type: Wires
-    BoardName: "Autolathe"
-    LayoutId: Autolathe
-  - type: ActivatableUI
-    key: enum.LatheUiKey.Key
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-    - key: enum.LatheUiKey.Key
-      type: LatheBoundUserInterface
-  - type: Transform
-    anchored: true
-  - type: Pullable
   - type: Lathe
     idleState: icon
     runningState: building
@@ -75,7 +88,7 @@
       - Crowbar
       - Multitool
       - NetworkConfigurator
-      - AirlockPainter
+      - SprayPainter
       - FlashlightLantern
       - CableStack
       - CableMVStack
@@ -84,7 +97,10 @@
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
+      - Fulton
+      - FultonBeacon
       - Pickaxe
+      - ModularReceiver
       - AppraisalTool
       - SheetRGlass
       - Beaker
@@ -92,6 +108,10 @@
       - LightTube
       - LightBulb
       - Bucket
+      - FoodPlate
+      - FoodPlateSmall
+      - FoodPlatePlastic
+      - FoodPlateSmallPlastic
       - SprayBottle
       - PowerCellSmall
       - MicroManipulatorStockPart
@@ -105,17 +125,49 @@
       - StationMapElectronics
       - FireAlarmElectronics
       - MailingUnitElectronics
+      - SignalTimerElectronics
       - APCElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - CellRechargerCircuitboard
+      - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
-  - type: StaticPrice
-    price: 800
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+       - CartridgePistol
+       - CartridgeMagnum
+       - ShellShotgun
+       - ShellShotgunFlare
+       - ShellTranquilizer
+       - CartridgeLightRifle
+       - CartridgeRifle
+       - MagazineBoxPistol
+       - MagazineBoxMagnum
+       - MagazineBoxRifle
+       - MagazineBoxLightRifle
+    emagDynamicRecipes:
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - ShellShotgunBeanbag
+      - CartridgeRifleRubber
+      - CartridgeLightRifleRubber
+      - MagazineBoxPistolRubber
+      - MagazineBoxMagnumRubber
+      - MagazineBoxRifleRubber
+      - MagazineBoxLightRifleRubber
+      - ShellShotgunIncendiary
+      - CartridgePistolIncendiary
+      - CartridgeMagnumIncendiary
+      - CartridgeLightRifleIncendiary
+      - CartridgeRifleIncendiary
+      - MagazineBoxPistolIncendiary
+      - MagazineBoxMagnumIncendiary
+      - MagazineBoxLightRifleIncendiary
+      - MagazineBoxRifleIncendiary
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Protolathe
+  parent: BaseLathe
   name: protolathe
   description: Converts raw materials into useful objects.
   components:
@@ -132,57 +184,17 @@
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-  - type: ResearchClient
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Machine
     board: ProtolatheMachineCircuitboard
-  - type: WiresPanel
   - type: Wires
-    BoardName: "Protolathe"
-    LayoutId: Protolathe
-  - type: TechnologyDatabase
+    boardName: wires-board-name-protolathe
+    layoutId: Protolathe
   - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
         - RawMaterial
         - Ingot
-  - type: ActivatableUI
-    key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-    - key: enum.LatheUiKey.Key
-      type: LatheBoundUserInterface
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
-  - type: Transform
-    anchored: true
-  - type: Pullable
   - type: Lathe
     idleState: icon
     runningState: building
@@ -191,6 +203,7 @@
       - MiningDrill
       - AnomalyScanner
       - AnomalyLocator
+      - AnomalyLocatorWide
       - RCD
       - RCDAmmo
       - HandheldCrewMonitor
@@ -215,7 +228,6 @@
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
       - PicoManipulatorStockPart
-      - SignalTimerElectronics
       - MopItem
       - Holoprojector
       - Mousetrap
@@ -231,12 +243,10 @@
       - Signaller
       - SignalTrigger
       - VoiceTrigger
+      - Igniter
       - PowerCellMedium
       - PowerCellHigh
       - WeaponPistolCHIMP
-      - CartridgeAnomalousParticleDelta
-      - CartridgeAnomalousParticleEpsilon
-      - CartridgeAnomalousParticleZeta
       - SynthesizerInstrument
       - RPED
       - ClothingShoesBootsMag
@@ -255,15 +265,25 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
+      - ClothingEyesGlassesChemical
+  - type: EmagLatheRecipes
+    emagDynamicRecipes:
+      - ExplosivePayload
+      - WeaponLaserCarbine
+      - WeaponAdvancedLaser
+      - WeaponLaserCannon
+      - WeaponXrayCannon
+      - WeaponTaser
 
 - type: entity
-  parent: Protolathe
   id: CircuitImprinter
+  parent: BaseLathe
   name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
   - type: Sprite
     sprite: Structures/Machines/circuit_imprinter.rsi
+    snapCardinals: true
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -279,7 +299,6 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - SignalTimerElectronics
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
@@ -299,12 +318,14 @@
       - SurveillanceWirelessCameraAnchoredCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
+      - SolarTrackerElectronics
       - PowerComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
+      - ElectricGrillMachineCircuitboard
       - FatExtractorMachineCircuitboard
       - SheetifierMachineCircuitboard
       - UniformPrinterMachineCircuitboard
@@ -325,14 +346,16 @@
       - HonkerTargetingElectronics
       - HamtrCentralElectronics
       - HamtrPeripheralsElectronics
-      - GeneratorPlasmaMachineCircuitboard
-      - GeneratorUraniumMachineCircuitboard
+      - PortableGeneratorPacmanMachineCircuitboard
+      - PortableGeneratorSuperPacmanMachineCircuitboard
+      - PortableGeneratorJrPacmanMachineCircuitboard
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
+      - MiniGravityGeneratorCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
@@ -344,6 +367,7 @@
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
+      - MassMediaCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -352,8 +376,8 @@
         - Ingot
 
 - type: entity
-  parent: Protolathe
   id: ExosuitFabricator
+  parent: BaseLathe
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs
   components:
@@ -371,13 +395,73 @@
   - type: Lathe
     idleState: fab-idle
     runningState: fab-active
-    dynamicRecipes:
-    - ProximitySensor
+    staticRecipes:
+    - MMI
+    - PositronicBrain
+    - SciFlash
+    - BorgModuleCable
+    - BorgModuleFireExtinguisher
+    - BorgModuleGPS
+    - BorgModuleRadiationDetection
+    - BorgModuleTool
+    - BorgModuleAppraisal
+    - BorgModuleConstruction
+    - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
     - LeftLegBorg
     - RightLegBorg
     - LightHeadBorg
+    - TorsoBorg
+    - LeftArmBorgEngineer
+    - RightArmBorgEngineer
+    - LeftLegBorgEngineer
+    - RightLegBorgEngineer
+    - HeadBorgEngineer
+    - TorsoBorgEngineer
+    - LeftLegBorgJanitor
+    - RightLegBorgJanitor
+    - HeadBorgJanitor
+    - TorsoBorgJanitor
+    - LeftArmBorgMedical
+    - RightArmBorgMedical
+    - LeftLegBorgMedical
+    - RightLegBorgMedical
+    - HeadBorgMedical
+    - TorsoBorgMedical
+    - LeftArmBorgMining
+    - RightArmBorgMining
+    - LeftLegBorgMining
+    - RightLegBorgMining
+    - HeadBorgMining
+    - TorsoBorgMining
+    - LeftArmBorgService
+    - RightArmBorgService
+    - LeftLegBorgService
+    - RightLegBorgService
+    - HeadBorgService
+    - TorsoBorgService
+    dynamicRecipes:
+    - ProximitySensor
+    - BorgModuleLightReplacer
+    - BorgModuleCleaning
+    - BorgModuleTrashCollection
+    - BorgModuleMining
+    - BorgModuleGrapplingGun
+    - BorgModuleGasAnalyzer
+    - BorgModuleAdvancedTool
+    - BorgModuleRCD
+    - BorgModuleArtifact
+    - BorgModuleAnomaly
+    - BorgModuleGardening
+    - BorgModuleHarvesting
+    - BorgModuleMusique
+    - BorgModuleLiteracy
+    - BorgModuleClowning
+    - BorgModuleDiagnosis
+    - BorgModuleTreatment
+    - BorgModuleDefibrillator
+    - BorgModuleAdvancedTreatment
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
@@ -396,6 +480,7 @@
     - HamtrRArm
     - HamtrLLeg
     - HamtrRLeg
+    - VimHarness
   - type: MaterialStorage
     whitelist:
       tags:
@@ -406,10 +491,9 @@
     guides:
     - Robotics
 
-
 - type: entity
-  parent: Protolathe
   id: SecurityTechFab
+  parent: BaseLathe
   name: security techfab
   description: Prints equipment for use by security crew.
   components:
@@ -431,37 +515,70 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - ClothingEyesHudSecurity
       - Flash
-      - FlashPayload
       - Handcuffs
       - Zipties
       - Stunbaton
       - ForensicPad
       - ClothingEyesGlassesSecurity
       - RiotShield
-      - CartridgePistol
-      - CartridgeMagnum
-      - CartridgePistolRubber
-      - CartridgeMagnumRubber
       - ShellShotgun
-      - ShellShotgunBeanbag
       - ShellShotgunFlare
       - ShellTranquilizer
-      - CartridgeLightRifle
-      - CartridgeRifle
-      - CartridgeLightRifleRubber
-      - CartridgeRifleRubber
+      - MagazinePistol
+      - MagazinePistolSubMachineGun
+      - MagazinePistolSubMachineGunTopMounted
+      - MagazineRifle
+      - MagazineLightRifle
+      - MagazineBoxPistol
+      - MagazineBoxMagnum
+      - MagazineBoxRifle
+      - MagazineBoxLightRifle
+      - SpeedLoaderMagnum
       - TargetHuman
       - TargetSyndicate
       - TargetClown
-      - MagazineBoxPistol
-      - MagazineBoxPistolRubber
-      - MagazineBoxMagnum
-      - MagazineBoxMagnumRubber
-      - MagazineBoxRifle
-      - MagazineBoxRifleRubber
-      - MagazineBoxLightRifle
+    dynamicRecipes:
+      - CartridgeLightRifleIncendiary
+      - CartridgeMagnumIncendiary
+      - CartridgePistolIncendiary
+      - CartridgeRifleIncendiary
+      - CartridgeLightRifleRubber
+      - CartridgeMagnumRubber
+      - CartridgePistolRubber
+      - CartridgeRifleRubber
+      - ExplosivePayload
+      - FlashPayload
+      - HoloprojectorSecurity
+      - MagazineBoxLightRifleIncendiary
+      - MagazineBoxMagnumIncendiary
+      - MagazineBoxPistolIncendiary
+      - MagazineBoxRifleIncendiary
+      - MagazineBoxLightRiflePractice
+      - MagazineBoxMagnumPractice
+      - MagazineBoxPistolPractice
+      - MagazineBoxRiflePractice
       - MagazineBoxLightRifleRubber
+      - MagazineBoxMagnumRubber
+      - MagazineBoxPistolRubber
+      - MagazineBoxRifleRubber
+      - ShellShotgunBeanbag
+      - ShellShotgunIncendiary
+      - ShellShotgunPractice
+      - Signaller
+      - SignalTrigger
+      - TelescopicShield
+      - TimerTrigger
+      - Truncheon
+      - VoiceTrigger
+      - WeaponAdvancedLaser
+      - WeaponDisablerPractice
+      - WeaponLaserCannon
+      - WeaponLaserCarbine
+      - WeaponLaserCarbinePractice
+      - WeaponTaser
+      - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
       tags:
@@ -470,8 +587,49 @@
         - Ingot
 
 - type: entity
-  parent: Protolathe
+  id: AmmoTechFab
+  parent: BaseLathe
+  name: ammo techfab
+  description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/techfab.rsi
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: ammo
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Machine
+      board: AmmoTechFabCircuitboard
+    - type: Lathe
+      idleState: icon
+      runningState: icon
+      staticRecipes:
+        - CartridgePistol
+        - CartridgeMagnum
+        - ShellShotgun
+        - ShellShotgunFlare
+        - ShellTranquilizer
+        - CartridgeLightRifle
+        - CartridgeRifle
+        - MagazineBoxPistol
+        - MagazineBoxMagnum
+        - MagazineBoxRifle
+        - MagazineBoxLightRifle
+    - type: MaterialStorage
+      whitelist:
+        tags:
+          - Sheet
+
+- type: entity
   id: MedicalTechFab
+  parent: BaseLathe
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
@@ -528,11 +686,12 @@
       - Hemostat
       - BluespaceBeaker
       - SyringeBluespace
+      - Jug
   - type: Machine
     board: MedicalTechFabCircuitboard
 
 - type: entity
-  parent: Autolathe
+  parent: BaseLathe
   id: UniformPrinter
   name: uniform printer
   description: Prints new or replacement uniforms.
@@ -563,6 +722,8 @@
       - ClothingUniformJumpsuitSalvageSpecialist
       - ClothingUniformJumpsuitChiefEngineer
       - ClothingUniformJumpskirtChiefEngineer
+      - ClothingUniformJumpsuitChiefEngineerTurtle
+      - ClothingUniformJumpskirtChiefEngineerTurtle
       - ClothingUniformJumpsuitChaplain
       - ClothingUniformJumpskirtChaplain
       - ClothingUniformJumpsuitChef
@@ -600,6 +761,8 @@
       - ClothingUniformJumpskirtPrisoner
       - ClothingUniformJumpsuitQM
       - ClothingUniformJumpskirtQM
+      - ClothingUniformJumpsuitQMTurtleneck
+      - ClothingUniformJumpskirtQMTurtleneck
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
       - ClothingUniformJumpsuitScientist
@@ -623,6 +786,7 @@
       - ClothingNeckMantleHOP
       - ClothingNeckMantleHOS
       - ClothingNeckMantleRD
+      - ClothingNeckMantleQM
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
@@ -651,7 +815,7 @@
         - Ingot
 
 - type: entity
-  parent: Autolathe
+  parent: BaseLathe
   id: OreProcessor
   name: ore processor
   description: It produces sheets and ingots using ores.
@@ -677,6 +841,9 @@
         tags:
           - Ore
     - type: Lathe
+      idleState: icon
+      runningState: building
+      canEjectStoredMaterials: false
       staticRecipes:
         - SheetSteel30
         - SheetGlass30
@@ -684,13 +851,13 @@
         - SheetPlasma30
         - SheetPGlass30
         - SheetRPGlass30
-        - SheetUranium1
-        - IngotGold1
-        - IngotSilver1
-        - MaterialBananium1
+        - SheetUranium30
+        - IngotGold30
+        - IngotSilver30
+        - MaterialBananium10
 
 - type: entity
-  parent: Autolathe
+  parent: BaseLathe
   id: Sheetifier
   name: sheet-meister 2000
   description: A very sheety machine.
@@ -714,5 +881,6 @@
   - type: Lathe
     idleState: base_machine
     runningState: base_machine_processing
+    canEjectStoredMaterials: false
     staticRecipes:
     - MaterialSheetMeat

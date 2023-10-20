@@ -7948,11 +7948,11 @@ entities:
     - pos: 7.5,32.5
       parent: 1653
       type: Transform
-- proto: PowerCellHyperPrinted
+- proto: PowerCellHighPrinted
   entities:
-  - uid: 1599
+  - uid: 822
     components:
-    - pos: 33.368233,13.5307665
+    - pos: 33.49889,13.580287
       parent: 1653
       type: Transform
 - proto: PowerCellRecharger
@@ -8929,6 +8929,49 @@ entities:
     - pos: 25.506968,14.578961
       parent: 1653
       type: Transform
+- proto: SheetGlass
+  entities:
+  - uid: 841
+    components:
+    - pos: 0.32647848,15.48905
+      parent: 1653
+      type: Transform
+  - uid: 844
+    components:
+    - pos: 53.377705,4.600436
+      parent: 1653
+      type: Transform
+- proto: SheetPlastic
+  entities:
+  - uid: 838
+    components:
+    - pos: 10.278141,7.4876976
+      parent: 1653
+      type: Transform
+  - uid: 839
+    components:
+    - pos: 0.43585348,16.5828
+      parent: 1653
+      type: Transform
+  - uid: 846
+    components:
+    - pos: 6.3194933,22.541233
+      parent: 1653
+      type: Transform
+- proto: SheetRGlass
+  entities:
+  - uid: 1112
+    components:
+    - pos: 20.352413,24.551647
+      parent: 1653
+      type: Transform
+- proto: SheetSteel
+  entities:
+  - uid: 840
+    components:
+    - pos: 0.46710348,15.942175
+      parent: 1653
+      type: Transform
 - proto: ShuttersWindow
   entities:
   - uid: 580
@@ -8936,37 +8979,25 @@ entities:
     - pos: 10.5,43.5
       parent: 1653
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 581
     components:
     - pos: 11.5,43.5
       parent: 1653
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 582
     components:
     - pos: 12.5,43.5
       parent: 1653
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
 - proto: SignalButton
   entities:
   - uid: 583
@@ -8974,15 +9005,14 @@ entities:
     - pos: 9.5,43.5
       parent: 1653
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 580
-        - port: Toggle
-          uid: 581
-        - port: Toggle
-          uid: 582
-      type: SignalTransmitter
+    - linkedPorts:
+        580:
+        - Pressed: Toggle
+        581:
+        - Pressed: Toggle
+        582:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SignalTrigger
   entities:
   - uid: 1597

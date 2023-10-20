@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Events;
@@ -5,16 +6,12 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-
 
 namespace Content.Shared.Friction
 {
@@ -67,7 +64,7 @@ namespace Content.Shared.Friction
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 if (prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
-                    _mover.UseMobMovement(body.Owner))
+                    _mover.UseMobMovement(uid))
                 {
                     continue;
                 }
@@ -77,7 +74,7 @@ namespace Content.Shared.Friction
 
                 if (!xformQuery.TryGetComponent(uid, out var xform))
                 {
-                    Logger.ErrorS("physics", $"Unable to get transform for {ToPrettyString(body.Owner)} in tilefrictioncontroller");
+                    Log.Error($"Unable to get transform for {ToPrettyString(uid)} in tilefrictioncontroller");
                     continue;
                 }
 
@@ -112,7 +109,7 @@ namespace Content.Shared.Friction
 
         private void ReduceLinearVelocity(EntityUid uid, bool prediction, PhysicsComponent body, float friction, float frameTime)
         {
-            var speed = body.LinearVelocity.Length;
+            var speed = body.LinearVelocity.Length();
 
             if (speed <= 0.0f)
                 return;

@@ -1,6 +1,5 @@
 ﻿using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Interaction;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Robust.Shared.Map;
@@ -14,7 +13,6 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -27,26 +25,26 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
     {
         var xform = Transform(uid);
         var ignitionRadius = component.MaximumIgnitionRadius * args.Stability;
-        IgniteNearby(xform.Coordinates, args.Severity, ignitionRadius);
+        IgniteNearby(uid, xform.Coordinates, args.Severity, ignitionRadius);
     }
 
     private void OnSupercritical(EntityUid uid, PyroclasticAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         var xform = Transform(uid);
-        IgniteNearby(xform.Coordinates, 1, component.MaximumIgnitionRadius * 2);
+        IgniteNearby(uid, xform.Coordinates, 1, component.MaximumIgnitionRadius * 2);
     }
 
-    public void IgniteNearby(EntityCoordinates coordinates, float severity, float radius)
+    public void IgniteNearby(EntityUid uid, EntityCoordinates coordinates, float severity, float radius)
     {
-        foreach (var flammable in _lookup.GetComponentsInRange<FlammableComponent>(coordinates, radius))
+        var flammables = new HashSet<Entity<FlammableComponent>>();
+        _lookup.GetEntitiesInRange(coordinates, radius, flammables);
+
+        foreach (var flammable in flammables)
         {
             var ent = flammable.Owner;
-            if (!_interaction.InRangeUnobstructed(coordinates.ToMap(EntityManager), ent, -1))
-                continue;
-
-            var stackAmount = 1 + (int) (severity / 0.25f);
+            var stackAmount = 1 + (int) (severity / 0.15f);
             _flammable.AdjustFireStacks(ent, stackAmount, flammable);
-            _flammable.Ignite(ent, flammable);
+            _flammable.Ignite(ent, uid, flammable);
         }
     }
 }

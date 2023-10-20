@@ -4,32 +4,23 @@
     roomWhitelist:
       - SalvageExperiment
     presets:
-      - Cross
-      - SpaceMan
-      - FourSquare
+      - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
   postGeneration:
-    - !type:MiddleConnectionPostGen
-      overlapCount: 3
-      count: 3
-      entities:
-        - CableApcExtension
-        - AirlockGlass
-      edgeEntities:
-        - Grille
-        - Window
+    - !type:CorridorPostGen
+      width: 3
 
-    - !type:MiddleConnectionPostGen
-      count: 1
-      entities:
-        - CableApcExtension
-        - AirlockGlass
-
-    - !type:EntrancePostGen
+    - !type:DungeonEntrancePostGen
       count: 2
+
+    - !type:RoomEntrancePostGen
       entities:
+        - CableApcExtension
         - AirlockGlass
 
-    - !type:InternalWindowPostGen
+    - !type:EntranceFlankPostGen
       entities:
         - Grille
         - Window
@@ -50,7 +41,7 @@
         - id: RandomPainting
           prob: 0.05
           orGroup: content
-        - id: Intercom
+        - id: IntercomCommon
           prob: 0.1
           orGroup: content
 
@@ -59,38 +50,60 @@
       wall: WallSolid
       cornerWall: WallReinforced
 
+    - !type:JunctionPostGen
+      width: 1
+
+    - !type:JunctionPostGen
+
+    - !type:AutoCablingPostGen
+
+    - !type:CornerClutterPostGen
+      contents:
+        - id: PottedPlantRandom
+          amount: 1
+
+    - !type:CorridorDecalSkirtingPostGen
+      color: "#D381C996"
+      cardinalDecals:
+        South: BrickTileWhiteLineS
+        East: BrickTileWhiteLineE
+        North: BrickTileWhiteLineN
+        West: BrickTileWhiteLineW
+      cornerDecals:
+        SouthEast: BrickTileWhiteCornerSe
+        SouthWest: BrickTileWhiteCornerSw
+        NorthEast: BrickTileWhiteCornerNe
+        NorthWest: BrickTileWhiteCornerNw
+      pocketDecals:
+        SouthWest: BrickTileWhiteInnerSw
+        SouthEast: BrickTileWhiteInnerSe
+        NorthWest: BrickTileWhiteInnerNw
+        NorthEast: BrickTileWhiteInnerNe
+
+
 - type: dungeonConfig
   id: LavaBrig
   generator: !type:PrefabDunGen
     roomWhitelist:
       - LavaBrig
     presets:
-      - Cross
-      - SpaceMan
-      - FourSquare
+      - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
   postGeneration:
-    - !type:MiddleConnectionPostGen
-      overlapCount: 3
-      count: 3
-      entities:
-        - CableApcExtension
-        - AirlockSecurityGlassLocked
-      edgeEntities:
-        - Grille
-        - Window
+    - !type:CorridorPostGen
+      width: 3
 
-    - !type:MiddleConnectionPostGen
-      count: 1
-      entities:
-        - CableApcExtension
-        - AirlockSecurityGlassLocked
-
-    - !type:EntrancePostGen
+    - !type:DungeonEntrancePostGen
       count: 2
+
+    - !type:RoomEntrancePostGen
       entities:
+        - CableApcExtension
         - AirlockSecurityGlassLocked
 
-    - !type:InternalWindowPostGen
+    - !type:EntranceFlankPostGen
       entities:
         - Grille
         - Window
@@ -98,7 +111,7 @@
     - !type:ExternalWindowPostGen
       entities:
         - Grille
-        - ReinforcedWindow
+        - Window
 
     - !type:WallMountPostGen
       spawns:
@@ -111,11 +124,41 @@
         - id: RandomPainting
           prob: 0.05
           orGroup: content
-        - id: Intercom
+        - id: IntercomCommon
           prob: 0.1
           orGroup: content
 
     - !type:BoundaryWallPostGen
       tile: FloorSteel
-      wall: WallReinforced
+      wall: WallSolid
       cornerWall: WallReinforced
+
+    - !type:JunctionPostGen
+      width: 1
+
+    - !type:JunctionPostGen
+
+    - !type:AutoCablingPostGen
+
+    - !type:CornerClutterPostGen
+      contents:
+        - id: PottedPlantRandom
+          amount: 1
+
+    - !type:CorridorDecalSkirtingPostGen
+      color: "#DE3A3A96"
+      cardinalDecals:
+        South: BrickTileWhiteLineS
+        East: BrickTileWhiteLineE
+        North: BrickTileWhiteLineN
+        West: BrickTileWhiteLineW
+      cornerDecals:
+        SouthEast: BrickTileWhiteCornerSe
+        SouthWest: BrickTileWhiteCornerSw
+        NorthEast: BrickTileWhiteCornerNe
+        NorthWest: BrickTileWhiteCornerNw
+      pocketDecals:
+        SouthWest: BrickTileWhiteInnerSw
+        SouthEast: BrickTileWhiteInnerSe
+        NorthWest: BrickTileWhiteInnerNw
+        NorthEast: BrickTileWhiteInnerNe

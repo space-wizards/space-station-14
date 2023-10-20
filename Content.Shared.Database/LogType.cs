@@ -87,5 +87,7 @@ public enum LogType
     EntityDelete = 82,
     Vote = 83,
     ItemConfigure = 84,
-    GameDirector = 85,
+    DeviceLinking = 85,
+    Tile = 86,
+    GameDirector = 87,
 }

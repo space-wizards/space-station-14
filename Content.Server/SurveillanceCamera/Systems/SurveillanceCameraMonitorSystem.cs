@@ -1,18 +1,10 @@
 using System.Linq;
-using Content.Server.Chat.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.Wires;
-using Content.Shared.Interaction;
-using Content.Shared.Speech;
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -42,21 +34,22 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var (_, monitor) in EntityQuery<ActiveSurveillanceCameraMonitorComponent, SurveillanceCameraMonitorComponent>())
+        var query = EntityQueryEnumerator<ActiveSurveillanceCameraMonitorComponent, SurveillanceCameraMonitorComponent>();
+        while (query.MoveNext(out var uid, out _, out var monitor))
         {
-            if (Paused(monitor.Owner))
+            if (Paused(uid))
             {
                 continue;
             }
 
             monitor.LastHeartbeatSent += frameTime;
-            SendHeartbeat(monitor.Owner, monitor);
+            SendHeartbeat(uid, monitor);
             monitor.LastHeartbeat += frameTime;
 
             if (monitor.LastHeartbeat > _maxHeartbeatTime)
             {
-                DisconnectCamera(monitor.Owner, true, monitor);
-                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(monitor.Owner);
+                DisconnectCamera(uid, true, monitor);
+                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(uid);
             }
         }
     }
@@ -488,14 +481,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        IPlayerSession? session = null;
-        if (player != null
-            && TryComp(player, out ActorComponent? actor))
-        {
-            session = actor.PlayerSession;
-        }
-
-        var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
+        var state = new SurveillanceCameraMonitorUiState(GetNetEntity(monitor.ActiveCamera), monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
         _userInterface.TrySetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
     }
 }

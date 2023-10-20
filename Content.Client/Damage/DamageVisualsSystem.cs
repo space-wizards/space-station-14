@@ -135,7 +135,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     private void InitializeVisualizer(EntityUid entity, DamageVisualsComponent damageVisComp)
     {
         if (!TryComp(entity, out SpriteComponent? spriteComponent)
-            || !TryComp<DamageableComponent?>(entity, out var damageComponent)
+            || !TryComp<DamageableComponent>(entity, out var damageComponent)
             || !HasComp<AppearanceComponent>(entity))
             return;
 
@@ -351,22 +351,22 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         if (damageVisComp.Disabled)
             return;
 
-        HandleDamage(args.Component, damageVisComp);
+        HandleDamage(uid, args.Component, damageVisComp);
     }
 
-    private void HandleDamage(AppearanceComponent component, DamageVisualsComponent damageVisComp)
+    private void HandleDamage(EntityUid uid, AppearanceComponent component, DamageVisualsComponent damageVisComp)
     {
-        if (!TryComp(component.Owner, out SpriteComponent? spriteComponent)
-            || !TryComp(component.Owner, out DamageableComponent? damageComponent))
+        if (!TryComp(uid, out SpriteComponent? spriteComponent)
+            || !TryComp(uid, out DamageableComponent? damageComponent))
             return;
 
         if (damageVisComp.TargetLayers != null && damageVisComp.DamageOverlayGroups != null)
-            UpdateDisabledLayers(spriteComponent, component, damageVisComp);
+            UpdateDisabledLayers(uid, spriteComponent, component, damageVisComp);
 
         if (damageVisComp.Overlay && damageVisComp.DamageOverlayGroups != null && damageVisComp.TargetLayers == null)
             CheckOverlayOrdering(spriteComponent, damageVisComp);
 
-        if (AppearanceSystem.TryGetData<bool>(component.Owner, DamageVisualizerKeys.ForceUpdate, out var update, component)
+        if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.ForceUpdate, out var update, component)
             && update)
         {
             ForceUpdateLayers(damageComponent, spriteComponent, damageVisComp);
@@ -376,11 +376,16 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         if (damageVisComp.TrackAllDamage)
         {
             UpdateDamageVisuals(damageComponent, spriteComponent, damageVisComp);
+            return;
         }
-        else if (AppearanceSystem.TryGetData<DamageVisualizerGroupData>(component.Owner, DamageVisualizerKeys.DamageUpdateGroups, out var data, component))
+
+        if (!AppearanceSystem.TryGetData<DamageVisualizerGroupData>(uid, DamageVisualizerKeys.DamageUpdateGroups,
+                out var data, component))
         {
-            UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageVisComp);
+            data = new DamageVisualizerGroupData(Comp<DamageableComponent>(uid).DamagePerGroup.Keys.ToList());
         }
+
+        UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageVisComp);
     }
 
     /// <summary>
@@ -389,29 +394,30 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     ///     layer will no longer be visible, or obtain
     ///     any damage updates.
     /// </summary>
-    private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualsComponent damageVisComp)
+    private void UpdateDisabledLayers(EntityUid uid, SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualsComponent damageVisComp)
     {
         foreach (var layer in damageVisComp.TargetLayerMapKeys)
         {
-            bool? layerStatus = null;
-            if (AppearanceSystem.TryGetData<bool>(component.Owner, layer, out var layerStateEnum, component))
-                layerStatus = layerStateEnum;
+            // I assume this gets set by something like body system if limbs are missing???
+            // TODO is this actually used by anything anywhere?
+            AppearanceSystem.TryGetData(uid, layer, out bool disabled, component);
 
-            if (layerStatus == null)
+            if (damageVisComp.DisabledLayers[layer] == disabled)
                 continue;
 
-            if (damageVisComp.DisabledLayers[layer] != (bool) layerStatus)
+            damageVisComp.DisabledLayers[layer] = disabled;
+            if (damageVisComp.TrackAllDamage)
             {
-                damageVisComp.DisabledLayers[layer] = (bool) layerStatus;
-                if (!damageVisComp.TrackAllDamage && damageVisComp.DamageOverlayGroups != null)
-                {
-                    foreach (var damageGroup in damageVisComp.DamageOverlayGroups!.Keys)
-                    {
-                        spriteComponent.LayerSetVisible($"{layer}{damageGroup}", damageVisComp.DisabledLayers[layer]);
-                    }
-                }
-                else if (damageVisComp.TrackAllDamage)
-                    spriteComponent.LayerSetVisible($"{layer}trackDamage", damageVisComp.DisabledLayers[layer]);
+                spriteComponent.LayerSetVisible($"{layer}trackDamage", !disabled);
+                continue;
+            }
+
+            if (damageVisComp.DamageOverlayGroups == null)
+                continue;
+
+            foreach (var damageGroup in damageVisComp.DamageOverlayGroups.Keys)
+            {
+                spriteComponent.LayerSetVisible($"{layer}{damageGroup}", !disabled);
             }
         }
     }

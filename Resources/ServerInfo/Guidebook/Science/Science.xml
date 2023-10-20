@@ -10,7 +10,28 @@ Science, often called Research and Development, is a job made up of both generat
 </Box>
 The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D computer, which allows you to unlock technologies.
 
-Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequesites you have to unlock before you can research them.
+Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequisites you have to unlock before you can research them.
+
+Information about the different technologies can be viewed [textlink="on the technology guidebook page" link="Technologies"].
+
+## Disciplines
+Technologies are spread over 5 different Disciplines:
+<Box>
+<GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
+<GuideEntityEmbed Entity="Syringe" Caption="Biochemical"/>
+<GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
+<GuideEntityEmbed Entity="ComputerTelevision" Caption="Civil Services"/>
+<GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Arsenal"/>
+</Box>
+
+<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Use your nearest R&D console to take note of which kind of research is locked behind each Discipline tree.
+
+## Tiers
+Each Discipline tree has up to 3 tiers of technologies. At the start the only tier that is open and available for you is tier 1.
+
+In order to progress further, you have to research up to [color=brown]75%[/color] of the current tier to move to the next one. So in order to unlock T2 researches you need to research 75% of T1.
+
+Now [color=green]Tier 3[/color] is where it gets interesting. If you research a T3 tech, you [color=brown]lock out[/color] T3 techs from other Discipline trees. That is, unless... you find some other way around it, probably should ask your [color=purple]Research Director[/color].
 
 ## Lathes
 <Box>
@@ -20,7 +41,8 @@ Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes
 <Box>
 <GuideEntityEmbed Entity="ExosuitFabricator"/>
 <GuideEntityEmbed Entity="MedicalTechFab"/>
+<GuideEntityEmbed Entity="SecurityTechFab"/>
 </Box>
-At a lathe, you can sync to a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, plasma) which can be acquired at Cargo or Salvage.
+At a lathe, you can choose a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, plasma) which can be acquired at Cargo or Salvage.
 
 </Document>

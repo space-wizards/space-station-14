@@ -1,15 +1,14 @@
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
 {
     public sealed class StomachSystem : EntitySystem
     {
-        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
@@ -21,7 +20,8 @@ namespace Content.Server.Body.Systems
 
         public override void Update(float frameTime)
         {
-            foreach (var (stomach, organ, sol)in EntityManager.EntityQuery<StomachComponent, OrganComponent, SolutionContainerManagerComponent>())
+            var query = EntityQueryEnumerator<StomachComponent, OrganComponent, SolutionContainerManagerComponent>();
+            while (query.MoveNext(out var uid, out var stomach, out var organ, out var sol))
             {
                 stomach.AccumulatedFrameTime += frameTime;
 
@@ -31,7 +31,7 @@ namespace Content.Server.Body.Systems
                 stomach.AccumulatedFrameTime -= stomach.UpdateInterval;
 
                 // Get our solutions
-                if (!_solutionContainerSystem.TryGetSolution(stomach.Owner, DefaultSolutionName,
+                if (!_solutionContainerSystem.TryGetSolution(uid, DefaultSolutionName,
                         out var stomachSolution, sol))
                     continue;
 
@@ -46,14 +46,13 @@ namespace Content.Server.Body.Systems
                     delta.Increment(stomach.UpdateInterval);
                     if (delta.Lifetime > stomach.DigestionDelay)
                     {
-                        if (stomachSolution.TryGetReagent(delta.ReagentId, out var quant))
+                        if (stomachSolution.TryGetReagent(delta.ReagentQuantity.Reagent, out var reagent))
                         {
-                            if (quant > delta.Quantity)
-                                quant = delta.Quantity;
+                            if (reagent.Quantity > delta.ReagentQuantity.Quantity)
+                                reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
 
-                            _solutionContainerSystem.TryRemoveReagent((stomach).Owner, stomachSolution,
-                                delta.ReagentId, quant);
-                            transferSolution.AddReagent(delta.ReagentId, quant);
+                            _solutionContainerSystem.RemoveReagent(uid, stomachSolution, reagent);
+                            transferSolution.AddReagent(reagent);
                         }
 
                         queue.Add(delta);
@@ -117,7 +116,7 @@ namespace Content.Server.Body.Systems
             // Add each reagent to ReagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {
-                stomach.ReagentDeltas.Add(new StomachComponent.ReagentDelta(reagent.ReagentId, reagent.Quantity));
+                stomach.ReagentDeltas.Add(new StomachComponent.ReagentDelta(reagent));
             }
 
             return true;

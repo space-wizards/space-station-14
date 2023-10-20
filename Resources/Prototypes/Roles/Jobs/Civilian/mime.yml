@@ -3,8 +3,11 @@
   name: job-name-mime
   description: job-description-mime
   playTimeTracker: JobMime
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 14400 #4 hrs
   startingGear: MimeGear
-  icon: "Mime"
+  icon: "JobIconMime"
   supervisors: job-supervisors-hop
   access:
   - Theatre
@@ -28,6 +31,18 @@
     mask: ClothingMaskMime
     id: MimePDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtMime
+  innerClothingSkirt: ClothingUniformJumpskirtMime
   satchel: ClothingBackpackSatchelMimeFilled
   duffelbag: ClothingBackpackDuffelMimeFilled
+
+- type: entity
+  id: ActionMimeInvisibleWall
+  name: Create Invisible Wall
+  description: Create an invisible wall in front of you, if placeable there.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    priority: -1
+    useDelay: 30
+    icon: Structures/Walls/solid.rsi/full.png
+    event: !type:InvisibleWallActionEvent

@@ -2,7 +2,7 @@
   id: Dresser
   parent: BaseStructure
   name: dresser
-  description: It's filled with underwear and shorts, finding an unused one is a gamble.
+  description: Wooden dresser, can store things inside itself, ideal for underwear, and someone's kidneys?...
   components:
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
@@ -15,6 +15,7 @@
     - trigger:
         !type:DamageTrigger
         damage: 50
+
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -23,6 +24,444 @@
             max: 3
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Storage
+    capacity: 50
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: InteractionOutline
+  - type: Clickable
   - type: Tag
     tags:
     - Wooden
+
+- type: entity
+  id: DresserFilled
+  parent: Dresser
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckLGBTPin
+        prob: 0.06
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpsuitColorGrey
+        prob: 0.06
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorGrey
+        prob: 0.06
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpsuitColorWhite
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorWhite
+        prob: 0.05
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpsuitColorPink
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorPink
+        prob: 0.05
+      - id: ClothingUniformJumpsuitLoungewear
+        prob: 0.05    
+        orGroup: dressermainloot
+      - id: Pen # It`s pen.
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingUniformJumpsuitColorBlue
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorBlue
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpsuitColorYellow
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorYellow
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpsuitColorGreen
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorGreen
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpsuitColorOrange
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpskirtColorOrange
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpsuitColorRed
+        prob: 0.03 
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorRed
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpsuitColorPurple
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorPurple
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpsuitColorDarkBlue
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtColorDarkBlue
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpsuitColorTeal
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpskirtColorTeal
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingShoesColorBlack
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingNeckScarfStripedRed
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingNeckScarfStripedBlue
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingNeckScarfStripedGreen
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingHeadHatGreysoft
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingHeadHatCorpsoft
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingHeadHatBunny
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingOuterHoodieBlack
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: BedsheetNT
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: BedsheetGrey
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingOuterWinterClown
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingOuterCoatBomber
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingEyesEyepatch
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingHeadHatPaper
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingMaskBreath
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingHeadHatWitch
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingOuterCoatLab
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingHeadHatFedoraGrey
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpsuitHawaiBlue
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingHeadHatAnimalHeadslime
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingNeckHeadphones
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingUnderSocksCoder
+        prob: 0.03 
+        orGroup: dressermainloot
+      - id: ClothingUnderSocksBee
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingHeadHatAnimalMonkey
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingShoesWizard
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingOuterDameDane
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingHeadHatShrineMaidenWig
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingOuterPoncho
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: ClothingShoesBootsWork
+        prob: 0.03
+        orGroup: dressermainloot
+      - id: ClothingOuterWinterCoat
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingMaskFox
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingEyesGlassesGar
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingOuterCoatGentle
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingHeadHatBeret
+        prob: 0.03
+        orGroup: dresserthirdloot
+      - id: PlushieLizard
+        prob: 0.03
+        orGroup: dresserthirdloot 
+      - id: ClothingOuterSuitShrineMaiden
+        prob: 0.03
+        orGroup: dressersecondloot
+      - id: ClothingOuterClownPriest
+        prob: 0.02
+        orGroup: dressersecondloot
+      - id: ClothingHeadHatXmasCrown
+        prob: 0.02
+        orGroup: dresserthirdloot
+      - id: ClothingMaskNeckGaiter
+        prob: 0.02
+        orGroup: dressersecondloot
+      - id: ClothingHeadHatBeretBrigmedic
+        prob: 0.02
+        orGroup: dresserthirdloot
+      - id: ClothingMaskGas
+        prob: 0.008
+        orGroup: dressersecondloot
+      - id: CablecuffsBroken
+        prob: 0.008
+        orGroup: dressersecondloot
+      - id: ClothingOuterVestHazard
+        prob: 0.008
+        orGroup: dressersecondloot
+      - id: ClothingHandsGlovesLatex
+        prob: 0.008
+        orGroup: dressermainloot
+      - id: ClothingHandsGlovesColorWhite
+        prob: 0.008
+        orGroup: dressermainloot
+      - id: ClothingHandsGlovesBoxingYellow
+        prob: 0.008
+        orGroup: dressermainloot
+      - id: ClothingOuterGhostSheet
+        prob: 0.008
+        orGroup: dressersecondloot
+      - id: ClothingUniformJumpskirtJanimaid
+        prob: 0.005
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtJanimaidmini
+        prob: 0.005
+        orGroup: dressermainloot
+      - id: ClothingNeckScarfStripedSyndieRed
+        prob: 0.005
+        orGroup: dressermainloot
+      - id: ClothingOuterCoatJensen
+        prob: 0.005
+        orGroup: dressersecondloot
+      - id: ClothingMaskMuzzle
+        prob: 0.003
+        orGroup: dressersecondloot
+      - id: ClothingHandsGlovesColorYellowBudget
+        prob: 0.002
+        orGroup: dressermainloot
+      - id: ClothingHeadPyjamaSyndicatePink
+        prob: 0.002
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+        prob: 0.002
+        orGroup: dressermainloot
+      - id: ClothingHeadHatTacticalMaidHeadband
+        prob: 0.001
+        orGroup: dresserthirdloot
+      - id: FoodTinMRE
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodCornTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodTinPeachesMaintTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: PaperRolling1
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodTinPeachesTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodFrozenPopsicleTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodPlateTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodFrozenSnowconeTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodTinBeansTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodTinMRETrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: TrashBananaPeel
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodPlateSmallTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodBowlBigTrash
+        prob: 0.010
+        orGroup: dressermainloot
+      - id: FoodTinMRE
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodCornTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodTinPeachesMaintTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: PaperRolling1
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodTinPeachesTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodFrozenPopsicleTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodPlateTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodFrozenSnowconeTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodTinBeansTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodTinMRETrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: TrashBananaPeel
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodPlateSmallTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodBowlBigTrash
+        prob: 0.010
+        orGroup: dressersecondloot
+      - id: FoodTinMRE
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodCornTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodTinPeachesMaintTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: PaperRolling1
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodTinPeachesTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodFrozenPopsicleTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodPlateTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodFrozenSnowconeTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodTinBeansTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodTinMRETrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: TrashBananaPeel
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodPlateSmallTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: FoodBowlBigTrash
+        prob: 0.010
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpskirtTacticalMaid
+        prob: 0.001
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpsuitNanotrasen
+        prob: 0.001
+        orGroup: dressermainloot
+      - id: Shiv
+        prob: 0.001
+        orGroup: dressersecondloot
+      - id: BikeHorn
+        prob: 0.001
+        orGroup: dressersecondloot
+      - id: DrinkWaterBottleFull
+        prob: 0.001
+        orGroup: dressersecondloot
+      - id: BrokenBottle
+        prob: 0.001
+        orGroup: dressersecondloot
+      - id: FoodMeatRotten 
+        prob: 0.001
+        orGroup: dressersecondloot
+      - id: ClothingOuterSkub
+        prob: 0.0008
+        orGroup: dressersecondloot
+      - id: ClothingNeckCloakMoth
+        prob: 0.0003
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpsuitPrisoner
+        prob: 0.0003
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpskirtPrisoner
+        prob: 0.0003
+        orGroup: dresserthirdloot
+      - id: ClothingOuterWinterCentcom
+        prob: 0.0001
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpskirtOfLife
+        prob: 0.0001
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpsuitSyndieFormal
+        prob: 0.0001
+        orGroup: dresserthirdloot
+      - id: ClothingUniformJumpskirtSyndieFormalDress
+        prob: 0.0001
+        orGroup: dresserthirdloot
+      - id: ClothingOuterWinterSyndie
+        prob: 0.0001
+        orGroup: dresserthirdloot
+      - id: ClothingHeadHatRichard
+        prob: 0.0001
+        orGroup: dresserthirdloot
+      - id: ClothingOuterDogi
+        prob: 0.00001
+        orGroup: dressersecondloot
+      - id: HeadHuman
+        prob: 0.00001
+        orGroup: dressersecondloot
+      - id: OrganHumanKidneys
+        prob: 0.00001
+        orGroup: dressersecondloot

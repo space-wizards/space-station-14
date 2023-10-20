@@ -5,35 +5,43 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: DragonRift
-    - type: Transform
-      anchored: true
-    - type: Physics
-      bodyType: Static
-      canCollide: false
-    - type: Fixtures
-    - type: Sprite
-      layers:
-        - sprite: Structures/Specific/carp_rift.rsi
-          state: icon
-          color: "#569fff"
-          shader: unshaded
-    - type: InteractionOutline
-    - type: Clickable
-    - type: PointLight
-      enabled: true
-      color: "#366db5"
-      radius: 10.0
-      energy: 5.0
-      netsync: false
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 300
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+  - type: DragonRift
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Sprite
+    layers:
+    - sprite: Structures/Specific/carp_rift.rsi
+      state: icon
+      color: "#569fff"
+      shader: unshaded
+  - type: InteractionOutline
+  - type: Clickable
+  - type: PointLight
+    enabled: true
+    color: "#366db5"
+    radius: 10.0
+    energy: 5.0
+    netsync: false
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: carp rift
+    # only show after making the announcement at 50%
+    enabled: false
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg

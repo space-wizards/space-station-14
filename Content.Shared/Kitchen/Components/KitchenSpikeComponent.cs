@@ -6,7 +6,7 @@ namespace Content.Shared.Kitchen.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedKitchenSpikeSystem))]
-public sealed class KitchenSpikeComponent : Component
+public sealed partial class KitchenSpikeComponent : Component
 {
     [DataField("delay")]
     public float SpikeDelay = 7.0f;
@@ -15,7 +15,7 @@ public sealed class KitchenSpikeComponent : Component
     [DataField("sound")]
     public SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
-    public List<string?>? PrototypesToSpawn;
+    public List<string>? PrototypesToSpawn;
 
     // TODO: Spiking alive mobs? (Replace with uid) (deal damage to their limbs on spiking, kill on first butcher attempt?)
     public string MeatSource1p = "?";

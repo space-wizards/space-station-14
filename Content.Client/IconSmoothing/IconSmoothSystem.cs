@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.IconSmoothing;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -235,6 +236,8 @@ namespace Content.Client.IconSmoothing
                 return;
             }
 
+            var spriteEnt = (uid, sprite);
+
             if (xform.Anchored)
             {
                 if (!_mapManager.TryGetGrid(xform.GridUid, out grid))
@@ -247,13 +250,13 @@ namespace Content.Client.IconSmoothing
             switch (smooth.Mode)
             {
                 case IconSmoothingMode.Corners:
-                    CalculateNewSpriteCorners(grid, smooth, sprite, xform, smoothQuery);
+                    CalculateNewSpriteCorners(grid, smooth, spriteEnt, xform, smoothQuery);
                     break;
                 case IconSmoothingMode.CardinalFlags:
-                    CalculateNewSpriteCardinal(grid, smooth, sprite, xform, smoothQuery);
+                    CalculateNewSpriteCardinal(grid, smooth, spriteEnt, xform, smoothQuery);
                     break;
                 case IconSmoothingMode.Diagonal:
-                    CalculateNewSpriteDiagonal(grid, smooth, sprite, xform, smoothQuery);
+                    CalculateNewSpriteDiagonal(grid, smooth, spriteEnt, xform, smoothQuery);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -261,11 +264,11 @@ namespace Content.Client.IconSmoothing
         }
 
         private void CalculateNewSpriteDiagonal(MapGridComponent? grid, IconSmoothComponent smooth,
-            SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+            Entity<SpriteComponent> sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
         {
             if (grid == null)
             {
-                sprite.LayerSetState(0, $"{smooth.StateBase}0");
+                sprite.Comp.LayerSetState(0, $"{smooth.StateBase}0");
                 return;
             }
 
@@ -288,21 +291,21 @@ namespace Content.Client.IconSmoothing
 
             if (matching)
             {
-                sprite.LayerSetState(0, $"{smooth.StateBase}1");
+                sprite.Comp.LayerSetState(0, $"{smooth.StateBase}1");
             }
             else
             {
-                sprite.LayerSetState(0, $"{smooth.StateBase}0");
+                sprite.Comp.LayerSetState(0, $"{smooth.StateBase}0");
             }
         }
 
-        private void CalculateNewSpriteCardinal(MapGridComponent? grid, IconSmoothComponent smooth, SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+        private void CalculateNewSpriteCardinal(MapGridComponent? grid, IconSmoothComponent smooth, Entity<SpriteComponent> sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
         {
             var dirs = CardinalConnectDirs.None;
 
             if (grid == null)
             {
-                sprite.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
+                sprite.Comp.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
                 return;
             }
 
@@ -316,7 +319,7 @@ namespace Content.Client.IconSmoothing
             if (MatchingEntity(smooth, grid.GetAnchoredEntitiesEnumerator(pos.Offset(Direction.West)), smoothQuery))
                 dirs |= CardinalConnectDirs.West;
 
-            sprite.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
+            sprite.Comp.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
 
             var directions = DirectionFlag.None;
 
@@ -329,7 +332,7 @@ namespace Content.Client.IconSmoothing
             if ((dirs & CardinalConnectDirs.West) != 0x0)
                 directions |= DirectionFlag.West;
 
-            CalculateEdge(sprite.Owner, directions, sprite);
+            CalculateEdge(sprite, directions, sprite);
         }
 
         private bool MatchingEntity(IconSmoothComponent smooth, AnchoredEntitiesEnumerator candidates, EntityQuery<IconSmoothComponent> smoothQuery)
@@ -347,7 +350,7 @@ namespace Content.Client.IconSmoothing
             return false;
         }
 
-        private void CalculateNewSpriteCorners(MapGridComponent? grid, IconSmoothComponent smooth, SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+        private void CalculateNewSpriteCorners(MapGridComponent? grid, IconSmoothComponent smooth, Entity<SpriteComponent> spriteEnt, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
         {
             var (cornerNE, cornerNW, cornerSW, cornerSE) = grid == null
                 ? (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None)
@@ -358,6 +361,7 @@ namespace Content.Client.IconSmoothing
             // It will also result in 4-8 sprite update events being raised when it only needs to be 1-2.
             // At the very least each event currently only queues a sprite for updating.
             // Oh god sprite component is a mess.
+            var sprite = spriteEnt.Comp;
             sprite.LayerSetState(CornerLayers.NE, $"{smooth.StateBase}{(int) cornerNE}");
             sprite.LayerSetState(CornerLayers.SE, $"{smooth.StateBase}{(int) cornerSE}");
             sprite.LayerSetState(CornerLayers.SW, $"{smooth.StateBase}{(int) cornerSW}");
@@ -377,7 +381,7 @@ namespace Content.Client.IconSmoothing
             if ((cornerNW & cornerSW) != CornerFill.None)
                 directions |= DirectionFlag.West;
 
-            CalculateEdge(sprite.Owner, directions, sprite);
+            CalculateEdge(spriteEnt, directions, sprite);
         }
 
         private (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(MapGridComponent grid, IconSmoothComponent smooth, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)

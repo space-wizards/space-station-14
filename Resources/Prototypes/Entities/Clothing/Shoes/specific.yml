@@ -26,6 +26,7 @@
   - type: Tag
     tags:
     - ClownShoes
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -41,12 +42,11 @@
     footstepSoundCollection:
       collection: FootstepClown
   - type: PointLight
-    netsync: false
     enabled: true
     radius: 3
     energy: 2
     color: "#FFD800"
-
+    netsync: false
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesCult
@@ -81,6 +81,10 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/spaceninja.rsi
   - type: NoSlip
+  - type: ClothingSpeedModifier
+    # ninja are masters of sneaking around relatively quickly, won't break cloak
+    walkModifier: 1.1
+    sprintModifier: 1.3
 
 - type: entity
   parent: ClothingShoesBaseButcherable

@@ -4,6 +4,7 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: glass }
   spawn: SheetGlass1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: ReinforcedGlass
@@ -11,6 +12,7 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: rglass }
   spawn: SheetRGlass1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: PlasmaGlass
@@ -18,6 +20,7 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: pglass }
   spawn: SheetPGlass1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: ReinforcedPlasmaGlass
@@ -25,6 +28,7 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: rpglass }
   spawn: SheetRPGlass1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: UraniumGlass
@@ -32,6 +36,7 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: uglass }
   spawn: SheetUGlass1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: ReinforcedUraniumGlass
@@ -39,3 +44,4 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: ruglass }
   spawn: SheetRUGlass1
   maxCount: 30
+  itemSize: 1

@@ -9,6 +9,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Graphics;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -16,14 +17,14 @@ namespace Content.Client.Parallax.Data;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
+public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSource
 {
     /// <summary>
     /// Parallax config path (the TOML file).
     /// In client resources.
     /// </summary>
     [DataField("configPath")]
-    public ResPath ParallaxConfigPath { get; } = new("/parallax_config.toml");
+    public ResPath ParallaxConfigPath { get; private set; } = new("/parallax_config.toml");
 
     /// <summary>
     /// ID for debugging, caching, and so forth.
@@ -31,7 +32,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
     /// It is advisible to provide a roughly unique ID for any unique config contents.
     /// </summary>
     [DataField("id")]
-    public string Identifier { get; } = "other";
+    public string Identifier { get; private set; } = "other";
 
     /// <summary>
     /// Cached path.

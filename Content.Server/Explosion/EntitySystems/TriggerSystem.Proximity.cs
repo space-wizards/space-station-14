@@ -1,28 +1,23 @@
 using Content.Server.Explosion.Components;
-using Content.Shared.Physics;
 using Content.Shared.Trigger;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class TriggerSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
-    /// <summary>
-    /// Anything that has stuff touching it (to check speed) or is on cooldown.
-    /// </summary>
-    private HashSet<TriggerOnProximityComponent> _activeProximities = new();
 
     private void InitializeProximity()
     {
         SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(OnProximityStartCollide);
         SubscribeLocalEvent<TriggerOnProximityComponent, EndCollideEvent>(OnProximityEndCollide);
         SubscribeLocalEvent<TriggerOnProximityComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TriggerOnProximityComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<TriggerOnProximityComponent, ComponentShutdown>(OnProximityShutdown);
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<TriggerOnProximityComponent, AnchorStateChangedEvent>(OnProximityAnchor);
@@ -37,7 +32,6 @@ public sealed partial class TriggerSystem
 
         if (!component.Enabled)
         {
-            _activeProximities.Remove(component);
             component.Colliding.Clear();
         }
         // Re-check for contacts as we cleared them.
@@ -49,14 +43,13 @@ public sealed partial class TriggerSystem
 
     private void OnProximityShutdown(EntityUid uid, TriggerOnProximityComponent component, ComponentShutdown args)
     {
-        _activeProximities.Remove(component);
         component.Colliding.Clear();
     }
 
     private void OnMapInit(EntityUid uid, TriggerOnProximityComponent component, MapInitEvent args)
     {
         component.Enabled = !component.RequiresAnchored ||
-                            EntityManager.GetComponent<TransformComponent>(uid).Anchored;
+                            Transform(uid).Anchored;
 
         SetProximityAppearance(uid, component);
 
@@ -68,23 +61,30 @@ public sealed partial class TriggerSystem
             component.Shape,
             TriggerOnProximityComponent.FixtureID,
             hard: false,
-            // TODO: Should probably have these settable via datafield but I'm lazy and it's a pain
-            collisionLayer: (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable));
+            body: body,
+            collisionLayer: component.Layer);
+    }
+
+    private void OnUnpaused(EntityUid uid, TriggerOnProximityComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextTrigger += args.PausedTime;
+        component.NextVisualUpdate += args.PausedTime;
     }
 
     private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID) return;
+        if (args.OurFixtureId != TriggerOnProximityComponent.FixtureID)
+            return;
 
-        _activeProximities.Add(component);
-        component.Colliding.Add(args.OtherBody);
+        component.Colliding[args.OtherEntity] = args.OtherBody;
     }
 
     private static void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID) return;
+        if (args.OurFixtureId != TriggerOnProximityComponent.FixtureID)
+            return;
 
-        component.Colliding.Remove(args.OtherBody);
+        component.Colliding.Remove(args.OtherEntity);
     }
 
     private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)
@@ -95,76 +95,67 @@ public sealed partial class TriggerSystem
         }
     }
 
-    private void Activate(TriggerOnProximityComponent component)
+    private void Activate(EntityUid uid, EntityUid user, TriggerOnProximityComponent component)
     {
         DebugTools.Assert(component.Enabled);
+
+        var curTime = _timing.CurTime;
 
         if (!component.Repeating)
         {
             component.Enabled = false;
-            _activeProximities.Remove(component);
             component.Colliding.Clear();
         }
         else
         {
-            component.Accumulator += component.Cooldown;
+            component.NextTrigger = curTime + component.Cooldown;
         }
 
-        if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
+        // Queue a visual update for when the animation is complete.
+        component.NextVisualUpdate = curTime + component.AnimationDuration;
+
+        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
         {
-            _appearance.SetData(appearance.Owner, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active, appearance);
+            _appearance.SetData(uid, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active, appearance);
         }
 
-        Trigger(component.Owner);
+        Trigger(uid, user);
     }
 
-    private void UpdateProximity(float frameTime)
+    private void UpdateProximity()
     {
-        var toRemove = new RemQueue<TriggerOnProximityComponent>();
+        var curTime = _timing.CurTime;
 
-        foreach (var comp in _activeProximities)
+        var query = EntityQueryEnumerator<TriggerOnProximityComponent>();
+        while (query.MoveNext(out var uid, out var trigger))
         {
-            MetaDataComponent? metadata = null;
-
-            if (Deleted(comp.Owner, metadata))
+            if (curTime >= trigger.NextVisualUpdate)
             {
-                toRemove.Add(comp);
-                continue;
+                // Update the visual state once the animation is done.
+                trigger.NextVisualUpdate = TimeSpan.MaxValue;
+                SetProximityAppearance(uid, trigger);
             }
 
-            SetProximityAppearance(comp.Owner, comp);
-
-            if (Paused(comp.Owner, metadata)) continue;
-
-            comp.Accumulator -= frameTime;
-
-            if (comp.Accumulator > 0f) continue;
-
-            // Only remove it from accumulation when nothing colliding anymore.
-            if (!comp.Enabled || comp.Colliding.Count == 0)
-            {
-                comp.Accumulator = 0f;
-                toRemove.Add(comp);
+            if (!trigger.Enabled)
                 continue;
-            }
 
-            // Alright now that we have no cd check everything in range.
+            if (curTime < trigger.NextTrigger)
+                // The trigger's on cooldown.
+                continue;
 
-            foreach (var colliding in comp.Colliding)
+            // Check for anything colliding and moving fast enough.
+            foreach (var (collidingUid, colliding) in trigger.Colliding)
             {
-                if (Deleted(colliding.Owner)) continue;
+                if (Deleted(collidingUid))
+                    continue;
 
-                if (colliding.LinearVelocity.Length < comp.TriggerSpeed) continue;
+                if (colliding.LinearVelocity.Length() < trigger.TriggerSpeed)
+                    continue;
 
                 // Trigger!
-                Activate(comp);
+                Activate(uid, collidingUid, trigger);
                 break;
             }
-        }
-
-        foreach (var prox in toRemove)
-        {
-            _activeProximities.Remove(prox);
         }
     }
 }

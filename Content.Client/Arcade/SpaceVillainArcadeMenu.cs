@@ -1,9 +1,8 @@
-﻿using Content.Client.Arcade.UI;
+﻿using System.Numerics;
+using Content.Client.Arcade.UI;
 using Content.Shared.Arcade;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Localization;
-using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.Arcade
 {
@@ -20,7 +19,7 @@ namespace Content.Client.Arcade
         private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
         {
-            MinSize = SetSize = (300, 225);
+            MinSize = SetSize = new Vector2(300, 225);
             Title = Loc.GetString("spacevillain-menu-title");
             Owner = owner;
 

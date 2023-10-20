@@ -30,7 +30,7 @@
         - Multitool
         - AppraisalTool
       components:
-        - AirlockPainter
+        - SprayPainter
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -103,7 +103,7 @@
         - Multitool
         - AppraisalTool
       components:
-        - AirlockPainter
+        - SprayPainter
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -238,6 +238,7 @@
   - type: Clothing
     sprite: Clothing/Belt/medical.rsi
   - type: Storage
+    capacity: 60
     whitelist:
       tags:
         - Wrench

@@ -1,8 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -25,10 +25,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
         SubscribeLocalEvent<MaterialStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentGetState>(OnGetInsertingState);
-        SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentHandleState>(OnHandleInsertingState);
         SubscribeLocalEvent<InsertingMaterialStorageComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
@@ -49,36 +45,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     private void OnMapInit(EntityUid uid, MaterialStorageComponent component, MapInitEvent args)
     {
         _appearance.SetData(uid, MaterialStorageVisuals.Inserting, false);
-    }
-
-    private void OnGetState(EntityUid uid, MaterialStorageComponent component, ref ComponentGetState args)
-    {
-        args.State = new MaterialStorageComponentState(component.Storage, component.MaterialWhiteList);
-    }
-
-    private void OnHandleState(EntityUid uid, MaterialStorageComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MaterialStorageComponentState state)
-            return;
-
-        component.Storage = new Dictionary<string, int>(state.Storage);
-
-        if (state.MaterialWhitelist != null)
-            component.MaterialWhiteList = new List<string>(state.MaterialWhitelist);
-    }
-
-    private void OnGetInsertingState(EntityUid uid, InsertingMaterialStorageComponent component, ref ComponentGetState args)
-    {
-        args.State = new InsertingMaterialStorageComponentState(component.EndTime, component.MaterialColor);
-    }
-
-    private void OnHandleInsertingState(EntityUid uid, InsertingMaterialStorageComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not InsertingMaterialStorageComponentState state)
-            return;
-
-        component.EndTime = state.EndTime;
-        component.MaterialColor = state.MaterialColor;
     }
 
     private void OnUnpaused(EntityUid uid, InsertingMaterialStorageComponent component, ref EntityUnpausedEvent args)
@@ -183,6 +149,29 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     }
 
     /// <summary>
+    /// Tries to set the amount of material in the storage to a specific value.
+    /// Still respects the filters in place.
+    /// </summary>
+    /// <param name="uid">The entity to change the material storage on.</param>
+    /// <param name="materialId">The ID of the material to change.</param>
+    /// <param name="volume">The stored material volume to set the storage to.</param>
+    /// <param name="component">The storage component on <paramref name="uid"/>. Resolved automatically if not given.</param>
+    /// <returns>True if it was successful (enough space etc).</returns>
+    public bool TrySetMaterialAmount(
+        EntityUid uid,
+        string materialId,
+        int volume,
+        MaterialStorageComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        var curAmount = GetMaterialAmount(uid, materialId, component);
+        var delta = volume - curAmount;
+        return TryChangeMaterialAmount(uid, materialId, delta, component);
+    }
+
+    /// <summary>
     /// Tries to insert an entity into the material storage.
     /// </summary>
     public virtual bool TryInsertMaterialEntity(EntityUid user,
@@ -198,7 +187,10 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!Resolve(toInsert, ref material, ref composition, false))
             return false;
 
-        if (storage.EntityWhitelist?.IsValid(toInsert) == false)
+        if (storage.Whitelist?.IsValid(toInsert) == false)
+            return false;
+
+        if (HasComp<UnremoveableComponent>(toInsert))
             return false;
 
         // Material Whitelist checked implicitly by CanChangeMaterialAmount();

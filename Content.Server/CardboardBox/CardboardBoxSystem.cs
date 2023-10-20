@@ -38,7 +38,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
     }
-	
+
 	private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
     {
 		if (!TryComp<EntityStorageComponent>(uid, out var box))
@@ -73,9 +73,9 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         {
             if (_timing.CurTime > component.EffectCooldown)
             {
-                RaiseNetworkEvent(new PlayBoxEffectMessage(uid, component.Mover.Value));
+                RaiseNetworkEvent(new PlayBoxEffectMessage(GetNetEntity(uid), GetNetEntity(component.Mover.Value)));
                 _audio.PlayPvs(component.EffectSound, uid);
-                component.EffectCooldown = _timing.CurTime + CardboardBoxComponent.MaxEffectCooldown;
+                component.EffectCooldown = _timing.CurTime + component.CooldownDuration;
             }
         }
     }

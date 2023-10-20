@@ -23,6 +23,15 @@
     Plastic: 200
 
 - type: latheRecipe
+  id: Igniter
+  result: Igniter
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+    Glass: 100
+
+- type: latheRecipe
   id: ChemicalPayload
   result: ChemicalPayload
   completetime: 2
@@ -33,12 +42,23 @@
 - type: latheRecipe
   id: FlashPayload
   result: FlashPayload
-  completetime: 1
+  completetime: 2
   materials:
     Steel: 50
     Plastic: 100
     Glass: 50
     #one fourth of what making a flash would cost
+
+- type: latheRecipe
+  id: ExplosivePayload
+  result: ExplosivePayload
+  completetime: 4
+  materials:
+    Steel: 100
+    Plastic: 100
+    Glass: 50
+    Plasma: 50
+    Silver: 50
 
 - type: latheRecipe
   id: Signaller
@@ -52,6 +72,14 @@
 - type: latheRecipe
   id: AnomalyLocator
   result: AnomalyLocatorEmpty
+  completetime: 3
+  materials:
+    Steel: 400
+    Glass: 100
+
+- type: latheRecipe
+  id: AnomalyLocatorWide
+  result: AnomalyLocatorWideEmpty
   completetime: 3
   materials:
     Steel: 400
@@ -81,7 +109,7 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
 
 - type: latheRecipe
   id: ClothingBackpackSatchelHolding
@@ -91,7 +119,7 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
 
 - type: latheRecipe
   id: ClothingBackpackDuffelHolding
@@ -101,7 +129,7 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
 
 - type: latheRecipe
   id: WeaponCrusher

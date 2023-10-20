@@ -1,12 +1,10 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Storage.Components;
 using Content.Shared.Item;
 using Content.Shared.Storage;
-using NUnit.Framework;
+using Content.Shared.Storage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
@@ -23,8 +21,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task StorageSizeArbitrageTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 
@@ -32,45 +30,49 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<ServerStorageComponent>("Storage", out var storage) ||
+                    if (!proto.TryGetComponent<StorageComponent>("Storage", out var storage) ||
                         storage.Whitelist != null ||
                         !proto.TryGetComponent<ItemComponent>("Item", out var item)) continue;
 
                     Assert.That(storage.StorageCapacityMax, Is.LessThanOrEqualTo(item.Size), $"Found storage arbitrage on {proto.ID}");
                 }
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestStorageFillPrototypes()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 
             await server.WaitAssertion(() =>
             {
-                foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
+                Assert.Multiple(() =>
                 {
-                    if (!proto.TryGetComponent<StorageFillComponent>("StorageFill", out var storage)) continue;
-
-                    foreach (var entry in storage.Contents)
+                    foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                     {
-                        Assert.That(entry.Amount, Is.GreaterThan(0), $"Specified invalid amount of {entry.Amount} for prototype {proto.ID}");
-                        Assert.That(entry.SpawnProbability, Is.GreaterThan(0), $"Specified invalid probability of {entry.SpawnProbability} for prototype {proto.ID}");
+                        if (!proto.TryGetComponent<StorageFillComponent>("StorageFill", out var storage))
+                            continue;
+
+                        foreach (var entry in storage.Contents)
+                        {
+                            Assert.That(entry.Amount, Is.GreaterThan(0), $"Specified invalid amount of {entry.Amount} for prototype {proto.ID}");
+                            Assert.That(entry.SpawnProbability, Is.GreaterThan(0), $"Specified invalid probability of {entry.SpawnProbability} for prototype {proto.ID}");
+                        }
                     }
-                }
+                });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestSufficientSpaceForFill()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
@@ -78,12 +80,12 @@ namespace Content.IntegrationTests.Tests
 
             Assert.Multiple(() =>
             {
-                foreach (var proto in PoolManager.GetEntityPrototypes<StorageFillComponent>(server))
+                foreach (var proto in PoolManager.GetPrototypesWithComponent<StorageFillComponent>(server))
                 {
                     int capacity;
                     var isEntStorage = false;
 
-                    if (proto.TryGetComponent<ServerStorageComponent>("Storage", out var storage))
+                    if (proto.TryGetComponent<StorageComponent>("Storage", out var storage))
                     {
                         capacity = storage.StorageCapacityMax;
                     }
@@ -142,7 +144,7 @@ namespace Content.IntegrationTests.Tests
                 return totalSize + groups.Values.Sum();
             }
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

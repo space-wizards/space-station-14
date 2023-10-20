@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Bible.Components
 {
     [RegisterComponent]
-    public sealed class BibleComponent : Component
+    public sealed partial class BibleComponent : Component
     {
         /// <summary>
         /// Damage that will be healed on a success

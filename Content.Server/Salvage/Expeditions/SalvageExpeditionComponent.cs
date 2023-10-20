@@ -1,8 +1,10 @@
-using Content.Shared.Random;
+using System.Numerics;
 using Content.Shared.Salvage;
+using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Salvage.Expeditions;
 
@@ -10,7 +12,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// Designates this entity as holding a salvage expedition.
 /// </summary>
 [RegisterComponent]
-public sealed class SalvageExpeditionComponent : Component
+public sealed partial class SalvageExpeditionComponent : SharedSalvageExpeditionComponent
 {
     public SalvageMissionParams MissionParams = default!;
 
@@ -34,9 +36,6 @@ public sealed class SalvageExpeditionComponent : Component
 
     [ViewVariables] public bool Completed = false;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("stage")]
-    public ExpeditionStage Stage = ExpeditionStage.Added;
-
     /// <summary>
     /// Countdown audio stream.
     /// </summary>
@@ -48,21 +47,6 @@ public sealed class SalvageExpeditionComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Misc/tension_session.ogg")
     {
-        Params = AudioParams.Default.WithVolume(-15),
+        Params = AudioParams.Default.WithVolume(-5),
     };
-
-    /// <summary>
-    /// The difficulty this mission had or, in the future, was selected.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("difficulty")]
-    public DifficultyRating Difficulty;
-}
-
-public enum ExpeditionStage : byte
-{
-    Added,
-    Running,
-    Countdown,
-    MusicCountdown,
-    FinalCountdown,
 }

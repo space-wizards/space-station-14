@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: lantern
   parent: BaseItem
-  id: lantern
+  id: Lantern
   description: The holy light guides the way.
   components:
     - type: HandheldLight
@@ -12,13 +12,10 @@
       behaviours:
         - !type:FadeBehaviour
           id: radiating
-          interpolate: Linear
           maxDuration: 2.0
           startValue: 3.0
           endValue: 2.0
           isLooped: true
-          property: Radius
-          enabled: false
           reverseWhenFinished: true
         - !type:PulseBehaviour
           id: blinking
@@ -27,8 +24,6 @@
           minValue: 0.1
           maxValue: 2.0
           isLooped: true
-          property: Radius
-          enabled: false
     - type: Sprite
       sprite: Objects/Tools/lantern.rsi
       layers:
@@ -41,11 +36,11 @@
       sprite: Objects/Tools/lantern.rsi
       heldPrefix: off
     - type: PointLight
-      netsync: false
       enabled: false
       radius: 3
       energy: 2.5
       color: "#FFC458"
+      netsync: false
     - type: Appearance
     - type: ToggleableLightVisuals
     - type: PowerCellSlot
@@ -60,10 +55,9 @@
         cell_slot: !type:ContainerSlot {}
 
 - type: entity
-  name: extra-bright lantern
-  parent: lantern
-  id: lanternextrabright
-  description: Blinding.
+  parent: Lantern
+  id: LanternFlash
+  suffix: Flash
   components:
     - type: Sprite
       sprite: Objects/Tools/lantern.rsi
@@ -78,10 +72,8 @@
         map: [ "enum.FlashVisuals.LightLayer" ]
         visible: false
     - type: PointLight
-      enabled: false
       radius: 5
       energy: 10
-      color: "#FFC458"
     - type: Flash
     - type: LimitedCharges
       maxCharges: 15

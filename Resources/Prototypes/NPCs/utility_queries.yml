@@ -1,9 +1,37 @@
 - type: utilityQuery
+  id: InventoryGuns
+  query:
+    - !type:InventoryQuery
+    - !type:ComponentFilter
+      components:
+        - type: Gun
+  considerations:
+    - !type:TargetAmmoCon
+      curve: !type:QuadraticCurve
+
+- type: utilityQuery
+  id: NearbyAmmo
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: Ammo
+        - type: Item
+  considerations:
+    - !type:TargetAmmoMatchesCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    # TODO: Get ammo count.
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyFood
   query:
     - !type:ComponentQuery
       components:
-        - type: Food
+      - type: Food
   considerations:
     - !type:TargetIsAliveCon
       curve: !type:InverseBoolCurve
@@ -14,6 +42,42 @@
       curve: !type:QuadraticCurve
         slope: 1.0
         exponent: 0.4
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: NearbyDrink
+  query:
+  - !type:ComponentQuery
+    components:
+    - type: Drink
+  considerations:
+  - !type:TargetIsAliveCon
+    curve: !type:InverseBoolCurve
+  - !type:TargetDistanceCon
+    curve: !type:PresetCurve
+      preset: TargetDistance
+  - !type:DrinkValueCon
+    curve: !type:QuadraticCurve
+      slope: 1.0
+      exponent: 0.4
+  - !type:TargetAccessibleCon
+    curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: NearbyGuns
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: Gun
+        - type: Item
+  considerations:
+    # TODO: Prefer highest DPC probably?
+    - !type:TargetAmmoCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
 
@@ -36,6 +100,50 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
+  id: OrderedTargets
+  query:
+    - !type:NearbyHostilesQuery
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetHealthCon
+      curve: !type:PresetCurve
+        preset: TargetHealth
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+    # they gotta be what we ordered
+    - !type:OrderedTargetCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: NearbyMeleeWeapons
+  query:
+    - !type:ComponentQuery
+      components:
+        # Just serializer things
+        - type: MeleeWeapon
+          damage:
+            types:
+              Brute: 0
+        - type: Item
+  considerations:
+    - !type:TargetMeleeCon
+      curve: !type:QuadraticCurve
+        slope: 0.5
+        exponent: 0.5
+        yOffset: 0
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyPuddles
   query:
     - !type:ComponentQuery
@@ -52,7 +160,7 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
-  id: NearbyRangedTargets
+  id: NearbyGunTargets
   query:
     - !type:NearbyHostilesQuery
   considerations:
@@ -68,6 +176,21 @@
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
+
+#- type: utilityQuery
+#  id: NearbyShoes
+#  query:
+#    - !type:ComponentQuery
+#      components:
+#        - type: Clothing
+#    - !type:ClothingSlotFilter
+#      slotFlags: Feet
+#  considerations:
+#    - !type:TargetDistanceCon
+#      curve: !type:PresetCurve
+#        preset: TargetDistance
+#    - !type:TargetAccessibleCon
+#      curve: !type:BoolCurve
 
 
 # Presets

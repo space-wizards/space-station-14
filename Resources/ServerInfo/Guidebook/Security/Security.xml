@@ -12,6 +12,7 @@
 
   ## Flashes
   Flashes are an effective tool for dispersing crowds and apprehending particularly evasive targets, with a large area of effect blinding all those without protection.
+  It is worth noting that flashes can be both used in a large area 	([color=yellow]Z[/color] hotkey) and if you attack somebody with it while [color=red]harm mode[/color] is active. Important to note that localized flashes last [color=yellow]2.5[/color] times as long as large area ones.
   Security and [color=#a4885c]some[/color] other members of staff have eye protection from flashbangs and flashes.
   <Box>
     <GuideEntityEmbed Entity="Flash"/>

@@ -1,11 +1,11 @@
+using System.Numerics;
+using Content.Shared.Radiation.Components;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
-
-using Content.Shared.Radiation.Components;
-using Content.Shared.Singularity.Components;
-using Content.Shared.Singularity.Events;
 
 namespace Content.Shared.Singularity.EntitySystems;
 
@@ -88,8 +88,8 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         singularity.Level = value;
         UpdateSingularityLevel(uid, oldValue, singularity);
-        if(!EntityManager.Deleted(singularity.Owner))
-            EntityManager.Dirty(singularity);
+        if (!Deleted(uid))
+            Dirty(uid, singularity);
     }
 
     /// <summary>
@@ -311,6 +311,7 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         comp.FalloffPower = newFalloffPower;
         comp.Intensity = newIntensity;
+        Dirty(uid, comp);
     }
 
     /// <summary>
@@ -353,7 +354,6 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void UpdateBody(EntityUid uid, PhysicsComponent comp, SingularityLevelChangedEvent args)
     {
-        _physics.SetBodyStatus(comp, (args.NewValue > 1) ? BodyStatus.InAir : BodyStatus.OnGround);
         if (args.NewValue <= 1 && args.OldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
             _physics.SetLinearVelocity(uid, Vector2.Zero, body: comp); // No idea how stopping the singularities movement keeps it from getting stuck though.
     }

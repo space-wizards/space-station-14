@@ -1,6 +1,6 @@
+using System.Numerics;
 using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -8,7 +8,7 @@ using Robust.Shared.Input;
 namespace Content.Client.UserInterface.Controls
 {
     [Virtual]
-    public abstract class SlotControl : Control
+    public abstract class SlotControl : Control, IEntityControl
     {
         public static int DefaultButtonSize = 64;
 
@@ -20,7 +20,7 @@ namespace Content.Client.UserInterface.Controls
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
-        public EntityUid? Entity => SpriteView.Sprite?.Owner;
+        public EntityUid? Entity => SpriteView.Entity;
 
         private bool _slotNameSet;
 
@@ -107,16 +107,16 @@ namespace Content.Client.UserInterface.Controls
         {
             IoCManager.InjectDependencies(this);
             Name = "SlotButton_null";
-            MinSize = (DefaultButtonSize, DefaultButtonSize);
+            MinSize = new Vector2(DefaultButtonSize, DefaultButtonSize);
             AddChild(ButtonRect = new TextureRect
             {
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Stop
             });
             AddChild(HighlightRect = new TextureRect
             {
                 Visible = false,
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Ignore
             });
 
@@ -125,21 +125,21 @@ namespace Content.Client.UserInterface.Controls
 
             AddChild(SpriteView = new SpriteView
             {
-                Scale = (2, 2),
-                SetSize = (DefaultButtonSize, DefaultButtonSize),
+                Scale = new Vector2(2, 2),
+                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(HoverSpriteView = new SpriteView
             {
-                Scale = (2, 2),
-                SetSize = (DefaultButtonSize, DefaultButtonSize),
+                Scale = new Vector2(2, 2),
+                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(StorageButton = new TextureButton
             {
-                Scale = (0.75f, 0.75f),
+                Scale = new Vector2(0.75f, 0.75f),
                 HorizontalAlignment = HAlignment.Right,
                 VerticalAlignment = VAlignment.Bottom,
                 Visible = false,
@@ -174,7 +174,7 @@ namespace Content.Client.UserInterface.Controls
 
             AddChild(BlockedRect = new TextureRect
             {
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Stop,
                 Visible = false
             });
@@ -188,13 +188,13 @@ namespace Content.Client.UserInterface.Controls
             if (!EntityHover)
                 return;
 
-            var tempQualifier = HoverSpriteView.Sprite;
+            var tempQualifier = HoverSpriteView.Ent;
             if (tempQualifier != null)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(tempQualifier);
             }
 
-            HoverSpriteView.Sprite = null;
+            HoverSpriteView.SetEntity(null);
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)
@@ -232,5 +232,7 @@ namespace Content.Client.UserInterface.Controls
             ButtonRect.Texture = Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
             HighlightRect.Texture = Theme.ResolveTextureOrNull(_highlightTexturePath)?.Texture;
         }
+
+        EntityUid? IEntityControl.UiEntity => Entity;
     }
 }

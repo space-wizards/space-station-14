@@ -8,8 +8,8 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+          !type:PhysShapeCircle
+          radius: 0.4
         density: 190
         mask:
         - FullTileMask
@@ -98,6 +98,7 @@
     state: field
   - type: ContainmentField
     throwForce: 50
+  - type: SyncSprite
   - type: GuideHelp
     guides: [ Singularity, Power ]
 

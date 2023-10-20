@@ -3,7 +3,7 @@
   name: revenant
   description: A spooky ghostie.
   components:
-  - type: Mind
+  - type: MindContainer
   - type: InputMover
   - type: MobMover
   - type: Input
@@ -34,16 +34,19 @@
         density: 80
         mask:
         - GhostImpassable
-  - type: HeatResistance
   - type: MovementIgnoreGravity
   - type: Damageable
     damageContainer: Biological
-  - type: Appearance
   - type: Examiner
   - type: NoSlip
   - type: Actions
   - type: Eye
     drawFov: false
+    visMask:
+      - Normal
+      - Ghost
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
   - type: DoAfter
   - type: Alerts
   - type: NameIdentifier
@@ -77,3 +80,5 @@
     - of
     - RevenantAdjective
     - RevenantTheme
+  - type: Speech
+    speechVerb: Ghost

@@ -1,6 +1,6 @@
 - type: entity
   name: behonker
-  parent: SimpleSpaceMobBase
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
   id: BaseMobBehonker
   abstract: true
   description: A floating demon aspect of the honkmother.
@@ -12,11 +12,32 @@
       description: ghost-role-information-behonker-description
     - type: GhostTakeoverAvailable
     - type: HTN
-      rootTask: SimpleHostileCompound
-    - type: Faction
+      rootTask:
+        task: SimpleRangedHostileCompound
+    - type: HitscanBatteryAmmoProvider
+      proto: RedLaser
+      fireCost: 62.5
+    - type: Battery
+      maxCharge: 1000
+      startingCharge: 1000
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 40
+    - type: Gun
+      fireRate: 0.75
+      useKey: false
+      selectedMode: SemiAuto
+      availableModes:
+        - SemiAuto
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
+    - type: SpamEmitSound
+      sound:
+        collection: BikeHorn
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: Speech
+      speechVerb: Cluwne
     - type: CombatMode
     - type: MobMover
     - type: InputMover
@@ -29,7 +50,6 @@
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: alive
-    - type: Appearance
     - type: DamageStateVisuals
       states:
         Alive:
@@ -61,7 +81,6 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        450: Critical
         500: Dead
     - type: Metabolizer
       solutionOnBody: false
@@ -70,14 +89,13 @@
       groups:
         - id: Medicine
         - id: Poison
-    - type: MovementAlwaysTouching
-    - type: NoSlip
     - type: Butcherable
       spawned:
         - id: MaterialBananium1
           amount: 2
+        - id: WeaponBehonkerLaser
+          amount: 1
     - type: MeleeWeapon
-      hidden: true
       soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
       damage:
@@ -94,10 +112,6 @@
           Radiation: 10
     - type: Input
       context: "human"
-    - type: Hands
-      showInHands: false
-    - type: Body
-      prototype: Behonker
 
 - type: entity
   name: behonker
@@ -112,6 +126,7 @@
     - type: GasProducerAnomaly
       releasedGas: 3
       releaseOnMaxSeverity: true
+      spawnRadius: 0
 
 - type: entity
   name: behonker
@@ -154,3 +169,4 @@
   - type: GasProducerAnomaly
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
+    spawnRadius: 0

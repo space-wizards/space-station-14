@@ -122,3 +122,9 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 
     #endregion
 }
+
+/// <summary>
+/// Raised whenever ambient music tries to play.
+/// </summary>
+[ByRefEvent]
+public record struct PlayAmbientMusicEvent(bool Cancelled = false);

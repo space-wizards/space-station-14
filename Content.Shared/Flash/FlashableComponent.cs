@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Flash
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class FlashableComponent : Component
+    public sealed partial class FlashableComponent : Component
     {
         public float Duration;
         public TimeSpan LastFlash;

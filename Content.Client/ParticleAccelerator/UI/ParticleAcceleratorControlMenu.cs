@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
@@ -51,7 +52,7 @@ namespace Content.Client.ParticleAccelerator.UI
 
         public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
         {
-            SetSize = (400, 320);
+            SetSize = new Vector2(400, 320);
             _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
 
             _owner = owner;
@@ -159,11 +160,11 @@ namespace Content.Client.ParticleAccelerator.UI
                     new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold},
-                        MinSize = (0, 2),
+                        MinSize = new Vector2(0, 2),
                     },
                     new Control
                     {
-                        MinSize = (0, 4)
+                        MinSize = new Vector2(0, 4)
                     },
 
                     new BoxContainer
@@ -210,7 +211,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                     },
                                     new Control
                                     {
-                                        MinSize = (0, 10),
+                                        MinSize = new Vector2(0, 10),
                                     },
                                     _drawLabel,
                                     new Control
@@ -237,7 +238,7 @@ namespace Content.Client.ParticleAccelerator.UI
                             new BoxContainer
                             {
                                 Orientation = LayoutOrientation.Vertical,
-                                MinSize = (186, 0),
+                                MinSize = new Vector2(186, 0),
                                 Children =
                                 {
                                     (_statusLabel = new Label
@@ -246,7 +247,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                     }),
                                     new Control
                                     {
-                                        MinSize = (0, 20)
+                                        MinSize = new Vector2(0, 20)
                                     },
                                     new PanelContainer
                                     {
@@ -408,7 +409,7 @@ namespace Content.Client.ParticleAccelerator.UI
             if (_maxStrength > 3 && enabled && assembled)
             {
                 _shouldContinueAnimating = true;
-                if (!_alarmControl.Visible)
+                if (!_alarmControl.HasRunningAnimation("warningAnim"))
                     _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");
             }
             else

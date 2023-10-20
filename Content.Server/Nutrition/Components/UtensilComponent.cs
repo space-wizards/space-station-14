@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Access(typeof(UtensilSystem))]
-    public sealed class UtensilComponent : Component
+    public sealed partial class UtensilComponent : Component
     {
         [DataField("types")]
         private UtensilType _types = UtensilType.None;

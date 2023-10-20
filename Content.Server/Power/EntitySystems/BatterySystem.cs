@@ -11,7 +11,6 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class BatterySystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -156,6 +155,17 @@ namespace Content.Server.Power.EntitySystems
 
             UseCharge(uid, value, battery);
             return true;
+        }
+
+        /// <summary>
+        /// Returns whether the battery is at least 99% charged, basically full.
+        /// </summary>
+        public bool IsFull(EntityUid uid, BatteryComponent? battery = null)
+        {
+            if (!Resolve(uid, ref battery))
+                return false;
+
+            return battery.CurrentCharge / battery.MaxCharge >= 0.99f;
         }
     }
 }

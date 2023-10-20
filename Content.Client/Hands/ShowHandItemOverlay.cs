@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Hands.Systems;
 using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
@@ -6,7 +7,9 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
 using Robust.Shared.Map;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Hands
 {
@@ -63,10 +66,11 @@ namespace Content.Client.Hands
 
             var screen = args.ScreenHandle;
             var offset = _cfg.GetCVar(CCVars.HudHeldItemOffset);
+            var offsetVec = new Vector2(offset, offset);
 
             if (IconOverride != null)
             {
-                screen.DrawTexture(IconOverride, mousePos.Position - IconOverride.Size / 2 + offset, Color.White.WithAlpha(0.75f));
+                screen.DrawTexture(IconOverride, mousePos.Position - IconOverride.Size / 2 + offsetVec, Color.White.WithAlpha(0.75f));
                 return;
             }
 
@@ -84,7 +88,7 @@ namespace Content.Client.Hands
                 screen.DrawEntity(handEntity.Value, halfSize, new Vector2(1f, 1f) * uiScale, Angle.Zero, Angle.Zero, Direction.South, sprite);
             }, Color.Transparent);
 
-            screen.DrawTexture(_renderBackbuffer.Texture, mousePos.Position - halfSize + offset, Color.White.WithAlpha(0.75f));
+            screen.DrawTexture(_renderBackbuffer.Texture, mousePos.Position - halfSize + offsetVec, Color.White.WithAlpha(0.75f));
         }
     }
 }

@@ -38,7 +38,7 @@ public sealed partial class ParticleAcceleratorSystem
         }
 
         if (TryComp<ProjectileComponent>(emitted, out var proj))
-            _projectileSystem.SetShooter(proj, uid);
+            _projectileSystem.SetShooter(emitted, proj, uid);
 
         if (TryComp<SinguloFoodComponent>(emitted, out var food))
         {
@@ -47,8 +47,8 @@ public sealed partial class ParticleAcceleratorSystem
             {
                 ParticleAcceleratorPowerState.Standby => 0,
                 ParticleAcceleratorPowerState.Level0 => 1,
-                ParticleAcceleratorPowerState.Level1 => 3,
-                ParticleAcceleratorPowerState.Level2 => 6,
+                ParticleAcceleratorPowerState.Level1 => 2,
+                ParticleAcceleratorPowerState.Level2 => 3,
                 ParticleAcceleratorPowerState.Level3 => 10,
                 _ => 0,
             } * 10;

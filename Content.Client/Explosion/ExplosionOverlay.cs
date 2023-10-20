@@ -1,8 +1,10 @@
+using System.Numerics;
 using Content.Shared.Explosion;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -62,10 +64,10 @@ public sealed class ExplosionOverlay : Overlay
         Box2 gridBounds;
         foreach (var (gridId, tiles) in visuals.Tiles)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entMan.TryGetComponent(gridId, out MapGridComponent? grid))
                 continue;
 
-            var xform = xforms.GetComponent(grid.Owner);
+            var xform = xforms.GetComponent(gridId);
             var (_, _, worldMatrix, invWorldMatrix) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             gridBounds = invWorldMatrix.TransformBox(worldBounds).Enlarged(grid.TileSize * 2);
@@ -102,13 +104,13 @@ public sealed class ExplosionOverlay : Overlay
 
             foreach (var tile in tiles)
             {
-                var centre = ((Vector2) tile + 0.5f) * tileSize;
+                var centre = (tile + Vector2Helpers.Half) * tileSize;
 
                 if (!gridBounds.Contains(centre))
                     continue;
 
                 var texture = _robustRandom.Pick(frames);
-                drawHandle.DrawTextureRect(texture, Box2.CenteredAround(centre, (tileSize, tileSize)), textures.FireColor);
+                drawHandle.DrawTextureRect(texture, Box2.CenteredAround(centre, new Vector2(tileSize, tileSize)), textures.FireColor);
             }
         }
     }

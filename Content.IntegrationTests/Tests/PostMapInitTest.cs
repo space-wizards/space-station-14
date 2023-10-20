@@ -1,28 +1,23 @@
-﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Roles;
-using NUnit.Framework;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using ShuttleSystem = Content.Server.Shuttles.Systems.ShuttleSystem;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -38,12 +33,35 @@ namespace Content.IntegrationTests.Tests
             "Dart",
         };
 
-        private static string[] Grids =
+        private static readonly string[] Grids =
         {
             "/Maps/centcomm.yml",
             "/Maps/Shuttles/cargo.yml",
             "/Maps/Shuttles/emergency.yml",
             "/Maps/infiltrator.yml",
+        };
+
+        private static readonly string[] GameMaps =
+        {
+            "Dev",
+            "TestTeg",
+            "Fland",
+            "Meta",
+            "Packed",
+            "Aspid",
+            "Cluster",
+            "Omega",
+            "Bagel",
+            "Origin",
+            "CentComm",
+            "Box",
+            "Europa",
+            "Barratry",
+            "Saltern",
+            "Core",
+            "Marathon",
+            "Kettle",
+            "MeteorArena"
         };
 
         /// <summary>
@@ -52,10 +70,11 @@ namespace Content.IntegrationTests.Tests
         [Test, TestCaseSource(nameof(Grids))]
         public async Task GridsLoadableTest(string mapFile)
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
+            var entManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = entManager.System<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
             Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
@@ -65,7 +84,10 @@ namespace Content.IntegrationTests.Tests
                 var mapId = mapManager.CreateMap();
                 try
                 {
-                    mapLoader.LoadGrid(mapId, mapFile);
+#pragma warning disable NUnit2045
+                    Assert.That(mapLoader.TryLoad(mapId, mapFile, out var roots));
+                    Assert.That(roots.Where(uid => entManager.HasComponent<MapGridComponent>(uid)), Is.Not.Empty);
+#pragma warning restore NUnit2045
                 }
                 catch (Exception ex)
                 {
@@ -83,14 +105,14 @@ namespace Content.IntegrationTests.Tests
             });
             await server.WaitRunTicks(1);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task NoSavedPostMapInitTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
             var mapFolder = new ResPath("/Maps");
@@ -123,62 +145,16 @@ namespace Content.IntegrationTests.Tests
                 var meta = root["meta"];
                 var postMapInit = meta["postmapinit"].AsBool();
 
-                Assert.False(postMapInit, $"Map {map.Filename} was saved postmapinit");
+                Assert.That(postMapInit, Is.False, $"Map {map.Filename} was saved postmapinit");
             }
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
-        private static string[] GetGameMapNames()
-        {
-           Task<string[]> task;
-            using (ExecutionContext.SuppressFlow())
-            {
-                task = Task.Run(static async () =>
-                {
-                    await Task.Yield();
-                    await using var pairTracker = await PoolManager.GetServerClient(
-                        new PoolSettings
-                        {
-                            Disconnected = true,
-                            TestName = $"{nameof(PostMapInitTest)}.{nameof(GetGameMapNames)}"
-                        }
-                    );
-                    var server = pairTracker.Pair.Server;
-                    var protoManager = server.ResolveDependency<IPrototypeManager>();
-
-                    var maps = protoManager.EnumeratePrototypes<GameMapPrototype>().ToList();
-                    var mapNames = new List<string>();
-                    var naughty = new HashSet<string>()
-                    {
-                        "Empty",
-                        "Infiltrator",
-                        "Pirate",
-                    };
-
-                    foreach (var map in maps)
-                    {
-                        // AAAAAAAAAA
-                        // Why are they stations!
-                        if (naughty.Contains(map.ID))
-                            continue;
-
-                        mapNames.Add(map.ID);
-                    }
-
-                    await pairTracker.CleanReturnAsync();
-                    return mapNames.ToArray();
-                });
-                Task.WaitAll(task);
-            }
-
-            return task.GetAwaiter().GetResult();
-        }
-
-        [Test, TestCaseSource(nameof(GetGameMapNames))]
+        [Test, TestCaseSource(nameof(GameMaps))]
         public async Task GameMapsLoadableTest(string mapProto)
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entManager = server.ResolveDependency<IEntityManager>();
@@ -207,20 +183,22 @@ namespace Content.IntegrationTests.Tests
                 EntityUid? targetGrid = null;
                 var memberQuery = entManager.GetEntityQuery<StationMemberComponent>();
 
-                var grids = mapManager.GetAllMapGrids(mapId).ToList();
+                var grids = mapManager.GetAllGrids(mapId).ToList();
                 var gridUids = grids.Select(o => o.Owner).ToList();
+                targetGrid = gridUids.First();
 
                 foreach (var grid in grids)
                 {
-                    if (!memberQuery.HasComponent(grid.Owner))
+                    var gridEnt = grid.Owner;
+                    if (!memberQuery.HasComponent(gridEnt))
                         continue;
 
-                    var area = grid.LocalAABB.Width * grid.LocalAABB.Height;
+                    var area = grid.Comp.LocalAABB.Width * grid.Comp.LocalAABB.Height;
 
                     if (area > largest)
                     {
                         largest = area;
-                        targetGrid = grid.Owner;
+                        targetGrid = gridEnt;
                     }
                 }
 
@@ -230,11 +208,18 @@ namespace Content.IntegrationTests.Tests
                 if (entManager.TryGetComponent<StationEmergencyShuttleComponent>(station, out var stationEvac))
                 {
                     var shuttlePath = stationEvac.EmergencyShuttlePath;
-                    var shuttle = mapLoader.LoadGrid(shuttleMap, shuttlePath.ToString());
+#pragma warning disable NUnit2045
+                    Assert.That(mapLoader.TryLoad(shuttleMap, shuttlePath.ToString(), out var roots));
+                    EntityUid shuttle = default!;
+                    Assert.DoesNotThrow(() =>
+                    {
+                        shuttle = roots.First(uid => entManager.HasComponent<MapGridComponent>(uid));
+                    }, $"Failed to load {shuttlePath}");
                     Assert.That(
-                        shuttle != null && shuttleSystem.TryFTLDock(shuttle.Value,
-                            entManager.GetComponent<ShuttleComponent>(shuttle.Value), targetGrid.Value),
+                        shuttleSystem.TryFTLDock(shuttle,
+                            entManager.GetComponent<ShuttleComponent>(shuttle), targetGrid.Value),
                         $"Unable to dock {shuttlePath} to {mapProto}");
+#pragma warning restore NUnit2045
                 }
 
                 mapManager.DeleteMap(shuttleMap);
@@ -246,12 +231,13 @@ namespace Content.IntegrationTests.Tests
                     {
                         var lateSpawns = 0;
 
-                        foreach (var comp in entManager.EntityQuery<SpawnPointComponent>(true))
+                        var query = entManager.AllEntityQueryEnumerator<SpawnPointComponent>();
+                        while (query.MoveNext(out var uid, out var comp))
                         {
-                            if (comp.SpawnType != SpawnPointType.LateJoin ||
-                                !xformQuery.TryGetComponent(comp.Owner, out var xform) ||
-                                xform.GridUid == null ||
-                                !gridUids.Contains(xform.GridUid.Value))
+                            if (comp.SpawnType != SpawnPointType.LateJoin
+                            || !xformQuery.TryGetComponent(uid, out var xform)
+                            || xform.GridUid == null
+                            || !gridUids.Contains(xform.GridUid.Value))
                             {
                                 continue;
                             }
@@ -279,8 +265,8 @@ namespace Content.IntegrationTests.Tests
                             missingSpawnPoints.Add(spawnpoint);
                     }
 
-                    Assert.That(missingSpawnPoints.Count() == 0,
-                        $"There is no spawnpoint for {String.Join(", ", missingSpawnPoints)} on {mapProto}.");
+                    Assert.That(missingSpawnPoints, Has.Count.EqualTo(0),
+                        $"There is no spawnpoint for {string.Join(", ", missingSpawnPoints)} on {mapProto}.");
                 }
 
                 try
@@ -294,90 +280,93 @@ namespace Content.IntegrationTests.Tests
             });
             await server.WaitRunTicks(1);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
-        /// <summary>
-        /// Get the non-game map maps.
-        /// </summary>
-        private static string[] GetMaps()
+        [Test]
+        public async Task AllMapsTested()
         {
-            Task<string[]> task;
-            using (ExecutionContext.SuppressFlow())
-            {
-                task = Task.Run(static async () =>
-                {
-                    await Task.Yield();
-                    await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{Disconnected = true});
-                    var server = pairTracker.Pair.Server;
-                    var resourceManager = server.ResolveDependency<IResourceManager>();
-                    var protoManager = server.ResolveDependency<IPrototypeManager>();
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
 
-                    var gameMaps = protoManager.EnumeratePrototypes<GameMapPrototype>().Select(o => o.MapPath).ToHashSet();
+            var gameMaps = protoMan.EnumeratePrototypes<GameMapPrototype>()
+                .Where(x => !pair.IsTestPrototype(x))
+                .Select(x => x.ID)
+                .ToHashSet();
 
-                    var mapFolder = new ResPath("/Maps");
-                    var maps = resourceManager
-                        .ContentFindFiles(mapFolder)
-                        .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
-                        .ToArray();
-                    var mapNames = new List<string>();
-                    foreach (var map in maps)
-                    {
-                        var rootedPath = map.ToRootedPath();
+            Assert.That(gameMaps.Remove(PoolManager.TestMap));
 
-                        // ReSharper disable once RedundantLogicalConditionalExpressionOperand
-                        if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal) ||
-                            gameMaps.Contains(map))
-                        {
-                            continue;
-                        }
-                        mapNames.Add(rootedPath.ToString());
-                    }
+            CollectionAssert.AreEquivalent(GameMaps.ToHashSet(), gameMaps, "Game map prototype missing from test cases.");
 
-                    await pairTracker.CleanReturnAsync();
-                    return mapNames.ToArray();
-                });
-                Task.WaitAll(task);
-            }
-
-            return task.GetAwaiter().GetResult();
+            await pair.CleanReturnAsync();
         }
 
-        [Test, TestCaseSource(nameof(GetMaps))]
-        public async Task MapsLoadableTest(string mapName)
+        [Test]
+        public async Task NonGameMapsLoadableTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var resourceManager = server.ResolveDependency<IResourceManager>();
+            var protoManager = server.ResolveDependency<IPrototypeManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
             Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
+            var gameMaps = protoManager.EnumeratePrototypes<GameMapPrototype>().Select(o => o.MapPath).ToHashSet();
+
+            var mapFolder = new ResPath("/Maps");
+            var maps = resourceManager
+                .ContentFindFiles(mapFolder)
+                .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                .ToArray();
+
+            var mapNames = new List<string>();
+            foreach (var map in maps)
+            {
+                if (gameMaps.Contains(map))
+                    continue;
+
+                var rootedPath = map.ToRootedPath();
+                if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+                mapNames.Add(rootedPath.ToString());
+            }
+
             await server.WaitPost(() =>
             {
-                var mapId = mapManager.CreateMap();
-                try
+                Assert.Multiple(() =>
                 {
-                    mapLoader.LoadMap(mapId, mapName);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Failed to load map {mapName}", ex);
-                }
+                    foreach (var mapName in mapNames)
+                    {
+                        var mapId = mapManager.CreateMap();
+                        try
+                        {
+                            Assert.That(mapLoader.TryLoad(mapId, mapName, out _));
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"Failed to load map {mapName}", ex);
+                        }
 
-                try
-                {
-                    mapManager.DeleteMap(mapId);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Failed to delete map {mapName}", ex);
-                }
+                        try
+                        {
+                            mapManager.DeleteMap(mapId);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"Failed to delete map {mapName}", ex);
+                        }
+                    }
+                });
             });
-            await server.WaitRunTicks(1);
 
-            await pairTracker.CleanReturnAsync();
+            await server.WaitRunTicks(1);
+            await pair.CleanReturnAsync();
         }
     }
 }

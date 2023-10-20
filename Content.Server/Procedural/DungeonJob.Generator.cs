@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Decals;
 using Content.Shared.Procedural;
@@ -20,7 +21,6 @@ public sealed partial class DungeonJob
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonTransform = Matrix3.CreateTransform(_position, dungeonRotation);
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
-        var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
         var fallbackTile = new Tile(_tileDefManager[prefab.Tile].TileId);
 
         foreach (var pack in _prototype.EnumeratePrototypes<DungeonRoomPackPrototype>())
@@ -28,21 +28,6 @@ public sealed partial class DungeonJob
             var size = pack.Size;
             var sizePacks = roomPackProtos.GetOrNew(size);
             sizePacks.Add(pack);
-
-            // Determine external connections; these are only valid when adjacent to a room node.
-            // We use this later to determine which room packs connect to each other
-            var nodes = new HashSet<Vector2i>();
-            externalNodes.Add(pack, nodes);
-
-            foreach (var room in pack.Rooms)
-            {
-                var rator = new Box2iEdgeEnumerator(room, false);
-
-                while (rator.MoveNext(out var index))
-                {
-                    nodes.Add(index);
-                }
-            }
         }
 
         // Need to sort to make the RNG deterministic (at least without prototype changes).
@@ -52,7 +37,7 @@ public sealed partial class DungeonJob
                 string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         }
 
-        var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>();
+        var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>(_prototype.Count<DungeonRoomPrototype>());
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
@@ -81,59 +66,12 @@ public sealed partial class DungeonJob
                 string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         }
 
-        // First we gather all of the edges for each roompack in the preset
-        // This allows us to determine which ones should connect from being adjacent
-        var edges = new HashSet<Vector2i>[gen.RoomPacks.Count];
-
-        for (var i = 0; i < gen.RoomPacks.Count; i++)
-        {
-            var pack = gen.RoomPacks[i];
-            var nodes = new HashSet<Vector2i>(pack.Width + 2 + pack.Height);
-
-            var rator = new Box2iEdgeEnumerator(pack, false);
-
-            while (rator.MoveNext(out var index))
-            {
-                nodes.Add(index);
-            }
-
-            edges[i] = nodes;
-        }
-
-        // Build up edge groups between each pack.
-        var connections = new Dictionary<int, Dictionary<int, HashSet<Vector2i>>>();
-
-        for (var i = 0; i < edges.Length; i++)
-        {
-            var nodes = edges[i];
-            var nodeConnections = connections.GetOrNew(i);
-
-            for (var j = i + 1; j < edges.Length; j++)
-            {
-                var otherNodes = edges[j];
-                var intersect = new HashSet<Vector2i>(nodes);
-
-                intersect.IntersectWith(otherNodes);
-
-                if (intersect.Count == 0)
-                    continue;
-
-                nodeConnections[j] = intersect;
-                var otherNodeConnections = connections.GetOrNew(j);
-                otherNodeConnections[i] = intersect;
-            }
-        }
-
         var tiles = new List<(Vector2i, Tile)>();
-        var dungeon = new Dungeon()
-        {
-            Position = _position
-        };
+        var dungeon = new Dungeon();
         var availablePacks = new List<DungeonRoomPackPrototype>();
         var chosenPacks = new DungeonRoomPackPrototype?[gen.RoomPacks.Count];
         var packTransforms = new Matrix3[gen.RoomPacks.Count];
         var packRotations = new Angle[gen.RoomPacks.Count];
-        var rotatedPackNodes = new HashSet<Vector2i>[gen.RoomPacks.Count];
 
         // Actually pick the room packs and rooms
         for (var i = 0; i < gen.RoomPacks.Count; i++)
@@ -159,9 +97,6 @@ public sealed partial class DungeonJob
             }
 
             // Iterate every pack
-            // To be valid it needs its edge nodes to overlap with every edge group
-            var external = connections[i];
-
             random.Shuffle(availablePacks);
             Matrix3 packTransform = default!;
             var found = false;
@@ -169,11 +104,12 @@ public sealed partial class DungeonJob
 
             foreach (var aPack in availablePacks)
             {
-                var aExternal = externalNodes[aPack];
+                var startIndex = random.Next(4);
 
                 for (var j = 0; j < 4; j++)
                 {
-                    var dir = (DirectionFlag) Math.Pow(2, j);
+                    var index = (startIndex + j) % 4;
+                    var dir = (DirectionFlag) Math.Pow(2, index);
                     Vector2i aPackDimensions;
 
                     if ((dir & (DirectionFlag.East | DirectionFlag.West)) != 0x0)
@@ -190,37 +126,11 @@ public sealed partial class DungeonJob
                         continue;
 
                     found = true;
-                    var rotatedNodes = new HashSet<Vector2i>(aExternal.Count);
                     var aRotation = dir.AsDir().ToAngle();
-
-                    // Get the external nodes in terms of the dungeon layout
-                    // (i.e. rotated if necessary + translated to the room position)
-                    foreach (var node in aExternal)
-                    {
-                        // Get the node in pack terms (offset from center), then rotate it
-                        // Afterwards we offset it by where the pack is supposed to be in world terms.
-                        var rotated = aRotation.RotateVec((Vector2) node + grid.TileSize / 2f - aPack.Size / 2f);
-                        rotatedNodes.Add((rotated + bounds.Center).Floored());
-                    }
-
-                    foreach (var group in external.Values)
-                    {
-                        if (rotatedNodes.Overlaps(group))
-                            continue;
-
-                        found = false;
-                        break;
-                    }
-
-                    if (!found)
-                    {
-                        continue;
-                    }
 
                     // Use this pack
                     packTransform = Matrix3.CreateTransform(bounds.Center, aRotation);
                     packRotations[i] = aRotation;
-                    rotatedPackNodes[i] = rotatedNodes;
                     pack = aPack;
                     break;
                 }
@@ -274,7 +184,7 @@ public sealed partial class DungeonJob
                         {
                             for (var y = roomSize.Bottom; y < roomSize.Top; y++)
                             {
-                                var index = matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - packCenter).Floored();
+                                var index = matty.Transform(new Vector2(x, y) + grid.TileSizeHalfVector - packCenter).Floored();
                                 tiles.Add((index, new Tile(_tileDefManager["FloorPlanetGrass"].TileId)));
                             }
                         }
@@ -311,6 +221,9 @@ public sealed partial class DungeonJob
                 var templateGrid = _entManager.GetComponent<MapGridComponent>(templateMapUid);
                 var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
+                var exterior = new HashSet<Vector2i>(room.Size.X * 2 + room.Size.Y * 2);
+                var tileOffset = -roomCenter + grid.TileSizeHalfVector;
+                Box2i? mapBounds = null;
 
                 // Load tiles
                 for (var x = 0; x < room.Size.X; x++)
@@ -320,23 +233,42 @@ public sealed partial class DungeonJob
                         var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
                         var tileRef = templateGrid.GetTileRef(indices);
 
-                        var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter);
+                        var tilePos = dungeonMatty.Transform(indices + tileOffset);
                         var rounded = tilePos.Floored();
                         tiles.Add((rounded, tileRef.Tile));
                         roomTiles.Add(rounded);
+
+                        // If this were a Box2 we'd add tilesize although here I think that's undesirable as
+                        // for example, a box2i of 0,0,1,1 is assumed to also include the tile at 1,1
+                        mapBounds = mapBounds?.Union(new Box2i(rounded, rounded)) ?? new Box2i(rounded, rounded);
                     }
                 }
 
+                for (var x = -1; x <= room.Size.X; x++)
+                {
+                    for (var y = -1; y <= room.Size.Y; y++)
+                    {
+                        if (x != -1 && y != -1 && x != room.Size.X && y != room.Size.Y)
+                        {
+                            continue;
+                        }
+
+                        var tilePos = dungeonMatty.Transform(new Vector2i(x + room.Offset.X, y + room.Offset.Y) + tileOffset);
+                        exterior.Add(tilePos.Floored());
+                    }
+                }
+
+                var bounds = new Box2(room.Offset, room.Offset + room.Size);
                 var center = Vector2.Zero;
 
                 foreach (var tile in roomTiles)
                 {
-                    center += ((Vector2) tile + grid.TileSize / 2f);
+                    center += (Vector2) tile + grid.TileSizeHalfVector;
                 }
 
                 center /= roomTiles.Count;
 
-                dungeon.Rooms.Add(new DungeonRoom(roomTiles, center));
+                dungeon.Rooms.Add(new DungeonRoom(roomTiles, center, mapBounds!.Value, exterior));
                 grid.SetTiles(tiles);
                 tiles.Clear();
                 var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
@@ -344,7 +276,6 @@ public sealed partial class DungeonJob
 
                 // Load entities
                 // TODO: I don't think engine supports full entity copying so we do this piece of shit.
-                var bounds = new Box2(room.Offset, room.Offset + room.Size);
 
                 foreach (var templateEnt in _lookup.GetEntitiesIntersecting(templateMapUid, bounds, LookupFlags.Uncontained))
                 {
@@ -378,8 +309,8 @@ public sealed partial class DungeonJob
                         // Offset by 0.5 because decals are offset from bot-left corner
                         // So we convert it to center of tile then convert it back again after transform.
                         // Do these shenanigans because 32x32 decals assume as they are centered on bottom-left of tiles.
-                        var position = dungeonMatty.Transform(decal.Coordinates + 0.5f - roomCenter);
-                        position -= 0.5f;
+                        var position = dungeonMatty.Transform(decal.Coordinates + Vector2Helpers.Half - roomCenter);
+                        position -= Vector2Helpers.Half;
 
                         // Umm uhh I love decals so uhhhh idk what to do about this
                         var angle = (decal.Angle + finalRoomRotation).Reduced();
@@ -391,13 +322,24 @@ public sealed partial class DungeonJob
                         {
                             position += new Vector2(-1f / 32f, 1f / 32f);
                         }
-                        else if (angle.Equals(Math.PI * 1.5))
+                        else if (angle.Equals(-Math.PI / 2f))
                         {
                             position += new Vector2(-1f / 32f, 0f);
                         }
                         else if (angle.Equals(Math.PI / 2f))
                         {
                             position += new Vector2(0f, 1f / 32f);
+                        }
+                        else if (angle.Equals(Math.PI * 1.5f))
+                        {
+                            // I hate this but decals are bottom-left rather than center position and doing the
+                            // matrix ops is a PITA hence this workaround for now; I also don't want to add a stupid
+                            // field for 1 specific op on decals
+                            if (decal.Id != "DiagonalCheckerAOverlay" &&
+                                decal.Id != "DiagonalCheckerBOverlay")
+                            {
+                                position += new Vector2(-1f / 32f, 0f);
+                            }
                         }
 
                         var tilePos = position.Floored();
@@ -427,16 +369,70 @@ public sealed partial class DungeonJob
             }
         }
 
-        // Calculate center
+        // Calculate center and do entrances
         var dungeonCenter = Vector2.Zero;
 
         foreach (var room in dungeon.Rooms)
         {
-            dungeonCenter += room.Center;
+            dungeon.RoomTiles.UnionWith(room.Tiles);
+            dungeon.RoomExteriorTiles.UnionWith(room.Exterior);
         }
 
-        dungeon.Center = (Vector2i) (dungeonCenter / dungeon.Rooms.Count);
+        foreach (var room in dungeon.Rooms)
+        {
+            dungeonCenter += room.Center;
+            SetDungeonEntrance(dungeon, room, random);
+        }
 
         return dungeon;
+    }
+
+    private void SetDungeonEntrance(Dungeon dungeon, DungeonRoom room, Random random)
+    {
+        // TODO: Move to dungeonsystem.
+
+        // TODO: Look at markers and use that.
+
+        // Pick midpoints as fallback
+        if (room.Entrances.Count == 0)
+        {
+            var offset = random.Next(4);
+
+            // Pick an entrance that isn't taken.
+            for (var i = 0; i < 4; i++)
+            {
+                var dir = (Direction) ((i + offset) * 2 % 8);
+                Vector2i entrancePos;
+
+                switch (dir)
+                {
+                    case Direction.East:
+                        entrancePos = new Vector2i(room.Bounds.Right + 1, room.Bounds.Bottom + room.Bounds.Height / 2);
+                        break;
+                    case Direction.North:
+                        entrancePos = new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Top + 1);
+                        break;
+                    case Direction.West:
+                        entrancePos = new Vector2i(room.Bounds.Left - 1, room.Bounds.Bottom + room.Bounds.Height / 2);
+                        break;
+                    case Direction.South:
+                        entrancePos = new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Bottom - 1);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                // Check if it's not blocked
+                var blockPos = entrancePos + dir.ToIntVec() * 2;
+
+                if (i != 3 && dungeon.RoomTiles.Contains(blockPos))
+                {
+                    continue;
+                }
+
+                room.Entrances.Add(entrancePos);
+                break;
+            }
+        }
     }
 }

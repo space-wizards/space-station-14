@@ -1,9 +1,11 @@
+using System.Numerics;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
-using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Spawners;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -41,9 +43,13 @@ namespace Content.Server.StationEvents.Events
             Box2? playableArea = null;
             var mapId = GameTicker.DefaultMap;
 
-            foreach (var grid in MapManager.GetAllMapGrids(mapId))
+            var query = AllEntityQuery<MapGridComponent, TransformComponent>();
+            while (query.MoveNext(out var gridId, out _, out var xform))
             {
-                var aabb = _physics.GetWorldAABB(grid.Owner);
+                if (xform.MapID != mapId)
+                    continue;
+
+                var aabb = _physics.GetWorldAABB(gridId);
                 playableArea = playableArea?.Union(aabb) ?? aabb;
             }
 
@@ -53,7 +59,7 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
-            var minimumDistance = (playableArea.Value.TopRight - playableArea.Value.Center).Length + 50f;
+            var minimumDistance = (playableArea.Value.TopRight - playableArea.Value.Center).Length() + 50f;
             var maximumDistance = minimumDistance + 100f;
 
             var center = playableArea.Value.Center;
@@ -68,7 +74,7 @@ namespace Content.Server.StationEvents.Events
                 _physics.SetBodyStatus(physics, BodyStatus.InAir);
                 _physics.SetLinearDamping(physics, 0f);
                 _physics.SetAngularDamping(physics, 0f);
-                _physics.ApplyLinearImpulse(meteor, -offset.Normalized * component.MeteorVelocity * physics.Mass, body: physics);
+                _physics.ApplyLinearImpulse(meteor, -offset.Normalized() * component.MeteorVelocity * physics.Mass, body: physics);
                 _physics.ApplyAngularImpulse(
                     meteor,
                     physics.Mass * ((component.MaxAngularVelocity - component.MinAngularVelocity) * RobustRandom.NextFloat() + component.MinAngularVelocity),

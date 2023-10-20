@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Robust.Shared.Map;
@@ -16,6 +17,7 @@ public sealed class RulesSystem : EntitySystem
 
     public bool IsTrue(EntityUid uid, RulesPrototype rules)
     {
+        var inRange = new HashSet<Entity<IComponent>>();
         foreach (var rule in rules.Rules)
         {
             switch (rule)
@@ -35,10 +37,11 @@ public sealed class RulesSystem : EntitySystem
                     }
 
                     var worldPos = _transform.GetWorldPosition(xform);
+                    var gridRange = new Vector2(griddy.Range, griddy.Range);
 
                     foreach (var _ in _mapManager.FindGridsIntersecting(
                                  xform.MapID,
-                                 new Box2(worldPos - griddy.Range, worldPos + griddy.Range)))
+                                 new Box2(worldPos - gridRange, worldPos + gridRange)))
                     {
                         return !griddy.Inverted;
                     }
@@ -70,12 +73,13 @@ public sealed class RulesSystem : EntitySystem
                     var count = 0;
 
                     // TODO: Update this when we get the callback version
-                    foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(xform.MapID,
-                                 worldPos, access.Range))
+                    var entities = new HashSet<Entity<AccessReaderComponent>>();
+                    _lookup.GetEntitiesInRange(xform.MapID, worldPos, access.Range, entities);
+                    foreach (var comp in entities)
                     {
                         if (!_reader.AreAccessTagsAllowed(access.Access, comp) ||
                             access.Anchored &&
-                            (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                            (!xformQuery.TryGetComponent(comp, out var compXform) ||
                              !compXform.Anchored))
                         {
                             continue;
@@ -111,12 +115,12 @@ public sealed class RulesSystem : EntitySystem
 
                     foreach (var compType in nearbyComps.Components.Values)
                     {
-                        // TODO: Update this when we get the callback version
-                        foreach (var comp in _lookup.GetComponentsInRange(compType.Component.GetType(), xform.MapID,
-                                     worldPos, nearbyComps.Range))
+                        inRange.Clear();
+                        _lookup.GetEntitiesInRange(compType.Component.GetType(), xform.MapID, worldPos, nearbyComps.Range, inRange);
+                        foreach (var comp in inRange)
                         {
                             if (nearbyComps.Anchored &&
-                                (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
+                                (!xformQuery.TryGetComponent(comp, out var compXform) ||
                                  !compXform.Anchored))
                             {
                                 continue;

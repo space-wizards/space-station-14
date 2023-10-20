@@ -1,15 +1,17 @@
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
+
 namespace Content.Client.PDA.Ringer
 {
     [UsedImplicitly]
     public sealed class RingerBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private RingtoneMenu? _menu;
 
-        public RingerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public RingerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -27,9 +29,17 @@ namespace Content.Client.PDA.Ringer
 
             _menu.SetRingerButton.OnPressed += _ =>
             {
-                if (!TryGetRingtone(out var ringtone)) return;
+                if (!TryGetRingtone(out var ringtone))
+                    return;
 
                 SendMessage(new RingerSetRingtoneMessage(ringtone));
+                _menu.SetRingerButton.Disabled = true;
+
+                Timer.Spawn(333, () =>
+                {
+                    if (_menu is { Disposed: false, SetRingerButton: { Disposed: false } ringer})
+                        ringer.Disabled = false;
+                });
             };
         }
 
@@ -41,7 +51,7 @@ namespace Content.Client.PDA.Ringer
                 return false;
             }
 
-            ringtone = new Note[4];
+            ringtone = new Note[_menu.RingerNoteInputs.Length];
 
             for (int i = 0; i < _menu.RingerNoteInputs.Length; i++)
             {
@@ -72,7 +82,7 @@ namespace Content.Client.PDA.Ringer
 
             }
 
-            _menu.TestRingerButton.Visible = !msg.IsPlaying;
+            _menu.TestRingerButton.Disabled = msg.IsPlaying;
         }
 
 

@@ -7,7 +7,7 @@ namespace Content.Server.AlertLevel;
 /// signify its alert level state.
 /// </summary>
 [RegisterComponent]
-public sealed class AlertLevelComponent : Component
+public sealed partial class AlertLevelComponent : Component
 {
     /// <summary>
     /// The current set of alert levels on the station.
@@ -28,8 +28,6 @@ public sealed class AlertLevelComponent : Component
     /// Is current station level can be changed by crew.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public bool IsLevelLocked = false;
-
-    [ViewVariables] public const float Delay = 30;
 
     [ViewVariables] public float CurrentDelay = 0;
     [ViewVariables] public bool ActiveDelay;

@@ -9,6 +9,7 @@ namespace Content.Server.Traits.Assorted;
 /// </summary>
 public sealed class NarcolepsySystem : EntitySystem
 {
+    [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "ForcedSleep"; // Same one used by N2O and other sleep chems.
 
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -38,7 +39,8 @@ public sealed class NarcolepsySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var narcolepsy in EntityQuery<NarcolepsyComponent>())
+        var query = EntityQueryEnumerator<NarcolepsyComponent>();
+        while (query.MoveNext(out var uid, out var narcolepsy))
         {
             narcolepsy.NextIncidentTime -= frameTime;
 
@@ -54,7 +56,7 @@ public sealed class NarcolepsySystem : EntitySystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             narcolepsy.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(narcolepsy.Owner, StatusEffectKey,
+            _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey,
                 TimeSpan.FromSeconds(duration), false);
         }
     }

@@ -1,5 +1,5 @@
 namespace Content.Client.Bed;
 
 [RegisterComponent]
-public sealed class StasisBedVisualsComponent : Component
+public sealed partial class StasisBedVisualsComponent : Component
 {}

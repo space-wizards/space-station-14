@@ -1,6 +1,5 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pulling.Components
@@ -9,7 +8,7 @@ namespace Content.Shared.Pulling.Components
     [NetworkedComponent()]
     [Access(typeof(SharedPullingStateManagementSystem))]
     [RegisterComponent]
-    public sealed class SharedPullableComponent : Component
+    public sealed partial class SharedPullableComponent : Component
     {
         /// <summary>
         /// The current entity pulling this component.
@@ -39,24 +38,14 @@ namespace Content.Shared.Pulling.Components
         [Access(typeof(SharedPullingSystem), Other = AccessPermissions.ReadExecute)]
         [ViewVariables]
         public bool PrevFixedRotation;
-
-        protected override void OnRemove()
-        {
-            if (Puller != null)
-            {
-                // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
-                Logger.ErrorS("c.go.c.pulling", "PULLING STATE CORRUPTION IMMINENT IN PULLABLE {0} - OnRemove called when Puller is set!", Owner);
-            }
-            base.OnRemove();
-        }
     }
 
     [Serializable, NetSerializable]
     public sealed class PullableComponentState : ComponentState
     {
-        public readonly EntityUid? Puller;
+        public readonly NetEntity? Puller;
 
-        public PullableComponentState(EntityUid? puller)
+        public PullableComponentState(NetEntity? puller)
         {
             Puller = puller;
         }

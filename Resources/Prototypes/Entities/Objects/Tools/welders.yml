@@ -30,10 +30,10 @@
         shader: unshaded
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     damage:
       types:
         Blunt: 5 #i mean... i GUESS you could use it like that
-  - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager
@@ -53,10 +53,10 @@
         Heat: 8
         Blunt: -5
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 1.5
     color: orange
+    netsync: false
   - type: Appearance
   - type: RequiresEyeProtection
   - type: PhysicalComposition

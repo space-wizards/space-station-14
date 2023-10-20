@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
@@ -8,9 +9,7 @@ using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Salvage;
-using Content.Shared.Shuttles.Components;
-using Robust.Shared.Audio;
+using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -44,7 +43,7 @@ public sealed partial class SalvageSystem
         // TODO: This is terrible but need bluespace harnesses or something.
         var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var _, out var mobState, out var mobXform))
+        while (query.MoveNext(out var uid, out _, out var mobState, out var mobXform))
         {
             if (mobXform.MapUid != xform.MapUid)
                 continue;
@@ -110,21 +109,11 @@ public sealed partial class SalvageSystem
             Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", component.DungeonLocation.GetDir())));
 
         component.Stage = ExpeditionStage.Running;
+        Dirty(args.MapUid, component);
     }
 
     private void OnFTLStarted(ref FTLStartedEvent ev)
     {
-        // Started a mining mission so work out exempt entities
-        if (TryComp<SalvageMiningExpeditionComponent>(
-                _mapManager.GetMapEntityId(ev.TargetCoordinates.ToMap(EntityManager, _transform).MapId),
-                out var mining))
-        {
-            var ents = new List<EntityUid>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            MiningTax(ents, ev.Entity, mining, xformQuery);
-            mining.ExemptEntities = ents;
-        }
-
         if (!TryComp<SalvageExpeditionComponent>(ev.FromMapUid, out var expedition) ||
             !TryComp<SalvageExpeditionDataComponent>(expedition.Station, out var station))
         {
@@ -155,21 +144,24 @@ public sealed partial class SalvageSystem
         {
             var remaining = comp.EndTime - _timing.CurTime;
 
-            if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(30))
+            if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(45))
             {
                 comp.Stage = ExpeditionStage.FinalCountdown;
-                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(30).Seconds)));
+                Dirty(uid, comp);
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(45).Seconds)));
             }
             else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
             {
                 // TODO: Some way to play audio attached to a map for players.
                 comp.Stream = _audio.PlayGlobal(comp.Sound, Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
                 comp.Stage = ExpeditionStage.MusicCountdown;
+                Dirty(uid, comp);
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
             }
-            else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(5))
+            else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(4))
             {
                 comp.Stage = ExpeditionStage.Countdown;
+                Dirty(uid, comp);
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(5).Minutes)));
             }
             // Auto-FTL out any shuttles
@@ -205,73 +197,6 @@ public sealed partial class SalvageSystem
             if (remaining < TimeSpan.Zero)
             {
                 QueueDel(uid);
-            }
-        }
-
-        // Mining missions: NOOP since it's handled after ftling
-
-        // Structure missions
-        var structureQuery = EntityQueryEnumerator<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>();
-
-        while (structureQuery.MoveNext(out var uid, out var structure, out var comp))
-        {
-            if (comp.Completed)
-                continue;
-
-            var structureAnnounce = false;
-
-            for (var i = 0; i < structure.Structures.Count; i++)
-            {
-                var objective = structure.Structures[i];
-
-                if (Deleted(objective))
-                {
-                    structure.Structures.RemoveSwap(i);
-                    structureAnnounce = true;
-                }
-            }
-
-            if (structureAnnounce)
-            {
-                Announce(uid, Loc.GetString("salvage-expedition-structure-remaining", ("count", structure.Structures.Count)));
-            }
-
-            if (structure.Structures.Count == 0)
-            {
-                comp.Completed = true;
-                Announce(uid, Loc.GetString("salvage-expedition-completed"));
-            }
-        }
-
-        // Elimination missions
-        var eliminationQuery = EntityQueryEnumerator<SalvageEliminationExpeditionComponent, SalvageExpeditionComponent>();
-        while (eliminationQuery.MoveNext(out var uid, out var elimination, out var comp))
-        {
-            if (comp.Completed)
-                continue;
-
-            var announce = false;
-
-            for (var i = 0; i < elimination.Megafauna.Count; i++)
-            {
-                var mob = elimination.Megafauna[i];
-
-                if (Deleted(mob) || _mobState.IsDead(mob))
-                {
-                    elimination.Megafauna.RemoveSwap(i);
-                    announce = true;
-                }
-            }
-
-            if (announce)
-            {
-                Announce(uid, Loc.GetString("salvage-expedition-megafauna-remaining", ("count", elimination.Megafauna.Count)));
-            }
-
-            if (elimination.Megafauna.Count == 0)
-            {
-                comp.Completed = true;
-                Announce(uid, Loc.GetString("salvage-expedition-completed"));
             }
         }
     }

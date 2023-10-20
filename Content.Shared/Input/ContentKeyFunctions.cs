@@ -44,6 +44,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenAdminMenu = "OpenAdminMenu";
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
+        public static readonly BoundKeyFunction ToggleFullscreen = "ToggleFullscreen";
         public static readonly BoundKeyFunction Point = "Point";
         public static readonly BoundKeyFunction ZoomOut = "ZoomOut";
         public static readonly BoundKeyFunction ZoomIn = "ZoomIn";
@@ -112,5 +113,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Vote9 = "Vote9";
         public static readonly BoundKeyFunction EditorCopyObject = "EditorCopyObject";
         public static readonly BoundKeyFunction EditorFlipObject = "EditorFlipObject";
+        public static readonly BoundKeyFunction InspectEntity = "InspectEntity";
     }
 }

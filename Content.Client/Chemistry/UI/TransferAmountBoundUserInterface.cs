@@ -8,7 +8,12 @@ namespace Content.Client.Chemistry.UI
     [UsedImplicitly]
     public sealed class TransferAmountBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private TransferAmountWindow? _window;
+
+        public TransferAmountBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        {
+        }
 
         protected override void Open()
         {
@@ -25,10 +30,6 @@ namespace Content.Client.Chemistry.UI
             };
             _window.OnClose += Close;
             _window.OpenCentered();
-        }
-
-        public TransferAmountBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
-        {
         }
 
         protected override void Dispose(bool disposing)

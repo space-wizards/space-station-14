@@ -6,11 +6,11 @@ namespace Content.Client.Research.UI
 {
     public sealed class DiskConsoleBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private DiskConsoleMenu? _menu;
 
-        public DiskConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public DiskConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-
         }
 
         protected override void Open()

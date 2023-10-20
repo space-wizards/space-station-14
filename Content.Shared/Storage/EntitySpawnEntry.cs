@@ -10,7 +10,7 @@ namespace Content.Shared.Storage;
 /// </summary>
 [Serializable]
 [DataDefinition]
-public struct EntitySpawnEntry
+public partial struct EntitySpawnEntry
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -78,12 +78,12 @@ public static class EntitySpawnCollection
     /// <param name="entries">The entity spawn entries.</param>
     /// <param name="random">Resolve param.</param>
     /// <returns>A list of entity prototypes that should be spawned.</returns>
-    public static List<string?> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
+    public static List<string> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
         IRobustRandom? random = null)
     {
         IoCManager.Resolve(ref random);
 
-        var spawned = new List<string?>();
+        var spawned = new List<string>();
         var ungrouped = CollectOrGroups(entries, out var orGroupedSpawns);
 
         foreach (var entry in ungrouped)
@@ -91,6 +91,9 @@ public static class EntitySpawnCollection
             // Check random spawn
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (entry.SpawnProbability != 1f && !random.Prob(entry.SpawnProbability))
+                continue;
+
+            if (entry.PrototypeId == null)
                 continue;
 
             var amount = (int) entry.GetAmount(random);
@@ -115,6 +118,9 @@ public static class EntitySpawnCollection
                 cumulative += entry.SpawnProbability;
                 if (diceRoll > cumulative)
                     continue;
+
+                if (entry.PrototypeId == null)
+                    break;
 
                 // Dice roll succeeded, add item and break loop
                 var amount = (int) entry.GetAmount(random);

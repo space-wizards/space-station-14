@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.IoC;
 using Content.Client.Resources;
 using Content.Shared.Damage;
@@ -69,7 +70,7 @@ namespace Content.Client.HealthOverlay.UI
             Panel.Visible = val;
         }
 
-        private void MoreFrameUpdate(FrameEventArgs args)
+        private void MoreFrameUpdate()
         {
             if (_entities.Deleted(Entity))
             {
@@ -86,7 +87,7 @@ namespace Content.Client.HealthOverlay.UI
 
             var mobStateSystem = _entities.EntitySysManager.GetEntitySystem<MobStateSystem>();
             var mobThresholdSystem = _entities.EntitySysManager.GetEntitySystem<MobThresholdSystem>();
-            if (mobStateSystem.IsAlive(mobState.Owner, mobState))
+            if (mobStateSystem.IsAlive(Entity, mobState))
             {
                 if (!mobThresholdSystem.TryGetThresholdForState(Entity,MobState.Critical, out var threshold))
                 {
@@ -100,7 +101,7 @@ namespace Content.Client.HealthOverlay.UI
                 HealthBar.Ratio = 1 - ((FixedPoint2)(damageable.TotalDamage / threshold)).Float();
                 HealthBar.Visible = true;
             }
-            else if (mobStateSystem.IsCritical(mobState.Owner, mobState))
+            else if (mobStateSystem.IsCritical(Entity, mobState))
             {
                 HealthBar.Ratio = 0;
                 HealthBar.Visible = false;
@@ -117,7 +118,7 @@ namespace Content.Client.HealthOverlay.UI
                     ((damageable.TotalDamage - critThreshold) /
                     (deadThreshold - critThreshold)).Value.Float();
             }
-            else if (mobStateSystem.IsDead(mobState.Owner, mobState))
+            else if (mobStateSystem.IsDead(Entity, mobState))
             {
                 CritBar.Ratio = 0;
                 CritBar.Visible = false;
@@ -135,7 +136,7 @@ namespace Content.Client.HealthOverlay.UI
         {
             base.FrameUpdate(args);
 
-            MoreFrameUpdate(args);
+            MoreFrameUpdate();
 
             if (_entities.Deleted(Entity) || _eyeManager.CurrentMap != _entities.GetComponent<TransformComponent>(Entity).MapID)
             {

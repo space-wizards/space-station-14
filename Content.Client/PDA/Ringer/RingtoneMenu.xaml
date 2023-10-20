@@ -1,7 +1,7 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'comp-ringer-ui-menu-title'}"
-            MinSize="256 128"
-            SetSize="256 128">
+            MinSize="320 128"
+            SetSize="320 128">
         <BoxContainer Orientation="Vertical"
                     VerticalExpand="True"
                     HorizontalExpand="True"
@@ -12,7 +12,7 @@
                         VerticalExpand="True"
                         HorizontalExpand="True"
                         HorizontalAlignment="Center"
-                        MinSize="120 0">
+                        MinSize="180 0">
                     <Label Name = "Indent_0Label"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -49,6 +49,24 @@
                             MinSize="40 0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center" />
+                    <Label Name = "Indent_4Label"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="-" />
+                    <LineEdit Name ="RingerNoteFiveInput"
+                            Access="Public"
+                            MinSize="40 0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    <Label Name = "Indent_5Label"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="-" />
+                    <LineEdit Name ="RingerNoteSixInput"
+                            Access="Public"
+                            MinSize="40 0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
                 </BoxContainer>
             </PanelContainer>
             <PanelContainer>
@@ -61,12 +79,14 @@
                             Access="Public"
                             Text="{Loc 'comp-ringer-ui-test-ringtone-button'}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            StyleClasses="OpenRight" />
                     <Button Name = "SetRingerButton"
                             Access="Public"
                             Text="{Loc 'comp-ringer-ui-set-ringtone-button'}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            StyleClasses="OpenLeft" />
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>

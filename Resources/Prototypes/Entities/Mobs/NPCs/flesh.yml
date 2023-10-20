@@ -1,13 +1,19 @@
-﻿- type: entity
-  parent: SimpleMobBase
+- type: entity
+  parent: [ SimpleMobBase, MobCombat ]
   id: BaseMobFlesh
   name: aberrant flesh
   description: A shambling mass of flesh, animated through anomalous energy.
   abstract: true
   components:
   - type: HTN
-    rootTask: SimpleHostileCompound
-  - type: Faction
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Tag
@@ -30,8 +36,7 @@
       0: Alive
       75: Dead
   - type: Stamina
-    excess: 50
-  - type: Appearance
+    critThreshold: 50
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -40,14 +45,13 @@
     bloodMaxVolume: 100
   - type: CombatMode
   - type: MeleeWeapon
-    hidden: true
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 3
+        Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
 
@@ -68,14 +72,13 @@
       Dead:
         Base: dead
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5
+        Slash: 8
 
 - type: entity
   parent: BaseMobFlesh
@@ -98,14 +101,13 @@
       0: Alive
       50: Dead
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5
+        Slash: 8
 
 - type: entity
   parent: BaseMobFlesh
@@ -185,7 +187,6 @@
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2.5
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0

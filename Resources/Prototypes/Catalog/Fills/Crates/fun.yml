@@ -23,6 +23,7 @@
       - id: PlushieDiona
       - id: PlushieXeno
       - id: PlushieHampter
+      - id: PlushieMoth
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -140,8 +141,13 @@
       - id: BackgammonBoard
       - id: ParchisBoard
       - id: CheckerBoard
-      - id: d6Dice
-        amount: 4
+      - id: ShipBattlemap
+      - id: SnowBattlemap
+      - id: SandBattlemap
+      - id: MoonBattlemap
+      - id: GrassBattlemap
+      - id: DiceBag
+        amount: 6
 
 - type: entity
   id: CrateFunATV
@@ -198,8 +204,9 @@
   - type: StorageFill
     contents:
       - id: WeaponWaterBlaster
+        amount: 2
       - id: WeaponWaterPistol
-        amount: 5
+        amount: 4
 
 - type: entity
   id: CrateFunSyndicateSegway
@@ -237,7 +244,7 @@
       - id: ClothingOuterCoatPirate
       - id: ClothingShoesBootsLaceup
         amount: 2
-      - id: HatBandRed
+      - id: ClothingHeadBandRed
       - id: FoamCutlass
         amount: 2
 
@@ -261,3 +268,42 @@
       - id: VehicleUnicycleFolded
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
+      - id: BeachBall
+
+- type: entity
+  id: CrateFunBikeHornImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BikeHornImplanter
+        amount: 3
+
+- type: entity
+  id: CrateFunMysteryFigurines
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: MysteryFigureBox
+        amount: 10
+      - id: MysteryFigureBox
+        amount: 15
+        prob: 0.05
+
+- type: entity
+  name: Dartboard Box Set
+  description: A box with everything you need for a fun game of darts.
+  id: CrateFunDartsSet
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: TargetDarts
+        amount: 1
+      - id: BoxDarts
+        amount: 1
+      - id: BoxDarts
+        amount: 1
+        prob: 0.05
+  

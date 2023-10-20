@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Hands.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
@@ -5,6 +6,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
 using Robust.Shared.Utility;
 
 namespace Content.Client.CombatMode;
@@ -59,7 +61,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         var mouseScreenPosition = _inputManager.MouseScreenPosition;
-        var mousePosMap = _eye.ScreenToMap(mouseScreenPosition);
+        var mousePosMap = _eye.PixelToMap(mouseScreenPosition);
         if (mousePosMap.MapId != args.MapId)
             return;
 
@@ -77,7 +79,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
     private void DrawSight(Texture sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
     {
         var sightSize = sight.Size * scale;
-        var expandedSize = sightSize + 7f;
+        var expandedSize = sightSize + new Vector2(7f, 7f);
 
         screen.DrawTextureRect(sight,
             UIBox2.FromDimensions(centerPos - sightSize * 0.5f, sightSize), StrokeColor);
