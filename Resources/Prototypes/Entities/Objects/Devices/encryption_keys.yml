@@ -43,14 +43,14 @@
 
 - type: entity
   parent: EncryptionKey
-  id: EncryptionKeyCentCom
+  id: EncryptionKeyCentComm
   name: central command encryption key
   description: An encryption key used by captain's bosses.
   components:
   - type: EncryptionKey
     channels:
-    - CentCom
-    defaultChannel: CentCom
+    - CentComm
+    defaultChannel: CentComm
   - type: Sprite
     layers:
     - state: crypt_blue

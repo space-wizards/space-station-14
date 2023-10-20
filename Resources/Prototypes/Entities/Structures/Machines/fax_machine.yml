@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseMachinePowered
   id: FaxMachineBase
   name: long range fax machine
@@ -66,9 +66,9 @@
 # Special
 - type: entity
   parent: FaxMachineBase
-  id: FaxMachineCentcom
-  name: centcom long range fax machine
-  suffix: Centcom
+  id: FaxMachineCentcomm
+  name: centcomm long range fax machine
+  suffix: Centcomm
   components:
   - type: Sprite
     layers:

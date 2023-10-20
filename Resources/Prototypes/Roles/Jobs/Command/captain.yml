@@ -21,7 +21,7 @@
   icon: "JobIconCaptain"
   requireAdminNotify: true
   joinNotifyCrew: true
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-centcomm
   canBeAntag: false
   accessGroups:
   - AllAccess

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseStation
   abstract: true
   components:
@@ -42,10 +42,10 @@
         - /Maps/Shuttles/mining.yml
 
 - type: entity
-  id: BaseStationCentcom
+  id: BaseStationCentcomm
   abstract: true
   components:
-    - type: StationCentcom
+    - type: StationCentcomm
 
 - type: entity
   id: BaseStationEvacuation

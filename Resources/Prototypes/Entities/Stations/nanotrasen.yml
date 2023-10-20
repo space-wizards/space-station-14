@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: BaseStationNanotrasen
   components:
@@ -15,7 +15,7 @@
     - BaseStationRecords
     - BaseStationArrivals
     - BaseStationShuttles
-    - BaseStationCentcom
+    - BaseStationCentcomm
     - BaseStationEvacuation
     - BaseStationAlertLevels
     - BaseStationExpeditions

@@ -57,8 +57,8 @@
   - type: Item
     size: 10
   - type: Prayable
-    sentMessage: prayer-popup-notify-centcom-sent
-    notifiactionPrefix: prayer-chat-notify-centcom
+    sentMessage: prayer-popup-notify-centcomm-sent
+    notifiactionPrefix: prayer-chat-notify-centcomm
     verb: prayer-verbs-call
     verbImage: null
 

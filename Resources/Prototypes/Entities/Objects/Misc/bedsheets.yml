@@ -74,15 +74,15 @@
     sprite: Clothing/Neck/Bedsheets/ce.rsi
 
 - type: entity
-  id: BedsheetCentcom
+  id: BedsheetCentcomm
   parent: BedsheetBase
-  name: CentCom bedsheet
+  name: Centcomm bedsheet
   description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
   components:
   - type: Sprite
-    state: sheetcentcom
+    state: sheetcentcomm
   - type: Clothing
-    sprite: Clothing/Neck/Bedsheets/centcom.rsi
+    sprite: Clothing/Neck/Bedsheets/centcomm.rsi
 
 - type: entity
   id: BedsheetClown

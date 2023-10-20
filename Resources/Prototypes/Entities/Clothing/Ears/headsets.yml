@@ -75,19 +75,19 @@
 
 - type: entity
   parent: ClothingHeadset
-  id: ClothingHeadsetCentCom
-  name: CentCom headset
+  id: ClothingHeadsetCentComm
+  name: CentComm headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyCentCom
+      - EncryptionKeyCentComm
       - EncryptionKeyStationMaster
   - type: Sprite
-    sprite: Clothing/Ears/Headsets/centcom.rsi
+    sprite: Clothing/Ears/Headsets/centcomm.rsi
   - type: Clothing
-    sprite: Clothing/Ears/Headsets/centcom.rsi
+    sprite: Clothing/Ears/Headsets/centcomm.rsi
 
 - type: entity
   parent: ClothingHeadset

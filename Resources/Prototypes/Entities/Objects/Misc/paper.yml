@@ -289,17 +289,17 @@
     state: pen_cap
 
 - type: entity
-  name: Centcom pen
+  name: Centcomm pen
   parent: CyberPen
-  id: PenCentcom
+  id: PenCentcomm
   description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: pen_centcom
+    state: pen_centcomm
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
-    heldPrefix: pen_centcom
+    heldPrefix: pen_centcomm
 
 - type: entity
   name: hop's fountain pen
@@ -545,18 +545,18 @@
     state: stamp-cap
 
 - type: entity
-  name: CentCom rubber stamp
+  name: CentComm rubber stamp
   parent: RubberStampBase
-  id: RubberStampCentcom
+  id: RubberStampCentcomm
   suffix: DO NOT MAP
   components:
   - type: Stamp
-    stampedName: stamp-component-stamped-name-centcom
+    stampedName: stamp-component-stamped-name-centcomm
     stampedColor: "#006600"
-    stampState: "paper_stamp-centcom"
+    stampState: "paper_stamp-centcomm"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-centcom
+    state: stamp-centcomm
 
 - type: entity
   name: chaplain's rubber stamp

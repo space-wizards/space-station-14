@@ -7,7 +7,7 @@
   setPreference: false
   startingGear: ERTLeaderGearEVA
   icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-centcomm
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -23,7 +23,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBulletproof
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltSecurityFilled
     pocket1: Flare
 
@@ -39,7 +39,7 @@
     outerClothing: ClothingOuterHardsuitERTLeader
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltSecurityFilled
     pocket1: Flare
 
@@ -52,7 +52,7 @@
   setPreference: false
   startingGear: ERTEngineerGearEVA
   icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-centcomm
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -68,7 +68,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBulletproof
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
 
@@ -84,7 +84,7 @@
     outerClothing: ClothingOuterHardsuitERTEngineer
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
 
@@ -97,7 +97,7 @@
   setPreference: false
   startingGear: ERTEngineerGearEVA
   icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-centcomm
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -113,7 +113,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBulletproof
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltSecurityFilled
     pocket1: Flare
     pocket2: FlashlightSeclite
@@ -130,7 +130,7 @@
     outerClothing: ClothingOuterHardsuitERTSecurity
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltSecurityFilled
     pocket1: Flare
     pocket2: FlashlightSeclite
@@ -144,7 +144,7 @@
   setPreference: false
   startingGear: ERTMedicalGearEVA
   icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-centcomm
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -160,7 +160,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBulletproof
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltMedicalFilled
     pocket1: HandheldHealthAnalyzer
     pocket2: Flare
@@ -177,7 +177,7 @@
     outerClothing: ClothingOuterHardsuitERTMedical
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltMedicalFilled
     pocket1: HandheldHealthAnalyzer
     pocket2: Flare
@@ -191,7 +191,7 @@
   setPreference: false
   startingGear: ERTJanitorGearEVA
   icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-centcomm
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -206,7 +206,7 @@
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterArmorBulletproof
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
 
@@ -221,6 +221,6 @@
     outerClothing: ClothingOuterHardsuitERTJanitor
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     belt: ClothingBeltJanitorFilled
     pocket1: Flare

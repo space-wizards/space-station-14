@@ -49,7 +49,7 @@
     back: ClothingBackpackDuffelSyndicateAmmo
     mask: ClothingMaskGasDeathSquad
     eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
     suitstorage: OxygenTankFilled
@@ -258,7 +258,7 @@
     back: ClothingBackpackDuffelCBURN
     mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitCBURN
     shoes: ClothingShoesBootsCombatFilled

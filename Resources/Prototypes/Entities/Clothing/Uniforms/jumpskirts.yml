@@ -583,14 +583,14 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
-  id: ClothingUniformJumpskirtCentcomFormalDress
+  id: ClothingUniformJumpskirtCentcommFormalDress
   name: central command formal dress
   description: A dress for special occasions
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/centcommformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/centcommformaldress.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase

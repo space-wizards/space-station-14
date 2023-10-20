@@ -632,38 +632,38 @@
 
 - type: entity
   parent: BasePDA
-  id: CentcomPDA
-  name: CentCom PDA
+  id: CentcommPDA
+  name: CentComm PDA
   description: Light green sign of walking bureaucracy.
   components:
   - type: Pda
-    id: CentcomIDCard
-    state: pda-centcom
+    id: CentcommIDCard
+    state: pda-centcomm
     penSlot:
-      startingItem: PenCentcom
+      startingItem: PenCentcomm
       whitelist:
         tags:
         - Write
   - type: PdaBorderColor
     borderColor: "#00842e"
   - type: Icon
-    state: pda-centcom
+    state: pda-centcomm
 
 - type: entity
-  parent: CentcomPDA
-  id: CentcomPDAFake
+  parent: CentcommPDA
+  id: CentcommPDAFake
   suffix: Fake
   components:
   - type: Pda
-    id: CentcomIDCardSyndie
+    id: CentcommIDCardSyndie
 
 - type: entity
-  parent: CentcomPDA
+  parent: CentcommPDA
   id: DeathsquadPDA
   suffix: Deathsquad
   components:
   - type: Pda
-    id: CentcomIDCardDeathsquad
+    id: CentcommIDCardDeathsquad
 
 - type: entity
   parent: BasePDA

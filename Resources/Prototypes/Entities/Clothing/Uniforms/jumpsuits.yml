@@ -132,25 +132,25 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitCentcomOfficial
-  name: CentCom official's jumpsuit
-  description: It's a jumpsuit worn by CentCom's officials.
+  id: ClothingUniformJumpsuitCentcommOfficial
+  name: CentComm official's jumpsuit
+  description: It's a jumpsuit worn by CentComm's officials.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_official.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_official.rsi
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitCentcomOfficer
-  name: CentCom officer's jumpsuit
-  description: It's a jumpsuit worn by CentCom Officers.
+  id: ClothingUniformJumpsuitCentcommOfficer
+  name: CentComm officer's jumpsuit
+  description: It's a jumpsuit worn by CentComm Officers.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_officer.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_officer.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -890,14 +890,14 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitCentcomFormal
+  id: ClothingUniformJumpsuitCentcommFormal
   name: central command formal suit
   description: A suit for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcommformal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcommformal.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -1061,7 +1061,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTEngineer
   name: ERT engineering uniform
-  description: A special suit made for the elite engineers under CentCom.
+  description: A special suit made for the elite engineers under CentComm.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
@@ -1076,7 +1076,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTJanitor
   name: ERT janitorial uniform
-  description: A special suit made for the elite janitors under CentCom.
+  description: A special suit made for the elite janitors under CentComm.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
@@ -1087,7 +1087,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTLeader
   name: ERT leader uniform
-  description: A special suit made for the best of the elites under CentCom.
+  description: A special suit made for the best of the elites under CentComm.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
@@ -1104,7 +1104,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTMedic
   name: ERT medical uniform
-  description: A special suit made for the elite medics under CentCom.
+  description: A special suit made for the elite medics under CentComm.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
@@ -1115,7 +1115,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTSecurity
   name: ERT security uniform
-  description: A special suit made for the elite security under CentCom.
+  description: A special suit made for the elite security under CentComm.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi

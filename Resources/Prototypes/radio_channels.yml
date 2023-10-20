@@ -6,8 +6,8 @@
   color: "#32cd32"
 
 - type: radioChannel
-  id: CentCom
-  name: chat-radio-centcom
+  id: CentComm
+  name: chat-radio-centcomm
   keycode: 'y'
   frequency: 1337
   color: "#2681a5"

@@ -35,7 +35,7 @@
   noSpawn: true
   parent: [BaseTraitorObjective, BaseLivingObjective]
   id: EscapeShuttleObjective
-  name: Escape to centcom alive and unrestrained.
+  name: Escape to centcomm alive and unrestrained.
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective
@@ -70,7 +70,7 @@
   noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomPersonObjective
-  description: Do it however you like, just make sure they don't make it to centcom.
+  description: Do it however you like, just make sure they don't make it to centcomm.
   components:
   - type: Objective
     difficulty: 1.75
@@ -95,7 +95,7 @@
   - type: PickRandomHead
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
-    # if ce flies a shittle to centcom you better find a way onto it
+    # if ce flies a shittle to centcomm you better find a way onto it
     requireDead: true
 
 # social

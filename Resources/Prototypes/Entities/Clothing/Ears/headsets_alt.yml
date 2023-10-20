@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: ClothingHeadset
   id: ClothingHeadsetAlt
@@ -28,22 +28,22 @@
 
 - type: entity
   parent: ClothingHeadsetAlt
-  id: ClothingHeadsetAltCentCom
-  name: CentCom over-ear headset
+  id: ClothingHeadsetAltCentComm
+  name: CentComm over-ear headset
   components:
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyCentCom
+      - EncryptionKeyCentComm
       - EncryptionKeyStationMaster
   - type: Sprite
-    sprite: Clothing/Ears/Headsets/centcom.rsi
+    sprite: Clothing/Ears/Headsets/centcomm.rsi
   - type: Clothing
-    sprite: Clothing/Ears/Headsets/centcom.rsi
+    sprite: Clothing/Ears/Headsets/centcomm.rsi
 
 - type: entity
-  parent: ClothingHeadsetAltCentCom
-  id: ClothingHeadsetAltCentComFake
+  parent: ClothingHeadsetAltCentComm
+  id: ClothingHeadsetAltCentCommFake
   suffix: Fake
   components:
   - type: ContainerFill

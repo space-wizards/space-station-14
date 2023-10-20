@@ -436,13 +436,13 @@
 
 - type: entity
   parent: IDCardStandard
-  id: CentcomIDCard
+  id: CentcommIDCard
   name: command officer ID card
   components:
   - type: Sprite
     layers:
-    - state: centcom
-    - state: idcentcom
+    - state: centcomm
+    - state: idcentcomm
   - type: Item
     heldPrefix: blue
   - type: IdCard
@@ -452,7 +452,7 @@
     - AllAccess
 
 - type: entity
-  parent: CentcomIDCard
+  parent: CentcommIDCard
   id: ERTLeaderIDCard
   name: ERT ID card
   components:
@@ -465,14 +465,14 @@
 
 - type: entity
   parent: IDCardStandard
-  id: CentcomIDCardSyndie
+  id: CentcommIDCardSyndie
   name: command officer ID card
   suffix: Fake
   components:
   - type: Sprite
     layers:
-    - state: centcom
-    - state: idcentcom
+    - state: centcomm
+    - state: idcentcomm
   - type: Item
     heldPrefix: blue
   - type: IdCard
@@ -494,17 +494,17 @@
       job: Musician
 
 - type: entity
-  parent: CentcomIDCard
-  id: CentcomIDCardDeathsquad
+  parent: CentcommIDCard
+  id: CentcommIDCardDeathsquad
   name: deathsquad ID card
   components:
   - type: Sprite
     layers:
-    - state: centcom
+    - state: centcomm
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Centcom Agent
+    jobTitle: Centcomm Agent
 
 - type: entity
   name: passenger ID card
@@ -681,14 +681,14 @@
     job: Detective
 
 - type: entity
-  parent: CentcomIDCard
+  parent: CentcommIDCard
   id: CBURNIDcard
   name: CBURN ID card
   components:
   - type: Sprite
     layers:
     - state: gold
-    - state: idcentcom
+    - state: idcentcomm
   - type: Item
     heldPrefix: gold
 

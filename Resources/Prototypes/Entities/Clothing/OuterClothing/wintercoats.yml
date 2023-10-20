@@ -108,15 +108,15 @@
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
-  id: ClothingOuterWinterCentcom
-  name: CentCom winter coat
+  id: ClothingOuterWinterCentcomm
+  name: CentComm winter coat
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
+    sprite: Clothing/OuterClothing/WinterCoats/coatcentcomm.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
+    sprite: Clothing/OuterClothing/WinterCoats/coatcentcomm.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCentcom
+    clothingPrototype: ClothingHeadHatHoodWinterCentcomm
 
 - type: entity
   parent: ClothingOuterWinterCoat

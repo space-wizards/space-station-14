@@ -110,14 +110,14 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckScarfStripedCentcom
-  name: striped CentCom scarf
-  description: A stylish striped centcom colored scarf. The perfect winter accessory for those with a keen fashion sense, and those who need to do paperwork in the cold.
+  id: ClothingNeckScarfStripedCentcomm
+  name: striped CentComm scarf
+  description: A stylish striped centcomm colored scarf. The perfect winter accessory for those with a keen fashion sense, and those who need to do paperwork in the cold.
   components:
     - type: Sprite
-      sprite: Clothing/Neck/Scarfs/centcom.rsi
+      sprite: Clothing/Neck/Scarfs/centcomm.rsi
     - type: Clothing
-      sprite: Clothing/Neck/Scarfs/centcom.rsi
+      sprite: Clothing/Neck/Scarfs/centcomm.rsi
 
 - type: entity
   parent: ClothingNeckBase

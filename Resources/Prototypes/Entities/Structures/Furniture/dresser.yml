@@ -438,7 +438,7 @@
       - id: ClothingUniformJumpskirtPrisoner
         prob: 0.0003
         orGroup: dresserthirdloot
-      - id: ClothingOuterWinterCentcom
+      - id: ClothingOuterWinterCentcomm
         prob: 0.0001
         orGroup: dresserthirdloot
       - id: ClothingUniformJumpskirtOfLife
