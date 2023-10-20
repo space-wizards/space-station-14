@@ -41,9 +41,9 @@ public sealed class IgnitionSourceSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (component,transform) in EntityQuery<IgnitionSourceComponent,TransformComponent>())
+        var query = EntityQueryEnumerator<IgnitionSourceComponent, TransformComponent>();
+        while (query.MoveNext(out var source, out var component, out var transform))
         {
-            var source = component.Owner;
             if (!component.Ignited)
                 continue;
 
