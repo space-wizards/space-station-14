@@ -3,7 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.Commands
 {
@@ -11,7 +11,6 @@ namespace Content.Server.Atmos.Commands
     public sealed class FillGas : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public string Command => "fillgas";
         public string Description => "Adds gas to all tiles in a grid.";
@@ -30,7 +29,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entManager.HasComponent<MapGridComponent>(gridId))
             {
                 shell.WriteLine("Invalid grid ID.");
                 return;
@@ -38,7 +37,7 @@ namespace Content.Server.Atmos.Commands
 
             var atmosphereSystem = _entManager.System<AtmosphereSystem>();
 
-            foreach (var tile in atmosphereSystem.GetAllMixtures(grid.Owner, true))
+            foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
             {
                 tile.AdjustMoles(gasId, moles);
             }
