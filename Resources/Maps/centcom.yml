@@ -130,7 +130,7 @@ entities:
       type: Physics
     - fixtures: {}
       type: Fixtures
-    - id: centcom
+    - id: centcomm
       type: BecomesStation
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
@@ -3979,7 +3979,7 @@ entities:
     - pos: -15.5,8.5
       parent: 1668
       type: Transform
-- proto: BedsheetCentcom
+- proto: BedsheetCentcomm
   entities:
   - uid: 3625
     components:
@@ -17810,14 +17810,14 @@ entities:
     - pos: 0.5,-45.5
       parent: 1668
       type: Transform
-- proto: CentcomIDCard
+- proto: CentcommIDCard
   entities:
   - uid: 3721
     components:
     - pos: -16.521366,8.567018
       parent: 1668
       type: Transform
-- proto: CentcomPDA
+- proto: CentcommPDA
   entities:
   - uid: 2198
     components:
@@ -19205,7 +19205,7 @@ entities:
     - pos: 27.544672,-22.46983
       parent: 1668
       type: Transform
-- proto: ClothingHeadsetAltCentCom
+- proto: ClothingHeadsetAltCentComm
   entities:
   - uid: 1435
     components:
@@ -21958,14 +21958,14 @@ entities:
     - pos: -28.5,1.5
       parent: 1668
       type: Transform
-- proto: FaxMachineCentcom
+- proto: FaxMachineCentcomm
   entities:
   - uid: 76
     components:
     - pos: -2.5,-2.5
       parent: 1668
       type: Transform
-    - name: CentCom
+    - name: CentComm
       type: FaxMachine
 - proto: filingCabinet
   entities:
@@ -29248,7 +29248,7 @@ entities:
     - pos: -23.482897,2.599884
       parent: 1668
       type: Transform
-- proto: PenCentcom
+- proto: PenCentcomm
   entities:
   - uid: 2905
     components:
@@ -33947,7 +33947,7 @@ entities:
     - pos: 15.5,8.5
       parent: 1668
       type: Transform
-- proto: RubberStampCentcom
+- proto: RubberStampCentcomm
   entities:
   - uid: 2917
     components:
@@ -42745,7 +42745,7 @@ entities:
     - pos: -0.5,3.5
       parent: 1668
       type: Transform
-    - location: Centcom
+    - location: Centcomm
       type: WarpPoint
 - proto: WaterCooler
   entities:

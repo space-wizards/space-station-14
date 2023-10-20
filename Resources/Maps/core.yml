@@ -48806,7 +48806,7 @@ entities:
     - pos: -3.141199,-27.463783
       parent: 2
       type: Transform
-- proto: ClothingOuterWinterCentcom
+- proto: ClothingOuterWinterCentcomm
   entities:
   - uid: 17474
     components:

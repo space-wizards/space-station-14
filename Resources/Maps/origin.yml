@@ -77761,7 +77761,7 @@ entities:
     - pos: -1.5377516,30.493696
       parent: 2
       type: Transform
-- proto: ClothingNeckScarfStripedCentcom
+- proto: ClothingNeckScarfStripedCentcomm
   entities:
   - uid: 12390
     components:
