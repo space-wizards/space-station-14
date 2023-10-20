@@ -741,13 +741,16 @@ public sealed partial class ChatSystem : SharedChatSystem
         return message;
     }
 
+    [ValidatePrototypeId<AccentPrototype>]
+    public const string ChatSanitize_Accent = "chatsanitize"
+
     public string SanitizeMessageReplaceWords(string message)
     {
         if (string.IsNullOrEmpty(message)) return message;
 
         var msg = message;
 
-        msg = _wordreplacement.ApplyReplacements(msg, "chatsanitize");
+        msg = _wordreplacement.ApplyReplacements(msg, ChatSanitize_Accent);
 
         return msg;
     }
