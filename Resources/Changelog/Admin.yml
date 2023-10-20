@@ -41,3 +41,8 @@ Entries:
   - {message: 'Fixed not being able to sort the F7 players tab by playtime.', type: Fix}
   id: 6
   time: '2023-10-14T23:52:00.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fixed playtime being sorted incorrectly in the F7 players tab.', type: Fix}
+  id: 7
+  time: '2023-10-16T04:23:00.0000000+00:00'
