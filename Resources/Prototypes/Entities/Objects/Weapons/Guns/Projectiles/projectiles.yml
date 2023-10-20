@@ -187,6 +187,9 @@
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
+  - type: Reflective
+    reflecive:
+    - Energy
 
 - type: entity
   name : disabler bolt
