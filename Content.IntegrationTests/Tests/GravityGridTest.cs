@@ -3,7 +3,6 @@ using Content.Server.Power.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Gravity;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -39,21 +38,17 @@ namespace Content.IntegrationTests.Tests
             var entityMan = server.ResolveDependency<IEntityManager>();
             var mapMan = server.ResolveDependency<IMapManager>();
 
-            MapGridComponent grid1 = null;
-            MapGridComponent grid2 = null;
-            EntityUid grid1Entity = default!;
-            EntityUid grid2Entity = default!;
+            Entity<MapGridComponent> grid1 = default;
+            Entity<MapGridComponent> grid2 = default;
 
             // Create grids
             await server.WaitAssertion(() =>
             {
                 var mapId = testMap.MapId;
-                grid1 = mapMan.CreateGrid(mapId);
-                grid2 = mapMan.CreateGrid(mapId);
-                grid1Entity = grid1.Owner;
-                grid2Entity = grid2.Owner;
+                grid1 = mapMan.CreateGridEntity(mapId);
+                grid2 = mapMan.CreateGridEntity(mapId);
 
-                generator = entityMan.SpawnEntity("GridGravityGeneratorDummy", grid2.ToCoordinates());
+                generator = entityMan.SpawnEntity("GridGravityGeneratorDummy", grid2.Comp!.ToCoordinates());
                 Assert.Multiple(() =>
                 {
                     Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));
@@ -74,8 +69,8 @@ namespace Content.IntegrationTests.Tests
                 Assert.Multiple(() =>
                 {
                     Assert.That(generatorComponent.GravityActive, Is.True);
-                    Assert.That(!entityMan.GetComponent<GravityComponent>(grid1Entity).EnabledVV);
-                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV);
+                    Assert.That(!entityMan.GetComponent<GravityComponent>(grid1).EnabledVV);
+                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2).EnabledVV);
                 });
 
                 // Re-enable needs power so it turns off again.
@@ -92,7 +87,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.Multiple(() =>
                 {
                     Assert.That(generatorComponent.GravityActive, Is.False);
-                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV, Is.False);
+                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2).EnabledVV, Is.False);
                 });
             });
 

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Systems;
 using Content.Tests;
@@ -39,8 +38,8 @@ public sealed class DockTest : ContentUnitTest
         await server.WaitAssertion(() =>
         {
             entManager.DeleteEntity(map.GridUid);
-            var grid1 = mapManager.CreateGrid(mapId);
-            var grid2 = mapManager.CreateGrid(mapId);
+            var grid1 = mapManager.CreateGridEntity(mapId);
+            var grid2 = mapManager.CreateGridEntity(mapId);
             var grid1Ent = grid1.Owner;
             var grid2Ent = grid2.Owner;
             var grid2Offset = new Vector2(50f, 50f);
@@ -57,7 +56,7 @@ public sealed class DockTest : ContentUnitTest
                 new(new Vector2i(0, 2), new Tile(1)),
             };
 
-            grid1.SetTiles(tiles1);
+            grid1.Comp.SetTiles(tiles1);
             var dock1 = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(grid1Ent, dock1Pos));
             var dock1Xform = entManager.GetComponent<TransformComponent>(dock1);
             dock1Xform.LocalRotation = dock1Angle;
@@ -71,7 +70,7 @@ public sealed class DockTest : ContentUnitTest
                 new(new Vector2i(1, 2), new Tile(1)),
             };
 
-            grid2.SetTiles(tiles2);
+            grid2.Comp.SetTiles(tiles2);
             var dock2 = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(grid2Ent, dock2Pos));
             var dock2Xform = entManager.GetComponent<TransformComponent>(dock2);
             dock2Xform.LocalRotation = dock2Angle;

@@ -37,16 +37,17 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, InternalsDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnGetInteractionVerbs(EntityUid uid, InternalsComponent component, GetVerbsEvent<InteractionVerb> args)
+    private void OnGetInteractionVerbs(Entity<InternalsComponent> internals, ref GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
+        var @event = args;
         InteractionVerb verb = new()
         {
             Act = () =>
             {
-                ToggleInternals(uid, args.User, false, component);
+                ToggleInternals((internals, internals), @event.User, false);
             },
             Message = Loc.GetString("action-description-internals-toggle"),
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
@@ -56,42 +57,42 @@ public sealed class InternalsSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    public void ToggleInternals(EntityUid uid, EntityUid user, bool force, InternalsComponent? internals = null)
+    public void ToggleInternals(Entity<InternalsComponent?> internals, EntityUid user, bool force)
     {
-        if (!Resolve(uid, ref internals, false))
+        if (!Resolve(internals, ref internals.Comp, false))
             return;
 
         // Toggle off if they're on
-        if (AreInternalsWorking(internals))
+        if (AreInternalsWorking(internals.Comp))
         {
-            if (force || user == uid)
+            if (force || user == internals.Owner)
             {
-                DisconnectTank(internals);
+                DisconnectTank((internals, internals.Comp));
                 return;
             }
 
-            StartToggleInternalsDoAfter(user, uid, internals);
+            StartToggleInternalsDoAfter(user, internals, internals.Comp);
             return;
         }
 
         // If they're not on then check if we have a mask to use
-        if (internals.BreathToolEntity == null)
+        if (internals.Comp.BreathToolEntity == null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, user);
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), internals, user);
             return;
         }
 
-        var tank = FindBestGasTank(uid, internals);
+        var tank = FindBestGasTank(internals, internals.Comp);
 
         if (tank == null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), uid, user);
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), internals, user);
             return;
         }
 
         if (!force)
         {
-            StartToggleInternalsDoAfter(user, uid, internals);
+            StartToggleInternalsDoAfter(user, internals, internals.Comp);
             return;
         }
 
@@ -114,12 +115,12 @@ public sealed class InternalsSystem : EntitySystem
         });
     }
 
-    private void OnDoAfter(EntityUid uid, InternalsComponent component, InternalsDoAfterEvent args)
+    private void OnDoAfter(Entity<InternalsComponent> internals, ref InternalsDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
 
-        ToggleInternals(uid, args.User, true, component);
+        ToggleInternals((internals, internals), args.User, true);
 
         args.Handled = true;
     }
@@ -171,16 +172,16 @@ public sealed class InternalsSystem : EntitySystem
         _alerts.ShowAlert(owner, AlertType.Internals, GetSeverity(component));
     }
 
-    public void DisconnectTank(InternalsComponent? component)
+    public void DisconnectTank(Entity<InternalsComponent>? internals)
     {
-        if (component == null)
+        if (internals is not { Comp: var component })
             return;
 
         if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
             _gasTank.DisconnectFromInternals((component.GasTankEntity.Value, tank));
 
         component.GasTankEntity = null;
-        _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
+        _alerts.ShowAlert(internals.Value, AlertType.Internals, GetSeverity(internals));
     }
 
     public bool TryConnectTank(Entity<InternalsComponent> ent, EntityUid tankEntity)
@@ -228,14 +229,14 @@ public sealed class InternalsSystem : EntitySystem
 
         if (_inventory.TryGetSlotEntity(internalsOwner, "back", out var backEntity, inventory, containerManager) &&
             TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
-            _gasTank.CanConnectToInternals(backGasTank))
+            _gasTank.CanConnectToInternals((backEntity.Value, backGasTank)))
         {
             return (backEntity.Value, backGasTank);
         }
 
         if (_inventory.TryGetSlotEntity(internalsOwner, "suitstorage", out var entity, inventory, containerManager) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&
-            _gasTank.CanConnectToInternals(gasTank))
+            _gasTank.CanConnectToInternals((entity.Value, gasTank)))
         {
             return (entity.Value, gasTank);
         }
@@ -244,7 +245,7 @@ public sealed class InternalsSystem : EntitySystem
 
         foreach (var hand in _hands.EnumerateHands(internalsOwner))
         {
-            if (TryComp(hand.HeldEntity, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
+            if (TryComp(hand.HeldEntity, out gasTank) && _gasTank.CanConnectToInternals((hand.HeldEntity.Value, gasTank)))
                 tanks.Add((hand.HeldEntity.Value, gasTank));
         }
 
@@ -260,7 +261,7 @@ public sealed class InternalsSystem : EntitySystem
 
             while (enumerator.MoveNext(out var container))
             {
-                if (TryComp(container.ContainedEntity, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
+                if (TryComp(container.ContainedEntity, out gasTank) && _gasTank.CanConnectToInternals((container.ContainedEntity.Value, gasTank)))
                     tanks.Add((container.ContainedEntity.Value, gasTank));
             }
 

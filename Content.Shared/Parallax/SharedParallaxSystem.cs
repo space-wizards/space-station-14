@@ -1,16 +1,27 @@
-using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
-
 namespace Content.Shared.Parallax;
 
 /// <summary>
 /// Handles per-map parallax in sim. Out of sim parallax is handled by ParallaxManager.
 /// </summary>
-public abstract class SharedParallaxSystem: EntitySystem
+public abstract class SharedParallaxSystem : EntitySystem
 {
-    [Serializable, NetSerializable]
-    protected sealed class ParallaxComponentState : ComponentState
+    [Dependency] private readonly IViewVariablesManager _vvManager = default!;
+
+    public override void Initialize()
     {
-        public string Parallax = string.Empty;
+        base.Initialize();
+
+        _vvManager.GetTypeHandler<ParallaxComponent>()
+            .AddPath(nameof(ParallaxComponent.Parallax), (uid, comp) => comp.Parallax, (uid, value, comp) =>
+            {
+                if (!Resolve(uid, ref comp) ||
+                    value.Equals(comp.Parallax))
+                {
+                    return;
+                }
+
+                comp.Parallax = value;
+                Dirty(uid, comp);
+            });
     }
 }

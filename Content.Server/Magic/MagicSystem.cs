@@ -199,7 +199,6 @@ public sealed class MagicSystem : EntitySystem
                 continue;
 
             var component = (Component) _compFact.GetComponent(name);
-            component.Owner = ev.Target;
             var temp = (object) component;
             _seriMan.CopyTo(data.Component, ref temp);
             EntityManager.AddComponent(ev.Target, (Component) temp!);

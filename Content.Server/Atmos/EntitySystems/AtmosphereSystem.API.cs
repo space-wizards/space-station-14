@@ -4,7 +4,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -268,7 +267,7 @@ public partial class AtmosphereSystem
         RaiseLocalEvent(gridUid, ref ev);
     }
 
-    public bool AddAtmosDevice(EntityUid gridUid, AtmosDeviceComponent device)
+    public bool AddAtmosDevice(EntityUid gridUid, Entity<AtmosDeviceComponent> device)
     {
         // TODO: check device is on grid
 
@@ -277,7 +276,7 @@ public partial class AtmosphereSystem
         return ev.Result;
     }
 
-    public bool RemoveAtmosDevice(EntityUid gridUid, AtmosDeviceComponent device)
+    public bool RemoveAtmosDevice(EntityUid gridUid, Entity<AtmosDeviceComponent> device)
     {
         // TODO: check device is on grid
 
@@ -352,8 +351,8 @@ public partial class AtmosphereSystem
         (EntityUid Grid, PipeNet PipeNet, bool Handled = false);
 
     [ByRefEvent] private record struct AddAtmosDeviceMethodEvent
-        (EntityUid Grid, AtmosDeviceComponent Device, bool Result = false, bool Handled = false);
+        (EntityUid Grid, Entity<AtmosDeviceComponent> Device, bool Result = false, bool Handled = false);
 
     [ByRefEvent] private record struct RemoveAtmosDeviceMethodEvent
-        (EntityUid Grid, AtmosDeviceComponent Device, bool Result = false, bool Handled = false);
+        (EntityUid Grid, Entity<AtmosDeviceComponent> Device, bool Result = false, bool Handled = false);
 }

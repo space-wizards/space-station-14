@@ -1,6 +1,5 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReagentEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
@@ -346,7 +345,7 @@ public sealed class DrinkSystem : EntitySystem
             return;
         }
 
-        var firstStomach = stomachs.FirstOrNull(stomach => _stomach.CanTransferSolution(stomach.Comp.Owner, drained));
+        var firstStomach = stomachs.FirstOrNull(stomach => _stomach.CanTransferSolution(stomach, drained));
 
         //All stomachs are full or can't handle whatever solution we have.
         if (firstStomach == null)
@@ -395,8 +394,7 @@ public sealed class DrinkSystem : EntitySystem
         _audio.PlayPvs(component.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f));
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
-        //TODO: Grab the stomach UIDs somehow without using Owner
-        _stomach.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
+        _stomach.TryTransferSolution(firstStomach.Value, drained, firstStomach);
 
         var comp = EnsureComp<ForensicsComponent>(uid);
         if (TryComp<DnaComponent>(args.Target, out var dna))

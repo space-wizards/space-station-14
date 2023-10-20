@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Humanoid.Components;
 using Content.Shared.Coordinates;
-using Content.Shared.Prototypes;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -43,9 +41,9 @@ namespace Content.IntegrationTests.Tests
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var grid = mapManager.CreateGridEntity(mapId);
                     // TODO: Fix this better in engine.
-                    grid.SetTile(Vector2i.Zero, new Tile(1));
+                    grid.Comp.SetTile(Vector2i.Zero, new Tile(1));
                     var coord = new EntityCoordinates(grid.Owner, 0, 0);
                     entityMan.SpawnEntity(protoId, coord);
                 }
@@ -162,11 +160,11 @@ namespace Content.IntegrationTests.Tests
                 foreach (var protoId in protoIds)
                 {
                     var mapId = mapManager.CreateMap();
-                    var grid = mapManager.CreateGrid(mapId);
+                    var grid = mapManager.CreateGridEntity(mapId);
                     var ent = sEntMan.SpawnEntity(protoId, new EntityCoordinates(grid.Owner, 0.5f, 0.5f));
                     foreach (var (_, component) in sEntMan.GetNetComponents(ent))
                     {
-                        sEntMan.Dirty(component);
+                        sEntMan.Dirty(component.Owner, component);
                     }
                 }
             });
@@ -375,7 +373,6 @@ namespace Content.IntegrationTests.Tests
                             continue;
                         }
 
-                        component.Owner = entity;
                         logmill.Debug($"Adding component: {name}");
 
                         Assert.DoesNotThrow(() =>

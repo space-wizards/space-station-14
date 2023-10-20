@@ -52,7 +52,7 @@ namespace Content.Tests.Shared.Alert
             Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.LowPressure, out var lowpressure));
             Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.HighPressure, out var highpressure));
 
-            EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowPressure, null, null);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(default, AlertType.LowPressure, null, null);
 
             var getty = new ComponentGetState();
             entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
@@ -62,7 +62,7 @@ namespace Content.Tests.Shared.Alert
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
-            EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.HighPressure, null, null);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(default, AlertType.HighPressure, null, null);
 
             // Lazy
             entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
@@ -70,7 +70,7 @@ namespace Content.Tests.Shared.Alert
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
-            EntitySystem.Get<AlertsSystem>().ClearAlertCategory(alertsComponent.Owner, AlertCategory.Pressure);
+            EntitySystem.Get<AlertsSystem>().ClearAlertCategory(default, AlertCategory.Pressure);
 
             entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
             alertState = (AlertsComponent.AlertsComponent_AutoState) getty.State!;

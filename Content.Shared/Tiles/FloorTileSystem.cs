@@ -114,13 +114,18 @@ public sealed class FloorTileSystem : EntitySystem
                 }
             }
         }
-        _mapManager.TryGetGrid(location.EntityId, out var mapGrid);
+
+        Entity<MapGridComponent> mapGrid = default;
+        if (TryComp<MapGridComponent>(location.EntityId, out var mapGridComponent))
+        {
+            mapGrid = (location.EntityId, mapGridComponent);
+        }
 
         foreach (var currentTile in component.OutputTiles)
         {
             var currentTileDefinition = (ContentTileDefinition) _tileDefinitionManager[currentTile];
 
-            if (mapGrid != null)
+            if (mapGrid.Comp != default)
             {
                 var gridUid = mapGrid.Owner;
                 var ev = new FloorTileAttemptEvent();
@@ -134,7 +139,7 @@ public sealed class FloorTileSystem : EntitySystem
                     return;
                 }
 
-                var tile = mapGrid.GetTileRef(location);
+                var tile = mapGrid.Comp.GetTileRef(location);
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
                 if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
@@ -156,12 +161,11 @@ public sealed class FloorTileSystem : EntitySystem
                 if (_netManager.IsClient)
                     return;
 
-                mapGrid = _mapManager.CreateGrid(locationMap.MapId);
-                var gridUid = mapGrid.Owner;
-                var gridXform = Transform(gridUid);
+                mapGrid = _mapManager.CreateGridEntity(locationMap.MapId);
+                var gridXform = Transform(mapGrid);
                 _transform.SetWorldPosition(gridXform, locationMap.Position);
-                location = new EntityCoordinates(gridUid, Vector2.Zero);
-                PlaceAt(args.User, gridUid, mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
+                location = new EntityCoordinates(mapGrid, Vector2.Zero);
+                PlaceAt(args.User, mapGrid, mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.Comp.TileSize / 2f);
                 return;
             }
         }

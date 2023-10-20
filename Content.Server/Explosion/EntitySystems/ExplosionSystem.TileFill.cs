@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared.Administration;
 using Content.Shared.Explosion;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -36,7 +37,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         if (!_explosionTypes.TryGetValue(typeID, out var typeIndex))
         {
-            Logger.Error("Attempted to spawn explosion using a prototype that was not defined during initialization. Explosion prototype hot-reload is not currently supported.");
+            Log.Error("Attempted to spawn explosion using a prototype that was not defined during initialization. Explosion prototype hot-reload is not currently supported.");
             return null;
         }
 
@@ -101,7 +102,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 airtightMap = new();
 
             var initialGridData = new ExplosionGridTileFlood(
-                _mapManager.GetGrid(epicentreGrid.Value),
+                (epicentreGrid.Value, Comp<MapGridComponent>(epicentreGrid.Value)),
                 airtightMap,
                 maxIntensity,
                 stepSize,
@@ -190,7 +191,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                         airtightMap = new();
 
                     data = new ExplosionGridTileFlood(
-                        _mapManager.GetGrid(grid),
+                        (grid, Comp<MapGridComponent>(grid)),
                         airtightMap,
                         maxIntensity,
                         stepSize,
@@ -275,7 +276,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         // diameter x diameter sized box, use a smaller box with radius sized sides:
         var box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
 
-        foreach (var grid in _mapManager.FindGridsIntersecting(epicenter.MapId, box))
+        var intersecting = new List<Entity<MapGridComponent>>();
+        _mapManager.FindGridsIntersecting(epicenter.MapId, box, ref intersecting);
+        foreach (var grid in intersecting)
         {
             if (TryComp(grid.Owner, out PhysicsComponent? physics) && physics.Mass > mass)
             {
@@ -295,7 +298,8 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         radius *= 4;
         box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
-        var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
+        var mapGrids = new List<Entity<MapGridComponent>>();
+        _mapManager.FindGridsIntersecting(epicenter.MapId, box, ref mapGrids);
         var grids = mapGrids.Select(x => x.Owner).ToList();
 
         if (referenceGrid != null)

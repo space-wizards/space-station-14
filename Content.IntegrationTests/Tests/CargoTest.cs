@@ -6,7 +6,6 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
@@ -104,7 +103,7 @@ public sealed class CargoTest
         await server.WaitAssertion(() =>
         {
             var mapId = testMap.MapId;
-            var grid = mapManager.CreateGrid(mapId);
+            var grid = mapManager.CreateGridEntity(mapId);
             var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()

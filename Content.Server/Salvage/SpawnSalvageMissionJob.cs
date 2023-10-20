@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
@@ -6,12 +5,10 @@ using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Structure;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Dataset;
@@ -24,8 +21,8 @@ using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
-using Content.Shared.Storage;
 using Robust.Shared.Collections;
+using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -108,12 +105,12 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             var biomeSystem = _entManager.System<BiomeSystem>();
             biomeSystem.SetTemplate(biome, _prototypeManager.Index<BiomeTemplatePrototype>(missionBiome.BiomePrototype));
             biomeSystem.SetSeed(biome, mission.Seed);
-            _entManager.Dirty(biome);
+            _entManager.Dirty(mapUid, biome);
 
             // Gravity
             var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
             gravity.Enabled = true;
-            _entManager.Dirty(gravity, metadata);
+            _entManager.Dirty(mapUid, gravity, metadata);
 
             // Atmos
             var air = _prototypeManager.Index<SalvageAirMod>(mission.Air);

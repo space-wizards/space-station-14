@@ -507,10 +507,10 @@ public sealed partial class AtmosphereSystem
         if (args.Handled)
             return;
 
-        if (!grid.Comp.AtmosDevices.Add((args.Device.Owner, args.Device)))
+        if (!grid.Comp.AtmosDevices.Add((args.Device, args.Device)))
             return;
 
-        args.Device.JoinedGrid = grid;
+        args.Device.Comp.JoinedGrid = grid;
         args.Handled = true;
         args.Result = true;
     }
@@ -521,10 +521,10 @@ public sealed partial class AtmosphereSystem
         if (args.Handled)
             return;
 
-        if (!component.AtmosDevices.Remove((args.Device.Owner, args.Device)))
+        if (!component.AtmosDevices.Remove((args.Device, args.Device)))
             return;
 
-        args.Device.JoinedGrid = null;
+        args.Device.Comp.JoinedGrid = null;
         args.Handled = true;
         args.Result = true;
     }

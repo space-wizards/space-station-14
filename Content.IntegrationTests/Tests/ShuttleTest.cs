@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -29,7 +28,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 var mapId = mapMan.CreateMap();
-                var grid = mapMan.CreateGrid(mapId);
+                var grid = mapMan.CreateGridEntity(mapId);
                 gridEnt = grid.Owner;
 
                 Assert.Multiple(() =>

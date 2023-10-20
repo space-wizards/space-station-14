@@ -15,7 +15,6 @@ using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SpriteComponent = Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
@@ -62,7 +61,7 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            (EntityUid Uid, MapGridComponent Grid)[] grids = null!;
+            (EntityUid Uid, Entity<MapGridComponent> Grid)[] grids = null!;
             var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
             var xformSystem = sEntityManager.System<SharedTransformSystem>();
 
@@ -76,7 +75,7 @@ namespace Content.MapRenderer.Painters
                 }
 
                 var mapId = sMapManager.GetAllMapIds().Last();
-                grids = sMapManager.GetAllMapGrids(mapId).Select(o => (o.Owner, o)).ToArray();
+                grids = sMapManager.GetAllGrids(mapId).Select(o => (o.Owner, o)).ToArray();
 
                 foreach (var (uid, _) in grids)
                 {
@@ -91,16 +90,16 @@ namespace Content.MapRenderer.Painters
             foreach (var (uid, grid) in grids)
             {
                 // Skip empty grids
-                if (grid.LocalAABB.IsEmpty())
+                if (grid.Comp.LocalAABB.IsEmpty())
                 {
                     Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
                     continue;
                 }
 
-                var tileXSize = grid.TileSize * TilePainter.TileImageSize;
-                var tileYSize = grid.TileSize * TilePainter.TileImageSize;
+                var tileXSize = grid.Comp.TileSize * TilePainter.TileImageSize;
+                var tileYSize = grid.Comp.TileSize * TilePainter.TileImageSize;
 
-                var bounds = grid.LocalAABB;
+                var bounds = grid.Comp.LocalAABB;
 
                 var left = bounds.Left;
                 var right = bounds.Right;

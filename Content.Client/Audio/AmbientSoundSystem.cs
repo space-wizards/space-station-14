@@ -224,7 +224,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
         // Prioritize far away & loud sounds.
         var importance = range * (ambientComp.Volume + 32);
-        state.SourceDict.GetOrNew(key).Add((importance, (ambientComp.Owner, ambientComp)));
+        state.SourceDict.GetOrNew(key).Add((importance, (value.Uid, ambientComp)));
         return true;
     }
 

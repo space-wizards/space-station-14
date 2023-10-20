@@ -36,16 +36,16 @@ namespace Content.IntegrationTests.Tests
                 var mapId = mapManager.CreateMap();
 
                 {
-                    var mapGrid = mapManager.CreateGrid(mapId);
+                    var mapGrid = mapManager.CreateGridEntity(mapId);
                     var mapGridEnt = mapGrid.Owner;
                     xformSystem.SetWorldPosition(mapGridEnt, new Vector2(10, 10));
-                    mapGrid.SetTile(new Vector2i(0, 0), new Tile(1, (TileRenderFlag) 1, 255));
+                    mapGrid.Comp.SetTile(new Vector2i(0, 0), new Tile(1, (TileRenderFlag) 1, 255));
                 }
                 {
-                    var mapGrid = mapManager.CreateGrid(mapId);
+                    var mapGrid = mapManager.CreateGridEntity(mapId);
                     var mapGridEnt = mapGrid.Owner;
                     xformSystem.SetWorldPosition(mapGridEnt, new Vector2(-8, -8));
-                    mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag) 1, 254));
+                    mapGrid.Comp.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag) 1, 254));
                 }
 
                 Assert.Multiple(() => mapLoader.SaveMap(mapId, mapPath));

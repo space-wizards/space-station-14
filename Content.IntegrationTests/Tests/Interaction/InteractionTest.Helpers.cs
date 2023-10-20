@@ -45,9 +45,9 @@ public abstract partial class InteractionTest
             if (!shouldSucceed)
                 return;
 
-            var comp = CEntMan.GetComponent<ConstructionGhostComponent>(clientTarget!.Value);
+            Assert.True(CEntMan.HasComponent<ConstructionGhostComponent>(clientTarget!.Value));
             ClientTarget = clientTarget;
-            ConstructionGhostId = comp.Owner.Id;
+            ConstructionGhostId = clientTarget.Value.Id;
         });
 
         await RunTicks(1);

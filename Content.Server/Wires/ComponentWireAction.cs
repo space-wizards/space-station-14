@@ -15,26 +15,26 @@ public abstract partial class ComponentWireAction<TComponent> : BaseWireAction w
             : StatusLightState.Off;
     }
 
-    public abstract bool Cut(EntityUid user, Wire wire, TComponent component);
-    public abstract bool Mend(EntityUid user, Wire wire, TComponent component);
-    public abstract void Pulse(EntityUid user, Wire wire, TComponent component);
+    public abstract bool Cut(EntityUid user, Wire wire, Entity<TComponent> entity);
+    public abstract bool Mend(EntityUid user, Wire wire, Entity<TComponent> entity);
+    public abstract void Pulse(EntityUid user, Wire wire, Entity<TComponent> entity);
 
     public override bool Cut(EntityUid user, Wire wire)
     {
         base.Cut(user, wire);
-        return EntityManager.TryGetComponent(wire.Owner, out TComponent? component) && Cut(user, wire, component);
+        return EntityManager.TryGetComponent(wire.Owner, out TComponent? component) && Cut(user, wire, (wire.Owner, component));
     }
 
     public override bool Mend(EntityUid user, Wire wire)
     {
         base.Mend(user, wire);
-        return EntityManager.TryGetComponent(wire.Owner, out TComponent? component) && Mend(user, wire, component);
+        return EntityManager.TryGetComponent(wire.Owner, out TComponent? component) && Mend(user, wire, (wire.Owner, component));
     }
 
     public override void Pulse(EntityUid user, Wire wire)
     {
         base.Pulse(user, wire);
         if (EntityManager.TryGetComponent(wire.Owner, out TComponent? component))
-            Pulse(user, wire, component);
+            Pulse(user, wire, (wire.Owner, component));
     }
 }

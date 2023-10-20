@@ -27,24 +27,24 @@ namespace Content.Server.Nutrition.EntitySystems
         /// <summary>
         /// Clicked with utensil
         /// </summary>
-        private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
+        private void OnAfterInteract(Entity<UtensilComponent> utensil, ref AfterInteractEvent ev)
         {
             if (ev.Target == null || !ev.CanReach)
                 return;
 
-            var result = TryUseUtensil(ev.User, ev.Target.Value, component);
+            var result = TryUseUtensil(ev.User, ev.Target.Value, utensil);
             ev.Handled = result.Handled;
         }
 
-        public (bool Success, bool Handled) TryUseUtensil(EntityUid user, EntityUid target, UtensilComponent component)
+        public (bool Success, bool Handled) TryUseUtensil(EntityUid user, EntityUid target, Entity<UtensilComponent> utensil)
         {
             if (!EntityManager.TryGetComponent(target, out FoodComponent? food))
                 return (false, true);
 
             //Prevents food usage with a wrong utensil
-            if ((food.Utensil & component.Types) == 0)
+            if ((food.Utensil & utensil.Comp.Types) == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", component.Owner)), user, user);
+                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", utensil)), user, user);
                 return (false, true);
             }
 
@@ -59,15 +59,12 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         /// <param name="uid">Utensil.</param>
         /// <param name="userUid">User of the utensil.</param>
-        public void TryBreak(EntityUid uid, EntityUid userUid, UtensilComponent? component = null)
+        public void TryBreak(Entity<UtensilComponent> utensil, EntityUid userUid)
         {
-            if (!Resolve(uid, ref component))
-                return;
-
-            if (_robustRandom.Prob(component.BreakChance))
+            if (_robustRandom.Prob(utensil.Comp.BreakChance))
             {
-                SoundSystem.Play(component.BreakSound.GetSound(), Filter.Pvs(userUid), userUid, AudioParams.Default.WithVolume(-2f));
-                EntityManager.DeleteEntity(component.Owner);
+                SoundSystem.Play(utensil.Comp.BreakSound.GetSound(), Filter.Pvs(userUid), userUid, AudioParams.Default.WithVolume(-2f));
+                EntityManager.DeleteEntity(utensil);
             }
         }
     }

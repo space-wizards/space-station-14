@@ -199,8 +199,6 @@ public sealed partial class ArtifactSystem
             }
 
             var comp = (Component) _componentFactory.GetComponent(reg);
-            comp.Owner = uid;
-
             var temp = (object) comp;
             _serialization.CopyTo(entry.Component, ref temp);
 
@@ -235,7 +233,6 @@ public sealed partial class ArtifactSystem
             if (entityPrototype?.Components.TryGetComponent(name, out var entry) ?? false)
             {
                 var comp = (Component) _componentFactory.GetComponent(name);
-                comp.Owner = uid;
                 var temp = (object) comp;
                 _serialization.CopyTo(entry, ref temp);
                 EntityManager.AddComponent(uid, (Component) temp!, true);

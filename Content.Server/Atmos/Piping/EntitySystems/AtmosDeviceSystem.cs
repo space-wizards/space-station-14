@@ -36,7 +36,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                 return;
 
             // Attempt to add device to a grid atmosphere.
-            bool onGrid = (transform.GridUid != null) && _atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component);
+            bool onGrid = (transform.GridUid != null) && _atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, ent);
 
             if (!onGrid && component.JoinSystem)
             {
@@ -52,7 +52,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         {
             var component = ent.Comp;
             // Try to remove the component from an atmosphere, and if not
-            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component.JoinedGrid.Value, component))
+            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component.JoinedGrid.Value, ent))
             {
                 // The grid might have been removed but not us... This usually shouldn't happen.
                 component.JoinedGrid = null;

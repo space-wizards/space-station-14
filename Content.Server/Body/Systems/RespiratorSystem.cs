@@ -110,11 +110,11 @@ namespace Content.Server.Body.Systems
 
             var lungRatio = 1.0f / organs.Count;
             var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
-            foreach (var (lung, _) in organs)
+            foreach (var (owner, lung, _) in organs)
             {
                 // Merge doesn't remove gas from the giver.
                 _atmosSys.Merge(lung.Air, gas);
-                _lungSystem.GasToReagent(lung.Owner, lung);
+                _lungSystem.GasToReagent((owner, lung));
             }
         }
 
@@ -128,7 +128,7 @@ namespace Content.Server.Body.Systems
             // exhale gas
 
             var ev = new ExhaleLocationEvent();
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ev);
 
             if (ev.Gas == null)
             {
@@ -140,7 +140,7 @@ namespace Content.Server.Body.Systems
             }
 
             var outGas = new GasMixture(ev.Gas.Volume);
-            foreach (var (lung, _) in organs)
+            foreach (var (_, lung, _) in organs)
             {
                 _atmosSys.Merge(outGas, lung.Air);
                 lung.Air.Clear();

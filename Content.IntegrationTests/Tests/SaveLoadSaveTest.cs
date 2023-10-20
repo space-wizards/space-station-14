@@ -33,7 +33,7 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapId0 = mapManager.CreateMap();
                 // TODO: Properly find the "main" station grid.
-                var grid0 = mapManager.CreateGrid(mapId0);
+                var grid0 = mapManager.CreateGridEntity(mapId0);
                 mapLoader.Save(grid0.Owner, "save load save 1.yml");
                 var mapId1 = mapManager.CreateMap();
                 EntityUid grid1 = default!;

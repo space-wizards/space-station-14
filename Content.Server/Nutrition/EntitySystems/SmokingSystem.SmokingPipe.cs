@@ -1,8 +1,8 @@
 using Content.Server.Nutrition.Components;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 
@@ -25,12 +25,12 @@ namespace Content.Server.Nutrition.EntitySystems
             _itemSlotsSystem.AddItemSlot(uid, SmokingPipeComponent.BowlSlotId, pipe.BowlSlot);
         }
 
-        private void OnPipeInteractUsingEvent(EntityUid uid, SmokingPipeComponent component, InteractUsingEvent args)
+        private void OnPipeInteractUsingEvent(Entity<SmokingPipeComponent> pipe, ref InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out SmokableComponent? smokable))
+            if (!EntityManager.TryGetComponent(pipe, out SmokableComponent? smokable))
                 return;
 
             if (smokable.State != SmokableState.Unlit)
@@ -42,17 +42,17 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            if (TryTransferReagents(component, smokable))
-                SetSmokableState(uid, SmokableState.Lit, smokable);
+            if (TryTransferReagents((pipe, pipe, smokable)))
+                SetSmokableState(pipe, SmokableState.Lit, smokable);
             args.Handled = true;
         }
 
-        public void OnPipeAfterInteract(EntityUid uid, SmokingPipeComponent component, AfterInteractEvent args)
+        public void OnPipeAfterInteract(Entity<SmokingPipeComponent> pipe, ref AfterInteractEvent args)
         {
             var targetEntity = args.Target;
             if (targetEntity == null ||
                 !args.CanReach ||
-                !EntityManager.TryGetComponent(uid, out SmokableComponent? smokable) ||
+                !EntityManager.TryGetComponent(pipe, out SmokableComponent? smokable) ||
                 smokable.State == SmokableState.Lit)
                 return;
 
@@ -62,37 +62,38 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            if(TryTransferReagents(component, smokable))
-                SetSmokableState(uid, SmokableState.Lit, smokable);
+            if(TryTransferReagents((pipe, pipe, smokable)))
+                SetSmokableState(pipe, SmokableState.Lit, smokable);
             args.Handled = true;
         }
 
-        private void OnPipeSolutionEmptyEvent(EntityUid uid, SmokingPipeComponent component, SmokableSolutionEmptyEvent args)
+        private void OnPipeSolutionEmptyEvent(Entity<SmokingPipeComponent> pipe, ref SmokableSolutionEmptyEvent args)
         {
-            _itemSlotsSystem.SetLock(component.Owner, component.BowlSlot, false);
-            SetSmokableState(uid, SmokableState.Unlit);
+            _itemSlotsSystem.SetLock(pipe, pipe.Comp.BowlSlot, false);
+            SetSmokableState(pipe, SmokableState.Unlit);
         }
 
         // Convert smokable item into reagents to be smoked
-        private bool TryTransferReagents(SmokingPipeComponent component, SmokableComponent smokable)
+        private bool TryTransferReagents(Entity<SmokingPipeComponent, SmokableComponent> pipe)
         {
+            var (_, component, smokable) = pipe;
             if (component.BowlSlot.Item == null)
                 return false;
 
-            EntityUid contents = component.BowlSlot.Item.Value;
+            var contents = component.BowlSlot.Item.Value;
 
             if (!TryComp<SolutionContainerManagerComponent>(contents, out var reagents) ||
-                !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Solution, out var pipeSolution))
+                !_solutionContainerSystem.TryGetSolution(pipe, smokable.Solution, out var pipeSolution))
                 return false;
 
             foreach (var reagentSolution in reagents.Solutions)
             {
-                _solutionContainerSystem.TryAddSolution(smokable.Owner, pipeSolution, reagentSolution.Value);
+                _solutionContainerSystem.TryAddSolution(pipe, pipeSolution, reagentSolution.Value);
             }
 
             EntityManager.DeleteEntity(contents);
 
-            _itemSlotsSystem.SetLock(component.Owner, component.BowlSlot, true); //no inserting more until current runs out
+            _itemSlotsSystem.SetLock(pipe, component.BowlSlot, true); //no inserting more until current runs out
 
             return true;
         }

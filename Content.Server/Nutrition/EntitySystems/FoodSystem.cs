@@ -220,17 +220,15 @@ public sealed class FoodSystem : EntitySystem
 
         var split = _solutionContainer.SplitSolution(uid, solution, transferAmount);
 
-        //TODO: Get the stomach UID somehow without nabbing owner
         // Get the stomach with the highest available solution volume
         var highestAvailable = FixedPoint2.Zero;
-        StomachComponent? stomachToUse = null;
-        foreach (var (stomach, _) in stomachs)
+        Entity<StomachComponent, OrganComponent>? stomachToUse = null;
+        foreach (var stomach in stomachs)
         {
-            var owner = stomach.Owner;
-            if (!_stomach.CanTransferSolution(owner, split))
+            if (!_stomach.CanTransferSolution(stomach, split))
                 continue;
 
-            if (!_solutionContainer.TryGetSolution(owner, StomachSystem.DefaultSolutionName,
+            if (!_solutionContainer.TryGetSolution(stomach, StomachSystem.DefaultSolutionName,
                     out var stomachSol))
                 continue;
 
@@ -250,7 +248,7 @@ public sealed class FoodSystem : EntitySystem
         }
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
-        _stomach.TryTransferSolution(stomachToUse.Owner, split, stomachToUse);
+        _stomach.TryTransferSolution(stomachToUse.Value, split, stomachToUse);
 
         var flavors = args.FlavorMessage;
 
@@ -381,7 +379,7 @@ public sealed class FoodSystem : EntitySystem
     ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent.SpecialDigestible"/> that whitelists
     ///     this <paramref name="food"/> (or if they even have enough stomachs in the first place).
     /// </summary>
-    private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<(StomachComponent, OrganComponent)> stomachs)
+    private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<Entity<StomachComponent, OrganComponent>> stomachs)
     {
         var digestible = true;
 
@@ -390,7 +388,7 @@ public sealed class FoodSystem : EntitySystem
             return false;
 
         // Run through the mobs' stomachs
-        foreach (var (comp, _) in stomachs)
+        foreach (var (_, comp, _) in stomachs)
         {
             // Find a stomach with a SpecialDigestible
             if (comp.SpecialDigestible == null)
@@ -409,9 +407,9 @@ public sealed class FoodSystem : EntitySystem
     }
 
     private bool TryGetRequiredUtensils(EntityUid user, FoodComponent component,
-        out List<EntityUid> utensils, HandsComponent? hands = null)
+        out List<Entity<UtensilComponent>> utensils, HandsComponent? hands = null)
     {
-        utensils = new List<EntityUid>();
+        utensils = new List<Entity<UtensilComponent>>();
 
         if (component.Utensil != UtensilType.None)
             return true;
@@ -432,7 +430,7 @@ public sealed class FoodSystem : EntitySystem
             {
                 // Add to used list
                 usedTypes |= utensil.Types;
-                utensils.Add(item);
+                utensils.Add((item, utensil));
             }
         }
 

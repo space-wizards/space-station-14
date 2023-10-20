@@ -44,7 +44,6 @@ public sealed class TraitSystem : EntitySystem
                     continue;
 
                 var comp = (Component) _serializationManager.CreateCopy(entry.Component, notNullableOverride: true);
-                comp.Owner = args.Mob;
                 EntityManager.AddComponent(args.Mob, comp);
             }
 

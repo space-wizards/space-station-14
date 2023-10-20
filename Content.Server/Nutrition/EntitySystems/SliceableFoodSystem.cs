@@ -27,19 +27,19 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<SliceableFoodComponent, ComponentStartup>(OnComponentStartup);
         }
 
-        private void OnInteractUsing(EntityUid uid, SliceableFoodComponent component, InteractUsingEvent args)
+        private void OnInteractUsing(Entity<SliceableFoodComponent> food, ref InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (TrySliceFood(uid, args.User, args.Used, component))
+            if (TrySliceFood((food, food, null, null), args.User, args.Used))
                 args.Handled = true;
         }
 
-        private bool TrySliceFood(EntityUid uid, EntityUid user, EntityUid usedItem,
-            SliceableFoodComponent? component = null, FoodComponent? food = null, TransformComponent? transform = null)
+        private bool TrySliceFood(Entity<SliceableFoodComponent?, FoodComponent?, TransformComponent?> sliceableEnt, EntityUid user, EntityUid usedItem)
         {
-            if (!Resolve(uid, ref component, ref food, ref transform) ||
+            var (uid, component, food, transform) = sliceableEnt;
+            if (!Resolve(sliceableEnt, ref component, ref food, ref transform) ||
                 string.IsNullOrEmpty(component.Slice))
             {
                 return false;
@@ -63,7 +63,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // Fill new slice
             FillSlice(sliceUid, lostSolution);
 
-            var inCont = _containerSystem.IsEntityInContainer(component.Owner);
+            var inCont = _containerSystem.IsEntityInContainer(sliceableEnt);
             if (inCont)
             {
                 _handsSystem.PickupOrDrop(user, sliceUid);

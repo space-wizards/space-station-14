@@ -1,4 +1,3 @@
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -19,34 +18,34 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<TrashOnEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        public void OnStartup(EntityUid uid, TrashOnEmptyComponent component, ComponentStartup args)
+        public void OnStartup(Entity<TrashOnEmptyComponent> ent, ref ComponentStartup args)
         {
-            CheckSolutions(component);
+            CheckSolutions(ent);
         }
 
-        public void OnSolutionChange(EntityUid uid, TrashOnEmptyComponent component, SolutionChangedEvent args)
+        public void OnSolutionChange(Entity<TrashOnEmptyComponent> ent, ref SolutionChangedEvent args)
         {
-            CheckSolutions(component);
+            CheckSolutions(ent);
         }
 
-        public void CheckSolutions(TrashOnEmptyComponent component)
+        public void CheckSolutions(Entity<TrashOnEmptyComponent> ent)
         {
-            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>((component).Owner))
+            if (!HasComp<SolutionContainerManagerComponent>(ent))
                 return;
 
-            if (_solutionContainerSystem.TryGetSolution(component.Owner, component.Solution, out var solution))
-                UpdateTags(component, solution);
+            if (_solutionContainerSystem.TryGetSolution(ent, ent.Comp.Solution, out var solution))
+                UpdateTags(ent, solution);
         }
 
-        public void UpdateTags(TrashOnEmptyComponent component, Solution solution)
+        public void UpdateTags(Entity<TrashOnEmptyComponent> ent, Solution solution)
         {
             if (solution.Volume <= 0)
             {
-                _tagSystem.AddTag(component.Owner, "Trash");
+                _tagSystem.AddTag(ent, "Trash");
                 return;
             }
-            if (_tagSystem.HasTag(component.Owner, "Trash"))
-                _tagSystem.RemoveTag(component.Owner, "Trash");
+            if (_tagSystem.HasTag(ent, "Trash"))
+                _tagSystem.RemoveTag(ent, "Trash");
         }
     }
 }

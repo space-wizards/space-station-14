@@ -7,9 +7,7 @@ using Content.Server.Parallax;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
-using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
-using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -67,12 +65,12 @@ public sealed class PlanetCommand : IConsoleCommand
         var biomeSystem = _entManager.System<BiomeSystem>();
         biomeSystem.SetSeed(biome, _random.Next());
         biomeSystem.SetTemplate(biome, biomeTemplate);
-        _entManager.Dirty(biome);
+        _entManager.Dirty(mapUid, biome);
 
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
         gravity.Enabled = true;
         gravity.Inherent = true;
-        _entManager.Dirty(gravity, metadata);
+        _entManager.Dirty(mapUid, gravity, metadata);
 
         // Day lighting
         // Daylight: #D8B059
@@ -82,7 +80,7 @@ public sealed class PlanetCommand : IConsoleCommand
 
         var light = _entManager.EnsureComponent<MapLightComponent>(mapUid);
         light.AmbientLightColor = Color.FromHex("#D8B059");
-        _entManager.Dirty(light, metadata);
+        _entManager.Dirty(mapUid, light, metadata);
 
         // Atmos
         var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);

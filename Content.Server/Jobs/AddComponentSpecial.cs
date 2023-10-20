@@ -23,8 +23,6 @@ namespace Content.Server.Jobs
             foreach (var (name, data) in Components)
             {
                 var component = (Component) factory.GetComponent(name);
-                component.Owner = mob;
-
                 var temp = (object) component;
                 serializationManager.CopyTo(data.Component, ref temp);
                 entityManager.AddComponent(mob, (Component) temp!, true);
