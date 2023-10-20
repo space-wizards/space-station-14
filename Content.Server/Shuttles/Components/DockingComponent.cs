@@ -19,12 +19,6 @@ namespace Content.Server.Shuttles.Components
         public override bool Docked => DockedWith != null;
 
         /// <summary>
-        /// Is true when fully undocked, and false while in progress of undocking
-        /// </summary>
-        [ViewVariables]
-        public bool Undocked = true;
-
-        /// <summary>
         /// Color that gets shown on the radar screen.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("radarColor")]

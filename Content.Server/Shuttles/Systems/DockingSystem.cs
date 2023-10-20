@@ -394,9 +394,6 @@ namespace Content.Server.Shuttles.Systems
                 GridBUid = gridB,
             };
 
-            dockA.Undocked = false;
-            dockB.Undocked = false;
-
             RaiseLocalEvent(dockAUid, msg);
             RaiseLocalEvent(dockBUid, msg);
             RaiseLocalEvent(msg);

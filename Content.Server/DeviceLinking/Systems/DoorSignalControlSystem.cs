@@ -76,12 +76,6 @@ namespace Content.Server.DeviceLinking.Systems
                     {
                         return;
                     }
-
-                    if (!dock.Undocked)
-                    {
-                        dock.Undocked = true;
-                        return;
-                    }
                 }
 
                 // If this is a shuttle dock, if docked, ignore (un)bolt signals
