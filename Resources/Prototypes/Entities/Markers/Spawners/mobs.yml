@@ -721,3 +721,18 @@
       - MobUraniumCrab
       - MobIronCrab
       - MobQuartzCrab
+
+- type: entity
+  name: White spindle Spawner
+  id: SpawnMobWhiteSpindle
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: white
+      sprite: Mobs/Animals/white_spider.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWhiteSpindleSpider
+
