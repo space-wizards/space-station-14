@@ -391,6 +391,9 @@ namespace Content.Server.Shuttles.Systems
                 GridBUid = gridB,
             };
 
+            dockA.Undocked = false;
+            dockB.Undocked = false;
+
             RaiseLocalEvent(dockAUid, msg);
             RaiseLocalEvent(dockBUid, msg);
             RaiseLocalEvent(msg);
@@ -401,7 +404,9 @@ namespace Content.Server.Shuttles.Systems
             if (!dockA.Enabled ||
                 !dockB.Enabled ||
                 dockA.DockedWith != null ||
-                dockB.DockedWith != null)
+                dockB.DockedWith != null ||
+                _bolts.IsBolted(dockAUid) ||
+                _bolts.IsBolted(dockBUid))
             {
                 return false;
             }

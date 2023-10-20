@@ -1,6 +1,7 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.Doors.Systems;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
@@ -67,6 +68,30 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (!TryComp<DoorBoltComponent>(uid, out var bolts))
                     return;
+
+                // Ignore signal if the sender is an external dock and if it is docked with something
+                if (TryComp<DockingComponent>(args.Trigger, out var dock))
+                {
+                    if (dock.Docked)
+                    {
+                        return;
+                    }
+
+                    if (!dock.Undocked)
+                    {
+                        dock.Undocked = true;
+                        return;
+                    }
+                }
+
+                // If this is a shuttle dock, if docked, ignore (un)bolt signals
+                if (TryComp<DockingComponent>(uid, out var thisdock))
+                {
+                    if (thisdock.Docked)
+                    {
+                        return;
+                    }
+                }
 
                 // if its a pulse toggle, otherwise set bolts to high/low
                 bool bolt;
