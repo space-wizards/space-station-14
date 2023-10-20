@@ -72,8 +72,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<StationEmergencyShuttleComponent, ComponentStartup>(OnStationStartup);
-        SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcomShutdown);
-        SubscribeLocalEvent<StationCentcommComponent, ComponentInit>(OnCentcomInit);
+        SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcommShutdown);
+        SubscribeLocalEvent<StationCentcommComponent, ComponentInit>(OnCentcommmInit);
         SubscribeNetworkEvent<EmergencyShuttleRequestPositionMessage>(OnShuttleRequestPosition);
         InitializeEmergencyConsole();
     }
@@ -85,7 +85,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         _roundEndCancelToken = new CancellationTokenSource();
     }
 
-    private void OnCentcomShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)
+    private void OnCentcommShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)
     {
         QueueDel(component.Entity);
         component.Entity = EntityUid.Invalid;
@@ -119,7 +119,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out _))
         {
-            RemCompDeferred<StationmCentcomComponent>(uid);
+            RemCompDeferred<StationCentcommComponent>(uid);
         }
     }
 
@@ -222,7 +222,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
     }
 
-    private void OnCentcomInit(EntityUid uid, StationCentcommComponent component, ComponentInit args)
+    private void OnCentcommInit(EntityUid uid, StationCentcommComponent component, ComponentInit args)
     {
         if (!_emergencyShuttleEnabled)
             return;
@@ -289,7 +289,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
     }
 
-    private void AddCentcom(StationCentcommComponent component)
+    private void AddCentcomm(StationCentcommComponent component)
     {
         // Check for existing centcomms and just point to that
         var query = AllEntityQuery<StationCentcommComponent>();
