@@ -7,7 +7,7 @@ using Content.Shared.Mobs.Systems;
 namespace Content.Server.Tesla.EntitySystems;
 
 /// <summary>
-/// The system is responsible for switching the status of the active lightning target
+/// A system that handles lightning strikes to different entities
 /// </summary>
 public sealed class LightningTargetSystem : EntitySystem
 {
@@ -22,17 +22,17 @@ public sealed class LightningTargetSystem : EntitySystem
 
     private void OnHittedByLightning(EntityUid uid, LightningTargetComponent component, ref HittedByLightningEvent args)
     {
-        Log.Debug("јй, мен€ ударила молни€");
-        if (!component.LightningExplode)
-            return;
-        Log.Debug("придетс€ взрыватьс€");
-        _explosionSystem.QueueExplosion(
-            uid,
-            component.ExplosionPrototype,
-            component.TotalIntensity,
-            component.Dropoff,
-            component.MaxTileIntensity
-            );
-        Log.Debug("взорвалс€");
+        //Log.Debug("јй, мен€ ударила молни€");
+        //if (!component.LightningExplode)
+        //    return;
+        //Log.Debug("придетс€ взрыватьс€");
+        //_explosionSystem.QueueExplosion(
+        //    uid,
+        //    component.ExplosionPrototype,
+        //    component.TotalIntensity,
+        //    component.Dropoff,
+        //    component.MaxTileIntensity
+        //    );
+        //Log.Debug("взорвалс€");
     }
 }
