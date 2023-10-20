@@ -17,7 +17,7 @@ ent-CrateFunInstrumentsKeyedPercussion = Keyed/Percussion instrument ensemble cr
     .desc = Hit some keys with some sticks or your hands, with this Keyed and Percussion instrument ensemble crate.
 
 ent-CrateFunInstrumentsSpecial = Special instrument collector's crate
-    .desc = Create some noise with this special collection of arguably-instruments! Centcom is not responsible for any trauma caused by the contents.
+    .desc = Create some noise with this special collection of arguably-instruments! Centcomm is not responsible for any trauma caused by the contents.
 
 ent-CrateFunArtSupplies = Art supplies
     .desc = Make some happy little accidents with lots of crayons!

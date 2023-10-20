@@ -1,4 +1,4 @@
-﻿job-supervisors-centcom = CentCom official
+job-supervisors-centcomm = CentComm official
 job-supervisors-captain = the captain
 job-supervisors-hop = the head of personnel
 job-supervisors-hos = the head of security
