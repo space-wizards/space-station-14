@@ -234,7 +234,7 @@ namespace Content.Server.RoundEnd
         /// <param name="textAnnounce"></param>
         public void DoRoundEndBehavior(RoundEndBehavior behavior,
             TimeSpan time,
-            string sender = "comms-console-announcement-title-centcom",
+            string sender = "comms-console-announcement-title-centcomm",
             string textCall = "round-end-system-shuttle-called-announcement",
             string textAnnounce = "round-end-system-shuttle-already-called-announcement")
         {

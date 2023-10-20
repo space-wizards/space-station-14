@@ -361,7 +361,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         var nukeQuery = AllEntityQuery<NukeComponent, TransformComponent>();
-        var centcoms = _emergency.GetCentcomMaps();
+        var centcomms = _emergency.GetCentcommMaps();
 
         while (nukeQuery.MoveNext(out var nuke, out var nukeTransform))
         {
@@ -369,9 +369,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 continue;
 
             // UH OH
-            if (centcoms.Contains(nukeTransform.MapID))
+            if (centcomms.Contains(nukeTransform.MapID))
             {
-                component.WinConditions.Add(WinCondition.NukeActiveAtCentCom);
+                component.WinConditions.Add(WinCondition.NukeActiveAtCentComm);
                 SetWinType(uid, WinType.OpsMajor, component);
                 return;
             }
@@ -428,13 +428,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         component.WinConditions.Add(WinCondition.SomeNukiesAlive);
 
-        var diskAtCentCom = false;
+        var diskAtCentComm = false;
         var diskQuery = AllEntityQuery<NukeDiskComponent, TransformComponent>();
 
         while (diskQuery.MoveNext(out _, out var transform))
         {
             var diskMapId = transform.MapID;
-            diskAtCentCom = centcoms.Contains(diskMapId);
+            diskAtCentComm = centcomms.Contains(diskMapId);
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             // This is fine for now, because we can assume a single station in base SS14.
@@ -443,16 +443,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         // If the disk is currently at Central Command, the crew wins - just slightly.
         // This also implies that some nuclear operatives have died.
-        if (diskAtCentCom)
+        if (diskAtCentComm)
         {
             SetWinType(uid, WinType.CrewMinor, component);
-            component.WinConditions.Add(WinCondition.NukeDiskOnCentCom);
+            component.WinConditions.Add(WinCondition.NukeDiskOnCentComm);
         }
         // Otherwise, the nuke ops win.
         else
         {
             SetWinType(uid, WinType.OpsMinor, component);
-            component.WinConditions.Add(WinCondition.NukeDiskNotOnCentCom);
+            component.WinConditions.Add(WinCondition.NukeDiskNotOnCentComm);
         }
     }
 

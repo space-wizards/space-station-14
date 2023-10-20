@@ -50,7 +50,7 @@ public sealed partial class EmergencyShuttleSystem
     public float MaximumTransitTime { get; private set; }
 
     /// <summary>
-    /// How long it will take for the emergency shuttle to arrive at CentCom.
+    /// How long it will take for the emergency shuttle to arrive at CentComm.
     /// </summary>
     public float TransitTime { get; private set; }
 
@@ -66,12 +66,12 @@ public sealed partial class EmergencyShuttleSystem
     private static readonly Color DangerColor = Color.Red;
 
     /// <summary>
-    /// Have the emergency shuttles been authorised to launch at CentCom?
+    /// Have the emergency shuttles been authorised to launch at CentComm?
     /// </summary>
     private bool _launchedShuttles;
 
     /// <summary>
-    /// Have the emergency shuttles left for CentCom?
+    /// Have the emergency shuttles left for CentComm?
     /// </summary>
     public bool ShuttlesLeft;
 
@@ -162,23 +162,23 @@ public sealed partial class EmergencyShuttleSystem
             while (dataQuery.MoveNext(out var stationUid, out var comp))
             {
                 if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle) ||
-                    !TryComp<StationCentcomComponent>(stationUid, out var centcom))
+                    !TryComp<StationCentcommComponent>(stationUid, out var centcomm))
                 {
                     continue;
                 }
 
-                if (Deleted(centcom.Entity))
+                if (Deleted(centcomm.Entity))
                 {
                     // TODO: Need to get non-overlapping positions.
                     _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                         new EntityCoordinates(
-                            _mapManager.GetMapEntityId(centcom.MapId),
+                            _mapManager.GetMapEntityId(centcomm.MapId),
                             _random.NextVector2(1000f)), _consoleAccumulator, TransitTime);
                 }
                 else
                 {
                     _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                        centcom.Entity, _consoleAccumulator, TransitTime, true);
+                        centcomm.Entity, _consoleAccumulator, TransitTime, true);
                 }
             }
 
@@ -198,15 +198,15 @@ public sealed partial class EmergencyShuttleSystem
         while (podLaunchQuery.MoveNext(out var uid, out var pod, out var shuttle))
         {
             var stationUid = _station.GetOwningStation(uid);
-
-            if (!TryComp<StationCentcomComponent>(stationUid, out var centcom) ||
-                Deleted(centcom.Entity) || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
+            
+            if (!TryComp<StationCentcommComponent>(stationUid, out var centcomm) ||
+                Deleted(centcomm.Entity) || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
             {
                 continue;
             }
 
             // Don't dock them. If you do end up doing this then stagger launch.
-            _shuttle.FTLTravel(uid, shuttle, centcom.Entity, hyperspaceTime: TransitTime);
+            _shuttle.FTLTravel(uid, shuttle, centcomm.Entity, hyperspaceTime: TransitTime);
             RemCompDeferred<EscapePodComponent>(uid);
         }
 
@@ -222,7 +222,7 @@ public sealed partial class EmergencyShuttleSystem
         // All the others.
         if (_consoleAccumulator < minTime)
         {
-            var query = AllEntityQuery<StationCentcomComponent>();
+            var query = AllEntityQuery<StationCentcommComponent>();
 
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
             while (query.MoveNext(out var comp))

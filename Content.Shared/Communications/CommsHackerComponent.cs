@@ -36,7 +36,7 @@ public sealed class NinjaHackingThreatPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// Locale id for the announcement to be made from CentCom.
+    /// Locale id for the announcement to be made from CentComm.
     /// </summary>
     [DataField(required: true)]
     public LocId Announcement;

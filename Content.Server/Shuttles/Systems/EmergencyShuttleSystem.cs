@@ -33,7 +33,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class EmergencyShuttleSystem : EntitySystem
 {
     /*
-     * Handles the escape shuttle + CentCom.
+     * Handles the escape shuttle + CentComm.
      */
 
     [Dependency] private readonly IAdminLogManager _logger = default!;
@@ -72,8 +72,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<StationEmergencyShuttleComponent, ComponentStartup>(OnStationStartup);
-        SubscribeLocalEvent<StationCentcomComponent, ComponentShutdown>(OnCentcomShutdown);
-        SubscribeLocalEvent<StationCentcomComponent, ComponentInit>(OnCentcomInit);
+        SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcomShutdown);
+        SubscribeLocalEvent<StationCentcommComponent, ComponentInit>(OnCentcomInit);
         SubscribeNetworkEvent<EmergencyShuttleRequestPositionMessage>(OnShuttleRequestPosition);
         InitializeEmergencyConsole();
     }
@@ -85,7 +85,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         _roundEndCancelToken = new CancellationTokenSource();
     }
 
-    private void OnCentcomShutdown(EntityUid uid, StationCentcomComponent component, ComponentShutdown args)
+    private void OnCentcomShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)
     {
         QueueDel(component.Entity);
         component.Entity = EntityUid.Invalid;
@@ -115,11 +115,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     private void CleanupEmergencyShuttle()
     {
-        var query = AllEntityQuery<StationCentcomComponent>();
+        var query = AllEntityQuery<StationCentcommComponent>();
 
         while (query.MoveNext(out var uid, out _))
         {
-            RemCompDeferred<StationCentcomComponent>(uid);
+            RemCompDeferred<StationmCentcomComponent>(uid);
         }
     }
 
@@ -222,7 +222,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
     }
 
-    private void OnCentcomInit(EntityUid uid, StationCentcomComponent component, ComponentInit args)
+    private void OnCentcomInit(EntityUid uid, StationCentcommComponent component, ComponentInit args)
     {
         if (!_emergencyShuttleEnabled)
             return;
@@ -234,7 +234,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
-        AddCentcom(component);
+        AddCentcomm(component);
     }
 
     private void OnStationStartup(EntityUid uid, StationEmergencyShuttleComponent component, ComponentStartup args)
@@ -274,11 +274,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         if (!_emergencyShuttleEnabled)
             return;
 
-        var centcomQuery = AllEntityQuery<StationCentcomComponent>();
-
-        while (centcomQuery.MoveNext(out var centcom))
+        var centcommQuery = AllEntityQuery<StationCentcommComponent>();
+        
+        while (centcommQuery.MoveNext(out var centcomm))
         {
-            AddCentcom(centcom);
+            AddCentcomm(centcomm);
         }
 
         var query = AllEntityQuery<StationEmergencyShuttleComponent>();
@@ -289,10 +289,10 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
     }
 
-    private void AddCentcom(StationCentcomComponent component)
+    private void AddCentcom(StationCentcommComponent component)
     {
-        // Check for existing centcoms and just point to that
-        var query = AllEntityQuery<StationCentcomComponent>();
+        // Check for existing centcomms and just point to that
+        var query = AllEntityQuery<StationCentcommComponent>();
 
         while (query.MoveNext(out var otherComp))
         {
@@ -319,14 +319,14 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
         else
         {
-            _sawmill.Warning("No CentCom map found, skipping setup.");
+            _sawmill.Warning("No CentComm map found, skipping setup.");
         }
     }
 
-    public HashSet<MapId> GetCentcomMaps()
+    public HashSet<MapId> GetCentcommMaps()
     {
-        var query = AllEntityQuery<StationCentcomComponent>();
-        var maps = new HashSet<MapId>(Count<StationCentcomComponent>());
+        var query = AllEntityQuery<StationCentcommComponent>();
+        var maps = new HashSet<MapId>(Count<StationCentcommComponent>());
 
         while (query.MoveNext(out var comp))
         {
@@ -340,17 +340,17 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     {
         if (!_emergencyShuttleEnabled
             || component.EmergencyShuttle != null ||
-            !TryComp<StationCentcomComponent>(uid, out var centcom))
+            !TryComp<StationCentcommComponent>(uid, out var centcomm))
         {
             return;
         }
 
         // Load escape shuttle
         var shuttlePath = component.EmergencyShuttlePath;
-        var shuttle = _map.LoadGrid(centcom.MapId, shuttlePath.ToString(), new MapLoadOptions()
+        var shuttle = _map.LoadGrid(centcomm.MapId, shuttlePath.ToString(), new MapLoadOptions()
         {
-            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
-            Offset = new Vector2(500f + centcom.ShuttleIndex, 0f)
+            // Should be far enough... right? I'm too lazy to bounds check CentComm rn.
+            Offset = new Vector2(500f + centcomm.ShuttleIndex, 0f)
         });
 
         if (shuttle == null)
@@ -359,17 +359,17 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
-        centcom.ShuttleIndex += _mapManager.GetGrid(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
+        centcomm.ShuttleIndex += _mapManager.GetGrid(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
 
-        // Update indices for all centcom comps pointing to same map
-        var query = AllEntityQuery<StationCentcomComponent>();
+        // Update indices for all centcomm comps pointing to same map
+        var query = AllEntityQuery<StationCentcommComponent>();
 
         while (query.MoveNext(out var comp))
         {
-            if (comp == centcom || comp.MapId != centcom.MapId)
+            if (comp == centcomm || comp.MapId != centcomm.MapId)
                 continue;
 
-            comp.ShuttleIndex = centcom.ShuttleIndex;
+            comp.ShuttleIndex = centcomm.ShuttleIndex;
         }
 
         component.EmergencyShuttle = shuttle;

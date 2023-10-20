@@ -41,7 +41,7 @@ public sealed partial class NukeopsRuleComponent : Component
     /// Text for shuttle call if RoundEndBehavior is ShuttleCall.
     /// </summary>
     [DataField]
-    public string RoundEndTextSender = "comms-console-announcement-title-centcom";
+    public string RoundEndTextSender = "comms-console-announcement-title-centcomm";
 
     /// <summary>
     /// Text for shuttle call if RoundEndBehavior is ShuttleCall.
@@ -221,9 +221,9 @@ public enum WinCondition : byte
     NukeExplodedOnNukieOutpost,
     NukeExplodedOnIncorrectLocation,
     NukeActiveInStation,
-    NukeActiveAtCentCom,
-    NukeDiskOnCentCom,
-    NukeDiskNotOnCentCom,
+    NukeActiveAtCentComm,
+    NukeDiskOnCentComm,
+    NukeDiskNotOnCentComm,
     NukiesAbandoned,
     AllNukiesDead,
     SomeNukiesAlive,

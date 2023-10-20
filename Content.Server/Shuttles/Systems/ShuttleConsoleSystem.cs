@@ -297,7 +297,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             var locked = shuttleFtl != null || Paused(shuttleGridUid.Value);
 
             // Can't cache it because it may have a whitelist for the particular console.
-            // Include paused as we still want to show CentCom.
+            // Include paused as we still want to show CentComm.
             var destQuery = AllEntityQuery<FTLDestinationComponent>();
 
             while (destQuery.MoveNext(out var destUid, out var comp))

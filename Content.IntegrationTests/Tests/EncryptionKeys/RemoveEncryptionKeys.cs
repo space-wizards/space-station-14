@@ -34,13 +34,13 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         await AssertEntityLookup(("EncryptionKeyCommon", 1));
 
         // Re-insert a key.
-        await Interact("EncryptionKeyCentCom");
+        await Interact("EncryptionKeyCentComm");
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(1));
-            Assert.That(comp.DefaultChannel, Is.EqualTo("CentCom"));
+            Assert.That(comp.DefaultChannel, Is.EqualTo("CentComm"));
             Assert.That(comp.Channels, Has.Count.EqualTo(1));
-            Assert.That(comp.Channels.First(), Is.EqualTo("CentCom"));
+            Assert.That(comp.Channels.First(), Is.EqualTo("CentComm"));
         });
     }
 
@@ -87,13 +87,13 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Reinsert a key
-        await Interact("EncryptionKeyCentCom");
+        await Interact("EncryptionKeyCentComm");
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(1));
-            Assert.That(comp.DefaultChannel, Is.EqualTo("CentCom"));
+            Assert.That(comp.DefaultChannel, Is.EqualTo("CentComm"));
             Assert.That(comp.Channels, Has.Count.EqualTo(1));
-            Assert.That(comp.Channels.First(), Is.EqualTo("CentCom"));
+            Assert.That(comp.Channels.First(), Is.EqualTo("CentComm"));
         });
 
         // Remove it again

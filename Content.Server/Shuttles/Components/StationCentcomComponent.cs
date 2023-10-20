@@ -7,7 +7,7 @@ namespace Content.Server.Shuttles.Components;
 /// Spawns Central Command (emergency destination) for a station.
 /// </summary>
 [RegisterComponent]
-public sealed partial class StationCentcomComponent : Component
+public sealed partial class StationCentcommComponent : Component
 {
     /// <summary>
     /// Crude shuttle offset spawning.
@@ -16,10 +16,10 @@ public sealed partial class StationCentcomComponent : Component
     public float ShuttleIndex;
 
     [DataField("map")]
-    public ResPath Map = new("/Maps/centcom.yml");
+    public ResPath Map = new("/Maps/centcomm.yml");
 
     /// <summary>
-    /// Centcom entity that was loaded.
+    /// Centcomm entity that was loaded.
     /// </summary>
     [DataField("entity")]
     public EntityUid Entity = EntityUid.Invalid;
