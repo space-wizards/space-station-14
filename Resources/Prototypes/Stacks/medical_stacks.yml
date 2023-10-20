@@ -4,7 +4,7 @@
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: ointment }
   spawn: Ointment
   maxCount: 10
-  itemSize: 1
+  itemSize: 3
 
 - type: stack
   id: AloeCream
@@ -20,7 +20,7 @@
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: gauze }
   spawn: Gauze
   maxCount: 10
-  itemSize: 1
+  itemSize: 3
 
 - type: stack
   id: Brutepack
@@ -28,7 +28,7 @@
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: gauze }
   spawn: Brutepack
   maxCount: 10
-  itemSize: 1
+  itemSize: 3
 
 - type: stack
   id: Bloodpack
@@ -36,7 +36,7 @@
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: bloodpack }
   spawn: Bloodpack
   maxCount: 10
-  itemSize: 1
+  itemSize: 3
 
 - type: stack
   id: MedicatedSuture
@@ -44,7 +44,7 @@
   icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: medicated-suture }
   spawn: MedicatedSuture
   maxCount: 10
-  itemSize: 1
+  itemSize: 3
 
 - type: stack
   id: RegenerativeMesh
@@ -52,6 +52,6 @@
   icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: regenerative-mesh}
   spawn: RegenerativeMesh
   maxCount: 10
-  itemSize: 1
+  itemSize: 3
 
 
