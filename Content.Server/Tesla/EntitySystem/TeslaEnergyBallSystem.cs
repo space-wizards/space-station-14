@@ -2,12 +2,13 @@ using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Server.Tesla.Components;
 using Robust.Shared.Physics.Events;
-using Content.Shared.Mobs.Components;
 using Microsoft.Extensions.DependencyModel;
-using Content.Server.Physics.Controllers;
 using Content.Server.Lightning.Components;
-using Content.Server.Explosion.EntitySystems;
-using Robust.Shared.Physics.Components;
+using Content.Shared.Mind.Components;
+using Content.Shared.Tag;
+using Content.Server.Administration.Logs;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Database;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -16,6 +17,8 @@ namespace Content.Server.Tesla.EntitySystems;
 /// </summary>
 public sealed class TeslaEnergyBallSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -50,6 +53,15 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         }
         if (TryComp<LightningTargetComponent>(args.OtherEntity, out var target))
         {
+            var morsel = args.OtherEntity;
+            if (!EntityManager.IsQueuedForDeletion(morsel) // I saw it log twice a few times for some reason? (singulo code copy)
+                && (HasComp<MindContainerComponent>(morsel)
+                || _tagSystem.HasTag(morsel, "HighRiskItem")
+                || HasComp<ContainmentFieldGeneratorComponent>(morsel)))
+            {
+                _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} collided with Tesla and was consumed");
+            }
+
             Spawn(component.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
             EntityManager.QueueDeleteEntity(args.OtherEntity);
             AdjustEnergy(uid, component, 50f);
