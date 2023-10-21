@@ -33,6 +33,14 @@
           False: { visible: false }
   - type: ActivatableUI
     key: enum.MicrowaveUiKey.Key
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
   - type: UserInterface
     interfaces:
     - key: enum.MicrowaveUiKey.Key
