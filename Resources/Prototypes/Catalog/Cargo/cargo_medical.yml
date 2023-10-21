@@ -101,8 +101,8 @@
 - type: cargoProduct
   id: MedicalMindShieldImplants
   icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
   product: CrateMindShieldImplants
   cost: 3000
   category: Medical

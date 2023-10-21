@@ -9,6 +9,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
@@ -34,6 +35,7 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly CollisionWakeSystem _colWakeSystem = default!;
+    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
 
     public override void Initialize()
     {
@@ -160,7 +162,7 @@ public sealed partial class BotanySystem : EntitySystem
             var product = _robustRandom.Pick(proto.ProductPrototypes);
 
             var entity = Spawn(product, position);
-            entity.RandomOffset(0.25f);
+            _randomHelper.RandomOffset(entity, 0.25f);
             products.Add(entity);
 
             var produce = EnsureComp<ProduceComponent>(entity);

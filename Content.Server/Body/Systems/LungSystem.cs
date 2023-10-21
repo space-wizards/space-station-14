@@ -37,7 +37,7 @@ public sealed class LungSystem : EntitySystem
         if (TryComp(args.Equipee, out InternalsComponent? internals))
         {
             component.ConnectedInternalsEntity = args.Equipee;
-            _internals.ConnectBreathTool(internals, uid);
+            _internals.ConnectBreathTool((args.Equipee, internals), uid);
         }
     }
 

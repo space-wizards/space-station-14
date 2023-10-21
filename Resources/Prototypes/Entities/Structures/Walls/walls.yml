@@ -1143,3 +1143,108 @@
     - type: Icon
       sprite: Structures/Magic/forcewall.rsi
       state: forcewall
+
+- type: entity
+  parent: BaseWall
+  id: WallCobblebrick
+  name: cobblestone brick wall
+  description: Stone by stone, perfectly fitted together to form a wall.
+  components:
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallBasaltCobblebrick
+  name: basalt brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_basalt.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallSnowCobblebrick
+  name: snow brick wall
+  description: A cold, not-so-impenetrable wall.
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_snow.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallAsteroidCobblebrick
+  name: asteroid stone brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_asteroid.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_asteroid.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallSandCobblebrick
+  name: sandstone brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_sand.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_sand.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallChromiteCobblebrick
+  name: chromite brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_chromite.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_chromite.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallAndesiteCobblebrick
+  name: andesite brick wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_andesite.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_andesite.rsi
+  - type: IconSmooth
+    key: walls
+    base: cobblebrick

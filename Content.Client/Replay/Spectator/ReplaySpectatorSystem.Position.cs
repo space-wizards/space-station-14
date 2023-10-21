@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Movement.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
@@ -134,9 +133,22 @@ public sealed partial class ReplaySpectatorSystem
             return true;
         }
 
-        var uid = EntityQuery<MapGridComponent>().MaxBy(x => x.LocalAABB.Size.LengthSquared())?.Owner;
-        coords = new EntityCoordinates(uid ?? default, default);
-        return uid != null;
+        Entity<MapGridComponent>? maxUid = null;
+        float? maxSize = null;
+        var gridQuery = EntityQueryEnumerator<MapGridComponent>();
+
+        while (gridQuery.MoveNext(out var uid, out var grid))
+        {
+            var size = grid.LocalAABB.Size.LengthSquared();
+            if (maxSize == null || size > maxSize)
+            {
+                maxUid = (uid, grid);
+                maxSize = size;
+            }
+        }
+
+        coords = new EntityCoordinates(maxUid ?? default, default);
+        return maxUid != null;
     }
 
     private void OnTerminating(EntityUid uid, ReplaySpectatorComponent component, ref EntityTerminatingEvent args)

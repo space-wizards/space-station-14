@@ -51,3 +51,6 @@ ent-CrateFunBikeHornImplants = Bike Horn Implants
 
 ent-CrateFunMysteryFigurines = Mystery Figure Crate
     .desc = A collection of 10 Mystery Figurine boxes. Duplicates non refundable.
+
+ent-CrateFunDartsSet = Dartboard Box Set
+    .desc = A box with everything you need for a fun game of darts.
