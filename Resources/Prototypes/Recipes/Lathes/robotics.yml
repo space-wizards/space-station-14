@@ -323,10 +323,10 @@
   result: PotatoAIChip
   completetime: 4
   materials:
-    Steel: 500
-    Plastic: 500
-    Glass: 500
-    Plasma: 500
+    Steel: 300
+    Plastic: 300
+    Glass: 300
+    Plasma: 300
 
 - type: latheRecipe
   id: BorgModuleCable
