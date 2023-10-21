@@ -9,3 +9,6 @@
       state: icon
     - type: Item
       size: 3
+    - type: Tag
+      tags:
+        - SmallAIChip

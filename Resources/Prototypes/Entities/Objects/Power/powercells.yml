@@ -47,7 +47,10 @@
   - type: Tag
     tags:
       - DroneUsable
-      - NoRecharge
+      - PotatoBattery
+  - type: Construction
+    graph: PowerCellPotato
+    node: potatobattery
 
 - type: entity
   name: small-capacity power cell

@@ -756,9 +756,6 @@
   id: NoBlockAnchoring
 
 - type: Tag
-  id: NoRecharge
-
-- type: Tag
   id: NozzleBackTank
 
 - type: Tag
@@ -838,6 +835,12 @@
 
 - type: Tag
   id: PlushieSharkGrey
+
+- type: Tag
+  id: Potato
+
+- type: Tag
+  id: PotatoBattery
 
 - type: Tag
   id: PowerCellSmall
@@ -923,6 +926,9 @@
 
 - type: Tag
   id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: SmallAIChip
 
 - type: Tag
   id: SmallMech

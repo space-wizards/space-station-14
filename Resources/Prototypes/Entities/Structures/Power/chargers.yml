@@ -87,7 +87,7 @@
           - PowerCell
         blacklist:
           tags:
-          - NoRecharge
+          - PotatoBattery
 
 - type: entity
   parent: BaseItemRecharger
