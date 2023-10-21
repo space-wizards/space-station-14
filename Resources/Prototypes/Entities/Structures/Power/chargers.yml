@@ -85,6 +85,9 @@
         whitelist:
           components:
           - PowerCell
+        blacklist:
+          tags:
+          - NoRecharge
 
 - type: entity
   parent: BaseItemRecharger
