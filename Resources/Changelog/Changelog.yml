@@ -1,17 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added cyborgs. These creations are assembled part by part and can be
-      loaded up with various modules to give them unique abilities. Make sure you
-      charge them at their dedicated charging stations., type: Add}
-  - {message: Added silicon laws. These are laws that all robotic crew must abide
-      by. This Asimov guy had the right idea., type: Add}
-  - {message: Added new Mechanized Treatment and Robotic Cleanliness technologies.,
-    type: Add}
-  - {message: The EMAG is now able to force cyborgs to follow your orders. How devious!,
-    type: Add}
-  id: 4532
-  time: '2023-08-12T21:39:58.0000000+00:00'
 - author: TemporalOroboros
   changes:
   - {message: Clicking on the screen now accounts for the distortion effect of nearby
@@ -2915,3 +2902,10 @@ Entries:
   - {message: Fix replays not starting., type: Fix}
   id: 5031
   time: '2023-10-20T22:37:02.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to run server commands without >., type: Fix}
+  - {message: Fixed not being able to use the help command to see another command's
+      help text., type: Fix}
+  id: 5032
+  time: '2023-10-21T10:58:57.0000000+00:00'
