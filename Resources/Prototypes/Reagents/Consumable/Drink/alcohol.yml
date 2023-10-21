@@ -485,7 +485,7 @@
         reagent: Ethanol
         amount: 0.15
       - !type:AdjustReagent
-        reagent: Radium
+        reagent: Uranium
         amount: 0.05
 
 - type: reagent
