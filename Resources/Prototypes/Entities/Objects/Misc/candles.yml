@@ -250,7 +250,7 @@
       - state: candle-big
         color: "#5d997e" 
       - state: fire-big
-        shader: unshaded        
+        shader: unshaded
         
 - type: entity
   name: magic purple candle
