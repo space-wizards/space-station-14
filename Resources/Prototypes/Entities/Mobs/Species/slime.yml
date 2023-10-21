@@ -80,10 +80,9 @@
     - Critical
     damage:
       types:
-        Heat: -0.15
-        Poison: -0.07
+        Heat: -0.07
       groups:
-        Brute: -0.15
+        Brute: -0.07
 
 - type: entity
   parent: MobHumanDummy
