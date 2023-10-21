@@ -1,0 +1,65 @@
+- type: entity
+  parent: VehicleATV
+  id: VehicleParamedicATV
+  name: Paramedic ATV
+  description: All-Tile Vehicle.
+  components:
+  - type: Vehicle
+    southOver: true
+    northOver: true
+    northOverride: -0.1
+    southOverride: 0.1
+    hornSound: /Audio/SS220/Paramedic-atv/weeoo1.ogg
+  - type: Sprite
+    sprite: SS220/Objects/Vehicles/paramedic_atv.rsi
+    layers:
+    - state: vehicle
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+    noRot: true
+  - type: RandomMetadata
+    descriptionSegments: [ATVDescriptions]
+  - type: MovementSpeedModifier
+    acceleration: 1
+    friction: 1
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 7
+  - type: Strap
+    buckleOffset: "0.1, -0.05"
+    maxBuckleDistance: 1
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: Keys
+        whitelist:
+          requireAll: true
+          tags:
+          - VehicleKey
+          - ParamedicATVKeys
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
+
+- type: entity
+  parent: VehicleKeyATV
+  id: VehicleKeyParamedicATV
+  name: Paramedic ATV keys
+  description: Think this looks like just one key? ATV keys means "actually two vehicle keys."
+  components:
+  - type: Tag
+    tags:
+    - VehicleKey
+    - ParamedicATVKeys
+  - type: Sprite
+    sprite: SS220/Objects/Vehicles/paramedic_atv.rsi
+    state: keys
+
+- type: Tag
+  id: ParamedicATVKeys

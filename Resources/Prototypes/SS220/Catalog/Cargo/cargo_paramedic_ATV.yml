@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: MedicalParamedicATV
+  icon:
+    sprite: SS220/Objects/Vehicles/paramedic_atv.rsi
+    state: vehicle
+  product: CrateParamedicATV
+  cost: 1500
+  category: Medical
+  group: market

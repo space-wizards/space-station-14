@@ -1,0 +1,13 @@
+type: entity
+  name: Paramedic ATV Spawner
+  id: SpawnVehicleParamedicATV
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: SS220/Objects/Vehicles/paramedic_atv.rsi
+        state: keys
+  - type: ConditionalSpawner
+    prototypes:
+      - VehicleParamedicATV
