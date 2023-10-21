@@ -6,83 +6,83 @@
     "x": 32,
     "y": 32
   },
-    "states": [
-        {
-            "name": "mmi_off"
-        },
-        {
-            "name": "mmi_alive"
-        },
-        {
-            "name": "mmi_dead"
-        },
-        {
-            "name": "mmi_brain"
-        },
-        {
-            "name": "mmi_brain_alien"
-        },
-        {
-            "name": "posibrain"
-        },
-        {
-            "name": "posibrain-occupied",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "posibrain-searching",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "potato"
-        },
-        {
-            "name": "potato-searching"
-        },
-        {
-            "name": "potato-occupied"
-        }
-    ]
+  "states": [
+    {
+      "name": "mmi_off"
+    },
+    {
+      "name": "mmi_alive"
+    },
+    {
+      "name": "mmi_dead"
+    },
+    {
+      "name": "mmi_brain"
+    },
+    {
+      "name": "mmi_brain_alien"
+    },
+    {
+      "name": "posibrain"
+    },
+    {
+      "name": "posibrain-occupied",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "posibrain-searching",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+        "name": "potato"
+    },
+    {
+        "name": "potato-searching"
+    },
+    {
+        "name": "potato-occupied"
+    }
+  ]
 }
