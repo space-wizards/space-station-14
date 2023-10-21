@@ -1,0 +1,28 @@
+# R-8
+- type: entity
+  name: R-8
+  suffix: CS
+  parent: BaseWeaponRevolver
+  id: WeaponRevolverR-8
+  description: #none
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/R8-Revolver.rsi
+    state: icon
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/R8-Revolver.rsi
+  - type: Gun
+    fireRate: 3
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+        - SpeedLoaderMagnum
+    proto: CartridgeMagnum
+    capacity: 8
+    chambers: [ True, True, True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg

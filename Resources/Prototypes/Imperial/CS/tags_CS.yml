@@ -1,0 +1,9 @@
+
+- type: Tag #for the Counter Space balance
+  id: MagazineDualBeretta
+
+- type: Tag #for the Counter Space balance
+  id: MagazinePistolSubMachineGunP90
+
+- type: Tag #for the Counter Space balance
+  id: MagazinePistolSubMachineGunBizon

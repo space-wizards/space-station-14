@@ -1,0 +1,51 @@
+#AWP - sniper rifle
+- type: entity
+  name: AWP
+  suffix: CS
+  parent: BaseWeaponRifle
+  id: WeaponSniperAWP
+  description: One hit - one kill. The main thing is hit. #This REALY one shot kill weapon. Carefully.
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/AWP.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/AWP.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 0.65
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: AWP-magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
