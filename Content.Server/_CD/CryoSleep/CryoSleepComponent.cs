@@ -12,8 +12,8 @@ public sealed partial class CryoSleepComponent : Component
     /// <summary>
     /// Whether or not spawns are routed through the cryopod.
     /// </summary>
-    [DataField("doSpawns")]
-    public bool DoSpawns = true;
+    [DataField("doSpawns"), ViewVariables(VVAccess.ReadWrite)]
+    public bool DoSpawns = false;
 
     /// <summary>
     /// The sound that is played when a player spawns in the pod.
