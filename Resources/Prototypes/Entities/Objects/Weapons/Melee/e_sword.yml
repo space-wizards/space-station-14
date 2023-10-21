@@ -177,6 +177,7 @@
         types:
             Slash: 17
             Heat: 17
+            Structural: 20
             Blunt: -4.5
     litDisarmMalus: 0.7
   - type: MeleeWeapon
