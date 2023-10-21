@@ -12,3 +12,6 @@
     - type: Tag
       tags:
         - SmallAIChip
+    - type: Construction
+      graph: PotatoAIChip
+      node: potatoaichip

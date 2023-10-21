@@ -319,16 +319,6 @@
     Plasma: 1500
 
 - type: latheRecipe
-  id: PotatoAIChip
-  result: PotatoAIChip
-  completetime: 4
-  materials:
-    Steel: 300
-    Plastic: 300
-    Glass: 300
-    Plasma: 300
-
-- type: latheRecipe
   id: BorgModuleCable
   result: BorgModuleCable
   completetime: 3

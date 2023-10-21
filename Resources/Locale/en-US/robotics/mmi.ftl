@@ -6,9 +6,6 @@ positronic-brain-searching = Beginning synthetic neuron descrambling...
 positronic-brain-role-name = positronic brain
 positronic-brain-role-description = Serve the station crew.
 
-potato-brain-role-name = potatronic brain
-potato-brain-role-description = Serve the station crew. Lament about being a potato.
-
 positronic-brain-wipe-device-verb-text = Wipe Brain
 positronic-brain-wiped-device = The neural activity was terminated.
 

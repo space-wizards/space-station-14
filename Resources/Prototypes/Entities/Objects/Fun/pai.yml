@@ -80,6 +80,7 @@
     - state: pai-base
     - state: syndicate-pai-off-overlay
       shader: unshaded
+      map: ["screen"]
   - type: ToggleableGhostRole
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
@@ -97,6 +98,34 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
+  id: PotatoAI
+  name: potato artificial intelligence
+  description: It's a potato. You forced it to be sentient, you monster.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: potato-base
+    - state: potato-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name-potato
+    roleDescription: pai-system-role-description-potato
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: potato-off-overlay }
+          Searching: { state: potato-searching-overlay }
+          On: { state: potato-on-overlay }
+  - type: Construction
+    graph: PotatoAI
+    node: potatoai
 
 - type: entity
   id: ActionPAIPlayMidi

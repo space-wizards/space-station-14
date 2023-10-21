@@ -117,35 +117,3 @@
             Off: { state: posibrain }
             Searching: { state: posibrain-searching }
             On: { state: posibrain-occupied }
-
-- type: entity
-  parent: PositronicBrain
-  id: PotatoBrain
-  name: potatronic brain
-  description: A cutting-edge AI chip, powered by a humble potato.
-  components:
-    - type: Sprite
-      layers:
-      - state: potato
-        map: ["base"]
-    - type: GenericVisualizer
-      visuals:
-        enum.ToggleableGhostRoleVisuals.Status:
-          base:
-            Off: { state: potato }
-            Searching: { state: potato-searching }
-            On: { state: potato-occupied }
-    - type: ToggleableGhostRole
-      examineTextMindPresent: positronic-brain-installed
-      examineTextMindSearching: positronic-brain-still-searching
-      examineTextNoMind: positronic-brain-off
-      beginSearchingText: positronic-brain-searching
-      roleName: potato-brain-role-name
-      roleDescription: potato-brain-role-description
-      wipeVerbText: positronic-brain-wipe-device-verb-text
-      wipeVerbPopup: positronic-brain-wiped-device
-      stopSearchVerbText: positronic-brain-stop-searching-verb-text
-      stopSearchVerbPopup: positronic-brain-stopped-searching
-    - type: Construction
-      graph: PotatoBrain
-      node: potatobrain

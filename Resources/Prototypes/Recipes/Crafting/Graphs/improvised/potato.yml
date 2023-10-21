@@ -22,12 +22,12 @@
       entity: PowerCellPotato
 
 - type: constructionGraph
-  id: PotatoBrain
+  id: PotatoAI
   start: start
   graph:
     - node: start
       edges:
-        - to: potatobrain
+        - to: potatoai
           steps:
             - tag: PotatoBattery
               name: a potato battery
@@ -40,5 +40,35 @@
               icon:
                 sprite: Objects/Misc/potatoai_chip.rsi
                 state: icon
-    - node: potatobrain
-      entity: PotatoBrain
+    - node: potatoai
+      entity: PotatoAI
+
+- type: constructionGraph
+  id: PotatoAIChip
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: potatoaichip
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Glass
+              amount: 1
+              doAfter: 1
+            - material: Cable
+              amount: 2
+              doAfter: 1
+            - tag: CapacitorStockPart
+              name: capacitor
+              icon:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: capacitor
+            - tag: CapacitorStockPart
+              name: capacitor
+              icon:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: capacitor
+    - node: potatoaichip
+      entity: PotatoAIChip
