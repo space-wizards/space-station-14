@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.Construction;
 using Content.Shared.Tag;
 using Robust.Shared.Console;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Construction.Commands
 {
@@ -19,7 +20,7 @@ namespace Content.Server.Construction.Commands
 
         public void Execute(IConsoleShell shell, string argsOther, string[] args)
         {
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             EntityUid? gridId;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 

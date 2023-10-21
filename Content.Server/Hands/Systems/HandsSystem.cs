@@ -20,6 +20,10 @@ using Content.Shared.Storage;
 using Content.Shared.Throwing;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Input.Binding;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
 {
@@ -154,9 +158,9 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coordinates, EntityUid entity)
+        private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (session is not ICommonSession playerSession)
+            if (playerSession == null)
                 return false;
 
             if (playerSession.AttachedEntity is not {Valid: true} player ||
