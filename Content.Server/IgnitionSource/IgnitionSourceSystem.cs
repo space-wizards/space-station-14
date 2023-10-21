@@ -19,15 +19,15 @@ public sealed class IgnitionSourceSystem : EntitySystem
         SubscribeLocalEvent<IgnitionSourceComponent, IsHotEvent>(OnIsHot);
     }
 
-    private void OnIsHot(Entity<IgnitionSourceComponent> ent, IsHotEvent args)
+    private void OnIsHot(Entity<IgnitionSourceComponent> ent, ref IsHotEvent args)
     {
-        SetIgnited(ent, args.IsHot);
+        SetIgnited((ent.Owner, ent.Comp), args.IsHot);
     }
 
     /// <summary>
     /// Simply sets the ignited field to the ignited param.
     /// </summary>
-    public void SetIgnited(Entity<IgnitionSourceComponent> ent, bool ignited = true)
+    public void SetIgnited(Entity<IgnitionSourceComponent?> ent, bool ignited = true)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;

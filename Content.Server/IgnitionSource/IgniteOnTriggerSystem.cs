@@ -39,14 +39,14 @@ public sealed class IgniteOnTriggerSystem : EntitySystem
         }
     }
 
-    private void OnTrigger(Entity<IgniteOnTriggerComponent> ent, TriggerEvent args)
+    private void OnTrigger(Entity<IgniteOnTriggerComponent> ent, ref TriggerEvent args)
     {
         // prevent spamming sound and ignition
         TryComp<UseDelayComponent>(ent, out var delay);
         if (_useDelay.ActiveDelay(ent, delay))
             return;
 
-        _source.SetIgnited(ent);
+        _source.SetIgnited(ent.Owner);
         _audio.PlayPvs(ent.Comp.IgniteSound, ent);
 
         _useDelay.BeginDelay(ent, delay);
