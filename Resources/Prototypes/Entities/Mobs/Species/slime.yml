@@ -74,7 +74,7 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
-  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute or 4 for poison.
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.
     allowedStates:
     - Alive
     - Critical
