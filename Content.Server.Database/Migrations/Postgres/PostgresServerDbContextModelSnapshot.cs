@@ -856,17 +856,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("server_id");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("start_date");
-
                     b.HasKey("Id")
                         .HasName("PK_round");
 
                     b.HasIndex("ServerId")
                         .HasDatabaseName("IX_round_server_id");
-
-                    b.HasIndex("StartDate");
 
                     b.ToTable("round", (string)null);
                 });

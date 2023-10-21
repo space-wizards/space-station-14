@@ -472,7 +472,6 @@ namespace Content.Server.Database
             var round = new Round
             {
                 Id = nextId,
-                StartDate = DateTime.UtcNow,
                 Players = players,
                 ServerId = server.Id
             };

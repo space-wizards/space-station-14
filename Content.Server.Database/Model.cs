@@ -111,9 +111,6 @@ namespace Content.Server.Database
                 .HasForeignKey(player => player.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId);
 
-            modelBuilder.Entity<Round>()
-                .HasIndex(round => round.StartDate);
-
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
 
@@ -470,8 +467,6 @@ namespace Content.Server.Database
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        public DateTime? StartDate { get; set; }
 
         public List<Player> Players { get; set; } = default!;
 
