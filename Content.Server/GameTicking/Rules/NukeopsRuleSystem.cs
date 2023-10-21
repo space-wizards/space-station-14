@@ -5,6 +5,7 @@ using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
+using Content.Server.RandomMetadata;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
@@ -67,6 +68,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly RandomMetadataSystem _randomMetadata = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -78,6 +80,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly WarDeclaratorSystem _warDeclarator = default!;
+
 
     [ValidatePrototypeId<CurrencyPrototype>]
     private const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -340,12 +343,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         component.TargetStation = _random.Pick(eligible);
+        var operation_name = _randomMetadata.GetRandomFromSegments(new List<string> {"operationPrefix", "operationSuffix"}, " ");
 
         var filter = Filter.Empty();
         var query = EntityQueryEnumerator<NukeOperativeComponent, ActorComponent>();
         while (query.MoveNext(out _, out var nukeops, out var actor))
         {
-            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value)));
+            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value), ("operation_name", operation_name)));
             _audio.PlayGlobal(nukeops.GreetSoundNotification, actor.PlayerSession);
             filter.AddPlayer(actor.PlayerSession);
         }
@@ -789,7 +793,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
             {
-                _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value)));
+                var operation_name = _randomMetadata.GetRandomFromSegments(new List<string> {"operationPrefix", "operationSuffix"}, " ");
+                _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value), ("operation_name", operation_name)));
 
                  // Notificate player about new role assignment
                  _audio.PlayGlobal(component.GreetSoundNotification, playerSession);
