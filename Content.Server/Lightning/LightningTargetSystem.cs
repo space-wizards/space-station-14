@@ -1,6 +1,8 @@
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lightning;
 using Content.Server.Lightning.Components;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -11,11 +13,12 @@ public sealed class LightningTargetSystem : EntitySystem
 {
 
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LightningTargetComponent, HittedByLightningEvent>(OnHittedByLightning, after: new[] { typeof(LightningSystem)});
+        SubscribeLocalEvent<LightningTargetComponent, HittedByLightningEvent>(OnHittedByLightning);
     }
 
     private void OnHittedByLightning(EntityUid uid, LightningTargetComponent component, ref HittedByLightningEvent args)
@@ -26,7 +29,7 @@ public sealed class LightningTargetSystem : EntitySystem
 
         //For some unknown reason it gives a random server crash.
         //To do: make the explosion dependent on the component parameters.
-        _explosionSystem.QueueExplosion(Transform(uid).MapPosition, component.ExplosionPrototype, component.TotalIntensity, component.Dropoff, component.MaxTileIntensity);
+        _explosionSystem.QueueExplosion(Transform(uid).MapPosition, component.ExplosionPrototype, component.TotalIntensity, component.Dropoff, component.MaxTileIntensity, canCreateVacuum: false);
         Log.Debug("BOOM на " + Transform(uid).MapPosition.ToString());
     }
 }

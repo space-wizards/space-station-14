@@ -23,9 +23,10 @@
         restitution: 0.8
         density: 99999
         mask:
-        - AllMask   
+        - Opaque  
         layer:
-        - Opaque 
+        - GlassLayer  
+  - type: Electrocution
   - type: TeslaEnergyBall
     energyLoss: 3
     spawnProto: TeslaMiniEnergyBall 
@@ -58,6 +59,7 @@
   name: mini ball lightning
   description: The cub of a destructive energy cage. Not as dangerous, but still not worth touching with bare hands.
   components: 
+  - type: Electrocution
   - type: Clickable
   - type: AmbientSound
     volume: -2
@@ -74,13 +76,13 @@
         shape:
           !type:PhysShapeCircle
             radius: 0.35
-        hard: true
+        hard: false
         restitution: 0.8
-        density: 9999
+        density: 10
         mask:
-        - AllMask   
-        layer:
         - Opaque  
+        layer:
+        - GlassLayer   
   - type: ChasingWalk # To make the tesla move around.
     maxSpeed: 2.8
     minSpeed: 2
