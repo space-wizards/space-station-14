@@ -1,15 +1,9 @@
-using Robust.Shared.GameStates;
-
-using Content.Shared.Singularity.EntitySystems;
-using Robust.Shared.Audio;
-using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tesla.Components;
 
 /// <summary>
-/// A component that makes the associated entity accumulate energy when an associated event horizon consumes things.
-/// Energy management is server-side.
+/// A component that tracks an entity's saturation level from absorbing other creatures by touch, and spawns new entities when the saturation limit is reached.
 /// </summary>
 [RegisterComponent]
 public sealed partial class TeslaEnergyBallComponent : Component
@@ -21,23 +15,26 @@ public sealed partial class TeslaEnergyBallComponent : Component
     public float UpdateInterval = 3.0f;
 
     /// <summary>
-    /// The amount of energy this tesla contains. Once the limit is reached, the energy will be spent to spawn mini-energy balls
+    /// The amount of energy this entity contains. Once the limit is reached, the energy will be spent to spawn mini-energy balls
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Energy;
 
     /// <summary>
-    /// 
+    /// The amount of energy an entity must reach in order to zero the energy and create another entity
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float NeedEnergyToSpawn = 100f;
 
     /// <summary>
-    /// how much energy the tesla uses per second.
+    /// how much energy the entity uses per second.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EnergyLoss = 3f;
 
+    /// <summary>
+    /// The amount of energy an entity must reach in order to zero the energy and create another entity
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EnergyToDespawn = -1000f;
     /// <summary>

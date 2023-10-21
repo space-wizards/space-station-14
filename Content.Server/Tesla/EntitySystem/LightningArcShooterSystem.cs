@@ -6,7 +6,7 @@ using Content.Server.Lightning;
 namespace Content.Server.Tesla.EntitySystems;
 
 /// <summary>
-/// Fires electric arcs at surrounding objects. Has a priority list of what to shoot at.
+/// Fires electric arcs at surrounding objects.
 /// </summary>
 public sealed class LightningArcShooterSystem : EntitySystem
 {
@@ -29,12 +29,9 @@ public sealed class LightningArcShooterSystem : EntitySystem
             if (arcShooter.NextShootTime > _gameTiming.CurTime)
                 return;
 
-            Log.Debug("Ща бахнем");
             ArcShoot(uid, arcShooter);
-            Log.Debug("Бахнули!");
             var delay = TimeSpan.FromSeconds(_random.NextFloat(arcShooter.ShootMinInterval, arcShooter.ShootMaxInterval));
             arcShooter.NextShootTime = _gameTiming.CurTime + delay;
-            Log.Debug("закончили бахать");
         }
     }
 

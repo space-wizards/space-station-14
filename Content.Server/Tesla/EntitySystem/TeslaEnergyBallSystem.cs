@@ -13,7 +13,7 @@ using Content.Shared.Database;
 namespace Content.Server.Tesla.EntitySystems;
 
 /// <summary>
-/// A component that takes energy and spends it to spawn mini energy balls.
+/// A component that tracks an entity's saturation level from absorbing other creatures by touch, and spawns new entities when the saturation limit is reached.
 /// </summary>
 public sealed class TeslaEnergyBallSystem : EntitySystem
 {
@@ -39,7 +39,6 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
                 continue;
 
             AdjustEnergy(uid, teslaEnergyBall, -teslaEnergyBall.EnergyLoss * teslaEnergyBall.AccumulatedFrametime);
-            Log.Debug("Текущая энергия: " + teslaEnergyBall.Energy);
             teslaEnergyBall.AccumulatedFrametime = 0f;
         }
     }

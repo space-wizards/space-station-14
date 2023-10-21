@@ -1,11 +1,10 @@
 using Content.Shared.Explosion;
-using Content.Shared.Lightning.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Lightning.Components;
 
 /// <summary>
-/// The component allows lightning to strike this target.
+/// The component allows lightning to strike this target. And determining the behavior of the target when struck by lightning.
 /// </summary>
 [RegisterComponent]
 public sealed partial class LightningTargetComponent : Component
