@@ -55,8 +55,6 @@
   - type: Reflect
     enabled: false
     reflectProb: 0.50
-    reflects:
-        - Energy
 
 - type: entity
   name: pen
@@ -205,7 +203,5 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
     enabled: true
-    reflectProb: 1
+    reflectProb: .75
     spread: 75
-    reflects:
-        - Energy
