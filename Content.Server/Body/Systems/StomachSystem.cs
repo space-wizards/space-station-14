@@ -1,8 +1,8 @@
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
@@ -20,7 +20,8 @@ namespace Content.Server.Body.Systems
 
         public override void Update(float frameTime)
         {
-            foreach (var (stomach, organ, sol)in EntityManager.EntityQuery<StomachComponent, OrganComponent, SolutionContainerManagerComponent>())
+            var query = EntityQueryEnumerator<StomachComponent, OrganComponent, SolutionContainerManagerComponent>();
+            while (query.MoveNext(out var uid, out var stomach, out var organ, out var sol))
             {
                 stomach.AccumulatedFrameTime += frameTime;
 
@@ -30,7 +31,7 @@ namespace Content.Server.Body.Systems
                 stomach.AccumulatedFrameTime -= stomach.UpdateInterval;
 
                 // Get our solutions
-                if (!_solutionContainerSystem.TryGetSolution(stomach.Owner, DefaultSolutionName,
+                if (!_solutionContainerSystem.TryGetSolution(uid, DefaultSolutionName,
                         out var stomachSolution, sol))
                     continue;
 
@@ -50,7 +51,7 @@ namespace Content.Server.Body.Systems
                             if (reagent.Quantity > delta.ReagentQuantity.Quantity)
                                 reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
 
-                            _solutionContainerSystem.RemoveReagent((stomach).Owner, stomachSolution, reagent);
+                            _solutionContainerSystem.RemoveReagent(uid, stomachSolution, reagent);
                             transferSolution.AddReagent(reagent);
                         }
 
