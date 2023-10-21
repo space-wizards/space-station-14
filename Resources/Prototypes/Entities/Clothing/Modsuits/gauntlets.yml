@@ -26,6 +26,9 @@
     clothingPrototype: ClothingBootsModsuitCESealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase
@@ -54,6 +57,9 @@
     clothingPrototype: ClothingBootsModsuitEngineerSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase
@@ -112,6 +118,9 @@
     clothingPrototype: ClothingBootsModsuitAtmosphericsSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase
@@ -170,6 +179,8 @@
     clothingPrototype: ClothingBootsModsuitCMOSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
 
 - type: entity
   parent: ClothingHandsBase
@@ -195,6 +206,8 @@
     clothingPrototype: ClothingBootsModsuitCivillianSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
 
 - type: entity
   parent: ClothingHandsBase
@@ -224,6 +237,9 @@
     clothingPrototype: ClothingBootsModsuitMagnateSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase
@@ -253,6 +269,8 @@
     clothingPrototype: ClothingBootsModsuitSecuritySealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
 
 - type: entity
   parent: ClothingHandsBase
@@ -282,6 +300,9 @@
     clothingPrototype: ClothingBootsModsuitHOSSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase
@@ -310,6 +331,8 @@
     clothingPrototype: ClothingBootsModsuitSalvageSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
 
 - type: entity
   parent: ClothingHandsBase
@@ -338,6 +361,9 @@
     clothingPrototype: ClothingBootsModsuitMinerSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase
@@ -366,6 +392,9 @@
     clothingPrototype: ClothingBootsModsuitOperativeSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase
@@ -394,6 +423,9 @@
     clothingPrototype: ClothingBootsModsuitOperativeCMDSealed
     slot: shoes
     requiredSlot: gloves
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingGauntletsModsuitOperativeSealed

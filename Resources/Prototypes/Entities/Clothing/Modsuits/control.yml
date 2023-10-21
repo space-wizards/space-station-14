@@ -86,6 +86,48 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingControlModsuitAtmosphericsSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/atmospheric.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/atmospheric.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitAtmosphericsSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 20
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingControlModsuitRNDSealed
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.
