@@ -26,11 +26,12 @@ public sealed class JetpackSystem : SharedJetpackSystem
         var toDisable = new ValueList<(EntityUid Uid, JetpackComponent Component)>();
         var query = EntityQueryEnumerator<ActiveJetpackComponent, JetpackComponent, GasTankComponent>();
 
-        while (query.MoveNext(out var uid, out var active, out var comp, out var gasTank))
+        while (query.MoveNext(out var uid, out var active, out var comp, out var gasTankComp))
         {
             if (_timing.CurTime < active.TargetTime)
                 continue;
 
+            var gasTank = (uid, gasTankComp);
             active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
             var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
 

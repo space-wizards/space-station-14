@@ -96,7 +96,7 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         if (result != null)
         {
-            DebugTools.Assert(result.Owner == uid);
+            DebugTools.AssertOwner(uid, result);
             return true;
         }
 
@@ -494,7 +494,7 @@ public abstract class SharedActionsSystem : EntitySystem
                           (TryComp(action.Container, out ActionsContainerComponent? containerComp)
                            && containerComp.Container.Contains(actionId)));
 
-        DebugTools.Assert(comp == null || comp.Owner == performer);
+        DebugTools.AssertOwner(performer, comp);
         comp ??= EnsureComp<ActionsComponent>(performer);
         action.AttachedEntity = performer;
         comp.Actions.Add(actionId);
@@ -523,7 +523,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!Resolve(container, ref containerComp))
             return;
 
-        DebugTools.Assert(comp == null || comp.Owner == performer);
+        DebugTools.AssertOwner(performer, comp);
         comp ??= EnsureComp<ActionsComponent>(performer);
 
         foreach (var actionId in actions)
@@ -586,9 +586,16 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!ResolveActionData(actionId, ref action))
             return;
 
+        if (action.AttachedEntity != performer)
+        {
+            Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}");
+            return;
+        }
+
         if (!Resolve(performer, ref comp, false))
         {
-            DebugTools.AssertNull(action.AttachedEntity);
+            DebugTools.Assert(action.AttachedEntity == null || TerminatingOrDeleted(action.AttachedEntity.Value));
+            action.AttachedEntity = null;
             return;
         }
 
@@ -599,7 +606,6 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
         }
 
-        DebugTools.Assert(action.AttachedEntity == performer);
         comp.Actions.Remove(actionId.Value);
         action.AttachedEntity = null;
         Dirty(actionId.Value, action);

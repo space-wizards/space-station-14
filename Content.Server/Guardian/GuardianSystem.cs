@@ -31,6 +31,7 @@ namespace Content.Server.Guardian
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -88,7 +89,7 @@ namespace Content.Server.Guardian
 
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
         {
-            component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
+            component.GuardianContainer = _container.EnsureContainer<ContainerSlot>(uid, "GuardianContainer");
             _actionSystem.AddAction(uid, ref component.ActionEntity, component.Action);
         }
 
@@ -217,7 +218,7 @@ namespace Content.Server.Guardian
 
             if (args.NewMobState == MobState.Critical)
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
+                _popupSystem.PopupEntity(Loc.GetString("guardian-host-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
                 _audio.Play("/Audio/Effects/guardian_warn.ogg", Filter.Pvs(component.HostedGuardian.Value), component.HostedGuardian.Value, true);
             }
             else if (args.NewMobState == MobState.Dead)
