@@ -54,7 +54,6 @@
     malus: 0
   - type: Reflect
     enabled: false
-    reflectProb: 0.50
 
 - type: entity
   name: pen
