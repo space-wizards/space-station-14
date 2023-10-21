@@ -36,9 +36,15 @@ public sealed partial class LightningArcShooterComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int ArcDepth = 1;
 
+    /// <summary>
+    /// The time, upon reaching which the next batch of lightning bolts will be fired.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextShootTime;
 
+    /// <summary>
+    /// The type of lightning bolts we shoot
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string LightningPrototype = "Lightning";
 }

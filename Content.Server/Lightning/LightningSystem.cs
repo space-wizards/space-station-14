@@ -2,10 +2,8 @@ using System.Linq;
 using Content.Server.Beam;
 using Content.Server.Beam.Components;
 using Content.Server.Lightning.Components;
-using Content.Server.Lightning.Events;
 using Content.Shared.Lightning;
 using Robust.Server.GameObjects;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
@@ -45,17 +43,16 @@ public sealed class LightningSystem : SharedLightningSystem
         if (Deleted(user) || Deleted(target))
             return;
 
-        Log.Debug("ПИУ");
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
-        Log.Debug("Пиу получился");
+
+        Log.Debug("Пиу отправил ивент на " + ToPrettyString(target));
         var ev = new HittedByLightningEvent(user, target);
         RaiseLocalEvent(target, ref ev, true);
-        Log.Debug("Пиу отправил ивент");
     }
 
     /// <summary>
-    /// Fires lightning bolts at random targets in a radius.
+    /// Looks for objects with a LightningTarget component in the radius, prioritizes them, and hits the highest priority targets with lightning.
     /// </summary>
     /// <param name="user">Where the lightning fires from</param>
     /// <param name="range">Targets selection radius</param>
@@ -64,22 +61,21 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="arcDepth">how many times to recursively fire lightning bolts from the target points of the first shot.</param>
     public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
     {
-        Log.Debug("Внутри процесса случайных молний");
+        Log.Debug(" ---------------------- Случайный выплеск! ----------------------");
         //To Do: add support to different priority target tablem for different lightning types
         var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).Coordinates, range);
         var sortedTargets = targets
             .OrderByDescending(target => target.Priority)
             .ThenBy(_ => _random.Next())
             .ToList();
-        var realCount = Math.Min(targets.Count, boltCount);
 
-        Log.Debug("Целей: " + realCount);
+        var realCount = Math.Min(sortedTargets.Count, boltCount);
+
         if (realCount <= 0)
             return;
 
         for (int i = 0; i < realCount; i++)
         {
-            Log.Debug("Целимся в " + sortedTargets[i].Owner.ToString());
             ShootLightning(user, sortedTargets[i].Owner, lightningPrototype);
 
             if (arcDepth > 0)
@@ -89,3 +85,11 @@ public sealed class LightningSystem : SharedLightningSystem
         }
     }
 }
+
+/// <summary>
+/// Called when lightning bolt collide with a entity
+/// </summary>
+/// <param name="Source">The entity that created the lightning</param>
+/// <param name="Target">The entity that was struck by lightning.</param>
+[ByRefEvent]
+public readonly record struct HittedByLightningEvent(EntityUid Source, EntityUid Target);
