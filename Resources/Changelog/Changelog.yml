@@ -1,30 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Vim exosuit is now smaller and lighter for better maneuverability.,
-    type: Tweak}
-  id: 4529
-  time: '2023-08-12T19:03:08.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added trash carts. Expect these to be mapped into maintenance soon.,
-    type: Add}
-  - {message: Added janitorial trash carts that can be locked and unlocked by janitors.
-      These are for janitors to store trash bags instead of lugging them around.,
-    type: Add}
-  id: 4530
-  time: '2023-08-12T19:05:33.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: 'Nanotrasen finally decided to give engineering departments something
-      to do, and has finalized the schematics for the thermo-electric generator (TEG).',
-    type: Add}
-  - {message: The TEG creates power by exchanging energy between a hot and cold gas
-      on its two sides., type: Add}
-  - {message: You can turn on gas heaters/freezers with alt-click now., type: Tweak}
-  - {message: You can open air alarm and pump menus with activate (E) now., type: Tweak}
-  id: 4531
-  time: '2023-08-12T20:41:55.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added cyborgs. These creations are assembled part by part and can be
@@ -2924,3 +2898,20 @@ Entries:
       20TC', type: Tweak}
   id: 5028
   time: '2023-10-19T15:19:33.0000000+00:00'
+- author: IntegerTempest
+  changes:
+  - {message: Added lathe printing for rollerbed & wheelchairs., type: Add}
+  id: 5029
+  time: '2023-10-20T05:46:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Meats now cook based on internal temperature. Don't make steak in a
+      plasma fire unless you want to scorch the outside before the inside can even
+      cook., type: Tweak}
+  id: 5030
+  time: '2023-10-20T20:21:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix replays not starting., type: Fix}
+  id: 5031
+  time: '2023-10-20T22:37:02.0000000+00:00'
