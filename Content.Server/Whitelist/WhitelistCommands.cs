@@ -18,7 +18,7 @@ public sealed class AddWhitelistCommand : LocalizedCommands
     {
         if (args.Length == 0)
         {
-            shell.WriteError(Loc.GetString("shell-need-minimum-one-arguments"));
+            shell.WriteError(Loc.GetString("shell-need-minimum-one-argument"));
             shell.WriteLine(Help);
             return;
         }
@@ -67,7 +67,7 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
     {
         if (args.Length == 0)
         {
-            shell.WriteError(Loc.GetString("shell-need-minimum-one-arguments"));
+            shell.WriteError(Loc.GetString("shell-need-minimum-one-argument"));
             shell.WriteLine(Help);
             return;
         }
