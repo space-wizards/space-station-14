@@ -89,9 +89,11 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
                 if (_openable.IsClosed(args.Used))
                     return;
 
-                if (TryComp<SolutionTransferComponent>(args.Used, out var transfer) &&
-                    transfer.CanReceive)
-                    return;
+                // TO DO fix it!
+
+                // if (TryComp<SolutionTransferComponent>(args.Used, out var transfer) &&
+                //     transfer.CanReceive)
+                //     return;
             }
         }
 

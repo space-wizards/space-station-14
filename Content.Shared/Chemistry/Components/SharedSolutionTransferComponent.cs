@@ -23,10 +23,10 @@ namespace Content.Shared.Chemistry.Components
         {
             public FixedPoint2 CurrentVolume { get; }
             public FixedPoint2 TotalVolume { get; }
-            public SharedTransferToggleMode CurrentMode { get; } = SharedTransferToggleMode.Draw;
+            public SharedTransferToggleMode? CurrentMode { get; } = SharedTransferToggleMode.Draw;
 
             public SolutionTransferComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume,
-                SharedTransferToggleMode currentMode)
+                SharedTransferToggleMode? currentMode)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;

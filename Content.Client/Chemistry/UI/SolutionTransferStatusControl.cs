@@ -84,7 +84,7 @@ public interface ITransferControlValues
 {
     public FixedPoint2 CurrentVolume { get; set; }
     public FixedPoint2 TotalVolume { get; set; }
-    public SharedTransferToggleMode CurrentMode { get; set; }
+    public SharedTransferToggleMode? CurrentMode { get; set; }
     public bool UiUpdateNeeded { get; set; }
 }
 

@@ -76,20 +76,17 @@ public sealed class SolutionTransferStatusSystem : EntitySystem
         component.TotalVolume = cState.TotalVolume;
         component.CurrentMode = cState.CurrentMode;
         component.UiUpdateNeeded = true;
-
-        Logger.Debug($"need to update status for SolutionTransferComponentState {component.CurrentVolume}");
     }
 
     private void OnItemTransferStatus(EntityUid uid, SolutionTransferComponent component, ItemStatusCollectMessage args)
     {
-
-        // var tranlates = new TransferControlTranlates
-        // {
-        //     DrawModeText = "",
-        //     InjectModeText = "",
-        //     InvalidModeText = "",
-        //     VolumeLabelText = "hypospray-volume-text"
-        // };
-        // args.Controls.Add(new TransferStatucControl(component, tranlates, true, false));
+        var tranlates = new TransferControlTranlates
+        {
+            DrawModeText = "injector-draw-text",
+            InjectModeText = "injector-inject-text",
+            InvalidModeText = "injector-invalid-injector-toggle-mode",
+            VolumeLabelText = "injector-volume-label"
+        };
+        args.Controls.Add(new SolutionTransferStatusControl(component, tranlates, true, true));
     }
 }

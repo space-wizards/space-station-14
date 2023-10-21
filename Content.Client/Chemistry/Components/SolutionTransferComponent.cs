@@ -15,7 +15,7 @@ namespace Content.Client.Chemistry.Components
         [ViewVariables]
         public FixedPoint2 TotalVolume { get; set; }
         [ViewVariables]
-        public SharedTransferToggleMode CurrentMode { get; set; }
+        public SharedTransferToggleMode? CurrentMode { get; set; }
         [ViewVariables(VVAccess.ReadWrite)]
         public bool UiUpdateNeeded { get; set; }
     }

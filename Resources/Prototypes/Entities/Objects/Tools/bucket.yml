@@ -18,6 +18,7 @@
   - type: Item
     size: 100
   - type: Clothing
+    quickEquip: false
     sprite: Objects/Tools/bucket.rsi
     slots:
     - HEAD

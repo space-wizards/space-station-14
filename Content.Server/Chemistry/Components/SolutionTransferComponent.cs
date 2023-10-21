@@ -31,20 +31,6 @@ public sealed partial class SolutionTransferComponent : SharedSolutionTransferCo
     public FixedPoint2 MaximumTransferAmount { get; set; } = FixedPoint2.New(50);
 
     /// <summary>
-    ///     Can this entity take reagent from reagent tanks?
-    /// </summary>
-    [DataField("canReceive")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool CanReceive { get; set; } = true;
-
-    /// <summary>
-    ///     Can this entity give reagent to other reagent containers?
-    /// </summary>
-    [DataField("canSend")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool CanSend { get; set; } = true;
-
-    /// <summary>
     /// Whether you're allowed to change the transfer amount.
     /// </summary>
     [DataField("canChangeTransferAmount")]
@@ -55,5 +41,5 @@ public sealed partial class SolutionTransferComponent : SharedSolutionTransferCo
     /// pure solutions (inject or draw something) 
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    private SharedTransferToggleMode ToggleState { get; set; }
+    public SharedTransferToggleMode? ToggleMode { get; set; }
 }
