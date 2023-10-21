@@ -380,16 +380,28 @@ namespace Content.Server.Construction
                     if (ev is not OnTemperatureChangeEvent)
                         break;
 
-                    if (TryComp<TemperatureComponent>(uid, out var tempComp))
+                    // prefer using InternalTemperature since that's more accurate for cooking.
+                    float temp;
+                    if (TryComp<InternalTemperatureComponent>(uid, out var internalTemp))
                     {
-                        if ((!temperatureChangeStep.MinTemperature.HasValue || tempComp.CurrentTemperature >= temperatureChangeStep.MinTemperature.Value) &&
-                            (!temperatureChangeStep.MaxTemperature.HasValue || tempComp.CurrentTemperature <= temperatureChangeStep.MaxTemperature.Value))
-                        {
-                            return HandleResult.True;
-                        }
+                        temp = internalTemp.Temperature;
                     }
-                    return HandleResult.False;
+                    else if (TryComp<TemperatureComponent>(uid, out var tempComp))
+                    {
+                        temp = tempComp.CurrentTemperature;
+                    }
+                    else
+                    {
+                        return HandleResult.False;
+                    }
 
+                    if ((!temperatureChangeStep.MinTemperature.HasValue || temp >= temperatureChangeStep.MinTemperature.Value) &&
+                        (!temperatureChangeStep.MaxTemperature.HasValue || temp <= temperatureChangeStep.MaxTemperature.Value))
+                    {
+                        return HandleResult.True;
+                    }
+
+                    return HandleResult.False;
                 }
 
                 case PartAssemblyConstructionGraphStep partAssemblyStep:

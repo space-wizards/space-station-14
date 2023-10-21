@@ -1,10 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
-using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
-using Robust.Shared.Player;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -127,12 +126,12 @@ public sealed partial class ParticleAcceleratorSystem
     }
 
     private bool ScanPart<T>(EntityUid uid, Vector2i coordinates, Angle? rotation, [NotNullWhen(true)] out EntityUid? part, [NotNullWhen(true)] out T? comp, MapGridComponent? grid = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(uid, ref grid))
         {
             part = null;
-            comp = null;
+            comp = default;
             return false;
         }
 
@@ -149,7 +148,7 @@ public sealed partial class ParticleAcceleratorSystem
         }
 
         part = null;
-        comp = null;
+        comp = default;
         return false;
     }
 

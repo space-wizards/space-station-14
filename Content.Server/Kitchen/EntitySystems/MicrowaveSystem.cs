@@ -1,7 +1,5 @@
 using System.Linq;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
@@ -10,6 +8,8 @@ using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;

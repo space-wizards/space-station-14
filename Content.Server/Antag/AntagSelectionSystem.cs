@@ -124,7 +124,6 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 {
                     break;
                 }
-                chosenPlayer = _random.PickAndTake(playerList);
             }
             else
             {

@@ -133,7 +133,8 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    public readonly List<(GameTick, ChatMessage)> History = new();
+    // TODO add a cap for this for non-replays
+    public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
     // and select (for attempting to send on).
@@ -165,6 +166,7 @@ public sealed class ChatUIController : UIController
         _player.LocalPlayerDetached += OnAttachedChanged;
         _state.OnStateChanged += StateChanged;
         _net.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
+        _net.RegisterNetMessage<MsgDeleteChatMessagesBy>(OnDeleteChatMessagesBy);
         SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
 
         _speechBubbleRoot = new LayoutContainer();
@@ -842,6 +844,16 @@ public sealed class ChatUIController : UIController
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                 break;
         }
+    }
+
+    public void OnDeleteChatMessagesBy(MsgDeleteChatMessagesBy msg)
+    {
+        // This will delete messages from an entity even if different players were the author.
+        // Usages of the erase admin verb should be rare enough that this does not matter.
+        // Otherwise the client would need to know that one entity has multiple author players,
+        // or the server would need to track when and which entities a player sent messages as.
+        History.RemoveAll(h => h.Msg.SenderKey == msg.Key || msg.Entities.Contains(h.Msg.SenderEntity));
+        Repopulate();
     }
 
     public void RegisterChat(ChatBox chat)

@@ -16,9 +16,7 @@ using Content.Shared.Temperature;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
@@ -37,6 +35,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public const float MinimumFireStacks = -10f;
         public const float MaximumFireStacks = 20f;
@@ -45,9 +44,9 @@ namespace Content.Server.Atmos.EntitySystems
         public const float MinIgnitionTemperature = 373.15f;
         public const string FlammableFixtureID = "flammable";
 
-        private float _timer = 0f;
+        private float _timer;
 
-        private Dictionary<FlammableComponent, float> _fireEvents = new();
+        private readonly Dictionary<Entity<FlammableComponent>, float> _fireEvents = new();
 
         public override void Initialize()
         {
@@ -187,15 +186,14 @@ namespace Content.Server.Atmos.EntitySystems
             args.IsHot = flammable.OnFire;
         }
 
-        private void OnTileFire(EntityUid uid, FlammableComponent flammable, ref TileFireEvent args)
+        private void OnTileFire(Entity<FlammableComponent> ent, ref TileFireEvent args)
         {
             var tempDelta = args.Temperature - MinIgnitionTemperature;
 
-            var maxTemp = 0f;
-            _fireEvents.TryGetValue(flammable, out maxTemp);
+            _fireEvents.TryGetValue(ent, out var maxTemp);
 
             if (tempDelta > maxTemp)
-                _fireEvents[flammable] = tempDelta;
+                _fireEvents[ent] = tempDelta;
         }
 
         private void OnRejuvenate(EntityUid uid, FlammableComponent component, RejuvenateEvent args)
@@ -233,7 +231,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!flammable.OnFire || !flammable.CanExtinguish)
                 return;
 
-            _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} stopped being on fire damage");
+            _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):entity} stopped being on fire damage");
             flammable.OnFire = false;
             flammable.FireStacks = 0;
 
@@ -271,16 +269,16 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable))
                 return;
 
-            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner, null) || flammable.Resisting)
+            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(uid, null) || flammable.Resisting)
                 return;
 
             flammable.Resisting = true;
 
-            flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
+            _popup.PopupEntity(Loc.GetString("flammable-component-resist-message"), uid, uid);
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
 
             // TODO FLAMMABLE: Make this not use TimerComponent...
-            flammable.Owner.SpawnTimer(2000, () =>
+            uid.SpawnTimer(2000, () =>
             {
                 flammable.Resisting = false;
                 flammable.FireStacks -= 1f;
@@ -295,7 +293,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 // 100 -> 1, 200 -> 2, 400 -> 3...
                 var fireStackMod = Math.Max(MathF.Log2(deltaTemp / 100) + 1, 0);
-                var fireStackDelta = fireStackMod - flammable.FireStacks;
+                var fireStackDelta = fireStackMod - flammable.Comp.FireStacks;
                 var flammableEntity = flammable.Owner;
                 if (fireStackDelta > 0)
                 {
@@ -313,10 +311,9 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, transform) in EntityManager.EntityQuery<FlammableComponent, TransformComponent>())
+            var query = EntityQueryEnumerator<FlammableComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out var flammable, out var transform))
             {
-                var uid = flammable.Owner;
-
                 // Slowly dry ourselves off if wet.
                 if (flammable.FireStacks < 0)
                 {
@@ -329,7 +326,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                _alertsSystem.ShowAlert(uid, AlertType.Fire, null, null);
+                _alertsSystem.ShowAlert(uid, AlertType.Fire);
 
                 if (flammable.FireStacks > 0)
                 {

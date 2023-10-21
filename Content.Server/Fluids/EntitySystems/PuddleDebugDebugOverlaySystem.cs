@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -14,7 +15,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
     [Dependency] private readonly PuddleSystem _puddle = default!;
 
     private readonly HashSet<ICommonSession> _playerObservers = new();
-
+    private List<Entity<MapGridComponent>> _grids = new();
 
     public bool ToggleObserver(ICommonSession observer)
     {
@@ -57,8 +58,10 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
             var worldBounds = Box2.CenteredAround(transform.WorldPosition,
                 new Vector2(LocalViewRange, LocalViewRange));
 
+            _grids.Clear();
+            _mapManager.FindGridsIntersecting(transform.MapID, worldBounds, ref _grids);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
+            foreach (var grid in _grids)
             {
                 var data = new List<PuddleDebugOverlayData>();
                 var gridUid = grid.Owner;
@@ -66,7 +69,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
                 if (!Exists(gridUid))
                     continue;
 
-                foreach (var uid in grid.GetAnchoredEntities(worldBounds))
+                foreach (var uid in grid.Comp.GetAnchoredEntities(worldBounds))
                 {
                     PuddleComponent? puddle = null;
                     TransformComponent? xform = null;

@@ -1,13 +1,13 @@
-using Content.Shared.Mindshield.Components;
-using Content.Shared.Revolutionary.Components;
-using Content.Server.Popups;
-using Content.Shared.Database;
 using Content.Server.Administration.Logs;
 using Content.Server.Mind;
-using Content.Shared.Implants;
-using Content.Shared.Tag;
+using Content.Server.Popups;
 using Content.Server.Roles;
+using Content.Shared.Database;
+using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Content.Shared.Mindshield.Components;
+using Content.Shared.Revolutionary.Components;
+using Content.Shared.Tag;
 
 namespace Content.Server.Mindshield;
 
@@ -39,25 +39,26 @@ public sealed class MindShieldSystem : EntitySystem
         if (_tag.HasTag(ev.Implant, MindShieldTag) && ev.Implanted != null)
         {
             EnsureComp<MindShieldComponent>(ev.Implanted.Value);
-            MindShieldRemovalCheck(ev.Implanted, ev.Implant);
+            MindShieldRemovalCheck(ev.Implanted.Value, ev.Implant);
         }
     }
 
     /// <summary>
     /// Checks if the implanted person was a Rev or Head Rev and remove role or destroy mindshield respectively.
     /// </summary>
-    public void MindShieldRemovalCheck(EntityUid? implanted, EntityUid implant)
+    public void MindShieldRemovalCheck(EntityUid implanted, EntityUid implant)
     {
-        if (HasComp<RevolutionaryComponent>(implanted) && !HasComp<HeadRevolutionaryComponent>(implanted))
+        if (HasComp<HeadRevolutionaryComponent>(implanted))
         {
-            _mindSystem.TryGetMind(implanted.Value, out var mindId, out _);
-            _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(implanted.Value)} was deconverted due to being implanted with a Mindshield.");
-            _roleSystem.MindTryRemoveRole<RevolutionaryRoleComponent>(mindId);
-        }
-        else if (HasComp<RevolutionaryComponent>(implanted))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted.Value);
+            _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted);
             QueueDel(implant);
+            return;
+        }
+
+        if (_mindSystem.TryGetMind(implanted, out var mindId, out _) &&
+            _roleSystem.MindTryRemoveRole<RevolutionaryRoleComponent>(mindId))
+        {
+            _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(implanted)} was deconverted due to being implanted with a Mindshield.");
         }
     }
 }

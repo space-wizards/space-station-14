@@ -121,10 +121,10 @@ namespace Content.Server.Administration.Commands
             {
                 var handsSystem = entityManager.System<HandsSystem>();
                 var coords = entityManager.GetComponent<TransformComponent>(target).Coordinates;
-                foreach (var (hand, prototype) in startingGear.Inhand)
+                foreach (var prototype in startingGear.Inhand)
                 {
                     var inhandEntity = entityManager.SpawnEntity(prototype, coords);
-                    handsSystem.TryPickup(target, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
+                    handsSystem.TryPickup(target, inhandEntity, checkActionBlocker: false, handsComp: handsComponent);
                 }
             }
 

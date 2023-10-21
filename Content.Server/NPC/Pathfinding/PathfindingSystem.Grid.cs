@@ -1,20 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
 using Content.Shared.Access.Components;
-using Content.Shared.Climbing;
+using Content.Shared.Climbing.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
-using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -101,6 +98,7 @@ public sealed partial class PathfindingSystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
+            var pathfinding = new Entity<GridPathfindingComponent>(uid, comp);
             // TODO: Dump all this shit and just do it live it's probably fast enough.
             if (comp.DirtyChunks.Count == 0 ||
                 curTime < comp.NextUpdate ||
@@ -119,7 +117,7 @@ public sealed partial class PathfindingSystem
 
             foreach (var origin in comp.DirtyChunks)
             {
-                var chunk = GetChunk(origin, uid, comp);
+                var chunk = GetChunk(origin, uid, pathfinding);
                 dirt[idx] = chunk;
                 idx++;
             }
@@ -154,7 +152,7 @@ public sealed partial class PathfindingSystem
                 var climbableQuery = GetEntityQuery<ClimbableComponent>();
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, climbableQuery,
+                BuildBreadcrumbs(dirt[i], (uid, mapGridComp), accessQuery, destructibleQuery, doorQuery, climbableQuery,
                     fixturesQuery, xformQuery);
             });
 
@@ -203,7 +201,7 @@ public sealed partial class PathfindingSystem
                     if (index != it1)
                         return;
 
-                    BuildNavmesh(chunk, comp);
+                    BuildNavmesh(chunk, pathfinding);
 #if DEBUG
                     Interlocked.Increment(ref updateCount);
 #endif
@@ -253,24 +251,24 @@ public sealed partial class PathfindingSystem
 
     private void OnCollisionChange(ref CollisionChangeEvent ev)
     {
-        var xform = Transform(ev.Body.Owner);
+        var xform = Transform(ev.BodyUid);
 
         if (xform.GridUid == null)
             return;
 
         // This will also rebuild on door open / closes which I think is good?
-        var aabb = _lookup.GetAABBNoContainer(ev.Body.Owner, xform.Coordinates.Position, xform.LocalRotation);
+        var aabb = _lookup.GetAABBNoContainer(ev.BodyUid, xform.Coordinates.Position, xform.LocalRotation);
         DirtyChunkArea(xform.GridUid.Value, aabb);
     }
 
     private void OnCollisionLayerChange(ref CollisionLayerChangeEvent ev)
     {
-        var xform = Transform(ev.Body.Owner);
+        var xform = Transform(ev.Body);
 
         if (xform.GridUid == null)
             return;
 
-        var aabb = _lookup.GetAABBNoContainer(ev.Body.Owner, xform.Coordinates.Position, xform.LocalRotation);
+        var aabb = _lookup.GetAABBNoContainer(ev.Body, xform.Coordinates.Position, xform.LocalRotation);
         DirtyChunkArea(xform.GridUid.Value, aabb);
     }
 
@@ -416,7 +414,7 @@ public sealed partial class PathfindingSystem
     }
 
     private void BuildBreadcrumbs(GridPathfindingChunk chunk,
-        MapGridComponent grid,
+        Entity<MapGridComponent> grid,
         EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<DoorComponent> doorQuery,
@@ -449,7 +447,7 @@ public sealed partial class PathfindingSystem
                 var tilePos = new Vector2i(x, y) + gridOrigin;
                 tilePolys.Clear();
 
-                var tile = grid.GetTileRef(tilePos);
+                var tile = grid.Comp.GetTileRef(tilePos);
                 var flags = tile.Tile.IsEmpty ? PathfindingBreadcrumbFlag.Space : PathfindingBreadcrumbFlag.None;
                 // var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
 
@@ -468,7 +466,7 @@ public sealed partial class PathfindingSystem
                     var xform = xformQuery.GetComponent(ent);
 
                     if (xform.ParentUid != grid.Owner ||
-                        grid.LocalToTile(xform.Coordinates) != tilePos)
+                        grid.Comp.LocalToTile(xform.Coordinates) != tilePos)
                     {
                         continue;
                     }
@@ -647,13 +645,13 @@ public sealed partial class PathfindingSystem
                     var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
                     var neighbors = new HashSet<PathPoly>();
-                    tilePoly.Add(new PathPoly(grid.Owner, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
+                    tilePoly.Add(new PathPoly(grid, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
                 }
             }
         }
 
         // Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
-        SendBreadcrumbs(chunk, grid.Owner);
+        SendBreadcrumbs(chunk, grid);
     }
 
     /// <summary>
@@ -728,12 +726,13 @@ public sealed partial class PathfindingSystem
         }
     }
 
-    private void BuildNavmesh(GridPathfindingChunk chunk, GridPathfindingComponent component)
+    private void BuildNavmesh(GridPathfindingChunk chunk, Entity<GridPathfindingComponent> pathfinding)
     {
         var sw = new Stopwatch();
         sw.Start();
 
         var chunkPolys = chunk.Polygons;
+        var component = pathfinding.Comp;
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(-1, 0), out var leftChunk);
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(0, -1), out var bottomChunk);
         component.Chunks.TryGetValue(chunk.Origin + new Vector2i(1, 0), out var rightChunk);
@@ -839,7 +838,7 @@ public sealed partial class PathfindingSystem
         }
 
         // Log.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
-        SendPolys(chunk, component.Owner, chunkPolys);
+        SendPolys(chunk, pathfinding, chunkPolys);
     }
 
     private void AddNeighbors(PathPoly polyA, PathPoly polyB)

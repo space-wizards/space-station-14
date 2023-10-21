@@ -576,9 +576,10 @@ namespace Content.Server.NPC.Pathfinding
         {
             var msg = new PathBreadcrumbsMessage();
 
-            foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
+            var query = AllEntityQuery<GridPathfindingComponent>();
+            while (query.MoveNext(out var uid, out var comp))
             {
-                var netGrid = GetNetEntity(comp.Owner);
+                var netGrid = GetNetEntity(uid);
 
                 msg.Breadcrumbs.Add(netGrid, new Dictionary<Vector2i, List<PathfindingBreadcrumb>>(comp.Chunks.Count));
 
@@ -625,9 +626,10 @@ namespace Content.Server.NPC.Pathfinding
         {
             var msg = new PathPolysMessage();
 
-            foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
+            var query = AllEntityQuery<GridPathfindingComponent>();
+            while (query.MoveNext(out var uid, out var comp))
             {
-                var netGrid = GetNetEntity(comp.Owner);
+                var netGrid = GetNetEntity(uid);
 
                 msg.Polys.Add(netGrid, new Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>(comp.Chunks.Count));
 

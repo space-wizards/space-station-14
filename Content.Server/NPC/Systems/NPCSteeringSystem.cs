@@ -1,15 +1,14 @@
-using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
-using Content.Server.Climbing;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.CCVar;
+using Content.Shared.Climbing.Systems;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;

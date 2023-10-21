@@ -1,13 +1,11 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
-
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -22,23 +20,20 @@ namespace Content.Server.Chemistry.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SolutionInjectOnCollideComponent, ComponentInit>(HandleInit);
             SubscribeLocalEvent<SolutionInjectOnCollideComponent, StartCollideEvent>(HandleInjection);
         }
 
-        private void HandleInit(EntityUid uid, SolutionInjectOnCollideComponent component, ComponentInit args)
+        private void HandleInjection(Entity<SolutionInjectOnCollideComponent> ent, ref StartCollideEvent args)
         {
-            component.Owner
-                .EnsureComponentWarn<SolutionContainerManagerComponent>($"{nameof(SolutionInjectOnCollideComponent)} requires a SolutionContainerManager on {component.Owner}!");
-        }
-
-        private void HandleInjection(EntityUid uid, SolutionInjectOnCollideComponent component, ref StartCollideEvent args)
-        {
+            var component = ent.Comp;
             var target = args.OtherEntity;
 
             if (!args.OtherBody.Hard ||
                 !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
-                !_solutionsSystem.TryGetInjectableSolution(component.Owner, out var solution)) return;
+                !_solutionsSystem.TryGetInjectableSolution(ent, out var solution))
+            {
+                return;
+            }
 
             if (component.BlockSlots != 0x0 && TryComp<InventoryComponent>(target, out var inventory))
             {

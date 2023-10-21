@@ -107,6 +107,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
     {
+        if (component.Seed != -1)
+            return;
+
         SetSeed(component, _random.Next());
     }
 
@@ -553,6 +556,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 foreach (var node in nodes)
                 {
+                    if (modified.Contains(node))
+                        continue;
+
                     // Need to ensure the tile under it has loaded for anchoring.
                     if (TryGetBiomeTile(node, component.Layers, component.Noise, grid, out var tile))
                     {

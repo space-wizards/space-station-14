@@ -433,9 +433,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 // Just in case
                 Clean(uid);
-
-                if (instrument.UserInterface is not null)
-                    _bui.CloseAll(instrument.UserInterface);
+                _bui.TryCloseAll(uid, InstrumentUiKey.Key);
             }
 
             instrument.Timer += frameTime;

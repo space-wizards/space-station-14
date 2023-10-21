@@ -413,21 +413,21 @@ namespace Content.Client.Hands.Systems
             base.RemoveHand(uid, handName, handsComp);
         }
 
-        private void OnHandActivated(HandsComponent? handsComponent)
+        private void OnHandActivated(Entity<HandsComponent>? ent)
         {
-            if (handsComponent == null)
+            if (ent is not { } hand)
                 return;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity != handsComponent.Owner)
+            if (_playerManager.LocalPlayer?.ControlledEntity != hand.Owner)
                 return;
 
-            if (handsComponent.ActiveHand == null)
+            if (hand.Comp.ActiveHand == null)
             {
                 OnPlayerSetActiveHand?.Invoke(null);
                 return;
             }
 
-            OnPlayerSetActiveHand?.Invoke(handsComponent.ActiveHand.Name);
+            OnPlayerSetActiveHand?.Invoke(hand.Comp.ActiveHand.Name);
         }
     }
 }

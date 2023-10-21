@@ -10,7 +10,9 @@ Science, often called Research and Development, is a job made up of both generat
 </Box>
 The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D computer, which allows you to unlock technologies.
 
-Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequesites you have to unlock before you can research them.
+Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequisites you have to unlock before you can research them.
+
+Information about the different technologies can be viewed [textlink="on the technology guidebook page" link="Technologies"].
 
 ## Disciplines
 Technologies are spread over 5 different Disciplines:

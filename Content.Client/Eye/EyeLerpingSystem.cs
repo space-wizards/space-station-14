@@ -132,7 +132,7 @@ public sealed class EyeLerpingSystem : EntitySystem
             return content.TargetZoom;
         }
 
-        var change = diff * 8f * frameTime;
+        var change = diff * Math.Min(8f * frameTime, 1);
 
         return eye.Zoom + change;
     }

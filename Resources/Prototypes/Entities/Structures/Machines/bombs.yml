@@ -13,7 +13,7 @@
         - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
     - type: Wires
-      LayoutId: Defusable
+      layoutId: Defusable
       alwaysRandomize: true
     - type: Defusable
     - type: Rotatable
@@ -56,7 +56,7 @@
   description: A bomb for dummies, manual not included.
   components:
     - type: Wires
-      LayoutId: Defusable
+      layoutId: Defusable
       alwaysRandomize: true
     - type: Sprite
       sprite: Structures/Machines/bomb.rsi
