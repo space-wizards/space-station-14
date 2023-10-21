@@ -45,26 +45,27 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
 
     private void OnStartCollide(EntityUid uid, TeslaEnergyBallComponent component, ref StartCollideEvent args)
     {
+        if (TryComp<ContainmentFieldComponent>(args.OtherEntity, out var field))
+            return;
         if (TryComp<SinguloFoodComponent>(args.OtherEntity, out var singuloFood))
         {
             AdjustEnergy(uid, component, singuloFood.Energy);
-            EntityManager.QueueDeleteEntity(args.OtherEntity);
         }
-        if (TryComp<LightningTargetComponent>(args.OtherEntity, out var target))
-        {
-            var morsel = args.OtherEntity;
-            if (!EntityManager.IsQueuedForDeletion(morsel) // I saw it log twice a few times for some reason? (singulo code copy)
-                && (HasComp<MindContainerComponent>(morsel)
-                || _tagSystem.HasTag(morsel, "HighRiskItem")
-                || HasComp<ContainmentFieldGeneratorComponent>(morsel)))
-            {
-                _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} collided with Tesla and was consumed");
-            }
 
-            Spawn(component.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
-            EntityManager.QueueDeleteEntity(args.OtherEntity);
-            AdjustEnergy(uid, component, 50f);
+        var morsel = args.OtherEntity;
+        if (!EntityManager.IsQueuedForDeletion(morsel) // I saw it log twice a few times for some reason? (singulo code copy)
+            && (HasComp<MindContainerComponent>(morsel)
+            || _tagSystem.HasTag(morsel, "HighRiskItem")
+            || HasComp<ContainmentFieldGeneratorComponent>(morsel)))
+        {
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} collided with Tesla and was consumed");
         }
+
+        Spawn(component.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
+        EntityManager.QueueDeleteEntity(args.OtherEntity);
+        AdjustEnergy(uid, component, 20f);
+
+        EntityManager.QueueDeleteEntity(args.OtherEntity);
     }
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
     {

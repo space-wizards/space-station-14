@@ -19,13 +19,13 @@
         shape:
           !type:PhysShapeCircle
             radius: 0.35
-        hard: false
+        hard: true
         restitution: 0.8
-        density: 10
+        density: 99999
         mask:
-        - None
+        - AllMask   
         layer:
-        - AllMask 
+        - Opaque 
   - type: TeslaEnergyBall
     energyLoss: 3
     spawnProto: TeslaMiniEnergyBall 
@@ -74,13 +74,13 @@
         shape:
           !type:PhysShapeCircle
             radius: 0.35
-        hard: false
+        hard: true
         restitution: 0.8
-        density: 5
+        density: 9999
         mask:
-        - None
-        layer:
         - AllMask   
+        layer:
+        - Opaque  
   - type: ChasingWalk # To make the tesla move around.
     maxSpeed: 2.8
     minSpeed: 2
