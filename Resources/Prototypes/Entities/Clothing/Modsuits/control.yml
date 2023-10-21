@@ -1,0 +1,589 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitCESealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/advanced.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/advanced.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.7
+        Caustic: 0.7
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCESealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 30
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitEngineerSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/engineer.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitEngineerSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 20
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitRNDSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/rnd.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/rnd.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitRNDSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 15
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitMedicalSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/medical.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Heat: 0.9
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitMedicalSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 20
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitCMOSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/cmo.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/cmo.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.5
+        Caustic: 0.5
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCMOSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 30
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitCivillianSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/civillian.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/civillian.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.8
+        Caustic: 0.8
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCivillianSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 15
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitMagnateSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/magnate.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/magnate.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.7
+        Caustic: 0.7
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitMagnateSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 40
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitSecuritySealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/security.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/security.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Shock: 0.7
+        Caustic: 0.7
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitSecuritySealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 20
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitHOSSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/hos.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/hos.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg #brainrot
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.9
+        Piercing: 0.8
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.8
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitHOSSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 40
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitSalvageSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/salvage.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/salvage.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.9
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.9
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitSalvageSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 50 #molly come here
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitMinerSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/miner.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/miner.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.7
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitMinerSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 50 #molly come here
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent #Offstation modsuits
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitOperativeSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/nukeops.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/nukeops.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.7
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitOperativeSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 65
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingControlModsuitOperativeCMDSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/nukeopscmd.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/nukeopscmd.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.5
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitOperativeCMDSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 80
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingControlModsuitOperativeSealed
+  id: ClothingControlModsuitCCSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/corporate.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/corporate.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCCSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 65
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
