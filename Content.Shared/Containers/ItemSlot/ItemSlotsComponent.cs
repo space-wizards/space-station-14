@@ -71,6 +71,9 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
 
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist;
+
         [DataField("insertSound")]
         public SoundSpecifier InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
