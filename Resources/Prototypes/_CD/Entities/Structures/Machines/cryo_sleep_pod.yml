@@ -20,7 +20,8 @@
   - type: CryoSleep
   - type: ContainerContainer
     containers:
-      body_container: !type:ContainerSlot  
+      body_container: 
+        !type:ContainerSlot
   - type: Destructible
     thresholds:
     - trigger:

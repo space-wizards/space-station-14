@@ -51,7 +51,7 @@ public sealed class CryoSleepSystem : EntitySystem
 
     private void ComponentInit(EntityUid uid, CryoSleepComponent component, ComponentInit args)
     {
-        component.BodyContainer = _container.EnsureContainer<ContainerSlot>(uid, "body");
+        component.BodyContainer = _container.EnsureContainer<ContainerSlot>(uid, "body_container");
     }
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
@@ -60,7 +60,12 @@ public sealed class CryoSleepSystem : EntitySystem
         if (args.JobId == null)
             return;
 
-        var validPods = EntityQuery<CryoSleepComponent>().ToArray();
+        var validPods = new List<CryoSleepComponent>();
+        foreach (var component in EntityQuery<CryoSleepComponent>().ToArray())
+        {
+            if (component.DoSpawns == true)
+                validPods.Add(component);
+        }
         _random.Shuffle(validPods);
 
         if (!validPods.Any())
