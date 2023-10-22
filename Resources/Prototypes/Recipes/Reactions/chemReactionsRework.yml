@@ -1,0 +1,249 @@
+- type: reaction
+  id: Water
+  impact: High
+  minTemp: 574
+  reactants:
+    Hydrogen:
+      amount: 2
+    Oxygen:
+      amount: 1
+  products:
+    Water: 1
+    Hydrogen: 0.3
+
+#Burn - Tier 1
+- type: reaction
+  id: Kelotane
+  reactants:
+    Silicon:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Kelotane: 2
+
+#Burn - Tier 2
+- type: reaction
+  id: Dermaline
+  reactants:
+    Kelotane:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Phosphorus:
+      amount: 1
+  products:
+    Dermaline: 3
+
+#Burn - Tier 3 
+- type: reaction
+  id: SynclotidicAcid
+  impact: Low
+  minTemp: 314
+  reactants:
+    Hydrogen:
+      amount: 3
+    Dermaline:
+      amount: 1
+    Phenol:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    SynclotidicAcid: 3
+    Water: 0.25
+
+#Poison - Tier 1
+- type: reaction
+  id: Alosethasone
+  reactants:
+    Aluminium:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Potassium:
+      amount: 1
+  products:
+    Alosethasone: 2.5
+
+#Poison - Tier 2
+- type: reaction
+  id: Dylovene
+  reactants:
+    Silicon:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Alosethasone:
+      amount: 1
+  products:
+    Dylovene: 3
+
+#Reagent for Acenazone
+- type: reaction
+  id: Formaldehyde
+  reactants:
+    Phenol:
+      amount: 1
+    Aluminium:
+      amount: 1
+  products:
+    Formaldehyde: 2
+
+#Poison - Tier 3
+- type: reaction
+  id: Acenazone
+  reactants:
+    PolytrinicAcid:
+      amount: 0.5
+    Formaldehyde:
+      amount: 1
+    Ammonia:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+    Dylovene: 
+      amount: 2
+    Chlorine:
+      amount: 3
+  products:
+    Acenazone: 5
+
+#Brute - Tier 1
+- type: reaction
+  id: Flexitaine
+  reactants:
+    Phenol:
+      amount: 1 
+    Nitrogen:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Flexitaine: 2
+
+#Brute - Tier 2
+- type: reaction
+  id: Bicaridine
+  reactants:
+    Inaprovaline:
+      amount: 1 
+    Flexitaine:
+      amount: 0.66
+    Carbon:
+      amount: 1
+  products:
+    Bicaridine: 3
+
+#Brute - Tier 2.5
+- type: reaction
+  id: Retropine
+  reactants:
+    SulfuricAcid:
+      amount: 1
+      catalyst: true
+    Fluorine:
+      amount: 1 
+    Bicaridine:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Retropine: 3
+    Bicaridine: 0.25
+
+#catalyst for tier 3
+- type: reaction
+  id: Ketopiride
+  impact: High
+  minTemp: 754
+  reactants:
+    Plasma:
+      amount: 3
+    Ammonia:
+      amount: 7
+    Oil:
+      amount: 5
+    Phenol:
+      amount: 2
+    Retropine:
+      amount: 3
+  effects:
+  - !type:CreateGas
+    gas: CarbonDioxide
+  - !type:PopupMessage
+    visualType: LargeCaution
+    messages: [ "ketopiride-gas-created" ]
+    type: Pvs
+  products:
+    Ketopiride: 1
+    Water: 0.5
+
+- type: reaction
+  id: KetopirideExplosion
+  impact: High
+  priority: 20
+  reactants:
+    Ketopiride:
+      amount: 1
+    Plasma:
+      amount: 1
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 12.5
+      intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion
+      intensitySlope: .5
+      maxTotalIntensity: 75
+
+#Brute - Tier 3
+- type: reaction
+  id: Tessine
+  reactants:
+    Ketopiride:
+      amount: 5
+      catalyst: true
+    Acetone:
+      amount: 3
+    Bicaridine:
+      amount: 4
+    Copper:
+      amount: 2
+  products:
+    Tessine: 3
+    Retropine: 0.5
+
+#Radiation - Tier 1
+- type: reaction
+  id: Hyronalin
+  reactants:
+    Radium:
+      amount: 1
+    Dylovene:
+      amount: 1
+  products:
+    Hyronalin: 2
+
+#Radiation - Tier 2
+- type: reaction
+  id: Arithrazine
+  reactants:
+    Hyronalin:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Arithrazine: 2
+
+#Radiation - Tier 4
+- type: reaction
+  id: Alcaphine
+  reactants:
+    Uranium:
+      amount: 1
+    Arithrazine:
+      amount: 3
+    Tessine:
+      amount: 1
+  products:
+    Alcaphine: 3
