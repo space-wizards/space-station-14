@@ -92,16 +92,20 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword_double.rsi, state: icon }
   productEntity: EnergySwordDouble
   cost:
-    Telecrystal: 16
+    Telecrystal: 30
   categories:
   - UplinkWeapons
   conditions:
     - !type:StoreWhitelistCondition
-      blacklist:
+      whitelist:
         tags:
           - NukeOpsUplink
           - LoneOpsUplink
-
+    - !type:BuyerWhitelistCondition
+      blacklist:
+      components:
+      - SurplusBundle
+      
 - type: listing
   id: UplinkDisposableTurret
   name: uplink-disposable-turret-name
@@ -113,10 +117,13 @@
   - UplinkWeapons
   conditions:
     - !type:StoreWhitelistCondition
-      blacklist:
+      whitelist:
         tags:
           - NukeOpsUplink
           - LoneOpsUplink
+      blacklist:
+        components:
+          - SurplusBundle
 
 # Explosives
 
@@ -156,9 +163,18 @@
   description: uplink-supermatter-grenade-desc
   productEntity: SupermatterGrenade
   cost:
-    Telecrystal: 6
+    Telecrystal: 10
   categories:
     - UplinkExplosives
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+        - NukeOpsUplink
+        - LoneOpsUplink
+      blacklist:
+        components:
+        - SurplusBundle
 
 - type: listing
   id: UplinkWhiteholeGrenade
@@ -166,9 +182,19 @@
   description: uplink-whitehole-grenade-desc
   productEntity: WhiteholeGrenade
   cost:
-    Telecrystal: 3
+    Telecrystal: 6
   categories:
     - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+      - LoneOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkGrenadePenguin
@@ -184,6 +210,11 @@
     blacklist:
       components:
       - SurplusBundle
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+      - LoneOpsUplink
 
 - type: listing
   id: UplinkC4
@@ -247,10 +278,18 @@
   description: uplink-exploding-syndicate-bomb-desc
   productEntity: SyndicateBomb
   cost:
-    Telecrystal: 11
+    Telecrystal: 9
   categories:
     - UplinkExplosives
-  restockTime: 30
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+      - LoneOpsUplink
+    blacklist:
+      components:
+      - SurplusBundle
 
 # Ammo
 
@@ -714,6 +753,15 @@
     Telecrystal: 25
   categories:
   - UplinkBundles
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+      - LoneOpsUplink
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkL6SawBundle
@@ -725,6 +773,12 @@
     Telecrystal: 30
   categories:
   - UplinkBundles
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+      - LoneOpsUplink
 
 - type: listing
   id: UplinkZombieBundle
@@ -829,6 +883,10 @@
   - UplinkTools
   conditions:
     - !type:BuyerWhitelistCondition
+      whitelist:
+        tags:
+        - NukeOpsUplink
+        - LoneOpsUplink
       blacklist:
         components:
           - SurplusBundle
@@ -915,6 +973,10 @@
     whitelist:
     - Chaplain
     - HeadOfPersonnel
+  - !type:StoreWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: uplinkRevolverCapGunFake
@@ -1119,6 +1181,11 @@
     Telecrystal: 12
   categories:
   - UplinkArmor
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 # Misc
 
