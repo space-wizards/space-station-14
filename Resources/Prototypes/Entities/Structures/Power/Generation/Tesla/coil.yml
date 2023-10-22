@@ -28,9 +28,22 @@
     snapCardinals: true
     layers:
       - state: coil
+        map: ["enabled"]
+      - state: coilhit
+        shader: unshaded
+        visible: false
+        map: ["hit"]
   - type: Appearance
-  #- type: GenericVisualizer
-  #- type: AnimationPlayer #что это вообще?
+  - type: GenericVisualizer
+    visuals:
+      enum.TeslaCoilVisuals.Enabled:
+        enabled:
+          True: { state: coil_open }
+          False: { state: coil }
+      enum.TeslaCoilVisuals.Lightning:
+        hit:
+          True: { visible: true }
+          False: { visible: false }
   - type: NodeContainer
     examinable: true
     nodes:

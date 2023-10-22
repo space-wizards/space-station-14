@@ -1,4 +1,6 @@
 
+using Robust.Shared.Audio;
+
 namespace Content.Server.Tesla.Components;
 
 /// <summary>
@@ -15,8 +17,27 @@ public sealed partial class TeslaCoilComponent : Component
     public float ChargeFromLightning = 30000f;
 
     /// <summary>
+    /// Spark duration.
+    /// </summary>
+    [DataField]
+    public TimeSpan LightningTime = TimeSpan.FromSeconds(4);
+
+    /// <summary>
+    /// When the spark visual should turn off.
+    /// </summary>
+    public TimeSpan LightningEndTime;
+
+    public bool IsSparking;
+
+    /// <summary>
     /// Was machine activated by user?
     /// </summary>
     [DataField]
     public bool Enabled;
+
+    [DataField]
+    public SoundSpecifier SoundOpen = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
+
+    [DataField]
+    public SoundSpecifier SoundClose = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 }
