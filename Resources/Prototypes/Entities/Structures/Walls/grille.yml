@@ -157,5 +157,5 @@
           layer:
           - WallLayer
     - type: Construction
-      graph: Grille
+      graph: GrilleDiagonal
       node: grilleDiagonal

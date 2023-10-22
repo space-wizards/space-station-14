@@ -47,9 +47,9 @@
 
 - type: constructionGraph
   id: GrilleDiagonal
-  start: start
+  start: startDiagonal
   graph:
-    - node: start
+    - node: startDiagonal
       edges:
         - to: grilleDiagonal
           completed:
@@ -63,7 +63,7 @@
     - node: grilleDiagonal
       entity: GrilleDiagonal
       edges:
-        - to: start
+        - to: startDiagonal
           completed:
             - !type:AdminLog
               message: "A grille was cut"
