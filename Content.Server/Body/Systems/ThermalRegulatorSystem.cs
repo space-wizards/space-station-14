@@ -35,7 +35,8 @@ public sealed class ThermalRegulatorSystem : EntitySystem
 
         // implicit heat regulation
         var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - comp.NormalBodyTemperature);
-        var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
+        var heatCapacity = _tempSys.GetHeatCapacity(uid, temperatureComponent);
+        var targetHeat = tempDiff * heatCapacity;
         if (temperatureComponent.CurrentTemperature > comp.NormalBodyTemperature)
         {
             totalMetabolismTempChange -= Math.Min(targetHeat, comp.ImplicitHeatRegulation);
@@ -49,7 +50,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
 
         // recalc difference and target heat
         tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - comp.NormalBodyTemperature);
-        targetHeat = tempDiff * temperatureComponent.HeatCapacity;
+        targetHeat = tempDiff * heatCapacity;
 
         // if body temperature is not within comfortable, thermal regulation
         // processes starts
