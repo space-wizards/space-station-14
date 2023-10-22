@@ -19,5 +19,5 @@ power-monitoring-window-show-lv-cable = Low voltage
 
 power-monitoring-window-flavor-left = [user@nanotrasen] $run power_net_query  
 power-monitoring-window-flavor-right = v1.3
-power-monitoring-window-rogue-power-consumer = [color=black][font size=14][bold]! WARNING - ROGUE POWER CONSUMING DEVICE DETECTED ![/bold][/font][/color]
-power-monitoring-window-power-net-abnormalities = [color=black][font size=14][bold]CAUTION - ABNORMAL ACTIVITY IN POWER NET[/bold][/font][/color]
+power-monitoring-window-rogue-power-consumer = [color=white][font size=14][bold]! WARNING - ROGUE POWER CONSUMING DEVICE DETECTED ![/bold][/font][/color]
+power-monitoring-window-power-net-abnormalities = [color=white][font size=14][bold]CAUTION - ABNORMAL ACTIVITY IN POWER NET[/bold][/font][/color]
