@@ -4,18 +4,17 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Movement.Systems;
 using Content.Shared.Actions.Events;
 using Content.Shared.Administration.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
@@ -215,7 +214,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         return Math.Clamp(chance, 0f, 1f);
     }
 
-    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
+    public override void DoLunge(EntityUid user, EntityUid weapon, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
     {
         Filter filter;
 
@@ -228,7 +227,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             filter = Filter.Pvs(user, entityManager: EntityManager);
         }
 
-        RaiseNetworkEvent(new MeleeLungeEvent(GetNetEntity(user), angle, localPos, animation), filter);
+        RaiseNetworkEvent(new MeleeLungeEvent(GetNetEntity(user), GetNetEntity(weapon), angle, localPos, animation), filter);
     }
 
     private void OnSpeechHit(EntityUid owner, MeleeSpeechComponent comp, MeleeHitEvent args)

@@ -1,7 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Tools.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Tools;
 using Robust.Server.GameObjects;

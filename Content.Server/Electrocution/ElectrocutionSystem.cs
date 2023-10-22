@@ -17,6 +17,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Maps;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Speech.EntitySystems;
@@ -61,7 +62,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private const string DamageType = "Shock";
 
     // Yes, this is absurdly small for a reason.
-    private const float ElectrifiedDamagePerWatt = 0.0015f;
+    private const float ElectrifiedScalePerWatt = 1E-6f;
 
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
@@ -102,7 +103,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             var timePassed = Math.Min(frameTime, electrocution.TimeLeft);
 
             electrocution.TimeLeft -= timePassed;
-            electrocution.AccumulatedDamage += consumer.ReceivedPower * ElectrifiedDamagePerWatt * timePassed;
+            electrocution.AccumulatedDamage += electrocution.BaseDamage * (consumer.ReceivedPower / consumer.DrawRate) * timePassed;
 
             if (!MathHelper.CloseTo(electrocution.TimeLeft, 0))
                 continue;
@@ -117,7 +118,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                 if (actual != null)
                 {
                     _adminLogger.Add(LogType.Electrocution,
-                        $"{ToPrettyString(electrocution.Electrocuting):entity} received {actual.Total:damage} powered electrocution damage from {ToPrettyString(electrocution.Source):source}");
+                        $"{ToPrettyString(electrocution.Electrocuting):entity} received {actual.GetTotal():damage} powered electrocution damage from {ToPrettyString(electrocution.Source):source}");
                 }
             }
             QueueDel(uid);
@@ -257,15 +258,17 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         var node = PoweredNode(uid, electrified, nodeContainer);
-        if (node == null)
+        if (node?.NodeGroup is not IBasePowerNet powerNet)
             return false;
 
-        var (damageMult, timeMult) = node.NodeGroupID switch
-        {
-            NodeGroupID.HVPower => (electrified.HighVoltageDamageMultiplier, electrified.HighVoltageTimeMultiplier),
-            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier, electrified.MediumVoltageTimeMultiplier),
-            _ => (1f, 1f)
-        };
+        var net = powerNet.NetworkNode;
+        var supp = net.LastCombinedSupply;
+
+        if (supp <= 0f)
+            return false;
+
+        // Initial damage scales off of the available supply on the principle that the victim has shorted the entire powernet through their body.
+        var damageScale = supp * ElectrifiedScalePerWatt;
 
         {
             var lastRet = true;
@@ -276,8 +279,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     node,
-                    (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageMult),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeMult),
+                    (int) (electrified.ShockDamage * damageScale * MathF.Pow(RecursiveDamageMultiplier, depth)),
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Min(1f + MathF.Log2(1f + damageScale), 3f) * MathF.Pow(RecursiveTimeMultiplier, depth)),
                     true,
                     electrified.SiemensCoefficient);
             }
@@ -304,18 +307,18 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
     }
 
-        /// <inheritdoc/>
-        public override bool TryDoElectrocution(
-            EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-            StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
-        {
-            if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
-                || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
-                return false;
+    /// <inheritdoc/>
+    public override bool TryDoElectrocution(
+        EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
+        StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
+    {
+        if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
+            || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+            return false;
 
-            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
-            return true;
-        }
+        RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
+        return true;
+    }
 
     private bool TryDoElectrocutionPowered(
         EntityUid uid,
@@ -331,12 +334,12 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
             return false;
 
+        if (!DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+            return false;
+
         // Coefficient needs to be higher than this to do a powered electrocution!
         if (siemensCoefficient <= 0.5f)
-            return DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects);
-
-        if (!DoCommonElectrocution(uid, sourceUid, null, time, refresh, siemensCoefficient, statusEffects))
-            return false;
+            return true;
 
         if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
             return true;
@@ -422,7 +425,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             if (actual != null)
             {
                 _adminLogger.Add(LogType.Electrocution,
-                    $"{ToPrettyString(uid):entity} received {actual.Total:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
+                    $"{ToPrettyString(uid):entity} received {actual.GetTotal():damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
             }
         }
 

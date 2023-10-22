@@ -11,6 +11,9 @@ public sealed partial class PanicBunkerTab : Control
 {
     [Dependency] private readonly IConsoleHost _console = default!;
 
+    private string _minAccountAge;
+    private string _minOverallHours;
+
     public PanicBunkerTab()
     {
         RobustXamlLoader.Load(this);
@@ -18,21 +21,37 @@ public sealed partial class PanicBunkerTab : Control
 
         DisableAutomaticallyButton.ToolTip = Loc.GetString("admin-ui-panic-bunker-disable-automatically-tooltip");
 
-        MinAccountAge.OnTextEntered += args =>
+        MinAccountAge.OnTextEntered += args => SendMinAccountAge(args.Text);
+        MinAccountAge.OnFocusExit += args => SendMinAccountAge(args.Text);
+        _minAccountAge = MinAccountAge.Text;
+
+        MinOverallHours.OnTextEntered += args => SendMinOverallHours(args.Text);
+        MinOverallHours.OnFocusExit += args => SendMinOverallHours(args.Text);
+        _minOverallHours = MinOverallHours.Text;
+    }
+
+    private void SendMinAccountAge(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text) ||
+            text == _minAccountAge ||
+            !int.TryParse(text, out var minutes))
         {
-            if (string.IsNullOrWhiteSpace(args.Text) || !int.TryParse(args.Text, out var minutes))
-                return;
+            return;
+        }
 
-            _console.ExecuteCommand($"panicbunker_min_account_age {minutes}");
-        };
+        _console.ExecuteCommand($"panicbunker_min_account_age {minutes}");
+    }
 
-        MinOverallHours.OnTextEntered += args =>
+    private void SendMinOverallHours(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text) ||
+            text == _minOverallHours ||
+            !int.TryParse(text, out var hours))
         {
-            if (string.IsNullOrWhiteSpace(args.Text) || !int.TryParse(args.Text, out var hours))
-                return;
+            return;
+        }
 
-            _console.ExecuteCommand($"panicbunker_min_overall_hours {hours}");
-        };
+        _console.ExecuteCommand($"panicbunker_min_overall_hours {hours}");
     }
 
     public void UpdateStatus(PanicBunkerStatus status)
@@ -48,7 +67,11 @@ public sealed partial class PanicBunkerTab : Control
         EnableAutomaticallyButton.Pressed = status.EnableWithoutAdmins;
         CountDeadminnedButton.Pressed = status.CountDeadminnedAdmins;
         ShowReasonButton.Pressed = status.ShowReason;
+
         MinAccountAge.Text = status.MinAccountAgeHours.ToString();
+        _minAccountAge = MinAccountAge.Text;
+
         MinOverallHours.Text = status.MinOverallHours.ToString();
+        _minOverallHours = MinOverallHours.Text;
     }
 }

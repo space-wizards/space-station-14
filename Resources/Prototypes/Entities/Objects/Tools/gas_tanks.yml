@@ -31,6 +31,7 @@
     explosionType: Default
     maxIntensity: 20
   - type: MeleeWeapon
+    wideAnimationRotation: 45
     attackRate: 0.8
     damage:
       types:
