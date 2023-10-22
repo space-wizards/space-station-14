@@ -5,6 +5,7 @@
                SetSize="1130 700"
                MinSize="1130 700">
     <BoxContainer Orientation="Horizontal">
+        <ui:NavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 5"/>
         <ScrollContainer HorizontalExpand="True"
                          VerticalExpand="True"
                          Margin="8, 8, 8, 8">
@@ -14,16 +15,6 @@
                            HSeparationOverride="5"
                            VSeparationOverride="20"
                            Columns="4">
-                <!-- Table header -->
-                <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
-                       StyleClasses="LabelHeading"/>
-                <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
-                       StyleClasses="LabelHeading"/>
-                <Label Text="{Loc 'crew-monitoring-user-interface-status'}"
-                       StyleClasses="LabelHeading"/>
-                <Label Text="{Loc 'crew-monitoring-user-interface-location'}"
-                       StyleClasses="LabelHeading"/>
-
                 <!-- Table rows are filled by code -->
             </GridContainer>
             <Label  Name="NoServerLabel"
@@ -32,8 +23,6 @@
                     FontColorOverride="Red"
                     HorizontalAlignment="Center"
                     Visible="false"/>
-        </ScrollContainer>
-        <ui:NavMapControl Name="NavMap"
-                          Margin="5 5"/>
+        </ScrollContainer>        
     </BoxContainer>
 </controls:FancyWindow>

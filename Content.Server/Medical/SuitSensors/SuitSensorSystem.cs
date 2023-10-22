@@ -302,12 +302,15 @@ namespace Content.Server.Medical.SuitSensors
             // try to get mobs id from ID slot
             var userName = Loc.GetString("suit-sensor-component-unknown-name");
             var userJob = Loc.GetString("suit-sensor-component-unknown-job");
+            var userJobIcon = "JobIconNoId";
             if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
             {
                 if (card.Comp.FullName != null)
                     userName = card.Comp.FullName;
                 if (card.Comp.JobTitle != null)
                     userJob = card.Comp.JobTitle;
+                if (card.Comp.JobIcon != null)
+                    userJobIcon = card.Comp.JobIcon;
             }
 
             // get health mob state
@@ -321,7 +324,7 @@ namespace Content.Server.Medical.SuitSensors
                 totalDamage = damageable.TotalDamage.Int();
 
             // finally, form suit sensor status
-            var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob);
+            var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob, userJobIcon);
             switch (sensor.Mode)
             {
                 case SuitSensorMode.SensorBinary:
@@ -370,6 +373,7 @@ namespace Content.Server.Medical.SuitSensors
                 [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdUpdatedState,
                 [SuitSensorConstants.NET_NAME] = status.Name,
                 [SuitSensorConstants.NET_JOB] = status.Job,
+                [SuitSensorConstants.NET_JOB_ICON] = status.JobIcon,
                 [SuitSensorConstants.NET_IS_ALIVE] = status.IsAlive,
                 [SuitSensorConstants.NET_SUIT_SENSOR_UID] = status.SuitSensorUid,
             };
@@ -397,6 +401,7 @@ namespace Content.Server.Medical.SuitSensors
             // check name, job and alive
             if (!payload.TryGetValue(SuitSensorConstants.NET_NAME, out string? name)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_JOB, out string? job)) return null;
+            if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_ICON, out string? jobIcon)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_SUIT_SENSOR_UID, out NetEntity suitSensorUid)) return null;
 
@@ -404,7 +409,7 @@ namespace Content.Server.Medical.SuitSensors
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
             payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
 
-            var status = new SuitSensorStatus(suitSensorUid, name, job)
+            var status = new SuitSensorStatus(suitSensorUid, name, job, jobIcon)
             {
                 IsAlive = isAlive.Value,
                 TotalDamage = totalDamage,
