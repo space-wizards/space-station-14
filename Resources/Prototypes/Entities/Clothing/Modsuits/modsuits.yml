@@ -1,0 +1,46 @@
+- type: technology
+  id: BasicWorkModsuits
+  name: research-technology-combat-modsuits
+  icon:
+    sprite: Clothing/Head/Modsuits/security.rsi
+    state: icon
+  discipline: Experimental
+  tier: 1
+  cost: 2500
+  recipeUnlocks:
+  # - MedicalModHelmet туду - Сюда засунуть просто обшивки боевых
+  # - MedicalModChestplate
+  # - MedicalModGauntlets
+  # - MedicalModBoots
+  # - RNDModHelmet
+  # - RNDModChestplate
+  # - RNDModGauntlets 
+  # - RNDModBoots
+  # - EngineerModHelmet
+  # - EngineerModChestplate
+  # - EngineerModGauntlets
+  # - EngineerModBoots
+
+- type: technology
+  id: Modsuits
+  name: research-epic-modsuits
+  icon:
+    sprite: Clothing/Head/Modsuits/atmospheric.rsi
+    state: icon
+  discipline: Experimental
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+  # - AtmosModHelmet
+  # - AtmosModChestplate сюда засунуть обшивки глав
+  # - AtmosModGauntlets
+  # - AtmosModBoots
+  # - SecurityModHelmet
+  # - BrigmedicModHelmet 
+  # - SecurityModChestplate
+  # - SecurityModGauntlets
+  # - SecurityModBoots
+  # - SalvageModHelmet
+  # - SalvageModChestplate
+  # - SalvageModGauntlets
+  # - SalvageModBoots
