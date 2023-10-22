@@ -28,6 +28,8 @@
   - type: Item
     size: 80
     sprite: Objects/Weapons/Melee/pickaxe.rsi
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   name: mining drill

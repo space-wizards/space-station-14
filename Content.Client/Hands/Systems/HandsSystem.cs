@@ -95,7 +95,8 @@ namespace Content.Client.Hands.Systems
                     }
                 }
 
-                component.SortedHands = new(state.HandNames);
+                component.SortedHands.Clear();
+                component.SortedHands.AddRange(state.HandNames);
                 var sorted = addedHands.OrderBy(hand => component.SortedHands.IndexOf(hand.Name));
 
                 foreach (var hand in sorted)
