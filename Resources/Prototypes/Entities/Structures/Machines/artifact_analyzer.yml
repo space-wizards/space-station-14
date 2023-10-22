@@ -119,8 +119,6 @@
     whitelist:
       components:
       - Artifact
-  - type: PlaceableSurface
-    placeCentered: true
   - type: Machine
     board: TraversalDistorterMachineCircuitboard
   - type: Appearance

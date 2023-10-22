@@ -8,7 +8,6 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
-  - type: PlaceableSurface
   - type: Fixtures
     fixtures:
       fix1:

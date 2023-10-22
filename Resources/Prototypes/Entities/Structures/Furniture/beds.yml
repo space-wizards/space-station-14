@@ -31,10 +31,6 @@
   - type: Construction
     graph: bed
     node: bed
-  # So that you can put bedsheets on beds again. Would be cool to have a tag
-  # for this so that only bedsheets can be placed.
-  - type: PlaceableSurface
-    placeCentered: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

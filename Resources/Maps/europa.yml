@@ -40218,8 +40218,6 @@ entities:
     - open: True
       removedMasks: 20
       type: EntityStorage
-    - isPlaceable: True
-      type: PlaceableSurface
   - uid: 5734
     components:
     - pos: -28.5,45.5
@@ -40254,8 +40252,6 @@ entities:
     - open: True
       removedMasks: 20
       type: EntityStorage
-    - isPlaceable: True
-      type: PlaceableSurface
   - uid: 5929
     components:
     - pos: 16.5,1.5

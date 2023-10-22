@@ -35,8 +35,6 @@
         layer:
         - MachineLayer
   - type: EntityStorage
-  - type: PlaceableSurface
-    isPlaceable: false # defaults to closed.
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

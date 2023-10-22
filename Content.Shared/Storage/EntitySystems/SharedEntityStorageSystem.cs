@@ -33,7 +33,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] private   readonly INetManager _net = default!;
     [Dependency] private   readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private   readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedContainerSystem _container = default!;
@@ -450,9 +449,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 component.RemovedMasks = 0;
             }
         }
-
-        if (TryComp<PlaceableSurfaceComponent>(uid, out var surface))
-            _placeableSurface.SetPlaceable(uid, component.Open, surface);
 
         _appearance.SetData(uid, StorageVisuals.Open, component.Open);
         _appearance.SetData(uid, StorageVisuals.HasContents, component.Contents.ContainedEntities.Count > 0);

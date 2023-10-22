@@ -9,7 +9,6 @@ namespace Content.Shared.Placeable;
 /// </summary>
 public sealed class ItemPlacerSystem : EntitySystem
 {
-    [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
@@ -36,12 +35,6 @@ public sealed class ItemPlacerSystem : EntitySystem
             var ev = new ItemPlacedEvent(args.OtherEntity);
             RaiseLocalEvent(uid, ref ev);
         }
-
-        if (comp.MaxEntities > 0 && count >= (comp.MaxEntities - 1))
-        {
-            // Don't let any more items be placed if it's reached its limit.
-            _placeableSurface.SetPlaceable(uid, false);
-        }
     }
 
     private void OnEndCollide(EntityUid uid, ItemPlacerComponent comp, ref EndCollideEvent args)
@@ -53,8 +46,6 @@ public sealed class ItemPlacerSystem : EntitySystem
 
         var ev = new ItemRemovedEvent(args.OtherEntity);
         RaiseLocalEvent(uid, ref ev);
-
-        _placeableSurface.SetPlaceable(uid, true);
     }
 }
 

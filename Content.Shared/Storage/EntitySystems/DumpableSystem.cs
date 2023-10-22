@@ -37,7 +37,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!args.CanReach || args.Handled)
             return;
 
-        if (!_disposalUnitSystem.HasDisposals(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
+        if (!_disposalUnitSystem.HasDisposals(args.Target))
             return;
 
         StartDoAfter(uid, args.Target.Value, args.User, component);
@@ -85,20 +85,6 @@ public sealed class DumpableSystem : EntitySystem
             };
             args.Verbs.Add(verb);
         }
-
-        if (HasComp<PlaceableSurfaceComponent>(args.Target))
-        {
-            UtilityVerb verb = new()
-            {
-                Act = () =>
-                {
-                    StartDoAfter(uid, args.Target, args.User, dumpable);
-                },
-                Text = Loc.GetString("dump-placeable-verb-name", ("surface", args.Target)),
-                IconEntity = GetNetEntity(uid)
-            };
-            args.Verbs.Add(verb);
-        }
     }
 
     public void StartDoAfter(EntityUid storageUid, EntityUid? targetUid, EntityUid userUid, DumpableComponent dumpable)
@@ -106,7 +92,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!TryComp<StorageComponent>(storageUid, out var storage))
             return;
 
-        float delay = storage.Container.ContainedEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
+        var delay = storage.Container.ContainedEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
@@ -132,9 +118,10 @@ public sealed class DumpableSystem : EntitySystem
 
         foreach (var entity in dumpQueue)
         {
-            var transform = Transform(entity);
+            // TODO: Make this not issue 2 moveevents.
+            var transform = _xformQuery.GetComponent(entity);
             _container.AttachParentToContainerOrGrid((entity, transform));
-            _transformSystem.SetLocalPositionRotation(transform, transform.LocalPosition + _random.NextVector2Box() / 2, _random.NextAngle());
+            _transformSystem.SetLocalPositionRotation(entity, transform.LocalPosition + _random.NextVector2Box() / 2, _random.NextAngle(), xform: transform);
         }
 
         if (args.Args.Target == null)
@@ -151,22 +138,10 @@ public sealed class DumpableSystem : EntitySystem
                 _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, entity, args.Args.User);
             }
         }
-        else if (HasComp<PlaceableSurfaceComponent>(args.Args.Target.Value))
-        {
-            dumped = true;
-
-            var targetPos = _xformQuery.GetComponent(args.Args.Target.Value).LocalPosition;
-
-            foreach (var entity in dumpQueue)
-            {
-                _transformSystem.SetLocalPosition(entity, targetPos + _random.NextVector2Box() / 4);
-            }
-        }
 
         if (dumped)
         {
-            // TODO: Predicted when above predicted
-            _audio.PlayPvs(component.DumpSound, uid);
+            _audio.PlayPredicted(component.DumpSound, uid, args.User);
         }
     }
 }

@@ -22,7 +22,6 @@
     whitelist:
       components:
       - Temperature
-  - type: PlaceableSurface
   - type: Machine
     board: ElectricGrillMachineCircuitboard
   - type: GenericVisualizer

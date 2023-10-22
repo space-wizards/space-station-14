@@ -52,9 +52,6 @@
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
   - type: Weldable
-  - type: PlaceableSurface
-    placeCentered: true
-    isPlaceable: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -231,9 +228,6 @@
     containers:
       entity_storage: !type:Container
   - type: Weldable
-  - type: PlaceableSurface
-    placeCentered: true
-    isPlaceable: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

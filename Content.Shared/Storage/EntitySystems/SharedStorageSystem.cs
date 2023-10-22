@@ -138,9 +138,6 @@ public abstract class SharedStorageSystem : EntitySystem
 
         Log.Debug($"Storage (UID {uid}) attacked by user (UID {args.User}) with entity (UID {args.Used}).");
 
-        if (HasComp<PlaceableSurfaceComponent>(uid))
-            return;
-
         PlayerInsertHeldEntity(uid, args.User, storageComp);
         // Always handle it, even if insertion fails.
         // We don't want to trigger any AfterInteract logic here.

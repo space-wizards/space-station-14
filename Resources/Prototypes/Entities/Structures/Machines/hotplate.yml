@@ -47,9 +47,6 @@
     whitelist:
       components:
       - FitsInDispenser
-  - type: PlaceableSurface
-    placeCentered: true
-    positionOffset: 0, 0.25
   - type: Machine
     board: HotplateMachineCircuitboard
   - type: GenericVisualizer

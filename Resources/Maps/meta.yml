@@ -73590,8 +73590,6 @@ entities:
           occludes: True
           ents: []
       type: ContainerContainer
-    - isPlaceable: False
-      type: PlaceableSurface
   - uid: 22815
     components:
     - pos: -57.500534,-18.21264

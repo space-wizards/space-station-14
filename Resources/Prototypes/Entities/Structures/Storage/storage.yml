@@ -14,7 +14,6 @@
     node: Rack
   - type: Anchorable
   - type: InteractionOutline
-  - type: PlaceableSurface
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: rack
