@@ -27,7 +27,7 @@
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     snapCardinals: true
     layers:
-      - state: coil0
+      - state: coil
   - type: Appearance
   #- type: GenericVisualizer
   #- type: AnimationPlayer #что это вообще?
@@ -43,6 +43,7 @@
   - type: BatteryDischarger
     # This is JUST copy from Radiation Collector
     activeSupplyRate: 100000
+  - type: TeslaCoil
   - type: LightningTarget
     priority: 4
     lightningExplode: false
@@ -84,7 +85,7 @@
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     snapCardinals: true
     layers:
-      - state: grounding_rod0
+      - state: grounding_rod
   - type: Appearance
   #- type: GenericVisualizer
   #- type: AnimationPlayer #что это вообще?

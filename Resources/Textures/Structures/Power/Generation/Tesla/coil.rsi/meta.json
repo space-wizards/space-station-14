@@ -8,16 +8,10 @@
   },
   "states": [
     {
-      "name": "coil_open0"
+      "name": "coil_open"
     },
     {
-      "name": "coil_open1"
-    },
-    {
-      "name": "coil0"
-    },
-    {
-      "name": "coil1"
+      "name": "coil"
     },
     {
       "name": "coilhit",
@@ -33,16 +27,10 @@
       ]
     },
     {
-      "name": "grounding_rod_open0"
+      "name": "grounding_rod_open"
     },
     {
-      "name": "grounding_rod_open1"
-    },
-    {
-      "name": "grounding_rod0"
-    },
-    {
-      "name": "grounding_rod1"
+      "name": "grounding_rod"
     },
     {
       "name": "grounding_rodhit",
