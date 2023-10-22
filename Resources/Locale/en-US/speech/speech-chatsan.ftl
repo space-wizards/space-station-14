@@ -10,8 +10,8 @@ chatsan-replacement-3 = on god
 chatsan-word-4 = wtf
 chatsan-replacement-4 = what the fuck
 
-chatsan-word-5 = ffs
-chatsan-replacement-5 = for fuck's sake
+chatsan-word-5 = wth
+chatsan-replacement-5 = what the heck
 
 chatsan-word-6 = tf
 chatsan-replacement-6 = the fuck
@@ -37,8 +37,8 @@ chatsan-replacement-13 = let me know
 chatsan-word-14 = ur
 chatsan-replacement-14 = your
 
-chatsan-word-15 = mk
-chatsan-replacement-15 = mmm, okay
+chatsan-word-15 = ffs
+chatsan-replacement-15 = for fuck's sake
 
 chatsan-word-16 = iirc
 chatsan-replacement-16 = if i remember correctly
