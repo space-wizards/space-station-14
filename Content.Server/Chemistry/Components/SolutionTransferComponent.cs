@@ -42,4 +42,7 @@ public sealed partial class SolutionTransferComponent : SharedSolutionTransferCo
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public SharedTransferToggleMode? ToggleMode { get; set; }
+
+    public Solution? DrainableSolution { get; set; } = null;
+    public Solution? RefillableSolution { get; set; } = null;
 }

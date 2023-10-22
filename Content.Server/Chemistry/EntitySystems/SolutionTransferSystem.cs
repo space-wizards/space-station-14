@@ -38,8 +38,19 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<SolutionTransferComponent, ComponentGetState>(OnSolutionTransferGetState);
             SubscribeLocalEvent<SolutionTransferComponent, HandSelectedEvent>(OnSolutionTransferHandSelected);
             SubscribeLocalEvent<SolutionTransferComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<SolutionTransferComponent, ComponentStartup>(OnSolutionTransferStartup);
         }
 
+        // found solutions for this component
+        private void OnSolutionTransferStartup(EntityUid uid, SolutionTransferComponent component, ComponentStartup args)
+        {
+            if (_solutionContainerSystem.TryGetDrainableSolution(uid, out var ownerDrain))
+                component.DrainableSolution = ownerDrain;
+
+            if (EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
+                && _solutionContainerSystem.TryGetRefillableSolution(uid, out var ownerRefill, refillable: refillComp))
+                component.RefillableSolution = ownerRefill;
+        }
         private void OnTransferAmountSetValueMessage(EntityUid uid, SolutionTransferComponent solutionTransfer, TransferAmountSetValueMessage message)
         {
             var newTransferAmount = FixedPoint2.Clamp(message.Value, solutionTransfer.MinimumTransferAmount, solutionTransfer.MaximumTransferAmount);
@@ -221,12 +232,8 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             SharedTransferToggleMode? toggleMode = nextMode ?? component.ToggleMode;
 
-            var isDrainSolution = _solutionContainerSystem.TryGetDrainableSolution(uid, out var ownerDrain);
-            EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp);
-            var isRefillSolution = _solutionContainerSystem.TryGetRefillableSolution(
-                uid, out var ownerRefill, refillable: refillComp);
-
-            if (ownerDrain is Solution drainSolution && ownerRefill is Solution refillSolution)
+            if (component.DrainableSolution is Solution drainSolution
+                    && component.RefillableSolution is Solution refillSolution)
             {
                 switch (toggleMode)
                 {
@@ -248,9 +255,9 @@ namespace Content.Server.Chemistry.EntitySystems
             }
             else
             {
-                if (isDrainSolution)
+                if (component.DrainableSolution != null)
                     toggleMode = SharedTransferToggleMode.Inject;
-                else if (isRefillSolution)
+                else if (component.RefillableSolution != null)
                     toggleMode = SharedTransferToggleMode.Draw;
                 else
                     toggleMode = null;
@@ -261,26 +268,21 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void SetTransferMode(EntityUid uid, SolutionTransferComponent component, bool isCanChangeToggleMode = true)
         {
-            Logger.Debug($"change toggle mode");
-            Logger.Debug($"current mode is {component.ToggleMode}");
-            Logger.Debug($"new mode is {GetTransferMode(uid, component, isCanChangeToggleMode)}");
             component.ToggleMode = GetTransferMode(uid, component, isCanChangeToggleMode);
         }
 
+        // get some solution for current toggleMode
+        // for draw - RefillableSolution(pour into the container)
+        // fro inject - DrainableSolution(pour out the container)
         private Solution? GetTransferModeSolution(EntityUid uid, SolutionTransferComponent component)
         {
-            Solution? solution = null;
+            if (component.ToggleMode == SharedTransferToggleMode.Inject)
+                return component.DrainableSolution;
 
-            if (component.ToggleMode == SharedTransferToggleMode.Inject
-                        && _solutionContainerSystem.TryGetDrainableSolution(uid, out solution))
-                return solution;
+            if (component.ToggleMode == SharedTransferToggleMode.Draw)
+                return component.RefillableSolution;
 
-            if (component.ToggleMode == SharedTransferToggleMode.Draw
-                        && EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
-                        && _solutionContainerSystem.TryGetRefillableSolution(uid, out solution, refillable: refillComp))
-                return solution;
-
-            return solution;
+            return null;
         }
 
         private SharedTransferToggleMode? GetAvailableNextMode(EntityUid uid, SolutionTransferComponent component)
