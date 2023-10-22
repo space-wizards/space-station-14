@@ -201,7 +201,7 @@
   id: Tessine
   reactants:
     Ketopiride:
-      amount: 5
+      amount: 1
       catalyst: true
     Acetone:
       amount: 3
