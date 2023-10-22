@@ -1601,9 +1601,11 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-#  - type: Butcherable
-#    butcheringType: Knife
-#    spawned:
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: CarvedPumpkin
+    - id: PumpkinSeeds
   - type: Tag
     tags:
     - Fruit

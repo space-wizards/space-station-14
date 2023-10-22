@@ -1176,6 +1176,15 @@
     FoodCheeseSlice: 3
 
 - type: microwaveMealRecipe
+  id: RecipePumpkinCake
+  name: pumpkin cake recipe
+  result: FoodCakePumpkin
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodPumpkin: 1
+
+- type: microwaveMealRecipe
   id: RecipeClownCake
   name: clown cake recipe
   result: FoodCakeClown
