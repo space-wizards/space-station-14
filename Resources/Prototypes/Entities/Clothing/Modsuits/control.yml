@@ -560,6 +560,32 @@
       event: !type:ToggleActionEvent
 
 - type: entity
+  parent: ClothingControlModsuitOperativeSealed
+  id: ClothingControlModsuitHonkOperativeSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/nukeopsclown.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/nukeopsclown.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitHonkOperativeSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 65
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+
+- type: entity
   parent: ClothingBackpack
   id: ClothingControlModsuitOperativeCMDSealed
   name: CE modsuit helmet

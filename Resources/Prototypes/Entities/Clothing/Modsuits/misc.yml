@@ -19,7 +19,7 @@
   description: uplink-modsuitoperativecmd-desc
   productEntity: ClothingControlModsuitOperativeCMDSealed
   cost:
-    Telecrystal: 25
+    Telecrystal: 20
   categories:
     - UplinkArmor
   conditions:

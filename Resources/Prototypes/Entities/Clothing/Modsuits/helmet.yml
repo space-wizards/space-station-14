@@ -397,3 +397,17 @@
     sprite: Clothing/Head/Modsuits/corporate.rsi
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
+
+- type: entity
+  parent: ClothingHeadHelmetModsuitOperativeSealed
+  id: ClothingHeadHelmetModsuitHonkOperativeSealed
+  noSpawn: true
+  name: salvage modsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Modsuits/nukeopsclown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Modsuits/nukeopsclown.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg

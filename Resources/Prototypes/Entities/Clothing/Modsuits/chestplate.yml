@@ -91,8 +91,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
+        Blunt: 0.7
+        Slash: 0.7
         Piercing: 0.8
         Shock: 0.2
         Caustic: 0.2
@@ -457,6 +457,23 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingGauntletsModsuitOperativeSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterChestplateModsuitOperativeSealed
+  id: ClothingOuterChestplateModsuitHonkOperativeSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/nukeopsclown.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/nukeopsclown.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitHonkOperativeSealed
     requiredSlot: outerClothing
     slot: gloves
 

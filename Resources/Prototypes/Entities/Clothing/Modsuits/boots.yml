@@ -540,3 +540,34 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingBootsModsuitHonkOperativeSealed
+  noSpawn: true
+  name: salvage modsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Modsuits/nukeopsclown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Modsuits/nukeopsclown.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Shock: 0.8
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitHonkOperativeSealed
+    slot: head
+    requiredSlot: feet
+  - type: Tag
+    tags:
+    - WhitelistChameleon
