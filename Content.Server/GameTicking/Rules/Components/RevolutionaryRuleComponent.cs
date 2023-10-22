@@ -60,6 +60,30 @@ public sealed partial class RevolutionaryRuleComponent : Component
     public int PlayersPerHeadRev = 15;
 
     /// <summary>
+    /// Whether or not Head Revs have been selected yet or not.
+    /// </summary>
+    [DataField]
+    public bool HeadRevsChosen;
+
+    /// <summary>
+    /// When Revs will start during a shift.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan? StartTime;
+
+    /// <summary>
+    /// The minimum amount of time after the round starts that the Head Revs will be chosen.
+    /// </summary>
+    [DataField]
+    public TimeSpan MinStartDelay = TimeSpan.FromMinutes(2);
+
+    /// <summary>
+    /// The maximum amount of time after the round starts that the Head Revs will be chosen.
+    /// </summary>
+    [DataField]
+    public TimeSpan MaxStartDelay = TimeSpan.FromMinutes(5);
+
+    /// <summary>
     /// The gear head revolutionaries are given on spawn.
     /// </summary>
     [DataField]

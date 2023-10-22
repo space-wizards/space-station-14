@@ -24,6 +24,7 @@ using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
@@ -36,6 +37,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -54,7 +56,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         base.Initialize();
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
@@ -66,6 +67,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         base.Started(uid, component, gameRule, args);
         component.CommandCheck = _timing.CurTime + component.TimerWait;
+        component.StartTime = _timing.CurTime + _random.Next(component.MinStartDelay, component.MaxStartDelay);
     }
 
     /// <summary>
@@ -74,14 +76,36 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
-        if (component.CommandCheck <= _timing.CurTime)
-        {
-            component.CommandCheck = _timing.CurTime + component.TimerWait;
 
-            if (CheckCommandLose())
+        if (component.HeadRevsChosen)
+        {
+            if (component.CommandCheck <= _timing.CurTime)
             {
-                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
-                GameTicker.EndGameRule(uid, gameRule);
+                component.CommandCheck = _timing.CurTime + component.TimerWait;
+
+                if (CheckCommandLose())
+                {
+                    _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
+                    GameTicker.EndGameRule(uid, gameRule);
+                }
+            }
+            return;
+        }
+
+        if (component.StartTime != null && component.StartTime <= _timing.CurTime)
+        {
+            var query = QueryActiveRules();
+            while (query.MoveNext(out _, out var comp, out _))
+            {
+                _antagSelection.EligiblePlayers(comp.HeadRevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
+                    "head-rev-role-greeting", "#5e9cff", out var chosen);
+                if (chosen.Any())
+                    GiveHeadRev(chosen, comp.HeadRevPrototypeId, comp);
+                else
+                {
+                    _chatManager.SendAdminAnnouncement(Loc.GetString("rev-no-heads"));
+                    comp.HeadRevsChosen = true;
+                }
             }
         }
     }
@@ -137,27 +161,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
     }
 
-    private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
-    {
-        var query = QueryActiveRules();
-        while (query.MoveNext(out _, out var comp, out _))
-        {
-            _antagSelection.EligiblePlayers(comp.HeadRevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
-                "head-rev-role-greeting", "#5e9cff", out var chosen);
-            if (chosen.Any())
-                GiveHeadRev(chosen, comp.HeadRevPrototypeId, comp);
-            else
-            {
-                _chatManager.SendAdminAnnouncement(Loc.GetString("rev-no-heads"));
-            }
-        }
-    }
-
     private void GiveHeadRev(List<EntityUid> chosen, string antagProto, RevolutionaryRuleComponent comp)
     {
+        comp.HeadRevsChosen = true;
         foreach (var headRev in chosen)
         {
             RemComp<CommandStaffComponent>(headRev);
+            //In case some funny guy mindshields themselves before being selected
+            if (TryComp<MindShieldComponent>(headRev, out var mindshield))
+                RemComp<MindShieldComponent>(headRev);
 
             var inCharacterName = MetaData(headRev).EntityName;
             if (_mind.TryGetMind(headRev, out var mindId, out var mind))

@@ -206,7 +206,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         var bag = backSlot.ContainedEntity;
         if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert(bag.Value, itemToSpawn, out _))
         {
-            _storageSystem.Insert(bag.Value, itemToSpawn, out _);
+            _storageSystem.Insert(bag.Value, itemToSpawn, out _, playSound: false);
         }
         else if (_inventory.TryGetSlotContainer(antag, "jumpsuit", out var jumpsuit, out _) && jumpsuit.ContainedEntity != null)
         {
@@ -227,6 +227,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                         {
                             pocket2Slot.Insert(itemToSpawn);
                         }
+
                     }
                 }
             }
