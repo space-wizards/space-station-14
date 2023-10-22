@@ -23,7 +23,9 @@ trait-accentless-desc = У вас нет того акцента, который
 trait-wheelchair-bound-name = Инвалид-колясочник
 trait-wheelchair-bound-desc = Вы не можете передвигаться без инвалидной коляски. Она поставляется в комплекте.
 trait-monochromatic-name = Монохроматическая слепота
-trait-monochromatic-desc = Зрение позволяет вам различать лишь оттенки серого
+trait-monochromatic-desc = Зрение позволяет вам различать лишь оттенки серого.
+trait-chromatic-aberration-name = Дальтонизм
+trait-chromatic-aberration-desc = Ваше цветовое восприятие отличается от общепринятой нормы.
 trait-nearsighted-name = Близорукость
 trait-nearsighted-desc = У вас ужасное зрение.
 nearsighted-trait-examined = [color=lightblue]{ CAPITALIZE(POSS-PRONOUN($target)) } глаза слегка расфокусированы. Не похоже, что { SUBJECT($target) } хорошо различает окружение.[/color]

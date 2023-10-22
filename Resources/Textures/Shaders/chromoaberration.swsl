@@ -1,0 +1,25 @@
+﻿uniform sampler2D SCREEN_TEXTURE;
+uniform highp float alpha = 1.0;
+
+uniform highp float a1 = 0.625;
+uniform highp float a2 = 0.375;
+uniform highp float a3 = 0.000;
+uniform highp float b1 = 0.700;
+uniform highp float b2 = 0.300;
+uniform highp float b3 = 0.000;
+uniform highp float c1 = 0.000;
+uniform highp float c2 = 0.300;
+uniform highp float c3 = 0.700;
+
+void fragment() {
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, UV);
+
+    highp mat3 m = mat3(
+        vec3(a1, a2, a3),
+        vec3(b1, b2, b3),
+        vec3(c1, c2, c3)
+    );
+    highp vec3 result = color.rgb * m;
+
+    COLOR = vec4(result, color.a * alpha);
+}

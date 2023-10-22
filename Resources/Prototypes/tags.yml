@@ -1088,3 +1088,6 @@
 
 - type: Tag
   id: GlassesMonochromacy
+
+- type: Tag
+  id: GlassesChromaticAberration

@@ -76,6 +76,16 @@
   id: PaperStamp
   kind: source
   path: "/Textures/Shaders/paperstamp.swsl"
+
+- type: shader
+  id: Crispy
+  kind: source
+  path: "/Textures/Shaders/crispy.swsl"
+
+- type: shader
+  id: ChromaticAberration
+  kind: source
+  path: "/Textures/Shaders/chromoaberration.swsl"
   
 # Simple horizontal cut
 - type: shader

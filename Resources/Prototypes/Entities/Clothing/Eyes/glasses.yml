@@ -79,6 +79,7 @@
     tags:
     - GlassesNearsight
     - GlassesMonochromacy
+    - GlassesChromaticAberration
     - HamsterWearable
     - WhitelistChameleon
 
@@ -96,6 +97,7 @@
   - type: Tag
     tags:
     - GlassesNearsight
+    - GlassesChromaticAberration
     - GlassesMonochromacy
     - HamsterWearable
     - WhitelistChameleon
@@ -116,6 +118,7 @@
     tags:
     - GlassesNearsight
     - GlassesMonochromacy
+    - GlassesChromaticAberration
 
 - type: entity
   parent: ClothingEyesBase

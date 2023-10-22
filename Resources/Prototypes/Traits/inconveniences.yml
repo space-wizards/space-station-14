@@ -12,11 +12,17 @@
   description: trait-monochromatic-desc
   components:
     - type: Monochromacy
+  blacklist:
+    components:
+      - PermanentBlindness
 
 - type: trait
-  id: Nearsighted
-  name: trait-nearsighted-name
-  description: trait-nearsighted-desc
-  traitGear: ClothingEyesGlasses
+  id: ChromaticAberration
+  name: trait-chromatic-aberration-name
+  description: trait-chromatic-aberration-desc
   components:
-    - type: Nearsighted
+    - type: ChromaticAberration
+      setPreset: "Pick"
+  blacklist:
+    components:
+      - Monochromacy

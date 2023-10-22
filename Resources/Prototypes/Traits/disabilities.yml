@@ -10,6 +10,20 @@
     - type: PermanentBlindness
 
 - type: trait
+  id: Nearsighted
+  name: trait-nearsighted-name
+  description: trait-nearsighted-desc
+  traitGear: ClothingEyesGlasses
+  whitelist:
+    components:
+      - Blindable
+  blacklist:
+    components:
+      - PermanentBlindness
+  components:
+    - type: Nearsighted
+
+- type: trait
   id: Narcolepsy
   name: trait-narcolepsy-name
   description: trait-narcolepsy-decs
