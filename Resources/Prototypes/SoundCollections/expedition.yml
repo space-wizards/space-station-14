@@ -1,0 +1,5 @@
+﻿- type: soundCollection
+  id: ExpeditionCountdownDefault
+  files:
+    - /Audio/Misc/tension_session.ogg
+    - /Audio/Misc/deadline.ogg

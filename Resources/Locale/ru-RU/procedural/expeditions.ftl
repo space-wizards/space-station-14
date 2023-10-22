@@ -27,16 +27,16 @@ salvage-expedition-difficulty-players = Рекомендуемое размер 
 salvage-expedition-not-all-present = Не все утилизаторы вернулись на борт шаттла!
 # Runner
 salvage-expedition-announcement-countdown-minutes =
-    До окончания экспедиции осталась { $duration } { $duration ->
-        [one] минута
-        [few] минуты
-       *[other] минут
+    До окончания экспедиции { $duration ->
+        [one] осталась { $duration } минута
+        [few] осталось { $duration } минуты
+       *[other] осталось { $duration } минут
     }.
 salvage-expedition-announcement-countdown-seconds =
-    До окончания экспедиции осталось { $duration } { $duration ->
-        [one] секунда
-        [few] секунды
-       *[other] секунд
+    До окончания экспедиции { $duration ->
+        [one] осталась { $duration } секунда
+        [few] осталось { $duration } секунды
+       *[other] осталось { $duration } секунд
     }.
 salvage-expedition-reward-description = Награда за завершение миссии
 salvage-expedition-announcement-dungeon = Подземелье расположено от вас на { $direction }.
