@@ -33,12 +33,7 @@ player-first-join-message = Игрок {$name} зашёл впервые!
 # Displayed in chat to admins when a player leaves
 player-leave-message = Игрок {$name} вышел.
 
-latejoin-arrival-announcement = {$character} ({$job}) {$gender ->
-        [male] прибыл
-        [female] прибыла
-        [epicene] прибыли
-       *[neuter] прибыл
-    } на станцию!
+latejoin-arrival-announcement = {$character} ({$job}) прибыл на станцию!
 latejoin-arrival-sender = Общее
 latejoin-arrivals-direction = Вскоре прибудет шаттл, который доставит вас на станцию.
 latejoin-arrivals-direction-time = Шаттл, который доставит вас на станцию, прибудет через {$time}.

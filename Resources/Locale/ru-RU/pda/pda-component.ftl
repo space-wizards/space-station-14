@@ -19,7 +19,7 @@ comp-pda-io-no-programs-available = Нет доступных программ
 pda-bound-user-interface-show-uplink-title = Открыть аплинк
 pda-bound-user-interface-show-uplink-description = Открывает ваш аплинк
 
-pda-bound-user-interface-lock-uplink-title = Заблокрировать аплинк
+pda-bound-user-interface-lock-uplink-title = Заблокировать аплинк
 pda-bound-user-interface-lock-uplink-description = Запретить кому-либо доступ к вашему аплинку без кода
 
 comp-pda-ui-menu-title = КПК
