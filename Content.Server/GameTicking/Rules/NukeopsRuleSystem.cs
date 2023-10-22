@@ -343,13 +343,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         component.TargetStation = _random.Pick(eligible);
-        var operation_name = _randomMetadata.GetRandomFromSegments(new List<string> {"operationPrefix", "operationSuffix"}, " ");
+        component.OperationName = _randomMetadata.GetRandomFromSegments(new List<string> {"operationPrefix", "operationSuffix"}, " ");
 
         var filter = Filter.Empty();
         var query = EntityQueryEnumerator<NukeOperativeComponent, ActorComponent>();
         while (query.MoveNext(out _, out var nukeops, out var actor))
         {
-            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value), ("operation_name", operation_name)));
+            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value), ("operation_name", component.OperationName)));
             _audio.PlayGlobal(nukeops.GreetSoundNotification, actor.PlayerSession);
             filter.AddPlayer(actor.PlayerSession);
         }
