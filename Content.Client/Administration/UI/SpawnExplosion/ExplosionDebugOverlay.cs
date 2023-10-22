@@ -1,10 +1,12 @@
+using System.Linq;
+using System.Numerics;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using System.Linq;
-using System.Numerics;
+using Robust.Shared.Map.Components;
 
 namespace Content.Client.Administration.UI.SpawnExplosion;
 
@@ -13,7 +15,6 @@ public sealed class ExplosionDebugOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
 
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
     public Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles = new();
@@ -61,14 +62,15 @@ public sealed class ExplosionDebugOverlay : Overlay
         var handle = args.ScreenHandle;
         Box2 gridBounds;
         var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+        var xformSystem = _entityManager.System<TransformSystem>();
 
         foreach (var (gridId, tileSets) in Tiles)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entityManager.TryGetComponent(gridId, out MapGridComponent? grid))
                 continue;
 
-            var gridXform = xformQuery.GetComponent(grid.Owner);
-            var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            var gridXform = xformQuery.GetComponent(gridId);
+            var (_, _, matrix, invMatrix) = xformSystem.GetWorldPositionRotationMatrixWithInv(gridXform, xformQuery);
             gridBounds = invMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             DrawText(handle, gridBounds, matrix, tileSets, grid.TileSize);
         }
@@ -114,9 +116,9 @@ public sealed class ExplosionDebugOverlay : Overlay
             }
         }
 
-        if (tileSets.ContainsKey(0))
+        if (tileSets.TryGetValue(0, out var set))
         {
-            var epicenter = tileSets[0].First();
+            var epicenter = set.First();
             var worldCenter = transform.Transform((epicenter + Vector2Helpers.Half) * tileSize);
             var screenCenter = _eyeManager.WorldToScreen(worldCenter) + new Vector2(-24, -24);
             var text = $"{Intensity[0]:F2}\nΣ={TotalIntensity:F1}\nΔ={Slope:F1}";
@@ -129,14 +131,15 @@ public sealed class ExplosionDebugOverlay : Overlay
         var handle = args.WorldHandle;
         Box2 gridBounds;
         var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+        var xformSystem = _entityManager.System<TransformSystem>();
 
         foreach (var (gridId, tileSets) in Tiles)
         {
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entityManager.TryGetComponent(gridId, out MapGridComponent? grid))
                 continue;
 
-            var gridXform = xformQuery.GetComponent(grid.Owner);
-            var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            var gridXform = xformQuery.GetComponent(gridId);
+            var (_, _, worldMatrix, invWorldMatrix) = xformSystem.GetWorldPositionRotationMatrixWithInv(gridXform, xformQuery);
             gridBounds = invWorldMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             handle.SetTransform(worldMatrix);
             DrawTiles(handle, gridBounds, tileSets, SpaceTileSize);
