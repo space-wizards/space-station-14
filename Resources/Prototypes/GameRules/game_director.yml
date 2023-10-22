@@ -94,13 +94,13 @@
     Anomaly: 100
     Atmos: 200
     Power: 100
-    Jani: 100
+    Mess: 100
     Hunger: 100
     Thirst: 100
     Medical: 100
 
 - type: storyBeat
-  id: EngineeringIssues
+  id: PowerIssues
   description: Create high engineering chaos
   goal:   # Annoying engineering issues
     Atmos: 400
@@ -123,8 +123,7 @@
     Combat: -100 # Friendly forces should retain the upper hand
 
 - type: storyBeat
-  id: MadScience
-  Attackers:
+  id: Attackers
   description: Drive high combat
   goal:
     Hostile: 100  # Quite a few hostiles

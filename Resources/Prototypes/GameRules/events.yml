@@ -295,7 +295,7 @@
     startDelay: 50
     duration: 60
     chaos:
-      Jani: 200
+      Mess: 200
   - type: VentClogRule
 
 - type: entity

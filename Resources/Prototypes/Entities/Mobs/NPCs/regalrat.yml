@@ -114,6 +114,8 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: CombatPower
+    factor: 2 # times more dangerous than a crew-member
 
 - type: entity
   id: MobRatKingBuff
@@ -265,6 +267,8 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+  - type: CombatPower
+    factor: 0.25 # only a fraction of a crew-member
 
 - type: weightedRandomEntity
   id: RatKingLoot

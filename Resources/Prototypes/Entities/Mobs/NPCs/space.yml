@@ -114,6 +114,8 @@
     prob: 0.25
     name: ghost-role-information-space-bear-name
     description: ghost-role-information-space-bear-description
+  - type: CombatPower
+    factor: 2 # times more dangerous than a crew-member
 
 - type: entity
   id: MobBearSpaceSalvage
@@ -185,6 +187,8 @@
     prob: 0.25
     name: ghost-role-information-space-kangaroo-name
     description: ghost-role-information-space-kangaroo-description
+  - type: CombatPower
+    factor: 1 # times more dangerous than a crew-member
 
 - type: entity
   id: MobKangarooSpaceSalvage
@@ -282,6 +286,8 @@
     description: ghost-role-information-space-spider-description
   - type: Speech
     speechVerb: Arachnid
+  - type: CombatPower
+    factor: 1.5 # times more dangerous than a crew-member
 
 - type: entity
   id: MobSpiderSpaceSalvage

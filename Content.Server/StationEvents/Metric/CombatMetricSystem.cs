@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
@@ -28,12 +29,13 @@ namespace Content.Server.StationEvents.Metric;
 public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent>
 {
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent component,
         CalculateChaosEvent args)
     {
         // Add up the pain of all the puddles
-        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, DamageableComponent>();
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, DamageableComponent, TransformComponent>();
         var hostiles = FixedPoint2.Zero;
         var friendlies = FixedPoint2.Zero;
 
@@ -42,14 +44,25 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
 
         var nukieQ = GetEntityQuery<NukeOperativeComponent>();
         var zombieQ = GetEntityQuery<ZombieComponent>();
+        var powerQ = GetEntityQuery<CombatPowerComponent>();
 
         // var humanoidQ = GetEntityQuery<HumanoidAppearanceComponent>();
+        var stationGrids = _stationSystem.GetAllStationGrids();
 
-        while (query.MoveNext(out var uid, out var mind, out var mobState, out var damage))
+        while (query.MoveNext(out var uid, out var mind, out var mobState, out var damage, out var transform))
         {
             // Don't count anything that is mindless
             if (mind.Mind == null)
                 continue;
+
+            // Only count threats currently on station, which avoids salvage threats getting counted for instance.
+            // Note this means for instance Nukies on nukie planet don't count, so the threat will spike when they arrive.
+            if (transform.GridUid == null || !stationGrids.Contains(transform.GridUid.Value))
+                continue;
+
+            // Read per-entity scaling factor (for instance space dragon has much higher threat)
+            powerQ.TryGetComponent(uid, out var power);
+            var threatMultiple = power?.Threat ?? 1.0f;
 
             if (_roles.MindIsAntagonist(mind.Mind))
             {
@@ -59,15 +72,15 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
                 // This is an antag
                 if (nukieQ.TryGetComponent(uid, out var nukie))
                 {
-                    hostiles += component.HostileScore + component.NukieScore;
+                    hostiles += (component.HostileScore + component.NukieScore) * threatMultiple;
                 }
                 else if (zombieQ.TryGetComponent(uid, out var zombie))
                 {
-                    hostiles += component.HostileScore + component.ZombieScore;
+                    hostiles += (component.HostileScore + component.ZombieScore) * threatMultiple;
                 }
                 else
                 {
-                    hostiles += component.HostileScore;
+                    hostiles += component.HostileScore * threatMultiple;
                 }
             }
             else
@@ -90,7 +103,7 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
                 }
 
                 // Friendlies are good, so make a negative chaos score
-                friendlies -= component.FriendlyScore;
+                friendlies -= component.FriendlyScore * threatMultiple;
 
             }
         }

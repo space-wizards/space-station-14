@@ -460,6 +460,22 @@ public sealed class StationSystem : EntitySystem
         return stations;
     }
 
+    public HashSet<EntityUid> GetAllStationGrids()
+    {
+        // Collect all grids owned by stations
+        var grids = new HashSet<EntityUid>();
+
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out var data))
+        {
+            // Add to the list of grids
+            grids.UnionWith(data.Grids);
+        }
+
+        return grids;
+    }
+
+
     /// <summary>
     /// Returns the first station that has a grid in a certain map.
     /// If the map has no stations, null is returned instead.

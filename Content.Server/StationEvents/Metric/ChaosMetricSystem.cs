@@ -1,4 +1,5 @@
 using Content.Server.GameTicking;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Metric.Components;
 
 namespace Content.Server.StationEvents.Metric;
@@ -26,4 +27,5 @@ public abstract class ChaosMetricSystem<T> : EntitySystem where T : Component
 
         args.Metrics += ourChaos;
     }
+
 }

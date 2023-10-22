@@ -123,6 +123,8 @@
   - type: Tag
     tags:
     - CannotSuicide
+  - type: CombatPower
+    factor: 4 # times more dangerous than a crew-member
 
 - type: entity
   parent: BaseMobDragon

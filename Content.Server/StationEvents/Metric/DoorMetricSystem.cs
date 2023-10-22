@@ -1,4 +1,5 @@
 ﻿using Content.Server.Power.Components;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.FixedPoint;
@@ -14,6 +15,8 @@ namespace Content.Server.StationEvents.Metric;
 /// </summary>
 public sealed class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
 {
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, DoorMetricComponent component,
         CalculateChaosEvent args)
     {
@@ -32,10 +35,15 @@ public sealed class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
         var powerCount = FixedPoint2.Zero;
 
         // Add up the pain of all the doors
-        // TODO: Restrict to just doors on the main station here?
-        var queryFirelock = EntityQueryEnumerator<DoorComponent, ApcPowerReceiverComponent>();
-        while (queryFirelock.MoveNext(out var uid, out var door, out var power))
+        // Restrict to just doors on the main station
+        var stationGrids = _stationSystem.GetAllStationGrids();
+
+        var queryFirelock = EntityQueryEnumerator<DoorComponent, ApcPowerReceiverComponent, TransformComponent>();
+        while (queryFirelock.MoveNext(out var uid, out var door, out var power, out var transform))
         {
+            if (transform.GridUid == null || !stationGrids.Contains(transform.GridUid.Value))
+                continue;
+
             if (firelockQ.TryGetComponent(uid, out var firelock))
             {
                 if (firelock.DangerFire)
@@ -79,7 +87,7 @@ public sealed class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
         {
             {ChaosMetric.Security, emagChaos},
             {ChaosMetric.Atmos, atmosChaos},
-            {ChaosMetric.Engineering, powerChaos},
+            {ChaosMetric.Power, powerChaos},
         });
         return chaos;
     }

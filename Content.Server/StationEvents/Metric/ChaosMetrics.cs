@@ -19,7 +19,7 @@ public enum ChaosMetric
     Medical,
 
     Security,
-    Engineering,
+    Power,
     Atmos,
     Mess,
 
