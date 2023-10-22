@@ -100,3 +100,5 @@
         - CartridgeAntiMateriel
     capacity: 1
     proto: CartridgeAntiMateriel
+  - type: StaticPrice
+    price: 0

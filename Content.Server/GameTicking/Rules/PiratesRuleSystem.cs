@@ -8,6 +8,7 @@ using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.NPC.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
@@ -40,6 +41,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -221,6 +223,9 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 _mindSystem.TransferTo(newMind, mob);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
                 _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
+
+                _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
+                _npcFaction.AddFaction(mob, "Syndicate");
 
                 pirates.Pirates.Add(newMind);
 
