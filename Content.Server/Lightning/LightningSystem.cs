@@ -55,7 +55,6 @@ public sealed class LightningSystem : SharedLightningSystem
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
 
-        Log.Debug("Пиу отправил ивент на " + ToPrettyString(target));
         var ev = new HittedByLightningEvent(user, target);
         RaiseLocalEvent(target, ref ev, true);
     }
