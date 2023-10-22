@@ -227,7 +227,6 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                         {
                             pocket2Slot.Insert(itemToSpawn);
                         }
-
                     }
                 }
             }
