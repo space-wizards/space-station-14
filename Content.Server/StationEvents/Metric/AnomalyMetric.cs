@@ -11,7 +11,7 @@ namespace Content.Server.StationEvents.Metric;
 /// </summary>
 public sealed class AnomalyMetric : ChaosMetricSystem<AnomalyMetricComponent>
 {
-    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, AnomalyMetricComponent component, ChaosMetricComponent metric,
+    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, AnomalyMetricComponent component,
         CalculateChaosEvent args)
     {
         var anomalyChaos = FixedPoint2.Zero;
@@ -32,9 +32,9 @@ public sealed class AnomalyMetric : ChaosMetricSystem<AnomalyMetricComponent>
             anomalyChaos += component.BaseCost;
         }
 
-        var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>()
+        var chaos = new ChaosMetrics(new Dictionary<ChaosMetric, FixedPoint2>()
         {
-            {"Anomaly", anomalyChaos},
+            {ChaosMetric.Anomaly, anomalyChaos},
         });
         return chaos;
     }

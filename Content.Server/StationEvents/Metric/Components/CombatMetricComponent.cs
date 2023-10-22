@@ -3,7 +3,7 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Server.StationEvents.Metric.Components;
 
-[RegisterComponent, Access(typeof(CombatMetric))]
+[RegisterComponent, Access(typeof(CombatMetricSystem))]
 public sealed partial class CombatMetricComponent : Component
 {
     [DataField("hostileScore"), ViewVariables(VVAccess.ReadWrite)]

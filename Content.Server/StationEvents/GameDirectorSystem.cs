@@ -3,19 +3,16 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Ghost.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents.Metric;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
-using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents;
 
@@ -64,7 +61,6 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
-    [Dependency] private readonly ChaosMetricManager _metrics = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -91,10 +87,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     protected override void Added(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         // This deletes all existing metrics and sets them up again.
-        _metrics.SetupMetrics();
         SetupEvents(scheduler, CountActivePlayers());
-        CopyStories(uid, scheduler);
-        ValidateStories(scheduler);
         scheduler.TimeNextEvent = _timing.CurTime + TimeSpan.FromSeconds(GameDirectorComponent.MinimumTimeUntilFirstEvent);
         LogMessage($"Started, first event in {GameDirectorComponent.MinimumTimeUntilFirstEvent} seconds");
     }
@@ -135,7 +128,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         ChaosMetrics chaos;
         var count = CountActivePlayers();
 
-        chaos = _metrics.CalculateChaos();
+        chaos = CalculateChaos(uid);
         scheduler.CurrentChaos = chaos;
 
         // Decide what story beat to work with (which sets chaos goals)
@@ -180,6 +173,8 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
             // TODO: A
             if (player.AttachedEntity != null)
             {
+                // TODO: Consider a custom component here instead of HumanoidAppearanceComponent to represent
+                //        "significant enough to count as a whole player"
                 if (HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
                 {
                     count.Players += 1;
@@ -217,6 +212,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
 
     private void LogMessage(string message, bool showChat=true)
     {
+        // TODO: LogMessage strings all require localization.
         _adminLogger.Add(LogType.GameDirector, showChat?LogImpact.Medium:LogImpact.High, $"{message}");
         if (showChat)
         {
@@ -228,14 +224,14 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     ///   Returns the StoryBeat that should be currently used to select events.
     ///   Advances the current story and picks new stories when the current beat is complete.
     /// </summary>
-    private StoryBeat DetermineNextBeat(GameDirectorComponent scheduler, ChaosMetrics chaos, PlayerCount count)
+    private StoryBeatPrototype DetermineNextBeat(GameDirectorComponent scheduler, ChaosMetrics chaos, PlayerCount count)
     {
         var curTime = _timing.CurTime;
         // Potentially Complete CurrBeat, which is always scheduler.CurrStory[0]
-        if (scheduler.CurrStory.Count > 0)
+        if (scheduler.RemainingBeats.Count > 0)
         {
-            var beatName = scheduler.CurrStory.Peek();
-            var beat = scheduler.StoryBeats[beatName];
+            var beatName = scheduler.RemainingBeats[0];
+            var beat = _prototypeManager.Index<StoryBeatPrototype>(beatName);
             var secsInBeat = (curTime - scheduler.BeatStart).TotalSeconds;
 
             if (secsInBeat > beat.MaxSecs)
@@ -267,52 +263,59 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
             }
 
             // If we didn't return by here, we are done with this beat.
-            scheduler.CurrStory.Pop();
+            //   While RemoveAt(0) does a O(n) shift, we're shifting string pointers and usually n < 20.
+            scheduler.RemainingBeats.RemoveAt(0);
         }
         scheduler.BeatStart = curTime;
 
         // Advance in the current story
-        if (scheduler.CurrStory.Count > 0)
+        if (scheduler.RemainingBeats.Count > 0)
         {
             // Return the next beat in the current story.
-            var beatName = scheduler.CurrStory.Peek();
-            var beat = scheduler.StoryBeats[beatName];
+            var beatName = scheduler.RemainingBeats[0];
+            var beat = _prototypeManager.Index<StoryBeatPrototype>(beatName);
 
             LogMessage($"New StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
             return beat;
         }
 
         // Need to find a new story. Pick a random one which meets our needs.
-        var stories = scheduler.Stories.Keys.ToList();
-        _random.Shuffle(stories);
-
-        foreach (var storyName in stories)
+        if (scheduler.Stories != null)
         {
-            var story = scheduler.Stories[storyName];
-            if (story.MinPlayers > count.Players || story.MaxPlayers < count.Players)
+
+            var stories = scheduler.Stories.ToList();
+            _random.Shuffle(stories);
+
+            foreach (var storyName in stories)
             {
-                continue;
+                var story = _prototypeManager.Index<StoryPrototype>(storyName);
+                if (story.MinPlayers > count.Players || story.MaxPlayers < count.Players || story.Beats == null)
+                {
+                    continue;
+                }
+
+                // A new story was picked. Copy the full list of beats (for us to pop beats from the front as we proceed)
+                foreach (var storyBeat in story.Beats)
+                {
+                    scheduler.RemainingBeats.Add(storyBeat);
+                }
+
+                scheduler.CurrentStoryName = storyName;
+                SetupEvents(scheduler, count);
+                _sawmill.Info(
+                    $"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
+
+                var beatName = scheduler.RemainingBeats[0];
+                var beat = _prototypeManager.Index<StoryBeatPrototype>(beatName);
+
+                LogMessage($"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+                return beat;
             }
-
-            // A new story was picked. Copy the full list of beats (for us to pop beats from the front as we proceed)
-            foreach (var storyBeat in story.Beats)
-            {
-                scheduler.CurrStory.Push(storyBeat);
-            }
-            scheduler.CurrentStoryName = storyName;
-            SetupEvents(scheduler, count);
-            _sawmill.Info($"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
-
-            var beatName = scheduler.CurrStory.Peek();
-            var beat = scheduler.StoryBeats[beatName];
-
-            LogMessage($"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
-            return beat;
         }
 
         // Just use the fallback beat when no stories were found. That beat does exist, right!?
-        scheduler.CurrStory.Push(scheduler.FallbackBeatName);
-        return scheduler.StoryBeats[scheduler.FallbackBeatName];
+        scheduler.RemainingBeats.Add(scheduler.FallbackBeatName);
+        return _prototypeManager.Index<StoryBeatPrototype>(scheduler.FallbackBeatName);
     }
 
     private float RankChaosDelta(ChaosMetrics chaos)
@@ -324,7 +327,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         return chaos.ChaosDict.Values.Sum(v => (float)(v) * (float)(v));
     }
 
-    private List<RankedEvent> ChooseEvents(GameDirectorComponent scheduler, StoryBeat beat, ChaosMetrics chaos, PlayerCount count)
+    private List<RankedEvent> ChooseEvents(GameDirectorComponent scheduler, StoryBeatPrototype beat, ChaosMetrics chaos, PlayerCount count)
     {
         // TODO : Potentially filter Chaos here using CriticalLevels & DangerLevels which force us to focus on
         //        big problems (lots of hostiles, spacing) prior to smaller ones (food & drink)
@@ -384,70 +387,18 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         return result;
     }
 
-    private void CopyStories(EntityUid uid, GameDirectorComponent scheduler)
+    public ChaosMetrics CalculateChaos(EntityUid uid)
     {
-        if (TryComp<GameStoriesComponent>(uid, out var stories))
-        {
-            // There are some stories (probably from a prototype subclass) to copy across
-            foreach (var storyBeat in stories.StoryBeats)
-            {
-                // Overwrite our values with those from the stories component
-                // TODO: Which of the two to favor when there are conflicts might need some thought.
-                scheduler.StoryBeats[storyBeat.Key] = storyBeat.Value;
-            }
+        // Send an event to chaos metric components on the Game Director's entity.
+        var calcEvent = new CalculateChaosEvent(new ChaosMetrics());
+        RaiseLocalEvent(uid, ref calcEvent);
 
-            if (stories.OverwriteStories)
-            {
-                // Overwrite the default stories with the provided ones.
-                scheduler.Stories = stories.Stories;
-            }
-            else
-            {
-                foreach (var story in stories.Stories)
-                {
-                    // Overwrite our values with those from the stories component
-                    // TODO: Which of the two to favor when there are conflicts might need some thought.
-                    scheduler.Stories[story.Key] = story.Value;
-                }
-            }
-        }
-    }
+        var metrics = calcEvent.Metrics;
 
-    /// <summary>
-    ///   Check that the stories have a valid configuration.
-    /// </summary>
-    private void ValidateStories(GameDirectorComponent scheduler)
-    {
-        if (scheduler.Stories.Count == 0)
-        {
-            _sawmill.Warning($"No stories found in GameDirector");
-        }
-        if (scheduler.StoryBeats.Count == 0)
-        {
-            _sawmill.Warning($"No storyBeats found in GameDirector");
-        }
-        if (!scheduler.StoryBeats.ContainsKey(scheduler.FallbackBeatName))
-        {
-            _sawmill.Warning($"Fallback storyBeat {scheduler.FallbackBeatName} not found in GameDirector");
-        }
-        foreach (var story in scheduler.Stories)
-        {
-            foreach (var beat in story.Value.Beats)
-            {
-                if (!scheduler.StoryBeats.ContainsKey(beat))
-                {
-                    _sawmill.Warning($"Missing StoryBeat {beat} referenced in Story '{story.Key}'");
-                }
-            }
-        }
-
-        foreach (var beat in scheduler.StoryBeats)
-        {
-            if (beat.Value.Goal.Empty)
-            {
-                _sawmill.Warning($"StoryBeat {beat.Key} has no goal Chaos configured.");
-            }
-        }
+        // Calculated metrics
+        metrics.ChaosDict[ChaosMetric.Combat] = metrics.ChaosDict.GetValueOrDefault(ChaosMetric.Friend) +
+                                                metrics.ChaosDict.GetValueOrDefault(ChaosMetric.Hostile);
+        return calcEvent.Metrics;
     }
 
 }

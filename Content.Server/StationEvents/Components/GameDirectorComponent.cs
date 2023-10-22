@@ -4,6 +4,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -33,7 +35,7 @@ public sealed partial class GameDirectorComponent : Component
     public ChaosMetrics CurrentChaos = new();
 
     /// <summary>
-    ///   The story we are currently executing from stories
+    ///   The story we are currently executing from stories (for easier debugging)
     /// </summary>
     [DataField("currentStoryName"), ViewVariables(VVAccess.ReadOnly)]
     public string CurrentStoryName = "";
@@ -41,26 +43,20 @@ public sealed partial class GameDirectorComponent : Component
     /// <summary>
     ///   Remaining beats in the story we are currently executing (a list of beat IDs)
     /// </summary>
-    // Stack is not compatible with DataField [DataField("currStory"), ViewVariables(VVAccess.ReadWrite)]
-    public Stack<string> CurrStory = new();
+    [DataField("remainingBeats", customTypeSerializer: typeof(PrototypeIdListSerializer<StoryBeatPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public List<string> RemainingBeats = new();
 
     /// <summary>
-    ///   All possible story beats, by ID
-    /// </summary>
-    [DataField("storyBeats"), ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<string, StoryBeat> StoryBeats = new();
-
-    /// <summary>
-    ///   A dictionary mapping story names to the list of beats for each story.
+    ///   Which stories the director can choose from (so we can change flavor of director by loading different stories)
     ///   One of these get picked randomly each time the current story is exhausted.
     /// </summary>
-    [DataField("stories"), ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<string, Story> Stories = new();
+    [DataField("stories", customTypeSerializer: typeof(PrototypeIdArraySerializer<StoryPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string[]? Stories;
 
     /// <summary>
     ///   A beat name we always use when we cannot find any stories to use.
     /// </summary>
-    [DataField("fallbackBeatName"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("fallbackBeatName", customTypeSerializer: typeof(PrototypeIdSerializer<StoryBeatPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string FallbackBeatName = "Peace";
 
     /// <summary>
@@ -76,8 +72,13 @@ public sealed partial class GameDirectorComponent : Component
 ///   Gated by various settings such as the number of players
 /// </summary>
 [DataDefinition]
-public sealed partial class Story
+[Prototype("story")]
+public sealed partial class StoryPrototype : IPrototype
 {
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
     /// <summary>
     ///   A human-readable description string for logging / admins
     /// </summary>
@@ -99,8 +100,8 @@ public sealed partial class Story
     /// <summary>
     ///   List of beat-ids in this story.
     /// </summary>
-    [DataField("beats"), ViewVariables(VVAccess.ReadWrite)]
-    public List<String> Beats = new();
+    [DataField("beats", customTypeSerializer: typeof(PrototypeIdArraySerializer<StoryBeatPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string[]? Beats;
 }
 
 /// <summary>
@@ -116,8 +117,13 @@ public sealed partial class Story
 ///   the next round of chaos.
 /// </summary>
 [DataDefinition]
-public sealed partial class StoryBeat
+[Prototype("storyBeat")]
+public sealed partial class StoryBeatPrototype : IPrototype
 {
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
     /// <summary>
     ///   A human-readable description string for logging / admins
     /// </summary>
@@ -131,6 +137,8 @@ public sealed partial class StoryBeat
     public ChaosMetrics Goal = new ChaosMetrics();
 
     /// <summary>
+    ///   Early end if things deteriorate too much
+    ///
     ///   If the current metrics get worse than any of these, end the story beat
     ///   For instance, too many hostiles or too little atmos
     /// </summary>
@@ -138,6 +146,8 @@ public sealed partial class StoryBeat
     public ChaosMetrics EndIfAnyWorse = new ChaosMetrics();
 
     /// <summary>
+    ///   Early end if life is good enough
+    ///
     ///   If the current metrics get better than all of these, end the story beat
     ///   For instance, medical, atmos, hostiles are all under control.
     /// </summary>
@@ -173,6 +183,11 @@ public sealed partial class StoryBeat
     /// <summary>
     ///   How many different events we choose from (at random) when performing this StoryBeat
     /// </summary>
+    ///
+    /// The director is making a priority pick. But to ensure it doesn't ALWAYS pick the very best we actually
+    ///  pick randomly from the top few events (RandomEventLimit).
+    /// By tuning RandomEventLimit you can decide on a per beat basis how much the director is "directing" and
+    ///  how much it's acting like a random system. Some randomness is often good to spice things up.
     [DataField("randomEventLimit"), ViewVariables(VVAccess.ReadWrite)]
     public int RandomEventLimit = 3;
 }

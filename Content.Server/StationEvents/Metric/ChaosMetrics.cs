@@ -5,6 +5,34 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents.Metric;
 
+public enum ChaosMetric
+{
+    Hunger,
+    Thirst,
+
+    Anomaly,
+
+    Friend,   // Negative score for how many friendlies on station
+    Hostile,  // Increases with hostiles
+
+    Death,
+    Medical,
+
+    Security,
+    Engineering,
+    Atmos,
+    Mess,
+
+    // Metrics calculated from above by Game Director:
+    Combat,   // Friend + Hostile - <0 if crew is strong. 0 if balanced (fighting). >0 indicates crew is losing.
+}
+
+/// <summary>
+///   Raised to request metrics to calculate and sum their statistics
+/// </summary>
+[ByRefEvent]
+public record struct CalculateChaosEvent(ChaosMetrics Metrics);
+
 /// <summary>
 ///   This class represents a collection of chaos
 /// </summary>
@@ -17,8 +45,8 @@ public sealed partial class ChaosMetrics : IEquatable<ChaosMetrics>
     /// <summary>
     ///   Main chaos dictionary. Most ChaosMetrics functions exist to somehow modifying this.
     /// </summary>
-    [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<string, FixedPoint2>)), ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<string, FixedPoint2> ChaosDict { get; set; } = new();
+    [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<ChaosMetric, FixedPoint2>)), ViewVariables(VVAccess.ReadWrite)]
+    public Dictionary<ChaosMetric, FixedPoint2> ChaosDict { get; set; } = new();
 
     /// <summary>
     ///   Whether this chaos specifier has any entries.
@@ -56,7 +84,7 @@ public sealed partial class ChaosMetrics : IEquatable<ChaosMetrics>
     /// <summary>
     ///   Constructor that takes another ChaosMetrics instance and copies it.
     /// </summary>
-    public ChaosMetrics(Dictionary<string, FixedPoint2> chaos)
+    public ChaosMetrics(Dictionary<ChaosMetric, FixedPoint2> chaos)
     {
         ChaosDict = new(chaos);
     }

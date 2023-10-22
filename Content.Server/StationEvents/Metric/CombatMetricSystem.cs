@@ -25,11 +25,11 @@ namespace Content.Server.StationEvents.Metric;
 ///   Death: 20 per dead body,
 ///   Medical: 10 for crit + 0.05 * damage (so 5 for 100 damage),
 /// </summary>
-public sealed class CombatMetric : ChaosMetricSystem<CombatMetricComponent>
+public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent>
 {
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
-    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent component, ChaosMetricComponent metric,
+    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent component,
         CalculateChaosEvent args)
     {
         // Add up the pain of all the puddles
@@ -43,7 +43,7 @@ public sealed class CombatMetric : ChaosMetricSystem<CombatMetricComponent>
         var nukieQ = GetEntityQuery<NukeOperativeComponent>();
         var zombieQ = GetEntityQuery<ZombieComponent>();
 
-        var humanoidQ = GetEntityQuery<HumanoidAppearanceComponent>();
+        // var humanoidQ = GetEntityQuery<HumanoidAppearanceComponent>();
 
         while (query.MoveNext(out var uid, out var mind, out var mobState, out var damage))
         {
@@ -95,14 +95,13 @@ public sealed class CombatMetric : ChaosMetricSystem<CombatMetricComponent>
             }
         }
 
-        var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>()
+        var chaos = new ChaosMetrics(new Dictionary<ChaosMetric, FixedPoint2>()
         {
-            {"Friend", friendlies},
-            {"Hostile", hostiles},
-            {"Combat", friendlies + hostiles},
+            {ChaosMetric.Friend, friendlies},
+            {ChaosMetric.Hostile, hostiles},
 
-            {"Death", death},
-            {"Medical", medical},
+            {ChaosMetric.Death, death},
+            {ChaosMetric.Medical, medical},
         });
         return chaos;
     }

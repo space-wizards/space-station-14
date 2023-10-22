@@ -11,17 +11,17 @@ namespace Content.Server.StationEvents.Metric;
 ///
 ///   Jani - JaniMetricComponent.Puddles points per BaselineQty of various substances
 /// </summary>
-public sealed class JaniMetric : ChaosMetricSystem<JaniMetricComponent>
+public sealed class PuddleMetricSystem : ChaosMetricSystem<PuddleMetricComponent>
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
-    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, JaniMetricComponent component, ChaosMetricComponent metric,
+    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, PuddleMetricComponent component,
         CalculateChaosEvent args)
     {
 
         // Add up the pain of all the puddles
         var query = EntityQueryEnumerator<PuddleComponent, SolutionContainerManagerComponent>();
-        var janiChaos = FixedPoint2.Zero;
+        var mess = FixedPoint2.Zero;
         while (query.MoveNext(out var puddleUid, out var puddle, out var solutionMgr))
         {
             if (!_solutionContainerSystem.TryGetSolution(puddleUid, puddle.SolutionName, out var puddleSolution, solutionMgr))
@@ -34,10 +34,13 @@ public sealed class JaniMetric : ChaosMetricSystem<JaniMetricComponent>
                 puddleChaos += substanceChaos * substance.Quantity;
             }
 
-            janiChaos += puddleChaos / component.BaselineQty;
+            mess += puddleChaos;
         }
 
-        var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>(){{"Jani", janiChaos}});
+        var chaos = new ChaosMetrics(new Dictionary<ChaosMetric, FixedPoint2>()
+        {
+            {ChaosMetric.Mess, mess}
+        });
         return chaos;
     }
 }
