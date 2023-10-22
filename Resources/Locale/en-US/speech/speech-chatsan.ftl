@@ -31,8 +31,8 @@ chatsan-replacement-10 = i don't care
 chatsan-word-12 = tbh
 chatsan-replacement-12 = to be honest
 
-chatsan-word-13 = u
-chatsan-replacement-13 = you
+chatsan-word-13 = lmk
+chatsan-replacement-13 = let me know
 
 chatsan-word-14 = ur
 chatsan-replacement-14 = your
