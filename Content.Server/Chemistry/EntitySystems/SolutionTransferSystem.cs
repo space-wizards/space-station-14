@@ -10,6 +10,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Hands;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -38,6 +39,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<SolutionTransferComponent, ComponentGetState>(OnSolutionTransferGetState);
             SubscribeLocalEvent<SolutionTransferComponent, HandSelectedEvent>(OnSolutionTransferHandSelected);
             SubscribeLocalEvent<SolutionTransferComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<SolutionTransferComponent, UseInHandEvent>(OnSolutionContainerUse);
             SubscribeLocalEvent<SolutionTransferComponent, ComponentStartup>(OnSolutionTransferStartup);
         }
 
@@ -103,14 +105,12 @@ namespace Content.Server.Chemistry.EntitySystems
         private void AddSimplyVerb(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<Verb> args)
         {
             // add inject/draw action verb
-            var nextModeTransfer = GetAvailableNextMode(uid, component);
-            if (nextModeTransfer is not SharedTransferToggleMode mode
-                    || mode == component.ToggleMode)
+            if (!TryGetAvailableNextMode(uid, component, out var nextModeTransfer))
                 return;
 
             Verb modeVerb = new()
             {
-                Text = mode.ToString(),
+                Text = "" + component.ToggleMode,
                 Act = () =>
                 {
                     component.ToggleMode = nextModeTransfer;
@@ -284,14 +284,39 @@ namespace Content.Server.Chemistry.EntitySystems
 
             return null;
         }
-
-        private SharedTransferToggleMode? GetAvailableNextMode(EntityUid uid, SolutionTransferComponent component)
+        private bool TryGetAvailableNextMode(
+                EntityUid uid, SolutionTransferComponent component,
+                out SharedTransferToggleMode? nextMode)
         {
-            var nextMode = SharedTransferToggleMode.Inject;
+            nextMode = SharedTransferToggleMode.Inject;
             if (component.ToggleMode == SharedTransferToggleMode.Inject)
                 nextMode = SharedTransferToggleMode.Draw;
 
-            return GetTransferMode(uid, component, true, nextMode);
+            nextMode = GetTransferMode(uid, component, true, nextMode);
+
+            return nextMode is SharedTransferToggleMode mode && mode != component.ToggleMode;
+        }
+
+        private void OnSolutionContainerUse(EntityUid uid, SolutionTransferComponent component, UseInHandEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            string msg;
+            if (TryGetAvailableNextMode(uid, component, out var nextMode))
+            {
+                msg = "injector-component-drawing-text";
+                if (nextMode == SharedTransferToggleMode.Inject)
+                    msg = "injector-component-injecting-text";
+
+                component.ToggleMode = nextMode;
+                Dirty(uid, component);
+            }
+            else
+                msg = "you can't toggle mode";
+
+            _popupSystem.PopupEntity(Loc.GetString(msg), uid, args.User);
+            args.Handled = true;
         }
 
         /// <summary>
