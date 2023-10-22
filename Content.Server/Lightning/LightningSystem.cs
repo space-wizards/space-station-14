@@ -8,6 +8,15 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
 
+// For maintainers (delete this text after the review)
+
+//I've redesigned the lightning system to be more optimized.
+//Previously, each lightning element, when it touched something, would try to branch into nearby entities.
+//So if a lightning bolt was 20 entities long, each one would check its surroundings and have a chance to create additional lightning...
+//which could lead to recursive creation of more and more lightning bolts and checks.
+
+//I redesigned so that lightning branches can only be created from the point where the lightning struck, no more collide checks
+//and the number of these branches is explicitly controlled in the new function.
 public sealed class LightningSystem : SharedLightningSystem
 {
     [Dependency] private readonly PhysicsSystem _physics = default!;
@@ -61,7 +70,6 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="arcDepth">how many times to recursively fire lightning bolts from the target points of the first shot.</param>
     public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
     {
-        Log.Debug(" ---------------------- Случайный выплеск! ----------------------");
         //To Do: add support to different priority target tablem for different lightning types
         var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).Coordinates, range);
         var sortedTargets = targets
@@ -76,7 +84,7 @@ public sealed class LightningSystem : SharedLightningSystem
 
         for (int i = 0; i < realCount; i++)
         {
-            ShootLightning(user, sortedTargets[i].Owner, lightningPrototype);
+            ShootLightning(user, sortedTargets[i].Owner, lightningPrototype); //idk how to evade .Owner pls help
 
             if (arcDepth > 0)
             {
@@ -87,7 +95,7 @@ public sealed class LightningSystem : SharedLightningSystem
 }
 
 /// <summary>
-/// Called when lightning bolt collide with a entity
+/// Invoked when an entity becomes the target of a lightning strike (not when touched)
 /// </summary>
 /// <param name="Source">The entity that created the lightning</param>
 /// <param name="Target">The entity that was struck by lightning.</param>

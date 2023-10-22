@@ -27,9 +27,11 @@ public sealed class LightningTargetSystem : EntitySystem
         if (!component.LightningExplode)
             return;
 
-        //For some unknown reason it gives a random server crash.
-        //To do: make the explosion dependent on the component parameters.
-        _explosionSystem.QueueExplosion(Transform(uid).MapPosition, component.ExplosionPrototype, component.TotalIntensity, component.Dropoff, component.MaxTileIntensity, canCreateVacuum: false);
-        Log.Debug("BOOM на " + Transform(uid).MapPosition.ToString());
+        _explosionSystem.QueueExplosion(
+            Transform(uid).MapPosition,
+            component.ExplosionPrototype,
+            component.TotalIntensity, component.Dropoff,
+            component.MaxTileIntensity,
+            canCreateVacuum: false);
     }
 }

@@ -32,6 +32,5 @@
     noRot: true
   - type: Anchorable
   - type: Pullable
-  #- type: GuideHelp
-  #  guides: [ Singularity, Power ]
+  #- type: GuideHelp #   To Do - add Tesla Guide
 

@@ -45,7 +45,6 @@ public sealed class SingularityGeneratorSystem : EntitySystem
 
         SetPower(uid, 0, comp);
         EntityManager.SpawnEntity(comp.SpawnPrototype, Transform(uid).Coordinates);
-        QueueDel(uid); //For tesla
     }
 
     #region Getters/Setters

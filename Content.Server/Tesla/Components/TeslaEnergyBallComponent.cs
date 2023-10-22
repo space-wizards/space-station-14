@@ -37,7 +37,7 @@ public sealed partial class TeslaEnergyBallComponent : Component
     /// The amount of energy an entity must reach in order to zero the energy and create another entity
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float EnergyToDespawn = -1000f;
+    public float EnergyToDespawn = -300f;
     /// <summary>
     /// Entities that spawn when the energy limit is reached
     /// </summary>
@@ -50,6 +50,9 @@ public sealed partial class TeslaEnergyBallComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<EntityPrototype>? ConsumeEffectProto = "EffectTeslaSparks";
 
+    /// <summary>
+    /// Played when energy reaches the lower limit (and entity destroyed)
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier SoundCollapse = default!;
 }

@@ -46,6 +46,7 @@
   - type: PointLight
     enabled: true
     radius: 5
+    color: "#ff0000"
   - type: Appearance
   #- type: GuideHelp
   - type: WarpPoint
@@ -85,13 +86,13 @@
         shape:
           !type:PhysShapeCircle
             radius: 0.35
-        hard: false
+        hard: true
         restitution: 0.8
-        density: 10
+        density: 999
         mask:
         - Opaque  
         layer:
-        - GlassLayer   
+        - GlassLayer  
   - type: ChasingWalk
     maxSpeed: 2.8
     minSpeed: 2
@@ -101,6 +102,7 @@
   - type: PointLight
     enabled: true
     radius: 5
+    color: "#4080FF"
   - type: Appearance
   - type: LightningArcShooter
     maxLightningArc: 2

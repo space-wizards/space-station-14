@@ -43,7 +43,7 @@ internal sealed class ChasingWalkSystem : EntitySystem
                 ForceImpulse(uid, chasing);
                 chasing.NextImpulseTime = _gameTiming.CurTime + TimeSpan.FromSeconds(chasing.ImpulseInterval);
             }
-            //Change Target Part
+            //Change Target
             if (chasing.NextChangeVectorTime <= _gameTiming.CurTime)
             {
                 ChangeTarget(uid, chasing);

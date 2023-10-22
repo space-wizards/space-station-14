@@ -4,7 +4,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Lightning.Components;
 
 /// <summary>
-/// The component allows lightning to strike this target. And determining the behavior of the target when struck by lightning.
+/// This component allows the lightning system to select a given entity as the target of a lightning strike.
+/// It also determines the priority of selecting this target, and the behavior of the explosion. Used for tesla.
 /// </summary>
 [RegisterComponent]
 public sealed partial class LightningTargetComponent : Component

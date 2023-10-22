@@ -1,7 +1,7 @@
 
 namespace Content.Server.Tesla.Components;
 /// <summary>
-/// Fires electric arcs at surrounding objects. Has a priority list of what to shoot at.
+/// Periodically fires electric arcs at surrounding objects.
 /// </summary>
 [RegisterComponent]
 public sealed partial class LightningArcShooterComponent : Component
@@ -9,8 +9,11 @@ public sealed partial class LightningArcShooterComponent : Component
     /// <summary>
     /// The number of lightning bolts that are fired at the same time. From 0 to N
     /// </summary>
+
+    //Important balance value: if there aren't a N number of coils or grounders around the tesla,
+    //the tesla will have a chance to shoot into something important and break.
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MaxLightningArc = 5;
+    public int MaxLightningArc = 8;
 
     /// <summary>
     /// Minimum interval between shooting.
@@ -22,7 +25,7 @@ public sealed partial class LightningArcShooterComponent : Component
     /// Maximum interval between shooting.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ShootMaxInterval = 5.0f;
+    public float ShootMaxInterval = 8.0f;
 
     /// <summary>
     /// the target selection radius for lightning bolts.

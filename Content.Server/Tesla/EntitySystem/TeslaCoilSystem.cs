@@ -9,6 +9,9 @@ using Content.Shared.Power;
 
 namespace Content.Server.Tesla.EntitySystems;
 
+/// <summary>
+/// Generates electricity from lightning bolts
+/// </summary>
 public sealed class TeslaCoilSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -69,6 +72,5 @@ public sealed class TeslaCoilSystem : EntitySystem
         _appearance.SetData(uid, TeslaCoilVisuals.Enabled, status);
         _audio.PlayPvs(status ? component.SoundOpen : component.SoundOpen, uid);
         _popup.PopupEntity(status ? Loc.GetString("tesla-coil-on") : Loc.GetString("tesla-coil-off"), uid);
-        Log.Debug("Статус: " + component.Enabled);
     }
 }

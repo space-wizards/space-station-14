@@ -54,18 +54,17 @@ public sealed partial class ChasingWalkComponent : Component
 
 
     /// <summary>
-    /// The component that the anomaly is chasing
+    /// The component that the entity is chasing
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
     public string ChasingComponent = default!;
     /// <summary>
-    /// The maximum radius in which the anomaly chooses the target component to follow
-    /// scales with severity
+    /// The maximum radius in which the entity chooses the target component to follow
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxChaseRadius = 25;
     /// <summary>
-    /// The entity uid, chasing by the entity
+    /// The entity uid, chasing by the component owner
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? ChasingEntity;

@@ -65,8 +65,7 @@
   - type: PowerNetworkBattery
     maxSupply: 1000000000
     supplyRampTolerance: 1000000000
-  #- type: GuideHelp
-  #  guides: [ Singularity, Power ]
+  #- type: GuideHelp #   To Do - add Tesla Guide
   
 - type: entity
   parent: [ BaseMachinePowered ]
@@ -121,5 +120,4 @@
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
-
-  #- type: AnimationPlayer #что это вообще?
+  #- type: GuideHelp #   To Do - add Tesla Guide

@@ -1,9 +1,7 @@
 using Content.Server.Singularity.Components;
-using Content.Shared.Singularity.EntitySystems;
 using Content.Server.Tesla.Components;
 using Robust.Shared.Physics.Events;
 using Microsoft.Extensions.DependencyModel;
-using Content.Server.Lightning.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Tag;
 using Content.Server.Administration.Logs;
@@ -17,8 +15,8 @@ namespace Content.Server.Tesla.EntitySystems;
 /// </summary>
 public sealed class TeslaEnergyBallSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     public override void Initialize()
     {
@@ -65,8 +63,6 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         Spawn(component.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
         EntityManager.QueueDeleteEntity(args.OtherEntity);
         AdjustEnergy(uid, component, 20f);
-
-        EntityManager.QueueDeleteEntity(args.OtherEntity);
     }
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
     {

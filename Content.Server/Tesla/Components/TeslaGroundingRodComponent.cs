@@ -2,7 +2,7 @@
 namespace Content.Server.Tesla.Components;
 
 /// <summary>
-/// Generates electricity from lightning bolts
+/// Depending on the energy it receives, it changes its priority of selecting a lightning target
 /// </summary>
 [RegisterComponent]
 public sealed partial class TeslaGroundingRodComponent : Component
