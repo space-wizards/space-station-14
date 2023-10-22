@@ -236,7 +236,7 @@
   name: diagonal grille
   id: GrilleDiagonal
   graph: GrilleDiagonal
-  startNode: startDiagonal
+  startNode: start
   targetNode: grilleDiagonal
   category: construction-category-structures
   description: A flimsy framework of iron rods.
