@@ -30,7 +30,6 @@
       - state: coil
         map: ["enabled"]
       - state: coilhit
-        shader: unshaded
         visible: false
         map: ["hit"]
   - type: Appearance
@@ -70,14 +69,34 @@
   #  guides: [ Singularity, Power ]
   
 - type: entity
+  parent: [ BaseMachinePowered ]
   id: TeslaGroundingRod
   name: grounding rod
   description: A machine that keeps lightning from striking too far away.
   placement:
     mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    snapCardinals: true
+    layers:
+      - state: grounding_rod_open      
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+      - state: grounding_rodhit
+        visible: false
+        map: ["hit"]
+  - type: GenericVisualizer
+    visuals:
+      enum.TeslaCoilVisuals.Lightning:
+        hit:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: grounding_rod }
+          False: { state: grounding_rod_open }
+  - type: Transform
+    anchored: true
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -91,37 +110,16 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: Transform
-    anchored: true
-    noRot: true
-  - type: Sprite
-    sprite: Structures/Power/Generation/Tesla/coil.rsi
-    snapCardinals: true
-    layers:
-      - state: grounding_rod
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+    needsPower: true 
   - type: Appearance
-  #- type: GenericVisualizer
-  #- type: AnimationPlayer #что это вообще?
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      input:
-        !type:CableDeviceNode
-        nodeGroupID: HVPower
-  - type: Battery
-    maxCharge: 100000
-    startingCharge: 0
+  - type: TeslaGroundingRod
   - type: LightningTarget
     priority: 3
     lightningExplode: false
-  - type: BatteryDischarger
-    # This is JUST copy from Radiation Collector
-    activeSupplyRate: 100000
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
-  - type: PowerNetworkBattery
-    maxSupply: 1000000000
-    supplyRampTolerance: 1000000000
-  #- type: GuideHelp
-  #  guides: [ Singularity, Power ]
+
+  #- type: AnimationPlayer #что это вообще?

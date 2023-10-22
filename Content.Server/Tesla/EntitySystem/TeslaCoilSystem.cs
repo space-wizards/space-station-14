@@ -6,7 +6,6 @@ using Content.Server.Tesla.Components;
 using Content.Server.Lightning;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Power;
-using Content.Shared.Popups;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -42,6 +41,7 @@ public sealed class TeslaCoilSystem : EntitySystem
             }
         }
     }
+
     //When interacting, turn the coil on or off.
     private void OnInteractHand(EntityUid uid, TeslaCoilComponent component, InteractHandEvent args)
     {
@@ -51,7 +51,6 @@ public sealed class TeslaCoilSystem : EntitySystem
     //When struck by lightning, charge the internal battery
     private void OnHittedLightning(EntityUid uid, TeslaCoilComponent component, ref HittedByLightningEvent args)
     {
-        Log.Debug("Попадание");
         if (!component.Enabled)
             return;
         if (!TryComp<BatteryComponent>(uid, out var batteryComponent))
@@ -62,7 +61,6 @@ public sealed class TeslaCoilSystem : EntitySystem
         _appearance.SetData(uid, TeslaCoilVisuals.Lightning, true);
         component.LightningEndTime = _gameTiming.CurTime + component.LightningTime;
         component.IsSparking = true;
-        Log.Debug("Заряжено! " + batteryComponent.CurrentCharge);
     }
 
     private void ToggleCoil(EntityUid uid, TeslaCoilComponent component, bool status)
