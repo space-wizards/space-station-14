@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer keep a cyborg's UI open after closing the panel.,
-    type: Fix}
-  - {message: Cyborgs now retain their laws when off-station., type: Fix}
-  id: 4542
-  time: '2023-08-13T07:09:30.0000000+00:00'
 - author: onoira
   changes:
   - {message: Spare pieces have been added to checkerboards allowing for more playable
@@ -2911,3 +2904,8 @@ Entries:
       has access to most of Nanotrasen''s accounting details!', type: Add}
   id: 5041
   time: '2023-10-22T07:34:06.0000000+00:00'
+- author: stopbreaking
+  changes:
+  - {message: Replaced wielding do_after with an interaction cooldown., type: Tweak}
+  id: 5042
+  time: '2023-10-22T13:53:14.0000000+00:00'
