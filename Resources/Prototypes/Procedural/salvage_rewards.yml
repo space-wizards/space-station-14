@@ -68,10 +68,9 @@
     CrateArmoryPistols: 1.0
     # rare armor
     ClothingOuterArmorRiot: 1.0
-    ClothingControlModsuitSalvageSealed: 0.25 #Imperia edit
     ClothingControlModsuitEngineerSealed: 0.25 #Imperia edit
     ClothingControlModsuitMedicalSealed: 0.25 #Imperia edit
-    ClothingControlModsuitMinerSealed: 0.05 #Imperia edit
+    ClothingControlModsuitMinerSealed: 0.02 #Imperia edit
     # rare chemicals
     CognizineChemistryBottle: 1.0
     OmnizineChemistryBottle: 1.0
