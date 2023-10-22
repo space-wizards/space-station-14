@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tesla.Components;
@@ -47,5 +48,8 @@ public sealed partial class TeslaEnergyBallComponent : Component
     /// Entity, spun when tesla gobbles with touch.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<EntityPrototype>? ConsumeEffectProto = "EffectEmpPulse";
+    public ProtoId<EntityPrototype>? ConsumeEffectProto = "EffectTeslaSparks";
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier SoundCollapse = default!;
 }

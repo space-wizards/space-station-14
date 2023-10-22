@@ -17,6 +17,7 @@ namespace Content.Server.Tesla.EntitySystems;
 /// </summary>
 public sealed class TeslaEnergyBallSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     public override void Initialize()
@@ -78,6 +79,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         }
         if (component.Energy < component.EnergyToDespawn)
         {
+            _audio.PlayPvs(component.SoundCollapse, uid);
             QueueDel(uid);
         }
     }

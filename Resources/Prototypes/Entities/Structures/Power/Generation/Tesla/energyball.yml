@@ -30,12 +30,16 @@
   - type: TeslaEnergyBall
     energyLoss: 3
     spawnProto: TeslaMiniEnergyBall 
+    soundCollapse:
+      path: /Audio/Effects/tesla_collapse.ogg
+      params:
+        variation: 0.3
   - type: LightningArcShooter
     shootRange: 10
     shootMinInterval: 2
     shootMaxInterval: 5
     lightningPrototype: HyperchargedLightning
-  - type: ChasingWalk # To make the tesla move around.
+  - type: ChasingWalk
     maxSpeed: 2.5
     minSpeed: 1.875
     chasingComponent: LightningTarget
@@ -53,6 +57,11 @@
     shader: unshaded
     layers:
     - state: energy_ball
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/Effects/tesla_collapse.ogg
+      params:
+        variation: 0.3
     
 - type: entity 
   id: TeslaMiniEnergyBall
@@ -83,7 +92,7 @@
         - Opaque  
         layer:
         - GlassLayer   
-  - type: ChasingWalk # To make the tesla move around.
+  - type: ChasingWalk
     maxSpeed: 2.8
     minSpeed: 2
     chasingComponent: LightningTarget
