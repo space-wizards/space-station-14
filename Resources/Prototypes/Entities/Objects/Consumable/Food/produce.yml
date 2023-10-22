@@ -815,6 +815,8 @@
   - type: Produce
     seedId: corn
   - type: Extractable
+    grindableSolutionName: food
+  - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Cornoil
