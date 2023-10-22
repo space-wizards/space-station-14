@@ -82,10 +82,10 @@ public sealed class SolutionTransferStatusSystem : EntitySystem
     {
         var tranlates = new TransferControlTranlates
         {
-            DrawModeText = "injector-draw-text",
-            InjectModeText = "injector-inject-text",
-            InvalidModeText = "injector-invalid-injector-toggle-mode",
-            VolumeLabelText = "injector-volume-label"
+            DrawModeText = "comp-solution-transfer-draw-text",
+            InjectModeText = "comp-solution-transfer-inject-text",
+            InvalidModeText = "comp-solution-transfer-invalid-toggle-mode",
+            VolumeLabelText = "comp-solution-transfer"
         };
         args.Controls.Add(new SolutionTransferStatusControl(component, tranlates, true, true));
     }

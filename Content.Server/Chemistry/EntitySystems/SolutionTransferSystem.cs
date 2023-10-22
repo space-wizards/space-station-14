@@ -12,6 +12,7 @@ using Content.Shared.Popups;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -59,7 +60,8 @@ namespace Content.Server.Chemistry.EntitySystems
             solutionTransfer.TransferAmount = newTransferAmount;
 
             if (message.Session.AttachedEntity is { Valid: true } user)
-                _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), uid, user);
+                _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount",
+                    ("amount", newTransferAmount)), uid, user);
         }
 
         private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -108,15 +110,30 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!TryGetAvailableNextMode(uid, component, out var nextModeTransfer))
                 return;
 
+            var msg = "";
+            ResPath pathIcon;
+
+            if (nextModeTransfer == SharedTransferToggleMode.Draw)
+            {
+                msg = "comp-solution-transfer-draw-text";
+                pathIcon = new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png");
+            }
+            else
+            {
+                msg = "comp-solution-transfer-inject-text";
+                pathIcon = new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png");
+            }
+
             Verb modeVerb = new()
             {
-                Text = "" + component.ToggleMode,
+                Text = Loc.GetString(msg),
                 Act = () =>
                 {
                     component.ToggleMode = nextModeTransfer;
                     Dirty(uid, component);
                 },
                 Impact = LogImpact.Low,
+                Icon = new SpriteSpecifier.Texture(pathIcon)
             };
             args.Verbs.Add(modeVerb);
         }
@@ -180,16 +197,18 @@ namespace Content.Server.Chemistry.EntitySystems
                     {
                         var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", target));
                         _popupSystem.PopupEntity(message, uid, args.User);
-
-                        args.Handled = true;
                     }
                 }
                 // we try to pure, but component has not refellable component
                 else
                 {
-                    var message = "target has not refillible component!";
+                    var message = Loc.GetString("comp-solution-transfer-no-solution-target",
+                                    ("mode", Loc.GetString("comp-solution-transfer-inject-text")),
+                                    ("target", target));
                     _popupSystem.PopupEntity(message, uid, args.User);
                 }
+
+                args.Handled = true;
             }
             else if (component.ToggleMode == SharedTransferToggleMode.Draw && modeSolution != null)
             {
@@ -212,16 +231,17 @@ namespace Content.Server.Chemistry.EntitySystems
                             : "comp-solution-transfer-fill-normal";
 
                         _popupSystem.PopupEntity(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)), uid, args.User);
-
-                        args.Handled = true;
-                        return;
                     }
                 }
                 else
                 {
-                    var message = "target has not drainable component!";
+                    var message = Loc.GetString("comp-solution-transfer-no-solution-target",
+                                    ("mode", Loc.GetString("comp-solution-transfer-draw-text")),
+                                    ("target", target));
                     _popupSystem.PopupEntity(message, uid, args.User);
                 }
+
+                args.Handled = true;
             }
         }
 
@@ -305,17 +325,20 @@ namespace Content.Server.Chemistry.EntitySystems
             string msg;
             if (TryGetAvailableNextMode(uid, component, out var nextMode))
             {
-                msg = "injector-component-drawing-text";
+                var mode = "comp-solution-transfer-draw-text";
                 if (nextMode == SharedTransferToggleMode.Inject)
-                    msg = "injector-component-injecting-text";
+                    mode = "comp-solution-transfer-inject-text";
+
+                msg = Loc.GetString("comp-solution-transfer-set-toggle-mode",
+                    ("mode", Loc.GetString(mode)));
 
                 component.ToggleMode = nextMode;
                 Dirty(uid, component);
             }
             else
-                msg = "you can't toggle mode";
+                msg = Loc.GetString("comp-solution-transfer-cant-change-mode");
 
-            _popupSystem.PopupEntity(Loc.GetString(msg), uid, args.User);
+            _popupSystem.PopupEntity(msg, uid, args.User);
             args.Handled = true;
         }
 
