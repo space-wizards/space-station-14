@@ -293,6 +293,7 @@ public sealed class MindSystem : SharedMindSystem
         if (session != null && !alreadyAttached && mind.VisitingEntity == null)
         {
             _actor.Attach(entity, session, true);
+            DebugTools.Assert(session.AttachedEntity == entity, $"Failed to attach entity.");
             Log.Info($"Session {session.Name} transferred to entity {entity}.");
         }
 
