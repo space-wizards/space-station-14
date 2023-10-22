@@ -6,6 +6,7 @@ using Content.Server.Physics.Components;
 using Content.Shared.Follower.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -72,14 +73,17 @@ internal sealed class ChasingWalkSystem : EntitySystem
     //pushing the entity toward its target
     private void ForceImpulse(EntityUid uid, ChasingWalkComponent component)
     {
-        if (!Initialized(uid) || component.ChasingEntity == null)
+        if (!Initialized(uid))
             return;
 
-        if (Deleted(component.ChasingEntity))
+        if (Deleted(component.ChasingEntity) || component.ChasingEntity == null)
         {
-            component.ChasingEntity = null;
+            ChangeTarget(uid, component);
             return;
         }
+
+        if (!TryComp<PhysicsComponent>(uid, out var physics))
+            return;
 
         //Calculating direction to the target.
         var xform = _xformQuery.GetComponent(component.ChasingEntity.Value);
@@ -88,5 +92,7 @@ internal sealed class ChasingWalkSystem : EntitySystem
         //Changing the direction of the entity.
         var speed = delta.Normalized() * component.Speed;
         _physics.SetLinearVelocity(uid, speed);
+
+        _physics.SetBodyStatus(physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
     }
 }
