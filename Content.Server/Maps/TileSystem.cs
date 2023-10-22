@@ -6,6 +6,7 @@ using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Content.Shared.Tiles;
 
 namespace Content.Server.Maps;
 
@@ -95,6 +96,11 @@ public sealed class TileSystem : EntitySystem
             return false;
 
         var mapGrid = _mapManager.GetGrid(tileRef.GridUid);
+        var ev = new FloorTileAttemptEvent();
+        RaiseLocalEvent(mapGrid);
+
+        if ((HasComp<ProtectedGridComponent>(tileRef.GridUid) || ev.Cancelled) && tileDef.ID == "Plating")
+            return false;
 
         const float margin = 0.1f;
         var bounds = mapGrid.TileSize - margin * 2;

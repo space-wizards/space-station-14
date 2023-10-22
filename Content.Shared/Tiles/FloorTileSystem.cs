@@ -125,7 +125,7 @@ public sealed class FloorTileSystem : EntitySystem
             {
                 var gridUid = mapGrid.Owner;
 
-                if (!CanPlaceTile(gridUid, mapGrid, out var reason))
+                if (!CanPlaceTile(gridUid, mapGrid, component, out var reason))
                 {
                     _popup.PopupClient(reason, args.User, args.User);
                     return;
@@ -181,15 +181,26 @@ public sealed class FloorTileSystem : EntitySystem
         _audio.PlayPredicted(placeSound, location, user, AudioHelpers.WithVariation(0.125f, _random));
     }
 
-    public bool CanPlaceTile(EntityUid gridUid, MapGridComponent component, [NotNullWhen(false)] out string? reason)
+    public bool CanPlaceTile(EntityUid gridUid, MapGridComponent component, FloorTileComponent? tile, [NotNullWhen(false)] out string? reason)
     {
         var ev = new FloorTileAttemptEvent();
         RaiseLocalEvent(gridUid, ref ev);
 
-        if (HasComp<ProtectedGridComponent>(gridUid) || ev.Cancelled)
+        if (tile?.OutputTiles == null)
         {
-            reason = Loc.GetString("invalid-floor-placement");
-            return false;
+            reason = null;
+            return true;
+        }
+
+        foreach (var currentTile in tile.OutputTiles)
+        {
+            var currentTileDefinition = (ContentTileDefinition) _tileDefinitionManager[currentTile];
+
+            if ((HasComp<ProtectedGridComponent>(gridUid) || ev.Cancelled) && currentTileDefinition.ID == "Lattice")
+            {
+                reason = Loc.GetString("invalid-floor-placement");
+                return false;
+            }
         }
 
         reason = null;

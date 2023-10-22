@@ -165,7 +165,7 @@ public sealed class RCDSystem : EntitySystem
         {
             //Floor mode just needs the tile to be a space tile (subFloor)
             case RcdMode.Floors:
-                if (!_floors.CanPlaceTile(gridId.Value, mapGrid, out var reason))
+                if (!_floors.CanPlaceTile(gridId.Value, mapGrid, null, out var reason))
                 {
                     _popup.PopupClient(reason, user, user);
                     return;
