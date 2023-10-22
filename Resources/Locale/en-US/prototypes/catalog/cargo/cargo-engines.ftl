@@ -21,3 +21,6 @@ ent-EngineParticleAccelerator = { ent-CrateEngineeringParticleAccelerator }
 
 ent-EngineSolar = { ent-CrateEngineeringSolar }
     .desc = { ent-CrateEngineeringSolar.desc }
+
+ent-EngineTeslaGenerator = { ent-CrateEngineeringTeslaGenerator }
+    .desc = { ent-CrateEngineeringTeslaGenerator.desc }

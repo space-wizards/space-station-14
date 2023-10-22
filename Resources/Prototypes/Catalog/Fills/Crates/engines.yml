@@ -116,3 +116,11 @@
       - id: WallmountGeneratorAPUElectronics
       - id: HandheldGPSBasic
       - id: InflatableDoorStack1
+
+- type: entity
+  id: CrateEngineeringTeslaGenerator
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: TeslaGenerator

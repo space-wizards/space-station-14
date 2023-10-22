@@ -28,3 +28,6 @@ ent-CrateEngineeringSolar = Solar assembly crate
     .desc = Parts for constructing solar panels and trackers.
 
 ent-CrateEngineeringShuttle = Shuttle powering crate
+
+ent-CrateEngineeringTeslaGenerator = Tesla generator crate
+    .desc = A tesla generator. God save you.
