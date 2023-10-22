@@ -1,13 +1,13 @@
 
-- type: reaction #imperial
+- type: reaction
   id: Dylovene
   reactants:
     Silicon:
       amount: 1
     Nitrogen:
       amount: 1
-    Alosethasone:
-      amount: 1
+    Alosethasone: #imperial chemistryRework
+      amount: 1 #imperial chemistryRework
   products:
     Dylovene: 3 
 
@@ -35,7 +35,7 @@
   products:
     Cryptobiolin: 3
 
-- type: reaction #imperial
+- type: reaction
   id: Arithrazine
   reactants:
     Hyronalin:
@@ -45,13 +45,13 @@
   products:
     Arithrazine: 2 
 
-- type: reaction #imperial
+- type: reaction
   id: Bicaridine
   reactants:
     Inaprovaline:
       amount: 1 
-    Flexitaine:
-      amount: 0.66
+    Flexitaine: #imperial chemistryRework
+      amount: 0.66 #imperial chemistryRework
     Carbon:
       amount: 1
   products:
@@ -95,7 +95,7 @@
   products:
     Epinephrine: 5
 
-- type: reaction #imperial
+- type: reaction
   id: Dermaline
   reactants:
     Kelotane:
@@ -130,7 +130,7 @@
   products:
     DexalinPlus: 3
 
-- type: reaction #imperial
+- type: reaction
   id: Hyronalin
   reactants:
     Radium:
@@ -176,7 +176,7 @@
   products:
     TranexamicAcid: 3
 
-- type: reaction #imperial
+- type: reaction
   id: Kelotane
   reactants:
     Silicon:
