@@ -1,9 +1,4 @@
 Entries:
-- author: LightVillet
-  changes:
-  - {message: Fixed spilling empty containers, type: Fix}
-  id: 4541
-  time: '2023-08-13T07:08:54.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can no longer keep a cyborg's UI open after closing the panel.,
@@ -2908,3 +2903,11 @@ Entries:
       clothing., type: Fix}
   id: 5040
   time: '2023-10-22T05:54:30.0000000+00:00'
+- author: Endecc
+  changes:
+  - {message: 'Added the Requisition Digi-board, a wireless cargo computer (and high-capacity
+      clipboard) for the Quartermaster''s Locker.', type: Add}
+  - {message: 'Added a new Steal objective for traitors, as this new fancy clipboard
+      has access to most of Nanotrasen''s accounting details!', type: Add}
+  id: 5041
+  time: '2023-10-22T07:34:06.0000000+00:00'
