@@ -137,7 +137,7 @@ public sealed partial class NukeopsRuleComponent : Component
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
     public string EliteNames = "SyndicateNamesElite";
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
+    [DataField]
     public string OperationName = "Test Operation";
 
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]

@@ -797,8 +797,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
             {
-                var operation_name = _randomMetadata.GetRandomFromSegments(new List<string> {"operationPrefix", "operationSuffix"}, " ");
-                _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value), ("operation_name", operation_name)));
+                _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value), ("operation_name", nukeops.OperationName)));
 
                  // Notificate player about new role assignment
                  _audio.PlayGlobal(component.GreetSoundNotification, playerSession);
