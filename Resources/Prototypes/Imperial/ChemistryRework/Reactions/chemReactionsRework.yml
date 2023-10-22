@@ -11,31 +11,6 @@
     Water: 1
     Hydrogen: 0.3
 
-#Burn - Tier 1
-- type: reaction
-  id: Kelotane
-  reactants:
-    Silicon:
-      amount: 1
-    Carbon:
-      amount: 1
-  products:
-    Kelotane: 2
-
-#Burn - Tier 2
-- type: reaction
-  id: Dermaline
-  reactants:
-    Kelotane:
-      amount: 1
-    Oxygen:
-      amount: 1
-    Phosphorus:
-      amount: 1
-  products:
-    Dermaline: 3
-
-#Burn - Tier 3 
 - type: reaction
   id: SynclotidicAcid
   impact: Low
@@ -53,7 +28,6 @@
     SynclotidicAcid: 3
     Water: 0.25
 
-#Poison - Tier 1
 - type: reaction
   id: Alosethasone
   reactants:
@@ -66,20 +40,6 @@
   products:
     Alosethasone: 2.5
 
-#Poison - Tier 2
-- type: reaction
-  id: Dylovene
-  reactants:
-    Silicon:
-      amount: 1
-    Nitrogen:
-      amount: 1
-    Alosethasone:
-      amount: 1
-  products:
-    Dylovene: 3
-
-#Reagent for Acenazone
 - type: reaction
   id: Formaldehyde
   reactants:
@@ -90,7 +50,6 @@
   products:
     Formaldehyde: 2
 
-#Poison - Tier 3
 - type: reaction
   id: Acenazone
   reactants:
@@ -109,7 +68,6 @@
   products:
     Acenazone: 5
 
-#Brute - Tier 1
 - type: reaction
   id: Flexitaine
   reactants:
@@ -122,20 +80,6 @@
   products:
     Flexitaine: 2
 
-#Brute - Tier 2
-- type: reaction
-  id: Bicaridine
-  reactants:
-    Inaprovaline:
-      amount: 1 
-    Flexitaine:
-      amount: 0.66
-    Carbon:
-      amount: 1
-  products:
-    Bicaridine: 3
-
-#Brute - Tier 2.5
 - type: reaction
   id: Retropine
   reactants:
@@ -152,7 +96,6 @@
     Retropine: 3
     Bicaridine: 0.25
 
-#catalyst for tier 3
 - type: reaction
   id: Ketopiride
   impact: High
@@ -196,7 +139,6 @@
       intensitySlope: .5
       maxTotalIntensity: 75
 
-#Brute - Tier 3
 - type: reaction
   id: Tessine
   reactants:
@@ -213,29 +155,6 @@
     Tessine: 3
     Retropine: 0.5
 
-#Radiation - Tier 1
-- type: reaction
-  id: Hyronalin
-  reactants:
-    Radium:
-      amount: 1
-    Dylovene:
-      amount: 1
-  products:
-    Hyronalin: 2
-
-#Radiation - Tier 2
-- type: reaction
-  id: Arithrazine
-  reactants:
-    Hyronalin:
-      amount: 1
-    Hydrogen:
-      amount: 1
-  products:
-    Arithrazine: 2
-
-#Radiation - Tier 4
 - type: reaction
   id: Alcaphine
   reactants:

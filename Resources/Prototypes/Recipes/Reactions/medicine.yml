@@ -1,14 +1,15 @@
-# - type: reaction
-#   id: Dylovene
-#   reactants:
-#     Silicon:
-#       amount: 1
-#     Nitrogen:
-#       amount: 1
-#     Potassium:
-#       amount: 1
-#   products:
-#     Dylovene: 3
+
+- type: reaction #imperial
+  id: Dylovene
+  reactants:
+    Silicon:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Alosethasone:
+      amount: 1
+  products:
+    Dylovene: 3 
 
 - type: reaction
   id: Ethylredoxrazine
@@ -34,25 +35,27 @@
   products:
     Cryptobiolin: 3
 
-# - type: reaction
-#   id: Arithrazine
-#   reactants:
-#     Hyronalin:
-#       amount: 1
-#     Hydrogen:
-#       amount: 1
-#   products:
-#     Arithrazine: 2
+- type: reaction #imperial
+  id: Arithrazine
+  reactants:
+    Hyronalin:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Arithrazine: 2 
 
-# - type: reaction
-#   id: Bicaridine
-#   reactants:
-#     Inaprovaline:
-#       amount: 1
-#     Carbon:
-#       amount: 1
-#   products:
-#     Bicaridine: 2
+- type: reaction #imperial
+  id: Bicaridine
+  reactants:
+    Inaprovaline:
+      amount: 1 
+    Flexitaine:
+      amount: 0.66
+    Carbon:
+      amount: 1
+  products:
+    Bicaridine: 3
 
 - type: reaction
   id: Cryoxadone
@@ -92,17 +95,17 @@
   products:
     Epinephrine: 5
 
-# - type: reaction
-#   id: Dermaline
-#   reactants:
-#     Kelotane:
-#       amount: 1
-#     Oxygen:
-#       amount: 1
-#     Phosphorus:
-#       amount: 1
-#   products:
-#     Dermaline: 3
+- type: reaction #imperial
+  id: Dermaline
+  reactants:
+    Kelotane:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Phosphorus:
+      amount: 1
+  products:
+    Dermaline: 3
 
 - type: reaction
   id: Dexalin
@@ -127,15 +130,15 @@
   products:
     DexalinPlus: 3
 
-# - type: reaction
-#   id: Hyronalin
-#   reactants:
-#     Radium:
-#       amount: 1
-#     Dylovene:
-#       amount: 1
-#   products:
-#     Hyronalin: 2
+- type: reaction #imperial
+  id: Hyronalin
+  reactants:
+    Radium:
+      amount: 1
+    Dylovene:
+      amount: 1
+  products:
+    Hyronalin: 2
 
 - type: reaction
   id: Inaprovaline
@@ -173,15 +176,15 @@
   products:
     TranexamicAcid: 3
 
-# - type: reaction
-#   id: Kelotane
-#   reactants:
-#     Silicon:
-#       amount: 1
-#     Carbon:
-#       amount: 1
-#   products:
-#     Kelotane: 2
+- type: reaction #imperial
+  id: Kelotane
+  reactants:
+    Silicon:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Kelotane: 2
 
 - type: reaction
   id: Leporazine
