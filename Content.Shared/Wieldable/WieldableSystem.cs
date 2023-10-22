@@ -77,7 +77,7 @@ public sealed class WieldableSystem : EntitySystem
 
         gun.MinAngle -= component.MinAngle;
         gun.MaxAngle -= component.MaxAngle;
-        Dirty(gun);
+        Dirty(uid, gun);
     }
 
     private void OnGunWielded(EntityUid uid, GunWieldBonusComponent component, ref ItemWieldedEvent args)
@@ -87,7 +87,7 @@ public sealed class WieldableSystem : EntitySystem
 
         gun.MinAngle += component.MinAngle;
         gun.MaxAngle += component.MaxAngle;
-        Dirty(gun);
+        Dirty(uid, gun);
     }
 
     private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -196,7 +196,8 @@ public sealed class WieldableSystem : EntitySystem
         var targEv = new ItemWieldedEvent();
         RaiseLocalEvent(used, ref targEv);
 
-        Dirty(component);
+        Dirty(used, component);
+        return true;
     }
 
     /// <summary>
@@ -214,7 +215,7 @@ public sealed class WieldableSystem : EntitySystem
         var targEv = new ItemUnwieldedEvent(user);
 
         RaiseLocalEvent(used, targEv);
-
+        return true;
     }
 
     private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
@@ -244,7 +245,7 @@ public sealed class WieldableSystem : EntitySystem
 
         _appearance.SetData(uid, WieldableVisuals.Wielded, false);
 
-        Dirty(component);
+        Dirty(uid, component);
         _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
     }
 
