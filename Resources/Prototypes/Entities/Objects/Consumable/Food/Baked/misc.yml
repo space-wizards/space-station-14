@@ -18,7 +18,7 @@
   - type: Item
     size: 1
   - type: CookbookDocumentation
-    catagory: "Bakes"
+    category: "Bakes"
 
 # Muffins/Buns
 
@@ -114,7 +114,7 @@
   - type: Sprite
     state: COOKIE!!!
   - type: CookbookDocumentation
-    catagory: "Cookies"
+    category: "Cookies"
 
 - type: entity
   name: oatmeal cookie
@@ -134,7 +134,7 @@
         - ReagentId: Vitamin
           Quantity: 1
   - type: CookbookDocumentation
-    catagory: "Cookies"
+    category: "Cookies"
 
 - type: entity
   name: raisin cookie
@@ -157,7 +157,7 @@
     tags:
     - Fruit
   - type: CookbookDocumentation
-    catagory: "Cookies"
+    category: "Cookies"
 
 - type: entity
   name: sugar cookie
@@ -168,7 +168,7 @@
   - type: Sprite
     state: cookie-sugar
   - type: CookbookDocumentation
-    catagory: "Cookies"
+    category: "Cookies"
 
 # Nuggets
 
@@ -211,7 +211,7 @@
         - ReagentId: Vitamin
           Quantity: 1
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 
 # Waffles/Pancakes
 
@@ -272,7 +272,7 @@
     tags:
     - Pancake
   - type: CookbookDocumentation
-    catagory: "Breakfast"
+    category: "Breakfast"
 
 - type: entity
   name: blueberry pancake
@@ -366,7 +366,7 @@
         - ReagentId: Vitamin
           Quantity: 1
   - type: CookbookDocumentation
-    catagory: "Breakfast"
+    category: "Breakfast"
 
 - type: entity
   name: soy waffles
@@ -475,7 +475,7 @@
         - ReagentId: Protein
           Quantity: 2
   - type: CookbookDocumentation
-    catagory: "Pasta"
+    category: "Pasta"
 
 - type: entity
   name: chèvre chaud
@@ -630,4 +630,4 @@
           - ReagentId: Vitamin
             Quantity: 1
     - type: CookbookDocumentation
-      catagory: "PotatoDishes"
+      category: "PotatoDishes"

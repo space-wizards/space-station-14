@@ -30,7 +30,7 @@
     - Pizza
     - Fruit # Tomato? idk
   - type: CookbookDocumentation
-    catagory: "Pizzas"
+    category: "Pizzas"
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable
@@ -61,7 +61,7 @@
     - Pizza
     - Fruit
   - type: CookbookDocumentation
-    catagory: "Slices"
+    category: "Slices"
 
 # Pizza
 

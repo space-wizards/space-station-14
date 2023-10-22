@@ -83,7 +83,7 @@
         - ReagentId: Vitamin
           Quantity: 5
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 # Salad
 
@@ -116,7 +116,7 @@
     - Soup
     - Fruit # I don't know what this is but its' a salad so sure
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: herb salad
@@ -146,7 +146,7 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: valid salad
@@ -181,7 +181,7 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: coleslaw
@@ -210,7 +210,7 @@
         - ReagentId: Allicin
           Quantity: 3
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: caesar salad
@@ -238,7 +238,7 @@
         - ReagentId: Vitamin
           Quantity: 6
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: kimchi salad
@@ -267,7 +267,7 @@
         - ReagentId: Allicin
           Quantity: 2
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: fruit salad
@@ -296,7 +296,7 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: jungle salad
@@ -326,7 +326,7 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: citrus salad
@@ -356,7 +356,7 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: salad of eden
@@ -384,7 +384,7 @@
         - ReagentId: Omnizine
           Quantity: 5
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 # Rice
 
@@ -402,7 +402,7 @@
     - state: bowl
     - state: rice
   - type: CookbookDocumentation
-    catagory: "Rice"
+    category: "Rice"
 
 - type: entity
   name: egg-fried rice
@@ -432,7 +432,7 @@
     - Meat
     - Soup
   - type: CookbookDocumentation
-    catagory: "Rice"
+    category: "Rice"
 
 - type: entity
   name: rice and pork
@@ -466,7 +466,7 @@
     - Meat
     - Soup
   - type: CookbookDocumentation
-    catagory: "Rice"
+    category: "Rice"
 
 - type: entity
   name: rice pudding
@@ -496,7 +496,7 @@
         - ReagentId: Sugar
           Quantity: 5
   - type: CookbookDocumentation
-    catagory: "Rice"
+    category: "Rice"
 
 - type: entity
   name: black-eyed gumbo
@@ -530,7 +530,7 @@
     - Meat
     - Soup
   - type: CookbookDocumentation
-    catagory: "Rice"
+    category: "Rice"
 
 # Misc
 
@@ -560,7 +560,7 @@
         - ReagentId: Milk
           Quantity: 10
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: space liberty duff
@@ -577,7 +577,7 @@
     - state: bowl
     - state: spacelibertyduff
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 
 - type: entity
   name: amanita jelly
@@ -602,7 +602,7 @@
         - ReagentId: Amatoxin
           Quantity: 6
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 
 # Soup
 
@@ -635,7 +635,7 @@
     - Meat
     - Soup
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: slime soup
@@ -662,7 +662,7 @@
         - ReagentId: Water
           Quantity: 10
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: tomato soup
@@ -694,7 +694,7 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: wing fang chu
@@ -722,7 +722,7 @@
         - ReagentId: Vitamin
           Quantity: 7
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: clown's tears
@@ -749,7 +749,7 @@
         - ReagentId: Water
           Quantity: 10
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: vegetable soup
@@ -779,7 +779,7 @@
         - ReagentId: Oculine
           Quantity: 1
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: nettle soup
@@ -810,7 +810,7 @@
         - ReagentId: Histamine
           Quantity: 0.5
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: mystery soup
@@ -826,7 +826,7 @@
     - state: bowl
     - state: mystery
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: bowl of hot chili
@@ -855,7 +855,7 @@
           - ReagentId: Allicin
             Quantity: 3
   - type: CookbookDocumentation
-    catagory: "Chilis"
+    category: "Chilis"
 
 - type: entity
   name: cold chili
@@ -881,7 +881,7 @@
           - ReagentId: Vitamin
             Quantity: 4
   - type: CookbookDocumentation
-    catagory: "Chilis"
+    category: "Chilis"
 
 - type: entity
   name: chili con carnival
@@ -913,7 +913,7 @@
           - ReagentId: Allicin
             Quantity: 3
   - type: CookbookDocumentation
-    catagory: "Chilis"
+    category: "Chilis"
 
 - type: entity
   name: monkey's delight
@@ -947,7 +947,7 @@
     - Meat
     - Soup
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: tomato soup
@@ -978,7 +978,7 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: eyeball soup
@@ -1008,7 +1008,7 @@
     - Meat
     - Soup
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: miso soup
@@ -1042,7 +1042,7 @@
     - Meat
     - Soup
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: mushroom soup
@@ -1071,7 +1071,7 @@
           - ReagentId: Milk
             Quantity: 5
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: beet soup
@@ -1095,7 +1095,7 @@
           - ReagentId: Water
             Quantity: 10
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 # Tastes like borsch, bortsch, borstch, borsh, borshch, borscht.
 
 - type: entity
@@ -1118,7 +1118,7 @@
           - ReagentId: Vitamin
             Quantity: 6
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 # Tastes like beet.
 
 - type: entity
@@ -1153,7 +1153,7 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: sweet potato soup
@@ -1178,7 +1178,7 @@
           - ReagentId: Vitamin
             Quantity: 5
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 # Tastes like sweet potato.
 
 - type: entity
@@ -1206,7 +1206,7 @@
           - ReagentId: Allicin
             Quantity: 5
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: bisque
@@ -1235,7 +1235,7 @@
           - ReagentId: Water
             Quantity: 5
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 # Tastes like crab.
 
 - type: entity
@@ -1262,7 +1262,7 @@
           - ReagentId: Licoxide
             Quantity: 6
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 
 - type: entity
   name: bungo curry
@@ -1293,5 +1293,5 @@
     - Fruit
     - Soup
   - type: CookbookDocumentation
-    catagory: "Chilis"
+    category: "Chilis"
 # Tastes like bungo, hot curry.

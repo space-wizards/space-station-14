@@ -1,5 +1,4 @@
 {
     "omnisharp.analyzeOpenDocumentsOnly": true,
-    "dotnet.defaultSolution": "SpaceStation14.sln",
-    "git-blame.gitWebUrl": ""
+    "dotnet.defaultSolution": "SpaceStation14.sln"
 }

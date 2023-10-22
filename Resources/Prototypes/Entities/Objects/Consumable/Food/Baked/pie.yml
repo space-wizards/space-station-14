@@ -25,7 +25,7 @@
     tags:
     - Pie
   - type: CookbookDocumentation
-    catagory: "Pies"
+    category: "Pies"
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable
@@ -48,7 +48,7 @@
         - ReagentId: Vitamin
           Quantity: 1
   - type: CookbookDocumentation
-    catagory: "Slices"
+    category: "Slices"
 
 # Pie
 

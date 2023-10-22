@@ -236,7 +236,7 @@
   - type: TimedDespawn #delete the egg after the chicken spawns
     lifetime: 21
   - type: CookbookDocumentation
-    catagory: "Unknown"
+    category: "Unknown"
 
 - type: entity
   name: mallard duck #Quack
@@ -359,7 +359,7 @@
     - type: TimedDespawn #delete the egg after the chicken spawns
       lifetime: 21
     - type: CookbookDocumentation
-      catagory: "Unknown"
+      category: "Unknown"
 
 - type: entity
   name: butterfly

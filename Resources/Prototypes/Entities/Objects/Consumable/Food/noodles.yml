@@ -16,7 +16,7 @@
         - ReagentId: Nutriment
           Quantity: 20
   - type: CookbookDocumentation
-    catagory: "Pasta"
+    category: "Pasta"
 
 # Noodles
 

@@ -14,7 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Guidebook.Controls;
 
 /// <summary>
-///     Control for embedding a catagory of food into a guidebook.
+///     Control for embedding a category of food into a guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideCookbookGroupEmbed : BoxContainer, IDocumentTag
@@ -32,7 +32,7 @@ public sealed partial class GuideCookbookGroupEmbed : BoxContainer, IDocumentTag
     {
         foreach (var entityPrototype in _prototype.EnumeratePrototypes<EntityPrototype>().Where(x => x.HasComponent<CookbookDocumentationComponent>()).OrderBy(p => p.Name))
         {
-            if (entityPrototype.TryGetComponent<CookbookDocumentationComponent>(out var comp) && comp.Catagory == group) { CatagoryContainer.AddChild(new GuideFoodEmbed(entityPrototype)); }
+            if (entityPrototype.TryGetComponent<CookbookDocumentationComponent>(out var comp) && comp.Category == group) { CategoryContainer.AddChild(new GuideFoodEmbed(entityPrototype)); }
         }
     }
 
@@ -47,7 +47,7 @@ public sealed partial class GuideCookbookGroupEmbed : BoxContainer, IDocumentTag
 
         foreach (var entityPrototype in _prototype.EnumeratePrototypes<EntityPrototype>().Where(x => x.HasComponent<CookbookDocumentationComponent>() && !x.Abstract).OrderBy(p => p.Name))
         {
-            if (entityPrototype.TryGetComponent<CookbookDocumentationComponent>(out var comp) && comp.Catagory == group) { CatagoryContainer.AddChild(new GuideFoodEmbed(entityPrototype)); }
+            if (entityPrototype.TryGetComponent<CookbookDocumentationComponent>(out var comp) && comp.Category == group) { CategoryContainer.AddChild(new GuideFoodEmbed(entityPrototype)); }
         }
 
         control = this;

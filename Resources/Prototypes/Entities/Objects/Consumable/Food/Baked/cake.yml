@@ -23,7 +23,7 @@
   - type: Item
     size: 25
   - type: CookbookDocumentation
-    catagory: "Cakes"
+    category: "Cakes"
 
 - type: entity
   parent: FoodCakeBase
@@ -47,7 +47,7 @@
   - type: Item
     size: 5
   - type: CookbookDocumentation
-    catagory: "Slices"
+    category: "Slices"
 
 # Custom Cake Example
 

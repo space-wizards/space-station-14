@@ -102,4 +102,4 @@
       - enum.DamageStateVisualLayers.Base:
           white: ""
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"

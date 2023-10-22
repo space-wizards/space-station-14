@@ -22,7 +22,7 @@
         - ReagentId: Nutriment
           Quantity: 20
   - type: CookbookDocumentation
-    catagory: "Breads"
+    category: "Breads"
 
 - type: entity
   parent: FoodBreadBase
@@ -44,7 +44,7 @@
         - ReagentId: Nutriment
           Quantity: 4
   - type: CookbookDocumentation
-    catagory: "Slices"
+    category: "Slices"
 
 # Custom Bread Example
 

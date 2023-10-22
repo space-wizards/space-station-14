@@ -338,7 +338,7 @@
     graph: Pizza
     node: start
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: dough slice
@@ -352,7 +352,7 @@
   - type: Sprite
     state: dough-slice
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: cornmeal dough
@@ -370,7 +370,7 @@
     count: 3
     slice: FoodDoughCornmealSlice
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: cornmeal dough slice
@@ -442,7 +442,7 @@
   - type: Sprite
     state: dough-pastry
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: pastry base
@@ -453,7 +453,7 @@
   - type: Sprite
     state: dough-pastry-baked
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: pie dough
@@ -464,7 +464,7 @@
   - type: Sprite
     state: dough-pie
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: flat dough
@@ -478,7 +478,7 @@
     graph: Pizza
     node: flat
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: pizza bread
@@ -489,7 +489,7 @@
   - type: Sprite
     state: pizzabread
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: cake batter
@@ -503,7 +503,7 @@
   - type: Sprite
     state: cakebatter
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: stick of butter
@@ -514,7 +514,7 @@
   - type: Sprite
     state: butter
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
     
 - type: entity
   name: stick of cannabis butter
@@ -537,7 +537,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: cheese wheel
@@ -554,7 +554,7 @@
     count: 3
     slice: FoodCheeseSlice
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: cheese wedge
@@ -575,7 +575,7 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: chèvre log
@@ -602,7 +602,7 @@
         - ReagentId: Vitamin
           Quantity: 0.6
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: chèvre disk
@@ -626,7 +626,7 @@
         - ReagentId: Vitamin
           Quantity: 0.2
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: tofu
@@ -652,7 +652,7 @@
     count: 3
     slice: FoodTofuSlice
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: tofu slice
@@ -675,7 +675,7 @@
         - ReagentId: Nutriment
           Quantity: 2
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   name: burned mess

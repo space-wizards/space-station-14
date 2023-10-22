@@ -23,7 +23,7 @@
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: 1
   - type: CookbookDocumentation
-    catagory: "Donuts"
+    category: "Donuts"
 # Tastes like donut.
 
 # The sprinkles are now an overlay, so you can put them on any donut! If we really

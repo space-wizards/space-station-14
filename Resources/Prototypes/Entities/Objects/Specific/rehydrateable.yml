@@ -47,7 +47,7 @@
         layer:
         - LowImpassable
   - type: CookbookDocumentation
-    catagory: "Ingredients"
+    category: "Ingredients"
 
 - type: entity
   parent: PlushieCarp

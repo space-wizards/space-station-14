@@ -34,7 +34,7 @@
     materialComposition:
       Meaterial: 300
   - type: CookbookDocumentation
-    catagory: "Meat"
+    category: "Meat"
 
 - type: entity
   parent: FoodMeatBase

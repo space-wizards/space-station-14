@@ -35,7 +35,7 @@
   - type: Sprite
     state: loadedbakedpotato
   - type: CookbookDocumentation
-    catagory: "PotatoDishes"
+    category: "PotatoDishes"
 # Tastes like potato.
 
 - type: entity
@@ -51,7 +51,7 @@
   - type: Sprite
     state: fries
   - type: CookbookDocumentation
-    catagory: "PotatoDishes"
+    category: "PotatoDishes"
 # Tastes like fries, salt.
 
 - type: entity
@@ -68,7 +68,7 @@
   - type: Sprite
     state: fries-cheesy
   - type: CookbookDocumentation
-    catagory: "PotatoDishes"
+    category: "PotatoDishes"
 # Tastes like fries, cheese.
 
 - type: entity
@@ -94,7 +94,7 @@
         - ReagentId: JuiceCarrot
           Quantity: 20
   - type: CookbookDocumentation
-    catagory: "PotatoDishes"
+    category: "PotatoDishes"
 # Tastes like carrots, salt.
 
 - type: entity
@@ -109,7 +109,7 @@
   - type: Sprite
     state: nachos
   - type: CookbookDocumentation
-    catagory: "Mexican"
+    category: "Mexican"
 # Tastes like nachos.
 
 - type: entity
@@ -136,7 +136,7 @@
         - ReagentId: TableSalt
           Quantity: 1
   - type: CookbookDocumentation
-    catagory: "Mexican"
+    category: "Mexican"
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -164,7 +164,7 @@
         - ReagentId: Vitamin
           Quantity: 4
   - type: CookbookDocumentation
-    catagory: "Mexican"
+    category: "Mexican"
 # Tastes like nachos, hot pepper.
 
 - type: entity
@@ -187,7 +187,7 @@
         - ReagentId: Nutriment
           Quantity: 1
   - type: CookbookDocumentation
-    catagory: "Snacks"
+    category: "Snacks"
 # Tastes like parsnips, salt.
 
 - type: entity
@@ -215,7 +215,7 @@
     tags:
     - Fruit
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 # Tastes like eggplant, cheese.
 
 - type: entity
@@ -231,7 +231,7 @@
   - type: Sprite
     state: yakiimo
   - type: CookbookDocumentation
-    catagory: "PotatoDishes"
+    category: "PotatoDishes"
 # Tastes like sweet potato.
 
 - type: entity
@@ -261,7 +261,7 @@
     - CubanCarp
     - Meat
   - type: CookbookDocumentation
-    catagory: "Seafood"
+    category: "Seafood"
 # Tastes like fish, batter, hot peppers.
 
 - type: entity
@@ -289,7 +289,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 # Tastes like meat, cabbage.
 
 - type: entity
@@ -317,7 +317,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 # Tastes like meat, salmon.
 
 - type: entity
@@ -345,7 +345,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 # Tastes like meat, butter.
 
 - type: entity
@@ -375,7 +375,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 # Tastes like meat, smokey sauce.
 
 - type: entity
@@ -404,7 +404,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "Breakfast"
+    category: "Breakfast"
 # Tastes like eggs, bacon, bun.
 
 - type: entity
@@ -430,7 +430,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "Breakfast"
+    category: "Breakfast"
 # Tastes like egg, cheese.
 
 - type: entity
@@ -461,7 +461,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "Breakfast"
+    category: "Breakfast"
 # Tastes like egg, salt, pepper.
 
 - type: entity
@@ -477,7 +477,7 @@
   - type: Sprite
     state: milkape
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 # Tastes like milk, chocolate, the jungle.
 
 - type: entity
@@ -501,7 +501,7 @@
         - ReagentId: Allicin
           Quantity: 5
   - type: CookbookDocumentation
-    catagory: "OtherMeals"
+    category: "OtherMeals"
 # Tastes like pain.
 
 - type: entity
@@ -524,7 +524,7 @@
         - ReagentId: Blackpepper
           Quantity: 3
   - type: CookbookDocumentation
-    catagory: "Soups"
+    category: "Soups"
 # Tastes awesome.
 
 - type: entity
@@ -539,7 +539,7 @@
     - type: Sprite
       state: queso
     - type: CookbookDocumentation
-      catagory: "Mexican"
+      category: "Mexican"
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
@@ -566,7 +566,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "Seafood"
+    category: "Seafood"
 # tastes exotic
 
 - type: entity
@@ -593,7 +593,7 @@
       tags:
       - Meat
     - type: CookbookDocumentation
-      catagory: "Mexican"
+      category: "Mexican"
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
 - type: entity
@@ -627,7 +627,7 @@
     tags:
     - Fruit
   - type: CookbookDocumentation
-    catagory: "Salads"
+    category: "Salads"
 
 - type: entity
   name: soft taco
@@ -647,7 +647,7 @@
     tags:
     - Meat
   - type: CookbookDocumentation
-    catagory: "Mexican"
+    category: "Mexican"
 
 - type: entity
   name: corn in butter
@@ -673,4 +673,4 @@
         - ReagentId: Vitamin
           Quantity: 4
   - type: CookbookDocumentation
-    catagory: "Snacks"
+    category: "Snacks"

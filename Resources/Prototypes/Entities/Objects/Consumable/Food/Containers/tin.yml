@@ -51,7 +51,7 @@
   - type: StaticPrice
     price: 50
   - type: CookbookDocumentation
-    catagory: "Snacks"
+    category: "Snacks"
 
 - type: entity
   abstract: true

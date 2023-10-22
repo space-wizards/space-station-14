@@ -16,7 +16,7 @@
         - ReagentId: Nutriment
           Quantity: 10
   - type: CookbookDocumentation
-    catagory: "FrozenTreats"
+    category: "FrozenTreats"
 
 # Ice-cream
 
