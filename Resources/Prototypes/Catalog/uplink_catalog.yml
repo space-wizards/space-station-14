@@ -154,7 +154,7 @@
   description: uplink-supermatter-grenade-desc
   productEntity: SupermatterGrenade
   cost:
-    Telecrystal: 6
+    Telecrystal: 8
   categories:
     - UplinkExplosives
 

@@ -37,7 +37,7 @@ uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a five-second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
 uplink-supermatter-grenade-name = Supermatter Grenade
-uplink-supermatter-grenade-desc = Grenade that simulates delamination of a suppermatter engine, generates powerful gravity well. Explosion comparable to a Mini Bomb.
+uplink-supermatter-grenade-desc = Grenade that simulates delamination of a suppermatter engine, generates powerful gravity well.
 
 uplink-whitehole-grenade-name = Whitehole Grenade
 uplink-whitehole-grenade-desc = Grenade that are repulses everything around for about 10 seconds. Very useful in small rooms and for chasing someone.

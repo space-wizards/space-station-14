@@ -137,9 +137,10 @@
         volume: -5
   - type: Explosive
     explosionType: Default
-    totalIntensity: 200
-    intensitySlope: 30
-    maxIntensity: 120
+    totalIntensity: 50
+    intensitySlope: 5
+    maxIntensity: 20
+    canCreateVacuum: false
   - type: SoundOnTrigger
     removeOnTrigger: true
     sound:
@@ -158,7 +159,7 @@
           path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
       - type: GravityWell
         maxRange: 8
-        baseRadialAcceleration: 145
+        baseRadialAcceleration: 100
         baseTangentialAcceleration: 5
         gravPulsePeriod: 0.01
       - type: SingularityDistortion
