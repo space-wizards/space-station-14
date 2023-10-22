@@ -1,4 +1,3 @@
-
 using Content.Shared.Eye.Blinding;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -6,6 +5,10 @@ using Robust.Client.Player;
 using Content.Shared.Eye.Blinding.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Tag;
+using Content.Shared.Inventory;
+using Content.Client.Inventory;
 
 namespace Content.Client.Eye.Blinding;
 
@@ -21,18 +24,21 @@ public sealed class MonochromacySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MonochromacyComponent, ComponentInit>(OnMonochromacyInit);
+        SubscribeLocalEvent<MonochromacyComponent, ComponentStartup>(OnMonochromacyStartup);
         SubscribeLocalEvent<MonochromacyComponent, ComponentShutdown>(OnMonochromacyShutdown);
 
         SubscribeLocalEvent<MonochromacyComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<MonochromacyComponent, PlayerDetachedEvent>(OnPlayerDetached);
+
+        SubscribeLocalEvent<MonochromacyComponent, DidEquipEvent>(DidEquip);
+        SubscribeLocalEvent<MonochromacyComponent, DidUnequipEvent>(DidUnequip);
 
         _overlay = new();
     }
 
     private void OnPlayerAttached(EntityUid uid, MonochromacyComponent component, PlayerAttachedEvent args)
     {
-        _overlayMan.AddOverlay(_overlay);
+        UpdateShader(component);
     }
 
     private void OnPlayerDetached(EntityUid uid, MonochromacyComponent component, PlayerDetachedEvent args)
@@ -40,10 +46,10 @@ public sealed class MonochromacySystem : EntitySystem
         _overlayMan.RemoveOverlay(_overlay);
     }
 
-    private void OnMonochromacyInit(EntityUid uid, MonochromacyComponent component, ComponentInit args)
+    private void OnMonochromacyStartup(EntityUid uid, MonochromacyComponent component, ComponentStartup args)
     {
         if (_player.LocalPlayer?.ControlledEntity == uid)
-            _overlayMan.AddOverlay(_overlay);
+			UpdateShader(component);
     }
 
     private void OnMonochromacyShutdown(EntityUid uid, MonochromacyComponent component, ComponentShutdown args)
@@ -52,5 +58,32 @@ public sealed class MonochromacySystem : EntitySystem
         {
             _overlayMan.RemoveOverlay(_overlay);
         }
+    }
+	
+	private void DidEquip(EntityUid uid, MonochromacyComponent component, DidEquipEvent args)
+    {
+        var comp = EnsureComp<TagComponent>(args.Equipment);
+
+        if (comp.Tags.Contains("GlassesMonochromacy") && args.SlotFlags == SlotFlags.EYES) UpdateShaderGlasses(component);
+        else if (args.SlotFlags is not SlotFlags.EYES) UpdateShader(component);
+    }
+	
+	private void DidUnequip(EntityUid uid, MonochromacyComponent component, DidUnequipEvent args)
+    {
+        UpdateShader(component);
+    }
+	
+	private void UpdateShader(MonochromacyComponent component)
+    {
+        _overlayMan.RemoveOverlay(_overlay);
+        _overlay.AlphaValue = component.Alpha;
+        _overlayMan.AddOverlay(_overlay);
+    }
+
+    private void UpdateShaderGlasses(MonochromacyComponent component)
+    {
+        _overlayMan.RemoveOverlay(_overlay);
+        _overlay.AlphaValue = component.AlphaGlasses;
+        _overlayMan.AddOverlay(_overlay);
     }
 }

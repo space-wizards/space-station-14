@@ -77,6 +77,8 @@
   - type: VisionCorrection
   - type: Tag
     tags:
+    - GlassesNearsight
+    - GlassesMonochromacy
     - HamsterWearable
     - WhitelistChameleon
 
@@ -93,6 +95,8 @@
   - type: VisionCorrection
   - type: Tag
     tags:
+    - GlassesNearsight
+    - GlassesMonochromacy
     - HamsterWearable
     - WhitelistChameleon
 
@@ -108,6 +112,10 @@
     sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
   - type: VisionCorrection
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - GlassesNearsight
+    - GlassesMonochromacy
 
 - type: entity
   parent: ClothingEyesBase

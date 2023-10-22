@@ -18,6 +18,8 @@ namespace Content.Client.Eye.Blinding
         public override bool RequestScreenTexture => true;
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _greyscaleShader;
+		
+		public float AlphaValue = 1.0f;
 
         private MonochromacyComponent _monochromacyComponent = default!;
 
@@ -35,8 +37,13 @@ namespace Content.Client.Eye.Blinding
                 return;
 			if (!_entityManager.HasComponent<MonochromacyComponent>(player))
                 return;
+			if (!_entityManager.TryGetComponent(player, out EyeComponent? eyeComp))
+				return;
+			if (args.Viewport.Eye != eyeComp.Eye)
+				return;
 
             _greyscaleShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+			_greyscaleShader?.SetParameter("alpha", AlphaValue);
 
             var worldHandle = args.WorldHandle;
             var viewport = args.WorldBounds;

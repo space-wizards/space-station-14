@@ -12,3 +12,11 @@
   description: trait-monochromatic-desc
   components:
     - type: Monochromacy
+
+- type: trait
+  id: Nearsighted
+  name: trait-nearsighted-name
+  description: trait-nearsighted-desc
+  traitGear: ClothingEyesGlasses
+  components:
+    - type: Nearsighted

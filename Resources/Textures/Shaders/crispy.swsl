@@ -1,0 +1,351 @@
+//
+// Description : Array and textureless GLSL 2D simplex noise function.
+//      Author : Ian McEwan, Ashima Arts.
+//  Maintainer : stegu
+//     Lastmod : 20110822 (ijm)
+//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//               Distributed under the MIT License. See LICENSE file.
+//               https://github.com/ashima/webgl-noise
+//               https://github.com/stegu/webgl-noise
+//
+// Copyright (C) 2011 by Ashima Arts (Simplex noise)
+// Copyright (C) 2011-2016 by Stefan Gustavson (Classic noise and others)
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+
+highp vec3 mod289(highp vec3 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+highp vec2 mod289(highp vec2 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+highp vec3 permute(highp vec3 x) {
+  return mod289(((x*34.0)+10.0)*x);
+}
+
+highp float snoise(highp vec2 v)
+  {
+  const highp vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
+                      0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
+                     -0.577350269189626,  // -1.0 + 2.0 * C.x
+                      0.024390243902439); // 1.0 / 41.0
+// First corner
+  highp vec2 i  = floor(v + dot(v, C.yy) );
+  highp vec2 x0 = v -   i + dot(i, C.xx);
+
+// Other corners
+  highp vec2 i1;
+  //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0
+  //i1.y = 1.0 - i1.x;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  // x0 = x0 - 0.0 + 0.0 * C.xx ;
+  // x1 = x0 - i1 + 1.0 * C.xx ;
+  // x2 = x0 - 1.0 + 2.0 * C.xx ;
+  highp vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+
+// Permutations
+  i = mod289(i); // Avoid truncation effects in permutation
+  highp vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+		+ i.x + vec3(0.0, i1.x, 1.0 ));
+
+  highp vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+  m = m*m ;
+  m = m*m ;
+
+// Gradients: 41 points uniformly over a line, mapped onto a diamond.
+// The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
+
+  highp vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  highp vec3 h = abs(x) - 0.5;
+  highp vec3 ox = floor(x + 0.5);
+  highp vec3 a0 = x - ox;
+
+// Normalise gradients implicitly by scaling m
+// Approximation of: m *= inversesqrt( a0*a0 + h*h );
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+
+// Compute final noise value at P
+  highp vec3 g;
+  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+
+//
+// https://github.com/jamieowen/glsl-blend
+//
+// The MIT License (MIT) Copyright (c) 2015 Jamie Owen
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//
+
+highp float blendOverlay(highp float base, highp float blend) {
+	return base<0.5?(2.0*base*blend):(1.0-2.0*(1.0-base)*(1.0-blend));
+}
+
+highp vec3 blendOverlay(highp vec3 base, highp vec3 blend) {
+	return vec3(blendOverlay(base.r,blend.r),blendOverlay(base.g,blend.g),blendOverlay(base.b,blend.b));
+}
+
+highp vec3 blendOverlay(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float blendColorBurn(highp float base, highp float blend) {
+	return (blend==0.0)?blend:max((1.0-((1.0-base)/blend)),0.0);
+}
+
+highp vec3 blendColorBurn(highp vec3 base, highp vec3 blend) {
+	return vec3(blendColorBurn(base.r,blend.r),blendColorBurn(base.g,blend.g),blendColorBurn(base.b,blend.b));
+}
+
+highp vec3 blendColorBurn(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float blendDarken(highp float base, highp float blend) {
+	return min(blend,base);
+}
+
+highp vec3 blendDarken(highp vec3 base, highp vec3 blend) {
+	return vec3(blendDarken(base.r,blend.r),blendDarken(base.g,blend.g),blendDarken(base.b,blend.b));
+}
+
+highp vec3 blendDarken(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendDarken(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float blendLighten(highp float base, highp float blend) {
+	return max(blend,base);
+}
+
+highp vec3 blendLighten(highp vec3 base, highp vec3 blend) {
+	return vec3(blendLighten(base.r,blend.r),blendLighten(base.g,blend.g),blendLighten(base.b,blend.b));
+}
+
+highp vec3 blendLighten(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendLighten(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float rand(highp vec2 co){
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+highp float blendReflect(highp float base, highp float blend) {
+	return (blend==1.0)?blend:min(base*base/(1.0-blend),1.0);
+}
+
+highp vec3 blendReflect(highp vec3 base, highp vec3 blend) {
+	return vec3(blendReflect(base.r,blend.r),blendReflect(base.g,blend.g),blendReflect(base.b,blend.b));
+}
+
+highp vec3 blendReflect(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendReflect(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float blendLinearBurn(highp float base, highp float blend) {
+	// Note : Same implementation as BlendSubtractf
+	return max(base+blend-1.0,0.0);
+}
+
+highp vec3 blendLinearBurn(highp vec3 base, highp vec3 blend) {
+	// Note : Same implementation as BlendSubtract
+	return max(base+blend-vec3(1.0),vec3(0.0));
+}
+
+highp vec3 blendLinearBurn(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendLinearBurn(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float blendLinearDodge(highp float base, highp float blend) {
+	// Note : Same implementation as BlendAddf
+	return min(base+blend,1.0);
+}
+
+highp vec3 blendLinearDodge(highp vec3 base, highp vec3 blend) {
+	// Note : Same implementation as BlendAdd
+	return min(base+blend,vec3(1.0));
+}
+
+highp vec3 blendLinearDodge(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendLinearDodge(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp float blendLinearLight(highp float base, highp float blend) {
+	return blend<0.5?blendLinearBurn(base,(2.0*blend)):blendLinearDodge(base,(2.0*(blend-0.5)));
+}
+
+highp vec3 blendLinearLight(highp vec3 base, highp vec3 blend) {
+	return vec3(blendLinearLight(base.r,blend.r),blendLinearLight(base.g,blend.g),blendLinearLight(base.b,blend.b));
+}
+
+highp vec3 blendLinearLight(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendLinearLight(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+highp vec3 blendAverage(highp vec3 base, highp vec3 blend) {
+	return (base+blend)/2.0;
+}
+
+highp vec3 blendAverage(highp vec3 base, highp vec3 blend, highp float opacity) {
+	return (blendAverage(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+//
+// https://gamedev.stackexchange.com/a/59808
+//
+//   Author: sam hocevar
+// Answered: Jul 27, 2013 at 13:33
+//  License: CC BY-SA 3.0
+//
+
+highp vec3 rgb2hsv(highp vec3 c)
+{
+    highp vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+    highp vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+    highp vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+
+    highp float d = q.x - min(q.w, q.y);
+    /* float e = 1.0e-10; */
+    highp float e = 0.0000000001;
+    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+}
+
+highp vec3 hsv2rgb(highp vec3 c)
+{
+    highp vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    highp vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
+//
+// https://raw.githubusercontent.com/msfeldstein/glsl-edge-detection/master/index.glsl
+//
+// This software is released under the MIT license:
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+
+// Adapted from http://coding-experiments.blogspot.com/2010/06/edge-detection.html
+highp float threshold(in highp float thr1, in highp float thr2 , in highp float val) {
+  if (val < thr1) {return 0.0;}
+  if (val > thr2) {return 1.0;}
+  return val;
+}
+
+// averaged pixel difference from 3 color channels
+highp float diff(in highp vec4 pix1, in highp vec4 pix2)
+{
+    return (
+        abs(pix1.r - pix2.r) +
+        abs(pix1.g - pix2.g) +
+        abs(pix1.b - pix2.b)
+    ) / 3.;
+}
+
+highp float edge(in sampler2D tex, in highp vec2 coords, in highp vec2 textureSize){
+  highp float dx = textureSize.x;
+  highp float dy = textureSize.y;
+  highp vec4 pix[9];
+
+  pix[0] = zTextureSpec(tex, coords + vec2( -1.0 * dx, -1.0 * dy));
+  pix[1] = zTextureSpec(tex, coords + vec2( -1.0 * dx , 0.0 * dy));
+  pix[2] = zTextureSpec(tex, coords + vec2( -1.0 * dx , 1.0 * dy));
+  pix[3] = zTextureSpec(tex, coords + vec2( 0.0 * dx , -1.0 * dy));
+  pix[4] = zTextureSpec(tex, coords + vec2( 0.0 * dx , 0.0 * dy));
+  pix[5] = zTextureSpec(tex, coords + vec2( 0.0 * dx , 1.0 * dy));
+  pix[6] = zTextureSpec(tex, coords + vec2( 1.0 * dx , -1.0 * dy));
+  pix[7] = zTextureSpec(tex, coords + vec2( 1.0 * dx , 0.0 * dy));
+  pix[8] = zTextureSpec(tex, coords + vec2( 1.0 * dx , 1.0 * dy));
+
+  // average color differences around neighboring pixels
+  highp float delta = (diff(pix[1],pix[7])+
+          diff(pix[5],pix[3]) +
+          diff(pix[0],pix[8])+
+          diff(pix[2],pix[6])
+           )/4.0;
+
+  return clamp(3.0 * delta, 0.0, 1.0);
+}
+
+//
+//  Author: @Vordenburg
+// License: follows space-station-14/LICENSE.TXT as of this commit.
+//
+
+void fragment()
+{
+    highp vec2 ps = TEXTURE_PIXEL_SIZE;
+    highp vec4 base = zTexture(UV);
+
+    highp vec3 edges = vec3(1.0 - edge(TEXTURE, UV, TEXTURE_PIXEL_SIZE));
+
+    highp vec3 browning = vec3(1.08, 1.05, 0.9);
+    highp vec3 browning2 = vec3(0.34, 0.21, 0.12);
+    highp vec3 browning3 = vec3(0.85, 0.57, 0.26);
+    highp vec3 oily = vec3(0.05, 0.03, 0.0);
+
+    highp vec3 product = base.rgb;
+
+    product = rgb2hsv(product);
+    product.x = 0.095;
+    product = hsv2rgb(product);
+    product = blendOverlay(product, browning3, 1.0);
+
+    product = blendLinearBurn(product, browning * snoise((UV * 30.0)), 0.2);
+    product = blendLinearBurn(product, edges, 0.6);
+    product = blendOverlay(product, browning3 * snoise(round(UV * 50.0)), 0.2);
+
+    COLOR = vec4(product, base.a);
+}

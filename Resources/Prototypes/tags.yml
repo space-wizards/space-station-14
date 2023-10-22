@@ -1082,3 +1082,9 @@
 
 - type: Tag
   id: MindShield
+
+- type: Tag
+  id: GlassesNearsight
+
+- type: Tag
+  id: GlassesMonochromacy
