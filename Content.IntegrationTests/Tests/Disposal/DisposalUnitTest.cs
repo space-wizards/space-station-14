@@ -147,10 +147,10 @@ namespace Content.IntegrationTests.Tests.Disposal
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             EntityUid human = default!;
             EntityUid wrench = default!;
@@ -240,7 +240,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Re-pressurizing
                 Flush(disposalUnit, unitComponent, false, disposalSystem);
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

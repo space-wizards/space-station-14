@@ -9,3 +9,6 @@ reagent-desc-vitamin = Found in healthy, complete meals.
 
 reagent-name-protein = protein
 reagent-desc-protein = Found in certain meals, good for bodily health.
+
+reagent-name-cocoapowder = сocoa powder
+reagent-desc-cocoapowder = From the best varieties of cocoa beans

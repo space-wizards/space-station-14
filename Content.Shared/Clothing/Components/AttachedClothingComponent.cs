@@ -10,7 +10,7 @@ namespace Content.Shared.Clothing.Components;
 /// </summary>
 [Access(typeof(ToggleableClothingSystem))]
 [RegisterComponent]
-public sealed class AttachedClothingComponent : Component
+public sealed partial class AttachedClothingComponent : Component
 {
     /// <summary>
     ///     The Id of the piece of clothing that this entity belongs to.

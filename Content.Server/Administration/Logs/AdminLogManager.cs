@@ -12,7 +12,6 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Logs;
 
@@ -66,6 +65,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     private TimeSpan _queueSendDelay;
     private int _queueMax;
     private int _preRoundQueueMax;
+    private int _dropThreshold;
 
     // Per update
     private TimeSpan _nextUpdateTime;
@@ -77,6 +77,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     private int _currentLogId;
     private int NextLogId => Interlocked.Increment(ref _currentLogId);
     private GameRunLevel _runLevel = GameRunLevel.PreRoundLobby;
+
+    // 1 when saving, 0 otherwise
+    private int _savingLogs;
+    private int _logsDropped;
 
     public void Initialize()
     {
@@ -94,6 +98,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             value => _queueMax = value, true);
         _configuration.OnValueChanged(CCVars.AdminLogsPreRoundQueueMax,
             value => _preRoundQueueMax = value, true);
+        _configuration.OnValueChanged(CCVars.AdminLogsDropThreshold,
+            value => _dropThreshold = value, true);
 
         if (_metricsEnabled)
         {
@@ -132,7 +138,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         if (_timing.RealTime >= _nextUpdateTime)
         {
-            await SaveLogs();
+            await TrySaveLogs();
             return;
         }
 
@@ -143,8 +149,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 QueueCapReached.Inc();
             }
 
-            _sawmill.Warning($"Maximum cap of {_queueMax} reached for admin logs.");
-            await SaveLogs();
+            await TrySaveLogs();
         }
     }
 
@@ -163,8 +168,22 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             PreRoundQueueCapReached.Inc();
         }
 
-        _sawmill.Warning($"Maximum cap of {_preRoundQueueMax} reached for pre-round admin logs.");
-        await SaveLogs();
+        await TrySaveLogs();
+    }
+
+    private async Task TrySaveLogs()
+    {
+        if (Interlocked.Exchange(ref _savingLogs, 1) == 1)
+            return;
+
+        try
+        {
+            await SaveLogs();
+        }
+        finally
+        {
+            Interlocked.Exchange(ref _savingLogs, 0);
+        }
     }
 
     private async Task SaveLogs()
@@ -173,10 +192,18 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         // TODO ADMIN LOGS array pool
         var copy = new List<AdminLog>(_logQueue.Count + _preRoundLogQueue.Count);
-
         copy.AddRange(_logQueue);
-        _logQueue.Clear();
-        Queue.Set(0);
+
+        if (_logQueue.Count >= _queueMax)
+        {
+            _sawmill.Warning($"In-round cap of {_queueMax} reached for admin logs.");
+        }
+
+        var dropped = Interlocked.Exchange(ref _logsDropped, 0);
+        if (dropped > 0)
+        {
+            _sawmill.Error($"Dropped {dropped} logs. Current max threshold: {_dropThreshold}");
+        }
 
         if (_runLevel == GameRunLevel.PreRoundLobby && !_preRoundLogQueue.IsEmpty)
         {
@@ -193,10 +220,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             copy.AddRange(_preRoundLogQueue);
         }
 
+        _logQueue.Clear();
+        Queue.Set(0);
+
         _preRoundLogQueue.Clear();
         PreRoundQueue.Set(0);
 
-        // ship the logs to Azkaban
         var task = _db.AddAdminLogs(copy);
 
         _sawmill.Debug($"Saving {copy.Count} admin logs.");
@@ -251,6 +280,14 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     private void Add(LogType type, LogImpact impact, string message, JsonDocument json, HashSet<Guid> players, List<AdminLogEntity> entities)
     {
+        var preRound = _runLevel == GameRunLevel.PreRoundLobby;
+        var count = preRound ? _preRoundLogQueue.Count : _logQueue.Count;
+        if (count >= _dropThreshold)
+        {
+            Interlocked.Increment(ref _logsDropped);
+            return;
+        }
+
         var log = new AdminLog
         {
             Id = NextLogId,
@@ -275,7 +312,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             log.Players.Add(player);
         }
 
-        if (_runLevel == GameRunLevel.PreRoundLobby)
+        if (preRound)
         {
             _preRoundLogQueue.Enqueue(log);
         }

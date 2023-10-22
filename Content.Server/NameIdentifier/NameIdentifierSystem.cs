@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using Content.Shared.GameTicking;
+﻿using Content.Shared.GameTicking;
 using Content.Shared.NameIdentifier;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.NameIdentifier;
 
@@ -15,12 +13,13 @@ public sealed class NameIdentifierSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     /// <summary>
     /// Free IDs available per <see cref="NameIdentifierGroupPrototype"/>.
     /// </summary>
     [ViewVariables]
-    public Dictionary<string, List<int>> CurrentIds = new();
+    public readonly Dictionary<string, List<int>> CurrentIds = new();
 
     public override void Initialize()
     {
@@ -103,11 +102,16 @@ public sealed class NameIdentifierSystem : EntitySystem
             component.Identifier = id;
         }
 
+        component.FullIdentifier = group.FullName
+            ? uniqueName
+            : $"({uniqueName})";
+
         var meta = MetaData(uid);
         // "DR-1234" as opposed to "drone (DR-1234)"
-        meta.EntityName = group.FullName
+        _metaData.SetEntityName(uid, group.FullName
             ? uniqueName
-            : $"{meta.EntityName} ({uniqueName})";
+            : $"{meta.EntityName} ({uniqueName})", meta);
+        Dirty(component);
     }
 
     private void InitialSetupPrototypes()

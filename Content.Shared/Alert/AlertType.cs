@@ -22,6 +22,8 @@ namespace Content.Shared.Alert
         HumanCrit,
         HumanDead,
         HumanHealth,
+        BorgBattery,
+        BorgBatteryNone,
         PilotingShuttle,
         Peckish,
         Starving,
@@ -45,7 +47,9 @@ namespace Content.Shared.Alert
         Debug3,
         Debug4,
         Debug5,
-        Debug6
+        Debug6,
+        SuitPower,
+        BorgHealth
     }
 
 }

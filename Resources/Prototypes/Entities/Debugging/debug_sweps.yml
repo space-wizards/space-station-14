@@ -10,6 +10,7 @@
       - Debug
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
+    state: icon
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
   - type: Gun
@@ -20,6 +21,7 @@
       - FullAuto
   - type: AmmoCounter
   - type: ChamberMagazineAmmoProvider
+    boltClosed: null
   - type: ItemSlots
     slots:
       gun_magazine:

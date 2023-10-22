@@ -54,6 +54,11 @@
     - giggled
 
 - type: emote
+  id: Honk
+  category: Vocal
+  chatMessages: [honks]
+
+- type: emote
   id: Sigh
   category: Vocal
   chatMessages: [sighs]
@@ -124,7 +129,7 @@
    - chittered
    - chittered.
    - chittered!
-  
+
 - type: emote
   id: Squeak
   category: Vocal
@@ -184,3 +189,8 @@
     - salutes.
     - salutes!
 
+- type: emote
+  id: DefaultDeathgasp
+  chatMessages: ["emote-deathgasp"]
+  chatTriggers:
+  - deathgasp

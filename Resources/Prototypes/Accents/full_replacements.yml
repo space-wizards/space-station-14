@@ -8,6 +8,8 @@
   - accent-words-cat-3
   - accent-words-cat-4
   - accent-words-cat-5
+  - accent-words-cat-6
+  - accent-words-cat-7
 
 - type: accent
   id: dog
@@ -25,6 +27,9 @@
   - accent-words-mouse-2
   - accent-words-mouse-3
   - accent-words-mouse-4
+  - accent-words-mouse-5 
+  - accent-words-mouse-6 
+  - accent-words-mouse-7
 
 - type: accent
   id: mumble
@@ -59,6 +64,9 @@
   - accent-words-zombie-5
   - accent-words-zombie-6
   - accent-words-zombie-7
+  - accent-words-zombie-8
+  - accent-words-zombie-9
+  - accent-words-zombie-10
 
 - type: accent
   id: genericAggressive

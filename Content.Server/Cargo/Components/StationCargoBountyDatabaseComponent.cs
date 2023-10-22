@@ -6,7 +6,7 @@ namespace Content.Server.Cargo.Components;
 /// Stores all active cargo bounties for a particular station.
 /// </summary>
 [RegisterComponent]
-public sealed class StationCargoBountyDatabaseComponent : Component
+public sealed partial class StationCargoBountyDatabaseComponent : Component
 {
     /// <summary>
     /// Maximum amount of bounties a station can have.

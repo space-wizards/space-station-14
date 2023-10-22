@@ -22,6 +22,7 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1
     soundHit:
       path: /Audio/Weapons/eblade1.ogg
@@ -87,6 +88,7 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1
     hidden: true
     damage:
@@ -178,6 +180,7 @@
             Blunt: -4.5
     litDisarmMalus: 0.7
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.5
     angle: 100
     soundHit:

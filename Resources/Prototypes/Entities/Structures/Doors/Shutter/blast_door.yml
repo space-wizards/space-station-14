@@ -24,6 +24,9 @@
   - type: Appearance
   - type: RadiationBlocker
     resistance: 8
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
 
 - type: entity
   id: BlastDoorOpen

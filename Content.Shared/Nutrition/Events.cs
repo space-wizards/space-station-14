@@ -8,13 +8,13 @@ namespace Content.Shared.Nutrition;
 ///     Do after even for food and drink.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ConsumeDoAfterEvent : DoAfterEvent
+public sealed partial class ConsumeDoAfterEvent : DoAfterEvent
 {
     [DataField("solution", required: true)]
-    public readonly string Solution = default!;
+    public string Solution = default!;
 
     [DataField("flavorMessage", required: true)]
-    public readonly string FlavorMessage = default!;
+    public string FlavorMessage = default!;
 
     private ConsumeDoAfterEvent()
     {
@@ -33,13 +33,13 @@ public sealed class ConsumeDoAfterEvent : DoAfterEvent
 ///     Do after event for vape.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class VapeDoAfterEvent : DoAfterEvent
+public sealed partial class VapeDoAfterEvent : DoAfterEvent
 {
     [DataField("solution", required: true)]
-    public readonly Solution Solution = default!;
+    public Solution Solution = default!;
 
     [DataField("forced", required: true)]
-    public readonly bool Forced = default!;
+    public bool Forced = default!;
 
     private VapeDoAfterEvent()
     {

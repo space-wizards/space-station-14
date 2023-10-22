@@ -4,7 +4,7 @@ namespace Content.Shared.Examine
     ///     Component required for a player to be able to examine things.
     /// </summary>
     [RegisterComponent]
-    public sealed class ExaminerComponent : Component
+    public sealed partial class ExaminerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("skipChecks")]

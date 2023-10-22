@@ -70,7 +70,7 @@ public sealed class ConstructionPrototype : IPrototype
 
     [ViewVariables]
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("placementMode")]
     public string PlacementMode = "PlaceFree";

@@ -1,9 +1,12 @@
 - type: entity
   id: PartSilicon
   parent: BaseItem
-  name: "silicon body part"
   abstract: true
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+  - type: Icon
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
   - type: Damageable
     damageContainer: Inorganic
   - type: BodyPart
@@ -21,16 +24,11 @@
       Steel: 25
 
 - type: entity
-  id: LeftArmBorg
-  name: "left borg arm"
+  id: BaseBorgArmLeft
   parent: PartSilicon
+  name: left cyborg arm
+  abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Silicon/drone.rsi
-    state: "l_hand"
-  - type: Icon
-    sprite: Mobs/Silicon/drone.rsi
-    state: "l_hand"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -40,16 +38,11 @@
     - BorgArm
 
 - type: entity
-  id: RightArmBorg
-  name: "right borg arm"
+  id: BaseBorgArmRight
   parent: PartSilicon
+  name: right cyborg arm
+  abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Silicon/drone.rsi
-    state: "r_hand"
-  - type: Icon
-    sprite: Mobs/Silicon/drone.rsi
-    state: "r_hand"
   - type: BodyPart
     partType: Hand
     symmetry: Right
@@ -59,16 +52,11 @@
     - BorgArm
 
 - type: entity
-  id: LeftLegBorg
-  name: "left borg leg"
+  id: BaseBorgLegLeft
   parent: PartSilicon
+  name: left cyborg leg
+  abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Silicon/borg.rsi
-    state: "l_leg"
-  - type: Icon
-    sprite: Mobs/Silicon/borg.rsi
-    state: "l_leg"
   - type: BodyPart
     partType: Leg
     symmetry: Left
@@ -76,19 +64,13 @@
     tags:
     - Trash
     - BorgLeg
-    - BorgLeftLeg
 
 - type: entity
-  id: RightLegBorg
-  name: "right borg leg"
+  id: BaseBorgLegRight
   parent: PartSilicon
+  name: right cyborg leg
+  abstract: true
   components:
-  - type: Sprite
-    sprite: Mobs/Silicon/borg.rsi
-    state: "r_leg"
-  - type: Icon
-    sprite: Mobs/Silicon/borg.rsi
-    state: "r_leg"
   - type: BodyPart
     partType: Leg
     symmetry: Right
@@ -96,22 +78,28 @@
     tags:
     - Trash
     - BorgLeg
-    - BorgRightLeg
 
 - type: entity
-  id: LightHeadBorg
-  name: "borg head"
+  id: BaseBorgHead
   parent: PartSilicon
+  name: cyborg head
+  abstract: true
   components:
-  - type: Sprite
-    sprite: Objects/Specific/Borg/head.rsi
-    state: "light_borg_head"
-  - type: Icon
-    sprite: Objects/Specific/Borg/head.rsi
-    state: "light_borg_head"
   - type: BodyPart
     partType: Head
   - type: Tag
     tags:
     - Trash
     - BorgHead
+
+- type: entity
+  id: BaseBorgTorso
+  parent: PartSilicon
+  name: cyborg torso
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Torso
+  - type: Tag
+    tags:
+    - Trash

@@ -13,6 +13,7 @@ public sealed class AdminTestArenaSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
 
     public const string ArenaMapPath = "/Maps/Test/admin_test_arena.yml";
 
@@ -35,8 +36,17 @@ public sealed class AdminTestArenaSystem : EntitySystem
         }
 
         ArenaMap[admin.UserId] = _mapManager.GetMapEntityId(_mapManager.CreateMap());
+        _metaDataSystem.SetEntityName(ArenaMap[admin.UserId], $"ATAM-{admin.Name}");
         var grids = _map.LoadMap(Comp<MapComponent>(ArenaMap[admin.UserId]).MapId, ArenaMapPath);
-        ArenaGrid[admin.UserId] = grids.Count == 0 ? null : grids[0];
+        if (grids.Count != 0)
+        {
+            _metaDataSystem.SetEntityName(grids[0], $"ATAG-{admin.Name}");
+            ArenaGrid[admin.UserId] = grids[0];
+        }
+        else
+        {
+            ArenaGrid[admin.UserId] = null;
+        }
 
         return (ArenaMap[admin.UserId], ArenaGrid[admin.UserId]);
     }

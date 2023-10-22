@@ -32,7 +32,7 @@ public partial class MobStateSystem
 
         var ev = new UpdateMobStateEvent {Target = entity, Component = component, Origin = origin};
         RaiseLocalEvent(entity, ref ev);
-        ChangeState(entity, component, ev.State);
+        ChangeState(entity, component, ev.State, origin: origin);
     }
 
     /// <summary>
@@ -111,8 +111,8 @@ public partial class MobStateSystem
         OnStateChanged(target, component, oldState, newState);
         RaiseLocalEvent(target, ev, true);
         _adminLogger.Add(LogType.Damaged, oldState == MobState.Alive ? LogImpact.Low : LogImpact.Medium,
-            $"{ToPrettyString(component.Owner):user} state changed from {oldState} to {newState}");
-        Dirty(component);
+            $"{ToPrettyString(target):user} state changed from {oldState} to {newState}");
+        Dirty(target, component);
     }
 
     #endregion

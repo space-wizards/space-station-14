@@ -2,6 +2,7 @@
   name: Trash Spawner
   id: RandomSpawner
   parent: MarkerBase
+  suffix: 50
   components:
     - type: Sprite
       layers:
@@ -21,6 +22,7 @@
         - FoodPacketChipsTrash
         - FoodPacketChocolateTrash
         - FoodPacketChowMeinTrash
+        - FoodPacketCnDsTrash
         - FoodPacketDanDanTrash
         - FoodPacketEnergyTrash
         - FoodPacketPistachioTrash
@@ -34,3 +36,13 @@
       offset: 0.2
   placement:
     mode: AlignTileAny
+
+- type: entity
+  parent: RandomSpawner
+  id: RandomSpawner100
+  suffix: 100
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: RandomSpawner
+    chance: 1

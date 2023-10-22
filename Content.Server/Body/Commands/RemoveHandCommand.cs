@@ -11,8 +11,11 @@ using Robust.Shared.Random;
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    sealed class RemoveHandCommand : IConsoleCommand
+    public sealed class RemoveHandCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         public string Command => "removehand";
         public string Description => "Removes a hand from your entity.";
         public string Help => $"Usage: {Command}";
@@ -32,18 +35,16 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.TryGetComponent(player.AttachedEntity, out BodyComponent? body))
+            if (!_entManager.TryGetComponent(player.AttachedEntity, out BodyComponent? body))
             {
-                var random = IoCManager.Resolve<IRobustRandom>();
-                var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
+                var text = $"You have no body{(_random.Prob(0.2f) ? " and you must scream." : ".")}";
 
                 shell.WriteLine(text);
                 return;
             }
 
-            var bodySystem = entityManager.System<BodySystem>();
-            var hand = bodySystem.GetBodyChildrenOfType(player.AttachedEntity, BodyPartType.Hand, body).FirstOrDefault();
+            var bodySystem = _entManager.System<BodySystem>();
+            var hand = bodySystem.GetBodyChildrenOfType(player.AttachedEntity.Value, BodyPartType.Hand, body).FirstOrDefault();
 
             if (hand == default)
             {
@@ -51,7 +52,7 @@ namespace Content.Server.Body.Commands
             }
             else
             {
-                bodySystem.DropPart(hand.Id, hand.Component);
+                _entManager.System<SharedTransformSystem>().AttachToGridOrMap(hand.Id);
             }
         }
     }

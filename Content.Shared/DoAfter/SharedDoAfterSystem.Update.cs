@@ -71,7 +71,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         if (dirty)
-            Dirty(comp);
+            Dirty(uid, comp);
 
         if (comp.DoAfters.Count == 0)
             RemCompDeferred(uid, active);

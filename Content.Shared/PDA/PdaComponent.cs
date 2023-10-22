@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.PDA
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class PdaComponent : Component
+    public sealed partial class PdaComponent : Component
     {
         public const string PdaIdSlotId = "PDA-id";
         public const string PdaPenSlotId = "PDA-pen";

@@ -5,10 +5,10 @@
   name: research-technology-salvage-weapons
   icon:
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    state: gun
+    state: icon
   discipline: Arsenal
   tier: 1
-  cost: 10000
+  cost: 5000
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
   # These are roundstart but not replenishable for salvage
@@ -51,19 +51,19 @@
   - TimerTrigger
   - FlashPayload
   - ExplosivePayload
+  - Igniter
 
 - type: technology
-  id: AdvancedLaserManipulation
-  name: research-technology-advanced-laser-manipulation
+  id: WeaponizedLaserManipulation
+  name: research-technology-weaponized-laser-manipulation
   icon:
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     state: icon
   discipline: Arsenal
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - WeaponLaserCarbine
-  - WeaponAdvancedLaser
 
 - type: technology
   id: NonlethalAmmunition
@@ -73,7 +73,7 @@
     state: beanbag
   discipline: Arsenal
   tier: 1
-  cost: 7500
+  cost: 5000
   recipeUnlocks:
   - ShellShotgunBeanbag
   - CartridgePistolRubber
@@ -84,6 +84,24 @@
   - MagazineBoxMagnumRubber
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
+
+- type: technology
+  id: PracticeAmmunition
+  name: research-technology-practice-ammunition
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: practice
+  discipline: Arsenal
+  tier: 1
+  cost: 2000
+  recipeUnlocks:
+  - ShellShotgunPractice
+  - MagazineBoxPistolPractice
+  - MagazineBoxMagnumPractice
+  - MagazineBoxLightRiflePractice
+  - MagazineBoxRiflePractice
+  - WeaponLaserCarbinePractice
+  - WeaponDisablerPractice
 
 # Tier 2
 
@@ -122,6 +140,8 @@
   cost: 8000
   recipeUnlocks:
   - Truncheon
+  - TelescopicShield
+  - HoloprojectorSecurity
 
 # Tier 3
 
@@ -136,3 +156,15 @@
   cost: 15000
   recipeUnlocks:
   - WeaponTaser
+
+- type: technology
+  id: PortableMicrofusionWeaponry
+  name: research-technology-portable-microfusion-weaponry
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - WeaponAdvancedLaser

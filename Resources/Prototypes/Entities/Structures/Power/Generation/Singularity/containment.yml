@@ -98,6 +98,7 @@
     state: field
   - type: ContainmentField
     throwForce: 50
+  - type: SyncSprite
   - type: GuideHelp
     guides: [ Singularity, Power ]
 

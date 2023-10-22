@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(BasicStationEventSchedulerSystem))]
-public sealed class BasicStationEventSchedulerComponent : Component
+public sealed partial class BasicStationEventSchedulerComponent : Component
 {
     public const float MinimumTimeUntilFirstEvent = 300;
 

@@ -10,6 +10,7 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Audio;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment;
@@ -18,7 +19,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -45,7 +45,6 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<ActiveScannedArtifactComponent, MoveEvent>(OnScannedMoved);
         SubscribeLocalEvent<ActiveScannedArtifactComponent, ArtifactActivatedEvent>(OnArtifactActivated);
 
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentStartup>(OnAnalyzeStart);
@@ -54,8 +53,8 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactAnalyzerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<ArtifactAnalyzerComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<ArtifactAnalyzerComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<ArtifactAnalyzerComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemPlacedEvent>(OnItemPlaced);
+        SubscribeLocalEvent<ArtifactAnalyzerComponent, ItemRemovedEvent>(OnItemRemoved);
 
         SubscribeLocalEvent<ArtifactAnalyzerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLink);
@@ -107,22 +106,18 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Goes through the current contacts on
+    /// Goes through the current entities on
     /// the analyzer and returns a valid artifact
     /// </summary>
     /// <param name="uid"></param>
-    /// <param name="component"></param>
+    /// <param name="placer"></param>
     /// <returns></returns>
-    private EntityUid? GetArtifactForAnalysis(EntityUid? uid, ArtifactAnalyzerComponent? component = null)
+    private EntityUid? GetArtifactForAnalysis(EntityUid? uid, ItemPlacerComponent? placer = null)
     {
-        if (uid == null)
+        if (uid == null || !Resolve(uid.Value, ref placer))
             return null;
 
-        if (!Resolve(uid.Value, ref component))
-            return null;
-
-        var validEnts = component.Contacts.Where(HasComp<ArtifactComponent>).ToHashSet();
-        return validEnts.FirstOrNull();
+        return placer.PlacedEntities.FirstOrNull();
     }
 
     /// <summary>
@@ -205,11 +200,12 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             artifact = analyzer.LastAnalyzedArtifact;
             msg = GetArtifactScanMessage(analyzer);
             totalTime = analyzer.AnalysisDuration * analyzer.AnalysisDurationMulitplier;
-            canScan = analyzer.Contacts.Any();
+            if (TryComp<ItemPlacerComponent>(component.AnalyzerEntity, out var placer))
+                canScan = placer.PlacedEntities.Any();
             canPrint = analyzer.ReadyToPrint;
 
             // the artifact that's actually on the scanner right now.
-            if (GetArtifactForAnalysis(component.AnalyzerEntity, analyzer) is { } current)
+            if (GetArtifactForAnalysis(component.AnalyzerEntity, placer) is { } current)
                 points = _artifact.GetResearchPointValue(current);
         }
         var analyzerConnected = component.AnalyzerEntity != null;
@@ -218,11 +214,11 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
         var remaining = active != null ? _timing.CurTime - active.StartTime : TimeSpan.Zero;
 
-        var state = new AnalysisConsoleScanUpdateState(artifact, analyzerConnected, serverConnected,
+        var state = new AnalysisConsoleScanUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
             canScan, canPrint, msg, scanning, remaining, totalTime, points);
 
         var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
-        UserInterfaceSystem.SetUiState(bui, state);
+        _ui.SetUiState(bui, state);
     }
 
     /// <summary>
@@ -382,20 +378,6 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks to make sure that the currently scanned artifact isn't moved off of the scanner
-    /// </summary>
-    private void OnScannedMoved(EntityUid uid, ActiveScannedArtifactComponent component, ref MoveEvent args)
-    {
-        if (!TryComp<ArtifactAnalyzerComponent>(component.Scanner, out var analyzer))
-            return;
-
-        if (analyzer.Contacts.Contains(uid))
-            return;
-
-        CancelScan(uid, component, analyzer);
-    }
-
-    /// <summary>
     /// Stops the current scan
     /// </summary>
     [PublicAPI]
@@ -448,27 +430,16 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         args.AddPercentageUpgrade("analyzer-artifact-component-upgrade-analysis", component.AnalysisDurationMulitplier);
     }
 
-    private void OnCollide(EntityUid uid, ArtifactAnalyzerComponent component, ref StartCollideEvent args)
+    private void OnItemPlaced(EntityUid uid, ArtifactAnalyzerComponent component, ref ItemPlacedEvent args)
     {
-        var otherEnt = args.OtherEntity;
-
-        if (!HasComp<ArtifactComponent>(otherEnt))
-            return;
-
-        component.Contacts.Add(otherEnt);
-
-        if (component.Console != null)
+        if (component.Console != null && Exists(component.Console))
             UpdateUserInterface(component.Console.Value);
     }
 
-    private void OnEndCollide(EntityUid uid, ArtifactAnalyzerComponent component, ref EndCollideEvent args)
+    private void OnItemRemoved(EntityUid uid, ArtifactAnalyzerComponent component, ref ItemRemovedEvent args)
     {
-        var otherEnt = args.OtherEntity;
-
-        if (!HasComp<ArtifactComponent>(otherEnt))
-            return;
-        component.Contacts.Remove(otherEnt);
-
+        // cancel the scan if the artifact moves off the analyzer
+        CancelScan(args.OtherEntity);
         if (component.Console != null && Exists(component.Console))
             UpdateUserInterface(component.Console.Value);
     }

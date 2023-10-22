@@ -9,7 +9,6 @@
   - type: Item
     sprite: Objects/Materials/materials.rsi
     size: 30
-  - type: ItemStatus
   - type: Tag
     tags:
       - DroneUsable
@@ -127,11 +126,14 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - Gauze
       - RawMaterial
+  - type: Construction
+    graph: WebObjects # not sure if I should either keep this here or just make another prototype. Will keep it here just in case.
+    node: cloth
 
 - type: entity
   parent: MaterialCloth
@@ -193,7 +195,7 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - RawMaterial
@@ -319,6 +321,27 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialHideCorgi
+  name: corgi hide
+  description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a corgi is sent to the nice farm.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: corgihide
+  - type: Item
+    sprite: Clothing/Head/Misc/hides.rsi
+    heldPrefix: corgi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hides.rsi
+    equippedPrefix: corgi2
+    slots:
+    - HEAD
+  - type: Tag
+    tags:
+    - HideCorgi
+
+- type: entity
+  parent: MaterialBase
   id: MaterialDiamond
   name: refined diamond
   suffix: Full
@@ -372,7 +395,7 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - RawMaterial
@@ -413,7 +436,7 @@
       - bananium
       - bananium_1
   - type: RadiationSource
-    intensity: 0.3
+    intensity: 0.1
   - type: FlavorProfile
     flavors:
       - banana
@@ -453,3 +476,102 @@
     count: 1
   - type: Item
     size: 2
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialWebSilk
+  name: silk
+  description: A webby material
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      WebSilk: 100
+  - type: Sprite
+    sprite: Objects/Materials/silk.rsi
+    state: icon
+  - type: Stack
+    count: 50
+    stackType: WebSilk
+  - type: Item
+    size: 50
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
+
+- type: entity
+  parent: MaterialWebSilk
+  id: MaterialWebSilk25
+  suffix: 25
+  components:
+  - type: Stack
+    count: 25
+  - type: Item
+    size: 25
+
+- type: entity
+  parent: MaterialWebSilk
+  id: MaterialWebSilk1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBones
+  name: bones
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Bones
+    baseLayer: base
+    layerStates:
+    - bones
+    - bones_2
+    - bones_3
+  - type: Sprite
+    state: cotton_3
+    layers:
+    - state: cotton_3
+      map: ["base"]
+  - type: Appearance
+  - type: Item
+    size: 30
+  - type: Food
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Vitamin
+          Quantity: 3
+
+- type: entity
+  parent: MaterialBones
+  id: MaterialBones1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+  - type: Item
+    size: 1

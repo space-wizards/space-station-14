@@ -24,11 +24,13 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(RelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeStripEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
+
+        // by-ref events
+        SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);
@@ -38,11 +40,30 @@ public partial class InventorySystem
 
         // ComponentActivatedClientSystems
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowSecurityIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowHungerIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowThirstIconsComponent>>(RelayInventoryEvent);
 
-        SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetStrippingVerbs);
+        SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetEquipmentVerbs);
     }
 
-    protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs, IInventoryRelayEvent
+    protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent
+    {
+        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this, args.TargetSlots);
+
+        // this copies the by-ref event
+        var ev = new InventoryRelayedEvent<T>(args);
+
+        while (containerEnumerator.MoveNext(out var container))
+        {
+            if (!container.ContainedEntity.HasValue) continue;
+            RaiseLocalEvent(container.ContainedEntity.Value, ev);
+        }
+
+        // and now we copy it back
+        args = ev.Args;
+    }
+
+    protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : IInventoryRelayEvent
     {
         if (args.TargetSlots == SlotFlags.NONE)
             return;
@@ -52,11 +73,11 @@ public partial class InventorySystem
         while (containerEnumerator.MoveNext(out var container))
         {
             if (!container.ContainedEntity.HasValue) continue;
-            RaiseLocalEvent(container.ContainedEntity.Value, ev, broadcast: false);
+            RaiseLocalEvent(container.ContainedEntity.Value, ev);
         }
     }
 
-    private void OnGetStrippingVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<EquipmentVerb> args)
+    private void OnGetEquipmentVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
         // Automatically relay stripping related verbs to all equipped clothing.
 
@@ -93,9 +114,9 @@ public partial class InventorySystem
 ///      happens to be a dead mouse. Clothing that wishes to modify movement speed must subscribe to
 ///      InventoryRelayedEvent&lt;RefreshMovementSpeedModifiersEvent&gt;
 /// </remarks>
-public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs where TEvent : EntityEventArgs
+public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs
 {
-    public readonly TEvent Args;
+    public TEvent Args;
 
     public InventoryRelayedEvent(TEvent args)
     {

@@ -2,7 +2,7 @@ using Content.Server.Hands.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
-public sealed class EquipOperator : HTNOperator
+public sealed partial class EquipOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 

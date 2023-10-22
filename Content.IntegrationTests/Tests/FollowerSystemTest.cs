@@ -14,8 +14,8 @@ public sealed class FollowerSystemTest
     [Test]
     public async Task FollowerMapDeleteTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IEntityManager>();
         var mapMan = server.ResolveDependency<IMapManager>();
@@ -42,6 +42,6 @@ public sealed class FollowerSystemTest
 
             entMan.DeleteEntity(mapMan.GetMapEntityId(map));
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

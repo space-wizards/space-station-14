@@ -74,3 +74,5 @@
   description: A polymorphed unfortunate.
   components:
   - type: Cluwne
+  - type: Speech
+    speechVerb: Cluwne

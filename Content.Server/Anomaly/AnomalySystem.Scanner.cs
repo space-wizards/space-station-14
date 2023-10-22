@@ -79,7 +79,7 @@ public sealed partial class AnomalySystem
         if (!HasComp<AnomalyComponent>(target))
             return;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)
         {
             DistanceThreshold = 2f
         });

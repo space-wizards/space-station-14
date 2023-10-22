@@ -33,15 +33,15 @@ namespace Content.IntegrationTests.Tests.Gravity
         [Test]
         public async Task WeightlessStatusTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
 
             EntityUid human = default;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
@@ -51,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             });
 
             // Let WeightlessSystem and GravitySystem tick
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
             var generatorUid = EntityUid.Invalid;
             await server.WaitAssertion(() =>
             {
@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             });
 
             // Let WeightlessSystem and GravitySystem tick
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
 
             await server.WaitAssertion(() =>
             {
@@ -72,16 +72,16 @@ namespace Content.IntegrationTests.Tests.Gravity
                 entityManager.DeleteEntity(generatorUid);
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

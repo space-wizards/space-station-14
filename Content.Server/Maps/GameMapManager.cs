@@ -85,7 +85,7 @@ public sealed class GameMapManager : IGameMapManager
         var poolPrototype = _entityManager.System<GameTicker>().Preset?.MapPool ??
                    _configurationManager.GetCVar(CCVars.GameMapPool);
 
-        if (_prototypeManager.TryIndex<GameMapPoolPrototype>(_configurationManager.GetCVar(CCVars.GameMapPool), out var pool))
+        if (_prototypeManager.TryIndex<GameMapPoolPrototype>(poolPrototype, out var pool))
         {
             foreach (var map in pool.Maps)
             {

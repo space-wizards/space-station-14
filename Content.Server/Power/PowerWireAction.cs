@@ -8,7 +8,7 @@ namespace Content.Server.Power;
 
 // Generic power wire action. Use on anything
 // that requires power.
-public sealed class PowerWireAction : BaseWireAction
+public sealed partial class PowerWireAction : BaseWireAction
 {
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-power";

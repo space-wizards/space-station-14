@@ -17,10 +17,10 @@ public sealed class PrototypeTests
     [Test]
     public async Task TestAllServerPrototypesAreSerializable()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient();
         var context = new PrototypeSaveTest.TestEntityUidContext();
-        await SaveThenValidatePrototype(pairTracker.Pair.Server, "server", context);
-        await pairTracker.CleanReturnAsync();
+        await SaveThenValidatePrototype(pair.Server, "server", context);
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -30,10 +30,10 @@ public sealed class PrototypeTests
     [Test]
     public async Task TestAllClientPrototypesAreSerializable()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient();
         var context = new PrototypeSaveTest.TestEntityUidContext();
-        await SaveThenValidatePrototype(pairTracker.Pair.Client, "client", context);
-        await pairTracker.CleanReturnAsync();
+        await SaveThenValidatePrototype(pair.Client, "client", context);
+        await pair.CleanReturnAsync();
     }
 
     public async Task SaveThenValidatePrototype(RobustIntegrationTest.IntegrationInstance instance, string instanceId,
@@ -69,10 +69,10 @@ public sealed class PrototypeTests
     [Test]
     public async Task ServerPrototypeSaveLoadSaveTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient();
         var context = new PrototypeSaveTest.TestEntityUidContext();
-        await SaveLoadSavePrototype(pairTracker.Pair.Server, context);
-        await pairTracker.CleanReturnAsync();
+        await SaveLoadSavePrototype(pair.Server, context);
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -81,10 +81,10 @@ public sealed class PrototypeTests
     [Test]
     public async Task ClientPrototypeSaveLoadSaveTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient();
         var context = new PrototypeSaveTest.TestEntityUidContext();
-        await SaveLoadSavePrototype(pairTracker.Pair.Client, context);
-        await pairTracker.CleanReturnAsync();
+        await SaveLoadSavePrototype(pair.Client, context);
+        await pair.CleanReturnAsync();
     }
 
     private async Task SaveLoadSavePrototype(

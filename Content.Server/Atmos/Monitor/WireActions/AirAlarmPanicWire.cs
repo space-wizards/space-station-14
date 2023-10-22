@@ -7,7 +7,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Atmos.Monitor;
 
-public sealed class AirAlarmPanicWire : ComponentWireAction<AirAlarmComponent>
+public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComponent>
 {
     public override string Name { get; set; } = "wire-name-air-alarm-panic";
     public override Color Color { get; set; } = Color.Red;

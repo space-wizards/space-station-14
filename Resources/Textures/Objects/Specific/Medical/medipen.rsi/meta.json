@@ -79,6 +79,12 @@
     {
       "name": "atropen_empty"
     },
+    {
+      "name": "arithpen"
+    },
+    {
+      "name": "arithpen_empty"
+    },
 	{
       "name": "medipen-inhand-left"
     },

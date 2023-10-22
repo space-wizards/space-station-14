@@ -19,3 +19,20 @@
               doAfter: 10
     - node: plushie
       entity: PlushieGhostRevenant
+
+- type: constructionGraph
+  id: ClothingOuterSuitIan
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: suit
+      steps:
+      - tag: HideCorgi
+        name: corgi hide
+        icon:
+          sprite: Objects/Materials/materials.rsi
+          state: corgihide
+        doAfter: 5
+  - node: suit
+    entity: ClothingOuterSuitIan

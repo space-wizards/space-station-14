@@ -7,12 +7,6 @@
   components:
   - type: Sharp
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     color: "#ffeead"
     enabled: false
@@ -50,12 +44,17 @@
     capacity: 1
     count: 1
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 10
-        Slash: 5
+        Blunt: 8
+        Slash: 2
   - type: Wieldable
-  - type: MeleeRequiresWield
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2.5
+        Slash: 2.5
   - type: GunRequiresWield
   - type: Item
     size: 150
@@ -63,6 +62,7 @@
   - type: Tool
     qualities:
       - Prying
+  - type: Prying
 
 - type: entity
   name: crusher dagger
@@ -74,12 +74,16 @@
     sprite: Objects/Weapons/Melee/crusher_dagger.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.5
     damage:
       types:
         Slash: 6.5
   - type: Item
     size: 10
+  - type: Tag
+    tags:
+    - Knife
 
 # Like a crusher... but better
 - type: entity
@@ -105,6 +109,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.25
   - type: Item
     size: 150

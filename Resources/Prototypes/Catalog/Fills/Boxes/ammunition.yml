@@ -90,21 +90,6 @@
         amount: 3
 
 - type: entity
-  name: box of omega particle cartridges
-  parent: BoxMagazine
-  id: BoxMagazineChimpOmega
-  description: A box full of omega particle cartridges for the CHIMP.
-  components:
-  - type: StorageFill
-    contents:
-      - id: CartridgeAnomalousParticleOmega
-        amount: 10
-  - type: Sprite
-    layers:
-      - state: box_science
-      - state: omegacart
-
-- type: entity
   name: box of Vector (practice) magazines
   parent: BoxMagazine
   id: BoxMagazineMagnumSubMachineGunPractice

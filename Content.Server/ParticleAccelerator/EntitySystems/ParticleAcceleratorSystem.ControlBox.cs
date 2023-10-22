@@ -233,7 +233,7 @@ public sealed partial class ParticleAcceleratorSystem
             receive = powerConsumer.ReceivedPower;
         }
 
-        UserInterfaceSystem.SetUiState(bui, new ParticleAcceleratorUIState(
+        _uiSystem.SetUiState(bui, new ParticleAcceleratorUIState(
             comp.Assembled,
             comp.Enabled,
             comp.SelectedStrength,

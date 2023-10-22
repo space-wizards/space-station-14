@@ -9,7 +9,7 @@ namespace Content.Server.Store.Components;
 /// to increase its balance.
 /// </summary>
 [RegisterComponent]
-public sealed class CurrencyComponent : Component
+public sealed partial class CurrencyComponent : Component
 {
     /// <summary>
     /// The value of the currency.

@@ -11,7 +11,6 @@
     size: 30
   - type: StaticPrice
     price: 0
-  - type: ItemStatus
   - type: Tag
     tags:
     - Sheet
@@ -49,7 +48,7 @@
   - type: Sprite
     state: steel_3
     layers:
-    - state: plasteel_3
+    - state: steel_3
       map: ["base"]
   - type: Item
     heldPrefix: steel
@@ -97,6 +96,17 @@
   - type: Stack
     stackType: Steel
     count: 1
+
+- type: entity
+  parent: SheetSteel
+  id: SheetSteelLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Item
+    size: 0
+  - type: Stack
+    lingering: true
+    count: 0
 
 - type: entity
   parent: SheetMetalBase

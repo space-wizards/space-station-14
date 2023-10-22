@@ -2,12 +2,14 @@ using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Utility;
+using Robust.Shared.Graphics;
 using static Robust.Client.GameObjects.SpriteComponent;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Clickable
 {
     [RegisterComponent]
-    public sealed class ClickableComponent : Component
+    public sealed partial class ClickableComponent : Component
     {
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
 
@@ -73,7 +75,7 @@ namespace Content.Client.Clickable
                 if (layer.ActualRsi is not { } rsi || !rsi.TryGetState(layer.State, out var rsiState))
                     continue;
 
-                var dir = Layer.GetDirection(rsiState.Directions, relativeRotation);
+                var dir = Layer.GetDirection(rsiState.RsiDirections, relativeRotation);
 
                 // convert to layer-local coordinates
                 layer.GetLayerDrawMatrix(dir, out var matrix);
@@ -86,7 +88,7 @@ namespace Content.Client.Clickable
                 // Next, to get the right click map we need the "direction" of this layer that is actually being used to draw the sprite on the screen.
                 // This **can** differ from the dir defined before, but can also just be the same.
                 if (sprite.EnableDirectionOverride)
-                    dir = sprite.DirectionOverride.Convert(rsiState.Directions);
+                    dir = sprite.DirectionOverride.Convert(rsiState.RsiDirections);
                 dir = dir.OffsetRsiDir(layer.DirOffset);
 
                 if (_clickMapManager.IsOccluding(layer.ActualRsi!, layer.State, dir, layer.AnimationFrame, layerImagePos))
@@ -131,7 +133,7 @@ namespace Content.Client.Clickable
         }
 
         [DataDefinition]
-        public sealed class DirBoundData
+        public sealed partial class DirBoundData
         {
             [DataField("all")] public Box2 All;
             [DataField("north")] public Box2 North;

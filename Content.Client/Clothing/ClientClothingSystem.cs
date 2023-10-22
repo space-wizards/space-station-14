@@ -47,7 +47,6 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -170,10 +169,12 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnVisualsChanged(EntityUid uid, InventoryComponent component, VisualsChangedEvent args)
     {
-        if (!TryComp(args.Item, out ClothingComponent? clothing) || clothing.InSlot == null)
+        var item = GetEntity(args.Item);
+
+        if (!TryComp(item, out ClothingComponent? clothing) || clothing.InSlot == null)
             return;
 
-        RenderEquipment(uid, args.Item, clothing.InSlot, component, null, clothing);
+        RenderEquipment(uid, item, clothing.InSlot, component, null, clothing);
     }
 
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)

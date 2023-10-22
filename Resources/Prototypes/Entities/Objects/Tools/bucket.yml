@@ -5,8 +5,8 @@
   description: It's a boring old bucket.
   components:
   - type: Drink
-    isOpen: true
     solution: bucket
+    ignoreEmpty: true
   - type: Clickable
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi
@@ -26,7 +26,7 @@
       bucket:
         maxVol: 250
   - type: SolutionTransfer
-    transferAmount: 50
+    transferAmount: 100
     maxTransferAmount: 100
     minTransferAmount: 10
     canChangeTransferAmount: true

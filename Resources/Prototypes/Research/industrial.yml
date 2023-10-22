@@ -11,6 +11,7 @@
   cost: 7500
   recipeUnlocks:
   - MiningDrill
+  - BorgModuleMining
   - OreProcessorMachineCircuitboard
 
 - type: technology
@@ -33,7 +34,7 @@
     state: panel
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - WallmountSubstationElectronics
   - WallmountGeneratorElectronics
@@ -47,7 +48,7 @@
     state: icon
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - ProtolatheMachineCircuitboard
   - AutolatheMachineCircuitboard
@@ -59,13 +60,14 @@
   name: research-technology-power-generation
   icon:
     sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen0_1
+    state: portgen0
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
-  - GeneratorPlasmaMachineCircuitboard
-  - GeneratorUraniumMachineCircuitboard
+  - PortableGeneratorPacmanMachineCircuitboard
+  - PortableGeneratorSuperPacmanMachineCircuitboard
+  - PortableGeneratorJrPacmanMachineCircuitboard
   - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
@@ -81,6 +83,7 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
+  - BorgModuleGasAnalyzer
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
 
@@ -96,7 +99,8 @@
   tier: 2
   cost: 5000
   recipeUnlocks:
-    - WeaponGrapplingGun
+  - WeaponGrapplingGun
+  - BorgModuleGrapplingGun
 
 - type: technology
   id: RapidConstruction
@@ -110,6 +114,7 @@
   recipeUnlocks:
   - RCD
   - RCDAmmo
+  - BorgModuleRCD
 
 - type: technology
   id: Shuttlecraft
@@ -125,6 +130,7 @@
   - RadarConsoleCircuitboard
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
+  - MiniGravityGeneratorCircuitboard
 
 - type: technology
   id: RipleyAPLU
@@ -134,7 +140,7 @@
     state: ripley
   discipline: Industrial
   tier: 2
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - RipleyHarness
   - RipleyLArm
@@ -185,6 +191,7 @@
     - WelderExperimental
     - PowerDrill
     - JawsOfLife
+    - BorgModuleAdvancedTool
 
 # Tier 3
 

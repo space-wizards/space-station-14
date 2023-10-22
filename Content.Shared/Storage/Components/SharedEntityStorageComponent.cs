@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Storage.Components;
 
 [NetworkedComponent]
-public abstract class SharedEntityStorageComponent : Component
+public abstract partial class SharedEntityStorageComponent : Component
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
@@ -27,19 +27,19 @@ public abstract class SharedEntityStorageComponent : Component
     /// <summary>
     ///     Collision masks that were removed from ANY layer when the storage was opened;
     /// </summary>
-    [DataField("removedMasks")]
+    [DataField]
     public int RemovedMasks;
 
     /// <summary>
     /// The total amount of items that can fit in one entitystorage
     /// </summary>
-    [DataField("capacity")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Capacity = 30;
 
     /// <summary>
     /// Whether or not the entity still has collision when open
     /// </summary>
-    [DataField("isCollidableWhenOpen")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool IsCollidableWhenOpen;
 
     /// <summary>
@@ -47,71 +47,70 @@ public abstract class SharedEntityStorageComponent : Component
     /// If false, it prevents the storage from opening when the entity inside of it moves.
     /// This is for objects that you want the player to move while inside, like large cardboard boxes, without opening the storage.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("openOnMove")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool OpenOnMove = true;
 
     //The offset for where items are emptied/vacuumed for the EntityStorage.
-    [DataField("enteringOffset")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Vector2 EnteringOffset = new(0, 0);
 
     //The collision groups checked, so that items are depositied or grabbed from inside walls.
-    [DataField("enteringOffsetCollisionFlags")]
-    public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
     /// <summary>
     /// How close you have to be to the "entering" spot to be able to enter
     /// </summary>
-    [DataField("enteringRange")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EnteringRange = 0.18f;
 
     /// <summary>
     /// Whether or not to show the contents when the storage is closed
     /// </summary>
-    [DataField("showContents")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool ShowContents;
 
     /// <summary>
     /// Whether or not light is occluded by the storage
     /// </summary>
-    [DataField("occludesLight")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool OccludesLight = true;
 
     /// <summary>
     /// Whether or not all the contents stored should be deleted with the entitystorage
     /// </summary>
-    [DataField("deleteContentsOnDestruction"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool DeleteContentsOnDestruction;
 
     /// <summary>
     /// Whether or not the container is sealed and traps air inside of it
     /// </summary>
-    [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool Airtight = true;
 
     /// <summary>
     /// Whether or not the entitystorage is open or closed
     /// </summary>
-    [DataField("open")]
+    [DataField]
     public bool Open;
 
     /// <summary>
     /// The sound made when closed
     /// </summary>
-    [DataField("closeSound")]
+    [DataField]
     public SoundSpecifier CloseSound = new SoundPathSpecifier("/Audio/Effects/closetclose.ogg");
 
     /// <summary>
     /// The sound made when open
     /// </summary>
-    [DataField("openSound")]
+    [DataField]
     public SoundSpecifier OpenSound = new SoundPathSpecifier("/Audio/Effects/closetopen.ogg");
 
     /// <summary>
     ///     Whitelist for what entities are allowed to be inserted into this container. If this is not null, the
     ///     standard requirement that the entity must be an item or mob is waived.
     /// </summary>
-    [DataField("whitelist")]
+    [DataField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
@@ -119,12 +118,6 @@ public abstract class SharedEntityStorageComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
-
-    /// <summary>
-    /// Whether or not the storage has been welded shut
-    /// </summary>
-    [DataField("isWeldedShut"), ViewVariables(VVAccess.ReadWrite)]
-    public bool IsWeldedShut;
 }
 
 [Serializable, NetSerializable]
@@ -140,16 +133,13 @@ public sealed class EntityStorageComponentState : ComponentState
 
     public float EnteringRange;
 
-    public bool IsWeldedShut;
-
-    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange, bool isWeldedShut)
+    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange)
     {
         Open = open;
         Capacity = capacity;
         IsCollidableWhenOpen = isCollidableWhenOpen;
         OpenOnMove = openOnMove;
         EnteringRange = enteringRange;
-        IsWeldedShut = isWeldedShut;
     }
 }
 

@@ -38,7 +38,7 @@ public sealed class AdminCommandPermissions
                     {
                         var newArr = new AdminFlags[exFlags.Length + 1];
                         exFlags.CopyTo(newArr, 0);
-                        exFlags[^1] = flags;
+                        newArr[^1] = flags;
                         AdminCommands[cmd] = newArr;
                     }
                 }

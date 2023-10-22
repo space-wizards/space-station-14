@@ -4,7 +4,7 @@
     sprite: Mobs/Animals/bee.rsi
     state: 0
   product: CrateNPCBee
-  cost: 4000
+  cost: 7000
   category: Livestock
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Mobs/Animals/butterfly.rsi
     state: butterfly
   product: CrateNPCButterflies
-  cost: 2500
+  cost: 4400
   category: Livestock
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Mobs/Pets/cat.rsi
     state: cat
   product: CrateNPCCat
-  cost: 1000
+  cost: 1200
   category: Livestock
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Mobs/Animals/chicken.rsi
     state: icon-1
   product: CrateNPCChicken
-  cost: 2500
+  cost: 4000
   category: Livestock
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Mobs/Animals/crab.rsi
     state: crab
   product: CrateNPCCrab
-  cost: 1800
+  cost: 3000
   category: Livestock
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Mobs/Animals/duck.rsi
     state: icon-0
   product: CrateNPCDuck
-  cost: 3500
+  cost: 6000
   category: Livestock
   group: market
 
@@ -64,7 +64,7 @@
     sprite: Mobs/Pets/corgi.rsi
     state: corgi
   product: CrateNPCCorgi
-  cost: 1000
+  cost: 1200
   category: Livestock
   group: market
 
@@ -84,7 +84,7 @@
     sprite: Mobs/Animals/goat.rsi
     state: goat
   product: CrateNPCGoat
-  cost: 1000
+  cost: 1200
   category: Livestock
   group: market
 
@@ -94,7 +94,7 @@
     sprite: Mobs/Animals/goose.rsi
     state: goose
   product: CrateNPCGoose
-  cost: 1500
+  cost: 2100
   category: Livestock
   group: market
 
@@ -104,7 +104,7 @@
     sprite: Mobs/Animals/gorilla.rsi
     state: icon
   product: CrateNPCGorilla
-  cost: 1000
+  cost: 1100
   category: Livestock
   group: market
 
@@ -124,7 +124,7 @@
     sprite: Mobs/Animals/mouse.rsi
     state: icon-0
   product: CrateNPCMouse
-  cost: 2500
+  cost: 4400
   category: Livestock
   group: market
 
@@ -134,7 +134,7 @@
     sprite: Mobs/Animals/parrot.rsi
     state: parrot
   product: CrateNPCParrot
-  cost: 2000
+  cost: 3000
   category: Livestock
   group: market
 
@@ -144,7 +144,7 @@
     sprite: Mobs/Animals/penguin.rsi
     state: penguin
   product: CrateNPCPenguin
-  cost: 1500
+  cost: 2100
   category: Livestock
   group: market
 
@@ -154,7 +154,7 @@
     sprite: Mobs/Animals/pig.rsi
     state: pig
   product: CrateNPCPig
-  cost: 1000
+  cost: 1100
   category: Livestock
   group: market
 
@@ -164,7 +164,7 @@
     sprite: Mobs/Animals/snake.rsi
     state: snake
   product: CrateNPCSnake
-  cost: 2000
+  cost: 3000
   category: Livestock
   group: market
 
@@ -184,7 +184,7 @@
     sprite: Mobs/Animals/lizard.rsi
     state: lizard
   product: CrateNPCLizard
-  cost: 1000
+  cost: 1100
   category: Livestock
   group: market
 

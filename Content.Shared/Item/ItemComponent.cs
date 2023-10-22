@@ -11,7 +11,7 @@ namespace Content.Shared.Item;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(SharedItemSystem))]
-public sealed class ItemComponent : Component
+public sealed partial class ItemComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("size")]
@@ -56,10 +56,10 @@ public sealed class ItemComponentState : ComponentState
 [Serializable, NetSerializable]
 public sealed class VisualsChangedEvent : EntityEventArgs
 {
-    public readonly EntityUid Item;
+    public readonly NetEntity Item;
     public readonly string ContainerId;
 
-    public VisualsChangedEvent(EntityUid item, string containerId)
+    public VisualsChangedEvent(NetEntity item, string containerId)
     {
         Item = item;
         ContainerId = containerId;

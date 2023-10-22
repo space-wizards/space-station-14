@@ -14,10 +14,10 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -88,7 +88,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 Assert.That(found, Is.True);
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

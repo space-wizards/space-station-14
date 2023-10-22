@@ -59,6 +59,20 @@
       entity: FoodDoughCornmeal
 
 - type: reaction
+  id: CreateTortillaDough
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Cornmeal:
+      amount: 15
+    Water:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDoughTortilla
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true
@@ -266,3 +280,19 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: FoodMeatMeatball
+
+- type: reaction
+  id: CreateChocolate
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    CocoaPowder:
+      amount: 4
+    Milk:
+      amount: 2
+    Sugar:
+      amount: 2
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodSnackChocolateBar

@@ -1,0 +1,147 @@
+﻿- type: entity
+  name: watcher
+  id: MobWatcherBase
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  abstract: true
+  description: It's like its staring right through you.
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Lavaland/watcher.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: unshaded
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 80
+        mask:
+          - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: base
+        BaseUnshaded: unshaded
+      Dead:
+        Base: dead
+        BaseUnshaded: dead-unshaded
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5
+    baseSprintSpeed: 7
+  - type: ProjectileBatteryAmmoProvider
+    proto: WatcherBolt
+    fireCost: 50
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Gun
+    fireRate: 0.5
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: CombatMode
+  - type: InteractionPopup
+    successChance: 0.3
+    interactSuccessString: petting-success-slimes
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/lizard_happy.ogg
+
+- type: entity
+  id: MobWatcherLavaland
+  parent: MobWatcherBase
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: unshaded
+      shader: unshaded
+      color: red
+  - type: PointLight
+    radius: 1.5
+    energy: 0.5
+    color: red
+
+- type: entity
+  id: MobWatcherIcewing
+  parent: MobWatcherBase
+  name: icewing watcher
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: unshaded
+      shader: unshaded
+      color: deepskyblue
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: deepskyblue
+
+- type: entity
+  id: MobWatcherMagmawing
+  parent: MobWatcherBase
+  name: magmawing watcher
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: unshaded
+      shader: unshaded
+      color: orangered
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: orangered
+  - type: ProjectileBatteryAmmoProvider
+    proto: WatcherBoltMagmawing
+    fireCost: 50
+
+- type: entity
+  id: MobWatcherPride
+  parent: MobWatcherBase
+  name: pride watcher
+  suffix: ADMEME
+  description: This rare subspecies only appears in June.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: base
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: unshaded
+      shader: unshaded
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+  - type: RgbLightController
+    layers: [ 1 ]

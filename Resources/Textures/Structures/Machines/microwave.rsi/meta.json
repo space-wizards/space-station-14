@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris",
+    "copyright": "Taken from /tg/station at commit 9065b811726ae52be5d1889f436c01a24efbf47a, edited by github user @Flareguy for Space Station 14",
     "states": [
         {
             "name": "mw"
@@ -17,13 +17,7 @@
             "name": "mw0"
         },
         {
-            "name": "mw_running_unlit",
-            "delays": [
-                [
-                    1.0,
-                    1.0
-                ]
-            ]
+            "name": "mw_running_unlit"
         },
         {
             "name": "mwb"
@@ -35,31 +29,13 @@
             "name": "mwbloody0"
         },
         {
-            "name": "mwbloody1",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
+            "name": "mwbloody1"
         },
         {
-            "name": "mwbloodyo",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
+            "name": "mwbloodyo"
         },
         {
-            "name": "mwo",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
+            "name": "mwo"
         }
-    ]
-}
+      ]
+    }

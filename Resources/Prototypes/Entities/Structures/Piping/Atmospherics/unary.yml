@@ -6,6 +6,9 @@
     mode: SnapgridCenter
   components:
     - type: AtmosDevice
+    - type: Tag
+      tags:
+        - Unstackable
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
@@ -53,6 +56,7 @@
     - type: Tag
       tags:
         - GasVent
+        - Unstackable
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -83,6 +87,7 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
+    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -142,6 +147,7 @@
     - type: Tag
       tags:
         - GasScrubber
+        - Unstackable
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
@@ -173,6 +179,7 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
+    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -239,8 +246,8 @@
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: Wires
-      BoardName: "Thermomachine"
-      LayoutId: Thermomachine
+      boardName: wires-board-name-thermomachine
+      layoutId: Thermomachine
     - type: WiresVisuals
     - type: NodeContainer
       nodes:
@@ -250,6 +257,14 @@
           pipeDirection: South
     - type: Transform
       noRot: false
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+    - type: PowerSwitch
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -276,11 +291,13 @@
             True: { state: freezerOn }
             False: { state: freezerOff }
     - type: GasThermoMachine
-      mode: Freezer
+      coefficientOfPerformance: -64
     - type: ApcPowerReceiver
       powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
+    - type: DeviceNetwork
+      prefix: device-address-prefix-freezer
 
 - type: entity
   parent: GasThermoMachineFreezer
@@ -317,11 +334,13 @@
             True: { state: heaterOn }
             False: { state: heaterOff }
     - type: GasThermoMachine
-      mode: Heater
+      coefficientOfPerformance: 32
     - type: ApcPowerReceiver
       powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+    - type: DeviceNetwork
+      prefix: device-address-prefix-heater
 
 - type: entity
   parent: GasThermoMachineHeater

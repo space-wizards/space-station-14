@@ -1,0 +1,49 @@
+#Hunger
+- type: statusIcon
+  id: HungerIconOverfed
+  priority: 5
+  icon:
+    sprite: Interface/Misc/food_icons.rsi
+    state: overfed
+  locationPreference: Right
+
+- type: statusIcon
+  id: HungerIconPeckish
+  priority: 5
+  icon:
+    sprite: Interface/Misc/food_icons.rsi
+    state: peckish
+  locationPreference: Right
+
+- type: statusIcon
+  id: HungerIconStarving
+  priority: 5
+  icon:
+    sprite: Interface/Misc/food_icons.rsi
+    state: starving
+  locationPreference: Right
+
+#Thirst
+- type: statusIcon
+  id: ThirstIconOverhydrated
+  priority: 5
+  icon:
+    sprite: Interface/Misc/food_icons.rsi
+    state: overhydrated
+  locationPreference: Left
+
+- type: statusIcon
+  id: ThirstIconThirsty
+  priority: 5
+  icon:
+    sprite: Interface/Misc/food_icons.rsi
+    state: thirsty
+  locationPreference: Left
+
+- type: statusIcon
+  id: ThirstIconParched
+  priority: 5
+  icon:
+    sprite: Interface/Misc/food_icons.rsi
+    state: parched
+  locationPreference: Left

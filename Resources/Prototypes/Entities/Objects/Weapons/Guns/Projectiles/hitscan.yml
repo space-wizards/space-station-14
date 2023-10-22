@@ -62,7 +62,7 @@
     state: impact_laser
 
 - type: hitscan
-  id: RedMediumLaserWeak
+  id: RedLightLaser
   damage:
     types:
       Heat: 7

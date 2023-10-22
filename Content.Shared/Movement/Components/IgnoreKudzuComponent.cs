@@ -6,6 +6,6 @@ namespace Content.Shared.Movement.Components;
 /// Special component to allow an entity to navigate kudzu without slowdown.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class IgnoreKudzuComponent : Component
+public sealed partial class IgnoreKudzuComponent : Component
 {
 }

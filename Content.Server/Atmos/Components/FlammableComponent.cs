@@ -4,7 +4,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public sealed class FlammableComponent : Component
+    public sealed partial class FlammableComponent : Component
     {
         [ViewVariables]
         public bool Resisting = false;
@@ -35,5 +35,26 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("flammableCollisionShape")]
         public IPhysShape FlammableCollisionShape = new PhysShapeCircle(0.35f);
+
+        /// <summary>
+        ///     Should the component be set on fire by interactions with isHot entities
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("alwaysCombustible")]
+        public bool AlwaysCombustible = false;
+
+        /// <summary>
+        ///     Can the component anyhow lose its FireStacks?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("canExtinguish")]
+        public bool CanExtinguish = true;
+
+        /// <summary>
+        ///     How many firestacks should be applied to component when being set on fire?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("firestacksOnIgnite")]
+        public float FirestacksOnIgnite = 2.0f;
     }
 }

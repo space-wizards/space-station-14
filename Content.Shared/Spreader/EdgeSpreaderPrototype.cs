@@ -9,4 +9,5 @@ namespace Content.Shared.Spreader;
 public sealed class EdgeSpreaderPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
+    [DataField(required:true)] public int UpdatesPerSecond;
 }

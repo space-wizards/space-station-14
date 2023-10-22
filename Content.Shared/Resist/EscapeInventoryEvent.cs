@@ -4,6 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Resist;
 
 [Serializable, NetSerializable]
-public sealed class EscapeInventoryEvent : SimpleDoAfterEvent
+public sealed partial class EscapeInventoryEvent : SimpleDoAfterEvent
 {
 }

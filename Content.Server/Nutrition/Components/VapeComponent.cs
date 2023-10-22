@@ -1,15 +1,11 @@
-using System.Threading;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Atmos;
 
-/// <summary>
-/// Component for vapes
-/// </summary>
-namespace Content.Server.Nutrition.Components
+namespace Content.Server.Nutrition.Components // Vapes are very nutritious.
 {
-    [RegisterComponent, Access(typeof(SmokingSystem))] 
-    public sealed class VapeComponent : Component
+    [RegisterComponent, Access(typeof(SmokingSystem))]
+    public sealed partial class VapeComponent : Component
     {
         [DataField("delay")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -23,6 +19,7 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float ExplosionIntensity { get; set; } = 2.5f;
 
+        // TODO use RiggableComponent.
         [DataField("explodeOnUse")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ExplodeOnUse { get; set; } = false;
@@ -42,10 +39,9 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float ReductionFactor { get; set; } = 300f;
 
+        // TODO when this gets fixed, use prototype serializers
         [DataField("solutionNeeded")]
         [ViewVariables(VVAccess.ReadWrite)]
         public string SolutionNeeded = "Water";
-
-        public CancellationTokenSource? CancelToken;
     }
 }

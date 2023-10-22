@@ -12,6 +12,8 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -90
+    swingLeft: true
     attackRate: 0.75
     damage:
       types:
@@ -38,6 +40,7 @@
       - Prying
   - type: TilePrying
     advanced: true
+  - type: Prying
   - type: UseDelay
     delay: 1
 

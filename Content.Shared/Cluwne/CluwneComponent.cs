@@ -7,7 +7,7 @@ namespace Content.Shared.Cluwne;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed class CluwneComponent : Component
+public sealed partial class CluwneComponent : Component
 {
     /// <summary>
     /// timings for giggles and knocks.

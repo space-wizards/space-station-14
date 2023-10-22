@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 /// Causes an entity to automatically emote at a set interval.
 /// </summary>
 [RegisterComponent, Access(typeof(AutoEmoteSystem))]
-public sealed class AutoEmoteComponent : Component
+public sealed partial class AutoEmoteComponent : Component
 {
     /// <summary>
     /// A set of emotes that the entity will preform.

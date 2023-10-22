@@ -17,10 +17,10 @@ public sealed class CargoTest
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -46,15 +46,15 @@ public sealed class CargoTest
             mapManager.DeleteMap(mapId);
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
     [Test]
     public async Task NoCargoBountyArbitageTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -86,16 +86,16 @@ public sealed class CargoTest
             mapManager.DeleteMap(mapId);
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task NoStaticPriceAndStackPrice()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -109,7 +109,7 @@ public sealed class CargoTest
 
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
-                .Where(p => !pairTracker.Pair.IsTestPrototype(p))
+                .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !p.Components.ContainsKey("MapGrid")) // Grids are not for sale.
                 .Select(p => p.ID)
                 .ToList();
@@ -142,7 +142,7 @@ public sealed class CargoTest
             mapManager.DeleteMap(mapId);
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
 
@@ -168,8 +168,8 @@ public sealed class CargoTest
     [Test]
     public async Task StackPrice()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var priceSystem = entManager.System<PricingSystem>();
@@ -178,6 +178,6 @@ public sealed class CargoTest
         var price = priceSystem.GetPrice(ent);
         Assert.That(price, Is.EqualTo(100.0));
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

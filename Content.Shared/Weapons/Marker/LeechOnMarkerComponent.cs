@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Marker;
 /// Applies leech upon hitting a damage marker target.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class LeechOnMarkerComponent : Component
+public sealed partial class LeechOnMarkerComponent : Component
 {
     // TODO: Can't network damagespecifiers yet last I checked.
     [ViewVariables(VVAccess.ReadWrite)]

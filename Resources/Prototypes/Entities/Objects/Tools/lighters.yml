@@ -44,7 +44,6 @@
     sprite: Objects/Tools/lighters.rsi
     heldPrefix: off
   - type: ItemCooldown
-  - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager

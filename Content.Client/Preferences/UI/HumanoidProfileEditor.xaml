@@ -1,7 +1,8 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI"
-         xmlns:humanoid="clr-namespace:Content.Client.Humanoid">
+         xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <BoxContainer Orientation="Horizontal">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
@@ -57,7 +58,7 @@
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-clothing'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'Show'}" HorizontalAlignment="Right" />
+                                    <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'humanoid-profile-editor-clothing-show'}" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Clothing -->
                                 <BoxContainer HorizontalExpand="True">
@@ -143,9 +144,13 @@
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-            <Control Name="CSpriteViewFront" VerticalExpand="True" SizeFlagsStretchRatio="1" />
-            <Control Name="CSpriteViewSide" VerticalExpand="True" SizeFlagsStretchRatio="1" />
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" VerticalAlignment="Center">
+            <SpriteView Name="CSpriteView" Scale="8 8" SizeFlagsStretchRatio="1" />
+            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
+                <Button Name="CSpriteRotateLeft" Text="◀" StyleClasses="OpenRight" />
+                <cc:VSeparator Margin="2 0 3 0" />
+                <Button Name="CSpriteRotateRight" Text="▶" StyleClasses="OpenLeft" />
+            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </Control>

@@ -3,24 +3,25 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Robust.Client.UserInterface;
+using Robust.Shared.Containers;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
-using static Content.Shared.Storage.SharedStorageComponent;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Storage.UI
 {
     /// <summary>
     /// GUI class for client storage component
     /// </summary>
-    public sealed class StorageWindow : DefaultWindow
+    public sealed class StorageWindow : FancyWindow
     {
-        private IEntityManager _entityManager;
+        private readonly IEntityManager _entityManager;
 
         private readonly Label _information;
         public readonly ContainerButton StorageContainerButton;
@@ -41,7 +42,7 @@ namespace Content.Client.Storage.UI
                 MouseFilter = MouseFilterMode.Pass,
             };
 
-            Contents.AddChild(StorageContainerButton);
+            ContentsContainer.AddChild(StorageContainerButton);
 
             var innerContainerButton = new PanelContainer
             {
@@ -54,6 +55,7 @@ namespace Content.Client.Storage.UI
             {
                 Orientation = LayoutOrientation.Vertical,
                 MouseFilter = MouseFilterMode.Ignore,
+                Margin = new Thickness(5),
             };
 
             StorageContainerButton.AddChild(vBox);
@@ -87,20 +89,27 @@ namespace Content.Client.Storage.UI
         /// <summary>
         /// Loops through stored entities creating buttons for each, updates information labels
         /// </summary>
-        public void BuildEntityList(StorageBoundUserInterfaceState state)
+        public void BuildEntityList(EntityUid entity, StorageComponent component)
         {
-            var list = state.StoredEntities.ConvertAll(uid => new EntityListData(uid));
+            var storedCount = component.Container.ContainedEntities.Count;
+            var list = new List<EntityListData>(storedCount);
+
+            foreach (var uid in component.Container.ContainedEntities)
+            {
+                list.Add(new EntityListData(uid));
+            }
+
             EntityList.PopulateList(list);
 
-            //Sets information about entire storage container current capacity
-            if (state.StorageCapacityMax != 0)
+            // Sets information about entire storage container current capacity
+            if (component.StorageCapacityMax != 0)
             {
-                _information.Text = Loc.GetString("comp-storage-window-volume", ("itemCount", state.StoredEntities.Count),
-                    ("usedVolume", state.StorageSizeUsed), ("maxVolume", state.StorageCapacityMax));
+                _information.Text = Loc.GetString("comp-storage-window-volume", ("itemCount", storedCount),
+                    ("usedVolume", component.StorageUsed), ("maxVolume", component.StorageCapacityMax));
             }
             else
             {
-                _information.Text = Loc.GetString("comp-storage-window-volume-unlimited", ("itemCount", state.StoredEntities.Count));
+                _information.Text = Loc.GetString("comp-storage-window-volume-unlimited", ("itemCount", storedCount));
             }
         }
 
@@ -113,26 +122,26 @@ namespace Content.Client.Storage.UI
                 || !_entityManager.EntityExists(entity))
                 return;
 
-            _entityManager.TryGetComponent(entity, out SpriteComponent? sprite);
             _entityManager.TryGetComponent(entity, out ItemComponent? item);
             _entityManager.TryGetComponent(entity, out StackComponent? stack);
             var count = stack?.Count ?? 1;
             var size = item?.Size;
 
+            var spriteView = new SpriteView
+            {
+                HorizontalAlignment = HAlignment.Left,
+                VerticalAlignment = VAlignment.Center,
+                SetSize = new Vector2(32.0f, 32.0f),
+                OverrideDirection = Direction.South,
+            };
+            spriteView.SetEntity(entity);
             button.AddChild(new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 2,
                 Children =
                     {
-                        new SpriteView
-                        {
-                            HorizontalAlignment = HAlignment.Left,
-                            VerticalAlignment = VAlignment.Center,
-                            SetSize = new Vector2(32.0f, 32.0f),
-                            OverrideDirection = Direction.South,
-                            Sprite = sprite
-                        },
+                        spriteView,
                         new Label
                         {
                             HorizontalExpand = true,

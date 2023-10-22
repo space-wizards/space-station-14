@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class SpawnPrototype : IGraphAction
+    public sealed partial class SpawnPrototype : IGraphAction
     {
         [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Prototype { get; private set; } = string.Empty;

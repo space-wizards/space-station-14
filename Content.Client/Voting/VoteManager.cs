@@ -34,7 +34,6 @@ namespace Content.Client.Voting
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IBaseClient _client = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeouts = new();
         private readonly Dictionary<int, ActiveVote> _votes = new();

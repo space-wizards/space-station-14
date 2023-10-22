@@ -9,7 +9,7 @@ namespace Content.Server.Damage.Components;
 /// Should the entity take damage / be stunned if colliding at a speed above MinimumSpeed?
 /// </summary>
 [RegisterComponent, Access(typeof(DamageOnHighSpeedImpactSystem))]
-public sealed class DamageOnHighSpeedImpactComponent : Component
+public sealed partial class DamageOnHighSpeedImpactComponent : Component
 {
     [DataField("minimumSpeed"), ViewVariables(VVAccess.ReadWrite)]
     public float MinimumSpeed = 20f;

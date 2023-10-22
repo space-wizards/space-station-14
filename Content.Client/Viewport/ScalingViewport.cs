@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Graphics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -21,6 +22,7 @@ namespace Content.Client.Viewport
     public sealed class ScalingViewport : Control, IViewportControl
     {
         [Dependency] private readonly IClyde _clyde = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
 
         // Internal viewport creation is deferred.
@@ -252,8 +254,26 @@ namespace Content.Client.Viewport
             EnsureViewportCreated();
 
             var matrix = Matrix3.Invert(GetLocalToScreenMatrix());
+            coords = matrix.Transform(coords);
 
-            return _viewport!.LocalToWorld(matrix.Transform(coords));
+            return _viewport!.LocalToWorld(coords);
+        }
+
+        /// <inheritdoc/>
+        public MapCoordinates PixelToMap(Vector2 coords)
+        {
+            if (_eye == null)
+                return default;
+
+            EnsureViewportCreated();
+
+            var matrix = Matrix3.Invert(GetLocalToScreenMatrix());
+            coords = matrix.Transform(coords);
+
+            var ev = new PixelToMapEvent(coords, this, _viewport!);
+            _entityManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
+
+            return _viewport!.LocalToWorld(ev.VisiblePosition);
         }
 
         public Vector2 WorldToScreen(Vector2 map)

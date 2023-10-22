@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed class ExtinguishReaction : ReagentEffect
+    public sealed partial class ExtinguishReaction : ReagentEffect
     {
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
             => Loc.GetString("reagent-effect-guidebook-extinguish-reaction", ("chance", Probability));

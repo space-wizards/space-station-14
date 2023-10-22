@@ -10,7 +10,7 @@ namespace Content.Server.Worldgen.Components.Debris;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(DebrisFeaturePlacerSystem))]
-public sealed class DebrisFeaturePlacerControllerComponent : Component
+public sealed partial class DebrisFeaturePlacerControllerComponent : Component
 {
     /// <summary>
     ///     Whether or not to clip debris that would spawn at a location that has a density of zero.
@@ -38,6 +38,6 @@ public sealed class DebrisFeaturePlacerControllerComponent : Component
     ///     The noise channel to use as a density controller.
     /// </summary>
     [DataField("densityNoiseChannel", customTypeSerializer: typeof(PrototypeIdSerializer<NoiseChannelPrototype>))]
-    public string DensityNoiseChannel { get; } = default!;
+    public string DensityNoiseChannel { get; private set; } = default!;
 }
 

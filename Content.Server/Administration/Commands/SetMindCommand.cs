@@ -1,7 +1,7 @@
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -67,14 +67,10 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mindSystem = entityManager.System<MindSystem>();
+            var mindSystem = entityManager.System<SharedMindSystem>();
+            var metadata = entityManager.GetComponent<MetaDataComponent>(eUid);
 
-            var mind = playerCData.Mind;
-            if (mind == null)
-            {
-                mind = mindSystem.CreateMind(session.UserId);
-                mind.CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName;
-            }
+            var mind = playerCData.Mind ?? mindSystem.CreateMind(session.UserId, metadata.EntityName);
 
             mindSystem.TransferTo(mind, eUid, ghostOverride);
         }

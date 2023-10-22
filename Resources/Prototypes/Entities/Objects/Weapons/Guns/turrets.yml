@@ -66,10 +66,7 @@
       interactSuccessSound:
         path: /Audio/Effects/double_beep.ogg
     - type: CombatMode
-      combatToggleAction:
-        enabled: false
-        autoPopulate: false
-        name: action-name-combat
+      toggleMouseRotator: false
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
@@ -113,6 +110,14 @@
           3.141
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
+    - type: MouseRotator
+      angleTolerance: 5
+      rotationSpeed: 180
+      simple4DirMode: false
+    - type: NoRotateOnInteract
+    - type: NoRotateOnMove
+    - type: Input
+      context: "human"
 
 - type: entity
   parent: BaseWeaponTurret
@@ -156,7 +161,6 @@
     - type: BallisticAmmoProvider
       proto: CartridgePistol
       capacity: 50
-      cycleable: false
     - type: Construction
       deconstructionTarget: null
       graph: WeaponTurretSyndicateDisposable

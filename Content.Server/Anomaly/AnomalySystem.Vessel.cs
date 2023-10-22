@@ -156,7 +156,7 @@ public sealed partial class AnomalySystem
             return;
 
         Appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, on, appearanceComponent);
-        if (TryComp<SharedPointLightComponent>(uid, out var pointLightComponent))
+        if (_pointLight.TryGetLight(uid, out var pointLightComponent))
             _pointLight.SetEnabled(uid, on, pointLightComponent);
 
         // arbitrary value for the generic visualizer to use.

@@ -12,7 +12,7 @@ namespace Content.Server.NPC.Components;
 /// Added to NPCs that are moving.
 /// </summary>
 [RegisterComponent]
-public sealed class NPCSteeringComponent : Component
+public sealed partial class NPCSteeringComponent : Component
 {
     #region Context Steering
 

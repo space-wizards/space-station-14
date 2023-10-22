@@ -8,7 +8,7 @@ namespace Content.Server.Cargo.Components;
 /// Stores all of cargo orders for a particular station.
 /// </summary>
 [RegisterComponent]
-public sealed class StationCargoOrderDatabaseComponent : Component
+public sealed partial class StationCargoOrderDatabaseComponent : Component
 {
     /// <summary>
     /// Maximum amount of orders a station is allowed, approved or not.

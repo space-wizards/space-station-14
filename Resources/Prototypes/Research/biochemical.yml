@@ -8,13 +8,14 @@
     state: beakerlarge
   discipline: Biochemical
   tier: 1
-  cost: 10000
+  cost: 5000
   recipeUnlocks:
   - LargeBeaker
   - Dropper
   - HotplateMachineCircuitboard
   - ChemicalPayload
   - ClothingEyesGlassesChemical
+  - Jug
 
 - type: technology
   id: SurgicalTools
@@ -24,7 +25,7 @@
     state: saw
   discipline: Biochemical
   tier: 1
-  cost: 5000
+  cost: 2500 #this is useless so heavy decrease
   recipeUnlocks:
   - Scalpel
   - Retractor
@@ -41,10 +42,24 @@
     state: icon
   discipline: Biochemical
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - CryostasisBeaker
   - StasisBedMachineCircuitboard
+
+- type: technology
+  id: MechanizedTreatment
+  name: research-technology-mechanized-treatment
+  icon:
+    sprite: Mobs/Silicon/chassis.rsi
+    state: medical
+  discipline: Biochemical
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - BorgModuleDiagnosis
+  - BorgModuleTreatment
+  - BorgModuleDefibrillator
 
 - type: technology
   id: Virology
@@ -85,6 +100,7 @@
   recipeUnlocks:
   - ChemMasterMachineCircuitboard
   - ChemDispenserMachineCircuitboard
+  - BorgModuleAdvancedTreatment
   technologyPrerequisites:
   - Chemistry
 

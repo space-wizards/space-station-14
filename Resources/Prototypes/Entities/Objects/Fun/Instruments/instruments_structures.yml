@@ -164,8 +164,8 @@
   - type: WiresVisuals
   - type: WiresPanel
   - type: Wires
-    BoardName: "DawInstrument"
-    LayoutId: DawInstrument
+    boardName: wires-board-name-dawinstrument
+    layoutId: DawInstrument
   - type: Machine
     board: DawInstrumentMachineCircuitboard
   - type: Instrument

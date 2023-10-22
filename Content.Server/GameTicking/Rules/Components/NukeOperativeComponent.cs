@@ -6,7 +6,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// This is used for tagging a mob as a nuke operative.
 /// </summary>
 [RegisterComponent]
-public sealed class NukeOperativeComponent : Component
+public sealed partial class NukeOperativeComponent : Component
 {
     /// <summary>
     ///     Path to antagonist alert sound.

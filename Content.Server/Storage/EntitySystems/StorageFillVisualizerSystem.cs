@@ -1,5 +1,5 @@
-﻿using Content.Server.Storage.Components;
-using Content.Shared.Rounding;
+﻿using Content.Shared.Rounding;
+using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -33,7 +33,7 @@ public sealed class StorageFillVisualizerSystem : EntitySystem
         UpdateAppearance(uid, component: component);
     }
 
-    private void UpdateAppearance(EntityUid uid, ServerStorageComponent? storage = null, AppearanceComponent? appearance = null,
+    private void UpdateAppearance(EntityUid uid, StorageComponent? storage = null, AppearanceComponent? appearance = null,
         StorageFillVisualizerComponent? component = null)
     {
         if (!Resolve(uid, ref storage, ref appearance, ref component, false))

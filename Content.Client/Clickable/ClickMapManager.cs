@@ -2,6 +2,8 @@ using System.Text;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
+using Robust.Shared.Graphics;
+using Robust.Shared.Graphics.RSI;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -71,7 +73,7 @@ namespace Content.Client.Clickable
             return SampleClickMap(clickMap, pos, clickMap.Size, Vector2i.Zero);
         }
 
-        public bool IsOccluding(RSI rsi, RSI.StateId state, RSI.State.Direction dir, int frame, Vector2i pos)
+        public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos)
         {
             if (!_rsiMaps.TryGetValue(rsi, out var rsiData))
             {
@@ -210,6 +212,6 @@ namespace Content.Client.Clickable
     {
         public bool IsOccluding(Texture texture, Vector2i pos);
 
-        public bool IsOccluding(RSI rsi, RSI.StateId state, RSI.State.Direction dir, int frame, Vector2i pos);
+        public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos);
     }
 }

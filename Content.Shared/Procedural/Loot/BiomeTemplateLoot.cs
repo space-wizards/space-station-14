@@ -6,7 +6,7 @@ namespace Content.Shared.Procedural.Loot;
 /// <summary>
 /// Adds a biome template layer for dungeon loot.
 /// </summary>
-public sealed class BiomeTemplateLoot : IDungeonLoot
+public sealed partial class BiomeTemplateLoot : IDungeonLoot
 {
     [DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
     public string Prototype = string.Empty;

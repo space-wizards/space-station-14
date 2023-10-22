@@ -33,6 +33,9 @@
   - type: PneumaticCannon
   - type: Storage
     capacity: 30
+    blacklist:
+      tags:
+        - Arrow
   - type: Appearance
   - type: ItemMapper
     containerWhitelist: [gas_tank]

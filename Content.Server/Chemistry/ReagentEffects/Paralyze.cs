@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class Paralyze : ReagentEffect
+public sealed partial class Paralyze : ReagentEffect
 {
     [DataField("paralyzeTime")] public double ParalyzeTime = 2;
 

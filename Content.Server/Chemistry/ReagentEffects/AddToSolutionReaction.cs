@@ -1,4 +1,4 @@
-using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed class AddToSolutionReaction : ReagentEffect
+    public sealed partial class AddToSolutionReaction : ReagentEffect
     {
         [DataField("solution")]
         private string _solution = "reagents";

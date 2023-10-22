@@ -10,8 +10,15 @@ namespace Content.Shared.Administration
         string IdentityName,
         string StartingJob,
         bool Antag,
-        EntityUid? EntityUid,
+        NetEntity? NetEntity,
         NetUserId SessionId,
         bool Connected,
-        bool ActiveThisRound);
+        bool ActiveThisRound,
+        TimeSpan? OverallPlaytime)
+    {
+        private string? _playtimeString;
+
+        public string PlaytimeString => _playtimeString ??=
+            OverallPlaytime?.ToString("%d':'hh':'mm") ?? Loc.GetString("generic-unknown-title");
+    }
 }

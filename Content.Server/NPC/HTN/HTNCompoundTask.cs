@@ -8,7 +8,7 @@ namespace Content.Server.NPC.HTN;
 /// <remarks>
 /// This just points to a specific htnCompound prototype
 /// </remarks>
-public sealed class HTNCompoundTask : HTNTask, IHTNCompound
+public sealed partial class HTNCompoundTask : HTNTask, IHTNCompound
 {
     [DataField("task", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<HTNCompoundPrototype>))]
     public string Task = string.Empty;

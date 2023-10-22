@@ -23,16 +23,16 @@
         types:
           Blunt: 5
     - type: OnUseTimerTrigger
-      delay: 180
+      delay: 120
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
       params:
         volume: -2
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default
-      maxIntensity: 8
-      intensitySlope: 5
-      totalIntensity: 20
+      maxIntensity: 50
+      intensitySlope: 25
+      totalIntensity: 100
       canCreateVacuum: false
     - type: DeleteOnTrigger
     - type: HotPotato
@@ -40,7 +40,7 @@
       enabled: false
       damage:
         types:
-          Heat: 1
+          Heat: 2
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -66,3 +66,41 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
+
+- type: entity
+  name: banana peel
+  suffix: Explosive
+  parent: TrashBananaPeel
+  id: TrashBananaPeelExplosive
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    layers:
+    - state: peel
+    - state: primed
+      shader: unshaded
+  - type: TriggerOnSlip
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 2
+    totalIntensity: 10
+    canCreateVacuum: false
+  - type: DeleteOnTrigger
+  - type: AnimationPlayer
+
+- type: entity
+  parent: BaseItem
+  id: TrashBananaPeelExplosiveUnarmed
+  name: banana
+  suffix: Unarmed
+  description: There's something unusual about this banana.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: produce
+  - type: SpawnItemsOnUse
+    items:
+    - id: TrashBananaPeelExplosive
+    sound:
+      path: /Audio/Effects/unwrap.ogg

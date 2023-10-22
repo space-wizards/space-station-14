@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.MassMedia.Components
 {
     [RegisterComponent]
-    public sealed class NewsWriteComponent : Component
+    public sealed partial class NewsWriteComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ShareAvalible = false;

@@ -87,6 +87,7 @@
     whitelist:
       components:
       - PhysicalComposition
+      - MobState
       - SpaceGarbage
       tags:
       - Trash

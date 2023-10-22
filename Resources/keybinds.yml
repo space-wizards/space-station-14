@@ -89,6 +89,9 @@ binds:
 - function: ShowEscapeMenu
   type: State
   key: F10
+- function: ToggleFullscreen
+  type: State
+  key: F11
 - function: CycleChatChannelForward
   type: State
   key: Tab
@@ -237,6 +240,10 @@ binds:
 - function: ShowDebugConsole
   type: State
   key: Tilde
+- function: InspectEntity
+  type: State
+  key: v
+  mod1: Alt
 - function: MouseMiddle
   type: State
   key: MouseMiddle

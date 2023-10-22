@@ -18,7 +18,7 @@ namespace Content.Client.Administration.UI.SetOutfit
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-        public EntityUid? TargetEntityId { get; set; }
+        public NetEntity? TargetEntityId { get; set; }
         private StartingGearPrototype? _selectedOutfit;
 
         public SetOutfitMenu()

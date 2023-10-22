@@ -8,7 +8,7 @@ namespace Content.Client.Chemistry.Visualizers;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(FoamVisualizerSystem))]
-public sealed class FoamVisualsComponent : Component
+public sealed partial class FoamVisualsComponent : Component
 {
     /// <summary>
     /// The id of the animation used when the foam dissolves.

@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.Components;
 /// to entities that collide with it. Similar to <see cref="PuddleComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed class SmokeComponent : Component
+public sealed partial class SmokeComponent : Component
 {
     public const string SolutionName = "solutionArea";
 

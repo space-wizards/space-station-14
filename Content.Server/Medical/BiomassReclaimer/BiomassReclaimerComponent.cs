@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Medical.BiomassReclaimer
 {
     [RegisterComponent]
-    public sealed class BiomassReclaimerComponent : Component
+    public sealed partial class BiomassReclaimerComponent : Component
     {
         /// <summary>
         /// This gets set for each mob it processes.

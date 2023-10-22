@@ -53,7 +53,17 @@
   components:
   - type: Sprite
     state: clown
-    
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineHoloClown
+  name: holoclown figure
+  description: A figurine depicting a holoclown. Even more annoying than a clown and no less real.
+  components:
+  - type: Sprite
+    state: holoclown
+
+
 - type: entity
   parent: BaseFigurine
   id: ToyFigurineMime
@@ -202,7 +212,7 @@
   parent: BaseFigurine
   id: ToyFigurineScientist
   name: scientist figurine
-  description: A figurine depicting a Scienist donning a labcoat.
+  description: A figurine depicting a Scientist donning a labcoat.
   components:
   - type: Sprite
     state: scientist

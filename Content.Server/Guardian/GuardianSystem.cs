@@ -1,3 +1,4 @@
+using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
@@ -5,6 +6,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Guardian;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -28,6 +30,8 @@ namespace Content.Server.Guardian
         [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -85,8 +89,8 @@ namespace Content.Server.Guardian
 
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
         {
-            component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
-            _actionSystem.AddAction(uid, component.Action, null);
+            component.GuardianContainer = _container.EnsureContainer<ContainerSlot>(uid, "GuardianContainer");
+            _actionSystem.AddAction(uid, ref component.ActionEntity, component.Action);
         }
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
@@ -94,8 +98,11 @@ namespace Content.Server.Guardian
             if (component.HostedGuardian == null)
                 return;
 
+            if (HasComp<HandsComponent>(component.HostedGuardian.Value))
+                _bodySystem.GibBody(component.HostedGuardian.Value);
+
             EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
-            _actionSystem.RemoveAction(uid, component.Action);
+            _actionSystem.RemoveAction(uid, component.ActionEntity);
         }
 
         private void OnGuardianAttackAttempt(EntityUid uid, GuardianComponent component, AttackAttemptEvent args)
@@ -161,7 +168,7 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true
@@ -211,7 +218,7 @@ namespace Content.Server.Guardian
 
             if (args.NewMobState == MobState.Critical)
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
+                _popupSystem.PopupEntity(Loc.GetString("guardian-host-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
                 _audio.Play("/Audio/Effects/guardian_warn.ogg", Filter.Pvs(component.HostedGuardian.Value), component.HostedGuardian.Value, true);
             }
             else if (args.NewMobState == MobState.Dead)
@@ -294,22 +301,11 @@ namespace Content.Server.Guardian
                 RetractGuardian(hostUid, hostComponent, guardianUid, guardianComponent);
         }
 
-        private bool CanRelease(EntityUid guardian)
-        {
-            return HasComp<ActorComponent>(guardian);
-        }
-
         private void ReleaseGuardian(EntityUid host, GuardianHostComponent hostComponent, EntityUid guardian, GuardianComponent guardianComponent)
         {
             if (guardianComponent.GuardianLoose)
             {
                 DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardian));
-                return;
-            }
-
-            if (!CanRelease(guardian))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-no-soul"), host, host);
                 return;
             }
 

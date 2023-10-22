@@ -26,7 +26,7 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 DummyTicker = false,
                 Connected = true,
@@ -34,8 +34,8 @@ namespace Content.MapRenderer.Painters
                 Map = map
             });
 
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            var server = pair.Server;
+            var client = pair.Client;
 
             Console.WriteLine($"Loaded client and server in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
 
@@ -55,7 +55,7 @@ namespace Content.MapRenderer.Painters
             var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -85,7 +85,7 @@ namespace Content.MapRenderer.Painters
                 }
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             foreach (var (uid, grid) in grids)
@@ -132,7 +132,7 @@ namespace Content.MapRenderer.Painters
             // We don't care if it fails as we have already saved the images.
             try
             {
-                await pairTracker.CleanReturnAsync();
+                await pair.CleanReturnAsync();
             }
             catch
             {

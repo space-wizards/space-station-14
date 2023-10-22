@@ -18,7 +18,7 @@ public sealed partial class SolutionAmmoProviderComponent : Component
     /// How much reagent it costs to fire once.
     /// </summary>
     [DataField("fireCost"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float FireCost = 10;
+    public float FireCost = 5;
 
     /// <summary>
     /// The amount of shots currently available.

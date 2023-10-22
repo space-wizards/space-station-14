@@ -50,6 +50,7 @@ namespace Content.Server.DeviceLinking.Systems
             if (!args.CanAccess || !args.CanInteract || (args.Hands == null))
                 return;
 
+            var disabled = component.State == TwoWayLeverState.Left;
             InteractionVerb verbLeft = new()
             {
                 Act = () =>
@@ -63,14 +64,15 @@ namespace Content.Server.DeviceLinking.Systems
                     StateChanged(uid, component);
                 },
                 Category = VerbCategory.Lever,
-                Message = Loc.GetString("two-way-lever-cant"),
-                Disabled = component.State == TwoWayLeverState.Left,
+                Message = disabled ? Loc.GetString("two-way-lever-cant") : null,
+                Disabled = disabled,
                 Icon = new SpriteSpecifier.Texture(new ($"/Textures/Interface/VerbIcons/{_leftToggleImage}")),
                 Text = Loc.GetString("two-way-lever-left"),
             };
 
             args.Verbs.Add(verbLeft);
 
+            disabled = component.State == TwoWayLeverState.Right;
             InteractionVerb verbRight = new()
             {
                 Act = () =>
@@ -84,8 +86,8 @@ namespace Content.Server.DeviceLinking.Systems
                     StateChanged(uid, component);
                 },
                 Category = VerbCategory.Lever,
-                Message = Loc.GetString("two-way-lever-cant"),
-                Disabled = component.State == TwoWayLeverState.Right,
+                Message = disabled ? Loc.GetString("two-way-lever-cant") : null,
+                Disabled = disabled,
                 Icon = new SpriteSpecifier.Texture(new ($"/Textures/Interface/VerbIcons/{_rightToggleImage}")),
                 Text = Loc.GetString("two-way-lever-right"),
             };

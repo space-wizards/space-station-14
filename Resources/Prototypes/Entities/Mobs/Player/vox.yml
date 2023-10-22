@@ -1,5 +1,5 @@
 ﻿- type: entity
   save: false
   name: Vox
-  parent: [BaseMobVox, BaseMob]
+  parent: BaseMobVox
   id: MobVox

@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.Components;
 /// Should probably be joined with SolutionContainerVisualsComponent when solutions are networked.
 /// </summary>
 [RegisterComponent, Access(typeof(TransformableContainerSystem))]
-public sealed class TransformableContainerComponent : Component
+public sealed partial class TransformableContainerComponent : Component
 {
     /// <summary>
     /// This is the initial metadata name for the container.

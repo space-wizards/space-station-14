@@ -82,10 +82,11 @@
     - type: Appearance
     - type: GenericVisualizer
       visuals:
-        enum.PumpVisuals.Enabled:
+        enum.GasVolumePumpVisuals.State:
           enabled:
-            True: { state: pumpVolumeOn }
-            False: { state: pumpVolume }
+            On: { state: pumpVolumeOn }
+            Off: { state: pumpVolume }
+            Blocked: { state: pumpVolumeBlocked }
     - type: PipeColorVisuals
     - type: GasVolumePump
       enabled: false
@@ -102,6 +103,14 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_pump.ogg
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+      prefix: device-address-prefix-volume-pump
+    - type: WiredNetworkConnection
 
 - type: entity
   parent: GasBinaryBase
@@ -419,5 +428,3 @@
   - type: Construction
     graph: GasBinary
     node: radiator
-  - type: StaticPrice
-    price: 50

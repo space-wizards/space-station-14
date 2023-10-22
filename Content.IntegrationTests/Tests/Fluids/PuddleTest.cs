@@ -16,10 +16,10 @@ namespace Content.IntegrationTests.Tests.Fluids
         [Test]
         public async Task TilePuddleTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<PuddleSystem>();
@@ -34,18 +34,18 @@ namespace Content.IntegrationTests.Tests.Fluids
 
                 Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.True);
             });
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task SpaceNoPuddleTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<PuddleSystem>();
@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 }
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             await server.WaitAssertion(() =>
             {
@@ -73,7 +73,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.False);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

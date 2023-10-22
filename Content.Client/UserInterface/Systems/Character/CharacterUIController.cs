@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.CharacterInfo;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
@@ -6,10 +7,10 @@ using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.Utility;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
 using static Content.Client.CharacterInfo.CharacterInfoSystem;
@@ -21,6 +22,7 @@ namespace Content.Client.UserInterface.Systems.Character;
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
+    [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
     private CharacterWindow? _window;
     private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
@@ -101,10 +103,13 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        var (job, objectives, briefing, sprite, entityName) = data;
+        var (entity, job, objectives, briefing, entityName) = data;
 
+        _window.SpriteView.SetEntity(entity);
+        _window.NameLabel.Text = entityName;
         _window.SubText.Text = job;
         _window.Objectives.RemoveAllChildren();
+        _window.ObjectivesLabel.Visible = objectives.Any();
 
         foreach (var (groupId, conditions) in objectives)
         {
@@ -123,7 +128,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             foreach (var condition in conditions)
             {
                 var conditionControl = new ObjectiveConditionsControl();
-                conditionControl.ProgressTexture.Texture = condition.SpriteSpecifier.Frame0();
+                conditionControl.ProgressTexture.Texture = _sprite.Frame0(condition.Icon);
                 conditionControl.ProgressTexture.Progress = condition.Progress;
                 var titleMessage = new FormattedMessage();
                 var descriptionMessage = new FormattedMessage();
@@ -136,15 +141,23 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 objectiveControl.AddChild(conditionControl);
             }
 
-            var briefingControl = new ObjectiveBriefingControl();
-            briefingControl.Label.Text = briefing;
-
-            objectiveControl.AddChild(briefingControl);
             _window.Objectives.AddChild(objectiveControl);
         }
 
-        _window.SpriteView.Sprite = sprite;
-        _window.NameLabel.Text = entityName;
+        if (briefing != null)
+        {
+            var briefingControl = new ObjectiveBriefingControl();
+            briefingControl.Label.Text = briefing;
+            _window.Objectives.AddChild(briefingControl);
+        }
+
+        var controls = _characterInfo.GetCharacterInfoControls(entity);
+        foreach (var control in controls)
+        {
+            _window.Objectives.AddChild(control);
+        }
+
+        _window.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
     }
 
     private void CharacterDetached()

@@ -7,6 +7,6 @@ namespace Content.Server.Nutrition.Components;
 /// Including but not limited to: puddles
 /// </summary>
 [RegisterComponent, Access(typeof(DrinkSystem))]
-public sealed class BadDrinkComponent : Component
+public sealed partial class BadDrinkComponent : Component
 {
 }

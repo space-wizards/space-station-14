@@ -1,5 +1,6 @@
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -55,9 +56,9 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
             EntityUid human = default;
@@ -66,6 +67,7 @@ namespace Content.IntegrationTests.Tests
             EntityUid pocketItem = default;
 
             InventorySystem invSystem = default!;
+            var mapMan = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
@@ -126,9 +128,11 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(!invSystem.TryGetSlotEntity(human, "id", out _));
                     Assert.That(!invSystem.TryGetSlotEntity(human, "pocket1", out _));
                 });
+
+                mapMan.DeleteMap(testMap.MapId);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         private static bool IsDescendant(EntityUid descendant, EntityUid parent, IEntityManager entManager)

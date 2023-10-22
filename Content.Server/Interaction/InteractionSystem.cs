@@ -2,7 +2,6 @@
 
 using Content.Server.Administration.Logs;
 using Content.Server.Pulling;
-using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
@@ -25,8 +24,6 @@ namespace Content.Server.Interaction
     [UsedImplicitly]
     public sealed partial class InteractionSystem : SharedInteractionSystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -35,7 +32,7 @@ namespace Content.Server.Interaction
         {
             base.Initialize();
 
-            SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
+            SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
         }
 
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
@@ -46,52 +43,32 @@ namespace Content.Server.Interaction
             if (!_container.TryGetContainingContainer(target, out var container))
                 return false;
 
-            if (!TryComp(container.Owner, out ServerStorageComponent? storage))
+            if (!TryComp(container.Owner, out StorageComponent? storage))
                 return false;
 
-            if (storage.Storage?.ID != container.ID)
+            if (storage.Container?.ID != container.ID)
                 return false;
 
             if (!TryComp(user, out ActorComponent? actor))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return _uiSystem.SessionHasOpenUi(container.Owner, SharedStorageComponent.StorageUiKey.Key, actor.PlayerSession);
+            return _uiSystem.SessionHasOpenUi(container.Owner, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
         }
 
-        #region Drag drop
-
-        private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
+        private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
         {
-            if (Deleted(msg.Dragged) || Deleted(msg.Target))
+            if (ev.Player.AttachedEntity is not { } user)
                 return;
 
-            var user = args.SenderSession.AttachedEntity;
-
-            if (user == null || !_actionBlockerSystem.CanInteract(user.Value, msg.Target))
-                return;
-
-            // must be in range of both the target and the object they are drag / dropping
-            // Client also does this check but ya know we gotta validate it.
-            if (!InRangeUnobstructed(user.Value, msg.Dragged, popup: true)
-                || !InRangeUnobstructed(user.Value, msg.Target, popup: true))
+            if (InRangeUnobstructed(user, ev.Target, ev.UserInterface.InteractionRange))
             {
-                return;
+                ev.Result = BoundUserInterfaceRangeResult.Pass;
             }
-
-            var dragArgs = new DragDropDraggedEvent(user.Value, msg.Target);
-
-            // trigger dragdrops on the dropped entity
-            RaiseLocalEvent(msg.Dragged, ref dragArgs);
-
-            if (dragArgs.Handled)
-                return;
-
-            var dropArgs = new DragDropTargetEvent(user.Value, msg.Dragged);
-
-            RaiseLocalEvent(msg.Target, ref dropArgs);
+            else
+            {
+                ev.Result = BoundUserInterfaceRangeResult.Fail;
+            }
         }
-
-        #endregion
     }
 }

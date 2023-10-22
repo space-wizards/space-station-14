@@ -7,7 +7,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.NodeContainer;
-using Robust.Shared.Timing;
 using Robust.Server.GameObjects;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer.NodeGroups;
@@ -25,7 +24,6 @@ namespace Content.Server.Atmos.Portable
         [Dependency] private readonly GasCanisterSystem _canisterSystem = default!;
         [Dependency] private readonly GasPortableSystem _gasPortableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
@@ -55,7 +53,7 @@ namespace Content.Server.Atmos.Portable
             if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
 
-            var timeDelta = (float) (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var timeDelta = args.dt;
 
             if (!component.Enabled)
                 return;
