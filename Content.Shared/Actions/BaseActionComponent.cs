@@ -121,6 +121,11 @@ public abstract partial class BaseActionComponent : Component
     [ViewVariables] public EntityUid? AttachedEntity;
 
     /// <summary>
+    ///     The preferred entity to raise an action event on.
+    /// </summary>
+    public EntityUid PreferredEntity;
+
+    /// <summary>
     ///     Whether or not to automatically add this action to the action bar when it becomes available.
     /// </summary>
     [DataField("autoPopulate")] public bool AutoPopulate = true;
@@ -159,6 +164,7 @@ public abstract class BaseActionComponentState : ComponentState
     public bool ClientExclusive;
     public int Priority;
     public NetEntity? AttachedEntity;
+    public NetEntity PreferredEntity;
     public bool AutoPopulate;
     public bool Temporary;
     public ItemActionIconStyle ItemIconStyle;
@@ -169,6 +175,7 @@ public abstract class BaseActionComponentState : ComponentState
         Container = entManager.GetNetEntity(component.Container);
         EntityIcon = entManager.GetNetEntity(component.EntIcon);
         AttachedEntity = entManager.GetNetEntity(component.AttachedEntity);
+        PreferredEntity = entManager.GetNetEntity(component.PreferredEntity);
         Icon = component.Icon;
         IconOn = component.IconOn;
         IconColor = component.IconColor;

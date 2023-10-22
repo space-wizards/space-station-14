@@ -1,5 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Ghost;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
@@ -17,6 +20,7 @@ public sealed class ActionContainerSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -26,6 +30,45 @@ public sealed class ActionContainerSystem : EntitySystem
         SubscribeLocalEvent<ActionsContainerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActionsContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<ActionsContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+        SubscribeLocalEvent<ActionsContainerComponent, MindAddedMessage>(OnMindAdded);
+    }
+
+    // TODO: Does not trigger on client but despite this, TransferAllActions relays to client as expected
+    private void OnMindAdded(EntityUid uid, ActionsContainerComponent component, MindAddedMessage args)
+    {
+        if(!_mind.TryGetMind(uid, out var mindId, out var mindComp))
+            return;
+
+        mindComp.MindActionsContainer ??= EnsureComp<ActionsContainerComponent>(mindId);
+        var mindEnts = mindComp.MindActionsContainer.Container.ContainedEntities;
+
+        // TODO: Ghosting (non admin) and re-possessing causes actions to be wiped.
+        if (!HasComp<GhostComponent>(uid))
+        {
+            if (ShouldTransferAllActions(uid, component))
+            {
+                // TODO: Prevent some actions from being transferred (combat mode)
+                // TODO: Prevent mind actions from following to a different ghost role
+                TransferAllActions(uid, mindId, component, mindComp.MindActionsContainer);
+            }
+            else
+            {
+                // TODO: new client issue is with granting somewhere.
+                // TODO: Compare against TransferAction
+                _actions.GrantActions(uid, mindEnts, mindId);
+
+                /*foreach (var action in mindEnts)
+                {
+                    // No action icon updates at all
+                    _actions.AddActionDirect(uid, action);
+                }*/
+            }
+        }
+
+        // TODO: Need to grant all actions again on mind added
+        //  1 - Check actions on entity where mind is being added
+        //  2 - Compare to actions in mind
+        //  3 - Grant as needed
     }
 
     /// <summary>
@@ -121,6 +164,8 @@ public sealed class ActionContainerSystem : EntitySystem
 
         DebugTools.AssertEqual(action.Container, newContainer);
         DebugTools.AssertNull(action.AttachedEntity);
+        if (HasComp<MindComponent>(action.Container) && _netMan.IsServer)
+            action.ItemIconStyle = ItemActionIconStyle.BigAction;
 
         if (attached != null)
             _actions.AddActionDirect(attached.Value, actionId, action: action);
@@ -204,6 +249,23 @@ public sealed class ActionContainerSystem : EntitySystem
         // Therefore, to ensure that the behaviour of the method is consistent we will also explicitly remove the action.
         if (action.AttachedEntity != null)
             _actions.RemoveAction(action.AttachedEntity.Value, actionId, action: action);
+    }
+
+    public IEnumerable<EntityUid> GetContainerActions(ref ActionsContainerComponent comp)
+    {
+        return comp.Container.ContainedEntities;
+    }
+
+    public bool ShouldTransferAllActions(EntityUid from, ActionsContainerComponent? oldContainer = null)
+    {
+        // TODO: Replace with new resolution from meeting
+        if (!Resolve(from, ref oldContainer))
+            return false;
+
+        if (oldContainer.Container.ContainedEntities.Count > 0)
+            return true;
+
+        return false;
     }
 
     private void OnInit(EntityUid uid, ActionsContainerComponent component, ComponentInit args)

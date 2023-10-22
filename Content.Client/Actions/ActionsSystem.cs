@@ -93,6 +93,7 @@ namespace Content.Client.Actions
             component.ClientExclusive = state.ClientExclusive;
             component.Priority = state.Priority;
             component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
+            component.PreferredEntity = EnsureEntity<T>(state.PreferredEntity, uid);
             component.AutoPopulate = state.AutoPopulate;
             component.Temporary = state.Temporary;
             component.ItemIconStyle = state.ItemIconStyle;

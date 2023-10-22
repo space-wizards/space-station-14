@@ -7,9 +7,11 @@ using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mind;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -26,6 +28,7 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -210,7 +213,16 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!TryGetActionData(actionEnt, out var action))
             return;
 
-        DebugTools.Assert(action.AttachedEntity == user);
+        if (action.AttachedEntity == user)
+            action.PreferredEntity = user;
+
+        if (_netMan.IsServer)
+        {
+            DebugTools.Assert(action.AttachedEntity == user);
+
+            if (action.Container != null && !HasComp<MindComponent>(action.Container))
+                action.PreferredEntity = action.Container.Value;
+        }
 
         if (!action.Enabled)
             return;
@@ -289,7 +301,7 @@ public abstract class SharedActionsSystem : EntitySystem
             performEvent.Performer = user;
 
         // All checks passed. Perform the action!
-        PerformAction(user, component, actionEnt, action, performEvent, curTime);
+        PerformAction(action.PreferredEntity, component, actionEnt, action, performEvent, curTime);
     }
 
     public bool ValidateEntityTarget(EntityUid user, EntityUid target, EntityTargetActionComponent action)
@@ -359,8 +371,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var toggledBefore = action.Toggled;
 
-        // Note that attached entity is allowed to be null here.
-        if (action.AttachedEntity != null && action.AttachedEntity != performer)
+        // Note that attached entity and attached container are allowed to be null here.
+        if (action.AttachedEntity != null && (action.AttachedEntity != performer && action.Container != null && action.Container != performer))
         {
             Log.Error($"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(actionId)} that is attached to another entity {ToPrettyString(action.AttachedEntity.Value)}");
             return;
@@ -370,7 +382,7 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             // This here is required because of client-side prediction (RaisePredictiveEvent results in event re-use).
             actionEvent.Handled = false;
-            RaiseLocalEvent(action.Container ?? performer, (object) actionEvent, broadcast: true);
+            RaiseLocalEvent(performer, (object) actionEvent, broadcast: true);
             handled = actionEvent.Handled;
         }
 

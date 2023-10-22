@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameTicking;
+﻿using Content.Shared.Actions;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -66,6 +67,9 @@ namespace Content.Shared.Mind
         ///     Can be null.
         /// </summary>
         [ViewVariables] public MindContainerComponent? OwnedComponent;
+
+        // TODO: Some sort of data storing? ie component that granted + actioncontainer?
+        [ViewVariables] public ActionsContainerComponent? MindActionsContainer { get; set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.
