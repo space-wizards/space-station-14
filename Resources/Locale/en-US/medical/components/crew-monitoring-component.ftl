@@ -12,3 +12,6 @@ crew-monitoring-user-interface-dead = Dead
 crew-monitoring-user-interface-no-info = N/A
 
 crew-monitoring-user-interface-no-server = Server not found
+
+crew-monitoring-user-interface-flavor-left = In case of an emergancy, contact station medical staff immediately
+crew-monitoring-user-interface-flavor-right = v1.7

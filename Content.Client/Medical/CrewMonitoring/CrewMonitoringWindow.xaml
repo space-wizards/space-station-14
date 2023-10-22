@@ -4,25 +4,35 @@
                Title="{Loc 'crew-monitoring-user-interface-title'}"
                SetSize="1130 700"
                MinSize="1130 700">
-    <BoxContainer Orientation="Horizontal">
-        <ui:NavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 5"/>
-        <ScrollContainer HorizontalExpand="True"
-                         VerticalExpand="True"
-                         Margin="8, 8, 8, 8">
-            <GridContainer Name="SensorsTable"
-                           HorizontalExpand="True"
-                           VerticalExpand="True"
-                           HSeparationOverride="5"
-                           VSeparationOverride="20"
-                           Columns="4">
-                <!-- Table rows are filled by code -->
-            </GridContainer>
-            <Label  Name="NoServerLabel"
-                    Text="{Loc 'crew-monitoring-user-interface-no-server'}"
-                    StyleClasses="LabelHeading"
-                    FontColorOverride="Red"
-                    HorizontalAlignment="Center"
-                    Visible="false"/>
-        </ScrollContainer>        
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+            <ui:NavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 5"/>
+            <ScrollContainer VerticalExpand="True" SetWidth="440"
+                             Margin="8, 8, 8, 8">
+                <BoxContainer Name="SensorsTable"
+                               Orientation="Vertical"
+                               HorizontalExpand="True">
+                    <!-- Table rows are filled by code -->
+                </BoxContainer>
+                <Label  Name="NoServerLabel"
+                        Text="{Loc 'crew-monitoring-user-interface-no-server'}"
+                        StyleClasses="LabelHeading"
+                        FontColorOverride="Red"
+                        HorizontalAlignment="Center"
+                        Visible="false"/>
+            </ScrollContainer>        
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'crew-monitoring-user-interface-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'crew-monitoring-user-interface-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
