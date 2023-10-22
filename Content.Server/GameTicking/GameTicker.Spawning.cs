@@ -29,7 +29,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly SharedJobSystem _jobs = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
-        private const string ObserverPrototypeName = "MobObserver";
+        public const string ObserverPrototypeName = "MobObserver";
 
         /// <summary>
         /// How many players have joined the round through normal methods.

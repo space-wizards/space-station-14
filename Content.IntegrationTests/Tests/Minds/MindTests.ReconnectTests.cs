@@ -127,8 +127,10 @@ public sealed partial class MindTests
         var mindSys = entMan.System<SharedMindSystem>();
         var mind = GetMind(pair);
 
+        Assert.Null(mind.Comp.VisitingEntity);
+
         // Make player visit a new mob
-        var original = mind.Comp.CurrentEntity;
+        var original = mind.Comp.OwnedEntity;
         EntityUid visiting = default;
         await pair.Server.WaitAssertion(() =>
         {
@@ -137,6 +139,7 @@ public sealed partial class MindTests
         });
         await pair.RunTicksSync(5);
 
+        Assert.That(mind.Comp.VisitingEntity, Is.EqualTo(visiting));
         await DisconnectReconnect(pair);
 
         // Player is back in control of the visited mob, mind was preserved
