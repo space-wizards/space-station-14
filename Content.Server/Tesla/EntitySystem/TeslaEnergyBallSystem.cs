@@ -59,7 +59,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
             || _tagSystem.HasTag(morsel, "HighRiskItem")
             || HasComp<ContainmentFieldGeneratorComponent>(morsel)))
         {
-            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} collided with Tesla and was turned to dust");
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} collided with {ToPrettyString(uid)} and was turned to dust");
         }
 
         Spawn(component.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);

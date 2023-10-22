@@ -99,3 +99,23 @@
   cost: 4000
   category: Engineering
   group: market
+
+- type: cargoProduct
+  id: EngineTeslaCoil
+  icon:
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    state: coil0
+  product: CrateEngineeringTeslaCoil
+  cost: 1000
+  category: Engineering
+  group: market
+  
+- type: cargoProduct
+  id: EngineTeslaGroundingRod
+  icon:
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    state: grounding_rod0
+  product: CrateEngineeringTeslaGroundingRod
+  cost: 1000
+  category: Engineering
+  group: market
