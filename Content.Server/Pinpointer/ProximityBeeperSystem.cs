@@ -73,7 +73,11 @@ public sealed class ProximityBeeperSystem : EntitySystem
         }
 
         if (closestDistance is not { } distance)
+        {
+            // If we don't reset the timer here walking into range will result in the beeper beeping frantically as it catches up.
+            component.NextBeepTime = _timing.CurTime + component.MaxBeepInterval;
             return;
+        }
 
         if (playBeep)
             _audio.PlayPvs(component.BeepSound, uid);
