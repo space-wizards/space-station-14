@@ -11,7 +11,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.002
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.001
@@ -118,7 +118,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.1
@@ -154,7 +154,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.7
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.9
@@ -186,7 +186,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.2
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.6
@@ -222,7 +222,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.7
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.9
@@ -255,7 +255,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.4
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.1
@@ -292,7 +292,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.4
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.7
@@ -328,7 +328,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.4
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.7
@@ -364,7 +364,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.6
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.7
@@ -400,7 +400,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.5
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.3
@@ -436,7 +436,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.25
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.3
@@ -490,7 +490,7 @@
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 0.001
     lowPressureMultiplier: 200
   - type: TemperatureProtection
     coefficient: 0.3
