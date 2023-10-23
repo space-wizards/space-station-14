@@ -16,3 +16,7 @@ ent-DebugGyroscope = Дебаг гироскоп
 ent-GyroscopeUnanchored = { ent-Gyroscope }
     .suffix = Незакрепленный
     .desc = { ent-Gyroscope.desc }
+
+ent-ThrusterUnanchored = Двигатель
+    .desc = Ускоритель, заставляющий шаттл двигаться.
+    .suffix = незакреплён

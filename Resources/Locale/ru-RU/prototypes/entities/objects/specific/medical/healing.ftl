@@ -124,3 +124,7 @@ ent-SyringeSaline = шприц физраствора
     .desc = { ent-BaseSyringe.desc }
 ent-PillCharcoal = таблетка угля
     .desc = { ent-Pill.desc }
+
+ent-HealingToolbox = Лечащий набор инструментов
+    .desc = Мощный набор инструментов, наполненный мощной энергией. Он может залечить ваши раны и наполнить вас убийственным намерением.
+    .suffix = НЕ МАППИТЬ!

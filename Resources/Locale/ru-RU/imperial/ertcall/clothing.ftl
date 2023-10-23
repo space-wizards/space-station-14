@@ -27,3 +27,8 @@ ent-ClothingOuterHardsuitCBURNMedic = экзокостюм медика отря
     .desc = { ent-ClothingOuterHardsuitCBURN.desc }
 ent-ClothingHeadHelmetCBURNMedic = шлем медика отряда РХБЗЗ
     .desc = { ent-ClothingHeadHelmetCBURN.desc }
+
+ent-ClothingOuterHardsuitImperialERTLeader = Скафандр лидера ОБР
+    .desc = Защитный скафандр, который носят члены бригады экстренного реагирования.
+ent-ClothingHeadHelmetHardsuitImperialERTLeader = Шлем скафандра лидера ОБР
+    .desc = Специальный шлем защитного скафандра, который носят члены бригады экстренного реагирования.

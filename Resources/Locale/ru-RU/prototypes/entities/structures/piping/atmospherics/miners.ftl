@@ -25,3 +25,16 @@ ent-GasMinerMiasma = газодобытчик миазм
 ent-GasMinerNitrousOxide = газодобытчик оксида азота N2O
     .desc = { ent-GasMinerBase.desc }
     .suffix = { "" }
+
+ent-GasMinerNitrogenStation = газодобытчик N2
+    .desc = { ent-GasMinerBase.desc }
+    .suffix = { "Станция, 1000kPa" }
+ent-GasMinerNitrogenStationLarge = газодобытчик N2
+    .desc = { ent-GasMinerBase.desc }
+    .suffix = { "Станция, 4500kPa" }
+ent-GasMinerOxygenStation = газодобытчик O2
+    .desc = { ent-GasMinerBase.desc }
+    .suffix = { "Станция, 1000kPa" }
+ent-GasMinerOxygenStationLarge = газодобытчик O2
+    .desc = { ent-GasMinerBase.desc }
+    .suffix = { "Станция, 4500kPa" }

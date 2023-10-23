@@ -90,3 +90,5 @@ ent-ComputerSalvageExpedition = консоль экспедиций
     .suffix = { "" }
 ent-ComputerMassMedia = консоль новостей
     .desc = Напишите свое послание всему миру!
+ent-ComputerSensorMonitoring = компьютер мониторинга датчиков
+    .desc = Гибкая консоль для мониторинга всех видов датчиков.
