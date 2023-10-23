@@ -1,0 +1,89 @@
+- type: constructionGraph #START
+  id: ModsuitConstructed
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: modsuitconstructed
+      steps:
+      - component: PowerCell
+        name: батарейку
+        doAfter: 1
+        store: battery-container
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+
+      - tag: ModsuitHelmet
+        name: шлем модсьюта
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 1
+
+      - tag: ModsuitChestplate
+        name: нагрудник модсьюта
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 2
+
+      - tag: ModsuitGauntlets
+        name: рукавицы модсьюта
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 3
+
+      - tag: ModsuitBoots
+        name: ботинки модсьюта
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
+
+      - tool: Anchoring
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
+
+      - tool: Screwing
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
+
+  - node: modsuitconstructed
+    actions:
+    - !type:BuildMech
+      mechPrototype: ControlModsuitConstructingEnd
+
+- type: constructionGraph
+  id: ModsuitAtmospheric
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitatmospheric
+          steps:
+            - tag: PlatingAtmosphericModsuit
+              name: покрытие модсьюта атмосферного техника
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: atmospheric-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+    - node: modsuitatmospheric
+      entity: ClothingControlModsuitAtmosphericsSealed

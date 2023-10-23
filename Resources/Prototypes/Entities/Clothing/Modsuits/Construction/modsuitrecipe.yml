@@ -1,0 +1,10 @@
+- type: construction
+  name: Модсьют Атмосферного Техника
+  id: ModsuitAtmospheric
+  graph: ModsuitAtmospheric
+  startNode: start
+  targetNode: modsuitatmospheric
+  category: construction-category-clothing
+  description: Продвинутый модсьют в определенной сборке.
+  icon: { sprite: Clothing/Back/Modsuits/atmospheric.rsi, state: icon }
+  objectType: Item

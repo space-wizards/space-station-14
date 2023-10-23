@@ -36,6 +36,9 @@
       icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -122,6 +125,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitAtmospheric
+    node: modsuitatmospheric
 
 - type: entity
   parent: ClothingControlModsuitBase

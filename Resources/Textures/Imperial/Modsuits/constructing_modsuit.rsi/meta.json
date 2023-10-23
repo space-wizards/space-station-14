@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7b38dd4ff76749da37c950eff3239078f6bd9cf2",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "boots"
+    },
+    {
+      "name": "chestplate"
+    },
+    {
+      "name": "CORE-equip0"
+    },
+    {
+      "name": "CORE-equip1"
+    },
+    {
+      "name": "CORE-equip2"
+    },
+    {
+      "name": "CORE-equip3"
+    },
+    {
+      "name": "CORE-equip4"
+    },
+    {
+      "name": "gauntlets"
+    },
+    {
+      "name": "helmet"
+    },
+    {
+      "name": "mod-core"
+    },
+    {
+      "name": "mod-core-ethereal"
+    },
+    {
+      "name": "mod-core-plasma"
+    },
+    {
+      "name": "paintkit"
+    }
+  ]
+}
