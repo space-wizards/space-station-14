@@ -1,6 +1,8 @@
 using Content.Shared.Actions;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
+using Content.Shared.NameIdentifier;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Utility;
@@ -16,6 +18,21 @@ public abstract partial class SharedGunSystem
 
         args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor), ("mode", GetLocSelector(component.SelectedMode))));
         args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", $"{component.FireRate:0.0}")));
+
+        if (TryComp(args.Examined, out ItemSlotsComponent? weaponSlots)
+            && _slots.TryGetSlot(args.Examined, "gun_bayonet", out var itemSlot, weaponSlots))
+        {
+            if (itemSlot.Item != null)
+            {
+                args.PushMarkup(Loc.GetString("gun-bayonet-examine",
+                    ("color", BayonetExamineColor),
+                    ("bayonet", Comp<MetaDataComponent>((EntityUid) itemSlot.Item).EntityName)));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("gun-bayonet-none-examine"));
+            }
+        }
     }
 
     private string GetLocSelector(SelectiveFire mode)

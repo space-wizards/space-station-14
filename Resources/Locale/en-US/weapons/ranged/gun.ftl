@@ -1,6 +1,8 @@
 
 gun-selected-mode-examine = Current selected fire mode is [color={$color}]{$mode}[/color].
 gun-fire-rate-examine = Fire rate is [color={$color}]{$fireRate}[/color] per second.
+gun-bayonet-none-examine = There is no bayonet attached.
+gun-bayonet-examine = There is a [color={$color}]{$bayonet}[/color] attached.
 gun-selector-verb = Change to {$mode}
 gun-selected-mode = Selected {$mode}
 gun-disabled = You can't use guns!
