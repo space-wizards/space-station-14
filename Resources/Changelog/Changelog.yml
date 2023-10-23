@@ -1,10 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: Composting high-potency plants refills tray nutrients much more effectively.,
-    type: Tweak}
-  id: 4544
-  time: '2023-08-13T07:10:22.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds a Secret Door for construction, type: Add}
@@ -2908,3 +2902,10 @@ Entries:
   - {message: Tile-prying do_after is now predicted., type: Tweak}
   id: 5043
   time: '2023-10-23T13:20:33.0000000+00:00'
+- author: Tryded
+  changes:
+  - {message: Changed the damage of the double bladed energy sword to 17 heat + 17
+      Slash (The Double Bladed energy sword use to deal as much damage as an energy
+      dagger.), type: Tweak}
+  id: 5044
+  time: '2023-10-23T14:35:33.0000000+00:00'
