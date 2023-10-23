@@ -1,8 +1,10 @@
+using System.Numerics;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Robust.Client.GameObjects;
+using Robust.Client.Console;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -12,6 +14,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
     public override void Initialize()
     {
@@ -29,6 +33,11 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     {
         UpdateLayers(component, sprite);
         ApplyMarkingSet(component, sprite);
+
+        var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(component.Species);
+        var height = Math.Clamp(MathF.Round(component.Height, 1), speciesPrototype.MinHeight, speciesPrototype.MaxHeight); // should NOT be locked, at all
+
+        sprite.Scale = new Vector2(speciesPrototype.ScaleHeight ? height : 1f, height);
 
         sprite[sprite.LayerMapReserveBlank(HumanoidVisualLayers.Eyes)].Color = component.EyeColor;
     }
@@ -194,6 +203,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         humanoid.Species = profile.Species;
         humanoid.SkinColor = profile.Appearance.SkinColor;
         humanoid.EyeColor = profile.Appearance.EyeColor;
+        humanoid.Height = profile.Height;
 
         UpdateSprite(humanoid, Comp<SpriteComponent>(uid));
     }

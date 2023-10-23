@@ -781,6 +781,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("hair_name");
+						
+					b.Property<float>("Height")
+                        .HasColumnType("real")
+                        .HasColumnName("height");
 
                     b.Property<float>("Height")
                         .HasColumnType("real")
