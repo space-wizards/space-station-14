@@ -35,7 +35,9 @@
       params:
         variation: 0.3
   - type: LightningArcShooter
-    shootRange: 10
+    arcDepth: 3
+    maxLightningArc: 8
+    shootRange: 7
     shootMinInterval: 2
     shootMaxInterval: 5
     lightningPrototype: HyperchargedLightning
@@ -103,7 +105,8 @@
     color: "#4080FF"
   - type: Appearance
   - type: LightningArcShooter
-    maxLightningArc: 2
+    arcDepth: 2
+    maxLightningArc: 1
     shootMinInterval: 4
     shootMaxInterval: 10
     shootRange: 3

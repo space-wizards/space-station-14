@@ -16,6 +16,14 @@ public sealed partial class LightningTargetComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Priority;
 
+    /// <summary>
+    /// Lightning has a number of bounces into neighboring targets.
+    /// This number controls how many bounces the lightning bolt has left after hitting that target.
+    /// At high values, the lightning will not travel farther than that entity.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int LightningResistance = 1; //by default, reduces the number of bounces from this target by 1
+
     // BOOM PART
 
     /// <summary>

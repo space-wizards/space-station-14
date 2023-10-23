@@ -113,6 +113,7 @@
   - type: TeslaGroundingRod
   - type: LightningTarget
     priority: 3
+    lightningResistance: 10
     lightningExplode: false
   - type: Anchorable
   - type: Rotatable
