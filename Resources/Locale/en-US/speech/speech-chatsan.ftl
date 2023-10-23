@@ -109,11 +109,8 @@ chatsan-word-39 = etc
 chatsan-word-40 = etc.
 chatsan-replacement-etcetera = etcetera
 
-chatsan-word-41 = fyi
-chatsan-replacement-41 = for your information
+chatsan-word-41 = wyd
+chatsan-replacement-41 = what you doing
 
-chatsan-word-42 = wyd
-chatsan-replacement-42 = what you doing
-
-chatsan-word-43 = ofc
-chatsan-replacement-43 = of course
+chatsan-word-42 = ofc
+chatsan-replacement-42 = of course
