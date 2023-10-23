@@ -115,12 +115,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (nextModeTransfer == SharedTransferToggleMode.Draw)
             {
-                msg = "comp-solution-transfer-draw-text";
+                msg = "comp-solution-transfer-menu-option-draw";
                 pathIcon = new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png");
             }
             else
             {
-                msg = "comp-solution-transfer-inject-text";
+                msg = "comp-solution-transfer-menu-option-inject";
                 pathIcon = new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png");
             }
 
@@ -325,12 +325,11 @@ namespace Content.Server.Chemistry.EntitySystems
             string msg;
             if (TryGetAvailableNextMode(uid, component, out var nextMode))
             {
-                var mode = "comp-solution-transfer-draw-text";
+                var mode = "comp-solution-transfer-set-toggle-mode-draw";
                 if (nextMode == SharedTransferToggleMode.Inject)
-                    mode = "comp-solution-transfer-inject-text";
+                    mode = "comp-solution-transfer-set-toggle-mode-inject";
 
-                msg = Loc.GetString("comp-solution-transfer-set-toggle-mode",
-                    ("mode", Loc.GetString(mode)));
+                msg = Loc.GetString(mode, ("fromIn", uid));
 
                 component.ToggleMode = nextMode;
                 Dirty(uid, component);

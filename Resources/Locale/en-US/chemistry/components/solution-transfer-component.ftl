@@ -1,8 +1,12 @@
-### UI
-comp-solution-transfer-draw-text = pour from
-comp-solution-transfer-inject-text = spill in
+### UI status control
+comp-solution-transfer-draw-text = fill
+comp-solution-transfer-inject-text = spill
 comp-solution-transfer-invalid-toggle-mode = Invalid action
-comp-solution-transfer = Volume: [color=white]{$currentVolume}/{$totalVolume}[/color]
+comp-solution-transfer-status-volume-label = Volume: {$currentVolume}/{$totalVolume}
+
+### UI verb menu options
+comp-solution-transfer-menu-option-draw = the fill mode
+comp-solution-transfer-menu-option-inject = the spill into mode
 
 ### Solution transfer component
 comp-solution-transfer-fill-normal = You fill {THE($target)} with {$amount}u from {THE($owner)}.
@@ -20,8 +24,9 @@ comp-solution-transfer-verb-amount = {$amount}u
 ## Displayed after you successfully change a solution's amount using the BUI
 comp-solution-transfer-set-amount = Transfer amount set to {$amount}u.
 
-##Toggle solution transfer mode
-comp-solution-transfer-set-toggle-mode = Now you {$mode}
+##Toggle solution transfer mode, popups
+comp-solution-transfer-set-toggle-mode-draw = Now you're pouring in {THE($fromIn)}
+comp-solution-transfer-set-toggle-mode-inject = Now you're pouring out {THE($fromIn)}
 comp-solution-transfer-cant-change-mode = You can't toggle the pour mode
 
 ##Con't pour

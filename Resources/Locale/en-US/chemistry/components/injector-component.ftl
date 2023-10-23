@@ -1,8 +1,8 @@
 ## UI
 
-injector-draw-text = [color=white]Draw[/color]
-injector-inject-text = [color=white]Inject[/color]
-injector-invalid-injector-toggle-mode = [color=white]Inject Invalid[/color]
+injector-draw-text = Draw
+injector-inject-text = Inject
+injector-invalid-injector-toggle-mode = Inject Invalid
 injector-volume-label = Volume: [color=white]{$currentVolume}/{$totalVolume}[/color]
 
 ## Entity

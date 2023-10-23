@@ -85,7 +85,7 @@ public sealed class SolutionTransferStatusSystem : EntitySystem
             DrawModeText = "comp-solution-transfer-draw-text",
             InjectModeText = "comp-solution-transfer-inject-text",
             InvalidModeText = "comp-solution-transfer-invalid-toggle-mode",
-            VolumeLabelText = "comp-solution-transfer"
+            VolumeLabelText = "comp-solution-transfer-status-volume-label"
         };
         args.Controls.Add(new SolutionTransferStatusControl(component, tranlates, true, true));
     }
