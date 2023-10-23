@@ -38,6 +38,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: MMI
       - id: Hemostat
       - id: SawAdvanced
       - id: Drill
@@ -225,6 +226,8 @@
       contents:
         - id: C4
           amount: 8
+        - id: Multitool
+        - id: RemoteSignaller
 
 - type: entity
   parent: ClothingBackpackChameleon
