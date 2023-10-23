@@ -26,7 +26,6 @@
         - Opaque  
         layer:
         - GlassLayer  
-  - type: Electrocution
   - type: TeslaEnergyBall
     energyLoss: 3
     spawnProto: TeslaMiniEnergyBall 
@@ -73,7 +72,6 @@
   name: mini ball lightning
   description: The cub of a destructive energy cage. Not as dangerous, but still not worth touching with bare hands.
   components: 
-  - type: Electrocution
   - type: Clickable
   - type: AmbientSound
     volume: -2
