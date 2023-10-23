@@ -12,6 +12,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
@@ -92,6 +93,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, EntityUnpausedEvent>(OnGunUnpaused);
         SubscribeLocalEvent<MeleeWeaponComponent, ItemSlotInsertAttemptEvent>(OnBayonetInserted);
+        SubscribeLocalEvent<MeleeWeaponComponent, ItemSlotEjectAttemptEvent>(OnBayonetRemoved);
 
 #if DEBUG
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
@@ -120,9 +122,22 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnBayonetInserted(EntityUid uid, MeleeWeaponComponent component, ItemSlotInsertAttemptEvent args)
     {
+        if (args.Slot.Name != "Bayonet")
+            return;
+
         if (!TryComp(args.Item, out MeleeWeaponComponent? itemMelee))
             return;
+
         component.Damage = itemMelee.Damage;
+        component.Hidden = false;
+    }
+
+    private void OnBayonetRemoved(EntityUid uid, MeleeWeaponComponent component, ItemSlotEjectAttemptEvent args)
+    {
+        if (args.Slot.Name != "Bayonet")
+            return;
+
+        component.Hidden = true;
     }
 
     private void OnGunUnpaused(EntityUid uid, GunComponent component, ref EntityUnpausedEvent args)
