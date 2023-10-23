@@ -4,7 +4,6 @@ using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
 
 namespace Content.Server.Interaction
 {
