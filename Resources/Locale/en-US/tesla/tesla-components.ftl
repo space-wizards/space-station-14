@@ -1,5 +1,5 @@
-tesla-coil-on = Tesla coil turns on.
-tesla-coil-off = Tesla coil turns off.
+tesla-coil-on = The tesla coil turns on.
+tesla-coil-off = The tesla coil turns off.
 
-tsla-grounding-on = Grounding rod turns on.
-tsla-grounding-off = Grounding rod turns off.
+tesla-grounding-on = The grounding rod turns on.
+tesla-grounding-off = The grounding rod turns off.

@@ -25,10 +25,10 @@ public sealed class ChaoticJumpSystem : EntitySystem
         SubscribeLocalEvent<ChaoticJumpComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(Entity<ChaoticJumpComponent> uid, ref MapInitEvent args)
+    private void OnMapInit(Entity<ChaoticJumpComponent> chaotic, ref MapInitEvent args)
     {
         //So the entity doesn't teleport instantly. For tesla, for example, it's important for it to eat tesla's generator.
-        uid.Comp.NextJumpTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_random.NextFloat(uid.Comp.JumpMinInterval, uid.Comp.JumpMaxInterval));
+        chaotic.Comp.NextJumpTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_random.NextFloat(chaotic.Comp.JumpMinInterval, chaotic.Comp.JumpMaxInterval));
     }
 
     public override void Update(float frameTime)

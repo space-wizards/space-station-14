@@ -43,6 +43,7 @@
         hit:
           True: { visible: true }
           False: { visible: false }
+  - type: AnimationPlayer
   - type: NodeContainer
     examinable: true
     nodes:
@@ -50,7 +51,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: Battery
-    maxCharge: 100000
+    maxCharge: 200000
     startingCharge: 0
   - type: BatteryDischarger
     # This is JUST copy from Radiation Collector
@@ -68,8 +69,8 @@
   #- type: GuideHelp #   To Do - add Tesla Guide
   
 - type: entity
-  parent: [ BaseMachinePowered ]
   id: TeslaGroundingRod
+  parent: BaseStructureDynamic
   name: grounding rod
   description: A machine that keeps lightning from striking too far away.
   placement:
@@ -77,6 +78,7 @@
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/coil.rsi
+    noRot: true
     snapCardinals: true
     layers:
       - state: grounding_rod_open
@@ -95,9 +97,8 @@
           True: { state: grounding_rod }
           False: { state: grounding_rod_open }
   - type: Transform
-    anchored: true
+    anchored: false
   - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -118,4 +119,5 @@
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
+  - type: InteractionOutline
   #- type: GuideHelp #   To Do - add Tesla Guide

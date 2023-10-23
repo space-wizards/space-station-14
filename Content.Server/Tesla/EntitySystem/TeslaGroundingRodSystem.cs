@@ -1,18 +1,15 @@
-using Content.Shared.Interaction;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
-using Robust.Shared.Timing;
 using Content.Server.Tesla.Components;
 using Content.Server.Lightning;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.Power;
 using Content.Server.Lightning.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Power;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Tesla.EntitySystems;
 
 public sealed class TeslaGroundingRodSystem : EntitySystem
 {
-
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -23,19 +20,19 @@ public sealed class TeslaGroundingRodSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TeslaGroundingRodComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<TeslaGroundingRodComponent, HitByLightningEvent>(OnHittedLightning);
+        SubscribeLocalEvent<TeslaGroundingRodComponent, HitByLightningEvent>(OnHitByLightning);
     }
 
-    private void OnInteractHand(EntityUid uid, TeslaGroundingRodComponent component, InteractHandEvent args)
+    private void OnInteractHand(Entity<TeslaGroundingRodComponent> grounding, ref InteractHandEvent args)
     {
-        Toggle(uid, component, !component.Enabled);
+        Toggle(grounding, !grounding.Comp.Enabled);
     }
 
-    private void OnHittedLightning(EntityUid uid, TeslaGroundingRodComponent component, ref HitByLightningEvent args)
+    private void OnHitByLightning(Entity<TeslaGroundingRodComponent> grounding, ref HitByLightningEvent args)
     {
-        _appearance.SetData(uid, TeslaCoilVisuals.Lightning, true);
-        component.LightningEndTime = _gameTiming.CurTime + component.LightningTime;
-        component.IsSparking = true;
+        _appearance.SetData(grounding.Owner, TeslaCoilVisuals.Lightning, true);
+        grounding.Comp.LightningEndTime = _gameTiming.CurTime + grounding.Comp.LightningTime;
+        grounding.Comp.IsSparking = true;
     }
 
     public override void Update(float frameTime)
@@ -56,15 +53,16 @@ public sealed class TeslaGroundingRodSystem : EntitySystem
         }
     }
 
-    private void Toggle(EntityUid uid, TeslaGroundingRodComponent component, bool status)
+    private void Toggle(Entity<TeslaGroundingRodComponent> grounding, bool status)
     {
-        if (!TryComp<LightningTargetComponent>(uid, out var target))
+        if (!TryComp<LightningTargetComponent>(grounding, out var target))
             return;
 
-        target.Priority = status ? component.EnabledPriority : component.DisabledPriority;
-        component.Enabled = status;
-        _appearance.SetData(uid, TeslaCoilVisuals.Enabled, status);
-        _audio.PlayPvs(status ? component.SoundOpen : component.SoundClose, uid);
-        _popup.PopupEntity(status ? Loc.GetString("tesla-grounding-on") : Loc.GetString("tesla-grounding-off"), uid);
+        target.Priority = status ? grounding.Comp.EnabledPriority : grounding.Comp.DisabledPriority;
+        grounding.Comp.Enabled = status;
+
+        _appearance.SetData(grounding, TeslaCoilVisuals.Enabled, status);
+        _audio.PlayPvs(status ? grounding.Comp.SoundOpen : grounding.Comp.SoundClose, grounding);
+        _popup.PopupEntity(status ? Loc.GetString("tesla-grounding-on") : Loc.GetString("tesla-grounding-off"), grounding);
     }
 }

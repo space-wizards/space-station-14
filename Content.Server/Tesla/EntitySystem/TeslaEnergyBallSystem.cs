@@ -1,12 +1,11 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Singularity.Components;
 using Content.Server.Tesla.Components;
-using Robust.Shared.Physics.Events;
-using Microsoft.Extensions.DependencyModel;
+using Content.Shared.Database;
+using Content.Shared.Singularity.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Tag;
-using Content.Server.Administration.Logs;
-using Content.Shared.Singularity.Components;
-using Content.Shared.Database;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -18,6 +17,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -42,13 +42,13 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         }
     }
 
-    private void OnStartCollide(EntityUid uid, TeslaEnergyBallComponent component, ref StartCollideEvent args)
+    private void OnStartCollide(Entity<TeslaEnergyBallComponent> tesla, ref StartCollideEvent args)
     {
         if (TryComp<ContainmentFieldComponent>(args.OtherEntity, out var field))
             return;
         if (TryComp<SinguloFoodComponent>(args.OtherEntity, out var singuloFood))
         {
-            AdjustEnergy(uid, component, singuloFood.Energy);
+            AdjustEnergy(tesla, tesla.Comp, singuloFood.Energy);
         }
 
         var morsel = args.OtherEntity;
@@ -57,12 +57,12 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
             || _tagSystem.HasTag(morsel, "HighRiskItem")
             || HasComp<ContainmentFieldGeneratorComponent>(morsel)))
         {
-            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} collided with {ToPrettyString(uid)} and was turned to dust");
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} collided with {ToPrettyString(tesla)} and was turned to dust");
         }
 
-        Spawn(component.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
-        EntityManager.QueueDeleteEntity(args.OtherEntity);
-        AdjustEnergy(uid, component, 20f);
+        Spawn(tesla.Comp.ConsumeEffectProto, Transform(args.OtherEntity).Coordinates);
+        QueueDel(args.OtherEntity);
+        AdjustEnergy(tesla, tesla.Comp, 20f);
     }
     public void AdjustEnergy(EntityUid uid, TeslaEnergyBallComponent component, float delta)
     {
