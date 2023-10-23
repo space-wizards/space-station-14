@@ -110,6 +110,17 @@
     location: science
 
 - type: entity
+  id: WarpPointBeaconSecurity
+  parent: WarpPointBeacon
+  name: warp point (security)
+  components:
+  - type: NavMapBeacon
+    text: security
+    color: "#DE3A3A"
+  - type: WarpPoint
+    location: security
+
+- type: entity
   id: WarpPointBeaconService
   parent: WarpPointBeacon
   name: warp point (service)

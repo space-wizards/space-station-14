@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.PDA;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -83,7 +82,8 @@ public sealed class AlertLevelSystem : EntitySystem
             return;
         }
 
-        foreach (var comp in EntityQuery<AlertLevelComponent>())
+        var query = EntityQueryEnumerator<AlertLevelComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             comp.AlertLevels = alerts;
 
@@ -95,7 +95,7 @@ public sealed class AlertLevelSystem : EntitySystem
                     defaultLevel = comp.AlertLevels.Levels.Keys.First();
                 }
 
-                SetLevel(comp.Owner, defaultLevel, true, true, true);
+                SetLevel(uid, defaultLevel, true, true, true);
             }
         }
 

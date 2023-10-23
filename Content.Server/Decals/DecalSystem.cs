@@ -9,11 +9,13 @@ using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -31,6 +33,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly IConfigurationManager _conf = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly MapSystem _mapSystem = default!;
 
         private readonly Dictionary<NetEntity, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -283,10 +286,10 @@ namespace Content.Server.Decals
                 return false;
 
             var gridId = coordinates.GetGridUid(EntityManager);
-            if (!MapManager.TryGetGrid(gridId, out var grid))
+            if (!TryComp(gridId, out MapGridComponent? grid))
                 return false;
 
-            if (grid.GetTileRef(coordinates).IsSpace(_tileDefMan))
+            if (_mapSystem.GetTileRef(gridId.Value, grid, coordinates).IsSpace(_tileDefMan))
                 return false;
 
             if (!TryComp(gridId, out DecalGridComponent? comp))

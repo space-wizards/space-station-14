@@ -46,6 +46,7 @@ rev-description = Revolutionaries are among us.
 
 rev-not-enough-ready-players = Not enough players readied up for the game. There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start a Revolution.
 rev-no-one-ready = No players readied up! Can't start a Revolution.
+rev-no-heads = There were no Head Revolutionaries to be selected. Can't start a Revolution.
 
 rev-all-heads-dead = All the heads are dead, now finish up the rest of the crew!
 
