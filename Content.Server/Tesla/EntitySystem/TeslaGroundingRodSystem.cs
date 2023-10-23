@@ -23,7 +23,7 @@ public sealed class TeslaGroundingRodSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TeslaGroundingRodComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<TeslaGroundingRodComponent, HittedByLightningEvent>(OnHittedLightning);
+        SubscribeLocalEvent<TeslaGroundingRodComponent, HitByLightningEvent>(OnHittedLightning);
     }
 
     private void OnInteractHand(EntityUid uid, TeslaGroundingRodComponent component, InteractHandEvent args)
@@ -31,7 +31,7 @@ public sealed class TeslaGroundingRodSystem : EntitySystem
         Toggle(uid, component, !component.Enabled);
     }
 
-    private void OnHittedLightning(EntityUid uid, TeslaGroundingRodComponent component, ref HittedByLightningEvent args)
+    private void OnHittedLightning(EntityUid uid, TeslaGroundingRodComponent component, ref HitByLightningEvent args)
     {
         _appearance.SetData(uid, TeslaCoilVisuals.Lightning, true);
         component.LightningEndTime = _gameTiming.CurTime + component.LightningTime;

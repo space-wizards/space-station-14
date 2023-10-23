@@ -55,7 +55,7 @@ public sealed class LightningSystem : SharedLightningSystem
         var spriteState = LightningRandomizer();
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
 
-        var ev = new HittedByLightningEvent(user, target);
+        var ev = new HitByLightningEvent(user, target);
         RaiseLocalEvent(target, ref ev, true);
     }
 
@@ -99,4 +99,4 @@ public sealed class LightningSystem : SharedLightningSystem
 /// <param name="Source">The entity that created the lightning</param>
 /// <param name="Target">The entity that was struck by lightning.</param>
 [ByRefEvent]
-public readonly record struct HittedByLightningEvent(EntityUid Source, EntityUid Target);
+public readonly record struct HitByLightningEvent(EntityUid Source, EntityUid Target);

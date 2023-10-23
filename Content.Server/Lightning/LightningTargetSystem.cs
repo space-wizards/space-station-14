@@ -11,17 +11,16 @@ namespace Content.Server.Tesla.EntitySystems;
 /// </summary>
 public sealed class LightningTargetSystem : EntitySystem
 {
-
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LightningTargetComponent, HittedByLightningEvent>(OnHittedByLightning);
+        SubscribeLocalEvent<LightningTargetComponent, HitByLightningEvent>(OnHitByLightning);
     }
 
-    private void OnHittedByLightning(EntityUid uid, LightningTargetComponent component, ref HittedByLightningEvent args)
+    private void OnHitByLightning(EntityUid uid, LightningTargetComponent component, ref HitByLightningEvent args)
     {
 
         if (!component.LightningExplode)

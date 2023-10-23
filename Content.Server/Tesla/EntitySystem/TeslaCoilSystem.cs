@@ -24,7 +24,7 @@ public sealed class TeslaCoilSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TeslaCoilComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<TeslaCoilComponent, HittedByLightningEvent>(OnHittedLightning);
+        SubscribeLocalEvent<TeslaCoilComponent, HitByLightningEvent>(OnHittedLightning);
     }
 
     public override void Update(float frameTime)
@@ -52,7 +52,7 @@ public sealed class TeslaCoilSystem : EntitySystem
     }
 
     //When struck by lightning, charge the internal battery
-    private void OnHittedLightning(EntityUid uid, TeslaCoilComponent component, ref HittedByLightningEvent args)
+    private void OnHittedLightning(EntityUid uid, TeslaCoilComponent component, ref HitByLightningEvent args)
     {
         if (!component.Enabled)
             return;

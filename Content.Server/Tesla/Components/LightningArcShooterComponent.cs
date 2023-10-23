@@ -1,9 +1,11 @@
+using Content.Server.Tesla.EntitySystems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tesla.Components;
 /// <summary>
 /// Periodically fires electric arcs at surrounding objects.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(LightningArcShooterSystem))]
 public sealed partial class LightningArcShooterComponent : Component
 {
     /// <summary>
@@ -49,5 +51,5 @@ public sealed partial class LightningArcShooterComponent : Component
     /// The type of lightning bolts we shoot
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string LightningPrototype = "Lightning";
+    public EntProtoId LightningPrototype = "Lightning";
 }
