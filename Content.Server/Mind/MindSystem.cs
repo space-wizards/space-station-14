@@ -47,10 +47,9 @@ public sealed class MindSystem : SharedMindSystem
             mind.UserId = null;
         }
 
-        if (!TryComp(mind.OwnedEntity, out MetaDataComponent? meta) || meta.EntityLifeStage >= EntityLifeStage.Terminating)
-            return;
+        if (mind.OwnedEntity != null && !TerminatingOrDeleted(mind.OwnedEntity.Value))
+            TransferTo(uid, null, mind: mind, createGhost: false);
 
-        RaiseLocalEvent(mind.OwnedEntity.Value, new MindRemovedMessage((uid, mind)), true);
         mind.OwnedEntity = null;
     }
 
@@ -260,7 +259,10 @@ public sealed class MindSystem : SharedMindSystem
         if (TryComp(oldEntity, out MindContainerComponent? oldContainer))
         {
             oldContainer.Mind = null;
-            RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage((mindId, mind)), true);
+            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindContainerComponent> containerEnt = (oldEntity.Value, oldContainer);
+            RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindId, new MindGotRemovedEvent(mindEnt, containerEnt));
             Dirty(oldEntity.Value, oldContainer);
         }
 
@@ -294,7 +296,10 @@ public sealed class MindSystem : SharedMindSystem
         {
             component!.Mind = mindId;
             mind.OriginalOwnedEntity ??= mind.OwnedEntity;
-            RaiseLocalEvent(entity.Value, new MindAddedMessage((mindId, mind)), true);
+            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindContainerComponent> containerEnt = (entity.Value, component);
+            RaiseLocalEvent(entity.Value, new MindAddedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindId, new MindGotAddedEvent(mindEnt, containerEnt));
             Dirty(entity.Value, component);
         }
     }

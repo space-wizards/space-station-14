@@ -39,23 +39,59 @@ namespace Content.Shared.Mind.Components
         public bool GhostOnShutdown { get; set; } = true;
     }
 
-    public sealed class MindRemovedMessage : EntityEventArgs
+    public abstract class MindEvent : EntityEventArgs
     {
         public readonly Entity<MindComponent> Mind;
+        public readonly Entity<MindContainerComponent> Container;
 
-        public MindRemovedMessage(Entity<MindComponent> mind)
+        public MindEvent(Entity<MindComponent> mind, Entity<MindContainerComponent> container)
         {
             Mind = mind;
+            Container = container;
         }
     }
 
-    public sealed class MindAddedMessage : EntityEventArgs
+    /// <summary>
+    /// Event raised directed at a mind-container when a mind gets removed.
+    /// </summary>
+    public sealed class MindRemovedMessage : MindEvent
     {
-        public readonly Entity<MindComponent> Mind;
-
-        public MindAddedMessage(Entity<MindComponent> mind)
+        public MindRemovedMessage(Entity<MindComponent> mind, Entity<MindContainerComponent> container)
+            : base(mind, container)
         {
-            Mind = mind;
+        }
+    }
+
+    /// <summary>
+    /// Event raised directed at a mind when it gets removed from a mind-container.
+    /// </summary>
+    public sealed class MindGotRemovedEvent : MindEvent
+    {
+        public MindGotRemovedEvent(Entity<MindComponent> mind, Entity<MindContainerComponent> container)
+            : base(mind, container)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Event raised directed at a mind-container when a mind gets added.
+    /// </summary>
+    public sealed class MindAddedMessage : MindEvent
+    {
+        public MindAddedMessage(Entity<MindComponent> mind, Entity<MindContainerComponent> container)
+            : base(mind, container)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Event raised directed at a mind when it gets added to a mind-container.
+    /// </summary>
+    public sealed class MindGotAddedEvent : MindEvent
+    {
+        public MindGotAddedEvent(Entity<MindComponent> mind, Entity<MindContainerComponent> container)
+            : base(mind, container)
+        {
         }
     }
 }
