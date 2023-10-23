@@ -8,6 +8,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
+using CableCuttingFinishedEvent = Content.Shared.Tools.Systems.CableCuttingFinishedEvent;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Server.Power.EntitySystems;
 
