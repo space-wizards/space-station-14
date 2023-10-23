@@ -6,3 +6,15 @@ rat-king-domain-description = Потратьте некоторое количе
 rat-king-domain-popup = В воздух поднимается облако миазм.
 
 rat-king-too-hungry = Вы слишком голодны, чтобы использовать эту способность!
+
+rat-king-stay-name = Стоять
+rat-king-stay-description = Прикажите своей армии стоять на месте.
+
+rat-king-follow-name = За мной
+rat-king-follow-description = Прикажите своей армии следовать за вами.
+
+rat-king-cheeseem-name = Чизим
+rat-king-cheeseem-description = Прикажите своей армии атаковать любого, на кого вы укажете.
+
+rat-king-loose-name = Свободны
+rat-king-loose-description = Прикажите своей армии действовать по своему усмотрению.

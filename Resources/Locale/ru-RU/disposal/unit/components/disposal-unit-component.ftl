@@ -23,4 +23,9 @@ disposal-unit-thrown-missed = Промах!
 
 # state
 disposal-unit-state-Ready = Готов
+# Yes I want it to always say Pressurizing
+disposal-unit-state-Flushed = Давление
 disposal-unit-state-Pressurizing = Зарядка
+
+# putting people in
+disposal-unit-being-inserted = {CAPITALIZE($user)} пытается затолкнуть вас в мусоропровод!

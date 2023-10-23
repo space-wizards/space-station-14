@@ -6,7 +6,7 @@
 
 - type: Tag
   id: AirAlarmElectronics
-  
+
 - type: Tag
   id: Airlock
 
@@ -496,7 +496,7 @@
 
 - type: Tag
   id: GeigerCounter
-  
+
 - type: Tag
   id: GlassAirlock
 
@@ -565,7 +565,7 @@
 
 - type: Tag
   id: HighRiskItem
-  
+
 - type: Tag
   id: HighSecDoor
 

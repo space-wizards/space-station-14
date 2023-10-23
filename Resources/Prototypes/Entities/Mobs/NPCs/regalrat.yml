@@ -278,8 +278,8 @@
 
 - type: entity
   id: ActionRatKingRaiseArmy
-  name: Raise Army
-  description: Spend some hunger to summon an allied rat to help defend you.
+  name: rat-king-raise-army-name
+  description: rat-king-raise-army-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -291,8 +291,8 @@
 
 - type: entity
   id: ActionRatKingDomain
-  name: Rat King's Domain
-  description: Spend some hunger to release a cloud of miasma into the air.
+  name: rat-king-domain-name
+  description: rat-king-domain-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -304,8 +304,8 @@
 
 - type: entity
   id: ActionRatKingOrderStay
-  name: Stay
-  description: Command your army to stand in place.
+  name: rat-king-stay-name
+  description: rat-king-stay-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -323,8 +323,8 @@
 
 - type: entity
   id: ActionRatKingOrderFollow
-  name: Follow
-  description: Command your army to follow you around.
+  name: rat-king-follow-name
+  description: rat-king-follow-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -342,8 +342,8 @@
 
 - type: entity
   id: ActionRatKingOrderCheeseEm
-  name: Cheese 'Em
-  description: Command your army to attack whoever you point at.
+  name: rat-king-cheeseem-name
+  description: rat-king-cheeseem-description
   noSpawn: true
   components:
   - type: InstantAction
@@ -361,8 +361,8 @@
 
 - type: entity
   id: ActionRatKingOrderLoose
-  name: Loose
-  description: Command your army to act at their own will.
+  name: rat-king-loose-name
+  description: rat-king-loose-description
   noSpawn: true
   components:
   - type: InstantAction
