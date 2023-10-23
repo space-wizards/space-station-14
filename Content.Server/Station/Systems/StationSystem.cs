@@ -475,7 +475,6 @@ public sealed class StationSystem : EntitySystem
         return grids;
     }
 
-
     /// <summary>
     /// Returns the first station that has a grid in a certain map.
     /// If the map has no stations, null is returned instead.
