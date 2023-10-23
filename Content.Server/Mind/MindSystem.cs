@@ -55,10 +55,6 @@ public sealed class MindSystem : SharedMindSystem
 
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
-        // Let's not create ghosts if not in the middle of the round.
-        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
-            return;
-
         if (!TryGetMind(uid, out var mindId, out var mind, component))
             return;
 
@@ -76,6 +72,11 @@ public sealed class MindSystem : SharedMindSystem
 
         TransferTo(mindId, null, createGhost: false, mind: mind);
 
+        // Let's not create ghosts if not in the middle of the round.
+        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+            return;
+
+        // I just love convoluted entity shutdown logic that results in more entities being spawned.
         if (component.GhostOnShutdown && mind.Session != null)
         {
             var xform = Transform(uid);
@@ -300,7 +301,7 @@ public sealed class MindSystem : SharedMindSystem
         {
             component!.Mind = mindId;
             mind.OwnedEntity = entity;
-            mind.OriginalOwnedEntity ??= mind.OwnedEntity;
+            mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);
             Entity<MindComponent> mindEnt = (mindId, mind);
             Entity<MindContainerComponent> containerEnt = (entity.Value, component);
             RaiseLocalEvent(entity.Value, new MindAddedMessage(mindEnt, containerEnt));

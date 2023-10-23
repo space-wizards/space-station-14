@@ -42,12 +42,14 @@ namespace Content.Shared.Mind
         public NetUserId? OriginalOwnerUserId { get; set; }
 
         /// <summary>
-        ///     Entity UID for the first entity that this mind controlled. Used for round end.
+        ///     The first entity that this mind controlled. Used for round end information.
         ///     Might be relevant if the player has ghosted since.
         /// </summary>
-
         [DataField, AutoNetworkedField]
-        public EntityUid? OriginalOwnedEntity;
+        public NetEntity? OriginalOwnedEntity;
+        // This is a net entity, because this field currently ddoes not get set to null when this entity is deleted.
+        // This is a lazy way to ensure that people check that the entity still exists.
+        // TODO MIND Fix this properly by adding an OriginalMindContainerComponent or something like that.
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;

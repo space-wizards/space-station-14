@@ -54,9 +54,11 @@ public abstract class SharedMindSystem : EntitySystem
         if (UserMinds.TryAdd(component.UserId.Value, uid))
             return;
 
-        var old = UserMinds[component.UserId.Value];
+        var existing = UserMinds[component.UserId.Value];
+        if (existing == uid)
+            return;
 
-        if (!Exists(old))
+        if (!Exists(existing))
         {
             Log.Error($"Found deleted entity in mind dictionary while initializing mind {ToPrettyString(uid)}");
             UserMinds[component.UserId.Value] = uid;
