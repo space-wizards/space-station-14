@@ -82,6 +82,7 @@
     tags:
     - CombatKnife
     - Knife
+    - Bayonet
   - type: Sprite
     sprite: Objects/Weapons/Melee/combat_knife.rsi
     size: 2
@@ -111,6 +112,10 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/survival_knife.rsi
+  - type: Tag
+    tags:
+    - Bayonet
+
 
 - type: entity
   name: kukri knife

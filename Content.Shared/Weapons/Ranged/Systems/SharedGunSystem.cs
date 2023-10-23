@@ -91,6 +91,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, EntityUnpausedEvent>(OnGunUnpaused);
+        SubscribeLocalEvent<MeleeWeaponComponent, ItemSlotInsertAttemptEvent>(OnBayonetInserted);
 
 #if DEBUG
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
@@ -115,6 +116,13 @@ public abstract partial class SharedGunSystem : EntitySystem
             component.NextFire = melee.NextAttack;
             Dirty(component);
         }
+    }
+
+    private void OnBayonetInserted(EntityUid uid, MeleeWeaponComponent component, ItemSlotInsertAttemptEvent args)
+    {
+        if (!TryComp(args.Item, out MeleeWeaponComponent? itemMelee))
+            return;
+        component.Damage = itemMelee.Damage;
     }
 
     private void OnGunUnpaused(EntityUid uid, GunComponent component, ref EntityUnpausedEvent args)

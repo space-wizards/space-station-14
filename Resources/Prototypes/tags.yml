@@ -3,7 +3,7 @@
 
 - type: Tag
   id: AirAlarmElectronics
-  
+
 - type: Tag
   id: Airlock
 
@@ -33,6 +33,9 @@
 
 - type: Tag
   id: BaseballBat
+
+- type: Tag
+  id: Bayonet
 
 - type: Tag
   id: BBQsauce
@@ -493,7 +496,7 @@
 
 - type: Tag
   id: GeigerCounter
-  
+
 - type: Tag
   id: GlassAirlock
 
@@ -562,7 +565,7 @@
 
 - type: Tag
   id: HighRiskItem
-  
+
 - type: Tag
   id: HighSecDoor
 

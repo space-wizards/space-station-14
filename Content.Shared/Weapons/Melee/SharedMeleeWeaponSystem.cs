@@ -186,6 +186,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
         }
 
+        if (weapon.NoLightAttack)
+            return;
+
         AttemptAttack(args.SenderSession.AttachedEntity!.Value, weaponUid, weapon, msg, args.SenderSession);
     }
 
@@ -201,6 +204,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             return;
         }
+
+        if (weapon.NoHeavyAttack)
+            return;
 
         AttemptAttack(args.SenderSession.AttachedEntity.Value, weaponUid, weapon, msg, args.SenderSession);
     }

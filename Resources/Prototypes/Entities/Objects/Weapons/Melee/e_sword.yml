@@ -118,6 +118,7 @@
   - type: Tag
     tags:
     - Write
+    - Bayonet
   - type: DisarmMalus
     malus: 0
 

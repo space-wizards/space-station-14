@@ -25,6 +25,15 @@
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+  - type: MeleeWeapon
+    hidden: true
+    wideAnimationRotation: -90
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 0
+  - type: MeleeRequiresObjectInSlot
+    slotName: gun_bayonet
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -43,6 +52,12 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+      gun_bayonet:
+        name: Bayonet
+        priority: 0
+        whitelist:
+          tags:
+            - Bayonet
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -88,6 +103,12 @@
         whitelist:
           tags:
             - CartridgeLightRifle
+      gun_bayonet:
+        name: Bayonet
+        priority: 0
+        whitelist:
+          tags:
+            - Bayonet
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -131,6 +152,12 @@
         whitelist:
           tags:
             - CartridgeRifle
+      gun_bayonet:
+        name: Bayonet
+        priority: 0
+        whitelist:
+          tags:
+            - Bayonet
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -177,6 +204,12 @@
         whitelist:
           tags:
             - CartridgeRifle
+      gun_bayonet:
+        name: Bayonet
+        priority: 0
+        whitelist:
+          tags:
+            - Bayonet
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot

@@ -22,6 +22,18 @@ public sealed partial class MeleeWeaponComponent : Component
     public bool AltDisarm = true;
 
     /// <summary>
+    /// If you can't light attack
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public bool NoLightAttack;
+
+    /// <summary>
+    /// If you can't heavy attack
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public bool NoHeavyAttack;
+
+    /// <summary>
     /// Should the melee weapon's damage stats be examinable.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
