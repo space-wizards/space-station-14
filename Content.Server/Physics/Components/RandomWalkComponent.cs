@@ -36,6 +36,13 @@ public sealed partial class RandomWalkComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public bool StepOnStartup = false;
 
+    /// <summary>
+    /// Speed modifier for each tick
+    /// </summary>
+    [DataField("change")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float Сhange = 1f;
+
     #region Update Timing
 
     /// <summary>

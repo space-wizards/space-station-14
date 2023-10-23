@@ -127,6 +127,12 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("explosion");
+
+    /// <summary>
+    /// Will the anomaly randomly move with a pulse
+    /// </summary>
+    [DataField]
+    public Boolean PulseRun = true;
     #endregion
 
     /// <summary>
