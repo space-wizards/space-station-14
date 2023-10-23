@@ -10,7 +10,7 @@
   - type: Storage
     capacity: 60
   - type: Item
-    size: 9999
+    size: Large
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:

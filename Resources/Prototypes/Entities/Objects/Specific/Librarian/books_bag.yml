@@ -13,7 +13,7 @@
       slots:
         - belt
     - type: Item
-      size: 151
+      size: Large
     - type: Storage
       capacity: 150
       quickInsert: true

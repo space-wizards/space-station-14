@@ -386,7 +386,7 @@
   description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
   components:
   - type: Item
-    size: 15
+    size: Normal
   - type: StorageFill
     contents:
       - id: EncryptionKeySyndie
@@ -401,7 +401,7 @@
   description: Six deathrattle implants and handheld GPS devices for the whole squad.
   components:
   - type: Item
-    size: 60
+    size: Normal
   - type: StorageFill
     contents:
       - id: DeathRattleImplanter
@@ -434,7 +434,7 @@
   description: This box filled with colorful darts.
   components:
   - type: Item
-    size: 40
+    size: Normal
   - type: StorageFill
     contents:
       - id: Dart

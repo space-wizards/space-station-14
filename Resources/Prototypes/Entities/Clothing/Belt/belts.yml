@@ -418,7 +418,7 @@
   - type: Clothing
     sprite: Clothing/Belt/bandolier.rsi
   - type: Item
-    size: 60
+    size: Bulky
   - type: Storage
     capacity: 60
     whitelist:
@@ -464,7 +464,7 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Item
-    size: 60
+    size: Bulky
   - type: Storage
     capacity: 60
     whitelist:
@@ -528,7 +528,7 @@
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Item
-    size: 70
+    size: Bulky
   - type: Storage
     capacity: 70
 

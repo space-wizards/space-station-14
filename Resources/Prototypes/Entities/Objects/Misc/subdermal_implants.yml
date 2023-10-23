@@ -110,7 +110,7 @@
     - type: SubdermalImplant
       implantAction: ActionOpenStorageImplant
     - type: Item
-      size: 9999
+      size: Large
     - type: Storage
       capacity: 20 #10-20 should be more than enough for this
     - type: ContainerContainer

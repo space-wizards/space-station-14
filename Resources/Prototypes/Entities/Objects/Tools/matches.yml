@@ -6,7 +6,7 @@
   - type: Storage
     capacity: 10
   - type: Item
-    size: 10
+    size: Small
 
 - type: entity
   name: match stick
@@ -26,7 +26,7 @@
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: unlit
-    size: 1
+    size: Tiny
   - type: Matchstick
     duration: 10
     igniteSound:
@@ -80,7 +80,7 @@
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
-    size: 5
+    size: Tiny
   - type: Storage
     capacity: 5
   - type: StorageFill

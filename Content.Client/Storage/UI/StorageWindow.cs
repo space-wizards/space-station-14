@@ -1,16 +1,12 @@
 using System.Numerics;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Item;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Robust.Client.UserInterface;
-using Robust.Shared.Containers;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Direction = Robust.Shared.Maths.Direction;
 
@@ -101,16 +97,10 @@ namespace Content.Client.Storage.UI
 
             EntityList.PopulateList(list);
 
-            // Sets information about entire storage container current capacity
-            if (component.StorageCapacityMax != 0)
-            {
-                _information.Text = Loc.GetString("comp-storage-window-volume", ("itemCount", storedCount),
-                    ("usedVolume", component.StorageUsed), ("maxVolume", component.StorageCapacityMax));
-            }
-            else
-            {
-                _information.Text = Loc.GetString("comp-storage-window-volume-unlimited", ("itemCount", storedCount));
-            }
+            //todo; maybe use a percentage? This gets weird with high-weight items.
+            _information.Text = Loc.GetString("comp-storage-window-volume",
+                ("itemCount", storedCount),
+                ("maxCount", component.MaxSlots));
         }
 
         /// <summary>
@@ -122,10 +112,8 @@ namespace Content.Client.Storage.UI
                 || !_entityManager.EntityExists(entity))
                 return;
 
-            _entityManager.TryGetComponent(entity, out ItemComponent? item);
             _entityManager.TryGetComponent(entity, out StackComponent? stack);
             var count = stack?.Count ?? 1;
-            var size = item?.Size;
 
             var spriteView = new SpriteView
             {
@@ -148,11 +136,6 @@ namespace Content.Client.Storage.UI
                             ClipText = true,
                             Text = _entityManager.GetComponent<MetaDataComponent>(Identity.Entity(entity, _entityManager)).EntityName +
                                    (count > 1 ? $" x {count}" : string.Empty),
-                        },
-                        new Label
-                        {
-                            Align = Label.AlignMode.Right,
-                            Text = size.ToString() ?? Loc.GetString("comp-storage-no-item-size"),
                         }
                     }
             });

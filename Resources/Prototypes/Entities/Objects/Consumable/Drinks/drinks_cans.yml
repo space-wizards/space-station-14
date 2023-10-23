@@ -370,7 +370,7 @@
         map: ["6pack6"]
         visible: false
   - type: Item
-    size: 6
+    size: Normal
   - type: Storage
     capacity: 30
     whitelist:

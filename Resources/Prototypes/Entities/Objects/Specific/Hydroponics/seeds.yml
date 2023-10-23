@@ -8,7 +8,7 @@
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
     - type: Item
-      size: 2
+      size: Tiny
     - type: StaticPrice
       price: 20
 
@@ -457,7 +457,7 @@
       seedId: watermelon
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/watermelon.rsi
-      
+
 - type: entity
   parent: SeedBase
   name: packet of grape seeds

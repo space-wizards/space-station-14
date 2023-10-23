@@ -12,7 +12,7 @@
       map: [ "tank" ]
       visible: false
   - type: Item
-    size: 50
+    size: Normal
   - type: Clothing
     quickEquip: false
     slots:
@@ -93,7 +93,7 @@
   - type: ContainerAmmoProvider
     container: storagebase
   - type: Item
-    size: 50
+    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
     quickEquip: false
@@ -120,7 +120,7 @@
   suffix: Admeme
   components:
   - type: Item
-    size: 9999
+    size: Large
   - type: Storage
     capacity: 9999
   - type: PneumaticCannon

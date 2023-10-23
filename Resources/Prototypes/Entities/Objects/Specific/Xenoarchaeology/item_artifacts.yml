@@ -55,7 +55,7 @@
       type: IntercomBoundUserInterface
   - type: Appearance
   - type: Item
-    size: 40
+    size: Normal
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     heldPrefix: ano01
   - type: Actions

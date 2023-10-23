@@ -45,7 +45,7 @@
   - type: Storage
     capacity: 5
   - type: Item
-    size: 5
+    size: Small
   - type: StorageFill
     contents:
     - id: Cigarette
@@ -110,7 +110,7 @@
   - type: Storage
     capacity: 10
   - type: Item
-    size: 10
+    size: Small
   - type: StorageFill
     contents:
     - id: CigaretteRandom

@@ -38,7 +38,7 @@
     capacity: 8
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
-    size: 8
+    size: Small
   - type: StorageFill
     contents:
     - id: Cigar

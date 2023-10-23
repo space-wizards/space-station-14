@@ -7,13 +7,13 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     public sealed class StorageTest
     {
+        //todo: does this matter for storage slots? probably not in the same way
         /// <summary>
         /// Can an item store more than itself weighs.
         /// In an ideal world this test wouldn't need to exist because sizes would be recursive.
@@ -32,9 +32,11 @@ namespace Content.IntegrationTests.Tests
                 {
                     if (!proto.TryGetComponent<StorageComponent>("Storage", out var storage) ||
                         storage.Whitelist != null ||
-                        !proto.TryGetComponent<ItemComponent>("Item", out var item)) continue;
+                        storage.MaxItemSize == null ||
+                        !proto.TryGetComponent<ItemComponent>("Item", out var item))
+                        continue;
 
-                    Assert.That(storage.StorageCapacityMax, Is.LessThanOrEqualTo(item.Size), $"Found storage arbitrage on {proto.ID}");
+                    Assert.That(storage.MaxItemSize.Value, Is.LessThan(item.Size), $"Found storage arbitrage on {proto.ID}");
                 }
             });
             await pair.CleanReturnAsync();
@@ -87,7 +89,7 @@ namespace Content.IntegrationTests.Tests
 
                     if (proto.TryGetComponent<StorageComponent>("Storage", out var storage))
                     {
-                        capacity = storage.StorageCapacityMax;
+                        capacity = storage.MaxTotalSize;
                     }
                     else if (proto.TryGetComponent<EntityStorageComponent>("EntityStorage", out var entStorage))
                     {
@@ -103,6 +105,37 @@ namespace Content.IntegrationTests.Tests
                     var fill = (StorageFillComponent) proto.Components[id].Component;
                     var size = GetFillSize(fill, isEntStorage);
                     Assert.That(size, Is.LessThanOrEqualTo(capacity), $"{proto.ID} storage fill is too large.");
+
+                    if (storage != null)
+                    {
+                        Assert.That(GetFillSize(fill, true), Is.LessThanOrEqualTo(storage.MaxSlots), $"{proto.ID} storage fill has too many items.");
+
+                        var maxSize = storage.MaxItemSize;
+                        if (maxSize == null)
+                        {
+                            if (!proto.TryGetComponent<ItemComponent>("Item", out var item))
+                                continue;
+                            maxSize = item.Size;
+                        }
+
+                        foreach (var entry in fill.Contents)
+                        {
+                            if (entry.PrototypeId == null)
+                                continue;
+
+                            if (!protoMan.TryIndex<EntityPrototype>(entry.PrototypeId, out var fillItem))
+                                continue;
+
+                            if (isEntStorage)
+                                continue;
+
+                            if (!fillItem.TryGetComponent<ItemComponent>("Item", out var item))
+                                continue;
+
+                            Assert.That(item.Size, Is.LessThanOrEqualTo(maxSize),
+                                $"Entity {proto.ID} has storage-fill item, {entry.PrototypeId}, that is too large");
+                        }
+                    }
                 }
             });
 
@@ -121,7 +154,7 @@ namespace Content.IntegrationTests.Tests
                     return entry.Amount;
 
                 if (proto.TryGetComponent<ItemComponent>("Item", out var item))
-                    return item.Size * entry.Amount;
+                    return SharedItemSystem.GetItemSizeWeight(item.Size) * entry.Amount;
 
                 Assert.Fail($"Prototype is missing item comp: {entry.PrototypeId}");
                 return 0;

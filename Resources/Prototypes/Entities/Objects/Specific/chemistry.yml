@@ -187,7 +187,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainerManager
     solutions:
@@ -317,7 +317,7 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: "syringe_base0"
   - type: Item
-    size: 3
+    size: Tiny
     sprite: Objects/Specific/Chemistry/syringe.rsi
     heldPrefix: 0
   - type: SolutionContainerManager
@@ -393,7 +393,7 @@
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
   - type: Item
-    size: 1
+    size: Tiny
     sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Pill
   - type: Food

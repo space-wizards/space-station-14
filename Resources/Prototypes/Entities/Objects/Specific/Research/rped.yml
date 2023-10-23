@@ -9,7 +9,7 @@
     state: icon
   - type: Item
     sprite: Objects/Specific/Research/rped.rsi
-    size: 50
+    size: Normal
   - type: GuideHelp
     guides:
     - MachineUpgrading

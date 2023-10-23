@@ -17,7 +17,7 @@
       shader: unshaded
       visible: false
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Tools/welder.rsi
   - type: ToggleableLightVisuals
     spriteLayer: flame
@@ -142,7 +142,7 @@
   - type: Sprite
     sprite: Objects/Tools/welder_mini.rsi
   - type: Item
-    size: 5
+    size: Tiny
     sprite: Objects/Tools/welder_mini.rsi
   - type: RefillableSolution
     solution: Welder

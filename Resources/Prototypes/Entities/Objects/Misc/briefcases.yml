@@ -5,7 +5,7 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: 60
+    size: Bulky
   - type: Storage
     capacity: 60
   - type: Tag
@@ -32,7 +32,7 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: 80
+    size: Bulky
   - type: Storage
     capacity: 80
   - type: Tag

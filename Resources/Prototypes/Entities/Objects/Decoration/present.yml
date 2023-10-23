@@ -15,7 +15,7 @@
   suffix: Empty
   components:
   - type: Item
-    size: 30
+    size: Normal
   - type: Storage
     capacity: 30
 

@@ -14,7 +14,7 @@
     slots:
     - belt
   - type: Item
-    size: 176
+    size: Large
   - type: Storage
     capacity: 175
     quickInsert: true

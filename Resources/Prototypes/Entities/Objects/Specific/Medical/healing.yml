@@ -6,7 +6,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Specific/Medical/medical.rsi
     heldPrefix: ointment
   # Inherited
@@ -54,8 +54,6 @@
   - type: Stack
     stackType: Ointment
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   id: Ointment10Lingering
@@ -105,8 +103,6 @@
   - type: Stack
     stackType: RegenerativeMesh
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   name: bruise pack
@@ -144,8 +140,6 @@
   - type: Stack
     stackType: Brutepack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   id: Brutepack10Lingering
@@ -193,8 +187,6 @@
   - type: Stack
     stackType: MedicatedSuture
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   name: blood pack
@@ -273,8 +265,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   id: Gauze10Lingering

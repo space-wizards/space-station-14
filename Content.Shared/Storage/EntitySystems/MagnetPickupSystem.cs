@@ -56,7 +56,8 @@ public sealed class MagnetPickupSystem : EntitySystem
             comp.NextScan += ScanDelay;
 
             // No space
-            if (storage.StorageUsed >= storage.StorageCapacityMax)
+            if (storage.Container.ContainedEntities.Count >= storage.MaxSlots ||
+                _storage.GetCumulativeItemSizes(uid, storage) >= storage.MaxTotalSize)
                 continue;
 
             if (!_inventory.TryGetContainingSlot(uid, out var slotDef))

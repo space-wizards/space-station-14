@@ -13,7 +13,7 @@
     slots:
     - belt
   - type: Item
-    size: 46
+    size: Normal
   - type: Storage
     capacity: 45
     quickInsert: true

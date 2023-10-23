@@ -751,7 +751,7 @@
         offset: "0, 0.12"
     sprite: Clothing/Head/Hats/magician.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Clothing/Head/Hats/magician.rsi
   - type: Storage
     capacity: 10

@@ -9,7 +9,7 @@
     sprite: Objects/Fun/crayons.rsi
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: 1
+    size: Tiny
   - type: Tag
     tags:
     - Write
@@ -238,7 +238,7 @@
     capacity: 7
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: 7
+    size: Small
     heldPrefix: box
   - type: StorageFill
     contents:
