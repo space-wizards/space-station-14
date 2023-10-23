@@ -87,7 +87,7 @@ public sealed partial class GuideMicrowaveRecipeEmbed : BoxContainer, IDocumentT
             var ingredientBox = new BoxContainer() { Align = AlignMode.Center };
             var reagentPrototype = _prototype.Index<ReagentPrototype>(ingredient);
 
-            ingredientBox.AddChild(new TextureRect() { TexturePath = "/Textures/Interface/Misc/reagent.png" });
+            ingredientBox.AddChild(new TextureRect() { TexturePath = "/Textures/Interface/Misc/reagent.png", Modulate = reagentPrototype.SubstanceColor });
 
             var ingredientName = new RichTextLabel();
             var ingredientNameMsg = new FormattedMessage();
