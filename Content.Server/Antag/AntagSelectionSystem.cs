@@ -23,6 +23,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.Mobs;
 using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
+using Content.Shared.Hands.Components;
 
 namespace Content.Server.Antag;
 
@@ -210,23 +211,37 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         }
         else if (_inventory.TryGetSlotContainer(antag, "jumpsuit", out var jumpsuit, out _) && jumpsuit.ContainedEntity != null)
         {
-            if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1Slot, out _))
+            if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1Slot, out _) && pocket1Slot.ContainedEntity == null && _containerSystem.CanInsert(itemToSpawn, pocket1Slot))
             {
-                if (pocket1Slot.ContainedEntity == null)
+                pocket1Slot.Insert(itemToSpawn);
+                return;
+            }
+            else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2Slot, out _) && pocket2Slot.ContainedEntity == null && _containerSystem.CanInsert(itemToSpawn, pocket2Slot))
+            {
+                pocket2Slot.Insert(itemToSpawn);
+                return;
+            }
+            TryHands(antag, itemToSpawn);
+        }
+        else
+            TryHands(antag, itemToSpawn);
+    }
+
+    /// <summary>
+    /// If you are without jumpsuit or pockets are full we will try hands. (Separate so I don't need to duplicate code)
+    /// </summary>
+    private void TryHands(EntityUid antag, EntityUid item)
+    {
+        if (TryComp<HandsComponent>(antag, out var comp))
+        {
+            foreach (var hand in comp.Hands.Values)
+            {
+                if (hand.Container != null && hand.Container.ContainedEntity == null)
                 {
-                    if (_containerSystem.CanInsert(itemToSpawn, pocket1Slot))
+                    if (_containerSystem.CanInsert(item, hand.Container))
                     {
-                        pocket1Slot.Insert(itemToSpawn);
-                    }
-                }
-                else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2Slot, out _))
-                {
-                    if (pocket2Slot.ContainedEntity == null)
-                    {
-                        if (_containerSystem.CanInsert(itemToSpawn, pocket2Slot))
-                        {
-                            pocket2Slot.Insert(itemToSpawn);
-                        }
+                        hand.Container.Insert(item);
+                        break;
                     }
                 }
             }
