@@ -1,7 +1,7 @@
-using Content.Server.NPC.Components;
-using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.NPC.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Systems;
 
@@ -160,15 +160,15 @@ public sealed partial class NpcFactionSystem : EntitySystem
         if (!xformQuery.TryGetComponent(entity, out var entityXform))
             yield break;
 
-        foreach (var comp in _lookup.GetComponentsInRange<NpcFactionMemberComponent>(entityXform.MapPosition, range))
+        foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(entityXform.MapPosition, range))
         {
-            if (comp.Owner == entity)
+            if (ent.Owner == entity)
                 continue;
 
-            if (!factions.Overlaps(comp.Factions))
+            if (!factions.Overlaps(ent.Comp.Factions))
                 continue;
 
-            yield return comp.Owner;
+            yield return ent.Owner;
         }
     }
 

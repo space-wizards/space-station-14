@@ -1,16 +1,20 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Clothing.Components;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Emp;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
-using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Popups;
@@ -19,11 +23,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Shared.DoAfter;
-using Content.Server.Emp;
-using Content.Server.DeviceLinking.Events;
-using Content.Server.DeviceLinking.Systems;
-using Content.Shared.Inventory;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -333,7 +332,7 @@ namespace Content.Server.Light.EntitySystems
             light.LastGhostBlink = time;
 
             ToggleBlinkingLight(uid, light, true);
-            light.Owner.SpawnTimer(light.GhostBlinkingTime, () =>
+            uid.SpawnTimer(light.GhostBlinkingTime, () =>
             {
                 ToggleBlinkingLight(uid, light, false);
             });

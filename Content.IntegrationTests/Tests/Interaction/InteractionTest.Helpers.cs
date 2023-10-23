@@ -13,9 +13,7 @@ using Content.Server.Gravity;
 using Content.Server.Power.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Atmos;
-using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
 using Content.Shared.Item;
 using Robust.Client.UserInterface;
@@ -708,8 +706,9 @@ public abstract partial class InteractionTest
             if (proto == null)
                 return;
 
-            grid = MapMan.CreateGrid(MapData.MapId);
-            gridUid = grid.Owner;
+            var gridEnt = MapMan.CreateGridEntity(MapData.MapId);
+            grid = gridEnt;
+            gridUid = gridEnt;
             var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
             Transform.SetWorldPosition(gridXform, pos.Position);
             grid.SetTile(SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
