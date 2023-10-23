@@ -1,6 +1,6 @@
-using Content.Shared.Coordinates.Helpers;
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
@@ -58,7 +58,7 @@ namespace Content.Server.Engineering.EntitySystems
             if (component.Deleted || !IsTileClear())
                 return;
 
-            if (EntityManager.TryGetComponent(component.Owner, out StackComponent? stackComp)
+            if (EntityManager.TryGetComponent(uid, out StackComponent? stackComp)
                 && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
             {
                 return;
@@ -66,8 +66,8 @@ namespace Content.Server.Engineering.EntitySystems
 
             EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
-            if (component.RemoveOnInteract && stackComp == null && !((!EntityManager.EntityExists(component.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
-                EntityManager.DeleteEntity(component.Owner);
+            if (component.RemoveOnInteract && stackComp == null && !((!EntityManager.EntityExists(uid) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
+                EntityManager.DeleteEntity(uid);
         }
     }
 }

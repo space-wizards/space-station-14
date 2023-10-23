@@ -61,12 +61,12 @@ public sealed class RenameCommand : IConsoleCommand
         {
             if (idCardSystem.TryFindIdCard(entityUid.Value, out var idCard))
             {
-                idCardSystem.TryChangeFullName(idCard.Owner, name, idCard);
+                idCardSystem.TryChangeFullName(idCard, name, idCard);
 
                 // Records
                 // This is done here because ID cards are linked to station records
                 if (_entManager.TrySystem<StationRecordsSystem>(out var recordsSystem)
-                    && _entManager.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
+                    && _entManager.TryGetComponent(idCard, out StationRecordKeyStorageComponent? keyStorage)
                     && keyStorage.Key != null)
                 {
                     var origin = keyStorage.Key.Value.OriginStation;
