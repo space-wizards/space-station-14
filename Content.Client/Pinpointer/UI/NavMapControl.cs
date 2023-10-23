@@ -103,7 +103,7 @@ public sealed partial class NavMapControl : MapGridControl
 
         _transformSystem = _entManager.System<SharedTransformSystem>();
         _spriteSystem = _entManager.System<SpriteSystem>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 16);
+        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 12);
 
         RectClipContent = true;
         HorizontalExpand = true;
