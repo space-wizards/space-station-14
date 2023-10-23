@@ -54,7 +54,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnInit);
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
@@ -180,10 +180,10 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private void OnInit(EntityUid uid, MicrowaveComponent component, ComponentInit ags)
+        private void OnInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
         {
-            component.Storage = _container.EnsureContainer<Container>(uid, "microwave_entity_container");
-            _deviceLink.EnsureSinkPorts(uid, component.OnPort);
+            ent.Comp.Storage = _container.EnsureContainer<Container>(ent, "microwave_entity_container");
+            _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
         }
 
         private void OnSuicide(EntityUid uid, MicrowaveComponent component, SuicideEvent args)
