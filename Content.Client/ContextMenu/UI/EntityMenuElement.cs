@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.Systems;
+using Content.Client.UserInterface;
 using Content.Shared.Administration;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
@@ -8,7 +9,7 @@ using Robust.Client.Player;
 
 namespace Content.Client.ContextMenu.UI
 {
-    public sealed partial class EntityMenuElement : ContextMenuElement
+    public sealed partial class EntityMenuElement : ContextMenuElement, IEntityControl
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -49,7 +50,8 @@ namespace Content.Client.ContextMenu.UI
 
         private string? SearchPlayerName(EntityUid entity)
         {
-            return _adminSystem.PlayerList.FirstOrDefault(player => player.EntityUid == entity)?.Username;
+            var netEntity = _entityManager.GetNetEntity(entity);
+            return _adminSystem.PlayerList.FirstOrDefault(player => player.NetEntity == netEntity)?.Username;
         }
 
         /// <summary>
@@ -77,12 +79,12 @@ namespace Content.Client.ContextMenu.UI
             var representation = _entityManager.ToPrettyString(entity);
 
             var name = representation.Name;
-            var id = representation.Uid;
+            var id = representation.Uid.ToString();
             var prototype = representation.Prototype;
             var playerName = representation.Session?.Name ?? SearchPlayerName(entity);
             var deleted = representation.Deleted;
 
-            return $"{name} ({id}{(prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
+            return $"{name} ({id} / {_entityManager.GetNetEntity(entity).ToString()}{(prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
         }
 
         private string GetEntityDescription(EntityUid entity)
@@ -107,14 +109,16 @@ namespace Content.Client.ContextMenu.UI
             // _entityManager.Deleted() implicitly checks all of these.
             if (_entityManager.Deleted(entity))
             {
-                Icon.Sprite = null;
+                Icon.SetEntity(null);
                 Text = string.Empty;
             }
             else
             {
-                Icon.Sprite = _entityManager.GetComponentOrNull<SpriteComponent>(entity);
+                Icon.SetEntity(entity);
                 Text = GetEntityDescription(entity.Value);
             }
         }
+
+        EntityUid? IEntityControl.UiEntity => Entity;
     }
 }

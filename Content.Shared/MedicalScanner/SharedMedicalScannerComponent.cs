@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner
 {
-    public abstract class SharedMedicalScannerComponent : Component
+    public abstract partial class SharedMedicalScannerComponent : Component
     {
         [Serializable, NetSerializable]
         public enum MedicalScannerVisuals : byte

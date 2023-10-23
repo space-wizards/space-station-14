@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Markdown.Value;
 namespace Content.IntegrationTests.Tests.Serialization;
 
 [TestFixture]
-public sealed class SerializationTest
+public sealed partial class SerializationTest
 {
     /// <summary>
     /// Check that serializing generic enums works as intended. This should really be in engine, but engine
@@ -17,8 +17,8 @@ public sealed class SerializationTest
     [Test]
     public async Task SerializeGenericEnums()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
         var seriMan = server.ResolveDependency<ISerializationManager>();
         var refMan = server.ResolveDependency<IReflectionManager>();
 
@@ -68,13 +68,13 @@ public sealed class SerializationTest
         Assert.That(seriMan.ValidateNode<Enum>(typedNode).GetErrors().Any(), Is.True);
         Assert.That(seriMan.ValidateNode<TestEnum>(typedNode).GetErrors().Any(), Is.False);
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     private enum TestEnum : byte { Aa, Bb, Cc, Dd }
 
     [DataDefinition]
-    private sealed class TestData
+    private sealed partial class TestData
     {
         [DataField("value")] public Enum Value = default!;
         [DataField("sequence")] public List<Enum> Sequence = default!;

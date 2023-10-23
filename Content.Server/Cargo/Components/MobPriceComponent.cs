@@ -4,7 +4,7 @@
 /// This is used for calculating the price of mobs.
 /// </summary>
 [RegisterComponent]
-public sealed class MobPriceComponent : Component
+public sealed partial class MobPriceComponent : Component
 {
     /// <summary>
     /// How much of a penalty per part there should be. This is a multiplier for a multiplier, the penalty for each body part is calculated from the total number of slots, and then multiplied by this.

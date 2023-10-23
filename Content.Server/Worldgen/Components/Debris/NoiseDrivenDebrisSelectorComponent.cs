@@ -12,7 +12,7 @@ namespace Content.Server.Worldgen.Components.Debris;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(NoiseDrivenDebrisSelectorSystem))]
-public sealed class NoiseDrivenDebrisSelectorComponent : Component
+public sealed partial class NoiseDrivenDebrisSelectorComponent : Component
 {
     private EntitySpawnCollectionCache? _cache;
 
@@ -39,6 +39,6 @@ public sealed class NoiseDrivenDebrisSelectorComponent : Component
     /// </summary>
     /// <remarks>This noise channel should be mapped to exactly the range [0, 1] unless you want a lot of warnings in the log.</remarks>
     [DataField("noiseChannel", customTypeSerializer: typeof(PrototypeIdSerializer<NoiseChannelPrototype>))]
-    public string NoiseChannel { get; } = default!;
+    public string NoiseChannel { get; private set; } = default!;
 }
 

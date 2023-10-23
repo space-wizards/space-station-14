@@ -11,7 +11,7 @@ namespace Content.Server.DeviceLinking.Components.Overload;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(DeviceLinkOverloadSystem))]
-public sealed class SpawnOnOverloadComponent : Component
+public sealed partial class SpawnOnOverloadComponent : Component
 {
     /// <summary>
     /// The entity prototype to spawn when the device overloads

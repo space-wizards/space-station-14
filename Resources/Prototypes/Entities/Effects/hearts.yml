@@ -1,0 +1,16 @@
+- type: entity
+  id: EffectHearts
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.85
+  - type: Sprite
+    noRot: true
+    drawdepth: Effects
+    sprite: Effects/hearts.rsi
+    state: hearts
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer

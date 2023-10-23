@@ -4,6 +4,6 @@
 ///     Triggers when an item artifact is microwaved.
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactMicrowaveTriggerComponent : Component
+public sealed partial class ArtifactMicrowaveTriggerComponent : Component
 {
 }

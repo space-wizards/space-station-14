@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Database;
-using Robust.Server.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.Administration.Notes;
 
@@ -12,15 +12,15 @@ public interface IAdminNotesManager
     event Action<SharedAdminNote>? NoteModified;
     event Action<SharedAdminNote>? NoteDeleted;
 
-    bool CanCreate(IPlayerSession admin);
-    bool CanDelete(IPlayerSession admin);
-    bool CanEdit(IPlayerSession admin);
-    bool CanView(IPlayerSession admin);
-    Task OpenEui(IPlayerSession admin, Guid notedPlayer);
-    Task OpenUserNotesEui(IPlayerSession player);
-    Task AddAdminRemark(IPlayerSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime);
-    Task DeleteAdminRemark(int noteId, NoteType type, IPlayerSession deletedBy);
-    Task ModifyAdminRemark(int noteId, NoteType type, IPlayerSession editedBy, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime);
+    bool CanCreate(ICommonSession admin);
+    bool CanDelete(ICommonSession admin);
+    bool CanEdit(ICommonSession admin);
+    bool CanView(ICommonSession admin);
+    Task OpenEui(ICommonSession admin, Guid notedPlayer);
+    Task OpenUserNotesEui(ICommonSession player);
+    Task AddAdminRemark(ICommonSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime);
+    Task DeleteAdminRemark(int noteId, NoteType type, ICommonSession deletedBy);
+    Task ModifyAdminRemark(int noteId, NoteType type, ICommonSession editedBy, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime);
     /// <summary>
     /// Queries the database and retrieves all notes, secret and visible
     /// </summary>

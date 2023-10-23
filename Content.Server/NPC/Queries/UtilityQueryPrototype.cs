@@ -13,7 +13,7 @@ namespace Content.Server.NPC.Queries;
 public sealed class UtilityQueryPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("query")]
     public List<UtilityQuery> Query = new();

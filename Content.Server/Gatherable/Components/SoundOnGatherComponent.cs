@@ -7,7 +7,7 @@ namespace Content.Server.Gatherable.Components;
 /// Plays the specified sound when this entity is gathered.
 /// </summary>
 [RegisterComponent, Access(typeof(GatherableSystem))]
-public sealed class SoundOnGatherComponent : Component
+public sealed partial class SoundOnGatherComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/break_stone.ogg")

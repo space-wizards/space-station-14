@@ -1,17 +1,15 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Interaction.Components;
-using Content.Server.Mind.Components;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
-using Robust.Shared.Collections;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -85,7 +83,8 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
         var xform = Transform(uid);
 
-        var partners = _entityLookup.GetComponentsInRange<ReproductivePartnerComponent>(xform.Coordinates, component.BreedRange);
+        var partners = new HashSet<Entity<ReproductivePartnerComponent>>();
+        _entityLookup.GetEntitiesInRange(xform.Coordinates, component.BreedRange, partners);
 
         if (partners.Count >= component.Capacity)
             return false;

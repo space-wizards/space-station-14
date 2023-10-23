@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Monitor.Components;
 
 [RegisterComponent]
-public sealed class AirAlarmComponent : Component
+public sealed partial class AirAlarmComponent : Component
 {
     [ViewVariables] public AirAlarmMode CurrentMode { get; set; } = AirAlarmMode.Filtering;
     [ViewVariables] public bool AutoMode { get; set; } = true;

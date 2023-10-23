@@ -5,7 +5,7 @@ namespace Content.Server.Store.Conditions;
 /// <summary>
 /// Only allows a listing to be purchased a certain amount of times.
 /// </summary>
-public sealed class ListingLimitedStockCondition : ListingCondition
+public sealed partial class ListingLimitedStockCondition : ListingCondition
 {
     /// <summary>
     /// The amount of times this listing can be purchased.

@@ -10,7 +10,7 @@ namespace Content.Shared.Access.Components;
 ///     and allows checking if something or somebody is authorized with these access levels.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class AccessReaderComponent : Component
+public sealed partial class AccessReaderComponent : Component
 {
     /// <summary>
     /// Whether or not the accessreader is enabled.
@@ -26,25 +26,30 @@ public sealed class AccessReaderComponent : Component
     public HashSet<string> DenyTags = new();
 
     /// <summary>
-    ///     List of access lists to check allowed against. For an access check to pass
-    ///     there has to be an access list that is a subset of the access in the checking list.
+    /// List of access groups that grant access to this reader. Only a single matching group is required to gain access.
+    /// A group matches if it is a subset of the set being checked against.
     /// </summary>
     [DataField("access")]
     public List<HashSet<string>> AccessLists = new();
 
     /// <summary>
-    /// A list of valid stationrecordkeys
+    /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required tp gaim
+    /// access.
     /// </summary>
     [DataField("accessKeys")]
     public HashSet<StationRecordKey> AccessKeys = new();
 
-
     /// <summary>
-    ///     The name of the container in which additional
-    ///     AccessReaderComponents may be found.
+    /// If specified, then this access reader will instead pull access requirements from entities contained in the
+    /// given container.
     /// </summary>
+    /// <remarks>
+    /// This effectively causes <see cref="DenyTags"/>, <see cref="AccessLists"/>, and <see cref="AccessKeys"/> to be
+    /// ignored, though <see cref="Enabled"/> is still respected. Access is denied if there are no valid entities or
+    /// they all deny access.
+    /// </remarks>
     [DataField("containerAccessProvider")]
-    public string? ContainerAccessProvider = null;
+    public string? ContainerAccessProvider;
 }
 
 [Serializable, NetSerializable]
@@ -56,9 +61,9 @@ public sealed class AccessReaderComponentState : ComponentState
 
     public List<HashSet<string>> AccessLists;
 
-    public HashSet<StationRecordKey> AccessKeys;
+    public List<(NetEntity, uint)> AccessKeys;
 
-    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
+    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, List<(NetEntity, uint)> accessKeys)
     {
         Enabled = enabled;
         DenyTags = denyTags;

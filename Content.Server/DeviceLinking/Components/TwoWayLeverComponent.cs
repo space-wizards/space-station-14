@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.DeviceLinking.Components
 {
     [RegisterComponent]
-    public sealed class TwoWayLeverComponent : Component
+    public sealed partial class TwoWayLeverComponent : Component
     {
         [DataField("state")]
         public TwoWayLeverState State;

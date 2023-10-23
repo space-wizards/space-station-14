@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Components
 {
     [Serializable, NetSerializable]
-    public sealed class InjectorDoAfterEvent : SimpleDoAfterEvent
+    public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent
     {
     }
 
@@ -14,7 +14,7 @@ namespace Content.Shared.Chemistry.Components
     /// Shared class for injectors & syringes
     /// </summary>
     [NetworkedComponent, ComponentProtoName("Injector")]
-    public abstract class SharedInjectorComponent : Component
+    public abstract partial class SharedInjectorComponent : Component
     {
         /// <summary>
         /// Component data used for net updates. Used by client for item status ui

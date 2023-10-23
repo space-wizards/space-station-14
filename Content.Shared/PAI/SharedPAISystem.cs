@@ -1,9 +1,4 @@
-using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
-using Content.Shared.Hands;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Item;
-using Content.Shared.Movement.Events;
 
 namespace Content.Shared.PAI
 {
@@ -18,27 +13,24 @@ namespace Content.Shared.PAI
     /// </summary>
     public abstract class SharedPAISystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<PAIComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
         }
 
-        private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
+        private void OnMapInit(EntityUid uid, PAIComponent component, MapInitEvent args)
         {
-            if (component.MidiAction != null)
-                _actionsSystem.AddAction(uid, component.MidiAction, null);
+            _actionsSystem.AddAction(uid, ref component.MidiAction, component.MidiActionId);
         }
 
         private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
         {
-            if (component.MidiAction != null)
-                _actionsSystem.RemoveAction(uid, component.MidiAction);
+            _actionsSystem.RemoveAction(uid, component.MidiAction);
         }
     }
 }

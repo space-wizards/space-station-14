@@ -1,7 +1,7 @@
 namespace Content.Server.Chemistry.Components;
 
 [RegisterComponent]
-public sealed class SolutionHeaterComponent : Component
+public sealed partial class SolutionHeaterComponent : Component
 {
     /// <summary>
     /// How much heat is added per second to the solution, with no upgrades.

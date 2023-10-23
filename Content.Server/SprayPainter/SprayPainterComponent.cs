@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.SprayPainter;
 
 [RegisterComponent]
-public sealed class SprayPainterComponent : Component
+public sealed partial class SprayPainterComponent : Component
 {
     [DataField("spraySound")]
     public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");

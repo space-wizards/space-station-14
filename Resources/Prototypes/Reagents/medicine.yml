@@ -547,6 +547,13 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: medicine
   color: "#c8ff75"
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 6
+    - !type:PlantPhalanximine
+      conditions:
+      - !type:ReagentThreshold
+        min: 4
   metabolisms:
     Medicine:
       effects:

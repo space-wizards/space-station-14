@@ -21,7 +21,19 @@ public sealed class StationJobsTest
     [TestPrototypes]
     private const string Prototypes = @"
 - type: playTimeTracker
-  id: PlayTimeDummy
+  id: PlayTimeDummyAssistant
+
+- type: playTimeTracker
+  id: PlayTimeDummyMime
+
+- type: playTimeTracker
+  id: PlayTimeDummyClown
+
+- type: playTimeTracker
+  id: PlayTimeDummyCaptain
+
+- type: playTimeTracker
+  id: PlayTimeDummyChaplain
 
 - type: gameMap
   id: FooStation
@@ -44,26 +56,26 @@ public sealed class StationJobsTest
 
 - type: job
   id: TAssistant
-  playTimeTracker: PlayTimeDummy
+  playTimeTracker: PlayTimeDummyAssistant
 
 - type: job
   id: TMime
   weight: 20
-  playTimeTracker: PlayTimeDummy
+  playTimeTracker: PlayTimeDummyMime
 
 - type: job
   id: TClown
   weight: -10
-  playTimeTracker: PlayTimeDummy
+  playTimeTracker: PlayTimeDummyClown
 
 - type: job
   id: TCaptain
   weight: 10
-  playTimeTracker: PlayTimeDummy
+  playTimeTracker: PlayTimeDummyCaptain
 
 - type: job
   id: TChaplain
-  playTimeTracker: PlayTimeDummy
+  playTimeTracker: PlayTimeDummyChaplain
 ";
 
     private const int StationCount = 100;
@@ -74,8 +86,8 @@ public sealed class StationJobsTest
     [Test]
     public async Task AssignJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
@@ -142,14 +154,14 @@ public sealed class StationJobsTest
                 Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
             });
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AdjustJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -193,14 +205,14 @@ public sealed class StationJobsTest
                 Assert.That(stationJobs.IsJobUnlimited(station, "TChaplain"), "Could not make TChaplain unlimited.");
             });
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task InvalidRoundstartJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
 
@@ -232,7 +244,7 @@ public sealed class StationJobsTest
                 }
             });
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }
 

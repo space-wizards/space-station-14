@@ -4,7 +4,7 @@ namespace Content.Shared.Sticky.Components;
 using DrawDepth;
 
 [RegisterComponent]
-public sealed class StickyVisualizerComponent : Component
+public sealed partial class StickyVisualizerComponent : Component
 {
     /// <summary>
     ///     What sprite draw depth set when entity stuck.

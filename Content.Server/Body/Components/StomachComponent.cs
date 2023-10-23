@@ -1,12 +1,14 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
-    public sealed class StomachComponent : Component
+    public sealed partial class StomachComponent : Component
     {
         public float AccumulatedFrameTime;
 
@@ -46,14 +48,12 @@ namespace Content.Server.Body.Components
         /// </summary>
         public sealed class ReagentDelta
         {
-            public readonly string ReagentId;
-            public readonly FixedPoint2 Quantity;
+            public readonly ReagentQuantity ReagentQuantity;
             public float Lifetime { get; private set; }
 
-            public ReagentDelta(string reagentId, FixedPoint2 quantity)
+            public ReagentDelta(ReagentQuantity reagentQuantity)
             {
-                ReagentId = reagentId;
-                Quantity = quantity;
+                ReagentQuantity = reagentQuantity;
                 Lifetime = 0.0f;
             }
 

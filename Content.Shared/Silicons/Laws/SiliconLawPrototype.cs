@@ -6,7 +6,7 @@ namespace Content.Shared.Silicons.Laws;
 
 [Virtual, DataDefinition]
 [Serializable, NetSerializable]
-public class SiliconLaw : IComparable<SiliconLaw>
+public partial class SiliconLaw : IComparable<SiliconLaw>
 {
     /// <summary>
     /// A locale string which is the actual text of the law.
@@ -49,7 +49,7 @@ public sealed class SiliconLawPrototype : SiliconLaw, IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
 
 }

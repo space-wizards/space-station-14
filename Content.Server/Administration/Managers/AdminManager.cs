@@ -49,14 +49,14 @@ namespace Content.Server.Administration.Managers
         private readonly AdminCommandPermissions _commandPermissions = new();
         private readonly AdminCommandPermissions _toolshedCommandPermissions = new();
 
-        public bool IsAdmin(IPlayerSession session, bool includeDeAdmin = false)
+        public bool IsAdmin(ICommonSession session, bool includeDeAdmin = false)
         {
             return GetAdminData(session, includeDeAdmin) != null;
         }
 
-        public AdminData? GetAdminData(IPlayerSession session, bool includeDeAdmin = false)
+        public AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false)
         {
-            if (_admins.TryGetValue(session, out var reg) && (reg.Data.Active || includeDeAdmin))
+            if (_admins.TryGetValue((IPlayerSession)session, out var reg) && (reg.Data.Active || includeDeAdmin))
             {
                 return reg.Data;
             }
@@ -203,7 +203,7 @@ namespace Content.Server.Administration.Managers
                 }
             }
 
-            foreach (var spec in _toolshed.AllCommands())
+            foreach (var spec in _toolshed.DefaultEnvironment.AllCommands())
             {
                 var (isAvail, flagsReq) = GetRequiredFlag(spec.Cmd);
 

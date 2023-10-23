@@ -25,6 +25,7 @@ WARNING: This is not an automatically generated list, things here may become out
 <GuideEntityEmbed Entity="FoodTofu"/>
 <GuideEntityEmbed Entity="FoodDoughPie"/>
 <GuideEntityEmbed Entity="FoodCakeBatter"/>
+<GuideEntityEmbed Entity="FoodDoughFlat"/>
 </Box>
 
 <Box>
@@ -39,6 +40,7 @@ WARNING: This is not an automatically generated list, things here may become out
 - Bun: Microwave Dough Slice for 5 Seconds
 - Cutlet: Slice Raw Meat
 - Cheese Wedge: Slice Cheese Wheel
+- Flat Dough: Use a rolling pin or a round object (fire extinguisher, soda can, bottle) on Dough.
 
 ## Food Examples
 
@@ -46,7 +48,7 @@ WARNING: This is not an automatically generated list, things here may become out
 - Plain Burger: Microwave 1 Bun and 1 Raw Meat for 10 Seconds
 - Tomato Soup: 10u Water, 1 Bowl, and 2 Tomatoes for 10 Seconds
 - Citrus Salad: 1 Bowl, 1 Lemon, 1 Lime, 1 Orange for 5 Seconds
-- Margherita Pizza: Microwave 1 Dough, 1 Cheese Wedge, and 4 Tomatoes for 30 Seconds
+- Margherita Pizza: Microwave 1 Flat Dough, 1 Cheese Wedge, and 4 Tomatoes for 30 Seconds
 - Cake: 1 Cake Batter for 15 Seconds
 - Apple Pie: 1 Pie Dough, 3 Apples, and 1 Pie Tin for 15 Seconds
 

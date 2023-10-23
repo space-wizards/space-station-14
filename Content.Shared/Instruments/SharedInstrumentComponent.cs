@@ -6,33 +6,52 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Instruments;
 
 [NetworkedComponent]
-[AutoGenerateComponentState(true)]
 [Access(typeof(SharedInstrumentSystem))]
 public abstract partial class SharedInstrumentComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public bool Playing { get; set; }
 
-    [DataField("program"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentProgram { get; set; }
 
-    [DataField("bank"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentBank { get; set; }
 
-    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
     public bool AllowProgramChange { get ; set; }
 
-    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
     public bool RespectMidiLimits { get; set; } = true;
 
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? Master { get; set; } = null;
 
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
+}
+
+[Serializable, NetSerializable]
+public sealed class InstrumentComponentState : ComponentState
+{
+    public bool Playing;
+
+    public byte InstrumentProgram;
+
+    public byte InstrumentBank;
+
+    public bool AllowPercussion;
+
+    public bool AllowProgramChange;
+
+    public bool RespectMidiLimits;
+
+    public NetEntity? Master;
+
+    public BitArray FilteredChannels = default!;
 }
 
 
@@ -42,9 +61,9 @@ public abstract partial class SharedInstrumentComponent : Component
 [Serializable, NetSerializable]
 public sealed class InstrumentStopMidiEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
 
-    public InstrumentStopMidiEvent(EntityUid uid)
+    public InstrumentStopMidiEvent(NetEntity uid)
     {
         Uid = uid;
     }
@@ -56,10 +75,10 @@ public sealed class InstrumentStopMidiEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class InstrumentSetMasterEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
-    public EntityUid? Master { get; }
+    public NetEntity Uid { get; }
+    public NetEntity? Master { get; }
 
-    public InstrumentSetMasterEvent(EntityUid uid, EntityUid? master)
+    public InstrumentSetMasterEvent(NetEntity uid, NetEntity? master)
     {
         Uid = uid;
         Master = master;
@@ -72,11 +91,11 @@ public sealed class InstrumentSetMasterEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class InstrumentSetFilteredChannelEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
     public int Channel { get; }
     public bool Value { get; }
 
-    public InstrumentSetFilteredChannelEvent(EntityUid uid, int channel, bool value)
+    public InstrumentSetFilteredChannelEvent(NetEntity uid, int channel, bool value)
     {
         Uid = uid;
         Channel = channel;
@@ -90,9 +109,9 @@ public sealed class InstrumentSetFilteredChannelEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class InstrumentStartMidiEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
 
-    public InstrumentStartMidiEvent(EntityUid uid)
+    public InstrumentStartMidiEvent(NetEntity uid)
     {
         Uid = uid;
     }
@@ -104,10 +123,10 @@ public sealed class InstrumentStartMidiEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class InstrumentMidiEventEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
     public RobustMidiEvent[] MidiEvent { get; }
 
-    public InstrumentMidiEventEvent(EntityUid uid, RobustMidiEvent[] midiEvent)
+    public InstrumentMidiEventEvent(NetEntity uid, RobustMidiEvent[] midiEvent)
     {
         Uid = uid;
         MidiEvent = midiEvent;

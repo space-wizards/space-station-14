@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Anomaly.Components;
 
 [RegisterComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class GeneratingAnomalyGeneratorComponent : Component
+public sealed partial class GeneratingAnomalyGeneratorComponent : Component
 {
     /// <summary>
     /// When the generating period will end.

@@ -6,6 +6,7 @@ using Content.Server.Stunnable;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -21,8 +22,10 @@ namespace Content.Server.Shuttles.Systems;
 [UsedImplicitly]
 public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly BodySystem _bobby = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
     [Dependency] private readonly DoorSystem _doors = default!;
@@ -36,9 +39,9 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly ThrusterSystem _thruster = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -54,7 +57,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         InitializeIFF();
         InitializeImpact();
 
-        SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
         SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
 
@@ -82,21 +84,12 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         CleanupHyperspace();
     }
 
-    private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)
-    {
-        // Easier than doing it in the comp and they don't have constructors.
-        for (var i = 0; i < component.LinearThrusters.Length; i++)
-        {
-            component.LinearThrusters[i] = new List<EntityUid>();
-        }
-    }
-
     private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
     {
         foreach (var fixture in args.NewFixtures)
         {
-            _physics.SetDensity(uid, fixture, TileMassMultiplier, false, manager);
-            _fixtures.SetRestitution(uid, fixture, 0.1f, false, manager);
+            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileMassMultiplier, false, manager);
+            _fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
         }
     }
 

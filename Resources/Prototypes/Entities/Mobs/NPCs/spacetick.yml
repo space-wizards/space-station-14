@@ -59,7 +59,6 @@
     bloodMaxVolume: 50
   - type: CombatMode
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Effects/bite.ogg
     angle: 0
@@ -83,6 +82,8 @@
   - type: GhostTakeoverAvailable
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Speech
+    speechVerb: SmallMob
 
 - type: entity
   id: MobTickSalvage

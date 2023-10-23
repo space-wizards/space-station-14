@@ -49,7 +49,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         List<EntityUid> invalidSinks = new();
         foreach (var sinkUid  in sourceComponent.LinkedPorts.Keys)
         {
-            if (!TryComp<DeviceLinkSinkComponent?>(sinkUid, out var sinkComponent))
+            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
             {
                 invalidSinks.Add(sinkUid);
                 foreach (var savedSinks in sourceComponent.Outputs.Values)

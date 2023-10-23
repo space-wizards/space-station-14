@@ -17,4 +17,7 @@ pai-system-stop-searching-verb-text = Stop searching
 pai-system-stopped-searching = The device stopped searching for a pAI.
 
 pai-system-pai-name = { CAPITALIZE(THE($owner)) }'s pAI
+pai-system-pai-name-raw = {$name}'s pAI
 
+pai-system-brick-popup = The pAI's circuits loudly pop and fizzle out!
+pai-system-scramble-popup = The pAI's circuits are overloaded with electricity!

@@ -12,7 +12,6 @@
     size: 30
   - type: StaticPrice
     price: 0
-  - type: ItemStatus
   - type: Tag
     tags:
     - Sheet
@@ -99,6 +98,17 @@
     count: 1
   - type: Item
     size: 1
+
+- type: entity
+  parent: SheetGlass
+  id: SheetGlassLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Item
+    size: 0
+  - type: Stack
+    lingering: true
+    count: 0
 
 - type: entity
   parent: SheetGlassBase

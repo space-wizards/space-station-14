@@ -33,7 +33,7 @@ public partial class PolymorphSystem
 
     private void OnPolymorphCollide(EntityUid uid, PolymorphOnCollideComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != SharedProjectileSystem.ProjectileFixture)
+        if (args.OurFixtureId != SharedProjectileSystem.ProjectileFixture)
             return;
 
         var other = args.OtherEntity;

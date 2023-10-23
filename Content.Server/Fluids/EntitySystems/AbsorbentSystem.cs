@@ -1,6 +1,6 @@
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
@@ -55,7 +55,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var oldProgress = component.Progress.ShallowClone();
         component.Progress.Clear();
 
-        if (solution.TryGetReagent(PuddleSystem.EvaporationReagent, out var water))
+        var water = solution.GetTotalPrototypeQuantity(PuddleSystem.EvaporationReagent);
+        if (water > FixedPoint2.Zero)
         {
             component.Progress[_prototype.Index<ReagentPrototype>(PuddleSystem.EvaporationReagent).SubstanceColor] = water.Float();
         }
@@ -206,9 +207,6 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         _audio.PlayPvs(component.TransferSound, target);
         _useDelay.BeginDelay(used);
         return true;
-        _audio.PlayPvs(component.TransferSound, target);
-        _useDelay.BeginDelay(used);
-        return true;
     }
 
     /// <summary>
@@ -230,7 +228,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         // Check if we have any evaporative reagents on our absorber to transfer
-        absorberSoln.TryGetReagent(PuddleSystem.EvaporationReagent, out var available);
+        var available = absorberSoln.GetTotalPrototypeQuantity(PuddleSystem.EvaporationReagent);
 
         // No material
         if (available == FixedPoint2.Zero)
@@ -258,7 +256,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var localPos = _transform.GetInvWorldMatrix(userXform).Transform(targetPos);
         localPos = userXform.LocalRotation.RotateVec(localPos);
 
-        _melee.DoLunge(user, Angle.Zero, localPos, null, false);
+        _melee.DoLunge(user, used, Angle.Zero, localPos, null, false);
 
         return true;
     }

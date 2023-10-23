@@ -4,7 +4,7 @@
 /// Triggers when the entity is overlapped for the specified duration.
 /// </summary>
 [RegisterComponent]
-public sealed class TriggerOnTimedCollideComponent : Component
+public sealed partial class TriggerOnTimedCollideComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("threshold")]

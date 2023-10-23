@@ -441,13 +441,24 @@
         cellularReturnType: Distance2
       entities:
         - WallRockSnow
+    # Ice tiles
+    - !type:BiomeTileLayer
+      tile: FloorIce
+      threshold: -0.9
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.03
+        lacunarity: 2
+        fractalType: FBm
+        octaves: 5
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
     - !type:BiomeDummyLayer
       id: Loot
     - !type:BiomeTileLayer
-      threshold: -1.0
-      tile: FloorSnow
-    - !type:BiomeTileLayer
-      threshold: -0.50
+      threshold: -0.7
       tile: FloorSnow
       noise:
         seed: 0
@@ -457,6 +468,7 @@
     - !type:BiomeEntityLayer
       allowedTiles:
       - FloorSnow
+      - FloorIce
       threshold: 0.95
       noise:
         seed: 3

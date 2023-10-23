@@ -8,7 +8,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// an artifact placed on it to move up/down
 /// </summary>
 [RegisterComponent]
-public sealed class TraversalDistorterComponent : Component
+public sealed partial class TraversalDistorterComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public float BiasChance;

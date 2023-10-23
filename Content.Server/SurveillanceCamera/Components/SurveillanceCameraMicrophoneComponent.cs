@@ -7,7 +7,7 @@ namespace Content.Server.SurveillanceCamera;
 ///     environment. All surveillance camera monitors have speakers for this.
 /// </summary>
 [RegisterComponent]
-public sealed class SurveillanceCameraMicrophoneComponent : Component
+public sealed partial class SurveillanceCameraMicrophoneComponent : Component
 {
     [DataField("enabled")]
     public bool Enabled { get; set; } = true;
@@ -18,9 +18,9 @@ public sealed class SurveillanceCameraMicrophoneComponent : Component
     ///     Used to avoid things like feedback loops, or radio spam.
     /// </summary>
     [DataField("blacklist")]
-    public EntityWhitelist Blacklist { get; } = new();
+    public EntityWhitelist Blacklist { get; private set; } = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("range")]
-    public int Range { get; } = 10;
+    public int Range { get; private set; } = 10;
 }

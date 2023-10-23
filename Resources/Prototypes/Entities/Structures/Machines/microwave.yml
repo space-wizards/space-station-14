@@ -8,6 +8,13 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
+      enum.MicrowaveVisualState.Bloody:
+        bloody:
+          True: { visible: true }
+          False: { visible: false }
+        bloodyunshaded:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.VisualState:
         enum.MicrowaveVisualizerLayers.Base:
           Idle: { state: "mw" }
@@ -17,6 +24,9 @@
           Idle: { state: "mw_unlit" }
           Broken: { state: "mw_unlit" }
           Cooking: { state: "mw_running_unlit" }
+        bloodyunshaded:
+          Idle: { visible: false }
+          Broken: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           True: { visible: true }
@@ -49,6 +59,13 @@
     - state: mw_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+    - state: mwbloody0
+      map: ["bloody"]
+      visible: false
+    - state: mwbloody1
+      shader: unshaded
+      map: ["bloodyunshaded"]
+      visible: false
   - type: Destructible
     thresholds:
     - trigger:

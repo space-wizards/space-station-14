@@ -8,10 +8,10 @@
   },
   "states": [
     {
-      "name": "bonfire_0"
+      "name": "bonfire"
     },
     {
-      "name": "bonfire_1"
+      "name": "bonfire_extinguished"
     },
     {
       "name": "burning",

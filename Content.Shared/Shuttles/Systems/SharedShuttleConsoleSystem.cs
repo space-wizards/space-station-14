@@ -20,9 +20,9 @@ namespace Content.Shared.Shuttles.Systems
         [Serializable, NetSerializable]
         protected sealed class PilotComponentState : ComponentState
         {
-            public EntityUid? Console { get; }
+            public NetEntity? Console { get; }
 
-            public PilotComponentState(EntityUid? uid)
+            public PilotComponentState(NetEntity? uid)
             {
                 Console = uid;
             }

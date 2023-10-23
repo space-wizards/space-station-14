@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
-    public sealed class MachineFrameComponent : Component
+    public sealed partial class MachineFrameComponent : Component
     {
         public const string PartContainerName = "machine_parts";
         public const string BoardContainerName = "machine_board";
@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Components
         public bool HasBoard => BoardContainer?.ContainedEntities.Count != 0;
 
         [DataField("progress", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
-        public readonly Dictionary<string, int> Progress = new();
+        public Dictionary<string, int> Progress = new();
 
         [ViewVariables]
         public readonly Dictionary<string, int> MaterialProgress = new();
@@ -46,7 +46,7 @@ namespace Content.Server.Construction.Components
     }
 
     [DataDefinition]
-    public sealed class MachineDeconstructedEvent : EntityEventArgs
+    public sealed partial class MachineDeconstructedEvent : EntityEventArgs
     {
     }
 }

@@ -9,7 +9,7 @@ namespace Content.Shared.Fluids;
 /// For entities that can clean up puddles
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class AbsorbentComponent : Component
+public sealed partial class AbsorbentComponent : Component
 {
     public const string SolutionName = "absorbed";
 

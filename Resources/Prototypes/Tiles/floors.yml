@@ -787,6 +787,178 @@
   itemDrop: FloorTileItemLaundry
   heatCapacity: 10000
 
+# Concrete
+- type: tile
+  id: FloorConcrete
+  name: tiles-concrete-tile
+  sprite: /Textures/Tiles/Planet/Concrete/concrete.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemConcrete
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorConcreteMono
+  name: tiles-concrete-slab
+  sprite: /Textures/Tiles/Planet/Concrete/concrete_mono.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemConcrete
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorConcreteSmooth
+  name: tiles-concrete-smooth
+  sprite: /Textures/Tiles/Planet/Concrete/concrete_smooth.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemConcrete
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorGrayConcrete
+  name: tiles-gray-concrete-tile
+  sprite: /Textures/Tiles/Planet/Concrete/grayconcrete.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemGrayConcrete
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorGrayConcreteMono
+  name: tiles-gray-concrete-slab
+  sprite: /Textures/Tiles/Planet/Concrete/grayconcrete_mono.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemGrayConcrete
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorGrayConcreteSmooth
+  name: tiles-gray-concrete-smooth
+  sprite: /Textures/Tiles/Planet/Concrete/grayconcrete_smooth.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemGrayConcrete
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorOldConcrete
+  name: tiles-old-concrete-tile
+  sprite: /Textures/Tiles/Planet/Concrete/oldconcrete.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemOldConcrete
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorOldConcreteMono
+  name: tiles-old-concrete-slab
+  sprite: /Textures/Tiles/Planet/Concrete/oldconcrete_mono.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemOldConcrete
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorOldConcreteSmooth
+  name: tiles-old-concrete-smooth
+  sprite: /Textures/Tiles/Planet/Concrete/oldconcrete_smooth.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemOldConcrete
+  heatCapacity: 10000
+  weather: true
+
 # Carpets (non smoothing)
 - type: tile
   id: FloorArcadeBlue
@@ -1066,6 +1238,30 @@
 
 # Terrain
 - type: tile
+  id: FloorAsphalt
+  name: tiles-asphalt
+  sprite: /Textures/Tiles/Planet/Concrete/asphalt.png
+  variants: 10
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: FloorDirt
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepTile
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
   id: FloorGrass
   name: tiles-planet-grass-floor
   sprite: /Textures/Tiles/grass.png
@@ -1146,13 +1342,26 @@
   weather: true
 
 # Asteroid
-# TODO: Change the rock & pebbles into regular variants with a 20% chance to spawn (like SS13.) Give ironsand variants from /vg/station.
-# TODO: Probably remove asteroid coarse sand if it isn't resprited by the time tile migrations exist. It was likely made to co-exist with the CEV-Eris style rocks and doesn't look too good nowadays.
 
 - type: tile
   id: FloorAsteroidSand
   name: tiles-asteroid-sand
   sprite: /Textures/Tiles/Asteroid/asteroid.png
+  variants: 13
+  placementVariants:
+  - 0.8
+  - 0.0166 #Should be roughly 20%.... I think??? I don't know dude, I'm just a YAML monkey.
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0116
+  - 0.0116
   baseTurf: Space
   isSubfloor: true
   canCrowbar: false
@@ -1162,11 +1371,9 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidSandRocks
-  name: tiles-asteroid-sand-rocks
-  sprite: /Textures/Tiles/Asteroid/asteroid_rocks.png
-  variants: 8
-  placementVariants: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+  id: FloorAsteroidSandDug
+  name: tiles-asteroid-sand
+  sprite: /Textures/Tiles/Asteroid/asteroid_dug.png
   baseTurf: Space
   isSubfloor: true
   canCrowbar: false
@@ -1176,25 +1383,24 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidSandRocksRed
-  name: tiles-asteroid-sand-rocks
-  sprite: /Textures/Tiles/Asteroid/asteroid_rocks_red.png
-  variants: 8
-  placementVariants: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
-  baseTurf: Space
-  isSubfloor: true
-  canCrowbar: false
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorAsteroidSandPebbles
-  name: tiles-asteroid-sand-pebbles
-  sprite: /Textures/Tiles/Asteroid/asteroid_pebbles.png
-  variants: 4
-  placementVariants: [ 0, 1, 2, 3 ]
+  id: FloorAsteroidSandRed
+  name: tiles-asteroid-sand
+  sprite: /Textures/Tiles/Asteroid/asteroid_red.png
+  variants: 13
+  placementVariants:
+  - 0.8
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0116
+  - 0.0116
   baseTurf: Space
   isSubfloor: true
   canCrowbar: false
@@ -1216,38 +1422,26 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidCoarseSand0
-  name: tiles-asteroid-coarse-sand
-  sprite: /Textures/Tiles/Asteroid/asteroid_coarse_sand.png
-  variants: 3
+  id: FloorAsteroidIronsand
+  name: tiles-asteroid-ironsand
+  sprite: /Textures/Tiles/Asteroid/ironsand.png
+  variants: 15
   placementVariants:
   - 1.0
   - 1.0
   - 1.0
-  baseTurf: Space
-  isSubfloor: true
-  canCrowbar: false
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-
-- type: tileAlias
-  id: FloorBasaslt
-  target: FloorBasalt
-
-- type: tileAlias
-  id: FloorAsteroidCoarseSand1
-  target: FloorAsteroidCoarseSand0
-
-- type: tileAlias
-  id: FloorAsteroidCoarseSand2
-  target: FloorAsteroidCoarseSand0
-
-- type: tile
-  id: FloorAsteroidCoarseSandDug
-  name: tiles-asteroid-dug-coarse-sand
-  sprite: /Textures/Tiles/Asteroid/asteroid_coarse_sand_dug.png
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Space
   isSubfloor: true
   canCrowbar: false
@@ -1257,45 +1451,21 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidIronsand1
+  id: FloorAsteroidSandUnvariantized
+  name: tiles-asteroid-sand
+  sprite: /Textures/Tiles/Asteroid/asteroid0.png
+  baseTurf: Space
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidIronsandUnvariantized
   name: tiles-asteroid-ironsand
-  sprite: /Textures/Tiles/ironsand1.png
-  baseTurf: Space
-  isSubfloor: true
-  canCrowbar: false
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorAsteroidIronsand2
-  name: tiles-asteroid-ironsand-pebbles
-  sprite: /Textures/Tiles/ironsand2.png
-  baseTurf: Space
-  isSubfloor: true
-  canCrowbar: false
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorAsteroidIronsand3
-  name: tiles-asteroid-ironsand-pebbles
-  sprite: /Textures/Tiles/ironsand3.png
-  baseTurf: Space
-  isSubfloor: true
-  canCrowbar: false
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-
-- type: tile
-  id: FloorAsteroidIronsand4
-  name: tiles-asteroid-ironsand-rock
-  sprite: /Textures/Tiles/ironsand4.png
+  sprite: /Textures/Tiles/Asteroid/ironsand0.png
   baseTurf: Space
   isSubfloor: true
   canCrowbar: false
@@ -1473,7 +1643,7 @@
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: false
-  canAxe: false #You can't RCD these in SS13 apparently, so this is probably the next best thing
+  canAxe: false
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteel

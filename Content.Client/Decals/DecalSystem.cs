@@ -92,13 +92,16 @@ namespace Content.Client.Decals
 
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)
         {
-            foreach (var (gridId, updatedGridChunks) in ev.Data)
+            foreach (var (netGrid, updatedGridChunks) in ev.Data)
             {
-                if (updatedGridChunks.Count == 0) continue;
+                if (updatedGridChunks.Count == 0)
+                    continue;
+
+                var gridId = GetEntity(netGrid);
 
                 if (!TryComp(gridId, out DecalGridComponent? gridComp))
                 {
-                    Logger.Error($"Received decal information for an entity without a decal component: {ToPrettyString(gridId)}");
+                    Log.Error($"Received decal information for an entity without a decal component: {ToPrettyString(gridId)}");
                     continue;
                 }
 
@@ -106,13 +109,16 @@ namespace Content.Client.Decals
             }
 
             // Now we'll cull old chunks out of range as the server will send them to us anyway.
-            foreach (var (gridId, chunks) in ev.RemovedChunks)
+            foreach (var (netGrid, chunks) in ev.RemovedChunks)
             {
-                if (chunks.Count == 0) continue;
+                if (chunks.Count == 0)
+                    continue;
+
+                var gridId = GetEntity(netGrid);
 
                 if (!TryComp(gridId, out DecalGridComponent? gridComp))
                 {
-                    Logger.Error($"Received decal information for an entity without a decal component: {ToPrettyString(gridId)}");
+                    Log.Error($"Received decal information for an entity without a decal component: {ToPrettyString(gridId)}");
                     continue;
                 }
 

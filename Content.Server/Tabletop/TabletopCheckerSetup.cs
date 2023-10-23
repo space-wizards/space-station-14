@@ -6,77 +6,99 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed class TabletopCheckerSetup : TabletopSetup
+    public sealed partial class TabletopCheckerSetup : TabletopSetup
     {
 
-        // TODO: Un-hardcode the rest of entity prototype IDs, probably.
+        [DataField("prototypePieceWhite", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string PrototypePieceWhite = default!;
+
+        [DataField("prototypeCrownWhite", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string PrototypeCrownWhite = default!;
+
+        [DataField("prototypePieceBlack", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string PrototypePieceBlack = default!;
+
+        [DataField("prototypeCrownBlack", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string PrototypeCrownBlack = default!;
 
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var checkerboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
-
-            session.Entities.Add(checkerboard);
+            session.Entities.Add(
+                entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0))
+            );
 
             SpawnPieces(session, entityManager, session.Position.Offset(-4.5f, 3.5f));
         }
 
-        private void SpawnPieces(TabletopSession session, IEntityManager entityManager, MapCoordinates topLeft, float separation = 1f)
+        private void SpawnPieces(TabletopSession session, IEntityManager entityManager, MapCoordinates left)
         {
-            var (mapId, x, y) = topLeft;
+            static float GetOffset(float offset) => offset * 1f /* separation */;
 
-            // Spawn all black pieces
-            SpawnPieces(session, entityManager, "Black", topLeft, separation);
+            Span<EntityUid> pieces = stackalloc EntityUid[42];
+            var pieceIndex = 0;
 
-            // Spawn all white pieces
-            SpawnPieces(session, entityManager, "White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
-
-            // Queens
-            for (int i = 1; i < 4; i++)
+            // Pieces
+            for (var offsetY = 0; offsetY < 3; offsetY++)
             {
-                EntityUid tempQualifier = entityManager.SpawnEntity("BlackCheckerQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - (i - 1) * separation, mapId));
-                session.Entities.Add(tempQualifier);
+                var checker = offsetY % 2;
 
-                EntityUid tempQualifier1 = entityManager.SpawnEntity("WhiteCheckerQueen", new MapCoordinates(x + 8 * separation + 9f / 32, y - (i - 1) * separation, mapId));
-                session.Entities.Add(tempQualifier1);
+                for (var offsetX = 0; offsetX < 8; offsetX += 2)
+                {
+                    // Prevents an extra piece on the middle row
+                    if (checker + offsetX > 8) continue;
+
+                    pieces[pieceIndex] = entityManager.SpawnEntity(
+                        PrototypePieceBlack,
+                        left.Offset(GetOffset(offsetX + (1 - checker)), GetOffset(offsetY * -1))
+                    );
+                    pieces[pieceIndex] = entityManager.SpawnEntity(
+                        PrototypePieceWhite,
+                        left.Offset(GetOffset(offsetX + checker), GetOffset(offsetY - 7))
+                    );
+                    pieceIndex += 2;
+                }
             }
 
-            var spares = new List<EntityUid>();
-            for (var i = 1; i < 7; i++)
-            {
-                var step = 3 + 0.25f * (i - 1);
-                spares.Add(
-                  entityManager.SpawnEntity("BlackCheckerPiece",
-                  new MapCoordinates(x + 9 * separation + 9f / 32, y - step * separation, mapId)
-                ));
+            const int NumCrowns = 3;
+            const float Overlap = 0.25f;
+            const float xOffset = 9f / 32;
+            const float xOffsetBlack = 9 + xOffset;
+            const float xOffsetWhite = 8 + xOffset;
 
-                spares.Add(
-                  entityManager.SpawnEntity("WhiteCheckerPiece",
-                  new MapCoordinates(x + 8 * separation + 9f / 32, y - step * separation, mapId)
-                ));
+            // Crowns
+            for (var i = 0; i < NumCrowns; i++)
+            {
+                var step = -(Overlap * i);
+                pieces[pieceIndex] = entityManager.SpawnEntity(
+                    PrototypeCrownBlack,
+                    left.Offset(GetOffset(xOffsetBlack), GetOffset(step))
+                );
+                pieces[pieceIndex + 1] = entityManager.SpawnEntity(
+                    PrototypeCrownWhite,
+                    left.Offset(GetOffset(xOffsetWhite), GetOffset(step))
+                );
+                pieceIndex += 2;
             }
-            session.Entities.UnionWith(spares);
-        }
 
-        private void SpawnPieces(TabletopSession session, IEntityManager entityManager, string color, MapCoordinates left, float separation = 1f)
-        {
-          var (mapId, x, y) = left;
-          // If white is being placed it must go from bottom->up
-          var reversed = (color == "White") ? 1 : -1;
-
-          for (int i = 0; i < 3; i++)
+            // Spares
+            for (var i = 0; i < 6; i++)
             {
-            var x_offset = i % 2;
-            if (reversed == -1) x_offset = 1 - x_offset; // Flips it
-
-            for (int j = 0; j < 8; j += 2)
-            {
-              // Prevents an extra piece on the middle row
-              if (x_offset + j > 8) continue;
-
-              EntityUid tempQualifier4 = entityManager.SpawnEntity(color + "CheckerPiece", new MapCoordinates(x + (j + x_offset) * separation, y + i * reversed * separation, mapId));
-              session.Entities.Add(tempQualifier4);
+                var step = -((Overlap * (NumCrowns + 2)) + (Overlap * i));
+                pieces[pieceIndex] = entityManager.SpawnEntity(
+                    PrototypePieceBlack,
+                    left.Offset(GetOffset(xOffsetBlack), GetOffset(step))
+                );
+                pieces[pieceIndex] = entityManager.SpawnEntity(
+                    PrototypePieceWhite,
+                    left.Offset(GetOffset(xOffsetWhite), GetOffset(step))
+                );
+                pieceIndex += 2;
             }
-          }
+
+            for (var i = 0; i < pieces.Length; i++)
+            {
+                session.Entities.Add(pieces[i]);
+            }
         }
     }
 }

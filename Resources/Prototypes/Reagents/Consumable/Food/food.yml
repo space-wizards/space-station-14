@@ -1,4 +1,4 @@
-﻿# End points - the eventual goal is that almost all foods and drinks metabolize into either these, or reagents that build up (e.g. theobromine, caffeine,... )
+# End points - the eventual goal is that almost all foods and drinks metabolize into either these, or reagents that build up (e.g. theobromine, caffeine,... )
 - type: reagent
   id: Nutriment #Anything that isn't better suited to vitamin, protein, or sugar. we aren't doing a super in-depth simulator.
   name: reagent-name-nutriment
@@ -6,7 +6,7 @@
   desc: reagent-desc-nutriment
   physicalDesc: reagent-physical-desc-opaque
   flavor: nutriment
-  color: "#664330"
+  color: "#24591F"
   metabolisms:
     Food:
       effects:

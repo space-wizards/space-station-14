@@ -6,7 +6,7 @@ using Content.Shared.Chemistry.Components;
 namespace Content.Server.Body.Components;
 
 [RegisterComponent, Access(typeof(LungSystem))]
-public sealed class LungComponent : Component
+public sealed partial class LungComponent : Component
 {
     [DataField("air")]
     [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends

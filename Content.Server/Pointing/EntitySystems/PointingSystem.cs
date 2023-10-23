@@ -1,15 +1,15 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Ghost.Components;
-using Content.Server.Players;
 using Content.Server.Pointing.Components;
-using Content.Server.Visible;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
+using Content.Shared.Examine;
+using Content.Shared.Eye;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
@@ -38,6 +38,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
@@ -64,6 +65,8 @@ namespace Content.Server.Pointing.EntitySystems
         private void SendMessage(EntityUid source, IEnumerable<ICommonSession> viewers, EntityUid pointed, string selfMessage,
             string viewerMessage, string? viewerPointedAtMessage = null)
         {
+            var netSource = GetNetEntity(source);
+
             foreach (var viewer in viewers)
             {
                 if (viewer.AttachedEntity is not {Valid: true} viewerEntity)
@@ -77,10 +80,10 @@ namespace Content.Server.Pointing.EntitySystems
                         ? viewerPointedAtMessage
                         : viewerMessage;
 
-                RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, source), viewerEntity);
+                RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, netSource), viewerEntity);
             }
 
-            _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, source));
+            _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, netSource));
         }
 
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
@@ -91,7 +94,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
             else
             {
-                return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+                return ExamineSystemShared.InRangeUnOccluded(pointer, coordinates, 15, predicate: e => e == pointer);
             }
         }
 
@@ -99,13 +102,13 @@ namespace Content.Server.Pointing.EntitySystems
         {
             if (session?.AttachedEntity is not { } player)
             {
-                Logger.Warning($"Player {session} attempted to point without any attached entity");
+                Log.Warning($"Player {session} attempted to point without any attached entity");
                 return false;
             }
 
             if (!coords.IsValid(EntityManager))
             {
-                Logger.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coords}");
+                Log.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coords}");
                 return false;
             }
 
@@ -163,13 +166,14 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var arrowVisibility = EntityManager.EnsureComponent<VisibilityComponent>(arrow);
                 layer = playerVisibility.Layer;
-                _visibilitySystem.SetLayer(arrowVisibility, layer);
+                _visibilitySystem.SetLayer(arrow, arrowVisibility, layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.
             bool ViewerPredicate(IPlayerSession playerSession)
             {
-                if (playerSession.ContentData()?.Mind?.CurrentEntity is not {Valid: true} ent ||
+                if (!_minds.TryGetMind(playerSession, out _, out var mind) ||
+                    mind.CurrentEntity is not { Valid: true } ent ||
                     !TryComp(ent, out EyeComponent? eyeComp) ||
                     (eyeComp.VisibilityMask & layer) == 0)
                     return false;
@@ -199,6 +203,11 @@ namespace Content.Server.Pointing.EntitySystems
                     : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
 
                 viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
+
+                var ev = new AfterPointedAtEvent(pointed);
+                RaiseLocalEvent(player, ref ev);
+                var gotev = new AfterGotPointedAtEvent(player);
+                RaiseLocalEvent(pointed, ref gotev);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {ToPrettyString(pointed):target} {Transform(pointed).Coordinates}");
             }
@@ -245,10 +254,12 @@ namespace Content.Server.Pointing.EntitySystems
 
         private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
-            if (TryComp(ev.Target, out TransformComponent? xform))
-                TryPoint(args.SenderSession, xform.Coordinates, ev.Target);
+            var target = GetEntity(ev.Target);
+
+            if (TryComp(target, out TransformComponent? xform))
+                TryPoint(args.SenderSession, xform.Coordinates, target);
             else
-                Logger.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
+                Log.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
         }
 
         public override void Shutdown()
@@ -263,26 +274,28 @@ namespace Content.Server.Pointing.EntitySystems
         {
             var currentTime = _gameTiming.CurTime;
 
-            foreach (var component in EntityQuery<PointingArrowComponent>(true))
+            var query = AllEntityQuery<PointingArrowComponent>();
+            while (query.MoveNext(out var uid, out var component))
             {
-                Update(component, currentTime);
+                Update((uid, component), currentTime);
             }
         }
 
-        private void Update(PointingArrowComponent component, TimeSpan currentTime)
+        private void Update(Entity<PointingArrowComponent> pointing, TimeSpan currentTime)
         {
             // TODO: That pause PR
+            var component = pointing.Comp;
             if (component.EndTime > currentTime)
                 return;
 
             if (component.Rogue)
             {
-                RemComp<PointingArrowComponent>(component.Owner);
-                EnsureComp<RoguePointingArrowComponent>(component.Owner);
+                RemComp<PointingArrowComponent>(pointing);
+                EnsureComp<RoguePointingArrowComponent>(pointing);
                 return;
             }
 
-            Del(component.Owner);
+            Del(pointing);
         }
     }
 }

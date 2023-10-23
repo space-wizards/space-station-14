@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class RobustHarvest : ReagentEffect
+    public sealed partial class RobustHarvest : ReagentEffect
     {
         [DataField("potencyLimit")]
         public int PotencyLimit = 50;

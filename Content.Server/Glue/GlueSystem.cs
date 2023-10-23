@@ -1,11 +1,10 @@
 using Content.Server.Administration.Logs;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Item;
 using Content.Shared.Glue;
 using Content.Shared.Interaction;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Robust.Shared.Timing;
@@ -26,7 +25,7 @@ public sealed class GlueSystem : SharedGlueSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGluedInit);
         SubscribeLocalEvent<GluedComponent, GotEquippedHandEvent>(OnHandPickUp);
     }
@@ -39,11 +38,6 @@ public sealed class GlueSystem : SharedGlueSystem
 
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
-
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
-        {
-            return;
-        }
 
         if (TryGlue(uid, component, target, args.User))
         {

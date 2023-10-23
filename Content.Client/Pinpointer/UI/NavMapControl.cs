@@ -2,7 +2,9 @@ using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -20,18 +22,19 @@ namespace Content.Client.Pinpointer.UI;
 public sealed class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    private SharedTransformSystem _transform;
 
     public EntityUid? MapUid;
-
 
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
 
     private Vector2 _offset;
     private bool _draggin;
-
     private bool _recentering = false;
-
-    private float _recenterMinimum = 0.05f;
+    private readonly float _recenterMinimum = 0.05f;
+    private readonly Font _font;
+    private static readonly Color TileColor = new(30, 67, 30);
+    private static readonly Color BeaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -52,6 +55,11 @@ public sealed class NavMapControl : MapGridControl
     public NavMapControl() : base(8f, 128f, 48f)
     {
         IoCManager.InjectDependencies(this);
+
+        _transform = _entManager.System<SharedTransformSystem>();
+        var cache = IoCManager.Resolve<IResourceCache>();
+        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 16);
+
         RectClipContent = true;
         HorizontalExpand = true;
         VerticalExpand = true;
@@ -175,7 +183,6 @@ public sealed class NavMapControl : MapGridControl
         }
 
         var offset = _offset;
-        var tileColor = new Color(30, 67, 30);
         var lineColor = new Color(102, 217, 102);
 
         if (_entManager.TryGetComponent<PhysicsComponent>(MapUid, out var physics))
@@ -200,7 +207,7 @@ public sealed class NavMapControl : MapGridControl
                     verts[i] = Scale(new Vector2(vert.X, -vert.Y));
                 }
 
-                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts[..poly.VertexCount], tileColor);
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts[..poly.VertexCount], TileColor);
             }
         }
 
@@ -332,6 +339,24 @@ public sealed class NavMapControl : MapGridControl
                     handle.DrawCircle(position, MinimapScale / 2f, value.Color);
                 }
             }
+        }
+
+        // Beacons
+        var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
+        var rectBuffer = new Vector2(5f, 3f);
+
+        foreach (var beacon in navMap.Beacons)
+        {
+            var position = beacon.Position - offset;
+
+            position = Scale(position with { Y = -position.Y });
+
+            handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
+            var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
+
+            var labelPosition = position + labelOffset;
+            handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), BeaconColor);
+            handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
         }
     }
 

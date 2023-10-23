@@ -15,8 +15,8 @@ public sealed class QueryTests
     [Test]
     public async Task QuerySingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(AddTests.LogTestSettings);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(AddTests.LogTestSettings);
+        var server = pair.Server;
 
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
         var sPlayers = server.ResolveDependency<IPlayerManager>();
@@ -55,6 +55,6 @@ public sealed class QueryTests
             return false;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

@@ -3,7 +3,7 @@
 namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
-public sealed class ElectricityAnomalyComponent : Component
+public sealed partial class ElectricityAnomalyComponent : Component
 {
     /// <summary>
     /// The maximum radius of the passive electrocution effect

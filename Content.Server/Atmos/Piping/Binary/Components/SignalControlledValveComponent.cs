@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Piping.Binary.Components;
 
 [RegisterComponent, Access(typeof(SignalControlledValveSystem))]
-public sealed class SignalControlledValveComponent : Component
+public sealed partial class SignalControlledValveComponent : Component
 {
     [DataField("openPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string OpenPort = "Open";

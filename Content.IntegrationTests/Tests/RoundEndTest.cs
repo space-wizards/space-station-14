@@ -13,13 +13,13 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 DummyTicker = false,
                 Connected = true
             });
 
-            var server = pairTracker.Pair.Server;
+            var server = pair.Server;
 
             var entManager = server.ResolveDependency<IEntityManager>();
             var config = server.ResolveDependency<IConfigurationManager>();
@@ -120,7 +120,7 @@ namespace Content.IntegrationTests.Tests
                 var currentCount = Thread.VolatileRead(ref eventCount);
                 while (currentCount == Thread.VolatileRead(ref eventCount) && !timeout.IsCompleted)
                 {
-                    await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+                    await pair.RunTicksSync(5);
                 }
                 if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
             }
@@ -137,9 +137,7 @@ namespace Content.IntegrationTests.Tests
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMinutes(4);
                 ticker.RestartRound();
             });
-            await PoolManager.ReallyBeIdle(pairTracker.Pair, 10);
-
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

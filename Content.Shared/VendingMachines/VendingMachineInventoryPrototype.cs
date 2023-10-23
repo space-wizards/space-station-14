@@ -9,15 +9,15 @@ namespace Content.Shared.VendingMachines
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("startingInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
-        public Dictionary<string, uint> StartingInventory { get; } = new();
+        public Dictionary<string, uint> StartingInventory { get; private set; } = new();
 
         [DataField("emaggedInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
-        public Dictionary<string, uint>? EmaggedInventory { get; }
+        public Dictionary<string, uint>? EmaggedInventory { get; private set; }
 
         [DataField("contrabandInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
-        public Dictionary<string, uint>? ContrabandInventory { get; }
+        public Dictionary<string, uint>? ContrabandInventory { get; private set; }
     }
 }

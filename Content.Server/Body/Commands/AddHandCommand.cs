@@ -14,6 +14,10 @@ namespace Content.Server.Body.Commands
     [AdminCommand(AdminFlags.Fun)]
     sealed class AddHandCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         [ValidatePrototypeId<EntityPrototype>]
         public const string DefaultHandPrototype = "LeftHandHuman";
 
@@ -24,9 +28,6 @@ namespace Content.Server.Body.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             EntityUid entity;
             EntityUid hand;
@@ -48,21 +49,21 @@ namespace Content.Server.Body.Commands
                     }
 
                     entity = player.AttachedEntity.Value;
-                    hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates);
+                    hand = _entManager.SpawnEntity(DefaultHandPrototype, _entManager.GetComponent<TransformComponent>(entity).Coordinates);
                     break;
                 }
                 case 1:
                 {
-                    if (EntityUid.TryParse(args[0], out var uid))
+                    if (NetEntity.TryParse(args[0], out var uidNet) && _entManager.TryGetEntity(uidNet, out var uid))
                     {
-                        if (!entityManager.EntityExists(uid))
+                        if (!_entManager.EntityExists(uid))
                         {
                             shell.WriteLine($"No entity found with uid {uid}");
                             return;
                         }
 
-                        entity = uid;
-                        hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates);
+                        entity = uid.Value;
+                        hand = _entManager.SpawnEntity(DefaultHandPrototype, _entManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
                     else
                     {
@@ -79,34 +80,34 @@ namespace Content.Server.Body.Commands
                         }
 
                         entity = player.AttachedEntity.Value;
-                        hand = entityManager.SpawnEntity(args[0], entityManager.GetComponent<TransformComponent>(entity).Coordinates);
+                        hand = _entManager.SpawnEntity(args[0], _entManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
 
                     break;
                 }
                 case 2:
                 {
-                    if (!EntityUid.TryParse(args[0], out var uid))
+                    if (!NetEntity.TryParse(args[0], out var netEnt) || !_entManager.TryGetEntity(netEnt, out var uid))
                     {
                         shell.WriteLine($"{args[0]} is not a valid entity uid.");
                         return;
                     }
 
-                    if (!entityManager.EntityExists(uid))
+                    if (!_entManager.EntityExists(uid))
                     {
                         shell.WriteLine($"No entity exists with uid {uid}.");
                         return;
                     }
 
-                    entity = uid;
+                    entity = uid.Value;
 
-                    if (!prototypeManager.HasIndex<EntityPrototype>(args[1]))
+                    if (!_protoManager.HasIndex<EntityPrototype>(args[1]))
                     {
                         shell.WriteLine($"No hand entity exists with id {args[1]}.");
                         return;
                     }
 
-                    hand = entityManager.SpawnEntity(args[1], entityManager.GetComponent<TransformComponent>(entity).Coordinates);
+                    hand = _entManager.SpawnEntity(args[1], _entManager.GetComponent<TransformComponent>(entity).Coordinates);
 
                     break;
                 }
@@ -117,22 +118,21 @@ namespace Content.Server.Body.Commands
                 }
             }
 
-            if (!entityManager.TryGetComponent(entity, out BodyComponent? body) || body.Root == null)
+            if (!_entManager.TryGetComponent(entity, out BodyComponent? body) || body.RootContainer.ContainedEntity == null)
             {
-                var random = IoCManager.Resolve<IRobustRandom>();
-                var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
+                var text = $"You have no body{(_random.Prob(0.2f) ? " and you must scream." : ".")}";
 
                 shell.WriteLine(text);
                 return;
             }
 
-            if (!entityManager.TryGetComponent(hand, out BodyPartComponent? part))
+            if (!_entManager.TryGetComponent(hand, out BodyPartComponent? part))
             {
                 shell.WriteLine($"Hand entity {hand} does not have a {nameof(BodyPartComponent)} component.");
                 return;
             }
 
-            var bodySystem = entityManager.System<BodySystem>();
+            var bodySystem = _entManager.System<BodySystem>();
 
             var attachAt = bodySystem.GetBodyChildrenOfType(entity, BodyPartType.Arm, body).FirstOrDefault();
             if (attachAt == default)
@@ -140,13 +140,13 @@ namespace Content.Server.Body.Commands
 
             var slotId = part.GetHashCode().ToString();
 
-            if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, hand, attachAt.Component, part))
+            if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, hand, BodyPartType.Hand,attachAt.Component, part))
             {
-                shell.WriteError($"Couldn't create a slot with id {slotId} on entity {entityManager.ToPrettyString(entity)}");
+                shell.WriteError($"Couldn't create a slot with id {slotId} on entity {_entManager.ToPrettyString(entity)}");
                 return;
             }
 
-            shell.WriteLine($"Added hand to entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName}");
+            shell.WriteLine($"Added hand to entity {_entManager.GetComponent<MetaDataComponent>(entity).EntityName}");
         }
     }
 }

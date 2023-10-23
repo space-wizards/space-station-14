@@ -12,13 +12,10 @@
     behaviours:
       - !type:FadeBehaviour
         id: radiating
-        interpolate: Linear
         maxDuration: 2.0
         startValue: 3.0
         endValue: 2.0
         isLooped: true
-        property: Radius
-        enabled: false
         reverseWhenFinished: true
       - !type:PulseBehaviour
         id: blinking
@@ -27,8 +24,6 @@
         minValue: 0.1
         maxValue: 2.0
         isLooped: true
-        property: Radius
-        enabled: false
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots

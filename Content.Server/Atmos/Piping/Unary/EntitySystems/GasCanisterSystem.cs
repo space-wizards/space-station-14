@@ -260,7 +260,7 @@ public sealed class GasCanisterSystem : EntitySystem
             return;
 
         // Check the used item is valid...
-        if (!HasComp<GasTankComponent>(args.Used))
+        if (!TryComp<GasTankComponent>(args.Used, out var gasTank) || gasTank.IsValveOpen)
             return;
 
         // Preventing inserting a tank since if its locked you cant remove it.

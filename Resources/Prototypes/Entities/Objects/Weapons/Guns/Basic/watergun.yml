@@ -14,7 +14,7 @@
   - type: Gun
     clumsyProof: true
     cameraRecoilScalar: 0 #no recoil
-    fireRate: 1
+    fireRate: 2
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -23,12 +23,12 @@
   - type: SolutionContainerManager
     solutions:
       chamber:
-        maxVol: 50 #5 shots
+        maxVol: 50 #10 shots
   - type: SolutionAmmoProvider
     solutionId: chamber
     proto: BulletWaterShot
   - type: SolutionTransfer
-    transferAmount: 10
+    transferAmount: 5
     maxTransferAmount: 50
     minTransferAmount: 5
     canChangeTransferAmount: true
@@ -75,7 +75,7 @@
   components:
   - type: Gun
     cameraRecoilScalar: 0 #no recoil
-    fireRate: 2
+    fireRate: 3
     selectedMode: FullAuto
     availableModes:
     - FullAuto
@@ -84,7 +84,44 @@
   - type: SolutionContainerManager
     solutions:
       chamber:
-        maxVol: 100 #10 shots
+        maxVol: 100 #20 shots
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
+    layers:
+    - state: detail1
+    - state: detail2
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: icon
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Item
+    sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
+    size: 35
+  - type: RandomSprite
+    getAllGroups: true
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          icon: Rainbow
+      - enum.PowerDeviceVisualLayers.Powered:
+          detail2: Sixteen
+
+- type: entity
+  id: WeaponWaterBlasterSuper
+  parent: WeaponWaterGunBase
+  name: super water blaster
+  description: No! No! Not in the eyes!
+  components:
+  - type: Gun
+    cameraRecoilScalar: 0 #no recoil
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: SolutionContainerManager
+    solutions:
+      chamber:
+        maxVol: 500 #100 shots
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     layers:

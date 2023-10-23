@@ -9,15 +9,13 @@ namespace Content.Server.Medical.Components
     ///    After scanning, retrieves the target Uid to use with its related UI.
     /// </summary>
     [RegisterComponent]
-    public sealed class HealthAnalyzerComponent : Component
+    public sealed partial class HealthAnalyzerComponent : Component
     {
         /// <summary>
         /// How long it takes to scan someone.
         /// </summary>
         [DataField("scanDelay")]
         public float ScanDelay = 0.8f;
-
-        public BoundUserInterface? UserInterface => Owner.GetUIOrNull(HealthAnalyzerUiKey.Key);
 
         /// <summary>
         ///     Sound played on scanning begin

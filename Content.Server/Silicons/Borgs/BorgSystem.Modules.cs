@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -57,16 +58,29 @@ public sealed partial class BorgSystem
     private void OnSelectableInstalled(EntityUid uid, SelectableBorgModuleComponent component, ref BorgModuleInstalledEvent args)
     {
         var chassis = args.ChassisEnt;
-        component.ModuleSwapAction.EntityIcon = uid;
-        _actions.AddAction(chassis, component.ModuleSwapAction, uid);
-        SelectModule(chassis, uid, moduleComp: component);
+
+        if (_actions.AddAction(chassis, ref component.ModuleSwapActionEntity, out var action, component.ModuleSwapActionId, uid))
+        {
+            action.EntityIcon = uid;
+            Dirty(component.ModuleSwapActionEntity.Value, action);
+        }
+
+        if (!TryComp(chassis, out BorgChassisComponent? chassisComp))
+            return;
+
+        if (chassisComp.SelectedModule == null)
+            SelectModule(chassis, uid, chassisComp, component);
     }
 
     private void OnSelectableUninstalled(EntityUid uid, SelectableBorgModuleComponent component, ref BorgModuleUninstalledEvent args)
     {
         var chassis = args.ChassisEnt;
         _actions.RemoveProvidedActions(chassis, uid);
-        UnselectModule(chassis, uid, moduleComp: component);
+        if (!TryComp(chassis, out BorgChassisComponent? chassisComp))
+            return;
+
+        if (chassisComp.SelectedModule == uid)
+            UnselectModule(chassis, chassisComp);
     }
 
     private void OnSelectableAction(EntityUid uid, SelectableBorgModuleComponent component, BorgModuleActionSelectedEvent args)
@@ -75,16 +89,14 @@ public sealed partial class BorgSystem
         if (!TryComp<BorgChassisComponent>(chassis, out var chassisComp))
             return;
 
+        args.Handled = true;
         if (chassisComp.SelectedModule == uid)
         {
-            UnselectModule(chassis, chassisComp.SelectedModule, chassisComp);
-            args.Handled = true;
+            UnselectModule(chassis, chassisComp);
             return;
         }
 
-        UnselectModule(chassis, chassisComp.SelectedModule, chassisComp);
         SelectModule(chassis, uid, chassisComp, component);
-        args.Handled = true;
     }
 
     /// <summary>
@@ -93,13 +105,32 @@ public sealed partial class BorgSystem
     public void SelectModule(EntityUid chassis,
         EntityUid moduleUid,
         BorgChassisComponent? chassisComp = null,
-        SelectableBorgModuleComponent? moduleComp = null)
+        SelectableBorgModuleComponent? selectable = null,
+        BorgModuleComponent? moduleComp = null)
     {
-        if (Terminating(chassis) || Deleted(chassis))
+        if (LifeStage(chassis) >= EntityLifeStage.Terminating)
             return;
 
         if (!Resolve(chassis, ref chassisComp))
             return;
+
+        if (!Resolve(moduleUid, ref moduleComp) || !moduleComp.Installed || moduleComp.InstalledEntity != chassis)
+        {
+            Log.Error($"{ToPrettyString(chassis)} attempted to select uninstalled module {ToPrettyString(moduleUid)}");
+            return;
+        }
+
+        if (selectable == null && !HasComp<SelectableBorgModuleComponent>(moduleUid))
+        {
+            Log.Error($"{ToPrettyString(chassis)} attempted to select invalid module {ToPrettyString(moduleUid)}");
+            return;
+        }
+
+        if (!chassisComp.ModuleContainer.Contains(moduleUid))
+        {
+            Log.Error($"{ToPrettyString(chassis)} does not contain the installed module {ToPrettyString(moduleUid)}");
+            return;
+        }
 
         if (chassisComp.SelectedModule != null)
             return;
@@ -107,8 +138,7 @@ public sealed partial class BorgSystem
         if (chassisComp.SelectedModule == moduleUid)
             return;
 
-        if (!Resolve(moduleUid, ref moduleComp, false))
-            return;
+        UnselectModule(chassis, chassisComp);
 
         var ev = new BorgModuleSelectedEvent(chassis);
         RaiseLocalEvent(moduleUid, ref ev);
@@ -118,28 +148,19 @@ public sealed partial class BorgSystem
     /// <summary>
     /// Unselects a module, removing its provided abilities
     /// </summary>
-    public void UnselectModule(EntityUid chassis,
-        EntityUid? moduleUid,
-        BorgChassisComponent? chassisComp = null,
-        SelectableBorgModuleComponent? moduleComp = null)
+    public void UnselectModule(EntityUid chassis, BorgChassisComponent? chassisComp = null)
     {
-        if (Terminating(chassis) || Deleted(chassis))
+        if (LifeStage(chassis) >= EntityLifeStage.Terminating)
             return;
 
         if (!Resolve(chassis, ref chassisComp))
             return;
 
-        if (moduleUid == null)
-            return;
-
-        if (chassisComp.SelectedModule != moduleUid)
-            return;
-
-        if (!Resolve(moduleUid.Value, ref moduleComp, false))
+        if (chassisComp.SelectedModule == null)
             return;
 
         var ev = new BorgModuleUnselectedEvent(chassis);
-        RaiseLocalEvent(moduleUid.Value, ref ev);
+        RaiseLocalEvent(chassisComp.SelectedModule.Value, ref ev);
         chassisComp.SelectedModule = null;
     }
 
@@ -208,9 +229,20 @@ public sealed partial class BorgSystem
         if (!TryComp<HandsComponent>(chassis, out var hands))
             return;
 
+        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        {
+            foreach (var (hand, item) in component.ProvidedItems)
+            {
+                QueueDel(item);
+                _hands.RemoveHand(chassis, hand, hands);
+            }
+            component.ProvidedItems.Clear();
+            return;
+        }
+
         foreach (var (handId, item) in component.ProvidedItems)
         {
-            if (!Deleted(item) && !Terminating(item))
+            if (LifeStage(item) <= EntityLifeStage.MapInitialized)
             {
                 RemComp<UnremoveableComponent>(item);
                 component.ProvidedContainer.Insert(item, EntityManager);

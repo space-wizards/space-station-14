@@ -73,7 +73,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
             return;
 
-        if (args.OtherFixture.ID != particle.FixtureId)
+        if (args.OtherFixtureId != particle.FixtureId)
             return;
 
         // small function to randomize because it's easier to read like this

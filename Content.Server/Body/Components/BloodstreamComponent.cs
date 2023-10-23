@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Access(typeof(BloodstreamSystem), (typeof(ChemistrySystem)))]
-    public sealed class BloodstreamComponent : Component
+    public sealed partial class BloodstreamComponent : Component
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
         public static string DefaultBloodSolutionName = "bloodstream";

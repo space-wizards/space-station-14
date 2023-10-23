@@ -7,7 +7,7 @@ namespace Content.Server.PDA.Ringer;
 /// Traitors are told the code when greeted.
 /// </summary>
 [RegisterComponent, Access(typeof(RingerSystem))]
-public sealed class RingerUplinkComponent : Component
+public sealed partial class RingerUplinkComponent : Component
 {
     /// <summary>
     /// Notes to set ringtone to in order to lock or unlock the uplink.

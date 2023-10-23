@@ -21,20 +21,20 @@ namespace Content.Shared.Chemistry.Reagent
 {
     [Prototype("reagent")]
     [DataDefinition]
-    public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
+    public sealed partial class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("name", required: true)]
-        private string Name { get; } = default!;
+        private string Name { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
 
         [DataField("group")]
-        public string Group { get; } = "Unknown";
+        public string Group { get; private set; } = "Unknown";
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ReagentPrototype>))]
         public string[]? Parents { get; private set; }
@@ -44,13 +44,13 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Abstract { get; private set; }
 
         [DataField("desc", required: true)]
-        private string Description { get; } = default!;
+        private string Description { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedDescription => Loc.GetString(Description);
 
         [DataField("physicalDesc", required: true)]
-        private string PhysicalDescription { get; } = default!;
+        private string PhysicalDescription { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
@@ -71,23 +71,23 @@ namespace Content.Shared.Chemistry.Reagent
         public FixedPoint2 FlavorMinimum = FixedPoint2.New(0.1f);
 
         [DataField("color")]
-        public Color SubstanceColor { get; } = Color.White;
+        public Color SubstanceColor { get; private set; } = Color.White;
 
         /// <summary>
         ///     The specific heat of the reagent.
         ///     How much energy it takes to heat one unit of this reagent by one Kelvin.
         /// </summary>
         [DataField("specificHeat")]
-        public float SpecificHeat { get; } = 1.0f;
+        public float SpecificHeat { get; private set; } = 1.0f;
 
         [DataField("boilingPoint")]
-        public float? BoilingPoint { get; }
+        public float? BoilingPoint { get; private set; }
 
         [DataField("meltingPoint")]
-        public float? MeltingPoint { get; }
+        public float? MeltingPoint { get; private set; }
 
         [DataField("metamorphicSprite")]
-        public SpriteSpecifier? MetamorphicSprite { get; } = null;
+        public SpriteSpecifier? MetamorphicSprite { get; private set; } = null;
 
         /// <summary>
         /// If this reagent is part of a puddle is it slippery.
@@ -109,10 +109,10 @@ namespace Content.Shared.Chemistry.Reagent
         public Dictionary<string, ReactiveReagentEffectEntry>? ReactiveEffects = null;
 
         [DataField("tileReactions", serverOnly: true)]
-        public readonly List<ITileReaction> TileReactions = new(0);
+        public List<ITileReaction> TileReactions = new(0);
 
         [DataField("plantMetabolism", serverOnly: true)]
-        public readonly List<ReagentEffect> PlantMetabolisms = new(0);
+        public List<ReagentEffect> PlantMetabolisms = new(0);
 
         [DataField("pricePerUnit")] public float PricePerUnit;
 
@@ -141,7 +141,7 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(EntityUid? plantHolder, Solution.ReagentQuantity amount, Solution solution)
+        public void ReactionPlant(EntityUid? plantHolder, ReagentQuantity amount, Solution solution)
         {
             if (plantHolder == null)
                 return;
@@ -184,7 +184,7 @@ namespace Content.Shared.Chemistry.Reagent
 
 
     [DataDefinition]
-    public sealed class ReagentEffectsEntry
+    public sealed partial class ReagentEffectsEntry
     {
         /// <summary>
         ///     Amount of reagent to metabolize, per metabolism cycle.
@@ -226,7 +226,7 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
-    public sealed class ReactiveReagentEffectEntry
+    public sealed partial class ReactiveReagentEffectEntry
     {
         [DataField("methods", required: true)]
         public HashSet<ReactionMethod> Methods = default!;

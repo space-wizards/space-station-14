@@ -4,6 +4,7 @@
   roundStart: true
   prototype: MobDiona
   sprites: MobDionaSprites
+  defaultSkinTone: "#cdb369"
   markingLimits: MobDionaMarkingLimits
   dollPrototype: MobDionaDummy
   skinColoration: Hues

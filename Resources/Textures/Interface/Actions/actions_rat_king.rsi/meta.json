@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage404 (github). ratKingArmy and ratKingDomain taken from https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "attack"
+    },
+    {
+      "name": "attackOff"
+    },
+    {
+      "name": "follow"
+    },
+    {
+      "name": "followOff"
+    },
+    {
+      "name": "loose"
+    },
+    {
+      "name": "looseOff"
+    },
+    {
+      "name": "stay"
+    },
+    {
+      "name": "stayOff"
+    },
+    {
+      "name": "ratKingArmy"
+    },
+    {
+      "name": "ratKingDomain"
+    }
+  ]
+}

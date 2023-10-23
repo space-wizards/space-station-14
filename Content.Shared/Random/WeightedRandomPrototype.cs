@@ -9,8 +9,8 @@ namespace Content.Shared.Random;
 public sealed class WeightedRandomPrototype : IWeightedRandomPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("weights")]
-    public Dictionary<string, float> Weights { get; } = new();
+    public Dictionary<string, float> Weights { get; private set; } = new();
 }

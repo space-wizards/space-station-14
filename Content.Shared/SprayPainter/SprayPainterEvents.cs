@@ -47,13 +47,13 @@ public sealed class SprayPainterBoundUserInterfaceState : BoundUserInterfaceStat
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterDoAfterEvent : DoAfterEvent
+public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
 {
     [DataField("sprite")]
-    public readonly string? Sprite = null;
+    public string? Sprite = null;
 
     [DataField("color")]
-    public readonly Color? Color = null;
+    public Color? Color = null;
 
     private SprayPainterDoAfterEvent()
     {

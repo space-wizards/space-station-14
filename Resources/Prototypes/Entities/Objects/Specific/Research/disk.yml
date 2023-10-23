@@ -58,7 +58,7 @@
         datadisk_base: Sixteen
   - type: TechnologyDisk
   - type: StaticPrice
-    price: 1000
+    price: 100
 
 - type: entity
   parent: TechnologyDisk

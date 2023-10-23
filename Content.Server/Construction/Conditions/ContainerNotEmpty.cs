@@ -9,12 +9,12 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ContainerNotEmpty : IGraphCondition
+    public sealed partial class ContainerNotEmpty : IGraphCondition
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
-        [DataField("examineText")] public string? ExamineText { get; }
-        [DataField("guideText")] public string? GuideText { get; }
-        [DataField("guideIcon")] public SpriteSpecifier? GuideIcon { get; }
+        [DataField("examineText")] public string? ExamineText { get; private set; }
+        [DataField("guideText")] public string? GuideText { get; private set; }
+        [DataField("guideIcon")] public SpriteSpecifier? GuideIcon { get; private set; }
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {

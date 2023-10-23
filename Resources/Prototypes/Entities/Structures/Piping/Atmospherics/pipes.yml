@@ -49,7 +49,7 @@
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: StaticPrice
-    price: 22
+    price: 11
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 

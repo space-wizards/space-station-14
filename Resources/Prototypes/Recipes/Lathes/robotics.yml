@@ -7,6 +7,15 @@
     Glass: 300
 
 - type: latheRecipe
+  id: SciFlash
+  result: SciFlash
+  completetime: 2
+  materials:
+    Glass: 100
+    Plastic: 200
+    Steel: 100
+
+- type: latheRecipe
   id: CyborgEndoskeleton
   result: CyborgEndoskeleton
   completetime: 3
@@ -400,6 +409,16 @@
     Gold: 50
 
 - type: latheRecipe
+  id: BorgModuleConstruction
+  result: BorgModuleConstruction
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
   id: BorgModuleGasAnalyzer
   result: BorgModuleGasAnalyzer
   completetime: 3
@@ -470,6 +489,16 @@
     Gold: 50
 
 - type: latheRecipe
+  id: BorgModuleAdvancedTreatment
+  result: BorgModuleAdvancedTreatment
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
   id: BorgModuleDefibrillator
   result: BorgModuleDefibrillator
   completetime: 3
@@ -522,6 +551,16 @@
 - type: latheRecipe
   id: BorgModuleGardening
   result: BorgModuleGardening
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleHarvesting
+  result: BorgModuleHarvesting
   completetime: 3
   materials:
     Steel: 500

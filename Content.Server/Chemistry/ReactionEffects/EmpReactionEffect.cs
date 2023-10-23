@@ -6,7 +6,7 @@ namespace Content.Server.Chemistry.ReactionEffects;
 
 
 [DataDefinition]
-public sealed class EmpReactionEffect : ReagentEffect
+public sealed partial class EmpReactionEffect : ReagentEffect
 {
     /// <summary>
     ///     Impulse range per unit of reagent

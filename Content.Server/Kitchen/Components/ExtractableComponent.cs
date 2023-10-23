@@ -8,7 +8,7 @@ namespace Content.Server.Kitchen.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(ReagentGrinderSystem))]
-    public sealed class ExtractableComponent : Component
+    public sealed partial class ExtractableComponent : Component
     {
         [DataField("juiceSolution")]
         public Solution? JuiceSolution;

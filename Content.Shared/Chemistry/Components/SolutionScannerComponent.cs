@@ -1,7 +1,7 @@
 namespace Content.Shared.Chemistry.Components;
 
 [RegisterComponent]
-public sealed class SolutionScannerComponent : Component
+public sealed partial class SolutionScannerComponent : Component
 {
 }
 

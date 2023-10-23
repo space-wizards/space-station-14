@@ -450,7 +450,7 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     private bool _availableJobsDirty;
 
-    private TickerJobsAvailableEvent _cachedAvailableJobs = new (new Dictionary<EntityUid, string>(), new Dictionary<EntityUid, Dictionary<string, uint?>>());
+    private TickerJobsAvailableEvent _cachedAvailableJobs = new (new Dictionary<NetEntity, string>(), new Dictionary<NetEntity, Dictionary<string, uint?>>());
 
     /// <summary>
     /// Assembles an event from the current available-to-play jobs.
@@ -461,18 +461,19 @@ public sealed partial class StationJobsSystem : EntitySystem
     {
         // If late join is disallowed, return no available jobs.
         if (_gameTicker.DisallowLateJoin)
-            return new TickerJobsAvailableEvent(new Dictionary<EntityUid, string>(), new Dictionary<EntityUid, Dictionary<string, uint?>>());
+            return new TickerJobsAvailableEvent(new Dictionary<NetEntity, string>(), new Dictionary<NetEntity, Dictionary<string, uint?>>());
 
-        var jobs = new Dictionary<EntityUid, Dictionary<string, uint?>>();
-        var stationNames = new Dictionary<EntityUid, string>();
+        var jobs = new Dictionary<NetEntity, Dictionary<string, uint?>>();
+        var stationNames = new Dictionary<NetEntity, string>();
 
         var query = EntityQueryEnumerator<StationJobsComponent>();
 
         while (query.MoveNext(out var station, out var comp))
         {
+            var netStation = GetNetEntity(station);
             var list = comp.JobList.ToDictionary(x => x.Key, x => x.Value);
-            jobs.Add(station, list);
-            stationNames.Add(station, Name(station));
+            jobs.Add(netStation, list);
+            stationNames.Add(netStation, Name(station));
         }
         return new TickerJobsAvailableEvent(stationNames, jobs);
     }

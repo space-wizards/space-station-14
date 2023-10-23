@@ -3,10 +3,10 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Humanoid.Markings;
 
 /// <summary>
-///     Default colors for marking 
+///     Default colors for marking
 /// </summary>
 [DataDefinition]
-public sealed class MarkingColors
+public sealed partial class MarkingColors
 {
     /// <summary>
     /// Coloring properties that will be used on any unspecified layer
@@ -65,7 +65,7 @@ public static class MarkingColoring
                     colors.Add(defaultColor);
                     continue;
                 }
-            
+
                 // All specified layers must be colored separately, all unspecified must depend on default coloring
                 if (prototype.Coloring.Layers.TryGetValue(name, out var layerColoring))
                 {
@@ -86,7 +86,7 @@ public static class MarkingColoring
 ///     A class that defines coloring type and fallback for markings
 /// </summary>
 [DataDefinition]
-public sealed class LayerColoringDefinition
+public sealed partial class LayerColoringDefinition
 {
     [DataField("type")]
     public LayerColoringType Type = new SkinColoring();
@@ -96,7 +96,7 @@ public sealed class LayerColoringDefinition
     /// </summary>
     [DataField("fallbackTypes")]
     public List<LayerColoringType> FallbackTypes = new() {};
-    
+
     /// <summary>
     ///     Color that will be used if coloring type and fallback type will return nil
     /// </summary>
@@ -122,13 +122,13 @@ public sealed class LayerColoringDefinition
 ///     An abstract class for coloring types
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class LayerColoringType
+public abstract partial class LayerColoringType
 {
     /// <summary>
     ///     Makes output color negative
     /// </summary>
     [DataField("negative")]
-    public bool Negative { get; } = false;
+    public bool Negative { get; private set; } = false;
     public abstract Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet);
     public Color? GetColor(Color? skin, Color? eyes, MarkingSet markingSet)
     {

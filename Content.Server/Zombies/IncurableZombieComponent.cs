@@ -4,7 +4,7 @@
 /// This is used for a zombie that cannot be cured by any methods.
 /// </summary>
 [RegisterComponent]
-public sealed class IncurableZombieComponent : Component
+public sealed partial class IncurableZombieComponent : Component
 {
 
 }

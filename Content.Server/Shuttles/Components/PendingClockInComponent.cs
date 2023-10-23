@@ -4,7 +4,7 @@ namespace Content.Server.Shuttles.Components;
 /// Added to arrivals latejoins until they have arrived at the station.
 /// </summary>
 [RegisterComponent]
-public sealed class PendingClockInComponent : Component
+public sealed partial class PendingClockInComponent : Component
 {
 
 }

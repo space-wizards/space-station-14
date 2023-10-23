@@ -322,13 +322,13 @@ public sealed class AirAlarmSystem : EntitySystem
             UpdateUI(uid, component);
         }
     }
-    
+
     private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
     {
         if (!AccessCheck(uid, args.Session.AttachedEntity, component))
         {
            UpdateUI(uid, component);
-            return;       
+            return;
         }
 
         switch (args.Data)
@@ -339,7 +339,7 @@ public sealed class AirAlarmSystem : EntitySystem
                     SetData(uid, addr, args.Data);
                 }
                 break;
-                
+
             case GasVentScrubberData scrubberData:
                 foreach (string addr in component.ScrubberData.Keys)
                 {
@@ -361,7 +361,7 @@ public sealed class AirAlarmSystem : EntitySystem
         if (user == null)
             return false;
 
-        if (!_access.IsAllowed(user.Value, reader))
+        if (!_access.IsAllowed(user.Value, uid, reader))
         {
             _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, user.Value);
             return false;

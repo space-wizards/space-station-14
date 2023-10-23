@@ -307,6 +307,27 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileConcrete
+  name: concrete tile
+  spawn: FloorTileItemGrayConcrete
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileGrayConcrete
+  name: gray concrete tile
+  spawn: FloorTileItemLaundry
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileOldConcrete
+  name: old concrete tile
+  spawn: FloorTileItemOldConcrete
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileSilver
   name: silver floor tile
   spawn: FloorTileItemSilver

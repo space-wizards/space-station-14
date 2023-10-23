@@ -1,10 +1,64 @@
 - type: construction
   name: web tile
   id: TileWeb
-  graph: TileWeb
+  graph: WebObjects
   startNode: start
-  targetNode: webtile
+  targetNode: tile
   category: construction-category-tiles
   description: "Nice and smooth."
-  icon: { sprite: Objects/Tiles/web.rsi, state: icon }
+  icon:
+    sprite: Objects/Tiles/web.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web winter coat
+  id: ClothingOuterWinterWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: coat
+  category: construction-category-clothing
+  description: "Surprisingly warm and durable."
+  icon:
+    sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web jumpsuit
+  id: ClothingUniformJumpsuitWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: jumpsuit
+  category: construction-category-clothing
+  description: "At least it's something."
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/web.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web jumpskirt
+  id: ClothingUniformJumpskirtWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: jumpskirt
+  category: construction-category-clothing
+  description: "At least it's something."
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/web.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: silk woven cloth
+  id: SilkWovenCloth
+  graph: WebObjects
+  startNode: start
+  targetNode: cloth
+  category: construction-category-materials
+  description: "Feels just like cloth, strangely enough."
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cloth_3
   objectType: Item

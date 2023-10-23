@@ -8,7 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.ParticleAccelerator.Wires;
 
-public sealed class ParticleAcceleratorStrengthWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
+public sealed partial class ParticleAcceleratorStrengthWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
 {
     public override string Name { get; set; } = "wire-name-pa-strength";
     public override Color Color { get; set; } = Color.Blue;

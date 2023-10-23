@@ -1,7 +1,7 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class AreaReactionEffect : ReagentEffect
+    public sealed partial class AreaReactionEffect : ReagentEffect
     {
         /// <summary>
         /// How many seconds will the effect stay, counting after fully spreading.

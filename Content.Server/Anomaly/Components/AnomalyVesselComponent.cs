@@ -13,7 +13,7 @@ namespace Content.Server.Anomaly.Components;
 /// the anomaly's stability and severity.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class AnomalyVesselComponent : Component
+public sealed partial class AnomalyVesselComponent : Component
 {
     /// <summary>
     /// The anomaly that the vessel is storing.

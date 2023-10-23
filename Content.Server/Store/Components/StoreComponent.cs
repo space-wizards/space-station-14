@@ -12,7 +12,7 @@ namespace Content.Server.Store.Components;
 /// through the ui. The currency, listings, and categories are defined in yaml.
 /// </summary>
 [RegisterComponent]
-public sealed class StoreComponent : Component
+public sealed partial class StoreComponent : Component
 {
     /// <summary>
     /// The default preset for the store. Is overriden by default values specified on the component.

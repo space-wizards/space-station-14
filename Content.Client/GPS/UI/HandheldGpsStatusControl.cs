@@ -9,12 +9,12 @@ namespace Content.Client.GPS.UI;
 
 public sealed class HandheldGpsStatusControl : Control
 {
-    private readonly HandheldGPSComponent _parent;
+    private readonly Entity<HandheldGPSComponent> _parent;
     private readonly RichTextLabel _label;
     private float _updateDif;
     private readonly IEntityManager _entMan;
 
-    public HandheldGpsStatusControl(HandheldGPSComponent parent)
+    public HandheldGpsStatusControl(Entity<HandheldGPSComponent> parent)
     {
         _parent = parent;
         _entMan = IoCManager.Resolve<IEntityManager>();
@@ -28,10 +28,10 @@ public sealed class HandheldGpsStatusControl : Control
         base.FrameUpdate(args);
 
         _updateDif += args.DeltaSeconds;
-        if (_updateDif < _parent.UpdateRate)
+        if (_updateDif < _parent.Comp.UpdateRate)
             return;
 
-        _updateDif -= _parent.UpdateRate;
+        _updateDif -= _parent.Comp.UpdateRate;
 
         UpdateGpsDetails();
     }
@@ -39,7 +39,7 @@ public sealed class HandheldGpsStatusControl : Control
     private void UpdateGpsDetails()
     {
         var posText = "Error";
-        if (_entMan.TryGetComponent(_parent.Owner, out TransformComponent? transComp))
+        if (_entMan.TryGetComponent(_parent, out TransformComponent? transComp))
         {
             var pos =  transComp.MapPosition;
             var x = (int) pos.X;

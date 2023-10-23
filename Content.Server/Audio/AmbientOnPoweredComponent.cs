@@ -6,7 +6,7 @@ namespace Content.Server.Audio
     /// Toggles <see cref="AmbientSoundComponent"/> on when powered and off when not powered.
     /// </summary>
     [RegisterComponent]
-    public sealed class AmbientOnPoweredComponent : Component
+    public sealed partial class AmbientOnPoweredComponent : Component
     {
     }
 }

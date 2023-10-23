@@ -43,10 +43,15 @@ namespace Content.Client.Lobby.UI
             CharacterSetupButton = new Button
             {
                 Text = Loc.GetString("lobby-character-preview-panel-character-setup-button"),
-                HorizontalAlignment = HAlignment.Left
+                HorizontalAlignment = HAlignment.Center,
+                Margin = new Thickness(0, 5, 0, 0),
             };
 
-            _summaryLabel = new Label();
+            _summaryLabel = new Label
+            {
+                HorizontalAlignment = HAlignment.Center,
+                Margin = new Thickness(3, 3),
+            };
 
             var vBox = new BoxContainer
             {
@@ -61,7 +66,8 @@ namespace Content.Client.Lobby.UI
             };
             _viewBox = new BoxContainer
             {
-                Orientation = LayoutOrientation.Horizontal
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalAlignment = HAlignment.Center,
             };
             var _vSpacer = new VSpacer();
 
@@ -76,8 +82,6 @@ namespace Content.Client.Lobby.UI
             AddChild(vBox);
 
             UpdateUI();
-
-            _preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
         public Button CharacterSetupButton { get; }
@@ -85,21 +89,10 @@ namespace Content.Client.Lobby.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
             if (_previewDummy != null) _entityManager.DeleteEntity(_previewDummy.Value);
             _previewDummy = default;
-        }
-
-        private SpriteView MakeSpriteView(EntityUid entity, Direction direction)
-        {
-            return new()
-            {
-                Sprite = _entityManager.GetComponent<SpriteComponent>(entity),
-                OverrideDirection = direction,
-                Scale = new Vector2(2, 2)
-            };
         }
 
         public void UpdateUI()
@@ -120,15 +113,16 @@ namespace Content.Client.Lobby.UI
                 else
                 {
                     _previewDummy = _entityManager.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(selectedCharacter.Species).DollPrototype, MapCoordinates.Nullspace);
-                    var viewSouth = MakeSpriteView(_previewDummy.Value, Direction.South);
-                    var viewNorth = MakeSpriteView(_previewDummy.Value, Direction.North);
-                    var viewWest = MakeSpriteView(_previewDummy.Value, Direction.West);
-                    var viewEast = MakeSpriteView(_previewDummy.Value, Direction.East);
                     _viewBox.DisposeAllChildren();
-                    _viewBox.AddChild(viewSouth);
-                    _viewBox.AddChild(viewNorth);
-                    _viewBox.AddChild(viewWest);
-                    _viewBox.AddChild(viewEast);
+                    var spriteView = new SpriteView
+                    {
+                        OverrideDirection = Direction.South,
+                        Scale = new Vector2(4f, 4f),
+                        MaxSize = new Vector2(112, 112),
+                        Stretch = SpriteView.StretchMode.None,
+                    };
+                    spriteView.SetEntity(_previewDummy.Value);
+                    _viewBox.AddChild(spriteView);
                     _summaryLabel.Text = selectedCharacter.Summary;
                     _entityManager.System<HumanoidAppearanceSystem>().LoadProfile(_previewDummy.Value, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
