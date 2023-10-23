@@ -1,8 +1,6 @@
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lightning;
 using Content.Server.Lightning.Components;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -20,17 +18,17 @@ public sealed class LightningTargetSystem : EntitySystem
         SubscribeLocalEvent<LightningTargetComponent, HitByLightningEvent>(OnHitByLightning);
     }
 
-    private void OnHitByLightning(EntityUid uid, LightningTargetComponent component, ref HitByLightningEvent args)
+    private void OnHitByLightning(Entity<LightningTargetComponent> uid, ref HitByLightningEvent args)
     {
 
-        if (!component.LightningExplode)
+        if (!uid.Comp.LightningExplode)
             return;
 
         _explosionSystem.QueueExplosion(
             Transform(uid).MapPosition,
-            component.ExplosionPrototype,
-            component.TotalIntensity, component.Dropoff,
-            component.MaxTileIntensity,
+            uid.Comp.ExplosionPrototype,
+            uid.Comp.TotalIntensity, uid.Comp.Dropoff,
+            uid.Comp.MaxTileIntensity,
             canCreateVacuum: false);
     }
 }

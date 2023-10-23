@@ -1,12 +1,8 @@
 using System.Linq;
+using Content.Server.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-
-using Content.Server.Physics.Components;
-using Content.Shared.Follower.Components;
-using Content.Shared.Throwing;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics;
 using System.Numerics;
 
@@ -15,17 +11,24 @@ namespace Content.Server.Physics.Controllers;
 /// <summary>
 /// A component which makes its entity periodically chaotic jumps arounds
 /// </summary>
-internal sealed class ChaoticJumpSystem : EntitySystem
+public sealed class ChaoticJumpSystem : EntitySystem
 {
-
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<ChaoticJumpComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<ChaoticJumpComponent> uid, ref MapInitEvent args)
+    {
+        //So the entity doesn't teleport instantly. For tesla, for example, it's important for it to eat tesla's generator.
+        uid.Comp.NextJumpTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_random.NextFloat(uid.Comp.JumpMinInterval, uid.Comp.JumpMaxInterval));
     }
 
     public override void Update(float frameTime)

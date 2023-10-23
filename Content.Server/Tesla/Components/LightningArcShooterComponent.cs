@@ -2,6 +2,7 @@ using Content.Server.Tesla.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tesla.Components;
+
 /// <summary>
 /// Periodically fires electric arcs at surrounding objects.
 /// </summary>

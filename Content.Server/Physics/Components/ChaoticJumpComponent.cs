@@ -1,19 +1,20 @@
+using Content.Server.Physics.Controllers;
 using Content.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Physics.Components;
 
 /// <summary>
 /// A component which makes its entity periodically chaotic jumps arounds
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ChaoticJumpSystem))]
 public sealed partial class ChaoticJumpComponent : Component
 {
     /// <summary>
     /// The next moment in time when the entity is pushed toward its goal
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextJumpTime;
 
     /// <summary>
@@ -47,5 +48,5 @@ public sealed partial class ChaoticJumpComponent : Component
     /// Spawn before jump
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<EntityPrototype>? Effect = "EffectEmpPulse";
+    public EntProtoId Effect = "EffectEmpPulse";
 }

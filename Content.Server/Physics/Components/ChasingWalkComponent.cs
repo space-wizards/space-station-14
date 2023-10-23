@@ -1,10 +1,13 @@
 
+using Content.Server.Physics.Controllers;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Server.Physics.Components;
 
 /// <summary>
 /// A component which makes its entity chasing entity with selected component.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ChasingWalkSystem))]
 public sealed partial class ChasingWalkComponent : Component
 {
     /// <summary>
@@ -47,9 +50,8 @@ public sealed partial class ChasingWalkComponent : Component
     /// <summary>
     /// The next change of direction time.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextChangeVectorTime;
-
 
     /// <summary>
     /// The component that the entity is chasing

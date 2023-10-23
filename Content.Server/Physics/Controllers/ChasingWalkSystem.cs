@@ -1,10 +1,7 @@
 using System.Linq;
+using Content.Server.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-
-using Content.Server.Physics.Components;
-using Content.Shared.Follower.Components;
-using Content.Shared.Throwing;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
 
@@ -13,22 +10,12 @@ namespace Content.Server.Physics.Controllers;
 /// <summary>
 /// A system which makes its entity chasing another entity with selected component.
 /// </summary>
-internal sealed class ChasingWalkSystem : EntitySystem
+public sealed class ChasingWalkSystem : EntitySystem
 {
-
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-
-
-    private EntityQuery<TransformComponent> _xformQuery;
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
-    }
 
     public override void Update(float frameTime)
     {
@@ -53,10 +40,11 @@ internal sealed class ChasingWalkSystem : EntitySystem
             }
         }
     }
+
     private void ChangeTarget(EntityUid uid, ChasingWalkComponent component)
     {
         //We find our coordinates and calculate the radius of the target search.
-        var xform = _xformQuery.GetComponent(uid);
+        var xform = Transform(uid);
         var range = component.MaxChaseRadius;
         var compType = EntityManager.ComponentFactory.GetRegistration(component.ChasingComponent).Type;
         var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range)
@@ -86,7 +74,7 @@ internal sealed class ChasingWalkSystem : EntitySystem
             return;
 
         //Calculating direction to the target.
-        var xform = _xformQuery.GetComponent(component.ChasingEntity.Value);
+        var xform = Transform(component.ChasingEntity.Value);
         var delta = xform.MapPosition.Position - Transform(uid).MapPosition.Position;
 
         //Changing the direction of the entity.
