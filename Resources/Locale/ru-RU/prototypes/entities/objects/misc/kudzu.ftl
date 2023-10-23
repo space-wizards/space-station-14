@@ -7,3 +7,5 @@ ent-WeakKudzu = { ent-Kudzu }
 ent-FleshKudzu = сухожилия
     .desc = Быстрорастущее скопление мясистых сухожилий. ЗАЧЕМ ВЫ ВСТАЛИ, ЧТОБЫ ПОСМОТРЕТЬ НА НЕГО?!
     .suffix = { "" }
+ent-MiddleKudzu = { ent-Kudzu }
+    .desc = { ent-Kudzu.desc }

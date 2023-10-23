@@ -10,3 +10,4 @@ ent-SalvageHumanCorpse = неизвестный человек
 ent-MobCluwne = существо
     .desc = Полиморфированное несчастье.
     .suffix = { "" }
+ent-MobSalvager = Утилизатор

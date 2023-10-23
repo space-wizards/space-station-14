@@ -86,3 +86,4 @@ ent-FoodBreadSausageSlice = ломтик сосисочного хлеба
     .desc = Не стоит слишком сильно задумываться о нём.
 ent-FoodBreadFrenchToast = сладкие гренки
     .desc = Также известны как французские тосты. Ломтик хлеба, смоченный во взбитой яичной смеси.
+ent-FoodBreadBaguetteSlice = Ломтик багета

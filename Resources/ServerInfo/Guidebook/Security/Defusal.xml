@@ -10,7 +10,7 @@
     <GuideEntityEmbed Entity="Multitool"/>
   </Box>
 
-  Что касается защитного снаряжения, то [color=yellow]костюм для бомбы[/color] или любое другое защитное снаряжение поможет вам не взорваться в куски.
+  Что касается защитного снаряжения, то [color=yellow]сапёрный костюм[/color] или любое другое защитное снаряжение поможет вам не взорваться в куски.
   <Box>
     <GuideEntityEmbed Entity="ClothingHeadHelmetBombSuit"/>
     <GuideEntityEmbed Entity="ClothingOuterSuitBomb"/>
