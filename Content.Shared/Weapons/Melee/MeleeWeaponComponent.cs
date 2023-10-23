@@ -24,13 +24,13 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <summary>
     /// If you can't light attack
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool NoLightAttack;
 
     /// <summary>
     /// If you can't heavy attack
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool NoHeavyAttack;
 
     /// <summary>
