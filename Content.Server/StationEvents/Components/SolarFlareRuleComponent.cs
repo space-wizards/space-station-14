@@ -6,19 +6,19 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.StationEvents.Components;
 
 /// <summary>
-///   Solar Flare event specific configuration
+///     Solar Flare event specific configuration
 /// </summary>
 [RegisterComponent, Access(typeof(SolarFlareRule))]
 public sealed partial class SolarFlareRuleComponent : Component
 {
     /// <summary>
-    ///   If true, only headsets affected, but e.g. handheld radio will still work
+    ///     If true, only headsets affected, but e.g. handheld radio will still work
     /// </summary>
     [DataField("onlyJamHeadsets")]
     public bool OnlyJamHeadsets;
 
     /// <summary>
-    ///   Channels that will be disabled for a duration of event
+    ///     Channels that will be disabled for a duration of event
     /// </summary>
     [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> AffectedChannels = new();
@@ -42,13 +42,13 @@ public sealed partial class SolarFlareRuleComponent : Component
     public uint ExtraCount;
 
     /// <summary>
-    ///   Chance light bulb breaks per second during event
+    ///     Chance light bulb breaks per second during event
     /// </summary>
     [DataField("lightBreakChancePerSecond")]
     public float LightBreakChancePerSecond;
 
     /// <summary>
-    ///   Chance door toggles per second during event
+    ///     Chance door toggles per second during event
     /// </summary>
     [DataField("doorToggleChancePerSecond")]
     public float DoorToggleChancePerSecond;

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.StationEvents.Components;
 
 /// <summary>
-///   Used an event that spawns an anomaly somewhere random on the map.
+/// Used an event that spawns an anomaly somewhere random on the map.
 /// </summary>
 [RegisterComponent, Access(typeof(AnomalySpawnRule))]
 public sealed partial class AnomalySpawnRuleComponent : Component

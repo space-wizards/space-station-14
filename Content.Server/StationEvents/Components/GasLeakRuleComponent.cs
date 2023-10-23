@@ -16,12 +16,12 @@ public sealed partial class GasLeakRuleComponent : Component
     };
 
     /// <summary>
-    ///   Running cooldown of how much time until another leak.
+    ///     Running cooldown of how much time until another leak.
     /// </summary>
     public float TimeUntilLeak;
 
     /// <summary>
-    ///   How long between more gas being added to the tile.
+    ///     How long between more gas being added to the tile.
     /// </summary>
     public float LeakCooldown = 1.0f;
 
@@ -36,7 +36,7 @@ public sealed partial class GasLeakRuleComponent : Component
     public readonly int MinimumMolesPerSecond = 20;
 
     /// <summary>
-    ///   Don't want to make it too fast to give people time to flee.
+    ///     Don't want to make it too fast to give people time to flee.
     /// </summary>
     public int MaximumMolesPerSecond = 50;
 

@@ -19,7 +19,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.StationEvents.Events;
 
 /// <summary>
-///   An abstract entity system inherited by all station events for their behavior.
+///     An abstract entity system inherited by all station events for their behavior.
 /// </summary>
 public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T : IComponent
 {
@@ -101,8 +101,8 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     }
 
     /// <summary>
-    ///   Called every tick when this event is running.
-    ///   Events are responsible for their own lifetime, so this handles starting and ending after time.
+    ///     Called every tick when this event is running.
+    ///     Events are responsible for their own lifetime, so this handles starting and ending after time.
     /// </summary>
     /// <inheritdoc/>
     public override void Update(float frameTime)
@@ -217,14 +217,14 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
 }
 
 /// <summary>
-///   Raised broadcast to determine what the severity modifier should be for an event, some positive number that can be multiplied with various things.
-///   Handled by usually other game rules (like the ramping scheduler).
-///   Most events should try and make use of this if possible.
+///     Raised broadcast to determine what the severity modifier should be for an event, some positive number that can be multiplied with various things.
+///     Handled by usually other game rules (like the ramping scheduler).
+///     Most events should try and make use of this if possible.
 /// </summary>
 public sealed class GetSeverityModifierEvent : EntityEventArgs
 {
     /// <summary>
-    ///   Should be multiplied/added to rather than set, for commutativity.
+    ///     Should be multiplied/added to rather than set, for commutativity.
     /// </summary>
     public float Modifier = 1.0f;
 }
