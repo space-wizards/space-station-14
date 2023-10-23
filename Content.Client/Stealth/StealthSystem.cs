@@ -81,16 +81,18 @@ public sealed class StealthSystem : SharedStealthSystem
         var parentXform = Transform(parent);
         var reference = args.Viewport.WorldToLocal(parentXform.WorldPosition);
         reference.X = -reference.X;
-        var visibility = GetVisibility(uid, component);
-
-        // actual visual visibility effect is limited to +/- 1.
-        visibility = Math.Clamp(visibility, -1f, 1f);
+        var originalVisibility = GetVisibility(uid, component);
+		
+		// actual visual visibility effect is limited to +/- 1.
+        var visibility = Math.Clamp(originalVisibility, -1f, 1f);
+		
+		var alphaVal = originalVisibility <= -1 ? 0 : (visibility + 1f) / 2f;
 
         _shader.SetParameter("reference", reference);
         _shader.SetParameter("visibility", visibility);
 
         visibility = MathF.Max(0, visibility);
-        args.Sprite.Color = new Color(visibility, visibility, 1, 1);
+        args.Sprite.Color = new Color(visibility, visibility, 1, alphaVal);
     }
 }
 
