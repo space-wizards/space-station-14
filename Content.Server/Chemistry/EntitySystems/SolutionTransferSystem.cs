@@ -174,13 +174,11 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var target = args.Target!.Value;
 
-            // no any container, nothing do here
-            if (!_solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrain))
-                return;
-
             var transferAmount = component.TransferAmount;
 
             var modeSolution = GetTransferModeSolution(uid, component);
+
+            var isTargetDrainableSolution = _solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrainableSolution);
 
             // try to pour something
             if (component.ToggleMode == SharedTransferToggleMode.Inject && modeSolution != null)
@@ -199,20 +197,23 @@ namespace Content.Server.Chemistry.EntitySystems
 
                     if (transferred > 0)
                     {
-                        var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", target));
+                        var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred),
+                                                                                                        ("target", target));
                         _popupSystem.PopupEntity(message, uid, args.User);
                         args.Handled = true;
                     }
                 }
                 // we try to pure, but component has not refellable component
-                else
+                // special for water tank or something like
+                else if (isTargetDrainableSolution)
                 {
                     var message = Loc.GetString("comp-solution-transfer-no-target-refillable-component", ("target", target));
                     _popupSystem.PopupEntity(message, uid, args.User);
                     args.Handled = true;
                 }
             }
-            else if (component.ToggleMode == SharedTransferToggleMode.Draw && modeSolution != null)
+            else if (targetDrainableSolution is Solution targetDrain
+                        && component.ToggleMode == SharedTransferToggleMode.Draw && modeSolution != null)
             {
                 // uid is the entity receiving solution from target.
                 if (EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
@@ -232,7 +233,6 @@ namespace Content.Server.Chemistry.EntitySystems
 
                     _popupSystem.PopupEntity(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)),
                                                                                                         uid, args.User);
-
                     args.Handled = true;
                 }
             }
