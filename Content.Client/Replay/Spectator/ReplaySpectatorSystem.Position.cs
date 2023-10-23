@@ -135,7 +135,9 @@ public sealed partial class ReplaySpectatorSystem
 
         Entity<MapGridComponent>? maxUid = null;
         float? maxSize = null;
-        while (EntityQueryEnumerator<MapGridComponent>().MoveNext(out var uid, out var grid))
+        var gridQuery = EntityQueryEnumerator<MapGridComponent>();
+
+        while (gridQuery.MoveNext(out var uid, out var grid))
         {
             var size = grid.LocalAABB.Size.LengthSquared();
             if (maxSize == null || size > maxSize)
