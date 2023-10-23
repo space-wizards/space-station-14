@@ -1,11 +1,11 @@
 using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Robust.Shared.Timing;
+using Content.Shared.Power;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Tesla.Components;
 using Content.Server.Lightning;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.Power;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -15,10 +15,11 @@ namespace Content.Server.Tesla.EntitySystems;
 public sealed class TeslaCoilSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+
     public override void Initialize()
     {
         base.Initialize();

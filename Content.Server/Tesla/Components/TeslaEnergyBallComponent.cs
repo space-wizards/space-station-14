@@ -1,3 +1,4 @@
+using Content.Server.Tesla.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -6,10 +7,9 @@ namespace Content.Server.Tesla.Components;
 /// <summary>
 /// A component that tracks an entity's saturation level from absorbing other creatures by touch, and spawns new entities when the saturation limit is reached.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(TeslaEnergyBallSystem))]
 public sealed partial class TeslaEnergyBallComponent : Component
 {
-
     public float AccumulatedFrametime = 0.0f;
 
     [DataField]
@@ -42,17 +42,17 @@ public sealed partial class TeslaEnergyBallComponent : Component
     /// Entities that spawn when the energy limit is reached
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<EntityPrototype>? SpawnProto = "TeslaMiniEnergyBall";
+    public EntProtoId SpawnProto = "TeslaMiniEnergyBall";
 
     /// <summary>
     /// Entity, spun when tesla gobbles with touch.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<EntityPrototype>? ConsumeEffectProto = "EffectTeslaSparks";
+    public EntProtoId ConsumeEffectProto = "EffectTeslaSparks";
 
     /// <summary>
     /// Played when energy reaches the lower limit (and entity destroyed)
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier SoundCollapse = default!;
+    public SoundSpecifier? SoundCollapse;
 }

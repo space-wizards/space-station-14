@@ -1,7 +1,7 @@
-using Content.Server.Tesla.Components;
-using Robust.Shared.Timing;
-using Robust.Shared.Random;
 using Content.Server.Lightning;
+using Content.Server.Tesla.Components;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -10,15 +10,10 @@ namespace Content.Server.Tesla.EntitySystems;
 /// </summary>
 public sealed class LightningArcShooterSystem : EntitySystem
 {
-
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
 
-    }
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

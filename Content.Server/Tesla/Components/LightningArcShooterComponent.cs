@@ -11,10 +11,10 @@ public sealed partial class LightningArcShooterComponent : Component
 {
     /// <summary>
     /// The number of lightning bolts that are fired at the same time. From 0 to N
+    /// Important balance value: if there aren't a N number of coils or grounders around the tesla,
+    /// the tesla will have a chance to shoot into something important and break.
     /// </summary>
 
-    //Important balance value: if there aren't a N number of coils or grounders around the tesla,
-    //the tesla will have a chance to shoot into something important and break.
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MaxLightningArc = 1;
 
