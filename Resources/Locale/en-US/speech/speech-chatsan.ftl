@@ -114,3 +114,6 @@ chatsan-replacement-41 = for your information
 
 chatsan-word-42 = wyd
 chatsan-replacement-42 = what you doing
+
+chatsan-word-43 = ofc
+chatsan-replacement-43 = of course
