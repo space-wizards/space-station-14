@@ -1,5 +1,3 @@
-using Content.Server.Physics.Controllers;
-using Robust.Shared.Map;
 
 namespace Content.Server.Physics.Components;
 

@@ -13,7 +13,7 @@ public sealed partial class LightningArcShooterComponent : Component
     //Important balance value: if there aren't a N number of coils or grounders around the tesla,
     //the tesla will have a chance to shoot into something important and break.
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MaxLightningArc = 8;
+    public int MaxLightningArc = 1;
 
     /// <summary>
     /// Minimum interval between shooting.

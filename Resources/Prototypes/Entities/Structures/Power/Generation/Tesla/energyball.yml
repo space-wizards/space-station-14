@@ -36,7 +36,7 @@
         variation: 0.3
   - type: LightningArcShooter
     arcDepth: 3
-    maxLightningArc: 8
+    maxLightningArc: 4
     shootRange: 7
     shootMinInterval: 2
     shootMaxInterval: 5
@@ -45,6 +45,10 @@
     maxSpeed: 2.5
     minSpeed: 1.875
     chasingComponent: LightningTarget
+  - type: ChaoticJump
+    jumpMinInterval: 8
+    jumpMaxInterval: 15
+    offset: 1
   - type: PointLight
     enabled: true
     radius: 5
