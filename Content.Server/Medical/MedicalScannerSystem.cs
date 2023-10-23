@@ -247,7 +247,6 @@ namespace Content.Server.Medical
 
             scannerComponent.BodyContainer.Remove(contained);
             _climbSystem.ForciblySetClimbing(contained, uid);
-            UpdateAppearance(uid, scannerComponent);
         }
 
         private void OnRefreshParts(EntityUid uid, MedicalScannerComponent component, RefreshPartsEvent args)
