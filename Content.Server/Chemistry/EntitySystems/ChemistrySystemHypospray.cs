@@ -13,6 +13,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
+using Content.Shared.Hands;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -28,6 +29,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<HyposprayComponent, ComponentGetState>(OnHypoGetState);
+            SubscribeLocalEvent<HyposprayComponent, HandSelectedEvent>(OnInjectorHandSelected);
         }
 
         private void OnHypoGetState(EntityUid uid, HyposprayComponent component, ref ComponentGetState args)
@@ -70,7 +72,14 @@ namespace Content.Server.Chemistry.EntitySystems
             TryDoInject(uid, args.HitEntities.First(), args.User);
         }
 
-        public bool TryDoInject(EntityUid uid, EntityUid? target, EntityUid user, HyposprayComponent? component=null)
+        private void OnInjectorHandSelected(EntityUid uid, HyposprayComponent component, HandSelectedEvent args)
+        {
+            // ???? why ?????
+            // update ui info when you take the item
+            Dirty(uid, component);
+        }
+
+        public bool TryDoInject(EntityUid uid, EntityUid? target, EntityUid user, HyposprayComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
@@ -126,7 +135,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (realTransferAmount <= 0)
             {
-                _popup.PopupCursor(Loc.GetString("hypospray-component-transfer-already-full-message",("owner", target)), user);
+                _popup.PopupCursor(Loc.GetString("hypospray-component-transfer-already-full-message", ("owner", target)), user);
                 return true;
             }
 

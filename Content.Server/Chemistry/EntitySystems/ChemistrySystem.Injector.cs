@@ -15,6 +15,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Stacks;
+using Content.Shared.Hands;
 using Robust.Server.GameObjects;
 using Content.Shared.Popups;
 
@@ -32,7 +33,7 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<InjectorComponent, InjectorDoAfterEvent>(OnInjectDoAfter);
-        SubscribeLocalEvent<InjectorComponent, ComponentStartup>(OnInjectorStartup);
+        SubscribeLocalEvent<InjectorComponent, HandSelectedEvent>(OnInjectorHandSelected);
         SubscribeLocalEvent<InjectorComponent, UseInHandEvent>(OnInjectorUse);
         SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
         SubscribeLocalEvent<InjectorComponent, ComponentGetState>(OnInjectorGetState);
@@ -164,10 +165,11 @@ public sealed partial class ChemistrySystem
         args.Handled = true;
     }
 
-    private void OnInjectorStartup(EntityUid uid, InjectorComponent component, ComponentStartup args)
+    private void OnInjectorHandSelected(EntityUid uid, InjectorComponent component, HandSelectedEvent args)
     {
         // ???? why ?????
-        Dirty(component);
+        // update ui info when you take the item
+        Dirty(uid, component);
     }
 
     private void OnInjectorUse(EntityUid uid, InjectorComponent component, UseInHandEvent args)
