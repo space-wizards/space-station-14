@@ -446,20 +446,6 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sets the Mind's OwnedComponent and OwnedEntity
-    /// </summary>
-    /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>
-    /// <param name="uid">Entity owned by <paramref name="mind"/></param>
-    /// <param name="mindContainerComponent">MindContainerComponent owned by <paramref name="mind"/></param>
-    protected void SetOwnedEntity(MindComponent mind, EntityUid? uid, MindContainerComponent? mindContainerComponent)
-    {
-        if (uid != null)
-            Resolve(uid.Value, ref mindContainerComponent);
-
-        mind.OwnedEntity = uid;
-    }
-
-    /// <summary>
     /// Sets the Mind's UserId, Session, and updates the player's PlayerData. This should have no direct effect on the
     /// entity that any mind is connected to, except as a side effect of the fact that it may change a player's
     /// attached entity. E.g., ghosts get deleted.

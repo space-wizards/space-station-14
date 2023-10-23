@@ -245,6 +245,11 @@ public sealed class MindSystem : SharedMindSystem
         }
         else if (createGhost)
         {
+            // TODO remove this option.
+            // Transfer-to-null should just detach a mind.
+            // If people want to create a ghost, that should be done explicitly via some TransferToGhost() method, not
+            // not implicitly via optional arguments.
+
             var position = Deleted(mind.OwnedEntity)
                 ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
                 : Transform(mind.OwnedEntity.Value).MapPosition;
@@ -259,14 +264,13 @@ public sealed class MindSystem : SharedMindSystem
         if (TryComp(oldEntity, out MindContainerComponent? oldContainer))
         {
             oldContainer.Mind = null;
+            mind.OwnedEntity = null;
             Entity<MindComponent> mindEnt = (mindId, mind);
             Entity<MindContainerComponent> containerEnt = (oldEntity.Value, oldContainer);
             RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(mindEnt, containerEnt));
             RaiseLocalEvent(mindId, new MindGotRemovedEvent(mindEnt, containerEnt));
             Dirty(oldEntity.Value, oldContainer);
         }
-
-        SetOwnedEntity(mind, entity, component);
 
         // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
         if (alreadyAttached)
@@ -295,6 +299,7 @@ public sealed class MindSystem : SharedMindSystem
         if (entity != null)
         {
             component!.Mind = mindId;
+            mind.OwnedEntity = entity;
             mind.OriginalOwnedEntity ??= mind.OwnedEntity;
             Entity<MindComponent> mindEnt = (mindId, mind);
             Entity<MindContainerComponent> containerEnt = (entity.Value, component);
