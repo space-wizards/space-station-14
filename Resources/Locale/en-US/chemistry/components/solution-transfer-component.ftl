@@ -29,5 +29,5 @@ comp-solution-transfer-set-toggle-mode-draw = Now you're pouring in {THE($fromIn
 comp-solution-transfer-set-toggle-mode-inject = Now you're pouring out {THE($fromIn)}
 comp-solution-transfer-cant-change-mode = You can't toggle the pour mode
 
-##Con't pour
-comp-solution-transfer-no-solution-target = You can't {$mode} {THE($target)}
+##Displayed when you can't pour because the targe container hasn't refillable component
+comp-solution-transfer-no-target-refillable-component = You can't spill into {THE($target)}

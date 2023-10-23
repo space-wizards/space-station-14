@@ -174,6 +174,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var target = args.Target!.Value;
 
+            // no any container, nothing do here
+            if (!_solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrain))
+                return;
+
             var transferAmount = component.TransferAmount;
 
             var modeSolution = GetTransferModeSolution(uid, component);
@@ -184,7 +188,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 // if has refillComponent then pure!
                 if (EntityManager.TryGetComponent(target, out RefillableSolutionComponent? refillTargetComp)
                     && _solutionContainerSystem.TryGetRefillableSolution(target, out var targetRefill, refillable: refillTargetComp)
-                    && targetRefill is Solution targetSolution)
+                    && targetRefill != null)
                 {
                     if (EntityManager.TryGetComponent(target, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
                     {
@@ -197,51 +201,40 @@ namespace Content.Server.Chemistry.EntitySystems
                     {
                         var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", target));
                         _popupSystem.PopupEntity(message, uid, args.User);
+                        args.Handled = true;
                     }
                 }
                 // we try to pure, but component has not refellable component
                 else
                 {
-                    var message = Loc.GetString("comp-solution-transfer-no-solution-target",
-                                    ("mode", Loc.GetString("comp-solution-transfer-inject-text")),
-                                    ("target", target));
+                    var message = Loc.GetString("comp-solution-transfer-no-target-refillable-component", ("target", target));
                     _popupSystem.PopupEntity(message, uid, args.User);
+                    args.Handled = true;
                 }
-
-                args.Handled = true;
             }
             else if (component.ToggleMode == SharedTransferToggleMode.Draw && modeSolution != null)
             {
-                if (_solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrain))
+                // uid is the entity receiving solution from target.
+                if (EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
                 {
-                    // uid is the entity receiving solution from target.
-                    if (EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
-                    {
-                        // if the receiver has a smaller transfer limit, use that instead
-                        transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill);
-                    }
-
-                    var transferred = Transfer(args.User, target, targetDrain, uid, modeSolution, transferAmount);
-
-                    if (transferred > 0)
-                    {
-                        var toTheBrim = modeSolution.AvailableVolume == 0;
-                        var msg = toTheBrim
-                            ? "comp-solution-transfer-fill-fully"
-                            : "comp-solution-transfer-fill-normal";
-
-                        _popupSystem.PopupEntity(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)), uid, args.User);
-                    }
-                }
-                else
-                {
-                    var message = Loc.GetString("comp-solution-transfer-no-solution-target",
-                                    ("mode", Loc.GetString("comp-solution-transfer-draw-text")),
-                                    ("target", target));
-                    _popupSystem.PopupEntity(message, uid, args.User);
+                    // if the receiver has a smaller transfer limit, use that instead
+                    transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill);
                 }
 
-                args.Handled = true;
+                var transferred = Transfer(args.User, target, targetDrain, uid, modeSolution, transferAmount);
+
+                if (transferred > 0)
+                {
+                    var toTheBrim = modeSolution.AvailableVolume == 0;
+                    var msg = toTheBrim
+                        ? "comp-solution-transfer-fill-fully"
+                        : "comp-solution-transfer-fill-normal";
+
+                    _popupSystem.PopupEntity(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)),
+                                                                                                        uid, args.User);
+
+                    args.Handled = true;
+                }
             }
         }
 
