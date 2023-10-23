@@ -517,6 +517,7 @@ namespace Content.Server.Database
 
         public List<AdminLogPlayer> Players { get; set; } = default!;
 
+        // Unused
         public List<AdminLogEntity> Entities { get; set; } = default!;
     }
 
@@ -530,6 +531,7 @@ namespace Content.Server.Database
         [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
     }
 
+    // Unused
     public class AdminLogEntity
     {
         [Required, Key] public int Uid { get; set; }
