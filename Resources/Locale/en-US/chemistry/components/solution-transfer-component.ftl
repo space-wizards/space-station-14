@@ -1,7 +1,7 @@
 ### UI status control
 comp-solution-transfer-draw-text = fill
 comp-solution-transfer-inject-text = spill
-comp-solution-transfer-invalid-toggle-mode = Invalid action
+comp-solution-transfer-invalid-toggle-mode = Nothing can do
 comp-solution-transfer-status-volume-label = Volume: {$currentVolume}/{$totalVolume}
 
 ### UI verb menu options
