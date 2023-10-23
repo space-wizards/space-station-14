@@ -63,3 +63,6 @@
 
 - type: Tag
   id: PlatingRNDModsuit
+
+- type: Tag
+  id: PlatingAsteroidModsuit

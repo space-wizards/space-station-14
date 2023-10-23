@@ -97,6 +97,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitEngineer
+    node: modsuitengineer
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -158,6 +161,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitRND
+    node: modsuitrnd
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -185,6 +191,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitMedical
+    node: modsuitmedical
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -242,6 +251,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitCivillian
+    node: modsuitcivillian
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -300,6 +312,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitSecurity
+    node: modsuitsecurity
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -364,6 +379,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitSalvage
+    node: modsuitsalvage
 
 - type: entity
   parent: ClothingControlModsuitBase

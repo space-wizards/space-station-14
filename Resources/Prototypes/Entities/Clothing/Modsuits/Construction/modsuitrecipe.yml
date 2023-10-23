@@ -5,6 +5,72 @@
   startNode: start
   targetNode: modsuitatmospheric
   category: construction-category-clothing
-  description: Продвинутый модсьют в определенной сборке.
+  description: Модсьют, созданный специально под нужды профессии.
   icon: { sprite: Clothing/Back/Modsuits/atmospheric.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Инженерный модсьют
+  id: ModsuitEngineer
+  graph: ModsuitEngineer
+  startNode: start
+  targetNode: modsuitengineer
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/engineer.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Медицинский модсьют
+  id: ModsuitMedical
+  graph: ModsuitMedical
+  startNode: start
+  targetNode: modsuitmedical
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/medical.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Научный модсьют
+  id: ModsuitRND
+  graph: ModsuitRND
+  startNode: start
+  targetNode: modsuitrnd
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/rnd.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Модсьют Утилизатора
+  id: ModsuitSalvage
+  graph: ModsuitSalvage
+  startNode: start
+  targetNode: modsuitsalvage
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/salvage.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Гражданский модсьют
+  id: ModsuitCivillian
+  graph: ModsuitCivillian
+  startNode: start
+  targetNode: modsuitcivillian
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды безработного.
+  icon: { sprite: Clothing/Back/Modsuits/civillian.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Модсьют Службы безопасности
+  id: ModsuitSecurity
+  graph: ModsuitSecurity
+  startNode: start
+  targetNode: modsuitsecurity
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/security.rsi, state: icon }
   objectType: Item

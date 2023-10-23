@@ -330,6 +330,19 @@
 
 - type: entity
   parent: BaseItem
+  id: PlatingAsteroidModsuitConstructing
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/plating.rsi
+    state: engineering-plating
+  - type: Tag
+    tags:
+    - PlatingAsteroidModsuit #same color pallete
+
+- type: entity
+  parent: BaseItem
   id: PlatingAtmosphericModsuitConstructing
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.
