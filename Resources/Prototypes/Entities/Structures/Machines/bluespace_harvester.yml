@@ -1,0 +1,58 @@
+- type: entity
+  id: BluespaceHarvester
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: bluespace harvester
+  description: It's magic.
+  components:
+  - type: BluespaceHarvester
+  - type: Appearance
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.5,1.5,1.5"
+        density: 50
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Sprite
+    sprite: Structures/Machines/bluespace_harvester.rsi
+    snapCardinals: true
+    layers:
+    - state: tap_0
+      map: ["base"]
+  - type: GenericVisualizer
+    visuals:
+      enum.BluespaceHarvesterVisualLayers.Base:
+        base:
+          0: { state: tap_0 }
+          1: { state: tap_1 }
+          2: { state: tap_2 }
+          3: { state: tap_3 }
+          4: { state: tap_4 }
+          5: { state: tap_5 }
+          6: { state: tap_redspace }
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: ActivatableUI
+    key: enum.BluespaceHarvesterUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.BluespaceHarvesterUiKey.Key
+      type: BluespaceHarvesterBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 0
+  - type: Machine
+    board: MicrowaveMachineCircuitboard
+  - type: GuideHelp
+    guides: [ Power ]
+ 
