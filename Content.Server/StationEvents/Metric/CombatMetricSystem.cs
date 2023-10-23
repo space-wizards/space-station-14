@@ -86,7 +86,6 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
             else
             {
                 // This is a friendly
-
                 if (mobState.CurrentState == MobState.Dead)
                 {
                     death += component.DeadScore;
@@ -104,7 +103,6 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
 
                 // Friendlies are good, so make a negative chaos score
                 friendlies -= component.FriendlyScore * threatMultiple;
-
             }
         }
 

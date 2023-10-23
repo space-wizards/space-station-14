@@ -18,7 +18,6 @@ public sealed class PuddleMetricSystem : ChaosMetricSystem<PuddleMetricComponent
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, PuddleMetricComponent component,
         CalculateChaosEvent args)
     {
-
         // Add up the pain of all the puddles
         var query = EntityQueryEnumerator<PuddleComponent, SolutionContainerManagerComponent>();
         var mess = FixedPoint2.Zero;

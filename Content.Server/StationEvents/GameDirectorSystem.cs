@@ -195,7 +195,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     /// </summary>
     protected RankedEvent SelectBest(List<RankedEvent> bestEvents, int maxRandom)
     {
-        var ranked =bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
+        var ranked = bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
 
         var rand = _random.NextFloat();
         rand *= rand; // Square it, which leads to a front-weighted distribution
@@ -206,7 +206,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
 
         // Pick this event
         var events = String.Join(", ", ranked.Select(r => r.PossibleEvent.StationEvent));
-        LogMessage( $"Picked {rankedEvent.PossibleEvent.StationEvent} from best events (in sequence) {events}");
+        LogMessage($"Picked {rankedEvent.PossibleEvent.StationEvent} from best events (in sequence) {events}");
         return rankedEvent;
     }
 
@@ -216,7 +216,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         _adminLogger.Add(LogType.GameDirector, showChat?LogImpact.Medium:LogImpact.High, $"{message}");
         if (showChat)
         {
-            _chat.SendAdminAnnouncement("GameDirector "+ message);
+            _chat.SendAdminAnnouncement("GameDirector " + message);
         }
 
     }
@@ -282,7 +282,6 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         // Need to find a new story. Pick a random one which meets our needs.
         if (scheduler.Stories != null)
         {
-
             var stories = scheduler.Stories.ToList();
             _random.Shuffle(stories);
 
@@ -400,5 +399,4 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
                                                 metrics.ChaosDict.GetValueOrDefault(ChaosMetric.Hostile);
         return calcEvent.Metrics;
     }
-
 }
