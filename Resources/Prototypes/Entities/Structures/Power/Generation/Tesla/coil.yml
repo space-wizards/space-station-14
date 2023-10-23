@@ -79,8 +79,8 @@
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     snapCardinals: true
     layers:
-      - state: grounding_rod_open      
-        map: ["enum.PowerDeviceVisualLayers.Powered"]
+      - state: grounding_rod_open
+        map: ["power"]
       - state: grounding_rodhit
         visible: false
         map: ["hit"]
@@ -90,8 +90,8 @@
         hit:
           True: { visible: true }
           False: { visible: false }
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
+      enum.TeslaCoilVisuals.Enabled:
+        power:
           True: { state: grounding_rod }
           False: { state: grounding_rod_open }
   - type: Transform
@@ -104,14 +104,11 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
-        density: 190
+        density: 90
         mask:
         - MachineMask
         layer:
         - MachineLayer
-  - type: ApcPowerReceiver
-    powerLoad: 1000
-    needsPower: true 
   - type: Appearance
   - type: TeslaGroundingRod
   - type: LightningTarget

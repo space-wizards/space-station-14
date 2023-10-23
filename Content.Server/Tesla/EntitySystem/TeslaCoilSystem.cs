@@ -70,7 +70,7 @@ public sealed class TeslaCoilSystem : EntitySystem
     {
         component.Enabled = status;
         _appearance.SetData(uid, TeslaCoilVisuals.Enabled, status);
-        _audio.PlayPvs(status ? component.SoundOpen : component.SoundOpen, uid);
+        _audio.PlayPvs(status ? component.SoundOpen : component.SoundClose, uid);
         _popup.PopupEntity(status ? Loc.GetString("tesla-coil-on") : Loc.GetString("tesla-coil-off"), uid);
     }
 }

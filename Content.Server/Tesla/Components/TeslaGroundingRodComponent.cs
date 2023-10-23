@@ -1,4 +1,6 @@
 
+using Robust.Shared.Audio;
+
 namespace Content.Server.Tesla.Components;
 
 /// <summary>
@@ -20,6 +22,8 @@ public sealed partial class TeslaGroundingRodComponent : Component
 
     public bool IsSparking;
 
+    public bool Enabled;
+
     /// <summary>
     /// priority for lightning strikes when the device is powered up
     /// </summary>
@@ -31,4 +35,10 @@ public sealed partial class TeslaGroundingRodComponent : Component
     /// </summary>
     [DataField]
     public int DisabledPriority = 0;
+
+    [DataField]
+    public SoundSpecifier SoundOpen = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
+
+    [DataField]
+    public SoundSpecifier SoundClose = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 }

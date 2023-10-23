@@ -14,22 +14,21 @@ public sealed class TeslaGroundingRodSystem : EntitySystem
 {
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TeslaGroundingRodComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<TeslaGroundingRodComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<TeslaGroundingRodComponent, HittedByLightningEvent>(OnHittedLightning);
     }
 
-    private void OnPowerChanged(EntityUid uid, TeslaGroundingRodComponent component, ref PowerChangedEvent args)
+    private void OnInteractHand(EntityUid uid, TeslaGroundingRodComponent component, InteractHandEvent args)
     {
-        if (!TryComp<LightningTargetComponent>(uid, out var target))
-            return;
-
-        target.Priority = args.Powered ? component.EnabledPriority : component.DisabledPriority;
+        Toggle(uid, component, !component.Enabled);
     }
 
     private void OnHittedLightning(EntityUid uid, TeslaGroundingRodComponent component, ref HittedByLightningEvent args)
@@ -55,5 +54,17 @@ public sealed class TeslaGroundingRodSystem : EntitySystem
                 component.IsSparking = false;
             }
         }
+    }
+
+    private void Toggle(EntityUid uid, TeslaGroundingRodComponent component, bool status)
+    {
+        if (!TryComp<LightningTargetComponent>(uid, out var target))
+            return;
+
+        target.Priority = status ? component.EnabledPriority : component.DisabledPriority;
+        component.Enabled = status;
+        _appearance.SetData(uid, TeslaCoilVisuals.Enabled, status);
+        _audio.PlayPvs(status ? component.SoundOpen : component.SoundClose, uid);
+        _popup.PopupEntity(status ? Loc.GetString("tesla-grounding-on") : Loc.GetString("tesla-grounding-off"), uid);
     }
 }

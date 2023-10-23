@@ -46,7 +46,6 @@
   - type: PointLight
     enabled: true
     radius: 5
-    color: "#ff0000"
   - type: Appearance
   - type: WarpPoint
     follow: true
