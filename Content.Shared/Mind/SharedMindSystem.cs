@@ -26,7 +26,7 @@ public abstract class SharedMindSystem : EntitySystem
     [Dependency] private readonly SharedPlayerSystem _player = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
-    // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
+    [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
 
     public override void Initialize()
