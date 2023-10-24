@@ -60,7 +60,7 @@ public sealed class ActionContainerSystem : EntitySystem
     {
         action = null;
 
-        DebugTools.Assert(comp == null || comp.Owner == uid);
+        DebugTools.AssertOwner(uid, comp);
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
 
         if (Exists(actionId))
@@ -162,7 +162,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (action.Container != null)
             RemoveAction(actionId, action);
 
-        DebugTools.Assert(comp == null || comp.Owner == uid);
+        DebugTools.AssertOwner(uid, comp);
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
         if (!comp.Container.Insert(actionId))
         {
