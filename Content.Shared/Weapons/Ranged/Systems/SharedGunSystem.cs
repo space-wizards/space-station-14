@@ -53,6 +53,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private   readonly SharedMeleeWeaponSystem _meleeSystem = default!;
     [Dependency] protected readonly SharedPointLightSystem Lights = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
@@ -123,13 +124,19 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnBayonetInserted(EntityUid uid, MeleeWeaponComponent component, ItemSlotInsertAttemptEvent args)
     {
+        if (args.User == null)
+            return;
+
         if (args.Slot.Name != "Bayonet")
             return;
 
         if (!TryComp(args.Item, out MeleeWeaponComponent? itemMelee))
             return;
 
-        component.Damage = itemMelee.Damage;
+        component.Damage = _meleeSystem.GetDamage(args.Item, (EntityUid) args.User, itemMelee);
+        component.SwingSound = itemMelee.SwingSound;
+        component.HitSound = itemMelee.HitSound;
+        component.NoDamageSound = itemMelee.NoDamageSound;
         component.Hidden = false;
     }
 
