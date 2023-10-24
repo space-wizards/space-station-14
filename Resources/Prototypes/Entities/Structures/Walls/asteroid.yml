@@ -149,6 +149,8 @@
   parent: BaseStructure
   name: rock
   components:
+    - type: PlacementReplacement
+      key: walls
     - type: SoundOnGather
     - type: Gatherable
       whitelist:
