@@ -18,9 +18,6 @@ entities:
     components:
     - name: NT Ares
       type: MetaData
-    - pos: 19.605614,20.262415
-      parent: invalid
-      type: Transform
     - chunks:
         -1,0:
           ind: -1,0

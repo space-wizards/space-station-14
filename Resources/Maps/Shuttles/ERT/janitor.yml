@@ -18,9 +18,6 @@ entities:
     components:
     - name: NT Hestia
       type: MetaData
-    - pos: 39.605614,0.2624154
-      parent: invalid
-      type: Transform
     - chunks:
         -1,0:
           ind: -1,0

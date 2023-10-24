@@ -19,9 +19,6 @@ entities:
     components:
     - name: NT Penance
       type: MetaData
-    - pos: 62.27101,17.585178
-      parent: invalid
-      type: Transform
     - chunks:
         -1,0:
           ind: -1,0

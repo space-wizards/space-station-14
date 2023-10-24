@@ -15,9 +15,6 @@ entities:
     components:
     - name: NT Phoenix
       type: MetaData
-    - pos: 87.27101,62.58518
-      parent: invalid
-      type: Transform
     - chunks:
         -1,0:
           ind: -1,0
