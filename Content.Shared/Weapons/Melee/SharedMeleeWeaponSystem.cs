@@ -322,6 +322,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(target, out var targetXform))
             return false;
 
+        if (weapon.NoLightAttack)
+            return false;
+
         return AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(targetXform.Coordinates)), null);
     }
 

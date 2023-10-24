@@ -45,7 +45,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly ExamineSystemShared Examine = default!;
-    [Dependency] private   readonly ItemSlotsSystem _slots = default!;
+    [Dependency] public readonly ItemSlotsSystem _slots = default!;
     [Dependency] private   readonly RechargeBasicEntityAmmoSystem _recharge = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -147,6 +147,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         component.Hidden = true;
     }
+
 
     private void OnGunUnpaused(EntityUid uid, GunComponent component, ref EntityUnpausedEvent args)
     {
