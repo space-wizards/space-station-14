@@ -19,7 +19,7 @@ namespace Content.Server.Body.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
 
             EntityUid bodyId;
             EntityUid? partUid;

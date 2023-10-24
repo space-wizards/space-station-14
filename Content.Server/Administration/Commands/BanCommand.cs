@@ -78,7 +78,7 @@ public sealed class BanCommand : LocalizedCommands
         }
 
         var located = await _locator.LookupIdByNameOrIdAsync(target);
-        var player = shell.Player as ICommonSession;
+        var player = shell.Player;
 
         if (located == null)
         {

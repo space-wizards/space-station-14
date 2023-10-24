@@ -229,7 +229,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     /// <param name="args"></param>
     private void OnServerSelectionMessage(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleServerSelectionMessage args)
     {
-        _ui.TryOpen(uid, ResearchClientUiKey.Key, (ICommonSession) args.Session);
+        _ui.TryOpen(uid, ResearchClientUiKey.Key, args.Session);
     }
 
     /// <summary>

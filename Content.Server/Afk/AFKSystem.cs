@@ -72,11 +72,9 @@ public sealed class AFKSystem : EntitySystem
 
         _checkTime = _timing.CurTime + TimeSpan.FromSeconds(_checkDelay);
 
-        foreach (var session in Filter.GetAllPlayers())
+        foreach (var pSession in Filter.GetAllPlayers())
         {
-            if (session.Status != SessionStatus.InGame) continue;
-
-            var pSession = (ICommonSession) session;
+            if (pSession.Status != SessionStatus.InGame) continue;
             var isAfk = _afkManager.IsAfk(pSession);
 
             if (isAfk && _afkPlayers.Add(pSession))

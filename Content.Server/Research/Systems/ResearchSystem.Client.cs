@@ -46,7 +46,7 @@ public sealed partial class ResearchSystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, (ICommonSession) args.Session);
+        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, args.Session);
     }
     #endregion
 

@@ -129,12 +129,12 @@ public sealed class MindSystem : SharedMindSystem
     public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
     {
         session = null;
-        return TryComp(mindId, out MindComponent? mind) && (session = (ICommonSession?) mind.Session) != null;
+        return TryComp(mindId, out MindComponent? mind) && (session = mind.Session) != null;
     }
 
     public ICommonSession? GetSession(MindComponent mind)
     {
-        return (ICommonSession?) mind.Session;
+        return mind.Session;
     }
 
     public bool TryGetSession(MindComponent mind, [NotNullWhen(true)] out ICommonSession? session)

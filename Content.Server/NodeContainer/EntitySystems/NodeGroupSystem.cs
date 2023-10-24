@@ -75,7 +75,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private void HandleEnableMsg(NodeVis.MsgEnable msg, EntitySessionEventArgs args)
         {
-            var session = (ICommonSession) args.SenderSession;
+            var session = args.SenderSession;
             if (!_adminManager.HasAdminFlag(session, AdminFlags.Debug))
                 return;
 

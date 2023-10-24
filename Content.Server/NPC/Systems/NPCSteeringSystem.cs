@@ -145,7 +145,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
     private void OnDebugRequest(RequestNPCSteeringDebugEvent msg, EntitySessionEventArgs args)
     {
-        if (!_admin.IsAdmin((ICommonSession)args.SenderSession))
+        if (!_admin.IsAdmin(args.SenderSession))
             return;
 
         if (msg.Enabled)

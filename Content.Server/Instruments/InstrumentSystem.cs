@@ -385,7 +385,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 var nearby = GetBands(entity);
                 _bui.TrySendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
-                    (ICommonSession)request.Session);
+                    request.Session);
             }
 
             _bandRequestQueue.Clear();

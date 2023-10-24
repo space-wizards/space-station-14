@@ -16,7 +16,7 @@ namespace Content.Server.Alert.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
                 shell.WriteLine("You cannot run this from the server or without an attached entity.");

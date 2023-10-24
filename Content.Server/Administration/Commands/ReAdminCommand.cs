@@ -15,7 +15,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             if (player == null)
             {
                 shell.WriteLine("You cannot use this command from the server console.");

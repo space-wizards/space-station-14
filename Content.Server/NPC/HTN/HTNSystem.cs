@@ -45,7 +45,7 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnHTNMessage(RequestHTNMessage msg, EntitySessionEventArgs args)
     {
-        if (!_admin.HasAdminFlag((ICommonSession) args.SenderSession, AdminFlags.Debug))
+        if (!_admin.HasAdminFlag(args.SenderSession, AdminFlags.Debug))
         {
             _subscribers.Remove(args.SenderSession);
             return;

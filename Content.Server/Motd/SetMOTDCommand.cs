@@ -25,7 +25,7 @@ public sealed class SetMotdCommand : LocalizedCommands
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string motd = "";
-        var player = (ICommonSession?)shell.Player;
+        var player = shell.Player;
         if (args.Length > 0)
         {
             motd = string.Join(" ", args).Trim();

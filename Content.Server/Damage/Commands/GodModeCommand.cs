@@ -17,7 +17,7 @@ namespace Content.Server.Damage.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             EntityUid entity;
 
             switch (args.Length)

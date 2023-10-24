@@ -25,7 +25,7 @@ namespace Content.Server.Verbs
 
         private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
         {
-            var player = (ICommonSession) eventArgs.SenderSession;
+            var player = eventArgs.SenderSession;
 
             if (!EntityManager.EntityExists(GetEntity(args.EntityUid)))
             {

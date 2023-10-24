@@ -30,7 +30,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
 
             if (player == null)
             {

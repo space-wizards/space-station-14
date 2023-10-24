@@ -346,10 +346,10 @@ public sealed partial class ParticleAcceleratorSystem
         if (msg.Enabled)
         {
             if (comp.Assembled)
-                SwitchOn(uid, (ICommonSession?) msg.Session, comp);
+                SwitchOn(uid, msg.Session, comp);
         }
         else
-            SwitchOff(uid, (ICommonSession?) msg.Session, comp);
+            SwitchOff(uid, msg.Session, comp);
 
         UpdateUI(uid, comp);
     }
@@ -363,7 +363,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
-        SetStrength(uid, msg.State, (ICommonSession?) msg.Session, comp);
+        SetStrength(uid, msg.State, msg.Session, comp);
 
         UpdateUI(uid, comp);
     }
@@ -377,7 +377,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
-        RescanParts(uid, (ICommonSession?) msg.Session, comp);
+        RescanParts(uid, msg.Session, comp);
 
         UpdateUI(uid, comp);
     }

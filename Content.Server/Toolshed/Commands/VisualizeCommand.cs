@@ -30,7 +30,7 @@ public sealed class VisualizeCommand : ToolshedCommand
         var ui = new ToolshedVisualizeEui(
             input.Select(e => (EntName(e), EntityManager.GetNetEntity(e))).ToArray()
         );
-        _euiManager.OpenEui(ui, (ICommonSession) ctx.Session);
+        _euiManager.OpenEui(ui, ctx.Session);
         _euiManager.QueueStateUpdate(ui);
     }
 }

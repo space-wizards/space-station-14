@@ -28,7 +28,7 @@ public sealed partial class TestPair
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; private set; } = default!;
     public RobustIntegrationTest.ClientIntegrationInstance Client { get;  private set; } = default!;
 
-    public ICommonSession? Player => (ICommonSession?) Server.PlayerMan.Sessions.FirstOrDefault();
+    public ICommonSession? Player => Server.PlayerMan.Sessions.FirstOrDefault();
     public ContentPlayerData? PlayerData => Player?.Data.ContentData();
 
     public PoolTestLogHandler ServerLogHandler { get;  private set; } = default!;

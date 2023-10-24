@@ -20,7 +20,7 @@ namespace Content.Server.Sandbox.Commands
         {
             var sandboxManager = EntitySystem.Get<SandboxSystem>();
             var adminManager = IoCManager.Resolve<IAdminManager>();
-            if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag((ICommonSession)shell.Player!, AdminFlags.Mapping)))
+            if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag(shell.Player!, AdminFlags.Mapping)))
             {
                 shell.WriteError("You are not currently able to use mapping commands.");
             }

@@ -528,7 +528,7 @@ namespace Content.Server.NPC.Pathfinding
 
         private void OnBreadcrumbs(RequestPathfindingDebugMessage msg, EntitySessionEventArgs args)
         {
-            var pSession = (ICommonSession) args.SenderSession;
+            var pSession = args.SenderSession;
 
             if (!_adminManager.HasAdminFlag(pSession, AdminFlags.Debug))
             {

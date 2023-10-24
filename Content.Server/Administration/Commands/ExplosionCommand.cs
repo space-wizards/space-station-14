@@ -21,7 +21,7 @@ public sealed class OpenExplosionEui : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player as ICommonSession;
+        var player = shell.Player;
         if (player == null)
         {
             shell.WriteError("This does not work from the server console.");

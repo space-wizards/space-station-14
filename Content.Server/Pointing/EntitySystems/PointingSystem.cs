@@ -181,7 +181,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
 
             var viewers = Filter.Empty()
-                .AddWhere(session1 => ViewerPredicate((ICommonSession) session1))
+                .AddWhere(session1 => ViewerPredicate(session1))
                 .Recipients;
 
             string selfMessage;

@@ -19,7 +19,7 @@ namespace Content.Server.AlertLevel.Commands
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             var levelNames = new string[] {};
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             if (player?.AttachedEntity != null)
             {
                 var stationUid = EntitySystem.Get<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
@@ -54,7 +54,7 @@ namespace Content.Server.AlertLevel.Commands
                 return;
             }
 
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
                 shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));

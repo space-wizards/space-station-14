@@ -15,7 +15,7 @@ namespace Content.Server.Administration.Commands
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             var dbMan = IoCManager.Resolve<IServerDbManager>();
 
             if (args.Length != 1)

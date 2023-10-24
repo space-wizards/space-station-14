@@ -18,7 +18,7 @@ namespace Content.Server.Disposal
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
                 shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));

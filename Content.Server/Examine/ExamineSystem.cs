@@ -46,7 +46,7 @@ namespace Content.Server.Examine
 
         private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)
         {
-            var player = (ICommonSession) eventArgs.SenderSession;
+            var player = eventArgs.SenderSession;
             var session = eventArgs.SenderSession;
             var channel = player.ConnectedClient;
             var entity = GetEntity(request.NetEntity);

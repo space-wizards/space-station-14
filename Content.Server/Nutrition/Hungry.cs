@@ -18,7 +18,7 @@ namespace Content.Server.Nutrition
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as ICommonSession;
+            var player = shell.Player;
             if (player == null)
             {
                 shell.WriteLine("You cannot use this command unless you are a player.");

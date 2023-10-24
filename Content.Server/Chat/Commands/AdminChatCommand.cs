@@ -15,7 +15,7 @@ namespace Content.Server.Chat.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = (ICommonSession?) shell.Player;
+            var player = shell.Player;
 
             if (player == null)
             {
