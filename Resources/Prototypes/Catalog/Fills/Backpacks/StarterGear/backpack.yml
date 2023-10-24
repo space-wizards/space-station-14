@@ -292,7 +292,10 @@
         - id: RCDAmmo
         - id: CableMVStack
         - id: CableHVStack
-        - id: CableLVStack
+        - id: CableApcStack
+        - id: SheetPlasteel
+        - id: SheetSteel
+        - id: SheetGlass
 
 - type: entity
   noSpawn: true
