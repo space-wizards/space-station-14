@@ -313,6 +313,7 @@
       - id: HandheldHealthAnalyzer
       - id: CombatMedipen
       - id: MicroBombImplanter
+      - id: SyndiHypo
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
