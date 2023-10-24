@@ -102,7 +102,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: StealthClothing
-    visibility: 1.1
+    visibility: 0.2
     toggleAction: ActionTogglePhaseCloak
   - type: PressureProtection
     highPressureMultiplier: 0.6
