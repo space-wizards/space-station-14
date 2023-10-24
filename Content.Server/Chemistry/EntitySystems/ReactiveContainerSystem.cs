@@ -1,6 +1,6 @@
 using Content.Shared.Chemistry;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Popups;
@@ -19,17 +19,8 @@ public sealed class ReactiveContainerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReactiveContainerComponent, ComponentInit>(HandleInit);
         SubscribeLocalEvent<ReactiveContainerComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<ReactiveContainerComponent, SolutionChangedEvent>(OnSolutionChange);
-    }
-
-    private void HandleInit(EntityUid uid, ReactiveContainerComponent component, ComponentInit args)
-    {
-        component.Owner
-            .EnsureComponentWarn<SolutionContainerManagerComponent>($"{nameof(ReactiveContainerComponent)} requires a SolutionContainerManager on {component.Owner}!");
-        component.Owner
-            .EnsureComponentWarn<ContainerManagerComponent>($"{nameof(ReactiveContainerComponent)} requires a ContainerManagerComponent on {component.Owner}!");
     }
 
     private void OnInserted(EntityUid uid, ReactiveContainerComponent comp, EntInsertedIntoContainerMessage args)
