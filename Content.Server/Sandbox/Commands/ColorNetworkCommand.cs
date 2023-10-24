@@ -5,7 +5,6 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Sandbox.Commands
 {

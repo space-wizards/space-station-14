@@ -4,7 +4,6 @@ using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Examine

@@ -3,7 +3,6 @@ using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Commands
 {

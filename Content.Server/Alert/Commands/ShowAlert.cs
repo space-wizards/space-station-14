@@ -3,7 +3,6 @@ using Content.Server.Commands;
 using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Alert.Commands
 {

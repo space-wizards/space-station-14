@@ -6,7 +6,6 @@ using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Motd;
 

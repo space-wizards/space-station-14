@@ -4,7 +4,6 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Bql;
 using Content.Shared.Eui;
-using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 

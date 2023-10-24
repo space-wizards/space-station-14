@@ -3,7 +3,6 @@ using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Commands

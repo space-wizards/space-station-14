@@ -2,7 +2,6 @@ using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.Player;
 
 namespace Content.Server.Chat.Commands
 {

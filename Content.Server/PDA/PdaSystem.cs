@@ -14,7 +14,6 @@ using Content.Shared.Light.Components;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 
 namespace Content.Server.PDA
 {

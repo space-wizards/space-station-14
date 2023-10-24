@@ -8,7 +8,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Numerics;
-using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands;
 

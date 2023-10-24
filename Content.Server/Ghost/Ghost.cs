@@ -2,7 +2,6 @@ using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Ghost
 {

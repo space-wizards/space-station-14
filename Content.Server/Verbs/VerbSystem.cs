@@ -6,7 +6,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 
 namespace Content.Server.Verbs
 {

@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
-using Robust.Shared.Player;
 
 namespace Content.Server.Research.Systems;
 

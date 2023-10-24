@@ -3,7 +3,6 @@ using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Body.Commands

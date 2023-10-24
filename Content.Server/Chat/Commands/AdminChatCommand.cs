@@ -2,7 +2,6 @@ using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Chat.Commands
 {

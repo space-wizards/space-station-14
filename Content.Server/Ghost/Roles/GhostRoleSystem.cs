@@ -4,7 +4,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
-using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Follower;

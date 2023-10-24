@@ -3,7 +3,6 @@ using Content.Server.EUI;
 using Content.Server.NPC.UI;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.NPC.Commands;
 

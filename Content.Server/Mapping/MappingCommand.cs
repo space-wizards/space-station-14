@@ -10,7 +10,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Mapping

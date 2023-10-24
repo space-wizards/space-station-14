@@ -2,7 +2,6 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 
 namespace Content.Server.Salvage;
 

@@ -7,7 +7,6 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Voting;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Voting
 {

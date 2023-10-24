@@ -4,7 +4,6 @@ using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Body.Commands
 {

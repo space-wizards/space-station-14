@@ -3,7 +3,6 @@ using Content.Shared.Administration;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition
 {

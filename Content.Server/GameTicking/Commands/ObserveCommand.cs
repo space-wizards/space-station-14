@@ -1,7 +1,6 @@
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Commands
 {

@@ -5,7 +5,6 @@ using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 
 namespace Content.Server.Objectives.Commands
 {

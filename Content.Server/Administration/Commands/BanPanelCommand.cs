@@ -1,7 +1,6 @@
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Content.Server.EUI;
-using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands;
 

@@ -2,7 +2,6 @@
 using Content.Shared.Administration;
 using Content.Shared.EntityList;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityList

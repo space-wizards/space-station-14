@@ -1,7 +1,6 @@
 ﻿using Content.Server.DeviceNetwork.Components;
 using Content.Shared.SensorMonitoring;
 using Robust.Shared.Collections;
-using Robust.Shared.Player;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 using IncrementalUIState = Content.Shared.SensorMonitoring.SensorMonitoringIncrementalUpdate;
 
