@@ -1126,6 +1126,16 @@
   - UplinkMisc
 
 - type: listing
+  id: UplinkSnackBox
+  name: uplink-snack-box-name
+  description: uplink-snack-box-desc
+  productEntity: HappyHonkNukieSnacks
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkMisc
+
+- type: listing
   id: UplinkEshield
   name: uplink-eshield-name
   description: uplink-eshield-desc
