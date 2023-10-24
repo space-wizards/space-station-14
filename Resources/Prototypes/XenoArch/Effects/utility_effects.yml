@@ -53,7 +53,7 @@
         ents: [ ]
   - type: Storage
     maxSlots: 5
-    maxItemSize: Large
+    maxItemSize: Huge
     maxTotalWeight: 40
 
 - type: artifactEffect

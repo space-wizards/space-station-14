@@ -51,7 +51,7 @@ namespace Content.IntegrationTests.Tests
   id: ToolboxDummy
   components:
   - type: Item
-    size: Large
+    size: Huge
 ";
         [Test]
         public async Task Test()

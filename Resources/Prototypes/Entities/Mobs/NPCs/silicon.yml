@@ -173,7 +173,7 @@
     node: bot
   - type: Storage
     maxSlots: 15
-    maxItemSize: Bulky
+    maxItemSize: Large
     maxTotalWeight: 60
   - type: UserInterface
     interfaces:

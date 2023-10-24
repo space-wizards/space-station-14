@@ -226,8 +226,10 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
+  - type: Item
+    size: Ginormous
   - type: Storage
     maxSlots: 21
-    maxItemSize: Large
+    maxItemSize: Huge
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding

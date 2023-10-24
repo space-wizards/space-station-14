@@ -672,7 +672,7 @@
       types:
         Blunt: 0
   - type: Item
-    size: Normal
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
   - type: ItemCooldown
@@ -741,7 +741,7 @@
     sprite: Objects/Fun/toys.rsi
     state: synb
   - type: Item
-    size: Normal
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: synb
   - type: Damageable

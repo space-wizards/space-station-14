@@ -11,6 +11,7 @@
   - type: Clothing
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
+    maxItemSize: Normal
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -83,6 +84,7 @@
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
     maxSlots: 16
+    maxItemSize: Normal
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -416,7 +418,7 @@
   - type: Clothing
     sprite: Clothing/Belt/bandolier.rsi
   - type: Item
-    size: Bulky
+    size: Large
   - type: Storage
     whitelist:
       tags:
@@ -461,7 +463,7 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Item
-    size: Bulky
+    size: Large
   - type: Storage
     whitelist:
       components:
@@ -524,7 +526,7 @@
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Item
-    size: Bulky
+    size: Large
 
 - type: entity
   parent: ClothingBeltBase

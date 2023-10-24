@@ -11,5 +11,6 @@ item-component-on-examine-size = Size: {$size}
 item-component-size-Tiny = tiny
 item-component-size-Small = small
 item-component-size-Normal = normal
-item-component-size-Bulky = bulky
 item-component-size-Large = large
+item-component-size-Huge = huge
+item-component-size-Ginormous = bulky

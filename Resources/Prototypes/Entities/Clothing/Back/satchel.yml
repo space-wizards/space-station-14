@@ -167,6 +167,8 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
+  - type: Item
+    size: Ginormous
   - type: Storage
     maxSlots: 21
-    maxItemSize: Large
+    maxItemSize: Huge

@@ -305,7 +305,7 @@
       map: ["foldedLayer"]
       visible: false
   - type: Item
-    size: Bulky
+    size: Large
   - type: Appearance
   - type: MeleeWeapon
     damage:

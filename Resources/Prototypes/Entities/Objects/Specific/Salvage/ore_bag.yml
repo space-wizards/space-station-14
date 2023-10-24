@@ -14,7 +14,7 @@
     slots:
     - belt
   - type: Item
-    size: Large
+    size: Huge
   - type: Storage
     maxSlots: 12
     maxItemSize: Normal

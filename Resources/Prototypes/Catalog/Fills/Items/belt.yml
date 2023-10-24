@@ -121,6 +121,8 @@
   name: grenadier chest rig
   suffix: Filled
   components:
+  - type: Item
+    size: Large
   - type: Storage
     maxSlots: 8
   - type: StorageFill

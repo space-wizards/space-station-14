@@ -125,7 +125,7 @@ public sealed class EnergySwordSystem : EntitySystem
     {
         if (TryComp(uid, out ItemComponent? item))
         {
-            _item.SetSize(uid, ItemSize.Large, item);
+            _item.SetSize(uid, ItemSize.Huge, item);
         }
 
         if (comp.IsSharp)

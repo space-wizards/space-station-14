@@ -89,12 +89,17 @@ public enum ItemSize
     /// <summary>
     /// Items that are too large to fit inside of standard bags, but can worn in exterior slots or placed in custom containers.
     /// </summary>
-    Bulky = 4,
+    Large = 4,
 
     /// <summary>
     /// Items that are too large to place inside of any kind of container.
     /// </summary>
-    Large = 5
+    Huge = 5,
+
+    /// <summary>
+    /// Picture furry gf
+    /// </summary>
+    Ginormous = 6
 }
 
 /// <summary>

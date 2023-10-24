@@ -57,7 +57,7 @@
   components:
   - type: Storage
     maxSlots: 100
-    maxItemSize: Large
+    maxItemSize: Huge
     maxTotalWeight: 200
     quickInsert: true
     areaInsert: true

@@ -5,7 +5,7 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: Bulky
+    size: Large
   - type: Storage
     maxSlots: 4
     maxTotalWeight: 16
@@ -33,7 +33,7 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: Bulky
+    size: Large
   - type: Storage
     maxSlots: 6
     maxTotalWeight: 24

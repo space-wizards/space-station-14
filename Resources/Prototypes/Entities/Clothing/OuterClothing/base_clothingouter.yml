@@ -72,7 +72,7 @@
     walkModifier: 0.4
     sprintModifier: 0.6
   - type: Item
-    size: Bulky
+    size: Large
   - type: Armor
     modifiers:
       coefficients:

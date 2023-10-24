@@ -25,7 +25,7 @@ public sealed partial class ItemToggleComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("onSize")]
-    public ItemSize OnSize = ItemSize.Large;
+    public ItemSize OnSize = ItemSize.Huge;
 }
 
 [ByRefEvent]

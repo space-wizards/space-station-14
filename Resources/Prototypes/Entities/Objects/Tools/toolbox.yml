@@ -11,7 +11,7 @@
     maxSlots: 7
     maxTotalWeight: 28
   - type: Item
-    size: Bulky
+    size: Large
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:

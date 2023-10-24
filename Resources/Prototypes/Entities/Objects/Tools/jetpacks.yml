@@ -37,7 +37,7 @@
       state: icon
     - type: Item
       sprite: Objects/Tanks/Jetpacks/blue.rsi
-      size: Bulky
+      size: Large
     - type: UserInterface
       interfaces:
         - key: enum.SharedGasTankUiKey.Key

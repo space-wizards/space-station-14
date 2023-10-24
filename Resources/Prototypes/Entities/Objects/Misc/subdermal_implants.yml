@@ -110,7 +110,7 @@
     - type: SubdermalImplant
       implantAction: ActionOpenStorageImplant
     - type: Item
-      size: Large
+      size: Huge
     - type: Storage
       maxSlots: 4
       maxItemSize: Small

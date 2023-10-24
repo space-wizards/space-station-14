@@ -8,7 +8,7 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
   - type: Item
-    size: Large
+    size: Huge
   - type: Clothing
     quickEquip: false
     slots:
@@ -258,9 +258,11 @@
       shader: unshaded
   - type: Clothing
     equippedPrefix: holding
+  - type: Item
+    size: Ginormous
   - type: Storage
     maxSlots: 21
-    maxItemSize: Large
+    maxItemSize: Huge
 
 - type: entity
   parent: ClothingBackpackClown

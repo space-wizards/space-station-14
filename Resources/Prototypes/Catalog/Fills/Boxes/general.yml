@@ -233,6 +233,11 @@
   id: BoxPerformer
   description: Happy Hatsune Miku Day!
   components:
+  - type: Storage
+    maxItemSize: Normal
+    whitelist:
+      components:
+      - Clothing
   - type: StorageFill
     contents:
       - id: ClothingShoesBootsPerformer
