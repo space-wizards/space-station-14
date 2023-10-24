@@ -1,7 +1,7 @@
 ﻿- type: stack
   id: ArtifactFragment
   name: artifact fragment
-  icon: { sprite: "/Textures/Objects/Specific/Xenoarchaelogy/artifact_fragments.rsi", state: ancientball1 }
+  icon: { sprite: "/Textures/Objects/Specific/Xenoarchaeology/artifact_fragments.rsi", state: ancientball1 }
   spawn: ArtifactFragment1
   maxCount: 30
   itemSize: 5
