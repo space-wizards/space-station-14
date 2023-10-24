@@ -86,6 +86,8 @@
   suffix: Filled
   parent: ToolboxSyndicate
   components:
+  - type: Storage
+    maxItemSize: Large
   - type: StorageFill
     contents:
       - id: ClothingBeltUtilityEngineering

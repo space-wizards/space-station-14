@@ -101,15 +101,8 @@ namespace Content.IntegrationTests.Tests
                                       ? SharedStorageSystem.DefaultStorageMaxItemSize
                                       : (ItemSize) Math.Max(0, (int) item.Size - 1));
 
-                    int capacity;
-                    if (storage.MaxTotalWeight != null)
-                    {
-                        capacity = storage.MaxTotalWeight.Value;
-                    }
-                    else
-                    {
-                        capacity = storage.MaxSlots * SharedItemSystem.GetItemSizeWeight(storage.MaxItemSize ?? maxSize);
-                    }
+                    var capacity = storage.MaxTotalWeight ??
+                                   storage.MaxSlots * SharedItemSystem.GetItemSizeWeight(storage.MaxItemSize ?? maxSize);
 
                     var fill = (StorageFillComponent) proto.Components[id].Component;
                     var size = GetFillSize(fill, false, protoMan);
