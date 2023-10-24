@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation at commit e06b82a7f4b2b09216fb28fd384c95a2e1dc50e5 and modified by Darkie",
+  "copyright": "Taken from https://github.com/space-wizards/space-station-14/ at commit f57e8ec6b9b4b72ef56c8146be0bc159ed2691ee and modified by Darkie",
   "states": [
     {
       "name": "DamageOverlay_4",
