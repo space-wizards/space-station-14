@@ -35,7 +35,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly MeleeWeaponSystem _meleeSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string HitscanProto = "HitscanEffect";
