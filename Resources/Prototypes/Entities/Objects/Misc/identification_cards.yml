@@ -447,6 +447,7 @@
     heldPrefix: blue
   - type: IdCard
     jobTitle: Central Commander
+    jobIcon: JobIconNanotrasen
   - type: Access
     groups:
     - AllAccess
