@@ -231,7 +231,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 return;
             }
 
-            if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
+            if (_xformQuery.TryGetComponent(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
             {
                 var parent = transformOwner.ParentUid;
 
@@ -614,8 +614,8 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(uid, ref uid.Comp))
             return false;
 
-        return GetCumulativeItemSizes(uid, uid.Comp) < GetMaxTotalWeight(uid) &&
-               uid.Comp.Container.ContainedEntities.Count < uid.Comp.MaxSlots;
+        return uid.Comp.Container.ContainedEntities.Count < uid.Comp.MaxSlots &&
+               GetCumulativeItemSizes(uid, uid.Comp) < GetMaxTotalWeight(uid);
     }
 
     /// <summary>
@@ -646,7 +646,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (uid.Comp.MaxItemSize != null)
             return uid.Comp.MaxItemSize.Value;
 
-        if (!TryComp<ItemComponent>(uid, out var item))
+        if (!_itemQuery.TryGetComponent(uid, out var item))
             return DefaultStorageMaxItemSize;
 
         // if there is no max item size specified, the value used
