@@ -71,7 +71,7 @@ public sealed class MOTDSystem : EntitySystem
 
         var wrappedMessage = Loc.GetString("motd-wrap-message", ("motd", _messageOfTheDay));
         shell.WriteLine(wrappedMessage);
-        if (shell.Player is ICommonSession player)
+        if (shell.Player is { } player)
             _chatManager.ChatMessageToOne(ChatChannel.Server, _messageOfTheDay, wrappedMessage, source: EntityUid.Invalid, hideChat: false, client: player.ConnectedClient);
     }
 

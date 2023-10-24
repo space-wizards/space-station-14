@@ -88,7 +88,7 @@ namespace Content.Server.Afk
 
         private void ConsoleHostOnAnyCommandExecuted(IConsoleShell shell, string commandname, string argstr, string[] args)
         {
-            if (shell.Player is ICommonSession player)
+            if (shell.Player is { } player)
                 PlayerDidAction(player);
         }
 

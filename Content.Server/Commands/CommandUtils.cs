@@ -68,7 +68,7 @@ namespace Content.Server.Commands
                 transform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
             ruleString = ruleString.Replace("$NAME", entMan.GetComponent<MetaDataComponent>(ent).EntityName);
 
-            if (shell.Player is ICommonSession player)
+            if (shell.Player is { } player)
             {
                 if (player.AttachedEntity is {Valid: true} p)
                 {

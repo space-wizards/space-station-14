@@ -17,7 +17,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (!(shell.Player is ICommonSession))
+            if (shell.Player == null)
             {
                 shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
