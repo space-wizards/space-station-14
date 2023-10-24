@@ -157,7 +157,7 @@
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetERTMedic
     eyes: ClothingEyesHudMedical
-    gloves: ClothingHandsGlovesCombat
+    gloves: ClothingHandsGlovesNitrile
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
@@ -173,7 +173,7 @@
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
     eyes: ClothingEyesHudMedical
-    gloves: ClothingHandsGlovesCombat
+    gloves: ClothingHandsGlovesNitrile
     outerClothing: ClothingOuterHardsuitERTMedical
     suitstorage: AirTankFilled
     id: ERTLeaderPDA
@@ -217,7 +217,7 @@
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
-    gloves: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesColorPurple
     outerClothing: ClothingOuterHardsuitERTJanitor
     suitstorage: AirTankFilled
     id: ERTLeaderPDA
