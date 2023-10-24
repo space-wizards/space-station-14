@@ -1,6 +1,7 @@
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Physics.Components;
@@ -16,10 +17,10 @@ namespace Content.Client.Physics.Controllers
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<RelayInputMoverComponent, LocalPlayerAttachedEvent>(OnRelayPlayerAttached);
-            SubscribeLocalEvent<RelayInputMoverComponent, LocalPlayerDetachedEvent>(OnRelayPlayerDetached);
-            SubscribeLocalEvent<InputMoverComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<InputMoverComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<RelayInputMoverComponent, PlayerAttachedEvent>(OnRelayPlayerAttached);
+            SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
+            SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<InputMoverComponent, UpdateIsPredictedEvent>(OnUpdatePredicted);
             SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
@@ -53,7 +54,7 @@ namespace Content.Client.Physics.Controllers
             // What if the entity is being pulled by a vehicle controlled by the player?
         }
 
-        private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, LocalPlayerAttachedEvent args)
+        private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
         {
             Physics.UpdateIsPredicted(uid);
             Physics.UpdateIsPredicted(component.RelayEntity);
@@ -61,7 +62,7 @@ namespace Content.Client.Physics.Controllers
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
-        private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, LocalPlayerDetachedEvent args)
+        private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
         {
             Physics.UpdateIsPredicted(uid);
             Physics.UpdateIsPredicted(component.RelayEntity);
@@ -69,12 +70,12 @@ namespace Content.Client.Physics.Controllers
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
-        private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, LocalPlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, PlayerAttachedEvent args)
         {
             SetMoveInput(component, MoveButtons.None);
         }
 
-        private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, LocalPlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, PlayerDetachedEvent args)
         {
             SetMoveInput(component, MoveButtons.None);
         }

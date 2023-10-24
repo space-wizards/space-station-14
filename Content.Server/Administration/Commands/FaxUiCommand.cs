@@ -1,6 +1,7 @@
 using Content.Server.EUI;
 using Content.Server.Fax.AdminUI;
 using Content.Shared.Administration;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
@@ -15,7 +16,7 @@ public sealed class FaxUiCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
+        var player = shell.Player as IPlayerSession;
         if (player == null)
         {
             shell.WriteLine("shell-only-players-can-run-this-command");

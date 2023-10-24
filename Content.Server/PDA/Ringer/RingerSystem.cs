@@ -7,6 +7,7 @@ using Content.Shared.PDA.Ringer;
 using Content.Shared.Popups;
 using Content.Shared.Store;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -181,7 +182,7 @@ namespace Content.Server.PDA.Ringer
                 _ui.SetUiState(bui, new RingerUpdateState(isPlaying, ringer.Ringtone));
         }
 
-        public bool ToggleRingerUI(EntityUid uid, ICommonSession session)
+        public bool ToggleRingerUI(EntityUid uid, IPlayerSession session)
         {
             if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
                 _ui.ToggleUi(bui, session);

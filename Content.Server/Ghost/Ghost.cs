@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Ghost
@@ -16,7 +17,7 @@ namespace Content.Server.Ghost
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player;
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("You have no session, you can't ghost.");

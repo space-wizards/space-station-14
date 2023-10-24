@@ -5,6 +5,7 @@ using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 
 namespace Content.Client.Administration.UI.Tabs.AdminTab
 {

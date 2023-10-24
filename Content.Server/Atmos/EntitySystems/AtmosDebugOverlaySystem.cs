@@ -10,7 +10,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -28,7 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
         ///     To modify it see <see cref="AddObserver"/> and
         ///     <see cref="RemoveObserver"/>.
         /// </summary>
-        private readonly HashSet<ICommonSession> _playerObservers = new();
+        private readonly HashSet<IPlayerSession> _playerObservers = new();
 
         /// <summary>
         ///     Overlay update ticks per second.
@@ -49,17 +48,17 @@ namespace Content.Server.Atmos.EntitySystems
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
         }
 
-        public bool AddObserver(ICommonSession observer)
+        public bool AddObserver(IPlayerSession observer)
         {
             return _playerObservers.Add(observer);
         }
 
-        public bool HasObserver(ICommonSession observer)
+        public bool HasObserver(IPlayerSession observer)
         {
             return _playerObservers.Contains(observer);
         }
 
-        public bool RemoveObserver(ICommonSession observer)
+        public bool RemoveObserver(IPlayerSession observer)
         {
             if (!_playerObservers.Remove(observer))
             {
@@ -77,7 +76,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="observer">The observer to toggle.</param>
         /// <returns>true if added, false if removed.</returns>
-        public bool ToggleObserver(ICommonSession observer)
+        public bool ToggleObserver(IPlayerSession observer)
         {
             if (HasObserver(observer))
             {

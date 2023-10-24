@@ -14,7 +14,7 @@ namespace Content.Server.GameTicking.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player;
+            var player = shell.Player as IPlayerSession;
             if (args.Length > 1)
             {
                 shell.WriteLine("Must provide <= 1 argument.");

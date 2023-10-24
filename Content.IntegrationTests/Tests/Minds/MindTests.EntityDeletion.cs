@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Players;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
-using Content.Shared.Players;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -36,7 +35,7 @@ public sealed partial class MindTests
         MindComponent mind = default!;
         await server.WaitAssertion(() =>
         {
-            var player = playerMan.Sessions.Single();
+            var player = playerMan.ServerSessions.Single();
 
             playerEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
             visitEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
@@ -82,7 +81,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
-        var player = playerMan.Sessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
@@ -129,7 +128,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
 
-        var player = playerMan.Sessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
         Assert.That(!entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player was initially a ghost?");
 
@@ -163,7 +162,7 @@ public sealed partial class MindTests
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
         var mind = GetMind(pair);
 
-        var player = playerMan.Sessions.Single();
+        var player = playerMan.ServerSessions.Single();
 #pragma warning disable NUnit2045 // Interdependent assertions.
         Assert.That(player.AttachedEntity, Is.Not.Null);
         Assert.That(entMan.EntityExists(player.AttachedEntity));
@@ -219,7 +218,7 @@ public sealed partial class MindTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var serverConsole = server.ResolveDependency<IServerConsoleHost>();
 
-        var player = playerMan.Sessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
         var ghost = await BecomeGhost(pair);
 
@@ -264,7 +263,7 @@ public sealed partial class MindTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var serverConsole = server.ResolveDependency<IServerConsoleHost>();
 
-        var player = playerMan.Sessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
         EntityUid ghost = default!;
 

@@ -54,7 +54,6 @@ public sealed class RenameCommand : IConsoleCommand
         {
             // Mind
             mind.CharacterName = name;
-            _entManager.Dirty(mindId, mind);
         }
 
         // Id Cards

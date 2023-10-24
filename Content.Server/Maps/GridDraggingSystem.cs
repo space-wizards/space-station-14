@@ -1,9 +1,10 @@
 using Content.Shared.Maps;
 using Robust.Server.Console;
+using Robust.Server.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Maps;
 
@@ -26,7 +27,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     public void Toggle(ICommonSession session)
     {
-        if (session is not { } pSession)
+        if (session is not IPlayerSession pSession)
             return;
 
         DebugTools.Assert(_admin.CanCommand(pSession, CommandName));
@@ -51,7 +52,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     {
         var grid = GetEntity(ev.Grid);
 
-        if (args.SenderSession is not { } playerSession ||
+        if (args.SenderSession is not IPlayerSession playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
             !Exists(grid) ||
             Deleted(grid))
@@ -68,7 +69,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     {
         var grid = GetEntity(msg.Grid);
 
-        if (args.SenderSession is not { } playerSession ||
+        if (args.SenderSession is not IPlayerSession playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
             !Exists(grid) ||
             Deleted(grid))

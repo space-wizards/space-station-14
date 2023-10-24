@@ -13,7 +13,6 @@ using Robust.Server.Console;
 using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Player;
 
 namespace Content.Server.Sandbox
 {

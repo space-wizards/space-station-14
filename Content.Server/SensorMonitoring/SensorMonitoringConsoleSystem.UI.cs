@@ -1,5 +1,7 @@
 ﻿using Content.Server.DeviceNetwork.Components;
 using Content.Shared.SensorMonitoring;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Collections;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 using IncrementalUIState = Content.Shared.SensorMonitoring.SensorMonitoringIncrementalUpdate;
@@ -128,7 +130,7 @@ public sealed partial class SensorMonitoringConsoleSystem
         if (!args.UiKey.Equals(SensorMonitoringConsoleUiKey.Key))
             return;
 
-        if (args.Session is not { } player)
+        if (args.Session is not IPlayerSession player)
             return;
 
         component.InitialUIStateSent.Remove(player);

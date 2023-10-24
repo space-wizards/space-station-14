@@ -1,5 +1,7 @@
+using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -15,7 +17,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player;
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("shell-only-players-can-run-this-command");

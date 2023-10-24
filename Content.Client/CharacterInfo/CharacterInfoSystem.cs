@@ -1,5 +1,6 @@
 ﻿using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 
@@ -10,10 +11,13 @@ public sealed class CharacterInfoSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _players = default!;
 
     public event Action<CharacterData>? OnCharacterUpdate;
+    public event Action? OnCharacterDetached;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<PlayerAttachSysMessage>(OnPlayerAttached);
 
         SubscribeNetworkEvent<CharacterInfoEvent>(OnCharacterInfoEvent);
     }
@@ -27,6 +31,14 @@ public sealed class CharacterInfoSystem : EntitySystem
         }
 
         RaiseNetworkEvent(new RequestCharacterInfoEvent(GetNetEntity(entity.Value)));
+    }
+
+    private void OnPlayerAttached(PlayerAttachSysMessage msg)
+    {
+        if (msg.AttachedEntity == default)
+        {
+            OnCharacterDetached?.Invoke();
+        }
     }
 
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
