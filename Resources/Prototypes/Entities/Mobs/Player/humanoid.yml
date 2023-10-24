@@ -100,6 +100,10 @@
   id: ERTLeaderEVALecter
   parent: ERTLeaderEVA
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-leader-name
+      description: ghost-role-information-ert-leader-description
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVALecter ]
 
@@ -283,6 +287,10 @@
   id: ERTSecurityEVALecter
   parent: ERTSecurityEVA
   components:
+    - type: GhostRole
+      name: ghost-role-information-ert-security-name
+      description: ghost-role-information-ert-security-description
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVALecter ]
 
