@@ -15,7 +15,7 @@
         - NamesFirstMilitaryLeader
         - names_last
     - type: RandomHumanoidSpawner
-      settings: ERTLeader
+      settings: DeathSquad
 
 - type: randomHumanoidSettings
   id: DeathSquad
@@ -26,7 +26,7 @@
       description: ghost-role-information-ert-leader-description
     - type: GhostTakeoverAvailable
     - type: Loadout
-      prototypes: [ ERTLeaderGear ]
+      prototypes: [ DeathSquadGear ]
     - type: RandomMetadata
       nameSegments:
         - NamesFirstMilitaryLeader
