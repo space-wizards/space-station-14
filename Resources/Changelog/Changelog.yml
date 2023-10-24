@@ -1,10 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Added guidebook entries for the Access Configurator and how to install
-      Airlock Safeguards, type: Add}
-  id: 4552
-  time: '2023-08-13T07:19:28.0000000+00:00'
 - author: CrigCrag
   changes:
   - {message: 'Space Station staff are no longer immune to the toxic and caustic effects
@@ -2904,3 +2898,8 @@ Entries:
   - {message: You can actually grind corn into cornmeal now., type: Fix}
   id: 5051
   time: '2023-10-24T20:38:43.0000000+00:00'
+- author: Myakot
+  changes:
+  - {message: Skeletons can now heal by pouring milk over themselves, type: Add}
+  id: 5052
+  time: '2023-10-24T20:58:34.0000000+00:00'
