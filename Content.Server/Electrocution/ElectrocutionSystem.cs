@@ -192,18 +192,13 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void OnLightAttacked(EntityUid uid, PoweredLightComponent component, AttackedEvent args)
     {
+        if (!component.CurrentLit || args.Used != args.User)
+            return;
 
         if (!_meleeWeapon.GetDamage(args.Used, args.User).Any())
             return;
 
-        if (args.Used != args.User)
-            return;
-
-        if (component.CurrentLit == false)
-            return;
-
         DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, 1);
-
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -498,7 +493,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void PlayElectrocutionSound(EntityUid targetUid, EntityUid sourceUid, ElectrifiedComponent? electrified = null)
     {
-        if (!Resolve(sourceUid, ref electrified) || !electrified.PlaySoundOnShock)
+        if (!Resolve(sourceUid, ref electrified, false) || !electrified.PlaySoundOnShock)
         {
             return;
         }
