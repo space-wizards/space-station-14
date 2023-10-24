@@ -96,7 +96,11 @@ namespace Content.IntegrationTests.Tests
                         else
                         {
                             proto.TryGetComponent<ItemComponent>("Item", out var item);
-                            capacity = storage.MaxSlots * SharedItemSystem.GetItemSizeWeight(item?.Size ?? SharedStorageSystem.DefaultStorageMaxItemSize);
+
+                            var maxSize = item?.Size == null
+                                ? SharedStorageSystem.DefaultStorageMaxItemSize
+                                : (ItemSize) Math.Max(0, (int) item.Size - 1);
+                            capacity = storage.MaxSlots * SharedItemSystem.GetItemSizeWeight(storage.MaxItemSize ?? maxSize);
                         }
                     }
                     else if (proto.TryGetComponent<EntityStorageComponent>("EntityStorage", out var entStorage))
@@ -132,9 +136,6 @@ namespace Content.IntegrationTests.Tests
                                 continue;
 
                             if (!protoMan.TryIndex<EntityPrototype>(entry.PrototypeId, out var fillItem))
-                                continue;
-
-                            if (isEntStorage)
                                 continue;
 
                             if (!fillItem.TryGetComponent<ItemComponent>("Item", out var item))

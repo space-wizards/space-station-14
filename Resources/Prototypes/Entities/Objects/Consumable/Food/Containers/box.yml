@@ -211,6 +211,7 @@
   # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
     maxSlots: 1
+    maxItemSize: Normal
     whitelist:
       tags:
       - Pizza
