@@ -529,7 +529,7 @@
         insertOnInteract: true
   - type: Item
     sprite: Objects/Misc/qm_clipboard.rsi
-    size: 30
+    size: Normal
   - type: Clothing
     slots: [belt]
     quickEquip: false
