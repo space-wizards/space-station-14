@@ -258,7 +258,7 @@
         - id: RegenerativeMesh
         - id: BoxHandcuff
         - id: CrowbarRed
-        - id: PistolMag
+        - id: MagazinePistol
 
 - type: entity
   noSpawn: true
