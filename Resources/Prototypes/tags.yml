@@ -234,6 +234,9 @@
 
 - type: Tag
   id: CanPilot
+  
+- type: Tag
+  id: CannonRestrict
 
 - type: Tag
   id: CannotSuicide
@@ -1013,9 +1016,6 @@
 
 - type: Tag
   id: TrashBag
-
-- type: Tag
-  id: CannonRestrict
 
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
