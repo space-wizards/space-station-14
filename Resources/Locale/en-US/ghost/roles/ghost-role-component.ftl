@@ -167,5 +167,5 @@ ghost-role-information-loneop-rules = You are a syndicate operative tasked with 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
 
-ghost-role-information-Death-Squad-name = Death Squad Agent
+ghost-role-information-Death-Squad-name = Death Squad Operative
 ghost-role-information-Death-Squad-description = Prepare for an all-out offensive on the station. As a heavily armed operative, your mission is to obliterate all life in your path. No witnesses.
