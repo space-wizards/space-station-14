@@ -305,8 +305,6 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
-        - id: WeaponPulsePistol
-        - id: MedkitFilled
         - id: BoxLightMixed
         - id: BoxLightMixed
         - id: Soap
