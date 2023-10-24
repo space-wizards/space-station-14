@@ -150,7 +150,7 @@ ghost-role-information-ert-security-name = ERT Security
 ghost-role-information-ert-security-description = Assist with security efforts to resolve the stations issues.
 
 ghost-role-information-ert-medical-name = ERT Medical
-ghost-role-information-ert-medical-description = Assist with medicaling efforts to resolve the stations issues.
+ghost-role-information-ert-medical-description = Assist with medical efforts to resolve the stations issues.
 
 ghost-role-information-cburn-agent-name = CBURN Agent
 ghost-role-information-cburn-agent-description = A highly trained CentCom agent, capable of dealing with various threats.
