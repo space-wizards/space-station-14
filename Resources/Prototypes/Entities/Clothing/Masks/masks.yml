@@ -13,6 +13,7 @@
   - type: IdentityBlocker
   - type: Tag
     tags:
+    - MonkeyWearable
     - HamsterWearable
     - WhitelistChameleon
 

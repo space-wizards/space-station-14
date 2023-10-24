@@ -35,12 +35,31 @@
   - type: Tag
     tags:
     - Arrow
+    - CannonRestrict
   - type: Projectile
     deleteOnCollide: false
     onlyCollideWhenShot: true
     damage:
       types:
         Piercing: 25
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 2
+  - type: RefillableSolution
+    solution: ammo
+  - type: InjectableSolution
+    solution: ammo
+  - type: SolutionInjectOnCollide
+    transferAmount: 2
+    blockSlots: NONE
+  - type: SolutionTransfer
+    maxTransferAmount: 2
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: solution
+
 
 - type: entity
   parent: BaseArrow
@@ -55,6 +74,9 @@
     - state: rod
       color: brown
     - state: tip
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Projectile
     damage:
       types:
@@ -75,6 +97,9 @@
       color: darkgray
     - state: tip
       color: lightblue
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Projectile
     damage:
       types:

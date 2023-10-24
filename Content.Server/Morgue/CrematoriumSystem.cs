@@ -156,7 +156,7 @@ public sealed class CrematoriumSystem : EntitySystem
             ("victim", Identity.Entity(victim, EntityManager))),
             victim, Filter.PvsExcept(victim), true, PopupType.LargeCaution);
 
-        if (_entityStorage.CanInsert(uid))
+        if (_entityStorage.CanInsert(victim, uid))
         {
             _entityStorage.CloseStorage(uid);
             _standing.Down(victim, false);
@@ -174,12 +174,13 @@ public sealed class CrematoriumSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (act, crem) in EntityQuery<ActiveCrematoriumComponent, CrematoriumComponent>())
+        var query = EntityQueryEnumerator<ActiveCrematoriumComponent, CrematoriumComponent>();
+        while (query.MoveNext(out var uid, out var act, out var crem))
         {
             act.Accumulator += frameTime;
 
             if (act.Accumulator >= crem.CookTime)
-                FinishCooking(act.Owner, crem);
+                FinishCooking(uid, crem);
         }
     }
 }

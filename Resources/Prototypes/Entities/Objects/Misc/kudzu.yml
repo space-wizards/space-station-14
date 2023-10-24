@@ -79,12 +79,9 @@
       ignoreWhitelist:
         components:
         - IgnoreKudzu
+    - type: ActiveEdgeSpreader
     - type: EdgeSpreader
-    - type: NodeContainer
-      nodes:
-        kudzu:
-          !type:SpreaderNode
-          nodeGroupID: Spreader
+      id: Kudzu
     - type: Food
       requiredStomachs: 2 # ruminants have 4 stomachs but i dont care to give them literally 4 stomachs. 2 is good
       delay: 0.5
@@ -186,12 +183,9 @@
     - type: GrowingKudzu
       growthTickChance: 0.3
     - type: AtmosExposed
+    - type: ActiveEdgeSpreader
     - type: EdgeSpreader
-    - type: NodeContainer
-      nodes:
-        kudzu:
-          !type:SpreaderNode
-          nodeGroupID: Spreader
+      id: Kudzu
     - type: SlowContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3

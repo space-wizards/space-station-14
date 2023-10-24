@@ -1,7 +1,6 @@
 using Content.Server.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Tools.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
@@ -9,6 +8,7 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Content.Shared.Wires;
+using Content.Shared.Prying.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Doors.Systems;
@@ -18,7 +18,6 @@ public sealed class AirlockSystem : SharedAirlockSystem
     [Dependency] private readonly WiresSystem _wiresSystem = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly DoorBoltSystem _bolts = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -31,9 +30,9 @@ public sealed class AirlockSystem : SharedAirlockSystem
         SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
-        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
-        SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
-        SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
+        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] { typeof(DoorSystem) });
+        SubscribeLocalEvent<AirlockComponent, GetPryTimeModifierEvent>(OnGetPryMod);
+        SubscribeLocalEvent<AirlockComponent, BeforePryEvent>(OnBeforePry);
 
     }
 
@@ -153,10 +152,12 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         if (TryComp<WiresPanelComponent>(uid, out var panel) &&
             panel.Open &&
-            _prototypeManager.TryIndex<WiresPanelSecurityLevelPrototype>(panel.CurrentSecurityLevelID, out var securityLevelPrototype) &&
-            securityLevelPrototype.WiresAccessible &&
             TryComp<ActorComponent>(args.User, out var actor))
         {
+            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                !wiresPanelSecurity.WiresAccessible)
+                return;
+
             _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
             args.Handled = true;
             return;
@@ -169,20 +170,18 @@ public sealed class AirlockSystem : SharedAirlockSystem
         }
     }
 
-    private void OnGetPryMod(EntityUid uid, AirlockComponent component, DoorGetPryTimeModifierEvent args)
+    private void OnGetPryMod(EntityUid uid, AirlockComponent component, ref GetPryTimeModifierEvent args)
     {
         if (_power.IsPowered(uid))
             args.PryTimeModifier *= component.PoweredPryModifier;
     }
 
-    private void OnDoorPry(EntityUid uid, AirlockComponent component, BeforeDoorPryEvent args)
+    private void OnBeforePry(EntityUid uid, AirlockComponent component, ref BeforePryEvent args)
     {
-        if (this.IsPowered(uid, EntityManager))
+        if (this.IsPowered(uid, EntityManager) && !args.PryPowered)
         {
-            if (HasComp<ToolForcePoweredComponent>(args.Tool))
-                return;
             Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
-            args.Cancel();
+            args.Cancelled = true;
         }
     }
 

@@ -91,3 +91,11 @@
   icon: { sprite: Objects/Materials/silk.rsi, state: icon }
   color: "#eeeeee" #eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
   price: 0 # Maybe better for it to be priceless, knowing how greedy cargo is.
+
+- type: material
+  id: Bones
+  name: materials-bones
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/materials.rsi, state: bones }
+  color: "#896f5e"
+  price: 0

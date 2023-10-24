@@ -4,6 +4,8 @@
   description: A large storage container for holding unprocessed ores.
   parent: BaseStructureDynamic
   components:
+  - type: StaticPrice
+    price: 500
   - type: Anchorable
   - type: InteractionOutline
   - type: Damageable

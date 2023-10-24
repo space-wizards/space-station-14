@@ -295,6 +295,19 @@
 
 - type: entity
   parent: IDCardStandard
+  id: PunPunIDCard
+  name: pun pun ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idbartender
+    - type: PresetIdCard
+      job: Bartender
+      name: Pun Pun
+
+- type: entity
+  parent: IDCardStandard
   id: ChefIDCard
   name: chef ID card
   components:

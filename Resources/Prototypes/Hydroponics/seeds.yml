@@ -1272,7 +1272,7 @@
     Vitamin:
       Min: 1
       Max: 4
-      PotencyDivisor: 40	
+      PotencyDivisor: 40
 
 - type: seed
   id: bungo

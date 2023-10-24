@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
+using Content.Server.Mind.Commands;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Players;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -25,20 +27,34 @@ public sealed class MindSystem : SharedMindSystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedGhostSystem _ghosts = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
+        SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
+    }
+
+    private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
+    {
+        if (mind.UserId is {} user)
+        {
+            UserMinds.Remove(user);
+            if (_players.GetPlayerData(user).ContentData() is { } oldData)
+                oldData.Mind = null;
+            mind.UserId = null;
+        }
+
+        if (mind.OwnedEntity != null && !TerminatingOrDeleted(mind.OwnedEntity.Value))
+            TransferTo(uid, null, mind: mind, createGhost: false);
+
+        mind.OwnedEntity = null;
     }
 
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
-        // Let's not create ghosts if not in the middle of the round.
-        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
-            return;
-
         if (!TryGetMind(uid, out var mindId, out var mind, component))
             return;
 
@@ -56,6 +72,11 @@ public sealed class MindSystem : SharedMindSystem
 
         TransferTo(mindId, null, createGhost: false, mind: mind);
 
+        // Let's not create ghosts if not in the middle of the round.
+        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+            return;
+
+        // I just love convoluted entity shutdown logic that results in more entities being spawned.
         if (component.GhostOnShutdown && mind.Session != null)
         {
             var xform = Transform(uid);
@@ -177,7 +198,7 @@ public sealed class MindSystem : SharedMindSystem
         if (mind.VisitingEntity == null)
             return;
 
-        RemoveVisitingEntity(mind);
+        RemoveVisitingEntity(mindId, mind);
 
         if (mind.Session == null || mind.Session.AttachedEntity == mind.VisitingEntity)
             return;
@@ -195,14 +216,13 @@ public sealed class MindSystem : SharedMindSystem
     public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
         MindComponent? mind = null)
     {
-        base.TransferTo(mindId, entity, ghostCheckOverride, createGhost, mind);
-
-        if (!Resolve(mindId, ref mind))
+        if (mind == null && !Resolve(mindId, ref mind))
             return;
 
         if (entity == mind.OwnedEntity)
             return;
 
+        Dirty(mindId, mind);
         MindContainerComponent? component = null;
         var alreadyAttached = false;
 
@@ -226,24 +246,32 @@ public sealed class MindSystem : SharedMindSystem
         }
         else if (createGhost)
         {
+            // TODO remove this option.
+            // Transfer-to-null should just detach a mind.
+            // If people want to create a ghost, that should be done explicitly via some TransferToGhost() method, not
+            // not implicitly via optional arguments.
+
             var position = Deleted(mind.OwnedEntity)
                 ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
                 : Transform(mind.OwnedEntity.Value).MapPosition;
 
             entity = Spawn("MobObserver", position);
+            component = EnsureComp<MindContainerComponent>(entity.Value);
             var ghostComponent = Comp<GhostComponent>(entity.Value);
             _ghosts.SetCanReturnToBody(ghostComponent, false);
         }
 
-        var oldComp = mind.OwnedComponent;
         var oldEntity = mind.OwnedEntity;
-        if (oldComp != null && oldEntity != null)
+        if (TryComp(oldEntity, out MindContainerComponent? oldContainer))
         {
-            oldComp.Mind = null;
-            RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(oldEntity.Value, mind), true);
+            oldContainer.Mind = null;
+            mind.OwnedEntity = null;
+            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindContainerComponent> containerEnt = (oldEntity.Value, oldContainer);
+            RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindId, new MindGotRemovedEvent(mindEnt, containerEnt));
+            Dirty(oldEntity.Value, oldContainer);
         }
-
-        SetOwnedEntity(mind, entity, component);
 
         // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
         if (alreadyAttached)
@@ -258,7 +286,7 @@ public sealed class MindSystem : SharedMindSystem
                   || !TryComp(mind.VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
                   || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
         {
-            RemoveVisitingEntity(mind);
+            RemoveVisitingEntity(mindId, mind);
         }
 
         // Player is CURRENTLY connected.
@@ -269,11 +297,16 @@ public sealed class MindSystem : SharedMindSystem
             Log.Info($"Session {session.Name} transferred to entity {entity}.");
         }
 
-        if (mind.OwnedComponent != null)
+        if (entity != null)
         {
-            mind.OwnedComponent.Mind = mindId;
-            RaiseLocalEvent(mind.OwnedEntity!.Value, new MindAddedMessage(), true);
-            mind.OriginalOwnedEntity ??= mind.OwnedEntity;
+            component!.Mind = mindId;
+            mind.OwnedEntity = entity;
+            mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);
+            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindContainerComponent> containerEnt = (entity.Value, component);
+            RaiseLocalEvent(entity.Value, new MindAddedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindId, new MindGotAddedEvent(mindEnt, containerEnt));
+            Dirty(entity.Value, component);
         }
     }
 
@@ -290,6 +323,8 @@ public sealed class MindSystem : SharedMindSystem
         if (mind.UserId == userId)
             return;
 
+        Dirty(mindId, mind);
+        _pvsOverride.ClearOverride(mindId);
         if (userId != null && !_players.TryGetPlayerData(userId.Value, out _))
         {
             Log.Error($"Attempted to set mind user to invalid value {userId}");
@@ -331,11 +366,35 @@ public sealed class MindSystem : SharedMindSystem
         if (_players.TryGetSessionById(userId.Value, out var ret))
         {
             mind.Session = ret;
+            _pvsOverride.AddSessionOverride(mindId, ret);
             _actor.Attach(mind.CurrentEntity, ret);
         }
 
         // session may be null, but user data may still exist for disconnected players.
         if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
             data.Mind = mindId;
+    }
+
+    public void ControlMob(EntityUid user, EntityUid target)
+    {
+        if (TryComp(user, out ActorComponent? actor))
+            ControlMob(actor.PlayerSession.UserId, target);
+    }
+
+    public void ControlMob(NetUserId user, EntityUid target)
+    {
+        var (mindId, mind) = GetOrCreateMind(user);
+
+        if (mind.CurrentEntity == target)
+            return;
+
+        if (mind.OwnedEntity == target)
+        {
+            UnVisit(mindId, mind);
+            return;
+        }
+
+        MakeSentientCommand.MakeSentient(target, EntityManager);
+        TransferTo(mindId, target, ghostCheckOverride: true, mind: mind);
     }
 }

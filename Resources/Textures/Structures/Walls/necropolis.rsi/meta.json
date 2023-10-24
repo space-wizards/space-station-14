@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/9dbe3253d0bc712e086ec6b5bc4a7fd69bdf337f#diff-a93b44bf8dd39fddb41a69ad1c2dd2d294244b7a46fa885ac6023ed8cdb54080 and modified.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	  {
+      "name": "full"
+    }, 
+	  {
+      "name": "necropolis0",
+	    "directions": 4
+    },
+	  {
+      "name": "necropolis1",
+	    "directions": 4
+    },
+	  {
+      "name": "necropolis2",
+	    "directions": 4
+    },
+	  {
+      "name": "necropolis3",
+	    "directions": 4
+    },
+	  {
+      "name": "necropolis4",
+	    "directions": 4
+    },
+	  {
+      "name": "necropolis5",
+	    "directions": 4
+    },
+	  {
+      "name": "necropolis6",
+	    "directions": 4
+    },
+	  {
+      "name": "necropolis7",
+	    "directions": 4
+    }
+  ]
+}

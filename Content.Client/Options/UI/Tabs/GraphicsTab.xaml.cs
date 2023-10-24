@@ -229,6 +229,12 @@ namespace Content.Client.Options.UI.Tabs
         private bool ConfigIsFullscreen =>
             _cfg.GetCVar(CVars.DisplayWindowMode) == (int) WindowMode.Fullscreen;
 
+        public void UpdateProperties()
+        {
+            FullscreenCheckBox.Pressed = ConfigIsFullscreen;
+        }
+
+
         private float ConfigUIScale => _cfg.GetCVar(CVars.DisplayUIScale);
 
         private int GetConfigLightingQuality()

@@ -75,7 +75,7 @@ public abstract class SharedItemSystem : EntitySystem
 
     private void OnHandInteract(EntityUid uid, ItemComponent component, InteractHandEvent args)
     {
-        if (args.Handled || _combatMode.IsInCombatMode(args.User))
+        if (args.Handled)
             return;
 
         args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);

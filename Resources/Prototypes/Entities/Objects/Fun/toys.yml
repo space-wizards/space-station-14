@@ -122,6 +122,7 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
 
@@ -185,6 +186,7 @@
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
 
@@ -206,6 +208,7 @@
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/muffled_weh.ogg
 
@@ -231,6 +234,7 @@
       sound:
         path: /Audio/Items/Toys/toy_rustle.ogg
     - type: MeleeWeapon
+      wideAnimationRotation: 180
       soundHit:
         path: /Audio/Items/Toys/toy_rustle.ogg
     - type: SolutionContainerManager
@@ -353,8 +357,11 @@
     sound:
       path: /Audio/Effects/bite.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     soundHit:
       path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite # Rrrr!
   - type: Tag
     tags:
       - PlushieCarp
@@ -380,6 +387,7 @@
     sound:
       path: /Audio/Items/Toys/rattle.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/rattle.ogg
 
@@ -395,6 +403,7 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: Clothing
@@ -437,6 +446,7 @@
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
 
@@ -467,6 +477,7 @@
     sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
 
@@ -603,6 +614,9 @@
   - type: Item
     sprite: Objects/Fun/toys.rsi
     heldPrefix: capgun
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Gun
     selectedMode: SemiAuto
     availableModes:

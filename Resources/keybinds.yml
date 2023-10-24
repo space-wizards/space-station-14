@@ -89,6 +89,9 @@ binds:
 - function: ShowEscapeMenu
   type: State
   key: F10
+- function: ToggleFullscreen
+  type: State
+  key: F11
 - function: CycleChatChannelForward
   type: State
   key: Tab

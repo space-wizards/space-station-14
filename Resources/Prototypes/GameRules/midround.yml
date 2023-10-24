@@ -14,8 +14,16 @@
     - TerrorObjective
     - NinjaSurviveObjective
   - type: NinjaRule
-    threats:
-    - announcement: terror-dragon
-      rule: Dragon
-    - announcement: terror-revenant
-      rule: RevenantSpawn
+    threats: NinjaThreats
+
+# stores configuration for dragon
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: Dragon
+  components:
+  - type: GenericAntagRule
+    agentName: dragon-round-end-agent-name
+    objectives:
+    - CarpRiftsObjective
+    - DragonSurviveObjective

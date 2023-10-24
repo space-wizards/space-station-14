@@ -4,7 +4,6 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Players;
@@ -49,8 +48,7 @@ namespace Content.Shared.Movement.Systems
                 .Register<SharedMoverController>();
 
             SubscribeLocalEvent<InputMoverComponent, ComponentInit>(OnInputInit);
-            SubscribeLocalEvent<InputMoverComponent, ComponentGetState>(OnInputGetState);
-            SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnInputHandleState);
+            SubscribeLocalEvent<InputMoverComponent, AfterAutoHandleStateEvent>(OnInputHandleState);
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
 
             SubscribeLocalEvent<AutoOrientComponent, EntParentChangedMessage>(OnAutoParentChange);
@@ -75,31 +73,10 @@ namespace Content.Shared.Movement.Systems
             Dirty(component);
         }
 
-        private void OnInputHandleState(EntityUid uid, InputMoverComponent component, ref ComponentHandleState args)
+        private void OnInputHandleState(EntityUid uid, InputMoverComponent component, ref AfterAutoHandleStateEvent args)
         {
-            if (args.Current is not InputMoverComponentState state)
-                return;
-
-            component.HeldMoveButtons = state.Buttons;
             component.LastInputTick = GameTick.Zero;
             component.LastInputSubTick = 0;
-            component.CanMove = state.CanMove;
-
-            component.RelativeRotation = state.RelativeRotation;
-            component.TargetRelativeRotation = state.TargetRelativeRotation;
-            component.RelativeEntity = EnsureEntity<InputMoverComponent>(state.RelativeEntity, uid);
-            component.LerpTarget = state.LerpAccumulator;
-        }
-
-        private void OnInputGetState(EntityUid uid, InputMoverComponent component, ref ComponentGetState args)
-        {
-            args.State = new InputMoverComponentState(
-                component.HeldMoveButtons,
-                component.CanMove,
-                component.RelativeRotation,
-                component.TargetRelativeRotation,
-                GetNetEntity(component.RelativeEntity),
-                component.LerpTarget);
         }
 
         private void ShutdownInput()
@@ -564,35 +541,6 @@ namespace Content.Shared.Movement.Systems
             }
         }
 
-        [Serializable, NetSerializable]
-        private sealed class InputMoverComponentState : ComponentState
-        {
-            public MoveButtons Buttons { get; }
-            public readonly bool CanMove;
-
-            /// <summary>
-            /// Our current rotation for movement purposes. This is lerping towards <see cref="TargetRelativeRotation"/>
-            /// </summary>
-            public Angle RelativeRotation;
-
-            /// <summary>
-            /// Target rotation relative to the <see cref="RelativeEntity"/>. Typically 0
-            /// </summary>
-            public Angle TargetRelativeRotation;
-            public NetEntity? RelativeEntity;
-            public TimeSpan LerpAccumulator;
-
-            public InputMoverComponentState(MoveButtons buttons, bool canMove, Angle relativeRotation, Angle targetRelativeRotation, NetEntity? relativeEntity, TimeSpan lerpTarget)
-            {
-                Buttons = buttons;
-                CanMove = canMove;
-                RelativeRotation = relativeRotation;
-                TargetRelativeRotation = targetRelativeRotation;
-                RelativeEntity = relativeEntity;
-                LerpAccumulator = lerpTarget;
-            }
-        }
-
         private sealed class ShuttleInputCmdHandler : InputCmdHandler
         {
             private readonly SharedMoverController _controller;
@@ -615,6 +563,7 @@ namespace Content.Shared.Movement.Systems
     }
 
     [Flags]
+    [Serializable, NetSerializable]
     public enum MoveButtons : byte
     {
         None = 0,

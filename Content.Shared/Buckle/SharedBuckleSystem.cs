@@ -65,7 +65,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
             || !Resolve(buckleUid, ref buckleComp, false))
             return;
 
-        _transform.SetCoordinates(buckleUid, new EntityCoordinates(strapUid, strapComp.BuckleOffset));
+        _transform.SetCoordinates(buckleUid, new EntityCoordinates(strapUid, strapComp.BuckleOffsetClamped));
 
         var buckleTransform = Transform(buckleUid);
 
@@ -75,7 +75,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
             return;
 
         _transform.SetLocalRotation(buckleUid, Angle.Zero, buckleTransform);
-        _joints.RefreshRelay(buckleUid, strapUid);
+        _joints.SetRelay(buckleUid, strapUid);
 
         switch (strapComp.Position)
         {
