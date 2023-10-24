@@ -35,7 +35,7 @@
   id: RandomHumanoidSpawnerERTLeaderEVA
   parent: RandomHumanoidSpawnerERTLeader
   name: ERT leader
-  suffix: EVA
+  suffix: Armored EVA
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -90,7 +90,7 @@
   id: RandomHumanoidSpawnerERTJanitorEVA
   parent: RandomHumanoidSpawnerERTJanitor
   name: ERT janitor
-  suffix: EVA
+  suffix: Environmental EVA
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -145,7 +145,7 @@
   id: RandomHumanoidSpawnerERTEngineerEVA
   parent: RandomHumanoidSpawnerERTEngineer
   name: ERT engineer
-  suffix: EVA
+  suffix: Environmental EVA
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -200,7 +200,7 @@
   id: RandomHumanoidSpawnerERTSecurityEVA
   parent: RandomHumanoidSpawnerERTSecurity
   name: ERT security
-  suffix: EVA
+  suffix: Armored EVA
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -255,7 +255,7 @@
   id: RandomHumanoidSpawnerERTMedicalEVA
   parent: RandomHumanoidSpawnerERTMedical
   name: ERT medic
-  suffix: EVA
+  suffix: Armored EVA
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
