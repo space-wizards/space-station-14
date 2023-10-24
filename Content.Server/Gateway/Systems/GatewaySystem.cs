@@ -7,6 +7,7 @@ using Content.Shared.Teleportation.Systems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Gateway.Systems;
 
@@ -227,5 +228,14 @@ public sealed class GatewaySystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("gateway-access-denied"), user);
         _audio.PlayPvs(comp.AccessDeniedSound, uid);
         return true;
+    }
+
+    public void SetName(EntityUid gatewayUid, FormattedMessage gatewayName, GatewayDestinationComponent? gatewayComp = null)
+    {
+        if (!Resolve(gatewayUid, ref gatewayComp))
+            return;
+
+        gatewayComp.Name = gatewayName;
+        Dirty(gatewayUid, gatewayComp);
     }
 }

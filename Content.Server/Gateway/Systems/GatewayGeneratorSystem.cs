@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
 using Content.Server.Salvage;
+using Content.Shared.Dataset;
 using Content.Shared.Salvage;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -9,6 +10,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Gateway.Systems;
 
@@ -24,8 +26,12 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly GatewaySystem _gateway = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SalvageSystem _salvage = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
+
+    [ValidatePrototypeId<DatasetPrototype>]
+    private const string PlanetNames = "names_borer";
 
     // TODO:
     // Use fog instead of blackness for barrier.
@@ -57,13 +63,16 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     {
         var tiles = new List<(Vector2i Index, Tile Tile)>();
         var tileDef = _tileDefManager["FloorSteel"];
+        const int MaxOffset = 256;
 
         for (var i = 0; i < 3; i++)
         {
             tiles.Clear();
+            var seed = _random.Next();
+            var random = new Random(seed);
             var mapId = _mapManager.CreateMap();
             var mapUid = _mapManager.GetMapEntityId(mapId);
-            var origin = _random.NextVector2(512f).Floored();
+            var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
             var restriction = AddComp<RestrictedRangeComponent>(mapUid);
             restriction.Origin = origin;
             // TODO: Not this.
@@ -79,10 +88,16 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 }
             }
 
+            // Clear area nearby as a sort of landing pad.
             _maps.SetTiles(mapUid, grid, tiles);
+
+            var gatewayName = SharedSalvageSystem.GetFTLName(_protoManager.Index<DatasetPrototype>("names_borer"), seed);
+
+            _metadata.SetEntityName(mapUid, gatewayName);
 
             var gatewayUid = SpawnAtPosition("GatewayDestination", new EntityCoordinates(mapUid, origin));
             var gatewayComp = Comp<GatewayDestinationComponent>(gatewayUid);
+            _gateway.SetName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
             _gateway.SetEnabled(gatewayUid, true, gatewayComp);
             component.Generated.Add(mapUid);
         }
