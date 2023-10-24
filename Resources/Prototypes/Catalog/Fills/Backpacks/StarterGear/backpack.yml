@@ -305,6 +305,7 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
+        - id: LightReplacer
         - id: BoxLightMixed
         - id: BoxLightMixed
         - id: Soap
