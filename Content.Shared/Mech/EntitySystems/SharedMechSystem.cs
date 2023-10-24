@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Destructible;
@@ -30,7 +29,6 @@ public abstract class SharedMechSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -105,8 +103,6 @@ public abstract class SharedMechSystem : EntitySystem
             return;
 
         args.Entities.Add(pilot.Value);
-        _access.FindAccessItemsInventory(pilot.Value, out var items);
-        args.Entities.UnionWith(items);
     }
 
     private void SetupUser(EntityUid mech, EntityUid pilot, MechComponent? component = null)

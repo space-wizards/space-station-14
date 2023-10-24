@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, except numerical signs which were created by discord: brainfood#7460, states: 'survival' and 'ntmining' from https://github.com/tgstation/tgstation/commit/f743754ec3ef446c8172388431effa73aeddb7ff#diff-b429dd7fccbca60d740d4887c1077a178abf1efffe57e7ae2a0b607c8a9e2202",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, except numerical signs which were created by discord: brainfood#7460, states: 'survival' and 'ntmining' from https://github.com/tgstation/tgstation/commit/f743754ec3ef446c8172388431effa73aeddb7ff#diff-b429dd7fccbca60d740d4887c1077a178abf1efffe57e7ae2a0b607c8a9e2202, 'janitor' edited by forgotmyotheraccount on github",
     "states": [
         {
             "name": "ai",
@@ -244,6 +244,14 @@
         },
         {
             "name": "corrosives",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "court",
             "delays": [
                 [
                     1
@@ -807,7 +815,23 @@
             ]
         },
         {
+            "name": "janitor",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "laser",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "law",
             "delays": [
                 [
                     1
@@ -920,6 +944,14 @@
         },
         {
             "name": "prison",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "psychology",
             "delays": [
                 [
                     1

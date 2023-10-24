@@ -94,7 +94,17 @@ public sealed partial class GameTicker
         _sawmillReplays.Info($"Moving replay into final position: {state.MoveToPath}");
         _taskManager.BlockWaitOnTask(_replays.WaitWriteTasks());
         DebugTools.Assert(!_replays.IsWriting());
-        data.Directory.CreateDir(state.MoveToPath.Value.Directory);
+
+        try
+        {
+            if (!data.Directory.Exists(state.MoveToPath.Value.Directory))
+                data.Directory.CreateDir(state.MoveToPath.Value.Directory);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            _sawmillReplays.Error($"Error creating replay directory {state.MoveToPath.Value.Directory}: {e}");
+        }
+
         data.Directory.Rename(data.Path, state.MoveToPath.Value);
     }
 

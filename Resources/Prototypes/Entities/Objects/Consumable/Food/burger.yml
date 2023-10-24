@@ -90,6 +90,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 6
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, grass.
 
 - type: entity
@@ -113,6 +116,9 @@
           Quantity: 19
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, bacon.
 
 - type: entity
@@ -138,6 +144,9 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: bearger
@@ -162,6 +171,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: big bite burger
@@ -185,6 +197,9 @@
           Quantity: 9
   - type: Sprite
     state: bigbite
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, silver, magic.
 
 - type: entity
@@ -210,6 +225,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, brains.
 
 - type: entity
@@ -236,6 +254,9 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: cheese burger
@@ -261,6 +282,9 @@
           Quantity: 7
         - ReagentId: Protein
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 # TODO: Make this work.
   # - type: Sprite
   #   state: plate
@@ -296,6 +320,9 @@
           Quantity: 1
         - ReagentId: Mayo
           Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, chicken.
 
 - type: entity
@@ -321,6 +348,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 6
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: corgi burger #curger...
@@ -343,6 +373,9 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 12
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: crab burger
@@ -367,6 +400,9 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: crazy hamburger # Burger for you euro-cucks
@@ -395,6 +431,9 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 6
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: duck sandwich # Burger for you sick bastards
@@ -419,6 +458,9 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, duck.
 
 - type: entity
@@ -456,6 +498,9 @@
       - fishy
   - type: Sprite
     state: fish
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, fish.
 
 - type: entity
@@ -510,6 +555,7 @@
   - type: Tag
     tags:
       - ClothMade
+      - Meat
 # Tastes like bun, ectoplasm.
 
 - type: entity
@@ -535,6 +581,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: McGuffin
@@ -559,6 +608,9 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: McRib
@@ -585,6 +637,9 @@
           Quantity: 4
         - ReagentId: BbqSauce
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, pork patty.
 
 - type: entity
@@ -637,6 +692,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: rat burger
@@ -661,6 +719,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 2
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, HEAT.
 
 - type: entity
@@ -685,6 +746,9 @@
           Quantity: 5
         - ReagentId: SulfuricAcid
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, lettuce, sludge.
 
 - type: entity
@@ -763,6 +827,9 @@
           Quantity: 5
   - type: Sprite
     state: superbite
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, diabetes.
 
 - type: entity
@@ -814,6 +881,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like bun, acid.
 
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but

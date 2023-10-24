@@ -23,7 +23,7 @@ public sealed class ShuffleArtifactSystem : EntitySystem
         var mobState = GetEntityQuery<MobStateComponent>();
 
         List<EntityCoordinates> allCoords = new();
-        List<TransformComponent> toShuffle = new();
+        List<Entity<TransformComponent>> toShuffle = new();
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.Radius, LookupFlags.Dynamic | LookupFlags.Sundries))
         {
@@ -32,7 +32,7 @@ public sealed class ShuffleArtifactSystem : EntitySystem
 
             var xform = Transform(ent);
 
-            toShuffle.Add(xform);
+            toShuffle.Add((ent, xform));
             allCoords.Add(xform.Coordinates);
         }
 

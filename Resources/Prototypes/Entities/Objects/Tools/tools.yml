@@ -19,6 +19,7 @@
     - state: cutters-cutty-thingy
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     damage:
       types:
         Piercing: 2
@@ -65,6 +66,7 @@
     sprite: Objects/Tools/screwdriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     attackRate: 1
     damage:
       types:
@@ -105,6 +107,7 @@
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: 135
     attackRate: 1.5
     damage:
       types:
@@ -140,6 +143,7 @@
     size: 10
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 8
@@ -318,6 +322,7 @@
   - type: StaticPrice
     price: 100
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     attackRate: 1.5
     damage:
       types:
@@ -422,6 +427,8 @@
     tags:
     - Multitool
   - type: TilePrying
+  - type: Prying
+    enabled: false
   - type: Tool
     qualities:
       - Screwing
@@ -485,6 +492,7 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 14
@@ -497,3 +505,33 @@
       Wood: 50
   - type: StaticPrice
     price: 25
+
+- type: entity
+  parent: BaseItem
+  id: RollingPin
+  name: rolling pin
+  description: A tool used to shape and flatten dough.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/rolling_pin.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/rolling_pin.rsi
+    size: 10
+  - type: Clothing
+    sprite: Objects/Tools/rolling_pin.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 7
+  - type: Tool
+    qualities:
+    - Rolling
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100

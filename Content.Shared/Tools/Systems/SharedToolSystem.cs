@@ -1,22 +1,35 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
+using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Tools;
+namespace Content.Shared.Tools.Systems;
 
 public abstract partial class SharedToolSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private   readonly IMapManager _mapManager = default!;
+    [Dependency] private   readonly INetManager _netManager = default!;
+    [Dependency] private   readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] protected readonly SharedInteractionSystem InteractionSystem = default!;
+    [Dependency] private   readonly SharedMapSystem _maps = default!;
+    [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private   readonly TileSystem _tiles = default!;
+    [Dependency] private   readonly TurfSystem _turfs = default!;
 
     public override void Initialize()
     {
         InitializeMultipleTool();
+        InitializeTilePrying();
         SubscribeLocalEvent<ToolComponent, ToolDoAfterEvent>(OnDoAfter);
     }
 
