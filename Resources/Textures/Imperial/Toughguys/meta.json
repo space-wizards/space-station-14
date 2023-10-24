@@ -1,0 +1,45 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made for the Imperial Space community, author's discord nickname: pelarchic.",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+      "states": [
+
+        {
+            "name": "plushie_scientist"
+        },
+        {
+            "name": "plushie_engineer"
+        },
+        {
+            "name": "plushie_surgeon"
+        },
+        {
+            "name": "plushie_capitan"
+        },
+        {
+            "name": "plushie_PCC"
+        },
+        {
+            "name": "plushie_CP"
+        },
+        {
+            "name": "plushie_chemist"
+        },
+        {
+            "name": "plushie_GSB"
+        },
+        {
+            "name": "plushie_paramedic"
+        },
+        {
+            "name": "plushie_bartender"
+        },
+        {
+            "name": "plushie_bartender_full"
+        }
+    ]
+}

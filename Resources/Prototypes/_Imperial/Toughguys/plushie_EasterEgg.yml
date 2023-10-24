@@ -1,0 +1,46 @@
+- type: entity
+  id: PillThrivevin
+  name: pill thrivevin
+  parent: Pill
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    state: pill11
+  - type: Pill
+    pillType: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+          - ReagentId: Thrivenin
+            Quantity: 25
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  name: Armenian Stuff
+  description: Kum'Ar's secret recipe, adapted by the Fox God.
+  parent: BaseChemistryEmptyBottle
+  id: ArmenianStuff
+  components:
+  - type: Sprite
+    layers:
+      - state: bottle-2
+      - state: bottle-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 60
+        reagents:
+          - ReagentId: Desoxyephedrine
+            Quantity: 30
+          - ReagentId: THCOil
+            Quantity: 10
+          - ReagentId: MuteToxin
+            Quantity: 20
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-2-
