@@ -34,7 +34,6 @@ namespace Content.Server.Chemistry.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<SolutionTransferComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
-            SubscribeLocalEvent<SolutionTransferComponent, GetVerbsEvent<Verb>>(AddSimplyVerb);
             SubscribeLocalEvent<SolutionTransferComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<SolutionTransferComponent, TransferAmountSetValueMessage>(OnTransferAmountSetValueMessage);
             SubscribeLocalEvent<SolutionTransferComponent, ComponentGetState>(OnSolutionTransferGetState);
@@ -104,40 +103,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        private void AddSimplyVerb(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<Verb> args)
-        {
-            // add inject/draw action verb
-            if (!TryGetAvailableNextMode(uid, component, out var nextModeTransfer))
-                return;
-
-            var msg = "";
-            ResPath pathIcon;
-
-            if (nextModeTransfer == SharedTransferToggleMode.Draw)
-            {
-                msg = "comp-solution-transfer-menu-option-draw";
-                pathIcon = new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png");
-            }
-            else
-            {
-                msg = "comp-solution-transfer-menu-option-inject";
-                pathIcon = new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png");
-            }
-
-            Verb modeVerb = new()
-            {
-                Text = Loc.GetString(msg),
-                Act = () =>
-                {
-                    component.ToggleMode = nextModeTransfer;
-                    Dirty(uid, component);
-                },
-                Impact = LogImpact.Low,
-                Icon = new SpriteSpecifier.Texture(pathIcon)
-            };
-            args.Verbs.Add(modeVerb);
-        }
-
+        // for updates status control UI
         private void OnSolutionTransferGetState(EntityUid uid, SolutionTransferComponent component,
             ref ComponentGetState args)
         {
@@ -180,13 +146,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var isTargetDrainableSolution = _solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrainableSolution);
 
-            // try to pour something
+            // if you have inject mode then to spill in something
             if (component.ToggleMode == SharedTransferToggleMode.Inject && modeSolution != null)
             {
-                // if has refillComponent then pure!
+                // if target container has refillable component then do it
                 if (EntityManager.TryGetComponent(target, out RefillableSolutionComponent? refillTargetComp)
-                    && _solutionContainerSystem.TryGetRefillableSolution(target, out var targetRefill, refillable: refillTargetComp)
-                    && targetRefill != null)
+                    && _solutionContainerSystem.TryGetRefillableSolution(target, out var targetRefill, refillable: refillTargetComp))
                 {
                     if (EntityManager.TryGetComponent(target, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
                     {
@@ -203,7 +168,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         args.Handled = true;
                     }
                 }
-                // we try to pure, but component has not refellable component
+                // we try to spill, but component has not refellable component
                 // special for water tank or something like
                 else if (isTargetDrainableSolution)
                 {
@@ -212,13 +177,14 @@ namespace Content.Server.Chemistry.EntitySystems
                     args.Handled = true;
                 }
             }
+            // if you have draw mode than fill from some container
+            // of course if target container has a drainable component
             else if (targetDrainableSolution is Solution targetDrain
                         && component.ToggleMode == SharedTransferToggleMode.Draw && modeSolution != null)
             {
                 // uid is the entity receiving solution from target.
                 if (EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
                 {
-                    // if the receiver has a smaller transfer limit, use that instead
                     transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill);
                 }
 
@@ -238,6 +204,11 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
+        // get available mode from toggle mode(or nextMode) and available solutions
+        // if isChangeMode = false, then we don't change toggle mode
+        // for example if our bucket is full we change mode for "spill mode"
+        // null mode - this is invalid mode and we can't found any solution,
+        // you should check solutions for this component
         private SharedTransferToggleMode? GetTransferMode(
                 EntityUid uid, SolutionTransferComponent component,
                 bool isCanChangeMode = true,
@@ -310,6 +281,8 @@ namespace Content.Server.Chemistry.EntitySystems
             return nextMode is SharedTransferToggleMode mode && mode != component.ToggleMode;
         }
 
+        // try to get change mode with it use in hand
+        // for example you can't fill a full bucket
         private void OnSolutionContainerUse(EntityUid uid, SolutionTransferComponent component, UseInHandEvent args)
         {
             if (args.Handled)

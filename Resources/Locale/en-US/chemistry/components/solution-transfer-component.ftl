@@ -4,10 +4,6 @@ comp-solution-transfer-inject-text = spill
 comp-solution-transfer-invalid-toggle-mode = Nothing can do
 comp-solution-transfer-status-volume-label = Volume: {$currentVolume}/{$totalVolume}
 
-### UI verb menu options
-comp-solution-transfer-menu-option-draw = the fill mode
-comp-solution-transfer-menu-option-inject = the spill into mode
-
 ### Solution transfer component
 comp-solution-transfer-fill-normal = You fill {THE($target)} with {$amount}u from {THE($owner)}.
 comp-solution-transfer-fill-fully = You fill {THE($target)} to the brim with {$amount}u from {THE($owner)}.
