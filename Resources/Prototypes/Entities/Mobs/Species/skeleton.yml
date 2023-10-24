@@ -64,7 +64,7 @@
           - MobMask
         layer:
           - MobLayer
-  - type: Reactive # this is a meme
+  - type: Reactive
     groups:
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
@@ -90,14 +90,14 @@
         visualType: Large
         messages: [ "skeleton-healed-by-milk-popup" ]
         probability: 0.25
-      - reagents: [ MilkOat ]
-        methods: [ Touch ]
-        effects:
-          - !type:PopupMessage
-            type: Local
-            visualType: Large
-            messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
-            probability: 0.5
+    - reagents: [ MilkOat ]
+      methods: [ Touch ]
+      effects:
+        - !type:PopupMessage
+          type: Local
+          visualType: Large
+          messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
+          probability: 0.5
 
 - type: entity
   parent: BaseSpeciesDummy
