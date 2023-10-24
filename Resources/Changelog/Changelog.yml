@@ -1,9 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Vending machine sprites have been polished up., type: Tweak}
-  id: 4548
-  time: '2023-08-13T07:15:13.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: 'Blood-red magboots now slow you down less and have jetpack functionality,
@@ -2908,3 +2903,8 @@ Entries:
       hijacking, type: Add}
   id: 5047
   time: '2023-10-24T07:55:47.0000000+00:00'
+- author: VasilisThePikachu
+  changes:
+  - {message: Stuttering trait stutters less common., type: Fix}
+  id: 5048
+  time: '2023-10-24T09:28:31.0000000+00:00'
