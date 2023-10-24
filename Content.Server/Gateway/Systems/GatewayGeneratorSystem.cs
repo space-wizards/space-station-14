@@ -35,15 +35,12 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
     // TODO:
     // Use fog instead of blackness for barrier.
-    // Fix names / colouring on gateway thing
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
     // Add dungeon name to thing
     // Add biome template to thing
     // Add biome template options.
     // Make continental bigger areas probably?
     // Think of something for resources
-    // Fix next ready
-    // Fix selecting
     // Fix unlocks / locking
     // Make a planet helper instead of calling command
     // Spawn dungeon / make an await for dungeons or something
