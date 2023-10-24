@@ -9,7 +9,8 @@
     sprite: Objects/Storage/boxes.rsi
     size: Normal
   - type: Storage
-    capacity: 30
+    maxSlots: 7
+    maxTotalWeight: 14
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

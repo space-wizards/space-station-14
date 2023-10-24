@@ -14,7 +14,6 @@
     slots:
     - back
   - type: Storage
-    capacity: 100
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -196,7 +195,8 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
-    capacity: 250
+    maxSlots: 10
+    maxTotalSize: 40
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -260,7 +260,8 @@
   - type: Clothing
     equippedPrefix: holding
   - type: Storage
-    capacity: 9999
+    maxSlots: 21
+    maxItemSize: Large
 
 - type: entity
   parent: ClothingBackpackClown

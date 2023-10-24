@@ -39,7 +39,7 @@ namespace Content.Shared.Storage
         /// A limit for the cumulative ItemSizes that can be inserted in this storage.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int MaxTotalSize = 7 * SharedItemSystem.ItemSizeWeightNormal;
+        public int? MaxTotalSize;
 
         // TODO: Make area insert its own component.
         [DataField("quickInsert")]
@@ -65,23 +65,6 @@ namespace Content.Shared.Storage
         /// </summary>
         [DataField("blacklist")]
         public EntityWhitelist? Blacklist;
-
-        //todo remove
-        #region DEPRECATED
-        /// <summary>
-        /// How much storage is currently being used by contained entities.
-        /// </summary>
-        [Obsolete]
-        [ViewVariables, DataField("storageUsed"), AutoNetworkedField]
-        public int StorageUsed;
-
-        /// <summary>
-        /// Maximum capacity for storage.
-        /// </summary>
-        [Obsolete]
-        [DataField("capacity"), AutoNetworkedField]
-        public int StorageCapacityMax = 10000;
-        #endregion
 
         /// <summary>
         /// Sound played whenever an entity is inserted into storage.

@@ -9,7 +9,7 @@
       tags:
       - RollingPaper
       - CigFilter
-    capacity: 20
+    maxSlots: 20
   - type: StorageFill
     contents:
       - id: PaperRolling
@@ -31,7 +31,6 @@
       tags:
       - RollingPaper
       - CigFilter
-    capacity: 32
   - type: StorageFill
     contents:
       - id: PaperRolling

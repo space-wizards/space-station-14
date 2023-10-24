@@ -37,7 +37,8 @@
       - state: box
       - state: light
   - type: Storage
-    capacity: 60
+    maxSlots: 12
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -60,7 +61,8 @@
       - state: box
       - state: lighttube
   - type: Storage
-    capacity: 60
+    maxSlots: 12
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -85,7 +87,8 @@
       - state: box
       - state: lightmixed
   - type: Storage
-    capacity: 60
+    maxSlots: 12
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -108,7 +111,6 @@
       - state: box
       - state: pda
   - type: Storage
-    capacity: 60
     whitelist:
       components:
       - Pda
@@ -128,7 +130,6 @@
       - state: box
       - state: pda
   - type: Storage
-    capacity: 60
     whitelist:
       components:
       - IdCard
@@ -148,7 +149,6 @@
       - state: box
       - state: headset
   - type: Storage
-    capacity: 60
     whitelist:
       components:
       - Headset
@@ -192,7 +192,6 @@
   description: A special box for sensitive people.
   components:
   - type: Storage
-    capacity: 30
   - type: Sprite
     layers:
       - state: box_hug
@@ -267,7 +266,7 @@
       - id: TrashBag
         amount: 6
   - type: Storage
-    capacity: 800
+    maxItemSize: Normal
     whitelist:
       tags:
         - TrashBag
@@ -294,7 +293,6 @@
       - state: box
       - state: encryptokey
   - type: Storage
-    capacity: 30
     whitelist:
       components:
       - EncryptionKey
@@ -392,7 +390,6 @@
       - id: EncryptionKeySyndie
         amount: 2
   - type: Storage
-    capacity: 15
 
 - type: entity
   name: deathrattle implant box
@@ -409,7 +406,8 @@
       - id: HandheldGPSBasic
         amount: 6
   - type: Storage
-    capacity: 60
+    maxSlots: 12
+    maxTotalWeight: 24
   - type: Sprite
     layers:
       - state: box
@@ -438,15 +436,16 @@
   - type: StorageFill
     contents:
       - id: Dart
-        amount: 5
+        amount: 3
       - id: DartBlue
-        amount: 5
+        amount: 3
       - id: DartPurple
-        amount: 5
+        amount: 3
       - id: DartYellow
-        amount: 5
+        amount: 3
   - type: Storage
-    capacity: 40
+    maxSlots: 12
+    maxTotalWeight: 24
   - type: Sprite
     layers:
       - state: box

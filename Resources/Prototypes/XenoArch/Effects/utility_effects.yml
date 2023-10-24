@@ -52,7 +52,9 @@
       storagebase: !type:Container
         ents: [ ]
   - type: Storage
-    capacity: 50
+    MaxSlots: 5
+    maxItemSize: Large
+    MaxTotalSize: 40
 
 - type: artifactEffect
   id: EffectPhasing

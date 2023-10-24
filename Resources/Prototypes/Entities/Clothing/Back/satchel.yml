@@ -168,4 +168,5 @@
     - state: icon-unlit
       shader: unshaded
   - type: Storage
-    capacity: 9999
+    maxSlots: 21
+    maxItemSize: Large

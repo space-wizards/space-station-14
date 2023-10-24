@@ -16,8 +16,6 @@
   components:
   - type: Item
     size: Normal
-  - type: Storage
-    capacity: 30
 
 - type: entity
   id: PresentRandomUnsafe

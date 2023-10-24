@@ -13,11 +13,6 @@ namespace Content.Shared.Item;
 [Access(typeof(SharedItemSystem))]
 public sealed partial class ItemComponent : Component
 {
-    [Obsolete]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
-    public int OldSize = 5;
-
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [Access(typeof(SharedItemSystem))]
     public ItemSize Size = ItemSize.Small;

@@ -8,7 +8,6 @@
     whitelist:
       tags:
       - MonkeyCube
-    capacity: 30
   - type: StorageFill
     contents:
       - id: MonkeyCubeWrapped
@@ -47,7 +46,6 @@
     whitelist:
       tags:
       - MonkeyCube
-    capacity: 30
   - type: StorageFill
     contents:
       - id: SyndicateSpongeWrapped

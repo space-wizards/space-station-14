@@ -5,6 +5,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Item;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -13,7 +14,6 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public sealed class StorageTest
     {
-        //todo: does this matter for storage slots? probably not in the same way
         /// <summary>
         /// Can an item store more than itself weighs.
         /// In an ideal world this test wouldn't need to exist because sizes would be recursive.
@@ -89,7 +89,15 @@ namespace Content.IntegrationTests.Tests
 
                     if (proto.TryGetComponent<StorageComponent>("Storage", out var storage))
                     {
-                        capacity = storage.MaxTotalSize;
+                        if (storage.MaxTotalSize != null)
+                        {
+                            capacity = storage.MaxTotalSize.Value;
+                        }
+                        else
+                        {
+                            proto.TryGetComponent<ItemComponent>("Item", out var item);
+                            capacity = storage.MaxSlots * SharedItemSystem.GetItemSizeWeight(item?.Size ?? SharedStorageSystem.DefaultStorageMaxItemSize);
+                        }
                     }
                     else if (proto.TryGetComponent<EntityStorageComponent>("EntityStorage", out var entStorage))
                     {

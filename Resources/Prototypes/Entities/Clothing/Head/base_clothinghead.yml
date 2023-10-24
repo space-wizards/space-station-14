@@ -8,6 +8,8 @@
     - HEAD
   - type: Sprite
     state: icon
+  - type: Item
+    size: Small
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager

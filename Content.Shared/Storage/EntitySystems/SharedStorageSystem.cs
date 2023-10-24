@@ -477,7 +477,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (SharedItemSystem.GetItemSizeWeight(item.Size) + GetCumulativeItemSizes(uid, storageComp) > storageComp.MaxTotalSize)
+        if (SharedItemSystem.GetItemSizeWeight(item.Size) + GetCumulativeItemSizes(uid, storageComp) > GetMaxTotalWeight((uid, storageComp)))
         {
             reason = "comp-storage-insufficient-capacity";
             return false;
@@ -607,6 +607,18 @@ public abstract class SharedStorageSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns true if there is enough space to theoretically fit another item.
+    /// </summary>
+    public bool HasSpace(Entity<StorageComponent?> uid)
+    {
+        if (!Resolve(uid, ref uid.Comp))
+            return false;
+
+        return GetCumulativeItemSizes(uid, uid.Comp) < GetMaxTotalWeight(uid) &&
+               uid.Comp.Container.ContainedEntities.Count < uid.Comp.MaxSlots;
+    }
+
+    /// <summary>
     /// Returns the sum of all the ItemSizes of the items inside of a storage.
     /// </summary>
     public int GetCumulativeItemSizes(EntityUid uid, StorageComponent? component = null)
@@ -640,6 +652,17 @@ public abstract class SharedStorageSystem : EntitySystem
         // if there is no max item size specified, the value used
         // is one below the item size of the storage entity, clamped at ItemSize.Tiny
         return (ItemSize) Math.Max((int) item.Size - 1, 1);
+    }
+
+    public int GetMaxTotalWeight(Entity<StorageComponent?> uid)
+    {
+        if (!Resolve(uid, ref uid.Comp))
+            return 0;
+
+        if (uid.Comp.MaxTotalSize != null)
+            return uid.Comp.MaxTotalSize.Value;
+
+        return uid.Comp.MaxSlots * SharedItemSystem.GetItemSizeWeight(GetMaxItemSize(uid));
     }
 
     /// <summary>

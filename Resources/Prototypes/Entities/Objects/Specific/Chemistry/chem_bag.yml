@@ -15,7 +15,7 @@
   - type: Item
     size: Normal
   - type: Storage
-    capacity: 45
+    maxSlots: 40
     quickInsert: true
     areaInsert: true
     whitelist:

@@ -16,7 +16,8 @@
   - type: Item
     size: Large
   - type: Storage
-    capacity: 175
+    maxSlots: 12
+    maxItemSize: Normal
     quickInsert: true
     areaInsert: true
     whitelist:
