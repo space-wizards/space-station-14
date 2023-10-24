@@ -5,7 +5,6 @@
   description: A very large chainsaw. Usually you use this for cutting down trees... usually.
   components:
   - type: Wieldable
-    wieldTime: 1
     wieldSound: !type:SoundPathSpecifier
       path: /Audio/Weapons/chainsawwield.ogg
       params:
@@ -44,3 +43,5 @@
         - ReagentId: WeldingFuel
           Quantity: 300
         maxVol: 300
+  - type: UseDelay
+    delay: 1
