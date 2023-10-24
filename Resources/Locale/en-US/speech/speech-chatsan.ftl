@@ -110,7 +110,7 @@ chatsan-word-40 = etc.
 chatsan-replacement-etcetera = etcetera
 
 chatsan-word-41 = wyd
-chatsan-replacement-41 = what you doing
+chatsan-replacement-41 = what are you doing
 
 chatsan-word-42 = ofc
 chatsan-replacement-42 = of course
