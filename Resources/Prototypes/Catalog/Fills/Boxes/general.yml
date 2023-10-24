@@ -238,6 +238,7 @@
     whitelist:
       components:
       - Clothing
+      - Food
   - type: StorageFill
     contents:
       - id: ClothingShoesBootsPerformer
