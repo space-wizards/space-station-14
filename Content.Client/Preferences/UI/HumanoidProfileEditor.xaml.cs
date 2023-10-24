@@ -459,7 +459,7 @@ namespace Content.Client.Preferences.UI
 
             _tabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-loadouts-tab"));
             _loadoutPreferences = new List<LoadoutPreferenceSelector>();
-            var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().OrderBy(l => l.ID).ToList();
+            var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().ToList();
 
             var loadoutsEnabled = _configurationManager.GetCVar(CCVars.GameLoadoutsEnabled);
             _tabContainer.SetTabVisible(4, loadoutsEnabled);
@@ -489,7 +489,7 @@ namespace Content.Client.Preferences.UI
 
                 // Make categories
                 var currentCategory = 1;
-                foreach (var loadout in loadouts)
+                foreach (var loadout in loadouts.OrderBy(l => l.Category))
                 {
                     // Check for existing category
                     BoxContainer? match = null;
@@ -514,12 +514,12 @@ namespace Content.Client.Preferences.UI
                     };
 
                     _loadoutsTabs.AddChild(box);
-                    _loadoutsTabs.SetTabTitle(currentCategory, Loc.GetString(loadout.Category));
+                    _loadoutsTabs.SetTabTitle(currentCategory, Loc.GetString($"loadout-category-{loadout.Category}"));
                     currentCategory++;
                 }
 
                 // Fill categories
-                foreach (var loadout in loadouts.OrderBy(l => !l.Exclusive))
+                foreach (var loadout in loadouts.OrderBy(l => l.ID))
                 {
                     var selector = new LoadoutPreferenceSelector(loadout, _entMan, _loadoutSystem);
 
@@ -1541,18 +1541,18 @@ namespace Content.Client.Preferences.UI
                 Loadout = loadout;
 
                 // Display the first item in the loadout as a preview
+                // TODO: Maybe allow custom icons to be specified in the prototype?
                 var dummyLoadoutItem = entityManager.SpawnEntity(loadout.Items.First(), MapCoordinates.Nullspace);
 
-                // Get the sprite component of the dummy entity and create a sprite view for it
-                var sprite = entityManager.GetComponent<SpriteComponent>(dummyLoadoutItem);
+                // Create a sprite preview of the loadout item
                 var previewLoadout = new SpriteView
                 {
-                    Sprite = sprite,
                     Scale = new Vector2(1, 1),
                     OverrideDirection = Direction.South,
                     VerticalAlignment = VAlignment.Center,
                     SizeFlagsStretchRatio = 1
                 };
+                previewLoadout.SetEntity(dummyLoadoutItem);
 
 
                 // Create a checkbox to get the loadout
