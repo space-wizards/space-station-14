@@ -1,6 +1,6 @@
 ﻿## UI
 
-crew-monitoring-user-interface-title = Crew Monitoring
+crew-monitoring-user-interface-title = Crew Monitoring Console
 
 crew-monitoring-user-interface-name = Name
 crew-monitoring-user-interface-job = Job

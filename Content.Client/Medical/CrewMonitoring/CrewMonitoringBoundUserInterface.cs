@@ -15,13 +15,19 @@ namespace Content.Client.Medical.CrewMonitoring
         protected override void Open()
         {
             EntityUid? gridUid = null;
+            string stationName = string.Empty;
 
             if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
             {
                 gridUid = xform.GridUid;
+
+                if (EntMan.TryGetComponent<MetaDataComponent>(gridUid, out var metaData))
+                {
+                    stationName = metaData.EntityName;
+                }
             }
 
-            _menu = new CrewMonitoringWindow(gridUid);
+            _menu = new CrewMonitoringWindow(stationName, gridUid);
 
             _menu.OpenCentered();
             _menu.OnClose += Close;
