@@ -254,8 +254,6 @@
       contents:
         - id: BoxSurvival
         - id: WeaponDisabler
-        - id: WeaponPulsePistol
-        - id: WeaponPulseCarbine
         - id: MedicatedSuture
         - id: RegenerativeMesh
         - id: BoxHandcuff
