@@ -37,7 +37,7 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTLeader
-    suitstorage: OxygenTankFilled
+    suitstorage: AirTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
@@ -82,7 +82,7 @@
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTEngineer
-    suitstorage: OxygenTankFilled
+    suitstorage: AirTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltChiefEngineerFilled
@@ -128,7 +128,7 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTSecurity
-    suitstorage: OxygenTankFilled
+    suitstorage: AirTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
@@ -175,7 +175,7 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTMedical
-    suitstorage: OxygenTankFilled
+    suitstorage: AirTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMedicalFilled
@@ -219,7 +219,7 @@
     mask: ClothingMaskBreath
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTJanitor
-    suitstorage: OxygenTankFilled
+    suitstorage: AirTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltJanitorFilled
