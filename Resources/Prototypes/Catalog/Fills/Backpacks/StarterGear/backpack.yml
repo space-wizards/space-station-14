@@ -237,13 +237,12 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
-        - id: WeaponPulseCarbine
-        - id: WeaponPulsePistol
         - id: WeaponDisabler
         - id: MedicatedSuture
         - id: RegenerativeMesh
-        - id: Handcuffs
+        - id: BoxHandcuff
         - id: CrowbarRed
+        - id: MagazinePistol
 
 - type: entity
   noSpawn: true
