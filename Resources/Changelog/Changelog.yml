@@ -1,11 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: 'Wheelchairs, unicycles and similar vehicles no longer act as a magical
-      barrier against stuns.', type: Fix}
-  - {message: Driving while asleep is no longer possible., type: Fix}
-  id: 4547
-  time: '2023-08-13T07:13:19.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Vending machine sprites have been polished up., type: Tweak}
@@ -2909,3 +2902,9 @@ Entries:
   - {message: Ore bags now pickup artifact fragments as well as ores, type: Fix}
   id: 5046
   time: '2023-10-24T06:20:46.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Syndicate have issued a new challenge objective for traitors with shuttle
+      hijacking, type: Add}
+  id: 5047
+  time: '2023-10-24T07:55:47.0000000+00:00'
