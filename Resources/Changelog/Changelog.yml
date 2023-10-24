@@ -1,32 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Syndicate clowns may now purchase a holoclown injector via their syndicate
-      uplink., type: Add}
-  id: 4550
-  time: '2023-08-13T07:18:10.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: The various laser guns are now called rifles or pistols., type: Tweak}
-  - {message: Retro laser blasters now deal 20% more damage., type: Tweak}
-  - {message: Laser deliveries now contain 3 laser rifles instead of 3 retro laser
-      blasters., type: Tweak}
-  id: 4551
-  time: '2023-08-13T07:18:49.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Added guidebook entries for the Access Configurator and how to install
-      Airlock Safeguards, type: Add}
-  id: 4552
-  time: '2023-08-13T07:19:28.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Space Station staff are no longer immune to the toxic and caustic effects
-      of some pyrotechnic chemicals, as well as bleach. Drinking bleach now makes
-      you scream as your stomach lining is reduced to goop.', type: Tweak}
-  - {message: Phenol is now (accurately) toxic., type: Tweak}
-  id: 4553
-  time: '2023-08-13T07:22:08.0000000+00:00'
 - author: CrigCrag
   changes:
   - {message: Added jugs to the medical fabricator., type: Add}
@@ -2908,3 +2880,24 @@ Entries:
       sending you to the farplanes., type: Fix}
   id: 5049
   time: '2023-10-24T10:44:09.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed the "examine" trigger for artifacts not having a hint., type: Fix}
+  id: 5050
+  time: '2023-10-24T20:37:16.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: You can actually grind corn into cornmeal now., type: Fix}
+  id: 5051
+  time: '2023-10-24T20:38:43.0000000+00:00'
+- author: Myakot
+  changes:
+  - {message: Skeletons can now heal by pouring milk over themselves, type: Add}
+  id: 5052
+  time: '2023-10-24T20:58:34.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Fixed anomaly locators frantically beeping when they first enter detection
+      range for an anomaly., type: Fix}
+  id: 5053
+  time: '2023-10-24T21:00:23.0000000+00:00'
