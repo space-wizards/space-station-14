@@ -27,6 +27,15 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
+  - type: MeleeWeapon
+    hidden: true
+    wideAnimationRotation: -90
+    attackRate: 1
+    damage:
+      types:
+        Slash: 0
+  - type: MeleeRequiresObjectInSlot
+    slotName: gun_bayonet
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
@@ -48,6 +57,12 @@
         whitelist:
           tags:
             - CartridgePistol
+      gun_bayonet:
+        name: Bayonet
+        priority: 0
+        whitelist:
+          tags:
+            - Bayonet
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
@@ -144,6 +159,12 @@
           whitelist:
             tags:
               - CartridgePistol
+        gun_bayonet:
+          name: Bayonet
+          priority: 0
+          whitelist:
+            tags:
+              - Bayonet
     - type: MagazineVisuals
       magState: mag
       steps: 1
@@ -191,6 +212,12 @@
         whitelist:
           tags:
             - CartridgeMagnum
+      gun_bayonet:
+        name: Bayonet
+        priority: 0
+        whitelist:
+          tags:
+            - Bayonet
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -243,6 +270,12 @@
         whitelist:
           tags:
             - CartridgePistol
+      gun_bayonet:
+        name: Bayonet
+        priority: 0
+        whitelist:
+          tags:
+            - Bayonet
   - type: MagazineVisuals
     magState: mag
     steps: 6
@@ -274,6 +307,12 @@
           whitelist:
             tags:
               - CartridgePistol
+        gun_bayonet:
+          name: Bayonet
+          priority: 0
+          whitelist:
+            tags:
+              - Bayonet
 
 - type: entity
   name: Vector
@@ -300,3 +339,9 @@
         whitelist:
           tags:
             - CartridgeMagnum
+      gun_bayonet:
+        name: Bayonet
+        priority: 0
+        whitelist:
+          tags:
+            - Bayonet
