@@ -61,6 +61,7 @@
   noSpawn: true
   components:
   - type: StationEvent
+    minimumPlayers: 35
     weight: 10
     duration: 1
   - type: RandomEntityStorageSpawnRule
