@@ -64,6 +64,29 @@
           - MobMask
         layer:
           - MobLayer
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ Milk ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          groups:
+            Burn: -1
+            Brute: -1
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "skeleton-healed-by-milk-popup" ]
+        probability: 0.25
 
 - type: entity
   parent: BaseSpeciesDummy
