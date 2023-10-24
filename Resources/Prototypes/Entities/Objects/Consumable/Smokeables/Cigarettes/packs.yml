@@ -109,7 +109,7 @@
   - type: SpaceGarbage
   - type: Storage
     maxSlots: 10
-    maxTotalSize: 20
+    maxTotalWeight: 20
   - type: Item
     size: Small
   - type: StorageFill

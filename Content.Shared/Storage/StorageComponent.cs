@@ -39,7 +39,7 @@ namespace Content.Shared.Storage
         /// A limit for the cumulative ItemSizes that can be inserted in this storage.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int? MaxTotalSize;
+        public int? MaxTotalWeight;
 
         // TODO: Make area insert its own component.
         [DataField("quickInsert")]

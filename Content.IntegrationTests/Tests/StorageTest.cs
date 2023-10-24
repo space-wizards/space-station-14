@@ -89,9 +89,9 @@ namespace Content.IntegrationTests.Tests
 
                     if (proto.TryGetComponent<StorageComponent>("Storage", out var storage))
                     {
-                        if (storage.MaxTotalSize != null)
+                        if (storage.MaxTotalWeight != null)
                         {
-                            capacity = storage.MaxTotalSize.Value;
+                            capacity = storage.MaxTotalWeight.Value;
                         }
                         else
                         {

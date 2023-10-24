@@ -52,9 +52,9 @@
       storagebase: !type:Container
         ents: [ ]
   - type: Storage
-    MaxSlots: 5
+    maxSlots: 5
     maxItemSize: Large
-    MaxTotalSize: 40
+    maxTotalWeight: 40
 
 - type: artifactEffect
   id: EffectPhasing

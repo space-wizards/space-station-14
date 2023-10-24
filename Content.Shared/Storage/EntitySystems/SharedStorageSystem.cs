@@ -659,8 +659,8 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(uid, ref uid.Comp))
             return 0;
 
-        if (uid.Comp.MaxTotalSize != null)
-            return uid.Comp.MaxTotalSize.Value;
+        if (uid.Comp.MaxTotalWeight != null)
+            return uid.Comp.MaxTotalWeight.Value;
 
         return uid.Comp.MaxSlots * SharedItemSystem.GetItemSizeWeight(GetMaxItemSize(uid));
     }

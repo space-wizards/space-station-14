@@ -178,7 +178,7 @@
   components:
   - type: Storage
     maxSlots: 12
-    maxTotalSize: 24
+    maxItemSize: Small
   - type: StorageFill
     contents:
     - id: Eggshells
