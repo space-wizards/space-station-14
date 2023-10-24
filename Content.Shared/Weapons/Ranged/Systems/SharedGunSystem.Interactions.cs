@@ -22,16 +22,14 @@ public abstract partial class SharedGunSystem
         if (TryComp(args.Examined, out ItemSlotsComponent? weaponSlots)
             && _slots.TryGetSlot(args.Examined, "gun_bayonet", out var itemSlot, weaponSlots))
         {
-            if (itemSlot.Item != null)
-            {
-                args.PushMarkup(Loc.GetString("gun-bayonet-examine",
-                    ("color", BayonetExamineColor),
-                    ("bayonet", Comp<MetaDataComponent>((EntityUid) itemSlot.Item).EntityName)));
-            }
-            else
+            if (itemSlot.Item == null)
             {
                 args.PushMarkup(Loc.GetString("gun-bayonet-none-examine"));
+                return;
             }
+            args.PushMarkup(Loc.GetString("gun-bayonet-examine",
+                    ("color", BayonetExamineColor),
+                    ("bayonet", Comp<MetaDataComponent>((EntityUid) itemSlot.Item).EntityName)));
         }
     }
 
