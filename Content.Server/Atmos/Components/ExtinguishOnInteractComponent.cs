@@ -1,16 +1,15 @@
-using Content.Shared.Damage;
+using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.Audio;
-using Robust.Shared.Physics.Collision.Shapes;
 
 namespace Content.Server.Atmos.Components;
 /// <summary>
 /// Allows you to extinguish an object by interacting with it
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(FlammableSystem))]
 public sealed partial class ExtinguishOnInteractComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier ExtinguishSound = new SoundPathSpecifier("/Audio/Items/candle_blowing.ogg");
+    public SoundSpecifier? ExtinguishAttemptSound = new SoundPathSpecifier("/Audio/Items/candle_blowing.ogg");
 
     /// <summary>
     /// Extinguishing chance

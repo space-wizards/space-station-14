@@ -142,6 +142,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             TryHandExtinguish(uid, component);
         }
+
         private void OnExtinguishUsingInHand(EntityUid uid, ExtinguishOnInteractComponent component, UseInHandEvent args)
         {
             TryHandExtinguish(uid, component);
@@ -149,15 +150,15 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void TryHandExtinguish(EntityUid uid, ExtinguishOnInteractComponent component)
         {
-            if (!TryComp<FlammableComponent>(uid, out var flammable))
+            if (!TryComp(uid, out FlammableComponent? flammable))
                 return;
             if (!flammable.OnFire)
                 return;
-            if (TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.ActiveDelay(uid, useDelay))
+            if (TryComp(uid, out UseDelayComponent? useDelay) && _useDelay.ActiveDelay(uid, useDelay))
                 return;
 
             _useDelay.BeginDelay(uid);
-            _audio.PlayPvs(component.ExtinguishSound, uid);
+            _audio.PlayPvs(component.ExtinguishAttemptSound, uid);
             if (_random.Prob(component.Probability))
             {
                 AdjustFireStacks(uid, component.StackDelta, flammable);
