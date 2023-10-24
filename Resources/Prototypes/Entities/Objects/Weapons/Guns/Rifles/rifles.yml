@@ -28,7 +28,7 @@
   - type: MeleeWeapon
     hidden: true
     wideAnimationRotation: -90
-    attackRate: 1.5
+    attackRate: 1
     damage:
       types:
         Slash: 0
