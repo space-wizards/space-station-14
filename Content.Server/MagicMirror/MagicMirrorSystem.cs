@@ -146,7 +146,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void UpdateInterface(EntityUid uid, EntityUid playerUid, ICommonSession session, HumanoidAppearanceComponent? humanoid = null)
     {
-        if (!Resolve(playerUid, ref humanoid) || session is not ICommonSession player)
+        if (!Resolve(playerUid, ref humanoid) || session is not { } player)
         {
             return;
         }

@@ -67,7 +67,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
 
     private void OnAfterUiClose(EntityUid uid, BlockGameArcadeComponent component, BoundUIClosedEvent args)
     {
-        if (args.Session is not ICommonSession session)
+        if (args.Session is not { } session)
             return;
 
         if (component.Player != session)

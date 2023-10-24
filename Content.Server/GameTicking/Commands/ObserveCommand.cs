@@ -14,7 +14,7 @@ namespace Content.Server.GameTicking.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not ICommonSession player)
+            if (shell.Player is not { } player)
             {
                 return;
             }

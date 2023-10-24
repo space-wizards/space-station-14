@@ -26,7 +26,7 @@ sealed class SalvageRulerCommand : IConsoleCommand
             return;
         }
 
-        if (shell.Player is not ICommonSession player)
+        if (shell.Player is not { } player)
         {
             shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
             return;

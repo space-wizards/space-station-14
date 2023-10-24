@@ -129,7 +129,7 @@ public sealed partial class SensorMonitoringConsoleSystem
         if (!args.UiKey.Equals(SensorMonitoringConsoleUiKey.Key))
             return;
 
-        if (args.Session is not ICommonSession player)
+        if (args.Session is not { } player)
             return;
 
         component.InitialUIStateSent.Remove(player);

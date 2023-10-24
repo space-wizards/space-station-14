@@ -9,7 +9,6 @@ using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.UserInterface;
@@ -27,7 +26,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     public string Help => $"{Command} <cargosell / lathesell / melee>";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not ICommonSession pSession)
+        if (shell.Player is not { } pSession)
         {
             shell.WriteError(Loc.GetString("stat-values-server"));
             return;

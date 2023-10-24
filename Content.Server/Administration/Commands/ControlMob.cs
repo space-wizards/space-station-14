@@ -16,7 +16,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not ICommonSession player)
+            if (shell.Player is not { } player)
             {
                 shell.WriteLine("shell-server-cannot");
                 return;

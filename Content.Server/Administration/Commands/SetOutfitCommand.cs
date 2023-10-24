@@ -57,7 +57,7 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length == 1)
             {
-                if (shell.Player is not ICommonSession player)
+                if (shell.Player is not { } player)
                 {
                     shell.WriteError(Loc.GetString("set-outfit-command-is-not-player-error"));
                     return;

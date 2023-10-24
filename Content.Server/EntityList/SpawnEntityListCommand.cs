@@ -22,7 +22,7 @@ namespace Content.Server.EntityList
                 return;
             }
 
-            if (shell.Player is not ICommonSession player)
+            if (shell.Player is not { } player)
             {
                 shell.WriteError("You must be a player to run this command.");
                 return;

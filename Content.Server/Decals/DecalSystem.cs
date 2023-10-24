@@ -198,7 +198,7 @@ namespace Content.Server.Decals
 
         private void OnDecalPlacementRequest(RequestDecalPlacementEvent ev, EntitySessionEventArgs eventArgs)
         {
-            if (eventArgs.SenderSession is not ICommonSession session)
+            if (eventArgs.SenderSession is not { } session)
                 return;
 
             // bad
@@ -227,7 +227,7 @@ namespace Content.Server.Decals
 
         private void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs)
         {
-            if (eventArgs.SenderSession is not ICommonSession session)
+            if (eventArgs.SenderSession is not { } session)
                 return;
 
             // bad

@@ -15,7 +15,7 @@ public sealed class NPCCommand : IConsoleCommand
     public string Help => $"{Command}";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not ICommonSession playerSession)
+        if (shell.Player is not { } playerSession)
         {
             return;
         }

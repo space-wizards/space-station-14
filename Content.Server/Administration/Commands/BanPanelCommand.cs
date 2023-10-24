@@ -16,7 +16,7 @@ public sealed class BanPanelCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not ICommonSession player)
+        if (shell.Player is not { } player)
         {
             shell.WriteError(Loc.GetString("cmd-banpanel-server"));
             return;

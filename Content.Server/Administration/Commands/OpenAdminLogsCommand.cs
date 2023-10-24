@@ -15,7 +15,7 @@ public sealed class OpenAdminLogsCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not ICommonSession player)
+        if (shell.Player is not { } player)
         {
             shell.WriteLine("This does not work from the server console.");
             return;

@@ -26,7 +26,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     public void Toggle(ICommonSession session)
     {
-        if (session is not ICommonSession pSession)
+        if (session is not { } pSession)
             return;
 
         DebugTools.Assert(_admin.CanCommand(pSession, CommandName));
@@ -51,7 +51,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     {
         var grid = GetEntity(ev.Grid);
 
-        if (args.SenderSession is not ICommonSession playerSession ||
+        if (args.SenderSession is not { } playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
             !Exists(grid) ||
             Deleted(grid))
@@ -68,7 +68,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     {
         var grid = GetEntity(msg.Grid);
 
-        if (args.SenderSession is not ICommonSession playerSession ||
+        if (args.SenderSession is not { } playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
             !Exists(grid) ||
             Deleted(grid))

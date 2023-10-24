@@ -59,7 +59,7 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
     {
-        if (args.SenderSession is not ICommonSession sessionCast
+        if (args.SenderSession is not { } sessionCast
             || !_configManager.GetCVar(CCVars.CrewManifestWithoutEntity))
         {
             return;
@@ -92,12 +92,12 @@ public sealed class CrewManifestSystem : EntitySystem
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if (owningStation == null || ev.Session is not ICommonSession sessionCast)
+        if (owningStation == null || ev.Session is not { } session)
         {
             return;
         }
 
-        CloseEui(owningStation.Value, sessionCast, uid);
+        CloseEui(owningStation.Value, session, uid);
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ public sealed class CrewManifestSystem : EntitySystem
     private void OpenEuiFromBui(EntityUid uid, CrewManifestViewerComponent component, CrewManifestOpenUiMessage msg)
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if (owningStation == null || msg.Session is not ICommonSession sessionCast)
+        if (owningStation == null || msg.Session is not { } session)
         {
             return;
         }
@@ -135,7 +135,7 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        OpenEui(owningStation.Value, sessionCast, uid);
+        OpenEui(owningStation.Value, session, uid);
     }
 
     /// <summary>
@@ -251,7 +251,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
             return;
         }
 
-        if (shell.Player == null || shell.Player is not ICommonSession session)
+        if (shell.Player == null || shell.Player is not { } session)
         {
             shell.WriteLine("You must run this from a client.");
             return;

@@ -48,7 +48,7 @@ public sealed partial class HumanoidAppearanceSystem
     private void OnBaseLayersSet(EntityUid uid, HumanoidAppearanceComponent component,
         HumanoidMarkingModifierBaseLayersSetMessage message)
     {
-        if (message.Session is not ICommonSession player
+        if (message.Session is not { } player
             || !_adminManager.HasAdminFlag(player, AdminFlags.Fun))
         {
             return;
@@ -81,7 +81,7 @@ public sealed partial class HumanoidAppearanceSystem
     private void OnMarkingsSet(EntityUid uid, HumanoidAppearanceComponent component,
         HumanoidMarkingModifierMarkingSetMessage message)
     {
-        if (message.Session is not ICommonSession player
+        if (message.Session is not { } player
             || !_adminManager.HasAdminFlag(player, AdminFlags.Fun))
         {
             return;

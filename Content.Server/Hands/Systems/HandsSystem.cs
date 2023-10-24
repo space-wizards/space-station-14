@@ -219,7 +219,7 @@ namespace Content.Server.Hands.Systems
         // TODO: move to storage or inventory
         private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
         {
-            if (session is not ICommonSession playerSession)
+            if (session is not { } playerSession)
                 return;
 
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))

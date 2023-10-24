@@ -42,7 +42,7 @@ namespace Content.Server.Tabletop
 
         private void OnTabletopRequestTakeOut(TabletopRequestTakeOut msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession is not ICommonSession playerSession)
+            if (args.SenderSession is not { } playerSession)
                 return;
 
             var table = GetEntity(msg.TableUid);
@@ -105,7 +105,7 @@ namespace Content.Server.Tabletop
 
         protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession is not ICommonSession playerSession)
+            if (args.SenderSession is not { } playerSession)
                 return;
 
             if (!TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
