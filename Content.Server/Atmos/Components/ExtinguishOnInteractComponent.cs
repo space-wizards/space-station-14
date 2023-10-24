@@ -24,4 +24,7 @@ public sealed partial class ExtinguishOnInteractComponent : Component
     // which is useful for any blacksmithing mechs
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float StackDelta = -5.0f;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public LocId ExtinguishFailed = "candle-extinguish-failed";
 }

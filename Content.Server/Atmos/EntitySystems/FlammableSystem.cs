@@ -162,6 +162,9 @@ namespace Content.Server.Atmos.EntitySystems
             if (_random.Prob(component.Probability))
             {
                 AdjustFireStacks(uid, component.StackDelta, flammable);
+            } else
+            {
+                _popup.PopupEntity(Loc.GetString(component.ExtinguishFailed), uid);
             }
         }
         private void OnCollide(EntityUid uid, FlammableComponent flammable, ref StartCollideEvent args)
