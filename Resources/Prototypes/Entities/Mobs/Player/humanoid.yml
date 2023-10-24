@@ -22,8 +22,8 @@
   randomizeName: false
   components:
     - type: GhostRole
-      name: ghost-role-information-ert-leader-name
-      description: ghost-role-information-ert-leader-description
+      name: ghost-role-information-Death-Squad-name
+      description: ghost-role-information-Death-Squad-description
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ DeathSquadGear ]
