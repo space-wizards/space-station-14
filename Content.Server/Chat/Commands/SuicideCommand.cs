@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 
@@ -17,7 +18,7 @@ namespace Content.Server.Chat.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not { } player)
+            if (shell.Player is not IPlayerSession player)
             {
                 shell.WriteLine(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;

@@ -3,6 +3,8 @@ using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
+using PlayerManager = Robust.Client.Player.PlayerManager;
 
 namespace Content.IntegrationTests.Tests.Actions;
 
@@ -24,7 +26,7 @@ public sealed class ActionsAddedTest
         var sEntMan = server.ResolveDependency<IEntityManager>();
         var cEntMan = client.ResolveDependency<IEntityManager>();
         var clientSession = client.ResolveDependency<Robust.Client.Player.IPlayerManager>().LocalPlayer?.Session;
-        var serverSession = server.ResolveDependency<IPlayerManager>().Sessions.Single();
+        var serverSession = server.ResolveDependency<IPlayerManager>().ServerSessions.Single();
         var sActionSystem = server.System<SharedActionsSystem>();
         var cActionSystem = client.System<SharedActionsSystem>();
 

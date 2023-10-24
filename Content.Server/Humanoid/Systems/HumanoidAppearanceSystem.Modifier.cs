@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Content.Shared.Humanoid;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Humanoid;
@@ -47,7 +48,7 @@ public sealed partial class HumanoidAppearanceSystem
     private void OnBaseLayersSet(EntityUid uid, HumanoidAppearanceComponent component,
         HumanoidMarkingModifierBaseLayersSetMessage message)
     {
-        if (message.Session is not { } player
+        if (message.Session is not IPlayerSession player
             || !_adminManager.HasAdminFlag(player, AdminFlags.Fun))
         {
             return;
@@ -80,7 +81,7 @@ public sealed partial class HumanoidAppearanceSystem
     private void OnMarkingsSet(EntityUid uid, HumanoidAppearanceComponent component,
         HumanoidMarkingModifierMarkingSetMessage message)
     {
-        if (message.Session is not { } player
+        if (message.Session is not IPlayerSession player
             || !_adminManager.HasAdminFlag(player, AdminFlags.Fun))
         {
             return;

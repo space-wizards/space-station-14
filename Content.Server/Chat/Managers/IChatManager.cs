@@ -1,6 +1,8 @@
 using Content.Shared.Chat;
+using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.Chat.Managers
 {
@@ -10,12 +12,12 @@ namespace Content.Server.Chat.Managers
         ///     Keys identifying messages sent by a specific player, used when sending
         ///     <see cref="MsgChatMessage"/>
         /// </summary>
-        Dictionary<ICommonSession, int> SenderKeys { get; }
+        Dictionary<IPlayerSession, int> SenderKeys { get; }
 
         /// <summary>
         ///     Tracks which entities a player was attached to while sending messages.
         /// </summary>
-        Dictionary<ICommonSession, HashSet<NetEntity>> SenderEntities { get; }
+        Dictionary<IPlayerSession, HashSet<NetEntity>> SenderEntities { get; }
 
         void Initialize();
 
@@ -28,7 +30,7 @@ namespace Content.Server.Chat.Managers
 
         void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false);
 
-        void TrySendOOCMessage(ICommonSession player, string message, OOCChatType type);
+        void TrySendOOCMessage(IPlayerSession player, string message, OOCChatType type);
 
         void SendHookOOC(string sender, string message);
         void SendAdminAnnouncement(string message);
@@ -45,8 +47,8 @@ namespace Content.Server.Chat.Managers
 
         void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, int? senderKey = null);
 
-        bool MessageCharacterLimit(ICommonSession player, string message);
+        bool MessageCharacterLimit(IPlayerSession player, string message);
 
-        void DeleteMessagesBy(ICommonSession player);
+        void DeleteMessagesBy(IPlayerSession player);
     }
 }

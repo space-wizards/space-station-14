@@ -1,7 +1,8 @@
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
-using Robust.Shared.Player;
+using Robust.Server.Player;
 using Robust.Shared.Toolshed;
+
 
 namespace Content.Server.Administration.Managers
 {
@@ -21,12 +22,12 @@ namespace Content.Server.Administration.Managers
         /// <remarks>
         ///     This does not include admins that are de-adminned.
         /// </remarks>
-        IEnumerable<ICommonSession> ActiveAdmins { get; }
+        IEnumerable<IPlayerSession> ActiveAdmins { get; }
 
         /// <summary>
         /// Gets all admins currently on the server, even de-adminned ones.
         /// </summary>
-        IEnumerable<ICommonSession> AllAdmins { get; }
+        IEnumerable<IPlayerSession> AllAdmins { get; }
 
         /// <summary>
         ///     De-admins an admin temporarily so they are effectively a normal player.
@@ -34,18 +35,18 @@ namespace Content.Server.Administration.Managers
         /// <remarks>
         ///     De-adminned admins are able to re-admin at any time if they so desire.
         /// </remarks>
-        void DeAdmin(ICommonSession session);
+        void DeAdmin(IPlayerSession session);
 
         /// <summary>
         ///     Re-admins a de-adminned admin.
         /// </summary>
-        void ReAdmin(ICommonSession session);
+        void ReAdmin(IPlayerSession session);
 
         /// <summary>
         ///     Re-loads the permissions of an player in case their admin data changed DB-side.
         /// </summary>
         /// <seealso cref="ReloadAdminsWithRank"/>
-        void ReloadAdmin(ICommonSession player);
+        void ReloadAdmin(IPlayerSession player);
 
         /// <summary>
         ///     Reloads admin permissions for all admins with a certain rank.
@@ -56,7 +57,7 @@ namespace Content.Server.Administration.Managers
 
         void Initialize();
 
-        void PromoteHost(ICommonSession player);
+        void PromoteHost(IPlayerSession player);
 
         bool TryGetCommandFlags(CommandSpec command, out AdminFlags[]? flags);
     }

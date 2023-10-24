@@ -30,7 +30,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         SubscribeLocalEvent<EyeAttachedEvent>(OnAttached);
 
         SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
-        SubscribeLocalEvent<LerpingEyeComponent, LocalPlayerDetachedEvent>(OnDetached);
+        SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
@@ -94,7 +94,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         AddEye(ev.Entity, ev.Component, true);
     }
 
-    private void OnDetached(EntityUid uid, LerpingEyeComponent component, LocalPlayerDetachedEvent args)
+    private void OnDetached(EntityUid uid, LerpingEyeComponent component, PlayerDetachedEvent args)
     {
         if (!component.ManuallyAdded)
             RemCompDeferred(uid, component);

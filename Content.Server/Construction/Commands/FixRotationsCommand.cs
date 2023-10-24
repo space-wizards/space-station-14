@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Construction;
 using Content.Shared.Tag;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 
@@ -20,7 +21,7 @@ namespace Content.Server.Construction.Commands
 
         public void Execute(IConsoleShell shell, string argsOther, string[] args)
         {
-            var player = shell.Player;
+            var player = shell.Player as IPlayerSession;
             EntityUid? gridId;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 

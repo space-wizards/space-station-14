@@ -1,5 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Motd;
@@ -13,10 +14,10 @@ internal sealed class MOTDCommand : LocalizedCommands
     [Dependency] private readonly IAdminManager _adminManager = default!;
 
     public override string Command => "motd";
-
+    
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
+        var player = (IPlayerSession?)shell.Player;
         if (args.Length < 1 || (player != null && _adminManager is AdminManager aMan && !aMan.CanCommand(player, "set-motd")))
             shell.ConsoleHost.ExecuteCommand(shell.Player, "get-motd");
         else
@@ -25,7 +26,7 @@ internal sealed class MOTDCommand : LocalizedCommands
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        var player = shell.Player;
+        var player = (IPlayerSession?)shell.Player;
         if (player != null && _adminManager is AdminManager aMan && !aMan.CanCommand(player, "set-motd"))
             return CompletionResult.Empty;
         if (args.Length == 1)

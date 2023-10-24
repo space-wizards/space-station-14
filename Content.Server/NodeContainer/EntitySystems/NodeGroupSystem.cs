@@ -9,7 +9,6 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.EntitySystems
@@ -30,7 +29,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         private readonly List<int> _visDeletes = new();
         private readonly List<BaseNodeGroup> _visSends = new();
 
-        private readonly HashSet<ICommonSession> _visPlayers = new();
+        private readonly HashSet<IPlayerSession> _visPlayers = new();
         private readonly HashSet<BaseNodeGroup> _toRemake = new();
         private readonly HashSet<BaseNodeGroup> _nodeGroups = new();
         private readonly HashSet<Node> _toRemove = new();
@@ -75,7 +74,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private void HandleEnableMsg(NodeVis.MsgEnable msg, EntitySessionEventArgs args)
         {
-            var session = args.SenderSession;
+            var session = (IPlayerSession) args.SenderSession;
             if (!_adminManager.HasAdminFlag(session, AdminFlags.Debug))
                 return;
 
@@ -398,7 +397,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
         }
 
-        private void VisSendFullStateImmediate(ICommonSession player)
+        private void VisSendFullStateImmediate(IPlayerSession player)
         {
             var msg = new NodeVis.MsgData();
 

@@ -10,6 +10,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
@@ -42,8 +43,8 @@ namespace Content.Client.Inventory
             UpdatesOutsidePrediction = true;
             base.Initialize();
 
-            SubscribeLocalEvent<InventorySlotsComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<InventorySlotsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<InventorySlotsComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<InventorySlotsComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<InventoryComponent, ComponentShutdown>(OnShutdown);
 
@@ -112,12 +113,12 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerDetached(EntityUid uid, InventorySlotsComponent component, LocalPlayerDetachedEvent args)
+        private void OnPlayerDetached(EntityUid uid, InventorySlotsComponent component, PlayerDetachedEvent args)
         {
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, LocalPlayerAttachedEvent args)
+        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, PlayerAttachedEvent args)
         {
             if (TryGetSlots(uid, out var definitions))
             {

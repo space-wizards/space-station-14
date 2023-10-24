@@ -13,6 +13,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
 
 namespace Content.Server.Interaction

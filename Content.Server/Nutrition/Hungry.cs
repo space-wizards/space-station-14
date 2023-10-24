@@ -1,7 +1,9 @@
 using Content.Server.Administration;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Administration;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Nutrition
@@ -17,7 +19,7 @@ namespace Content.Server.Nutrition
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player;
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("You cannot use this command unless you are a player.");

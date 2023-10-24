@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Eui;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.EUI
 {

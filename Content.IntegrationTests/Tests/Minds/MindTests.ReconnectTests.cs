@@ -49,7 +49,7 @@ public sealed partial class MindTests
         var mind = GetMind(pair);
 
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
-        var player = playerMan.Sessions.Single();
+        var player = playerMan.ServerSessions.Single();
         var name = player.Name;
         var user = player.UserId;
         Assert.That(mind.Comp.OwnedEntity, Is.Not.Null);
@@ -72,7 +72,7 @@ public sealed partial class MindTests
 
         // Reconnect
         await Connect(pair, name);
-        player = playerMan.Sessions.Single();
+        player = playerMan.ServerSessions.Single();
         Assert.Multiple(() =>
         {
             Assert.That(user, Is.EqualTo(player.UserId));
@@ -127,10 +127,8 @@ public sealed partial class MindTests
         var mindSys = entMan.System<SharedMindSystem>();
         var mind = GetMind(pair);
 
-        Assert.Null(mind.Comp.VisitingEntity);
-
         // Make player visit a new mob
-        var original = mind.Comp.OwnedEntity;
+        var original = mind.Comp.CurrentEntity;
         EntityUid visiting = default;
         await pair.Server.WaitAssertion(() =>
         {
@@ -139,7 +137,6 @@ public sealed partial class MindTests
         });
         await pair.RunTicksSync(5);
 
-        Assert.That(mind.Comp.VisitingEntity, Is.EqualTo(visiting));
         await DisconnectReconnect(pair);
 
         // Player is back in control of the visited mob, mind was preserved

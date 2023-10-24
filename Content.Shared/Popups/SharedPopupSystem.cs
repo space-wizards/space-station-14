@@ -1,5 +1,6 @@
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Popups

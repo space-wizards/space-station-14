@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Administration;
-using Robust.Shared.Player;
+using Robust.Server.Player;
 
 namespace Content.Server.Administration
 {
@@ -8,7 +8,7 @@ namespace Content.Server.Administration
     /// </summary>
     public sealed class AdminPermsChangedEventArgs : EventArgs
     {
-        public AdminPermsChangedEventArgs(ICommonSession player, AdminFlags? flags)
+        public AdminPermsChangedEventArgs(IPlayerSession player, AdminFlags? flags)
         {
             Player = player;
             Flags = flags;
@@ -17,7 +17,7 @@ namespace Content.Server.Administration
         /// <summary>
         ///     The player that had their admin permissions changed.
         /// </summary>
-        public ICommonSession Player { get; }
+        public IPlayerSession Player { get; }
 
         /// <summary>
         ///     The admin flags of the player. Null if the player is no longer an admin.

@@ -4,7 +4,7 @@ using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.Pulling
 {

@@ -5,7 +5,7 @@ using Robust.Client.Console;
 using Robust.Client.Placement;
 using Robust.Client.Placement.Modes;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
+using Robust.Shared.Players;
 
 namespace Content.Client.Sandbox
 {

@@ -32,10 +32,10 @@ public sealed partial class ReplaySpectatorSystem
 
     public void SpectateEntity(EntityUid target)
     {
-        if (_player.LocalSession == null)
+        if (_player.LocalPlayer == null)
             return;
 
-        var old = _player.LocalSession.AttachedEntity;
+        var old = _player.LocalPlayer.ControlledEntity;
 
         if (old == target)
         {
@@ -44,7 +44,7 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
-        _player.SetAttachedEntity(_player.LocalSession, target);
+        _player.LocalPlayer.AttachEntity(target, EntityManager, _client);
         EnsureComp<ReplaySpectatorComponent>(target);
 
         _stateMan.RequestStateChange<ReplaySpectateEntityState>();
@@ -59,10 +59,10 @@ public sealed partial class ReplaySpectatorSystem
 
     public TransformComponent SpawnSpectatorGhost(EntityCoordinates coords, bool gridAttach)
     {
-        if (_player.LocalSession == null)
+        if (_player.LocalPlayer == null)
             throw new InvalidOperationException();
 
-        var old = _player.LocalSession.AttachedEntity;
+        var old = _player.LocalPlayer.ControlledEntity;
 
         var ent = Spawn("ReplayObserver", coords);
         _eye.SetMaxZoom(ent, Vector2.One * 5);
@@ -73,7 +73,7 @@ public sealed partial class ReplaySpectatorSystem
         if (gridAttach)
             _transform.AttachToGridOrMap(ent);
 
-        _player.SetAttachedEntity(_player.LocalSession, ent);
+        _player.LocalPlayer.AttachEntity(ent, EntityManager, _client);
 
         if (old != null)
         {
@@ -93,7 +93,7 @@ public sealed partial class ReplaySpectatorSystem
     {
         if (args.Length == 0)
         {
-            if (_player.LocalSession?.AttachedEntity is { } current)
+            if (_player.LocalPlayer?.ControlledEntity is { } current)
                 SpawnSpectatorGhost(new EntityCoordinates(current, default), true);
             else
                 SpawnSpectatorGhost(default, true);

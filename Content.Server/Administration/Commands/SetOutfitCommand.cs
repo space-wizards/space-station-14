@@ -10,6 +10,7 @@ using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -56,7 +57,7 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length == 1)
             {
-                if (shell.Player is not { } player)
+                if (shell.Player is not IPlayerSession player)
                 {
                     shell.WriteError(Loc.GetString("set-outfit-command-is-not-player-error"));
                     return;

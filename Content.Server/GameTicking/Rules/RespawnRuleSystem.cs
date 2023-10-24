@@ -6,7 +6,6 @@ using Content.Shared.Chat;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
-using Content.Shared.Players;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Network;

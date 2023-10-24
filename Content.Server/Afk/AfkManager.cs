@@ -5,7 +5,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Input;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Afk
@@ -21,13 +20,13 @@ namespace Content.Server.Afk
         /// </summary>
         /// <param name="player">The player to check.</param>
         /// <returns>True if the player is AFK, false otherwise.</returns>
-        bool IsAfk(ICommonSession player);
+        bool IsAfk(IPlayerSession player);
 
         /// <summary>
         /// Resets AFK status for the player as if they just did an action and are definitely not AFK.
         /// </summary>
         /// <param name="player">The player to set AFK status for.</param>
-        void PlayerDidAction(ICommonSession player);
+        void PlayerDidAction(IPlayerSession player);
 
         void Initialize();
     }
@@ -41,7 +40,7 @@ namespace Content.Server.Afk
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IConsoleHost _consoleHost = default!;
 
-        private readonly Dictionary<ICommonSession, TimeSpan> _lastActionTimes = new();
+        private readonly Dictionary<IPlayerSession, TimeSpan> _lastActionTimes = new();
 
         public void Initialize()
         {
@@ -56,7 +55,7 @@ namespace Content.Server.Afk
                 HandleInputCmd);
         }
 
-        public void PlayerDidAction(ICommonSession player)
+        public void PlayerDidAction(IPlayerSession player)
         {
             if (player.Status == SessionStatus.Disconnected)
                 // Make sure we don't re-add to the dictionary if the player is disconnected now.
@@ -65,7 +64,7 @@ namespace Content.Server.Afk
             _lastActionTimes[player] = _gameTiming.RealTime;
         }
 
-        public bool IsAfk(ICommonSession player)
+        public bool IsAfk(IPlayerSession player)
         {
             if (!_lastActionTimes.TryGetValue(player, out var time))
                 // Some weird edge case like disconnected clients. Just say true I guess.
@@ -88,13 +87,13 @@ namespace Content.Server.Afk
 
         private void ConsoleHostOnAnyCommandExecuted(IConsoleShell shell, string commandname, string argstr, string[] args)
         {
-            if (shell.Player is { } player)
+            if (shell.Player is IPlayerSession player)
                 PlayerDidAction(player);
         }
 
         private void HandleInputCmd(FullInputCmdMessage msg, EntitySessionEventArgs args)
         {
-            PlayerDidAction(args.SenderSession);
+            PlayerDidAction((IPlayerSession) args.SenderSession);
         }
     }
 }

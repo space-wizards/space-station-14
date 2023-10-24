@@ -7,6 +7,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
@@ -175,7 +177,7 @@ public sealed class AddTests
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.Sessions.First();
+            var player = sPlayers.ServerSessions.First();
             playerGuid = player.UserId;
 
             Assert.DoesNotThrow(() =>
@@ -278,7 +280,7 @@ public sealed class AddTests
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.Sessions.Single();
+            var player = sPlayers.ServerSessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
         });
@@ -316,7 +318,7 @@ public sealed class AddTests
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.Sessions.Single();
+            var player = sPlayers.ServerSessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
         });

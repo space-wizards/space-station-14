@@ -1,10 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: 'Blood-red magboots now slow you down less and have jetpack functionality,
-      but cost more.', type: Tweak}
-  id: 4549
-  time: '2023-08-13T07:17:10.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Syndicate clowns may now purchase a holoclown injector via their syndicate
@@ -2908,3 +2902,9 @@ Entries:
   - {message: Stuttering trait stutters less common., type: Fix}
   id: 5048
   time: '2023-10-24T09:28:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix climbing in the same position (e.g. exiting from medical scanners)
+      sending you to the farplanes., type: Fix}
+  id: 5049
+  time: '2023-10-24T10:44:09.0000000+00:00'
