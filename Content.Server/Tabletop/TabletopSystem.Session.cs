@@ -81,7 +81,7 @@ namespace Content.Server.Tabletop
                 CloseSessionFor(player, gamer.Tabletop, false);
 
             // Set the entity as an absolute GAMER.
-            attachedEntity.EnsureComponent<TabletopGamerComponent>().Tabletop = uid;
+            EnsureComp<TabletopGamerComponent>(attachedEntity).Tabletop = uid;
 
             // Create a camera for the gamer to use
             var camera = CreateCamera(tabletop, player);
@@ -139,7 +139,7 @@ namespace Content.Server.Tabletop
             var camera = EntityManager.SpawnEntity(null, session.Position.Offset(offset));
 
             // Add an eye component and disable FOV
-            var eyeComponent = camera.EnsureComponent<EyeComponent>();
+            var eyeComponent = EnsureComp<EyeComponent>(camera);
             _eye.SetDrawFov(camera, false, eyeComponent);
             _eye.SetZoom(camera, tabletop.CameraZoom, eyeComponent);
 

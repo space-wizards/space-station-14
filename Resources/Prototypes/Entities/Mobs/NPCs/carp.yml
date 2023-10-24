@@ -1,7 +1,7 @@
 - type: entity
   name: space carp
   id: BaseMobCarp
-  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
   description: It's a space carp.
   abstract: true
   components:
@@ -56,7 +56,6 @@
           amount: 2
     - type: MeleeWeapon
       altDisarm: false
-      hidden: true
       angle: 0
       animation: WeaponArcBite
       soundHit:
@@ -127,6 +126,18 @@
             - Opaque
     - type: TypingIndicator
       proto: robot
+
+- type: entity
+  parent: MobCarp
+  id: MobCarpRainbow
+  name: rainbow carp
+  description: Wow such a shiny fishie!
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 0.5
+  - type: RgbLightController
+    layers: [ 0 ]
 
 - type: entity
   id: MobCarpSalvage

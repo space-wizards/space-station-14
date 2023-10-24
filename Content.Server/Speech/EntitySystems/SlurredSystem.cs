@@ -4,6 +4,7 @@ using Content.Shared.Drunk;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -11,6 +12,9 @@ public sealed class SlurredSystem : SharedSlurredSystem
 {
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string SlurKey = "SlurredSpeech";
@@ -39,8 +43,9 @@ public sealed class SlurredSystem : SharedSlurredSystem
         if (!_statusEffectsSystem.TryGetTime(uid, SharedDrunkSystem.DrunkKey, out var time))
             return 0;
 
-        var timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
-        return Math.Clamp(timeLeft / 200, 0f, 1f);
+        var curTime = _timing.CurTime;
+        var timeLeft = (float) (time.Value.Item2 - curTime).TotalSeconds;
+        return Math.Clamp((timeLeft - 80) / 1100, 0f, 1f);
     }
 
     private void OnAccent(EntityUid uid, SlurredAccentComponent component, AccentGetEvent args)

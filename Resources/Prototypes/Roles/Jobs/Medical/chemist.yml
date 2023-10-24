@@ -25,6 +25,6 @@
     ears: ClothingHeadsetMedical
     belt: ChemBag
     # the purple glasses?
-  innerclothingskirt: ClothingUniformJumpskirtChemistry
+  innerClothingSkirt: ClothingUniformJumpskirtChemistry
   satchel: ClothingBackpackSatchelChemistryFilled
   duffelbag: ClothingBackpackDuffelChemistryFilled

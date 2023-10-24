@@ -35,6 +35,7 @@
       amount: 1
   - type: Tag
     tags:
+      - ClothMade
       - WhitelistChameleon
 
 - type: entity

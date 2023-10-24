@@ -13,6 +13,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -20,6 +21,19 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
         SubscribeLocalEvent<ActionOnInteractComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<ActionOnInteractComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<ActionOnInteractComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, ActionOnInteractComponent component, MapInitEvent args)
+    {
+        if (component.Actions == null)
+            return;
+
+        var comp = EnsureComp<ActionsContainerComponent>(uid);
+        foreach (var id in component.Actions)
+        {
+            _actionContainer.AddAction(uid, id, comp);
+        }
     }
 
     private void OnActivate(EntityUid uid, ActionOnInteractComponent component, ActivateInWorldEvent args)
@@ -35,7 +49,6 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (act.Event != null)
             act.Event.Performer = args.User;
 
-        act.Provider = uid;
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
@@ -65,7 +78,6 @@ public sealed class ActionOnInteractSystem : EntitySystem
                     entAct.Event.Target = args.Target.Value;
                 }
 
-                entAct.Provider = uid;
                 _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
                 return;
@@ -91,7 +103,6 @@ public sealed class ActionOnInteractSystem : EntitySystem
             act.Event.Target = args.ClickLocation;
         }
 
-        act.Provider = uid;
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }

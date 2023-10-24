@@ -5,6 +5,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: BoxFolderQmClipboard
       - id: ClothingHeadsetCargo
       - id: CargoRequestComputerCircuitboard
       - id: CargoShuttleComputerCircuitboard

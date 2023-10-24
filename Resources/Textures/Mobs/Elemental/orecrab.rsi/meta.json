@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by brainfood1183 (github)",
+  "states": [
+    {
+      "name": "ironcrab",
+      "directions": 4
+    },
+    {
+      "name": "uraniumcrab",
+      "directions": 4
+    },
+    {
+      "name": "quartzcrab",
+      "directions": 4
+    }
+  ]
+}

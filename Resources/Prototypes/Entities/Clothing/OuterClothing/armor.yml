@@ -3,7 +3,7 @@
 
 #Basic armor vest
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseMedium
   id: ClothingOuterArmorBasic
   name: armor vest
   description: A standard Type I armored vest that provides decent protection against most types of damage.
@@ -255,3 +255,28 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorBone
+  name: bone armor
+  description: Sits on you like a second skin.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/bone_armor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/bone_armor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.8
+        Piercing: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: GroupExamine
+  - type: Construction
+    graph: BoneArmor
+    node: armor

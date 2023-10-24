@@ -207,7 +207,7 @@
   - type: AccessReader
     access: [["Command"]]
   - type: Wires
-    LayoutId: AirlockCommand
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -273,7 +273,7 @@
   - type: AccessReader
     access: [["Security"]]
   - type: Wires
-    LayoutId: AirlockSecurity
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -283,7 +283,7 @@
   - type: AccessReader
     access: [["Detective"]]
   - type: Wires
-    LayoutId: AirlockSecurity
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -293,7 +293,7 @@
   - type: AccessReader
     access: [["Brig"]]
   - type: Wires
-    LayoutId: AirlockSecurity
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -303,7 +303,7 @@
   - type: AccessReader
     access: [["Armory"]]
   - type: Wires
-    LayoutId: AirlockArmory
+    layoutId: AirlockArmory
 
 - type: entity
   parent: AirlockSecurity

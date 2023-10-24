@@ -48,4 +48,6 @@ public sealed partial class EggLayerComponent : Component
 
     [DataField("accumulatedFrametime")]
     public float AccumulatedFrametime;
+
+    [DataField] public EntityUid? Action;
 }
