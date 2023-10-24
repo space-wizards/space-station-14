@@ -6,6 +6,11 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Chemistry.EntitySystems;
 
+/// <summary>
+/// Events for show injectors, hypospraes & transfor solutions information
+/// for status control
+/// there is also to set translates for show text
+/// </summary>
 public sealed class SolutionTransferStatusSystem : EntitySystem
 {
     public override void Initialize()

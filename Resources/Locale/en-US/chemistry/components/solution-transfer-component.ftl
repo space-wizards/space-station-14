@@ -20,10 +20,10 @@ comp-solution-transfer-verb-amount = {$amount}u
 ## Displayed after you successfully change a solution's amount using the BUI
 comp-solution-transfer-set-amount = Transfer amount set to {$amount}u.
 
-##Toggle solution transfer mode, popups
+## Toggle solution transfer mode, popups
 comp-solution-transfer-set-toggle-mode-draw = Now you're pouring in {THE($fromIn)}
 comp-solution-transfer-set-toggle-mode-inject = Now you're pouring out {THE($fromIn)}
 comp-solution-transfer-cant-change-mode = You can't toggle the pour mode
 
-##Displayed when you can't pour because the targe container hasn't refillable component
+## Displayed when you can't pour because the targe container hasn't refillable component
 comp-solution-transfer-no-target-refillable-component = You can't spill into {THE($target)}

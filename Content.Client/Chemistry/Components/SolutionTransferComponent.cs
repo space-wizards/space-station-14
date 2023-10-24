@@ -6,6 +6,8 @@ using Content.Client.Chemistry.UI;
 namespace Content.Client.Chemistry.Components
 {
     /// <summary>
+    /// Client behavior for containers with transfer amounts. Used for show status information
+    /// in UI.
     /// </summary>
     [RegisterComponent]
     public sealed partial class SolutionTransferComponent : SharedSolutionTransferComponent, ITransferControlValues

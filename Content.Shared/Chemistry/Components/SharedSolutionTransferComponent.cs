@@ -5,13 +5,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components
 {
-    [Serializable, NetSerializable]
-    public sealed partial class SharedTransferDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
-
-    /// <summary>
-    /// </summary>
     [NetworkedComponent]
     public abstract partial class SharedSolutionTransferComponent : Component
     {

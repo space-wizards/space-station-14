@@ -7,7 +7,13 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chemistry.UI;
-
+/// <summary>
+// UI for show information about injectors, hypospraes & containers with transfer solution
+// can show valume information or only mode
+// isShowVolume - show volume for this container
+// isShowToggle - show toggle mode
+// if isShowVolume & isShowToggle - false then show nothing
+/// </summary>
 public sealed class SolutionTransferStatusControl : Control
 {
     private readonly ITransferControlValues _parent;
@@ -42,9 +48,11 @@ public sealed class SolutionTransferStatusControl : Control
     {
         _parent.UiUpdateNeeded = false;
 
+        if (!_isShowToggle && !_isShowVolume)
+            return;
+
         var mainLabelTranslate = "transfer-status-control";
 
-        //Update current volume and injector state
         var modeStringLocalized = "";
         if (_isShowToggle)
         {
