@@ -9,6 +9,9 @@
     },
     "states": [
         {
+            "name": "Nanotrasen"
+        },
+        {
             "name": "Detective"
         },
         {
