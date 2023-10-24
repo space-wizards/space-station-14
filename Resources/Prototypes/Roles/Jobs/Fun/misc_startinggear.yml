@@ -256,7 +256,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
     back: ClothingBackpackDuffelCBURN
-    mask: ClothingMaskGasExplorer
+    mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesCombat
