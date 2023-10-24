@@ -773,12 +773,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.2 #best armor in the game
-        Slash: 0.2
-        Piercing: 0.2
+        Blunt: 0.1 #best armor in the game
+        Slash: 0.1
+        Piercing: 0.1
         Heat: 0.1
         Radiation: 0.1
-        Caustic: 0.2
+        Caustic: 0.1
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
