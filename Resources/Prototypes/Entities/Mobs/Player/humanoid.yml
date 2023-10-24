@@ -314,6 +314,7 @@
 - type: entity
   id: RandomHumanoidSpawnerCBURNUnit
   name: CBURN Agent
+  suffix: ERTSpawn
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
