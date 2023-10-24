@@ -1,14 +1,6 @@
 Entries:
 - author: CrigCrag
   changes:
-  - {message: 'Space Station staff are no longer immune to the toxic and caustic effects
-      of some pyrotechnic chemicals, as well as bleach. Drinking bleach now makes
-      you scream as your stomach lining is reduced to goop.', type: Tweak}
-  - {message: Phenol is now (accurately) toxic., type: Tweak}
-  id: 4553
-  time: '2023-08-13T07:22:08.0000000+00:00'
-- author: CrigCrag
-  changes:
   - {message: Added jugs to the medical fabricator., type: Add}
   - {message: Jugs now take up more space in bags., type: Tweak}
   id: 4554
@@ -2903,3 +2895,9 @@ Entries:
   - {message: Skeletons can now heal by pouring milk over themselves, type: Add}
   id: 5052
   time: '2023-10-24T20:58:34.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Fixed anomaly locators frantically beeping when they first enter detection
+      range for an anomaly., type: Fix}
+  id: 5053
+  time: '2023-10-24T21:00:23.0000000+00:00'
