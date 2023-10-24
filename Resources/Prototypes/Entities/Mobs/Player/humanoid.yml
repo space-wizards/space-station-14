@@ -284,7 +284,7 @@
   parent: ERTSecurityEVA
   components:
     - type: Loadout
-      prototypes: [ ERTSecurityEVALecter ]
+      prototypes: [ ERTSecurityGearEVALecter ]
 
 ## ERT Medic
 
