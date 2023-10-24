@@ -35,6 +35,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly MeleeWeaponSystem _meleeSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _slots = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string HitscanProto = "HitscanEffect";
@@ -78,7 +79,6 @@ public sealed partial class GunSystem : SharedGunSystem
 
         // Plays animated effects on the client.
         SubscribeNetworkEvent<HitscanEvent>(OnHitscan);
-        SubscribeLocalEvent<MeleeLungeEvent>(OnMeleeSwing);
 
         InitializeMagazineVisuals();
         InitializeSpentAmmo();
@@ -130,21 +130,6 @@ public sealed partial class GunSystem : SharedGunSystem
 
             _animPlayer.Play(ent, null, anim, "hitscan-effect");
         }
-    }
-
-    private void OnMeleeSwing(MeleeLungeEvent args)
-    {
-        var user = GetEntity(args.Entity);
-        var gun = GetEntity(args.Weapon);
-
-        if (!Exists(user)
-            || !Exists(gun)
-            || !TryComp(gun, out ItemSlotsComponent? itemSlotsComponent)
-            || !_slots.TryGetSlot(gun, "gun_bayonet", out var itemSlot, itemSlotsComponent)
-            || itemSlot.Item == null)
-            return;
-
-        _meleeSystem.DoLunge(user, itemSlot.Item.Value, args.Angle, args.LocalPos, args.Animation);
     }
 
     public override void Update(float frameTime)

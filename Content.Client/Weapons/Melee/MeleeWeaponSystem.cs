@@ -112,6 +112,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Heavy attack.
         if (altDown == BoundKeyState.Down)
         {
+            if (weapon.NoHeavyAttack)
+                return;
+
             // If it's an unarmed attack then do a disarm
             if (weapon.AltDisarm && weaponUid == entity)
             {
@@ -133,6 +136,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Light attack
         if (useDown == BoundKeyState.Down)
         {
+            if (weapon.NoLightAttack)
+                return;
+
             var attackerPos = Transform(entity).MapPosition;
 
             if (mousePos.MapId != attackerPos.MapId ||

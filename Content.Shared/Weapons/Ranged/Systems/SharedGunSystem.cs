@@ -45,7 +45,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly ExamineSystemShared Examine = default!;
-    [Dependency] public readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] private   readonly RechargeBasicEntityAmmoSystem _recharge = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -127,7 +127,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (args.User == null)
             return;
 
-        if (args.Slot.Name != "Bayonet")
+        if (args.Slot.ID != "gun_bayonet")
             return;
 
         if (!TryComp(args.Item, out MeleeWeaponComponent? itemMelee))
@@ -142,7 +142,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnBayonetRemoved(EntityUid uid, MeleeWeaponComponent component, ItemSlotEjectAttemptEvent args)
     {
-        if (args.Slot.Name != "Bayonet")
+        if (args.Slot.ID != "gun_bayonet")
             return;
 
         component.Hidden = true;
