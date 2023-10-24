@@ -10,7 +10,6 @@
     size: Normal
   - type: Storage
     maxSlots: 7
-    maxTotalWeight: 14
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
