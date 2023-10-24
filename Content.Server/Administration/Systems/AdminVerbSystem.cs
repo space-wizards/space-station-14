@@ -6,6 +6,7 @@ using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
+using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Prayer;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
@@ -18,7 +19,6 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -55,7 +55,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
         [Dependency] private readonly EuiManager _eui = default!;
-        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -276,12 +276,7 @@ namespace Content.Server.Administration.Systems
                     // TODO VERB ICON control mob icon
                     Act = () =>
                     {
-                        MakeSentientCommand.MakeSentient(args.Target, EntityManager);
-
-                        if (!_minds.TryGetMind(player, out var mindId, out var mind))
-                            return;
-
-                        _mindSystem.TransferTo(mindId, args.Target, ghostCheckOverride: true, mind: mind);
+                        _mindSystem.ControlMob(args.User, args.Target);
                     },
                     Impact = LogImpact.High,
                     ConfirmationPopup = true
@@ -357,7 +352,7 @@ namespace Content.Server.Administration.Systems
                         var message = ExamineSystemShared.InRangeUnOccluded(args.User, args.Target)
                             ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
                             : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
-                        
+
                         _popup.PopupEntity(message, args.Target, args.User);
                     }
                 };
