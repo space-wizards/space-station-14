@@ -216,7 +216,7 @@
     jumpsuit: ClothingUniformJumpsuitERTJanitor
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesBootsMag
-    mask: ClothingMaskBreath
+    mask: ClothingMaskGasERT
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTJanitor
     suitstorage: AirTankFilled
