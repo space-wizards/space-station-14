@@ -34,13 +34,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -1.25 #imperial chemistryRework start
-            Heat: 0.25 
-      - !type:HealthChange
-        probability: 0.3
-        damage:
-          types:
-            Radiation: 0.25 #imperial chemistryRework end
+            Poison: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -155,9 +149,7 @@
       - !type:HealthChange
         damage:
           groups:
-            Brute: -2.75 #imperial chemistryRework start
-          types:
-            Shock: 0.12 #imperial chemistryRework end
+            Brute: -2
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -248,7 +240,6 @@
             Heat: -1.25 #imperial chemistryRework start
             Shock: -1.25
             Cold: -1.25
-            Poison: 0.25 #imperial  chemistryReworkend
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
