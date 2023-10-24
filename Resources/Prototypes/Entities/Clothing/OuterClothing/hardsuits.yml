@@ -711,7 +711,7 @@
 
 #ERT Medic Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitSyndieElite
+  parent: ClothingOuterHardsuitMedic
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit
   components:
