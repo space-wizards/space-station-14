@@ -1,0 +1,18 @@
+<ContainerButton xmlns="https://spacestation14.io"
+                 xmlns:local="clr-namespace:Content.Client.Info.PlaytimeStats"
+                 xmlns:customControls1="clr-namespace:Content.Client.Administration.UI.CustomControls">
+    <PanelContainer Name="BackgroundColorPanel"/>
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  SeparationOverride="4">
+        <Label Name="RoleLabel"
+               SizeFlagsStretchRatio="3"
+               HorizontalExpand="True"
+               ClipText="True"/>
+        <customControls1:VSeparator/>
+        <Label Name="PlaytimeLabel"
+               SizeFlagsStretchRatio="3"
+               HorizontalExpand="True"
+               ClipText="True"/>
+    </BoxContainer>
+</ContainerButton>

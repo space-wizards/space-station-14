@@ -122,4 +122,15 @@ public sealed class JobRequirementsManager
         reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(string.Join('\n', reasons));
         return reason == null;
     }
+    public TimeSpan FetchOverallPlaytime()
+    {
+        return _roles.Values.Aggregate(TimeSpan.Zero, (sum, nextTimeSpan) => sum + nextTimeSpan);
+    }
+
+    public Dictionary<string, TimeSpan> FetchPlaytimeByRoles()
+    {
+        return new Dictionary<string, TimeSpan>(_roles);
+    }
+
+
 }
