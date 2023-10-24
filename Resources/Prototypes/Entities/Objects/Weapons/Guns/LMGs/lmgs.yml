@@ -58,6 +58,8 @@
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
     price: 500
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   name: L6 SAW

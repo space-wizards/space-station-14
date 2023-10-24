@@ -41,6 +41,8 @@
   - type: TilePrying
     advanced: true
   - type: Prying
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   id: FireAxeFlaming
