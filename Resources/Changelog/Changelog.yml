@@ -1,10 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Syndicate clowns may now purchase a holoclown injector via their syndicate
-      uplink., type: Add}
-  id: 4550
-  time: '2023-08-13T07:18:10.0000000+00:00'
 - author: Errant
   changes:
   - {message: The various laser guns are now called rifles or pistols., type: Tweak}
@@ -2908,3 +2902,8 @@ Entries:
       sending you to the farplanes., type: Fix}
   id: 5049
   time: '2023-10-24T10:44:09.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed the "examine" trigger for artifacts not having a hint., type: Fix}
+  id: 5050
+  time: '2023-10-24T20:37:16.0000000+00:00'
