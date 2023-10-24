@@ -21,10 +21,19 @@ public sealed partial class GatewayWindow : FancyWindow,
     public event Action<NetEntity>? OpenPortal;
     private List<GatewayDestinationData> _destinations = new();
     private NetEntity? _current;
-    private TimeSpan _lastOpen;
     private TimeSpan _nextReady;
+    private TimeSpan _cooldown;
     private List<Label> _readyLabels = default!;
-    private List<Button> _openButtons = default!;
+
+    /// <summary>
+    /// Re-apply the state if the timer has elapsed.
+    /// </summary>
+    private GatewayBoundUserInterfaceState? _lastState;
+
+    /// <summary>
+    /// Toggled if suddenly gateway has become ready.
+    /// </summary>
+    private bool _isReady = true;
 
     public GatewayWindow()
     {
@@ -35,14 +44,14 @@ public sealed partial class GatewayWindow : FancyWindow,
 
     public void UpdateState(GatewayBoundUserInterfaceState state)
     {
+        _isReady = true;
         _destinations = state.Destinations;
         _current = state.Current;
         _nextReady = state.NextReady;
-        _lastOpen = state.NextReady;
+        _cooldown = state.Cooldown;
 
         Container.DisposeAllChildren();
         _readyLabels = new List<Label>(_destinations.Count);
-        _openButtons = new List<Button>(_destinations.Count);
 
         if (_destinations.Count == 0)
         {
@@ -106,7 +115,7 @@ public sealed partial class GatewayWindow : FancyWindow,
                 Text = Loc.GetString("gateway-window-open-portal"),
                 Pressed = ent == _current,
                 ToggleMode = true,
-                Disabled = _current != null || busy || now < nextReady,
+                Disabled = now < _nextReady || ent == _current,
                 SetHeight = 32f,
                 HorizontalAlignment = HAlignment.Right,
                 Margin = new Thickness(10f, 0f, 0f, 0f),
@@ -123,7 +132,6 @@ public sealed partial class GatewayWindow : FancyWindow,
             }
 
             box.AddChild(openButton);
-            _openButtons.Add(openButton);
 
             Container.AddChild(new PanelContainer()
             {
@@ -135,6 +143,8 @@ public sealed partial class GatewayWindow : FancyWindow,
                 }
             });
         }
+
+        _lastState = state;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -144,27 +154,35 @@ public sealed partial class GatewayWindow : FancyWindow,
         var now = _timing.CurTime;
 
         // if its not going to close then show it as empty
-        if (_current == null)
+        if (_current == null || _cooldown == TimeSpan.Zero)
         {
             NextReadyBar.Value = 0f;
             NextCloseText.Text = "00:00";
         }
         else
         {
-            var remaining = _nextReady - _timing.CurTime;
+            var remaining = _nextReady - now;
             if (remaining < TimeSpan.Zero)
             {
+                if (!_isReady && _lastState != null)
+                {
+                    // Refresh UI buttons.
+                    UpdateState(_lastState);
+                }
+
                 NextReadyBar.Value = 1f;
                 NextCloseText.Text = "00:00";
             }
             else
             {
-                var openTime = _nextReady - _lastOpen;
+                _isReady = false;
+                var openTime = _cooldown;
                 NextReadyBar.Value = 1f - (float) (remaining / openTime);
                 NextCloseText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
             }
         }
 
+        /*
         for (var i = 0; i < _destinations.Count; i++)
         {
             var dest = _destinations[i];
@@ -173,6 +191,7 @@ public sealed partial class GatewayWindow : FancyWindow,
             _readyLabels[i].Text = ReadyText(now, nextReady, busy);
             _openButtons[i].Disabled = _current != null || busy || now < nextReady;
         }
+        */
     }
 
     private string ReadyText(TimeSpan now, TimeSpan nextReady, bool busy)

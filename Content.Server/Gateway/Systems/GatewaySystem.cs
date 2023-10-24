@@ -90,7 +90,7 @@ public sealed class GatewaySystem : EntitySystem
         }
 
         _linkedEntity.GetLink(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextReady);
+        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextReady, comp.Cooldown);
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
@@ -112,15 +112,16 @@ public sealed class GatewaySystem : EntitySystem
         // can't link if portal is already open on either side, the destination is invalid or on cooldown
         var desto = GetEntity(args.Destination);
 
-        if (HasComp<PortalComponent>(uid) ||
-            HasComp<PortalComponent>(desto) ||
+        // If it's already open / not enabled / we're not ready DENY.
+        if (HasComp<PortalComponent>(desto) ||
             !TryComp<GatewayDestinationComponent>(desto, out var dest) ||
             !dest.Enabled ||
-            _timing.CurTime < _metadata.GetPauseTime(desto) + dest.NextReady)
+            _timing.CurTime < _metadata.GetPauseTime(uid) + comp.NextReady)
         {
             return;
         }
 
+        ClosePortal(uid, comp);
         // TODO: admin log???
         OpenPortal(uid, comp, desto, dest);
     }
@@ -132,7 +133,7 @@ public sealed class GatewaySystem : EntitySystem
         EnsureComp<PortalComponent>(dest).CanTeleportToOtherMaps = true;
 
         // for ui
-        comp.NextReady = _timing.CurTime;
+        comp.NextReady = _timing.CurTime + comp.Cooldown;
 
         _audio.PlayPvs(comp.OpenSound, uid);
         _audio.PlayPvs(comp.OpenSound, dest);
@@ -230,7 +231,7 @@ public sealed class GatewaySystem : EntitySystem
         return true;
     }
 
-    public void SetName(EntityUid gatewayUid, FormattedMessage gatewayName, GatewayDestinationComponent? gatewayComp = null)
+    public void SetDestinationName(EntityUid gatewayUid, FormattedMessage gatewayName, GatewayDestinationComponent? gatewayComp = null)
     {
         if (!Resolve(gatewayUid, ref gatewayComp))
             return;

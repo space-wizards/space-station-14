@@ -91,13 +91,13 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             // Clear area nearby as a sort of landing pad.
             _maps.SetTiles(mapUid, grid, tiles);
 
-            var gatewayName = SharedSalvageSystem.GetFTLName(_protoManager.Index<DatasetPrototype>("names_borer"), seed);
+            var gatewayName = SharedSalvageSystem.GetFTLName(_protoManager.Index<DatasetPrototype>(PlanetNames), seed);
 
             _metadata.SetEntityName(mapUid, gatewayName);
 
             var gatewayUid = SpawnAtPosition("GatewayDestination", new EntityCoordinates(mapUid, origin));
             var gatewayComp = Comp<GatewayDestinationComponent>(gatewayUid);
-            _gateway.SetName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
+            _gateway.SetDestinationName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
             _gateway.SetEnabled(gatewayUid, true, gatewayComp);
             component.Generated.Add(mapUid);
         }

@@ -39,12 +39,15 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     /// </summary>
     public readonly TimeSpan NextReady;
 
+    public readonly TimeSpan Cooldown;
+
     public GatewayBoundUserInterfaceState(List<GatewayDestinationData> destinations,
-        NetEntity? current, TimeSpan nextReady)
+        NetEntity? current, TimeSpan nextReady, TimeSpan cooldown)
     {
         Destinations = destinations;
         Current = current;
         NextReady = nextReady;
+        Cooldown = cooldown;
     }
 }
 
