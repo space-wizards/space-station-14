@@ -5,7 +5,6 @@ using Content.Server.GameTicking;
 using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
@@ -28,11 +27,11 @@ public sealed class QueryTests
         var date = DateTime.UtcNow;
         var guid = Guid.NewGuid();
 
-        ICommonSession player = default;
+        IPlayerSession player = default;
 
         await server.WaitPost(() =>
         {
-            player = sPlayers.Sessions.First();
+            player = sPlayers.ServerSessions.First();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
         });

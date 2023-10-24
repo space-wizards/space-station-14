@@ -16,7 +16,6 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -46,7 +45,7 @@ namespace Content.Server.Voting.Managers
 
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeout = new();
         private readonly Dictionary<NetUserId, TimeSpan> _voteTimeout = new();
-        private readonly HashSet<ICommonSession> _playerCanCallVoteDirty = new();
+        private readonly HashSet<IPlayerSession> _playerCanCallVoteDirty = new();
         private readonly StandardVoteType[] _standardVoteTypeValues = Enum.GetValues<StandardVoteType>();
 
         public void Initialize()
@@ -107,7 +106,7 @@ namespace Content.Server.Voting.Managers
             }
         }
 
-        private void CastVote(VoteReg v, ICommonSession player, int? option)
+        private void CastVote(VoteReg v, IPlayerSession player, int? option)
         {
             if (!IsValidOption(v, option))
                 throw new ArgumentOutOfRangeException(nameof(option), "Invalid vote option ID");
@@ -229,7 +228,7 @@ namespace Content.Server.Voting.Managers
 
         private void SendUpdates(VoteReg v)
         {
-            foreach (var player in _playerManager.Sessions)
+            foreach (var player in _playerManager.ServerSessions)
             {
                 SendSingleUpdate(v, player);
             }
@@ -238,7 +237,7 @@ namespace Content.Server.Voting.Managers
             v.Dirty = false;
         }
 
-        private void SendSingleUpdate(VoteReg v, ICommonSession player)
+        private void SendSingleUpdate(VoteReg v, IPlayerSession player)
         {
             var msg = new MsgVoteData();
 
@@ -278,10 +277,10 @@ namespace Content.Server.Voting.Managers
 
         private void DirtyCanCallVoteAll()
         {
-            _playerCanCallVoteDirty.UnionWith(_playerManager.Sessions);
+            _playerCanCallVoteDirty.UnionWith(_playerManager.ServerSessions);
         }
 
-        private void SendUpdateCanCallVote(ICommonSession player)
+        private void SendUpdateCanCallVote(IPlayerSession player)
         {
             var msg = new MsgVoteCanCall();
             msg.CanCall = CanCallVote(player, null, out var isAdmin, out var timeSpan);
@@ -307,7 +306,7 @@ namespace Content.Server.Voting.Managers
         }
 
         private bool CanCallVote(
-            ICommonSession initiator,
+            IPlayerSession initiator,
             StandardVoteType? voteType,
             out bool isAdmin,
             out TimeSpan timeSpan)
@@ -354,7 +353,7 @@ namespace Content.Server.Voting.Managers
             return !_voteTimeout.TryGetValue(initiator.UserId, out timeSpan);
         }
 
-        public bool CanCallVote(ICommonSession initiator, StandardVoteType? voteType = null)
+        public bool CanCallVote(IPlayerSession initiator, StandardVoteType? voteType = null)
         {
             return CanCallVote(initiator, voteType, out _, out _);
         }
@@ -407,14 +406,14 @@ namespace Content.Server.Voting.Managers
             return false;
         }
 
-        private void DirtyCanCallVote(ICommonSession player)
+        private void DirtyCanCallVote(IPlayerSession player)
         {
             _playerCanCallVoteDirty.Add(player);
         }
 
         #region Preset Votes
 
-        private void WirePresetVoteInitiator(VoteOptions options, ICommonSession? player)
+        private void WirePresetVoteInitiator(VoteOptions options, IPlayerSession? player)
         {
             if (player != null)
             {
@@ -433,13 +432,13 @@ namespace Content.Server.Voting.Managers
         private sealed class VoteReg
         {
             public readonly int Id;
-            public readonly Dictionary<ICommonSession, int> CastVotes = new();
+            public readonly Dictionary<IPlayerSession, int> CastVotes = new();
             public readonly VoteEntry[] Entries;
             public readonly string Title;
             public readonly string InitiatorText;
             public readonly TimeSpan StartTime;
             public readonly TimeSpan EndTime;
-            public readonly HashSet<ICommonSession> VotesDirty = new();
+            public readonly HashSet<IPlayerSession> VotesDirty = new();
 
             public bool Cancelled;
             public bool Finished;
@@ -447,10 +446,10 @@ namespace Content.Server.Voting.Managers
 
             public VoteFinishedEventHandler? OnFinished;
             public VoteCancelledEventHandler? OnCancelled;
-            public ICommonSession? Initiator { get; }
+            public IPlayerSession? Initiator { get; }
 
             public VoteReg(int id, VoteEntry[] entries, string title, string initiatorText,
-                ICommonSession? initiator, TimeSpan start, TimeSpan end)
+                IPlayerSession? initiator, TimeSpan start, TimeSpan end)
             {
                 Id = id;
                 Entries = entries;
@@ -518,7 +517,7 @@ namespace Content.Server.Voting.Managers
                 return _mgr.IsValidOption(_reg, optionId);
             }
 
-            public void CastVote(ICommonSession session, int? optionId)
+            public void CastVote(IPlayerSession session, int? optionId)
             {
                 _mgr.CastVote(_reg, session, optionId);
             }

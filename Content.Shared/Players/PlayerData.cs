@@ -1,15 +1,16 @@
 ﻿using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Players;
 
 /// <summary>
 ///     Content side for all data that tracks a player session.
-///     Use <see cref="PlaIPlayerDatarver.Player.IPlayerData)"/> to retrieve this from an <see cref="PlayerData"/>.
+///     Use <see cref="PlaIPlayerDatarver.Player.IPlayerData)"/> to retrieve this from an <see cref="IPlayerData"/>.
 ///     <remarks>Not currently used on the client.</remarks>
 /// </summary>
-public sealed class ContentPlayerData
+public sealed class PlayerData
 {
     /// <summary>
     ///     The session ID of the player owning this data.
@@ -37,9 +38,21 @@ public sealed class ContentPlayerData
     /// </summary>
     public bool ExplicitlyDeadminned { get; set; }
 
-    public ContentPlayerData(NetUserId userId, string name)
+    public PlayerData(NetUserId userId, string name)
     {
         UserId = userId;
         Name = name;
+    }
+}
+
+
+public static class PlayerDataExt
+{
+    /// <summary>
+    ///     Gets the correctly cast instance of content player data from an engine player data storage.
+    /// </summary>
+    public static PlayerData? ContentData(this IPlayerData data)
+    {
+        return (PlayerData?) data.ContentDataUncast;
     }
 }

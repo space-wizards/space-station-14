@@ -1,11 +1,11 @@
 ﻿using Content.Shared.Players;
-using Robust.Shared.Player;
+using Robust.Shared.Players;
 
 namespace Content.Client.Players;
 
 public sealed class PlayerSystem : SharedPlayerSystem
 {
-    public override ContentPlayerData? ContentData(ICommonSession? session)
+    public override PlayerData? ContentData(ICommonSession? session)
     {
         return null;
     }

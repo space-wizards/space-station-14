@@ -20,6 +20,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 
@@ -169,7 +170,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.
-            bool ViewerPredicate(ICommonSession playerSession)
+            bool ViewerPredicate(IPlayerSession playerSession)
             {
                 if (!_minds.TryGetMind(playerSession, out _, out var mind) ||
                     mind.CurrentEntity is not { Valid: true } ent ||
@@ -181,7 +182,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
 
             var viewers = Filter.Empty()
-                .AddWhere(session1 => ViewerPredicate(session1))
+                .AddWhere(session1 => ViewerPredicate((IPlayerSession) session1))
                 .Recipients;
 
             string selfMessage;

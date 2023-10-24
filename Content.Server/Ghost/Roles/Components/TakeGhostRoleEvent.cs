@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Player;
+﻿using Robust.Shared.Players;
 
 namespace Content.Server.Ghost.Roles.Components;
 

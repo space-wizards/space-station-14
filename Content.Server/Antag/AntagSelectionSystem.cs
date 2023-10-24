@@ -22,7 +22,6 @@ using Content.Server.Station.Systems;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Mobs;
 using Robust.Server.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag;
@@ -89,9 +88,9 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         out List<EntityUid> chosen,
         bool includeHeads = false)
     {
-        var allPlayers = _playerSystem.Sessions.ToList();
-        var playerList = new List<ICommonSession>();
-        var prefList = new List<ICommonSession>();
+        var allPlayers = _playerSystem.ServerSessions.ToList();
+        var playerList = new List<IPlayerSession>();
+        var prefList = new List<IPlayerSession>();
         chosen = new List<EntityUid>();
         foreach (var player in allPlayers)
         {
@@ -117,7 +116,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         var antags = Math.Clamp(allPlayers.Count / antagsPerPlayer, 1, maxAntags);
         for (var antag = 0; antag < antags; antag++)
         {
-            ICommonSession? chosenPlayer = null;
+            IPlayerSession chosenPlayer = null!;
             if (prefList.Count == 0)
             {
                 if (playerList.Count == 0)

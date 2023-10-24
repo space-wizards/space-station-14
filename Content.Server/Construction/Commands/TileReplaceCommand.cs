@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -19,7 +20,7 @@ sealed class TileReplaceCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
+        var player = shell.Player as IPlayerSession;
         EntityUid? gridId;
         string tileIdA;
         string tileIdB;

@@ -58,10 +58,10 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<GhostComponent, ComponentRemove>(OnGhostRemove);
             SubscribeLocalEvent<GhostComponent, AfterAutoHandleStateEvent>(OnGhostState);
 
-            SubscribeLocalEvent<GhostComponent, LocalPlayerAttachedEvent>(OnGhostPlayerAttach);
-            SubscribeLocalEvent<GhostComponent, LocalPlayerDetachedEvent>(OnGhostPlayerDetach);
+            SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttach);
+            SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
 
-            SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttach);
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttach);
 
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
@@ -130,7 +130,7 @@ namespace Content.Client.Ghost
             PlayerRemoved?.Invoke(component);
         }
 
-        private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, LocalPlayerAttachedEvent localPlayerAttachedEvent)
+        private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, PlayerAttachedEvent playerAttachedEvent)
         {
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
@@ -161,13 +161,13 @@ namespace Content.Client.Ghost
             return true;
         }
 
-        private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, LocalPlayerDetachedEvent args)
+        private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
         {
             if (PlayerDetach(uid))
                 component.IsAttached = false;
         }
 
-        private void OnPlayerAttach(LocalPlayerAttachedEvent ev)
+        private void OnPlayerAttach(PlayerAttachedEvent ev)
         {
             if (!HasComp<GhostComponent>(ev.Entity))
                 PlayerDetach(ev.Entity);

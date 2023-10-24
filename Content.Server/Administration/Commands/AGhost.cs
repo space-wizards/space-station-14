@@ -2,6 +2,7 @@
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -17,7 +18,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player;
+            var player = shell.Player as IPlayerSession;
             if (player == null)
             {
                 shell.WriteLine("Nah");

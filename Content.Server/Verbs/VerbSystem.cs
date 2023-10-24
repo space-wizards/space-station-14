@@ -6,6 +6,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
+using Robust.Server.Player;
 
 namespace Content.Server.Verbs
 {
@@ -24,7 +25,7 @@ namespace Content.Server.Verbs
 
         private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
         {
-            var player = eventArgs.SenderSession;
+            var player = (IPlayerSession) eventArgs.SenderSession;
 
             if (!EntityManager.EntityExists(GetEntity(args.EntityUid)))
             {
@@ -42,7 +43,7 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var force = args.AdminRequest && eventArgs.SenderSession is { } playerSession &&
+            var force = args.AdminRequest && eventArgs.SenderSession is IPlayerSession playerSession &&
                         _adminMgr.HasAdminFlag(playerSession, AdminFlags.Admin);
 
             List<Type> verbTypes = new();

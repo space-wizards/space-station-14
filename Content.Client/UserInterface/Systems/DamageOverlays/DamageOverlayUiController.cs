@@ -1,9 +1,11 @@
+using Content.Client.Alerts;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -23,13 +25,13 @@ public sealed class DamageOverlayUiController : UIController
     public override void Initialize()
     {
         _overlay = new Overlays.DamageOverlay();
-        SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttach);
-        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttach);
+        SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<MobThresholdChecked>(OnThresholdCheck);
     }
 
-    private void OnPlayerAttach(LocalPlayerAttachedEvent args)
+    private void OnPlayerAttach(PlayerAttachedEvent args)
     {
         ClearOverlay();
         if (!EntityManager.TryGetComponent<MobStateComponent>(args.Entity, out var mobState))
@@ -39,7 +41,7 @@ public sealed class DamageOverlayUiController : UIController
         _overlayManager.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(LocalPlayerDetachedEvent args)
+    private void OnPlayerDetached(PlayerDetachedEvent args)
     {
         _overlayManager.RemoveOverlay(_overlay);
         ClearOverlay();

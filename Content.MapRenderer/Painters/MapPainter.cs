@@ -68,7 +68,7 @@ namespace Content.MapRenderer.Painters
 
             await server.WaitPost(() =>
             {
-                var playerEntity = sPlayerManager.Sessions.Single().AttachedEntity;
+                var playerEntity = sPlayerManager.ServerSessions.Single().AttachedEntity;
 
                 if (playerEntity.HasValue)
                 {

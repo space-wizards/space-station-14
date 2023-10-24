@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
@@ -20,18 +21,18 @@ public sealed class SetMotdCommand : LocalizedCommands
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     public override string Command => "set-motd";
-
+    
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string motd = "";
-        var player = shell.Player;
+        var player = (IPlayerSession?)shell.Player;
         if (args.Length > 0)
         {
             motd = string.Join(" ", args).Trim();
             if (player != null && _chatManager.MessageCharacterLimit(player, motd))
                 return; // check function prints its own error response
         }
-
+        
         _configurationManager.SetCVar(CCVars.MOTD, motd); // A hook in MOTDSystem broadcasts changes to the MOTD to everyone so we don't need to do it here.
         if (string.IsNullOrEmpty(motd))
         {

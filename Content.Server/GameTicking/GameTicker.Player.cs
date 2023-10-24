@@ -1,4 +1,5 @@
 using Content.Server.Database;
+using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Players;
@@ -6,7 +7,6 @@ using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -49,14 +49,14 @@ namespace Content.Server.GameTicking
                     // Always make sure the client has player data.
                     if (session.Data.ContentDataUncast == null)
                     {
-                        var data = new ContentPlayerData(session.UserId, args.Session.Name);
+                        var data = new PlayerData(session.UserId, args.Session.Name);
                         data.Mind = mindId;
                         session.Data.ContentDataUncast = data;
                     }
 
                     // Make the player actually join the game.
                     // timer time must be > tick length
-                    Timer.Spawn(0, () => _playerManager.JoinGame(args.Session));
+                    Timer.Spawn(0, args.Session.JoinGame);
 
                     var record = await _dbManager.GetPlayerRecordByUserId(args.Session.UserId);
                     var firstConnection = record != null &&
@@ -100,7 +100,8 @@ namespace Content.Server.GameTicking
                     }
                     else
                     {
-                        _playerManager.SetAttachedEntity(session, mind.CurrentEntity);
+                        // Simply re-attach to existing entity.
+                        session.AttachToEntity(mind.CurrentEntity);
                         PlayerJoinGame(session);
                     }
 
@@ -145,12 +146,12 @@ namespace Content.Server.GameTicking
             }
         }
 
-        private HumanoidCharacterProfile GetPlayerProfile(ICommonSession p)
+        private HumanoidCharacterProfile GetPlayerProfile(IPlayerSession p)
         {
             return (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.UserId).SelectedCharacter;
         }
 
-        public void PlayerJoinGame(ICommonSession session, bool silent = false)
+        public void PlayerJoinGame(IPlayerSession session, bool silent = false)
         {
             if (!silent)
                 _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
@@ -161,7 +162,7 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new TickerJoinGameEvent(), session.ConnectedClient);
         }
 
-        private void PlayerJoinLobby(ICommonSession session)
+        private void PlayerJoinLobby(IPlayerSession session)
         {
             _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
             _db.AddRoundPlayers(RoundId, session.UserId);
@@ -181,9 +182,9 @@ namespace Content.Server.GameTicking
 
     public sealed class PlayerJoinedLobbyEvent : EntityEventArgs
     {
-        public readonly ICommonSession PlayerSession;
+        public readonly IPlayerSession PlayerSession;
 
-        public PlayerJoinedLobbyEvent(ICommonSession playerSession)
+        public PlayerJoinedLobbyEvent(IPlayerSession playerSession)
         {
             PlayerSession = playerSession;
         }

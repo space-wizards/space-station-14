@@ -38,7 +38,7 @@ namespace Content.Client.Construction
             base.Initialize();
 
             UpdatesOutsidePrediction = true;
-            SubscribeLocalEvent<LocalPlayerAttachedEvent>(HandlePlayerAttached);
+            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
             SubscribeNetworkEvent<ResponseConstructionGuide>(OnConstructionGuideReceived);
 
@@ -110,9 +110,9 @@ namespace Content.Client.Construction
             ClearGhost(msg.GhostId);
         }
 
-        private void HandlePlayerAttached(LocalPlayerAttachedEvent msg)
+        private void HandlePlayerAttached(PlayerAttachSysMessage msg)
         {
-            var available = IsCraftingAvailable(msg.Entity);
+            var available = IsCraftingAvailable(msg.AttachedEntity);
             UpdateCraftingAvailability(available);
         }
 
