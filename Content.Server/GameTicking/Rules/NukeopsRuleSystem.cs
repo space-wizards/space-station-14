@@ -602,11 +602,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             var maxOperatives = nukeops.MaxOps;
 
             // Dear lord what is happening HERE.
-            var everyone = new List<IPlayerSession>(ev.PlayerPool);
-            var prefList = new List<IPlayerSession>();
-            var medPrefList = new List<IPlayerSession>();
-            var cmdrPrefList = new List<IPlayerSession>();
-            var operatives = new List<IPlayerSession>();
+            var everyone = new List<ICommonSession>(ev.PlayerPool);
+            var prefList = new List<ICommonSession>();
+            var medPrefList = new List<ICommonSession>();
+            var cmdrPrefList = new List<ICommonSession>();
+            var operatives = new List<ICommonSession>();
 
             // The LINQ expression ReSharper keeps suggesting is completely unintelligible so I'm disabling it
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
@@ -637,7 +637,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             for (var i = 0; i < numNukies; i++)
             {
                 // TODO: Please fix this if you touch it.
-                IPlayerSession nukeOp;
+                ICommonSession nukeOp;
                 // Only one commander, so we do it at the start
                 if (i == 0)
                 {
@@ -908,7 +908,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         _npcFaction.AddFaction(mob, "Syndicate");
     }
 
-    private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints, NukeopsRuleComponent component)
+    private void SpawnOperatives(int spawnCount, List<ICommonSession> sessions, bool addSpawnPoints, NukeopsRuleComponent component)
     {
         if (component.NukieOutpost == null)
             return;
@@ -987,10 +987,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var playersPerOperative = component.PlayersPerOperative;
         var maxOperatives = component.MaxOps;
 
-        var playerPool = _playerManager.ServerSessions.ToList();
+        var playerPool = _playerManager.Sessions.ToList();
         var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
 
-        var operatives = new List<IPlayerSession>();
+        var operatives = new List<ICommonSession>();
         SpawnOperatives(numNukies, operatives, true, component);
     }
 
