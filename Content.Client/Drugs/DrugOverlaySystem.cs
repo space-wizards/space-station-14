@@ -1,5 +1,4 @@
 using Content.Shared.Drugs;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 
@@ -24,18 +23,18 @@ public sealed class DrugOverlaySystem : EntitySystem
         SubscribeLocalEvent<SeeingRainbowsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SeeingRainbowsComponent, ComponentShutdown>(OnShutdown);
 
-        SubscribeLocalEvent<SeeingRainbowsComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<SeeingRainbowsComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<SeeingRainbowsComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<SeeingRainbowsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, SeeingRainbowsComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, SeeingRainbowsComponent component, LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, SeeingRainbowsComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, SeeingRainbowsComponent component, LocalPlayerDetachedEvent args)
     {
         _overlay.Intoxication = 0;
         _overlayMan.RemoveOverlay(_overlay);

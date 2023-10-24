@@ -4,7 +4,6 @@ using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Examine
@@ -46,7 +45,7 @@ namespace Content.Server.Examine
 
         private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)
         {
-            var player = (IPlayerSession) eventArgs.SenderSession;
+            var player = eventArgs.SenderSession;
             var session = eventArgs.SenderSession;
             var channel = player.ConnectedClient;
             var entity = GetEntity(request.NetEntity);

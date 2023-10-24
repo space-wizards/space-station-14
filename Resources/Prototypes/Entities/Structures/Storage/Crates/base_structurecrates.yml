@@ -80,7 +80,7 @@
   - type: ResistLocker
 
 - type: entity
-  parent: CrateGeneric
+  parent: CrateBaseWeldable
   id: CrateBaseSecure
   components:
   - type: Lock

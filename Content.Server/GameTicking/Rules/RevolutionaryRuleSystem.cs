@@ -144,8 +144,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             _antagSelection.EligiblePlayers(comp.HeadRevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
                 "head-rev-role-greeting", "#5e9cff", out var chosen);
-            if (!chosen.Any())
-                GiveHeadRev(chosen, comp.RevPrototypeId, comp);
+            if (chosen.Any())
+                GiveHeadRev(chosen, comp.HeadRevPrototypeId, comp);
             else
             {
                 _chatManager.SendAdminAnnouncement(Loc.GetString("rev-no-heads"));

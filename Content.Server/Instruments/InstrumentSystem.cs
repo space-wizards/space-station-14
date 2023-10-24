@@ -9,12 +9,12 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Instruments;
@@ -385,7 +385,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 var nearby = GetBands(entity);
                 _bui.TrySendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
-                    (IPlayerSession)request.Session);
+                    request.Session);
             }
 
             _bandRequestQueue.Clear();
@@ -447,7 +447,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         }
     }
 
-    public void ToggleInstrumentUi(EntityUid uid, IPlayerSession session, InstrumentComponent? component = null)
+    public void ToggleInstrumentUi(EntityUid uid, ICommonSession session, InstrumentComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
