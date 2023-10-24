@@ -6,6 +6,7 @@ using Content.Shared.Maps;
 using Content.Shared.Tools;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Server.Tools
 {
@@ -21,13 +22,11 @@ namespace Content.Server.Tools
         [Dependency] private readonly SharedPointLightSystem _light = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly TurfSystem _turf = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            InitializeTilePrying();
             InitializeLatticeCutting();
             InitializeWelders();
         }
