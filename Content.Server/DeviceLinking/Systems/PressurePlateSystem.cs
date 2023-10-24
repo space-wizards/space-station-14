@@ -1,7 +1,7 @@
 using Content.Server.DeviceLinking.Components;
+using Content.Server.Physics;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Placeable;
-using Content.Server.Physics;
 
 namespace Content.Server.DeviceLinking.Systems;
 
