@@ -90,7 +90,7 @@
   id: RandomHumanoidSpawnerERTJanitorEVA
   parent: RandomHumanoidSpawnerERTJanitor
   name: ERT janitor
-  suffix: Environmental EVA
+  suffix: Enviro EVA
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
@@ -145,7 +145,7 @@
   id: RandomHumanoidSpawnerERTEngineerEVA
   parent: RandomHumanoidSpawnerERTEngineer
   name: ERT engineer
-  suffix: Environmental EVA
+  suffix: Enviro EVA
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
