@@ -391,7 +391,7 @@
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Storage
-    maxSlot: 1
+    maxSlots: 1
     whitelist:
       tags:
         - CaptainSabre

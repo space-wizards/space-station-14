@@ -53,7 +53,7 @@
     maxSlots: 10
     maxTotalWeight: 20
     whitelist:
-      component:
+      components:
       - Handcuff
   - type: StorageFill
     contents:
