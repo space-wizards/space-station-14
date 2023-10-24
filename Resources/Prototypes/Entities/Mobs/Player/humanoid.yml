@@ -54,6 +54,21 @@
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
 
+- type: entity
+  id: RandomHumanoidSpawnerERTLeaderEVALecter
+  parent: RandomHumanoidSpawnerERTLeaderEVA
+  suffix: Lecter, EVA
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTLeaderEVALecter
+
+- type: randomHumanoidSettings
+  id: ERTLeaderEVALecter
+  parent: ERTLeaderEVA
+  components:
+    - type: Loadout
+      prototypes: [ ERTLeaderGearEVALecter ]
+
 ## ERT Janitor
 
 - type: entity
@@ -218,6 +233,21 @@
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
+
+- type: entity
+  id: RandomHumanoidSpawnerERTSecurityEVALecter
+  parent: RandomHumanoidSpawnerERTSecurityEVA
+  suffix: Lecter, EVA
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTSecurityEVALecter
+
+- type: randomHumanoidSettings
+  id: ERTSecurityEVALecter
+  parent: ERTSecurityEVA
+  components:
+    - type: Loadout
+      prototypes: [ ERTSecurityEVALecter ]
 
 ## ERT Medic
 
