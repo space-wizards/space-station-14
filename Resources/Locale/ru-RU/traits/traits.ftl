@@ -24,3 +24,5 @@ trait-frontal-lisp-name = Сигматизм
 trait-frontal-lisp-desc = У ваф имеютшя проблемы ш произношением.
 trait-slavic-accent-name = Старославянский акцент
 trait-slavic-accent-desc = Доколе можно новые словечки выдумывать?
+trait-socialanxiety-name = Социофобия
+trait-socialanxiety-desc = Вы испытываете тревожность, когда говорите, что приводит к заиканию.

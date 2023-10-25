@@ -58,3 +58,5 @@ marking-LizardHornsBighorn-horns_bighorn = Унатх, рожки (Бигхор�
 marking-LizardHornsBighorn = Унатх, рожки (Бигхорн)
 marking-LizardHornsKoboldEars-horns_kobold_ears = Унатх, уши (Кобольд)
 marking-LizardHornsKoboldEars = Унатх, уши (Кобольд)
+marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Унатх, уши (Вислоухий кобольд)
+marking-LizardHornsFloppyKoboldEars = Унатх, уши (Вислоухий кобольд)
