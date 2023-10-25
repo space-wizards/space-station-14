@@ -226,7 +226,7 @@
     projectilePrototype: ProjectileIcicle
     targetNonSentientChance: 0.1
   - type: TileSpawnAnomaly
-    floorTileId: FloorIce
+    floorTileId: FloorIceStation
   - type: TempAffectingAnomaly
     tempChangePerSecond: -25
     hotspotExposeTemperature: -1000
