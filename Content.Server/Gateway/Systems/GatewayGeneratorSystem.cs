@@ -42,15 +42,11 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     // TODO: Portals to avoid people being stranded
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
     // Add dungeon name to thing
-    // Defer spawning for performance.
     // Add biome template to thing
     // Add biome template options.
     // Make continental bigger areas probably?
     // Think of something for resources
     // Fix unlocks / locking
-    // Make a planet helper instead of calling command
-    // Spawn dungeon / make an await for dungeons or something
-    // apply biome templates
     // Add mob templates like lizards or aliens or w/e
     // Probably need reduced ore spawn rate.
     // Add an initial 15min lockout or something on roundstart
