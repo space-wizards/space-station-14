@@ -16,7 +16,7 @@
       sprite: Objects/Misc/ice_crust.rsi
       layers:
         - state: ice
-      drawdepth: WallMountedItems
+      drawdepth: FloorObjects
     - type: Appearance
     - type: Clickable
     - type: Transform
