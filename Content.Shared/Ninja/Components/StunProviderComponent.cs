@@ -42,7 +42,7 @@ public sealed partial class StunProviderComponent : Component
         DamageDict = new()
         {
             { "Shock", 5 }
-        };
+        }
     };
 
     /// <summary>
