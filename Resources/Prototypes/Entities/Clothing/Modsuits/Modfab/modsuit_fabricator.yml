@@ -1,14 +1,62 @@
+# - type: entity
+#   parent: ExosuitFabricator
+#   id: ModsuitFab
+#   name: modsuitfab 
+#   description: Prints equipment for use by the medbay.
+#   components:
+#   - type: Machine
+#     board: ExosuitFabricatorMachineCircuitboard
+#   - type: Sprite
+#     netsync: false
+#     sprite: Imperial/Structures/Machines/modsuit_fabricator.rsi
+#     layers:
+#     - state: icon
+#       map: ["enum.LatheVisualLayers.IsRunning"]
+#     - state: unlit
+#       shader: unshaded
+#       map: ["enum.PowerDeviceVisualLayers.Powered"]
+#     - state: inserting
+#       map: ["enum.MaterialStorageVisualLayers.Inserting"]
+#     - state: panel
+#       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+#   - type: MaterialStorage
+#     whitelist:
+#       tags:
+#       - Sheet
+#       - RawMaterial
+#       - Ingot
+#   - type: Lathe
+#     idleState: icon
+#     runningState: building
+#     staticRecipes:
+#       - ControlModsuitConstructingStart
+#       - HelmetModsuitConstructing
+#       - ChestplateModsuitConstructing
+#       - GauntletsModsuitConstructing
+#       - BootsModsuitConstructing
+#       - PlatingCivillianModsuitConstructing
+#       - PlatingMedicalModsuitConstructing
+#       - PlatingEngineeringModsuitConstructing
+#       - PlatingAtmosphericModsuitConstructing
+
+# #     dynamicRecipes:
+#       - PlatingMagnateModsuit
+#       - PlatingSecurityModsuitConstructing
+#       - PlatingHOSModsuit
+#       - PlatingCMOModsuit
+#       - PlatingCEModsuit
+#       - PlatingAsteroidModsuitConstructing
+#       - PlatingRNDModsuitConstructing
+
 - type: entity
   parent: Protolathe
   id: ModsuitFab
-  name: modsuitfab 
-  description: Prints equipment for use by the medbay.
+  name: modsuits fab
+  description: Creates parts for robotics and other mechanical needs
   components:
-  - type: Machine
-    board: ExosuitFabricatorMachineCircuitboard
   - type: Sprite
     netsync: false
-    sprite: Structures/Machines/modsuit_fabricator.rsi
+    sprite: Imperial/Structures/Machines/modsuit_fabricator.rsi
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -19,62 +67,35 @@
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: ExosuitFabricatorMachineCircuitboard
   - type: Lathe
     idleState: icon
     runningState: building
     staticRecipes:
-      - EVAModHelmet
-      - EVAModChestplate
-      - EVAModGauntlets
-      - EVAModBoots
-
+      - ControlModsuitConstructingStart
+      - HelmetModsuitConstructing
+      - ChestplateModsuitConstructing
+      - GauntletsModsuitConstructing
+      - BootsModsuitConstructing
+      - PlatingCivillianModsuitConstructing
+      - PlatingMedicalModsuitConstructing
+      - PlatingEngineeringModsuitConstructing
+      - PlatingAtmosphericModsuitConstructing
     dynamicRecipes:
-      - FullMetalJacket
-      - RNDJacket
-      - WorkJacket
-      - MedicalJacket
-      - AtmosModHelmet
-      - AtmosModChestplate
-      - AtmosModGauntlets
-      - AtmosModBoots
-      - EngineerModHelmet
-      - EngineerModChestplate
-      - EngineerModGauntlets
-      - EngineerModBoots
-      - HOSModHelmet
-      - HOSModChestplate
-      - HOSModGauntlets
-      - HOSModBoots
-      - SecurityModHelmet
-      - BrigmedicModHelmet 
-      - SecurityModChestplate
-      - SecurityModGauntlets
-      - SecurityModBoots
-      - MedicalModHelmet
-      - MedicalModChestplate
-      - MedicalModGauntlets
-      - MedicalModBoots
-      - RNDModHelmet
-      - RNDModChestplate
-      - RNDModGauntlets
-      - RNDModBoots
-      - CMOModHelmet
-      - CMOModChestplate
-      - CMOModGauntlets
-      - CMOModBoots
-      - SalvageModHelmet
-      - SalvageModChestplate
-      - SalvageModGauntlets
-      - SalvageModBoots
-      - CEModHelmet
-      - CEModChestplate
-      - CEModGauntlets
-      - CEModBoots
-      - CaptainModHelmet
-      - CaptainModChestplate
-      - CaptainModGauntlets
-      - CaptainModBoots
-      - BlueshieldModHelmet
-      - BlueshieldModChestplate
-      - BlueshieldModGauntlets
-      - BlueshieldModBoots
+      - PlatingMagnateModsuit
+      - PlatingSecurityModsuitConstructing
+      - PlatingHOSModsuit
+      - PlatingCMOModsuit
+      - PlatingCEModsuit
+      - PlatingAsteroidModsuitConstructing
+      - PlatingRNDModsuitConstructing
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: GuideHelp
+    guides:
+    - Robotics

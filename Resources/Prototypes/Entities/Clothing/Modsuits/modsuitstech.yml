@@ -1,46 +1,28 @@
 - type: technology
-  id: BasicWorkModsuits
+  id: СombatModsuits
   name: research-technology-combat-modsuits
   icon:
-    sprite: Clothing/Head/Modsuits/security.rsi
+    sprite: Clothing/Head/Modsuits/salvage.rsi
     state: icon
-  discipline: Experimental
+  discipline: Industrial
   tier: 1
-  cost: 2500
-  recipeUnlocks:
-  # - MedicalModHelmet туду - Сюда засунуть просто обшивки боевых
-  # - MedicalModChestplate
-  # - MedicalModGauntlets
-  # - MedicalModBoots
-  # - RNDModHelmet
-  # - RNDModChestplate
-  # - RNDModGauntlets 
-  # - RNDModBoots
-  # - EngineerModHelmet
-  # - EngineerModChestplate
-  # - EngineerModGauntlets
-  # - EngineerModBoots
-
-- type: technology
-  id: Modsuits
-  name: research-epic-modsuits
-  icon:
-    sprite: Clothing/Head/Modsuits/atmospheric.rsi
-    state: icon
-  discipline: Experimental
-  tier: 2
   cost: 5000
   recipeUnlocks:
-  # - AtmosModHelmet
-  # - AtmosModChestplate сюда засунуть обшивки глав
-  # - AtmosModGauntlets
-  # - AtmosModBoots
-  # - SecurityModHelmet
-  # - BrigmedicModHelmet 
-  # - SecurityModChestplate
-  # - SecurityModGauntlets
-  # - SecurityModBoots
-  # - SalvageModHelmet
-  # - SalvageModChestplate
-  # - SalvageModGauntlets
-  # - SalvageModBoots
+  - PlatingSecurityModsuitConstructing
+  - PlatingAsteroidModsuitConstructing
+  - PlatingRNDModsuitConstructing
+
+- type: technology
+  id: Advanced Modsuits
+  name: research-advanced-modsuits
+  icon:
+    sprite: Clothing/Head/Modsuits/magnate.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - PlatingCEModsuit
+  - PlatingMagnateModsuit
+  - PlatingHOSModsuit
+  - PlatingCMOModsuit

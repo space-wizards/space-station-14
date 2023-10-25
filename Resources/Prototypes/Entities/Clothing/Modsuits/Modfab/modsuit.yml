@@ -1,419 +1,126 @@
 - type: latheRecipe
-  id: EVAModBoots
-  result: EVAModBoots
-  completetime: 4
+  id: ControlModsuitConstructingStart
+  result: ControlModsuitConstructingStart
+  completetime: 8
+  materials:
+    Steel: 200
+    Plasma: 500
+
+- type: latheRecipe
+  id: HelmetModsuitConstructing
+  result: HelmetModsuitConstructing
+  completetime: 8
+  materials:
+    Steel: 200
+    Glass: 300
+
+- type: latheRecipe
+  id: ChestplateModsuitConstructing
+  result: ChestplateModsuitConstructing
+  completetime: 8
   materials:
     Steel: 500
 
 - type: latheRecipe
-  id: EVAModChestplate
-  result: EVAModChestplate
+  id: GauntletsModsuitConstructing
+  result: GauntletsModsuitConstructing
+  completetime: 8
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: BootsModsuitConstructing
+  result: BootsModsuitConstructing
+  completetime: 8
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: PlatingCivillianModsuitConstructing
+  result: PlatingCivillianModsuitConstructing
   completetime: 4
   materials:
     Steel: 1000
+
+- type: latheRecipe
+  id: PlatingMedicalModsuitConstructing
+  result: PlatingMedicalModsuitConstructing
+  completetime: 4
+  materials:
     Plastic: 500
+    Steel: 200
 
 - type: latheRecipe
-  id: EVAModGauntlets
-  result: EVAModGauntlets
-  completetime: 4
+  id: PlatingEngineeringModsuitConstructing
+  result: PlatingEngineeringModsuitConstructing
+  completetime: 12
   materials:
-    Steel: 500
+    Steel: 1500
+    Plasma: 500
 
 - type: latheRecipe
-  id: EVAModHelmet
-  result: EVAModHelmet
-  completetime: 4
-  materials:
-    Steel: 500
-    Glass: 500
-
-- type: latheRecipe
-  id: AtmosModBoots
-  result: AtmosModBoots
-  completetime: 4
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: AtmosModChestplate
-  result: AtmosModChestplate
-  completetime: 4
+  id: PlatingAtmosphericModsuitConstructing
+  result: PlatingAtmosphericModsuitConstructing
+  completetime: 12
   materials:
     Steel: 1000
+    Plasma: 1000
+
+- type: latheRecipe
+  id: PlatingAsteroidModsuitConstructing
+  result: PlatingAsteroidModsuitConstructing
+  completetime: 12
+  materials:
+    Steel: 1000
+    Uranium: 1000
+
+- type: latheRecipe
+  id: PlatingRNDModsuitConstructing
+  result: PlatingRNDModsuitConstructing
+  completetime: 12
+  materials:
+    Steel: 1500
+    Plasma: 500
+
+- type: latheRecipe
+  id: PlatingSecurityModsuitConstructing
+  result: PlatingSecurityModsuitConstructing
+  completetime: 12
+  materials:
     Plasteel: 1000
+    Plasma: 500
 
 - type: latheRecipe
-  id: AtmosModGauntlets
-  result: AtmosModGauntlets
-  completetime: 4
+  id: PlatingHOSModsuit
+  result: PlatingHOSModsuit
+  completetime: 20
   materials:
-    Steel: 300
-    Plasteel: 300
-
-- type: latheRecipe
-  id: AtmosModHelmet
-  result: AtmosModHelmet
-  completetime: 4
-  materials:
-    Steel: 500
-    Glass: 500
-
-- type: latheRecipe
-  id: EngineerModBoots
-  result: EngineerModBoots
-  completetime: 4
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: EngineerModChestplate
-  result: EngineerModChestplate
-  completetime: 4
-  materials:
-    Steel: 1000
-    Plasteel: 500
-
-- type: latheRecipe
-  id: EngineerModGauntlets
-  result: EngineerModGauntlets
-  completetime: 4
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: EngineerModHelmet
-  result: EngineerModHelmet
-  completetime: 4
-  materials:
-    Steel: 500
-    Glass: 500
-
-- type: latheRecipe
-  id: HOSModBoots
-  result: HOSModBoots
-  completetime: 4
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: HOSModChestplate
-  result: HOSModChestplate
-  completetime: 4
-  materials:
-    Steel: 1000
     Plasteel: 1500
+    Plasma: 1000
 
 - type: latheRecipe
-  id: HOSModGauntlets
-  result: HOSModGauntlets
-  completetime: 4
+  id: PlatingCEModsuit
+  result: PlatingCEModsuit
+  completetime: 20
   materials:
-    Steel: 500
-    Plasteel: 500
+    Plasteel: 1500
+    Plasma: 1000
+    Uranium: 1000
 
 - type: latheRecipe
-  id: HOSModHelmet
-  result: HOSModHelmet
-  completetime: 4
-  materials:
-    Steel: 1000
-    Glass: 500
-
-- type: latheRecipe
-  id: SecurityModBoots
-  result: SecurityModBoots
-  completetime: 4
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: SecurityModChestplate
-  result: SecurityModChestplate
-  completetime: 4
-  materials:
-    Steel: 500
-    Plasteel: 1000
-
-- type: latheRecipe
-  id: SecurityModGauntlets
-  result: SecurityModGauntlets
-  completetime: 4
-  materials:
-    Plasteel: 500
-
-- type: latheRecipe
-  id: SecurityModHelmet
-  result: SecurityModHelmet
-  completetime: 4
-  materials:
-    Steel: 600
-    Glass: 500
-
-- type: latheRecipe
-  id: BrigmedicModHelmet
-  result: BrigmedicModHelmet
-  completetime: 4
-  materials:
-    Steel: 600
-    Glass: 500
-
-- type: latheRecipe
-  id: MedicalModBoots
-  result: MedicalModBoots
-  completetime: 4
-  materials:
-    Steel: 300
-
-- type: latheRecipe
-  id: MedicalModChestplate
-  result: MedicalModChestplate
-  completetime: 4
-  materials:
-    Steel: 700
-
-- type: latheRecipe
-  id: MedicalModGauntlets
-  result: MedicalModGauntlets
-  completetime: 4
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: MedicalModHelmet
-  result: MedicalModHelmet
-  completetime: 4
-  materials:
-    Steel: 100
-    Glass: 500
-
-- type: latheRecipe
-  id: RNDModBoots
-  result: RNDModBoots
-  completetime: 4
-  materials:
-    Steel: 700
-
-- type: latheRecipe
-  id: RNDModChestplate
-  result: RNDModChestplate
-  completetime: 4
+  id: PlatingCMOModsuit
+  result: PlatingCMOModsuit
+  completetime: 20
   materials:
     Plasteel: 800
-    Steel: 1500
+    Plasma: 1200
 
 - type: latheRecipe
-  id: RNDModGauntlets
-  result: RNDModGauntlets
-  completetime: 4
-  materials:
-    Steel: 700
-
-- type: latheRecipe
-  id: RNDModHelmet
-  result: RNDModHelmet
-  completetime: 4
-  materials:
-    Steel: 1000
-    Glass: 100
-
-- type: latheRecipe
-  id: CMOModBoots
-  result: CMOModBoots
-  completetime: 4
-  materials:
-    Steel: 300
-
-- type: latheRecipe
-  id: CMOModChestplate
-  result: CMOModChestplate
-  completetime: 4
-  materials:
-    Steel: 800
-
-- type: latheRecipe
-  id: CMOModGauntlets
-  result: CMOModGauntlets
-  completetime: 4
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: CMOModHelmet
-  result: CMOModHelmet
-  completetime: 4
-  materials:
-    Steel: 400
-    Glass: 400
-
-- type: latheRecipe
-  id: SalvageModBoots
-  result: SalvageModBoots
-  completetime: 4
-  materials:
-    Steel: 600
-
-- type: latheRecipe
-  id: SalvageModChestplate
-  result: SalvageModChestplate
-  completetime: 4
-  materials:
-    Plasteel: 500
-    Steel: 1500
-
-- type: latheRecipe
-  id: SalvageModGauntlets
-  result: SalvageModGauntlets
-  completetime: 4
-  materials:
-    Steel: 500
-
-- type: latheRecipe
-  id: SalvageModHelmet
-  result: SalvageModHelmet
-  completetime: 4
-  materials:
-    Steel: 1000
-    Glass: 500
-
-- type: latheRecipe
-  id: CEModBoots
-  result: CEModBoots
-  completetime: 4
-  materials:
-    Steel: 1000
-
-- type: latheRecipe
-  id: CEModChestplate
-  result: CEModChestplate
-  completetime: 4
+  id: PlatingMagnateModsuit
+  result: PlatingMagnateModsuit
+  completetime: 20
   materials:
     Plasteel: 1500
-    Steel: 1500
-
-- type: latheRecipe
-  id: CEModGauntlets
-  result: CEModGauntlets
-  completetime: 4
-  materials:
-    Steel: 800
-
-- type: latheRecipe
-  id: CEModHelmet
-  result: CEModHelmet
-  completetime: 4
-  materials:
-    Steel: 1500
-    Glass: 1000
-
-- type: latheRecipe
-  id: CaptainModBoots
-  result: CaptainModBoots
-  completetime: 4
-  materials:
-    Steel: 1000
-
-- type: latheRecipe
-  id: CaptainModChestplate
-  result: CaptainModChestplate
-  completetime: 4
-  materials:
-    Plasteel: 1500
-    Steel: 1500
-
-- type: latheRecipe
-  id: CaptainModGauntlets
-  result: CaptainModGauntlets
-  completetime: 4
-  materials:
-    Steel: 800
-
-- type: latheRecipe
-  id: CaptainModHelmet
-  result: CaptainModHelmet
-  completetime: 4
-  materials:
-    Steel: 1500
-    Glass: 1000
-
-- type: latheRecipe
-  id: BlueshieldModBoots
-  result: BlueshieldModBoots
-  completetime: 4
-  materials:
-    Steel: 1000
-
-- type: latheRecipe
-  id: BlueshieldModChestplate
-  result: BlueshieldModChestplate
-  completetime: 4
-  materials:
-    Plasteel: 1500
-    Steel: 1500
-
-- type: latheRecipe
-  id: BlueshieldModGauntlets
-  result: BlueshieldModGauntlets
-  completetime: 4
-  materials:
-    Steel: 800
-
-- type: latheRecipe
-  id: BlueshieldModHelmet
-  result: BlueshieldModHelmet
-  completetime: 4
-  materials:
-    Steel: 1500
-    Glass: 1000
-
-- type: latheRecipe
-  id: MedicalJacket
-  result: MedicalJacket
-  completetime: 4
-  materials:
-    Steel: 200
-
-- type: latheRecipe
-  id: RNDJacket
-  result: RNDJacket
-  completetime: 4
-  materials:
-    Plasteel: 300
-
-- type: latheRecipe
-  id: WorkJacket
-  result: WorkJacket
-  completetime: 4
-  materials:
-    Steel: 400
-
-- type: latheRecipe
-  id: FullMetalJacket
-  result: FullMetalJacket
-  completetime: 4
-  materials:
-    Plasteel: 500
-    Steel: 200
-
-- type: latheRecipe
-  id: ModsuitEnhancedSomething
-  result: ModsuitEnhancedSomething
-  completetime: 4
-  materials:
-    Plastic: 300
-    Steel: 200
-
-- type: latheRecipe
-  id: ModsuitEnhancedCore
-  result: ModsuitEnhancedCore
-  completetime: 4
-  materials:
-    Steel: 1000
-
-- type: latheRecipe
-  id: ModsuitEnhancedBox
-  result: ModsuitEnhancedBox
-  completetime: 4
-  materials:
-    Plasteel: 500
-    Steel: 500
+    Plasma: 1200
+    Uranium: 1000
+    Gold: 1000
