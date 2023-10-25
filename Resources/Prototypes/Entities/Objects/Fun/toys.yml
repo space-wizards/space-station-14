@@ -94,8 +94,6 @@
   description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
   components:
   - type: Sprite
-    state: plushie_h
-  - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   - type: Item

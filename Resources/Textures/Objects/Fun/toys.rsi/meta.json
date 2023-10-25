@@ -30,15 +30,15 @@
             "name": "plushie_h"
         },
         {
-            "name": "equipped-HELMET",
+            "name": "bee-equipped-HELMET",
             "directions": 4
         },
         {
-            "name": "inhand-left",
+            "name": "bee-inhand-left",
             "directions": 4
         },
         {
-            "name": "inhand-right",
+            "name": "bee-inhand-right",
             "directions": 4
         },
 	{
