@@ -37,7 +37,7 @@
     maxTotalWeight: 32
     blacklist:
       tags:
-        - Arrow
+        - CannonRestrict
   - type: Appearance
   - type: ItemMapper
     containerWhitelist: [gas_tank]

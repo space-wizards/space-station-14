@@ -133,36 +133,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("admin_log", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLogEntity", b =>
-                {
-                    b.Property<int>("Uid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("uid");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Uid"));
-
-                    b.Property<int?>("AdminLogId")
-                        .HasColumnType("integer")
-                        .HasColumnName("admin_log_id");
-
-                    b.Property<int?>("AdminLogRoundId")
-                        .HasColumnType("integer")
-                        .HasColumnName("admin_log_round_id");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Uid")
-                        .HasName("PK_admin_log_entity");
-
-                    b.HasIndex("AdminLogId", "AdminLogRoundId")
-                        .HasDatabaseName("IX_admin_log_entity_admin_log_id_admin_log_round_id");
-
-                    b.ToTable("admin_log_entity", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.AdminLogPlayer", b =>
                 {
                     b.Property<Guid>("PlayerUserId")
@@ -1312,14 +1282,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Round");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.AdminLogEntity", b =>
-                {
-                    b.HasOne("Content.Server.Database.AdminLog", null)
-                        .WithMany("Entities")
-                        .HasForeignKey("AdminLogId", "AdminLogRoundId")
-                        .HasConstraintName("FK_admin_log_entity_admin_log_admin_log_id_admin_log_round_id");
-                });
-
             modelBuilder.Entity("Content.Server.Database.AdminLogPlayer", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", "Player")
@@ -1677,8 +1639,6 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.AdminLog", b =>
                 {
-                    b.Navigation("Entities");
-
                     b.Navigation("Players");
                 });
 
