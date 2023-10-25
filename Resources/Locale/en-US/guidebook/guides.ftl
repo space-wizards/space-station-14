@@ -26,6 +26,7 @@ guide-entry-janitorial = Janitorial
 guide-entry-bartender = Bartender
 guide-entry-chef = Chef
 guide-entry-foodrecipes = Food Recipes
+guide-entry-playableraces = Playable Races
 guide-entry-medical = Medical
 guide-entry-medicaldoctor = Medical Doctor
 guide-entry-chemist = Chemist

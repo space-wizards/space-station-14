@@ -1,0 +1,97 @@
+﻿<Document>
+# Races
+
+SS14 has a variety of races to choose from. Each of them has some (relatively) minor differences that you should keep in mind when playing as and interacting with one.
+
+## Human
+<Box>
+<GuideEntityEmbed Entity="MobHuman" Caption="A boring human.">
+</Box>
+Your average baseliner, humans are the most intuitive race.
+
+## Reptile
+<Box>
+<GuideEntityEmbed Entity="MobReptilian" Caption="Tailed folk with cold blood.">
+</Box>
+Lizards have a lisp, a tail and other reptile-like features.
+
+Main differences:
+- When bare handed, they use their pointy claws to attack instead of their fists.
+- Their tail allows them to drag objects without ocuppying their hands.
+- Have a pretty restrictive diet which consists mostly of meat and fruits but have an easier time metabolizing poisonous substances.
+- Their cold blood makes them more vulnerable to low temperatures.
+- Their scales are minimally better at protecting against cuts, and minimally worse against blunt hits.
+
+Notes:
+- If you're having issues keeping your temperature, a scarf can help you stay comfortable.
+
+## Slime
+<Box>
+<GuideEntityEmbed Entity="MobSlimePerson" Caption="Slimy life forms.">
+</Box>
+</Document>
+Humanoids with a looser, slimy body.
+
+Main differences:
+- They breath nitrogen instead of oxygen.
+- Their bodies have an easy time absorbing blunt hits, but other kinds of physical damage are extra harmful.
+- Their loose body-mass makes them specially susceptible to damage from low pressure.
+- The lack of flesh and blood but grants them resistance to poisons and a near immunity to damage to their genetic code.
+- When spilled, their sticky slime slows down creatures walking over it.
+- They never rot after death.
+
+Notes:
+- Keep in mind that attempting to breath with an oxygen tank will merely cause you to asphyxiate.
+
+## Diona
+<Box>
+<GuideEntityEmbed Entity="MobDiona" Caption="Living trees.">
+</Box>
+Diona are essentially living plants, with most of their anatomy resembling one.
+
+Main differences:
+- Capable of breathing carbon dioxide AND oxygen.
+- They have roots instead of feet, making them unable to wear shoes or boots.
+- Their bark is fairly resistant to most physical damage.
+- Being plant-like, fire and electric shocks are extra deadly to them.
+- Can also metabolize plant-related chemicals and be affected like a plant would.
+- They require more water to live and also "bleed" water when harmed.
+
+Notes:
+- While robust harvest is a very benefficial chemical for a Diona, overdosing on it can have severe consequences.
+
+## Dwarf
+<Box>
+<GuideEntityEmbed Entity="MobDwarf" Caption="Stout and...">
+</Box>
+Excluding their smaller stature. Dwarves are pretty much identical to humans.
+</Document>
+
+## Arachnid
+<Box>
+<GuideEntityEmbed Entity="MobArachnid" Caption="Large spider-like creatures.">
+</Box>
+Hardy insectoids, very similar to actual spiders.
+
+Main differences:
+- Their exo-skeleton is resistant to cuts, but vulnerable to other types of physical damage.
+- They are specially sensitive to changes in temperature and air. But are highly resistant to extreme pressures.
+- When attacking bare handed, their attacks cut targets instead of bashing them.
+- A more efficient metabolism makes them require less food and water.
+- Can produce webs which can be used to build furniture and clothing.
+
+## Moth
+<Box>
+<GuideEntityEmbed Entity="MobArachnid" Caption="Fluffy, big-eyed insects.">
+</Box>
+Moths are pretty much a larger version of the kind you'd find on earth.
+
+Main differences:
+- Their lightweight bodies and wings grant them excellent mobility in zero-g enviroments.
+- Can only consume silk and cloth (including most clothing) due to their tube-like mouths. Which serve as nutrition.
+- Their fur makes them attuned to the cold.
+
+Notes:
+- You may still take pills by diluting them in a liquid, like with soda can.
+
+</Document>
