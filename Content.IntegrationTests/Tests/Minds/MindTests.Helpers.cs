@@ -127,7 +127,7 @@ public sealed partial class MindTests
         var mindId = player.ContentData()!.Mind!.Value;
         Assert.That(mindId, Is.Not.EqualTo(default(EntityUid)));
         var mind = entMan.GetComponent<MindComponent>(mindId);
-        ActorComponent? actor = default!;
+        ActorComponent actor = default!;
         Assert.Multiple(() =>
         {
             Assert.That(player, Is.EqualTo(mind.Session), "Player session does not match mind session");
