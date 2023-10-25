@@ -35,13 +35,33 @@
       "name": "helmet"
     },
     {
-      "name": "mod-core"
+      "name": "mod-core",
+      "delays": [
+        [
+          0.18625,
+          0.18625,
+          0.18625,
+          0.18625
+        ]
+      ]
     },
     {
       "name": "mod-core-ethereal"
     },
     {
       "name": "mod-core-plasma"
+    },
+    {
+      "name": "mod-core-magnate"
+    },
+    {
+      "name": "mod-core-cmo"
+    },
+    {
+      "name": "mod-core-ce"
+    },
+    {
+      "name": "mod-core-hos"
     },
     {
       "name": "paintkit"

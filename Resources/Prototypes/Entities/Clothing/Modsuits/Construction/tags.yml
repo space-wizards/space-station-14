@@ -35,6 +35,18 @@
   id: CoreBasicModsuit
 
 - type: Tag
+  id: CoreHOSModsuit
+
+- type: Tag
+  id: CoreCMOModsuit
+
+- type: Tag
+  id: CoreCEModsuit
+
+- type: Tag
+  id: CoreMagnateModsuit
+
+- type: Tag
   id: PlatingCivillianModsuit
 
 - type: Tag

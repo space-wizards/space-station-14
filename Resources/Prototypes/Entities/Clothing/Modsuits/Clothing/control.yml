@@ -69,6 +69,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitAdvanced
+    node: modsuitadvanced
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -222,6 +225,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitRescue
+    node: modsuitrescue
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -282,6 +288,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitMagnate
+    node: modsuitmagnates
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -347,6 +356,9 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: Construction
+    graph: ModsuitHOS
+    node: modsuithos
 
 - type: entity
   parent: ClothingControlModsuitBase

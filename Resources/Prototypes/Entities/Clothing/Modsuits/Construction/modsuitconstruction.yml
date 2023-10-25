@@ -13,58 +13,6 @@
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: Storage
     capacity: 30
-
-- type: entity
-  parent: ClothingControlModsuitBaseUnsealed
-  id: ClothingControlModsuitCEUnsealed
-  name: CE modsuit helmet
-  description: Special hardsuit helmet, made for the CE of the station.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Modsuits/advanced.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Modsuits/advanced.rsi
-  - type: Storage
-    capacity: 30
-
-- type: entity
-  parent: ClothingControlModsuitBaseUnsealed
-  id: ClothingControlModsuitCMOUnsealed
-  name: CE modsuit helmet
-  description: Special hardsuit helmet, made for the CE of the station.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Modsuits/cmo.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Modsuits/cmo.rsi
-  - type: Storage
-    capacity: 30
-
-- type: entity
-  parent: ClothingControlModsuitBaseUnsealed
-  id: ClothingControlModsuitMagnateUnsealed
-  name: CE modsuit helmet
-  description: Special hardsuit helmet, made for the CE of the station.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Modsuits/magnate.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Modsuits/magnate.rsi
-  - type: Storage
-    capacity: 40
-
-- type: entity
-  parent: ClothingControlModsuitBaseUnsealed
-  id: ClothingControlModsuitHOSUnsealed
-  name: CE modsuit helmet
-  description: Special hardsuit helmet, made for the CE of the station.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Modsuits/hos.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Modsuits/hos.rsi
-  - type: Storage
-    capacity: 40
 #Modsuit Parts start
 
 - type: entity
@@ -197,6 +145,58 @@
   - type: Tag
     tags:
     - CoreSecurityModsuit
+
+- type: entity
+  parent: BaseItem
+  id: CoreHOSModsuitConstructing
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/constructing_modsuit.rsi
+    state: mod-core-hos
+  - type: Tag
+    tags:
+    - CoreHOSModsuit
+
+- type: entity
+  parent: BaseItem
+  id: CoreСMOModsuitConstructing
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/constructing_modsuit.rsi
+    state: mod-core-cmo
+  - type: Tag
+    tags:
+    - CoreCMOModsuit
+
+- type: entity
+  parent: BaseItem
+  id: CoreCEModsuitConstructing
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/constructing_modsuit.rsi
+    state: mod-core-ce
+  - type: Tag
+    tags:
+    - CoreCEModsuit
+
+- type: entity
+  parent: BaseItem
+  id: CoreMagnateModsuitConstructing
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/constructing_modsuit.rsi
+    state: mod-core-magnate
+  - type: Tag
+    tags:
+    - CoreMagnateModsuit
 
 - type: entity
   parent: BaseItem

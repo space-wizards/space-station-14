@@ -74,3 +74,47 @@
   description: Модсьют, созданный специально под нужды профессии.
   icon: { sprite: Clothing/Back/Modsuits/security.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  name: Продвинутый модсьют
+  id: ModsuitAdvanced
+  graph: ModsuitAdvanced
+  startNode: start
+  targetNode: modsuitadvanced
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/advanced.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Модсьют Главного врача
+  id: ModsuitRescue
+  graph: ModsuitRescue
+  startNode: start
+  targetNode: modsuitrescue
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/cmo.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Модсьют Капитана
+  id: ModsuitMagnate
+  graph: ModsuitMagnate
+  startNode: start
+  targetNode: modsuitmagnate
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/magnate.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Модсьют Главы Службы Безопасности
+  id: ModsuitHOS
+  graph: ModsuitHOS
+  startNode: start
+  targetNode: modsuithos
+  category: construction-category-clothing
+  description: Модсьют, созданный специально под нужды профессии.
+  icon: { sprite: Clothing/Back/Modsuits/hos.rsi, state: icon }
+  objectType: Item
