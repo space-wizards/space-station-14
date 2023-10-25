@@ -4,6 +4,7 @@ using Content.Shared.GameWindow;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
@@ -17,6 +18,7 @@ namespace Content.Server.GameTicking
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private readonly ActorSystem _actor = default!;
 
         private void InitializePlayer()
         {
@@ -100,8 +102,16 @@ namespace Content.Server.GameTicking
                     }
                     else
                     {
-                        _playerManager.SetAttachedEntity(session, mind.CurrentEntity);
-                        PlayerJoinGame(session);
+                        if (_actor.Attach(mind.CurrentEntity, session))
+                        {
+                            PlayerJoinGame(session);
+                        }
+                        else
+                        {
+                            Log.Error(
+                                $"Failed to attach player {session} with mind {ToPrettyString(mindId)} to its current entity {ToPrettyString(mind.CurrentEntity)}");
+                            SpawnObserverWaitDb();
+                        }
                     }
 
                     break;
