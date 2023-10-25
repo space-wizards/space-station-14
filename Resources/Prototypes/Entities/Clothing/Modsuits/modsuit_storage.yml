@@ -11,7 +11,7 @@
         - id: OxygenTankFilled
         - id: JetpackVoidFilled
         - id: ClothingShoesBootsMagAdv
-        - id: ClothingOuterModsuitCE
+        - id: ClothingControlModsuitCESealed
         - id: ClothingMaskGasAtmos
 
 - type: entity
@@ -25,7 +25,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitCapSpace
+        - id: ClothingControlModsuitMagnateSealed
         - id: ClothingMaskGasCaptain
 
 - type: entity
@@ -39,7 +39,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitCivillian
+        - id: ClothingControlModsuitCivillianSealed
         - id: ClothingMaskBreath
 
 - type: entity
@@ -53,7 +53,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitCMO
+        - id: ClothingControlModsuitCMOSealed
         - id: ClothingMaskBreath
 
 - type: entity
@@ -67,9 +67,8 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitRND
+        - id: ClothingControlModsuitRNDSealed
         - id: ClothingMaskBreath
-
 
 - type: entity
   name: ModSuit Storage Medical
@@ -82,7 +81,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitMedical
+        - id: ClothingControlModsuitMedicalSealed
         - id: ClothingMaskBreath
 
 - type: entity
@@ -96,21 +95,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitSecurity
-        - id: ClothingMaskGasSecurity
-
-- type: entity
-  name: ModSuit Storage Brigmedic
-  description: ModSuit Storage 
-  id: ModSuitStorageBrigmedic
-  parent: SuitStorageBase
-  suffix: Brigmedic
-  components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: ClothingOuterModsuitBrigmedic
+        - id: ClothingControlModsuitSecuritySealed
         - id: ClothingMaskGasSecurity
 
 - type: entity
@@ -124,7 +109,22 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitSalvage
+        - id: ClothingControlModsuitSalvageSealed
+        - id: ClothingMaskGasExplorer
+        - id: ClothingShoesBootsMag
+
+- type: entity
+  name: ModSuit Storage Salvage
+  description: ModSuit Storage
+  id: ModSuitStorageMiner
+  parent: SuitStorageBase
+  suffix: Miner
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitMinerSealed
         - id: ClothingMaskGasExplorer
         - id: ClothingShoesBootsMag
 
@@ -139,7 +139,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitEngineer
+        - id: ClothingControlModsuitEngineerSealed
         - id: ClothingMaskGas
         - id: ClothingShoesBootsMag
 
@@ -154,7 +154,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitAtmos
+        - id: ClothingControlModsuitAtmosphericsSealed
         - id: ClothingMaskGasAtmos
         - id: ClothingShoesBootsMag
 
@@ -169,7 +169,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitHOS
+        - id: ClothingControlModsuitHOSSealed
         - id: ClothingMaskGasSwat
         - id: JetpackSecurityFilled
 
@@ -184,34 +184,6 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterModsuitCentcom
+        - id: ClothingControlModsuitCCSealed
         - id: ClothingMaskGasCentcom
         - id: JetpackSecurityFilled
-
-- type: entity
-  name: ModSuit Storage Interdyne
-  description: ModSuit Storage
-  id: ModSuitStorageInterdyne
-  parent: SuitStorageBase
-  suffix: HOS
-  components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: ClothingOuterModsuitInterdyne
-        - id: ClothingMaskBreath
-
-- type: entity
-  name: ModSuit Storage Blueshield
-  description: ModSuit Storage
-  id: ModSuitStorageBlueshield
-  parent: SuitStorageBase
-  suffix: HOS
-  components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: ClothingOuterModsuitBlueshield
-        - id: ClothingMaskBreath
