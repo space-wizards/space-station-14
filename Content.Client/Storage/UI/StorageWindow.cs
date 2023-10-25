@@ -4,8 +4,10 @@ using Robust.Client.UserInterface.Controls;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Item;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Client.UserInterface;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Direction = Robust.Shared.Maths.Direction;
@@ -19,6 +21,8 @@ namespace Content.Client.Storage.UI
     {
         private readonly IEntityManager _entityManager;
 
+        private readonly SharedStorageSystem _storage;
+
         private readonly Label _information;
         public readonly ContainerButton StorageContainerButton;
         public readonly ListContainer EntityList;
@@ -28,6 +32,7 @@ namespace Content.Client.Storage.UI
         public StorageWindow(IEntityManager entityManager)
         {
             _entityManager = entityManager;
+            _storage = _entityManager.System<SharedStorageSystem>();
             SetSize = new Vector2(240, 320);
             Title = Loc.GetString("comp-storage-window-title");
             RectClipContent = true;
@@ -58,7 +63,10 @@ namespace Content.Client.Storage.UI
 
             _information = new Label
             {
-                Text = Loc.GetString("comp-storage-window-volume", ("itemCount", 0), ("usedVolume", 0), ("maxVolume", 0)),
+                Text = Loc.GetString("comp-storage-window-volume",
+                    ("itemCount", 0),
+                    ("maxCount", 0),
+                    ("size", SharedItemSystem.GetItemSizeLocale(ItemSize.Normal))),
                 VerticalAlignment = VAlignment.Center
             };
 
@@ -100,7 +108,8 @@ namespace Content.Client.Storage.UI
             //todo; maybe use a percentage? This gets weird with high-weight items.
             _information.Text = Loc.GetString("comp-storage-window-volume",
                 ("itemCount", storedCount),
-                ("maxCount", component.MaxSlots));
+                ("maxCount", component.MaxSlots),
+                ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((entity, component)))));
         }
 
         /// <summary>
