@@ -7,9 +7,6 @@
                 SetSize="600 400">
     <Control>
         <BoxContainer Name="statsBox" Orientation="Vertical" Margin="10,10,10,10">
-            <!-- Stats Title -->
-            <Label Name="StatsTitleLabel" HorizontalExpand="True" Text="{Loc ui-playtime-stats-title}" />
-            <Control MinSize="0 5" />
 
             <!-- Overall Playtime -->
             <Label Name="OverallPlaytimeLabel" HorizontalExpand="True" Text="{Loc ui-playtime-overall-base}" />

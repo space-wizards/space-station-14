@@ -128,8 +128,18 @@ public sealed class JobRequirementsManager
 
     public Dictionary<string, TimeSpan> FetchPlaytimeByRoles()
     {
-        return new Dictionary<string, TimeSpan>(_roles);
-    }
+        var mappedRoles = new Dictionary<string, TimeSpan>();
+        var jobsToMap = _prototypes.EnumeratePrototypes<JobPrototype>();
 
+        foreach (var job in jobsToMap)
+        {
+            if (_roles.TryGetValue(job.PlayTimeTracker, out var locJobName))
+            {
+                mappedRoles[job.Name] = locJobName;
+            }
+        }
+
+        return mappedRoles;
+    }
 
 }
