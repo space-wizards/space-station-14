@@ -1,4 +1,4 @@
-namespace Content.Server.Chemistry.Components
+namespace Content.Server.Chemistry.Components.DeleteOnSolutionEmptyComponent
 {
     /// <summary>
     /// Component that removes an item when a specific solution in it becomes empty.
@@ -10,6 +10,6 @@ namespace Content.Server.Chemistry.Components
         /// The name of the solution of which to check emptiness
         /// </summary>
         [DataField("solution")]
-        public string Solution { get; set; } = string.Empty;
+        public string Solution = string.Empty;
     }
 }

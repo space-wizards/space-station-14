@@ -1,8 +1,8 @@
-using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components.DeleteOnSolutionEmptyComponent;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
 {
     public sealed class DeleteOnSolutionEmptySystem : EntitySystem
     {
@@ -27,10 +27,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public void CheckSolutions(EntityUid uid, DeleteOnSolutionEmptyComponent component)
         {
-            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>((component).Owner))
+            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>(uid))
                 return;
 
-            if (_solutionContainerSystem.TryGetSolution(component.Owner, component.Solution, out var solution))
+            if (_solutionContainerSystem.TryGetSolution(uid, component.Solution, out var solution))
                 if (solution.Volume <= 0)
                     EntityManager.QueueDeleteEntity(uid);
         }

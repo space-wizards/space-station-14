@@ -243,7 +243,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var absorberSplit = absorberSoln.SplitSolutionWithOnly(puddleSplit.Volume, PuddleSystem.EvaporationReagents);
 
         // Do tile reactions first
-        var coordinates = EntityManager.GetComponent<TransformComponent>(target).Coordinates;
+        var coordinates = Transform(target).Coordinates;
         if (_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var mapGrid))
         {
             _puddleSystem.DoTileReactions(mapGrid.GetTileRef(coordinates), absorberSplit);
