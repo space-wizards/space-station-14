@@ -136,7 +136,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/nettle.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Specific/Hydroponics/nettle.rsi
   - type: MeleeWeapon
     damage:
@@ -166,7 +166,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/death_nettle.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Specific/Hydroponics/death_nettle.rsi
   - type: MeleeWeapon
     damage:
@@ -184,7 +184,7 @@
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 6 
+    transferAmount: 6
     solution: food
     pierceArmor: true # We do a little trolling
   - type: Extractable
@@ -222,7 +222,7 @@
   - type: Tag
     tags:
     - Fruit
-    
+
 - type: entity
   name: mimana
   parent: FoodProduceBase
@@ -314,7 +314,7 @@
     state: peel
   - type: Item
     sprite: Objects/Specific/Hydroponics/mimana.rsi
-    heldPrefix: peel  
+    heldPrefix: peel
   - type: Slippery
     slipSound:
       path: /Audio/Effects/slip.ogg
@@ -836,7 +836,7 @@
     sprite: Objects/Specific/Hydroponics/corn.rsi
     state: cob
   - type: Item
-    size: 1
+    size: Tiny
   - type: Tag
     tags:
       - Trash
@@ -1237,7 +1237,7 @@
   - type: Tag
     tags:
     - Galaxythistle
-    - Fruit # Probably? 
+    - Fruit # Probably?
 
 - type: entity
   name: fly amanita
@@ -1365,7 +1365,7 @@
   description: Round green object that you can slice and eat.
   components:
   - type: Item
-    size: 10
+    size: Small
   - type: FlavorProfile
     flavors:
       - watermelon
@@ -1427,7 +1427,7 @@
   description: Juicy green and red slice.
   components:
   - type: Item
-    size: 2
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - watermelon
