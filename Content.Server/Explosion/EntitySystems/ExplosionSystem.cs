@@ -6,6 +6,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Armor;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -13,12 +14,15 @@ using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
+using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -45,6 +49,12 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsSys = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+
+    private EntityQuery<TransformComponent> _transformQuery;
+    private EntityQuery<DamageableComponent> _damageQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<ProjectileComponent> _projectileQuery;
+    private EntityQuery<MindComponent> _mindQuery;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -92,6 +102,12 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeCvars();
         InitAirtightMap();
         InitVisuals();
+
+        _transformQuery = GetEntityQuery<TransformComponent>();
+        _damageQuery = GetEntityQuery<DamageableComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _projectileQuery = GetEntityQuery<ProjectileComponent>();
+        _mindQuery = GetEntityQuery<MindComponent>();
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
@@ -115,8 +131,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
         InventoryRelayedEvent<GetExplosionResistanceEvent> args)
     {
-        var a = args.Args;
-        OnGetResistance(uid, component, ref a);
+        OnGetResistance(uid, component, ref args.Args);
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)

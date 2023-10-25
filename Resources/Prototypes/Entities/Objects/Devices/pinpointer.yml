@@ -58,6 +58,7 @@
 - type: entity
   parent: PinpointerBase
   id: PinpointerStation
+  suffix: Station
   components:
   - type: Pinpointer
     component: BecomesStation

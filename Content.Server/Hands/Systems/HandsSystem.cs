@@ -18,14 +18,11 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Throwing;
-using JetBrains.Annotations;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
@@ -97,7 +94,7 @@ namespace Content.Server.Hands.Systems
             base.HandleEntityRemoved(uid, hands, args);
 
             if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
-                _virtualSystem.Delete(@virtual, uid);
+                _virtualSystem.Delete((args.Entity, @virtual), uid);
         }
 
         private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
@@ -169,9 +166,9 @@ namespace Content.Server.Hands.Systems
 
             if (playerSession.AttachedEntity is not {Valid: true} player ||
                 !Exists(player) ||
-                player.IsInContainer() ||
+                ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
-                hands.ActiveHandEntity is not EntityUid throwEnt ||
+                hands.ActiveHandEntity is not { } throwEnt ||
                 !_actionBlockerSystem.CanThrow(player, throwEnt))
                 return false;
 

@@ -15,15 +15,12 @@ public sealed class FrontalLispSystem : EntitySystem
     {
         var message = args.Message;
 
-        // handles ts, c(iey), z, ps, ti
-        message = Regex.Replace(message, @"[T]+[S]+|[C]+(?=[IEY])|[Z]+|[P][S]+|[T](?=[I])", "TH");
-        message = Regex.Replace(message, @"[Tt]+[Ss]+|[Cc]+(?=[IiEeYy])|[Zz]+|[Pp][Ss]+|[Tt](?=[Ii])", "th");
-        // handles ex
-        message = Regex.Replace(message, @"(?![E])[X]", "KTH");
-        message = Regex.Replace(message, @"(?![Ee])[Xx]", "kth");
-        // handles sth and s
-        message = Regex.Replace(message, "[S]+[T]?[H]?", "TH");
-        message = Regex.Replace(message, "[Ss]+[Tt]?[Hh]?", "th");
+        // handles ts, sc(i|e|y), c(i|e|y), ps, st(io(u|n)), ch(i|e), z, s
+        message = Regex.Replace(message, @"[T]+[Ss]+|[S]+[Cc]+(?=[IiEeYy]+)|[C]+(?=[IiEeYy]+)|[P][Ss]+|([S]+[Tt]+|[T]+)(?=[Ii]+[Oo]+[Uu]*[Nn]*)|[C]+[Hh]+(?=[Ii]*[Ee]*)|[Z]+|[S]+|[X]+(?=[Ee]+)", "TH");
+        message = Regex.Replace(message, @"[t]+[s]+|[s]+[c]+(?=[iey]+)|[c]+(?=[iey]+)|[p][s]+|([s]+[t]+|[t]+)(?=[i]+[o]+[u]*[n]*)|[c]+[h]+(?=[i]*[e]*)|[z]+|[s]+|[x]+(?=[e]+)", "th");
+        // handles ex(c), x
+        message = Regex.Replace(message, @"[E]+[Xx]+[Cc]*|[X]+", "EKTH");
+        message = Regex.Replace(message, @"[e]+[x]+[c]*|[x]+", "ekth");
 
         args.Message = message;
     }

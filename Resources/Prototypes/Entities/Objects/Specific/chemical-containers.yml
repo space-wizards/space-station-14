@@ -36,7 +36,6 @@
         - key: enum.TransferAmountUiKey.Key
           type: TransferAmountBoundUserInterface
     - type: Drink
-      isOpen: true
       solution: beaker
     - type: Spillable
       solution: beaker

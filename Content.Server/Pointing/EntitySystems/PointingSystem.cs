@@ -3,12 +3,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Pointing.Components;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Eye;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
@@ -94,7 +94,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
             else
             {
-                return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+                return ExamineSystemShared.InRangeUnOccluded(pointer, coordinates, 15, predicate: e => e == pointer);
             }
         }
 
@@ -166,7 +166,7 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var arrowVisibility = EntityManager.EnsureComponent<VisibilityComponent>(arrow);
                 layer = playerVisibility.Layer;
-                _visibilitySystem.SetLayer(arrowVisibility, layer);
+                _visibilitySystem.SetLayer(arrow, arrowVisibility, layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.
@@ -203,6 +203,11 @@ namespace Content.Server.Pointing.EntitySystems
                     : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
 
                 viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
+
+                var ev = new AfterPointedAtEvent(pointed);
+                RaiseLocalEvent(player, ref ev);
+                var gotev = new AfterGotPointedAtEvent(player);
+                RaiseLocalEvent(pointed, ref gotev);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {ToPrettyString(pointed):target} {Transform(pointed).Coordinates}");
             }
@@ -269,26 +274,28 @@ namespace Content.Server.Pointing.EntitySystems
         {
             var currentTime = _gameTiming.CurTime;
 
-            foreach (var component in EntityQuery<PointingArrowComponent>(true))
+            var query = AllEntityQuery<PointingArrowComponent>();
+            while (query.MoveNext(out var uid, out var component))
             {
-                Update(component, currentTime);
+                Update((uid, component), currentTime);
             }
         }
 
-        private void Update(PointingArrowComponent component, TimeSpan currentTime)
+        private void Update(Entity<PointingArrowComponent> pointing, TimeSpan currentTime)
         {
             // TODO: That pause PR
+            var component = pointing.Comp;
             if (component.EndTime > currentTime)
                 return;
 
             if (component.Rogue)
             {
-                RemComp<PointingArrowComponent>(component.Owner);
-                EnsureComp<RoguePointingArrowComponent>(component.Owner);
+                RemComp<PointingArrowComponent>(pointing);
+                EnsureComp<RoguePointingArrowComponent>(pointing);
                 return;
             }
 
-            Del(component.Owner);
+            Del(pointing);
         }
     }
 }

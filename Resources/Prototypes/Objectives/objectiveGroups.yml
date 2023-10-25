@@ -16,6 +16,7 @@
     NukeDiskStealObjective: 1
     MagbootsStealObjective: 1
     CorgiMeatStealObjective: 1
+    ClipboardStealObjective: 1
     CaptainGunStealObjective: 0.5
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
@@ -32,6 +33,7 @@
   weights:
     EscapeShuttleObjective: 1
     DieObjective: 0.05
+    HijackShuttleObjective: 0.02
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial

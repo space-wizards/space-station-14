@@ -7,8 +7,8 @@ namespace Content.Shared.Movement.Components
     /// Applies basic movement speed and movement modifiers for an entity.
     /// If this is not present on the entity then they will use defaults for movement.
     /// </summary>
-    [RegisterComponent]
-    [NetworkedComponent, Access(typeof(MovementSpeedModifierSystem))]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [Access(typeof(MovementSpeedModifierSystem))]
     public sealed partial class MovementSpeedModifierComponent : Component
     {
         // Weightless
@@ -25,10 +25,10 @@ namespace Content.Shared.Movement.Components
         public const float DefaultBaseWalkSpeed = 2.5f;
         public const float DefaultBaseSprintSpeed = 4.5f;
 
-        [ViewVariables]
+        [AutoNetworkedField, ViewVariables]
         public float WalkSpeedModifier = 1.0f;
 
-        [ViewVariables]
+        [AutoNetworkedField, ViewVariables]
         public float SprintSpeedModifier = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -56,55 +56,56 @@ namespace Content.Shared.Movement.Components
         /// <summary>
         /// Minimum speed a mob has to be moving before applying movement friction.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("minimumFrictionSpeed")]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public float MinimumFrictionSpeed = DefaultMinimumFrictionSpeed;
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and providing inputs.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("weightlessFriction")]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public float WeightlessFriction = DefaultWeightlessFriction;
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and not providing inputs.
         /// This is essentially how much their speed decreases per second.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("weightlessFrictionNoInput")]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public float WeightlessFrictionNoInput = DefaultWeightlessFrictionNoInput;
 
         /// <summary>
         /// The movement speed modifier applied to a mob's total input velocity when weightless.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("weightlessModifier")]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public float WeightlessModifier = DefaultWeightlessModifier;
 
         /// <summary>
         /// The acceleration applied to mobs when moving and weightless.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("weightlessAcceleration")]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public float WeightlessAcceleration = DefaultWeightlessAcceleration;
 
         /// <summary>
         /// The acceleration applied to mobs when moving.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("acceleration")]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public float Acceleration = DefaultAcceleration;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("friction")]
+        [ViewVariables(VVAccess.ReadWrite), DataField]
         public float Friction = DefaultFriction;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("frictionNoInput")] public float? FrictionNoInput = null;
+        [ViewVariables(VVAccess.ReadWrite), DataField]
+        public float? FrictionNoInput;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("baseWalkSpeed")]
+        [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
         public float BaseWalkSpeed { get; set; } = DefaultBaseWalkSpeed;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("baseSprintSpeed")]
+        [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
         public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
 
         [ViewVariables]

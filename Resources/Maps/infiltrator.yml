@@ -574,7 +574,7 @@ entities:
     - type: GasTileOverlay
     - type: SpreaderGrid
     - type: GridPathfinding
-- proto: AirlockExternal
+- proto: AirlockSyndicateLocked
   entities:
   - uid: 69
     components:
@@ -616,7 +616,7 @@ entities:
     - pos: -4.5,-10.5
       parent: 73
       type: Transform
-- proto: AirlockSecurity
+- proto: AirlockSyndicateLocked
   entities:
   - uid: 201
     components:
@@ -637,7 +637,7 @@ entities:
     - pos: -0.5,-14.5
       parent: 73
       type: Transform
-- proto: AirlockSecurityGlass
+- proto: AirlockSyndicateGlassLocked
   entities:
   - uid: 371
     components:

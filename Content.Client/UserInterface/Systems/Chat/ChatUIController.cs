@@ -9,13 +9,13 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
-using Content.Client.Lobby.UI;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Damage.ForceSay;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Radio;
@@ -133,7 +133,8 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    public readonly List<(GameTick, ChatMessage)> History = new();
+    // TODO add a cap for this for non-replays
+    public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
     // and select (for attempting to send on).
@@ -164,6 +165,8 @@ public sealed class ChatUIController : UIController
         _player.LocalPlayerChanged += OnLocalPlayerChanged;
         _state.OnStateChanged += StateChanged;
         _net.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
+        _net.RegisterNetMessage<MsgDeleteChatMessagesBy>(OnDeleteChatMessagesBy);
+        SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
 
         _speechBubbleRoot = new LayoutContainer();
 
@@ -700,7 +703,7 @@ public sealed class ChatUIController : UIController
 
     public void UpdateSelectedChannel(ChatBox box)
     {
-        var (prefixChannel, _, radioChannel) = SplitInputContents(box.ChatInput.Input.Text);
+        var (prefixChannel, _, radioChannel) = SplitInputContents(box.ChatInput.Input.Text.ToLower());
 
         if (prefixChannel == ChatSelectChannel.None)
             box.ChatInput.ChannelSelector.UpdateChannelSelectButton(box.SelectedChannel, null);
@@ -774,6 +777,37 @@ public sealed class ChatUIController : UIController
         _manager.SendMessage(text, prefixChannel == 0 ? channel : prefixChannel);
     }
 
+    private void OnDamageForceSay(DamageForceSayEvent ev, EntitySessionEventArgs _)
+    {
+        if (UIManager.ActiveScreen?.GetWidget<ChatBox>() is not { } chatBox)
+            return;
+
+        // Don't send on OOC/LOOC obviously!
+        if (chatBox.SelectedChannel is not
+            (ChatSelectChannel.Local or
+            ChatSelectChannel.Radio or
+            ChatSelectChannel.Whisper))
+            return;
+
+        if (_player.LocalPlayer?.ControlledEntity is not { } ent
+            || !EntityManager.TryGetComponent<DamageForceSayComponent>(ent, out var forceSay))
+            return;
+
+        var msg = chatBox.ChatInput.Input.Text.TrimEnd();
+
+        if (string.IsNullOrWhiteSpace(msg))
+            return;
+
+        var modifiedText = ev.Suffix != null
+            ? Loc.GetString(forceSay.ForceSayMessageWrap,
+                ("message", msg), ("suffix", ev.Suffix))
+            : Loc.GetString(forceSay.ForceSayMessageWrapNoSuffix,
+                ("message", msg));
+
+        chatBox.ChatInput.Input.SetText(modifiedText);
+        chatBox.ChatInput.Input.ForceSubmitText();
+    }
+
     private void OnChatMessage(MsgChatMessage message)
     {
         var msg = message.Message;
@@ -831,6 +865,16 @@ public sealed class ChatUIController : UIController
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                 break;
         }
+    }
+
+    public void OnDeleteChatMessagesBy(MsgDeleteChatMessagesBy msg)
+    {
+        // This will delete messages from an entity even if different players were the author.
+        // Usages of the erase admin verb should be rare enough that this does not matter.
+        // Otherwise the client would need to know that one entity has multiple author players,
+        // or the server would need to track when and which entities a player sent messages as.
+        History.RemoveAll(h => h.Msg.SenderKey == msg.Key || msg.Entities.Contains(h.Msg.SenderEntity));
+        Repopulate();
     }
 
     public void RegisterChat(ChatBox chat)

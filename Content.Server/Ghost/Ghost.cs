@@ -27,8 +27,8 @@ namespace Content.Server.Ghost
             var minds = _entities.System<SharedMindSystem>();
             if (!minds.TryGetMind(player, out var mindId, out var mind))
             {
-                shell.WriteLine("You have no Mind, you can't ghost.");
-                return;
+                mindId = minds.CreateMind(player.UserId);
+                mind = _entities.GetComponent<MindComponent>(mindId);
             }
 
             if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mindId, true, true, mind))

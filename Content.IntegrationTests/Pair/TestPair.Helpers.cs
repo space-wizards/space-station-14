@@ -23,8 +23,9 @@ public sealed partial class TestPair
         {
             mapData.MapId = Server.MapMan.CreateMap();
             mapData.MapUid = Server.MapMan.GetMapEntityId(mapData.MapId);
-            mapData.MapGrid = Server.MapMan.CreateGrid(mapData.MapId);
-            mapData.GridUid = mapData.MapGrid.Owner; // Fixing this requires an engine PR.
+            var mapGrid = Server.MapMan.CreateGridEntity(mapData.MapId);
+            mapData.MapGrid = mapGrid;
+            mapData.GridUid = mapGrid.Owner; // Fixing this requires an engine PR.
             mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
             var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);
@@ -75,5 +76,23 @@ public sealed partial class TestPair
         }
 
         return otherUid.Value;
+    }
+
+    /// <summary>
+    /// Execute a command on the server and wait some number of ticks.
+    /// </summary>
+    public async Task WaitCommand(string cmd, int numTicks = 10)
+    {
+        await Server.ExecuteCommand(cmd);
+        await RunTicksSync(numTicks);
+    }
+
+    /// <summary>
+    /// Execute a command on the client and wait some number of ticks.
+    /// </summary>
+    public async Task WaitClientCommand(string cmd, int numTicks = 10)
+    {
+        await Client.ExecuteCommand(cmd);
+        await RunTicksSync(numTicks);
     }
 }

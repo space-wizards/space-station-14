@@ -16,13 +16,13 @@ using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Spawners;
 
 namespace Content.Server.Magic;
 
@@ -46,12 +46,13 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpellbookComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SpellbookComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<SpellbookComponent, SpellbookDoAfterEvent>(OnDoAfter);
 
@@ -69,18 +70,37 @@ public sealed class MagicSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        _actionsSystem.AddActions(args.Args.User, component.Spells, component.LearnPermanently ? null : uid);
         args.Handled = true;
-    }
+        if (!component.LearnPermanently)
+        {
+            _actionsSystem.GrantActions(args.Args.User, component.Spells, uid);
+            return;
+        }
 
-    private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
-    {
-        //Negative charges means the spell can be used without it running out.
         foreach (var (id, charges) in component.SpellActions)
         {
-            var spell = Spawn(id);
+            // TOOD store spells entity ids on some sort of innate magic user component or something like that.
+            EntityUid? actionId = null;
+            if (_actionsSystem.AddAction(args.Args.User, ref actionId, id))
+                _actionsSystem.SetCharges(actionId, charges < 0 ? null : charges);
+        }
+
+        component.SpellActions.Clear();
+    }
+
+    private void OnInit(EntityUid uid, SpellbookComponent component, MapInitEvent args)
+    {
+        if (component.LearnPermanently)
+            return;
+
+        foreach (var (id, charges) in component.SpellActions)
+        {
+            var spell = _actionContainer.AddAction(uid, id);
+            if (spell == null)
+                continue;
+
             _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
-            component.Spells.Add(spell);
+            component.Spells.Add(spell.Value);
         }
     }
 
@@ -289,7 +309,7 @@ public sealed class MagicSystem : EntitySystem
                 _boltsSystem.SetBoltsDown(entity, bolts, false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
-                _doorSystem.StartOpening(doorComp.Owner);
+                _doorSystem.StartOpening(entity);
         }
     }
 

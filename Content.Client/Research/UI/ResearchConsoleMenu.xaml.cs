@@ -27,7 +27,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     private readonly TechnologyDatabaseComponent? _technologyDatabase;
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
-    private readonly AccessReaderSystem _accessReader = default!;
+    private readonly AccessReaderSystem _accessReader;
 
     public readonly EntityUid Entity;
 
@@ -55,7 +55,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
 
         foreach (var tech in allTech)
         {
-            var mini = new MiniTechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech, false));
+            var mini = new MiniTechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech));
             AvailableCardsContainer.AddChild(mini);
         }
 
@@ -74,7 +74,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         foreach (var techId in _technologyDatabase.CurrentTechnologyCards)
         {
             var tech = _prototype.Index<TechnologyPrototype>(techId);
-            var cardControl = new TechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech), state.Points, hasAccess);
+            var cardControl = new TechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech, includeTier: false), state.Points, hasAccess);
             cardControl.OnPressed += () => OnTechnologyCardPressed?.Invoke(techId);
             TechnologyCardsContainer.AddChild(cardControl);
         }
@@ -82,35 +82,9 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         foreach (var unlocked in _technologyDatabase.UnlockedTechnologies)
         {
             var tech = _prototype.Index<TechnologyPrototype>(unlocked);
-            var cardControl = new MiniTechnologyCardControl(tech, _prototype, _sprite, GetTechnologyDescription(tech, false));
+            var cardControl = new MiniTechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech, false));
             UnlockedCardsContainer.AddChild(cardControl);
         }
-    }
-
-    public FormattedMessage GetTechnologyDescription(TechnologyPrototype technology, bool includeCost = true)
-    {
-        var description = new FormattedMessage();
-        if (includeCost)
-        {
-            description.AddMarkup(Loc.GetString("research-console-cost", ("amount", technology.Cost)));
-            description.PushNewline();
-        }
-        description.AddMarkup(Loc.GetString("research-console-unlocks-list-start"));
-        foreach (var recipe in technology.RecipeUnlocks)
-        {
-            var recipeProto = _prototype.Index<LatheRecipePrototype>(recipe);
-            description.PushNewline();
-            description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry",
-                ("name",recipeProto.Name)));
-        }
-        foreach (var generic in technology.GenericUnlocks)
-        {
-            description.PushNewline();
-            description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry-generic",
-                ("name", Loc.GetString(generic.UnlockDescription))));
-        }
-
-        return description;
     }
 
     public void UpdateInformationPanel(ResearchConsoleBoundInterfaceState state)

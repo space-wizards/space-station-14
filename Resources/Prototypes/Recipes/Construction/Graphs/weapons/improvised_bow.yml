@@ -1,0 +1,17 @@
+﻿- type: constructionGraph
+  id: ImprovisedBow
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ImprovisedBow
+      steps:
+      - material: WoodPlank
+        amount: 10
+        doAfter: 4
+      - material: Cloth
+        amount: 5
+        doAfter: 4
+
+  - node: ImprovisedBow
+    entity: BowImprovised

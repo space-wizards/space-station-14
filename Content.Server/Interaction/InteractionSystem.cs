@@ -32,8 +32,6 @@ namespace Content.Server.Interaction
         {
             base.Initialize();
 
-            SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
-
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
         }
 
@@ -57,45 +55,6 @@ namespace Content.Server.Interaction
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
             return _uiSystem.SessionHasOpenUi(container.Owner, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
         }
-
-        #region Drag drop
-
-        private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
-        {
-            var dragged = GetEntity(msg.Dragged);
-            var target = GetEntity(msg.Target);
-
-            if (Deleted(dragged) || Deleted(target))
-                return;
-
-            var user = args.SenderSession.AttachedEntity;
-
-            if (user == null || !_actionBlockerSystem.CanInteract(user.Value, target))
-                return;
-
-            // must be in range of both the target and the object they are drag / dropping
-            // Client also does this check but ya know we gotta validate it.
-            if (!InRangeUnobstructed(user.Value, dragged, popup: true)
-                || !InRangeUnobstructed(user.Value, target, popup: true))
-            {
-                return;
-            }
-
-            var dragArgs = new DragDropDraggedEvent(user.Value, target);
-
-            // trigger dragdrops on the dropped entity
-            RaiseLocalEvent(dragged, ref dragArgs);
-
-            if (dragArgs.Handled)
-                return;
-
-            var dropArgs = new DragDropTargetEvent(user.Value, dragged);
-
-            // trigger dragdrops on the target entity (what you are dropping onto)
-            RaiseLocalEvent(GetEntity(msg.Target), ref dropArgs);
-        }
-
-        #endregion
 
         private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
         {

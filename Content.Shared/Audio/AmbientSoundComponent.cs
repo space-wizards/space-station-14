@@ -12,7 +12,7 @@ namespace Content.Shared.Audio;
 [Access(typeof(SharedAmbientSoundSystem))]
 public sealed partial class AmbientSoundComponent : Component, IComponentTreeEntry<AmbientSoundComponent>
 {
-    [DataField("enabled")]
+    [DataField("enabled", readOnly: true)]
     [ViewVariables(VVAccess.ReadWrite)] // only for map editing
     public bool Enabled { get; set; } = true;
 

@@ -12,7 +12,6 @@
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-      toggleAction: ActionToggleMagboots
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
