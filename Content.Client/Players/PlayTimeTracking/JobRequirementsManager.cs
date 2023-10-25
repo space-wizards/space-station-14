@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
@@ -122,9 +120,10 @@ public sealed class JobRequirementsManager
         reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(string.Join('\n', reasons));
         return reason == null;
     }
+
     public TimeSpan FetchOverallPlaytime()
     {
-        return _roles.Values.Aggregate(TimeSpan.Zero, (sum, nextTimeSpan) => sum + nextTimeSpan);
+        return _roles.TryGetValue("Overall", out var overallPlaytime) ? overallPlaytime : TimeSpan.Zero;
     }
 
     public Dictionary<string, TimeSpan> FetchPlaytimeByRoles()

@@ -82,7 +82,7 @@ namespace Content.Client.Preferences.UI
 
             RulesButton.OnPressed += _ => new RulesAndInfoWindow().Open();
 
-            StatsButton.OnPressed += _ => new PlaytimeStatsWindow("2hrs", "01/01/2023").Open();
+            StatsButton.OnPressed += _ => new PlaytimeStatsWindow().OpenCentered();
             preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
