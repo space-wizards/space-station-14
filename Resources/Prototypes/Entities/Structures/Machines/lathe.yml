@@ -695,6 +695,7 @@
       - BluespaceBeaker
       - SyringeBluespace
       - Jug
+      - ClothingEyesGlassesChemical
   - type: Machine
     board: MedicalTechFabCircuitboard
 
