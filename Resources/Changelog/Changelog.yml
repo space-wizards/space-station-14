@@ -1,12 +1,6 @@
 Entries:
 - author: CrigCrag
   changes:
-  - {message: Added jugs to the medical fabricator., type: Add}
-  - {message: Jugs now take up more space in bags., type: Tweak}
-  id: 4554
-  time: '2023-08-13T07:23:37.0000000+00:00'
-- author: CrigCrag
-  changes:
   - {message: Many basic elements from the periodic table are now mildly toxic or
       caustic. Watch what you drink!, type: Tweak}
   - {message: Crewmembers who drink lithium have reported very minor cases of serious
@@ -2901,3 +2895,10 @@ Entries:
       range for an anomaly., type: Fix}
   id: 5053
   time: '2023-10-24T21:00:23.0000000+00:00'
+- author: 27alaing
+  changes:
+  - {message: The anti-slang system allows for more leeway with certain phrases now.,
+    type: Tweak}
+  - {message: 'The supply radio channel can be used with ":u" again.', type: Fix}
+  id: 5054
+  time: '2023-10-25T00:56:19.0000000+00:00'
