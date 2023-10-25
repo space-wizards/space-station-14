@@ -10,7 +10,6 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Timer = Robust.Shared.Timing.Timer;
@@ -91,18 +90,10 @@ public sealed partial class EmergencyShuttleSystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
-        SubscribeLocalEvent<EmergencyShuttleConsoleComponent, GotEmaggedEvent>(OnEmagged); // Corvax-Hijack
+        SubscribeLocalEvent<EmergencyShuttleConsoleComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<EscapePodComponent, EntityUnpausedEvent>(OnEscapeUnpaused);
     }
-
-    // Corvax-Hijack-Start
-    private void OnEmagged(EntityUid uid, EmergencyShuttleConsoleComponent component, ref GotEmaggedEvent args)
-    {
-        _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"{ToPrettyString(args.UserUid):player} emagged shuttle console for early launch");
-        EarlyLaunch();
-    }
-    // Corvax-Hijack-End
 
     private void OnEmergencyOpenAttempt(EntityUid uid, EmergencyShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
     {
@@ -112,6 +103,12 @@ public sealed partial class EmergencyShuttleSystem
             args.Cancel();
             _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, args.User);
         }
+    }
+
+    private void OnEmagged(EntityUid uid, EmergencyShuttleConsoleComponent component, ref GotEmaggedEvent args)
+    {
+        _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"{ToPrettyString(args.UserUid):player} emagged shuttle console for early launch");
+        EarlyLaunch();
     }
 
     private void SetAuthorizeTime(float obj)
@@ -268,16 +265,17 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmergencyRepeal(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleRepealMessage args)
     {
         var player = args.Session.AttachedEntity;
-        if (player == null) return;
+        if (player == null)
+            return;
 
-        if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
+        if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard, uid))
         {
             _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), player.Value, PopupType.Medium);
             return;
         }
 
         // TODO: This is fucking bad
-        if (!component.AuthorizedEntities.Remove(MetaData(idCard.Owner).EntityName))
+        if (!component.AuthorizedEntities.Remove(MetaData(idCard).EntityName))
             return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Session:user}");
@@ -293,14 +291,14 @@ public sealed partial class EmergencyShuttleSystem
         if (player == null)
             return;
 
-        if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
+        if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard, uid))
         {
             _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), args.Session, PopupType.Medium);
             return;
         }
 
         // TODO: This is fucking bad
-        if (!component.AuthorizedEntities.Add(MetaData(idCard.Owner).EntityName))
+        if (!component.AuthorizedEntities.Add(MetaData(idCard).EntityName))
             return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Session:user}");

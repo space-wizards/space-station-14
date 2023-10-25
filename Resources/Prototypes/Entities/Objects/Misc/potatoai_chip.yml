@@ -1,0 +1,17 @@
+- type: entity
+  id: PotatoAIChip
+  name: supercompact AI chip
+  parent: BaseItem
+  description: This high-tech AI chip requires a voltage of exactly 1.1V to function correctly.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/potatoai_chip.rsi
+      state: icon
+    - type: Item
+      size: 3
+    - type: Tag
+      tags:
+        - SmallAIChip
+    - type: Construction
+      graph: PotatoAIChip
+      node: potatoaichip

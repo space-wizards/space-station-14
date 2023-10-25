@@ -15,7 +15,6 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Tools
 {
@@ -24,7 +23,7 @@ namespace Content.Server.Tools
         private readonly HashSet<EntityUid> _activeWelders = new();
 
         private const float WelderUpdateTimer = 1f;
-        private float _welderTimer = 0f;
+        private float _welderTimer;
 
         public void InitializeWelders()
         {
@@ -112,7 +111,7 @@ namespace Content.Server.Tools
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):welder} toggled on");
 
             var ev = new WelderToggledEvent(true);
-            RaiseLocalEvent(welder.Owner, ev, false);
+            RaiseLocalEvent(uid, ev);
 
             var hotEvent = new IsHotEvent() {IsHot = true};
             RaiseLocalEvent(uid, hotEvent);
@@ -162,7 +161,7 @@ namespace Content.Server.Tools
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):welder} toggled off");
 
             var ev = new WelderToggledEvent(false);
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ev);
 
             var hotEvent = new IsHotEvent() {IsHot = false};
             RaiseLocalEvent(uid, hotEvent);
@@ -187,7 +186,7 @@ namespace Content.Server.Tools
         private void OnWelderStartup(EntityUid uid, WelderComponent welder, ComponentStartup args)
         {
             // TODO: Delete this shit what
-            Dirty(welder);
+            Dirty(uid, welder);
         }
 
         private void OnWelderIsHotEvent(EntityUid uid, WelderComponent welder, IsHotEvent args)
@@ -222,7 +221,7 @@ namespace Content.Server.Tools
         {
             // TODO what
             // ????
-            Dirty(welder);
+            Dirty(uid, welder);
         }
 
         private void OnWelderActivate(EntityUid uid, WelderComponent welder, ActivateInWorldEvent args)
@@ -317,7 +316,7 @@ namespace Content.Server.Tools
                 if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
                     TryTurnWelderOff(tool, null, welder);
 
-                Dirty(welder);
+                Dirty(tool, welder);
             }
 
             _welderTimer -= WelderUpdateTimer;

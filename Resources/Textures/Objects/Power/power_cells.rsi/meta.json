@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/tgstation/tgstation/commit/7dcdbc1468ffdc8689b984cb6b181d48ae41dbf2",
+    "copyright": "https://github.com/tgstation/tgstation/commit/7dcdbc1468ffdc8689b984cb6b181d48ae41dbf2, potato based on https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068 edited by @Doru991",
     "states": [
         {
             "name": "potato"

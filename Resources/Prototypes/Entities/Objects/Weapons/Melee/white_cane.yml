@@ -22,3 +22,6 @@
       types:
         Blunt: 3
         Stamina: 5
+  - type: UseDelay
+    delay: 1
+

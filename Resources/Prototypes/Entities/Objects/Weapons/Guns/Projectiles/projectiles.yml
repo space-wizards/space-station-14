@@ -297,6 +297,8 @@
     damage:
       types:
         Heat: 14
+  # mining laser real
+  - type: GatheringProjectile
   - type: Tag
     tags:
     - EmitterBolt

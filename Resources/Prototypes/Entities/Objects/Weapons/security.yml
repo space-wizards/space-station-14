@@ -169,6 +169,7 @@
 - type: entity
   name: flash
   parent: Flash
+  suffix: 2 charges
   id: SciFlash
   components:
     - type: LimitedCharges

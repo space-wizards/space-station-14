@@ -59,8 +59,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         // if the explosion is centered on some grid (and not just space), get the transforms.
         if (referenceGrid != null)
         {
-            var targetGrid = _mapManager.GetGrid(referenceGrid.Value);
-            var xform = Transform(targetGrid.Owner);
+            var targetGrid = Comp<MapGridComponent>(referenceGrid.Value);
+            var xform = Transform(referenceGrid.Value);
             targetAngle = xform.WorldRotation;
             targetMatrix = xform.InvWorldMatrix;
             tileSize = targetGrid.TileSize;
@@ -84,17 +84,17 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (!_gridEdges.TryGetValue(gridToTransform, out var edges))
                 continue;
 
-            if (!_mapManager.TryGetGrid(gridToTransform, out var grid))
+            if (!TryComp(gridToTransform, out MapGridComponent? grid))
                 continue;
 
             if (grid.TileSize != tileSize)
             {
-                Logger.Error($"Explosions do not support grids with different grid sizes. GridIds: {gridToTransform} and {referenceGrid}");
+                Log.Error($"Explosions do not support grids with different grid sizes. GridIds: {gridToTransform} and {referenceGrid}");
                 continue;
             }
 
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-            var xform = xforms.GetComponent(grid.Owner);
+            var xform = xforms.GetComponent(gridToTransform);
             var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
@@ -228,7 +228,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
             return;
 
-        if (!_mapManager.TryGetGrid(ev.Entity, out var grid))
+        if (!TryComp(ev.Entity, out MapGridComponent? grid))
             return;
 
         var tileRef = ev.NewTile;
