@@ -26,7 +26,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     private EntityUid? _owner;
     private EntityUid? _trackedEntity;
-    //private float? _nextScrollPosition;
 
     private Color _wallColor = new Color(102, 164, 217);
     private Color _tileColor = new Color(30, 57, 67);
@@ -45,10 +44,24 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         // Get grid uid
         if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        {
             NavMap.SetMap(xform.GridUid);
 
+            // Assign station name      
+            var stationName = Loc.GetString("power-monitoring-window-unknown-location");
+
+            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
+                stationName = stationMetaData.EntityName;
+
+            var msg = new FormattedMessage();
+            msg.AddMarkup(Loc.GetString("power-monitoring-window-station-name", ("stationName", stationName)));
+
+            StationName.SetMessage(msg);
+        }
         else
+        {
             NavMap.Visible = false;
+        }
 
         // Set UI tab titles
         MasterTabContainer.SetTabTitle(0, Loc.GetString("power-monitoring-window-label-sources"));
