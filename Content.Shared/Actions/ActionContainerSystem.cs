@@ -241,11 +241,6 @@ public sealed class ActionContainerSystem : EntitySystem
             _actions.RemoveAction(action.AttachedEntity.Value, actionId, action: action);
     }
 
-    public IEnumerable<EntityUid> GetContainerActions(ref ActionsContainerComponent comp)
-    {
-        return comp.Container.ContainedEntities;
-    }
-
     public bool ShouldTransferAllActions(EntityUid from, ActionsContainerComponent? oldContainer = null)
     {
         // TODO: Replace with new resolution from meeting
