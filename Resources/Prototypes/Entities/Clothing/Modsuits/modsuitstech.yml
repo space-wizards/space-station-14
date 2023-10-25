@@ -22,7 +22,7 @@
   tier: 2
   cost: 7500
   recipeUnlocks:
-  - PlatingCEModsuit
-  - PlatingMagnateModsuit
-  - PlatingHOSModsuit
-  - PlatingCMOModsuit
+  - PlatingCEModsuitConstructing
+  - PlatingMagnateModsuitConstructing
+  - PlatingHOSModsuitConstructing
+  - PlatingCMOModsuitConstructing

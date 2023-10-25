@@ -135,19 +135,6 @@
 
 - type: entity
   parent: BaseItem
-  id: CoreSecurityModsuitConstructing
-  name: CE modsuit helmet
-  description: Special hardsuit helmet, made for the CE of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/constructing_modsuit.rsi
-    state: mod-core-ethereal
-  - type: Tag
-    tags:
-    - CoreSecurityModsuit
-
-- type: entity
-  parent: BaseItem
   id: CoreHOSModsuitConstructing
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.
@@ -161,7 +148,7 @@
 
 - type: entity
   parent: BaseItem
-  id: CoreСMOModsuitConstructing
+  id: CoreCMOModsuitConstructing
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.
   components:

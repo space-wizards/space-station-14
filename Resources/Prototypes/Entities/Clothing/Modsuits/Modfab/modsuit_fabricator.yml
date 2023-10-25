@@ -83,11 +83,11 @@
       - PlatingEngineeringModsuitConstructing
       - PlatingAtmosphericModsuitConstructing
     dynamicRecipes:
-      - PlatingMagnateModsuit
+      - PlatingMagnateModsuitConstructing
       - PlatingSecurityModsuitConstructing
-      - PlatingHOSModsuit
-      - PlatingCMOModsuit
-      - PlatingCEModsuit
+      - PlatingHOSModsuitConstructing
+      - PlatingCMOModsuitConstructing
+      - PlatingCEModsuitConstructing
       - PlatingAsteroidModsuitConstructing
       - PlatingRNDModsuitConstructing
   - type: MaterialStorage

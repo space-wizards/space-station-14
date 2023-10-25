@@ -91,16 +91,16 @@
     Plasma: 500
 
 - type: latheRecipe
-  id: PlatingHOSModsuit
-  result: PlatingHOSModsuit
+  id: PlatingHOSModsuitConstructing
+  result: PlatingHOSModsuitConstructing
   completetime: 20
   materials:
     Plasteel: 1500
     Plasma: 1000
 
 - type: latheRecipe
-  id: PlatingCEModsuit
-  result: PlatingCEModsuit
+  id: PlatingCEModsuitConstructing
+  result: PlatingCEModsuitConstructing
   completetime: 20
   materials:
     Plasteel: 1500
@@ -108,16 +108,16 @@
     Uranium: 1000
 
 - type: latheRecipe
-  id: PlatingCMOModsuit
-  result: PlatingCMOModsuit
+  id: PlatingCMOModsuitConstructing
+  result: PlatingCMOModsuitConstructing
   completetime: 20
   materials:
     Plasteel: 800
     Plasma: 1200
 
 - type: latheRecipe
-  id: PlatingMagnateModsuit
-  result: PlatingMagnateModsuit
+  id: PlatingMagnateModsuitConstructing
+  result: PlatingMagnateModsuitConstructing
   completetime: 20
   materials:
     Plasteel: 1500

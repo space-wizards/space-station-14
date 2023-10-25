@@ -49,7 +49,15 @@
       "name": "mod-core-ethereal"
     },
     {
-      "name": "mod-core-plasma"
+      "name": "mod-core-plasma",
+      "delays": [
+        [
+          0.18625,
+          0.18625,
+          0.18625,
+          0.18625
+        ]
+      ]
     },
     {
       "name": "mod-core-magnate"
