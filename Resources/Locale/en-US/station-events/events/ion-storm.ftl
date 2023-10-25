@@ -39,12 +39,12 @@ ion-storm-law-requires-subjects = {$who} {$plural ->
 } {$joined} {$subjects}
 
 ion-storm-law-allergic = {$who} {$plural ->
-    [true] ARE
-    *[false] IS
+    [true] IS
+    *[false] ARE
 } {$severity} ALLERGIC TO {$allergy}
 ion-storm-law-allergic-subjects = {$who} {$plural ->
-    [true] ARE
-    *[false] IS
+    [true] IS
+    *[false] ARE
 } {$severity} ALLERGIC TO {$adjective} {$subjects}
 
 ion-storm-law-feeling = {$who} {$feeling} {$concept}
