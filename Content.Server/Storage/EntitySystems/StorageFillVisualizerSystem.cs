@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Rounding;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -13,12 +12,12 @@ public sealed class StorageFillVisualizerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StorageFillVisualizerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<StorageFillVisualizerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StorageFillVisualizerComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<StorageFillVisualizerComponent, EntRemovedFromContainerMessage>(OnRemoved);
     }
 
-    private void OnInit(EntityUid uid, StorageFillVisualizerComponent component, ComponentInit args)
+    private void OnStartup(EntityUid uid, StorageFillVisualizerComponent component, ComponentStartup args)
     {
         UpdateAppearance(uid, component: component);
     }
