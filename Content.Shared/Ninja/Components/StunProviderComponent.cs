@@ -1,4 +1,4 @@
-using Content.Shared.FixedPoint;
+using Content.Shared.Damage;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
