@@ -225,8 +225,13 @@
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
     targetNonSentientChance: 0.1
-  - type: TileSpawnAnomaly
-    floorTileId: FloorIceStation
+  - type: EntitySpawnAnomaly
+    spawns:
+    - IceCrust
+    maxSpawnAmount: 15
+    spawnOnPulse: false
+    spawnOnSuperCritical: false
+    spawnOnStabilityChanged: true
   - type: TempAffectingAnomaly
     tempChangePerSecond: -25
     hotspotExposeTemperature: -1000

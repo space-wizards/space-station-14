@@ -1660,17 +1660,3 @@
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemReinforced #same case as FloorHull
-
-- type: tile
-  id: FloorIceStation
-  name: tiles-ice-station
-  sprite: /Textures/Tiles/Planet/Snow/ice.png
-  baseTurf: Plating
-  isSubfloor: false
-  canCrowbar: true
-  friction: 0.05
-  heatCapacity: 10000
-  mobFriction: 0.5
-  mobFrictionNoInput: 0.05
-  mobAcceleration: 2
-  
