@@ -1,4 +1,6 @@
+using System.Linq;
 using System.Numerics;
+using Content.Client.Message;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Content.Client.Stylesheets;
@@ -23,7 +25,7 @@ namespace Content.Client.Storage.UI
 
         private readonly SharedStorageSystem _storage;
 
-        private readonly Label _information;
+        private readonly RichTextLabel _information;
         public readonly ContainerButton StorageContainerButton;
         public readonly ListContainer EntityList;
         private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
@@ -61,14 +63,14 @@ namespace Content.Client.Storage.UI
 
             StorageContainerButton.AddChild(vBox);
 
-            _information = new Label
+            _information = new RichTextLabel
             {
-                Text = Loc.GetString("comp-storage-window-volume",
-                    ("itemCount", 0),
-                    ("maxCount", 0),
-                    ("size", SharedItemSystem.GetItemSizeLocale(ItemSize.Normal))),
                 VerticalAlignment = VAlignment.Center
             };
+            _information.SetMessage(Loc.GetString("comp-storage-window-volume",
+                ("itemCount", 0),
+                ("maxCount", 0),
+                ("size", SharedItemSystem.GetItemSizeLocale(ItemSize.Normal))));
 
             vBox.AddChild(_information);
 
@@ -105,11 +107,23 @@ namespace Content.Client.Storage.UI
 
             EntityList.PopulateList(list);
 
-            //todo; maybe use a percentage? This gets weird with high-weight items.
-            _information.Text = Loc.GetString("comp-storage-window-volume",
-                ("itemCount", storedCount),
-                ("maxCount", component.MaxSlots),
-                ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((entity, component)))));
+            SetStorageInformation((entity, component));
+        }
+
+        private void SetStorageInformation(Entity<StorageComponent> uid)
+        {
+            if (_storage.HasSpace((uid, uid.Comp)))
+            {
+                _information.SetMarkup(Loc.GetString("comp-storage-window-volume",
+                    ("itemCount", uid.Comp.Container.ContainedEntities.Count),
+                    ("maxCount", uid.Comp.MaxSlots),
+                    ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
+            }
+            else
+            {
+                _information.SetMarkup(Loc.GetString("comp-storage-window-volume-full",
+                    ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
+            }
         }
 
         /// <summary>

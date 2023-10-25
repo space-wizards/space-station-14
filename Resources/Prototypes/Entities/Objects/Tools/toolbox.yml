@@ -117,7 +117,7 @@
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
   - type: Storage
     maxItemSize: Large
-    maxTotalSize: 28
+    maxTotalWeight: 28
   - type: MeleeWeapon
     damage:
       types:
