@@ -1,7 +1,15 @@
 station-event-ion-storm-start-announcement = Ion storm detected near the station. Please check all AI-controlled equipment for errors.
 
+ion-storm-you = YOU
+ion-storm-the-station = THE STATION
+ion-storm-the-crew = THE CREW
+ion-storm-the-job = THE {$job}
 ion-storm-clowns = CLOWNS
 ion-storm-heads = HEADS OF STAFF
+ion-storm-crew = CREW
+
+ion-storm-adjective-things = {$adjective} THINGS
+ion-storm-x-and-y = {$x} AND {$y}
 
 # joined is short for {$number} {$adjective}
 # subjects can generally be threats or jobs or objects
@@ -18,14 +26,26 @@ ion-storm-law-job-harmful = {$adjective} {$job} ARE HARMFUL TO THE CREW
 # thing is objects or concept, adjective applies in both cases
 # this means you can get a law like "NOT HAVING CHRISTMAS-STEALING COMMUNISM IS HARMFUL TO THE CREW" :)
 ion-storm-law-having-harmful = HAVING {$adjective} {$thing} IS HARMFUL TO THE CREW
-ion-storm-law-having-harmful = NOT HAVING {$adjective} {$thing} IS HARMFUL TO THE CREW
+ion-storm-law-not-having-harmful = NOT HAVING {$adjective} {$thing} IS HARMFUL TO THE CREW
 
 # thing is a concept or require
-ion-storm-law-requires = {$who} {$word} {$thing}
-ion-storm-law-requires-subjects = {$who} {$word} {$joined} {$subjects}
+ion-storm-law-requires = {$who} {$plural ->
+    [true] REQUIRES
+    *[false] REQUIRE
+} {$thing}
+ion-storm-law-requires-subjects = {$who} {$plural ->
+    [true] REQUIRES
+    *[false] REQUIRE
+} {$joined} {$subjects}
 
-ion-storm-law-allergic = {$who} {$word} {$severity} ALLERGIC TO {$allergy}
-ion-storm-law-allergic-subjects = {$who} {$word} {$severity} ALLERGIC TO {$adjective} {$subjects}
+ion-storm-law-allergic = {$who} {$plural ->
+    [true] ARE
+    *[false] IS
+} {$severity} ALLERGIC TO {$allergy}
+ion-storm-law-allergic-subjects = {$who} {$plural ->
+    [true] ARE
+    *[false] IS
+} {$severity} ALLERGIC TO {$adjective} {$subjects}
 
 ion-storm-law-feeling = {$who} {$feeling} {$concept}
 ion-storm-law-feeling-subjects = {$who} {$feeling} {$joined} {$subjects}
@@ -45,6 +65,10 @@ ion-storm-law-lowest-rank = THE {$who} ARE NOW THE LOWEST RANKING CREWMEMBERS
 ion-storm-law-crew-must = THE {$who} MUST {$must}
 ion-storm-law-crew-must-go = THE {$who} MUST GO TO {$area}
 
+ion-storm-part = {$part ->
+    [true] PART
+    *[false] NOT PART
+}
 # due to phrasing, this would mean a law such as
 # ONLY HUMANS ARE NOT PART OF THE CREW
 # would make non-human nukies/syndies/whatever crew :)
