@@ -188,7 +188,7 @@
       - ReagentId: Artifexium
         Quantity: 10
   - type: StaticPrice
-    price: 250
+    price: 0
   - type: Stack
     stackType: ArtifactFragment
   - type: GuideHelp
