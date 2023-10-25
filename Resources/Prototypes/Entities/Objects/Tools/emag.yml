@@ -12,6 +12,9 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/emag.rsi
+  - type: Tag
+    tags:
+      - Hacking
 
 - type: entity
   parent: BaseItem
@@ -26,3 +29,6 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/emag.rsi
+  - type: Tag
+    tags:
+      - Hacking

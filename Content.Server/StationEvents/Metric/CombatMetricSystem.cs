@@ -4,10 +4,12 @@ using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Roles;
+using Content.Shared.Tag;
 using Content.Shared.Zombies;
 
 namespace Content.Server.StationEvents.Metric;
@@ -30,8 +32,37 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
 {
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
-    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent component,
+    public FixedPoint2 InventoryPower(EntityUid uid, CombatMetricComponent component)
+    {
+        // Iterate through items to determine how powerful the entity is
+        // Having a good range of offensive items in your inventory makes you more dangerous
+        var threat = FixedPoint2.Zero;
+
+        var tagsQ = GetEntityQuery<TagComponent>();
+        var allTags = new HashSet<string>();
+
+        foreach (var item in _inventory.GetHandOrInventoryEntities(uid))
+        {
+            if (tagsQ.TryGetComponent(uid, out var tags))
+            {
+                allTags.UnionWith(tags.Tags);
+            }
+        }
+
+        foreach (var key in allTags)
+        {
+            threat += component.itemThreat.GetValueOrDefault(key);
+        }
+
+        if (threat > component.maxItemThreat)
+            return component.maxItemThreat;
+
+        return threat;
+    }
+
+    public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent combatMetric,
         CalculateChaosEvent args)
     {
         // Add up the pain of all the puddles
@@ -42,8 +73,6 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
         var medical = FixedPoint2.Zero;
         var death = FixedPoint2.Zero;
 
-        var nukieQ = GetEntityQuery<NukeOperativeComponent>();
-        var zombieQ = GetEntityQuery<ZombieComponent>();
         var powerQ = GetEntityQuery<CombatPowerComponent>();
 
         // var humanoidQ = GetEntityQuery<HumanoidAppearanceComponent>();
@@ -58,59 +87,51 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
             // Only count threats currently on station, which avoids salvage threats getting counted for instance.
             // Note this means for instance Nukies on nukie planet don't count, so the threat will spike when they arrive.
             if (transform.GridUid == null || !stationGrids.Contains(transform.GridUid.Value))
+                // TODO: Check for NPCs here, they still count.
                 continue;
 
             // Read per-entity scaling factor (for instance space dragon has much higher threat)
             powerQ.TryGetComponent(uid, out var power);
             var threatMultiple = power?.Threat ?? 1.0f;
 
-            if (_roles.MindIsAntagonist(mind.Mind))
+            var entityThreat = FixedPoint2.Zero;
+
+            var antag = _roles.MindIsAntagonist(mind.Mind);
+            if (antag)
             {
                 if (mobState.CurrentState != MobState.Alive)
                     continue;
-
-                // This is an antag
-                if (nukieQ.TryGetComponent(uid, out var nukie))
-                {
-                    hostiles += (component.HostileScore + component.NukieScore) * threatMultiple;
-                }
-                else if (zombieQ.TryGetComponent(uid, out var zombie))
-                {
-                    hostiles += (component.HostileScore + component.ZombieScore) * threatMultiple;
-                }
-                else
-                {
-                    hostiles += component.HostileScore * threatMultiple;
-                }
             }
             else
             {
                 // This is a friendly
-
                 if (mobState.CurrentState == MobState.Dead)
                 {
-                    death += component.DeadScore;
+                    death += combatMetric.DeadScore;
                     continue;
                 }
                 else
                 {
-                    medical += damage.Damage.Total * component.MedicalMultiplier;
+                    medical += damage.Damage.Total * combatMetric.MedicalMultiplier;
                     if (mobState.CurrentState == MobState.Critical)
                     {
-                        medical += component.CritScore;
+                        medical += combatMetric.CritScore;
                         continue;
                     }
                 }
-
-                // Friendlies are good, so make a negative chaos score
-                friendlies -= component.FriendlyScore * threatMultiple;
-
             }
+
+            // Iterate through items to determine how powerful the entity is
+            entityThreat += InventoryPower(uid, combatMetric);
+            if (antag)
+                hostiles += (entityThreat + combatMetric.HostileScore) * threatMultiple;
+            else
+                friendlies += (entityThreat + combatMetric.FriendlyScore) * threatMultiple;
         }
 
         var chaos = new ChaosMetrics(new Dictionary<ChaosMetric, FixedPoint2>()
         {
-            {ChaosMetric.Friend, friendlies},
+            {ChaosMetric.Friend, -friendlies}, // Friendlies are good, so make a negative chaos score
             {ChaosMetric.Hostile, hostiles},
 
             {ChaosMetric.Death, death},

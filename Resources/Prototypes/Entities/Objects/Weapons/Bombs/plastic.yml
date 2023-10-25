@@ -60,3 +60,6 @@
         base:
           Primed: { state: primed }
           Unprimed: { state: complete }
+  - type: Tag
+  tags:
+    - Bomb

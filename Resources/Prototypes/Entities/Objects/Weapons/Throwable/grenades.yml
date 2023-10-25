@@ -30,6 +30,9 @@
   - type: Appearance
   - type: AnimationPlayer
   - type: TimerTriggerVisuals
+  - type: Tag
+  tags:
+    - Grenade
 
 - type: entity
   name: explosive grenade
