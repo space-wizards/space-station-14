@@ -137,6 +137,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         component.SwingSound = itemMelee.SwingSound;
         component.HitSound = itemMelee.HitSound;
         component.NoDamageSound = itemMelee.NoDamageSound;
+        component.AttackRate = itemMelee.AttackRate < 1f ? itemMelee.AttackRate : 1f;
         component.Hidden = false;
     }
 
