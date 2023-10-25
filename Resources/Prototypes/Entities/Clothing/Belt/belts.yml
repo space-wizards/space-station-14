@@ -83,8 +83,6 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
-    maxSlots: 16
-    maxItemSize: Normal
     # TODO: Fill this out more.
     whitelist:
       tags:

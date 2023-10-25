@@ -200,6 +200,7 @@
   components:
   - type: Storage
     maxSlots: 16
+    maxTotalWeight: 44
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed

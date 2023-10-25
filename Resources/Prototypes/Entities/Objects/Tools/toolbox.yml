@@ -9,7 +9,8 @@
       path: /Audio/Items/toolbox_drop.ogg
   - type: Storage
     maxSlots: 7
-    maxTotalWeight: 28
+    maxItemSize: Normal
+    maxTotalWeight: 14
   - type: Item
     size: Huge
   - type: ItemCooldown
@@ -114,6 +115,9 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
+  - type: Storage
+    maxItemSize: Large
+    maxTotalSize: 28
   - type: MeleeWeapon
     damage:
       types:

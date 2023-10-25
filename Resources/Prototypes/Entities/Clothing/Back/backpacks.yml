@@ -198,6 +198,7 @@
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
     maxSlots: 10
+    maxTotalWeight: 40
 
 - type: entity
   parent: ClothingBackpackERTLeader
