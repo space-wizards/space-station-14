@@ -262,7 +262,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var localPos = _transform.GetInvWorldMatrix(userXform).Transform(targetPos);
         localPos = userXform.LocalRotation.RotateVec(localPos);
 
-        _melee.DoLunge(user, Angle.Zero, localPos, null, false);
+        _melee.DoLunge(user, used, Angle.Zero, localPos, null, false);
 
         return true;
     }
