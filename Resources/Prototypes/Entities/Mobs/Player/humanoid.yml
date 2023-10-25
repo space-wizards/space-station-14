@@ -21,6 +21,7 @@
   id: DeathSquad
   randomizeName: false
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
       description: ghost-role-information-Death-Squad-description
@@ -54,6 +55,7 @@
   id: ERTLeader
   randomizeName: false
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
@@ -81,6 +83,7 @@
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
@@ -100,6 +103,7 @@
   id: ERTLeaderEVALecter
   parent: ERTLeaderEVA
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
@@ -129,6 +133,7 @@
   id: ERTJanitor
   parent: ERTLeader
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
       description: ghost-role-information-ert-janitor-description
@@ -156,6 +161,7 @@
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
       description: ghost-role-information-ert-janitor-description
@@ -185,6 +191,7 @@
   id: ERTEngineer
   parent: ERTLeader
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
@@ -212,6 +219,7 @@
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
@@ -241,6 +249,7 @@
   id: ERTSecurity
   parent: ERTLeader
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
@@ -268,6 +277,7 @@
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
@@ -287,6 +297,7 @@
   id: ERTSecurityEVALecter
   parent: ERTSecurityEVA
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
@@ -316,6 +327,7 @@
   id: ERTMedical
   parent: ERTLeader
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
@@ -343,6 +355,7 @@
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
@@ -366,6 +379,7 @@
 - type: randomHumanoidSettings
   id: CBURNAgent
   components:
+    - type: MindShield
     - type: Loadout
       prototypes: [CBURNGear]
     - type: GhostRole
@@ -391,6 +405,7 @@
 - type: randomHumanoidSettings
   id: CentcomOfficial
   components:
+    - type: MindShield
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
       description: ghost-role-information-centcom-official-description
