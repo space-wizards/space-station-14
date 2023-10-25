@@ -12,6 +12,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Containers.ItemSlots
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Components;
@@ -44,6 +45,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] private   readonly ItemSlotsSystem _slots = default!
     [Dependency] private   readonly StaminaSystem _stamina = default!;
 
     public const float DamagePitchVariation = 0.05f;
@@ -70,6 +72,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeLocalEvent<BonusMeleeDamageComponent, GetMeleeDamageEvent>(OnGetBonusMeleeDamage);
         SubscribeLocalEvent<BonusMeleeDamageComponent, GetHeavyDamageModifierEvent>(OnGetBonusHeavyDamageModifier);
         SubscribeLocalEvent<BonusMeleeAttackRateComponent, GetMeleeAttackRateEvent>(OnGetBonusMeleeAttackRate);
+        SubscribeLocalEvent<MeleeRequiresObjectInSlotComponent, AttemptMeleeEvent>(OnMeleeAttempt);
 
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<LightAttackEvent>(OnLightAttack);
@@ -151,6 +154,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         args.Rate += component.FlatModifier;
         args.Multipliers *= component.Multiplier;
+    }
+    /// <summary>
+    ///     Intercept any attempt to attack with melee.
+    /// </summary>
+    private void OnMeleeAttempt(EntityUid uid, MeleeRequiresObjectInSlotComponent component, ref AttemptMeleeEvent args)
+    {
+        if (TryComp(uid, out ItemSlotsComponent? slotsComponent)
+            && _slots.TryGetSlot(uid, component.SlotName, out ItemSlot? itemSlot, slotsComponent)
+            && !itemSlot.HasItem)
+            args.Cancelled = true;
     }
 
     private void OnStopAttack(StopAttackEvent msg, EntitySessionEventArgs args)
