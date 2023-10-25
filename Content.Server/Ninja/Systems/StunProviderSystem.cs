@@ -28,9 +28,6 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
 
-    [ValidatePrototypeId<DamageTypePrototype>]
-    public const string DamageType = "Shock";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -63,10 +60,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
 
         _audio.PlayPvs(comp.Sound, target);
 
-        // do the shock
-        var shock = _proto.Index<DamageTypePrototype>(DamageType);
-        var damage = new DamageSpecifier(shock, comp.StunDamage);
-        _damageable.TryChangeDamage(target, damage, false, true, null, origin: uid);
+        _damageable.TryChangeDamage(target, comp.StunDamage, false, true, null, origin: uid);
         _stun.TryParalyze(target, comp.StunTime, refresh: false);
 
         // short cooldown to prevent instant stunlocking

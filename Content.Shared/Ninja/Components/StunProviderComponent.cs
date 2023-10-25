@@ -34,10 +34,16 @@ public sealed partial class StunProviderComponent : Component
     public float StunCharge = 36f;
 
     /// <summary>
-    /// Shock damage dealt when stunning someone
+    /// Damage dealt when stunning someone
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 StunDamage = FixedPoint2.New(5);
+    public DamageSpecifier StunDamage = new()
+    {
+        DamageDict = new()
+        {
+            { "Shock", 5 }
+        };
+    };
 
     /// <summary>
     /// Time that someone is stunned for, stacks if done multiple times.
