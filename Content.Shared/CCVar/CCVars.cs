@@ -655,7 +655,7 @@ namespace Content.Shared.CCVar
         /// Whether ghosts can see antagonist icons on antagonists such as Revolutionaries. Aghosts still get to see them.
         /// </summary>
         public static readonly CVarDef<bool> GhostAntagStatusIndicatorVisible =
-            CVarDef.Create("hud.ghost_antag_status_indicator_visible", true, CVar.ARCHIVE);
+            CVarDef.Create("hud.ghost_antag_status_indicator_visible", true, CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
 
         /*
          * NPCs
