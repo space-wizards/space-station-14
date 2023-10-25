@@ -92,7 +92,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword_double.rsi, state: icon }
   productEntity: EnergySwordDouble
   cost:
-    Telecrystal: 16
+    Telecrystal: 20 #(Originally 16)
   categories:
   - UplinkWeapons
   conditions:
@@ -1122,6 +1122,16 @@
   productEntity: CigPackSyndicate
   cost:
     Telecrystal: 2
+  categories:
+  - UplinkMisc
+
+- type: listing
+  id: UplinkSnackBox
+  name: uplink-snack-box-name
+  description: uplink-snack-box-desc
+  productEntity: HappyHonkNukieSnacks
+  cost:
+    Telecrystal: 1
   categories:
   - UplinkMisc
 
