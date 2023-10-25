@@ -1,8 +1,9 @@
-using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
+using Content.Server.Procedural;
 using Content.Server.Salvage;
 using Content.Shared.Dataset;
+using Content.Shared.Procedural;
 using Content.Shared.Salvage;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -25,6 +26,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly BiomeSystem _biome = default!;
+    [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly GatewaySystem _gateway = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SalvageSystem _salvage = default!;
@@ -34,9 +36,11 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
+    // TODO: Portals to avoid people being stranded
     // Use fog instead of blackness for barrier.
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
     // Add dungeon name to thing
+    // Defer spawning for performance.
     // Add biome template to thing
     // Add biome template options.
     // Make continental bigger areas probably?
@@ -97,6 +101,12 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             _gateway.SetDestinationName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
             _gateway.SetEnabled(gatewayUid, true, gatewayComp);
             component.Generated.Add(mapUid);
+
+            var dungeonDistance = random.Next(6, 12);
+            var dungeonRotation = _dungeon.GetDungeonRotation(seed);
+            var dungeonPosition = origin + (dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance))).Floored();
+
+            _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), mapUid, grid, dungeonPosition, seed);
         }
 
         Dirty(uid, component);
