@@ -9,8 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee.Components;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
@@ -54,8 +52,6 @@ namespace Content.Shared.Containers.ItemSlots
             SubscribeLocalEvent<ItemSlotsComponent, ComponentHandleState>(HandleItemSlotsState);
 
             SubscribeLocalEvent<ItemSlotsComponent, ItemSlotButtonPressedEvent>(HandleButtonPressed);
-
-            SubscribeLocalEvent<MeleeRequiresObjectInSlotComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         }
 
         #region ComponentManagement
@@ -611,19 +607,6 @@ namespace Content.Shared.Containers.ItemSlots
                 TryInsertFromHand(uid, slot, user);
         }
         #endregion
-
-        /// <summary>
-        ///     Intercept any attempt to attack with melee.
-        /// </summary>
-        private void OnMeleeAttempt(EntityUid uid, MeleeRequiresObjectInSlotComponent component, ref AttemptMeleeEvent args)
-        {
-            if (TryComp(uid, out ItemSlotsComponent? slotsComponent)
-                && TryGetSlot(uid, component.SlotName, out ItemSlot? itemSlot, slotsComponent)
-                && !itemSlot.HasItem)
-            {
-                args.Cancelled = true;
-            }
-        }
 
         /// <summary>
         ///     Eject items from (some) slots when the entity is destroyed.
