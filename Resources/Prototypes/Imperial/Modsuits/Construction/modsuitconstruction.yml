@@ -6,9 +6,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Modsuits/advanced.rsi
+    sprite: Imperial/Clothing/Back/Modsuits/advanced.rsi
   - type: Clothing
-    sprite: Clothing/Back/Modsuits/advanced.rsi
+    sprite: Imperial/Clothing/Back/Modsuits/advanced.rsi
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: Storage
