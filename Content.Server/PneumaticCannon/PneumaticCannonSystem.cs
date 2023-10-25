@@ -70,10 +70,11 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         args.Cancel();
     }
 
-    private void OnShoot(EntityUid uid, PneumaticCannonComponent component, ref GunShotEvent args)
+    private void OnShoot(Entity<PneumaticCannonComponent> cannon, ref GunShotEvent args)
     {
+        var (uid, component) = cannon;
         // require a gas tank if it uses gas
-        var gas = GetGas(uid);
+        var gas = GetGas(cannon);
         if (gas == null && component.GasUsage > 0f)
             return;
 
@@ -82,7 +83,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         {
             _stun.TryParalyze(args.User, TimeSpan.FromSeconds(component.HighPowerStunTime), true, status);
             Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-power-stun",
-                ("cannon", component.Owner)), uid, args.User);
+                ("cannon", uid)), cannon, args.User);
         }
 
         // ignore gas stuff if the cannon doesn't use any
@@ -90,14 +91,14 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
             return;
 
         // this should always be possible, as we'll eject the gas tank when it no longer is
-        var environment = _atmos.GetContainingMixture(component.Owner, false, true);
-        var removed = _gasTank.RemoveAir(gas, component.GasUsage);
+        var environment = _atmos.GetContainingMixture(cannon, false, true);
+        var removed = _gasTank.RemoveAir(gas.Value, component.GasUsage);
         if (environment != null && removed != null)
         {
             _atmos.Merge(environment, removed);
         }
 
-        if (gas.Air.TotalMoles >= component.GasUsage)
+        if (gas.Value.Comp.Air.TotalMoles >= component.GasUsage)
             return;
 
         // eject gas tank
@@ -107,13 +108,13 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
     /// <summary>
     ///     Returns whether the pneumatic cannon has enough gas to shoot an item, as well as the tank itself.
     /// </summary>
-    private GasTankComponent? GetGas(EntityUid uid)
+    private Entity<GasTankComponent>? GetGas(EntityUid uid)
     {
         if (!Container.TryGetContainer(uid, PneumaticCannonComponent.TankSlotId, out var container) ||
             container is not ContainerSlot slot || slot.ContainedEntity is not {} contained)
             return null;
 
-        return TryComp<GasTankComponent>(contained, out var gasTank) ? gasTank : null;
+        return TryComp<GasTankComponent>(contained, out var gasTank) ? (contained, gasTank) : null;
     }
 
     private float GetProjectileSpeedFromPower(PneumaticCannonComponent component)
