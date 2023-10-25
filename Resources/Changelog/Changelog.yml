@@ -1,15 +1,6 @@
 Entries:
 - author: CrigCrag
   changes:
-  - {message: Many basic elements from the periodic table are now mildly toxic or
-      caustic. Watch what you drink!, type: Tweak}
-  - {message: Crewmembers who drink lithium have reported very minor cases of serious
-      brain damage. Doctors should watch out for people who are laughing and screaming
-      at nothing., type: Tweak}
-  id: 4555
-  time: '2023-08-13T07:24:11.0000000+00:00'
-- author: CrigCrag
-  changes:
   - {message: 'Nanotrasen stopped watering down their acid to save money. Drinking
       or injecting acids is more dangerous now, and acids burn through your insides
       much quicker.', type: Tweak}
@@ -2902,3 +2893,9 @@ Entries:
   - {message: 'The supply radio channel can be used with ":u" again.', type: Fix}
   id: 5054
   time: '2023-10-25T00:56:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Medical cyborgs' stethoscopes can no longer be fed to moths to obtain
+      a free hand., type: Fix}
+  id: 5055
+  time: '2023-10-25T04:51:32.0000000+00:00'
