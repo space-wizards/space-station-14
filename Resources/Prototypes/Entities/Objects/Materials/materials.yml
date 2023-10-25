@@ -8,7 +8,7 @@
     sprite: Objects/Materials/materials.rsi
   - type: Item
     sprite: Objects/Materials/materials.rsi
-    size: Small
+    size: Normal
   - type: Tag
     tags:
       - DroneUsable
