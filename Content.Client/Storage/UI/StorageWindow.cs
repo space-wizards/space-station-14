@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.Message;
 using Robust.Client.Graphics;
@@ -112,16 +111,17 @@ namespace Content.Client.Storage.UI
 
         private void SetStorageInformation(Entity<StorageComponent> uid)
         {
-            if (_storage.HasSpace((uid, uid.Comp)))
+            if (uid.Comp.MaxSlots != uid.Comp.Container.ContainedEntities.Count
+                && _storage.GetCumulativeItemSizes(uid, uid.Comp) == _storage.GetMaxTotalWeight((uid, uid.Comp)))
             {
-                _information.SetMarkup(Loc.GetString("comp-storage-window-volume",
-                    ("itemCount", uid.Comp.Container.ContainedEntities.Count),
-                    ("maxCount", uid.Comp.MaxSlots),
+                _information.SetMarkup(Loc.GetString("comp-storage-window-volume-full",
                     ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
             }
             else
             {
-                _information.SetMarkup(Loc.GetString("comp-storage-window-volume-full",
+                _information.SetMarkup(Loc.GetString("comp-storage-window-volume",
+                    ("itemCount", uid.Comp.Container.ContainedEntities.Count),
+                    ("maxCount", uid.Comp.MaxSlots),
                     ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
             }
         }
@@ -136,6 +136,7 @@ namespace Content.Client.Storage.UI
                 return;
 
             _entityManager.TryGetComponent(entity, out StackComponent? stack);
+            _entityManager.TryGetComponent(entity, out ItemComponent? item);
             var count = stack?.Count ?? 1;
 
             var spriteView = new SpriteView
@@ -158,7 +159,14 @@ namespace Content.Client.Storage.UI
                             HorizontalExpand = true,
                             ClipText = true,
                             Text = _entityManager.GetComponent<MetaDataComponent>(Identity.Entity(entity, _entityManager)).EntityName +
-                                   (count > 1 ? $" x {count}" : string.Empty),
+                                   (count > 1 ? $" x {count}" : string.Empty)
+                        },
+                        new Label
+                        {
+                            Align = Label.AlignMode.Right,
+                            Text = item?.Size != null
+                                ? SharedItemSystem.GetItemSizeLocale(item.Size)
+                                : Loc.GetString("comp-storage-no-item-size")
                         }
                     }
             });
