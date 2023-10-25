@@ -36,6 +36,11 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
+
+    // TODO: Make the stencil texture static or something idk, some way to share it. Maybe add it to ParallaxSystem
+    // Move the sprite thingie and also make gas tile overlay use the manual sprite drawing
+    // Move parallax over to ParallaxSystem to draw sprites as parallax.
+
     // TODO: Portals to avoid people being stranded
     // Use fog instead of blackness for barrier.
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.

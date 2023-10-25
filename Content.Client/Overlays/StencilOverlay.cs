@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Numerics;
-using Content.Client.Overlays;
 using Content.Client.Parallax;
+using Content.Client.Weather;
 using Content.Shared.Weather;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -16,9 +16,12 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Weather;
+namespace Content.Client.Overlays;
 
-public sealed class WeatherOverlay : StencilOverlay
+/// <summary>
+/// Simple re-useable overlay with stencilled texture.
+/// </summary>
+public abstract class StencilOverlay : Overlay
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -26,25 +29,29 @@ public sealed class WeatherOverlay : StencilOverlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IResourceCache _cache = default!;
-    private readonly WeatherSystem _weather;
+    private readonly SharedTransformSystem _transform;
+    private readonly SpriteSystem _sprite;
 
-    public WeatherOverlay(SharedTransformSystem transform, SpriteSystem sprite, WeatherSystem weather) : base(transform, sprite)
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
+
+    private IRenderTexture? _blep;
+
+    public StencilOverlay(SharedTransformSystem transform, SpriteSystem sprite)
     {
-        _weather = weather;
+        ZIndex = ParallaxSystem.ParallaxZIndex + 1;
+        _transform = transform;
+        _sprite = sprite;
+        IoCManager.InjectDependencies(this);
     }
 
-    protected override bool BeforeDraw(in OverlayDrawArgs args)
+    protected void DrawTexture(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace)
-            return false;
-
-        if (!_entManager.TryGetComponent<WeatherComponent>(_mapManager.GetMapEntityId(args.MapId), out var weather) ||
-            weather.Weather.Count == 0)
-        {
-            return false;
-        }
-
-        return base.BeforeDraw(in args);
+        var worldHandle = args.WorldHandle;
+        var mapId = args.MapId;
+        var worldAABB = args.WorldAABB;
+        var worldBounds = args.WorldBounds;
+        var invMatrix = args.Viewport.GetWorldToLocalMatrix();
+        var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -75,7 +82,11 @@ public sealed class WeatherOverlay : StencilOverlay
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
 
-        DrawTexture();
+        if (_blep?.Texture.Size != args.Viewport.Size)
+        {
+            _blep?.Dispose();
+            _blep = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "weather-stencil");
+        }
 
         // Cut out the irrelevant bits via stencil
         // This is why we don't just use parallax; we might want specific tiles to get drawn over

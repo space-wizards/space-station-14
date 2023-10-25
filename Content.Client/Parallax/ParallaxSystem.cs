@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Parallax.Data;
 using Content.Client.Parallax.Managers;
 using Content.Shared.Parallax;
@@ -72,4 +73,11 @@ public sealed class ParallaxSystem : SharedParallaxSystem
     {
         return TryComp<ParallaxComponent>(mapUid, out var parallax) ? parallax.Parallax : Fallback;
     }
+
+    public void DrawParallax(DrawingHandleWorld worldHandle, float scale, float slowness, Vector2 scrolling, Texture sprite)
+    {
+
+    }
+
+
 }
