@@ -1,4 +1,4 @@
-- type: entity
+- type: entity #Commented value in armor = overall defence
   parent: ClothingBackpack
   id: ClothingControlModsuitBase
   abstract: true
@@ -53,11 +53,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
+        Blunt: 0.9 #melee ~ 0.45
         Slash: 0.9
-        Piercing: 0.9
+        Piercing: 0.9 #piercing ~ 0.65
         Shock: 0.7
-        Caustic: 0.7
+        Caustic: 0.7 #Heat ~ 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitCESealed
   - type: Storage
@@ -83,9 +83,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
+        Blunt: 0.9 #Heat ~ 0.8
+        Slash: 0.9 #Melee ~ 0.65 # Piercing ~ 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitEngineerSealed
   - type: Storage
@@ -114,9 +113,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
+        Blunt: 0.9 #Melee ~ 0.65 ~Heat ~0.1 Piericng = 0.9
         Slash: 0.9
-        Piercing: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitAtmosphericsSealed
   - type: Storage
@@ -144,10 +142,10 @@
     sprite: Clothing/Back/Modsuits/rnd.rsi
   - type: Armor
     modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
+      coefficients: #Slowdown = 40%
+        Blunt: 0.9 #Melee ~ 0.4, 3 carps + crowbar = 20% hp left
+        Slash: 0.9 #Piercing ~0.6
+        Piercing: 0.9 #Heat ~ 0.34
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitRNDSealed
     requiredSlot: back
@@ -178,8 +176,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Heat: 0.9
+        Blunt: 0.9 #Medical ~ 0.9
+        Heat: 0.9 #Heat ~0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitMedicalSealed
   - type: Storage
@@ -208,10 +206,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
+        Blunt: 0.9 #melee ~ 0.75
         Slash: 0.9
-        Piercing: 0.9
-        Shock: 0.5
+        Piercing: 0.9 #piercing ~ 0.6
+        Shock: 0.5 #heat ~ 0.45
         Caustic: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitCMOSealed
@@ -238,7 +236,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Shock: 0.8
+        Shock: 0.8 #Eva  hardusit equivalent, 0.9 melee,0.8 heat
         Caustic: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitCivillianSealed
@@ -268,9 +266,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
+        Blunt: 0.9 #melee 0.5
+        Slash: 0.9 #heat - 0.45
+        Piercing: 0.9 #piercing ~ 0.45
         Shock: 0.7
         Caustic: 0.7
   - type: ToggleableClothing
@@ -298,9 +296,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Slash: 0.95
-        Shock: 0.7
-        Caustic: 0.7
+        Slash: 0.95 #melee ~ 0.4
+        Shock: 0.7 #heat ~ 0.65
+        Caustic: 0.7 #piercing ~0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitSecuritySealed
   - type: Storage
@@ -329,12 +327,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
+        Blunt: 0.8 #melee ~0.36
         Slash: 0.9
-        Piercing: 0.8
+        Piercing: 0.8 #piercing ~0.45
         Shock: 0.7
         Caustic: 0.7
-        Heat: 0.8
+        Heat: 0.8 #heat ~ 0.3
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 200
@@ -363,11 +361,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.9
+        Blunt: 0.8 #melee 0.5
+        Slash: 0.9 #piercing #0.65
         Shock: 0.7
         Caustic: 0.7
-        Heat: 0.9
+        Heat: 0.9 #Heat 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitSalvageSealed
   - type: Storage
@@ -385,7 +383,7 @@
 
 - type: entity
   parent: ClothingControlModsuitBase
-  id: ClothingControlModsuitMinerSealed
+  id: ClothingControlModsuitMinerSealed #30% slowdown, salvage tank. Extra rare, 0.02 chance of salvage reward
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.
   components:
@@ -396,12 +394,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.85
-        Slash: 0.85
-        Piercing: 0.85
+        Blunt: 0.85 # 0.4 melee
+        Slash: 0.85 #0.6 piercing
         Shock: 0.7
         Caustic: 0.7
-        Heat: 0.7
+        Heat: 0.7 #Heat - 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitMinerSealed
   - type: Storage
@@ -416,7 +413,7 @@
 
 - type: entity
   parent: ClothingControlModsuitBase
-  id: ClothingControlModsuitOperativeSealed
+  id: ClothingControlModsuitOperativeSealed #Not availabve to nuke ops, only traitors. 12 tc. 10% slowdown
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.
   components:
@@ -427,12 +424,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
+        Blunt: 0.8 #melee - 0.3
         Slash: 0.8
-        Piercing: 0.8
+        Piercing: 0.8 #piercing - 0.25
         Shock: 0.7
         Caustic: 0.7
-        Heat: 0.7
+        Heat: 0.7 #Heat ~ 0.33
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitOperativeSealed
   - type: Storage
@@ -447,7 +444,7 @@
 
 - type: entity
   parent: ClothingControlModsuitOperativeSealed
-  id: ClothingControlModsuitHonkOperativeSealed
+  id: ClothingControlModsuitHonkOperativeSealed #same as nukeops
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.
   components:
@@ -471,7 +468,7 @@
 
 - type: entity
   parent: ClothingControlModsuitBase
-  id: ClothingControlModsuitOperativeCMDSealed
+  id: ClothingControlModsuitOperativeCMDSealed #20 tc dead squad almost
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.
   components:
@@ -481,13 +478,13 @@
     sprite: Clothing/Back/Modsuits/nukeopscmd.rsi
   - type: Armor
     modifiers:
-      coefficients:
-        Blunt: 0.75
+      coefficients: 
+        Blunt: 0.75 #melee ~ 0.2
         Slash: 0.75
-        Piercing: 0.75
+        Piercing: 0.75 #piercing ~ 0.15
         Shock: 0.7
         Caustic: 0.7
-        Heat: 0.5
+        Heat: 0.5 #heat = 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitOperativeCMDSealed
   - type: Storage
@@ -501,7 +498,7 @@
     autoRot: true
 
 - type: entity
-  parent: ClothingControlModsuitOperativeSealed
+  parent: ClothingControlModsuitOperativeSealed #same as oper, only GM-s can spawn
   id: ClothingControlModsuitCCSealed
   name: CE modsuit helmet
   description: Special hardsuit helmet, made for the CE of the station.

@@ -14,9 +14,6 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9 
-        Slash: 0.9
-        Piercing: 0.9
         Shock: 0.8
         Heat: 0.8
   - type: PressureProtection
@@ -58,9 +55,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
         Shock: 0.8
   - type: PressureProtection
     highPressureMultiplier: 0.05
@@ -115,7 +112,6 @@
       coefficients:
         Blunt: 0.9
         Slash: 0.9
-        Piercing: 0.9
         Shock: 0.8
         Heat: 0.85
   - type: PressureProtection

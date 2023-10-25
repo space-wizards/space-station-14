@@ -16,7 +16,6 @@
       coefficients:
         Blunt: 0.9
         Slash: 0.9
-        Piercing: 0.9
         Shock: 0.8
         Heat: 0.8
   - type: PressureProtection
@@ -108,7 +107,6 @@
       coefficients:
         Blunt: 0.9
         Slash: 0.9
-        Piercing: 0.9
         Shock: 0.85
         Heat: 0.85
   - type: PressureProtection
