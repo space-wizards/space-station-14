@@ -213,16 +213,12 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!TryGetActionData(actionEnt, out var action))
             return;
 
+        DebugTools.Assert(action.AttachedEntity == user);
         if (action.AttachedEntity == user)
             action.PreferredEntity = user;
 
-        if (_netMan.IsServer)
-        {
-            DebugTools.Assert(action.AttachedEntity == user);
-
-            if (action.Container != null && !HasComp<MindComponent>(action.Container))
-                action.PreferredEntity = action.Container.Value;
-        }
+        if (action.Container != null && !HasComp<MindComponent>(action.Container))
+            action.PreferredEntity = action.Container.Value;
 
         if (!action.Enabled)
             return;

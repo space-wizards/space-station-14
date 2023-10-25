@@ -31,18 +31,16 @@ public sealed class ActionContainerSystem : EntitySystem
         SubscribeLocalEvent<ActionsContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<ActionsContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<ActionsContainerComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<ActionsContainerComponent, MindRemovedMessage>(OnMindRemoved);
     }
 
-    // TODO: Does not trigger on client but despite this, TransferAllActions relays to client as expected
     private void OnMindAdded(EntityUid uid, ActionsContainerComponent component, MindAddedMessage args)
     {
         if(!_mind.TryGetMind(uid, out var mindId, out var mindComp))
             return;
 
         mindComp.MindActionsContainer ??= EnsureComp<ActionsContainerComponent>(mindId);
-        var mindEnts = mindComp.MindActionsContainer.Container.ContainedEntities;
 
-        // TODO: Ghosting (non admin) and re-possessing causes actions to be wiped.
         if (!HasComp<GhostComponent>(uid))
         {
             if (ShouldTransferAllActions(uid, component))
@@ -53,22 +51,14 @@ public sealed class ActionContainerSystem : EntitySystem
             }
             else
             {
-                // TODO: new client issue is with granting somewhere.
-                // TODO: Compare against TransferAction
-                _actions.GrantActions(uid, mindEnts, mindId);
-
-                /*foreach (var action in mindEnts)
-                {
-                    // No action icon updates at all
-                    _actions.AddActionDirect(uid, action);
-                }*/
+                _actions.GrantContainedActions(uid, mindId);
             }
         }
+    }
 
-        // TODO: Need to grant all actions again on mind added
-        //  1 - Check actions on entity where mind is being added
-        //  2 - Compare to actions in mind
-        //  3 - Grant as needed
+    private void OnMindRemoved(EntityUid uid, ActionsContainerComponent component, MindRemovedMessage args)
+    {
+        _actions.RemoveProvidedActions(uid, args.Mind);
     }
 
     /// <summary>
@@ -164,7 +154,7 @@ public sealed class ActionContainerSystem : EntitySystem
 
         DebugTools.AssertEqual(action.Container, newContainer);
         DebugTools.AssertNull(action.AttachedEntity);
-        if (HasComp<MindComponent>(action.Container) && _netMan.IsServer)
+        if (HasComp<MindComponent>(action.Container))
             action.ItemIconStyle = ItemActionIconStyle.BigAction;
 
         if (attached != null)
