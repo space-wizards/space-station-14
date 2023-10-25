@@ -3,12 +3,9 @@ using Content.Shared.StatusIcon.Components;
 using Content.Shared.NukeOps;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
-using Content.Client.Antag;
-
-
 
 namespace Content.Client.Overlays;
-public sealed class ShowSyndicateIconsSystem : AntagStatusIconSystem<NukeOperativeComponent>
+public sealed class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSyndicateIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -16,12 +13,31 @@ public sealed class ShowSyndicateIconsSystem : AntagStatusIconSystem<NukeOperati
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NukeOperativeComponent, GetStatusIconsEvent>(GetNukeOpsIcon);
+        SubscribeLocalEvent<NukeOperativeComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void GetNukeOpsIcon(EntityUid uid, NukeOperativeComponent comp, ref GetStatusIconsEvent args)
+    private void OnGetStatusIconsEvent(EntityUid uid, NukeOperativeComponent nukeOperativeComponent, ref GetStatusIconsEvent args)
     {
-        GetStatusIcon(comp.SyndStatusIcon, ref args);
+        if (!IsActive || args.InContainer)
+        {
+            return;
+        }
+
+        var healthIcons = DecideThirstIcon(uid, nukeOperativeComponent);
+
+        args.StatusIcons.AddRange(healthIcons);
+    }
+
+    private IReadOnlyList<StatusIconPrototype> DecideThirstIcon(EntityUid uid, NukeOperativeComponent nukeOperativeComponent)
+    {
+        var result = new List<StatusIconPrototype>();
+
+        if (_prototype.TryIndex<StatusIconPrototype>(nukeOperativeComponent.SyndStatusIcon, out var overhydrated))
+        {
+            result.Add(overhydrated);
+        }
+
+        return result;
     }
 }
 

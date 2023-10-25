@@ -129,6 +129,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medsecengi.rsi
   - type: ShowSecurityIcons
+  - type: ShowSyndicateIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -143,6 +144,7 @@
   - type: ShowSecurityIcons
   - type: ShowHungerIcons
   - type: ShowThirstIcons
+  - type: ShowSyndicateIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -155,3 +157,4 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/sec.rsi
   - type: ShowSyndicateIcons
+  

@@ -2,6 +2,7 @@ using Robust.Shared.Audio;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.NukeOps;
@@ -21,6 +22,6 @@ public sealed partial class NukeOperativeComponent : Component
     /// <summary>
     ///     
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<StatusIconPrototype> SyndStatusIcon = "SyndicateFaction";
+    [DataField("syndStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
+    public string SyndStatusIcon = "SyndicateFaction";
 }
