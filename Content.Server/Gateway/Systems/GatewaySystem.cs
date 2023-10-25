@@ -106,7 +106,7 @@ public sealed class GatewaySystem : EntitySystem
 
         // if the gateway has an access reader check it before allowing opening
         var user = args.Session.AttachedEntity.Value;
-        if (CheckAccess(user, uid))
+        if (CheckAccess(user, uid, comp))
             return;
 
         // can't link if portal is already open on either side, the destination is invalid or on cooldown
@@ -121,13 +121,16 @@ public sealed class GatewaySystem : EntitySystem
             return;
         }
 
-        ClosePortal(uid, comp);
         // TODO: admin log???
+        ClosePortal(uid, comp);
         OpenPortal(uid, comp, desto, dest);
     }
 
-    private void OpenPortal(EntityUid uid, GatewayComponent comp, EntityUid dest, GatewayDestinationComponent destComp)
+    private void OpenPortal(EntityUid uid, GatewayComponent comp, EntityUid dest, GatewayDestinationComponent destComp, TransformComponent? destXform = null)
     {
+        if (!Resolve(dest, ref destXform) || destXform.MapUid == null)
+            return;
+
         _linkedEntity.TryLink(uid, dest);
         EnsureComp<PortalComponent>(uid).CanTeleportToOtherMaps = true;
         EnsureComp<PortalComponent>(dest).CanTeleportToOtherMaps = true;
@@ -141,6 +144,9 @@ public sealed class GatewaySystem : EntitySystem
         UpdateUserInterface(uid, comp);
         UpdateAppearance(uid);
         UpdateAppearance(dest);
+
+        var ev = new GatewayOpenEvent(destXform.MapUid.Value, dest);
+        RaiseLocalEvent(destXform.MapUid.Value, ref ev);
     }
 
     private void ClosePortal(EntityUid uid, GatewayComponent? comp = null)
@@ -239,4 +245,14 @@ public sealed class GatewaySystem : EntitySystem
         gatewayComp.Name = gatewayName;
         Dirty(gatewayUid, gatewayComp);
     }
+}
+
+/// <summary>
+/// Raised when a GatewayDestination is opened.
+/// </summary>
+[ByRefEvent]
+public readonly record struct GatewayOpenEvent(EntityUid MapUid, EntityUid GatewayDestinationUid)
+{
+    public readonly EntityUid MapUid = MapUid;
+    public readonly EntityUid GatewayDestinationUid = GatewayDestinationUid;
 }

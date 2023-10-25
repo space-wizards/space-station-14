@@ -54,8 +54,8 @@ public sealed class LinkedEntitySystem : EntitySystem
         _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, true);
         _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, true);
 
-        Dirty(firstLink);
-        Dirty(secondLink);
+        Dirty(first, firstLink);
+        Dirty(second, secondLink);
 
         return firstLink.LinkedEntities.Add(second)
             && secondLink.LinkedEntities.Add(first);

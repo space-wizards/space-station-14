@@ -6,6 +6,7 @@ using Content.Shared.Dataset;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
+using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -59,6 +60,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GatewayGeneratorComponent, MapInitEvent>(OnGeneratorMapInit);
+        SubscribeLocalEvent<GatewayGeneratorDestinationComponent, GatewayOpenEvent>(OnGeneratorOpen);
     }
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent component, MapInitEvent args)
@@ -85,7 +87,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             {
                 for (var y = -2; y <= 2; y++)
                 {
-                    tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: _random.NextByte(tileDef.Variants))));
+                    tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: random.NextByte(tileDef.Variants))));
                 }
             }
 
@@ -100,10 +102,34 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             var gatewayComp = Comp<GatewayDestinationComponent>(gatewayUid);
             _gateway.SetDestinationName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
             _gateway.SetEnabled(gatewayUid, true, gatewayComp);
-            component.Generated.Add(new GatewayDestination(mapUid));
+            component.Generated.Add(mapUid);
+
+            var genDest = AddComp<GatewayGeneratorDestinationComponent>(mapUid);
+            genDest.Origin = origin;
+            genDest.Seed = seed;
         }
 
         Dirty(uid, component);
+    }
+
+    private void OnGeneratorOpen(Entity<GatewayGeneratorDestinationComponent> ent, ref GatewayOpenEvent args)
+    {
+        if (ent.Comp.Loaded)
+            return;
+
+        ent.Comp.Loaded = true;
+
+        if (!TryComp(args.MapUid, out MapGridComponent? grid))
+            return;
+
+        var seed = ent.Comp.Seed;
+        var origin = ent.Comp.Origin;
+        var random = new Random(seed);
+        var dungeonDistance = random.Next(6, 12);
+        var dungeonRotation = _dungeon.GetDungeonRotation(seed);
+        var dungeonPosition = origin + dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance)).Floored();
+
+        _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), args.MapUid, grid, dungeonPosition, seed);
     }
 }
 
@@ -129,11 +155,18 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// Maps we've generated.
     /// </summary>
     [DataField]
-    public List<GatewayDestination> Generated = new();
+    public List<EntityUid> Generated = new();
 }
 
-[DataRecord]
-public record struct GatewayDestination(EntityUid Entity)
+[RegisterComponent]
+public sealed partial class GatewayGeneratorDestinationComponent : Component
 {
-    public bool Loaded = false;
+    [DataField]
+    public bool Loaded;
+
+    [DataField]
+    public int Seed;
+
+    [DataField]
+    public Vector2i Origin;
 }
