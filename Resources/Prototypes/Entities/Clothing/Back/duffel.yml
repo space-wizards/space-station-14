@@ -7,7 +7,8 @@
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
   - type: Storage
-    capacity: 120
+    maxSlots: 10
+    maxTotalWeight: 40
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
@@ -162,8 +163,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
-  - type: Storage
-    capacity: 131
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -228,7 +227,11 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
+  - type: Item
+    size: Ginormous
   - type: Storage
-    capacity: 9999
+    maxSlots: 14
+    maxItemSize: Large
+    maxTotalWeight: 56 #14 normal-sized items.
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding

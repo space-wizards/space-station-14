@@ -1,126 +1,4 @@
 Entries:
-- author: onoira
-  changes:
-  - {message: Spare pieces have been added to checkerboards allowing for more playable
-      variants., type: Tweak}
-  id: 4543
-  time: '2023-08-13T07:10:10.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Composting high-potency plants refills tray nutrients much more effectively.,
-    type: Tweak}
-  id: 4544
-  time: '2023-08-13T07:10:22.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds a Secret Door for construction, type: Add}
-  id: 4545
-  time: '2023-08-13T07:10:46.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Bolas are now easier to make and more durable., type: Tweak}
-  id: 4546
-  time: '2023-08-13T07:11:11.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: 'Wheelchairs, unicycles and similar vehicles no longer act as a magical
-      barrier against stuns.', type: Fix}
-  - {message: Driving while asleep is no longer possible., type: Fix}
-  id: 4547
-  time: '2023-08-13T07:13:19.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Vending machine sprites have been polished up., type: Tweak}
-  id: 4548
-  time: '2023-08-13T07:15:13.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: 'Blood-red magboots now slow you down less and have jetpack functionality,
-      but cost more.', type: Tweak}
-  id: 4549
-  time: '2023-08-13T07:17:10.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: Syndicate clowns may now purchase a holoclown injector via their syndicate
-      uplink., type: Add}
-  id: 4550
-  time: '2023-08-13T07:18:10.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: The various laser guns are now called rifles or pistols., type: Tweak}
-  - {message: Retro laser blasters now deal 20% more damage., type: Tweak}
-  - {message: Laser deliveries now contain 3 laser rifles instead of 3 retro laser
-      blasters., type: Tweak}
-  id: 4551
-  time: '2023-08-13T07:18:49.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Added guidebook entries for the Access Configurator and how to install
-      Airlock Safeguards, type: Add}
-  id: 4552
-  time: '2023-08-13T07:19:28.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Space Station staff are no longer immune to the toxic and caustic effects
-      of some pyrotechnic chemicals, as well as bleach. Drinking bleach now makes
-      you scream as your stomach lining is reduced to goop.', type: Tweak}
-  - {message: Phenol is now (accurately) toxic., type: Tweak}
-  id: 4553
-  time: '2023-08-13T07:22:08.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: Added jugs to the medical fabricator., type: Add}
-  - {message: Jugs now take up more space in bags., type: Tweak}
-  id: 4554
-  time: '2023-08-13T07:23:37.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: Many basic elements from the periodic table are now mildly toxic or
-      caustic. Watch what you drink!, type: Tweak}
-  - {message: Crewmembers who drink lithium have reported very minor cases of serious
-      brain damage. Doctors should watch out for people who are laughing and screaming
-      at nothing., type: Tweak}
-  id: 4555
-  time: '2023-08-13T07:24:11.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Nanotrasen stopped watering down their acid to save money. Drinking
-      or injecting acids is more dangerous now, and acids burn through your insides
-      much quicker.', type: Tweak}
-  - {message: Having corrosive acid in your body now makes you scream!, type: Tweak}
-  - {message: Polytrinic acid now requires plasma to make., type: Tweak}
-  id: 4556
-  time: '2023-08-13T07:24:50.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: Arachnids have received several changes. Check your local PR station
-      for more details., type: Tweak}
-  id: 4557
-  time: '2023-08-13T07:38:05.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: 'Nanotrasen have fixed their accidental breakage of time space continuum,
-      making sure that steel tiles do indeed take steel to create.', type: Fix}
-  id: 4558
-  time: '2023-08-13T12:43:01.0000000+00:00'
-- author: FillerVK
-  changes:
-  - {message: Added cocoa cultivation, type: Add}
-  - {message: Added a recipe for creating a chocolate bar, type: Add}
-  id: 4559
-  time: '2023-08-13T14:35:58.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Player icons in the end-of-round summary window should now display properly.,
-    type: Fix}
-  id: 4560
-  time: '2023-08-13T16:55:05.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The DNA scrambler no longer has the power of magically transforming
-      various creatures into humanoids., type: Fix}
-  id: 4561
-  time: '2023-08-13T16:56:21.0000000+00:00'
 - author: Repo
   changes:
   - {message: fixed pressure tanks to not show scientific notation., type: Fix}
@@ -2909,3 +2787,109 @@ Entries:
   - {message: Replaced wielding do_after with an interaction cooldown., type: Tweak}
   id: 5042
   time: '2023-10-22T13:53:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tile-prying do_after is now predicted., type: Tweak}
+  id: 5043
+  time: '2023-10-23T13:20:33.0000000+00:00'
+- author: Tryded
+  changes:
+  - {message: Changed the damage of the double bladed energy sword to 17 heat + 17
+      Slash (The Double Bladed energy sword use to deal as much damage as an energy
+      dagger.), type: Tweak}
+  id: 5044
+  time: '2023-10-23T14:35:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed activating artifacts with magboots., type: Fix}
+  id: 5045
+  time: '2023-10-24T06:18:46.0000000+00:00'
+- author: Stray-Pyramid
+  changes:
+  - {message: Ore bags now pickup artifact fragments as well as ores, type: Fix}
+  id: 5046
+  time: '2023-10-24T06:20:46.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Syndicate have issued a new challenge objective for traitors with shuttle
+      hijacking, type: Add}
+  id: 5047
+  time: '2023-10-24T07:55:47.0000000+00:00'
+- author: VasilisThePikachu
+  changes:
+  - {message: Stuttering trait stutters less common., type: Fix}
+  id: 5048
+  time: '2023-10-24T09:28:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix climbing in the same position (e.g. exiting from medical scanners)
+      sending you to the farplanes., type: Fix}
+  id: 5049
+  time: '2023-10-24T10:44:09.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed the "examine" trigger for artifacts not having a hint., type: Fix}
+  id: 5050
+  time: '2023-10-24T20:37:16.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: You can actually grind corn into cornmeal now., type: Fix}
+  id: 5051
+  time: '2023-10-24T20:38:43.0000000+00:00'
+- author: Myakot
+  changes:
+  - {message: Skeletons can now heal by pouring milk over themselves, type: Add}
+  id: 5052
+  time: '2023-10-24T20:58:34.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Fixed anomaly locators frantically beeping when they first enter detection
+      range for an anomaly., type: Fix}
+  id: 5053
+  time: '2023-10-24T21:00:23.0000000+00:00'
+- author: 27alaing
+  changes:
+  - {message: The anti-slang system allows for more leeway with certain phrases now.,
+    type: Tweak}
+  - {message: 'The supply radio channel can be used with ":u" again.', type: Fix}
+  id: 5054
+  time: '2023-10-25T00:56:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Medical cyborgs' stethoscopes can no longer be fed to moths to obtain
+      a free hand., type: Fix}
+  id: 5055
+  time: '2023-10-25T04:51:32.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Roundstart borg jobs get funny names., type: Tweak}
+  id: 5056
+  time: '2023-10-25T13:00:09.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The search bar in vending machines now works., type: Fix}
+  id: 5057
+  time: '2023-10-25T13:01:16.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'The Syndicate''s chefs are now offering snack boxes for only 1 tc.
+      Usually contains a toy, drinks and food.', type: Add}
+  id: 5058
+  time: '2023-10-25T13:26:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix docking UI not showing other grids., type: Fix}
+  id: 5059
+  time: '2023-10-25T13:28:34.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Potato batteries can be built by crew., type: Add}
+  - {message: New compact AI chips may be powered via potato batteries., type: Add}
+  id: 5060
+  time: '2023-10-25T13:52:50.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Storage now functions based on slots and sizes, rather than numerical
+      values.', type: Tweak}
+  id: 5061
+  time: '2023-10-25T22:53:39.0000000+00:00'
