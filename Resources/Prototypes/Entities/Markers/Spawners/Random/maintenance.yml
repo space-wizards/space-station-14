@@ -52,7 +52,6 @@
         - ClothingShoesCult
         - ClothingUniformJumpsuitAncient
         - ClothingUniformJumpsuitPirate
-        - ClothingHeadHatBee
       rareChance: 0.01
       prototypes:
         - Lighter

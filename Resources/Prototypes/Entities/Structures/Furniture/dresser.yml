@@ -188,8 +188,6 @@
         orGroup: dressermainloot
       - id: ClothingUnderSocksBee
         prob: 0.03
-      - id: ClothingHeadHatBee
-        prob: 0.03
         orGroup: dresserthirdloot
       - id: ClothingHeadHatAnimalMonkey
         prob: 0.03
