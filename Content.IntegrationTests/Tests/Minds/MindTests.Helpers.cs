@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.IntegrationTests.Pair;
+using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
@@ -118,20 +119,25 @@ public sealed partial class MindTests
     /// </summary>
     private static (EntityUid Id, MindComponent Comp) GetMind(Pair.TestPair pair)
     {
-        var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
-        var entMan = pair.Server.ResolveDependency<IEntityManager>();
+        var playerMan = pair.Server.PlayerMan;
+        var entMan = pair.Server.EntMan;
         var player = playerMan.Sessions.SingleOrDefault();
         Assert.That(player, Is.Not.Null);
 
         var mindId = player.ContentData()!.Mind!.Value;
         Assert.That(mindId, Is.Not.EqualTo(default(EntityUid)));
         var mind = entMan.GetComponent<MindComponent>(mindId);
+        ActorComponent? actor = default!;
         Assert.Multiple(() =>
         {
+            Assert.That(player, Is.EqualTo(mind.Session), "Player session does not match mind session");
+            Assert.That(entMan.System<MindSystem>().GetMind(player.UserId), Is.EqualTo(mindId));
             Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity), "Player is not attached to the mind's current entity.");
             Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");
             Assert.That(mind.VisitingEntity == null || entMan.EntityExists(mind.VisitingEntity), "The minds visited entity does not exist.");
+            Assert.That(entMan.TryGetComponent(mind.CurrentEntity, out actor));
         });
+        Assert.That(actor.PlayerSession, Is.EqualTo(mind.Session));
 
         return (mindId, mind);
     }
