@@ -6,7 +6,7 @@ using Content.Shared.Clothing;
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
 /// <summary>
-/// This handles...
+/// This handles artifacts that are activated by magnets, both salvage and magboots.
 /// </summary>
 public sealed class ArtifactMagnetTriggerSystem : EntitySystem
 {
@@ -22,20 +22,20 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var artifactQuery = EntityQuery<ArtifactMagnetTriggerComponent, TransformComponent>().ToHashSet();
-        if (!artifactQuery.Any())
+        if (!EntityQuery<ArtifactMagnetTriggerComponent>().Any())
             return;
 
         List<EntityUid> toActivate = new();
 
         //assume that there's more instruments than artifacts
         var query = EntityQueryEnumerator<MagbootsComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var magboot, out var magXform))
+        while (query.MoveNext(out _, out var magboot, out var magXform))
         {
             if (!magboot.On)
                 continue;
 
-            foreach (var (trigger, xform) in artifactQuery)
+            var artiQuery = EntityQueryEnumerator<ArtifactMagnetTriggerComponent, TransformComponent>();
+            while (artiQuery.MoveNext(out var artifactUid, out var trigger, out var xform))
             {
                 if (!magXform.Coordinates.TryDistance(EntityManager, xform.Coordinates, out var distance))
                     continue;
@@ -43,7 +43,7 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
                 if (distance > trigger.Range)
                     continue;
 
-                toActivate.Add(uid);
+                toActivate.Add(artifactUid);
             }
         }
 
