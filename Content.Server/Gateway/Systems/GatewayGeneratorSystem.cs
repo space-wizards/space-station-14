@@ -3,6 +3,7 @@ using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage;
 using Content.Shared.Dataset;
+using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
 using Robust.Shared.Console;
@@ -37,12 +38,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
     // TODO:
 
-    // TODO: Make the stencil texture static or something idk, some way to share it. Maybe add it to ParallaxSystem
-    // Move the sprite thingie and also make gas tile overlay use the manual sprite drawing
-    // Move parallax over to ParallaxSystem to draw sprites as parallax.
-
     // TODO: Portals to avoid people being stranded
-    // Use fog instead of blackness for barrier.
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
     // Add dungeon name to thing
     // Defer spawning for performance.
@@ -81,8 +77,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
             var restriction = AddComp<RestrictedRangeComponent>(mapUid);
             restriction.Origin = origin;
-            // TODO: Not this.
-            _console.ExecuteCommand($"planet {mapId} Continental");
+            _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Continental"), seed);
 
             var grid = Comp<MapGridComponent>(mapUid);
 
@@ -105,13 +100,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             var gatewayComp = Comp<GatewayDestinationComponent>(gatewayUid);
             _gateway.SetDestinationName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
             _gateway.SetEnabled(gatewayUid, true, gatewayComp);
-            component.Generated.Add(mapUid);
-
-            var dungeonDistance = random.Next(6, 12);
-            var dungeonRotation = _dungeon.GetDungeonRotation(seed);
-            var dungeonPosition = origin + (dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance))).Floored();
-
-            _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), mapUid, grid, dungeonPosition, seed);
+            component.Generated.Add(new GatewayDestination(mapUid));
         }
 
         Dirty(uid, component);
@@ -140,5 +129,11 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// Maps we've generated.
     /// </summary>
     [DataField]
-    public List<EntityUid> Generated = new();
+    public List<GatewayDestination> Generated = new();
+}
+
+[DataRecord]
+public record struct GatewayDestination(EntityUid Entity)
+{
+    public bool Loaded = false;
 }

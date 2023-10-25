@@ -1,9 +1,14 @@
 using System.Numerics;
 using System.Threading.Tasks;
+using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Decals;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Atmos;
 using Content.Shared.Decals;
+using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
@@ -35,6 +40,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISerializationManager _serManager = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -802,4 +808,51 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     }
 
     #endregion
+
+    /// <summary>
+    /// Creates a simple planet setup for a map.
+    /// </summary>
+    public void EnsurePlanet(EntityUid mapUid, BiomeTemplatePrototype biomeTemplate, int? seed = null, MetaDataComponent? metadata = null)
+    {
+        if (!Resolve(mapUid, ref metadata))
+            return;
+
+        var biome = EnsureComp<BiomeComponent>(mapUid);
+        seed ??= _random.Next();
+        SetSeed(biome, seed.Value);
+        SetTemplate(biome, biomeTemplate);
+        Dirty(mapUid, biome, metadata);
+
+        var gravity = EnsureComp<GravityComponent>(mapUid);
+        gravity.Enabled = true;
+        gravity.Inherent = true;
+        Dirty(mapUid, gravity, metadata);
+
+        // Day lighting
+        // Daylight: #D8B059
+        // Midday: #E6CB8B
+        // Moonlight: #2b3143
+        // Lava: #A34931
+
+        var light = EnsureComp<MapLightComponent>(mapUid);
+        light.AmbientLightColor = Color.FromHex("#D8B059");
+        Dirty(mapUid, light, metadata);
+
+        // Atmos
+        var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
+
+        var moles = new float[Atmospherics.AdjustedNumberOfGases];
+        moles[(int) Gas.Oxygen] = 21.824779f;
+        moles[(int) Gas.Nitrogen] = 82.10312f;
+
+        var mixture = new GasMixture(2500)
+        {
+            Temperature = 293.15f,
+            Moles = moles,
+        };
+
+        _atmos.SetMapAtmosphere(mapUid, false, mixture, atmos);
+
+        EnsureComp<MapGridComponent>(mapUid);
+    }
 }
