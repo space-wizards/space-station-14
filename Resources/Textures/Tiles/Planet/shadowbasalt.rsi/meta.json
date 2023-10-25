@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "taken from https://github.com/tgstation/tgstation/raw/master/icons/turf/floors.dmi and edited by TheShuEd",
+  "copyright": "taken from tgstation @ commit a0ca7b3f46132517f71f08bfda465667d133b5d7 and edited by TheShuEd",
   "size": {
     "x": 32,
     "y": 32
