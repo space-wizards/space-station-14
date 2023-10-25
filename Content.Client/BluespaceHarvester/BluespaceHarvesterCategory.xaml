@@ -1,0 +1,6 @@
+<Control xmlns="https://spacestation14.io">
+    <GridContainer Margin = "2 0 0 0" Columns="2">
+            <Label Name="CategoryLabel" Text="Category" StyleClasses="StatusFieldTitle"></Label>
+            <Button Name="CategoryButton" Text="10000" StyleClasses="OpenRight" Access="Public"/>
+    </GridContainer>
+</Control>

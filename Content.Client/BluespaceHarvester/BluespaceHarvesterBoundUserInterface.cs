@@ -40,4 +40,14 @@ public sealed class BluespaceHarvesterBoundUserInterface : BoundUserInterface
 
         _window?.UpdateState(current);
     }
+
+    public void SendTargetLevel(int level)
+    {
+        SendMessage(new BluespaceHarvesterTargetLevelMessage(level));
+    }
+
+    public void SendBuy(Shared.BluespaceHarvester.BluespaceHarvesterCategory category)
+    {
+        SendMessage(new BluespaceHarvesterBuyMessage(category));
+    }
 }

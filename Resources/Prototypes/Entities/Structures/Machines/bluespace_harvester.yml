@@ -1,6 +1,6 @@
 - type: entity
   id: BluespaceHarvester
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachine, ConstructibleMachine ]
   name: bluespace harvester
   description: It's magic.
   components:
@@ -24,6 +24,9 @@
     layers:
     - state: tap_0
       map: ["base"]
+    - state: south_effect
+      map: ["effects"]
+      visible: false
   - type: GenericVisualizer
     visuals:
       enum.BluespaceHarvesterVisualLayers.Base:
@@ -35,6 +38,10 @@
           4: { state: tap_4 }
           5: { state: tap_5 }
           6: { state: tap_redspace }
+      enum.BluespaceHarvesterVisualLayers.Effects:
+        effects:
+          True: { visible: true }
+          False: { visible: false }
   - type: Destructible
     thresholds:
     - trigger:
@@ -49,10 +56,15 @@
     interfaces:
     - key: enum.BluespaceHarvesterUiKey.Key
       type: BluespaceHarvesterBoundUserInterface
-  - type: ApcPowerReceiver
-    powerLoad: 0
   - type: Machine
     board: MicrowaveMachineCircuitboard
   - type: GuideHelp
     guides: [ Power ]
- 
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: PowerConsumer
+    voltage: High

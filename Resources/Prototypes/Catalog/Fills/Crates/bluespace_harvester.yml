@@ -1,0 +1,111 @@
+# TechnicalLoot
+- type: entity
+  id: CrateHarvesterSingularity
+  parent: CrateCommandSecure
+  description: You've got a bad feeling about this.
+  suffix: Bluespace Harvester, Singularity, DO NOT MAP
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: Singularity
+
+- type: entity
+  id: CrateHarvesterSingularityFake
+  parent: CrateCommandSecure
+  description: You've got a bad feeling about this.
+  suffix: Bluespace Harvester, Singularity Fake
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: SingularityToy
+      amount: 3
+
+- type: entity
+  id: CrateHarvesterPartsT3
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, PartsT3
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: SalvagePartsT3Spawner
+      amount: 7
+
+- type: entity
+  id: CrateHarvesterPartsT4
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, PartsT4
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: SalvagePartsT4Spawner
+      amount: 4
+
+- type: entity
+  id: CrateHarvesterMaterials
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, Materials
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterMaterials
+      amount: 5
+
+- type: entity
+  id: CrateHarvesterPowerCell
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, Power Cell
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterPowerCell
+      amount: 3
+
+- type: entity
+  id: CrateHarvesterBeer
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, Beer
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterBeer
+      amount: 30
+
+- type: entity
+  id: CrateHarvesterTools
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, Tools
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterTools
+      amount: 3
+
+- type: entity
+  id: CrateHarvesterBackpackHolding
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, Backpack Holding
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterBackpackHolding
+      amount: 2
+
+- type: entity
+  id: CrateHarvesterAmeJar
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, AmeJar
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: AmeJar
+      amount: 10
+
+- type: entity
+  id: CrateHarvesterCircuitboard
+  parent: CrateEngineering
+  suffix: Bluespace Harvester, Circuitboard
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterCircuitboard
+      amount: 3

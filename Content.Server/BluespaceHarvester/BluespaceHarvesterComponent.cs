@@ -23,17 +23,37 @@ public sealed partial class BluespaceHarvesterComponent : Component
     [DataField("emaggedStableLevel")]
     public int EmaggedStableLevel = 5;
 
-    [DataField("points")]
+    [DataField("points"), ViewVariables(VVAccess.ReadWrite)]
     public int Points = 0;
 
-    [DataField("dangerPoints")]
+    [DataField("totalPoints"), ViewVariables(VVAccess.ReadWrite)]
+    public int TotalPoints = 0;
+
+    [DataField("dangerPoints"), ViewVariables(VVAccess.ReadWrite)]
     public int DangerPoints = 0;
+
+    [DataField("reseted")]
+    public bool Enable = false;
+
+    [DataField("spawnRadius")]
+    public float SpawnRadius = 5f;
 
     /// <summary>
     ///     After this danger value, the generation of dangerous creatures and anomalies will begin.
     /// </summary>
     [DataField("dangerLimit")]
     public int DangerLimit = 100;
+
+    [DataField("categories")]
+    public List<BluespaceHarvesterCategoryInfo> Categories = new()
+    {
+        new BluespaceHarvesterCategoryInfo()
+        {
+            PrototypeId = "RandomHarvesterTechnicalLoot",
+            Cost = 15_000,
+            Type = BluespaceHarvesterCategory.Technical,
+        },
+    };
 }
 
 [Serializable]

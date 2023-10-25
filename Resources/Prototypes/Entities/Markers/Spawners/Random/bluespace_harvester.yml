@@ -1,0 +1,179 @@
+# TechnicalLoot
+- type: entity
+  id: RandomHarvesterTechnicalLoot
+  name: random harvester technical loot spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Machines/bluespace_harvester.rsi
+        state: tap_5
+  - type: RandomSpawner
+    prototypes:
+      - CrateHarvesterPartsT3
+      - CrateHarvesterPartsT4
+      - CrateHarvesterMaterials
+      - CrateHarvesterPowerCell
+      - CrateHarvesterBeer
+      - CrateHarvesterTools
+      - RandomHarvesterBackpackHolding
+      - CrateHarvesterAmeJar
+      - CrateHarvesterCircuitboard
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - CrateHarvesterSingularity
+      - CrateHarvesterSingularityFake
+    rareChance: 0.2
+
+- type: entity
+  id: RandomHarvesterMaterials
+  name: random harvester materials spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Materials/Sheets/other.rsi
+        state: plasma_3
+  - type: RandomSpawner
+    prototypes:
+      - SheetPlastic
+      - SheetSteel
+      - SheetPlasteel
+      - SheetGlass
+      - SheetRGlass
+      - SheetPGlass
+      - SheetRPGlass
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - IngotSilver
+      - IngotGold
+      - SheetUranium
+      - SheetUGlass
+      - SheetRUGlass
+      - MaterialSheetMeat
+    rareChance: 0.4
+
+- type: entity
+  id: RandomHarvesterPowerCell
+  name: random harvester power cell spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Power/power_cells.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - PowerCellMediumPrinted
+      - PowerCellHigh
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - PowerCellAntiqueProto
+      - PowerCellHigh
+    rareChance: 0.25
+
+- type: entity
+  id: RandomHarvesterBeer
+  name: random harvester beer spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Drinks/beer.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - DrinkBeerBottleFull
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - DrinkSingulo
+    rareChance: 0.05
+
+- type: entity
+  id: RandomHarvesterTools
+  name: random harvester tools spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Tools/drill.rsi
+        state: drill_screw
+  - type: RandomSpawner
+    prototypes:
+      - WelderExperimental
+      - PowerDrill
+      - JawsOfLife
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - RCDRecharging
+      - AccessConfigurator
+    rareChance: 0.075
+
+- type: entity
+  id: RandomHarvesterBackpackHolding
+  name: random harvester backpack holding spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Back/Backpacks/holding.rsi
+        state: holding
+  - type: RandomSpawner
+    prototypes:
+      - ClothingBackpackSatchelHolding
+      - ClothingBackpackDuffelHolding
+      - ClothingBackpackHolding
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - ClosetBluespace
+      - ClosetBluespaceUnstable
+    rareChance: 0.3
+
+- type: entity
+  id: RandomHarvesterCircuitboard
+  name: random harvester circuitboard spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Misc/module.rsi
+        state: cpuboard
+  - type: RandomSpawner
+    prototypes:
+      - SecurityTechFabCircuitboard
+      - MedicalTechFabCircuitboard
+      - TelecomServerCircuitboard
+      - AmmoTechFabCircuitboard
+      - CargoBountyComputerCircuitboard
+      - CargoRequestComputerCircuitboard
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - ResearchAndDevelopmentServerMachineCircuitboard
+      - IDComputerCircuitboard
+      - CommsComputerCircuitboard
+      - BodyScannerComputerCircuitboard
+      - CloningConsoleComputerCircuitboard
+      - CloningPodMachineCircuitboard
+      - CargoShuttleComputerCircuitboard
+    rareChance: 0.2
