@@ -1,0 +1,119 @@
+- type: reagent
+  id: Fomepizole
+  name: reagent-name-fomepizole
+  group: Medicine
+  desc: reagent-desc-fomepizole
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: medicine
+  color: "#afdd9a"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 10.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: Stutter
+        time: 10.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        time: 10.0
+        type: Remove
+
+- type: reagent
+  id: Haloperidol
+  name: reagent-name-haloperidol
+  group: Medicine
+  desc: reagent-desc-haloperidol
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: medicine
+  color: "#ded0ee"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.2
+        damage:
+          types:
+            Cellular: 1
+      - !type:AdjustReagent
+        reagent: Epinephrine
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Epinephrine
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: Ephedrine
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Ephedrine
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: Stimulants
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Stimulants
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: THC
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: THC
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: SpaceDrugs
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: SpaceDrugs
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:AdjustReagent
+        reagent: Desoxyephedrine
+        amount: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Desoxyephedrine
+          min: 1
+        reagent: Haloperidol
+        amount: -1
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 5.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: Stutter
+        time: 5.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        time: 5.0
+        type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+        probability: 0.3
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
