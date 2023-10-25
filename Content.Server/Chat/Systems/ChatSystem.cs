@@ -1,6 +1,8 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Content.Server.Speech.EntitySystems;
+using Content.Server.Speech.Components;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -56,6 +58,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -717,6 +720,8 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         var newMessage = message.Trim();
         newMessage = ReplaceWords(newMessage); // Corvax-ChatSanitize
+        newMessage = SanitizeMessageReplaceWords(newMessage);
+
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
         if (capitalizeTheWordI)
@@ -762,6 +767,20 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (char.IsLetter(message[^1]))
             message += ".";
         return message;
+    }
+
+    [ValidatePrototypeId<ReplacementAccentPrototype>]
+    public const string ChatSanitize_Accent = "chatsanitize";
+
+    public string SanitizeMessageReplaceWords(string message)
+    {
+        if (string.IsNullOrEmpty(message)) return message;
+
+        var msg = message;
+
+        msg = _wordreplacement.ApplyReplacements(msg, ChatSanitize_Accent);
+
+        return msg;
     }
 
     /// <summary>

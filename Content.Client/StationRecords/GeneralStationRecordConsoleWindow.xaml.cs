@@ -31,7 +31,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     private GeneralStationRecordFilterType _currentFilterType;
 
-    private EntityUid _previewDummy; 
+    private EntityUid _previewDummy;
 
     public GeneralStationRecordConsoleWindow()
     {
@@ -209,19 +209,22 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         IEntityManager entityManager = IoCManager.Resolve<IEntityManager>();
         IPrototypeManager prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         HumanoidAppearanceSystem appearanceSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<HumanoidAppearanceSystem>();
-        
+
         entityManager.DeleteEntity(_previewDummy);
-        
+
         var profile = record.Profile ?? new HumanoidCharacterProfile();
         _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(profile.Species).DollPrototype, MapCoordinates.Nullspace);
         appearanceSystem.LoadProfile(_previewDummy, profile);
         GiveDummyJobClothes(_previewDummy, record.JobPrototype, profile);
 
+        var spriteViewFront = new SpriteView() { Scale = new Vector2(5, 5) };
+        spriteViewFront.SetEntity(_previewDummy);
+        var spriteViewSide = new SpriteView() { Scale = new Vector2(5, 5), OverrideDirection = Direction.East };
+        spriteViewSide.SetEntity(_previewDummy);
+
         var spriteViewBox = new BoxContainer();
-        var sprite = entityManager.GetComponent<SpriteComponent>(_previewDummy);
-        
-        spriteViewBox.AddChild(new SpriteView() { Sprite = sprite, Scale = new Vector2(5, 5)});
-        spriteViewBox.AddChild(new SpriteView() { Sprite = sprite, Scale = new Vector2(5, 5), OverrideDirection = Direction.East});
+        spriteViewBox.AddChild(spriteViewFront);
+        spriteViewBox.AddChild(spriteViewSide);
 
         return spriteViewBox;
     }
@@ -230,7 +233,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         IEntityManager entityManager = IoCManager.Resolve<IEntityManager>();
         IPrototypeManager prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         ClientInventorySystem inventorySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClientInventorySystem>();
-        
+
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
         var job = prototypeManager.Index<JobPrototype>(jobPrototype ?? SharedGameTicker.FallbackOverflowJob);
 

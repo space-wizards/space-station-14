@@ -386,13 +386,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // we can only currently guarantee that NT stations are the only station to
         // exist in the base game.
 
-        var eligible = EntityQuery<StationEventEligibleComponent, NpcFactionMemberComponent>()
-            .Where(x =>
-                _npcFaction.IsFactionHostile(component.Faction, x.Item2.Owner, x.Item2))
-            .Select(x => x.Item1.Owner)
-            .ToList();
+        var eligible = new List<Entity<StationEventEligibleComponent, NpcFactionMemberComponent>>();
+        var eligibleQuery = EntityQueryEnumerator<StationEventEligibleComponent, NpcFactionMemberComponent>();
+        while (eligibleQuery.MoveNext(out var eligibleUid, out var eligibleComp, out var member))
+        {
+            if (!_npcFaction.IsFactionFriendly(component.Faction, eligibleUid, member))
+                continue;
 
-        if (!eligible.Any())
+            eligible.Add((eligibleUid, eligibleComp, member));
+        }
+
+        if (eligible.Count == 0)
             return;
 
         component.TargetStation = _random.Pick(eligible);

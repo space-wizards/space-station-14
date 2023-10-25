@@ -72,7 +72,7 @@ public sealed class MagnetPickupSystem : EntitySystem
 
             foreach (var near in _lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries))
             {
-                if (comp.Whitelist?.IsValid(near, EntityManager) == false)
+                if (storage.Whitelist?.IsValid(near, EntityManager) == false)
                     continue;
 
                 if (!_physicsQuery.TryGetComponent(near, out var physics) || physics.BodyStatus != BodyStatus.OnGround)
