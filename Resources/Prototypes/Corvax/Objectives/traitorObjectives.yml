@@ -10,4 +10,4 @@
     icon:
       sprite: Objects/Tools/emag.rsi
       state: icon
-  - type: HijackShuttleCondition
+  - type: HijackShuttle

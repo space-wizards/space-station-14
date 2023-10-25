@@ -40,8 +40,11 @@ namespace Content.Client.Administration.UI.CustomControls
             BackgroundPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40) };
         }
 
-        private void GameRulesListItemPressed(BaseButton.ButtonEventArgs args, ListData data)
+        private void GameRulesListItemPressed(BaseButton.ButtonEventArgs? args, ListData? data)
         {
+            if (args is null)
+                return;
+
             if (data is not GameRuleListData { Info: var selectedGameRule })
                 return;
             if (args.Event.Function == EngineKeyFunctions.UIClick)

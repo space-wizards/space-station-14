@@ -18,6 +18,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -176,8 +177,8 @@ public abstract class SharedImplanterSystem : EntitySystem
         {
             if (!TryComp<MetaDataComponent>(uid, out var metadata))
                 return;
-            metadata.EntityName = Loc.GetString("ent-BaseImplanter"); // Замена на стандартное имя
-            metadata.EntityDescription = Loc.GetString("ent-BaseImplanter.desc"); // Замена на стандартное описание
+            _metaData.SetEntityName(uid, Loc.GetString("ent-BaseImplanter")); // Замена на стандартное имя
+            _metaData.SetEntityDescription(uid, Loc.GetString("ent-BaseImplanter.desc")); // Замена на стандартное описание
             _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance); // Ставим спрайт пустого имплантера
         }
         else
