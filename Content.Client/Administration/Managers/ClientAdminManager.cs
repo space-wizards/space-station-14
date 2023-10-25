@@ -130,5 +130,13 @@ namespace Content.Client.Administration.Managers
 
             return null;
         }
+
+        public AdminData? GetAdminData(bool includeDeAdmin = false)
+        {
+            if (_player.LocalPlayer is { Session: { } session })
+                return GetAdminData(session, includeDeAdmin);
+
+            return null;
+        }
     }
 }

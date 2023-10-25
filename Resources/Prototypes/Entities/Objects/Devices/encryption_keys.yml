@@ -213,3 +213,18 @@
     layers:
     - state: crypt_red
     - state: synd_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyBinary
+  name: binary translator key
+  description: An encryption key that translates binary signals used by silicons.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Binary
+    defaultChannel: Binary
+  - type: Sprite
+    layers:
+    - state: crypt_silver
+    - state: rd_label

@@ -84,6 +84,12 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// </summary>
     public int PurchaseAmount = 0;
 
+    /// <summary>
+    /// Used to delay purchase of some items.
+    /// </summary>
+    [DataField("restockTime")]
+    public int RestockTime;
+
     public bool Equals(ListingData? listing)
     {
         if (listing == null)
@@ -136,6 +142,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             ProductAction = ProductAction,
             ProductEvent = ProductEvent,
             PurchaseAmount = PurchaseAmount,
+            RestockTime = RestockTime,
         };
     }
 }

@@ -5,7 +5,6 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -30,10 +29,6 @@ public abstract class SharedAnomalySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AnomalyComponent, ComponentGetState>(OnAnomalyGetState);
-        SubscribeLocalEvent<AnomalyComponent, ComponentHandleState>(OnAnomalyHandleState);
-        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentGetState>(OnSupercriticalGetState);
-        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentHandleState>(OnSupercriticalHandleState);
         SubscribeLocalEvent<AnomalyComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
 
@@ -42,43 +37,6 @@ public abstract class SharedAnomalySystem : EntitySystem
         SubscribeLocalEvent<AnomalySupercriticalComponent, EntityUnpausedEvent>(OnSupercriticalUnpause);
 
         _sawmill = Logger.GetSawmill("anomaly");
-    }
-
-    private void OnAnomalyGetState(EntityUid uid, AnomalyComponent component, ref ComponentGetState args)
-    {
-        args.State = new AnomalyComponentState(
-            component.Severity,
-            component.Stability,
-            component.Health,
-            component.NextPulseTime);
-    }
-
-    private void OnAnomalyHandleState(EntityUid uid, AnomalyComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not AnomalyComponentState state)
-            return;
-        component.Severity = state.Severity;
-        component.Stability = state.Stability;
-        component.Health = state.Health;
-        component.NextPulseTime = state.NextPulseTime;
-    }
-
-    private void OnSupercriticalGetState(EntityUid uid, AnomalySupercriticalComponent component, ref ComponentGetState args)
-    {
-        args.State = new AnomalySupercriticalComponentState
-        {
-            EndTime = component.EndTime,
-            Duration = component.SupercriticalDuration
-        };
-    }
-
-    private void OnSupercriticalHandleState(EntityUid uid, AnomalySupercriticalComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not AnomalySupercriticalComponentState state)
-            return;
-
-        component.EndTime = state.EndTime;
-        component.SupercriticalDuration = state.Duration;
     }
 
     private void OnInteractHand(EntityUid uid, AnomalyComponent component, InteractHandEvent args)

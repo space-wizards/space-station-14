@@ -33,20 +33,24 @@
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
+            SeniorEngineer: [ 1, 1 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 2, 4 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 4 ]
             #science
             ResearchDirector: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             ResearchAssistant: [2, 4]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
             Detective: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
             SecurityCadet: [ 2, 4 ]

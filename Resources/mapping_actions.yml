@@ -689,6 +689,20 @@
   name: RailingCornerSmall
 - action: !type:InstantActionComponent
     icon:
+      entity: RailingRound
+    name: RailingRound
+    keywords: []
+    checkCanInteract: False
+    clientExclusive: True
+    autoPopulate: False
+    temporary: True
+    event: !type:StartPlacementActionEvent
+      placementOption: SnapgridCenter
+      entityType: RailingRound
+  assignments:
+  - 5: 9
+- action: !type:InstantActionComponent
+    icon:
       entity: AirlockMaintLocked
     keywords: []
     checkCanInteract: False

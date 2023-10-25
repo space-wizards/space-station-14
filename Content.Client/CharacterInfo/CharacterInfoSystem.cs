@@ -59,7 +59,7 @@ public sealed class CharacterInfoSystem : EntitySystem
     public readonly record struct CharacterData(
         EntityUid Entity,
         string Job,
-        Dictionary<string, List<ConditionInfo>> Objectives,
+        Dictionary<string, List<ObjectiveInfo>> Objectives,
         string? Briefing,
         string EntityName
     );

@@ -124,6 +124,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
                 {
                     if (component.Deleted || !HasComp<GhostTakeoverAvailableComponent>(uid))
                         return;
+
                     RemCompDeferred<GhostTakeoverAvailableComponent>(uid);
                     RemCompDeferred<GhostRoleComponent>(uid);
                     _popup.PopupEntity(Loc.GetString(component.StopSearchVerbPopup), uid, args.User);
@@ -132,5 +133,27 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
             };
             args.Verbs.Add(verb);
         }
+    }
+
+    /// <summary>
+    /// If there is a player present, kicks it out.
+    /// If not, prevents future ghosts taking it.
+    /// No popups are made, but appearance is updated.
+    /// </summary>
+    public void Wipe(EntityUid uid)
+    {
+        if (TryComp<MindContainerComponent>(uid, out var mindContainer) &&
+            mindContainer.HasMind &&
+            _mind.TryGetMind(uid, out var mindId, out var mind))
+        {
+            _mind.TransferTo(mindId, null, mind: mind);
+        }
+
+        if (!HasComp<GhostTakeoverAvailableComponent>(uid))
+            return;
+
+        RemCompDeferred<GhostTakeoverAvailableComponent>(uid);
+        RemCompDeferred<GhostRoleComponent>(uid);
+        UpdateAppearance(uid, ToggleableGhostRoleStatus.Off);
     }
 }

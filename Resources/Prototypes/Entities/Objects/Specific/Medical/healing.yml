@@ -443,6 +443,22 @@
           Quantity: 10
 
 - type: entity
+  name: charcoal pill (10u)
+  parent: Pill
+  id: PillCharcoal
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    state: pill21
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Charcoal
+          Quantity: 10
+
+- type: entity
   name: romerol pill
   parent: Pill
   id: PillRomerol
@@ -584,6 +600,58 @@
           maxVol: 15
           reagents:
             - ReagentId: Ambuzol
+              Quantity: 15
+
+- type: entity
+  name: sigynate syringe
+  parent: BaseSyringe
+  id: SyringeSigynate
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Sigynate
+              Quantity: 15
+
+- type: entity
+  name: ethylredoxrazine syringe
+  parent: BaseSyringe
+  id: SyringeEthylredoxrazine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Ethylredoxrazine
+              Quantity: 15
+
+- type: entity
+  name: phalanximine syringe
+  parent: BaseSyringe
+  id: SyringePhalanximine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Phalanximine
+              Quantity: 15
+
+- type: entity
+  name: saline syringe
+  parent: BaseSyringe
+  id: SyringeSaline
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Saline
               Quantity: 15
 
 #this is where all the syringes are so i didn't know where to put it

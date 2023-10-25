@@ -3,7 +3,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -26,10 +25,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
         SubscribeLocalEvent<MaterialStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentGetState>(OnGetInsertingState);
-        SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentHandleState>(OnHandleInsertingState);
         SubscribeLocalEvent<InsertingMaterialStorageComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
@@ -50,36 +45,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     private void OnMapInit(EntityUid uid, MaterialStorageComponent component, MapInitEvent args)
     {
         _appearance.SetData(uid, MaterialStorageVisuals.Inserting, false);
-    }
-
-    private void OnGetState(EntityUid uid, MaterialStorageComponent component, ref ComponentGetState args)
-    {
-        args.State = new MaterialStorageComponentState(component.Storage, component.MaterialWhiteList);
-    }
-
-    private void OnHandleState(EntityUid uid, MaterialStorageComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MaterialStorageComponentState state)
-            return;
-
-        component.Storage = new Dictionary<string, int>(state.Storage);
-
-        if (state.MaterialWhitelist != null)
-            component.MaterialWhiteList = new List<string>(state.MaterialWhitelist);
-    }
-
-    private void OnGetInsertingState(EntityUid uid, InsertingMaterialStorageComponent component, ref ComponentGetState args)
-    {
-        args.State = new InsertingMaterialStorageComponentState(component.EndTime, component.MaterialColor);
-    }
-
-    private void OnHandleInsertingState(EntityUid uid, InsertingMaterialStorageComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not InsertingMaterialStorageComponentState state)
-            return;
-
-        component.EndTime = state.EndTime;
-        component.MaterialColor = state.MaterialColor;
     }
 
     private void OnUnpaused(EntityUid uid, InsertingMaterialStorageComponent component, ref EntityUnpausedEvent args)
@@ -222,7 +187,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!Resolve(toInsert, ref material, ref composition, false))
             return false;
 
-        if (storage.EntityWhitelist?.IsValid(toInsert) == false)
+        if (storage.Whitelist?.IsValid(toInsert) == false)
             return false;
 
         if (HasComp<UnremoveableComponent>(toInsert))

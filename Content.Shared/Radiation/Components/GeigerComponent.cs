@@ -9,41 +9,41 @@ namespace Content.Shared.Radiation.Components;
 ///     Geiger counter that shows current radiation level.
 ///     Can be added as a component to clothes.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedGeigerSystem))]
 public sealed partial class GeigerComponent : Component
 {
     /// <summary>
     ///     If true it will be active only when player equipped it.
     /// </summary>
-    [DataField("attachedToSuit")]
+    [DataField]
     public bool AttachedToSuit;
 
     /// <summary>
     ///     Is geiger counter currently active?
     ///     If false attached entity will ignore any radiation rays.
     /// </summary>
-    [DataField("isEnabled")]
+    [DataField, AutoNetworkedField]
     public bool IsEnabled;
 
     /// <summary>
     ///     Should it shows examine message with current radiation level?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("showExamine")]
+    [DataField]
     public bool ShowExamine;
 
     /// <summary>
     ///     Should it shows item control when equipped by player?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("showControl")]
+    [DataField]
     public bool ShowControl;
 
     /// <summary>
     ///     Map of sounds that should be play on loop for different radiation levels.
     /// </summary>
-    [DataField("sounds")]
+    [DataField]
     public Dictionary<GeigerDangerLevel, SoundSpecifier> Sounds = new()
     {
         {GeigerDangerLevel.Low, new SoundPathSpecifier("/Audio/Items/Geiger/low.ogg")},
@@ -55,13 +55,13 @@ public sealed partial class GeigerComponent : Component
     /// <summary>
     ///     Current radiation level in rad per second.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public float CurrentRadiation;
 
     /// <summary>
     ///     Estimated radiation danger level.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public GeigerDangerLevel DangerLevel = GeigerDangerLevel.None;
 
     /// <summary>
@@ -69,7 +69,7 @@ public sealed partial class GeigerComponent : Component
     ///     Because sound is annoying, geiger counter clicks will play
     ///     only for player that equipped it.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public EntityUid? User;
 
     /// <summary>
@@ -83,15 +83,6 @@ public sealed partial class GeigerComponent : Component
     ///     Played only for current user.
     /// </summary>
     public IPlayingAudioStream? Stream;
-}
-
-[Serializable, NetSerializable]
-public sealed class GeigerComponentState : ComponentState
-{
-    public float CurrentRadiation;
-    public GeigerDangerLevel DangerLevel;
-    public bool IsEnabled;
-    public NetEntity? User;
 }
 
 [Serializable, NetSerializable]

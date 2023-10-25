@@ -23,7 +23,7 @@ public sealed class EggLayerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EggLayerComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<EggLayerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EggLayerComponent, EggLayInstantActionEvent>(OnEggLayAction);
     }
 
@@ -50,12 +50,9 @@ public sealed class EggLayerSystem : EntitySystem
         }
     }
 
-    private void OnComponentInit(EntityUid uid, EggLayerComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
     {
-        if (string.IsNullOrWhiteSpace(component.EggLayAction))
-            return;
-
-        _actions.AddAction(uid, Spawn(component.EggLayAction), uid);
+        _actions.AddAction(uid, ref component.Action, component.EggLayAction);
         component.CurrentEggLayCooldown = _random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax);
     }
 

@@ -3,8 +3,8 @@
   id: DrinkBottleBaseFull
   abstract: true
   components:
-  - type: Drink
-    openSounds:
+  - type: Openable
+    sound:
       collection: bottleOpenSounds
   - type: SolutionContainerManager
     solutions:
@@ -39,6 +39,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tool
+    qualities:
+    - Rolling
+    speed: 0.75 # not as good as a rolling pin but does the job
   - type: TrashOnEmpty
     solution: drink
 
@@ -130,8 +134,9 @@
         reagents:
         - ReagentId: Grenadine
           Quantity: 100
-  - type: Drink
-    isOpen: true
+  # intended use is to spike drinks so starts open
+  - type: Openable
+    opened: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
 

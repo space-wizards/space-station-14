@@ -10,13 +10,13 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Shared.FixedPoint;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Reflect;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -26,7 +26,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -54,12 +53,12 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void OnBallisticPrice(EntityUid uid, BallisticAmmoProviderComponent component, ref PriceCalculationEvent args)
     {
-        if (string.IsNullOrEmpty(component.FillProto) || component.UnspawnedCount == 0)
+        if (string.IsNullOrEmpty(component.Proto) || component.UnspawnedCount == 0)
             return;
 
-        if (!ProtoManager.TryIndex<EntityPrototype>(component.FillProto, out var proto))
+        if (!ProtoManager.TryIndex<EntityPrototype>(component.Proto, out var proto))
         {
-            Log.Error($"Unable to find fill prototype for price on {component.FillProto} on {ToPrettyString(uid)}");
+            Log.Error($"Unable to find fill prototype for price on {component.Proto} on {ToPrettyString(uid)}");
             return;
         }
 
@@ -239,7 +238,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             if (!Deleted(hitEntity))
                             {
-                                if (dmg.Total > FixedPoint2.Zero)
+                                if (dmg.Any())
                                 {
                                     _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
                                 }
@@ -305,7 +304,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (user != null)
         {
             var projectile = EnsureComp<ProjectileComponent>(uid);
-            Projectiles.SetShooter(projectile, user.Value);
+            Projectiles.SetShooter(uid, projectile, user.Value);
             projectile.Weapon = gunUid;
         }
 

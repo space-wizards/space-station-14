@@ -2,6 +2,7 @@ using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
@@ -29,6 +30,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly PointLightSystem _pointLight = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
@@ -458,6 +460,8 @@ public sealed class NukeSystem : EntitySystem
 
         // turn on the spinny light
         _pointLight.SetEnabled(uid, true);
+        // enable the navmap beacon for people to find it
+        _navMap.SetBeaconEnabled(uid, true);
 
         _itemSlots.SetLock(uid, component.DiskSlot, true);
         if (!nukeXform.Anchored)
@@ -500,6 +504,8 @@ public sealed class NukeSystem : EntitySystem
 
         // turn off the spinny light
         _pointLight.SetEnabled(uid, false);
+        // disable the navmap beacon now that its disarmed
+        _navMap.SetBeaconEnabled(uid, false);
 
         // start bomb cooldown
         _itemSlots.SetLock(uid, component.DiskSlot, false);

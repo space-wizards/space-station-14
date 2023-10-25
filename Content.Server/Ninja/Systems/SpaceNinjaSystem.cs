@@ -1,17 +1,14 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Communications;
 using Content.Server.Chat.Managers;
-using Content.Server.StationEvents.Components;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Ghost.Roles.Events;
-using Content.Server.Objectives;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Server.Research.Systems;
 using Content.Server.Roles;
+using Content.Server.GenericAntag;
 using Content.Server.Warps;
 using Content.Shared.Alert;
 using Content.Shared.Clothing.EntitySystems;
@@ -22,16 +19,12 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Roles;
-using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using Content.Server.Objectives.Components;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -42,28 +35,27 @@ namespace Content.Server.Ninja.Systems;
 // TODO: when criminal records is merged, hack it to set everyone to arrest
 
 /// <summary>
-/// Main ninja system that handles ninja setup and greentext, provides helper methods for the rest of the code to use.
+/// Main ninja system that handles ninja setup, provides helper methods for the rest of the code to use.
 /// </summary>
 public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly GenericAntagSystem _genericAntag = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
+        SubscribeLocalEvent<SpaceNinjaComponent, GenericAntagCreatedEvent>(OnNinjaCreated);
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
@@ -79,34 +71,16 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     }
 
     /// <summary>
-    /// Turns the player into a space ninja
-    /// </summary>
-    public void MakeNinja(EntityUid mindId, MindComponent mind)
-    {
-        if (mind.OwnedEntity == null)
-            return;
-
-        // prevent double ninja'ing
-        var user = mind.OwnedEntity.Value;
-        if (HasComp<SpaceNinjaComponent>(user))
-            return;
-
-        AddComp<SpaceNinjaComponent>(user);
-        SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
-        GreetNinja(mindId, mind);
-    }
-
-    /// <summary>
     /// Download the given set of nodes, returning how many new nodes were downloaded.
     /// </summary>
     private int Download(EntityUid uid, List<string> ids)
     {
-        if (!_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
+        if (!_mind.TryGetObjectiveComp<StealResearchConditionComponent>(uid, out var obj))
             return 0;
 
-        var oldCount = role.DownloadedNodes.Count;
-        role.DownloadedNodes.UnionWith(ids);
-        var newCount = role.DownloadedNodes.Count;
+        var oldCount = obj.DownloadedNodes.Count;
+        obj.DownloadedNodes.UnionWith(ids);
+        var newCount = obj.DownloadedNodes.Count;
         return newCount - oldCount;
     }
 
@@ -114,29 +88,16 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// Returns a ninja's gamerule config data.
     /// If the gamerule was not started then it will be started automatically.
     /// </summary>
-    public NinjaRuleComponent? NinjaRule(EntityUid uid, SpaceNinjaComponent? comp = null)
+    public NinjaRuleComponent? NinjaRule(EntityUid uid, GenericAntagComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return null;
 
-        // already exists so just check it
-        if (comp.Rule != null)
-            return CompOrNull<NinjaRuleComponent>(comp.Rule);
-
-        // start it
-        _gameTicker.StartGameRule("Ninja", out var rule);
-        comp.Rule = rule;
-
-        if (!TryComp<NinjaRuleComponent>(rule, out var ninjaRule))
+        // mind not added yet so no rule
+        if (comp.RuleEntity == null)
             return null;
 
-        // add ninja mind to the rule's list for objective showing
-        if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.Mind != null)
-        {
-            ninjaRule.Minds.Add(mindContainer.Mind.Value);
-        }
-
-        return ninjaRule;
+        return CompOrNull<NinjaRuleComponent>(comp.RuleEntity);
     }
 
     // TODO: can probably copy paste borg code here
@@ -153,7 +114,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         if (GetNinjaBattery(uid, out _, out var battery))
         {
-             var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 8);
+            var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 8);
             _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
         }
         else
@@ -186,23 +147,17 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     }
 
     /// <summary>
-    /// Greets the ninja when a ghost takes over a ninja, if that happens.
-    /// </summary>
-    private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)
-    {
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.Mind != null)
-            GreetNinja(mind.Mind.Value);
-    }
-
-    /// <summary>
     /// Set up everything for ninja to work and send the greeting message/sound.
+    /// Objectives are added by <see cref="GenericAntagSystem"/>.
     /// </summary>
-    private void GreetNinja(EntityUid mindId, MindComponent? mind = null)
+    private void OnNinjaCreated(EntityUid uid, SpaceNinjaComponent comp, ref GenericAntagCreatedEvent args)
     {
-        if (!Resolve(mindId, ref mind) || mind.OwnedEntity == null || mind.Session == null)
+        var mindId = args.MindId;
+        var mind = args.Mind;
+
+        if (mind.Session == null)
             return;
 
-        var uid = mind.OwnedEntity.Value;
         var config = NinjaRule(uid);
         if (config == null)
             return;
@@ -215,25 +170,14 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
-        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent, TransformComponent>();
-        var map = Transform(uid).MapID;
-        while (query.MoveNext(out var warpUid, out _, out var warp, out var xform))
+        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent>();
+        while (query.MoveNext(out var warpUid, out _, out var warp))
         {
-            if (warp.Location != null)
-                warps.Add(warpUid);
+            warps.Add(warpUid);
         }
 
         if (warps.Count > 0)
             role.SpiderChargeTarget = _random.Pick(warps);
-
-        // assign objectives - must happen after spider charge target so that the obj requirement works
-        foreach (var objective in config.Objectives)
-        {
-            if (!_mind.TryAddObjective(mindId, objective, mind))
-            {
-                Log.Error($"Failed to add {objective} to ninja {mind.OwnedEntity.Value}");
-            }
-        }
 
         var session = mind.Session;
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
@@ -249,7 +193,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         if (ninja.Suit == null)
             return;
 
-        float wattage = _suit.SuitWattage(ninja.Suit.Value);
+        float wattage = Suit.SuitWattage(ninja.Suit.Value);
 
         SetSuitPowerAlert(uid, ninja);
         if (!TryUseCharge(uid, wattage * frameTime))
@@ -269,11 +213,11 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             return;
 
         // this popup is serverside since door emag logic is serverside (power funnies)
-        _popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
+        Popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
 
         // handle greentext
-        if (_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
-            role.DoorsJacked++;
+        if (_mind.TryGetObjectiveComp<DoorjackConditionComponent>(uid, out var obj))
+            obj.DoorsJacked++;
     }
 
     /// <summary>
@@ -286,14 +230,14 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             ? Loc.GetString("ninja-research-steal-fail")
             : Loc.GetString("ninja-research-steal-success", ("count", gained), ("server", args.Target));
 
-        _popup.PopupEntity(str, uid, uid, PopupType.Medium);
+        Popup.PopupEntity(str, uid, uid, PopupType.Medium);
     }
 
     private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ref ThreatCalledInEvent args)
     {
-        if (_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
+        if (_mind.TryGetObjectiveComp<TerrorConditionComponent>(uid, out var obj))
         {
-            role.CalledInThreat = true;
+            obj.CalledInThreat = true;
         }
     }
 }

@@ -7,7 +7,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.Buckle;
 
@@ -18,9 +17,6 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<StrapComponent, ComponentStartup>(OnStrapStartup);
         SubscribeLocalEvent<StrapComponent, ComponentShutdown>(OnStrapShutdown);
         SubscribeLocalEvent<StrapComponent, ComponentRemove>((_, c, _) => StrapRemoveAll(c));
-
-        SubscribeLocalEvent<StrapComponent, ComponentGetState>(OnStrapGetState);
-        SubscribeLocalEvent<StrapComponent, ComponentHandleState>(OnStrapHandleState);
 
         SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(OnStrapEntModifiedFromContainer);
         SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(OnStrapEntModifiedFromContainer);
@@ -39,7 +35,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnStrapStartup(EntityUid uid, StrapComponent component, ComponentStartup args)
     {
-        AppearanceSystem.SetData(uid, StrapVisuals.State, component.BuckledEntities.Count != 0);
+        Appearance.SetData(uid, StrapVisuals.State, component.BuckledEntities.Count != 0);
     }
 
     private void OnStrapShutdown(EntityUid uid, StrapComponent component, ComponentShutdown args)
@@ -48,24 +44,6 @@ public abstract partial class SharedBuckleSystem
             return;
 
         StrapRemoveAll(component);
-    }
-
-    private void OnStrapGetState(EntityUid uid, StrapComponent component, ref ComponentGetState args)
-    {
-        args.State = new StrapComponentState(component.Position, component.BuckleOffset, GetNetEntitySet(component.BuckledEntities), component.MaxBuckleDistance, component.OccupiedSize);
-    }
-
-    private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not StrapComponentState state)
-            return;
-
-        component.Position = state.Position;
-        component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
-        component.BuckledEntities.Clear();
-        component.BuckledEntities.UnionWith(EnsureEntitySet<StrapComponent>(state.BuckledEntities, uid));
-        component.MaxBuckleDistance = state.MaxBuckleDistance;
-        component.OccupiedSize = state.OccupiedSize;
     }
 
     private void OnStrapEntModifiedFromContainer(EntityUid uid, StrapComponent component, ContainerModifiedMessage message)
@@ -90,8 +68,8 @@ public abstract partial class SharedBuckleSystem
             !Resolve(strapUid, ref strapComp, false))
             return;
 
-        var contained = _containerSystem.TryGetContainingContainer(buckleUid, out var ownContainer);
-        var strapContained = _containerSystem.TryGetContainingContainer(strapUid, out var strapContainer);
+        var contained = _container.TryGetContainingContainer(buckleUid, out var ownContainer);
+        var strapContained = _container.TryGetContainingContainer(strapUid, out var strapContainer);
 
         if (contained != strapContained || ownContainer != strapContainer)
         {
@@ -133,7 +111,7 @@ public abstract partial class SharedBuckleSystem
         {
             var buckledComp = Comp<BuckleComponent>(entity);
 
-            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
+            if (!_interaction.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                 continue;
 
             var verb = new InteractionVerb()
@@ -158,7 +136,7 @@ public abstract partial class SharedBuckleSystem
             buckle.BuckledTo != uid &&
             args.User != uid &&
             StrapHasSpace(uid, buckle, component) &&
-            _interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckle.Range))
+            _interaction.InRangeUnobstructed(args.User, args.Target, range: buckle.Range))
         {
             InteractionVerb verb = new()
             {
@@ -173,11 +151,11 @@ public abstract partial class SharedBuckleSystem
         if (args.Using is {Valid: true} @using &&
             TryComp<BuckleComponent>(@using, out var usingBuckle) &&
             StrapHasSpace(uid, usingBuckle, component) &&
-            _interactionSystem.InRangeUnobstructed(@using, args.Target, range: usingBuckle.Range))
+            _interaction.InRangeUnobstructed(@using, args.Target, range: usingBuckle.Range))
         {
             // Check that the entity is unobstructed from the target (ignoring the user).
             bool Ignored(EntityUid entity) => entity == args.User || entity == args.Target || entity == @using;
-            if (!_interactionSystem.InRangeUnobstructed(@using, args.Target, usingBuckle.Range, predicate: Ignored))
+            if (!_interaction.InRangeUnobstructed(@using, args.Target, usingBuckle.Range, predicate: Ignored))
                 return;
 
             var isPlayer = _playerManager.TryGetSessionByEntity(@using, out var _);
@@ -269,7 +247,7 @@ public abstract partial class SharedBuckleSystem
 
         bool Ignored(EntityUid entity) => entity == userUid || entity == buckleUid || entity == targetUid;
 
-        return _interactionSystem.InRangeUnobstructed(targetUid, buckleUid, buckleComp.Range, predicate: Ignored);
+        return _interaction.InRangeUnobstructed(targetUid, buckleUid, buckleComp.Range, predicate: Ignored);
     }
 
     /// <summary>
@@ -312,9 +290,9 @@ public abstract partial class SharedBuckleSystem
 
         strapComp.OccupiedSize += buckleComp.Size;
 
-        AppearanceSystem.SetData(buckleUid, StrapVisuals.RotationAngle, strapComp.Rotation);
+        Appearance.SetData(buckleUid, StrapVisuals.RotationAngle, strapComp.Rotation);
 
-        AppearanceSystem.SetData(strapUid, StrapVisuals.State, true);
+        Appearance.SetData(strapUid, StrapVisuals.State, true);
 
         Dirty(strapUid, strapComp);
         return true;

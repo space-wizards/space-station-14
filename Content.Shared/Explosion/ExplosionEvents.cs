@@ -8,19 +8,15 @@ namespace Content.Shared.Explosion;
 ///     Raised directed at an entity to determine its explosion resistance, probably right before it is about to be
 ///     damaged by one.
 /// </summary>
-public sealed class GetExplosionResistanceEvent : EntityEventArgs, IInventoryRelayEvent
+[ByRefEvent]
+public record struct GetExplosionResistanceEvent(string ExplosionPrototype) : IInventoryRelayEvent
 {
     /// <summary>
     ///     A coefficient applied to overall explosive damage.
     /// </summary>
     public float DamageCoefficient = 1;
 
-    public readonly string ExplotionPrototype;
+    public readonly string ExplosionPrototype = ExplosionPrototype;
 
     SlotFlags IInventoryRelayEvent.TargetSlots =>  ~SlotFlags.POCKET;
-
-    public GetExplosionResistanceEvent(string id)
-    {
-        ExplotionPrototype = id;
-    }
 }

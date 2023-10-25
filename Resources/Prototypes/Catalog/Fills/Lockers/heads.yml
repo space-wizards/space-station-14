@@ -6,6 +6,7 @@
   - type: StorageFill
     contents:
       - id: ClothingNeckCloakQm
+      - id: BoxFolderQmClipboard
       - id: ClothingHeadsetCargo
       - id: ClothingUniformJumpsuitQMTurtleneck
       - id: ClothingUniformJumpskirtQMTurtleneck
@@ -55,6 +56,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: ClothingHeadHatCapcap
 
 - type: entity
   id: LockerCaptainFilled

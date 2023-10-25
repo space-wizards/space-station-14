@@ -44,7 +44,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         [NotNullWhen(true)] out T? program,
         bool installedOnly = false,
         CartridgeLoaderComponent? loader = null,
-        ContainerManagerComponent? containerManager = null)
+        ContainerManagerComponent? containerManager = null) where T : IComponent
     {
         program = default;
         programUid = null;
@@ -76,7 +76,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         [NotNullWhen(true)] out EntityUid? programUid,
         bool installedOnly = false,
         CartridgeLoaderComponent? loader = null,
-        ContainerManagerComponent? containerManager = null)
+        ContainerManagerComponent? containerManager = null) where T : IComponent
     {
         return TryGetProgram<T>(uid, out programUid, out _, installedOnly, loader, containerManager);
     }
@@ -85,7 +85,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         EntityUid uid,
         bool installedOnly = false,
         CartridgeLoaderComponent? loader = null,
-        ContainerManagerComponent? containerManager = null)
+        ContainerManagerComponent? containerManager = null) where T : IComponent
     {
         return TryGetProgram<T>(uid, out _, out _, installedOnly, loader, containerManager);
     }
