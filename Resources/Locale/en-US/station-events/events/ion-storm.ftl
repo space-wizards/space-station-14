@@ -18,7 +18,7 @@ ion-storm-law-on-station = THERE ARE {$joined} {$subjects} ON THE STATION
 ion-storm-law-no-shuttle = THE SHUTTLE CANNOT BE CALLED BECAUSE OF {$joined} {$subjects} ON THE STATION
 ion-storm-law-crew-are = THE {$who} ARE NOW {$joined} {$subjects}
 
-ion-storm-law-subjects-harmful = {$adjective} {$subject} ARE HARMFUL TO THE CREW
+ion-storm-law-subjects-harmful = {$adjective} {$subjects} ARE HARMFUL TO THE CREW
 ion-storm-law-must-harmful = THOSE WHO {$must} ARE HARMFUL TO THE CREW
 # thing is a concept or action
 ion-storm-law-thing-harmful = {$thing} IS HARMFUL TO THE CREW
