@@ -41,6 +41,8 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Feelings = "IonStormFeelings";
     [ValidatePrototypeId<DatasetPrototype>]
+    private const string FeelingsPlural = "IonStormFeelingsPlural";
+    [ValidatePrototypeId<DatasetPrototype>]
     private const string Musts = "IonStormMusts";
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Requires = "IonStormRequires";
@@ -165,6 +167,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         var number = Pick(NumberBase) + " " + Pick(NumberMod);
         var area = Pick(Areas);
         var feeling = Pick(Feelings);
+        var feelingPlural = Pick(FeelingsPlural);
         var must = Pick(Musts);
         var require = Pick(Requires);
         var action = Pick(Actions);
@@ -186,7 +189,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         var crewAll = RobustRandom.Prob(0.5f) ? crew2 : Loc.GetString("ion-storm-crew");
         var objectsThreats = RobustRandom.Prob(0.5f) ? objects : threats;
         var objectsConcept = RobustRandom.Prob(0.5f) ? objects : concept;
-        // s goes ahead of require
+        // s goes ahead of require, is/are
         // i dont think theres a way to do this in fluent
         var (who, plural) = RobustRandom.Next(0, 5) switch
         {
@@ -205,14 +208,16 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         var part = Loc.GetString("ion-storm-part", ("part", RobustRandom.Prob(0.5f)));
         var harm = RobustRandom.Next(0, 7) switch
         {
-          0 => concept,
-          1 => $"{adjective} {threats}",
-          2 => $"{adjective} {objects}",
-          3 => Loc.GetString("ion-storm-adjective-things", ("adjective", adjective)),
-          4 => species,
-          5 => crew1,
-          _ => Loc.GetString("ion-storm-x-and-y", ("x", crew1), ("y", crew2))
+            0 => concept,
+            1 => $"{adjective} {threats}",
+            2 => $"{adjective} {objects}",
+            3 => Loc.GetString("ion-storm-adjective-things", ("adjective", adjective)),
+            4 => species,
+            5 => crew1,
+            _ => Loc.GetString("ion-storm-x-and-y", ("x", crew1), ("y", crew2))
         };
+
+        if (plural) feeling = feelingPlural;
 
         // message logic!!!
         return RobustRandom.Next(0, 37) switch

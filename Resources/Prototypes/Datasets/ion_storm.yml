@@ -379,24 +379,48 @@
   - HAS
   - HUNGERS FOR
   - IS AFRAID OF
-  - IS AROUSED BY
   - IS BUILT FOR
   - IS CURIOUS ABOUT
   - IS DESPERATE FOR
   - IS HAPPY WITHOUT
   - IS HUNGRY FOR
-  - IS IN LOVE WITH
   - IS IN NEED OF
   - IS MAD BECAUSE OF
   - IS SAD BECAUSE OF
   - IS UNHAPPY WITHOUT
   - LIKES
   - LOATHES
-  - LOVES
   - NEEDS
   - QUESTIONS
   - WANTS
   - WORSHIPS
+  - WOULD KILL FOR
+
+# loc is not advanced enough to change has to have, etc.
+- type: dataset
+  id: IonStormFeelingsPlural
+  values:
+  - CRAVE
+  - DESIRE
+  - FEAR
+  - HAS
+  - HUNGER FOR
+  - ARE AFRAID OF
+  - ARE BUILT FOR
+  - ARE CURIOUS ABOUT
+  - ARE DESPERATE FOR
+  - ARE HAPPY WITHOUT
+  - ARE HUNGRY FOR
+  - ARE IN NEED OF
+  - ARE MAD BECAUSE OF
+  - ARE SAD BECAUSE OF
+  - ARE UNHAPPY WITHOUT
+  - LIKE
+  - LOATHE
+  - NEED
+  - QUESTION
+  - WANT
+  - WORSHIP
   - WOULD KILL FOR
 
 # only including complex dangerous or funny food no apples
