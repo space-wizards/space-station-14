@@ -586,10 +586,8 @@
   suffix: Toy Unsafe, Snacks
   name: syndicate snack box
   components:
-  - type: Item
-    size: 64
   - type: Storage
-    capacity: 64 # need more room for goodies
+    maxSlots: 9
   - type: StorageFill
     contents:
     # toy
