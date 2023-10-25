@@ -98,7 +98,7 @@
     state: plushie_h
   - type: Item
     sprite: Objects/Fun/toys.rsi
-    state: plushie_h
+    heldPrefix: bee
   - type: Extractable
     grindableSolutionName: bee
   - type: SolutionContainerManager
@@ -113,8 +113,6 @@
     equippedPrefix: bee
     slots:
     - HEAD
-  - type: Item
-    heldPrefix: bee
 
 - type: entity
   parent: BasePlushie
