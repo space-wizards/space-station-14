@@ -21,6 +21,6 @@ public sealed partial class NukeOperativeComponent : Component
     /// <summary>
     ///     
     /// </summary>
-    [DataField("syndicateStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<StatusIconPrototype> SyndStatusIcon = "SyndicateFaction";
 }
