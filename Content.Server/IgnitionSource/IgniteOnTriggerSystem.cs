@@ -35,21 +35,21 @@ public sealed class IgniteOnTriggerSystem : EntitySystem
             if (_timing.CurTime < comp.IgnitedUntil)
                 continue;
 
-            _source.SetIgnited(uid, false, source);
+            _source.SetIgnited((uid, source), false);
         }
     }
 
-    private void OnTrigger(EntityUid uid, IgniteOnTriggerComponent comp, TriggerEvent args)
+    private void OnTrigger(Entity<IgniteOnTriggerComponent> ent, ref TriggerEvent args)
     {
         // prevent spamming sound and ignition
-        TryComp<UseDelayComponent>(uid, out var delay);
-        if (_useDelay.ActiveDelay(uid, delay))
+        TryComp<UseDelayComponent>(ent, out var delay);
+        if (_useDelay.ActiveDelay(ent, delay))
             return;
 
-        _source.SetIgnited(uid);
-        _audio.PlayPvs(comp.IgniteSound, uid);
+        _source.SetIgnited(ent.Owner);
+        _audio.PlayPvs(ent.Comp.IgniteSound, ent);
 
-        _useDelay.BeginDelay(uid, delay);
-        comp.IgnitedUntil = _timing.CurTime + comp.IgnitedTime;
+        _useDelay.BeginDelay(ent, delay);
+        ent.Comp.IgnitedUntil = _timing.CurTime + ent.Comp.IgnitedTime;
     }
 }
