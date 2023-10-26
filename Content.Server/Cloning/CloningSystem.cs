@@ -109,6 +109,8 @@ namespace Content.Server.Cloning
                 mindComp.Mind != null)
                 return;
 
+            // TODO: Fire off event here?
+            // Alternatively: fire off a Tranfer Event?
             _mindSystem.TransferTo(mindId, entity, ghostCheckOverride: true, mind: mind);
             _mindSystem.UnVisit(mindId, mind);
             ClonesWaitingForMind.Remove(mind);

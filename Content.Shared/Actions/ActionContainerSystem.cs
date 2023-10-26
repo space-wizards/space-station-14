@@ -46,7 +46,7 @@ public sealed class ActionContainerSystem : EntitySystem
             if (ShouldTransferAllActions(uid, component))
             {
                 // TODO: Prevent some actions from being transferred (combat mode)
-                // TODO: Prevent mind actions from following to a different ghost role
+                // TODO: Prevent mind actions from following to a different ghost role (check ghost roles on transfer?)
                 TransferAllActions(uid, mindId, component, mindComp.MindActionsContainer);
             }
             else
