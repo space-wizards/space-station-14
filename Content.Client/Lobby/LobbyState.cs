@@ -87,6 +87,10 @@ namespace Content.Client.Lobby
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
+
+            _preferencesManager.OnServerDataLoaded += PreferencesDataLoaded;
+
+            _lobby.CharacterPreview.UpdateUI();
         }
 
         protected override void Shutdown()
@@ -107,6 +111,13 @@ namespace Content.Client.Lobby
 
             _characterSetup?.Dispose();
             _characterSetup = null;
+
+            _preferencesManager.OnServerDataLoaded -= PreferencesDataLoaded;
+        }
+
+        private void PreferencesDataLoaded()
+        {
+            _lobby?.CharacterPreview.UpdateUI();
         }
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)

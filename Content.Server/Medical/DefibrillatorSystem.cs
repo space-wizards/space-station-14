@@ -177,7 +177,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             return false;
 
         _audio.PlayPvs(component.ChargeSound, uid);
-        return _doAfter.TryStartDoAfter(new DoAfterArgs(user, component.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
+        return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
             uid, target, uid)
         {
             BlockDuplicate = true,
@@ -230,8 +230,6 @@ public sealed class DefibrillatorSystem : EntitySystem
                 // notify them they're being revived.
                 if (mind.CurrentEntity != target)
                 {
-                    _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
-                        InGameICChatType.Speak, true);
                     _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind), session);
                 }
             }

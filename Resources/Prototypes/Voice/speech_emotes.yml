@@ -88,6 +88,11 @@
 
 
 - type: emote
+  id: Honk
+  category: Vocal
+  chatMessages: [honks]
+
+- type: emote
   id: Sigh
   category: Vocal
   chatMessages: [sighs]

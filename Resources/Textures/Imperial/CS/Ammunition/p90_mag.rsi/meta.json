@@ -1,0 +1,45 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "high-velocity"
+        },
+        {
+            "name": "practice"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "red-icon"
+        },
+        {
+            "name": "rubber"
+        },
+        {
+            "name": "mag-1"
+        },
+        {
+            "name": "mag-2"
+        },
+        {
+            "name": "mag-3"
+        },
+        {
+            "name": "mag-4"
+        },
+        {
+            "name": "mag-5"
+        },
+        {
+            "name": "mag-6"
+        }
+    ]
+}

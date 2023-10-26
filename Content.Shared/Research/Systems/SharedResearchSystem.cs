@@ -3,6 +3,7 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Systems;
 
@@ -40,7 +41,7 @@ public abstract class SharedResearchSystem : EntitySystem
 
             component.CurrentTechnologyCards.Add(selected.ID);
         }
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public List<TechnologyPrototype> GetAvailableTechnologies(EntityUid uid, TechnologyDatabaseComponent? component = null)
@@ -142,6 +143,59 @@ public abstract class SharedResearchSystem : EntitySystem
         return tier - 1;
     }
 
+    public FormattedMessage GetTechnologyDescription(
+        TechnologyPrototype technology,
+        bool includeCost = true,
+        bool includeTier = true,
+        bool includePrereqs = false,
+        TechDisciplinePrototype? disciplinePrototype = null)
+    {
+        var description = new FormattedMessage();
+        if (includeTier)
+        {
+            disciplinePrototype ??= PrototypeManager.Index(technology.Discipline);
+            description.AddMarkup(Loc.GetString("research-console-tier-discipline-info",
+                ("tier", technology.Tier), ("color", disciplinePrototype.Color), ("discipline", Loc.GetString(disciplinePrototype.Name))));
+            description.PushNewline();
+        }
+
+        if (includeCost)
+        {
+            description.AddMarkup(Loc.GetString("research-console-cost", ("amount", technology.Cost)));
+            description.PushNewline();
+        }
+
+        if (includePrereqs && technology.TechnologyPrerequisites.Any())
+        {
+            description.AddMarkup(Loc.GetString("research-console-prereqs-list-start"));
+            foreach (var recipe in technology.TechnologyPrerequisites)
+            {
+                var techProto = PrototypeManager.Index(recipe);
+                description.PushNewline();
+                description.AddMarkup(Loc.GetString("research-console-prereqs-list-entry",
+                    ("text", Loc.GetString(techProto.Name))));
+            }
+            description.PushNewline();
+        }
+
+        description.AddMarkup(Loc.GetString("research-console-unlocks-list-start"));
+        foreach (var recipe in technology.RecipeUnlocks)
+        {
+            var recipeProto = PrototypeManager.Index(recipe);
+            description.PushNewline();
+            description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry",
+                ("name",recipeProto.Name)));
+        }
+        foreach (var generic in technology.GenericUnlocks)
+        {
+            description.PushNewline();
+            description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry-generic",
+                ("text", Loc.GetString(generic.UnlockDescription))));
+        }
+
+        return description;
+    }
+
     /// <summary>
     ///     Returns whether a technology is unlocked on this database or not.
     /// </summary>
@@ -169,6 +223,18 @@ public abstract class SharedResearchSystem : EntitySystem
         if (prototype.Tier < discipline.LockoutTier)
             return;
         component.MainDiscipline = prototype.Discipline;
-        Dirty(component);
+        Dirty(uid, component);
+    }
+
+    /// <summary>
+    /// Clear all unlocked technologies from the database.
+    /// </summary>
+    public void ClearTechs(EntityUid uid, TechnologyDatabaseComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp) || comp.UnlockedTechnologies.Count == 0)
+            return;
+
+        comp.UnlockedTechnologies.Clear();
+        Dirty(uid, comp);
     }
 }

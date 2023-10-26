@@ -1,0 +1,84 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "base-1"
+        },
+        {
+            "name": "base-2"
+        },
+        {
+            "name": "base-3"
+        },
+        {
+            "name": "base-4"
+        },
+        {
+            "name": "base-5"
+        },
+        {
+            "name": "base-6"
+        },
+        {
+            "name": "base-7"
+        },
+        {
+            "name": "base-8"
+        },
+        {
+            "name": "practice-1"
+        },
+        {
+            "name": "practice-2"
+        },
+        {
+            "name": "practice-3"
+        },
+        {
+            "name": "practice-4"
+        },
+        {
+            "name": "practice-5"
+        },
+        {
+            "name": "practice-6"
+        },
+        {
+            "name": "practice-7"
+        },
+        {
+            "name": "practice-8"
+        },
+        {
+            "name": "rubber-1"
+        },
+        {
+            "name": "rubber-2"
+        },
+        {
+            "name": "rubber-3"
+        },
+        {
+            "name": "rubber-4"
+        },
+        {
+            "name": "rubber-5"
+        },
+        {
+            "name": "rubber-6"
+        },
+        {
+            "name": "rubber-7"
+        },
+        {
+            "name": "rubber-8"
+        }
+    ]
+}

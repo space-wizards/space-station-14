@@ -156,7 +156,7 @@ public sealed class CrematoriumSystem : EntitySystem
             ("victim", Identity.Entity(victim, EntityManager))),
             victim, Filter.PvsExcept(victim), true, PopupType.LargeCaution);
 
-        if (_entityStorage.CanInsert(uid))
+        if (_entityStorage.CanInsert(victim, uid))
         {
             _entityStorage.CloseStorage(uid);
             _standing.Down(victim, false);

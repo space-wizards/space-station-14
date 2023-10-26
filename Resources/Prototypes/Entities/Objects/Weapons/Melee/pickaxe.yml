@@ -13,16 +13,16 @@
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
+      groups:
+        Brute: 5
       types:
-        Blunt: 2.5
-        Piercing: 2.5
         Structural: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
+      groups:
+        Brute: 10
       types:
-        Blunt: 5
-        Piercing: 5
         Structural: 10
   - type: Item
     size: 80
@@ -44,7 +44,7 @@
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
+      groups:
+        Brute: 10
       types:
-        Blunt: 5
-        Piercing: 5
         Structural: 10

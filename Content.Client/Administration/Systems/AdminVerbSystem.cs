@@ -24,12 +24,13 @@ namespace Content.Client.Administration.Systems
             // View variables verbs
             if (_clientConGroupController.CanViewVar())
             {
-                Verb verb = new();
-                verb.Category = VerbCategory.Debug;
-                verb.Text = "View Variables";
-                verb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/vv.svg.192dpi.png"));
-                verb.Act = () => _clientConsoleHost.ExecuteCommand($"vv {args.Target}");
-                verb.ClientExclusive = true; // opening VV window is client-side. Don't ask server to run this verb.
+                var verb = new VvVerb()
+                {
+                    Text = Loc.GetString("view-variables"),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
+                    Act = () => _clientConsoleHost.ExecuteCommand($"vv {GetNetEntity(args.Target)}"),
+                    ClientExclusive = true // opening VV window is client-side. Don't ask server to run this verb.
+                };
                 args.Verbs.Add(verb);
             }
         }

@@ -18,3 +18,5 @@ ent-ClothingShoesBootsLaceup = шнурованные туфли
     .suffix = { "" }
 ent-ClothingShoesBootsMerc = ботинки наёмника
     .desc = Ботинки, прошедшие через множество конфликтов и доказавшие свою боевую надежность.
+ent-ClothingShoesBootsWinter = зимние ботинки
+    .desc = Пушистые сапожки помогут пережить даже самую холодную зиму.

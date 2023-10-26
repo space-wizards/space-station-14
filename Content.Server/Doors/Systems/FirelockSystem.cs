@@ -18,6 +18,7 @@ using Microsoft.Extensions.Options;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Content.Shared.Prying.Components;
 
 namespace Content.Server.Doors.Systems
 {
@@ -38,7 +39,7 @@ namespace Content.Server.Doors.Systems
             base.Initialize();
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
+            SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
@@ -144,7 +145,7 @@ namespace Content.Server.Doors.Systems
                 args.Cancel();
         }
 
-        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, DoorGetPryTimeModifierEvent args)
+        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
         {
             var state = CheckPressureAndFire(uid, component);
 
@@ -261,7 +262,7 @@ namespace Content.Server.Doors.Systems
             List<AtmosDirection> directions = new(4);
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
-                var dir = (AtmosDirection) (1 << i);
+                var dir = (AtmosDirection)(1 << i);
                 if (airtight.AirBlockedDirection.HasFlag(dir))
                 {
                     directions.Add(dir);

@@ -59,6 +59,8 @@
   packetPrototype: BananaSeeds
   productPrototypes:
     - FoodBanana
+  mutationPrototypes:
+    - mimana
   harvestRepeat: Repeat
   lifespan: 50
   maturation: 6
@@ -72,6 +74,33 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+
+- type: seed
+  id: mimana
+  name: seeds-mimana-name
+  noun: seeds-noun-seeds
+  displayName: seeds-mimana-display-name
+  plantRsi: Objects/Specific/Hydroponics/mimana.rsi
+  packetPrototype: MimanaSeeds
+  productPrototypes:
+    - FoodMimana
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 6
+  production: 6
+  yield: 2
+  idealLight: 9
+  waterConsumption: 0.60
+  idealHeat: 298
+  chemicals:
+    MuteToxin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
     Nutriment:
       Min: 1
       Max: 2
@@ -270,6 +299,8 @@
   packetPrototype: TowercapSeeds
   productPrototypes:
     - Log
+  mutationPrototypes:
+    - steelcap
   lifespan: 80
   maturation: 15
   ligneous: true
@@ -283,6 +314,27 @@
   idealHeat: 288
 
 - type: seed
+  id: steelcap
+  name: seeds-steelcap-name
+  noun: seeds-noun-spores
+  displayName: seeds-steelcap-display-name
+  plantRsi: Objects/Specific/Hydroponics/steelcap.rsi
+  packetPrototype: SteelcapSeeds
+  productPrototypes:
+    - SteelLog
+  lifespan: 80
+  maturation: 15
+  ligneous: true
+  production: 3
+  yield: 3
+  potency: 1
+  growthStages: 3
+  waterConsumption: 0.60
+  nutrientConsumption: 0.80
+  lightTolerance: 6
+  idealHeat: 288
+
+- type: seed
   id: tomato
   name: seeds-tomato-name
   noun: seeds-noun-seeds
@@ -291,6 +343,9 @@
   packetPrototype: TomatoSeeds
   productPrototypes:
     - FoodTomato
+  mutationPrototypes:
+    - blueTomato
+    - bloodTomato
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 8
@@ -305,6 +360,76 @@
   splatPrototype: PuddleSplatter
   chemicals:
     Nutriment:
+      Min: 1
+      Max: 7
+      PotencyDivisor: 14
+    Vitamin:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 33
+    Water:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: blueTomato
+  name: seeds-bluetomato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-bluetomato-display-name
+  plantRsi: Objects/Specific/Hydroponics/blue_tomato.rsi
+  packetPrototype: BlueTomatoSeeds
+  productPrototypes:
+    - FoodBlueTomato
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 10
+  waterConsumption: 0.60
+  nutrientConsumption: 0.70
+  idealLight: 8
+  idealHeat: 298
+  juicy: true
+  splatPrototype: PuddleSplatter
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    SpaceLube:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: bloodTomato
+  name: seeds-bloodtomato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-bloodtomato-display-name
+  plantRsi: Objects/Specific/Hydroponics/blood_tomato.rsi
+  packetPrototype: BloodTomatoSeeds
+  productPrototypes:
+    - FoodBloodTomato
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 10
+  waterConsumption: 0.60
+  nutrientConsumption: 0.70
+  idealLight: 8
+  idealHeat: 298
+  juicy: true
+  splatPrototype: PuddleSplatter
+  chemicals:
+    Blood:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -322,6 +447,8 @@
   packetPrototype: EggplantSeeds
   productPrototypes:
     - FoodEggplant
+  mutationPrototypes:
+    - eggy
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 6
@@ -457,6 +584,8 @@
   packetPrototype: OnionSeeds
   productPrototypes:
     - FoodOnion
+  mutationPrototypes:
+    - onionred
   lifespan: 25
   maturation: 8
   production: 6
@@ -620,6 +749,8 @@
   packetPrototype: NettleSeeds
   productPrototypes:
     - Nettle
+  mutationPrototypes:
+    - deathNettle
   lifespan: 25
   maturation: 8
   production: 6
@@ -636,6 +767,35 @@
       PotencyDivisor: 4
 
 - type: seed
+  id: deathNettle
+  name: seeds-deathnettle-name
+  noun: seeds-noun-seeds
+  displayName: seeds-deathnettle-display-name
+  plantRsi: Objects/Specific/Hydroponics/death_nettle.rsi
+  packetPrototype: DeathNettleSeeds
+  productPrototypes:
+    - DeathNettle
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 20
+  growthStages: 5
+  idealLight: 8
+  waterConsumption: 0.70
+  nutrientConsumption: 0.80
+  idealHeat: 298
+  chemicals:
+    SulfuricAcid:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 6
+    FluorosulfuricAcid:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 6
+
+- type: seed
   id: chili
   name: seeds-chili-name
   noun: seeds-noun-seeds
@@ -644,6 +804,8 @@
   packetPrototype: ChiliSeeds
   productPrototypes:
     - FoodChili
+  mutationPrototypes:
+    - chilly
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 6
@@ -654,6 +816,37 @@
   idealHeat: 298
   chemicals:
     CapsaicinOil:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Nutriment:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: chilly
+  name: seeds-chilly-name
+  noun: seeds-noun-seeds
+  displayName: seeds-chilly-display-name
+  plantRsi: Objects/Specific/Hydroponics/chilly.rsi
+  packetPrototype: ChillySeeds
+  productPrototypes:
+    - FoodChilly
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    Frostoil:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -753,6 +946,8 @@
   packetPrototype: AmbrosiaVulgarisSeeds
   productPrototypes:
     - FoodAmbrosiaVulgaris
+  mutationPrototypes:
+    - ambrosiaDeus
   lifespan: 25
   maturation: 10
   production: 3
@@ -781,6 +976,40 @@
       Min: 1
       Max: 2
       Potencydivisor: 50
+
+- type: seed
+  id: ambrosiaDeus
+  name: seeds-ambrosiadeus-name
+  noun: seeds-noun-seeds
+  displayName: seeds-ambrosiadeus-display-name
+  plantRsi: Objects/Specific/Hydroponics/ambrosia_deus.rsi
+  packetPrototype: AmbrosiaDeusSeeds
+  productPrototypes:
+    - FoodAmbrosiaDeus
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 6
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 10
+    Omnizine: # Don't kill me
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    SpaceDrugs:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Desoxyephedrine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
 
 - type: seed
   id: galaxythistle
@@ -894,6 +1123,31 @@
   packetPrototype: SoybeanSeeds
   productPrototypes:
     - FoodSoybeans
+  mutationPrototypes:
+    - koibean
+  growthStages: 4
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 5
+  idealLight: 7
+  nutrientConsumption: 0.40
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 25  
+
+- type: seed
+  id: koibean
+  name: seeds-koibean-name
+  noun: seeds-noun-seeds
+  displayName: seeds-koibean-display-name
+  plantRsi: Objects/Specific/Hydroponics/koibean.rsi
+  packetPrototype: KoibeanSeeds
+  productPrototypes:
+    - FoodKoibean
   growthStages: 4
   lifespan: 25
   maturation: 6
@@ -907,6 +1161,10 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+    CarpoToxin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 30
 
 - type: seed
   id: grape
@@ -977,7 +1235,8 @@
   production: 6
   yield: 6
   idealLight: 7
-  waterConsumption: 6
+  waterConsumption: 1
+  nutrientConsumption: 0.8
   idealHeat: 298
   chemicals:
     Vitamin:
@@ -988,3 +1247,58 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+
+- type: seed
+  id: berries
+  name: seeds-berries-name
+  noun: seeds-noun-seeds
+  displayName: seeds-berries-display-name
+  plantRsi: Objects/Specific/Hydroponics/berries.rsi
+  packetPrototype: BerrySeeds
+  productPrototypes:
+    - FoodBerries
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 6
+  production: 6
+  yield: 4
+  idealLight: 7
+  nutrientConsumption: 0.6
+  chemicals:
+    Nutriment:
+      Min: 2
+      Max: 5
+      PotencyDivisor: 30
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 40
+
+- type: seed
+  id: bungo
+  name: seeds-bungo-name
+  noun: seeds-noun-seeds
+  displayName: seeds-bungo-display-name
+  plantRsi: Objects/Specific/Hydroponics/bungo.rsi
+  packetPrototype: BungoSeeds
+  productPrototypes:
+    - FoodBungo
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 8
+  production: 6
+  potency: 10
+  yield: 3
+  idealLight: 8
+  idealHeat: 298
+  growthStages: 4
+  waterConsumption: 0.6
+  chemicals:
+    Nutriment:
+      Min: 5
+      Max: 10
+      PotencyDivisor: 20
+    Enzyme:
+      Min: 5
+      Max: 10
+      PotencyDivisor: 20

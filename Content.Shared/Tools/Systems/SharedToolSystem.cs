@@ -29,7 +29,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         ev.DoAfter = args.DoAfter;
 
         if (args.OriginalTarget != null)
-            RaiseLocalEvent(args.OriginalTarget.Value, (object) ev);
+            RaiseLocalEvent(GetEntity(args.OriginalTarget.Value), (object) ev);
         else
             RaiseLocalEvent((object) ev);
     }
@@ -108,8 +108,8 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!CanStartToolUse(tool, user, target, toolQualitiesNeeded, toolComponent))
             return false;
 
-        var toolEvent = new ToolDoAfterEvent(doAfterEv, target);
-        var doAfterArgs = new DoAfterArgs(user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
+        var toolEvent = new ToolDoAfterEvent(doAfterEv, GetNetEntity(target));
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
@@ -214,7 +214,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         ///     Entity that the wrapped do after event will get directed at. If null, event will be broadcast.
         /// </summary>
         [DataField("target")]
-        public EntityUid? OriginalTarget;
+        public NetEntity? OriginalTarget;
 
         [DataField("wrappedEvent")]
         public DoAfterEvent WrappedEvent = default!;
@@ -223,7 +223,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         {
         }
 
-        public ToolDoAfterEvent(DoAfterEvent wrappedEvent, EntityUid? originalTarget)
+        public ToolDoAfterEvent(DoAfterEvent wrappedEvent, NetEntity? originalTarget)
         {
             DebugTools.Assert(wrappedEvent.GetType().HasCustomAttribute<NetSerializableAttribute>(), "Tool event is not serializable");
 
@@ -247,13 +247,13 @@ public abstract partial class SharedToolSystem : EntitySystem
     protected sealed partial class LatticeCuttingCompleteEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
         private LatticeCuttingCompleteEvent()
         {
         }
 
-        public LatticeCuttingCompleteEvent(EntityCoordinates coordinates)
+        public LatticeCuttingCompleteEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }
@@ -264,14 +264,14 @@ public abstract partial class SharedToolSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed partial class TilePryingDoAfterEvent : DoAfterEvent
     {
-        [DataField("coordinates", required:true)]
-        public EntityCoordinates Coordinates;
+        [DataField("coordinates", required: true)]
+        public NetCoordinates Coordinates;
 
         private TilePryingDoAfterEvent()
         {
         }
 
-        public TilePryingDoAfterEvent(EntityCoordinates coordinates)
+        public TilePryingDoAfterEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }

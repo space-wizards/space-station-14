@@ -38,7 +38,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
 
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
-                target, 0, message, verbs?.ToList(), centerAtCursor
+                GetNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor
             );
 
             RaiseNetworkEvent(ev, session.ConnectedClient);
@@ -49,29 +49,30 @@ namespace Content.Server.Examine
             var player = (IPlayerSession) eventArgs.SenderSession;
             var session = eventArgs.SenderSession;
             var channel = player.ConnectedClient;
+            var entity = GetEntity(request.NetEntity);
 
             if (session.AttachedEntity is not {Valid: true} playerEnt
-                || !EntityManager.EntityExists(request.EntityUid))
+                || !EntityManager.EntityExists(entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, request.Id, _entityNotFoundMessage), channel);
+                    request.NetEntity, request.Id, _entityNotFoundMessage), channel);
                 return;
             }
 
-            if (!CanExamine(playerEnt, request.EntityUid))
+            if (!CanExamine(playerEnt, entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, request.Id, _entityOutOfRangeMessage, knowTarget: false), channel);
+                    request.NetEntity, request.Id, _entityOutOfRangeMessage, knowTarget: false), channel);
                 return;
             }
 
             SortedSet<Verb>? verbs = null;
             if (request.GetVerbs)
-                verbs = _verbSystem.GetLocalVerbs(request.EntityUid, playerEnt, typeof(ExamineVerb));
+                verbs = _verbSystem.GetLocalVerbs(entity, playerEnt, typeof(ExamineVerb));
 
-            var text = GetExamineText(request.EntityUid, player.AttachedEntity);
+            var text = GetExamineText(entity, player.AttachedEntity);
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                request.EntityUid, request.Id, text, verbs?.ToList()), channel);
+                request.NetEntity, request.Id, text, verbs?.ToList()), channel);
         }
     }
 }

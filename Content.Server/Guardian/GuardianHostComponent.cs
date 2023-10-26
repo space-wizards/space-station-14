@@ -1,7 +1,6 @@
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Containers;
-using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Guardian
 {
@@ -24,17 +23,9 @@ namespace Content.Server.Guardian
         /// </summary>
         [ViewVariables] public ContainerSlot GuardianContainer = default!;
 
-        [DataField("action")]
-        public InstantAction Action = new()
-        {
-            DisplayName = "action-name-guardian",
-            Description = "action-description-guardian",
-            Icon = new SpriteSpecifier.Texture(new ("Interface/Actions/manifest.png")),
-            UseDelay = TimeSpan.FromSeconds(2),
-            CheckCanInteract = false, // allow use while stunned, etc. Gets removed on death anyways.
-            Event =  new GuardianToggleActionEvent(),
-        };
-    }
+        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string Action = "ActionToggleGuardian";
 
-    public sealed partial class GuardianToggleActionEvent : InstantActionEvent { };
+        [DataField("actionEntity")] public EntityUid? ActionEntity;
+    }
 }

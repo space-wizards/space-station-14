@@ -2,7 +2,6 @@
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -26,29 +25,11 @@ public abstract class SharedConveyorController : VirtualController
     public override void Initialize()
     {
         UpdatesAfter.Add(typeof(SharedMoverController));
-        SubscribeLocalEvent<ConveyorComponent, ComponentGetState>(OnConveyorGetState);
-        SubscribeLocalEvent<ConveyorComponent, ComponentHandleState>(OnConveyorHandleState);
 
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
 
         base.Initialize();
-    }
-
-    private void OnConveyorGetState(EntityUid uid, ConveyorComponent component, ref ComponentGetState args)
-    {
-        args.State = new ConveyorComponentState(component.Angle, component.Speed, component.State, component.Powered);
-    }
-
-    private void OnConveyorHandleState(EntityUid uid, ConveyorComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ConveyorComponentState state)
-            return;
-
-        component.Powered = state.Powered;
-        component.Angle = state.Angle;
-        component.Speed = state.Speed;
-        component.State = state.State;
     }
 
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)

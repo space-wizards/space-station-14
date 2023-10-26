@@ -145,10 +145,10 @@ public sealed class AmeNodeGroup : BaseNodeGroup
             instability = 1;
         // overloadVsSizeResult > 5:
         if (overloadVsSizeResult > 5)
-            instability = 5;
-        // overloadVsSizeResult > 10: This will explode in at most 5 injections.
+            instability = 3;
+        // overloadVsSizeResult > 10: This will explode in at most 20 injections.
         if (overloadVsSizeResult > 10)
-            instability = 20;
+            instability = 5;
 
         // Apply calculated instability
         if (instability == 0)

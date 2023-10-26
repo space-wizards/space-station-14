@@ -13,6 +13,7 @@
   - type: IdentityBlocker
   - type: Tag
     tags:
+    - MonkeyWearable
     - HamsterWearable
     - WhitelistChameleon
 
@@ -491,3 +492,17 @@
   - type: AddAccentClothing
     accent: ReplacementAccent
     replacement: italian
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskNinja
+  name: ninja mask
+  description: A close-fitting nano-enhanced mask that acts both as an air filter and a post-modern fashion statement.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/ninja.rsi
+  - type: EyeProtection
+  - type: BreathMask
+  - type: IdentityBlocker

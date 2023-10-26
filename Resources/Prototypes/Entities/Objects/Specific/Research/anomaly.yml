@@ -71,3 +71,36 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  id: AnomalyLocatorWideUnpowered
+  parent: AnomalyLocatorUnpowered
+  name: wide-spectrum anomaly locator
+  description: A device that looks for anomalies from an extended distance, but has no way to determine the distance to them.
+  suffix: Unpowered
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Research/anomalylocatorwide.rsi
+  - type: ProximityBeeper
+    maximumDistance: 40
+    minBeepInterval: 0.5
+    maxBeepInterval: 0.5
+
+- type: entity
+  id: AnomalyLocatorWide
+  parent: [ AnomalyLocatorWideUnpowered, PowerCellSlotSmallItem ]
+  suffix: Powered
+  components:
+  - type: PowerCellDraw
+    drawRate: 1
+    useRate: 0
+
+- type: entity
+  id: AnomalyLocatorWideEmpty
+  parent: AnomalyLocatorWide
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

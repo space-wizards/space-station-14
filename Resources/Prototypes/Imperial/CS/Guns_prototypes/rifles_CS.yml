@@ -1,0 +1,49 @@
+#SCAR-L - Assault Riffle
+- type: entity
+  name: SCAR-L
+  suffix: CS
+  parent: BaseWeaponRifle
+  id: CSWeaponSCAR-L
+  description: Special Operations Forces Combat Assault Rifle - too mane spooky words for forests scouts weapon.
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/SCAR(L).rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/SCAR(L).rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: SCAR-Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+

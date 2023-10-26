@@ -185,6 +185,39 @@
 
 - type: entity
   parent: ClothingHandsBase
+  id: ClothingHandsGlovesSpaceNinja
+  name: space ninja gloves
+  description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/spaceninja.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/spaceninja.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon-green}
+          False: {state: icon}
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-nanomachines
+  - type: FingerprintMask
+  - type: Thieving
+    stripTimeReduction: 1
+    stealthy: true
+  - type: NinjaGloves
+  # not actually electrified, just used to make stun ability work
+  - type: Electrified
+
+- type: entity
+  parent: ClothingHandsGlovesColorBlack
   id: ClothingHandsGlovesCombat
   name: combat gloves
   description: These tactical gloves are fireproof and shock resistant.
@@ -198,11 +231,10 @@
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
-    fiberColor: fibers-black
-  - type: FingerprintMask
 
+# can't parent combat gloves since they are butcherable
 - type: entity
-  parent: ClothingHandsGlovesCombat
+  parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsTacticalMaidGloves
   name: tactical maid gloves
   description: Tactical maid gloves, every self-respecting maid should be able to discreetly eliminate her goals.
@@ -211,9 +243,14 @@
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberColor: fibers-black
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesCombat
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
   description: High-quality combat gloves to protect hands from mechanical damage during combat.
@@ -222,13 +259,13 @@
     sprite: Clothing/Hands/Gloves/Color/olive.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/olive.rsi
-  - type: GloveHeatResistance
-    heatResistance: 1400
-  - type: Insulated
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHandsGlovesMercFingerless
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
-  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -269,29 +306,21 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/mercfingerless.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
+    fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
 
 - type: entity
-  parent: ClothingHandsBase
+  # Intentionally named after regular gloves, they're meant to be sneaky.
+  # This means they can also be butchered if you need to look unsus before a very thorough search...
+  parent: ClothingHandsGlovesColorBlack
   id: ThievingGloves
   suffix: Thieving
-  name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
-  description: Regular black gloves that do not keep you from frying.
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
-    - type: Sprite
-      sprite: Clothing/Hands/Gloves/Color/black.rsi
-    - type: Clothing
-      sprite: Clothing/Hands/Gloves/Color/black.rsi
-    - type: Thieving
-      stripTimeReduction: 1.5
-      stealthy: true
-    - type: Fiber
-      fiberMaterial: fibers-synthetic
-      fiberColor: fibers-black
-    - type: FingerprintMask
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Thieving
+    stripTimeReduction: 1.5
+    stealthy: true
 
 - type: entity
   parent: ClothingHandsGlovesColorWhite
@@ -301,7 +330,6 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
-
 
 - type: entity
   parent: ClothingHandsBase
@@ -317,7 +345,7 @@
     attackRate: 4
     damage:
       types:
-       Blunt: 7
+       Blunt: 8
     soundHit:
       collection: Punch
     animation: WeaponArcFist

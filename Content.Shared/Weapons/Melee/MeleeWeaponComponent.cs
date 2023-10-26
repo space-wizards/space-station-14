@@ -3,16 +3,14 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Melee;
 
 /// <summary>
 /// When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MeleeWeaponComponent : Component
 {
     // TODO: This is becoming bloated as shit.
@@ -20,26 +18,27 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <summary>
     /// Does this entity do a disarm on alt attack.
     /// </summary>
-    [DataField("altDisarm"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool AltDisarm = true;
 
     /// <summary>
     /// Should the melee weapon's damage stats be examinable.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("hidden")]
-    public bool HideFromExamine;
+    [DataField]
+    public bool Hidden;
 
     /// <summary>
     /// Next time this component is allowed to light attack. Heavy attacks are wound up and never have a cooldown.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextAttack;
 
     /// <summary>
     /// Starts attack cooldown when equipped if true.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("resetOnHandSelected")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool ResetOnHandSelected = true;
 
     /*
@@ -51,50 +50,51 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <summary>
     /// How many times we can attack per second.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("attackRate")]
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public float AttackRate = 1f;
 
     /// <summary>
     /// Are we currently holding down the mouse for an attack.
     /// Used so we can't just hold the mouse button and attack constantly.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Attacking = false;
 
     /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
     /// </summary>
-    [DataField("damage", required:true)]
+    [DataField(required:true)]
     [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = default!;
 
-    [DataField("bluntStaminaDamageFactor")] [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 BluntStaminaDamageFactor = FixedPoint2.New(0.5f);
 
     /// <summary>
     /// Multiplies damage by this amount for single-target attacks.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("clickDamageModifier")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public FixedPoint2 ClickDamageModifier = FixedPoint2.New(1);
 
     // TODO: Temporarily 1.5 until interactionoutline is adjusted to use melee, then probably drop to 1.2
     /// <summary>
     /// Nearest edge range to hit an entity.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("range")]
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public float Range = 1.5f;
 
     /// <summary>
     /// Total width of the angle for wide attacks.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("angle")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public Angle Angle = Angle.FromDegrees(60);
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ClickAnimation = "WeaponArcPunch";
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public EntProtoId Animation = "WeaponArcPunch";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("wideAnimation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WideAnimation = "WeaponArcSlash";
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public EntProtoId WideAnimation = "WeaponArcSlash";
 
     // Sounds
 
@@ -131,28 +131,4 @@ public sealed partial class MeleeWeaponComponent : Component
 public sealed class GetMeleeWeaponEvent : HandledEntityEventArgs
 {
     public EntityUid? Weapon;
-}
-
-[Serializable, NetSerializable]
-public sealed class MeleeWeaponComponentState : ComponentState
-{
-    // None of the other data matters for client as they're not predicted.
-
-    public float AttackRate;
-    public bool Attacking;
-    public TimeSpan NextAttack;
-
-    public string ClickAnimation;
-    public string WideAnimation;
-    public float Range;
-
-    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, string clickAnimation, string wideAnimation, float range)
-    {
-        AttackRate = attackRate;
-        Attacking = attacking;
-        NextAttack = nextAttack;
-        ClickAnimation = clickAnimation;
-        WideAnimation = wideAnimation;
-        Range = range;
-    }
 }

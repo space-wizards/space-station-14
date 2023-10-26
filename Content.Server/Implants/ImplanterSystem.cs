@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Implants;
 
@@ -24,7 +23,6 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         InitializeImplanted();
 
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
-        SubscribeLocalEvent<ImplanterComponent, ComponentGetState>(OnImplanterGetState);
 
         SubscribeLocalEvent<ImplanterComponent, ImplantEvent>(OnImplant);
         SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
@@ -69,7 +67,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        var args = new DoAfterArgs(user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
+        var args = new DoAfterArgs(EntityManager, user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
@@ -96,7 +94,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        var args = new DoAfterArgs(user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
+        var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
@@ -107,11 +105,6 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         if (_doAfter.TryStartDoAfter(args))
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
-    }
-
-    private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
-    {
-        args.State = new ImplanterComponentState(component.CurrentMode, component.ImplantOnly);
     }
 
     private void OnImplant(EntityUid uid, ImplanterComponent component, ImplantEvent args)

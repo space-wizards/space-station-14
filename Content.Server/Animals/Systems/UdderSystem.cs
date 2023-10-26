@@ -1,10 +1,10 @@
 using Content.Server.Animals.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
@@ -66,7 +66,7 @@ namespace Content.Server.Animals.Systems
             if (!Resolve(uid, ref udder))
                 return;
 
-            var doargs = new DoAfterArgs(userUid, 5, new MilkingDoAfterEvent(), uid, uid, used: containerUid)
+            var doargs = new DoAfterArgs(EntityManager, userUid, 5, new MilkingDoAfterEvent(), uid, uid, used: containerUid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,

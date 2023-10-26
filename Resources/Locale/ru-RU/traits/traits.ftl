@@ -34,3 +34,6 @@ trait-accentless-desc = У вас нет того акцента, который
 
 trait-wheelchair-bound-name = Инвалидная коляска
 trait-wheelchair-bound-desc = Вы не можете передвигаться без инвалидной коляски. Инвалидная коляска включена в вашу стоимость.
+
+trait-frontal-lisp-name = Сигматизм
+trait-frontal-lisp-desc = У ваф имеютшя проблемы ш произношением.

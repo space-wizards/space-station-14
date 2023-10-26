@@ -1,3 +1,4 @@
+
 - type: reaction
   id: Dylovene
   reactants:
@@ -5,10 +6,10 @@
       amount: 1
     Nitrogen:
       amount: 1
-    Potassium:
-      amount: 1
+    Alosethasone: #imperial chemistryRework
+      amount: 1 #imperial chemistryRework
   products:
-    Dylovene: 3
+    Dylovene: 3 
 
 - type: reaction
   id: Ethylredoxrazine
@@ -42,17 +43,19 @@
     Hydrogen:
       amount: 1
   products:
-    Arithrazine: 2
+    Arithrazine: 2 
 
 - type: reaction
   id: Bicaridine
   reactants:
     Inaprovaline:
-      amount: 1
+      amount: 1 
+    Flexitaine: #imperial chemistryRework
+      amount: 0.66 #imperial chemistryRework
     Carbon:
       amount: 1
   products:
-    Bicaridine: 2
+    Bicaridine: 3
 
 - type: reaction
   id: Cryoxadone

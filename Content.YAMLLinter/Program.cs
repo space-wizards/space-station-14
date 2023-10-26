@@ -77,7 +77,26 @@ namespace Content.YAMLLinter
 
             await instance.WaitPost(() =>
             {
+                var engineErrors = protoMan.ValidateDirectory(new ResPath("/EnginePrototypes"), out var engPrototypes);
                 yamlErrors = protoMan.ValidateDirectory(new ResPath("/Prototypes"), out var prototypes);
+
+                // Merge engine & content prototypes
+                foreach (var (kind, instances) in engPrototypes)
+                {
+                    if (prototypes.TryGetValue(kind, out var existing))
+                        existing.UnionWith(instances);
+                    else
+                        prototypes[kind] = instances;
+                }
+
+                foreach (var (kind, set) in engineErrors)
+                {
+                    if (yamlErrors.TryGetValue(kind, out var existing))
+                        existing.UnionWith(set);
+                    else
+                        yamlErrors[kind] = set;
+                }
+
                 fieldErrors = protoMan.ValidateFields(prototypes);
             });
 

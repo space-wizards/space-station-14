@@ -21,5 +21,5 @@ public sealed partial class RiderComponent : Component
 [Serializable, NetSerializable]
 public sealed class RiderComponentState : ComponentState
 {
-    public EntityUid? Entity;
+    public NetEntity? Entity;
 }

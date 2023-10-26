@@ -31,14 +31,15 @@ public sealed partial class ToolSystem
         if (args.Cancelled)
             return;
 
-        var gridUid = args.Coordinates.GetGridUid(EntityManager);
+        var coords = GetCoordinates(args.Coordinates);
+        var gridUid = coords.GetGridUid(EntityManager);
         if (!_mapManager.TryGetGrid(gridUid, out var grid))
         {
             Log.Error("Attempted to pry from a non-existent grid?");
             return;
         }
 
-        var tile = grid.GetTileRef(args.Coordinates);
+        var tile = grid.GetTileRef(coords);
         var center = _turf.GetTileCenter(tile);
         if (args.Used != null)
         {
@@ -56,7 +57,7 @@ public sealed partial class ToolSystem
 
     private bool TryPryTile(EntityUid toolEntity, EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
     {
-        if (!TryComp<ToolComponent?>(toolEntity, out var tool) && component.ToolComponentNeeded)
+        if (!TryComp<ToolComponent>(toolEntity, out var tool) && component.ToolComponentNeeded)
             return false;
 
         if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out _, out var mapGrid))
@@ -74,7 +75,7 @@ public sealed partial class ToolSystem
         if (!tileDef.CanCrowbar && !(tileDef.CanAxe && component.Advanced))
             return false;
 
-        var ev = new TilePryingDoAfterEvent(coordinates);
+        var ev = new TilePryingDoAfterEvent(GetNetCoordinates(coordinates));
 
         return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev, toolComponent: tool);
     }

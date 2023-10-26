@@ -28,7 +28,7 @@ public sealed class VisualizeCommand : ToolshedCommand
         }
 
         var ui = new ToolshedVisualizeEui(
-            input.Select(e => (EntName(e), e)).ToArray()
+            input.Select(e => (EntName(e), EntityManager.GetNetEntity(e))).ToArray()
         );
         _euiManager.OpenEui(ui, (IPlayerSession) ctx.Session);
         _euiManager.QueueStateUpdate(ui);
@@ -36,9 +36,9 @@ public sealed class VisualizeCommand : ToolshedCommand
 }
 internal sealed class ToolshedVisualizeEui : BaseEui
 {
-    private readonly (string name, EntityUid entity)[] _entities;
+    private readonly (string name, NetEntity entity)[] _entities;
 
-    public ToolshedVisualizeEui((string name, EntityUid entity)[] entities)
+    public ToolshedVisualizeEui((string name, NetEntity entity)[] entities)
     {
         _entities = entities;
     }

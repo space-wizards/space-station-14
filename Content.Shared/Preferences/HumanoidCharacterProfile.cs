@@ -256,10 +256,10 @@ namespace Content.Shared.Preferences
         }
 
         // Corvax-TTS-Start
-        public HumanoidCharacterProfile WithVoice(string voice)
-        {
-            return new(this) { Voice = voice };
-        }
+        // public HumanoidCharacterProfile WithVoice(string voice)
+        // {
+        //     return new(this) { Voice = voice };
+        // }
         // Corvax-TTS-End
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
@@ -453,7 +453,7 @@ namespace Content.Shared.Preferences
                 flavortext = FormattedMessage.RemoveMarkup(FlavorText);
             }
 
-            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, sponsorMarkings);
+            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
             {
@@ -519,20 +519,20 @@ namespace Content.Shared.Preferences
             _traitPreferences.Clear();
             _traitPreferences.AddRange(traits);
 
-            // Corvax-TTS-Start
+            //Corvax-TTS-Start
             prototypeManager.TryIndex<TTSVoicePrototype>(Voice, out var voice);
             if (voice is null || !CanHaveVoice(voice, Sex))
                 Voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
-            // Corvax-TTS-End
+            //Corvax-TTS-End
         }
 
-        // Corvax-TTS-Start
-        // MUST NOT BE PUBLIC, BUT....
+        //Corvax-TTS-Start
+        //MUST NOT BE PUBLIC, BUT....
         public static bool CanHaveVoice(TTSVoicePrototype voice, Sex sex)
         {
             return voice.RoundStart && sex == Sex.Unsexed || (voice.Sex == sex || voice.Sex == Sex.Unsexed);
         }
-        // Corvax-TTS-End
+        //Corvax-TTS-End
 
         // sorry this is kind of weird and duplicated,
         /// working inside these non entity systems is a bit wack

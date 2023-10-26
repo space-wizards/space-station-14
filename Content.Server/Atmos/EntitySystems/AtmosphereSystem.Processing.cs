@@ -327,6 +327,23 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
+        /**
+         * UpdateProcessing() takes a different number of calls to go through all of atmos
+         * processing depending on what options are enabled. This returns the actual effective time
+         * between atmos updates that devices actually experience.
+         */
+        public float RealAtmosTime()
+        {
+            int num = (int)AtmosphereProcessingState.NumStates;
+            if (!MonstermosEqualization)
+                num--;
+            if (!ExcitedGroups)
+                num--;
+            if (!Superconduction)
+                num--;
+            return num * AtmosTime;
+        }
+
         private bool ProcessAtmosDevices(GridAtmosphereComponent atmosphere)
         {
             if(!atmosphere.ProcessingPaused)
@@ -336,7 +353,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                RaiseLocalEvent(device.Owner, new AtmosDeviceUpdateEvent(AtmosTime * (int)AtmosphereProcessingState.NumStates), false);
+                RaiseLocalEvent(device.Owner, new AtmosDeviceUpdateEvent(RealAtmosTime()), false);
                 device.LastProcess = time;
 
                 if (number++ < LagCheckIterations) continue;

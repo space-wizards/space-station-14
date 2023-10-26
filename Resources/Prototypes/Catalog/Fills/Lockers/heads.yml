@@ -56,6 +56,7 @@
       - id: JetpackCaptainFilled
       - id: MedalCase
       - id: CoreMagnateModsuitConstructing #Edited in Imperial Space by @sentryprimies in the name of modsuits
+      - id: ClothingHeadHatCapcap
 
 - type: entity
   id: LockerCaptainFilled

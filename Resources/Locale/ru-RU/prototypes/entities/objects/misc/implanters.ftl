@@ -43,3 +43,6 @@ ent-DeathRattleImplanter = имплантер предсмертного хри�
 ent-BikeHornImplanter = имплантер велосипедного гудка
     .desc = { ent-BaseImplanter.desc }
     .suffix = { "" }
+ent-MindShieldImplanter = имплантер защиты разума
+    .desc = { ent-BaseImplanter.desc }
+    .suffix = { "" }

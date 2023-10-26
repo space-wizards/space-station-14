@@ -110,7 +110,8 @@ namespace Content.Server.Kitchen.EntitySystems
             if (args.Handled)
                 return;
 
-            if (component.PrototypesToSpawn?.Count > 0) {
+            if (component.PrototypesToSpawn?.Count > 0)
+            {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, args.User);
                 args.Handled = true;
             }
@@ -252,7 +253,7 @@ namespace Content.Server.Kitchen.EntitySystems
             butcherable.BeingButchered = true;
             component.InUse = true;
 
-            var doAfterArgs = new DoAfterArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, new SpikeDoAfterEvent(), uid, target: victimUid, used: uid)
+            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, component.SpikeDelay + butcherable.ButcherDelay, new SpikeDoAfterEvent(), uid, target: victimUid, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

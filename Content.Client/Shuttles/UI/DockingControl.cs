@@ -32,7 +32,7 @@ public class DockingControl : Control
     private int ScaledMinimapRadius => (int) (MapGridControl.UIDisplayRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
-    public EntityUid? ViewedDock;
+    public NetEntity? ViewedDock;
     public EntityUid? GridEntity;
 
     public EntityCoordinates? Coordinates;
@@ -41,7 +41,7 @@ public class DockingControl : Control
     /// <summary>
     /// Stored by GridID then by docks
     /// </summary>
-    public Dictionary<EntityUid, List<DockingInterfaceState>> Docks = new();
+    public Dictionary<NetEntity, List<DockingInterfaceState>> Docks = new();
 
     public DockingControl()
     {
@@ -204,7 +204,7 @@ public class DockingControl : Control
             }
 
             // Draw any docks on that grid
-            if (Docks.TryGetValue(grid.Owner, out var gridDocks))
+            if (Docks.TryGetValue(_entManager.GetNetEntity(grid.Owner), out var gridDocks))
             {
                 foreach (var dock in gridDocks)
                 {

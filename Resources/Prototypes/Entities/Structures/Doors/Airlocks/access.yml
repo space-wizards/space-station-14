@@ -96,6 +96,22 @@
       access: [["Atmospherics"]]
 
 - type: entity
+  parent: AirlockExternal
+  id: AirlockExternalSyndicateLocked
+  suffix: External, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalNukeopLocked
+  suffix: External, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
   suffix: Kitchen, Locked
@@ -188,11 +204,10 @@
   id: AirlockCommandLocked
   suffix: Command, Locked
   components:
-    - type: AccessReader
-      access: [["Command"]]
-    - type: Wires
-      LayoutId: AirlockCommand
-      alwaysRandomize: true
+  - type: AccessReader
+    access: [["Command"]]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommandLocked
@@ -255,37 +270,40 @@
   id: AirlockSecurityLocked
   suffix: Security, Locked
   components:
-    - type: AccessReader
-      access: [["Security"]]
-    - type: Wires
-      LayoutId: AirlockSecurity
-      alwaysRandomize: true
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
   id: AirlockDetectiveLocked
   suffix: Detective, Locked
   components:
-    - type: AccessReader
-      access: [["Detective"]]
-    - type: Wires
-      LayoutId: AirlockSecurity
+  - type: AccessReader
+    access: [["Detective"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
   id: AirlockBrigLocked
   suffix: Brig, Locked
   components:
-    - type: AccessReader
-      access: [["Brig"]]
+  - type: AccessReader
+    access: [["Brig"]]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurityLocked
   id: AirlockArmoryLocked
   suffix: Armory, Locked
   components:
-    - type: AccessReader
-      access: [["Armory"]]
+  - type: AccessReader
+    access: [["Armory"]]
+  - type: Wires
+    layoutId: AirlockArmory
 
 - type: entity
   parent: AirlockSecurityLocked
@@ -335,6 +353,22 @@
   components:
     - type: AccessReader
       access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassSyndicateLocked
+  suffix: External, Glass, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassNukeopLocked
+  suffix: External, Glass, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 - type: entity
   parent: AirlockExternalGlass
@@ -550,6 +584,22 @@
     - type: AccessReader
       access: [["External"]]
 
+- type: entity
+  parent: AirlockSyndicateGlass
+  id: AirlockSyndicateGlassLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockSyndicateGlass
+  id: AirlockSyndicateNukeopGlassLocked
+  suffix: Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
 # Maintenance Hatches
 - type: entity
   parent: AirlockMaint
@@ -735,6 +785,22 @@
     - type: AccessReader
       access: [["Captain"]]
 
+- type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateNukeopLocked
+  suffix: Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
 # Shuttle airlocks
 - type: entity
   parent: AirlockShuttle
@@ -743,6 +809,22 @@
   components:
     - type: AccessReader
       access: [["External"]]
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleSyndicateLocked
+  suffix: External, Docking, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleNukeopLocked
+  suffix: External, Docking, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 - type: entity
   parent: AirlockGlassShuttle

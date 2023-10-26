@@ -5,6 +5,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Storage;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -24,21 +25,20 @@ public sealed class PickRandomSystem : EntitySystem
 
     private void OnGetAlternativeVerbs(EntityUid uid, PickRandomComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !TryComp<ServerStorageComponent>(uid, out var storage))
+        if (!args.CanAccess || !args.CanInteract || !TryComp<StorageComponent>(uid, out var storage))
             return;
 
         var user = args.User;
 
-        var enabled = false;
-        if (storage.StoredEntities != null)
-            enabled = storage.StoredEntities.Any(item => comp.Whitelist?.IsValid(item, EntityManager) ?? true);
+        var enabled = storage.Container.ContainedEntities.Any(item => comp.Whitelist?.IsValid(item, EntityManager) ?? true);
 
         // alt-click / alt-z to pick an item
         args.Verbs.Add(new AlternativeVerb
         {
-            Act = (() => {
+            Act = () =>
+            {
                 TryPick(uid, comp, storage, user);
-            }),
+            },
             Impact = LogImpact.Low,
             Text = Loc.GetString(comp.VerbText),
             Disabled = !enabled,
@@ -46,16 +46,14 @@ public sealed class PickRandomSystem : EntitySystem
         });
     }
 
-    private void TryPick(EntityUid uid, PickRandomComponent comp, ServerStorageComponent storage, EntityUid user)
+    private void TryPick(EntityUid uid, PickRandomComponent comp, StorageComponent storage, EntityUid user)
     {
-        if (storage.StoredEntities == null)
-            return;
+        var entities = storage.Container.ContainedEntities.Where(item => comp.Whitelist?.IsValid(item, EntityManager) ?? true).ToArray();
 
-        var entities = storage.StoredEntities.Where(item => comp.Whitelist?.IsValid(item, EntityManager) ?? true);
         if (!entities.Any())
             return;
 
-        var picked = _random.Pick(entities.ToList());
+        var picked = _random.Pick(entities);
         // if it fails to go into a hand of the user, will be on the storage
         _container.AttachParentToContainerOrGrid(Transform(picked));
 

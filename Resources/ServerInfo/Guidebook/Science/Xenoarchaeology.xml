@@ -26,9 +26,9 @@
 
 При помощи консоли вы можете извлекать очки исследований из артефактов используя кнопку [color=#a4885c]Разрушить[/color]. Количество получаемых вами очков зависит от того, сколько узлов артефакта было активировано.
 
-## Assembling Artifacts
-<GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
+## Сборка артефактов
+<GuideEntityEmbed Entity="ArtifactFragment"/>
 
-It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, they usually find these while mining asteroids or on Expeditions.
+Можно собрать несколько фрагментов артефакта и объединить их в рабочий артефакт. Вы можете попросить их у Спасателя, они обычно находят их при добыче астероидов или в экспедициях.
 
 </Document>

@@ -8,12 +8,34 @@
 <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
 <GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
 </Box>
-Самыми важными устройствами вашего отдела являются сервер РнД, на котором хранятся все изученные технологии, и исследовательская консоль, который позволяет вам эти технологии открывать.
+  Самыми важными устройствами вашего отдела являются сервер РнД, на котором хранятся все изученные технологии, и исследовательская консоль, который позволяет вам эти технологии открывать.
 
-Каждая технология стоит определённое число [color=#a4885c]Очков исследований[/color], и их изучение открывает новые рецепты для печати на производственных станках. Некоторые технологии нельзя разблокировать, не изучив технологии им предшествующие.
+	Каждая технология стоит определённое число [color=#a4885c]Очков исследований[/color], и их изучение открывает новые рецепты для печати на производственных станках. Некоторые технологии нельзя разблокировать, не изучив технологии им предшествующие.
 
-## Disciplines
-Technologies are spread over 5 different Disciplines:
+  ## Дисциплины
+  Технологии распределены по 5 различным дисциплинам:
+	<Box>
+<GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
+<GuideEntityEmbed Entity="Syringe" Caption="Biochemical"/>
+<GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
+<GuideEntityEmbed Entity="ComputerTelevision" Caption="Civil Services"/>
+<GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Arsenal"/>
+</Box>
+
+<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Используйте ближайшую консоль исследований и разработок, чтобы узнать, какие исследования скрыты за каждым деревом дисциплин.
+
+## Уровни
+Каждое дерево Дисциплины имеет до 3 уровней технологий. Вначале единственный уровень, который открыт и доступен для вас, — это уровень 1.
+
+Чтобы продвинуться дальше, вам необходимо изучить до [color=brown]75%[/color] текущего уровня, чтобы перейти на следующий. Таким образом, чтобы разблокировать исследования Т2, вам необходимо исследовать 75% исследований Т1.
+
+
+Каждая технология стоит [color=#a4885c]очков исследования[/color] и открывает рецепты на токарных станках. Для некоторых технологий также потребуются предварительные условия, которые вам необходимо разблокировать, прежде чем вы сможете их исследовать.
+
+Информацию о различных технологиях можно просмотреть [textlink="на странице технологического справочника" link="Технологии"].
+
+## Дисциплины
+Технологии распределены по 5 различным дисциплинам:
 <Box>
 <GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
 <GuideEntityEmbed Entity="Syringe" Caption="Biochemical"/>
@@ -22,35 +44,16 @@ Technologies are spread over 5 different Disciplines:
 <GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Arsenal"/>
 </Box>
 
-<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Use your nearest R&D console to take note of which kind of research is locked behind each Discipline tree.
+<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Используйте ближайшую консоль исследований и разработок, чтобы узнать, какие исследования скрыты за каждым деревом дисциплин.
 
-## Tiers
-Each Discipline tree has up to 3 tiers of technologies. At the start the only tier that is open and available for you is tier 1.
+## Уровни
+Каждое дерево Дисциплины имеет до 3 уровней технологий. Вначале единственный уровень, который открыт и доступен для вас, — это уровень 1.
 
-In order to progress further, you have to research up to [color=brown]75%[/color] of the current tier to move to the next one. So in order to unlock T2 researches you need to research 75% of T1.
+Чтобы продвинуться дальше, вам необходимо изучить до [color=brown]75%[/color] текущего уровня, чтобы перейти на следующий. Таким образом, чтобы разблокировать исследования Т2, вам необходимо исследовать 75% исследований Т1.
 
+Теперь [color=green]Уровень 3[/color] становится интересным. Если вы исследуете технологию Т3, вы [color=brown]блокируете[/color] технологии Т3 из других деревьев Дисциплин. То есть, если... вы не найдете другой способ обойти эту проблему, вероятно, вам следует обратиться к своему [color=purple]директору по исследованиям[/color].
 
-
-## Disciplines
-Technologies are spread over 5 different Disciplines:
-<Box>
-<GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
-<GuideEntityEmbed Entity="Syringe" Caption="Biochemical"/>
-<GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
-<GuideEntityEmbed Entity="ComputerTelevision" Caption="Civil Services"/>
-<GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Arsenal"/>
-</Box>
-
-<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Use your nearest R&D console to take note of which kind of research is locked behind each Discipline tree.
-
-## Tiers
-Each Discipline tree has up to 3 tiers of technologies. At the start the only tier that is open and available for you is tier 1.
-
-In order to progress further, you have to research up to [color=brown]75%[/color] of the current tier to move to the next one. So in order to unlock T2 researches you need to research 75% of T1.
-
-Now [color=green]Tier 3[/color] is where it gets interesting. If you research a T3 tech, you [color=brown]lock out[/color] T3 techs from other Discipline trees. That is, unless... you find some other way around it, probably should ask your [color=purple]Research Director[/color].
-
-## Lathes
+## Токарные станки
 <Box>
 <GuideEntityEmbed Entity="Protolathe"/>
 <GuideEntityEmbed Entity="CircuitImprinter"/>
@@ -60,6 +63,6 @@ Now [color=green]Tier 3[/color] is where it gets interesting. If you research a 
 <GuideEntityEmbed Entity="MedicalTechFab"/>
 <GuideEntityEmbed Entity="SecurityTechFab"/>
 </Box>
-Воспользовавшись производственным станком (например, протолатом или принтером схем), вы можете синхронизировать его с сервером РнД, чтобы разблокировать новые рецепты для печати. Печать требует различные материалы (сталь, стекло, пластик, золото, или плазму), которые можно заказать в отделе снабжения или попросить у утилизаторов.
+	Воспользовавшись производственным станком (например, протолатом или принтером схем), вы можете синхронизировать его с сервером РнД, чтобы разблокировать новые рецепты для печати. Печать требует различные материалы (сталь, стекло, пластик, золото, или плазму), которые можно заказать в отделе снабжения или попросить у утилизаторов.
 
 </Document>

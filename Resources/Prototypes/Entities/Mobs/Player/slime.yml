@@ -1,9 +1,4 @@
 - type: entity
   save: false
-  parent: [BaseMobSlimePerson, BaseMob]
+  parent: BaseMobSlimePerson
   id: MobSlimePerson
-  components:
-    #Imperial foot prints
-    - type: FootPrints
-      leftBarePrint: "footprint-left-bare-slime"
-      rightBarePrint: "footprint-right-bare-slime"

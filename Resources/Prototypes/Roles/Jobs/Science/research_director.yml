@@ -21,6 +21,12 @@
   - Command
   - Maintenance
   - ResearchDirector
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: ResearchDirectorGear
@@ -31,6 +37,6 @@
     outerClothing: ClothingOuterCoatRnd
     id: RnDPDA
     ears: ClothingHeadsetRD
-  innerclothingskirt: ClothingUniformJumpskirtResearchDirector
+  innerClothingSkirt: ClothingUniformJumpskirtResearchDirector
   satchel: ClothingBackpackSatchelResearchDirectorFilled
   duffelbag: ClothingBackpackDuffelResearchDirectorFilled

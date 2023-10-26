@@ -111,3 +111,22 @@
     - state: green
     - sprite: Mobs/Aliens/Carps/dragon.rsi
       state: alive
+
+- type: entity
+  id: SpawnPointGhostSpaceNinja
+  name: ghost role spawn point
+  suffix: space ninja
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-space-ninja-name
+    description: ghost-role-information-space-ninja-description
+    rules: ghost-role-information-space-ninja-rules
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSpaceNinja
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon

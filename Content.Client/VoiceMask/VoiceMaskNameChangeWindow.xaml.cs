@@ -45,14 +45,14 @@ public sealed partial class VoiceMaskNameChangeWindow : DefaultWindow
         // Corvax-TTS-End
     }
 
-    public void UpdateState(string name, string voice) // Corvax-TTS
+    public void UpdateState(string name)//, string voice) // Corvax-TTS
     {
         NameSelector.Text = name;
 
         // Corvax-TTS-Start
-        var voiceIdx = _voices.FindIndex(v => v.ID == voice);
-        if (voiceIdx != -1)
-            VoiceSelector.Select(voiceIdx);
+        // var voiceIdx = _voices.FindIndex(v => v.ID == voice);
+        // if (voiceIdx != -1)
+        //     VoiceSelector.Select(voiceIdx);
         // Corvax-TTS-End
     }
 }

@@ -4,6 +4,7 @@ using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Shared.CombatMode;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Systems;
 

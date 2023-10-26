@@ -1,13 +1,9 @@
 <ui:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-                xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                 VerticalExpand="True" HorizontalExpand="True"
                 Title="{Loc admin-notes-message-window-title}"
                 MinSize="600 170">
-    <PanelContainer VerticalExpand="True" HorizontalExpand="True">
-        <PanelContainer.PanelOverride>
-            <graphics:StyleBoxFlat BackgroundColor="#25252A" />
-        </PanelContainer.PanelOverride>
+    <PanelContainer VerticalExpand="True" HorizontalExpand="True" StyleClasses="BackgroundDark">
         <ScrollContainer HScrollEnabled="False" VerticalExpand="True" HorizontalExpand="True" Margin="4">
             <BoxContainer Orientation="Vertical" SeparationOverride="10" VerticalAlignment="Bottom">
                 <Label Name="AdminLabel" Text="Loading..." />

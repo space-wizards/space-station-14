@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McWeb
-  parent: [BaseMobArachnid, BaseMob]
+  parent: BaseMobArachnid
   id: MobArachnid
   components:
   - type: Respirator
@@ -11,7 +11,3 @@
     damageRecovery:
       types:
         Asphyxiation: -0.5 # Recovery will suck without chems
-  #Imperial foot prints
-  - type: FootPrints
-    leftBarePrint: "footprint-left-bare-spider"
-    rightBarePrint: "footprint-right-bare-spider"

@@ -1,11 +1,6 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: [BaseMobReptilian, BaseMob]
+  parent: BaseMobReptilian
   id: MobReptilian
-  components:
-    #Imperial foot prints
-    - type: FootPrints
-      leftBarePrint: "footprint-left-bare-lizard"
-      rightBarePrint: "footprint-right-bare-lizard"
 #Weh

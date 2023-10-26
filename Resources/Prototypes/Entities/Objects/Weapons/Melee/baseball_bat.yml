@@ -18,6 +18,10 @@
         Blunt: 8
   - type: Item
     size: 80
+  - type: Tool
+    qualities:
+    - Rolling
+    speed: 0.75 # a bit unwieldly but does the job
   - type: Clothing
     quickEquip: false
     slots:

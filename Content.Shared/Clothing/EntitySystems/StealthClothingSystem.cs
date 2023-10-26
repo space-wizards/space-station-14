@@ -3,7 +3,6 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -13,6 +12,7 @@ namespace Content.Shared.Clothing.EntitySystems;
 public sealed class StealthClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -22,6 +22,13 @@ public sealed class StealthClothingSystem : EntitySystem
         SubscribeLocalEvent<StealthClothingComponent, ToggleStealthEvent>(OnToggleStealth);
         SubscribeLocalEvent<StealthClothingComponent, AfterAutoHandleStateEvent>(OnHandleState);
         SubscribeLocalEvent<StealthClothingComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<StealthClothingComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, StealthClothingComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -59,7 +66,7 @@ public sealed class StealthClothingSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        args.Actions.Add(comp.ToggleAction);
+        args.AddAction(ref comp.ToggleActionEntity, comp.ToggleAction);
     }
 
     /// <summary>

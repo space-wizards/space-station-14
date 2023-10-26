@@ -65,7 +65,7 @@ public sealed partial class DockingSystem
             if ((worldPos - otherWorldPos).Length() < comp.Radius)
                 continue;
 
-            _sawmill.Debug($"Removed RecentlyDocked from {ToPrettyString(uid)} and {ToPrettyString(comp.LastDocked)}");
+            Log.Debug($"Removed RecentlyDocked from {ToPrettyString(uid)} and {ToPrettyString(comp.LastDocked)}");
             RemComp<RecentlyDockedComponent>(uid);
             RemComp<RecentlyDockedComponent>(comp.LastDocked);
         }
@@ -73,48 +73,52 @@ public sealed partial class DockingSystem
 
     private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
     {
-        _sawmill.Debug($"Received undock request for {ToPrettyString(args.DockEntity)}");
+        var dork = GetEntity(args.DockEntity);
+
+        Log.Debug($"Received undock request for {ToPrettyString(dork)}");
 
         // TODO: Validation
-        if (!TryComp<DockingComponent>(args.DockEntity, out var dock) ||
+        if (!TryComp<DockingComponent>(dork, out var dock) ||
             !dock.Docked ||
             HasComp<PreventPilotComponent>(Transform(uid).GridUid))
         {
             return;
         }
 
-        Undock(args.DockEntity, dock);
+        Undock(dork, dock);
     }
 
     private void OnRequestAutodock(EntityUid uid, ShuttleConsoleComponent component, AutodockRequestMessage args)
     {
-        _sawmill.Debug($"Received autodock request for {ToPrettyString(args.DockEntity)}");
+        var dork = GetEntity(args.DockEntity);
+        Log.Debug($"Received autodock request for {ToPrettyString(dork)}");
         var player = args.Session.AttachedEntity;
 
         if (player == null ||
-            !HasComp<DockingComponent>(args.DockEntity) ||
+            !HasComp<DockingComponent>(dork) ||
             HasComp<PreventPilotComponent>(Transform(uid).GridUid))
         {
             return;
         }
 
         // TODO: Validation
-        var comp = EnsureComp<AutoDockComponent>(args.DockEntity);
+        var comp = EnsureComp<AutoDockComponent>(dork);
         comp.Requesters.Add(player.Value);
     }
 
     private void OnRequestStopAutodock(EntityUid uid, ShuttleConsoleComponent component, StopAutodockRequestMessage args)
     {
-        _sawmill.Debug($"Received stop autodock request for {ToPrettyString(args.DockEntity)}");
+        var dork = GetEntity(args.DockEntity);
+        Log.Debug($"Received stop autodock request for {ToPrettyString(dork)}");
 
         var player = args.Session.AttachedEntity;
 
         // TODO: Validation
-        if (player == null || !TryComp<AutoDockComponent>(args.DockEntity, out var comp)) return;
+        if (player == null || !TryComp<AutoDockComponent>(dork, out var comp)) return;
 
         comp.Requesters.Remove(player.Value);
 
         if (comp.Requesters.Count == 0)
-            RemComp<AutoDockComponent>(args.DockEntity);
+            RemComp<AutoDockComponent>(dork);
     }
 }

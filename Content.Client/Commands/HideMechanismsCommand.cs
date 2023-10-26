@@ -15,6 +15,7 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var containerSys = entityManager.System<SharedContainerSystem>();
             var organs = entityManager.EntityQuery<OrganComponent>(true);
 
             foreach (var part in organs)
@@ -27,7 +28,7 @@ namespace Content.Client.Commands
                 sprite.ContainerOccluded = false;
 
                 var tempParent = part.Owner;
-                while (tempParent.TryGetContainer(out var container))
+                while (containerSys.TryGetContainingContainer(tempParent, out var container))
                 {
                     if (!container.ShowContents)
                     {

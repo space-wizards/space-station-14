@@ -1,5 +1,6 @@
 ## ViewVariablesInstanceEntity
 
+view-variables = Просмотр компонентов
 view-variable-instance-entity-server-components-add-component-button-placeholder = Добавить компонент
 view-variable-instance-entity-client-variables-tab-title = Переменные клиента
 view-variable-instance-entity-client-components-tab-title = Компоненты клиента

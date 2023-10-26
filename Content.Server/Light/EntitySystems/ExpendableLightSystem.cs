@@ -154,7 +154,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnExpLightInit(EntityUid uid, ExpendableLightComponent component, ComponentInit args)
         {
-            if (TryComp<ItemComponent?>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
                 _item.SetHeldPrefix(uid, "unlit", item);
             }

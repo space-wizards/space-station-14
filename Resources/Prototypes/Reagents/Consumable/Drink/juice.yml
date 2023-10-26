@@ -23,7 +23,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-berry
   physicalDesc: reagent-physical-desc-sweet
-  flavor: juice
+  flavor: berry
   color: "#660099"
 
 - type: reagent

@@ -19,7 +19,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class FillGasWindow : DefaultWindow
     {
-        private List<EntityUid>? _gridData;
+        private List<NetEntity>? _gridData;
         private IEnumerable<GasPrototype>? _gasData;
 
         protected override void EnteredTree()
@@ -29,7 +29,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
             var gridQuery = entManager.AllEntityQueryEnumerator<MapGridComponent>();
-            _gridData ??= new List<EntityUid>();
+            _gridData ??= new List<NetEntity>();
             _gridData.Clear();
 
             while (gridQuery.MoveNext(out var uid, out _))
@@ -37,7 +37,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
                 var player = playerManager.LocalPlayer?.ControlledEntity;
                 var playerGrid = entManager.GetComponentOrNull<TransformComponent>(player)?.GridUid;
                 GridOptions.AddItem($"{uid} {(playerGrid == uid ? " (Current)" : "")}");
-                _gridData.Add(uid);
+                _gridData.Add(entManager.GetNetEntity(uid));
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);

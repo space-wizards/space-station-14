@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Item;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
@@ -29,7 +30,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<ServerStorageComponent>("Storage", out var storage) ||
+                    if (!proto.TryGetComponent<StorageComponent>("Storage", out var storage) ||
                         storage.Whitelist != null ||
                         !proto.TryGetComponent<ItemComponent>("Item", out var item)) continue;
 
@@ -84,7 +85,7 @@ namespace Content.IntegrationTests.Tests
                     int capacity;
                     var isEntStorage = false;
 
-                    if (proto.TryGetComponent<ServerStorageComponent>("Storage", out var storage))
+                    if (proto.TryGetComponent<StorageComponent>("Storage", out var storage))
                     {
                         capacity = storage.StorageCapacityMax;
                     }

@@ -27,3 +27,6 @@ roles-antag-space-ninja-objective = Energy sword everything, nom on electrical w
 
 roles-antag-subverted-silicon-name = Subverted silicon
 roles-antag-subverted-silicon-objective = Follow your new laws and do bad unto the station.
+
+roles-antag-space-ninja-name = Space Ninja
+roles-antag-space-ninja-objective = Use your stealth to sabotage the station, nom on electrical wires.

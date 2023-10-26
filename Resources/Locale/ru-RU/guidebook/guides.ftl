@@ -1,20 +1,27 @@
 guide-entry-engineering = Инженерное дело
 guide-entry-construction = Строительство
+guide-entry-airlock-security = Улучшения шлюза
 guide-entry-atmospherics = Атмосфера
 guide-entry-botany = Ботаника
 guide-entry-fires = Пожары и разгерметизации
 guide-entry-shuttle-craft = Шаттлостроение
 guide-entry-networking = Сетевые соединения
 guide-entry-network-configurator = Конфигуратор сетей
+guide-entry-access-configurator = Конфигуратор доступа
 guide-entry-power = Электропитание
+guide-entry-portable-generator = Портативные генераторы
 guide-entry-ame = Двигатель антиматерии (ДАМ)
 guide-entry-singularity = Сингулярный двигатель
-guide-entry-science = Научный отдел
+guide-entry-teg = Термоэлектрический генератор (ТЭГ)
+guide-entry-controls = Элементы управления
+guide-entry-radio = Рация
+guide-entry-jobs = Работы
 guide-entry-cargo = Отдел снабжения
 guide-entry-cargo-bounties = Запросы отдела снабжения
-guide-entry-salvage = Утилизация обломков
-guide-entry-controls = Управление
+guide-entry-salvage = Утилизаторы
+guide-entry-survival = Выживание
 guide-entry-chemicals = Химикаты
+guide-entry-ss14 = Космическая станция 14
 guide-entry-janitorial = Уборка станции
 guide-entry-bartender = Бармен
 guide-entry-chef = Шеф-повар
@@ -26,12 +33,8 @@ guide-entry-medicine = Медицина
 guide-entry-botanicals = Ботаника
 guide-entry-cloning = Клонирование
 guide-entry-cryogenics = Криогеника
-guide-entry-radio = Радиосвязь
-guide-entry-jobs = Должности
-guide-entry-survival = Выживание
-guide-entry-ss14 = Космическая станция 14
-
 guide-entry-science = Наука
+guide-entry-technologies = Технологии
 guide-entry-anomalous-research = Исследование аномалий
 guide-entry-scanners-and-vessels = Сканеры и сосуды
 guide-entry-ape = И.А.Ч.
@@ -39,8 +42,17 @@ guide-entry-xenoarchaeology = Ксеноархеология
 guide-entry-artifact-reports = Отчёты об артефактах
 guide-entry-traversal-distorter = Поперечный искатель
 guide-entry-machine-upgrading = Улучшение оборудования
-
 guide-entry-robotics = Робототехника
-
 guide-entry-security = Служба Безопасности
 guide-entry-dna = ДНК
+guide-entry-defusal = Обезвреживание большой бомбы
+
+guide-entry-antagonists = Антагонисты
+guide-entry-nuclear-operatives = Ядерные Оперативники
+guide-entry-traitors = Предатели
+guide-entry-zombies = Зомби
+guide-entry-revolutionaries = Революционеры
+guide-entry-minor-antagonists = Минорные Антагонисты
+guide-entry-space-ninja = Космический Ниндзя
+
+guide-entry-writing = Письменность

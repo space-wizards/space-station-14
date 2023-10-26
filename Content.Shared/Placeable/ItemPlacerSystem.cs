@@ -1,6 +1,5 @@
 ﻿using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using System.Linq;
 
 namespace Content.Shared.Placeable;
 
@@ -63,10 +62,10 @@ public sealed class ItemPlacerSystem : EntitySystem
 /// Raised on the <see cref="ItemPlacer"/> when an item is placed and it is under the item limit.
 /// </summary>
 [ByRefEvent]
-public record struct ItemPlacedEvent(EntityUid OtherEntity);
+public readonly record struct ItemPlacedEvent(EntityUid OtherEntity);
 
 /// <summary>
 /// Raised on the <see cref="ItemPlacer"/> when an item is removed from it.
 /// </summary>
 [ByRefEvent]
-public record struct ItemRemovedEvent(EntityUid OtherEntity);
+public readonly record struct ItemRemovedEvent(EntityUid OtherEntity);

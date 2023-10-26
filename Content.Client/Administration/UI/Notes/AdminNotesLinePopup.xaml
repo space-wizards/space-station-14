@@ -1,8 +1,8 @@
 <Popup xmlns="https://spacestation14.io"
        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <PanelContainer>
+    <PanelContainer StyleClasses="BackgroundDark">
         <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#25252A" BorderThickness="1" BorderColor="#18181B"/>
+            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#18181B"/>
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Vertical">
             <Label Name="PlayerNameLabel"/>

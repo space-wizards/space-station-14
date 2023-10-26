@@ -72,6 +72,22 @@
 
 - type: entity
   parent: ClothingShoesBaseButcherable
+  id: ClothingShoesSpaceNinja
+  name: space ninja shoes
+  description: A pair of nano-enhanced boots with built-in magnetic suction cups.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/spaceninja.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/spaceninja.rsi
+  - type: NoSlip
+  - type: ClothingSpeedModifier
+    # ninja are masters of sneaking around relatively quickly, won't break cloak
+    walkModifier: 1.1
+    sprintModifier: 1.3
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesSwat
   name: swat shoes
   description: When you want to turn up the heat.

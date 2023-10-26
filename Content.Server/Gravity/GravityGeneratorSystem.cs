@@ -17,6 +17,7 @@ namespace Content.Server.Gravity
         [Dependency] private readonly AmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly GravitySystem _gravitySystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPointLightSystem _lights = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
@@ -233,10 +234,10 @@ namespace Content.Server.Gravity
             var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
             _appearance.SetData(uid, GravityGeneratorVisuals.Charge, grav.Charge, appearance);
 
-            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
+            if (_lights.TryGetLight(uid, out var pointLight))
             {
-                pointLight.Enabled = grav.Charge > 0;
-                pointLight.Radius = MathHelper.Lerp(grav.LightRadiusMin, grav.LightRadiusMax, grav.Charge);
+                _lights.SetEnabled(uid, grav.Charge > 0, pointLight);
+                _lights.SetRadius(uid, MathHelper.Lerp(grav.LightRadiusMin, grav.LightRadiusMax, grav.Charge), pointLight);
             }
 
             if (!grav.Intact)

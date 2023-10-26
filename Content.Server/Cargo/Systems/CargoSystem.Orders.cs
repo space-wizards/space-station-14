@@ -215,13 +215,15 @@ namespace Content.Server.Cargo.Systems
                 !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
 
             if (_uiSystem.TryGetUi(consoleUid, CargoConsoleUiKey.Orders, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new CargoConsoleInterfaceState(
+            {
+                _uiSystem.SetUiState(bui, new CargoConsoleInterfaceState(
                     MetaData(station.Value).EntityName,
                     GetOutstandingOrderCount(orderDatabase),
                     orderDatabase.Capacity,
                     bankAccount.Balance,
                     orderDatabase.Orders
                 ));
+            }
         }
 
         private void ConsolePopup(ICommonSession session, string text)

@@ -1,10 +1,5 @@
 - type: entity
   save: false
   name: Urist McHands The Dwarf
-  parent: [BaseMobDwarf, BaseMob]
+  parent: BaseMobDwarf
   id: MobDwarf
-  components:
-    #Imperial foot prints
-    - type: FootPrints
-      leftBarePrint: "footprint-left-bare-dwarf"
-      rightBarePrint: "footprint-right-bare-dwarf"

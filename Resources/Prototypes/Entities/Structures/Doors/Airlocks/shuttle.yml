@@ -43,7 +43,7 @@
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Wires
-    LayoutId: Docking
+    layoutId: Docking
   - type: Door
     bumpOpen: false
     closeTimeTwo: 0.4

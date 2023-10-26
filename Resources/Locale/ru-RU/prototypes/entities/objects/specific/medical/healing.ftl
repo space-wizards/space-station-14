@@ -114,3 +114,17 @@ ent-MedicatedSuture = лечебный шовный материал
     .desc = Нить, пропитанная лекарством, эффективно лечит тупые травмы и закрывает раны.
 ent-BrutepackAdvanced1 = лечебный шовный материал
     .desc = Нить, пропитанная лекарством, эффективно лечит тупые травмы и закрывает раны.
+ent-SyringeSigynate = шприц сигината
+    .desc = { ent-BaseSyringe.desc }
+ent-SyringePhalanximine = шприц фалангимина
+    .desc = { ent-BaseSyringe.desc }
+ent-SyringeEthylredoxrazine = шприц этилредоксразина
+    .desc = { ent-BaseSyringe.desc }
+ent-SyringeSaline = шприц физраствора
+    .desc = { ent-BaseSyringe.desc }
+ent-PillCharcoal = таблетка угля
+    .desc = { ent-Pill.desc }
+
+ent-HealingToolbox = Лечащий набор инструментов
+    .desc = Мощный набор инструментов, наполненный мощной энергией. Он может залечить ваши раны и наполнить вас убийственным намерением.
+    .suffix = НЕ МАППИТЬ!

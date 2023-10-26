@@ -281,6 +281,9 @@
     state: blue
   - type: Item
     heldPrefix: blue
+  - type: Tag
+    tags:
+      - PlushieSharkBlue
 
 - type: entity
   parent: PlushieSharkBlue
@@ -293,6 +296,9 @@
     state: pink
   - type: Item
     heldPrefix: pink
+  - type: Tag
+    tags:
+      - PlushieSharkPink
 
 - type: entity
   parent: PlushieSharkBlue
@@ -305,6 +311,9 @@
     state: grey
   - type: Item
     heldPrefix: grey
+  - type: Tag
+    tags:
+      - PlushieSharkGrey
 
 - type: entity
   parent: BasePlushie
@@ -346,6 +355,8 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite # Rrrr!
 
 - type: entity
   parent: BasePlushie
@@ -591,6 +602,9 @@
   - type: Item
     sprite: Objects/Fun/toys.rsi
     heldPrefix: capgun
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -1021,9 +1035,8 @@
   name: crazy glue
   description:  A bottle of crazy glue manufactured by Honk! Co.
   components:
-  - type: Drink
-    isOpen: false
-    openSounds:
+  - type: Openable
+    sound:
       collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Fun/glue.rsi

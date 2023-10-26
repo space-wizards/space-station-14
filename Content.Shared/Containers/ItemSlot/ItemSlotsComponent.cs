@@ -113,6 +113,15 @@ namespace Content.Shared.Containers.ItemSlots
         public bool Locked = false;
 
         /// <summary>
+        /// Prevents adding the eject alt-verb, but still lets you swap items.
+        /// </summary>
+        /// <remarks>
+        ///     This does not affect EjectOnInteract, since if you do that you probably want ejecting to work.
+        /// </remarks>
+        [DataField("disableEject"), ViewVariables(VVAccess.ReadWrite)]
+        public bool DisableEject = false;
+
+        /// <summary>
         ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.
         ///     It doesn't block other insertion methods, like verbs.
         /// </summary>

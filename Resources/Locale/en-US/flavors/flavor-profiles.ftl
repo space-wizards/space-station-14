@@ -103,6 +103,7 @@ flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
 flavor-complex-garlic = like garlic
 flavor-complex-grape = like grapes
+flavor-complex-berry = like berries
 flavor-complex-meatballs = like meatballs
 flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
@@ -147,6 +148,7 @@ flavor-complex-parents = like someone's parents
 flavor-complex-plastic = like plastic
 flavor-complex-glue = like glue
 flavor-complex-spaceshroom-cooked = like space umami
+flavor-complex-lost-friendship = like lost friendship
 
 # Drink-specific flavors.
 

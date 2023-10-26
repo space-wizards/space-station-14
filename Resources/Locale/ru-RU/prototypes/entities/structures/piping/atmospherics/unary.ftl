@@ -22,3 +22,10 @@ ent-GasThermoMachineFreezer = охладитель
 ent-GasThermoMachineHeater = нагреватель
     .desc = { ent-BaseGasThermoMachine.desc }
     .suffix = { "" }
+
+ent-GasThermoMachineFreezerEnabled = охладитель
+    .desc = { ent-BaseGasThermoMachine.desc }
+    .suffix = Включён
+ent-GasThermoMachineHeaterEnabled = Нагреватель
+    .desc = { ent-BaseGasThermoMachine.desc }
+    .suffix = Включён

@@ -8,6 +8,7 @@
     sprite: Clothing/Shoes/Boots/workboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/workboots.rsi
+  - type: Matchbox
 
 - type: entity
   parent: ClothingShoesStorageBase
@@ -19,10 +20,12 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: Matchbox
   - type: Storage
     whitelist:
       tags:
         - Knife
+        - Sidearm
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHeavy
@@ -37,6 +40,7 @@
     sprite: Clothing/Shoes/Boots/explorer.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/explorer.rsi
+  - type: Matchbox
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -59,6 +63,7 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: Matchbox
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHeavy
@@ -66,6 +71,7 @@
     whitelist:
       tags:
         - Knife
+        - Sidearm
 
 - type: entity
   parent: ClothingShoesStorageBase
@@ -77,10 +83,12 @@
     sprite: Clothing/Shoes/Boots/mercboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/mercboots.rsi
+  - type: Matchbox
   - type: Storage
     whitelist:
       tags:
         - Knife
+        - Sidearm
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -92,3 +100,16 @@
     sprite: Clothing/Shoes/Boots/laceups.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/laceups.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsWinter
+  name: winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterboots.rsi
+  - type: TemperatureProtection
+    coefficient: 0.05

@@ -6,37 +6,38 @@
 ## Компоненты
 <Box>Базовые компоненты:</Box>
 <Box>
-<GuideEntityEmbed Entity="CapacitorStockPart"/>
-<GuideEntityEmbed Entity="MatterBinStockPart"/>
-<GuideEntityEmbed Entity="MicroLaserStockPart"/>
+<GuideEntityEmbed Entity = "CapacitorStockPart"/>
+<GuideEntityEmbed Entity = "MatterBinStockPart"/>
+<GuideEntityEmbed Entity = "MicroLaserStockPart"/>
 </Box>
 <Box>
-<GuideEntityEmbed Entity="MicroManipulatorStockPart"/>
-<GuideEntityEmbed Entity="ScanningModuleStockPart"/>
+<GuideEntityEmbed Entity = "MicroManipulatorStockPart"/>
+<GuideEntityEmbed Entity = "ScanningModuleStockPart"/>
 </Box>
 Вы можете осматривать компоненты, чтобы определить их тип и уровень качества, который может быть от 1 до 4.
 
 Компоненты более высоких уровней могут быть изучены и напечатаны, а также найдены утилизаторами или получены при помощи артефактов.
 <Box>
-<GuideEntityEmbed Entity="AdvancedMatterBinStockPart"/>
-<GuideEntityEmbed Entity="SuperMatterBinStockPart"/>
-<GuideEntityEmbed Entity="BluespaceMatterBinStockPart"/>
+<GuideEntityEmbed Entity = "AdvancedMatterBinStockPart"/>
+<GuideEntityEmbed Entity = "SuperMatterBinStockPart"/>
+<GuideEntityEmbed Entity = "BluespaceMatterBinStockPart"/>
 </Box>
 
 ## Процесс улучшения
 Узнать, можно ли улучшить то или иное устройство, можно осмотрев его и убедившись в наличии иконки [color=#a4885c]стрелки[/color] в правом нижнем углу описания. Кликнув по этой иконке вы сможете узнать, как это устройство было улучшено.
 
 Осмотрев плату можно узнать, какие компоненты необходимы для создания устройства. Попробуйте сами:
-<Box Orientation="Vertical">
-<GuideEntityEmbed Entity="ProtolatheMachineCircuitboard"/>
-<GuideEntityEmbed Entity="CloningPodMachineCircuitboard"/>
-<GuideEntityEmbed Entity="TraversalDistorterMachineCircuitboard"/>
-<GuideEntityEmbed Entity="ThermomachineFreezerMachineCircuitBoard"/>
+<Box Orientation = "Vertical">
+<GuideEntityEmbed Entity = "ProtolatheMachineCircuitboard"/>
+<GuideEntityEmbed Entity = "CloningPodMachineCircuitboard"/>
+<GuideEntityEmbed Entity = "TraversalDistorterMachineCircuitboard"/>
+<GuideEntityEmbed Entity = "ThermomachineFreezerMachineCircuitBoard"/>
 </Box>
 Вы можете использовать компоненты любого уровня качества. Выше уровень компонента — выше эффективность того или иного параметра устройства.
 
 Для модернизации уже собранного устройства необходимо сперва разобрать его при помощи отвёртки и лома, а затем заменить имеющиеся компоненты.
 
 РПЗД поможет вам с быстрым улучшением оборудования. Поместите компоненты в РПЗД, и кликните им по устройству, предварительно открутив техническую панель если таковая имеется. Помещённые в РПЗД компоненты быстро заменят уже установленные.
-<GuideEntityEmbed Entity="RPED"/>
+<GuideEntityEmbed Entity = "RPED"/>
+
 </Document>

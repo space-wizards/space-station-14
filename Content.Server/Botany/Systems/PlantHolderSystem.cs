@@ -1,13 +1,12 @@
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
@@ -16,7 +15,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Random.Helpers;
+using Content.Shared.Random;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -29,6 +28,7 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class PlantHolderSystem : EntitySystem
 {
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
@@ -36,10 +36,12 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -252,7 +254,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
             component.Seed.Unique = false;
             var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
-            seed.RandomOffset(0.25f);
+            _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
@@ -276,7 +278,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (HasComp<SharpComponent>(args.Used))
             DoHarvest(uid, args.User, component);
 
-        if (TryComp<ProduceComponent?>(args.Used, out var produce))
+        if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                 ("owner", uid),
@@ -345,6 +347,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.MutationLevel > 0)
         {
             Mutate(uid, Math.Min(component.MutationLevel, 25), component);
+            component.UpdateSpriteAfterUpdate = true;
             component.MutationLevel = 0;
         }
 
@@ -842,7 +845,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null)
         {
             EnsureUniqueSeed(uid, component);
-            _mutation.MutateSeed(component.Seed, severity);
+            _mutation.MutateSeed(ref component.Seed, severity);
         }
     }
 
@@ -856,9 +859,9 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null && component.Seed.Bioluminescent)
         {
             var light = EnsureComp<PointLightComponent>(uid);
-            light.Radius = component.Seed.BioluminescentRadius;
-            light.Color = component.Seed.BioluminescentColor;
-            light.CastShadows = false; // this is expensive, and botanists make lots of plants
+            _pointLight.SetRadius(uid, component.Seed.BioluminescentRadius, light);
+            _pointLight.SetColor(uid, component.Seed.BioluminescentColor, light);
+            _pointLight.SetCastShadows(uid, false, light);
             Dirty(uid, light);
         }
         else

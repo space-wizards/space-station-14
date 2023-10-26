@@ -1,6 +1,6 @@
 using Content.Shared.Cuffs;
-using JetBrains.Annotations;
 using Content.Shared.Cuffs.Components;
+using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Cuffs
@@ -12,13 +12,7 @@ namespace Content.Server.Cuffs
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandcuffComponent, ComponentGetState>(OnHandcuffGetState);
             SubscribeLocalEvent<CuffableComponent, ComponentGetState>(OnCuffableGetState);
-        }
-
-        private void OnHandcuffGetState(EntityUid uid, HandcuffComponent component, ref ComponentGetState args)
-        {
-            args.State = new HandcuffComponentState(component.OverlayIconState);
         }
 
         private void OnCuffableGetState(EntityUid uid, CuffableComponent component, ref ComponentGetState args)
@@ -34,7 +28,7 @@ namespace Content.Server.Cuffs
             args.State = new CuffableComponentState(component.CuffedHandCount,
                 component.CanStillInteract,
                 cuffs?.CuffedRSI,
-                $"{cuffs?.OverlayIconState}-{component.CuffedHandCount}",
+                $"{cuffs?.BodyIconState}-{component.CuffedHandCount}",
                 cuffs?.Color);
             // the iconstate is formatted as blah-2, blah-4, blah-6, etc.
             // the number corresponds to how many hands are cuffed.

@@ -6,6 +6,9 @@ ent-WaterTank2HighCapacityFull = { ent-WaterTankHighCapacity }
     .desc = { ent-WaterTankHighCapacity.desc }
 ent-WaterTank2HighCapacityEmpty = { ent-WaterTankHighCapacity }
     .desc = { ent-WaterTankHighCapacity.desc }
+ent-GenericTank = { ent-WaterTank }
+    .desc = { ent-WaterTankHighCapacity.desc }
+    .suffix = Пустой
 
 ent-WeldingFuelTank2Empty = { ent-WeldingFuelTank }
     .desc = { ent-WeldingFuelTank.desc }

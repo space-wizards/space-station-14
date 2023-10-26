@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by deltanedas (github) for SS14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "low"
+    },
+    {
+      "name": "medium"
+    },
+    {
+      "name": "high"
+    }
+  ]
+}

@@ -54,12 +54,12 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void OnBallisticPrice(EntityUid uid, BallisticAmmoProviderComponent component, ref PriceCalculationEvent args)
     {
-        if (string.IsNullOrEmpty(component.FillProto) || component.UnspawnedCount == 0)
+        if (string.IsNullOrEmpty(component.Proto) || component.UnspawnedCount == 0)
             return;
 
-        if (!ProtoManager.TryIndex<EntityPrototype>(component.FillProto, out var proto))
+        if (!ProtoManager.TryIndex<EntityPrototype>(component.Proto, out var proto))
         {
-            Log.Error($"Unable to find fill prototype for price on {component.FillProto} on {ToPrettyString(uid)}");
+            Log.Error($"Unable to find fill prototype for price on {component.Proto} on {ToPrettyString(uid)}");
             return;
         }
 
@@ -239,7 +239,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             if (!Deleted(hitEntity))
                             {
-                                if (dmg.Total > FixedPoint2.Zero)
+                                if (dmg.Any())
                                 {
                                     _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
                                 }
@@ -398,7 +398,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Lord
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
-        var sprites = new List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
+        var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
         var gridUid = fromCoordinates.GetGridUid(EntityManager);
         var angle = mapDirection;
 
@@ -421,18 +421,27 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             if (hitscan.MuzzleFlash != null)
             {
-                sprites.Add((fromCoordinates.Offset(angle.ToVec().Normalized() / 2), angle, hitscan.MuzzleFlash, 1f));
+                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                var netCoords = GetNetCoordinates(coords);
+
+                sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
             }
 
             if (hitscan.TravelFlash != null)
             {
-                sprites.Add((fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2), angle, hitscan.TravelFlash, distance - 1.5f));
+                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                var netCoords = GetNetCoordinates(coords);
+
+                sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
             }
         }
 
         if (hitscan.ImpactFlash != null)
         {
-            sprites.Add((fromCoordinates.Offset(angle.ToVec() * distance), angle.FlipPositive(), hitscan.ImpactFlash, 1f));
+            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
+            var netCoords = GetNetCoordinates(coords);
+
+            sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
         }
 
         if (sprites.Count > 0)

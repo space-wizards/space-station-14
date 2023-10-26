@@ -187,7 +187,7 @@ public sealed class HealingSystem : EntitySystem
             : component.Delay * GetScaledHealingPenalty(user, component);
 
         var doAfterEventArgs =
-            new DoAfterArgs(user, delay, new HealingDoAfterEvent(), target, target: target, used: uid)
+            new DoAfterArgs(EntityManager, user, delay, new HealingDoAfterEvent(), target, target: target, used: uid)
             {
                 //Raise the event on the target if it's not self, otherwise raise it on self.
                 BreakOnUserMove = true,

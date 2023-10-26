@@ -1,0 +1,341 @@
+#beretta - pistol
+- type: entity
+  name: beretta
+  parent: BaseWeaponPistol
+  id: CSWeaponBeretta
+  suffix: CS
+  description: Classic naturaly from 1975. Uses .35 auto ammo.
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/beretta.rsi
+  - type: Gun
+    fireRate: 5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: BerettaMagazinePistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+
+#Five-seveN (FN) - pistol
+- type: entity
+  name: five-seven
+  parent: BaseWeaponPistol
+  id: CSWeaponFiveSeven
+  suffix: CS
+  description: A faithful friend to his brother P90.
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/FN.rsi
+  - type: Gun
+    availableModes:
+    - SemiAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+
+#mac-10 - auto-pistol
+- type: entity
+  name: mac-10
+  parent: BaseWeaponPistol
+  id: CSWeaponMac-10
+  suffix: CS
+  description: Cheap, fast-firing light weapon. But it's not very accurate.
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/mac10.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/mac10.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: Gun
+    minAngle: 6
+    maxAngle: 26
+    fireRate: 15
+    angleIncrease: 6
+    angleDecay: 10
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: mac10-Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolHighCapacity
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+
+#dualBeretta - doublePistols
+- type: entity
+  name: dual beretta
+  parent: BaseWeaponPistol
+  id: CSWeaponDualBeretta
+  suffix: CS
+  description: Classic naturaly from 1975. Two pieces tied with a string. Uses .35 auto ammo.
+  components:
+  - type: MultiHandedItem
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/dual_Berettas.rsi
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/dual_Berettas.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: Gun
+    minAngle: 4
+    maxAngle: 16
+    fireRate: 10
+    angleIncrease: 4
+    angleDecay: 10
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: DualBerettaMagazinePistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+            - MagazineDualBeretta
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+
+# USP-S - silencer pistol
+- type: entity
+  name: usp-s
+  id: CSWeaponUSP-S
+  parent: WeaponPistolCobra
+  suffix: CS
+  description: Pew-Pew, fourty seven.
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/usp_s.rsi
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: false
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+
+#Glock-18 - pistol
+- type: entity
+  name: glock-18
+  parent: BaseWeaponPistol
+  id: CSWeaponGlock-18
+  suffix: CS
+  description: #descriprion
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/glock18.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: Glock18MagazinePistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+
+#Tec-9 auto-pistol
+- type: entity
+  name: TEC-9
+  parent: BaseWeaponSubMachineGun
+  id: CSWeaponTEC-9
+  suffix: CS
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/tec9.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/SMG/tec9.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: mac10-Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolHighCapacity
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+#CZ - auto-pistol
+- type: entity
+  name: CZ-auto
+  parent: BaseWeaponSubMachineGun
+  id: CSWeaponCZ
+  suffix: CS
+  description:
+  components:
+  - type: Sprite
+    sprite: Imperial/CS/Weapon/CZ_75auto.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Imperial/CS/Weapon/SMG/CZ_75auto.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Gun
+    selectedMode: FullAuto
+    availableMode:
+      - Full Auto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: mac10-Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolHighCapacity
+      gun_chamber:
+        name: Chamber
+        startingItem: #none
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance

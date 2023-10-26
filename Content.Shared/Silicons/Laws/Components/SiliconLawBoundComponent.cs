@@ -1,5 +1,5 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -14,14 +14,14 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// <summary>
     /// The sidebar action that toggles the laws screen.
     /// </summary>
-    [DataField("viewLawsAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ViewLawsAction = "ViewLaws";
+    [DataField("viewLawsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ViewLawsAction = "ActionViewLaws";
 
     /// <summary>
     /// The action for toggling laws. Stored here so we can remove it later.
     /// </summary>
-    [DataField("providedAction")]
-    public InstantAction? ProvidedAction;
+    [DataField("viewLawsActionEntity")]
+    public EntityUid? ViewLawsActionEntity;
 
     /// <summary>
     /// The last entity that provided laws to this entity.

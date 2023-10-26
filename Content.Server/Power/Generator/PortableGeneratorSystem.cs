@@ -72,7 +72,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         if (fuelGenerator.On || !Transform(uid).Anchored)
             return;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(user, component.StartTime, new GeneratorStartedEvent(), uid, uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.StartTime, new GeneratorStartedEvent(), uid, uid)
         {
             BreakOnDamage = true, BreakOnTargetMove = true, BreakOnUserMove = true, RequireCanInteract = true,
             NeedHand = true

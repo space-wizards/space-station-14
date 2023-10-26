@@ -164,3 +164,7 @@ ent-ClothingHeadHatCasa = соломенная шляпа
     .desc = Конусообразная шляпа
 ent-ClothingHeadHatTacticalMaidHeadband = тактическая повязка на голову для горничной
     .desc = «Красная повязка – не воображай себя Рэмбо и не бери в руки несколько автоматов».
+ent-ClothingHeadHatGladiator = шлем гладиатора
+    .desc = Шлем который использовали древнии воины.
+ent-ClothingHeadHatBeretSecurity = берет охраны
+    .desc = Стильный вариант одежды для сотрудников службы безопасности.

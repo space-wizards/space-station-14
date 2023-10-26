@@ -1,9 +1,5 @@
-﻿using System;
-using Content.Client.Stylesheets;
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+﻿using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;

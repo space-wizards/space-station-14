@@ -10,7 +10,7 @@
 <GuideEntityEmbed Entity="MachineAPE"/>
 </Box>
 
-Сканеры, сосуды и М.А.К.А.К.и используются для локализации и наблюдения за аномалиями.
+Сканеры, сосуды и И.А.Ч. и используются для локализации и наблюдения за аномалиями.
 
 <Box>
 <GuideEntityEmbed Entity="MachineAnomalyGenerator"/>

@@ -1,29 +1,29 @@
 <Document>
-  # Cargo Bounties
-  [textlink="Cargo" link="Cargo"] can always make money selling items whenever they feel like it. However, there are ways to make even more money by being more selective about what and when you're selling. One of these ways is [color=#a4885c]bounties[/color].
+  # Награды за груз
+  [textlink="Cargo" link="Cargo"] всегда могут зарабатывать деньги, продавая предметы, когда захотят. Однако есть способы заработать еще больше денег, если быть более избирательным в отношении того, что и когда вы продаете. Один из таких способов — [color=#a4885c]баунти[/color].
 
   <Box>
     <GuideEntityEmbed Entity="ComputerCargoBounty"/>
   </Box>
-  Every station has a fixed amount of bounties that are globally available. These can be checked at the [color=#a4885c]cargo bounty computer[/color], which shows the following information about them:
-  - What items are needed to fulfill the bounty
-  - How much money do you get for completing the bounty
-  - How much time is left before the bounty expires
+  На каждой станции есть фиксированное количество наград, доступных по всему миру. Их можно проверить на [color=#a4885c]компьютере по поиску грузов[/color], который показывает следующую информацию о них:
+  - Какие предметы необходимы для выполнения награды
+  - Сколько денег вы получите за выполнение задания
+  - Сколько времени осталось до истечения срока действия награды
 
-  Assuming that you are able to aquire all of the items for it in a time efficient and low-cost manner, you will be able to complete the bounty and get a significantly higher payout than you would be selling the items conventionally.
+  Предполагая, что вы сможете приобрести все предметы для него экономичным и недорогим способом, вы сможете выполнить задание и получить значительно более высокую выплату, чем при обычной продаже предметов.
 
-  ## Completing Bounties
+  ## Выполнение контрактов
   <Box>
     <GuideEntityEmbed Entity="PaperCargoBountyManifest"/>
     <GuideEntityEmbed Entity="CrateGenericSteel"/>
     <GuideEntityEmbed Entity="CargoPallet"/>
   </Box>
-  Once you have collected the items you need for a bounty, completing it is a simple process:
-  - Place all of the items inside of the crate and [bold]close it![/bold]
-  - Get the bounties manifest label by clicking the [color=#a4885c]print label[/color] button on corresponding entry on the cargo bounty computer.
-  - Place the label on the crate containing the items.
-  - Move the crate onto the cargo shuttle.
-  - Sell it.
+  После того, как вы собрали предметы, необходимые для получения награды, ее завершение представляет собой простой процесс:
+  - Поместите все предметы в ящик и [bold]закройте его![/bold]
+  - Получите этикетку манифеста о наградах, нажав кнопку [color=#a4885c]напечатать этикетку[/color] в соответствующей записи на компьютере о наградах за груз.
+  - Поместите этикетку на ящик с предметами.
+  - Переместите ящик на грузовой шаттл.
+  - Продай это.
 
-  And there you go! After you follow these steps, the bounty should disappear from the computer and a new one will take its place.
+  И вот! После выполнения этих действий награда должна исчезнуть с компьютера и ее место займет новая.
 </Document>

@@ -4,6 +4,7 @@ using Content.Server.NPC.HTN;
 using Content.Shared.CCVar;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NPC;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 

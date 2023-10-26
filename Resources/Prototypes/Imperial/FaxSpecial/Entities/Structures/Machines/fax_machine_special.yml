@@ -1,0 +1,249 @@
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineCentcomColored
+  name: centcom long range fax machine
+  description: Looks like someone spilled coffee on him.
+  suffix: Centcom, codes, goal
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_cent.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_cent.rsi
+    state: icon
+  - type: FaxMachine
+    name: "ЦК"
+    receiveNukeCodes: true
+    notifyAdmins: true
+    receiveStationGoal: true
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineSyndieColored
+  name: syndicate long range fax machine
+  description: A device for sending death threats. They have never been used
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_syn.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_syn.rsi
+    state: icon
+  - type: FaxMachine
+    name: "ERR*?*%!"
+    responsePings: false
+    emagged: true
+    notifyAdmins: true
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineCaptainColored
+  name: captain long range fax machine
+  description: Fax decorated with gilded details. Keep him away from scientists
+  suffix: NukeCodes, goal, codes
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_captain.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_captain.rsi
+    state: icon
+  - type: FaxMachine
+    name: "Капитан"
+    receiveNukeCodes: true
+    receiveStationGoal: true
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineBridgeColored
+  name: bridge long range fax machine
+  description: Looks shabby. The paint has been peeled off for a long time.
+  suffix: Bridge
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_bridge.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_bridge.rsi
+    state: icon
+  - type: FaxMachine
+    name: "Мостик"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineChiefEngineerColored
+  name: chief engineer long range fax machine
+  description: It is known that the design of this fax was invented by engineer Kevin S.
+  suffix: CE
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_ce.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_ce.rsi
+    state: icon
+  - type: FaxMachine
+    name: "СИ"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineChiefMedicalOfficerColored
+  name: chief medical officer long range fax machine
+  description: Smells like a hospital. Why are you sniffing a fax?
+  suffix: CMO
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_cmo.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_cmo.rsi
+    state: icon
+  - type: FaxMachine
+    name: "ГВ"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineHeadOfPersonnelColored
+  name: head of personnel long range fax machine
+  description: Generator of endless bureaucratic waste paper
+  suffix: HoP
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_hop.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_hop.rsi
+    state: icon
+  - type: FaxMachine
+    name: "ГП"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineHeadOfSecurityColored
+  name: head of security long range fax machine
+  description: Damn fax. Usually, if you use it, someone's life always collapses.
+  suffix: HoS
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_hos.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_hos.rsi
+    state: icon
+  - type: FaxMachine
+    name: "ГСБ"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineResearchDirectorColored
+  name: research director long range fax machine
+  description: It used to have some gold on it. Looks like someone scraped it off a long time ago
+  suffix: RD
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_rd.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_rd.rsi
+    state: icon
+  - type: FaxMachine
+    name: "НР"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineQuartermasterColored
+  name: quartermaster long range fax machine
+  description: This is where shopping lists keep popping up. From him only costs
+  suffix: Quart
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_quart.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_quart.rsi
+    state: icon
+  - type: FaxMachine
+    name: "КМ"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineInternalAffairsAgentColored
+  name: internal affairs agent long range fax machine
+  description: Direct communication with the operator of CentCom. Comfortable and stylish
+  suffix: IAA
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_iaa.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_iaa.rsi
+    state: icon
+  - type: FaxMachine
+    name: "АВД"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineERTColored
+  name: ERT long range fax machine
+  description: Long-range fax of special operations units
+  suffix: ERT
+  components:
+  - type: Sprite
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_ert.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Imperial/FaxSpecial/Structures/Machines/fax_machine_special/fax_machine_ert.rsi
+    state: icon
+  - type: FaxMachine
+    name: "ОБР"
+    receiveNukeCodes: true
+    notifyAdmins: true

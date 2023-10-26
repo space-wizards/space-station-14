@@ -171,12 +171,6 @@
     doAfterDelay: 8
   - type: Actions
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 3.5

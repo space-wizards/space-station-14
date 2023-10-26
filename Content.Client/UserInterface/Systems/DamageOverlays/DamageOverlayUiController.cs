@@ -1,4 +1,4 @@
-﻿using Content.Client.Alerts;
+using Content.Client.Alerts;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
@@ -79,9 +79,15 @@ public sealed class DamageOverlayUiController : UIController
             damageable == null && !EntityManager.TryGetComponent(entity, out  damageable))
             return;
 
-
         if (!_mobThresholdSystem.TryGetIncapThreshold(entity, out var foundThreshold, thresholds))
             return; //this entity cannot die or crit!!
+
+        if (!thresholds.ShowOverlays)
+        {
+            ClearOverlay();
+            return; //this entity intentionally has no overlays
+        }
+
         var critThreshold = foundThreshold.Value;
         _overlay.State = mobState.CurrentState;
 

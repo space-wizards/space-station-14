@@ -338,7 +338,6 @@
     size: 5
   - type: Storage
     capacity: 10
-    size: 10
     whitelist:
       tags:
         - Document
@@ -436,6 +435,63 @@
       color: "#3f3f3f"
     - state: folder-base
 
+- type: entity
+  id: BoxFolderClipboard
+  parent: BoxFolderBase
+  name: clipboard
+  description: The weapon of choice for those on the front lines of bureaucracy.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/clipboard.rsi
+    layers:
+    - state: clipboard
+    - state: clipboard_paper
+      map: ["clipboard_paper"]
+      visible: false
+    - state: clipboard_pen
+      map: ["clipboard_pen"]
+      visible: false
+    - state: clipboard_over
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      pen_slot: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      pen_slot:
+        name: Pen
+        whitelist:
+          tags:
+            - Write
+        insertOnInteract: false 
+  - type: Item
+    sprite: Objects/Misc/clipboard.rsi
+    size: 10
+  - type: Clothing
+    slots: [belt]
+    quickEquip: false
+    sprite: Objects/Misc/clipboard.rsi
+  - type: Storage
+    capacity: 20
+    whitelist:
+      tags:
+        - Document
+  - type: ItemMapper
+    mapLayers:
+      clipboard_paper:
+        whitelist:
+          tags:
+          - Document
+      clipboard_pen:
+        whitelist:
+          tags:
+          - Write
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+
 # Stamps
 - type: entity
   name: generic rubber stamp
@@ -478,6 +534,7 @@
   name: captain's rubber stamp
   parent: RubberStampBase
   id: RubberStampCaptain
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-captain
@@ -491,6 +548,7 @@
   name: CentCom rubber stamp
   parent: RubberStampBase
   id: RubberStampCentcom
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
@@ -504,6 +562,7 @@
   name: chaplain's rubber stamp
   parent: RubberStampBase
   id: RubberStampChaplain
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-chaplain
@@ -517,6 +576,7 @@
   name: clown's rubber stamp
   parent: RubberStampBase
   id: RubberStampClown
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-clown
@@ -533,6 +593,7 @@
   name: chief engineer's rubber stamp
   parent: RubberStampBase
   id: RubberStampCE
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-ce
@@ -546,6 +607,7 @@
   name: chief medical officer's rubber stamp
   parent: RubberStampBase
   id: RubberStampCMO
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-cmo
@@ -583,6 +645,7 @@
   name: head of personnel's rubber stamp
   parent: RubberStampBase
   id: RubberStampHop
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hop
@@ -596,6 +659,7 @@
   name: head of security's rubber stamp
   parent: RubberStampBase
   id: RubberStampHos
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hos
@@ -609,6 +673,7 @@
   name: mime's rubber stamp
   parent: RubberStampBase
   id: RubberStampMime
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-mime
@@ -623,6 +688,7 @@
   name: quartermaster's rubber stamp
   parent: RubberStampBase
   id: RubberStampQm
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-qm
@@ -636,6 +702,7 @@
   name: research director's rubber stamp
   parent: RubberStampBase
   id: RubberStampRd
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-rd
@@ -662,6 +729,7 @@
   name: syndicate rubber stamp
   parent: RubberStampBase
   id: RubberStampSyndicate
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-syndicate
@@ -675,6 +743,7 @@
   name: warden's rubber stamp
   parent: RubberStampBase
   id: RubberStampWarden
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-warden

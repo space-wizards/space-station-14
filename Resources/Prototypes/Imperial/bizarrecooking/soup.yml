@@ -1,0 +1,22 @@
+- type: entity
+  name: Bowl o' Brains
+  parent: FoodBowlBase
+  id: FoodSoupBrains
+  description: Looks like a nice, wholesome bowl of mashed brains matter.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - salty
+  - type: Sprite
+    sprite: Imperial/Bizarre/BizarreCooking/bowl.rsi
+    layers:
+    - state: bowl
+    - state: brain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 8

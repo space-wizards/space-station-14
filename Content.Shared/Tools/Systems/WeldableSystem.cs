@@ -41,16 +41,6 @@ public sealed class WeldableSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, WeldableComponent component, InteractUsingEvent args)
     {
-        // If any construction graph edges has its conditions meet and requires welding, then this construction takes priority
-        /* TODO: Whatever this is is not the way to do what you think you want to do.
-        if (Enumerable.Any<ConstructionGraphEdge>(_construction.GetCurrentNode(uid)?.Edges, x => _construction.CheckConditions(uid, x.Conditions)
-                                                                                                                               && Enumerable.Any<ConstructionGraphStep>(x.Steps, y => (y as ToolConstructionGraphStep)?.Tool == "Welding")) == true)
-        {
-            args.Handled = false;
-            return;
-        }
-        */
-
         if (args.Handled)
             return;
 

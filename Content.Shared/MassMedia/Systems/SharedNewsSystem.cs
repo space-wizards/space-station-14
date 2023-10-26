@@ -1,13 +1,13 @@
-using Content.Shared.StationRecords;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.MassMedia.Systems;
 
-[Serializable]
+[Serializable, NetSerializable]
 public struct NewsArticle
 {
     public string Name;
     public string Content;
     public string? Author;
-    public ICollection<StationRecordKey>? AuthorStationRecordKeyIds;
+    public ICollection<(NetEntity, uint)>? AuthorStationRecordKeyIds;
     public TimeSpan ShareTime;
 }

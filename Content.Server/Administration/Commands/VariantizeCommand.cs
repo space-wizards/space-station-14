@@ -10,6 +10,9 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class VariantizeCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+
     public string Command => "variantize";
 
     public string Description => Loc.GetString("variantize-command-description");
@@ -24,16 +27,13 @@ public sealed class VariantizeCommand : IConsoleCommand
             return;
         }
 
-        var entMan = IoCManager.Resolve<IEntityManager>();
-        var random = IoCManager.Resolve<IRobustRandom>();
-
-        if (!EntityUid.TryParse(args[0], out var euid))
+        if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
         {
             shell.WriteError($"Failed to parse euid '{args[0]}'.");
             return;
         }
 
-        if (!entMan.TryGetComponent(euid, out MapGridComponent? gridComp))
+        if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
             shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
             return;
@@ -42,7 +42,7 @@ public sealed class VariantizeCommand : IConsoleCommand
         foreach (var tile in gridComp.GetAllTiles())
         {
             var def = tile.GetContentTileDefinition();
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, def.PickVariant(random));
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, def.PickVariant(_random));
             gridComp.SetTile(tile.GridIndices, newTile);
         }
     }

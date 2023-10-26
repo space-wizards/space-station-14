@@ -74,7 +74,7 @@ public sealed partial class ConstructionSystem
 
         foreach (var entity in component.PartContainer.ContainedEntities)
         {
-            if (TryComp<MachinePartComponent?>(entity, out var machinePart))
+            if (TryComp<MachinePartComponent>(entity, out var machinePart))
                 parts.Add(machinePart);
         }
 
@@ -130,7 +130,7 @@ public sealed partial class ConstructionSystem
             throw new Exception($"Couldn't insert board with prototype {component.BoardPrototype} to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}!");
         }
 
-        if (!TryComp<MachineBoardComponent?>(board, out var machineBoard))
+        if (!TryComp<MachineBoardComponent>(board, out var machineBoard))
         {
             throw new Exception($"Entity with prototype {component.BoardPrototype} doesn't have a {nameof(MachineBoardComponent)}!");
         }

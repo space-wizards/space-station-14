@@ -77,6 +77,19 @@
     - BasicStationEventScheduler
 
 - type: gamePreset
+  id: Revolutionary
+  alias:
+    - rev
+    - revs
+    - revolutionaries
+  name: rev-title
+  description: rev-description
+  showInVote: false
+  rules:
+    - Revolutionary
+    - BasicStationEventScheduler
+
+- type: gamePreset
   id: Zombie
   alias:
   - zombie

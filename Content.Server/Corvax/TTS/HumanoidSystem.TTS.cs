@@ -11,7 +11,7 @@ public sealed partial class HumanoidAppearanceSystem
         if (!TryComp<TTSComponent>(uid, out var comp))
             return;
 
-        humanoid.Voice = voiceId;
+        //humanoid.Voice = voiceId;
         comp.VoicePrototypeId = voiceId;
     }
 }
