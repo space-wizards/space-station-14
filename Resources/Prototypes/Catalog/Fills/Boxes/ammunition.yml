@@ -278,7 +278,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Item
-    size: 30
+    size: Normal
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
 

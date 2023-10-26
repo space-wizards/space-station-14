@@ -92,7 +92,7 @@ public sealed class PryingSystem : EntitySystem
             // to be marked as handled as a popup would be generated on failure.
             return true;
 
-        return StartPry(target, user, null, 1.0f, out id);
+        return StartPry(target, user, null, 0.1f, out id); // hand-prying is much slower
     }
 
     private bool CanPry(EntityUid target, EntityUid user, PryingComponent? comp = null)
@@ -126,6 +126,7 @@ public sealed class PryingSystem : EntitySystem
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
+            BreakOnWeightlessMove = true,
         };
 
         if (tool != null)

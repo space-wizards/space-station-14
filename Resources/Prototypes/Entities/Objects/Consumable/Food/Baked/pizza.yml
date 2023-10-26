@@ -24,7 +24,7 @@
   - type: SliceableFood
     count: 8
   - type: Item
-    size: 8
+    size: Normal
   - type: Tag
     tags:
     - Pizza
@@ -53,7 +53,7 @@
         - ReagentId: Vitamin
           Quantity: 0.8
   - type: Item
-    size: 1
+    size: Tiny
   - type: Tag
     tags:
     - Pizza

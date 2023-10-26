@@ -43,12 +43,13 @@ namespace Content.Server.Clothing
                 args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
         }
 
-        private void OnToggleMask(EntityUid uid, MaskComponent mask, ToggleMaskEvent args)
+        private void OnToggleMask(Entity<MaskComponent> ent, ref ToggleMaskEvent args)
         {
+            var (uid, mask) = ent;
             if (mask.ToggleActionEntity == null)
                 return;
 
-            if (!_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) || !mask.Owner.Equals(existing))
+            if (!_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) || !uid.Equals(existing))
                 return;
 
             mask.IsToggled ^= true;
@@ -58,9 +59,9 @@ namespace Content.Server.Clothing
             _identity.QueueIdentityUpdate(args.Performer);
 
             if (mask.IsToggled)
-                _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-down-popup-message", ("mask", mask.Owner)), args.Performer, args.Performer);
+                _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-down-popup-message", ("mask", uid)), args.Performer, args.Performer);
             else
-                _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-up-popup-message", ("mask", mask.Owner)), args.Performer, args.Performer);
+                _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-up-popup-message", ("mask", uid)), args.Performer, args.Performer);
 
             ToggleMaskComponents(uid, mask, args.Performer);
         }
@@ -115,7 +116,7 @@ namespace Content.Server.Clothing
                 if (TryComp(wearer, out InternalsComponent? internals))
                 {
                     breathTool.ConnectedInternalsEntity = wearer;
-                    _internals.ConnectBreathTool(internals, uid);
+                    _internals.ConnectBreathTool((wearer, internals), uid);
                 }
             }
         }
