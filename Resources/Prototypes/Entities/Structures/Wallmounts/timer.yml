@@ -72,6 +72,32 @@
     graph: Timer
     node: brig
 
+- type: entity
+  id: ShuttleTimer
+  parent: Screen
+  name: shuttle timer
+  description: Displays shuttle timing information.
+  components:
+  - type: ShuttleTimer
+  - type: DeviceNetwork
+    receiveFrequencyId: ShuttleTimer
+
+- type: entity
+  id: EvacShuttleTimer
+  parent: ShuttleTimer
+  name: evac timer
+  components:
+  - type: DeviceNetwork
+    receiveFrequencyId: EvacShuttleTimer
+
+- type: entity
+  id: ArrivalsShuttleTimer
+  parent: ShuttleTimer
+  name: arrivals timer
+  components:
+  - type: DeviceNetwork
+    receiveFrequencyId: ArrivalsShuttleTimer
+
 # Construction Frame
 
 - type: entity
