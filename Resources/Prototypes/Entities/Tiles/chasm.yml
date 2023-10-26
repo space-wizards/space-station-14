@@ -65,3 +65,13 @@
     sprite: Tiles/Planet/Chasms/desert_chasm.rsi
   - type: Icon
     sprite: Tiles/Planet/Chasms/desert_chasm.rsi
+    
+- type: entity
+  parent: FloorChasmEntity
+  id: FloorSnowChasm
+  suffix: Snow
+  components:
+  - type: Sprite
+    sprite: Tiles/Planet/Chasms/snow_chasm.rsi
+  - type: Icon
+    sprite: Tiles/Planet/Chasms/snow_chasm.rsi
