@@ -1,9 +1,4 @@
 Entries:
-- author: Repo
-  changes:
-  - {message: fixed pressure tanks to not show scientific notation., type: Fix}
-  id: 4562
-  time: '2023-08-13T16:56:30.0000000+00:00'
 - author: Cripes
   changes:
   - {message: 'Paper stamps have been heavily tweaked with new looks, now each paper
@@ -2893,3 +2888,10 @@ Entries:
       values.', type: Tweak}
   id: 5061
   time: '2023-10-25T22:53:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Adjusted the sizes of space suits and belts., type: Tweak}
+  - {message: Reduced the slot count in the ore bag., type: Tweak}
+  - {message: Fixed not being to create pills at the ChemMaster 5000., type: Fix}
+  id: 5062
+  time: '2023-10-26T02:47:45.0000000+00:00'
