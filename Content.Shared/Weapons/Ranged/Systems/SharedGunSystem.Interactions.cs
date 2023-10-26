@@ -27,9 +27,10 @@ public abstract partial class SharedGunSystem
                 args.PushMarkup(Loc.GetString("gun-bayonet-none-examine"));
                 return;
             }
-            args.PushMarkup(Loc.GetString("gun-bayonet-examine",
+            if (TryComp(itemSlot.Item.Value, out MetaDataComponent? itemMetaData)
+                args.PushMarkup(Loc.GetString("gun-bayonet-examine",
                     ("color", BayonetExamineColor),
-                    ("bayonet", Comp<MetaDataComponent>((EntityUid) itemSlot.Item).EntityName)));
+                    ("bayonet", itemMetaData.EntityName)));
         }
     }
 
