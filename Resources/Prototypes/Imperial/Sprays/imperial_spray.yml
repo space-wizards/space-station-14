@@ -20,10 +20,10 @@
   suffix: Full
   components:
   - type: Sprite
-    sprite: Objects/Specific/Janitorial/imperial_janitorial.rsi
+    sprite: Imperial/Sprays/imperial_janitorial.rsi
     state: cleaner
   - type: Item
-    sprite: Objects/Specific/Janitorial/imperial_janitorial.rsi
+    sprite: Imperial/Sprays/imperial_janitorial.rsi
   - type: SolutionContainerManager
     solutions:
       spray:
