@@ -11,7 +11,7 @@
   - type: Clothing
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
-    maxItemSize: Normal
+    capacity: 45
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -83,6 +83,7 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
+    capacity: 105
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -237,6 +238,7 @@
   - type: Clothing
     sprite: Clothing/Belt/medical.rsi
   - type: Storage
+    capacity: 60
     whitelist:
       tags:
         - Wrench
@@ -391,7 +393,7 @@
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Storage
-    maxSlots: 1
+    capacity: 15
     whitelist:
       tags:
         - CaptainSabre
@@ -416,8 +418,9 @@
   - type: Clothing
     sprite: Clothing/Belt/bandolier.rsi
   - type: Item
-    size: Large
+    size: 60
   - type: Storage
+    capacity: 60
     whitelist:
       tags:
         - ShellShotgun
@@ -448,7 +451,7 @@
   - type: Clothing
     sprite: Clothing/Belt/holster.rsi
   - type: Storage
-    maxSlots: 3
+    capacity: 20
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -461,8 +464,9 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Item
-    size: Large
+    size: 60
   - type: Storage
+    capacity: 60
     whitelist:
       components:
         - Gun
@@ -524,7 +528,9 @@
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Item
-    size: Large
+    size: 70
+  - type: Storage
+    capacity: 70
 
 - type: entity
   parent: ClothingBeltBase
@@ -553,7 +559,7 @@
   - type: Clothing
     sprite: Clothing/Belt/wand.rsi
   - type: Storage
-    maxSlots: 8
+    capacity: 120
     whitelist:
       tags:
       - WizardWand

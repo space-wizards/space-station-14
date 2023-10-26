@@ -17,7 +17,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: Tiny
+    size: 1
   - type: Construction
     graph: smokeableJoint
     node: joint
@@ -48,7 +48,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: Tiny
+    size: 1
   - type: Construction
     graph: smokeableBlunt
     node: blunt

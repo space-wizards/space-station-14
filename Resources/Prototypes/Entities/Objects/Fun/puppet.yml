@@ -14,7 +14,7 @@
   - type: DoAfter
   - type: VentriloquistPuppet
   - type: Item
-    size: Normal
+    size: 30
   - type: Muted
   - type: TypingIndicator
     proto: robot

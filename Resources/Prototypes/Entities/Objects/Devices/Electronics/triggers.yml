@@ -17,7 +17,7 @@
     sprite: Objects/Devices/timer.rsi
     state: timer
   - type: Item
-    size: Small
+    size: 5
   - type: PayloadTrigger
     components:
     - type: OnUseTimerTrigger

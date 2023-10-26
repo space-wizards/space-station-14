@@ -16,7 +16,7 @@
         Slash: 25
         Piercing: 15
   - type: Item
-    size: Normal
+    size: 15
     sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Tool
     qualities:

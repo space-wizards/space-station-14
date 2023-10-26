@@ -5,7 +5,7 @@
   description: Used for taking and transfering samples. Sterile until open. Single use only.
   components:
   - type: Item
-    size: Tiny
+    size: 1
   - type: Sprite
     sprite: Objects/Specific/Medical/mouth_swab.rsi
     state: icon
@@ -26,7 +26,7 @@
   description: Prevents people who DON'T already have a disease from catching it.
   components:
   - type: Item
-    size: Tiny
+    size: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     state: salpen

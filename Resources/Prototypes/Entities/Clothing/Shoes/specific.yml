@@ -181,7 +181,7 @@
       - state: equipped-FEET
         offset: "0, -0.02"
   - type: Item
-    size: Small
+    size: 10
     sprite: Clothing/Shoes/Specific/large_clown.rsi
   - type: ClothingSpeedModifier
     walkModifier: 0.85

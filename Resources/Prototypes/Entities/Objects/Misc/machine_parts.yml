@@ -8,7 +8,7 @@
     - type: Sprite
       sprite: Objects/Misc/stock_parts.rsi
     - type: Item
-      size: Tiny
+      size: 1
     - type: GuideHelp
       guides:
       - MachineUpgrading

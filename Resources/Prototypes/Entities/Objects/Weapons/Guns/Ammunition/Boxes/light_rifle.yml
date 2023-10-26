@@ -12,7 +12,7 @@
     proto: CartridgeLightRifle
     capacity: 50
   - type: Item
-    size: Small
+    size: 5
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

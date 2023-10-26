@@ -7,7 +7,7 @@
     sprite: Objects/Weapons/Guns/Basic/wands.rsi
   - type: Item
     heldPrefix: wand
-    size: Normal
+    size: 30
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto

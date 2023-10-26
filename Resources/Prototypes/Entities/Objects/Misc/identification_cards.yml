@@ -12,7 +12,6 @@
     - idcard
     sprite: Objects/Misc/id_cards.rsi
   - type: Item
-    size: Small
     heldPrefix: default
   - type: Access
   - type: IdCard

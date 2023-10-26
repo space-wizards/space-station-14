@@ -176,7 +176,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: Item
-    size: Normal
+    size: 30
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: ToggleableClothing
@@ -197,7 +197,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: Item
-    size: Normal
+    size: 30
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ToggleableClothing

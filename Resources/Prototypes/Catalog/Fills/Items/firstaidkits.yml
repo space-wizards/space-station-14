@@ -12,7 +12,8 @@
       - id: Ointment
         amount: 2
       - id: Gauze
-      - id: PillCanisterTricordrazine
+      - id: PillTricordrazine
+        amount: 5
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
@@ -27,8 +28,10 @@
       - id: Ointment
         amount: 2
       - id: SyringeSigynate
-      - id: PillCanisterKelotane
-      - id: PillCanisterDermaline
+      - id: PillKelotane
+        amount: 5
+      - id: PillDermaline
+        amount: 5
 
 - type: entity
   id: MedkitBruteFilled
@@ -42,8 +45,10 @@
       - id: Gauze
       - id: Bloodpack
       - id: SyringeTranexamicAcid
-      - id: PillCanisterIron
-      - id: PillCanisterBicaridine
+      - id: PillIron
+        amount: 5
+      - id: PillBicaridine
+        amount: 5
 
 - type: entity
   id: MedkitToxinFilled
@@ -55,8 +60,10 @@
       - id: SyringeIpecac
       - id: SyringeEthylredoxrazine
       - id: AntiPoisonMedipen
-      - id: PillCanisterDylovene
-      - id: PillCanisterCharcoal
+      - id: PillDylovene
+        amount: 5
+      - id: PillCharcoal
+        amount: 3
 
 - type: entity
   id: MedkitOxygenFilled
@@ -69,7 +76,8 @@
       - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
       - id: SyringeInaprovaline
-      - id: PillCanisterDexalin
+      - id: PillDexalin
+        amount: 7
 
 - type: entity
   id: MedkitRadiationFilled
@@ -84,7 +92,8 @@
         amount: 1
       - id: EmergencyMedipen
         amount: 1
-      - id: PillCanisterHyronalin
+      - id: PillHyronalin
+        amount: 5
 
 - type: entity
   id: MedkitAdvancedFilled
@@ -111,9 +120,11 @@
       - id: MedicatedSuture
       - id: RegenerativeMesh
       - id: SyringeEphedrine
+      - id: SyringeSaline
       - id: BruteAutoInjector
       - id: BurnAutoInjector
       - id: EmergencyMedipen
+      - id: Bloodpack
 
 - type: entity
   id: StimkitFilled

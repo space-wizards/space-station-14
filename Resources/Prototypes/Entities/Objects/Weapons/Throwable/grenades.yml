@@ -9,7 +9,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: Item
-    size: Small
+    size: 5
   - type: Clothing
     quickEquip: false
     slots:
@@ -267,7 +267,7 @@
     - state: empty
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
-    size: Small
+    size: 8
   - type: PayloadCase
   - type: Construction
     graph: ModularGrenadeGraph

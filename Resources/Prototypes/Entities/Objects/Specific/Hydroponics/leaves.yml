@@ -63,7 +63,7 @@
     tags:
       - Smokable
   - type: Item
-    size: Tiny
+    size: 1
 
 - type: entity
   name: tobacco leaves
@@ -121,4 +121,4 @@
     tags:
       - Smokable
   - type: Item
-    size: Tiny
+    size: 1

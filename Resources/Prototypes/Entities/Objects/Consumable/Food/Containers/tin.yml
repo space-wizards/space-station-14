@@ -37,7 +37,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    size: Tiny
+    size: 3
   - type: DamageOnLand
     damage:
       types:
@@ -63,7 +63,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    size: Tiny
+    size: 3
   - type: PhysicalComposition
     materialComposition:
       Steel: 100

@@ -9,10 +9,9 @@
     state: icon
   - type: Item
     sprite: Objects/Storage/medalcase.rsi
-    size: Normal
+    size: 80
   - type: Storage
-    maxSlots: 8
-    maxTotalWeight: 16
+    capacity: 80
   - type: StorageFill
     contents:
     - id: ClothingNeckGoldmedal
