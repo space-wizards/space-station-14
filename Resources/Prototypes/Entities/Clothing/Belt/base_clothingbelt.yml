@@ -25,7 +25,7 @@
     maxSlots: 7
     maxItemSize: Normal
   - type: Item
-    size: Large
+    size: Huge
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
