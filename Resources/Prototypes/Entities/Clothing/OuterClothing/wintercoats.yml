@@ -11,7 +11,7 @@
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Item
-    size: 10
+    size: Small
   - type: Armor
     modifiers:
       coefficients:

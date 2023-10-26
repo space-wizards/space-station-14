@@ -187,7 +187,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainerManager
     solutions:
@@ -317,7 +317,7 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: "syringe_base0"
   - type: Item
-    size: 3
+    size: Tiny
     sprite: Objects/Specific/Chemistry/syringe.rsi
     heldPrefix: 0
   - type: SolutionContainerManager
@@ -393,7 +393,7 @@
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
   - type: Item
-    size: 1
+    size: Tiny
     sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Pill
   - type: Food
@@ -436,18 +436,20 @@
   name: pill canister
   id: PillCanister
   parent: BaseStorageItem
-  description: Holds up to 9 pills.
+  description: Holds up to 10 pills.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister
   - type: Item
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
+    size: Small
   - type: Tag
     tags:
       - PillCanister
   - type: Storage
-    capacity: 9
+    maxSlots: 10
+    maxTotalWeight: 10
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1
