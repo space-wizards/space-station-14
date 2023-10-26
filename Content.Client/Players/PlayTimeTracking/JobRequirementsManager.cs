@@ -1,6 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Content.Client.Administration.Managers;
+using Content.Client.Preferences;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
@@ -11,11 +12,15 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Preferences;
+using Content.Shared.Humanoid.Prototypes;
+using ReasonList = System.Collections.Generic.List<string>;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
 public sealed class JobRequirementsManager
 {
+    [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -23,6 +28,7 @@ public sealed class JobRequirementsManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
     private readonly List<string> _roleBans = new();
@@ -87,7 +93,7 @@ public sealed class JobRequirementsManager
         return _adminManager.IsActive();
     }
 
-    public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
@@ -107,17 +113,68 @@ public sealed class JobRequirementsManager
         if (player == null)
             return true;
 
-        return CheckRoleTime(job.Requirements, out reason);
+        return CheckAllowed(job, profile, out reason);
     }
 
+    //SS220 Species-Job-Requirement begin
+    public void BuildReason(ReasonList reasons, out FormattedMessage reason)
+    {
+        reason = FormattedMessage.FromMarkup(string.Join('\n', reasons));
+    }
+
+    public bool CheckAllowed(JobPrototype job, HumanoidCharacterProfile profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        reason = null;
+        ReasonList reasons = new();
+
+        var bCheckSpecies = CheckSpeciesRestrict(job, profile, reasons);
+        var bCheckRoleTime = CheckRoleTime(job.Requirements, reasons);
+
+        if (bCheckSpecies && bCheckRoleTime)
+        {
+            return true;
+        }
+
+        BuildReason(reasons, out reason);
+        return false;
+    }
+
+    public bool CheckSpeciesRestrict(JobPrototype job, HumanoidCharacterProfile profile, ReasonList reasons)
+    {
+        var species = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
+
+        if (species is not null)
+        {
+            if (JobRequirements.TryRequirementsSpeciesMet(job, species, out var reason, _prototypeManager))
+                return true;
+
+            reasons.Add(reason.ToMarkup());
+            return false;
+        }
+
+        return true;
+    }
+
+    // for compatible things like xaml for ghost roles
     public bool CheckRoleTime(HashSet<JobRequirement>? requirements, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
+        ReasonList reasons = new();
 
+        if (!CheckRoleTime(requirements, reasons))
+        {
+            BuildReason(reasons, out reason);
+            return false;
+        }
+        return true;
+    }
+    //SS220 Species-Job-Requirement end
+
+    public bool CheckRoleTime(HashSet<JobRequirement>? requirements, ReasonList reasons)
+    {
         if (requirements == null)
             return true;
 
-        var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
             if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
@@ -130,7 +187,6 @@ public sealed class JobRequirementsManager
             reasons.Add(jobReason.ToMarkup());
         }
 
-        reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(string.Join('\n', reasons));
-        return reason == null;
+        return reasons.Count == 0; //SS220 Species-Job-Requirement
     }
 }
