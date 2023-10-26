@@ -218,6 +218,38 @@
     access: [["Captain"]]
 
 - type: entity
+  parent: AirlockCentcom
+  id: AirlockCentcomLocked
+  suffix: Centcom, Locked
+  components:
+  - type: AccessReader
+    access: [["Centcom"]]
+
+- type: entity
+  parent: AirlockCentcom
+  id: AirlockSpecOpsLocked
+  suffix: SpecOps, Locked
+  components:
+  - type: AccessReader
+    access: [["SpecOps"]]
+
+- type: entity
+  parent: AirlockExternalCentcom
+  id: AirlockExternalCentcomLocked
+  suffix: External, Centcom, Locked
+  components:
+  - type: AccessReader
+    access: [["Centcom", "External"]]
+
+- type: entity
+  parent: AirlockExternalCentcom
+  id: AirlockExternalSpecOpsLocked
+  suffix: External, SpecOps, Locked
+  components:
+  - type: AccessReader
+    access: [["SpecOps", "External"]]
+
+- type: entity
   parent: AirlockCommand
   id: AirlockChiefMedicalOfficerLocked
   components:

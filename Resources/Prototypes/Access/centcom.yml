@@ -1,0 +1,7 @@
+- type: accessLevel
+  id: Centcom
+  name: id-card-access-level-centcom
+
+- type: accessLevel
+  id: SpecOps
+  name: id-card-access-level-specops

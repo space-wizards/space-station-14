@@ -21,6 +21,29 @@
     group: External
 
 - type: entity
+  parent: Airlock
+  id: AirlockExternalCentcom
+  suffix: Centcom, External
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated.
+  components:
+  - type: Door
+    bumpOpen: false
+    crushDamage:
+      types:
+        Blunt: 35
+    openSound:
+      path: /Audio/Machines/airlock_ext_open.ogg
+    closeSound:
+      path: /Audio/Machines/airlock_ext_close.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/highsec/centcom.rsi
+  - type: PaintableAirlock
+    group: Standard
+    
+
+- type: entity
   parent: AirlockExternal
   id: AirlockExternalGlass
   suffix: Glass, External

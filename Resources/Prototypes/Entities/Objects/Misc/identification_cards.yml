@@ -446,11 +446,11 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Central Commander
+    jobTitle: Офицер ЦК
     jobIcon: JobIconCentCom
   - type: Access
     groups:
-    - AllAccess
+    - CentcomAllAccess
 
 - type: entity
   parent: CentcomIDCard
@@ -463,6 +463,12 @@
     - state: ert_commander # we have the sprites but don't need individual ID entities for now.
   - type: Item
     heldPrefix: gold
+  - type: IdCard
+    jobTitle: Офицер СО
+    jobIcon: JobIconCentCom
+  - type: Access
+    groups:
+    - SpecOpsAllAccess
 
 - type: entity
   parent: IDCardStandard
@@ -499,15 +505,6 @@
   parent: CentcomIDCard
   id: CentcomIDCardDeathsquad
   name: deathsquad ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: centcom
-  - type: Item
-    heldPrefix: blue
-  - type: IdCard
-    jobTitle: Centcom Agent
-    jobIcon: JobIconCentCom
 
 - type: entity
   name: passenger ID card

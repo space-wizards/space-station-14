@@ -61,3 +61,27 @@
   description: Necessary for connecting two space craft together. Has a valve labelled "TURN TO OPEN"
   components:
   - type: PryUnpowered
+
+- type: entity
+  parent: AirlockExternalCentcom
+  id: AirlockExternalCentcomEasyPry
+  suffix: External, Centcom, EasyPry
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockExternalCentcomLocked
+  id: AirlockExternalCentcomEasyPryLocked
+  suffix: External, Centcom, EasyPry, Locked
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
+
+- type: entity
+  parent: AirlockExternalSpecOpsLocked
+  id: AirlockExternalSpecOpsEasyPryLocked
+  suffix: External, SpecOps, EasyPry, Locked
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated. Has a valve labelled "TURN TO OPEN"
+  components:
+  - type: PryUnpowered
