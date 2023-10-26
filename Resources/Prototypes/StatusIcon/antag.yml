@@ -21,7 +21,8 @@
 
 - type: statusIcon
   id: SyndicateFaction
-  priority: 11
+  priority: 0
+  locationPreference: Right
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Syndicate
