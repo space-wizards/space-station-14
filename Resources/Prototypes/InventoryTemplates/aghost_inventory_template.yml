@@ -11,27 +11,6 @@
       displayName: ID
 
     # For drip reasons.
-    # TODO: Make these show up when pressing the inventory button.
-    - name: jumpsuit
-      slotTexture: uniform
-      slotFlags: INNERCLOTHING
-      stripTime: 6
-      uiWindowPos: 0,2
-      strippingWindowPos: 0,2
-      displayName: Jumpsuit
-    - name: neck
-      slotTexture: neck
-      slotFlags: NECK
-      uiWindowPos: 0,1
-      strippingWindowPos: 0,1
-      displayName: Neck
-    - name: eyes
-      slotTexture: glasses
-      slotFlags: EYES
-      stripTime: 3
-      uiWindowPos: 0,2
-      strippingWindowPos: 0,2
-      displayName: Eyes
     - name: head
       slotTexture: head
       slotFlags: HEAD
