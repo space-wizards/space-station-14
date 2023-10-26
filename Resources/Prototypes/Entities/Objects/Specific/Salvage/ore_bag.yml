@@ -16,7 +16,7 @@
   - type: Item
     size: Huge
   - type: Storage
-    maxSlots: 12
+    maxSlots: 5
     maxItemSize: Normal
     quickInsert: true
     areaInsert: true

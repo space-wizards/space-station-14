@@ -180,14 +180,13 @@ namespace Content.Server.Chemistry.EntitySystems
             var user = message.Session.AttachedEntity;
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
-                || !TryComp(container, out StorageComponent? storage)
-                || storage.Container is null)
+                || !TryComp(container, out StorageComponent? storage))
             {
                 return; // output can't fit pills
             }
 
             // Ensure the number is valid.
-            if (message.Number == 0 || _storageSystem.HasSpace((chemMaster, storage)))
+            if (message.Number == 0 || !_storageSystem.HasSpace((container, storage)))
                 return;
 
             // Ensure the amount is valid.
