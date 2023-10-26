@@ -1,16 +1,16 @@
-# Midround DarkReaper, temporarily disaabled
-# - type: entity
-#   parent: BaseGameRule
-#   id: DarkReaperSpawn
-#   noSpawn: true
-#   components:
-#   - type: StationEvent
-#     weight: 7.5
-#     duration: 1
-#     earliestStart: 45
-#     minimumPlayers: 30
-#   - type: RandomSpawnRule
-#     prototype: DarkReaperRune
+#Midround DarkReaper
+- type: entity
+  parent: BaseGameRule
+  id: DarkReaperSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 7.5
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 30
+  - type: RandomSpawnRule
+    prototype: DarkReaperRune
 
 - type: entity
   parent: BaseGameRule
