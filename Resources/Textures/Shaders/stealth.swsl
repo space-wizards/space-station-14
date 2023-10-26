@@ -27,5 +27,5 @@ void fragment() {
     highp vec4 background = zTextureSpec(SCREEN_TEXTURE, ( FRAGCOORD.xy + vec2(w) ) * SCREEN_PIXEL_SIZE );
 
     COLOR.xyz = mix(background.xyz, sprite.xyz, sprite.a);
-    COLOR.a = sprite.a * 10 * (1 + sin(TIME) * 0.05);
+    COLOR.a = sprite.a * 10.0 * (1.0 + sin(TIME) * 0.05);
 }
