@@ -3,7 +3,7 @@
   id: PlushieCapitan
   name: August von Stierletz
   description: Capitan.
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -16,7 +16,7 @@
   id: PlushieChemist
   name: Sarah Morningstar
   description: The most furious follower of the great god Kum'Ar. So furious that even the toy seems to be saturated with drugs... NanoTrasen, seriously?
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -37,7 +37,7 @@
 - type: entity
   parent: PlushieChemist
   id: PlushieChemistGift
-  suffix:  COMMUNITY_TOY(GIFT)
+  suffix: COMMUNITY,TOY,GIFT
   components:
   - type: StorageFill
     contents:
@@ -48,7 +48,7 @@
   id: PlushieCP #Chief Medical Officer
   name: Ekaterina Nazintseva
   description: The only chief medical officer who finds Trayvovin useful. Will teach the ENTIRE station to create the perfect medical base.
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -69,7 +69,7 @@
 - type: entity
   parent: PlushieCP
   id: PlushieCPGift
-  suffix:  COMMUNITY_TOY(GIFT)
+  suffix: COMMUNITY,TOY,GIFT
   components:
   - type: StorageFill
     contents:
@@ -80,7 +80,7 @@
   id: PlushieEngineer
   name: Kevin Ackerley
   description: He believed that he could build a shuttle in 20 minutes, and whoever does not do this has no right to be called an “engineer.” He disappeared into obscurity in space after an unexpected depressurization of a weakly welded body of his own design.
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -93,7 +93,7 @@
   id: PlushieGSB  #Head of Security
   name: Linda Astereich
   description: The best representative of the Kesis race, who does not stand out in any way from the rest of the NT employees. Literally. Even this toy seems... not special to you.
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -106,7 +106,7 @@
   id: PlushieParamedic
   name: Egor Paletov
   description: #none
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -119,7 +119,7 @@
   id: PlushiePCC #Central Command Representative
   name: Arvely Snegov
   description:
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components: #None/ Soon
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -132,7 +132,7 @@
   id: PlushieScientist
   name: Madeline Rogers
   description: #None
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -145,7 +145,7 @@
   id: PlushieSurgeon
   name: Molly Matthews
   description: #None
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -158,7 +158,7 @@
   id: PlushieBartender
   name: Keturah Mur'r
   description: She will always pour you a drink, even if you are a zombie. Just follow the unbreakable rule - no brawls in her bar!
-  suffix:  COMMUNITY_TOY
+  suffix: COMMUNITY,TOY
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
@@ -170,7 +170,7 @@
 - type: entity
   parent: PlushieBartender
   id: PlushieBartenderGift
-  suffix: COMMUNITY_TOY(GIFT)
+  suffix: COMMUNITY,TOY,GIFT
   components:
   - type: Sprite
     sprite: Imperial/Toughguys
