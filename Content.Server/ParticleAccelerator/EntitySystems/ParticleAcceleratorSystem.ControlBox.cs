@@ -6,12 +6,17 @@ using Robust.Server.Player;
 using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
 using System.Diagnostics;
+using Content.Server.Administration.Managers;
 using Content.Shared.CCVar;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
 public sealed partial class ParticleAcceleratorSystem
 {
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     private void InitializeControlBoxSystem()
     {
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ComponentStartup>(OnComponentStartup);
@@ -170,6 +175,7 @@ public sealed partial class ParticleAcceleratorSystem
                     ("machine", ToPrettyString(uid)),
                     ("powerState", strength),
                     ("coordinates", pos.Coordinates)));
+                _audioSystem.PlayGlobal("/Audio/Misc/adminlarm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
             }
         }
 
