@@ -1,4 +1,3 @@
-using Content.Server.DeviceLinking;
 using Content.Server.TextScreen.Components;
 using Content.Server.TextScreen.Events;
 
@@ -9,13 +8,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.TextScreen;
 
+/// <summary>
+/// Base system for rendering text and timers on screens without networking or a BUI.
+/// </summary>
 public sealed class TextScreenSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-
-
 
     public override void Initialize()
     {
@@ -27,30 +27,36 @@ public sealed class TextScreenSystem : EntitySystem
         SubscribeLocalEvent<TextScreenComponent, TextScreenTextEvent>(OnText);
     }
 
+    /// <summary>
+    /// Enables component.Label to be displayed at roundstart without a <see cref="TextScreenTextEvent"/>.
+    /// </summary>
     private void OnInit(EntityUid uid, TextScreenComponent component, ComponentInit args)
     {
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
     }
 
+    /// <summary>
+    /// Overrides the screen display with a <see cref="TextScreenTimerEvent"/>.
+    /// </summary>
     private void OnTimer(EntityUid uid, TextScreenComponent component, ref TextScreenTimerEvent args)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        var activeTimer = EnsureComp<ActiveTextScreenTimerComponent>(uid);
-
         if (appearance != null)
         {
-            activeTimer.Remaining = _gameTiming.CurTime + args.Duration;
+            component.Remaining = _gameTiming.CurTime + args.Duration;
             _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, activeTimer.Remaining, appearance);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.Remaining, appearance);
         }
     }
 
+    /// <summary>
+    /// Overrides the screen display with a <see cref="TextScreenTextEvent"/>.
+    /// </summary>
     private void OnText(EntityUid uid, TextScreenComponent component, ref TextScreenTextEvent args)
     {
-        RemComp<ActiveTextScreenTimerComponent>(uid);
-
+        component.Remaining = null;
         component.Label = args.Label[..Math.Min(5, args.Label.Length)];
 
         _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
@@ -60,28 +66,17 @@ public sealed class TextScreenSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        UpdateTimer();
-    }
-
-    private void UpdateTimer()
-    {
-        var query = EntityQueryEnumerator<ActiveTextScreenTimerComponent, TextScreenComponent>();
-        while (query.MoveNext(out var uid, out var active, out var timer))
+        var query = EntityQueryEnumerator<TextScreenComponent>();
+        while (query.MoveNext(out var uid, out var timer))
         {
-            if (active.Remaining > _gameTiming.CurTime)
+            if (timer.Remaining != null && timer.Remaining > _gameTiming.CurTime)
                 continue;
 
-            Finish(uid);
+            timer.Remaining = null;
+            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
 
-            if (timer.DoneSound == null)
-                continue;
-            _audio.PlayPvs(timer.DoneSound, uid);
+            if (timer.DoneSound != null)
+                _audio.PlayPvs(timer.DoneSound, uid);
         }
-    }
-
-    private void Finish(EntityUid uid)
-    {
-        RemComp<ActiveTextScreenTimerComponent>(uid);
-        _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
     }
 }

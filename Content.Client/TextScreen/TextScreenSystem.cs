@@ -261,9 +261,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         else if (timeSpan.TotalMinutes >= 1 || !getMilliseconds)
         {
             firstString = timeSpan.Minutes.ToString("D2");
-            // It's nicer to see a timer set at 5 seconds actually start at 00:05 instead of 00:04.
-            var seconds = timeSpan.Seconds + (timeSpan.Milliseconds > 500 ? 1 : 0);
-            lastString = seconds.ToString("D2");
+            lastString = timeSpan.Seconds.ToString("D2");
         }
         else
         {

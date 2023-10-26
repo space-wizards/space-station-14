@@ -72,6 +72,37 @@
     graph: Timer
     node: brig
 
+# screentimer without the signaltimer BUI
+
+- type: entity
+  id: Screen
+  name: screen
+  description: Displays text or time.
+  components:
+  - type: Transform
+    anchored: true
+  - type: WallMount
+    arc: 360
+  - type: InteractionOutline
+  - type: Appearance
+  - type: Rotatable
+  - type: TextScreen
+  - type: TextScreenVisuals
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/textscreen.rsi # placeholder
+    state: textscreen
+    noRot: true
+  - type: Construction
+    graph: Timer
+    node: screen
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: ExtensionCableReceiver
+
 - type: entity
   id: ShuttleTimer
   parent: Screen

@@ -1,4 +1,0 @@
-﻿author: metalgearsloth
-changes:
-- type: Tweak
-  message: Reverted storage to function with numerical values again, instead of slots and sizes.
