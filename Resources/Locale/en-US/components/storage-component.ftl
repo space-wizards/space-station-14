@@ -6,5 +6,4 @@ comp-storage-invalid-container = This doesn't go in there!
 comp-storage-anchored-failure = Can't insert an anchored item.
 comp-storage-cant-drop = You can't let go of { THE($entity) }!
 comp-storage-window-title = Storage Item
-comp-storage-window-volume = Items: { $itemCount }/{ $maxCount }, Max Size: {$size}
-comp-storage-window-volume-full = [color=orange][bold]FULL[/bold][/color], Max Size: {$size}
+comp-storage-window-volume = Fill: { $percent }%, Max Size: {$size}

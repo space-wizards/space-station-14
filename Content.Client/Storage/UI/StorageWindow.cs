@@ -67,8 +67,7 @@ namespace Content.Client.Storage.UI
                 VerticalAlignment = VAlignment.Center
             };
             _information.SetMessage(Loc.GetString("comp-storage-window-volume",
-                ("itemCount", 0),
-                ("maxCount", 0),
+                ("percent", 0),
                 ("size", SharedItemSystem.GetItemSizeLocale(ItemSize.Normal))));
 
             vBox.AddChild(_information);
@@ -111,19 +110,9 @@ namespace Content.Client.Storage.UI
 
         private void SetStorageInformation(Entity<StorageComponent> uid)
         {
-            if (uid.Comp.MaxSlots != uid.Comp.Container.ContainedEntities.Count
-                && _storage.GetCumulativeItemSizes(uid, uid.Comp) == _storage.GetMaxTotalWeight((uid, uid.Comp)))
-            {
-                _information.SetMarkup(Loc.GetString("comp-storage-window-volume-full",
-                    ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
-            }
-            else
-            {
-                _information.SetMarkup(Loc.GetString("comp-storage-window-volume",
-                    ("itemCount", uid.Comp.Container.ContainedEntities.Count),
-                    ("maxCount", uid.Comp.MaxSlots),
-                    ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
-            }
+            _information.SetMarkup(Loc.GetString("comp-storage-window-volume",
+                ("percent", _storage.GetStorageFillPercentage((uid, uid.Comp)) * 100f),
+                ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
         }
 
         /// <summary>

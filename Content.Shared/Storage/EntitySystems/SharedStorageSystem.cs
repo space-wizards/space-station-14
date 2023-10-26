@@ -4,6 +4,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
@@ -663,6 +664,17 @@ public abstract class SharedStorageSystem : EntitySystem
             return uid.Comp.MaxTotalWeight.Value;
 
         return uid.Comp.MaxSlots * SharedItemSystem.GetItemSizeWeight(GetMaxItemSize(uid));
+    }
+
+    public FixedPoint2 GetStorageFillPercentage(Entity<StorageComponent?> uid)
+    {
+        if (!Resolve(uid, ref uid.Comp))
+            return 0;
+
+        var slotPercent = FixedPoint2.New(uid.Comp.Container.ContainedEntities.Count) / uid.Comp.MaxSlots;
+        var weightPercent = FixedPoint2.New(GetCumulativeItemSizes(uid)) / GetMaxTotalWeight(uid);
+
+        return FixedPoint2.Max(slotPercent, weightPercent);
     }
 
     /// <summary>
