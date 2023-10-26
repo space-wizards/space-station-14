@@ -26,7 +26,7 @@
   desc: reagent-desc-dylovene
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
-  pricePerUnit: 1 #imperial
+  pricePerUnit: 1.6 #imperial chemistryRework
   color: "#3a1d8a"
   metabolisms:
     Medicine:
@@ -141,7 +141,7 @@
   desc: reagent-desc-bicaridine
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
-  pricePerUnit: 1 #imperial
+  pricePerUnit: 1.8 #imperial chemistryRework
   color: "#ffaa00"
   metabolisms:
     Medicine:
@@ -222,7 +222,7 @@
             types:
              Cellular: -2
 
-- type: reagent
+- type: reagent 
   id: Dermaline
   name: reagent-name-dermaline
   group: Medicine
@@ -237,23 +237,23 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -1.5
-            Shock: -1.5
-            Cold: -1.5
+            Heat: -1.25 #imperial chemistryRework start #-1.5
+            Shock: -1.25 #-1.5
+            Cold: -1.25 #-1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 10
+          min: 12 #imperial chemistryRework #10
         damage:
           types:
-            Asphyxiation: 1
+            Asphyxiation: 1.25 #imperial chemistryRework #1
             Cold: 2
         groups:
             Brute: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 10
+          min: 12 #imperial chemistryRework $10
 
 - type: reagent
   id: Dexalin
@@ -406,6 +406,13 @@
         conditions:
         - !type:ReagentThreshold
           min: 30
+      - !type:HealthChange #imperial chemistryRework start
+        conditions:
+        - !type:Temperature
+          max: 157.0
+        damage:
+          types: 
+            Poison: -3.25 #imperial chemistryRework end
 
 - type: reagent
   id: Ipecac
@@ -477,6 +484,13 @@
         conditions:
         - !type:ReagentThreshold
           min: 25
+      - !type:HealthChange #imperial chemistryRework start
+        conditions:
+        - !type:Temperature
+          max: 162.0
+        damage:
+          groups:
+            Burn: -3.75 #imperial chemistryRework end
 
 - type: reagent
   id: Leporazine
