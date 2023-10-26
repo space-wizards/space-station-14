@@ -37,4 +37,7 @@
 - type: soundCollection
   id: LizardHiss
   files:
-    - /Audio/SS220/Emotes/lizard_hissing.ogg
+    - /Audio/SS220/Emotes/lizardhissing/lizard_hissing_1.ogg
+    - /Audio/SS220/Emotes/lizardhissing/lizard_hissing_2.ogg
+    - /Audio/SS220/Emotes/lizardhissing/lizard_hissing_3.ogg
+    - /Audio/SS220/Emotes/lizardhissing/lizard_hissing_4.ogg
