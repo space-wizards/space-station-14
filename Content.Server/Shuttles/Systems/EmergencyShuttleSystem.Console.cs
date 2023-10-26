@@ -364,14 +364,14 @@ public sealed partial class EmergencyShuttleSystem
         if (component.AuthorizedEntities.Count < component.AuthorizationsRequired || EarlyLaunchAuthorized)
             return false;
 
-        EarlyLaunch();
+        EarlyLaunch(component.Owner);
         return true;
     }
 
     /// <summary>
     /// Attempts to early launch the emergency shuttle if not already done.
     /// </summary>
-    public bool EarlyLaunch()
+    public bool EarlyLaunch(EntityUid console)
     {
         if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
 
@@ -381,6 +381,13 @@ public sealed partial class EmergencyShuttleSystem
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
         AnnounceLaunch();
         UpdateAllEmergencyConsoles();
+
+        var payload = new DeviceNetworkEvent
+        {
+            [BroadcastTime] = TimeSpan.FromSeconds(_authorizeTime);
+        }
+        _deviceNetworkSystem.QueuePacket(console, null, payload, 2451);
+
         return true;
     }
 

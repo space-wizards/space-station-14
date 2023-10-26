@@ -2,6 +2,8 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
+using Content.Server.DeviceNetwork.Events;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
@@ -38,6 +40,7 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -199,6 +202,11 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
+    private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
+    {
+        _shuttleTimerSystem.OnArrivalsDocked(uid, component, ref args);
+    }
+
     private void DumpChildren(EntityUid uid,
         ref FTLStartedEvent args,
         EntityQuery<PendingClockInComponent> pendingEntQuery,
@@ -344,7 +352,6 @@ public sealed class ArrivalsSystem : EntitySystem
         // TODO: Docking should be per-grid rather than per dock and bump off when undocking.
 
         // TODO: Stop dispatch if emergency shuttle has arrived.
-        // TODO: Need server join message specifying shuttle wait time or smth.
         // TODO: Need maps
         // TODO: Need emergency suits on shuttle probs
         // TODO: Need some kind of comp to shunt people off if they try to get on?
@@ -355,20 +362,26 @@ public sealed class ArrivalsSystem : EntitySystem
                 if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
                     continue;
 
-                var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime ;
+                var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime;
 
+                EntityUid? target;
+                EntityUid? source;
                 // Go back to arrivals source
                 if (xform.MapUid != arrivalsXform.MapUid)
                 {
+                    target = arrivals;
+                    source = xform.MapUid;
+
                     if (arrivals.IsValid())
-                        _shuttles.FTLTravel(uid, shuttle, arrivals, dock: true);
+                        _shuttles.FTLTravel(uid, shuttle, target, dock: true);
 
                     comp.NextArrivalsTime = _timing.CurTime + TimeSpan.FromSeconds(tripTime);
                 }
                 // Go to station
                 else
                 {
-                    var targetGrid = _station.GetLargestGrid(data);
+                    target = _station.GetLargestGrid(data);
+                    source = arrivalsXform.MapUid;
 
                     if (targetGrid != null)
                         _shuttles.FTLTravel(uid, shuttle, targetGrid.Value, dock: true);
@@ -380,6 +393,19 @@ public sealed class ArrivalsSystem : EntitySystem
                 }
 
                 comp.NextTransfer += TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
+
+                var payload = new NetworkPayload
+                    {
+                        [ShuttleGrid] = xform.GridUid,
+                        [SourceMap] = source,
+                        [DestMap] = target,
+                        // time to display on the timers inside the shuttle, at source, and at destination
+                        [LocalTimer] = arrivals.TravelTime,
+                        [SourceTimer] = arrivals.TravelTime + arrivals.Cooldown,
+                        [DestTimer] = arrivals.TravelTime
+                    }
+
+                _deviceNetworkSystem.QueuePacket(uid, null, payload, 2452);
             }
         }
     }
@@ -476,7 +502,22 @@ public sealed class ArrivalsSystem : EntitySystem
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
             _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
-            arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
+            arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(arrivalsComp.Cooldown - 10f);
+
+            // Shuttle timer bootstrap stuff
+            // if (!TryComp<ShuttleTimerComponent>(component.Shuttle, out var shuttleTimerComp))
+            //     return;
+
+            // _shuttleTimerSystem.PairShuttleWithRemotes(shuttleTimerComp, RemoteShuttleTimerMask.Arrivals);
+
+            // displays the ETA at roundstart on the arrivals terminal map
+            // var remote = new RemoteShuttleTimerEvent(TimeSpan.FromSeconds(10f + arrivalsComp.Startup));
+            // _shuttleTimerSystem.RaiseEventOnShuttles<ArrivalsShuttleComponent, RemoteShuttleTimerEvent>(ref remote);
+            var payload = new NetworkPayload
+            {
+                [BroadcastTime] = 10f + arrivalsComp.Startup
+            }
+            _deviceNetworkSystem.QueuePacket(arrivals, null, payload, 2452);
         }
 
         // Don't start the arrivals shuttle immediately docked so power has a time to stabilise?
