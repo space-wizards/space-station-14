@@ -1,4 +1,5 @@
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Materials;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -7,9 +8,11 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Cloning;
+
 [RegisterComponent]
 public sealed partial class CloningPodComponent : Component
 {
+    [ValidatePrototypeId<SinkPortPrototype>]
     public const string PodPort = "CloningPodReceiver";
 
     [ViewVariables]
@@ -30,8 +33,8 @@ public sealed partial class CloningPodComponent : Component
     /// <summary>
     /// The material that is used to clone entities.
     /// </summary>
-    [DataField("requiredMaterial", customTypeSerializer: typeof(PrototypeIdSerializer<MaterialPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string RequiredMaterial = "Biomass";
+    [DataField("requiredMaterial"), ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<MaterialPrototype> RequiredMaterial = "Biomass";
 
     /// <summary>
     /// The base amount of time it takes to clone a body
@@ -60,8 +63,8 @@ public sealed partial class CloningPodComponent : Component
     /// <summary>
     /// The mob to spawn on emag
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("mobSpawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MobSpawnId = "MobAbomination";
+    [DataField("mobSpawnId"), ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId MobSpawnId = "MobAbomination";
 
     /// <summary>
     /// Emag sound effects.
@@ -72,6 +75,7 @@ public sealed partial class CloningPodComponent : Component
         Params = AudioParams.Default.WithVolume(8),
     };
 
+    // TODO: Remove this from here when cloning and/or zombies are refactored
     [DataField("screamSound")]
     public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("ZombieScreams")
     {
@@ -109,6 +113,7 @@ public enum CloningPodVisuals : byte
 {
     Status
 }
+
 [Serializable, NetSerializable]
 public enum CloningPodStatus : byte
 {
