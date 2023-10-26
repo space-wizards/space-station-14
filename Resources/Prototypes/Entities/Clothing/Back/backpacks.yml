@@ -8,13 +8,14 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
   - type: Item
-    size: 9999
+    size: Huge
   - type: Clothing
     quickEquip: false
     slots:
     - back
   - type: Storage
-    capacity: 100
+    maxSlots: 7
+    maxTotalWeight: 28
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -196,7 +197,8 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
-    capacity: 250
+    maxSlots: 10
+    maxTotalWeight: 40
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -259,8 +261,12 @@
       shader: unshaded
   - type: Clothing
     equippedPrefix: holding
+  - type: Item
+    size: Ginormous
   - type: Storage
-    capacity: 9999
+    maxSlots: 14
+    maxItemSize: Large
+    maxTotalWeight: 56 #14 normal-sized items.
 
 - type: entity
   parent: ClothingBackpackClown

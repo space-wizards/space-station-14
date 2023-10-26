@@ -167,5 +167,9 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
+  - type: Item
+    size: Ginormous
   - type: Storage
-    capacity: 9999
+    maxSlots: 14
+    maxItemSize: Large
+    maxTotalWeight: 56 #14 normal-sized items.
