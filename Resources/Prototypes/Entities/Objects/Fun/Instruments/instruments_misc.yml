@@ -10,7 +10,7 @@
   - type: Instrument
     program: 121
   - type: Item
-    size: Small
+    size: 10
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -24,7 +24,7 @@
   - type: Instrument
     program: 122
   - type: Item
-    size: Small
+    size: 10
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -38,7 +38,7 @@
   - type: Instrument
     program: 123
   - type: Item
-    size: Tiny
+    size: 5
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -55,7 +55,7 @@
   - type: Instrument
     program: 124
   - type: Item
-    size: Small
+    size: 10
   - type: Prayable
     sentMessage: prayer-popup-notify-centcom-sent
     notifiactionPrefix: prayer-chat-notify-centcom
@@ -74,7 +74,7 @@
   - type: Instrument
     program: 125
   - type: Item
-    size: Small
+    size: 10
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -88,7 +88,7 @@
   - type: Instrument
     program: 126
   - type: Item
-    size: Tiny
+    size: 5
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -102,7 +102,7 @@
     sprite: Objects/Fun/Instruments/gunpet.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: 15
     sprite: Objects/Fun/Instruments/gunpet.rsi
   - type: Tag
     tags:
@@ -125,7 +125,7 @@
     - BrassInstrument #Go figure.
   - type: Item
     sprite: Objects/Fun/Instruments/bike_horn.rsi
-    size: Small
+    size: 10
   - type: Clothing
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     slots: [Belt]

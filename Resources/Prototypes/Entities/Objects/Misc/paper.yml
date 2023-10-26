@@ -23,7 +23,7 @@
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
   - type: Item
-    size: Tiny
+    size: 1
   - type: Tag
     tags:
     - Document
@@ -245,7 +245,7 @@
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: pen
-    size: Tiny
+    size: 2
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
@@ -277,7 +277,7 @@
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: overpriced_pen
-    size: Tiny
+    size: 2
 
 - type: entity
   name: captain's fountain pen
@@ -336,11 +336,9 @@
 #      black: "#3f3f3f"
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
-    size: Small
+    size: 5
   - type: Storage
-    maxSlots: 10
-    maxItemSize: Small
-    maxTotalWeight: 20
+    capacity: 10
     whitelist:
       tags:
         - Document
@@ -470,14 +468,13 @@
         insertOnInteract: false
   - type: Item
     sprite: Objects/Misc/clipboard.rsi
-    size: Small
+    size: 10
   - type: Clothing
     slots: [belt]
     quickEquip: false
     sprite: Objects/Misc/clipboard.rsi
   - type: Storage
-    maxSlots: 15
-    maxTotalWeight: 30
+    capacity: 20
     whitelist:
       tags:
         - Document
@@ -529,13 +526,13 @@
         insertOnInteract: true
   - type: Item
     sprite: Objects/Misc/qm_clipboard.rsi
-    size: Normal
+    size: 30
   - type: Clothing
     slots: [belt]
     quickEquip: false
     sprite: Objects/Misc/qm_clipboard.rsi
   - type: Storage
-    maxSlots: 20
+    capacity: 90
     quickInsert: true
     whitelist:
       tags:
@@ -588,7 +585,7 @@
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-mime
   - type: Item
-    size: Tiny
+    size: 3
 
 - type: entity
   name: alternate rubber stamp

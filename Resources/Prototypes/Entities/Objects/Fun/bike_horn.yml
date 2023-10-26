@@ -9,7 +9,7 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/bikehorn.rsi
-    size: Tiny
+    size: 5
   - type: Clothing
     sprite: Objects/Fun/bikehorn.rsi
     slots: [Belt]
@@ -58,7 +58,7 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/cluwnehorn.rsi
-    size: Tiny
+    size: 5
   - type: Clothing
     sprite: Objects/Fun/cluwnehorn.rsi
     slots: [Belt]
@@ -100,7 +100,7 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/goldbikehorn.rsi
-    size: Tiny
+    size: 5
   - type: Clothing
     sprite: Objects/Fun/goldbikehorn.rsi
     slots: [Belt]
@@ -119,7 +119,7 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/bananiumhorn.rsi
-    size: Tiny
+    size: 5
   - type: Clothing
     sprite: Objects/Fun/bananiumhorn.rsi
     slots: [Belt]

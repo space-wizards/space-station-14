@@ -5,7 +5,7 @@
   components:
   - type: Sprite
   - type: Item
-    size: Large
+    size: 50
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     quickEquip: false
@@ -37,7 +37,7 @@
   abstract: true
   components:
   - type: Item
-    size: Small
+    size: 10
   - type: Tag
     tags:
     - Sidearm
@@ -408,7 +408,7 @@
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
   - type: Item
-    size: Normal  # Intentionally larger than other pistols
+    size: 30  # Intentionally larger than other pistols
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:
@@ -464,7 +464,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: AnomalousParticleDeltaStrong
-    fireCost: 100
+    fireCost: 100 
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
@@ -476,13 +476,13 @@
   - type: Construction
     graph: UpgradeWeaponPistolCHIMP
     node: start
-
+      
 - type: entity
   name: experimental C.H.I.M.P. handcannon
   parent: WeaponPistolCHIMP
   id: WeaponPistolCHIMPUpgraded
   description: This C.H.I.M.P. seems to have a greater punch than is usual...
-  components:
+  components: 
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
@@ -490,7 +490,7 @@
     - proto: AnomalousParticleEpsilonStrong
       fireCost: 100
     - proto: AnomalousParticleOmegaStrong
-      fireCost: 100
+      fireCost: 100     
     - proto: AnomalousParticleZetaStrong
       fireCost: 100
 

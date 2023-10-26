@@ -6,7 +6,7 @@
   - type: Sprite
     state: icon
   - type: Item
-    size: Normal
+    size: 50
   - type: Clothing
     slots: [belt]
     quickEquip: false
@@ -22,10 +22,7 @@
   id: ClothingBeltStorageBase
   components:
   - type: Storage
-    maxSlots: 7
-    maxItemSize: Normal
-  - type: Item
-    size: Huge
+    capacity: 40
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

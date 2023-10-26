@@ -7,7 +7,7 @@
     sprite: Objects/Tanks/generic.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: 15
     sprite: Objects/Tanks/generic.rsi
   - type: Clothing
     sprite: Objects/Tanks/generic.rsi
@@ -100,7 +100,7 @@
   - type: Sprite
     sprite: Objects/Tanks/emergency.rsi
   - type: Item
-    size: Small
+    size: 10
     sprite: Objects/Tanks/emergency.rsi
   - type: GasTank
     outputPressure: 21.3

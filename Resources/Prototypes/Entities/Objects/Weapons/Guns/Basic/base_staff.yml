@@ -7,7 +7,7 @@
     sprite: Objects/Weapons/Guns/Basic/staves.rsi
   - type: Item
     heldPrefix: staff
-    size: Normal
+    size: 60
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto

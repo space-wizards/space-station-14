@@ -50,8 +50,7 @@
           True: { visible: false }
           False: { visible: true }
   - type: Storage
-    maxSlots: 60
-    maxItemSize: Normal
+    capacity: 525
     storageOpenSound: /Audio/Effects/closetopen.ogg
     storageCloseSound: /Audio/Effects/closetclose.ogg
     whitelist:

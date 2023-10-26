@@ -86,16 +86,9 @@
   suffix: Filled
   parent: ToolboxSyndicate
   components:
-  - type: Storage
-    maxSlots: 8
   - type: StorageFill
     contents:
-      - id: Crowbar
-      - id: Wrench
-      - id: Screwdriver
-      - id: Wirecutter
-      - id: Welder
-      - id: Multitool
+      - id: ClothingBeltUtilityEngineering
       - id: ClothingHandsGlovesCombat
       - id: ClothingMaskGasSyndicate
 

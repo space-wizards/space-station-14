@@ -13,7 +13,7 @@
     tags:
     - Dice
   - type: Item
-    size: Tiny
+    size: 2
 
 - type: entity
   parent: BaseDice

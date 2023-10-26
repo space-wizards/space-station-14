@@ -26,7 +26,7 @@
         Slash: 3.5
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
-    size: Tiny
+    size: 4
   - type: CollisionWake
     enabled: false
   - type: Fixtures

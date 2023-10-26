@@ -12,7 +12,7 @@
         map: ["base"]
     - type: Item
       sprite: Objects/Weapons/Bombs/hot_potato.rsi
-      size: Small
+      size: 5
     - type: AmbientSound
       enabled: false
       range: 8

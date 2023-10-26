@@ -12,8 +12,7 @@
       visible: false
   - type: Clothing
   - type: Storage
-    maxSlots: 15
-    maxItemSize: Small
+    capacity: 150
     whitelist:
       tags:
       - Arrow

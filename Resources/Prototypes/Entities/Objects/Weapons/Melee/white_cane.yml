@@ -8,7 +8,7 @@
     sprite: Objects/Weapons/Melee/white_cane.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: 15
     sprite: Objects/Weapons/Melee/white_cane.rsi
   - type: MeleeWeapon
     wideAnimationRotation: 45

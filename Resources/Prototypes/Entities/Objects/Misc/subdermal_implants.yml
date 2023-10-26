@@ -110,10 +110,9 @@
     - type: SubdermalImplant
       implantAction: ActionOpenStorageImplant
     - type: Item
-      size: Huge
+      size: 9999
     - type: Storage
-      maxSlots: 4
-      maxItemSize: Small
+      capacity: 20 #10-20 should be more than enough for this
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
