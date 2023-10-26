@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
@@ -105,6 +106,9 @@ public sealed partial class StorageSystem : SharedStorageSystem
     public override void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
     {
         if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
+            return;
+
+        if (!CanOpenUI(uid, storageComp, entity))
             return;
 
         // prevent spamming bag open / honkerton honk sound

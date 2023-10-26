@@ -8,3 +8,4 @@ comp-storage-cant-drop = You can't let go of { THE($entity) }!
 comp-storage-window-title = Storage Item
 comp-storage-window-volume = Items: { $itemCount }/{ $maxCount }, Max Size: {$size}
 comp-storage-window-volume-full = [color=orange][bold]FULL[/bold][/color], Max Size: {$size}
+comp-storage-cant-open-nested = You can't open the {$item} inside the {$parent}

@@ -1809,5 +1809,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> ReplayAutoRecordTempDir =
             CVarDef.Create("replay.auto_record_temp_dir", "", CVar.SERVERONLY);
+
+
+        /*
+         * Storage
+         */
+
+        /// <summary>
+        /// Whether players can access nested storage UIs.
+        /// </summary>
+        public static readonly CVarDef<bool> NestedStorageUIAccessEnabled =
+            CVarDef.Create("storage.nested_ui_access", true, CVar.REPLICATED);
     }
 }

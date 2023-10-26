@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
@@ -16,6 +17,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -37,9 +39,10 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
-    [Dependency] protected   readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
+    [Dependency] private   readonly IConfigurationManager _configManager = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<StackComponent> _stackQuery;
@@ -155,10 +158,26 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     private void OnActivate(EntityUid uid, StorageComponent storageComp, ActivateInWorldEvent args)
     {
-        if (args.Handled || _combatMode.IsInCombatMode(args.User) || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+        if (args.Handled || _combatMode.IsInCombatMode(args.User))// || !CanOpenUI(uid, storageComp, args.User))
             return;
 
         OpenStorageUI(uid, args.User, storageComp);
+    }
+
+    protected internal bool CanOpenUI(EntityUid uid, StorageComponent storageComp, EntityUid user)
+    {
+        if (!_configManager.GetCVar(CCVars.NestedStorageUIAccessEnabled)
+            && _containerSystem.TryGetContainingContainer(uid, out var container)
+            && HasComp<StorageComponent>(container.Owner))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("comp-storage-cant-open-nested", ("item", uid), ("parent", container.Owner)), uid, user);
+            return false;
+        }
+
+        if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+            return false;
+
+        return true;
     }
 
     /// <summary>
