@@ -92,4 +92,4 @@
       sprite: Structures/Windows/cracks_diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
-    node: uraniumReinforcedWindowDiagonal
+    node: reinforcedUraniumWindowDiagonal
