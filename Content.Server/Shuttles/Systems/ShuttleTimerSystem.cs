@@ -7,7 +7,7 @@ using Content.Server.TextScreen.Events;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork.Events;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
@@ -59,36 +59,38 @@ namespace Content.Server.Shuttles.Systems
         private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, DeviceNetworkPacketEvent args)
         {
             // some timer updates just want to broadcast their timing to every networked timer
-            if (args.Data.TryGetValue("BroadcastTime"), out var duration)
+
+            if (args.Data.TryGetValue("BroadcastTime", out TimeSpan broadcast))
             {
-                ev = new TextScreenTimerEvent(duration);
-                RaiseLocalEvent(uid, ev);
+                var text = new TextScreenTimerEvent(broadcast);
+                RaiseLocalEvent(uid, ref text);
                 return;
             }
 
-            if (!TryComp<TransformComponent>(uid, out var timerXform)) ||
-            (!args.Data.TryGetValue(SourceMap), out var source) ||
-            (!args.Data.TryGetValue(DestMap), out var dest) ||
-            (!args.Data.TryGetValue(ShuttleGrid), out var shuttle)
+            if (!TryComp<TransformComponent>(uid, out var timerXform) ||
+            timerXform.GridUid == null ||
+            !args.Data.TryGetValue("SourceMap", out EntityUid source) ||
+            !args.Data.TryGetValue("DestMap", out EntityUid dest) ||
+            !args.Data.TryGetValue("ShuttleGrid", out EntityUid shuttle))
                 return;
 
             string key;
-            switch (timerXform.GridUid)
+            switch (timerXform.GridUid.Value)
             {
-                case shuttle:
+                case var local when local == shuttle:
                     key = "LocalTimer";
                     break;
-                case source:
+                case var origin when origin == source:
                     key = "SourceTimer";
                     break;
-                case dest:
+                case var remote when remote == dest:
                     key = "DestTimer";
                     break;
                 default:
                     return;
             }
 
-            if (!args.Data.TryGetValue(key), out TimeSpan duration)
+            if (!args.Data.TryGetValue(key, out TimeSpan duration))
                 return;
 
             var ev = new TextScreenTimerEvent(duration);

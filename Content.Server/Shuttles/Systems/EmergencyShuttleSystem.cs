@@ -5,7 +5,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
-using Content.Server.DeviceNetwork.Events;
+using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking.Events;
 using Content.Server.Popups;
@@ -48,7 +48,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-
     [Dependency] private readonly DockingSystem _dock = default!;
     [Dependency] private readonly IdCardSystem _idSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
@@ -208,10 +207,10 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
             }
 
-            var payload = new DeviceNetworkEvent
+            var payload = new NetworkPayload
             {
-                [BroadcastTime] = TimeSpan.FromSeconds(_consoleAccumulator);
-            }
+                ["BroadcastTime"] = TimeSpan.FromSeconds(_consoleAccumulator)
+            };
             _deviceNetworkSystem.QueuePacket(stationShuttle.EmergencyShuttle.Value, null, payload, 2451);
 
             _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} docked with stations");

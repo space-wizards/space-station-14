@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
-using Content.Server.DeviceNetwork.Events;
+using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -202,10 +202,10 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
-    {
-        _shuttleTimerSystem.OnArrivalsDocked(uid, component, ref args);
-    }
+    // private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
+    // {
+    //     _shuttleTimerSystem.OnArrivalsDocked(uid, component, ref args);
+    // }
 
     private void DumpChildren(EntityUid uid,
         ref FTLStartedEvent args,
@@ -364,7 +364,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
                 var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime;
 
-                EntityUid? target;
+                EntityUid target;
                 EntityUid? source;
                 // Go back to arrivals source
                 if (xform.MapUid != arrivalsXform.MapUid)
@@ -380,11 +380,15 @@ public sealed class ArrivalsSystem : EntitySystem
                 // Go to station
                 else
                 {
-                    target = _station.GetLargestGrid(data);
+                    var station = _station.GetLargestGrid(data);
+
+                    if (station == null)
+                        return;
+
+                    target = station.Value;
                     source = arrivalsXform.MapUid;
 
-                    if (targetGrid != null)
-                        _shuttles.FTLTravel(uid, shuttle, targetGrid.Value, dock: true);
+                    _shuttles.FTLTravel(uid, shuttle, target, dock: true);
 
                     // The ArrivalsCooldown includes the trip there, so we only need to add the time taken for
                     // the trip back.
@@ -395,15 +399,19 @@ public sealed class ArrivalsSystem : EntitySystem
                 comp.NextTransfer += TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
 
                 var payload = new NetworkPayload
-                    {
-                        [ShuttleGrid] = xform.GridUid,
-                        [SourceMap] = source,
-                        [DestMap] = target,
-                        // time to display on the timers inside the shuttle, at source, and at destination
-                        [LocalTimer] = arrivals.TravelTime,
-                        [SourceTimer] = arrivals.TravelTime + arrivals.Cooldown,
-                        [DestTimer] = arrivals.TravelTime
-                    }
+                {
+                    ["DestMap"] = target,
+                    // time to display on the timers inside the shuttle, at source, and at destination
+                    ["LocalTimer"] = TimeSpan.FromSeconds(tripTime),
+                    ["SourceTimer"] = TimeSpan.FromSeconds(tripTime) + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown)),
+                    ["DestTimer"] = TimeSpan.FromSeconds(tripTime)
+                };
+
+                if (xform.GridUid != null)
+                    payload.Add("ShuttleGrid", xform.GridUid);
+                if (source != null)
+                    payload.Add("DestMap", source);
+
 
                 _deviceNetworkSystem.QueuePacket(uid, null, payload, 2452);
             }
@@ -502,7 +510,7 @@ public sealed class ArrivalsSystem : EntitySystem
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
             _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
-            arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(arrivalsComp.Cooldown - 10f);
+            arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
 
             // Shuttle timer bootstrap stuff
             // if (!TryComp<ShuttleTimerComponent>(component.Shuttle, out var shuttleTimerComp))
@@ -515,8 +523,8 @@ public sealed class ArrivalsSystem : EntitySystem
             // _shuttleTimerSystem.RaiseEventOnShuttles<ArrivalsShuttleComponent, RemoteShuttleTimerEvent>(ref remote);
             var payload = new NetworkPayload
             {
-                [BroadcastTime] = 10f + arrivalsComp.Startup
-            }
+                ["BroadcastTime"] = 10f + ShuttleSystem.DefaultStartupTime
+            };
             _deviceNetworkSystem.QueuePacket(arrivals, null, payload, 2452);
         }
 

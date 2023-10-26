@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Server.DeviceNetwork;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
@@ -108,7 +109,7 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmagged(EntityUid uid, EmergencyShuttleConsoleComponent component, ref GotEmaggedEvent args)
     {
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"{ToPrettyString(args.UserUid):player} emagged shuttle console for early launch");
-        EarlyLaunch();
+        EarlyLaunch(uid);
     }
 
     private void SetAuthorizeTime(float obj)
@@ -382,10 +383,11 @@ public sealed partial class EmergencyShuttleSystem
         AnnounceLaunch();
         UpdateAllEmergencyConsoles();
 
-        var payload = new DeviceNetworkEvent
+        var payload = new NetworkPayload
         {
-            [BroadcastTime] = TimeSpan.FromSeconds(_authorizeTime);
-        }
+            ["BroadcastTime"] = TimeSpan.FromSeconds(_authorizeTime)
+        };
+
         _deviceNetworkSystem.QueuePacket(console, null, payload, 2451);
 
         return true;
