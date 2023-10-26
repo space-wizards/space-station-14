@@ -237,23 +237,23 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -1.25 #imperial chemistryRework start
-            Shock: -1.25
-            Cold: -1.25
+            Heat: -1.25 #imperial chemistryRework start #-1.5
+            Shock: -1.25 #-1.5
+            Cold: -1.25 #-1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 12 #imperial chemistryRework
+          min: 12 #imperial chemistryRework #10
         damage:
           types:
-            Asphyxiation: 1.25 #imperial chemistryRework
+            Asphyxiation: 1.25 #imperial chemistryRework #1
             Cold: 2
         groups:
             Brute: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 12 #imperial chemistryRework
+          min: 12 #imperial chemistryRework $10
 
 - type: reagent
   id: Dexalin
