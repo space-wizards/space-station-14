@@ -15,6 +15,10 @@
   parent: BriefcaseSyndie
   suffix: SniperBundle
   components:
+  - type: Item
+    size: Huge
+  - type: Storage
+    maxItemSize: Large
   - type: StorageFill
     contents:
       - id: WeaponSniperHristov
