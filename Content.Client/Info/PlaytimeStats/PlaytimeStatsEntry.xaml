@@ -8,11 +8,13 @@
         <Label Name="RoleLabel"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
-               ClipText="True"/>
+               ClipText="True"
+               Margin="5,5,5,5"/>
         <customControls1:VSeparator/>
         <Label Name="PlaytimeLabel"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
-               ClipText="True"/>
+               ClipText="True"
+               Margin="5,5,5,5"/>
     </BoxContainer>
 </ContainerButton>
