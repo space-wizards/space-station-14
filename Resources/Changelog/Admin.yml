@@ -55,3 +55,8 @@ Entries:
       commands.', type: Tweak}
   id: 8
   time: '2023-10-21T09:53:00.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'AME and PA make a sound effect when they are being overloaded. Similar to being sent a fax.', type: Add}
+  id: 9
+  time: '2023-10-26T21:17:00.0000000+00:00'
