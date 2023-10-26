@@ -5,10 +5,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/advanced.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/advanced.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.002
@@ -41,10 +41,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/engineer.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/engineer.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/engineer.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/engineer.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.04
@@ -77,10 +77,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/rnd.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/rnd.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/rnd.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/rnd.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.04
@@ -113,10 +113,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/atmospheric.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/atmospheric.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/atmospheric.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/atmospheric.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.02
@@ -149,10 +149,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/medical.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/medical.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/medical.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/medical.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.7
@@ -181,10 +181,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/cmo.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/cmo.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/cmo.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/cmo.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.2
@@ -214,10 +214,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/civillian.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/civillian.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/civillian.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/civillian.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.7
@@ -247,10 +247,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/magnate.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/magnate.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/magnate.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/magnate.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.4
@@ -284,10 +284,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/security.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/security.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/security.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/security.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.4
@@ -320,10 +320,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/hos.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/hos.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/hos.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/hos.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.4
@@ -356,10 +356,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/salvage.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/salvage.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/salvage.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/salvage.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.6
@@ -392,10 +392,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/miner.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/miner.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/miner.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/miner.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.5
@@ -428,10 +428,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/nukeops.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeops.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/nukeops.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeops.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.25
@@ -465,10 +465,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/nukeopsclown.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopsclown.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/nukeopsclown.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopsclown.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: ToggleableClothing
     clothingPrototype: ClothingGauntletsModsuitHonkOperativeSealed
@@ -482,10 +482,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/nukeopscmd.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopscmd.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/nukeopscmd.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopscmd.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.001
@@ -519,10 +519,10 @@
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/corporate.rsi
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/corporate.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/OuterClothing/Modsuits/corporate.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/corporate.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.04

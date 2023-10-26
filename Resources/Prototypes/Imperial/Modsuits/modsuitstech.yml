@@ -2,7 +2,7 @@
   id: СombatModsuits
   name: research-technology-combat-modsuits
   icon:
-    sprite: Imperial/Clothing/Head/Modsuits/salvage.rsi
+    sprite: Imperial/Modsuits/Clothing/Head/salvage.rsi
     state: icon
   discipline: Industrial
   tier: 1
@@ -16,7 +16,7 @@
   id: Advanced Modsuits
   name: research-advanced-modsuits
   icon:
-    sprite: Imperial/Clothing/Head/Modsuits/magnate.rsi
+    sprite: Imperial/Modsuits/Clothing/Head/magnate.rsi
     state: icon
   discipline: Industrial
   tier: 2

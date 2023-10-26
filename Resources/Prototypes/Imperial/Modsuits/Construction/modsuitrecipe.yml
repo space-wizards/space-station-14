@@ -6,7 +6,7 @@
   targetNode: modsuitatmospheric
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/atmospheric.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/atmospheric.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -17,7 +17,7 @@
   targetNode: modsuitengineer
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/engineer.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/engineer.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -28,7 +28,7 @@
   targetNode: modsuitmedical
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/medical.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/medical.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -39,7 +39,7 @@
   targetNode: modsuitrnd
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/rnd.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/rnd.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -50,7 +50,7 @@
   targetNode: modsuitsalvage
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/salvage.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/salvage.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -61,7 +61,7 @@
   targetNode: modsuitcivillian
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды безработного.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/civillian.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/civillian.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -72,7 +72,7 @@
   targetNode: modsuitsecurity
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/security.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/security.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -83,7 +83,7 @@
   targetNode: modsuitadvanced
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/advanced.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/advanced.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -94,7 +94,7 @@
   targetNode: modsuitrescue
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/cmo.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/cmo.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -105,7 +105,7 @@
   targetNode: modsuitmagnate
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/magnate.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/magnate.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -116,5 +116,5 @@
   targetNode: modsuithos
   category: construction-category-clothing
   description: Модсьют, созданный специально под нужды профессии.
-  icon: { sprite: Imperial/Clothing/Back/Modsuits/hos.rsi, state: icon }
+  icon: { sprite: Imperial/Modsuits/Clothing/Back/hos.rsi, state: icon }
   objectType: Item

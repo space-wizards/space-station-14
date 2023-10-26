@@ -9,8 +9,8 @@
     sprite: Clothing/Back/Modsuits/advanced.rsi
   - type: Clothing
     sprite: Clothing/Back/Modsuits/advanced.rsi
-    equipSound: /Audio/Items/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -47,9 +47,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/advanced.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/advanced.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/advanced.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/advanced.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -80,9 +80,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/engineer.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/engineer.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/engineer.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/engineer.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -110,9 +110,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/atmospheric.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/atmospheric.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/atmospheric.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/atmospheric.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -140,9 +140,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/rnd.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/rnd.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/rnd.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/rnd.rsi
   - type: Armor
     modifiers:
       coefficients: #Slowdown = 40%
@@ -173,9 +173,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/medical.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/medical.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/medical.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/medical.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -203,9 +203,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/cmo.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/cmo.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/cmo.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/cmo.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -236,9 +236,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/civillian.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/civillian.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/civillian.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/civillian.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -266,9 +266,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/magnate.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/magnate.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/magnate.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/magnate.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -299,9 +299,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/security.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/security.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/security.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/security.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -330,9 +330,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/hos.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/hos.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/hos.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/hos.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -367,9 +367,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/salvage.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/salvage.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/salvage.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/salvage.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -400,9 +400,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/miner.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/miner.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/miner.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/miner.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -430,9 +430,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/nukeops.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/nukeops.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/nukeops.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/nukeops.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -461,9 +461,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/nukeopsclown.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/nukeopsclown.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/nukeopsclown.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/nukeopsclown.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterChestplateModsuitHonkOperativeSealed
     requiredSlot: back
@@ -485,9 +485,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/nukeopscmd.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/nukeopscmd.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/nukeopscmd.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/nukeopscmd.rsi
   - type: Armor
     modifiers:
       coefficients: 
@@ -516,9 +516,9 @@
   description: Special hardsuit helmet, made for the CE of the station.
   components:
   - type: Sprite
-    sprite: Imperial/Clothing/Back/Modsuits/corporate.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/corporate.rsi
   - type: Clothing
-    sprite: Imperial/Clothing/Back/Modsuits/corporate.rsi
+    sprite: Imperial/Modsuits/Clothing/Back/corporate.rsi
     equipSound: /Audio/Items/Modsuits/ballin.ogg
     unequipSound: /Audio/Items/Modsuits/ballout.ogg
   - type: ToggleableClothing
