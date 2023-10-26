@@ -9,8 +9,7 @@
       - state: icon-0
         map: ["enum.StorageFillLayers.Fill"]
   - type: Storage
-    maxSlots: 20
-    maxItemSize: Small
+    capacity: 125
     quickInsert: true
     areaInsert: true
     storageOpenSound:
@@ -34,7 +33,7 @@
     slots: [belt]
     sprite: Objects/Specific/Janitorial/trashbag.rsi
   - type: Item
-    size: Normal
+    size: 125
 
 - type: entity
   name: trash bag
@@ -56,9 +55,7 @@
   parent: TrashBagBlue
   components:
   - type: Storage
-    maxSlots: 100
-    maxItemSize: Huge
-    maxTotalWeight: 200
+    capacity: 125000
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1000

@@ -93,13 +93,10 @@
   parent: BoxCardboard
   id: BoxMouthSwab
   components:
-  - type: Storage
-    maxSlots: 10
-    maxTotalWeight: 20
   - type: StorageFill
     contents:
       - id: DiseaseSwab
-        amount: 10
+        amount: 30
   - type: Sprite
     layers:
       - state: box

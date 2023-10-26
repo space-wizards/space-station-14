@@ -38,14 +38,13 @@
       map: ["pink-box6"]
       visible: false
   - type: Storage
-    maxSlots: 6
-    maxTotalWeight: 12
+    capacity: 6
     whitelist:
       tags:
       - Donut
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    size: Small
+    size: 6
     heldPrefix: box
   - type: StorageFill
     contents:
@@ -119,13 +118,13 @@
       map: ["box12"]
       visible: false
   - type: Storage
-    maxSlots: 12
+    capacity: 12
     whitelist:
       tags:
       - Egg
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
-    size: Small
+    size: 12
   - type: StorageFill
     contents:
     - id: FoodEgg
@@ -176,9 +175,6 @@
   id: EggBoxBroken
   suffix: Broken
   components:
-  - type: Storage
-    maxSlots: 12
-    maxItemSize: Small
   - type: StorageFill
     contents:
     - id: Eggshells
@@ -210,8 +206,7 @@
       map: ["enum.StorageVisualLayers.Door"]
   # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
-    maxSlots: 1
-    maxItemSize: Normal
+    capacity: 8
     whitelist:
       tags:
       - Pizza
@@ -301,10 +296,10 @@
       map: ["box6"]
       visible: false
   - type: Storage
-    maxSlots: 6
+    capacity: 6
   - type: Item
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
-    size: Small
+    size: 6
     heldPrefix: box
   - type: StorageFill
     contents:
@@ -338,10 +333,10 @@
     whitelist:
       tags:
       - DonkPocket
-    maxSlots: 6
+    capacity: 6
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    size: Small
+    size: 6
   - type: StorageFill
     contents:
     - id: FoodDonkpocket
@@ -463,6 +458,8 @@
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
+  - type: Storage
+    capacity: 30
   - type: Tag
     tags:
     - Trash
@@ -586,8 +583,10 @@
   suffix: Toy Unsafe, Snacks
   name: syndicate snack box
   components:
+  - type: Item
+    size: 64
   - type: Storage
-    maxSlots: 9
+    capacity: 64 # need more room for goodies
   - type: StorageFill
     contents:
     # toy

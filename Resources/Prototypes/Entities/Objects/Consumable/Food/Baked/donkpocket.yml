@@ -16,7 +16,7 @@
         - ReagentId: Nutriment
           Quantity: 3
   - type: Item
-    size: Tiny
+    size: 1
   - type: Tag
     tags:
     - DonkPocket

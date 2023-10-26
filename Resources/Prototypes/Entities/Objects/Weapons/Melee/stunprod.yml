@@ -26,7 +26,7 @@
   - type: ItemCooldown
   - type: Item
     heldPrefix: off
-    size: Large
+    size: 100
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunprod.rsi
     quickEquip: false

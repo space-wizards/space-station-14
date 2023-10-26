@@ -5,7 +5,7 @@
   description: A hermetically sealed jar containing antimatter for use in an antimatter reactor.
   components:
   - type: Item
-    size: Normal
+    size: 5
     sprite: Objects/Power/AME/ame_jar.rsi
   - type: Sprite
     sprite: Objects/Power/AME/ame_jar.rsi

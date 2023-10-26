@@ -5,7 +5,7 @@
   description: Linked together with some spare cuffs and metal.
   components:
   - type: Item
-    size: Normal
+    size: 20
   - type: Sprite
     sprite: Objects/Weapons/Throwable/bola.rsi
     state: icon
