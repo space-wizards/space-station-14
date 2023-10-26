@@ -1,4 +1,4 @@
-﻿#
+﻿﻿#
 # You can use this Desmos sheet to calculate fuel burn rate values:
 # https://www.desmos.com/calculator/qcektq5dqs
 #
@@ -96,27 +96,26 @@
   parent: PortableGeneratorBase
   id: PortableGeneratorSwitchableBase
   components:
-    - type: PowerSwitchableGenerator
-      switchSound:
-        path: /Audio/Machines/button.ogg
-    - type: NodeContainer
-      examinable: true
-      nodes:
-        output_hv:
-          !type:CableDeviceNode
-          nodeGroupID: HVPower
-        output_mv:
-          !type:CableDeviceNode
-          nodeGroupID: MVPower
-          enabled: false
-    - type: PowerMonitoringDevice
-      group: Generator
-      loadNodes:
-        - output_hv
-        - output_mv
-    - type: NavMapTrackable
-      color: Purple
-      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+  - type: PowerSwitchable
+    examineText: power-switchable-generator-examine
+    switchText: power-switchable-generator-switched
+    cables:
+    - voltage: HV
+      node: output_hv
+    - voltage: MV
+      node: output_mv
+  - type: UseDelay
+    delay: 1
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output_hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output_mv:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+        enabled: false
 
 - type: entity
   name: P.A.C.M.A.N.-type portable generator
@@ -171,6 +170,14 @@
       gasType: CarbonDioxide
       # 2 moles of gas for every sheet of plasma.
       moleRatio: 2
+    - type: PowerMonitoringDevice
+      group: Generator
+      loadNodes:
+        - output_hv
+        - output_mv
+    - type: NavMapTrackable
+      color: Purple
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
 
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
@@ -220,7 +227,15 @@
     - type: UpgradePowerSupplier
       powerSupplyMultiplier: 1.25
       scaling: Exponential
-
+    - type: PowerMonitoringDevice
+      group: Generator
+      loadNodes:
+        - output_hv
+        - output_mv
+    - type: NavMapTrackable
+      color: Purple
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+      
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
   description: |-
@@ -300,7 +315,7 @@
       loadNode: output
     - type: NavMapTrackable
       color: Purple
-      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png   
     - type: PowerSupplier
       # No ramping needed on this bugger.
       voltage: Apc

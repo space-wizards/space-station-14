@@ -28,7 +28,7 @@
       - id: BoxSurvivalSecurity
       - id: Flash
       - id: MagazinePistol
-      
+
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSecurity
@@ -291,8 +291,7 @@
         - id: RegenerativeMesh
         - id: RCD
         - id: RCDAmmo
-        - id: RCDAmmo
-        - id: RCDAmmo
+          amount: 2
         - id: CableMVStack
         - id: CableHVStack
 
