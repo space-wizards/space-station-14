@@ -14,7 +14,7 @@
     sprite: Objects/Fun/Instruments/trumpet.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: 24
     sprite: Objects/Fun/Instruments/trumpet.rsi
   - type: Tag
     tags:
@@ -32,7 +32,7 @@
     sprite: Objects/Fun/Instruments/trombone.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: 48
     sprite: Objects/Fun/Instruments/trombone.rsi
   - type: Tag
     tags:
@@ -50,7 +50,7 @@
     sprite: Objects/Fun/Instruments/frenchhorn.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: 48
     sprite: Objects/Fun/Instruments/frenchhorn.rsi
   - type: Tag
     tags:
@@ -69,7 +69,7 @@
     sprite: Objects/Fun/Instruments/euphonium.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: 48
     sprite: Objects/Fun/Instruments/euphonium.rsi
   - type: Tag
     tags:

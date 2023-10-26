@@ -13,9 +13,9 @@
       slots:
         - belt
     - type: Item
-      size: Huge
+      size: 151
     - type: Storage
-      maxSlots: 15
+      capacity: 150
       quickInsert: true
       areaInsert: true
       whitelist:

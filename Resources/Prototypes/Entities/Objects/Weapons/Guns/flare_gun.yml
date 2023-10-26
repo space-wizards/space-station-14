@@ -10,7 +10,7 @@
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: Small
+    size: 10
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
   - type: Gun
     fireRate: 8

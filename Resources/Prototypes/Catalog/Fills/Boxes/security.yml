@@ -49,12 +49,6 @@
   id: BoxZiptie
   description: A box full of zipties.
   components:
-  - type: Storage
-    maxSlots: 10
-    maxTotalWeight: 20
-    whitelist:
-      components:
-      - Handcuff
   - type: StorageFill
     contents:
       - id: Zipties
@@ -70,9 +64,6 @@
   id: BoxForensicPad
   description: A box of forensic pads.
   components:
-  - type: Storage
-    maxSlots: 10
-    maxTotalWeight: 20
   - type: StorageFill
     contents:
       - id: ForensicPad

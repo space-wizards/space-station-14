@@ -16,7 +16,7 @@
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Item
-    size: Normal
+    size: 24
   - type: StaticPrice
     price: 200
 

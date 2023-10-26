@@ -7,7 +7,7 @@
     - type: Transform
       noRot: true
     - type: Item
-      size: Normal
+      size: 25
     - type: Sprite
       sprite: Structures/Furniture/rollerbeds.rsi
       noRot: true

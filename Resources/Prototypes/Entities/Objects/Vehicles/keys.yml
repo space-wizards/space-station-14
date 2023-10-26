@@ -5,7 +5,7 @@
   description: Interesting design.
   components:
   - type: Item
-    size: Tiny
+    size: 2
   - type: Tag
     tags:
     - VehicleKey

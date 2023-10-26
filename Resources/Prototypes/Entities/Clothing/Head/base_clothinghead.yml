@@ -8,8 +8,6 @@
     - HEAD
   - type: Sprite
     state: icon
-  - type: Item
-    size: Small
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -119,7 +117,7 @@
   name: base space helmet
   components:
   - type: Item
-    size: Small
+    size: 10
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000

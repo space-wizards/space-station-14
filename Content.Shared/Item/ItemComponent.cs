@@ -13,17 +13,18 @@ namespace Content.Shared.Item;
 [Access(typeof(SharedItemSystem))]
 public sealed partial class ItemComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(SharedItemSystem))]
-    public ItemSize Size = ItemSize.Small;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("size")]
+    [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
+    public int Size = 5;
 
     [Access(typeof(SharedItemSystem))]
-    [DataField]
+    [DataField("inhandVisuals")]
     public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
     [Access(typeof(SharedItemSystem))]
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
+    [DataField("heldPrefix")]
     public string? HeldPrefix;
 
     /// <summary>
@@ -38,10 +39,10 @@ public sealed partial class ItemComponent : Component
 [Serializable, NetSerializable]
 public sealed class ItemComponentState : ComponentState
 {
-    public ItemSize Size { get; }
+    public int Size { get; }
     public string? HeldPrefix { get; }
 
-    public ItemComponentState(ItemSize size, string? heldPrefix)
+    public ItemComponentState(int size, string? heldPrefix)
     {
         Size = size;
         HeldPrefix = heldPrefix;
@@ -63,43 +64,6 @@ public sealed class VisualsChangedEvent : EntityEventArgs
         Item = item;
         ContainerId = containerId;
     }
-}
-
-/// <summary>
-/// Abstracted sizes for items.
-/// Used to determine what can fit into inventories.
-/// </summary>
-public enum ItemSize
-{
-    /// <summary>
-    /// Items that can be held completely in one's hand.
-    /// </summary>
-    Tiny = 1,
-
-    /// <summary>
-    /// Items that can fit inside of a standard pocket.
-    /// </summary>
-    Small = 2,
-
-    /// <summary>
-    /// Items that can fit inside of a standard bag.
-    /// </summary>
-    Normal = 3,
-
-    /// <summary>
-    /// Items that are too large to fit inside of standard bags, but can worn in exterior slots or placed in custom containers.
-    /// </summary>
-    Large = 4,
-
-    /// <summary>
-    /// Items that are too large to place inside of any kind of container.
-    /// </summary>
-    Huge = 5,
-
-    /// <summary>
-    /// Picture furry gf
-    /// </summary>
-    Ginormous = 6
 }
 
 /// <summary>

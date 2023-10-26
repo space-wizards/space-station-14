@@ -18,7 +18,7 @@
       types:
         Blunt: 8
   - type: Item
-    size: Normal
+    size: 80
   - type: Tool
     qualities:
     - Rolling

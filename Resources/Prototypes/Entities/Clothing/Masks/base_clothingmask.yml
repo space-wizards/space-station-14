@@ -5,8 +5,6 @@
   components:
   - type: Sprite
     state: icon
-  - type: Item
-    size: Small
   - type: Clothing
     slots: [mask]
 

@@ -16,7 +16,7 @@
       state: fill-1
       visible: false
   - type: Item
-    size: Normal
+    size: 100
   - type: Clothing
     sprite: Objects/Tools/bucket.rsi
     slots:
