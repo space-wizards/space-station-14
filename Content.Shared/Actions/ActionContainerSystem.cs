@@ -41,6 +41,9 @@ public sealed class ActionContainerSystem : EntitySystem
 
         mindComp.MindActionsContainer ??= EnsureComp<ActionsContainerComponent>(mindId);
 
+        var mindEnt = mindComp.OwnedEntity; // against this
+        var originalEnt = mindComp.OriginalOwnedEntity; // compare this
+
         if (!HasComp<GhostComponent>(uid))
         {
             if (ShouldTransferAllActions(uid, component))
