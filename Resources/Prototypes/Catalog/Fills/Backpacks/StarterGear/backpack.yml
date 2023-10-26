@@ -240,7 +240,7 @@
         - id: WeaponDisabler
         - id: MedicatedSuture
         - id: RegenerativeMesh
-        - id: BoxHandcuff
+        - id: BoxZiptie
         - id: CrowbarRed
         - id: MagazinePistol
 
@@ -255,7 +255,7 @@
         - id: WeaponDisabler
         - id: MedicatedSuture
         - id: RegenerativeMesh
-        - id: BoxHandcuff
+        - id: BoxZiptie
         - id: CrowbarRed
         - id: MagazinePistol
 
