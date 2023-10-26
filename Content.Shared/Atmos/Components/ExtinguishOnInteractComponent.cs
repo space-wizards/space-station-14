@@ -1,11 +1,10 @@
-using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Atmos.Components;
+namespace Content.Shared.Atmos.Components;
 /// <summary>
 /// Allows you to extinguish an object by interacting with it
 /// </summary>
-[RegisterComponent, Access(typeof(FlammableSystem))]
+[RegisterComponent]
 public sealed partial class ExtinguishOnInteractComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
