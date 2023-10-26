@@ -1,10 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: 'Paper stamps have been heavily tweaked with new looks, now each paper
-      will lay out the stamps slightly differently and with an overlap.', type: Tweak}
-  id: 4563
-  time: '2023-08-13T18:28:10.0000000+00:00'
 - author: PixelTheKermit
   changes:
   - {message: Arachnid zombies no longer get functional hands., type: Fix}
@@ -2895,3 +2889,9 @@ Entries:
   - {message: Fixed not being to create pills at the ChemMaster 5000., type: Fix}
   id: 5062
   time: '2023-10-26T02:47:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Reverted storage to function with numerical values again, instead of
+      slots and sizes.', type: Tweak}
+  id: 5063
+  time: '2023-10-26T08:28:16.776154+00:00'
