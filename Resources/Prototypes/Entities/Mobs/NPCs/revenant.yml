@@ -41,7 +41,7 @@
   - type: NoSlip
   - type: Actions
   - type: TTS # Corvax-TTS
-    voice: Kelthuzad
+    voice: twitch
   - type: Eye
     drawFov: false
     visMask:
