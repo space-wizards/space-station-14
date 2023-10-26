@@ -75,6 +75,8 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<StorageComponent, StorageInteractWithItemEvent>(OnInteractWithItem);
+
+        // TODO close UI when inserted into another storage component.
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -343,6 +345,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     private void OnInteractWithItem(EntityUid uid, StorageComponent storageComp, StorageInteractWithItemEvent args)
     {
+        // TODO Disable interaction when nested.
         if (args.Session.AttachedEntity is not { } player)
             return;
 
