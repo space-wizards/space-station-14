@@ -20,7 +20,7 @@
     tags:
     - Cartridge
   - type: Item
-    size: Tiny
+    size: 1
   - type: SpaceGarbage
   - type: EmitSoundOnLand
     sound:

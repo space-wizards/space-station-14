@@ -4,10 +4,9 @@
   abstract: true
   components:
   - type: Storage
-    maxSlots: 7
-    maxTotalWeight: 14
+    capacity: 10
   - type: Item
-    size: Small
+    size: 10
 
 - type: entity
   name: match stick
@@ -27,7 +26,7 @@
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: unlit
-    size: Tiny
+    size: 1
   - type: Matchstick
     duration: 10
     igniteSound:
@@ -81,10 +80,9 @@
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
-    size: Small
+    size: 5
   - type: Storage
-    maxSlots: 5
-    maxTotalWeight: 5
+    capacity: 5
   - type: StorageFill
     contents:
       - id: Matchstick

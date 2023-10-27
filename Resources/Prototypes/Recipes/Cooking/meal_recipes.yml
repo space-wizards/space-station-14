@@ -218,7 +218,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBurgerMcrib
-  name: McRib recipe
+  name: BBQ rib sandwich recipe
   result: FoodBurgerMcrib
   time: 10
   solids:

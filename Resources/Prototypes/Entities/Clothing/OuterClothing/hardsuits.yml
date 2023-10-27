@@ -350,7 +350,7 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: Item
-    size: Normal
+    size: 50
   - type: Tag
     tags:
     - WhitelistChameleon

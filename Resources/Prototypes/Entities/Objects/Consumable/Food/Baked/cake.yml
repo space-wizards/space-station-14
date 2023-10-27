@@ -21,7 +21,7 @@
         - ReagentId: Vitamin
           Quantity: 5
   - type: Item
-    size: Normal
+    size: 25
 
 - type: entity
   parent: FoodCakeBase
@@ -43,7 +43,7 @@
         - ReagentId: Vitamin
           Quantity: 1
   - type: Item
-    size: Tiny
+    size: 5
 
 # Custom Cake Example
 
@@ -574,7 +574,7 @@
   - type: Food
     transferAmount: 12
   - type: Item
-    size: Normal
+    size: 40
   - type: PointLight
     color: "#FFFF00"
     radius: 2

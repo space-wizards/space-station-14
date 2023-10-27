@@ -5,7 +5,7 @@
   description: A plastic bag designed for the storage and transportation of cadavers.
   components:
   - type: Item
-    size: Small
+    size: 6
   - type: Sprite
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi

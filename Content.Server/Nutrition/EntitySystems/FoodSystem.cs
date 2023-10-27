@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Inventory;
@@ -123,7 +122,7 @@ public sealed class FoodSystem : EntitySystem
             return (false, false);
 
         // Check for used storage on the food item
-        if (TryComp<StorageComponent>(food, out var storageState) && storageState.Container.ContainedEntities.Any())
+        if (TryComp<StorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
         {
             _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
             return (false, true);
