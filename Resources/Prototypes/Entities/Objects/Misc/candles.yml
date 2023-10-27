@@ -18,7 +18,7 @@
         Flammable: [ Touch ]
         Extinguish: [ Touch ]
     - type: ExtinguishOnInteract
-      extinguishSound: 
+      extinguishFailed: 
         path: /Audio/Items/candle_blowing.ogg
         params:
           variation: 0.05
