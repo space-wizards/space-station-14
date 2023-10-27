@@ -347,3 +347,6 @@ uplink-syndicate-pai-desc = A Syndicate variant of the pAI with access to the Sy
 
 uplink-bribe-name = Lobbying Bundle
 uplink-bribe-desc = A heartfelt gift that can help you sway someone's opinion. Real or counterfeit? Yes.
+
+uplink-centcom-costume-bundle-name = Official Centcom Costume
+uplink-centcom-costume-bundle-desc = Do you seriously want to test a nuclear bomb at this station?
