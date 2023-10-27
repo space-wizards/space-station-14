@@ -405,6 +405,15 @@ namespace Content.Client.Options.UI.Tabs
                 CanRepeat = false
             };
 
+            // Remove existing binding if found.
+            if (_inputManager.TryGetBindings(registration, out var bindings))
+            {
+                foreach (var bind in bindings)
+                {
+                    _inputManager.RemoveBinding(bind);
+                }
+            }
+
             _inputManager.RegisterBinding(registration);
             // OnKeyBindModified will cause _currentlyRebinding to be reset and the UI to update.
             _inputManager.SaveToUserData();
