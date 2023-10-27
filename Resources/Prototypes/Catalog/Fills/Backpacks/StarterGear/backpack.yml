@@ -236,7 +236,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalEngineering
         - id: WeaponDisabler
         - id: MedicatedSuture
         - id: RegenerativeMesh
@@ -251,7 +251,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalEngineering
         - id: WeaponDisabler
         - id: MedicatedSuture
         - id: RegenerativeMesh
@@ -282,7 +282,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalEngineering
         - id: trayScanner
         - id: RCD
         - id: RCDAmmo
@@ -302,7 +302,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalEngineering
         - id: LightReplacer
         - id: BoxLightMixed
         - id: BoxLightMixed
@@ -321,7 +321,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalEngineering
         - id: WeaponPulseRifle
         - id: WeaponPulsePistol
         - id: WeaponRevolverMateba
