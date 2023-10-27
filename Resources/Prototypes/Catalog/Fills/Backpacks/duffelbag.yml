@@ -21,6 +21,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: BoxSurvivalEngineering
       - id: WeaponShotgunDoubleBarreled
       - id: BoxShotgunIncendiary
         amount: 2
