@@ -213,7 +213,7 @@ namespace Content.Server.GameTicking
 					_chatSystem.DispatchStationAnnouncement(station, 
 						msg, 
 						Loc.GetString("latejoin-arrival-sender"),
-						playDefaultSound: false, highlight: true);
+						playDefaultSound: false, highlight: true, doEscapeText: false);
 				}
 				else
 				{

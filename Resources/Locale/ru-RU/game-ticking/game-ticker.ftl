@@ -41,7 +41,7 @@ latejoin-arrival-announcement =
     } на станцию!
 latejoin-arrival-sender = Системы Оповещений
 latejoin-arrival-announcement-captain =
-    Все на борт! { $job } { $character } { $gender ->
+    Внимание всем! { $job } { $character } { $gender ->
         [male] прибыл
         [female] прибыла
         [epicene] прибыли
