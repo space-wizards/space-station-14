@@ -14,7 +14,7 @@
       department: Cargo
       time: 216000 # 60 hrs
   startingGear: SeniorCollecterGear
-  icon: "SeniorCollecter"
+  icon: "JobIconSeniorCollecter"
   supervisors: job-supervisors-qm
   access:
   - Cargo

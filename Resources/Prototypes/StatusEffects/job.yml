@@ -356,6 +356,13 @@
 
 - type: statusIcon
   parent: JobIcon
+  id: JobIconSeniorCollecter
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: SeniorCollecter
+
+- type: statusIcon
+  parent: JobIcon
   id: JobIconSeniorEngineer
   icon:
     sprite: Interface/Misc/job_icons.rsi
