@@ -51,8 +51,8 @@ public sealed partial class CloningPodComponent : Component
     /// <summary>
     /// The machine part that affects cloning speed
     /// </summary>
-    [DataField("machinePartCloningSpeed", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartCloningSpeed = "Manipulator";
+    [DataField("machinePartCloningSpeed"), ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<MachinePartPrototype> MachinePartCloningSpeed = "Manipulator";
 
     /// <summary>
     /// The current amount of time it takes to clone a body
@@ -98,8 +98,8 @@ public sealed partial class CloningPodComponent : Component
     /// <summary>
     /// The machine part that decreases the amount of material needed for cloning
     /// </summary>
-    [DataField("machinePartMaterialUse", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartMaterialUse = "MatterBin";
+    [DataField("machinePartMaterialUse"), ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<MachinePartPrototype> MachinePartMaterialUse = "MatterBin";
 
     [ViewVariables(VVAccess.ReadWrite)]
     public CloningPodStatus Status;
