@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Imperial/Structures/Machines/modsuit_fabricator.rsi
+    sprite: Imperial/Modsuits/modsuit_fabricator.rsi
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
