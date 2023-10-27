@@ -55,6 +55,8 @@
   - type: OreVein
     oreChance: 0.2
     oreRarityPrototypeId: RandomOreDistributionStandard
+  - type: RadiationBlocker
+    resistance: 2
 
 - type: entity
   id: AsteroidRockMining
@@ -196,6 +198,8 @@
           state: rock_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
+    - type: RadiationBlocker
+      resistance: 2
 
 # Ore veins
 - type: entity
