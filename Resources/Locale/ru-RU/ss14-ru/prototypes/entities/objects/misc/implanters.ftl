@@ -45,4 +45,7 @@ ent-DeathRattleImplanter = { ent-Implanter }
 ent-MindShieldImplanter = { ent-Implanter }
     .desc = { ent-BaseImplantOnlyImplanterSyndi.desc }
     .suffix = Защита сознания
+ent-ImplanterAdmeme = { ent-Implanter }
+    .desc = { ent-Implanter.desc }
+    .suffix = Адмем
 

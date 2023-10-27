@@ -2,17 +2,17 @@
 - type: dataset
   id: names_borg
   values:
-  - Bob
-  - Joe
-  - Beep
-  - Beep II
-  - Boombox
-  - Tour Guide-otron
-  - Taffy
-  - Boop
-  - Boop II
-  - Buzz
-  - Buzz II
-  - Toaster
-  - Head of Robots
-  - EVA 1
+  - Бобот
+  - Бипски
+  - Блитц
+  - Электрон
+  - Кланк
+  - Вольтрон
+  - Оптимус
+  - Титан
+  - ДОС
+  - Матрикс
+  - Омега-0
+  - Тостер
+  - V-1
+  - ЕВА 1

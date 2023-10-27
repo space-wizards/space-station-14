@@ -35,3 +35,5 @@ trait-felinid-name = Фелинид
 trait-felinid-desc = Ваше ДНК модифицировано, чтобы иметь сходство с семейством кошачьих.
 trait-frontal-lisp-name = Шепелявость
 trait-frontal-lisp-desc = Вы фепеляфите.
+trait-socialanxiety-name = Социальная неловкость
+trait-socialanxiety-desc = Вы очень стеснительны и часто запинаетесь.
