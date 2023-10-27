@@ -250,6 +250,9 @@ uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added
 uplink-hardsuit-syndie-name = Syndicate Hardsuit
 uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
 
+uplink-hardsuit-syndie-elite-name = Elite Syndicate Hardsuit
+uplink-hardsuit-syndie-elite-desc = An upgraded blood-red hardsuit with improved fireproofing and explosion protection
+
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that prevent slipping and, in zero gravity, allow you to move normally, at the cost of a slight slowdown. Additionally, they have jetpack functionality and come fueled, but don't last for long.
 

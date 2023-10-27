@@ -1063,6 +1063,22 @@
   - UplinkArmor
 
 - type: listing
+  id: UplinkHardsuitSyndieElite
+  name: uplink-hardsuit-syndie-elite-name
+  description: uplink-hardsuit-syndie-elite-desc
+  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndieelite.rsi, state: icon }
+  productEntity: ClothingOuterHardsuitSyndieElite
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkArmor
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
   id: UplinkClothingShoesBootsMagSyndie
   name: uplink-clothing-shoes-boots-mag-syndie-name
   description: uplink-clothing-shoes-boots-mag-syndie-desc
