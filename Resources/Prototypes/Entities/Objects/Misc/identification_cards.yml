@@ -711,15 +711,15 @@
 
 - type: entity
   parent: IDCardStandard
-  id: SeniorCollecterIDCard
-  name: senior collecter ID card
+  id: SeniorCollectorIDCard
+  name: senior collector ID card
   components:
   - type: Sprite
     layers:
     - state: default
-    - state: idseniorcollecter
+    - state: idseniorcollector
   - type: PresetIdCard
-    job: SeniorCollecter
+    job: SeniorCollector
 
 - type: entity
   parent: IDCardStandard

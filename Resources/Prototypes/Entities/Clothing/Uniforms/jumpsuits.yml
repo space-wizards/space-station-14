@@ -1221,14 +1221,14 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitSeniorCollecter
-  name: senior collecter jumpsuit
+  id: ClothingUniformJumpsuitSeniorCollector
+  name: senior collector jumpsuit
   description: A sign of skill and prestige within the supply department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/senior_collecter.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/senior_collector.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/senior_collecter.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/senior_collector.rsi
 
 - type: entity
   parent: ClothingUniformBase

@@ -356,10 +356,10 @@
 
 - type: statusIcon
   parent: JobIcon
-  id: JobIconSeniorCollecter
+  id: JobIconSeniorCollector
   icon:
     sprite: Interface/Misc/job_icons.rsi
-    state: SeniorCollecter
+    state: SeniorCollector
 
 - type: statusIcon
   parent: JobIcon

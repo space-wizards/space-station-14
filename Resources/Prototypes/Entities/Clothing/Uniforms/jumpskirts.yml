@@ -752,14 +752,14 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
-  id: ClothingUniformJumpskirtSeniorCollecter
-  name: senior collecter jumpskirt
+  id: ClothingUniformJumpskirtSeniorCollector
+  name: senior collector jumpskirt
   description: A sign of skill and prestige within the supply department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/senior_collecter.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/senior_collector.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/senior_collecter.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/senior_collector.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
