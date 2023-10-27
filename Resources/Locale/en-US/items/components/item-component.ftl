@@ -13,4 +13,4 @@ item-component-size-Small = small
 item-component-size-Normal = normal
 item-component-size-Large = large
 item-component-size-Huge = huge
-item-component-size-Ginormous = bulky
+item-component-size-Ginormous = ginormous

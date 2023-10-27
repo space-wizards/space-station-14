@@ -39,7 +39,6 @@
       visible: false
   - type: Storage
     maxSlots: 6
-    maxTotalWeight: 12
     whitelist:
       tags:
       - Donut
@@ -176,9 +175,6 @@
   id: EggBoxBroken
   suffix: Broken
   components:
-  - type: Storage
-    maxSlots: 12
-    maxItemSize: Small
   - type: StorageFill
     contents:
     - id: Eggshells
@@ -335,10 +331,10 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     state: box
   - type: Storage
+    maxTotalWeight: 12
     whitelist:
       tags:
       - DonkPocket
-    maxSlots: 6
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     size: Small

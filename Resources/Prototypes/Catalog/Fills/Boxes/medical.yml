@@ -94,7 +94,6 @@
   id: BoxMouthSwab
   components:
   - type: Storage
-    maxSlots: 10
     maxTotalWeight: 20
   - type: StorageFill
     contents:

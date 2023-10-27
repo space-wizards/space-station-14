@@ -37,7 +37,7 @@ namespace Content.IntegrationTests.Tests
                         !proto.TryGetComponent<ItemComponent>("Item", out var item))
                         continue;
 
-                    Assert.That(storage.MaxItemSize.Value, Is.LessThan(item.Size), $"Found storage arbitrage on {proto.ID}");
+                    Assert.That(storage.MaxItemSize.Value, Is.LessThanOrEqualTo(item.Size), $"Found storage arbitrage on {proto.ID}");
                 }
             });
             await pair.CleanReturnAsync();
@@ -96,19 +96,21 @@ namespace Content.IntegrationTests.Tests
 
                     proto.TryGetComponent<ItemComponent>("Item", out var item);
 
+                    var fill = (StorageFillComponent) proto.Components[id].Component;
+                    var size = GetFillSize(fill, false, protoMan);
                     var maxSize = storage.MaxItemSize ??
                                   (item?.Size == null
                                       ? SharedStorageSystem.DefaultStorageMaxItemSize
                                       : (ItemSize) Math.Max(0, (int) item.Size - 1));
-
-                    var capacity = storage.MaxTotalWeight ??
-                                   storage.MaxSlots * SharedItemSystem.GetItemSizeWeight(storage.MaxItemSize ?? maxSize);
-
-                    var fill = (StorageFillComponent) proto.Components[id].Component;
-                    var size = GetFillSize(fill, false, protoMan);
-
-                    Assert.That(size, Is.LessThanOrEqualTo(capacity), $"{proto.ID} storage fill is too large.");
-                    Assert.That(GetFillSize(fill, true, protoMan), Is.LessThanOrEqualTo(storage.MaxSlots), $"{proto.ID} storage fill has too many items.");
+                    if (storage.MaxSlots != null)
+                    {
+                        Assert.That(GetFillSize(fill, true, protoMan), Is.LessThanOrEqualTo(storage.MaxSlots),
+                            $"{proto.ID} storage fill has too many items.");
+                    }
+                    else
+                    {
+                        Assert.That(size, Is.LessThanOrEqualTo(storage.MaxTotalWeight), $"{proto.ID} storage fill is too large.");
+                    }
 
                     foreach (var entry in fill.Contents)
                     {

@@ -344,20 +344,17 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
-            if (!TryComp(container, out StorageComponent? storage) || storage.Container == null)
+            if (!TryComp(container, out StorageComponent? storage))
                 return null;
 
-            var pills = storage.Container?.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
+            var pills = storage.Container.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
             {
                 _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out var solution);
                 var quantity = solution?.Volume ?? FixedPoint2.Zero;
                 return (Name(pill), quantity);
             })).ToList();
 
-            if (pills == null)
-                return null;
-
-            return new ContainerInfo(name, storage.Container!.ContainedEntities.Count, storage.MaxSlots)
+            return new ContainerInfo(name, _storageSystem.GetCumulativeItemSizes(container.Value, storage), storage.MaxTotalWeight)
             {
                 Entities = pills
             };

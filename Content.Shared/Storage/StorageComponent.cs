@@ -23,10 +23,11 @@ namespace Content.Shared.Storage
         public Container Container = default!;
 
         /// <summary>
-        /// The max number of entities that can be inserted into this storage.
+        /// A limit for the cumulative ItemSize weights that can be inserted in this storage.
+        /// If MaxSlots is not null, then this is ignored.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int MaxSlots = 7;
+        public int MaxTotalWeight;
 
         /// <summary>
         /// The maximum size item that can be inserted into this storage,
@@ -36,10 +37,10 @@ namespace Content.Shared.Storage
         public ItemSize? MaxItemSize;
 
         /// <summary>
-        /// A limit for the cumulative ItemSizes that can be inserted in this storage.
+        /// The max number of entities that can be inserted into this storage.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int? MaxTotalWeight;
+        public int? MaxSlots;
 
         // TODO: Make area insert its own component.
         [DataField("quickInsert")]

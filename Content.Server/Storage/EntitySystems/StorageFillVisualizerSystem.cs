@@ -41,7 +41,13 @@ public sealed class StorageFillVisualizerSystem : EntitySystem
         if (component.MaxFillLevels < 1)
             return;
 
-        var level = ContentHelpers.RoundToEqualLevels(storage.Container.ContainedEntities.Count, storage.MaxSlots, component.MaxFillLevels);
+        if (!_appearance.TryGetData<int>(uid, StorageVisuals.StorageUsed, out var used, appearance))
+            return;
+
+        if (!_appearance.TryGetData<int>(uid, StorageVisuals.Capacity, out var capacity, appearance))
+            return;
+
+        var level = ContentHelpers.RoundToEqualLevels(used, capacity, component.MaxFillLevels);
         _appearance.SetData(uid, StorageFillVisuals.FillLevel, level, appearance);
     }
 }

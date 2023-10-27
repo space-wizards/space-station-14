@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
@@ -398,10 +400,16 @@ public abstract class SharedStorageSystem : EntitySystem
 
     public void RecalculateStorageUsed(EntityUid uid, StorageComponent storageComp)
     {
-        // it might make more sense to use the weights instead of the slots.
-        // I'm not sure.
-        _appearance.SetData(uid, StorageVisuals.StorageUsed, storageComp.Container.ContainedEntities.Count);
-        _appearance.SetData(uid, StorageVisuals.Capacity, storageComp.MaxSlots);
+        if (storageComp.MaxSlots == null)
+        {
+            _appearance.SetData(uid, StorageVisuals.StorageUsed, GetCumulativeItemSizes(uid, storageComp));
+            _appearance.SetData(uid, StorageVisuals.Capacity, storageComp.MaxTotalWeight);
+        }
+        else
+        {
+            _appearance.SetData(uid, StorageVisuals.StorageUsed, storageComp.Container.ContainedEntities.Count);
+            _appearance.SetData(uid, StorageVisuals.Capacity, storageComp.MaxSlots.Value);
+        }
     }
 
     /// <summary>
@@ -471,13 +479,22 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (storageComp.Container.ContainedEntities.Count >= storageComp.MaxSlots)
+        if (TryComp<StorageComponent>(insertEnt, out var insertStorage)
+            && GetMaxItemSize((insertEnt, insertStorage)) >= GetMaxItemSize((uid, storageComp)))
         {
-            reason = "comp-storage-insufficient-capacity";
+            reason = "comp-storage-too-big";
             return false;
         }
 
-        if (SharedItemSystem.GetItemSizeWeight(item.Size) + GetCumulativeItemSizes(uid, storageComp) > GetMaxTotalWeight((uid, storageComp)))
+        if (storageComp.MaxSlots != null)
+        {
+            if (storageComp.Container.ContainedEntities.Count >= storageComp.MaxSlots)
+            {
+                reason = "comp-storage-insufficient-capacity";
+                return false;
+            }
+        }
+        else if (SharedItemSystem.GetItemSizeWeight(item.Size) + GetCumulativeItemSizes(uid, storageComp) > storageComp.MaxTotalWeight)
         {
             reason = "comp-storage-insufficient-capacity";
             return false;
@@ -491,11 +508,34 @@ public abstract class SharedStorageSystem : EntitySystem
     ///     Inserts into the storage container
     /// </summary>
     /// <returns>true if the entity was inserted, false otherwise</returns>
-    public bool Insert(EntityUid uid, EntityUid insertEnt, out EntityUid? stackedEntity, EntityUid? user = null, StorageComponent? storageComp = null, bool playSound = true)
+    public bool Insert(
+        EntityUid uid,
+        EntityUid insertEnt,
+        out EntityUid? stackedEntity,
+        EntityUid? user = null,
+        StorageComponent? storageComp = null,
+        bool playSound = true)
+    {
+        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: storageComp, playSound: playSound);
+    }
+
+    /// <summary>
+    ///     Inserts into the storage container
+    /// </summary>
+    /// <returns>true if the entity was inserted, false otherwise</returns>
+    public bool Insert(
+        EntityUid uid,
+        EntityUid insertEnt,
+        out EntityUid? stackedEntity,
+        out string? reason,
+        EntityUid? user = null,
+        StorageComponent? storageComp = null,
+        bool playSound = true)
     {
         stackedEntity = null;
+        reason = null;
 
-        if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp))
+        if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out reason, storageComp))
             return false;
 
         /*
@@ -614,8 +654,14 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(uid, ref uid.Comp))
             return false;
 
-        return uid.Comp.Container.ContainedEntities.Count < uid.Comp.MaxSlots &&
-               GetCumulativeItemSizes(uid, uid.Comp) < GetMaxTotalWeight(uid);
+        //todo maybe this shouldn't be authoritative over weight? idk.
+        if (uid.Comp.MaxSlots != null)
+        {
+            return uid.Comp.Container.ContainedEntities.Count < uid.Comp.MaxSlots;
+
+        }
+
+        return GetCumulativeItemSizes(uid, uid.Comp) < uid.Comp.MaxTotalWeight;
     }
 
     /// <summary>
@@ -654,15 +700,15 @@ public abstract class SharedStorageSystem : EntitySystem
         return (ItemSize) Math.Max((int) item.Size - 1, 1);
     }
 
-    public int GetMaxTotalWeight(Entity<StorageComponent?> uid)
+    public FixedPoint2 GetStorageFillPercentage(Entity<StorageComponent?> uid)
     {
         if (!Resolve(uid, ref uid.Comp))
             return 0;
 
-        if (uid.Comp.MaxTotalWeight != null)
-            return uid.Comp.MaxTotalWeight.Value;
+        var slotPercent = FixedPoint2.New(uid.Comp.Container.ContainedEntities.Count) / uid.Comp.MaxSlots ?? FixedPoint2.Zero;
+        var weightPercent = FixedPoint2.New(GetCumulativeItemSizes(uid)) / uid.Comp.MaxTotalWeight;
 
-        return uid.Comp.MaxSlots * SharedItemSystem.GetItemSizeWeight(GetMaxItemSize(uid));
+        return FixedPoint2.Max(slotPercent, weightPercent);
     }
 
     /// <summary>

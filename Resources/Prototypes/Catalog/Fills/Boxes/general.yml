@@ -37,7 +37,6 @@
       - state: box
       - state: light
   - type: Storage
-    maxSlots: 12
     maxTotalWeight: 24
     whitelist:
       components:
@@ -61,7 +60,6 @@
       - state: box
       - state: lighttube
   - type: Storage
-    maxSlots: 12
     maxTotalWeight: 24
     whitelist:
       components:
@@ -87,7 +85,6 @@
       - state: box
       - state: lightmixed
   - type: Storage
-    maxSlots: 12
     maxTotalWeight: 24
     whitelist:
       components:
@@ -110,10 +107,6 @@
     layers:
       - state: box
       - state: pda
-  - type: Storage
-    whitelist:
-      components:
-      - Pda
 
 - type: entity
   name: ID card box
@@ -129,10 +122,6 @@
     layers:
       - state: box
       - state: pda
-  - type: Storage
-    whitelist:
-      components:
-      - IdCard
 
 - type: entity
   name: headset box
@@ -148,10 +137,6 @@
     layers:
       - state: box
       - state: headset
-  - type: Storage
-    whitelist:
-      components:
-      - Headset
 
 - type: entity
   name: meson box
@@ -191,7 +176,6 @@
   id: BoxHugHealing
   description: A special box for sensitive people.
   components:
-  - type: Storage
   - type: Sprite
     layers:
       - state: box_hug
@@ -272,6 +256,7 @@
       - id: TrashBag
         amount: 6
   - type: Storage
+    maxTotalWeight: 24
     maxItemSize: Normal
     whitelist:
       tags:
@@ -412,7 +397,6 @@
       - id: HandheldGPSBasic
         amount: 6
   - type: Storage
-    maxSlots: 12
     maxTotalWeight: 24
   - type: Sprite
     layers:
@@ -450,7 +434,6 @@
       - id: DartYellow
         amount: 3
   - type: Storage
-    maxSlots: 12
     maxTotalWeight: 24
   - type: Sprite
     layers:

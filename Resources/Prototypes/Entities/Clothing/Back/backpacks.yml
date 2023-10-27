@@ -8,13 +8,13 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
   - type: Item
-    size: Huge
+    size: Large
   - type: Clothing
     quickEquip: false
     slots:
     - back
   - type: Storage
-    maxSlots: 7
+    maxItemSize: Large
     maxTotalWeight: 28
   - type: ContainerContainer
     containers:
@@ -197,7 +197,6 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
-    maxSlots: 10
     maxTotalWeight: 40
 
 - type: entity
@@ -264,7 +263,6 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxSlots: 14
     maxItemSize: Large
     maxTotalWeight: 56 #14 normal-sized items.
 

@@ -42,6 +42,7 @@
   components:
   - type: Storage
     maxSlots: 1
+    maxItemSize: Normal
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

@@ -66,9 +66,8 @@ namespace Content.Client.Storage.UI
             {
                 VerticalAlignment = VAlignment.Center
             };
-            _information.SetMessage(Loc.GetString("comp-storage-window-volume",
-                ("itemCount", 0),
-                ("maxCount", 0),
+            _information.SetMessage(Loc.GetString("comp-storage-window-weight",
+                ("percent", 0),
                 ("size", SharedItemSystem.GetItemSizeLocale(ItemSize.Normal))));
 
             vBox.AddChild(_information);
@@ -111,15 +110,16 @@ namespace Content.Client.Storage.UI
 
         private void SetStorageInformation(Entity<StorageComponent> uid)
         {
-            if (uid.Comp.MaxSlots != uid.Comp.Container.ContainedEntities.Count
-                && _storage.GetCumulativeItemSizes(uid, uid.Comp) == _storage.GetMaxTotalWeight((uid, uid.Comp)))
+            //todo: text is the straight agenda. What about anything else?
+            if (uid.Comp.MaxSlots == null)
             {
-                _information.SetMarkup(Loc.GetString("comp-storage-window-volume-full",
+                _information.SetMarkup(Loc.GetString("comp-storage-window-weight",
+                    ("percent", _storage.GetStorageFillPercentage((uid, uid.Comp)) * 100),
                     ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
             }
             else
             {
-                _information.SetMarkup(Loc.GetString("comp-storage-window-volume",
+                _information.SetMarkup(Loc.GetString("comp-storage-window-slots",
                     ("itemCount", uid.Comp.Container.ContainedEntities.Count),
                     ("maxCount", uid.Comp.MaxSlots),
                     ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
