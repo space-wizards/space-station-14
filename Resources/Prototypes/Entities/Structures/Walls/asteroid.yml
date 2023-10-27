@@ -1000,7 +1000,7 @@
           state: rock_chromite_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_chromite_west
-        - state: rock_chromite
+        - state: rock_gold
 
 - type: entity
   id: WallRockChromitePlasma
@@ -1195,7 +1195,7 @@
           state: rock_andesite_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_andesite_west
-        - state: rock_andesite
+        - state: rock_gold
 
 - type: entity
   id: WallRockAndesitePlasma
