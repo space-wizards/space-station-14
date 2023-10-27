@@ -1,7 +1,9 @@
 using System.Threading;
 using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Shuttles.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
 using Content.Shared.CCVar;
@@ -109,7 +111,7 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmagged(EntityUid uid, EmergencyShuttleConsoleComponent component, ref GotEmaggedEvent args)
     {
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"{ToPrettyString(args.UserUid):player} emagged shuttle console for early launch");
-        EarlyLaunch(uid);
+        EarlyLaunch();
     }
 
     private void SetAuthorizeTime(float obj)
@@ -187,6 +189,20 @@ public sealed partial class EmergencyShuttleSystem
                 {
                     _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                         centcomm.Entity, _consoleAccumulator, TransitTime, true);
+                }
+
+                // shuttle timer stuff
+                if (TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var netComp))
+                {
+                    var payload = new NetworkPayload
+                    {
+                        ["BroadcastTime"] = TimeSpan.FromSeconds(TransitTime)
+                    };
+                    // can't think of a way to pass this to a shuttle ftl event handler without giving the emergency shuttle a unique component
+                    Timer.Spawn(
+                        (int) (ShuttleSystem.DefaultStartupTime * 1000),
+                        () => { _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency); }
+                        );
                 }
             }
 
@@ -365,14 +381,14 @@ public sealed partial class EmergencyShuttleSystem
         if (component.AuthorizedEntities.Count < component.AuthorizationsRequired || EarlyLaunchAuthorized)
             return false;
 
-        EarlyLaunch(component.Owner);
+        EarlyLaunch();
         return true;
     }
 
     /// <summary>
     /// Attempts to early launch the emergency shuttle if not already done.
     /// </summary>
-    public bool EarlyLaunch(EntityUid console)
+    public bool EarlyLaunch()
     {
         if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
 
@@ -383,12 +399,7 @@ public sealed partial class EmergencyShuttleSystem
         AnnounceLaunch();
         UpdateAllEmergencyConsoles();
 
-        var payload = new NetworkPayload
-        {
-            ["BroadcastTime"] = TimeSpan.FromSeconds(_authorizeTime)
-        };
-
-        _deviceNetworkSystem.QueuePacket(console, null, payload, 2451);
+        _shuttleTimerSystem.FloodEvacPacket(TimeSpan.FromSeconds(_authorizeTime));
 
         return true;
     }
