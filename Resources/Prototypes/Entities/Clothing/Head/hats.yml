@@ -29,7 +29,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretSupplying
   name: supplying beret
-  description: A stylish beret colored into the supply department colors. Has a gold patch on it.
+  description: A stylish beret colored into the supply department colors. Has a silver patch on it.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_supplying.rsi

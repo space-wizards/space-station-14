@@ -6,6 +6,7 @@
   - CargoTechnician
   - Quartermaster
   - SalvageSpecialist
+  - SeniorCollecter
 
 - type: department
   id: Civilian

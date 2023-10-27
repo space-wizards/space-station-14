@@ -92,6 +92,7 @@ JobSalvageSpecialist = Salvage Specialist
 JobScientist = Scientist
 JobSecurityCadet = Security Cadet
 JobSecurityOfficer = Security Officer
+JobSeniorCollecter = Senior Collecter
 JobSeniorEngineer = Senior Engineer
 JobSeniorOfficer = Senior Officer
 JobSeniorPhysician = Senior Physician

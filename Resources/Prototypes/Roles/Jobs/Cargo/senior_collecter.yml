@@ -1,7 +1,7 @@
 - type: job
   id: SeniorCollecter
-  name: job-name-seniorcollecter
-  description: job-description-seniorcollecter
+  name: job-name-senior-collecter
+  description: job-description-senior-collecter
   playTimeTracker: JobSeniorCollecter
   requirements:
     - !type:RoleTimeRequirement
@@ -14,7 +14,7 @@
       department: Cargo
       time: 216000 # 60 hrs
   startingGear: SeniorCollecterGear
-  icon: "JobIconSeniorCollecter"
+  icon: "SeniorCollecter"
   supervisors: job-supervisors-qm
   access:
   - Cargo

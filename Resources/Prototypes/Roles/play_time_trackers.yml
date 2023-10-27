@@ -122,6 +122,9 @@
   id: JobSecurityOfficer
 
 - type: playTimeTracker
+  id: JobSeniorCollecter
+
+- type: playTimeTracker
   id: JobSeniorEngineer
 
 - type: playTimeTracker
