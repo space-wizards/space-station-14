@@ -50,6 +50,17 @@
       - state: green
       - state: qm
 
+- type: entity
+  id: SpawnPointSeniorCollecter
+  parent: SpawnPointJobBase
+  name: seniorcollecter
+  components:
+  - type: SpawnPoint
+    job_id: SeniorCollecter
+  - type: Sprite
+    layers:
+      - state: green
+      - state: qm
 
 - type: entity
   id: SpawnPointCargoTechnician

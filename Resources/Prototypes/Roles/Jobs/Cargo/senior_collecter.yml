@@ -1,0 +1,37 @@
+- type: job
+  id: SeniorCollecter
+  name: job-name-seniorcollecter
+  description: job-description-seniorcollecter
+  playTimeTracker: JobSeniorCollecter
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 21600 #6 hrs
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 216000 # 60 hrs
+  startingGear: SeniorCollecterGear
+  icon: "JobIconSeniorCollecter"
+  supervisors: job-supervisors-qm
+  access:
+  - Cargo
+  - Maintenance
+  - External
+  - Salvage
+
+- type: startingGear
+  id: SeniorCollecterGear
+  equipment:
+    head: ClothingHeadHatBeretSupplying
+    jumpsuit: ClothingUniformJumpsuitSeniorCollecter
+    back: ClothingBackpackCargoFilled
+    shoes: ClothingShoesColorBlack
+    id: SeniorCollecterPDA
+    ears: ClothingHeadsetCargo
+    pocket1: AppraisalTool
+  innerclothingskirt: ClothingUniformJumpskirtSeniorCollecter
+  satchel: ClothingBackpackSatchelCargoFilled
+  duffelbag: ClothingBackpackDuffelCargoFilled

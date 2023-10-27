@@ -44,6 +44,7 @@ job-description-security = Catch criminals and enemies of the station, enforce t
 job-description-serviceworker = Learn the basics of bartending, cooking, and growing plants.
 job-description-warden = Patrol the security department, ensure that no one is stealing from the armory, and make sure that all prisoners are processed and let out when their time is up.
 job-description-zookeeper = Put on a joyful display of cute animals and space carps for all the crew to see. Currently available on Kettle Station.
+job-description-senior-collecter = Teach new cargonians the basics of ordering system, expeditions and shuttle driving.
 job-description-senior-engineer = Teach new engineers the basics of the station's engine, repairing, atmospherics and power.
 job-description-senior-researcher = Teach new scientists the basics of item printing, artifact research and anomalous objects.
 job-description-senior-physician = Teach new medics the basics of tending to the wounded, chemistry, diagnosing the diseased and disposing of the dead.
