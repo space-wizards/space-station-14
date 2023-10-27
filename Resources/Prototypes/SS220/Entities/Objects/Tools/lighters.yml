@@ -1,0 +1,131 @@
+- type: entity
+  name: expensive lighter
+  parent: Lighter
+  id: ExpensiveLighter
+  description: "Expensive metal lighter. She looks too brutal for you. Put it back."
+  components:
+  - type: RandomSprite
+    available:
+      - enum.WelderLayers.Base:
+          zippo_icon_base-1: ""
+      - enum.WelderLayers.Base:
+          zippo_icon_base-2: ""
+      - enum.WelderLayers.Base:
+          zippo_icon_base-3: ""
+      - enum.WelderLayers.Base:
+          zippo_icon_base-4: ""
+      - enum.WelderLayers.Base:
+          zippo_icon_base-5: ""
+  - type: Sprite
+    sprite: SS220/Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_icon_map
+      map: ["enum.WelderLayers.Base"]
+    - state: lighter_flame
+      map: ["enum.WelderLayers.Flame"]
+      shader: unshaded
+      visible: false
+    - state: zippo_icon_top
+  - type: Item
+    size: 3
+    sprite: SS220/Objects/Tools/lighters.rsi
+    heldPrefix: off
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 16
+        maxVol: 16
+  - type: Welder
+    fuelConsumption: 0.01
+    fuelLitCost: 0.1
+    litMeleeDamageBonus:
+      types:
+        Heat: 3
+    tankSafe: true
+    welderOnSounds:
+      collection: zippoOnSound
+    welderOffSounds:
+      collection: zippoOffSound
+
+- type: entity
+  parent: ExpensiveLighter
+  id: ExpensiveLighterNanotrasen
+  name: expensive lighter
+  description: "A lighter that gets only the best in their field in the ranks of Nanotrasen. On the back side, on the metal, the inscription is engraved: For 10 shifts without incident."
+  components:
+  - type: RandomSprite
+    available:
+      - enum.WelderLayers.Base:
+          zippo_icon_nanotrasen: ""
+  - type: Sprite
+    sprite: SS220/Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_icon_nanotrasen
+      map: ["enum.WelderLayers.Base"]
+    - state: lighter_flame
+      map: ["enum.WelderLayers.Flame"]
+      shader: unshaded
+      visible: false
+    - state: zippo_icon_top
+
+- type: entity
+  parent: ExpensiveLighter
+  id: ExpensiveLighterShield
+  description: "The lighter is a bright blue color - the same color as its owner is currently in the bar. The lighter depicts a white shield going into the sunset - just like the career of the owner of the lighter."
+  components:
+  - type: RandomSprite
+    available:
+      - enum.WelderLayers.Base:
+          zippo_icon_shield: ""
+  - type: Sprite
+    sprite: SS220/Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_icon_shield
+      map: ["enum.WelderLayers.Base"]
+    - state: lighter_flame
+      map: ["enum.WelderLayers.Flame"]
+      shader: unshaded
+      visible: false
+    - state: zippo_icon_top
+
+- type: entity
+  parent: ExpensiveLighter
+  id: ExpensiveLighterDetective
+  description: "The lighter reeks of whiskey. Oil fingerprints are clearly visible on the olive cover, and the wooden bottom and top of the lighter are badly worn."
+  components:
+  - type: RandomSprite
+    available:
+      - enum.WelderLayers.Base:
+          zippo_icon_detective: ""
+  - type: Sprite
+    sprite: SS220/Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_icon_detective
+      map: ["enum.WelderLayers.Base"]
+    - state: lighter_flame
+      map: ["enum.WelderLayers.Flame"]
+      shader: unshaded
+      visible: false
+    - state: zippo_icon_top
+
+- type: entity
+  parent: ExpensiveLighter
+  id: ExpensiveLighterSyndicate
+  description: "Used by hardened syndicate agents. Show your style and hatred of NanoTrasen with this lighter!"
+  components:
+  - type: RandomSprite
+    available:
+      - enum.WelderLayers.Base:
+          zippo_icon_syndicate: ""
+  - type: Sprite
+    sprite: SS220/Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_icon_syndicate_map
+      map: ["enum.WelderLayers.Base"]
+    - state: lighter_flame
+      map: ["enum.WelderLayers.Flame"]
+      shader: unshaded
+      visible: false
+    - state: zippo_icon_top

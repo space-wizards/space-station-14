@@ -7,7 +7,8 @@
       contents:
         - id: BoxSurvival
         - id: Telescopichka
-
+        - id: ExpensiveLighterNanotrasen #SS220-Zippo
+        
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSatchelMedical

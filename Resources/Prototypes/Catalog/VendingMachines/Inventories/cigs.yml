@@ -13,5 +13,7 @@
     PackPaperRollingFilters: 3
     CheapLighter: 4
     Lighter: 1
+    ExpensiveLighter: 1 #SS220-Zippo
   emaggedInventory:
     CigPackSyndicate: 1
+    ExpensiveLighterSyndicate: 1 #SS220-Zippo
