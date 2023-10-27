@@ -9,7 +9,6 @@ using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -42,7 +41,7 @@ namespace Content.Server.Tabletop
 
         private void OnTabletopRequestTakeOut(TabletopRequestTakeOut msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession is not IPlayerSession playerSession)
+            if (args.SenderSession is not { } playerSession)
                 return;
 
             var table = GetEntity(msg.TableUid);
@@ -105,7 +104,7 @@ namespace Content.Server.Tabletop
 
         protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession is not IPlayerSession playerSession)
+            if (args.SenderSession is not { } playerSession)
                 return;
 
             if (!TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
@@ -155,7 +154,7 @@ namespace Content.Server.Tabletop
 
         private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
         {
-            CloseSessionFor((IPlayerSession)args.SenderSession, GetEntity(msg.TableUid));
+            CloseSessionFor(args.SenderSession, GetEntity(msg.TableUid));
         }
 
         private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)
