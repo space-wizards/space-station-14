@@ -20,6 +20,6 @@
   category: construction-category-weapons
   description: Construct a landmine using a payload.
   icon:
-    sprite: Objects/Misc/uglymine.rsi
-    state: uglymine
+    sprite: Objects/Misc/landmine.rsi
+    state: landmine
   objectType: Item

@@ -19,6 +19,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Server.Wires;
 

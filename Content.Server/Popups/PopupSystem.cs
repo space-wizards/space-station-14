@@ -12,6 +12,7 @@ namespace Content.Server.Popups
     {
         [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly TransformSystem _xform = default!;
 
         public override void PopupCursor(string message, PopupType type = PopupType.Small)
         {
@@ -36,7 +37,7 @@ namespace Content.Server.Popups
 
         public override void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type = PopupType.Small)
         {
-            var mapPos = coordinates.ToMap(EntityManager);
+            var mapPos = coordinates.ToMap(EntityManager, _xform);
             var filter = Filter.Empty().AddPlayersByPvs(mapPos, entManager: EntityManager, playerMan: _player, cfgMan: _cfg);
             RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)), filter);
         }

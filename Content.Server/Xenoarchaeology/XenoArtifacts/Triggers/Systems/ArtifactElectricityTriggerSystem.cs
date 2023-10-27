@@ -20,18 +20,20 @@ public sealed class ArtifactElectricityTriggerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        List<ArtifactComponent> toUpdate = new();
-        foreach (var (trigger, power, artifact) in EntityQuery<ArtifactElectricityTriggerComponent, PowerConsumerComponent, ArtifactComponent>())
+
+        List<Entity<ArtifactComponent>> toUpdate = new();
+        var query = EntityQueryEnumerator<ArtifactElectricityTriggerComponent, PowerConsumerComponent, ArtifactComponent>();
+        while (query.MoveNext(out var uid, out var trigger, out var power, out var artifact))
         {
             if (power.ReceivedPower <= trigger.MinPower)
                 continue;
 
-            toUpdate.Add(artifact);
+            toUpdate.Add((uid, artifact));
         }
 
         foreach (var a in toUpdate)
         {
-            _artifactSystem.TryActivateArtifact(a.Owner, null,  a);
+            _artifactSystem.TryActivateArtifact(a, null, a);
         }
     }
 
