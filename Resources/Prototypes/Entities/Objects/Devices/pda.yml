@@ -660,7 +660,7 @@
 - type: entity
   parent: CentcomPDA
   id: DeathsquadPDA
-  suffix: Deathsquad
+  suffix: Death Squad
   components:
   - type: Pda
     id: CentcomIDCardDeathsquad
