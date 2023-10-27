@@ -46,6 +46,17 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
     // TODO:
 
+    // GATEWAY WINDOW
+    // Need a separate bar on GatewayWindow for unlocks
+    // Mark any locked ones as locked until unlocked
+    // If NextUnlock < curtime then undisable all locked ones (assuming NextReady is also up)
+    // After taken then disable them all again
+
+    // Need non-binary portals
+
+    // Re-use salvage config stuff for the RNG
+    // Also add weather coz it's funny.
+
     // TODO: Portals to avoid people being stranded
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
     // Add dungeon name to thing
