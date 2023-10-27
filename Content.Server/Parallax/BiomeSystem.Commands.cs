@@ -153,7 +153,12 @@ public sealed partial class BiomeSystem
             return;
         }
 
-        biome.MarkerLayers.Add(args[1]);
+        if (!biome.MarkerLayers.Add(args[1]))
+        {
+            return;
+        }
+
+        biome.ForcedMarkerLayers.Add(args[1]);
     }
 
     private CompletionResult AddMarkerLayerCallbackHelper(IConsoleShell shell, string[] args)
