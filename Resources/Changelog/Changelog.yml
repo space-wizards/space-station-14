@@ -1,9 +1,4 @@
 Entries:
-- author: Equivocateur
-  changes:
-  - {message: 'Emagged recyclers now not only gib people, but other mobs too.', type: Fix}
-  id: 4568
-  time: '2023-08-13T23:54:52.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: 'Fixed new players added to admin logs defaulting to selected, even
@@ -2898,3 +2893,9 @@ Entries:
   - {message: Fixed being able to give pAIs implants., type: Fix}
   id: 5067
   time: '2023-10-27T02:34:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Ion storms have appeared and are causing malfunctions in cyborg law
+      modules., type: Add}
+  id: 5068
+  time: '2023-10-27T02:40:13.0000000+00:00'
