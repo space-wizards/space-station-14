@@ -1243,6 +1243,16 @@
       - SurplusBundle
 
 - type: listing
+  id: UplinkCentcomCostumeBundle
+  name: uplink-centcom-costume-bundle-name
+  description: uplink-centcom-costume-bundle-desc
+  productEntity: ClothingBackpackDuffelCentcomCostume
+  cost:
+    Telecrystal: 25
+  categories:
+  - UplinkBundles
+
+- type: listing
   id: UplinkBribe
   name: uplink-bribe-name
   description: uplink-bribe-desc
