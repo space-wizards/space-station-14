@@ -17,7 +17,7 @@
       layers:
         - state: ice
       drawdepth: FloorObjects
-    - type: Appearance
+      color: "#ffffff44"
     - type: Clickable
     - type: Transform
       anchored: true
