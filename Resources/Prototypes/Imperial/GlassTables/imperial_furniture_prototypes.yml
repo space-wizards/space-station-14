@@ -5,9 +5,9 @@
   description: A square piece of uranium glass, standing on four metal legs. Pretty!
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/uranium.rsi
+    sprite: Imperial/GlassTables/uranium.rsi
   - type: Icon
-    sprite: Structures/Furniture/Tables/uranium.rsi
+    sprite: Imperial/GlassTables/uranium.rsi
   - type: GlassTable
     climberDamage:
       types:
@@ -54,9 +54,9 @@
   description: A square piece of uranium glass, standing on four metal legs. Extra robust.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/r_uranium.rsi
+    sprite: Imperial/GlassTables/r_uranium.rsi
   - type: Icon
-    sprite: Structures/Furniture/Tables/r_uranium.rsi
+    sprite: Imperial/GlassTables/r_uranium.rsi
   - type: GlassTable
     climberDamage:
       types:
@@ -103,9 +103,9 @@
   description: A square piece of plasma glass, standing on four metal legs. Extra robust.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/r_plasma.rsi
+    sprite: Imperial/GlassTables/r_plasma.rsi
   - type: Icon
-    sprite: Structures/Furniture/Tables/r_plasma.rsi
+    sprite: Imperial/GlassTables/r_plasma.rsi
   - type: GlassTable
     climberDamage:
       types:
@@ -152,7 +152,7 @@
   desc: Shiny gold toilet for realy reach man
   components:
     - type: Sprite
-      sprite: Structures/Furniture/goldToilet.rsi
+      sprite: Imperial/GlassTables/goldToilet.rsi
       state: closed_toilet_seat_up
     - type: Construction
       graph: GoldToilet

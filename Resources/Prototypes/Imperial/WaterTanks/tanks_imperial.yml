@@ -7,7 +7,7 @@
     - type: StaticPrice
       price: 500
     - type: Sprite
-      sprite: Structures/Storage/tanks_imperial.rsi
+      sprite: Imperial/WaterTanks/tanks_imperial.rsi
       layers:
         - state: tank_base
         - state: content-1
@@ -44,7 +44,7 @@
   - type: StaticPrice
     price: 3300
   - type: Sprite
-    sprite: Structures/Storage/tanks_imperial.rsi
+    sprite: Imperial/WaterTanks/tanks_imperial.rsi
     layers:
       - state: tank_base
       - state: content-1
@@ -83,7 +83,7 @@
   - type: StaticPrice
     price: 750
   - type: Sprite
-    sprite: Structures/Storage/tanks_imperial.rsi
+    sprite: Imperial/WaterTanks/tanks_imperial.rsi
     layers:
       - state: tank_base
       - state: content-1
@@ -131,7 +131,7 @@
   - type: StaticPrice
     price: 2500
   - type: Sprite
-    sprite: Structures/Storage/tanks_imperial.rsi
+    sprite: Imperial/WaterTanks/tanks_imperial.rsi
     layers:
       - state: tank_base
       - state: content-1
@@ -173,7 +173,7 @@
     - type: StaticPrice
       price: 500
     - type: Sprite
-      sprite: Structures/Storage/tanks_imperial.rsi
+      sprite: Imperial/WaterTanks/tanks_imperial.rsi
       layers:
         - state: tank_base
         - state: content-1

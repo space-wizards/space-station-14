@@ -80,7 +80,7 @@
               amount: 1
               doAfter: 1
 
-        #Imperial
+        #Imperial start
         - to: TableUraniumGlass
           steps:
             - material: UraniumGlass
@@ -98,6 +98,7 @@
             - material: ReinforcedPlasmaGlass
               amount: 1
               doAfter: 1
+        #Imperial end
 
 
     - node: CounterWoodFrame
@@ -249,7 +250,7 @@
             - tool: Prying
               doAfter: 1
 
-    #Imperial
+    #Imperial start
     - node: TableUraniumGlass
       entity: TableUraniumGlass
       edges:
@@ -285,3 +286,4 @@
           steps:
             - tool: Anchoring
               doAfter: 1
+    #Imperial end

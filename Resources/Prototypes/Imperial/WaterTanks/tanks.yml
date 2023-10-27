@@ -6,7 +6,7 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Structures/Storage/tanks_imperial.rsi
+      - sprite: Imperial/WaterTanks/tanks_imperial.rsi
         state: water-high-full
   - type: RandomSpawner
     offset: 0
@@ -27,7 +27,7 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Structures/Storage/tanks_imperial.rsi
+      - sprite: Imperial/WaterTanks/tanks_imperial.rsi
         state: welding-high-full
   - type: RandomSpawner
     offset: 0

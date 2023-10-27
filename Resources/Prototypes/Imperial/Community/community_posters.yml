@@ -6,7 +6,7 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Structures/Wallmounts/com_posters.rsi
+      - sprite: Imperial/Community/com_posters.rsi
         state: community_poster_spawner
   - type: RandomSpawner
     offset: 0
@@ -34,7 +34,7 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Structures/Wallmounts/com_posters.rsi
+      - sprite: Imperial/Community/com_posters.rsi
         state: community_painting_spawner
   - type: RandomSpawner
     offset: 0
