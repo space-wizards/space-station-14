@@ -147,8 +147,8 @@
 # Low value
 - type: biomeMarkerLayer
   id: ChromiteOreTin
-  proto: WallRockChromeTin
-  entityMask: WallRockChrome
+  proto: WallRockChromiteTin
+  entityMask: WallRockChromite
   maxCount: 30
   groupCount: 10
   radius: 4
