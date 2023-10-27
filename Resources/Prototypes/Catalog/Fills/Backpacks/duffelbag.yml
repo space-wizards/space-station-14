@@ -21,6 +21,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: BoxSurvivalEngineering
       - id: WeaponShotgunDoubleBarreled
       - id: BoxShotgunIncendiary
         amount: 2
@@ -198,9 +199,6 @@
   name: syndicate pyjama duffel bag
   description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
-  - type: Storage
-    maxSlots: 16
-    maxTotalWeight: 44
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed
@@ -234,8 +232,6 @@
   id: ClothingBackpackChameleonFill
   suffix: Fill, Chameleon
   components:
-    - type: Storage
-      maxSlots: 9
     - type: StorageFill
       contents:
         - id: ClothingUniformJumpsuitChameleon
@@ -318,6 +314,7 @@
       - id: HandheldHealthAnalyzer
       - id: CombatMedipen
       - id: MicroBombImplanter
+      - id: SyndiHypo
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle

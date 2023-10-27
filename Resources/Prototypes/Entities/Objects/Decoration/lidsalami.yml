@@ -9,6 +9,6 @@
     layers:
       - state: icon
   - type: Item
-    size: Huge
+    size: 1001
   - type: StaticPrice
     price: 0

@@ -43,9 +43,9 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    maxSlots: 5
+    capacity: 5
   - type: Item
-    size: Small
+    size: 5
   - type: StorageFill
     contents:
     - id: Cigarette
@@ -108,10 +108,9 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    maxSlots: 10
-    maxTotalWeight: 20
+    capacity: 10
   - type: Item
-    size: Small
+    size: 10
   - type: StorageFill
     contents:
     - id: CigaretteRandom

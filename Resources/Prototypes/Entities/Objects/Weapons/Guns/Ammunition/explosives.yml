@@ -10,7 +10,7 @@
     tags:
       - CartridgeRocket
   - type: Item
-    size: Small
+    size: 5
   - type: CartridgeAmmo
     proto: BulletRocket
     deleteOnSpawn: true
@@ -30,7 +30,7 @@
       tags:
         - CartridgeRocket
     - type: Item
-      size: Small
+      size: 5
     - type: CartridgeAmmo
       proto: BulletWeakRocket
       deleteOnSpawn: true
@@ -52,7 +52,7 @@
     tags:
     - Grenade
   - type: Item
-    size: Small
+    size: 5
   - type: Sprite
 
 - type: entity

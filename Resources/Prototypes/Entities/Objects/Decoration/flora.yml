@@ -171,6 +171,60 @@
     state: rocksolid03
 
 - type: entity
+  parent: BaseRock
+  id: FloraStalagmite1
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite1
+
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite2
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite2
+
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite3
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite3
+
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite4
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite4
+
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite5
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite5
+    
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite6
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite6
+
+- type: entity
   parent: BaseTree
   id: FloraTree01
   name: tree

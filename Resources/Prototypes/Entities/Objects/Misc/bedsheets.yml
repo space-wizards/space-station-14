@@ -13,7 +13,7 @@
     sprite: Objects/Misc/bedsheets.rsi
     noRot: true
   - type: Item
-    size: Small
+    size: 10
   - type: Clothing
     quickEquip: true
     slots:

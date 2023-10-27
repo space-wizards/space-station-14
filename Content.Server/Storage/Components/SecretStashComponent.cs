@@ -19,7 +19,7 @@ namespace Content.Server.Storage.Components
         ///     Max item size that can be fitted into secret stash.
         /// </summary>
         [DataField("maxItemSize")]
-        public ItemSize MaxItemSize = ItemSize.Small;
+        public int MaxItemSize = (int) ReferenceSizes.Pocket;
 
         /// <summary>
         ///     IC secret stash name. For example "the toilet cistern".

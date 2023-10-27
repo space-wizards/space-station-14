@@ -47,9 +47,10 @@
       - key: enum.StorageUiKey.Key
         type: StorageBoundUserInterface
     - type: Storage
+      capacity: 30
     - type: TileFrictionModifier
-      modifier: 0.4 # makes it slide
-
+      modifier: 0.4 # makes it slide 
+    
 # Add this if freezing/heating container/objects thermodynamics becomes a thing
 
     #- type: PowerCellSlot
@@ -62,7 +63,7 @@
     #    cell_slot:
     #      name: power-cell-slot-component-slot-name-default
     #      startingItem: PowerCellMedium
-
+  
 - type: entity
   name: Hot Food Cart
   id: FoodCartHot
@@ -72,11 +73,11 @@
     - type: Sprite
       netSync: false
       noRot: true
-      sprite: Objects/Specific/Kitchen/food_carts.rsi
+      sprite: Objects/Specific/Kitchen/food_carts.rsi 
       layers:
         - state: stand-food
     - type: Storage
-      blacklist:
+      blacklist: 
         tags:
           - Coldsauce
           - Hotsauce
@@ -99,7 +100,7 @@
           whitelist:
             tags:
               - Hotsauce
-          priority: 5
+          priority: 5 
         bbqsauce_slot:
           name: BBQ Sauce
           insertSound: /Audio/Items/bottle_clunk.ogg
@@ -107,7 +108,7 @@
           whitelist:
             tags:
               - BBQsauce
-          priority: 4
+          priority: 4  
         ketchup_slot:
           name: Ketchup
           insertSound: /Audio/Items/bottle_clunk.ogg
@@ -115,7 +116,7 @@
           whitelist:
             tags:
               - Ketchup
-          priority: 3
+          priority: 3 
     - type: ItemMapper
       mapLayers:
         cart_hotsauce:
@@ -153,7 +154,7 @@
     - type: Sprite
       netSync: false
       noRot: true
-      sprite: Objects/Specific/Kitchen/food_carts.rsi
+      sprite: Objects/Specific/Kitchen/food_carts.rsi 
       layers:
         - state: stand-ice
     - type: ContainerContainer

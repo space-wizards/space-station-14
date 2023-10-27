@@ -12,6 +12,12 @@
       containers:
         implanter_slot: !type:ContainerSlot { }
     - type: Implanter
+      whitelist:
+        components:
+        - Body # no chair microbomb
+      blacklist:
+        components:
+        - Guardian # no holoparasite macrobomb wombo combo
       currentMode: Draw
       implanterSlot:
         name: Implant
@@ -55,6 +61,16 @@
         - Trash
 
 - type: entity
+  parent: Implanter
+  id: ImplanterAdmeme
+  suffix: Admeme
+  components:
+  - type: Implanter
+    # go wild with sentient chairs with macrobombs
+    whitelist: null
+    blacklist: null
+
+- type: entity
   id: BaseImplantOnlyImplanter
   parent: Implanter
   description: A disposable syringe exclusively designed for the injection of subdermal implants.
@@ -81,7 +97,7 @@
   components:
     - type: Item
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
-      size: Tiny
+      size: 3
     - type: Sprite
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
       state: implanter1

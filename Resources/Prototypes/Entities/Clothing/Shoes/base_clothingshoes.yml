@@ -8,8 +8,6 @@
     - FEET
   - type: Sprite
     state: icon
-  - type: Item
-    size: Normal
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -41,7 +39,7 @@
   id: ClothingShoesStorageBase
   components:
   - type: Storage
-    maxSlots: 1
+    capacity: 10
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

@@ -24,7 +24,7 @@
         - ReagentId: Fat
           Quantity: 5
   - type: Item
-    size: Tiny
+    size: 5
   - type: Fixtures
     fixtures:
       fix1:
@@ -209,7 +209,7 @@
     graph: BearSteak
     node: start
     defaultTarget: filet migrawr
-
+    
 
 - type: entity
   name: raw penguin meat

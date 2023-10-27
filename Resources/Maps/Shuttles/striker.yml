@@ -874,6 +874,36 @@ entities:
       pos: -0.5,0.5
       parent: 325
       type: Transform
+- proto: ClothingBeltSyndieHolster
+  entities:
+  - uid: 317
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - canCollide: False
+      type: Physics
+- proto: ClothingHandsGlovesCombat
+  entities:
+  - uid: 316
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - canCollide: False
+      type: Physics
+- proto: ClothingMaskGasSyndicate
+  entities:
+  - uid: 318
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - canCollide: False
+      type: Physics
 - proto: ComputerIFFSyndicate
   entities:
   - uid: 40
@@ -896,6 +926,16 @@ entities:
           ents:
           - 245
       type: ContainerContainer
+- proto: Crowbar
+  entities:
+  - uid: 313
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - canCollide: False
+      type: Physics
 - proto: CyberPen
   entities:
   - uid: 77
@@ -1632,6 +1672,16 @@ entities:
       pos: -2.5,-3.5
       parent: 325
       type: Transform
+- proto: Multitool
+  entities:
+  - uid: 314
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - canCollide: False
+      type: Physics
 - proto: NitrogenTankFilled
   entities:
   - uid: 105
@@ -1828,6 +1878,20 @@ entities:
     - pos: 1.3427892,-2.379079
       parent: 325
       type: Transform
+    - canCollide: False
+      type: Physics
+- proto: Screwdriver
+  entities:
+  - uid: 310
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - selected:
+        enum.DamageStateVisualLayers.Base:
+          screwdriver: '#1861D5FF'
+      type: RandomSprite
     - canCollide: False
       type: Physics
 - proto: SheetGlass1
@@ -2318,6 +2382,21 @@ entities:
     - pos: 1.5699697,-0.44908836
       parent: 325
       type: Transform
+    - containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 310
+          - 311
+          - 312
+          - 313
+          - 314
+          - 315
+          - 316
+          - 317
+          - 318
+      type: ContainerContainer
     - canCollide: False
       type: Physics
 - proto: ToyFigurineNukie
@@ -2577,6 +2656,16 @@ entities:
     - pos: -2.5,2.5
       parent: 325
       type: Transform
+- proto: Welder
+  entities:
+  - uid: 312
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - canCollide: False
+      type: Physics
 - proto: WindoorSecure
   entities:
   - uid: 166
@@ -2598,6 +2687,30 @@ entities:
           ents:
           - 346
       type: ContainerContainer
+- proto: Wirecutter
+  entities:
+  - uid: 315
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - selected:
+        enum.DamageStateVisualLayers.Base:
+          cutters: '#D58C18FF'
+      type: RandomSprite
+    - canCollide: False
+      type: Physics
+- proto: Wrench
+  entities:
+  - uid: 311
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 177
+      type: Transform
+    - canCollide: False
+      type: Physics
 - proto: YellowOxygenTankFilled
   entities:
   - uid: 167
