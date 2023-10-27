@@ -41,13 +41,19 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
 
     public readonly TimeSpan Cooldown;
 
+    /// <summary>
+    /// Next time the destination generator unlocks another destination.
+    /// </summary>
+    public readonly TimeSpan NextUnlock;
+
     public GatewayBoundUserInterfaceState(List<GatewayDestinationData> destinations,
-        NetEntity? current, TimeSpan nextReady, TimeSpan cooldown)
+        NetEntity? current, TimeSpan nextReady, TimeSpan cooldown, TimeSpan nextUnlock)
     {
         Destinations = destinations;
         Current = current;
         NextReady = nextReady;
         Cooldown = cooldown;
+        NextUnlock = nextUnlock;
     }
 }
 
@@ -57,8 +63,6 @@ public record struct GatewayDestinationData
     public NetEntity Entity;
 
     public FormattedMessage Name;
-
-    public TimeSpan NextReady;
 
     public bool Portal;
 }

@@ -1,18 +1,24 @@
+using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage;
 using Content.Shared.Dataset;
+using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
-using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Gateway.Systems;
@@ -23,16 +29,18 @@ namespace Content.Server.Gateway.Systems;
 public sealed class GatewayGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _console = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly DungeonSystem _dungeon = default!;
+    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly GatewaySystem _gateway = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly SalvageSystem _salvage = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     [ValidatePrototypeId<DatasetPrototype>]
     private const string PlanetNames = "names_borer";
@@ -44,19 +52,27 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     // Add dungeon name to thing
     // Add biome template to thing
     // Add biome template options.
-    // Make continental bigger areas probably?
+    // Copy most of salvage mission spawner
+    // Add like a configs thing or the rng thing like salvage I guess.
     // Think of something for resources
-    // Fix unlocks / locking
     // Add mob templates like lizards or aliens or w/e
     // Probably need reduced ore spawn rate.
+    // Fix unlocks / locking
     // Add an initial 15min lockout or something on roundstart
-    // Need chain shape for barrier.
+    // Just daisy chain gateways and leave them permanent.
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<GatewayGeneratorComponent, EntityUnpausedEvent>(OnGeneratorUnpaused);
         SubscribeLocalEvent<GatewayGeneratorComponent, MapInitEvent>(OnGeneratorMapInit);
+        SubscribeLocalEvent<GatewayGeneratorDestinationComponent, AttemptGatewayOpenEvent>(OnGeneratorAttemptOpen);
         SubscribeLocalEvent<GatewayGeneratorDestinationComponent, GatewayOpenEvent>(OnGeneratorOpen);
+    }
+
+    private void OnGeneratorUnpaused(Entity<GatewayGeneratorComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.NextUnlock += args.PausedTime;
     }
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent component, MapInitEvent args)
@@ -93,8 +109,9 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             var gatewayName = SharedSalvageSystem.GetFTLName(_protoManager.Index<DatasetPrototype>(PlanetNames), seed);
 
             _metadata.SetEntityName(mapUid, gatewayName);
+            var originCoords = new EntityCoordinates(mapUid, origin);
 
-            var gatewayUid = SpawnAtPosition("GatewayDestination", new EntityCoordinates(mapUid, origin));
+            var gatewayUid = SpawnAtPosition("GatewayDestination", originCoords);
             var gatewayComp = Comp<GatewayDestinationComponent>(gatewayUid);
             _gateway.SetDestinationName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
             _gateway.SetEnabled(gatewayUid, true, gatewayComp);
@@ -103,9 +120,39 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             var genDest = AddComp<GatewayGeneratorDestinationComponent>(mapUid);
             genDest.Origin = origin;
             genDest.Seed = seed;
+            genDest.Generator = uid;
+
+            // Enclose the area
+            var boundaryUid = Spawn(null, originCoords);
+            var boundaryPhysics = AddComp<PhysicsComponent>(boundaryUid);
+            var cShape = new ChainShape();
+            // Don't need it to be a perfect circle, just need it to be loosely accurate.
+            cShape.CreateLoop(Vector2.Zero, restriction.Range + 1f, false, count: 4);
+            _fixtures.TryCreateFixture(
+                boundaryUid,
+                cShape,
+                "boundary",
+                collisionLayer: (int) (CollisionGroup.HighImpassable | CollisionGroup.Impassable | CollisionGroup.LowImpassable),
+                body: boundaryPhysics);
+            _physics.WakeBody(boundaryUid, body: boundaryPhysics);
+            AddComp<BoundaryComponent>(boundaryUid);
         }
 
         Dirty(uid, component);
+    }
+
+    private void OnGeneratorAttemptOpen(Entity<GatewayGeneratorDestinationComponent> ent, ref AttemptGatewayOpenEvent args)
+    {
+        if (ent.Comp.Loaded || args.Cancelled)
+            return;
+
+        if (!TryComp(ent.Comp.Generator, out GatewayGeneratorComponent? generatorComp))
+            return;
+
+        if (generatorComp.NextUnlock + _metadata.GetPauseTime(ent.Owner) <= _timing.CurTime)
+            return;
+
+        args.Cancelled = true;
     }
 
     private void OnGeneratorOpen(Entity<GatewayGeneratorDestinationComponent> ent, ref GatewayOpenEvent args)
@@ -113,19 +160,26 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         if (ent.Comp.Loaded)
             return;
 
-        ent.Comp.Loaded = true;
+        if (TryComp(ent.Comp.Generator, out GatewayGeneratorComponent? generatorComp))
+        {
+            generatorComp.NextUnlock = _timing.CurTime + generatorComp.UnlockCooldown;
+            _gateway.UpdateAllGateways();
+        }
 
         if (!TryComp(args.MapUid, out MapGridComponent? grid))
             return;
 
+        ent.Comp.Loaded = true;
         var seed = ent.Comp.Seed;
         var origin = ent.Comp.Origin;
         var random = new Random(seed);
-        var dungeonDistance = random.Next(6, 12);
+        var dungeonDistance = random.Next(3, 6);
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonPosition = origin + dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance)).Floored();
 
-        _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), args.MapUid, grid, dungeonPosition, seed);
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        _dungeon.GenerateDungeonAsync(_protoManager.Index<DungeonConfigPrototype>("Experiment"), args.MapUid, grid, dungeonPosition, seed);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
 }
 
@@ -157,6 +211,12 @@ public sealed partial class GatewayGeneratorComponent : Component
 [RegisterComponent]
 public sealed partial class GatewayGeneratorDestinationComponent : Component
 {
+    /// <summary>
+    /// Generator that created this destination.
+    /// </summary>
+    [DataField]
+    public EntityUid Generator;
+
     [DataField]
     public bool Loaded;
 

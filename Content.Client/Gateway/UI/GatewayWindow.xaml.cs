@@ -23,6 +23,9 @@ public sealed partial class GatewayWindow : FancyWindow,
     private NetEntity? _current;
     private TimeSpan _nextReady;
     private TimeSpan _cooldown;
+
+    private TimeSpan _nextUnlock;
+
     private List<Label> _readyLabels = default!;
 
     /// <summary>
@@ -49,6 +52,7 @@ public sealed partial class GatewayWindow : FancyWindow,
         _current = state.Current;
         _nextReady = state.NextReady;
         _cooldown = state.Cooldown;
+        _nextUnlock = state.NextUnlock;
 
         Container.DisposeAllChildren();
         _readyLabels = new List<Label>(_destinations.Count);
@@ -76,7 +80,6 @@ public sealed partial class GatewayWindow : FancyWindow,
         {
             var ent = dest.Entity;
             var name = dest.Name;
-            var nextReady = dest.NextReady;
             var busy = dest.Portal;
 
             var box = new BoxContainer()
@@ -102,7 +105,8 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             var readyLabel = new Label
             {
-                Text = ReadyText(now, nextReady, busy),
+                // TODO
+                Text = "Weh",
                 Margin = new Thickness(10f, 0f, 0f, 0f),
                 VerticalAlignment = VAlignment.Center,
                 HorizontalAlignment = HAlignment.Right,

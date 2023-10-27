@@ -1,4 +1,5 @@
 using Content.Server.Gateway.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Gateway;
 using Content.Shared.Popups;
@@ -19,6 +20,7 @@ public sealed class GatewaySystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly StationSystem _stations = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -61,7 +63,7 @@ public sealed class GatewaySystem : EntitySystem
         UpdateUserInterface(uid, comp);
     }
 
-    private void UpdateAllGateways()
+    public void UpdateAllGateways()
     {
         var query = AllEntityQuery<GatewayComponent>();
 
@@ -89,8 +91,15 @@ public sealed class GatewaySystem : EntitySystem
             });
         }
 
+        var nextUnlock = TimeSpan.Zero;
+
+        if (TryComp(_stations.GetOwningStation(uid), out GatewayGeneratorComponent? generatorComp))
+        {
+            nextUnlock = generatorComp.NextUnlock;
+        }
+
         _linkedEntity.GetLink(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextReady, comp.Cooldown);
+        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextReady, comp.Cooldown, nextUnlock);
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
@@ -131,6 +140,12 @@ public sealed class GatewaySystem : EntitySystem
         if (!Resolve(dest, ref destXform) || destXform.MapUid == null)
             return;
 
+        var ev = new AttemptGatewayOpenEvent(destXform.MapUid.Value, dest);
+        RaiseLocalEvent(destXform.MapUid.Value, ref ev);
+
+        if (ev.Cancelled)
+            return;
+
         _linkedEntity.TryLink(uid, dest);
         EnsureComp<PortalComponent>(uid).CanTeleportToOtherMaps = true;
         EnsureComp<PortalComponent>(dest).CanTeleportToOtherMaps = true;
@@ -144,9 +159,6 @@ public sealed class GatewaySystem : EntitySystem
         UpdateUserInterface(uid, comp);
         UpdateAppearance(uid);
         UpdateAppearance(dest);
-
-        var ev = new GatewayOpenEvent(destXform.MapUid.Value, dest);
-        RaiseLocalEvent(destXform.MapUid.Value, ref ev);
     }
 
     private void ClosePortal(EntityUid uid, GatewayComponent? comp = null)
@@ -248,11 +260,19 @@ public sealed class GatewaySystem : EntitySystem
 }
 
 /// <summary>
-/// Raised when a GatewayDestination is opened.
+/// Raised directed on the target map when a GatewayDestination is attempted to be opened.
 /// </summary>
 [ByRefEvent]
-public readonly record struct GatewayOpenEvent(EntityUid MapUid, EntityUid GatewayDestinationUid)
+public record struct AttemptGatewayOpenEvent(EntityUid MapUid, EntityUid GatewayDestinationUid)
 {
     public readonly EntityUid MapUid = MapUid;
     public readonly EntityUid GatewayDestinationUid = GatewayDestinationUid;
+
+    public bool Cancelled = false;
 }
+
+/// <summary>
+/// Raised directed on the target map when a gateway is opened.
+/// </summary>
+[ByRefEvent]
+public readonly record struct GatewayOpenEvent(EntityUid MapUid, EntityUid GatewayDestinationUid);
