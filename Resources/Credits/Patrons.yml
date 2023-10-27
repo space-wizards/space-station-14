@@ -1,48 +1,55 @@
+# 0 - Робаст (TierColor: "#ffffff")
+# 1 - Enterpass (TierColor: "#9b97e8")
+# 2 - Робаст+ (TierColor :"#8ccf6b")
+# 3 - Меценат (TierColor :"#fc9f9f")
+# 4 - Спонсор (TierColor: "#d61111") + возможность кастомного цвета ников
+# 5 - Специальные (TierColor: "#efcb68")  + возможность кастомного цвета ников
+
 - Name: "Sup0"
   InGame: "Sup0"
-  TierName: Робаст  
+  TierName: Enterpass  
   Color: "#ffffff"
   TierColor: "#ffffff"
-  Tier: 0
+  Tier: 1
 - Name: "Laastrog"
   InGame: "Laastrog"
   TierName: Робаст+
   Color: "#ffffff"
   TierColor: "#8ccf6b"
-  Tier: 1
+  Tier: 2
 - Name: "Swaiper5"
   InGame: "Swaiper5"
   TierName: Робаст+
   Color: "#ffffff"
   TierColor: "#8ccf6b"
-  Tier: 1
+  Tier: 2
 - Name: "Mexanik"
   InGame: "Mexanik78"
   TierName: Легендарный фиксер
   Color: "#ffb3de"
   TierColor: "#d61111"
-  Tier: 3
+  Tier: 4
 - Name: "Gamecrol"
   InGame: "Vixen"
-  TierName: Садист
+  TierName: Робаст+
   Color: "#ffffff"
   TierColor: "#8ccf6b"
-  Tier: 1
+  Tier: 2
 - Name: "Regex"
   InGame: "regexname112"
   TierName: Робаст+
   Color: "#ffffff"
   TierColor: "#8ccf6b"
-  Tier: 1
+  Tier: 2
 - Name: "Yuoko"
   InGame: "Yuoko"
-  TierName: ФинДир
-  Color: "#ffffff"
+  TierName: Мейнтейнер, ФинДир
+  Color: "#f5fc9f"
   TierColor: "#efcb68"
-  Tier: 4
+  Tier: 5
 - Name: "Temporaldarkness"
   InGame: "temporaldarkness"
   TierName: Ведущий? Мейнтейнер
   Color: "#87cefa"
   TierColor: "#efcb68"
-  Tier: 4
+  Tier: 5
