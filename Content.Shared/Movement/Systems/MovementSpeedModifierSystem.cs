@@ -20,16 +20,11 @@ namespace Content.Shared.Movement.Systems
             RaiseLocalEvent(uid, ev);
 
             if (MathHelper.CloseTo(ev.WalkSpeedModifier, move.WalkSpeedModifier) &&
-                MathHelper.CloseTo(ev.SprintSpeedModifier, move.SprintSpeedModifier) &&
-                MathHelper.CloseTo(ev.Friction, move.Friction) &&
-                MathHelper.CloseTo(ev.Acceleration, move.Acceleration))
+                MathHelper.CloseTo(ev.SprintSpeedModifier, move.SprintSpeedModifier))
                 return;
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
-            move.Friction = ev.Friction;
-            move.FrictionNoInput = ev.FrictionNoInput;
-            move.Acceleration = ev.Acceleration;
             Dirty(uid, move);
         }
 
@@ -40,6 +35,17 @@ namespace Content.Shared.Movement.Systems
 
             move.BaseWalkSpeed = baseWalkSpeed;
             move.BaseSprintSpeed = baseSprintSpeed;
+            move.Acceleration = acceleration;
+            Dirty(uid, move);
+        }
+
+        public void ChangeFriction(EntityUid uid, float friction, float? frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
+        {
+            if (!Resolve(uid, ref move, false))
+                return;
+
+            move.Friction = friction;
+            move.FrictionNoInput = frictionNoInput;
             move.Acceleration = acceleration;
             Dirty(uid, move);
         }
@@ -56,21 +62,11 @@ namespace Content.Shared.Movement.Systems
 
         public float WalkSpeedModifier { get; private set; } = 1.0f;
         public float SprintSpeedModifier { get; private set; } = 1.0f;
-        public float Friction { get; private set; } = MovementSpeedModifierComponent.DefaultFriction;
-        public float? FrictionNoInput { get; private set; } = null;
-        public float Acceleration { get; private set; } = MovementSpeedModifierComponent.DefaultAcceleration;
 
         public void ModifySpeed(float walk, float sprint)
         {
             WalkSpeedModifier *= walk;
             SprintSpeedModifier *= sprint;
-        }
-
-        public void ChangeFriction(float friction, float? frictionNoInput, float acceleration)
-        {
-            Friction = friction;
-            FrictionNoInput = frictionNoInput;
-            Acceleration = acceleration;
         }
     }
 }

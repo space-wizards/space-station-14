@@ -5,21 +5,18 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems;
 
-// SlowContactsSystem ripoff
 public sealed class FrictionContactsSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 
     private HashSet<EntityUid> _toUpdate = new();
-    private HashSet<EntityUid> _toRemove = new();
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<FrictionContactsComponent, StartCollideEvent>(OnEntityEnter);
         SubscribeLocalEvent<FrictionContactsComponent, EndCollideEvent>(OnEntityExit);
-        SubscribeLocalEvent<FrictionByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
         SubscribeLocalEvent<FrictionContactsComponent, ComponentShutdown>(OnShutdown);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
@@ -32,13 +29,15 @@ public sealed class FrictionContactsSystem : EntitySystem
         if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
             return;
 
-        EnsureComp<FrictionByContactComponent>(otherUid);
         _toUpdate.Add(otherUid);
     }
 
     private void OnEntityExit(EntityUid uid, FrictionContactsComponent component, ref EndCollideEvent args)
     {
         var otherUid = args.OtherEntity;
+
+        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
+            return;
 
         _toUpdate.Add(otherUid);
     }
@@ -55,48 +54,44 @@ public sealed class FrictionContactsSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        _toRemove.Clear();
-
-        foreach (var ent in _toUpdate)
+        foreach (var uid in _toUpdate)
         {
-            _speedModifierSystem.RefreshMovementSpeedModifiers(ent);
-        }
-
-        foreach (var ent in _toRemove)
-        {
-            RemComp<FrictionByContactComponent>(ent);
+            ApplyFrictionChange(uid);
         }
 
         _toUpdate.Clear();
     }
 
-    private void MovementSpeedCheck(EntityUid uid, FrictionByContactComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void ApplyFrictionChange(EntityUid uid)
     {
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;
 
-        float friction = MovementSpeedModifierComponent.DefaultFriction;
-        float? frictionNoInput = null;
-        float acceleration = MovementSpeedModifierComponent.DefaultAcceleration;
+        if (!TryComp(uid, out MovementSpeedModifierComponent? speedModifier))
+            return;
 
-        bool remove = true;
+        FrictionContactsComponent? frictionComponent = TouchesFrictionContactsComponent(uid, physicsComponent);
+
+        if (frictionComponent == null)
+        {
+            _speedModifierSystem.ChangeFriction(uid, MovementSpeedModifierComponent.DefaultFriction, null, MovementSpeedModifierComponent.DefaultAcceleration, speedModifier);
+        }
+        else
+        {
+            _speedModifierSystem.ChangeFriction(uid, frictionComponent.MobFriction, frictionComponent.MobFrictionNoInput, frictionComponent.MobAcceleration, speedModifier);
+        }
+    }
+
+    private FrictionContactsComponent? TouchesFrictionContactsComponent(EntityUid uid, PhysicsComponent physicsComponent)
+    {
         foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
         {
-            if (!TryComp<FrictionContactsComponent>(ent, out var frictionComponent))
+            if (!TryComp(ent, out FrictionContactsComponent? frictionContacts))
                 continue;
 
-            friction = frictionComponent.MobFriction;
-            frictionNoInput = frictionComponent.MobFrictionNoInput;
-            acceleration = frictionComponent.MobAcceleration;
-
-            remove = false;
+            return frictionContacts;
         }
 
-        args.ChangeFriction(friction, frictionNoInput, acceleration);
-
-        if (remove)
-        {
-            _toRemove.Add(uid);
-        }
+        return null;
     }
 }

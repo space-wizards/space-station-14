@@ -228,7 +228,7 @@
   - type: EntitySpawnAnomaly
     spawns:
     - IceCrust
-    maxSpawnAmount: 15
+    maxSpawnAmount: 17
     spawnOnPulse: false
     spawnOnSuperCritical: false
     spawnOnStabilityChanged: true
