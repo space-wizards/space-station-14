@@ -1,47 +1,48 @@
-# Специальные [3-10]: TearColor: Для мейнтенеров - #efcb68, Color: Любой
-# Спонсор [2]: TearColor: #d61111, Color #ffb3de
-# Меценат [1]: TearColor: #98a605
-# Робаст+ [0]: TearColor: #8ccf6b
-# Для всех тиров кроме специальных цвет (Color) #ffffff
-
+- Name: "Sup0"
+  InGame: "Sup0"
+  TierName: Робаст  
+  Color: "#ffffff"
+  TierColor: "#ffffff"
+  Tier: 0
 - Name: "Laastrog"
   InGame: "Laastrog"
   TierName: Робаст+
   Color: "#ffffff"
   TierColor: "#8ccf6b"
-  Tier: 0
+  Tier: 1
 - Name: "Swaiper5"
   InGame: "Swaiper5"
   TierName: Робаст+
   Color: "#ffffff"
   TierColor: "#8ccf6b"
-  Tier: 0
+  Tier: 1
 - Name: "Mexanik"
   InGame: "Mexanik78"
-  TierName: Спонсор
+  TierName: Легендарный фиксер
   Color: "#ffb3de"
   TierColor: "#d61111"
-  Tier: 2
+  Tier: 3
 - Name: "Gamecrol"
   InGame: "Vixen"
-  TierName: Робаст+
+  TierName: Садист
   Color: "#ffffff"
   TierColor: "#8ccf6b"
-  Tier: 0
+  Tier: 1
 - Name: "Regex"
   InGame: "regexname112"
   TierName: Робаст+
   Color: "#ffffff"
   TierColor: "#8ccf6b"
+  Tier: 1
 - Name: "Yuoko"
   InGame: "Yuoko"
-  TierName: Мейнтейнер, Кодовнер, ФинДир
+  TierName: ФинДир
   Color: "#ffffff"
   TierColor: "#efcb68"
-  Tier: 3
+  Tier: 4
 - Name: "Temporaldarkness"
   InGame: "temporaldarkness"
   TierName: Ведущий? Мейнтейнер
   Color: "#87cefa"
   TierColor: "#efcb68"
-  Tier: 3
+  Tier: 4
