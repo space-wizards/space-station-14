@@ -1,66 +1,47 @@
-- Name: "AltMapper"
-  InGame: "AltMapper"
-  TierName: Революционер
-  Color: "#ffffff"
-  TierColor: "#ffffff"
-  Tier: 0
-- Name: "Замятыш"
-  InGame: "SilverBear"
-  TierName: Репортёр
-  Color: "#ffffff"
-  TierColor: "#ffffff"
-  Tier: 0
-- Name: "Дмитрий Агзамов"
-  InGame: "Agzamov"
-  TierName: Варден
-  Color: "#ffffff"
-  TierColor: "#ffffff"
-  Tier: 0
-- Name: "Sup0"
-  InGame: "Sup0"
-  TierName: Космический дракон
-  Color: "#ffffff"
-  TierColor: "#ffffff"
-  Tier: 1
+# Специальные [3-10]: TearColor: Для мейнтенеров - #efcb68, Color: Любой
+# Спонсор [2]: TearColor: #d61111, Color #ffb3de
+# Меценат [1]: TearColor: #98a605
+# Робаст+ [0]: TearColor: #8ccf6b
+# Для всех тиров кроме специальных цвет (Color) #ffffff
+
 - Name: "Laastrog"
   InGame: "Laastrog"
-  TierName: Поддержавший
+  TierName: Робаст+
   Color: "#ffffff"
-  TierColor: "#ffffff"
+  TierColor: "#8ccf6b"
   Tier: 0
 - Name: "Swaiper5"
   InGame: "Swaiper5"
-  TierName: Поддержавший
+  TierName: Робаст+
   Color: "#ffffff"
-  TierColor: "#ffffff"
+  TierColor: "#8ccf6b"
   Tier: 0
-- Name: "Alexei_Libonov"
-  InGame: "Alexei_Libonov"
-  TierName: Офицер бумажной работы
-  Color: "#ffffff"
-  TierColor: "#ffffff"
-  Tier: 2
 - Name: "Mexanik"
   InGame: "Mexanik78"
-  TierName: Легендарный фиксер
-  Color: "#ffffff"
-  TierColor: "#ffffff"
-  Tier: 3
+  TierName: Спонсор
+  Color: "#ffb3de"
+  TierColor: "#d61111"
+  Tier: 2
 - Name: "Gamecrol"
   InGame: "Vixen"
-  TierName: Садист
+  TierName: Робаст+
   Color: "#ffffff"
-  TierColor: "#ffffff"
-  Tier: 2
+  TierColor: "#8ccf6b"
+  Tier: 0
+- Name: "Regex"
+  InGame: "regexname112"
+  TierName: Робаст+
+  Color: "#ffffff"
+  TierColor: "#8ccf6b"
 - Name: "Yuoko"
   InGame: "Yuoko"
-  TierName: Казначей
+  TierName: Мейнтейнер, Кодовнер, ФинДир
   Color: "#ffffff"
-  TierColor: "#ffffff"
-  Tier: 4
+  TierColor: "#efcb68"
+  Tier: 3
 - Name: "Temporaldarkness"
   InGame: "temporaldarkness"
   TierName: Ведущий? Мейнтейнер
   Color: "#87cefa"
   TierColor: "#efcb68"
-  Tier: 4
+  Tier: 3
