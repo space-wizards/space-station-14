@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: 'Fixed new players added to admin logs defaulting to selected, even
-      when not all players are selected.', type: Fix}
-  id: 4569
-  time: '2023-08-14T01:53:48.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: Substations produce hot CO2 when destroyed now., type: Tweak}
@@ -2899,3 +2893,10 @@ Entries:
       modules., type: Add}
   id: 5068
   time: '2023-10-27T02:40:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Foam and smoke can now transfer chemicals when inhaled. Wear internals
+      to avoid this., type: Add}
+  - {message: Fixed foam dissolution animation., type: Fix}
+  id: 5069
+  time: '2023-10-27T02:52:11.0000000+00:00'
