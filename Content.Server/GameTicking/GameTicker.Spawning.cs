@@ -3,20 +3,20 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost;
-using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Players;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
-using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -29,7 +29,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly SharedJobSystem _jobs = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
-        private const string ObserverPrototypeName = "MobObserver";
+        public const string ObserverPrototypeName = "MobObserver";
 
         /// <summary>
         /// How many players have joined the round through normal methods.
@@ -52,7 +52,7 @@ namespace Content.Server.GameTicking
             return spawnableStations;
         }
 
-        private void SpawnPlayers(List<IPlayerSession> readyPlayers, Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
+        private void SpawnPlayers(List<ICommonSession> readyPlayers, Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
         {
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
             RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
@@ -116,7 +116,7 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.Select(x => _playerManager.GetSessionByUserId(x)).ToArray(), profiles, force));
         }
 
-        private void SpawnPlayer(IPlayerSession player, EntityUid station, string? jobId = null, bool lateJoin = true, bool silent = false)
+        private void SpawnPlayer(ICommonSession player, EntityUid station, string? jobId = null, bool lateJoin = true, bool silent = false)
         {
             var character = GetPlayerProfile(player);
 
@@ -129,7 +129,7 @@ namespace Content.Server.GameTicking
             SpawnPlayer(player, character, station, jobId, lateJoin, silent);
         }
 
-        private void SpawnPlayer(IPlayerSession player, HumanoidCharacterProfile character, EntityUid station, string? jobId = null, bool lateJoin = true, bool silent = false)
+        private void SpawnPlayer(ICommonSession player, HumanoidCharacterProfile character, EntityUid station, string? jobId = null, bool lateJoin = true, bool silent = false)
         {
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
@@ -271,7 +271,7 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(mob, aev, true);
         }
 
-        public void Respawn(IPlayerSession player)
+        public void Respawn(ICommonSession player)
         {
             _mind.WipeMind(player);
             _adminLogger.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
@@ -289,7 +289,7 @@ namespace Content.Server.GameTicking
         /// <param name="station">The station they're spawning on</param>
         /// <param name="jobId">An optional job for them to spawn as</param>
         /// <param name="silent">Whether or not the player should be greeted upon joining</param>
-        public void MakeJoinGame(IPlayerSession player, EntityUid station, string? jobId = null, bool silent = false)
+        public void MakeJoinGame(ICommonSession player, EntityUid station, string? jobId = null, bool silent = false)
         {
             if (!_playerGameStatuses.ContainsKey(player.UserId))
                 return;
@@ -303,7 +303,7 @@ namespace Content.Server.GameTicking
         /// <summary>
         /// Causes the given player to join the current game as observer ghost. See also <see cref="SpawnObserver"/>
         /// </summary>
-        public void JoinAsObserver(IPlayerSession player)
+        public void JoinAsObserver(ICommonSession player)
         {
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
@@ -317,7 +317,7 @@ namespace Content.Server.GameTicking
         /// Spawns an observer ghost and attaches the given player to it. If the player does not yet have a mind, the
         /// player is given a new mind with the observer role. Otherwise, the current mind is transferred to the ghost.
         /// </summary>
-        public void SpawnObserver(IPlayerSession player)
+        public void SpawnObserver(ICommonSession player)
         {
             if (DummyTicker)
                 return;
@@ -430,13 +430,13 @@ namespace Content.Server.GameTicking
     [PublicAPI]
     public sealed class PlayerBeforeSpawnEvent : HandledEntityEventArgs
     {
-        public IPlayerSession Player { get; }
+        public ICommonSession Player { get; }
         public HumanoidCharacterProfile Profile { get; }
         public string? JobId { get; }
         public bool LateJoin { get; }
         public EntityUid Station { get; }
 
-        public PlayerBeforeSpawnEvent(IPlayerSession player, HumanoidCharacterProfile profile, string? jobId, bool lateJoin, EntityUid station)
+        public PlayerBeforeSpawnEvent(ICommonSession player, HumanoidCharacterProfile profile, string? jobId, bool lateJoin, EntityUid station)
         {
             Player = player;
             Profile = profile;
@@ -455,7 +455,7 @@ namespace Content.Server.GameTicking
     public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
     {
         public EntityUid Mob { get; }
-        public IPlayerSession Player { get; }
+        public ICommonSession Player { get; }
         public string? JobId { get; }
         public bool LateJoin { get; }
         public EntityUid Station { get; }
@@ -464,7 +464,7 @@ namespace Content.Server.GameTicking
         // Ex. If this is the 27th person to join, this will be 27.
         public int JoinOrder { get; }
 
-        public PlayerSpawnCompleteEvent(EntityUid mob, IPlayerSession player, string? jobId, bool lateJoin, int joinOrder, EntityUid station, HumanoidCharacterProfile profile)
+        public PlayerSpawnCompleteEvent(EntityUid mob, ICommonSession player, string? jobId, bool lateJoin, int joinOrder, EntityUid station, HumanoidCharacterProfile profile)
         {
             Mob = mob;
             Player = player;
