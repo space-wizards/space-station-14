@@ -5,6 +5,7 @@ using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Ganimed.SponsorManager;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Players;
@@ -30,6 +31,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
+    [Dependency] private readonly SponsorManager _sponsorManager = default!;
 
     public override void Initialize()
     {
@@ -158,7 +160,10 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     public bool IsAllowed(IPlayerSession player, string role)
     {
-        if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
+        if (_sponsorManager.IsHost(player))
+			return true;
+		
+		if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
             job.Requirements == null ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
@@ -171,7 +176,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     public HashSet<string> GetDisallowedJobs(IPlayerSession player)
     {
         var roles = new HashSet<string>();
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+		if (!_cfg.GetCVar(CCVars.GameRoleTimers) || _sponsorManager.IsHost(player))
             return roles;
 
         var playTimes = _tracking.GetTrackerTimes(player);

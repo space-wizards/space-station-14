@@ -325,9 +325,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         string sender = "Системы Оповещений",
         bool playDefaultSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+		bool? highlight = false)
     {
-        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+		var wrapString = (highlight is not null && highlight.Value) ? "chat-manager-sender-announcement-highlight-wrap-message" : "chat-manager-sender-announcement-wrap-message";
+		
+        var wrappedMessage = Loc.GetString(wrapString, ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         var station = _stationSystem.GetOwningStation(source);
 
         if (station == null)
