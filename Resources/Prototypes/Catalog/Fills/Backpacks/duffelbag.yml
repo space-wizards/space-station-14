@@ -329,3 +329,17 @@
       - id: ClothingHandsGlovesLatex
       - id: SyringeTranexamicAcid
       - id: SyringeHyronalin
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelCentcomCostume
+  name: official centcom costume bundle
+  description: it doesn't suit you
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatCentcom
+      - id: ClothingEyesGlassesSunglasses
+      - id: ClothingUniformJumpsuitCentcomOfficer
+      - id: ClothingShoesBootsLaceup
+
