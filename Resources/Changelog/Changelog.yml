@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug causing inventory slots to sometimes ignore interactions
-      (e.g., not opening the context menu).', type: Fix}
-  id: 4565
-  time: '2023-08-13T21:55:18.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fix "remove single hand" admin smite having gone missing., type: Fix}
@@ -2898,3 +2892,9 @@ Entries:
   - {message: Ribs and Mcribs now give back skewers when eaten, type: Fix}
   id: 5064
   time: '2023-10-27T02:12:35.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Headrevs now have their own music on spawn, credits to A-Guy on youtube',
+    type: Add}
+  id: 5065
+  time: '2023-10-27T02:19:35.0000000+00:00'
