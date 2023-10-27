@@ -32,25 +32,38 @@
 - type: htnCompound
   id: RuminantCompound
   branches:
-  - tasks:
-    - !type:HTNCompoundTask
-      task: FoodCompound
-  - tasks:
-    - !type:HTNCompoundTask
-      task: IdleCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: FoodCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
 
 - type: htnCompound
   id: RuminantHostileCompound
   branches:
-  - tasks:
-    - !type:HTNCompoundTask
-      task: MeleeCombatCompound
-  - tasks:
-    - !type:HTNCompoundTask
-      task: FoodCompound
-  - tasks:
-    - !type:HTNCompoundTask
-      task: IdleCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: FoodCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+- type: htnCompound
+  id: PredatorHostileCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
 
 - type: htnCompound
   id: DragonCarpCompound
