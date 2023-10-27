@@ -834,6 +834,7 @@ namespace Content.Client.Preferences.UI
                 OnProfileChanged?.Invoke(Profile, CharacterSlot);
                 _needUpdatePreview = true;
                 UpdateRoleRequirements(); //SS220 Species-Job-Requirement
+                UpdateJobPriorities();
             }
         }
 
@@ -1142,7 +1143,6 @@ namespace Content.Client.Preferences.UI
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
-            UpdateJobPriorities();
             UpdateAntagPreferences();
             UpdateTraitPreferences();
             UpdateMarkings();
@@ -1152,6 +1152,7 @@ namespace Content.Client.Preferences.UI
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
             UpdateRoleRequirements(); //SS220 Species-Job-Requirement
+            UpdateJobPriorities();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
