@@ -707,6 +707,19 @@
     jobTitle: Cluwne
   - type: Unremoveable
 
+
+- type: entity
+  parent: IDCardStandard
+  id: SeniorCollecterIDCard
+  name: senior collecter ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idseniorcollecter
+  - type: PresetIdCard
+    job: SeniorCollecter
+
 - type: entity
   parent: IDCardStandard
   id: SeniorEngineerIDCard

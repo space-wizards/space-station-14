@@ -27,6 +27,22 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSupplying
+  name: supplying beret
+  description: A stylish beret colored into the supply department colors. Has a gold patch on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_supplying.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_supplying.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretSecurity
   name: security beret
   description: A stylish clothing option for security officers.

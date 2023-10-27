@@ -886,6 +886,21 @@
 
 - type: entity
   parent: BasePDA
+  id: SeniorCollecterPDA
+  name: senior collecter PDA
+  description: Looks rusty and has some peeling paint, as if it hasn't been changed for centuries.
+  components:
+  - type: Pda
+    id: SeniorCollecterIDCard
+    state: pda-seniorcollecter
+  - type: PdaBorderColor
+    borderColor: "#e39751"
+    accentVColor: "#8900c9"
+  - type: Icon
+    state: pda-seniorcollecter
+
+- type: entity
+  parent: BasePDA
   id: SeniorEngineerPDA
   name: senior engineer PDA
   description: Seems to have been taken apart and put back together several times.
