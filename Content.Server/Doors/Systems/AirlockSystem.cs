@@ -178,11 +178,16 @@ public sealed class AirlockSystem : SharedAirlockSystem
 
     private void OnBeforePry(EntityUid uid, AirlockComponent component, ref BeforePryEvent args)
     {
-        if (this.IsPowered(uid, EntityManager) && !args.PryPowered)
-        {
-            Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
-            args.Cancelled = true;
-        }
+        if (args.Cancelled)
+            return;
+
+        if (!this.IsPowered(uid, EntityManager) || args.PryPowered)
+            return;
+
+        args.Message = "airlock-component-cannot-pry-is-powered-message";
+
+        args.Cancelled = true;
+
     }
 
     public bool CanChangeState(EntityUid uid, AirlockComponent component)

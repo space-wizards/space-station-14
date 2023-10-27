@@ -21,6 +21,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: BoxSurvivalEngineering
       - id: WeaponShotgunDoubleBarreled
       - id: BoxShotgunIncendiary
         amount: 2
@@ -313,6 +314,7 @@
       - id: HandheldHealthAnalyzer
       - id: CombatMedipen
       - id: MicroBombImplanter
+      - id: SyndiHypo
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle

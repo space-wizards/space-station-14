@@ -436,7 +436,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         var compZero = comps[0];
         comps.RemoveAt(0);
 
-        foreach (var comp in _lookup.GetComponentsInRange(compZero.Component.GetType(), mapPos, vision))
+        foreach (var comp in _lookup.GetEntitiesInRange(compZero.Component.GetType(), mapPos, vision))
         {
             var ent = comp.Owner;
 
