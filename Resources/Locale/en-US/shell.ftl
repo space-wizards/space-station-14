@@ -18,6 +18,8 @@ shell-argument-must-be-number = Argument must be a number.
 shell-argument-must-be-boolean = Argument must be a boolean.
 shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
+shell-need-minimum-arguments = Need at least {$minimum} arguments!
+shell-need-minimum-one-argument = Need at least one argument!
 
 shell-argument-uid = EntityUid
 

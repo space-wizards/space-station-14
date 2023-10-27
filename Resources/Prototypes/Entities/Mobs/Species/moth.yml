@@ -38,8 +38,6 @@
       Female: UnisexMoth
       Unsexed: UnisexMoth
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
     weightlessAcceleration: 1.5 # Move around more easily in space.
     weightlessFriction: 1
     weightlessModifier: 1

@@ -111,6 +111,13 @@ namespace Content.Server.Database
                 .HasForeignKey(player => player.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId);
 
+            modelBuilder.Entity<Round>()
+                .HasIndex(round => round.StartDate);
+
+            modelBuilder.Entity<Round>()
+                .Property(round => round.StartDate)
+                .HasDefaultValue(default(DateTime));
+
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
 
@@ -468,6 +475,8 @@ namespace Content.Server.Database
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public DateTime StartDate { get; set; }
+
         public List<Player> Players { get; set; } = default!;
 
         public List<AdminLog> AdminLogs { get; set; } = default!;
@@ -507,8 +516,6 @@ namespace Content.Server.Database
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
 
         public List<AdminLogPlayer> Players { get; set; } = default!;
-
-        public List<AdminLogEntity> Entities { get; set; } = default!;
     }
 
     public class AdminLogPlayer
@@ -519,12 +526,6 @@ namespace Content.Server.Database
         [Required, Key] public int LogId { get; set; }
         [Required, Key] public int RoundId { get; set; }
         [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
-    }
-
-    public class AdminLogEntity
-    {
-        [Required, Key] public int Uid { get; set; }
-        public string? Name { get; set; } = default!;
     }
 
     // Used by SS14.Admin

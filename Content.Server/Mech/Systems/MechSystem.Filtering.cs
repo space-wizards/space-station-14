@@ -3,7 +3,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Mech.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Mech.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Mech.Systems;
 
@@ -58,9 +57,9 @@ public sealed partial class MechSystem
 
         var coordinates = Transform(uid).MapPosition;
         GasMixture? destination = null;
-        if (_map.TryFindGridAt(coordinates, out _, out var grid))
+        if (_map.TryFindGridAt(coordinates, out var gridId, out var grid))
         {
-            var tile = grid.GetTileRef(coordinates);
+            var tile = _mapSystem.GetTileRef(gridId, grid, coordinates);
             destination = _atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true);
         }
 

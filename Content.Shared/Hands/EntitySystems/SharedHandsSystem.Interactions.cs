@@ -1,7 +1,9 @@
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
+using Content.Shared.Localizations;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -180,12 +182,21 @@ public abstract partial class SharedHandsSystem : EntitySystem
     //TODO: Actually shows all items/clothing/etc.
     private void HandleExamined(EntityUid uid, HandsComponent handsComp, ExaminedEvent args)
     {
-        foreach (var inhand in EnumerateHeld(uid, handsComp))
+        var held = EnumerateHeld(uid, handsComp).ToList();
+        if (!held.Any())
         {
-            if (HasComp<HandVirtualItemComponent>(inhand))
-                continue;
-
-            args.PushText(Loc.GetString("comp-hands-examine", ("user", Identity.Entity(handsComp.Owner, EntityManager)), ("item", inhand)));
+            args.PushText(Loc.GetString("comp-hands-examine-empty",
+                ("user", Identity.Entity(uid, EntityManager))));
+            return;
         }
+
+        var heldList = ContentLocalizationManager.FormatList(held
+            .Where(x => !HasComp<HandVirtualItemComponent>(x))
+            .Select(x => Loc.GetString("comp-hands-examine-wrapper",
+                ("item", Identity.Entity(x, EntityManager)))).ToList());
+
+        args.PushMarkup(Loc.GetString("comp-hands-examine",
+            ("user", Identity.Entity(uid, EntityManager)),
+            ("items", heldList)));
     }
 }

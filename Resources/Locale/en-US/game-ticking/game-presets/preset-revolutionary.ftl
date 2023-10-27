@@ -1,11 +1,11 @@
 ## Rev Head
 
 roles-antag-rev-head-name = Head Revolutionary
-roles-antag-rev-head-objective = Your objective is to take over the station by converting people to your cause and kill all Command staff on station.
+roles-antag-rev-head-objective = Your objective is to take over the station by converting people to your cause and killing all Command staff on station.
 
 head-rev-role-greeting =
     You are a Head Revolutionary.
-    You are tasked with taking over the station by any means necessary.
+    You are tasked with removing all of Command from station via death or exilement.
     The Syndicate has sponsored you with a flash that converts the crew to your side.
     Beware, this won't work on Security, Command, or those wearing sunglasses.
     Viva la revolución!
@@ -34,7 +34,7 @@ rev-break-control = {$name} has remembered their true allegiance!
 rev-role-greeting =
     You are a Revolutionary.
     You are tasked with taking over the station and protecting the Head Revolutionaries.
-    Eliminate all of the command staff.
+    Eliminate all of the Command staff.
     Viva la revolución!
 
 rev-briefing = Help your head revolutionaries kill every head to take over the station.
@@ -46,15 +46,16 @@ rev-description = Revolutionaries are among us.
 
 rev-not-enough-ready-players = Not enough players readied up for the game. There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start a Revolution.
 rev-no-one-ready = No players readied up! Can't start a Revolution.
+rev-no-heads = There were no Head Revolutionaries to be selected. Can't start a Revolution.
 
 rev-all-heads-dead = All the heads are dead, now finish up the rest of the crew!
 
-rev-won = The Head Revs survived and killed all of command.
+rev-won = The Head Revs survived and killed all of Command.
 
 rev-lost = Command survived and killed all of the Head Revs.
 
-rev-stalemate = All of the Head Revs died and so did all of command. We'll call it a draw.
+rev-stalemate = All of the Head Revs and Command died. It's a draw.
 
-rev-reverse-stalemate = I think the Head Revs and command forgot to fight because they are both still alive.
+rev-reverse-stalemate = Both Command and Head Revs survived.
 
 
