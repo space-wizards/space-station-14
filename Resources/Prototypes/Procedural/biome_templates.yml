@@ -485,7 +485,7 @@
   id: Shadow
   layers:
     - !type:BiomeEntityLayer
-      threshold: 0.9
+      threshold: 0.70
       noise:
         frequency: 1
         seed: 3
