@@ -28,7 +28,6 @@ namespace Content.Server.Gateway.Systems;
 /// </summary>
 public sealed class GatewayGeneratorSystem : EntitySystem
 {
-    [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
@@ -59,7 +58,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     // Probably need reduced ore spawn rate.
     // Fix unlocks / locking
     // Add an initial 15min lockout or something on roundstart
-    // Just daisy chain gateways and leave them permanent.
 
     public override void Initialize()
     {
