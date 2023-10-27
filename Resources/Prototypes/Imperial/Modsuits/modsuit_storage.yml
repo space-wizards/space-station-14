@@ -1,189 +1,189 @@
-# - type: entity
-#   name: ModSuit Storage CE
-#   description: ModSuit Storage
-#   id: ModSuitStorageCE
-#   parent: SuitStorageBase
-#   suffix: Chief Engineer
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: JetpackVoidFilled
-#         - id: ClothingShoesBootsMagAdv
-#         - id: ClothingControlModsuitCESealed
-#         - id: ClothingMaskGasAtmos
+- type: entity
+  name: ModSuit Storage CE
+  description: ModSuit Storage
+  id: ModSuitStorageCE
+  parent: SuitStorageBase
+  suffix: Chief Engineer
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: JetpackVoidFilled
+        - id: ClothingShoesBootsMagAdv
+        - id: ClothingControlModsuitCESealed
+        - id: ClothingMaskGasAtmos
 
-# - type: entity
-#   name: ModSuit Storage Captain
-#   description: ModSuit Storage
-#   id: ModSuitStorageCapSpace
-#   parent: SuitStorageBase
-#   suffix: Cap Space
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitMagnateSealed
-#         - id: ClothingMaskGasCaptain
+- type: entity
+  name: ModSuit Storage Captain
+  description: ModSuit Storage
+  id: ModSuitStorageCapSpace
+  parent: SuitStorageBase
+  suffix: Cap Space
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitMagnateSealed
+        - id: ClothingMaskGasCaptain
 
-# - type: entity
-#   name: ModSuit storage Civillian
-#   description: ModSuit storage
-#   id: ModSuitStorageCivillian
-#   parent: SuitStorageBase
-#   suffix: Civ suit
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitCivillianSealed
-#         - id: ClothingMaskBreath
+- type: entity
+  name: ModSuit storage Civillian
+  description: ModSuit storage
+  id: ModSuitStorageCivillian
+  parent: SuitStorageBase
+  suffix: Civ suit
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitCivillianSealed
+        - id: ClothingMaskBreath
 
-# - type: entity
-#   name: ModSuit Storage CMO
-#   description: ModSuit Storage
-#   id: ModSuitStorageCMO
-#   parent: SuitStorageBase
-#   suffix: СMO
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitCMOSealed
-#         - id: ClothingMaskBreath
+- type: entity
+  name: ModSuit Storage CMO
+  description: ModSuit Storage
+  id: ModSuitStorageCMO
+  parent: SuitStorageBase
+  suffix: СMO
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitCMOSealed
+        - id: ClothingMaskBreath
 
-# - type: entity
-#   name: ModSuit Storage RND
-#   description: ModSuit Storage
-#   id: ModSuitStorageRND
-#   parent: SuitStorageBase
-#   suffix: RND
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitRNDSealed
-#         - id: ClothingMaskBreath
+- type: entity
+  name: ModSuit Storage RND
+  description: ModSuit Storage
+  id: ModSuitStorageRND
+  parent: SuitStorageBase
+  suffix: RND
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitRNDSealed
+        - id: ClothingMaskBreath
 
-# - type: entity
-#   name: ModSuit Storage Medical
-#   description: ModSuit Storage 
-#   id: ModSuitStorageMedical
-#   parent: SuitStorageBase
-#   suffix: Medical
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitMedicalSealed
-#         - id: ClothingMaskBreath
+- type: entity
+  name: ModSuit Storage Medical
+  description: ModSuit Storage 
+  id: ModSuitStorageMedical
+  parent: SuitStorageBase
+  suffix: Medical
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitMedicalSealed
+        - id: ClothingMaskBreath
 
-# - type: entity
-#   name: ModSuit Storage Security
-#   description: ModSuit Storage 
-#   id: ModSuitStorageSecurity
-#   parent: SuitStorageBase
-#   suffix: Security
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitSecuritySealed
-#         - id: ClothingMaskGasSecurity
+- type: entity
+  name: ModSuit Storage Security
+  description: ModSuit Storage 
+  id: ModSuitStorageSecurity
+  parent: SuitStorageBase
+  suffix: Security
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitSecuritySealed
+        - id: ClothingMaskGasSecurity
 
-# - type: entity
-#   name: ModSuit Storage Salvage
-#   description: ModSuit Storage
-#   id: ModSuitStorageSalvage
-#   parent: SuitStorageBase
-#   suffix: Salvage
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitSalvageSealed
-#         - id: ClothingMaskGasExplorer
-#         - id: ClothingShoesBootsMag
+- type: entity
+  name: ModSuit Storage Salvage
+  description: ModSuit Storage
+  id: ModSuitStorageSalvage
+  parent: SuitStorageBase
+  suffix: Salvage
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitSalvageSealed
+        - id: ClothingMaskGasExplorer
+        - id: ClothingShoesBootsMag
 
-# - type: entity
-#   name: ModSuit Storage Salvage
-#   description: ModSuit Storage
-#   id: ModSuitStorageMiner
-#   parent: SuitStorageBase
-#   suffix: Miner
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitMinerSealed
-#         - id: ClothingMaskGasExplorer
-#         - id: ClothingShoesBootsMag
+- type: entity
+  name: ModSuit Storage Salvage
+  description: ModSuit Storage
+  id: ModSuitStorageMiner
+  parent: SuitStorageBase
+  suffix: Miner
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitMinerSealed
+        - id: ClothingMaskGasExplorer
+        - id: ClothingShoesBootsMag
 
-# - type: entity
-#   name: ModSuit Storage Engineer
-#   description: ModSuit Storage
-#   id: ModSuitStorageEngineer
-#   parent: SuitStorageBase
-#   suffix: Engineer
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitEngineerSealed
-#         - id: ClothingMaskGas
-#         - id: ClothingShoesBootsMag
+- type: entity
+  name: ModSuit Storage Engineer
+  description: ModSuit Storage
+  id: ModSuitStorageEngineer
+  parent: SuitStorageBase
+  suffix: Engineer
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitEngineerSealed
+        - id: ClothingMaskGas
+        - id: ClothingShoesBootsMag
 
-# - type: entity
-#   name: ModSuit Storage Atmos
-#   description: ModSuit Storage
-#   id: ModSuitStorageAtmos
-#   parent: SuitStorageBase
-#   suffix: Atmos
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitAtmosphericsSealed
-#         - id: ClothingMaskGasAtmos
-#         - id: ClothingShoesBootsMag
+- type: entity
+  name: ModSuit Storage Atmos
+  description: ModSuit Storage
+  id: ModSuitStorageAtmos
+  parent: SuitStorageBase
+  suffix: Atmos
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitAtmosphericsSealed
+        - id: ClothingMaskGasAtmos
+        - id: ClothingShoesBootsMag
 
-# - type: entity
-#   name: ModSuit Storage HOS
-#   description: ModSuit Storage
-#   id: ModSuitStorageHOS
-#   parent: SuitStorageBase
-#   suffix: HOS
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitHOSSealed
-#         - id: ClothingMaskGasSwat
-#         - id: JetpackSecurityFilled
+- type: entity
+  name: ModSuit Storage HOS
+  description: ModSuit Storage
+  id: ModSuitStorageHOS
+  parent: SuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitHOSSealed
+        - id: ClothingMaskGasSwat
+        - id: JetpackSecurityFilled
 
-# - type: entity
-#   name: ModSuit Storage Centcom
-#   description: ModSuit Storage
-#   id: ModSuitStorageCentcom
-#   parent: SuitStorageBase
-#   suffix: HOS
-#   components:
-#   - type: StorageFill
-#     contents:
-#         - id: NitrogenTankFilled
-#         - id: OxygenTankFilled
-#         - id: ClothingControlModsuitCCSealed
-#         - id: ClothingMaskGasCentcom
-#         - id: JetpackSecurityFilled
+- type: entity
+  name: ModSuit Storage Centcom
+  description: ModSuit Storage
+  id: ModSuitStorageCentcom
+  parent: SuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingControlModsuitCCSealed
+        - id: ClothingMaskGasCentcom
+        - id: JetpackSecurityFilled
