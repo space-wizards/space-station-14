@@ -1678,7 +1678,7 @@
   name: white spindle
   parent: MobGiantSpider
   id: MobWhiteSpindleSpider
-  description: Hand-spider, spinning webs. A bit irritable and bites painfully.
+  description: Hand-spider, spinning webs. A bit irritable and bites painfully. It eats only meat.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -1700,7 +1700,7 @@
     - Passive
   - type: HTN
     rootTask:
-      task: RuminantHostileCompound
+      task: PredatorHostileCompound
   - type: EggLayer
     eggSpawn:
     - id: SpiderWeb
