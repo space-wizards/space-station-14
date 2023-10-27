@@ -222,7 +222,7 @@
   - type: Tag
     tags:
     - Fruit
-    
+
 - type: entity
   name: mimana
   parent: FoodProduceBase
@@ -1237,7 +1237,7 @@
   - type: Tag
     tags:
     - Galaxythistle
-    - Fruit # Probably? 
+    - Fruit # Probably?
 
 - type: entity
   name: fly amanita
@@ -1567,9 +1567,9 @@
   - type: BadFood
 
 - type: entity
-  name: pea pod
   parent: FoodProduceBase
   id: FoodPeaPod
+  name: pea pod
   description: A duck's favorite treat!
   components:
   - type: FlavorProfile

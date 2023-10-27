@@ -501,9 +501,9 @@
 
 - type: entity
   parent: SeedBase
+  id: PeaSeeds
   name: packet of pea pods
   description: "These humble plants were once a vital part in the study of genetics."
-  id: PeaSeeds
   components:
     - type: Seed
       seedId: pea
