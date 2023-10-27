@@ -18,6 +18,7 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
+using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
@@ -248,6 +249,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             _appearance.SetData(uid, FireVisuals.OnFire, flammable.OnFire, appearance);
             _appearance.SetData(uid, FireVisuals.FireStacks, flammable.FireStacks, appearance);
+
+            // Also enable toggleable-light visuals
+            // This is intended so that matches & candles can re-use code for un-shaded layers on in-hand sprites.
+            // However, this could cause conflicts if something is ACTUALLY both a toggleable light and flammable.
+            // if that ever happens, then fire visuals will need to implement their own in-hand sprite management.
+            _appearance.SetData(uid, ToggleableLightVisuals.Enabled, true, appearance);
         }
 
         public void AdjustFireStacks(EntityUid uid, float relativeFireStacks, FlammableComponent? flammable = null)

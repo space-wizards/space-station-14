@@ -38,7 +38,7 @@
       sprite: Objects/Misc/candles.rsi
       normalState: fire-big
     - type: ToggleableLightVisuals
-      spriteLayer: enum.FireVisuals.OnFire
+      spriteLayer: null
       inhandVisuals:
         left:
         - state: inhand-left-flame
