@@ -197,7 +197,7 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
-    maxTotalWeight: 40
+    maxTotalWeight: 44
 
 - type: entity
   parent: ClothingBackpackERTLeader

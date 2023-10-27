@@ -114,7 +114,8 @@ namespace Content.Client.Storage.UI
             if (uid.Comp.MaxSlots == null)
             {
                 _information.SetMarkup(Loc.GetString("comp-storage-window-weight",
-                    ("percent", _storage.GetStorageFillPercentage((uid, uid.Comp)) * 100),
+                    ("weight", _storage.GetCumulativeItemSizes(uid, uid.Comp)),
+                    ("maxWeight", uid.Comp.MaxTotalWeight),
                     ("size", SharedItemSystem.GetItemSizeLocale(_storage.GetMaxItemSize((uid, uid.Comp))))));
             }
             else
@@ -165,7 +166,7 @@ namespace Content.Client.Storage.UI
                         {
                             Align = Label.AlignMode.Right,
                             Text = item?.Size != null
-                                ? SharedItemSystem.GetItemSizeLocale(item.Size)
+                                ? $"{SharedItemSystem.GetItemSizeWeight(item.Size)}"
                                 : Loc.GetString("comp-storage-no-item-size")
                         }
                     }

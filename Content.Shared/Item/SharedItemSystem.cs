@@ -18,9 +18,9 @@ public abstract class SharedItemSystem : EntitySystem
     public const int ItemSizeWeightTiny = 1;
     public const int ItemSizeWeightSmall = 2;
     public const int ItemSizeWeightNormal = 4;
-    public const int ItemSizeWeightLarge = 8;
-    public const int ItemSizeWeightHuge = 16;
-    public const int ItemSizeWeightGinormous = 32;
+    public const int ItemSizeWeightLarge = 16;
+    public const int ItemSizeWeightHuge = 24;
+    public const int ItemSizeWeightGinormous = 48;
 
     public override void Initialize()
     {
