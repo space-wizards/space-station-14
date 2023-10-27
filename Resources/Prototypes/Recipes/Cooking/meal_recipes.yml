@@ -1744,6 +1744,8 @@
     FoodBowlBig: 1
   reagents:
     Water: 10
+
+- type: microwaveMealRecipe
   id: RecipeTacoShell
   name: taco shell recipe
   result: FoodTacoShell
