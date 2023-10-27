@@ -1,6 +1,4 @@
 using System.Linq;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Examine;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
@@ -9,6 +7,7 @@ using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
@@ -366,7 +365,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 var compZero = comps[0];
                 comps.RemoveAt(0);
 
-                foreach (var comp in _lookup.GetComponentsInRange(compZero.Component.GetType(), mapPos, vision))
+                foreach (var comp in _lookup.GetEntitiesInRange(compZero.Component.GetType(), mapPos, vision))
                 {
                     var ent = comp.Owner;
 

@@ -57,8 +57,18 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation"
   source: "https://github.com/tgstation/tgstation/blob/e3a835b96043fad1269ee7b0c3a6cb340a466f3a/sound/effects/break_stone.ogg"
-  
+
 - files: ["waterswirl.ogg"]
-  license: "CC0-1.0"
+  license: "CC-BY-4.0"
   copyright: "Taken from InspectorJ via freesound.org and mixed from stereo to mono."
   source: "https://freesound.org/people/InspectorJ/sounds/398703/"
+
+- files: ["pop_high.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Taken from InspectorJ via freesound.org and mixed from stereo to mono."
+  source: "https://freesound.org/people/InspectorJ/sounds/411642/"
+
+- files: ["sizzle.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Recorded by deltanedas for SS14"
+  source: "https://github.com/deltanedas"

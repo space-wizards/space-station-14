@@ -51,7 +51,7 @@ namespace Content.Server.Body.Commands
             var mechanismName = string.Join(" ", args).ToLowerInvariant();
             var bodySystem = entityManager.System<BodySystem>();
 
-            foreach (var organ in bodySystem.GetBodyOrgans(body.Owner, body))
+            foreach (var organ in bodySystem.GetBodyOrgans(attached, body))
             {
                 if (fac.GetComponentName(organ.Component.GetType()).ToLowerInvariant() == mechanismName)
                 {
