@@ -1,12 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Fix "remove single hand" admin smite having gone missing., type: Fix}
-  - {message: Fix "remove hands" admin smite popup message., type: Fix}
-  id: 4566
-  time: '2023-08-13T22:50:58.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: AHelps now show a typing indicator to admins., type: Tweak}
   id: 4567
   time: '2023-08-13T23:03:17.0000000+00:00'
@@ -2898,3 +2892,9 @@ Entries:
     type: Add}
   id: 5065
   time: '2023-10-27T02:19:35.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Bodies of dead players who have taken a ghost role now show as "departed
+      and moved on"., type: Fix}
+  id: 5066
+  time: '2023-10-27T02:27:36.0000000+00:00'
