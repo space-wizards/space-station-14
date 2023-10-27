@@ -1069,7 +1069,7 @@
   icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndieelite.rsi, state: icon }
   productEntity: ClothingOuterHardsuitSyndieElite
   cost:
-    Telecrystal: 10
+    Telecrystal: 15
   categories:
   - UplinkArmor
   conditions:

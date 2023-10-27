@@ -350,7 +350,7 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: Item
-    size: 50
+    size: Normal
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -494,8 +494,8 @@
         Radiation: 0.25
         Caustic: 0.5
   - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
