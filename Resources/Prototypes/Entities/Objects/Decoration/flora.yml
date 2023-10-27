@@ -171,6 +171,60 @@
     state: rocksolid03
 
 - type: entity
+  parent: BaseRock
+  id: FloraStalagmite1
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite1
+
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite2
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite2
+
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite3
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite3
+
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite4
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite4
+
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite5
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite5
+    
+- type: entity
+  parent: BaseRock
+  id: FloraStalagmite6
+  name: rock
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
+    state: stalagmite6
+
+- type: entity
   parent: BaseTree
   id: FloraTree01
   name: tree
@@ -392,3 +446,52 @@
   components:
   - type: Sprite
     state: treestumpconifer
+
+- type: entity
+  parent: FloraTree01
+  id: ShadowTree01
+  name: tree
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
+    state: tree01
+
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree02
+  name: tree
+  components:
+  - type: Sprite
+    state: tree02
+    
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree03
+  name: tree
+  components:
+  - type: Sprite
+    state: tree03
+    
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree04
+  name: tree
+  components:
+  - type: Sprite
+    state: tree04
+    
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree05
+  name: tree
+  components:
+  - type: Sprite
+    state: tree05
+    
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree06
+  name: tree
+  components:
+  - type: Sprite
+    state: tree06

@@ -58,6 +58,9 @@ public sealed class InteractionPopupSystem : EntitySystem
 
             if (component.InteractSuccessSound != null)
                 sfx = component.InteractSuccessSound.GetSound();
+
+            if (component.InteractSuccessSpawn != null)
+                Spawn(component.InteractSuccessSpawn, Transform(uid).MapPosition);
         }
         else
         {
@@ -66,6 +69,9 @@ public sealed class InteractionPopupSystem : EntitySystem
 
             if (component.InteractFailureSound != null)
                 sfx = component.InteractFailureSound.GetSound();
+
+            if (component.InteractFailureSpawn != null)
+                Spawn(component.InteractFailureSpawn, Transform(uid).MapPosition);
         }
 
         if (component.MessagePerceivedByOthers != null)

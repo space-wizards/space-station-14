@@ -428,7 +428,7 @@ we are just going to end this here to save a lot of time. This is the exception 
     /// <summary>
     ///     Helper method that retrieves all entity prototypes that have some component.
     /// </summary>
-    public static List<EntityPrototype> GetPrototypesWithComponent<T>(RobustIntegrationTest.IntegrationInstance instance) where T : Component
+    public static List<EntityPrototype> GetPrototypesWithComponent<T>(RobustIntegrationTest.IntegrationInstance instance) where T : IComponent
     {
         var protoMan = instance.ResolveDependency<IPrototypeManager>();
         var compFact = instance.ResolveDependency<IComponentFactory>();

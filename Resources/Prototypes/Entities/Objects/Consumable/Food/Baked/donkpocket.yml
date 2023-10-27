@@ -58,7 +58,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 8
+        - ReagentId: Omnizine
+          Quantity: 2
 
 - type: entity
   name: dank-pocket
