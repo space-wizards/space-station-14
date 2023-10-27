@@ -14,7 +14,6 @@ namespace Content.Server.Abilities.Firestarter;
 
 public sealed class FirestarterSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -38,22 +37,7 @@ public sealed class FirestarterSystem : EntitySystem
         var xform = Transform(uid);
         var ignitionRadius = component.IgnitionRadius;
         IgniteNearby(uid, xform.Coordinates, args.Severity, ignitionRadius);
-        OnHeal(uid, component, args);
         _audio.PlayPvs(component.IgniteSound, uid);
-
-        args.Handled = true;
-    }
-
-    /// <summary>
-    /// Heals an amount of damage.
-    /// </summary>
-    private void OnHeal(EntityUid uid, FirestarterComponent component, FireStarterActionEvent args)
-    {
-
-        if (_container.IsEntityOrParentInContainer(uid))
-            return;
-
-        _damageable.TryChangeDamage(uid, component.HealingOnFire, true, false);
 
         args.Handled = true;
     }

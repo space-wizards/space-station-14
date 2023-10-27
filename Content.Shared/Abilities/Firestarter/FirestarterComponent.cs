@@ -1,5 +1,4 @@
 using Robust.Shared.Prototypes;
-using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.GameStates;
@@ -17,20 +16,6 @@ public sealed partial class FirestarterComponent : Component
     /// </summary>
     [DataField("ignitionRadius")]
     public float IgnitionRadius = 4f;
-
-    /// <summary>
-    /// Healing when using action.
-    /// </summary>
-    [DataField("healingOnFire")]
-    public DamageSpecifier HealingOnFire = new()
-    {
-        DamageDict = new()
-    {
-        { "Blunt", -8 },
-        { "Slash", -8 },
-        { "Piercing", -8 }
-    }
-    };
 
     /// <summary>
     /// The action entity.
