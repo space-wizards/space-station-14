@@ -111,7 +111,7 @@
       right:
       - state: inhand-right
         color: "#1b1724"
-        
+
 - type: entity
   name: green candle
   parent: Candle
@@ -129,7 +129,7 @@
       right:
       - state: inhand-right
         color: "#5d997e"
-        
+
 - type: entity
   name: purple candle
   parent: Candle
@@ -191,7 +191,7 @@
       right:
       - state: inhand-right
         color: "#a12349"
-        
+
 - type: entity
   name: small blue candle
   parent: CandleSmall
@@ -209,7 +209,7 @@
       right:
       - state: inhand-right
         color: "#425d7d"
-        
+
 - type: entity
   name: small black candle
   parent: CandleSmall
@@ -227,7 +227,7 @@
       right:
       - state: inhand-right
         color: "#1b1724"
-        
+
 - type: entity
   name: small green candle
   parent: CandleSmall
@@ -245,7 +245,7 @@
       right:
       - state: inhand-right
         color: "#5d997e"
-        
+
 - type: entity
   name: small purple candle
   parent: CandleSmall
@@ -263,7 +263,7 @@
       right:
       - state: inhand-right
         color: "#984aa1"
-        
+
 #Purely decorative candles for mappers. Do not have any functionality.
 
 - type: entity 
@@ -325,7 +325,7 @@
       right:
       - state: inhand-right
         color: "#425d7d"
-        
+
 - type: entity
   name: magic black candle
   parent: CandleInfinite
@@ -345,7 +345,7 @@
       right:
       - state: inhand-right
         color: "#1b1724"
-        
+
 - type: entity
   name: magic green candle
   parent: CandleInfinite
@@ -365,7 +365,7 @@
       right:
       - state: inhand-right
         color: "#5d997e"
-        
+
 - type: entity
   name: magic purple candle
   parent: CandleInfinite
@@ -405,7 +405,7 @@
       right:
       - state: inhand-right
         color: "#a12349"
-        
+
 - type: entity
   name: small magic blue candle
   parent: CandleInfinite
@@ -425,7 +425,7 @@
       right:
       - state: inhand-right
         color: "#425d7d"
-        
+
 - type: entity
   name: small magic black candle
   parent: CandleInfinite
@@ -445,7 +445,7 @@
       right:
       - state: inhand-right
         color: "#1b1724"    
-        
+
 - type: entity
   name: small magic green candle
   parent: CandleInfinite
@@ -465,7 +465,7 @@
       right:
       - state: inhand-right
         color: "#5d997e"  
-        
+
 - type: entity
   name: small magic purple candle
   parent: CandleInfinite
