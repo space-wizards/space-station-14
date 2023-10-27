@@ -494,6 +494,76 @@
       types:
         Blunt: 6
 
+- type: entity
+  id: BoxFolderQmClipboard
+  parent: BoxFolderBase
+  name: requisition digi-board
+  description: A bulky electric clipboard, filled with shipping orders and financing details. With so many compromising documents, you ought to keep this safe.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/qm_clipboard.rsi
+    layers:
+    - state: qm_clipboard
+    - state: qm_clipboard_paper
+      map: ["qm_clipboard_paper"]
+      visible: false
+    - state: qm_clipboard_pen
+      map: ["qm_clipboard_pen"]
+      visible: false
+    - state: qm_clipboard_over
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      pen_slot: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      pen_slot:
+        name: Pen
+        whitelist:
+          tags:
+            - Write
+        insertOnInteract: true
+  - type: Item
+    sprite: Objects/Misc/qm_clipboard.rsi
+    size: 30
+  - type: Clothing
+    slots: [belt]
+    quickEquip: false
+    sprite: Objects/Misc/qm_clipboard.rsi
+  - type: Storage
+    capacity: 90
+    quickInsert: true
+    whitelist:
+      tags:
+        - Document
+  - type: StorageFill
+    contents: [] #to override base folder fill
+  - type: ItemMapper
+    mapLayers:
+      qm_clipboard_paper:
+        whitelist:
+          tags:
+          - Document
+      qm_clipboard_pen:
+        whitelist:
+          tags:
+          - Write
+  - type: CargoOrderConsole
+  - type: ActivatableUI
+    verbText: qm-clipboard-computer-verb-text
+    key: enum.CargoConsoleUiKey.Orders
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Orders
+      type: CargoOrderConsoleBoundUserInterface
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+
 # Stamps
 - type: entity
   name: generic rubber stamp

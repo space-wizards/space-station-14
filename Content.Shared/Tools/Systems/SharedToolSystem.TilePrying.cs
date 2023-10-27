@@ -1,17 +1,15 @@
-using Content.Server.Tools.Components;
 using Content.Shared.Database;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
-namespace Content.Server.Tools;
+namespace Content.Shared.Tools.Systems;
 
-public sealed partial class ToolSystem
+public abstract partial class SharedToolSystem
 {
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-
     private void InitializeTilePrying()
     {
         SubscribeLocalEvent<TilePryingComponent, AfterInteractEvent>(OnTilePryingAfterInteract);
@@ -20,7 +18,8 @@ public sealed partial class ToolSystem
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target))) return;
+        if (args.Handled || !args.CanReach || args.Target != null && !HasComp<PuddleComponent>(args.Target))
+            return;
 
         if (TryPryTile(uid, args.User, component, args.ClickLocation))
             args.Handled = true;
@@ -33,26 +32,28 @@ public sealed partial class ToolSystem
 
         var coords = GetCoordinates(args.Coordinates);
         var gridUid = coords.GetGridUid(EntityManager);
-        if (!_mapManager.TryGetGrid(gridUid, out var grid))
+        if (!TryComp(gridUid, out MapGridComponent? grid))
         {
             Log.Error("Attempted to pry from a non-existent grid?");
             return;
         }
 
-        var tile = grid.GetTileRef(coords);
-        var center = _turf.GetTileCenter(tile);
+        var tile = _maps.GetTileRef(gridUid.Value, grid, coords);
+        var center = _turfs.GetTileCenter(tile);
+
         if (args.Used != null)
         {
             _adminLogger.Add(LogType.Tile, LogImpact.Low,
-                $"{ToPrettyString(args.User):actor} used {ToPrettyString(args.Used.Value):tool} to pry {_tileDefinitionManager[tile.Tile.TypeId].Name} at {center}");
+                $"{ToPrettyString(args.User):actor} used {ToPrettyString(args.Used.Value):tool} to pry {_tileDefManager[tile.Tile.TypeId].Name} at {center}");
         }
         else
         {
             _adminLogger.Add(LogType.Tile, LogImpact.Low,
-                $"{ToPrettyString(args.User):actor} pried {_tileDefinitionManager[tile.Tile.TypeId].Name} at {center}");
+                $"{ToPrettyString(args.User):actor} pried {_tileDefManager[tile.Tile.TypeId].Name} at {center}");
         }
 
-        _tile.PryTile(tile, component.Advanced);
+        if (_netManager.IsServer)
+            _tiles.PryTile(tile, component.Advanced);
     }
 
     private bool TryPryTile(EntityUid toolEntity, EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
@@ -60,17 +61,16 @@ public sealed partial class ToolSystem
         if (!TryComp<ToolComponent>(toolEntity, out var tool) && component.ToolComponentNeeded)
             return false;
 
-        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out _, out var mapGrid))
+        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out var gridUid, out var mapGrid))
             return false;
 
-        var tile = mapGrid.GetTileRef(clickLocation);
+        var tile = _maps.GetTileRef(gridUid, mapGrid, clickLocation);
+        var coordinates = _maps.GridTileToLocal(gridUid, mapGrid, tile.GridIndices);
 
-        var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-
-        if (!_interactionSystem.InRangeUnobstructed(user, coordinates, popup: false))
+        if (!InteractionSystem.InRangeUnobstructed(user, coordinates, popup: false))
             return false;
 
-        var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
+        var tileDef = (ContentTileDefinition) _tileDefManager[tile.Tile.TypeId];
 
         if (!tileDef.CanCrowbar && !(tileDef.CanAxe && component.Advanced))
             return false;

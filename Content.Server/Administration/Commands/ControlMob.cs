@@ -1,5 +1,5 @@
+using Content.Server.Mind;
 using Content.Shared.Administration;
-using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -42,14 +42,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mindSystem = _entities.System<SharedMindSystem>();
-            if (!mindSystem.TryGetMind(target, out var mindId, out var mind))
-            {
-                shell.WriteLine(Loc.GetString("shell-entity-is-not-mob"));
-                return;
-            }
-
-            mindSystem.TransferTo(mindId, target, mind: mind);
+            _entities.System<MindSystem>().ControlMob(player.UserId, target);
         }
     }
 }
