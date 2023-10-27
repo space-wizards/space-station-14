@@ -1574,6 +1574,18 @@ entities:
     - enabled: True
       type: AmbientSound
     - type: ActiveEmergencyLight
+- proto: EvacShuttleTimer
+  entities:
+  - uid: 411
+    components:
+    - pos: -1.5,0.5
+      parent: 410
+      type: Transform
+  - uid: 412
+    components:
+    - pos: -1.5,10.5
+      parent: 410
+      type: Transform
 - proto: ExtinguisherCabinetFilled
   entities:
   - uid: 362

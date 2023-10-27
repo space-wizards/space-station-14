@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -410,8 +411,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 if (xform.GridUid != null)
                     payload.Add("ShuttleGrid", xform.GridUid);
                 if (source != null)
-                    payload.Add("DestMap", source);
-
+                    payload.Add("SourceMap", source);
 
                 _deviceNetworkSystem.QueuePacket(uid, null, payload, 2452);
             }
@@ -509,6 +509,7 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
+            EnsureComp<DeviceNetworkComponent>(uid);
             _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
             arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
 

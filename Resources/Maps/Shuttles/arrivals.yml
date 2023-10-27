@@ -233,6 +233,18 @@ entities:
       pos: -0.5,3.5
       parent: 292
       type: Transform
+- proto: ArrivalsShuttleTimer
+  entities:
+  - uid: 294
+    components:
+    - pos: -4.5,3.5
+      parent: 292
+      type: Transform
+  - uid: 295
+    components:
+    - pos: 3.5,3.5
+      parent: 292
+      type: Transform
 - proto: AtmosDeviceFanTiny
   entities:
   - uid: 164

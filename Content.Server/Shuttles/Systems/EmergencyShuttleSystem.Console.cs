@@ -188,6 +188,12 @@ public sealed partial class EmergencyShuttleSystem
                     _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                         centcomm.Entity, _consoleAccumulator, TransitTime, true);
                 }
+
+                var payload = new NetworkPayload
+                {
+                    ["BroadcastTime"] = TransitTime
+                };
+                _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, 2451);
             }
 
             var podQuery = AllEntityQuery<EscapePodComponent>();
