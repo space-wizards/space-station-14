@@ -16,4 +16,4 @@ advertisement-boozeomat-15 = Бухло лучшего качества с 2053 
 advertisement-boozeomat-16 = Наше вино, словно детские слезы, невозможно оторваться!
 advertisement-boozeomat-17 = Максимум алкоголя, минимум работы!
 advertisement-boozeomat-18 = Мужчины любят пиво.
-advertisement-boozeomat-19 = За ваше здоровье и за мое очко!
+advertisement-boozeomat-19 = За ваше здоровье и за мой USB!
