@@ -9,13 +9,13 @@ namespace Content.Server.Shuttles.Components
 
         // [ViewVariables]
         // public HashSet<EntityUid> RemoteScreens = new();
-        [DataField("sourceTime"), ViewVariables]
-        public TimeSpan? SourceTime;
+        // [DataField("sourceTime"), ViewVariables]
+        // public TimeSpan? SourceTime;
 
         [ViewVariables]
         public TimeSpan? Duration;
 
-        [DataField("pairWith"), ViewVariables]
-        public RemoteShuttleTimerMask PairWith = RemoteShuttleTimerMask.None;
+        // [DataField("pairWith"), ViewVariables]
+        // public RemoteShuttleTimerMask PairWith = RemoteShuttleTimerMask.None;
     }
 }

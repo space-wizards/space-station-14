@@ -109,7 +109,7 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmagged(EntityUid uid, EmergencyShuttleConsoleComponent component, ref GotEmaggedEvent args)
     {
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"{ToPrettyString(args.UserUid):player} emagged shuttle console for early launch");
-        EarlyLaunch(uid);
+        EarlyLaunch();
     }
 
     private void SetAuthorizeTime(float obj)
@@ -365,14 +365,14 @@ public sealed partial class EmergencyShuttleSystem
         if (component.AuthorizedEntities.Count < component.AuthorizationsRequired || EarlyLaunchAuthorized)
             return false;
 
-        EarlyLaunch(component.Owner);
+        EarlyLaunch();
         return true;
     }
 
     /// <summary>
     /// Attempts to early launch the emergency shuttle if not already done.
     /// </summary>
-    public bool EarlyLaunch(EntityUid console)
+    public bool EarlyLaunch()
     {
         if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
 
@@ -388,7 +388,11 @@ public sealed partial class EmergencyShuttleSystem
             ["BroadcastTime"] = TimeSpan.FromSeconds(_authorizeTime)
         };
 
-        _deviceNetworkSystem.QueuePacket(console, null, payload, 2451);
+        var query = AllEntityQuery<StationEmergencyShuttleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, 2451);
+        }
 
         return true;
     }
