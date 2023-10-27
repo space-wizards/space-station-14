@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: AHelps now show a typing indicator to admins., type: Tweak}
-  id: 4567
-  time: '2023-08-13T23:03:17.0000000+00:00'
 - author: Equivocateur
   changes:
   - {message: 'Emagged recyclers now not only gib people, but other mobs too.', type: Fix}
@@ -2898,3 +2893,8 @@ Entries:
       and moved on"., type: Fix}
   id: 5066
   time: '2023-10-27T02:27:36.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed being able to give pAIs implants., type: Fix}
+  id: 5067
+  time: '2023-10-27T02:34:03.0000000+00:00'
