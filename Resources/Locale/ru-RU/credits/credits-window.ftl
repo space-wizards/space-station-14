@@ -1,5 +1,5 @@
 credits-window-title = Авторы
-credits-window-patrons-tab = Патроны
+credits-window-patrons-tab = Спонсоры
 credits-window-ss14contributorslist-tab = Авторы
 credits-window-licenses-tab = Лицензии на открытый исходный код
 credits-window-become-patron-button = Стать спонсором

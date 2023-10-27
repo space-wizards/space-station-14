@@ -33,6 +33,17 @@ public sealed class SponsorManager
 		return IsStillSponsor(sponsorTime);
     }
 	
+	public bool IsSponsor(string? name)
+    {
+        if (name is null)
+			return false;
+		
+		if (!sponsors.TryGetValue(name, out var sponsorTime))
+			return false;
+		
+		return IsStillSponsor(sponsorTime);
+    }
+	
 	public bool IsHost(ICommonSession? session)
 	{
 		if (session is null)
