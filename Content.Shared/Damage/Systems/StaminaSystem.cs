@@ -253,12 +253,13 @@ public sealed partial class StaminaSystem : EntitySystem
         if (component.Critical)
             return;
 		
-		foreach (var slot in _inventorySystem.GetSlots(uid))
-        {
-			if (_inventorySystem.TryGetSlotEntity(uid, slot.Name, out var item))
-				if (TryComp<StaminaProtectionComponent>(item, out var stamProt))
-					value *= stamProt.Coefficient;   
-		}
+		if (TryComp<InventoryComponent>(uid, out var _))
+			foreach (var slot in _inventorySystem.GetSlots(uid))
+			{
+				if (_inventorySystem.TryGetSlotEntity(uid, slot.Name, out var item))
+					if (TryComp<StaminaProtectionComponent>(item, out var stamProt))
+						value *= stamProt.Coefficient;   
+			}
 
         var oldDamage = component.StaminaDamage;
         component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
