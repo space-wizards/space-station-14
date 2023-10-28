@@ -4,32 +4,31 @@
   name: surgical duffel bag
   description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
   components:
-  - type: StorageFill
-    contents:
-      - id: Hemostat
-      - id: Saw
-      - id: Drill
-      - id: Cautery
-      - id: Retractor
-      - id: Scalpel
+    - type: StorageFill
+      contents:
+        - id: Hemostat
+        - id: Saw
+        - id: Drill
+        - id: Cautery
+        - id: Retractor
+        - id: Scalpel
 
 - type: entity
-  id: ClothingBackpackDuffelCBURN
-  parent: ClothingBackpackDuffel
-  name: CBURN duffel bag
-  description: A duffel bag containing a variety of biological containment equipment.
+  id: ClothingBackpackDuffelCBURNFilled
+  parent: ClothingBackpackDuffelCBURN
+  suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      #- id: BoxSurvivalEngineering
-      - id: WeaponShotgunDoubleBarreled
-      - id: BoxShotgunIncendiary
-        amount: 2
-      - id: GrenadeFlashBang
-        amount: 2
-      - id: PillAmbuzolPlus
-      - id: PillAmbuzol
-        amount: 4
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalEngineering
+        - id: WeaponShotgunDoubleBarreled
+        - id: BoxShotgunIncendiary
+          amount: 2
+        - id: GrenadeFlashBang
+          amount: 2
+        - id: PillAmbuzolPlus
+        - id: PillAmbuzol
+          amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
@@ -37,14 +36,14 @@
   name: syndicate surgical duffel bag
   description: A large duffel bag containing a full suite of surgical tools.
   components:
-  - type: StorageFill
-    contents:
-      - id: Hemostat
-      - id: SawAdvanced
-      - id: Drill
-      - id: Cautery
-      - id: Retractor
-      - id: ScalpelAdvanced
+    - type: StorageFill
+      contents:
+        - id: Hemostat
+        - id: SawAdvanced
+        - id: Drill
+        - id: Cautery
+        - id: Retractor
+        - id: ScalpelAdvanced
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -52,12 +51,12 @@
   name: Bulldog bundle
   description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 3 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponShotgunBulldog
-      - id: MagazineShotgun
-      - id: MagazineShotgun
-      - id: MagazineShotgunBeanbag
+    - type: StorageFill
+      contents:
+        - id: WeaponShotgunBulldog
+        - id: MagazineShotgun
+        - id: MagazineShotgun
+        - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles
 
 - type: entity
@@ -66,11 +65,11 @@
   name: C-20r bundle
   description: "Old faithful: The classic C-20r Submachine Gun, bundled with three magazines." #, and a Suppressor.
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGun
-        amount: 2
+    - type: StorageFill
+      contents:
+        - id: WeaponSubMachineGunC20r
+        - id: MagazinePistolSubMachineGun
+          amount: 2
 #     - id: SMGSuppressor
 
 - type: entity
@@ -79,11 +78,11 @@
   name: Python bundle
   description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponRevolverPythonAP
-      - id: SpeedLoaderMagnumAP
-        amount: 2
+    - type: StorageFill
+      contents:
+        - id: WeaponRevolverPythonAP
+        - id: SpeedLoaderMagnumAP
+          amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -91,10 +90,10 @@
   name: L6 Saw bundle
   description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponLightMachineGunL6
-      - id: MagazineLightRifleBox
+    - type: StorageFill
+      contents:
+        - id: WeaponLightMachineGunL6
+        - id: MagazineLightRifleBox
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -102,13 +101,13 @@
   name: China-Lake bundle
   description: "An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability."
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponLauncherChinaLake
-      - id: GrenadeBlast
-        amount: 4
-      - id: GrenadeFrag
-        amount: 4
+    - type: StorageFill
+      contents:
+        - id: WeaponLauncherChinaLake
+        - id: GrenadeBlast
+          amount: 4
+        - id: GrenadeFrag
+          amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -116,17 +115,17 @@
   name: M-90gl bundle
   description: "A versatile battle rifle with an attached grenade launcher, bundled with 3 magazines and 6 grenades of various capabilities."
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponRifleM90GrenadeLauncher
-      - id: MagazineRifle
-        amount: 2
-      - id: GrenadeBlast
-        amount: 2
-      - id: GrenadeFlash
-        amount: 2
-      - id: GrenadeFrag
-        amount: 2
+    - type: StorageFill
+      contents:
+        - id: WeaponRifleM90GrenadeLauncher
+        - id: MagazineRifle
+          amount: 2
+        - id: GrenadeBlast
+          amount: 2
+        - id: GrenadeFlash
+          amount: 2
+        - id: GrenadeFrag
+          amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -134,14 +133,14 @@
   name: ammo bundle
   description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW."
   components:
-  - type: StorageFill
-    contents:
-      - id: MagazinePistolSubMachineGun
-        amount: 4
-      - id: MagazineShotgun
-        amount: 4
-      - id: MagazineLightRifleBox
-        amount: 2
+    - type: StorageFill
+      contents:
+        - id: MagazinePistolSubMachineGun
+          amount: 4
+        - id: MagazineShotgun
+          amount: 4
+        - id: MagazineLightRifleBox
+          amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -150,36 +149,36 @@
   description: "Contains a full CentCom Official uniform set, headset and clipboard included. Encryption keys and ID access are not included."
   suffix: DO NOT MAP
   components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHatCentcom
-      - id: ClothingEyesGlassesSunglasses
-      - id: ClothingUniformJumpsuitCentcomOfficial
-      - id: ClothingShoesBootsJack
-      - id: ClothingHandsGlovesColorBlack
-      - id: ClothingHeadsetAltCentComFake
-      - id: ClothingOuterArmorBasic
-      - id: Paper
-      - id: Pen
-      - id: CentcomPDAFake
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: StorageFill
+      contents:
+        - id: ClothingHeadHatCentcom
+        - id: ClothingEyesGlassesSunglasses
+        - id: ClothingUniformJumpsuitCentcomOfficial
+        - id: ClothingShoesBootsJack
+        - id: ClothingHandsGlovesColorBlack
+        - id: ClothingHeadsetAltCentComFake
+        - id: ClothingOuterArmorBasic
+        - id: Paper
+        - id: Pen
+        - id: CentcomPDAFake
 
 - type: entity
   parent: ClothingBackpackDuffelClown
   id: ClothingBackpackDuffelSyndicateCostumeClown
   suffix: syndicate
   components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitClown
-      - id: ClothingShoesClown
-      - id: ClothingMaskClown
-      - id: BikeHorn
-      - id: ClownPDA
-      - id: ClothingHeadsetService
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitClown
+        - id: ClothingShoesClown
+        - id: ClothingMaskClown
+        - id: BikeHorn
+        - id: ClownPDA
+        - id: ClothingHeadsetService
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -187,11 +186,11 @@
   name: carp suit duffel bag
   description: Contains a carp suit and some friends to play with.
   components:
-  - type: StorageFill
-    contents:
-    - id: ClothingOuterSuitCarp
-    - id: PlushieCarp
-      amount: 6
+    - type: StorageFill
+      contents:
+        - id: ClothingOuterSuitCarp
+        - id: PlushieCarp
+          amount: 6
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -199,22 +198,22 @@
   name: syndicate pyjama duffel bag
   description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitPyjamaSyndicateRed
-      - id: ClothingUniformJumpsuitPyjamaSyndicateBlack
-      - id: ClothingUniformJumpsuitPyjamaSyndicatePink
-      - id: ClothingHeadPyjamaSyndicateRed
-      - id: ClothingHeadPyjamaSyndicateBlack
-      - id: ClothingHeadPyjamaSyndicatePink
-      - id: ClothingShoesSlippers
-        amount: 3
-      - id: BedsheetSyndie
-        amount: 3
-      - id: PlushieCarp
-      - id: PlushieNuke
-      - id: PlushieLizard
-      - id: PlushieSharkBlue
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpsuitPyjamaSyndicateRed
+        - id: ClothingUniformJumpsuitPyjamaSyndicateBlack
+        - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+        - id: ClothingHeadPyjamaSyndicateRed
+        - id: ClothingHeadPyjamaSyndicateBlack
+        - id: ClothingHeadPyjamaSyndicatePink
+        - id: ClothingShoesSlippers
+          amount: 3
+        - id: BedsheetSyndie
+          amount: 3
+        - id: PlushieCarp
+        - id: PlushieNuke
+        - id: PlushieLizard
+        - id: PlushieSharkBlue
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -250,12 +249,12 @@
   name: syndicate EVA bundle
   description: "Contains the Syndicate approved EVA suit."
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHelmetSyndicate
-      - id: ClothingOuterHardsuitSyndicate
-      - id: ClothingMaskGasSyndicate
-      - id: DoubleEmergencyOxygenTankFilled
+    - type: StorageFill
+      contents:
+        - id: ClothingHeadHelmetSyndicate
+        - id: ClothingOuterHardsuitSyndicate
+        - id: ClothingMaskGasSyndicate
+        - id: DoubleEmergencyOxygenTankFilled
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -263,11 +262,11 @@
   name: syndicate hardsuit bundle
   description: "Contains the Syndicate's signature blood red hardsuit."
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterHardsuitSyndie
-      - id: ClothingMaskGasSyndicate
-      - id: ClothingHandsGlovesCombat
+    - type: StorageFill
+      contents:
+        - id: ClothingOuterHardsuitSyndie
+        - id: ClothingMaskGasSyndicate
+        - id: ClothingHandsGlovesCombat
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -275,26 +274,26 @@
   name: syndicate zombie bundle
   description: "An all-in-one kit for unleashing the undead upon a station."
   components:
-  - type: StorageFill
-    contents:
-      - id: SyringeRomerol
-      - id: WeaponRevolverPython
-      - id: MagazineBoxMagnumIncendiary
-      - id: PillAmbuzolPlus
-      - id: PillAmbuzol
-        amount: 3
+    - type: StorageFill
+      contents:
+        - id: SyringeRomerol
+        - id: WeaponRevolverPython
+        - id: MagazineBoxMagnumIncendiary
+        - id: PillAmbuzolPlus
+        - id: PillAmbuzol
+          amount: 3
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateOperative
   name: operative duffelbag
   components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvivalSyndicate
-      - id: WeaponPistolViper
-      - id: PinpointerNuclear
-      - id: MicroBombImplanter
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalSyndicate
+        - id: WeaponPistolViper
+        - id: PinpointerNuclear
+        - id: MicroBombImplanter
 
 
 - type: entity
@@ -303,18 +302,18 @@
   name: operative medic duffelbag
   description: A large duffel bag for holding extra medical supplies.
   components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvivalSyndicate
-      - id: SawAdvanced
-      - id: Cautery
-      - id: CombatKnife
-      - id: WeaponPistolViper
-      - id: PinpointerNuclear
-      - id: HandheldHealthAnalyzer
-      - id: CombatMedipen
-      - id: MicroBombImplanter
-      - id: SyndiHypo
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalSyndicate
+        - id: SawAdvanced
+        - id: Cautery
+        - id: CombatKnife
+        - id: WeaponPistolViper
+        - id: PinpointerNuclear
+        - id: HandheldHealthAnalyzer
+        - id: CombatMedipen
+        - id: MicroBombImplanter
+        - id: SyndiHypo
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
@@ -322,12 +321,12 @@
   name: medical bundle
   description: "All you need to get your comrades back in the fight."
   components:
-  - type: StorageFill
-    contents:
-      - id: MedkitCombatFilled
-      - id: Defibrillator
-      - id: CombatMedipen
-        amount: 3
-      - id: ClothingHandsGlovesLatex
-      - id: SyringeTranexamicAcid
-      - id: SyringeHyronalin
+    - type: StorageFill
+      contents:
+        - id: MedkitCombatFilled
+        - id: Defibrillator
+        - id: CombatMedipen
+          amount: 3
+        - id: ClothingHandsGlovesLatex
+        - id: SyringeTranexamicAcid
+        - id: SyringeHyronalin
