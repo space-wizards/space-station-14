@@ -126,20 +126,18 @@ public sealed class JobRequirementsManager
         return _roles.TryGetValue("Overall", out var overallPlaytime) ? overallPlaytime : TimeSpan.Zero;
     }
 
-    public Dictionary<string, TimeSpan> FetchPlaytimeByRoles()
+    public IEnumerable<KeyValuePair<string, TimeSpan>> FetchPlaytimeByRoles()
     {
-        var mappedRoles = new Dictionary<string, TimeSpan>();
         var jobsToMap = _prototypes.EnumeratePrototypes<JobPrototype>();
 
         foreach (var job in jobsToMap)
         {
             if (_roles.TryGetValue(job.PlayTimeTracker, out var locJobName))
             {
-                mappedRoles[job.Name] = locJobName;
+                yield return new KeyValuePair<string, TimeSpan>(job.Name, locJobName);
             }
         }
-
-        return mappedRoles;
     }
+
 
 }

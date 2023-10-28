@@ -26,17 +26,6 @@
   <ItemGroup>
     <Folder Include="Spawners\" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Info\PlaytimeStats\PlaytimeStatsEntry.cs">
-      <DependentUpon>PlaytimeStatsEntry.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Info\PlaytimeStats\PlaytimeStatsHeader.cs">
-      <DependentUpon>PlaytimeStatsHeader.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Info\PlaytimeStats\PlaytimeStatsWindow.cs">
-      <DependentUpon>PlaytimeStatsWindow.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
 </Project>

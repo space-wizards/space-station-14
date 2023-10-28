@@ -23,12 +23,12 @@ public sealed partial class PlaytimeStatsHeader : ContainerButton
         UpdateLabels();
     }
 
-    public enum Header
+    public enum Header : byte
     {
         Role,
         Playtime
     }
-    public enum SortDirection
+    public enum SortDirection : byte
     {
         Ascending,
         Descending

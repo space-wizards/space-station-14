@@ -85,10 +85,8 @@ public sealed partial class PlaytimeStatsWindow : FancyWindow
             RolesPlaytimeList.AddChild(header);
 
         var sortedEntries = (direction == PlaytimeStatsHeader.SortDirection.Ascending)
-            ? entries.OrderBy(entry => entry.PlaytimeText != null ? ParsePlaytime(entry.PlaytimeText) : TimeSpan.Zero)
-                .ToList()
-            : entries.OrderByDescending(entry =>
-                entry.PlaytimeText != null ? ParsePlaytime(entry.PlaytimeText) : TimeSpan.Zero).ToList();
+            ? entries.OrderBy(entry => entry.Playtime).ToList()
+            : entries.OrderByDescending(entry => entry.Playtime).ToList();
 
         _useAltColor = false;
 
@@ -102,58 +100,26 @@ public sealed partial class PlaytimeStatsWindow : FancyWindow
     }
 
 
-    private TimeSpan ParsePlaytime(string playtimeString)
-    {
-        var localisedFilterParams = Loc.GetString("ui-playtime-time-format");
-
-        // Replace placeholders with regex capture groups
-        var regexPattern = localisedFilterParams
-            .Replace("{$hours}", @"(?<hours>\d+)")
-            .Replace("{$minutes}", @"(?<minutes>\d+)");
-
-        var regex = new Regex(regexPattern);
-        var match = regex.Match(playtimeString);
-
-        if (match.Success &&
-            int.TryParse(match.Groups["hours"].Value, out var hours) &&
-            int.TryParse(match.Groups["minutes"].Value, out var minutes))
-        {
-            return new TimeSpan(hours, minutes, 0);
-        }
-
-        _sawmill.Error($"Couldn't ParsePlaytime string: {playtimeString} Reverting to zero time for entry");
-        return TimeSpan.Zero;
-    }
-
-
-
     private void PopulatePlaytimeData()
     {
-        try
+        var overallPlaytime = _jobRequirementsManager.FetchOverallPlaytime();
+
+        if (overallPlaytime is var timeSpan)
         {
-            var overallPlaytime = _jobRequirementsManager.FetchOverallPlaytime();
-
-            if (overallPlaytime is var timeSpan)
-            {
-                var formattedPlaytime = ConvertTimeSpanToHoursMinutes(timeSpan);
-                OverallPlaytimeLabel.Text = Loc.GetString("ui-playtime-overall", ("time", formattedPlaytime));
-            }
-
-            var rolePlaytimes = _jobRequirementsManager.FetchPlaytimeByRoles();
-
-            RolesPlaytimeList.RemoveAllChildren();
-            PopulatePlaytimeHeader();
-
-            foreach (var rolePlaytime in rolePlaytimes)
-            {
-                var role = rolePlaytime.Key;
-                var playtime = rolePlaytime.Value;
-                AddRolePlaytimeEntryToTable(Loc.GetString(role), playtime.ToString());
-            }
+            var formattedPlaytime = ConvertTimeSpanToHoursMinutes(timeSpan);
+            OverallPlaytimeLabel.Text = Loc.GetString("ui-playtime-overall", ("time", formattedPlaytime));
         }
-        catch (Exception ex)
+
+        var rolePlaytimes = _jobRequirementsManager.FetchPlaytimeByRoles();
+
+        RolesPlaytimeList.RemoveAllChildren();
+        PopulatePlaytimeHeader();
+
+        foreach (var rolePlaytime in rolePlaytimes)
         {
-            _sawmill.Error($"An error occurred while populating playtime data: {ex}");
+            var role = rolePlaytime.Key;
+            var playtime = rolePlaytime.Value;
+            AddRolePlaytimeEntryToTable(Loc.GetString(role), playtime.ToString());
         }
     }
 
@@ -161,9 +127,7 @@ public sealed partial class PlaytimeStatsWindow : FancyWindow
     {
         if (TimeSpan.TryParse(playtimeString, out var playtime))
         {
-            var formattedPlaytime = ConvertTimeSpanToHoursMinutes(playtime);
-
-            var entry = new PlaytimeStatsEntry(role, formattedPlaytime,
+            var entry = new PlaytimeStatsEntry(role, playtime,
                 new StyleBoxFlat(_useAltColor ? _altColor : _defaultColor));
             RolesPlaytimeList.AddChild(entry);
             _useAltColor ^= true;
