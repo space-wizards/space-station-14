@@ -20,6 +20,9 @@
   - type: UpgradeBattery
     maxChargeMultiplier: 2
     baseMaxCharge: 2500000
+  - type: UpgradePowerSupplyRamping
+    scaling: Linear
+    supplyRampingMultiplier: 1
   - type: Battery
     startingCharge: 0
   - type: ExaminableBattery

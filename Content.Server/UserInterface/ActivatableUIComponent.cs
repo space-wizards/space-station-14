@@ -1,4 +1,4 @@
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 
@@ -10,8 +10,6 @@ namespace Content.Server.UserInterface
     {
         [ViewVariables]
         public Enum? Key { get; set; }
-
-        [ViewVariables] public PlayerBoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
@@ -67,7 +65,7 @@ namespace Content.Server.UserInterface
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
         [ViewVariables]
-        public IPlayerSession? CurrentSingleUser;
+        public ICommonSession? CurrentSingleUser;
 
         void ISerializationHooks.AfterDeserialization()
         {

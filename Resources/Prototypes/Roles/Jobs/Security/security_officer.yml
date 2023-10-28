@@ -34,6 +34,6 @@
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
-  innerclothingskirt: ClothingUniformJumpskirtSec
+  innerClothingSkirt: ClothingUniformJumpskirtSec
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

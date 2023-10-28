@@ -161,7 +161,6 @@
   - type: CombatMode
     canDisarm: true
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       collection: Punch
     angle: 30
