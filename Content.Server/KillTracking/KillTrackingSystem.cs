@@ -2,7 +2,7 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.KillTracking;
 
