@@ -4,7 +4,6 @@ using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 
@@ -32,18 +31,22 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         component.GrenadesContainer = _container.EnsureContainer<Container>(uid, "cluster-flash");
     }
 
-    private void OnClugStartup(EntityUid uid, ClusterGrenadeComponent component, ComponentStartup args)
+    private void OnClugStartup(Entity<ClusterGrenadeComponent> clug, ref ComponentStartup args)
     {
+        var component = clug.Comp;
         if (component.FillPrototype != null)
         {
             component.UnspawnedCount = Math.Max(0, component.MaxGrenades - component.GrenadesContainer.ContainedEntities.Count);
-            UpdateAppearance(uid, component);
+            UpdateAppearance(clug);
         }
     }
 
-    private void OnClugUsing(EntityUid uid, ClusterGrenadeComponent component, InteractUsingEvent args)
+    private void OnClugUsing(Entity<ClusterGrenadeComponent> clug, ref InteractUsingEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
+
+        var component = clug.Comp;
 
         // TODO: Should use whitelist.
         if (component.GrenadesContainer.ContainedEntities.Count >= component.MaxGrenades ||
@@ -51,7 +54,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             return;
 
         component.GrenadesContainer.Insert(args.Used);
-        UpdateAppearance(uid, component);
+        UpdateAppearance(clug);
         args.Handled = true;
     }
 
@@ -63,7 +66,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         // TODO: Should be an Update loop
         uid.SpawnTimer((int) (component.Delay * 1000), () =>
         {
-            if (Deleted(component.Owner))
+            if (Deleted(uid))
                 return;
 
             component.CountDown = true;
@@ -71,7 +74,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             var grenadesInserted = component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount;
             var thrownCount = 0;
             var segmentAngle = 360 / grenadesInserted;
-            while (TryGetGrenade(component, out var grenade))
+            while (TryGetGrenade((uid, component), out var grenade))
             {
                 var angleMin = segmentAngle * thrownCount;
                 var angleMax = segmentAngle * (thrownCount + 1);
@@ -99,14 +102,15 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         args.Handled = true;
     }
 
-    private bool TryGetGrenade(ClusterGrenadeComponent component, out EntityUid grenade)
+    private bool TryGetGrenade(Entity<ClusterGrenadeComponent> ent, out EntityUid grenade)
     {
         grenade = default;
+        var component = ent.Comp;
 
         if (component.UnspawnedCount > 0)
         {
             component.UnspawnedCount--;
-            grenade = EntityManager.SpawnEntity(component.FillPrototype, Transform(component.Owner).MapPosition);
+            grenade = EntityManager.SpawnEntity(component.FillPrototype, Transform(ent).MapPosition);
             return true;
         }
 
@@ -124,10 +128,12 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         return false;
     }
 
-    private void UpdateAppearance(EntityUid uid, ClusterGrenadeComponent component)
+    private void UpdateAppearance(Entity<ClusterGrenadeComponent> ent)
     {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
+        var component = ent.Comp;
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+            return;
 
-        _appearance.SetData(uid, ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount, appearance);
+        _appearance.SetData(ent, ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount, appearance);
     }
 }
