@@ -558,6 +558,9 @@
       reagents:
       - ReagentId: JuicePotato
         Quantity: 10
+  - type: Tag
+    tags:
+    - Potato
 
 - type: entity
   name: tomato
@@ -817,6 +820,7 @@
   - type: Produce
     seedId: corn
   - type: Extractable
+    grindableSolutionName: food
     juiceSolution:
       reagents:
       - ReagentId: Cornoil
