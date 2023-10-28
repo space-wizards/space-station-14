@@ -34,13 +34,25 @@
   components:
   - type: Sprite
     drawdepth: Effects
-    color: "#ffffffcc" #Add some transparency
+    color: "#ffffffcc"
+    sprite: Effects/foam.rsi
     layers:
-    - sprite: Fluids/foam.rsi
-      state: splat0
-      map: ["enum.FoamVisualLayers.Base"]
+      - state: foam
+        map: ["enum.FoamVisualLayers.Base"]
+      - map: [ "enum.EdgeLayer.South" ]
+        state: foam-south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: foam-east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: foam-north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: foam-west
   - type: AnimationPlayer
   - type: Appearance
+  - type: SmoothEdge
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
   - type: SmokeVisuals
   - type: FoamVisuals
     animationTime: 0.6
@@ -60,10 +72,6 @@
         layer:
         - SlipLayer
   - type: Smoke
-  - type: IconSmooth
-    key: foam
-    base: splat
-    mode: CardinalFlags
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader
     id: Smoke
@@ -82,10 +90,9 @@
   parent: Foam
   components:
   - type: Sprite
-    sprite: Effects/foam.rsi
-    state: mfoam
+    state: m_foam
     layers:
-    - state: mfoam
+    - state: m_foam
       map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
   - type: SmokeVisuals
@@ -103,8 +110,7 @@
   parent: Foam
   components:
   - type: Sprite
-    sprite: Effects/foam.rsi
-    state: mfoam
+    state: m_foam
     layers:
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
@@ -167,7 +173,7 @@
   components:
   - type: Sprite
     sprite: Effects/foam.rsi
-    state: ironfoam
+    state: iron_foam
 
 - type: entity
   id: FoamedAluminiumMetal
@@ -177,4 +183,4 @@
   components:
   - type: Sprite
     sprite: Effects/foam.rsi
-    state: metalfoam
+    state: metal_foam
