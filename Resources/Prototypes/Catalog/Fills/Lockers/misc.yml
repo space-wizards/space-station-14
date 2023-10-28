@@ -11,8 +11,7 @@
       - id: ClothingUniformJumpsuitOperative
       - id: ClothingUniformJumpskirtOperative
       - id: ClothingHeadsetAltSyndicate
-      - id: SyndicateIDCard
-      
+
 - type: entity
   id: ClosetEmergencyFilledRandom
   parent: ClosetEmergency
