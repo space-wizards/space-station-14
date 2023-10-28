@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made for Imperial Space project. Autors: ugog (wires), flazer (dragee_container), Skwebit (secret_folder, box_wires)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+      "states": [
+        {
+            "name": "box_wires"
+        },
+        {
+            "name": "any_wires"
+        },
+        {
+            "name": "HW_wires"
+        },
+        {
+            "name": "MW_wires"
+        },
+        {
+            "name": "folder_secret"
+        },
+        {
+            "name": "folder-overlay-paper"
+        }
+    ]
+}

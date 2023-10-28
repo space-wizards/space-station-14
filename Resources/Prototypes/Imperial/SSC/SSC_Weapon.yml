@@ -1,0 +1,15 @@
+# Hey! Legendary Golden AK!
+- type: entity
+  id: WeaponGoldenAk
+  parent: WeaponRifleAk
+  name: golden Ak
+  suffix: SSC
+  description: An ancient relic, once stolen from NanoTrasen. Any member of the board of directors is ready to make a deal with the devil in order to return this artifact to their secret altar.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Guns/golden_ak.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
