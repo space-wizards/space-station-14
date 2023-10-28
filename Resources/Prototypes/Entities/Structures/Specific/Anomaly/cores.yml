@@ -6,7 +6,7 @@
   description: The core of a detroyed incomprehensible object.
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\gravity_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
     layers:
     - state: core
     - state: pulse
@@ -29,6 +29,7 @@
   - type: StaticPrice
     price: 10000
   - type: AnomalyCore
+    timeToDecay: 600
 
 - type: entity
   parent: BaseAnomalyCore
@@ -36,7 +37,7 @@
   suffix: Pyroclastic
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\pyro_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 1.5
@@ -49,7 +50,7 @@
   suffix: Gravity
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\gravity_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 10
@@ -62,7 +63,7 @@
   suffix: Ice
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\ice_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 1.5
@@ -75,7 +76,7 @@
   suffix: Flesh
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\flesh_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/flesh_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -88,7 +89,7 @@
   suffix: Rock
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\rock_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/rock_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -101,7 +102,7 @@
   suffix: Liquid
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\liquid_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -114,7 +115,7 @@
   suffix: Bluespace
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\bluespace_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -127,7 +128,7 @@
   suffix: Electricity
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\electric_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/electric_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 2.0
@@ -151,7 +152,7 @@
   suffix: Pyroclastic, Inert
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\pyro_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 1.5
@@ -164,7 +165,7 @@
   suffix: Gravity, Inert
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\gravity_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 10
@@ -177,7 +178,7 @@
   suffix: Ice, Inert
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\ice_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 1.5
@@ -190,7 +191,7 @@
   suffix: Flesh, Inert
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\flesh_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/flesh_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -203,7 +204,7 @@
   suffix: Rock, Inert
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\rock_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/rock_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -216,7 +217,7 @@
   suffix: Liquid, Inert
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\liquid_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -229,7 +230,7 @@
   suffix: Bluespace, Inert
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\bluespace_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -242,7 +243,7 @@
   suffix: Electricity, Inert
   components:
   - type: Sprite
-    sprite: Structures\Specific\Anomalies\Cores\electric_core.rsi
+    sprite: Structures/Specific/Anomalies/Cores/electric_core.rsi
   - type: PointLight
     radius: 1.5
     energy: 2.0
