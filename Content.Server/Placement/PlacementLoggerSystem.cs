@@ -1,8 +1,8 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Shared.Database;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Placement;
+using Robust.Shared.Player;
 
 namespace Content.Server.Placement;
 
