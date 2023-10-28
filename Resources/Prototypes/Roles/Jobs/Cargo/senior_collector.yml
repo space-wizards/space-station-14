@@ -32,6 +32,6 @@
     id: SeniorCollectorPDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtSeniorCollector
+  innerClothingSkirt: ClothingUniformJumpskirtSeniorCollector
   satchel: ClothingBackpackSatchelCargoFilled
   duffelbag: ClothingBackpackDuffelCargoFilled
