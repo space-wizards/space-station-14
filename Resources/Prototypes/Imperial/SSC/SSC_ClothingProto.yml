@@ -1,0 +1,78 @@
+#Straw Hat
+- type: entity
+  id: ClothingHeadHatVillage
+  parent: ClothingHeadBase
+  name: simple straw hat
+  suffix: SSC
+  description: Damn newfangled hat!
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Clothing/straw_hat.rsi
+  - type: Clothing
+    sprite: Imperial/SomeStuffCreative/Clothing/straw_hat.rsi
+  - type: StaticPrice
+    price: 99
+
+#Central Command Representative EVA hardsuit
+- type: entity
+  id: ClothingOuterHardsuitEVACentCom
+  parent: ClothingOuterEVASuitBase
+  name: emergency hardsuit
+  suffix: SSC
+  description: When a big shot in emerhency situation, this suit will help survival.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Clothing/EVA/eva_centcom.rsi
+  - type: Clothing
+    sprite: Imperial/SomeStuffCreative/Clothing/EVA/eva_centcom.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 0.75 #Only sprint slows down. There is no walking penalty, because the representative always walks. Running is for subordinates, and he is a very big shot.
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.90
+        Pierce: 0.90
+        Radiation: 0.25
+  - type: StaticPrice
+    price: 4999
+
+#Central Command Representative EVA helmet
+- type: entity
+  id: ClothingHeadHelmetEVACentCom
+  parent: ClothingHeadEVAHelmetBase
+  name: emergency hardsuit helmet
+  suffix: SSC
+  description: Helmet for a big shot in emergency.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Clothing/EVA/helmeteva_centcom.rsi
+  - type: Clothing
+    sprite: Imperial/SomeStuffCreative/Clothing/EVA/helmeteva_centcom.rsi
+  - type: TemperatureProtection
+    coefficient: 0.002
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Pierce: 0.95
+        Radiation: 0.75
+  - type: StaticPrice
+    price: 999
+
+- type: entity
+  id: ClothingOuterHardsuitEVACentCom2
+  parent: ClothingOuterHardsuitEVACentCom
+  name: emergency hardsuit
+  description: When a big shot in emerhency situation, this suit will help survival.
+  suffix: SSC, ALT
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Clothing/EVA/eva_centcom2.rsi
+  - type: Clothing
+    sprite: Imperial/SomeStuffCreative/Clothing/EVA/eva_centcom2.rsi

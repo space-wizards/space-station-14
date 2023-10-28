@@ -1,0 +1,214 @@
+# box with food for emergency
+- type: entity
+  id: EmergencyFoodBox
+  parent: BoxCardboard
+  name: emergency food box
+  suffix: SSC
+  description: When a big shot is in an emergency, this set of special command food will help tide you over until help arrives.
+  components:
+  - type: Sprite
+    layers:
+      - state: box_olive
+  - type: StorageFill
+    contents:
+      - id: FoodTinBeans
+      - id: FoodTinMRE
+      - id: FoodTinPeaches
+      - id: DrinkWaterBottleFull
+      - id: GoldenSpoon
+      - id: SurvivalKnife
+
+# Box with wires
+- type: entity
+  id: BoxWire
+  parent: BoxCardboard
+  name: box with wires
+  suffix: SSC
+  description: This box with wires
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Containers/other.rsi
+    layers:
+        - state: box_wires
+        - state: any_wires
+  - type: Storage
+    capacity: 40
+  - type: Item
+    size: 40
+  - type: StorageFill
+    contents:
+      - id: CableApcStack
+      - id: CableMVStack10
+
+#Shuttle toolbox
+- type: entity
+  id: ShuttleToolbox
+  parent: ToolboxBase
+  name: shuttle toolbox
+  suffix: SSC
+  description: Box with basic technical equipment.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Containers/toolbox_shuttle.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/SomeStuffCreative/Containers/toolbox_shuttle.rsi
+  - type: StorageFill
+    contents:
+      - id: Wrench
+      - id: Wirecutter
+      - id: Screwdriver
+      - id: ClothingHandsGlovesColorYellow
+      - id: BoxWire
+
+#Special medkit for CentCom
+- type: entity
+  id: MedkitSpecial
+  parent: BaseStorageItem
+  name: CentCom first aid
+  suffix: SSC
+  description: A specially assembled first aid kit for special big shots.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Containers/medkit_special.rsi
+    state: icon
+  - type: Item
+    size: 60
+    sprite: Imperial/SomeStuffCreative/Containers/medkit_special.rsi
+  - type: Storage
+    capacity: 60
+    heldPrefix: firstaid
+  - type: Tag
+    tags:
+    - Medkit
+
+#Filled special CentCom medkit
+- type: entity
+  id: MedkitSpecialFill
+  parent: MedkitSpecial
+  name: CentCom first aid
+  suffix: SSC, Fill
+  components:
+  - type: StorageFill
+    contents:
+      - id: CommandMedipen
+        amount: 3
+      - id: Bloodpack
+        amount: 2
+      - id: Gauze
+      - id: ClothingHandsGlovesNitrile
+      - id: Syringe
+      - id: BookMedicalReferenceBook
+
+#Special case for NanoTrasen representative
+- type: entity
+  id: CaseSpecial
+  parent: BriefcaseBase
+  name: special secret NanoTrasen case
+  suffix: SSC
+  description: A suitcase worth as much as a station, with even more value inside.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Containers/case_special.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/SomeStuffCreative/Containers/case_special.rsi
+
+#Filled special case for NanoTrasen representative
+- type: entity
+  id: CaseSpecialFill
+  parent: CaseSpecial
+  name: special secret NanoTrasen case
+  suffix: SSC, Fill
+  components:
+  - type: StorageFill
+    contents:
+      - id: NTFolder
+      - id: RubberStampCentcom
+      - id: EncryptionKeyCentCom
+
+#NanoTrasen container for dragee
+- type: entity
+  id: NTdrageeContainer
+  parent: BaseStorageItem
+  name: Nano-Tak dragee
+  suffix: SSC
+  description: A delicious jelly bean that is popular with Central Command and helps calm the nerves.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Containers/medical.rsi
+    state: dragee_container
+  - type: Item
+    size: 24
+    sprite: Imperial/SomeStuffCreative/Containers/medical.rsi
+  - type: Tag
+    tags:
+      - PillCanister
+  - type: Storage
+    capacity: 24
+    quickInsert: true
+    areaInsert: true
+    areaInsertRadius: 1
+    storageInsertSound: /Audio/Effects/pill_insert.ogg
+    storageRemoveSound: /Audio/Effects/pill_remove.ogg
+    whitelist:
+      components:
+      - Pill
+  - type: Dumpable
+
+#Bigger pill canister
+- type: entity
+  id: PillCanisterBig
+  parent: PillCanister
+  name: big pill canister
+  suffix: SSC
+  description: Holds up to 16 pills!
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Containers/medical.rsi
+    state: pillContainerBig
+  - type: Item
+    size: 8
+    sprite: Imperial/SomeStuffCreative/Containers/medical.rsi
+  - type: Storage
+    capacity: 16
+
+#NanoTrasen container with dragee
+- type: entity
+  id: NTdrageeContainerFill
+  parent: NTdrageeContainer
+  name: Nano-Tak dragee
+  suffix: SSC, Fill
+  components:
+  - type: StorageFill
+    contents:
+      - id: NTdrageePill
+        amount: 24
+
+#NanoTrasen special folder
+- type: entity
+  id: NTFolder
+  parent: BoxFolderBase
+  name: NT folder
+  suffix: SSC
+  description: The secrets of the corporation are hidden here!
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Containers/other.rsi
+    layers:
+    - state: folder_secret
+
+# Storage for emergency CentComEVA
+- type: entity
+  id: SuitStorageCentCom
+  parent: SuitStorageBase
+  suffix: CentCom, SSC
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitEVACentCom
+      - id: ClothingHeadHelmetEVACentCom
+      - id: ClothingMaskGasCentcom
+      - id: OxygenTankFilled
+      - id: JetpackBlackFilled
+      - id: FlashlightLantern

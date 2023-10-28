@@ -1,0 +1,93 @@
+- type: entity
+  id: CommandMedipen
+  parent: ChemicalMedipen
+  name: command medipen
+  suffix: SSC
+  description: A disposable first aid kit designed for the big shots in command. Contains a balanced mixture of substances for omnidirectional treatment.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: morphen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    size: 5
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 20
+        - ReagentId: TranexamicAcid
+          Quantity: 5
+        - ReagentId: DexalinPlus
+          Quantity: 5
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+  - type: StaticPrice
+    price: 450
+
+- type: entity
+  id: NTdrageePill
+  name: Nano-Tak dragee
+  parent: Pill
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    state: pill9
+  - type: Pill
+    pillType: 9
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+          - ReagentId: Sugar
+            Quantity: 5
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  id: GoldenSpoon
+  name: golden spoon
+  parent: BaseItem
+  suffix: SSC
+  description: Looks prestigious.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Things/spoon.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/SomeStuffCreative/Things/spoon.rsi
+  - type: Tag
+    tags:
+    - Metal
+  - type: Utensil
+    types:
+    - Spoon
+  - type: SpaceGarbage
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 1
+  - type: StaticPrice
+    price: 450
+
+- type: entity
+  id: GoldenFork
+  name: golden fork
+  parent: Fork
+  suffix: SSC
+  description: Someone like to show off.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Things/fork.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/SomeStuffCreative/Things/fork.rsi
+  - type: StaticPrice
+    price: 450
