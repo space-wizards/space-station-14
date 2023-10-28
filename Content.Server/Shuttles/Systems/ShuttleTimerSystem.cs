@@ -53,13 +53,12 @@ namespace Content.Server.Shuttles.Systems
             // SubscribeLocalEvent<ShuttleTimerComponent, RemoteShuttleTimerEvent>(OnRemote);
             // SubscribeLocalEvent<ShuttleTimerComponent, FTLStartedEvent>(OnFTLStart);
 
-            SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+            SubscribeLocalEvent<ShuttleTimerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         }
 
-        private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, DeviceNetworkPacketEvent args)
+        private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
             // some timer updates just want to broadcast their timing to every networked timer
-
             if (args.Data.TryGetValue("BroadcastTime", out TimeSpan broadcast))
             {
                 var text = new TextScreenTimerEvent(broadcast);
@@ -69,8 +68,8 @@ namespace Content.Server.Shuttles.Systems
 
             if (!TryComp<TransformComponent>(uid, out var timerXform) ||
             timerXform.GridUid == null ||
-            !args.Data.TryGetValue("SourceMap", out EntityUid source) ||
-            !args.Data.TryGetValue("DestMap", out EntityUid dest) ||
+            !args.Data.TryGetValue("SourceTimer", out EntityUid source) ||
+            !args.Data.TryGetValue("DestTimer", out EntityUid dest) ||
             !args.Data.TryGetValue("ShuttleGrid", out EntityUid shuttle))
                 return;
 

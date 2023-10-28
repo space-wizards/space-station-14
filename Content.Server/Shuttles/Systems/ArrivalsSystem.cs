@@ -509,19 +509,12 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
-            EnsureComp<DeviceNetworkComponent>(uid);
+            EnsureComp<DeviceNetworkComponent>(component.Shuttle);
+            EnsureComp<ShuttleTimerComponent>(component.Shuttle);
             _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
             arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
 
-            // Shuttle timer bootstrap stuff
-            // if (!TryComp<ShuttleTimerComponent>(component.Shuttle, out var shuttleTimerComp))
-            //     return;
-
-            // _shuttleTimerSystem.PairShuttleWithRemotes(shuttleTimerComp, RemoteShuttleTimerMask.Arrivals);
-
             // displays the ETA at roundstart on the arrivals terminal map
-            // var remote = new RemoteShuttleTimerEvent(TimeSpan.FromSeconds(10f + arrivalsComp.Startup));
-            // _shuttleTimerSystem.RaiseEventOnShuttles<ArrivalsShuttleComponent, RemoteShuttleTimerEvent>(ref remote);
             var payload = new NetworkPayload
             {
                 ["BroadcastTime"] = 10f + ShuttleSystem.DefaultStartupTime
