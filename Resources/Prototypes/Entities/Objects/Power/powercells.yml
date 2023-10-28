@@ -42,8 +42,15 @@
     layers:
     - state: potato
   - type: Battery
-    maxCharge: 200
-    startingCharge: 200
+    maxCharge: 70
+    startingCharge: 70
+  - type: Tag
+    tags:
+      - DroneUsable
+      - PotatoBattery
+  - type: Construction
+    graph: PowerCellPotato
+    node: potatobattery
 
 - type: entity
   name: small-capacity power cell

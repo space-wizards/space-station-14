@@ -1,9 +1,9 @@
 using System.Numerics;
-using Content.Server.Fluids.Components;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
-using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -14,10 +14,10 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
 
-    private readonly HashSet<IPlayerSession> _playerObservers = new();
+    private readonly HashSet<ICommonSession> _playerObservers = new();
+    private List<Entity<MapGridComponent>> _grids = new();
 
-
-    public bool ToggleObserver(IPlayerSession observer)
+    public bool ToggleObserver(ICommonSession observer)
     {
         NextTick ??= _timing.CurTime + Cooldown;
 
@@ -31,7 +31,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
         return true;
     }
 
-    private void RemoveObserver(IPlayerSession observer)
+    private void RemoveObserver(ICommonSession observer)
     {
         if (!_playerObservers.Remove(observer))
         {
@@ -58,8 +58,10 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
             var worldBounds = Box2.CenteredAround(transform.WorldPosition,
                 new Vector2(LocalViewRange, LocalViewRange));
 
+            _grids.Clear();
+            _mapManager.FindGridsIntersecting(transform.MapID, worldBounds, ref _grids);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
+            foreach (var grid in _grids)
             {
                 var data = new List<PuddleDebugOverlayData>();
                 var gridUid = grid.Owner;
@@ -67,7 +69,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
                 if (!Exists(gridUid))
                     continue;
 
-                foreach (var uid in grid.GetAnchoredEntities(worldBounds))
+                foreach (var uid in grid.Comp.GetAnchoredEntities(worldBounds))
                 {
                     PuddleComponent? puddle = null;
                     TransformComponent? xform = null;

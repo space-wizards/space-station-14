@@ -687,7 +687,7 @@
   parent: ClothingOuterHardsuitSyndieCommander
   id: ClothingOuterHardsuitERTLeader
   name: ERT leader's hardsuit
-  description: A protective hardsuit worn by members of an emergency response team.
+  description: A protective hardsuit worn by the leader of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
@@ -698,9 +698,10 @@
 
 #ERT Engineer Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitSyndie
+  parent: ClothingOuterHardsuitCBURN
   id: ClothingOuterHardsuitERTEngineer
   name: ERT engineer's hardsuit
+  description: A protective hardsuit worn by the engineers of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
@@ -711,9 +712,10 @@
 
 #ERT Medic Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitSyndieElite
+  parent: ClothingOuterHardsuitMedic
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit
+  description: A protective hardsuit worn by the medics of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
@@ -727,6 +729,7 @@
   parent: ClothingOuterHardsuitSyndie
   id: ClothingOuterHardsuitERTSecurity
   name: ERT security's hardsuit
+  description: A protective hardsuit worn by the security officers of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
@@ -737,9 +740,10 @@
 
 #ERT Janitor Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitSyndie
+  parent: ClothingOuterHardsuitCBURN
   id: ClothingOuterHardsuitERTJanitor
   name: ERT janitor's hardsuit
+  description: A protective hardsuit worn by the janitors of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
@@ -752,7 +756,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitDeathsquad
-  name: deathsquad hardsuit
+  name: death squad hardsuit
   description: An advanced hardsuit favored by commandos for use in special operations.
   components:
   - type: Sprite
@@ -769,12 +773,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.2 #best armor in the game
-        Slash: 0.2
-        Piercing: 0.2
+        Blunt: 0.1 #best armor in the game
+        Slash: 0.1
+        Piercing: 0.1
         Heat: 0.1
         Radiation: 0.1
-        Caustic: 0.2
+        Caustic: 0.1
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0

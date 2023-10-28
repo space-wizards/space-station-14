@@ -16,6 +16,7 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -35,7 +36,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
-        private readonly Dictionary<IPlayerSession, Dictionary<NetEntity, HashSet<Vector2i>>> _lastSentChunks = new();
+        private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _lastSentChunks = new();
 
         // Oh look its more duplicated decal system code!
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
@@ -286,12 +287,12 @@ namespace Content.Server.Atmos.EntitySystems
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.
-            var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
+            var players = _playerManager.Sessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
             var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
             Parallel.ForEach(players, opts, p => UpdatePlayer(p, curTick));
         }
 
-        private void UpdatePlayer(IPlayerSession playerSession, GameTick curTick)
+        private void UpdatePlayer(ICommonSession playerSession, GameTick curTick)
         {
             var chunksInRange = _chunkingSys.GetChunksForSession(playerSession, ChunkSize, _chunkIndexPool, _chunkViewerPool);
             var previouslySent = _lastSentChunks[playerSession];

@@ -27,7 +27,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
                     var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true);
+                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true, force:true);
                 }
             }
         }

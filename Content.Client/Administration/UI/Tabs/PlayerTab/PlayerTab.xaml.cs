@@ -150,7 +150,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                 Header.Character => Compare(x.CharacterName, y.CharacterName),
                 Header.Job => Compare(x.StartingJob, y.StartingJob),
                 Header.Antagonist => x.Antag.CompareTo(y.Antag),
-                Header.Playtime => Compare(x.PlaytimeString, y.PlaytimeString),
+                Header.Playtime => TimeSpan.Compare(x.OverallPlaytime ?? default, y.OverallPlaytime ?? default),
                 _ => 1
             };
         }
