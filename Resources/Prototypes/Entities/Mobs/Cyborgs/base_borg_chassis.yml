@@ -183,7 +183,7 @@
   - type: Puller
     needsHands: false
   - type: StandingState
-  - type: Alerts
+  - type: Tag
     tags:
     - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
