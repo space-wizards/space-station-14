@@ -35,11 +35,10 @@
   - type: Sprite
     drawdepth: Effects
     color: "#ffffffcc" #Add some transparency
-    sprite: Effects/foam.rsi
-    state: foam
     layers:
-      - state: foam
-        map: ["enum.FoamVisualLayers.Base"]
+    - sprite: Fluids/foam.rsi
+      state: splat0
+      map: ["enum.FoamVisualLayers.Base"]
   - type: AnimationPlayer
   - type: Appearance
   - type: SmokeVisuals
@@ -61,6 +60,10 @@
         layer:
         - SlipLayer
   - type: Smoke
+  - type: IconSmooth
+    key: foam
+    base: splat
+    mode: CardinalFlags
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader
     id: Smoke
@@ -79,6 +82,7 @@
   parent: Foam
   components:
   - type: Sprite
+    sprite: Effects/foam.rsi
     state: mfoam
     layers:
     - state: mfoam
@@ -99,6 +103,7 @@
   parent: Foam
   components:
   - type: Sprite
+    sprite: Effects/foam.rsi
     state: mfoam
     layers:
       - state: mfoam
