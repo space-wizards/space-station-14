@@ -86,10 +86,13 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsLeader
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsLeaderGear ]
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTSpecOpsOfficer
 
 - type: job
   id: SpecOpsLeader
@@ -156,10 +159,13 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsEngineer
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsEngineerGear ]
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTEngineerOfficer
 
 - type: job
   id: SpecOpsEngineer
@@ -226,7 +232,7 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsCorpsman
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsCorpsmanGear ]
@@ -234,6 +240,9 @@
       makeSentient: true
       name: Парамедик Специальных Операций
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTMedic
 
 - type: job
   id: SpecOpsCorpsman
@@ -300,10 +309,13 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsCMO
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsCMOGear ]
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTMedicalOfficer
 
 - type: job
   id: SpecOpsCMO
@@ -370,7 +382,7 @@
 - type: randomHumanoidSettings
   id: EbentSpecOpsTrooper
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsTrooperGear ]
@@ -378,6 +390,9 @@
       makeSentient: true
       name: Рядовой Специальных Операций
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: SpecOps
+      statusIcon: NTCombatant
 
 - type: job
   id: SpecOpsFighter

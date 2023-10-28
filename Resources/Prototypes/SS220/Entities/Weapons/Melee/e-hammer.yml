@@ -11,6 +11,8 @@
         Blunt: 10
         Structural: 60
     litDisarmMalus: 0.6
+    colorOptions:
+    - "#ff0000"
   - type: Sprite
     sprite: SS220/Objects/Weapons/Melee/e_hammer.rsi
     layers:

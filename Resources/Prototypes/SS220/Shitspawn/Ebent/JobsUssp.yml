@@ -80,10 +80,13 @@
 - type: randomHumanoidSettings
   id: EbentUSSPLeader
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentUSSPLeaderGear ]
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPMarshal
 
 - type: job
   id: USSPLeader
@@ -165,10 +168,13 @@
 - type: randomHumanoidSettings
   id: EbentUSSPEngineer
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentUSSPEngineerGear ]
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPCombatant
 
 - type: job
   id: USSPEngineer
@@ -250,7 +256,7 @@
 - type: randomHumanoidSettings
   id: EbentUSSPCorpsman
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentUSSPCorpsmanGear ]
@@ -258,6 +264,9 @@
       makeSentient: true
       name: Полевой медик СССП
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPMedic
 
 - type: job
   id: USSPCorpsman
@@ -339,10 +348,13 @@
 - type: randomHumanoidSettings
   id: EbentUSSPCMO
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentUSSPCMOGear ]
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPMedicalOfficer
 
 - type: job
   id: USSPCMO
@@ -424,7 +436,7 @@
 - type: randomHumanoidSettings
   id: EbentUSSPTrooper
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentUSSPTrooperGear ]
@@ -432,6 +444,9 @@
       makeSentient: true
       name: Красноармеец
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: USSPEbent
+      statusIcon: USSPCombatant
 
 - type: job
   id: USSPFighter
