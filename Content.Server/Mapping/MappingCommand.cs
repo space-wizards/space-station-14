@@ -40,7 +40,7 @@ namespace Content.Server.Mapping
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not IPlayerSession player)
+            if (shell.Player is not { } player)
             {
                 shell.WriteError(Loc.GetString("cmd-savemap-server"));
                 return;
