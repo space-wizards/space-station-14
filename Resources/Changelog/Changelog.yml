@@ -1,9 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Substations produce hot CO2 when destroyed now., type: Tweak}
-  id: 4570
-  time: '2023-08-14T01:55:06.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Being turned into a cyborg or zombie now counts as a being dead for
@@ -2900,3 +2895,20 @@ Entries:
   - {message: Fixed foam dissolution animation., type: Fix}
   id: 5069
   time: '2023-10-27T02:52:11.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Increased funding in an undisclosed NT Operative Squad., type: Add}
+  - {message: CentComm staff will have their proper ID icons on security's sechud.,
+    type: Add}
+  - {message: CentComm staff will have undying loyalty to Nanotrasen., type: Add}
+  - {message: ERT funding has been improved. Expect specialized ERT units to be able
+      to provide more assistance related to their role., type: Tweak}
+  - {message: Cut funding from ERT weaponry. They'll likely be seen using standard
+      security-level weapons., type: Remove}
+  - {message: 'Cut funding from ERT uniforms, they no longer have built in armor.',
+    type: Fix}
+  - {message: The medical ERT members have had their hardsuits refitted with proper
+      armor., type: Fix}
+  - {message: Updated the localization files., type: Fix}
+  id: 5070
+  time: '2023-10-27T13:54:43.0000000+00:00'

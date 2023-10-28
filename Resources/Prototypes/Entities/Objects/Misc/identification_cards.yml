@@ -454,6 +454,24 @@
 
 - type: entity
   parent: CentcomIDCard
+  id: SpecOpsIDCard
+  name: command officer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcom
+  - type: Item
+    heldPrefix: blue
+  - type: IdCard
+    jobTitle: Оперативник ШСО
+    jobIcon: JobIconNanotrasen
+  - type: Access
+    groups:
+    - SpecOpsAllAccess
+
+- type: entity
+  parent: SpecOpsIDCard
   id: ERTLeaderIDCard
   name: ERT ID card
   components:
@@ -465,10 +483,7 @@
     heldPrefix: gold
   - type: IdCard
     jobTitle: Офицер СО
-    jobIcon: JobIconCentCom
-  - type: Access
-    groups:
-    - SpecOpsAllAccess
+    jobIcon: JobIconNanotrasen
 
 - type: entity
   parent: IDCardStandard
@@ -502,7 +517,7 @@
       job: Musician
 
 - type: entity
-  parent: CentcomIDCard
+  parent: SpecOpsIDCard
   id: CentcomIDCardDeathsquad
   name: deathsquad ID card
 
@@ -682,7 +697,7 @@
     job: Detective
 
 - type: entity
-  parent: CentcomIDCard
+  parent: SpecOpsIDCard
   id: CBURNIDcard
   name: CBURN ID card
   components:
