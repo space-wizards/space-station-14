@@ -8,7 +8,6 @@ using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Melee;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -27,7 +26,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     public string Help => $"{Command} <cargosell / lathesell / melee>";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not IPlayerSession pSession)
+        if (shell.Player is not { } pSession)
         {
             shell.WriteError(Loc.GetString("stat-values-server"));
             return;
