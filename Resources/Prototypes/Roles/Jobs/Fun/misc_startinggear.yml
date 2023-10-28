@@ -268,8 +268,8 @@
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerClothingSkirt: ClothingUniformJumpsuitColorBrown
-  satchel: ClothingBackpackDuffelCBURNFilled
-  duffelbag: ClothingBackpackDuffelCBURNFilled
+  satchel: ClothingBackpackDuffelCBURN
+  duffelbag: ClothingBackpackDuffelCBURN
 
 - type: startingGear
   id: BoxingKangarooGear
