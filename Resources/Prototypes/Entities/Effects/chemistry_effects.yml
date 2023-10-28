@@ -112,13 +112,13 @@
   - type: Sprite
     state: m_foam
     layers:
-      - state: mfoam
+      - state: m_foam
         map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
   - type: SmokeVisuals
   - type: FoamVisuals
     animationTime: 0.6
-    animationState: mfoam-dissolve
+    animationState: m_foam-dissolve
   - type: Smoke
   - type: SpawnOnDespawn
     prototype: FoamedAluminiumMetal
