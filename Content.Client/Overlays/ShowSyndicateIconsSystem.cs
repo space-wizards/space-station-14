@@ -23,18 +23,18 @@ public sealed class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSyndicateI
             return;
         }
 
-        var healthIcons = DecideThirstIcon(uid, nukeOperativeComponent);
+        var healthIcons = SyndicateIcon(uid, nukeOperativeComponent);
 
         args.StatusIcons.AddRange(healthIcons);
     }
 
-    private IReadOnlyList<StatusIconPrototype> DecideThirstIcon(EntityUid uid, NukeOperativeComponent nukeOperativeComponent)
+    private IReadOnlyList<StatusIconPrototype> SyndicateIcon(EntityUid uid, NukeOperativeComponent nukeOperativeComponent)
     {
         var result = new List<StatusIconPrototype>();
 
-        if (_prototype.TryIndex<StatusIconPrototype>(nukeOperativeComponent.SyndStatusIcon, out var overhydrated))
+        if (_prototype.TryIndex<StatusIconPrototype>(nukeOperativeComponent.SyndStatusIcon, out var syndicateicon))
         {
-            result.Add(overhydrated);
+            result.Add(syndicateicon);
         }
 
         return result;
