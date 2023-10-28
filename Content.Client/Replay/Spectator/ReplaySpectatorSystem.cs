@@ -6,6 +6,7 @@ using Robust.Client.Player;
 using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Markdown.Mapping;
 
 namespace Content.Client.Replay.Spectator;
