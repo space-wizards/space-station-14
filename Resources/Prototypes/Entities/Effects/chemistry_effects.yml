@@ -90,10 +90,20 @@
   parent: Foam
   components:
   - type: Sprite
-    state: m_foam
+    drawdepth: Effects
+    color: "#ffffffcc"
+    sprite: Effects/foam.rsi
     layers:
-    - state: m_foam
-      map: ["enum.FoamVisualLayers.Base"]
+      - state: m_foam
+        map: ["enum.FoamVisualLayers.Base"]
+      - map: [ "enum.EdgeLayer.South" ]
+        state: m_foam-south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: m_foam-east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: m_foam-north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: m_foam-west
   - type: Appearance
   - type: SmokeVisuals
   - type: FoamVisuals
