@@ -1,12 +1,11 @@
 using System.Numerics;
+using Content.Shared.Radiation.Components;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
-
-using Content.Shared.Radiation.Components;
-using Content.Shared.Singularity.Components;
-using Content.Shared.Singularity.Events;
 
 namespace Content.Shared.Singularity.EntitySystems;
 
@@ -89,8 +88,8 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         singularity.Level = value;
         UpdateSingularityLevel(uid, oldValue, singularity);
-        if(!EntityManager.Deleted(singularity.Owner))
-            EntityManager.Dirty(singularity);
+        if (!Deleted(uid))
+            Dirty(uid, singularity);
     }
 
     /// <summary>

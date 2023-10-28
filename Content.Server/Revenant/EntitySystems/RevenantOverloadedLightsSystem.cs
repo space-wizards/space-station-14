@@ -11,12 +11,13 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
 {
     [Dependency] private readonly BeamSystem _beam = default!;
 
-    protected override void OnZap(RevenantOverloadedLightsComponent component)
+    protected override void OnZap(Entity<RevenantOverloadedLightsComponent> lights)
     {
+        var component = lights.Comp;
         if (component.Target == null)
             return;
 
-        var lxform = Transform(component.Owner);
+        var lxform = Transform(lights);
         var txform = Transform(component.Target.Value);
 
         if (!lxform.Coordinates.TryDistance(EntityManager, txform.Coordinates, out var distance))
@@ -24,6 +25,6 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
         if (distance > component.ZapRange)
             return;
 
-        _beam.TryCreateBeam(component.Owner, component.Target.Value, component.ZapBeamEntityId);
+        _beam.TryCreateBeam(lights, component.Target.Value, component.ZapBeamEntityId);
     }
 }

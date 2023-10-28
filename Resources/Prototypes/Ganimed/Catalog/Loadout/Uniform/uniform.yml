@@ -916,6 +916,17 @@
   prototype: ClothingUniformJumpsuitAtmosCasual
 
 - type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitAtmosCasualOriginal
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+  prototype: ClothingUniformJumpsuitAtmosCasualOriginal
+
+- type: loadout
   id: LoadoutUniformClothingUniformJumpsuitDetective
   category: loadout-category-uniform
   cost: 3

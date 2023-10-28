@@ -1051,13 +1051,24 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAtmosCasual
-  name: atmospheric technician's casual jumpsuit
+  name: atmospheric technician's casual worksuit
   description: Might as well relax with a job as easy as yours.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/atmos_casual.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/atmos_casual.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAtmosCasualOriginal
+  name: atmospheric technician's casual jumpsuit
+  description: Now that is a jumpsuit in its own right. Not a cheap boy worker uniform.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_atmos_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_atmos_casual.rsi
 
 - type: entity
   parent: ClothingUniformBase

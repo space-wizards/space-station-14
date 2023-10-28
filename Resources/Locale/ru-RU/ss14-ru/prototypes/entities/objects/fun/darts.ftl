@@ -1,0 +1,10 @@
+ent-Dart = дротик
+    .desc = лёгкий метательный дротик для игры в дартс. Держите подальше от глаз!
+ent-DartBlue = { ent-Dart }
+    .desc = { ent-Dart.desc }
+ent-DartPurple = { ent-Dart }
+    .desc = { ent-Dart.desc }
+ent-DartYellow = { ent-Dart }
+    .desc = { ent-Dart.desc }
+ent-TargetDarts = мишень
+    .desc = Мишень для игры в дартс.

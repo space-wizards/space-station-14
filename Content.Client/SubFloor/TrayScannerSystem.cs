@@ -1,4 +1,3 @@
-using Content.Client.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.SubFloor;
@@ -41,7 +40,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         var playerPos = _transform.GetWorldPosition(playerXform, xformQuery);
         var playerMap = playerXform.MapID;
         var range = 0f;
-        HashSet<SubFloorHideComponent> inRange;
+        HashSet<Entity<SubFloorHideComponent>> inRange;
         var scannerQuery = GetEntityQuery<TrayScannerComponent>();
 
         // TODO: Should probably sub to player attached changes / inventory changes but inventory's
@@ -73,22 +72,19 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
             canSee = true;
         }
 
+        inRange = new HashSet<Entity<SubFloorHideComponent>>();
+
         if (canSee)
         {
-            inRange = _lookup.GetComponentsInRange<SubFloorHideComponent>(playerMap, playerPos, range);
+            _lookup.GetEntitiesInRange(playerMap, playerPos, range, inRange);
 
-            foreach (var comp in inRange)
+            foreach (var (uid, comp) in inRange)
             {
-                var uid = comp.Owner;
                 if (!comp.IsUnderCover || !comp.BlockAmbience | !comp.BlockInteractions)
                     continue;
 
                 EnsureComp<TrayRevealedComponent>(uid);
             }
-        }
-        else
-        {
-            inRange = new HashSet<SubFloorHideComponent>();
         }
 
         var revealedQuery = AllEntityQuery<TrayRevealedComponent, SpriteComponent, TransformComponent>();
@@ -102,7 +98,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
                 xform.MapID != MapId.Nullspace &&
                 xform.MapID == playerMap &&
                 xform.Anchored &&
-                inRange.Contains(subfloor))
+                inRange.Contains((uid, subfloor)))
             {
                 // Due to the fact client is predicting this server states will reset it constantly
                 if ((!_appearance.TryGetData(uid, SubFloorVisuals.ScannerRevealed, out bool value) || !value) &&

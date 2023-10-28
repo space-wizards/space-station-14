@@ -76,7 +76,7 @@
   - type: ZombieImmune
 
 - type: entity
-  parent: MobElementalBase
+  parent: [ MobElementalBase, MobCombat ]
   id: MobQuartzCrab
   name: quartz crab
   description: An ore crab made from quartz.
@@ -88,7 +88,6 @@
     rootTask:
       task: SimpleHostileCompound
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
@@ -120,7 +119,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: MobElementalBase
+  parent: [ MobElementalBase, MobCombat ]
   id: MobIronCrab
   name: ore crab
   description: An ore crab made from iron.
@@ -132,7 +131,6 @@
     rootTask:
       task: SimpleHostileCompound
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
@@ -163,7 +161,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: MobElementalBase
+  parent: [ MobElementalBase, MobCombat ]
   id: MobUraniumCrab
   name: ore crab
   description: An ore crab made from uranium.
@@ -175,7 +173,6 @@
     rootTask:
       task: IdleCompound
   - type: MeleeWeapon
-    hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
@@ -216,12 +213,12 @@
   name: Reagent slime
   id: ReagentSlime
   suffix: Water
-  parent: MobAdultSlimes
+  parent: [ MobAdultSlimes, MobCombat ]
   description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
   - type: NpcFactionMember
     factions:
-    - SimpleHostile 
+    - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/elemental.rsi
@@ -245,7 +242,7 @@
     speedModifierThresholds:
       50: 0.4
   - type: Bloodstream
-    bloodReagent: Water 
+    bloodReagent: Water
     chemicalMaxVolume: 100
   - type: StatusEffects
     allowed:
@@ -355,7 +352,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#128e80"
-        
+
 - type: entity
   id: ReagentSlimeTHC
   parent: ReagentSlime
@@ -372,7 +369,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#808080"
-        
+
 - type: entity
   id: ReagentSlimeBicaridine
   parent: ReagentSlime
@@ -423,7 +420,7 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#FA00AF"
-     
+
 - type: entity
   id: ReagentSlimeOmnizine
   parent: ReagentSlime

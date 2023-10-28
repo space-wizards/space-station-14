@@ -1617,12 +1617,12 @@ namespace Content.Client.Preferences.UI
 
                 var previewLoadout = new SpriteView
                 {
-                    Sprite = sprite,
                     Scale = new Vector2(1, 1),
                     OverrideDirection = Direction.South,
                     VerticalAlignment = VAlignment.Center,
                     SizeFlagsStretchRatio = 1
                 };
+				previewLoadout.SetEntity(dummyLoadout);
 
                 _checkBox = new CheckBox
                 {

@@ -234,7 +234,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (component.AntagonistRole == null)
             return;
 
-        _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(args.OldMindId);
+        _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(args.Mind);
     }
 
     private void EnsureEmaggedRole(EntityUid uid, EmagSiliconLawComponent component)

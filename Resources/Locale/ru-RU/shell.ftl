@@ -27,7 +27,9 @@ shell-wrong-arguments-number-need-specific =
 shell-argument-must-be-number = Аргумент должен быть числом.
 shell-argument-must-be-boolean = Аргумент должен быть boolean.
 shell-wrong-arguments-number = Неправильное количество аргументов.
-shell-need-between-arguments = Нужно от { $lower } до { $upper } аргументов!
+shell-need-between-arguments = Требуется от { $lower } до { $upper } аргументов!
+shell-need-minimum-arguments = Требуется как минимум {$minimum} аргументов!
+shell-need-minimum-one-argument = Требуется как минимум один аргумент!
 shell-argument-uid = EntityUid
 
 ## Guards

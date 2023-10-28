@@ -1,15 +1,15 @@
 ﻿uniform sampler2D SCREEN_TEXTURE;
-uniform highp float alpha = 1.0;
+uniform highp float alpha;
 
-uniform highp float a1 = 0.625;
-uniform highp float a2 = 0.375;
-uniform highp float a3 = 0.000;
-uniform highp float b1 = 0.700;
-uniform highp float b2 = 0.300;
-uniform highp float b3 = 0.000;
-uniform highp float c1 = 0.000;
-uniform highp float c2 = 0.300;
-uniform highp float c3 = 0.700;
+uniform highp float a1;
+uniform highp float a2;
+uniform highp float a3;
+uniform highp float b1;
+uniform highp float b2;
+uniform highp float b3;
+uniform highp float c1;
+uniform highp float c2;
+uniform highp float c3;
 
 void fragment() {
     highp vec4 color = zTextureSpec(SCREEN_TEXTURE, UV);

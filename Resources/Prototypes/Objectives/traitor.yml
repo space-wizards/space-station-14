@@ -196,6 +196,19 @@
     prototype: ClothingShoesBootsMagAdv
     owner: job-name-ce
 
+## qm
+
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: ClipboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Quartermaster
+  - type: StealCondition
+    prototype: BoxFolderQmClipboard
+    owner: job-name-qm
+
 ## hop
 
 - type: entity

@@ -146,7 +146,7 @@
     coefficient: 0.85
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.

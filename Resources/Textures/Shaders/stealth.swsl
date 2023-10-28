@@ -18,14 +18,21 @@ void fragment() {
     // get distortion magnitude. hand crafted from a random jumble of trig functions
     highp vec2 coords = (FRAGCOORD.xy + reference) * distance_scale;
     highp float w = sin(TIME + (coords.x + coords.y + 2.0*sin(TIME*time_scale) * sin(TIME*time_scale + coords.x - coords.y)) );
-
-    // visualize distortion via:
+	
+	// visualize distortion via:
     // COLOR = vec4(w,w,w,1.0);
+	 
+	w *= 5.0;
+	w *= 1.0 + visibility;
 
-    w *= (3.0 + visibility * 2.0);
 
     highp vec4 background = zTextureSpec(SCREEN_TEXTURE, ( FRAGCOORD.xy + vec2(w) ) * SCREEN_PIXEL_SIZE );
-
-    COLOR.xyz = mix(background.xyz, sprite.xyz, sprite.a);
-    COLOR.a = sprite.a * 10.0 * (1.0 + sin(TIME) * 0.05);
+	
+	if (visibility < 0.0) {
+		COLOR.xyz = background.xyz;
+		COLOR.a = 1.0 + visibility;
+	} else {
+		COLOR.xyz = mix(background.xyz, sprite.xyz, visibility);
+		COLOR.a = 1.0;
+	}
 }
