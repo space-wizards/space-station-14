@@ -18,6 +18,7 @@ using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Strip

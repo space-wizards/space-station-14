@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using NUnit.Framework.Interfaces;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -150,6 +152,34 @@ public sealed partial class MindTests
             Assert.That(entMan.Deleted(visiting), Is.False);
             Assert.That(mind.Comp.CurrentEntity, Is.EqualTo(visiting));
         });
+
+        await pair.CleanReturnAsync();
+    }
+
+    // This test will do the following
+    // - connect as a normal player
+    // - disconnect
+    // - reconnect
+    // - assert that they return to the original entity.
+    [Test]
+    public async Task TestReconnect()
+    {
+        await using var pair = await SetupPair();
+        var mind = GetMind(pair);
+
+        Assert.Null(mind.Comp.VisitingEntity);
+        Assert.NotNull(mind.Comp.OwnedEntity);
+        var entity = mind.Comp.OwnedEntity;
+
+        await pair.RunTicksSync(5);
+        await DisconnectReconnect(pair);
+        await pair.RunTicksSync(5);
+
+        var newMind = GetMind(pair);
+
+        Assert.Null(newMind.Comp.VisitingEntity);
+        Assert.That(newMind.Comp.OwnedEntity, Is.EqualTo(entity));
+        Assert.That(newMind.Id, Is.EqualTo(mind.Id));
 
         await pair.CleanReturnAsync();
     }
