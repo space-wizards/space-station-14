@@ -26,10 +26,46 @@
             "name": "iron_foam"
         },
         {
+            "name": "iron_foam-north"
+        },
+        {
+            "name": "iron_foam-east"
+        },
+        {
+            "name": "iron_foam-south"
+        },
+        {
+            "name": "iron_foam-west"
+        },
+        {
             "name": "metal_foam"
         },
         {
+            "name": "metal_foam-north"
+        },
+        {
+            "name": "metal_foam-east"
+        },
+        {
+            "name": "metal_foam-south"
+        },
+        {
+            "name": "metal_foam-west"
+        },
+        {
             "name": "m_foam"
+        },
+        {
+            "name": "m_foam-north"
+        },
+        {
+            "name": "m_foam-east"
+        },
+        {
+            "name": "m_foam-south"
+        },
+        {
+            "name": "m_foam-west"
         },
         {
             "name": "m_foam-dissolve",
