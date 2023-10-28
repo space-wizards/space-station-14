@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   abstract: true
   id: MobElementalBase
   components:
@@ -76,7 +75,6 @@
   - type: ZombieImmune
 
 - type: entity
-  save: false
   abstract: true
   id: MobOreCrab
   name: ore crab
@@ -84,10 +82,17 @@
   components:
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
-    state: uraniumcrab
+    state: uranium_crab
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Blunt: 10
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 2.5
@@ -101,15 +106,7 @@
   description: An ore crab made from Quartz.
   components:
   - type: Sprite
-    sprite: Mobs/Elemental/orecrab.rsi
-    state: quartzcrab
-  - type: MeleeWeapon
-    hidden: true
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
-    damage:
-      types:
-        Piercing: 10
+    state: quartz_crab
   - type: Destructible
     thresholds:
     - trigger:
@@ -133,11 +130,8 @@
   description: An ore crab made from iron.
   components:
   - type: Sprite
-    sprite: Mobs/Elemental/orecrab.rsi
-    state: ironcrab
+    state: iron_crab
   - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Blunt: 6
@@ -166,13 +160,8 @@
   id: MobUraniumCrab
   description: An ore crab made from uranium.
   components:
-  - type: Sprite
-    sprite: Mobs/Elemental/orecrab.rsi
-    state: uraniumcrab
   - type: FactionException
   - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Blunt: 8
@@ -183,7 +172,7 @@
     baseSprintSpeed : 2.5
   - type: NpcFactionMember
     factions:
-      - Passive
+      - SimpleNeutral
   - type: RadiationSource
     intensity: 2
     slope: 0.3
@@ -215,12 +204,8 @@
   description: An ore crab made from silver.
   components:
   - type: Sprite
-    sprite: Mobs/Elemental/orecrab.rsi
-    state: silvercrab
+    state: silver_crab
   - type: MeleeWeapon
-    hidden: true
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Blunt: 5
