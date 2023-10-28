@@ -32,20 +32,20 @@ namespace Content.Client.HealthAnalyzer.UI
         {
             RobustXamlLoader.Load(this);
 
-            _entityManager = IoCManager.Resolve<IEntityManager>();
+            var dependencies = IoCManager.Instance!;
+            _entityManager = dependencies.Resolve<IEntityManager>();
             _spriteSystem = _entityManager.System<SpriteSystem>();
-            _prototypes = IoCManager.Resolve<IPrototypeManager>();
-            _cache = IoCManager.Resolve<IResourceCache>();
+            _prototypes = dependencies.Resolve<IPrototypeManager>();
+            _cache = dependencies.Resolve<IResourceCache>();
         }
 
         public void Populate(HealthAnalyzerScannedUserMessage msg)
         {
             GroupsContainer.RemoveAllChildren();
 
-            var entities = IoCManager.Resolve<IEntityManager>();
-            var target = entities.GetEntity(msg.TargetEntity);
+            var target = _entityManager.GetEntity(msg.TargetEntity);
 
-            if (msg.TargetEntity == null
+            if (target == null
                 || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
             {
                 NoPatientDataText.Visible = true;
@@ -55,7 +55,7 @@ namespace Content.Client.HealthAnalyzer.UI
             NoPatientDataText.Visible = false;
 
             string entityName = Loc.GetString("health-analyzer-window-entity-unknown-text");
-            if (msg.TargetEntity != null && entities.HasComponent<MetaDataComponent>(target.Value))
+            if (_entityManager.HasComponent<MetaDataComponent>(target.Value))
             {
                 entityName = Identity.Name(target.Value, _entityManager);
             }
