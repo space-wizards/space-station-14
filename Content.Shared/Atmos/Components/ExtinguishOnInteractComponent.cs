@@ -24,6 +24,6 @@ public sealed partial class ExtinguishOnInteractComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float StackDelta = -5.0f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public LocId ExtinguishFailed = "candle-extinguish-failed";
 }
