@@ -234,8 +234,8 @@
       sprintModifier: 1 # makes its stats identical to other variants of bag of holding
 
 - type: entity
-  id: ClothingBackpackDuffelCBURN
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCBURN
   name: CBURN duffel bag
   description: A duffel bag containing a variety of biological containment equipment.
   components:
