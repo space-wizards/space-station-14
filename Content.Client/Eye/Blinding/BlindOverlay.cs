@@ -74,6 +74,7 @@ namespace Content.Client.Eye.Blinding
             }
 
             _greyscaleShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+			_greyscaleShader?.SetParameter("alpha", 1.0f);
 
             var worldHandle = args.WorldHandle;
             var viewport = args.WorldBounds;
