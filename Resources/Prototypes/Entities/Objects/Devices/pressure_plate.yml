@@ -42,8 +42,8 @@
         pitchscale: 0.75
     releasedSound:
       path: /Audio/Machines/button.ogg
-  - type: ItemPlacer
-    maxEntities: 0
+  #- type: ItemPlacer
+  #  maxEntities: 0
   - type: DeviceNetwork
     deviceNetId: Wireless
   - type: Damageable
