@@ -1,10 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: 'The nuke detonation sound plays to all crew members again, no longer
-      will you have to sit in silence before your demise', type: Fix}
-  id: 4574
-  time: '2023-08-14T03:55:50.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: 'The Syndicate have rebooted the chameleon clothing database, restoring
@@ -2909,3 +2903,9 @@ Entries:
   - {message: Stats menu on Character setup for total and role playtime., type: Add}
   id: 5073
   time: '2023-10-28T12:01:11.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'The space lube recipe now produces slightly more lube, but can overflow
+      its container.', type: Tweak}
+  id: 5074
+  time: '2023-10-28T16:46:59.0000000+00:00'
