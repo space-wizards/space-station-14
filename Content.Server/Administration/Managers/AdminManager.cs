@@ -7,15 +7,15 @@ using Content.Server.Database;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Players;
 using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Utility;
@@ -35,16 +35,16 @@ namespace Content.Server.Administration.Managers
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
 
-        private readonly Dictionary<IPlayerSession, AdminReg> _admins = new();
+        private readonly Dictionary<ICommonSession, AdminReg> _admins = new();
         private readonly HashSet<NetUserId> _promotedPlayers = new();
 
         public event Action<AdminPermsChangedEventArgs>? OnPermsChanged;
 
-        public IEnumerable<IPlayerSession> ActiveAdmins => _admins
+        public IEnumerable<ICommonSession> ActiveAdmins => _admins
             .Where(p => p.Value.Data.Active)
             .Select(p => p.Key);
 
-        public IEnumerable<IPlayerSession> AllAdmins => _admins.Select(p => p.Key);
+        public IEnumerable<ICommonSession> AllAdmins => _admins.Select(p => p.Key);
 
         private readonly AdminCommandPermissions _commandPermissions = new();
         private readonly AdminCommandPermissions _toolshedCommandPermissions = new();
@@ -56,7 +56,7 @@ namespace Content.Server.Administration.Managers
 
         public AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false)
         {
-            if (_admins.TryGetValue((IPlayerSession)session, out var reg) && (reg.Data.Active || includeDeAdmin))
+            if (_admins.TryGetValue(session, out var reg) && (reg.Data.Active || includeDeAdmin))
             {
                 return reg.Data;
             }
@@ -66,13 +66,13 @@ namespace Content.Server.Administration.Managers
 
         public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
         {
-            if (_playerManager.TryGetSessionByEntity(uid, out var session) && session is IPlayerSession playerSession)
-                return GetAdminData(playerSession, includeDeAdmin);
+            if (_playerManager.TryGetSessionByEntity(uid, out var session))
+                return GetAdminData(session, includeDeAdmin);
 
             return null;
         }
 
-        public void DeAdmin(IPlayerSession session)
+        public void DeAdmin(ICommonSession session)
         {
             if (!_admins.TryGetValue(session, out var reg))
             {
@@ -95,7 +95,7 @@ namespace Content.Server.Administration.Managers
             UpdateAdminStatus(session);
         }
 
-        public void ReAdmin(IPlayerSession session)
+        public void ReAdmin(ICommonSession session)
         {
             if (!_admins.TryGetValue(session, out var reg))
             {
@@ -119,7 +119,7 @@ namespace Content.Server.Administration.Managers
             UpdateAdminStatus(session);
         }
 
-        public async void ReloadAdmin(IPlayerSession player)
+        public async void ReloadAdmin(ICommonSession player)
         {
             var data = await LoadAdminData(player);
             var curAdmin = _admins.GetValueOrDefault(player);
@@ -236,7 +236,7 @@ namespace Content.Server.Administration.Managers
             _toolshed.ActivePermissionController = this;
         }
 
-        public void PromoteHost(IPlayerSession player)
+        public void PromoteHost(ICommonSession player)
         {
             _promotedPlayers.Add(player.UserId);
 
@@ -250,7 +250,7 @@ namespace Content.Server.Administration.Managers
         }
 
         // NOTE: Also sends commands list for non admins..
-        private void UpdateAdminStatus(IPlayerSession session)
+        private void UpdateAdminStatus(ICommonSession session)
         {
             var msg = new MsgUpdateAdminStatus();
 
@@ -290,7 +290,7 @@ namespace Content.Server.Administration.Managers
             }
         }
 
-        private async void LoginAdminMaybe(IPlayerSession session)
+        private async void LoginAdminMaybe(ICommonSession session)
         {
             var adminDat = await LoadAdminData(session);
             if (adminDat == null)
@@ -323,7 +323,7 @@ namespace Content.Server.Administration.Managers
             UpdateAdminStatus(session);
         }
 
-        private async Task<(AdminData dat, int? rankId, bool specialLogin)?> LoadAdminData(IPlayerSession session)
+        private async Task<(AdminData dat, int? rankId, bool specialLogin)?> LoadAdminData(ICommonSession session)
         {
             var promoteHost = IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal)
                               || _promotedPlayers.Contains(session.UserId)
@@ -387,7 +387,7 @@ namespace Content.Server.Administration.Managers
             }
         }
 
-        private static bool IsLocal(IPlayerSession player)
+        private static bool IsLocal(ICommonSession player)
         {
             var ep = player.ConnectedClient.RemoteEndPoint;
             var addr = ep.Address;
@@ -419,7 +419,7 @@ namespace Content.Server.Administration.Managers
             return false;
         }
 
-        public bool CanCommand(IPlayerSession session, string cmdName)
+        public bool CanCommand(ICommonSession session, string cmdName)
         {
             if (_commandPermissions.AnyCommands.Contains(cmdName))
             {
@@ -474,7 +474,7 @@ namespace Content.Server.Administration.Managers
                 return true;
             }
 
-            var data = GetAdminData((IPlayerSession)user);
+            var data = GetAdminData(user);
             if (data == null)
             {
                 // Player isn't an admin.
@@ -520,32 +520,32 @@ namespace Content.Server.Administration.Managers
             return (attribs.Length != 0, attribs);
         }
 
-        public bool CanViewVar(IPlayerSession session)
+        public bool CanViewVar(ICommonSession session)
         {
             return CanCommand(session, "vv");
         }
 
-        public bool CanAdminPlace(IPlayerSession session)
+        public bool CanAdminPlace(ICommonSession session)
         {
             return GetAdminData(session)?.CanAdminPlace() ?? false;
         }
 
-        public bool CanScript(IPlayerSession session)
+        public bool CanScript(ICommonSession session)
         {
             return GetAdminData(session)?.CanScript() ?? false;
         }
 
-        public bool CanAdminMenu(IPlayerSession session)
+        public bool CanAdminMenu(ICommonSession session)
         {
             return GetAdminData(session)?.CanAdminMenu() ?? false;
         }
 
-        public bool CanAdminReloadPrototypes(IPlayerSession session)
+        public bool CanAdminReloadPrototypes(ICommonSession session)
         {
             return GetAdminData(session)?.CanAdminReloadPrototypes() ?? false;
         }
 
-        private void SendPermsChangedEvent(IPlayerSession session)
+        private void SendPermsChangedEvent(ICommonSession session)
         {
             var flags = GetAdminData(session)?.Flags;
             OnPermsChanged?.Invoke(new AdminPermsChangedEventArgs(session, flags));
@@ -553,7 +553,7 @@ namespace Content.Server.Administration.Managers
 
         private sealed class AdminReg
         {
-            public readonly IPlayerSession Session;
+            public readonly ICommonSession Session;
 
             public AdminData Data;
             public int? RankId;
@@ -561,7 +561,7 @@ namespace Content.Server.Administration.Managers
             // Such as console.loginlocal or promotehost
             public bool IsSpecialLogin;
 
-            public AdminReg(IPlayerSession session, AdminData data)
+            public AdminReg(ICommonSession session, AdminData data)
             {
                 Data = data;
                 Session = session;

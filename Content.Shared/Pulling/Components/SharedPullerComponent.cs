@@ -17,15 +17,5 @@
         /// </summary>
         [DataField("needsHands")]
         public bool NeedsHands = true;
-
-        protected override void OnRemove()
-        {
-            if (Pulling != default)
-            {
-                // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
-                Logger.ErrorS("c.go.c.pulling", "PULLING STATE CORRUPTION IMMINENT IN PULLER {0} - OnRemove called when Pulling is set!", Owner);
-            }
-            base.OnRemove();
-        }
     }
 }
