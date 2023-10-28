@@ -15,6 +15,7 @@
   blacklist:
     components:
       - PermanentBlindness
+      - ChromaticAberration
 
 - type: trait
   id: ChromaticAberration
@@ -26,6 +27,7 @@
   blacklist:
     components:
       - Monochromacy
+      - PermanentBlindness
 
 - type: trait
   id: SocialAnxiety
@@ -37,3 +39,10 @@
       fourRandomProb: 0
       threeRandomProb: 0
       cutRandomProb: 0
+
+- type: trait
+  id: Incognito
+  name: trait-incognito-name
+  description: trait-incognito-desc
+  components:
+    - type: SetIncognito

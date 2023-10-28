@@ -233,6 +233,10 @@ namespace Content.Server.Ghost.Roles
 
             var newMind = _mindSystem.CreateMind(player.UserId,
                 EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
+				
+			//if (_mindSystem.TryGetMind(player, out var _, out var oldMind) && oldMind.Incognito)
+			//	Comp<MindComponent>(newMind).Incognito = true;
+			
             _roleSystem.MindAddRole(newMind, new GhostRoleMarkerRoleComponent { Name = role.RoleName });
 
             _mindSystem.SetUserId(newMind, player.UserId);
