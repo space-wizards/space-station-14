@@ -53,6 +53,9 @@
   parent: BaseAnomaly
   suffix: Pyroclastic
   components:
+  - type: Anomaly
+    corePrototype: AnomalyCorePyroclastic
+    coreInertPrototype: AnomalyCorePyroclasticInert
   - type: Sprite
     layers:
     - state: anom1
@@ -81,6 +84,9 @@
   parent: BaseAnomaly
   suffix: Gravity
   components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreGravity
+    coreInertPrototype: AnomalyCoreGravityInert
   - type: Sprite
     layers:
     - state: anom2
@@ -102,6 +108,9 @@
   parent: BaseAnomaly
   suffix: Electricity
   components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreElectricity
+    coreInertPrototype: AnomalyCoreElectricityInert
   - type: Sprite
     layers:
     - state: anom3
@@ -122,6 +131,9 @@
   parent: BaseAnomaly
   suffix: Flesh
   components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreFlesh
+    coreInertPrototype: AnomalyCoreFleshInert
   - type: Sprite
     layers:
     - state: anom5
@@ -186,6 +198,8 @@
         - WallLayer
         hard: false
   - type: Anomaly
+    corePrototype: AnomalyCoreBluespace
+    coreInertPrototype: AnomalyCoreBluespaceInert
     pulseSound:
       collection: RadiationPulse
       params:
@@ -214,6 +228,8 @@
     color: "#befaff"
     castShadows: false
   - type: Anomaly
+    corePrototype: AnomalyCoreIce
+    coreInertPrototype: AnomalyCoreIceInert
     anomalyContactDamage:
       types:
         Cold: 10
@@ -238,6 +254,9 @@
   parent: BaseAnomaly
   suffix: Rock
   components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreRock
+    coreInertPrototype: AnomalyCoreRockInert
   - type: Sprite
     layers:
     - state: anom6
@@ -289,6 +308,8 @@
     color: "#bbbbbb"
   - type: BadFood
   - type: Anomaly
+    corePrototype: AnomalyCoreLiquid
+    coreInertPrototype: AnomalyCoreLiquidInert
     anomalyContactDamage:
       types:
         Slash: 1

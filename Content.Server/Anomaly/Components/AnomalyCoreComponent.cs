@@ -19,8 +19,8 @@ public sealed partial class AnomalyCoreComponent : Component
     /// <summary>
     /// Amount of time required for the core to decompose into an inert core
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan TimeToDecay = TimeSpan.FromSeconds(30);
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public double TimeToDecay = 300;
 
     /// <summary>
     /// The moment of core decay. It is set during entity initialization.
@@ -29,14 +29,20 @@ public sealed partial class AnomalyCoreComponent : Component
     public TimeSpan DecayMoment;
 
     /// <summary>
-    /// The original value of the entity. The value is used from the StaticPrice component
+    /// The original value of the entity. The value is linked from the StaticPrice component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public double OldPrice;
 
+    /// <summary>
+    /// The value of the object sought during decaying
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public double FuturePrice = 200;
 
+    /// <summary>
+    /// Has the nucleus decayed?
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool IsDecayed;
 }

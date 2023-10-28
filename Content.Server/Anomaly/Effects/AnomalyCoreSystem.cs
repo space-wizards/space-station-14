@@ -20,7 +20,7 @@ public sealed class AnomalyCoreSystem : EntitySystem
 
     private void OnCompInit(Entity<AnomalyCoreComponent> core, ref ComponentInit args)
     {
-        core.Comp.DecayMoment = _gameTiming.CurTime + core.Comp.TimeToDecay;
+        core.Comp.DecayMoment = _gameTiming.CurTime + TimeSpan.FromSeconds(core.Comp.TimeToDecay);
 
         if (TryComp<StaticPriceComponent>(core, out var price))
         {
@@ -44,7 +44,8 @@ public sealed class AnomalyCoreSystem : EntitySystem
                 continue;
 
             var timeLeft = component.DecayMoment - _gameTiming.CurTime;
-            var lerp = (double)(timeLeft.TotalSeconds / component.TimeToDecay.TotalSeconds);
+            var lerp = (double)(timeLeft.TotalSeconds / component.TimeToDecay);
+            lerp = Math.Clamp(lerp, 0, 1);
 
             if (TryComp<StaticPriceComponent>(uid, out var price))
                 price.Price = MathHelper.Lerp(component.FuturePrice, component.OldPrice, lerp);
@@ -61,5 +62,6 @@ public sealed class AnomalyCoreSystem : EntitySystem
     {
         _appearance.SetData(uid, AnomalyCoreVisuals.Decaying, false);
         component.IsDecayed = true;
+
     }
 }
