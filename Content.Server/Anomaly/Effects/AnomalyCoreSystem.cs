@@ -1,6 +1,7 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.Cargo.Components;
 using Content.Shared.Anomaly;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
@@ -15,10 +16,10 @@ public sealed class AnomalyCoreSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AnomalyCoreComponent, ComponentInit>(OnCompInit);
+        SubscribeLocalEvent<AnomalyCoreComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnCompInit(Entity<AnomalyCoreComponent> core, ref ComponentInit args)
+    private void OnMapInit(Entity<AnomalyCoreComponent> core, ref MapInitEvent args)
     {
         core.Comp.DecayMoment = _gameTiming.CurTime + TimeSpan.FromSeconds(core.Comp.TimeToDecay);
 
