@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -15,7 +14,7 @@ namespace Content.Server.Administration.Commands
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             var dbMan = IoCManager.Resolve<IServerDbManager>();
 
             if (args.Length != 1)
