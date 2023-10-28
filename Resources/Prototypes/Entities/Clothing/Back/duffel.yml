@@ -232,3 +232,15 @@
     capacity: 9999
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
+
+- type: entity
+  id: ClothingBackpackDuffelCBURN
+  parent: ClothingBackpackDuffel
+  name: CBURN duffel bag
+  description: A duffel bag containing a variety of biological containment equipment.
+  components:
+    - type: Storage
+      capacity: 150
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1

@@ -14,22 +14,20 @@
       - id: Scalpel
 
 - type: entity
-  id: ClothingBackpackDuffelCBURN
-  parent: ClothingBackpackDuffel
-  name: CBURN duffel bag
-  description: A duffel bag containing a variety of biological containment equipment.
+  id: ClothingBackpackDuffelCBURNFilled
+  parent: ClothingBackpackDuffelCBURN
   components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvivalEngineering
-      - id: WeaponShotgunDoubleBarreled
-      - id: BoxShotgunIncendiary
-        amount: 2
-      - id: GrenadeFlashBang
-        amount: 2
-      - id: PillAmbuzolPlus
-      - id: PillAmbuzol
-        amount: 4
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalEngineering
+        - id: WeaponShotgunDoubleBarreled
+        - id: BoxShotgunIncendiary
+          amount: 2
+        - id: GrenadeFlashBang
+          amount: 2
+        - id: PillAmbuzolPlus
+        - id: PillAmbuzol
+          amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
