@@ -299,8 +299,7 @@
   name: livestock crate
   components:
   - type: EntityStorage
-    air:
-      volume: 800
+    airtight: false
   - type: Sprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:
