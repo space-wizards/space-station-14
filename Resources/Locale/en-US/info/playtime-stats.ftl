@@ -1,6 +1,6 @@
 # Playtime Stats
 
-ui-playtime-stats-title = Playtime Stats
+ui-playtime-stats-title = User Playtime Stats
 ui-playtime-overall-base = Overall Playtime:
 ui-playtime-overall = Overall Playtime: {$time}
 ui-playtime-first-time = First Time Playing
