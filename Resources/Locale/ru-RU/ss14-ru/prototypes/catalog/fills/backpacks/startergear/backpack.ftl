@@ -61,3 +61,5 @@ ent-ClothingBackpackSecurityFilledDetective = { ent-ClothingBackpackSecurity }
 	.desc = { ent-ClothingBackpackSecurity.desc }
 ent-ClothingBackpackBrigmedicFilled = { ent-ClothingBackpackBrigmedic }
 	.desc = { ent-ClothingBackpackBrigmedic.desc }
+ent-ClothingBackpackDeathSquadFilled = рюкзак эскадрона смерти
+	.desc = Содержит вооружение наиболее устрашающих сотрудников НТ.
