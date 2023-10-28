@@ -197,6 +197,14 @@ public sealed class InternalsSystem : EntitySystem
         return true;
     }
 
+    public bool AreInternalsWorking(EntityUid uid, InternalsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        return AreInternalsWorking(component);
+    }
+
     public bool AreInternalsWorking(InternalsComponent component)
     {
         return TryComp(component.BreathToolEntity, out BreathToolComponent? breathTool) &&
