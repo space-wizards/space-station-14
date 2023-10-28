@@ -13,7 +13,7 @@ using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
@@ -410,11 +410,11 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     public bool TryGetMind(
-        PlayerData player,
+        ContentPlayerData contentPlayer,
         out EntityUid mindId,
         [NotNullWhen(true)] out MindComponent? mind)
     {
-        mindId = player.Mind ?? default;
+        mindId = contentPlayer.Mind ?? default;
         return TryComp(mindId, out mind);
     }
 
