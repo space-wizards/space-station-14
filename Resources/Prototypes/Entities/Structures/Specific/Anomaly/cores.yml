@@ -1,0 +1,42 @@
+- type: entity
+  parent: BaseItem
+  id: BaseAnomalyCore
+  abstract: true
+  name: anomaly core
+  description: The core of a dead incomprehensible object. Rapidly losing its value over time.
+  components:
+  - type: Sprite
+    sprite: Structures\Specific\Anomalies\Cores\gravity_core.rsi
+    layers:
+    - state: core
+    - state: pulse
+      map: ["decay"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnomalyCoreVisuals.Decaying:
+        decay:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Item
+    size: 10
+  - type: ItemCooldown
+  - type: EmitSoundOnUse #placeholder for future unical mechanic
+    sound:
+      collection: RadiationPulse 
+  - type: UseDelay
+    delay: 2
+  - type: StaticPrice
+    price: 10000
+  - type: AnomalyCore
+
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreGravity
+  components:
+  - type: PointLight
+    radius: 2.0
+    energy: 10
+    color: "#1e070e"
+    castShadows: false
