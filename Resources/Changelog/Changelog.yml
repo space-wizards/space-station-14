@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed the RPED sound effect cutting off at the end., type: Fix}
-  id: 4572
-  time: '2023-08-14T03:36:08.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Admin notes now require a severity to be set before saving., type: Tweak}
@@ -2909,3 +2904,8 @@ Entries:
   - {message: Fixed nuclear operatives sound not being played at round start, type: Fix}
   id: 5071
   time: '2023-10-28T02:28:21.0000000+00:00'
+- author: Arteben
+  changes:
+  - {message: Nanotrasen improved the health analyzer UI!, type: Tweak}
+  id: 5072
+  time: '2023-10-28T05:54:18.0000000+00:00'
