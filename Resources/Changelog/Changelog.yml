@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Admin notes now require a severity to be set before saving., type: Tweak}
-  id: 4573
-  time: '2023-08-14T03:37:38.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: 'The nuke detonation sound plays to all crew members again, no longer
@@ -2909,3 +2904,8 @@ Entries:
   - {message: Nanotrasen improved the health analyzer UI!, type: Tweak}
   id: 5072
   time: '2023-10-28T05:54:18.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Stats menu on Character setup for total and role playtime., type: Add}
+  id: 5073
+  time: '2023-10-28T12:01:11.0000000+00:00'
