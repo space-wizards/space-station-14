@@ -6,7 +6,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Console;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Mobs;
 
