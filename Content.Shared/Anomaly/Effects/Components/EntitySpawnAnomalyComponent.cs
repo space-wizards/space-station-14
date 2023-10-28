@@ -35,19 +35,19 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
     /// <summary>
     /// Whether or not anomaly spawns entities on Pulse
     /// </summary>
-    [DataField("spawnOnPulse"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool SpawnOnPulse = true;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on SuperCritical
     /// </summary>
-    [DataField("spawnOnSuperCritical"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool SpawnOnSuperCritical = true;
 
     /// <summary>
     /// Whether or not anomaly spawns entities on StabilityChanged
     /// The idea was to spawn entities either on Pulse/Supercritical OR StabilityChanged
     /// </summary>
-    [DataField("spawnOnStabilityChanged"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool SpawnOnStabilityChanged = false;
 }

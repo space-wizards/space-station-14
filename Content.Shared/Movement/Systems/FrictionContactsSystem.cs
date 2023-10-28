@@ -10,6 +10,9 @@ public sealed class FrictionContactsSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 
+    // Comment copied from "original" SlowContactsSystem.cs
+    // TODO full-game-save 
+    // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
     private HashSet<EntityUid> _toUpdate = new();
 
     public override void Initialize()

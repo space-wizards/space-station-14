@@ -11,7 +11,7 @@ public sealed partial class FrictionContactsComponent : Component
     /// <summary>
     /// Modified mob friction while on FrictionContactsComponent
     /// </summary>
-    [DataField("mobFriction"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float MobFriction = 0.5f;
 
@@ -19,13 +19,13 @@ public sealed partial class FrictionContactsComponent : Component
     /// Modified mob friction without input while on FrictionContactsComponent
     /// </summary>
     [AutoNetworkedField]
-    [DataField("mobFrictionNoInput"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MobFrictionNoInput = 0.05f;
 
     /// <summary>
     /// Modified mob acceleration while on FrictionContactsComponent
     /// </summary>
     [AutoNetworkedField]
-    [DataField("mobAcceleration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MobAcceleration = 2.0f;
 }

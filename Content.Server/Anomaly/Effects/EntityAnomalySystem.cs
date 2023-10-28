@@ -21,7 +21,7 @@ public sealed class EntityAnomalySystem : EntitySystem
     {
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
-        SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnSeverityChanged);
+        SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
     }
 
     private void OnPulse(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyPulseEvent args)
@@ -48,7 +48,7 @@ public sealed class EntityAnomalySystem : EntitySystem
         SpawnEntitesOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.SuperCriticalSpawns);
     }
 
-    private void OnSeverityChanged(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyStabilityChangedEvent args)
+    private void OnStabilityChanged(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyStabilityChangedEvent args)
     {
         if (!component.SpawnOnStabilityChanged)
             return;
