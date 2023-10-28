@@ -234,3 +234,16 @@
     maxTotalWeight: 56 #14 normal-sized items.
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCBURN
+  name: CBURN duffel bag
+  description: A duffel bag containing a variety of biological containment equipment.
+  components:
+  - type: Storage
+    maxItemSize: Large
+    maxTotalWeight: 40
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1

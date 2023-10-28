@@ -12,6 +12,12 @@
       containers:
         implanter_slot: !type:ContainerSlot { }
     - type: Implanter
+      whitelist:
+        components:
+        - Body # no chair microbomb
+      blacklist:
+        components:
+        - Guardian # no holoparasite macrobomb wombo combo
       currentMode: Draw
       implanterSlot:
         name: Implant
@@ -53,6 +59,16 @@
     - type: Tag
       tags:
         - Trash
+
+- type: entity
+  parent: Implanter
+  id: ImplanterAdmeme
+  suffix: Admeme
+  components:
+  - type: Implanter
+    # go wild with sentient chairs with macrobombs
+    whitelist: null
+    blacklist: null
 
 - type: entity
   id: BaseImplantOnlyImplanter
