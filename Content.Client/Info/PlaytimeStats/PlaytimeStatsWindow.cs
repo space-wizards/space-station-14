@@ -104,11 +104,8 @@ public sealed partial class PlaytimeStatsWindow : FancyWindow
     {
         var overallPlaytime = _jobRequirementsManager.FetchOverallPlaytime();
 
-        if (overallPlaytime is var timeSpan)
-        {
-            var formattedPlaytime = ConvertTimeSpanToHoursMinutes(timeSpan);
-            OverallPlaytimeLabel.Text = Loc.GetString("ui-playtime-overall", ("time", formattedPlaytime));
-        }
+        var formattedPlaytime = ConvertTimeSpanToHoursMinutes(overallPlaytime);
+        OverallPlaytimeLabel.Text = Loc.GetString("ui-playtime-overall", ("time", formattedPlaytime));
 
         var rolePlaytimes = _jobRequirementsManager.FetchPlaytimeByRoles();
 
