@@ -326,6 +326,8 @@
   id: FoodMealRibs
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
+  - type: Food
+    trash: FoodKebabSkewer
   - type: FlavorProfile
     flavors:
       - meaty

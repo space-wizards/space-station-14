@@ -18,7 +18,6 @@
   - type: SmoothEdge
   - type: Sprite
     sprite: Structures/Walls/rock.rsi
-    noRot: true
     layers:
       - state: rock_asteroid
       - map: [ "enum.EdgeLayer.South" ]
@@ -77,7 +76,6 @@
   components:
   - type: Sprite
     sprite: Structures/Walls/rock.rsi
-    noRot: true
     layers:
       - state: rock_asteroid_ore
       - map: [ "enum.EdgeLayer.South" ]
@@ -98,7 +96,6 @@
   components:
   - type: Sprite
     sprite: Structures/Walls/rock.rsi
-    noRot: true
     layers:
       - state: rock_asteroid_ore1
       - map: [ "enum.EdgeLayer.South" ]
@@ -152,6 +149,8 @@
   parent: BaseStructure
   name: rock
   components:
+    - type: PlacementReplacement
+      key: walls
     - type: SoundOnGather
     - type: Gatherable
       whitelist:
@@ -380,6 +379,7 @@
 # Basalt variants
 - type: entity
   id: WallRockBasalt
+  name: basalt
   parent: WallRock
   components:
     - type: Sprite
@@ -575,6 +575,7 @@
 # Snow variants
 - type: entity
   id: WallRockSnow
+  name: snowdrift
   parent: WallRock
   components:
     - type: Sprite
@@ -771,6 +772,7 @@
 # Sand variants
 - type: entity
   id: WallRockSand
+  name: sandstone
   parent: WallRock
   components:
     - type: Sprite
@@ -966,6 +968,7 @@
 # Chromite variants
 - type: entity
   id: WallRockChromite
+  name: chromite
   parent: WallRock
   components:
     - type: Sprite
@@ -1001,7 +1004,7 @@
           state: rock_chromite_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_chromite_west
-        - state: rock_chromite
+        - state: rock_gold
 
 - type: entity
   id: WallRockChromitePlasma
@@ -1161,6 +1164,7 @@
 # Andesite variants
 - type: entity
   id: WallRockAndesite
+  name: andesite
   parent: WallRock
   components:
     - type: Sprite
@@ -1196,7 +1200,7 @@
           state: rock_andesite_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_andesite_west
-        - state: rock_andesite
+        - state: rock_gold
 
 - type: entity
   id: WallRockAndesitePlasma
