@@ -5,7 +5,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Systems;

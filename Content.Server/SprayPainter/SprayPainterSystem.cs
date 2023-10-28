@@ -11,6 +11,7 @@ using Content.Shared.SprayPainter;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.SprayPainter;
 
