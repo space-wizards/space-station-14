@@ -578,6 +578,57 @@
         orGroup: GiftPool
 
 - type: entity
+  parent: HappyHonkNukie
+  id: HappyHonkNukieSnacks
+  suffix: Toy Unsafe, Snacks
+  name: syndicate snack box
+  components:
+  - type: Item
+    size: 64
+  - type: Storage
+    capacity: 64 # need more room for goodies
+  - type: StorageFill
+    contents:
+    # toy
+    - id: C4
+      prob: 0.02
+      orGroup: GiftPool
+    - id: ToyMarauder
+      orGroup: GiftPool
+    - id: ToyMauler
+      orGroup: GiftPool
+    - id: ToyNuke
+      orGroup: GiftPool
+    - id: ToySword
+      orGroup: GiftPool
+    - id: BalloonSyn
+      prob: 0.6
+      orGroup: GiftPool
+    - id: PlushieNuke
+      orGroup: GiftPool
+    # drinks - 4 cans, up to 2 blood-red brews
+    - id: DrinkNukieCan
+      prob: 0.2
+      orGroup: Drink1Pool
+    - id: DrinkColaCan
+      orGroup: Drink1Pool
+    - id: DrinkNukieCan
+      prob: 0.2
+      orGroup: Drink2Pool
+    - id: DrinkColaCan
+      orGroup: Drink2Pool
+    - id: DrinkColaCan
+      amount: 2
+    # food
+    - id: FoodSaladValid
+      prob: 0.05
+      amount: 4
+      orGroup: FoodPool
+    - id: FoodSnackSyndi
+      amount: 4
+      orGroup: FoodPool
+
+- type: entity
   id: HappyHonkCluwne
   parent: HappyHonk
   name: woeful cluwne meal
