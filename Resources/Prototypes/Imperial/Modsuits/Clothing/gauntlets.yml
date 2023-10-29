@@ -10,7 +10,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/advanced.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -41,7 +41,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/engineer.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -72,7 +72,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/rnd.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -101,7 +101,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/atmospheric.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -132,7 +132,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/medical.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -161,7 +161,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/cmo.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -192,7 +192,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/civillian.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -219,7 +219,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/magnate.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -251,7 +251,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/security.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -282,7 +282,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/hos.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -314,7 +314,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/salvage.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -344,7 +344,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/miner.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -375,7 +375,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/nukeops.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -406,7 +406,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/nukeopsclown.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: ToggleableClothing
     clothingPrototype: ClothingBootsModsuitHonkOperativeSealed
     slot: shoes
@@ -424,7 +424,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/nukeopscmd.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -455,7 +455,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Hands/corporate.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: ToggleableClothing
     clothingPrototype: ClothingBootsModsuitCCSealed
     slot: shoes

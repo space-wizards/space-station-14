@@ -10,7 +10,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/advanced.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -39,7 +39,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/engineer.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -66,7 +66,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/rnd.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -97,7 +97,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/atmospheric.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -124,7 +124,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/medical.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -148,7 +148,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/cmo.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -172,7 +172,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/civillian.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -195,7 +195,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/magnate.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -224,7 +224,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/security.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -253,7 +253,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/hos.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -282,7 +282,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/salvage.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -308,7 +308,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/miner.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -336,7 +336,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/nukeops.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -365,7 +365,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/nukeopscmd.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: Armor
     modifiers:
       coefficients:
@@ -394,7 +394,7 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/corporate.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
 
 - type: entity
   parent: ClothingHeadHelmetModsuitOperativeSealed
@@ -408,4 +408,4 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/Head/nukeopsclown.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
