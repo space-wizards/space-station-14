@@ -229,19 +229,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (action.AttachedEntity != null)
             _actions.RemoveAction(action.AttachedEntity.Value, actionId, action: action);
     }
-
-    public bool ShouldTransferAllActions(EntityUid from, ActionsContainerComponent? oldContainer = null)
-    {
-        // TODO: Replace with new resolution from meeting
-        if (!Resolve(from, ref oldContainer))
-            return false;
-
-        if (oldContainer.Container.ContainedEntities.Count > 0)
-            return true;
-
-        return false;
-    }
-
+    
     private void OnInit(EntityUid uid, ActionsContainerComponent component, ComponentInit args)
     {
         component.Container = _container.EnsureContainer<Container>(uid, ActionsContainerComponent.ContainerId);
