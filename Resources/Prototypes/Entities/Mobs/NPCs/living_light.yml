@@ -198,7 +198,8 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
-    soundEmpty: false
+    soundEmpty:
+      path: /Audio/Items/lighter_off.ogg
   - type: Destructible
     thresholds:
     - trigger:
