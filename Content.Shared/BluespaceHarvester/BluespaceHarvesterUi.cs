@@ -103,8 +103,8 @@ public partial struct BluespaceHarvesterCategoryInfo
 [Serializable, NetSerializable]
 public enum BluespaceHarvesterCategory : byte
 {
-    Technical,
-    Biological,
+    Industrial,
     Technological,
-    Common,
+    Biological,
+    Destruction,
 }

@@ -1,0 +1,98 @@
+- type: entity
+  id: BluespaceHarvesterRift
+  name: redspace rift
+  description: RUN!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: BluespaceHarvesterRift
+    passiveSpawn:
+    - MobFleshJared
+    - MobFleshGolem
+    - MobFleshClamp
+    - MobFleshLover
+    - FleshBlocker
+    spawn:
+      # Flesh
+      - id: MobFleshJared
+        cost: 30
+      - id: MobFleshGolem
+        cost: 30
+      - id: MobFleshClamp
+        cost: 30
+      - id: MobFleshLover
+        cost: 30
+      - id: FleshBlocker
+        cost: 30
+      # Slimes
+      - id: MobAdultSlimesBlueAngry
+        cost: 40
+      - id: MobAdultSlimesYellowAngry
+        cost: 40
+      - id: MobAdultSlimesGreenAngry
+        cost: 40
+      # Carps
+      - id: MobCarp
+        cost: 70
+      - id: MobCarpMagic
+        cost: 70
+      # Space
+      - id: MobKangarooSpace
+        cost: 35
+      - id: MobBearSpace
+        cost: 35
+      - id: MobPurpleSnake
+        cost: 35
+      - id: MobTick
+        cost: 35
+      - id: MobWatcherLavaland
+        cost: 100
+      # Spiders
+      - id: MobSpiderSpace
+        cost: 50
+      - id: MobGiantSpiderAngry
+        cost: 55
+      - id: MobClownSpider
+        cost: 55
+      # DEATH
+      - id: FleshKudzu
+        cost: 300
+      - id: MobDragon
+        cost: 700
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Sprite
+    layers:
+    - sprite: Structures/Specific/carp_rift.rsi
+      state: icon
+      color: "#ff0000"
+      shader: unshaded
+  - type: InteractionOutline
+  - type: Clickable
+  - type: PointLight
+    enabled: true
+    color: "#ff0000"
+    radius: 10.0
+    energy: 5.0
+    netsync: false
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: redspace rift
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg

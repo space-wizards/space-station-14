@@ -1,7 +1,23 @@
-# TechnicalLoot
+# Branchs
 - type: entity
-  id: RandomHarvesterTechnicalLoot
-  name: random harvester technical loot spawner
+  id: RandomHarvesterDestructionlLoot
+  name: random harvester biological loot spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Machines/bluespace_harvester.rsi
+        state: tap_5
+  - type: RandomSpawner
+    chance: 1.0
+    offset: 0.0
+    rareChance: 0.2
+
+- type: entity
+  id: RandomHarvesterIndustrialLoot
+  name: random harvester industrial loot spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
   components:
@@ -28,6 +44,43 @@
       - CrateHarvesterSingularityFake
     rareChance: 0.2
 
+- type: entity
+  id: RandomHarvesterTechnologicalLoot
+  name: random harvester technological loot spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Machines/bluespace_harvester.rsi
+        state: tap_5
+  - type: RandomSpawner
+    prototypes:
+      - CrateHarvesterAnomaly
+      - CrateHarvesterArtifact
+      - CrateHarvesterTechnologyDisk
+    chance: 1.0
+    offset: 0.0
+    rareChance: 0.2
+
+- type: entity
+  id: RandomHarvesterBiologicalLoot
+  name: random harvester biological loot spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Machines/bluespace_harvester.rsi
+        state: tap_5
+  - type: RandomSpawner
+    chance: 1.0
+    offset: 0.0
+    rareChance: 0.2
+
+# Industrial
 - type: entity
   id: RandomHarvesterMaterials
   name: random harvester materials spawner
@@ -177,3 +230,24 @@
       - CloningPodMachineCircuitboard
       - CargoShuttleComputerCircuitboard
     rareChance: 0.2
+
+# Technological
+- type: entity
+  id: RandomHarvesterTechnologyDisk
+  name: random harvester technology disk spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Misc/module.rsi
+        state: datadisk5
+  - type: RandomSpawner
+    prototypes:
+      - TechnologyDisk
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - TechnologyDiskRare
+    rareChance: 0.3

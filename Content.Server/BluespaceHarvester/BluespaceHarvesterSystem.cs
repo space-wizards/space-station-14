@@ -6,6 +6,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Shared.BluespaceHarvester;
 using Content.Shared.Emag.Components;
+using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -59,6 +60,15 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         var query = EntityQueryEnumerator<BluespaceHarvesterComponent, PowerConsumerComponent>();
         while (query.MoveNext(out var uid, out var harvester, out var consumer))
         {
+            if (consumer.ReceivedPower < GetUsagePower(harvester.CurrentLevel))
+            {
+                // If there is insufficient production,
+                // it will reset itself (turn off) and you will need to start it again,
+                // this will not allow you to set it to maximum and enjoy life
+                harvester.Enable = false;
+                harvester.TargetLevel = 0;
+            }
+
             if (harvester.Enable)
             {
                 if (harvester.CurrentLevel < harvester.TargetLevel)
@@ -73,29 +83,36 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             var generation = GetPointGeneration(uid, harvester);
             harvester.Points += generation;
             harvester.TotalPoints += generation;
-            harvester.DangerPoints += GetDangerPointGeneration(uid, harvester);
+            harvester.Danger += GetDangerPointGeneration(uid, harvester);
 
-            if (harvester.DangerPoints < 0)
-                harvester.DangerPoints = 0;
+            if (harvester.Danger < 0)
+                harvester.Danger = 0;
+
+            var chance = HasComp<EmagComponent>(uid) ? harvester.EmaggedRiftChance : harvester.RiftChance;
+            if (harvester.Danger > harvester.DangerLimit && _random.NextFloat(0.0f, 1.0f) <= chance)
+            {
+                var count = _random.NextFloat(3);
+                for (var i = 0; i < count; i++)
+                {
+                    // Haha loot!
+                    var entity = SpawnLoot(uid, harvester.Rift, harvester);
+                    if (entity == null)
+                        continue;
+
+                    EnsureComp<BluespaceHarvesterRiftComponent>((EntityUid)entity).Danger = harvester.Danger / 3;
+                }
+
+                harvester.Danger = 0;
+            }
 
             UpdateAppearance(uid, harvester);
             UpdateUI(uid, harvester);
         }
     }
 
-    private void OnPowerChanged(EntityUid uid, BluespaceHarvesterComponent component, PowerConsumerReceivedChanged args)
+    private void OnPowerChanged(EntityUid uid, BluespaceHarvesterComponent component, ref PowerConsumerReceivedChanged args)
     {
-        if (args.ReceivedPower < args.DrawRate)
-        {
-            // If there is insufficient production,
-            // it will reset itself (turn off) and you will need to start it again,
-            // this will not allow you to set it to maximum and enjoy life
-            component.Enable = false;
-            component.TargetLevel = 0;
-        }
 
-        UpdateAppearance(uid, component);
-        UpdateUI(uid, component);
     }
 
     private void OnTargetLevel(EntityUid uid, BluespaceHarvesterComponent component, BluespaceHarvesterTargetLevelMessage args)
@@ -208,10 +225,10 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         };
     }
 
-    private void SpawnLoot(EntityUid uid, string prototype, BluespaceHarvesterComponent? harvester = null)
+    private EntityUid? SpawnLoot(EntityUid uid, string prototype, BluespaceHarvesterComponent? harvester = null)
     {
         if (!Resolve(uid, ref harvester))
-            return;
+            return null;
 
         var xform = Transform(uid);
         var coords = xform.Coordinates;
@@ -227,7 +244,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             }
         }
 
-        Spawn(prototype, newCoords);
+        return Spawn(prototype, newCoords);
     }
 
     public int GetPointGeneration(EntityUid uid, BluespaceHarvesterComponent? harvester = null)

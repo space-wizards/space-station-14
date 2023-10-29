@@ -1,4 +1,4 @@
-# TechnicalLoot
+# Industrial Loot
 - type: entity
   id: CrateHarvesterSingularity
   parent: CrateCommandSecure
@@ -109,3 +109,33 @@
     contents:
     - id: RandomHarvesterCircuitboard
       amount: 3
+
+- type: entity
+  id: CrateHarvesterTechnologyDisk
+  parent: CrateScienceSecure
+  suffix: Bluespace Harvester, TechnologyDisk
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterTechnologyDisk
+      amount: 4
+
+- type: entity
+  id: CrateHarvesterAnomaly
+  parent: CrateScienceSecure
+  suffix: Bluespace Harvester, CrateHarvesterAnomaly
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomAnomalySpawner
+      amount: 1
+
+- type: entity
+  id: CrateHarvesterArtifact
+  parent: CrateScienceSecure
+  suffix: Bluespace Harvester, Artifact
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomArtifactSpawner
+      amount: 1

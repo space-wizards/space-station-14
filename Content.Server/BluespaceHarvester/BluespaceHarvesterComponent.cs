@@ -1,4 +1,6 @@
 using Content.Shared.BluespaceHarvester;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.BluespaceHarvester;
 
@@ -30,13 +32,22 @@ public sealed partial class BluespaceHarvesterComponent : Component
     public int TotalPoints = 0;
 
     [DataField("dangerPoints"), ViewVariables(VVAccess.ReadWrite)]
-    public int DangerPoints = 0;
+    public int Danger = 0;
 
     [DataField("reseted")]
     public bool Enable = false;
 
     [DataField("spawnRadius")]
     public float SpawnRadius = 5f;
+
+    [DataField("rift", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string Rift = "BluespaceHarvesterRift";
+
+    [DataField("riftChance")]
+    public float RiftChance = 0.1f;
+
+    [DataField("emaggedRiftChance")]
+    public float EmaggedRiftChance = 0.05f;
 
     /// <summary>
     ///     After this danger value, the generation of dangerous creatures and anomalies will begin.
@@ -49,9 +60,27 @@ public sealed partial class BluespaceHarvesterComponent : Component
     {
         new BluespaceHarvesterCategoryInfo()
         {
-            PrototypeId = "RandomHarvesterTechnicalLoot",
+            PrototypeId = "RandomHarvesterBiologicalLoot",
+            Cost = 7_500,
+            Type = BluespaceHarvesterCategory.Biological,
+        },
+        new BluespaceHarvesterCategoryInfo()
+        {
+            PrototypeId = "RandomHarvesterTechnologicalLoot",
+            Cost = 10_000,
+            Type = BluespaceHarvesterCategory.Technological,
+        },
+        new BluespaceHarvesterCategoryInfo()
+        {
+            PrototypeId = "RandomHarvesterIndustrialLoot",
+            Cost = 12_500,
+            Type = BluespaceHarvesterCategory.Industrial,
+        },
+        new BluespaceHarvesterCategoryInfo()
+        {
+            PrototypeId = "RandomHarvesterDestructionlLoot",
             Cost = 15_000,
-            Type = BluespaceHarvesterCategory.Technical,
+            Type = BluespaceHarvesterCategory.Destruction,
         },
     };
 }
