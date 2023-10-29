@@ -24,5 +24,5 @@ public sealed partial class GrapplingGunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("cycleSound"), AutoNetworkedField]
     public SoundSpecifier? CycleSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/kinetic_reload.ogg");
 
-    public EntityUid? Stream;
+    public IPlayingAudioStream? Stream;
 }

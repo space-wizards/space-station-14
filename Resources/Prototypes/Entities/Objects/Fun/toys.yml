@@ -533,13 +533,13 @@
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
       params:
         volume: -5
-        maxDistance: 10
+        maxdistance: 10
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
       params:
         volume: -5
-        maxDistance: 10
+        maxdistance: 10
 
 - type: entity
   parent: BasePlushie

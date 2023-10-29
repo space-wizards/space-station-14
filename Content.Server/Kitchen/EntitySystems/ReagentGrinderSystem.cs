@@ -16,7 +16,6 @@ using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -65,7 +64,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (active.EndTime > _timing.CurTime)
                     continue;
 
-                reagentGrinder.AudioStream = _audioSystem.Stop(reagentGrinder.AudioStream);
+                reagentGrinder.AudioStream?.Stop();
                 RemCompDeferred<ActiveReagentGrinderComponent>(uid);
 
                 var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
@@ -285,7 +284,7 @@ namespace Content.Server.Kitchen.EntitySystems
             active.Program = program;
 
             reagentGrinder.AudioStream = _audioSystem.PlayPvs(sound, uid,
-                AudioParams.Default.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier)).Value.Entity; //slightly higher pitched
+                AudioParams.Default.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier)); //slightly higher pitched
             _userInterfaceSystem.TrySendUiMessage(uid, ReagentGrinderUiKey.Key,
                 new ReagentGrinderWorkStartedMessage(program));
         }

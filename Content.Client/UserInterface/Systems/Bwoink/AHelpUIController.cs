@@ -20,7 +20,6 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -35,7 +34,6 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-    [UISystemDependency] private readonly SharedAudioSystem _audio = default!;
 
     private BwoinkSystem? _bwoinkSystem;
     private MenuButton? GameAHelpButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.AHelpButton;
@@ -130,7 +128,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         }
         if (localPlayer.UserId != message.TrueSender)
         {
-            _audio.PlayGlobal("/Audio/Effects/adminhelp.ogg", Filter.Local(), false);
+            SoundSystem.Play("/Audio/Effects/adminhelp.ogg", Filter.Local());
             _clyde.RequestWindowAttention();
         }
 

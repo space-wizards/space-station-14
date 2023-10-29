@@ -11,7 +11,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -103,11 +102,11 @@ public sealed class LockSystem : EntitySystem
 
         _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-lock-success",
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user);
-        _audio.PlayPredicted(lockComp.LockSound, uid, user);
+        _audio.PlayPredicted(lockComp.LockSound, uid, user, AudioParams.Default.WithVolume(-5));
 
         lockComp.Locked = true;
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, true);
-        Dirty(uid, lockComp);
+        Dirty(lockComp);
 
         var ev = new LockToggledEvent(true);
         RaiseLocalEvent(uid, ref ev, true);
@@ -131,11 +130,11 @@ public sealed class LockSystem : EntitySystem
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user.Value);
         }
 
-        _audio.PlayPredicted(lockComp.UnlockSound, uid, user);
+        _audio.PlayPredicted(lockComp.UnlockSound, uid, user, AudioParams.Default.WithVolume(-5));
 
         lockComp.Locked = false;
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
-        Dirty(uid, lockComp);
+        Dirty(lockComp);
 
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
@@ -214,7 +213,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked || !component.BreakOnEmag)
             return;
-        _audio.PlayPredicted(component.UnlockSound, uid, null);
+        _audio.PlayPredicted(component.UnlockSound, uid, null, AudioParams.Default.WithVolume(-5));
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
         RemComp<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
         args.Handled = true;

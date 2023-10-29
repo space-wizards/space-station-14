@@ -52,5 +52,5 @@ public abstract partial class BaseForceGunComponent : Component
         Params = AudioParams.Default.WithLoop(true).WithVolume(-8f),
     };
 
-    public EntityUid? Stream;
+    public IPlayingAudioStream? Stream;
 }

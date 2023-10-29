@@ -29,8 +29,6 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;

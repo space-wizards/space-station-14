@@ -8,8 +8,6 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -50,7 +48,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
     {
-        _audio.Stop(component.Stream);
+        component.Stream?.Stop();
     }
 
     private void OnUnpaused(EntityUid uid, MaterialReclaimerComponent component, ref EntityUnpausedEvent args)
@@ -118,7 +116,8 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
         if (Timing.CurTime > component.NextSound)
         {
-            component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
+            component.Stream = _audio.PlayPredicted(component.Sound, uid, user);
+
             component.NextSound = Timing.CurTime + component.SoundCooldown;
         }
 
@@ -168,11 +167,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
         component.ItemsProcessed++;
         if (component.CutOffSound)
-        {
-            _audio.Stop(component.Stream);
-        }
+            component.Stream?.Stop();
 
-        Dirty(uid, component);
+        Dirty(component);
     }
 
     /// <summary>
@@ -184,7 +181,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             return;
         component.Enabled = enabled;
         AmbientSound.SetAmbience(uid, enabled && component.Powered);
-        Dirty(uid, component);
+        Dirty(component);
     }
 
     /// <summary>

@@ -44,7 +44,7 @@ public sealed partial class ExpendableLightComponent : SharedExpendableLightComp
     /// The sound that plays when the expendable light is lit.
     /// </summary>
     [Access(typeof(ExpendableLightSystem))]
-    public EntityUid? PlayingStream;
+    public IPlayingAudioStream? PlayingStream;
 }
 
 public enum ExpendableLightVisualLayers : byte

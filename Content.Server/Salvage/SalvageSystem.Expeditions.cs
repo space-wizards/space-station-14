@@ -73,7 +73,7 @@ public sealed partial class SalvageSystem
 
     private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
     {
-        component.Stream = _audio.Stop(component.Stream);
+        component.Stream?.Stop();
 
         foreach (var (job, cancelToken) in _salvageJobs.ToArray())
         {

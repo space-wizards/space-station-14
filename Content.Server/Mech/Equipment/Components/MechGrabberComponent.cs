@@ -43,7 +43,7 @@ public sealed partial class MechGrabberComponent : Component
     [DataField("grabSound")]
     public SoundSpecifier GrabSound = new SoundPathSpecifier("/Audio/Mecha/sound_mecha_hydraulic.ogg");
 
-    public EntityUid? AudioStream;
+    public IPlayingAudioStream? AudioStream;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public Container ItemContainer = default!;

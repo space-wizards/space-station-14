@@ -16,8 +16,6 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Stacks;
 using Content.Server.Popups;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Medical;

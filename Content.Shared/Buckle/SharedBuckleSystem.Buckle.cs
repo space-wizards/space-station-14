@@ -493,10 +493,8 @@ public abstract partial class SharedBuckleSystem
 
         _joints.RefreshRelay(buckleUid);
         Appearance.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
-
-        // TODO: Buckle listening to moveevents is sussy anyway.
-        if (!TerminatingOrDeleted(strapUid))
-            _audio.PlayPredicted(strapComp.UnbuckleSound, strapUid, userUid);
+        var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
+        _audio.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);

@@ -14,7 +14,7 @@ public sealed partial class LoadingScreenControl : Control
 {
     public static SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Silicon/Bots/mommi.rsi"), "wiggle");
 
-    public LoadingScreenControl(IClientResourceCache resCache)
+    public LoadingScreenControl(IResourceCache resCache)
     {
         RobustXamlLoader.Load(this);
 

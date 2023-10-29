@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using Robust.Client;
 using Robust.Client.State;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 
@@ -22,7 +21,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
-    private EntityUid? _lobbyStream;
+    private IPlayingAudioStream? _lobbyStream;
 
     public override void Initialize()
     {
@@ -119,11 +118,12 @@ public sealed class BackgroundAudioSystem : EntitySystem
         }
 
         _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), false,
-            _lobbyParams.WithVolume(_lobbyParams.Volume + _configManager.GetCVar(CCVars.LobbyMusicVolume)))?.Entity;
+            _lobbyParams.WithVolume(_lobbyParams.Volume + _configManager.GetCVar(CCVars.LobbyMusicVolume)));
     }
 
     private void EndLobbyMusic()
     {
-        _lobbyStream = _audio.Stop(_lobbyStream);
+        _lobbyStream?.Stop();
+        _lobbyStream = null;
     }
 }

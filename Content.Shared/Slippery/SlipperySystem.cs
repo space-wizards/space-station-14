@@ -5,8 +5,6 @@ using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;

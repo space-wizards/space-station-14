@@ -28,9 +28,6 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Content.Shared.Tag;
-using Content.Shared.Storage;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -281,7 +278,7 @@ public sealed class FoodSystem : EntitySystem
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(uid):food}");
         }
 
-        _audio.PlayPvs(component.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f));
+        _audio.Play(component.UseSound, Filter.Pvs(args.Target.Value), args.Target.Value, true, AudioParams.Default.WithVolume(-1f));
 
         // Try to break all used utensils
         foreach (var utensil in utensils)

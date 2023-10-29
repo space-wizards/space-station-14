@@ -13,8 +13,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -196,14 +194,14 @@ namespace Content.Server.Guardian
             if (TryComp<GuardianComponent>(guardian, out var guardianComp))
             {
                 guardianComp.Host = args.Args.Target.Value;
-                _audio.PlayPvs("/Audio/Effects/guardian_inject.ogg", args.Args.Target.Value);
+                _audio.Play("/Audio/Effects/guardian_inject.ogg", Filter.Pvs(args.Args.Target.Value), args.Args.Target.Value, true);
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), args.Args.Target.Value, args.Args.Target.Value);
                 // Exhaust the activator
                 component.Used = true;
             }
             else
             {
-                Log.Error($"Tried to spawn a guardian that doesn't have {nameof(GuardianComponent)}");
+                Logger.ErrorS("guardian", $"Tried to spawn a guardian that doesn't have {nameof(GuardianComponent)}");
                 EntityManager.QueueDeleteEntity(guardian);
             }
 
@@ -221,12 +219,12 @@ namespace Content.Server.Guardian
             if (args.NewMobState == MobState.Critical)
             {
                 _popupSystem.PopupEntity(Loc.GetString("guardian-host-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
-                _audio.PlayPvs("/Audio/Effects/guardian_warn.ogg", component.HostedGuardian.Value);
+                _audio.Play("/Audio/Effects/guardian_warn.ogg", Filter.Pvs(component.HostedGuardian.Value), component.HostedGuardian.Value, true);
             }
             else if (args.NewMobState == MobState.Dead)
             {
                 //TODO: Replace WithVariation with datafield
-                _audio.PlayPvs("/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioParams.Default.WithVariation(0.20f));
+                _audio.Play("/Audio/Voice/Human/malescream_guardian.ogg", Filter.Pvs(uid), uid, true, AudioHelpers.WithVariation(0.20f));
                 EntityManager.RemoveComponent<GuardianHostComponent>(uid);
             }
         }
