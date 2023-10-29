@@ -167,22 +167,16 @@ public sealed class ArrivalsSystem : EntitySystem
 
         var arrivalsMapUid = Transform(arrivals).MapUid;
 
-        // float ftl;
-        // if (!TryComp<FTLComponent>(shuttleUid, out var ftlComp))
-        //     ftl = ShuttleSystem.DefaultTravelTime;
-        // else
-        //     ftl = ftlComp.TravelTime;
-
-        float ftl = TryComp<FTLComponent>(shuttleUid, out var ftlComp) ? ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime;
+        float ftlTime = TryComp<FTLComponent>(shuttleUid, out var ftlComp) ? ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime;
 
         var payload = new NetworkPayload
         {
             ["ShuttleGrid"] = shuttleUid,
             ["SourceMap"] = args.FromMapUid,
-            ["DestMap"] = args.TargetCoordinates.GetGridUid(_entityManager),
-            ["LocalTimer"] = ftl,
-            ["SourceTimer"] = ftl + _cfgManager.GetCVar(CCVars.ArrivalsCooldown),
-            ["DestTimer"] = ftl
+            ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
+            ["LocalTimer"] = ftlTime,
+            ["SourceTimer"] = ftlTime + _cfgManager.GetCVar(CCVars.ArrivalsCooldown),
+            ["DestTimer"] = ftlTime
         };
         _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, 2452);
 
@@ -228,14 +222,14 @@ public sealed class ArrivalsSystem : EntitySystem
     private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
     {
         var shuttleXform = Transform(uid);
-        float dockTime = _cfgManager.GetCVar(CCVars.ArrivalsCooldown) - ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime;
+        float dockTime = (component.NextTransfer - _timing.CurTime).Seconds + ShuttleSystem.DefaultStartupTime;
         var payload = new NetworkPayload
         {
             ["ShuttleGrid"] = shuttleXform.GridUid,
-            ["SourceMap"] = shuttleXform.MapUid,
+            ["SourceMap"] = args.MapUid,
 
-            ["LocalTimer"] = _cfgManager.GetCVar(CCVars.ArrivalsCooldown) - ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime,
-            ["SourceTimer"] = _cfgManager.GetCVar(CCVars.ArrivalsCooldown) - ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime
+            ["LocalTimer"] = dockTime,
+            ["SourceTimer"] = dockTime
         };
         _deviceNetworkSystem.QueuePacket(uid, null, payload, 2452);
     }

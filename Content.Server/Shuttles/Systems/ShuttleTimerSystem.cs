@@ -76,7 +76,7 @@ namespace Content.Server.Shuttles.Systems
             args.Data.TryGetValue("SourceMap", out EntityUid? source);
             args.Data.TryGetValue("DestMap", out EntityUid? dest);
 
-            switch (timerXform.GridUid)
+            switch (timerXform.MapUid)
             {
                 case var local when local == shuttleGrid:
                     key = "LocalTimer";
