@@ -45,4 +45,5 @@
     sprintSpeed: 0.7
     staminaDamage: 55 # Sudden weight increase sapping stamina
     canThrowTrigger: true
+    canMoveBreakout: true
 
