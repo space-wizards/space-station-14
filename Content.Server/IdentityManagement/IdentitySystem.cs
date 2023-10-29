@@ -4,14 +4,12 @@ using Content.Server.Humanoid;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.IdentityManagement;
 
@@ -35,6 +33,7 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidEquipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Update(float frameTime)
@@ -53,10 +52,8 @@ public class IdentitySystem : SharedIdentitySystem
     }
 
     // This is where the magic happens
-    protected override void OnComponentInit(EntityUid uid, IdentityComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, IdentityComponent component, MapInitEvent args)
     {
-        base.OnComponentInit(uid, component, args);
-
         var ident = Spawn(null, Transform(uid).Coordinates);
 
         QueueIdentityUpdate(uid);
@@ -148,8 +145,8 @@ public class IdentitySystem : SharedIdentitySystem
         // Get their name and job from their ID for their presumed name.
         if (_idCard.TryFindIdCard(target, out var id))
         {
-            presumedName = string.IsNullOrWhiteSpace(id.FullName) ? null : id.FullName;
-            presumedJob = id.JobTitle?.ToLowerInvariant();
+            presumedName = string.IsNullOrWhiteSpace(id.Comp.FullName) ? null : id.Comp.FullName;
+            presumedJob = id.Comp.JobTitle?.ToLowerInvariant();
         }
 
         // If it didn't find a job, that's fine.

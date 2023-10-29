@@ -62,7 +62,7 @@ namespace Content.Server.Atmos.Components
         public readonly HashSet<IPipeNet> PipeNets = new();
 
         [ViewVariables]
-        public readonly HashSet<AtmosDeviceComponent> AtmosDevices = new();
+        public readonly HashSet<Entity<AtmosDeviceComponent>> AtmosDevices = new();
 
         [ViewVariables]
         public Queue<TileAtmosphere> CurrentRunTiles = new();
@@ -74,7 +74,7 @@ namespace Content.Server.Atmos.Components
         public Queue<IPipeNet> CurrentRunPipeNet = new();
 
         [ViewVariables]
-        public Queue<AtmosDeviceComponent> CurrentRunAtmosDevices = new();
+        public Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();
 
         [ViewVariables]
         public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);

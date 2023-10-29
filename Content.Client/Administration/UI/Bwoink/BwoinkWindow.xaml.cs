@@ -22,7 +22,7 @@ namespace Content.Client.Administration.UI.Bwoink
 
                     if (sel.OverallPlaytime != null)
                     {
-                        Title += $" | {Loc.GetString("generic-playtime-title")}: {sel.PlaytimeString()}";
+                        Title += $" | {Loc.GetString("generic-playtime-title")}: {sel.PlaytimeString}";
                     }
                 }
             };

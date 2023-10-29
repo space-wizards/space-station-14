@@ -1,483 +1,4 @@
 Entries:
-- author: emogarbage
-  changes:
-  - {message: Re-sprited grappling gun per artist request., type: Tweak}
-  id: 4504
-  time: '2023-08-10T06:16:57.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Advanced laser guns are now 30 size, like the antique laser gun.',
-    type: Tweak}
-  - {message: Advanced laser guns recharge 25% slower than before., type: Tweak}
-  id: 4505
-  time: '2023-08-10T07:27:02.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Obstacles to deter hackers can now be added to airlocks., type: Add}
-  - {message: Security and Atmospherics airlocks start with a moderate level of protection.
-      Command airlocks start with an even higher level of security., type: Add}
-  id: 4506
-  time: '2023-08-10T08:33:04.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The Syndicate are no longer interested in stealing Cargo's request computer
-      boards., type: Remove}
-  id: 4507
-  time: '2023-08-10T08:34:38.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: 'Added an electrical disruption kit to syndicate operatives, containing
-      3 EMP grenades and an EMP implanter. Costs 6 telecrystals.', type: Add}
-  - {message: Changed EMP grenade pricing to 2 telecrystals., type: Tweak}
-  - {message: Changed EMP implant pricing to 3 telecrystals., type: Tweak}
-  id: 4508
-  time: '2023-08-10T08:40:17.0000000+00:00'
-- author: kxvvv
-  changes:
-  - {message: Added a homemade stun weapon., type: Add}
-  id: 4509
-  time: '2023-08-10T09:33:34.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'You can now construct chain link fencing. Bullets pass through it,
-      it''s very slowly vaultable, and you can construct gates. Expect to see it mapped
-      eventually.', type: Add}
-  id: 4510
-  time: '2023-08-10T14:16:26.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Liquid plasma rivers now spawn on snow planets (you may have noticed
-      foreshadowing from the planet background sprites). They''re just as dangerous
-      as lava, so be careful.', type: Add}
-  id: 4511
-  time: '2023-08-10T14:16:51.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
-  - {message: Added supermatter grenade analog from SS13 and brand new whitehole grenade
-      for special operations., type: Add}
-  id: 4512
-  time: '2023-08-10T14:29:47.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
-      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
-  - {message: Updated pried tiles to match the appearance of the new tiles better.,
-    type: Tweak}
-  id: 4513
-  time: '2023-08-10T17:46:44.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
-      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
-  - {message: Updated pried tiles to match the appearance of the new tiles better.,
-    type: Tweak}
-  id: 4514
-  time: '2023-08-10T18:33:15.435911+00:00'
-- author: juliangiebel & mirrorcult
-  changes:
-  - {message: 'You may notice that chat text in general has become much prettier and
-      dynamic. Whispered text is smaller, announcements are larger, and names should
-      pop out more.', type: Tweak}
-  id: 4515
-  time: '2023-08-10T18:33:15.436963+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: All crates have a brand new look., type: Tweak}
-  id: 4516
-  time: '2023-08-11T00:12:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Job icons now ignore lighting., type: Fix}
-  id: 4517
-  time: '2023-08-11T00:36:26.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: 'As disease has been eradicated, Spaceacillin can no longer be created
-      or found.', type: Remove}
-  - {message: Creating medicated suture now required Cryptobiolin in place of Spaceacillin.,
-    type: Tweak}
-  id: 4518
-  time: '2023-08-11T03:04:49.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Added missing emergency security orders to the hardsuit version of HoS's
-      locker., type: Fix}
-  id: 4519
-  time: '2023-08-11T03:31:13.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: The Microwave and wall-mounted Nanomed now use sprites similar to the
-      ones found in SS14., type: Tweak}
-  id: 4520
-  time: '2023-08-11T05:12:37.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Ice has been added to the freezer crates. Chefs rejoice!, type: Tweak}
-  id: 4521
-  time: '2023-08-11T07:28:27.0000000+00:00'
-- author: tom-leys
-  changes:
-  - {message: Air Technicians will find a new fire-fighting door remote in their locker.
-      It controls FireLocks Let space in and fire out using a handy remote from a
-      safe distance!, type: Add}
-  - {message: 'FireDoors can be bolted and unbolted by fire-fighting, engineering
-      and command door remotes', type: Add}
-  - {message: 'Door remotes add your ID card access to their own. If you have access
-      to open a door, you can control that door with any door remote.', type: Tweak}
-  id: 4522
-  time: '2023-08-11T09:29:33.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Nanotrasen has designed the new Vim exosuit for all your beloved pets!
-      Research it alongside the HAMTR in the new "Critters Mechs" research technology,
-    type: Add}
-  id: 4523
-  time: '2023-08-11T16:20:16.0000000+00:00'
-- author: tom-leys
-  changes:
-  - {message: 'After a flurry of memos, the Atmospheric Technician''s remote no longer
-      opens the Chief Engineer''s door. So I guess fires in that room are considered
-      "totally normal" by command. To compensate, the remotes are more widely available
-      in more stations. Thanks Wookyskill.', type: Tweak}
-  id: 4524
-  time: '2023-08-11T22:18:40.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Mobs with crit states that die will now perform a visible emote., type: Add}
-  - {message: 'Succumbing in crit is more accessible, as it''s also an action now',
-    type: Tweak}
-  - {message: 'You can now say your ''last words'' while in crit. This action will
-      let you whisper up to 30 characters, then kill you.', type: Add}
-  - {message: You can fake your own deathgasp emote using an action in crit., type: Add}
-  id: 4525
-  time: '2023-08-12T05:56:34.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: Pickaxes are now 80 size and take more wood and steel to manufacture.,
-    type: Tweak}
-  id: 4526
-  time: '2023-08-12T06:17:26.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Traitors can now exist along with nuclear operatives., type: Add}
-  id: 4527
-  time: '2023-08-12T09:54:46.0000000+00:00'
-- author: terezi4real
-  changes:
-  - {message: Fixed errant transparency on jester outfit, type: Fix}
-  id: 4528
-  time: '2023-08-12T17:06:46.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Vim exosuit is now smaller and lighter for better maneuverability.,
-    type: Tweak}
-  id: 4529
-  time: '2023-08-12T19:03:08.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added trash carts. Expect these to be mapped into maintenance soon.,
-    type: Add}
-  - {message: Added janitorial trash carts that can be locked and unlocked by janitors.
-      These are for janitors to store trash bags instead of lugging them around.,
-    type: Add}
-  id: 4530
-  time: '2023-08-12T19:05:33.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: 'Nanotrasen finally decided to give engineering departments something
-      to do, and has finalized the schematics for the thermo-electric generator (TEG).',
-    type: Add}
-  - {message: The TEG creates power by exchanging energy between a hot and cold gas
-      on its two sides., type: Add}
-  - {message: You can turn on gas heaters/freezers with alt-click now., type: Tweak}
-  - {message: You can open air alarm and pump menus with activate (E) now., type: Tweak}
-  id: 4531
-  time: '2023-08-12T20:41:55.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added cyborgs. These creations are assembled part by part and can be
-      loaded up with various modules to give them unique abilities. Make sure you
-      charge them at their dedicated charging stations., type: Add}
-  - {message: Added silicon laws. These are laws that all robotic crew must abide
-      by. This Asimov guy had the right idea., type: Add}
-  - {message: Added new Mechanized Treatment and Robotic Cleanliness technologies.,
-    type: Add}
-  - {message: The EMAG is now able to force cyborgs to follow your orders. How devious!,
-    type: Add}
-  id: 4532
-  time: '2023-08-12T21:39:58.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: Clicking on the screen now accounts for the distortion effect of nearby
-      singularities., type: Fix}
-  id: 4533
-  time: '2023-08-12T23:43:08.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Non-humanoids such as mice and pAIs can no longer be kill targets.,
-    type: Fix}
-  id: 4534
-  time: '2023-08-13T01:01:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Lockers now once again inform you if you cannot access them., type: Fix}
-  id: 4535
-  time: '2023-08-13T01:21:07.0000000+00:00'
-- author: RiceMar
-  changes:
-  - {message: 'To satiate the salvage department''s rabid hunger for firepower, Nanotrasen
-      has started manufacturing proto-kinetic accelerators with bulky cannon-like
-      frames around the same internal machinery.', type: Add}
-  id: 4536
-  time: '2023-08-13T04:50:42.0000000+00:00'
-- author: TaralGit
-  changes:
-  - {message: Added open bolt animations for most gun sprites. Use e and z (default
-      keybinds) to toggle bolt / cycling., type: Add}
-  id: 4537
-  time: '2023-08-13T05:58:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix the lack of whitelist check for hand gathering., type: Fix}
-  id: 4538
-  time: '2023-08-13T07:07:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nerf pickaxe raw damage slightly., type: Tweak}
-  - {message: Nerf pickaxe and drill structural damage., type: Tweak}
-  id: 4539
-  time: '2023-08-13T07:07:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix bolt-less gun manual cycling (namely the wt550)., type: Fix}
-  id: 4540
-  time: '2023-08-13T07:08:00.0000000+00:00'
-- author: LightVillet
-  changes:
-  - {message: Fixed spilling empty containers, type: Fix}
-  id: 4541
-  time: '2023-08-13T07:08:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer keep a cyborg's UI open after closing the panel.,
-    type: Fix}
-  - {message: Cyborgs now retain their laws when off-station., type: Fix}
-  id: 4542
-  time: '2023-08-13T07:09:30.0000000+00:00'
-- author: onoira
-  changes:
-  - {message: Spare pieces have been added to checkerboards allowing for more playable
-      variants., type: Tweak}
-  id: 4543
-  time: '2023-08-13T07:10:10.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Composting high-potency plants refills tray nutrients much more effectively.,
-    type: Tweak}
-  id: 4544
-  time: '2023-08-13T07:10:22.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds a Secret Door for construction, type: Add}
-  id: 4545
-  time: '2023-08-13T07:10:46.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Bolas are now easier to make and more durable., type: Tweak}
-  id: 4546
-  time: '2023-08-13T07:11:11.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: 'Wheelchairs, unicycles and similar vehicles no longer act as a magical
-      barrier against stuns.', type: Fix}
-  - {message: Driving while asleep is no longer possible., type: Fix}
-  id: 4547
-  time: '2023-08-13T07:13:19.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Vending machine sprites have been polished up., type: Tweak}
-  id: 4548
-  time: '2023-08-13T07:15:13.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: 'Blood-red magboots now slow you down less and have jetpack functionality,
-      but cost more.', type: Tweak}
-  id: 4549
-  time: '2023-08-13T07:17:10.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: Syndicate clowns may now purchase a holoclown injector via their syndicate
-      uplink., type: Add}
-  id: 4550
-  time: '2023-08-13T07:18:10.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: The various laser guns are now called rifles or pistols., type: Tweak}
-  - {message: Retro laser blasters now deal 20% more damage., type: Tweak}
-  - {message: Laser deliveries now contain 3 laser rifles instead of 3 retro laser
-      blasters., type: Tweak}
-  id: 4551
-  time: '2023-08-13T07:18:49.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Added guidebook entries for the Access Configurator and how to install
-      Airlock Safeguards, type: Add}
-  id: 4552
-  time: '2023-08-13T07:19:28.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Space Station staff are no longer immune to the toxic and caustic effects
-      of some pyrotechnic chemicals, as well as bleach. Drinking bleach now makes
-      you scream as your stomach lining is reduced to goop.', type: Tweak}
-  - {message: Phenol is now (accurately) toxic., type: Tweak}
-  id: 4553
-  time: '2023-08-13T07:22:08.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: Added jugs to the medical fabricator., type: Add}
-  - {message: Jugs now take up more space in bags., type: Tweak}
-  id: 4554
-  time: '2023-08-13T07:23:37.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: Many basic elements from the periodic table are now mildly toxic or
-      caustic. Watch what you drink!, type: Tweak}
-  - {message: Crewmembers who drink lithium have reported very minor cases of serious
-      brain damage. Doctors should watch out for people who are laughing and screaming
-      at nothing., type: Tweak}
-  id: 4555
-  time: '2023-08-13T07:24:11.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Nanotrasen stopped watering down their acid to save money. Drinking
-      or injecting acids is more dangerous now, and acids burn through your insides
-      much quicker.', type: Tweak}
-  - {message: Having corrosive acid in your body now makes you scream!, type: Tweak}
-  - {message: Polytrinic acid now requires plasma to make., type: Tweak}
-  id: 4556
-  time: '2023-08-13T07:24:50.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: Arachnids have received several changes. Check your local PR station
-      for more details., type: Tweak}
-  id: 4557
-  time: '2023-08-13T07:38:05.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: 'Nanotrasen have fixed their accidental breakage of time space continuum,
-      making sure that steel tiles do indeed take steel to create.', type: Fix}
-  id: 4558
-  time: '2023-08-13T12:43:01.0000000+00:00'
-- author: FillerVK
-  changes:
-  - {message: Added cocoa cultivation, type: Add}
-  - {message: Added a recipe for creating a chocolate bar, type: Add}
-  id: 4559
-  time: '2023-08-13T14:35:58.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Player icons in the end-of-round summary window should now display properly.,
-    type: Fix}
-  id: 4560
-  time: '2023-08-13T16:55:05.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The DNA scrambler no longer has the power of magically transforming
-      various creatures into humanoids., type: Fix}
-  id: 4561
-  time: '2023-08-13T16:56:21.0000000+00:00'
-- author: Repo
-  changes:
-  - {message: fixed pressure tanks to not show scientific notation., type: Fix}
-  id: 4562
-  time: '2023-08-13T16:56:30.0000000+00:00'
-- author: Cripes
-  changes:
-  - {message: 'Paper stamps have been heavily tweaked with new looks, now each paper
-      will lay out the stamps slightly differently and with an overlap.', type: Tweak}
-  id: 4563
-  time: '2023-08-13T18:28:10.0000000+00:00'
-- author: PixelTheKermit
-  changes:
-  - {message: Arachnid zombies no longer get functional hands., type: Fix}
-  id: 4564
-  time: '2023-08-13T19:51:21.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug causing inventory slots to sometimes ignore interactions
-      (e.g., not opening the context menu).', type: Fix}
-  id: 4565
-  time: '2023-08-13T21:55:18.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fix "remove single hand" admin smite having gone missing., type: Fix}
-  - {message: Fix "remove hands" admin smite popup message., type: Fix}
-  id: 4566
-  time: '2023-08-13T22:50:58.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: AHelps now show a typing indicator to admins., type: Tweak}
-  id: 4567
-  time: '2023-08-13T23:03:17.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: 'Emagged recyclers now not only gib people, but other mobs too.', type: Fix}
-  id: 4568
-  time: '2023-08-13T23:54:52.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: 'Fixed new players added to admin logs defaulting to selected, even
-      when not all players are selected.', type: Fix}
-  id: 4569
-  time: '2023-08-14T01:53:48.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Substations produce hot CO2 when destroyed now., type: Tweak}
-  id: 4570
-  time: '2023-08-14T01:55:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Being turned into a cyborg or zombie now counts as a being dead for
-      survival and kill objectives., type: Fix}
-  - {message: Kill objectives no longer reveal a character's true name at all times.,
-    type: Fix}
-  id: 4571
-  time: '2023-08-14T03:34:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed the RPED sound effect cutting off at the end., type: Fix}
-  id: 4572
-  time: '2023-08-14T03:36:08.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Admin notes now require a severity to be set before saving., type: Tweak}
-  id: 4573
-  time: '2023-08-14T03:37:38.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: 'The nuke detonation sound plays to all crew members again, no longer
-      will you have to sit in silence before your demise', type: Fix}
-  id: 4574
-  time: '2023-08-14T03:55:50.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: 'The Syndicate have rebooted the chameleon clothing database, restoring
-      most lost functionality.', type: Fix}
-  id: 4575
-  time: '2023-08-14T04:03:20.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Fixed an issue which was preventing airlock safeguards from being installed
-      on glass airlocks, type: Fix}
-  id: 4576
-  time: '2023-08-14T06:42:02.0000000+00:00'
-- author: kseandi
-  changes:
-  - {message: 'The new airlock painters are so accurate that you can use them to paint
-      pipes. Because of this, Nanotrasen decided to rename them to "Spray painters".',
-    type: Tweak}
-  id: 4577
-  time: '2023-08-14T12:06:21.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Centcom will now sell Cargo gas canisters at a vastly reduced (and consistent!)
@@ -2950,3 +2471,447 @@ Entries:
       and robotics vendor or produced by science.', type: Add}
   id: 5003
   time: '2023-10-14T07:11:50.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fixed librarians, lawyers, ninjas and nukeops having their starting
+      in-hand items dropped on the floor.', type: Fix}
+  id: 5004
+  time: '2023-10-14T17:28:52.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced the bombsuit helmet's explosive resistance., type: Tweak}
+  id: 5005
+  time: '2023-10-14T17:34:58.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: mindshields to meta station armory, type: Add}
+  id: 5006
+  time: '2023-10-14T21:50:44.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'chem dispensers to barratry, you can stop crying now', type: Add}
+  id: 5007
+  time: '2023-10-14T21:51:33.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'All non-high-security airlocks can now be pried open by hand when unpowered,
+      albeit much slower than using a crowbar', type: Tweak}
+  id: 5008
+  time: '2023-10-15T22:17:45.0000000+00:00'
+- author: iacore
+  changes:
+  - {message: Secure crates are now weldable!, type: Fix}
+  id: 5009
+  time: '2023-10-16T05:27:23.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Behonkers are fixed (in combat use right click to fire laser), type: Fix}
+  id: 5010
+  time: '2023-10-16T05:29:14.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed material reclaimer sound error when processing something., type: Fix}
+  - {message: Fixed duplicate gib sound when the material reclaimer processes a mob.,
+    type: Fix}
+  id: 5011
+  time: '2023-10-16T05:30:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being permanently cuffed if you transformed into a zombie with
+      cuffs on., type: Fix}
+  id: 5012
+  time: '2023-10-16T05:31:04.0000000+00:00'
+- author: Lomcastar
+  changes:
+  - {message: Uranium crabs are more radioactive!, type: Tweak}
+  id: 5013
+  time: '2023-10-16T05:34:18.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Stun batons now take three hits to stun and have had their battery use
+      dropped by half, type: Tweak}
+  id: 5014
+  time: '2023-10-16T11:39:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item drops mispredicting., type: Fix}
+  id: 5015
+  time: '2023-10-16T11:49:41.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Pneumatic Cannons can no longer shoot arrows., type: Tweak}
+  id: 5016
+  time: '2023-10-17T22:58:05.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Spears and arrows can now only hold up to 2u of liquids instead of 5u.,
+    type: Tweak}
+  id: 5017
+  time: '2023-10-17T23:01:25.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: The grey stick that shows up when you wide swing a weapon now looks
+      like the weapon used., type: Tweak}
+  id: 5018
+  time: '2023-10-18T01:12:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix vaulting mispredict., type: Fix}
+  id: 5019
+  time: '2023-10-18T05:11:33.0000000+00:00'
+- author: daerSeebaer
+  changes:
+  - {message: The AME controller now shows the current load and maximum capacity.,
+    type: Add}
+  id: 5020
+  time: '2023-10-18T17:46:33.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Temperature alerts are now more accurate for different species., type: Fix}
+  id: 5021
+  time: '2023-10-18T18:05:15.0000000+00:00'
+- author: Phunny
+  changes:
+  - {message: Added Tortilla doughs and variants., type: Add}
+  - {message: Added Taco shells and recipe, type: Add}
+  - {message: Added various types of Tacos, type: Add}
+  - {message: Changed naming of the original taco to soft shell taco, type: Tweak}
+  id: 5022
+  time: '2023-10-18T21:03:23.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Electric shocks now scale with the amount of power in the cables instead
+      of the type of cable., type: Tweak}
+  id: 5023
+  time: '2023-10-18T21:04:47.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Being gibbed through normal means will no longer delete all items on
+      the body., type: Fix}
+  id: 5024
+  time: '2023-10-18T21:15:17.0000000+00:00'
+- author: KingFroozy
+  changes:
+  - {message: Atmospheric technician's casual jumpsuit was resprited., type: Tweak}
+  id: 5025
+  time: '2023-10-19T03:44:58.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: You will no longer be picked as a head revolutionary if you have not
+      checked it in the antag picker. Note you can still become a revolutionary if
+      someone converts you., type: Fix}
+  id: 5026
+  time: '2023-10-19T03:48:56.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added dart game!, type: Add}
+  id: 5027
+  time: '2023-10-19T03:55:30.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'C4 now costs 2 TC instead of 4TC, the bundle costs 12TC instead of
+      20TC', type: Tweak}
+  id: 5028
+  time: '2023-10-19T15:19:33.0000000+00:00'
+- author: IntegerTempest
+  changes:
+  - {message: Added lathe printing for rollerbed & wheelchairs., type: Add}
+  id: 5029
+  time: '2023-10-20T05:46:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Meats now cook based on internal temperature. Don't make steak in a
+      plasma fire unless you want to scorch the outside before the inside can even
+      cook., type: Tweak}
+  id: 5030
+  time: '2023-10-20T20:21:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix replays not starting., type: Fix}
+  id: 5031
+  time: '2023-10-20T22:37:02.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to run server commands without >., type: Fix}
+  - {message: Fixed not being able to use the help command to see another command's
+      help text., type: Fix}
+  id: 5032
+  time: '2023-10-21T10:58:57.0000000+00:00'
+- author: 27alaing
+  changes:
+  - {message: 'Common internet slang now gets replaced in IC chat. (example: brb -->
+      be right back)', type: Add}
+  id: 5033
+  time: '2023-10-21T19:43:11.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Added a s-social anxiety trait that m-makes you st-stutter your w-words
+      when you t-talk., type: Add}
+  id: 5034
+  time: '2023-10-21T20:09:54.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed shuttle thrusters and gyroscopes being disabled by default., type: Fix}
+  id: 5035
+  time: '2023-10-21T21:33:49.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed the expeditions console not showing any expeditions., type: Fix}
+  id: 5036
+  time: '2023-10-21T21:34:00.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Players can no longer telekinetically  pry open doors while they are
+      not under the effects of gravity., type: Fix}
+  id: 5037
+  time: '2023-10-22T05:49:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Emitters now destroy rocks in 1 hit like crushers and PKAs, you can
+      use them for laser mining.', type: Tweak}
+  id: 5038
+  time: '2023-10-22T05:51:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix tile placement mispredicting and flickering., type: Fix}
+  id: 5039
+  time: '2023-10-22T05:53:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that caused items to get stuck to vehicles when unequipping
+      clothing., type: Fix}
+  id: 5040
+  time: '2023-10-22T05:54:30.0000000+00:00'
+- author: Endecc
+  changes:
+  - {message: 'Added the Requisition Digi-board, a wireless cargo computer (and high-capacity
+      clipboard) for the Quartermaster''s Locker.', type: Add}
+  - {message: 'Added a new Steal objective for traitors, as this new fancy clipboard
+      has access to most of Nanotrasen''s accounting details!', type: Add}
+  id: 5041
+  time: '2023-10-22T07:34:06.0000000+00:00'
+- author: stopbreaking
+  changes:
+  - {message: Replaced wielding do_after with an interaction cooldown., type: Tweak}
+  id: 5042
+  time: '2023-10-22T13:53:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tile-prying do_after is now predicted., type: Tweak}
+  id: 5043
+  time: '2023-10-23T13:20:33.0000000+00:00'
+- author: Tryded
+  changes:
+  - {message: Changed the damage of the double bladed energy sword to 17 heat + 17
+      Slash (The Double Bladed energy sword use to deal as much damage as an energy
+      dagger.), type: Tweak}
+  id: 5044
+  time: '2023-10-23T14:35:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed activating artifacts with magboots., type: Fix}
+  id: 5045
+  time: '2023-10-24T06:18:46.0000000+00:00'
+- author: Stray-Pyramid
+  changes:
+  - {message: Ore bags now pickup artifact fragments as well as ores, type: Fix}
+  id: 5046
+  time: '2023-10-24T06:20:46.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Syndicate have issued a new challenge objective for traitors with shuttle
+      hijacking, type: Add}
+  id: 5047
+  time: '2023-10-24T07:55:47.0000000+00:00'
+- author: VasilisThePikachu
+  changes:
+  - {message: Stuttering trait stutters less common., type: Fix}
+  id: 5048
+  time: '2023-10-24T09:28:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix climbing in the same position (e.g. exiting from medical scanners)
+      sending you to the farplanes., type: Fix}
+  id: 5049
+  time: '2023-10-24T10:44:09.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed the "examine" trigger for artifacts not having a hint., type: Fix}
+  id: 5050
+  time: '2023-10-24T20:37:16.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: You can actually grind corn into cornmeal now., type: Fix}
+  id: 5051
+  time: '2023-10-24T20:38:43.0000000+00:00'
+- author: Myakot
+  changes:
+  - {message: Skeletons can now heal by pouring milk over themselves, type: Add}
+  id: 5052
+  time: '2023-10-24T20:58:34.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Fixed anomaly locators frantically beeping when they first enter detection
+      range for an anomaly., type: Fix}
+  id: 5053
+  time: '2023-10-24T21:00:23.0000000+00:00'
+- author: 27alaing
+  changes:
+  - {message: The anti-slang system allows for more leeway with certain phrases now.,
+    type: Tweak}
+  - {message: 'The supply radio channel can be used with ":u" again.', type: Fix}
+  id: 5054
+  time: '2023-10-25T00:56:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Medical cyborgs' stethoscopes can no longer be fed to moths to obtain
+      a free hand., type: Fix}
+  id: 5055
+  time: '2023-10-25T04:51:32.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Roundstart borg jobs get funny names., type: Tweak}
+  id: 5056
+  time: '2023-10-25T13:00:09.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The search bar in vending machines now works., type: Fix}
+  id: 5057
+  time: '2023-10-25T13:01:16.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'The Syndicate''s chefs are now offering snack boxes for only 1 tc.
+      Usually contains a toy, drinks and food.', type: Add}
+  id: 5058
+  time: '2023-10-25T13:26:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix docking UI not showing other grids., type: Fix}
+  id: 5059
+  time: '2023-10-25T13:28:34.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Potato batteries can be built by crew., type: Add}
+  - {message: New compact AI chips may be powered via potato batteries., type: Add}
+  id: 5060
+  time: '2023-10-25T13:52:50.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Storage now functions based on slots and sizes, rather than numerical
+      values.', type: Tweak}
+  id: 5061
+  time: '2023-10-25T22:53:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Adjusted the sizes of space suits and belts., type: Tweak}
+  - {message: Reduced the slot count in the ore bag., type: Tweak}
+  - {message: Fixed not being to create pills at the ChemMaster 5000., type: Fix}
+  id: 5062
+  time: '2023-10-26T02:47:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Reverted storage to function with numerical values again, instead of
+      slots and sizes.', type: Tweak}
+  id: 5063
+  time: '2023-10-26T08:28:16.776154+00:00'
+- author: nmajask
+  changes:
+  - {message: Bacon burgers require 1 bacon instead of 3 cutlets, type: Tweak}
+  - {message: Ghost burgers require 1 ectoplasm instead of 1 ghost sheet, type: Tweak}
+  - {message: Tofu creation no longer consumes the enzyme, type: Tweak}
+  - {message: Ribs and Mcribs now give back skewers when eaten, type: Fix}
+  id: 5064
+  time: '2023-10-27T02:12:35.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Headrevs now have their own music on spawn, credits to A-Guy on youtube',
+    type: Add}
+  id: 5065
+  time: '2023-10-27T02:19:35.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Bodies of dead players who have taken a ghost role now show as "departed
+      and moved on"., type: Fix}
+  id: 5066
+  time: '2023-10-27T02:27:36.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed being able to give pAIs implants., type: Fix}
+  id: 5067
+  time: '2023-10-27T02:34:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Ion storms have appeared and are causing malfunctions in cyborg law
+      modules., type: Add}
+  id: 5068
+  time: '2023-10-27T02:40:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Foam and smoke can now transfer chemicals when inhaled. Wear internals
+      to avoid this., type: Add}
+  - {message: Fixed foam dissolution animation., type: Fix}
+  id: 5069
+  time: '2023-10-27T02:52:11.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Increased funding in an undisclosed NT Operative Squad., type: Add}
+  - {message: CentComm staff will have their proper ID icons on security's sechud.,
+    type: Add}
+  - {message: CentComm staff will have undying loyalty to Nanotrasen., type: Add}
+  - {message: ERT funding has been improved. Expect specialized ERT units to be able
+      to provide more assistance related to their role., type: Tweak}
+  - {message: Cut funding from ERT weaponry. They'll likely be seen using standard
+      security-level weapons., type: Remove}
+  - {message: 'Cut funding from ERT uniforms, they no longer have built in armor.',
+    type: Fix}
+  - {message: The medical ERT members have had their hardsuits refitted with proper
+      armor., type: Fix}
+  - {message: Updated the localization files., type: Fix}
+  id: 5070
+  time: '2023-10-27T13:54:43.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: Fixed nuclear operatives sound not being played at round start, type: Fix}
+  id: 5071
+  time: '2023-10-28T02:28:21.0000000+00:00'
+- author: Arteben
+  changes:
+  - {message: Nanotrasen improved the health analyzer UI!, type: Tweak}
+  id: 5072
+  time: '2023-10-28T05:54:18.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Stats menu on Character setup for total and role playtime., type: Add}
+  id: 5073
+  time: '2023-10-28T12:01:11.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'The space lube recipe now produces slightly more lube, but can overflow
+      its container.', type: Tweak}
+  id: 5074
+  time: '2023-10-28T16:46:59.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The bee plush can now be worn on your head., type: Add}
+  id: 5075
+  time: '2023-10-29T03:55:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio rework is in which fixes a lot of audio bugs but may also introduce
+      new ones., type: Tweak}
+  - {message: Grid audio will now attenuate properly over distance and won't be ear
+      rupturingly loud., type: Fix}
+  - {message: FTL sound should no longer persist as it's attached to the shuttle instead
+      of being global., type: Fix}
+  - {message: Audio can now start at an offset so if an audio source comes into range
+      it won't play from the start., type: Fix}
+  - {message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
+      so it's smoother. You may need to adjust your master audio volume., type: Tweak}
+  id: 5076
+  time: '2023-10-29T03:58:23.0000000+00:00'
+- author: Simyon264
+  changes:
+  - {message: 'The PDA will now ring again, when a new station article gets published.
+      Reporters rejoice!', type: Fix}
+  id: 5077
+  time: '2023-10-29T10:37:40.0000000+00:00'

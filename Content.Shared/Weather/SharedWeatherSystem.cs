@@ -101,12 +101,11 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
-        foreach (var comp in EntityQuery<WeatherComponent>())
+        var query = EntityQueryEnumerator<WeatherComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.Weather.Count == 0)
                 continue;
-
-            var uid = comp.Owner;
 
             foreach (var (proto, weather) in comp.Weather)
             {
