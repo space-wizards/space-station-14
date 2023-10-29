@@ -68,7 +68,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnUpdate(Entity<GasRecyclerComponent> ent, ref AtmosDeviceUpdateEvent args)
         {
-
+            var comp = ent.Comp;
             if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.InletName, out var inletId, out var inletNode, out var inlet) ||
                 !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode) ||
                 !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.OutletName, out var outletId, out var outletNode, out var outlet) ||

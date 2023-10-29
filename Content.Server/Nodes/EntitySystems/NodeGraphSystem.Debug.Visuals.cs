@@ -2,7 +2,7 @@ using Content.Server.Nodes.Components;
 using Content.Server.Nodes.Events.Debug;
 using Content.Shared.Nodes;
 using Robust.Server.GameStates;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 
@@ -11,7 +11,7 @@ namespace Content.Server.Nodes.EntitySystems;
 public sealed partial class NodeGraphSystem
 {
     /// <summary>The set of players that are receiving node debug info and a filter for which graphs they are receiving that info for.</summary>
-    private readonly Dictionary<IPlayerSession, GraphFilter> _visSessions = new();
+    private readonly Dictionary<ICommonSession, GraphFilter> _visSessions = new();
     /// <summary>Whether we are currently sending node debug info to players.</summary>
     private bool _sendingVisState = false;
 
@@ -89,7 +89,7 @@ public sealed partial class NodeGraphSystem
     #region Command Hooks
 
     /// <summary>Starts sending the debugging visuals for node graphs to a player.</summary>
-    public void StartSendingNodeVis(IPlayerSession session)
+    public void StartSendingNodeVis(ICommonSession session)
     {
         GraphFilter? filter = _visSessions.TryGetValue(session, out var tmp) ? tmp : null;
 
@@ -105,7 +105,7 @@ public sealed partial class NodeGraphSystem
     }
 
     /// <summary>Starts sending the visual state of a specific graphs to a player.</summary>
-    public void StartSendingNodeVis(IPlayerSession session, EntityUid graphId)
+    public void StartSendingNodeVis(ICommonSession session, EntityUid graphId)
     {
         GraphFilter? filter = _visSessions.TryGetValue(session, out var tmp) ? tmp : null;
 
@@ -126,7 +126,7 @@ public sealed partial class NodeGraphSystem
     }
 
     /// <summary>Stops sending the visual state of a specific types of node graph to a player.</summary>
-    public void StartSendingNodeVis(IPlayerSession session, string prototype)
+    public void StartSendingNodeVis(ICommonSession session, string prototype)
     {
         GraphFilter? filter = _visSessions.TryGetValue(session, out var tmp) ? tmp : null;
 
@@ -147,7 +147,7 @@ public sealed partial class NodeGraphSystem
     }
 
     /// <summary>Stops sending the visual state of nodes to a player.</summary>
-    public void StopSendingNodeVis(IPlayerSession session)
+    public void StopSendingNodeVis(ICommonSession session)
     {
         _visSessions.Remove(session);
 
@@ -156,7 +156,7 @@ public sealed partial class NodeGraphSystem
     }
 
     /// <summary>Stops sending the visual state of a specific graph to a player.</summary>
-    public void StopSendingNodeVis(IPlayerSession session, EntityUid graphId)
+    public void StopSendingNodeVis(ICommonSession session, EntityUid graphId)
     {
         if (!_visSessions.TryGetValue(session, out var filter))
             return;
@@ -177,7 +177,7 @@ public sealed partial class NodeGraphSystem
     }
 
     /// <summary>Stops sending the visual state of a specific type of node graph to a player.</summary>
-    public void StopSendingNodeVis(IPlayerSession session, string prototype)
+    public void StopSendingNodeVis(ICommonSession session, string prototype)
     {
         if (!_visSessions.TryGetValue(session, out var filter))
             return;
@@ -216,19 +216,28 @@ public sealed partial class NodeGraphSystem
             if (filter.Uids?.TryGetValue(uid, out var shouldAdd) == true)
             {
                 if (shouldAdd)
+                {
+                    args.Entities ??= new();
                     args.Entities.Add(uid);
+                }
                 continue;
             }
 
             if (filter.Prototypes?.TryGetValue(graph.GraphProto, out shouldAdd) == true)
             {
                 if (shouldAdd)
+                {
+                    args.Entities ??= new();
                     args.Entities.Add(uid);
+                }
                 continue;
             }
 
             if (filter.Default)
+            {
+                args.Entities ??= new();
                 args.Entities.Add(uid);
+            }
         }
     }
 
@@ -239,7 +248,7 @@ public sealed partial class NodeGraphSystem
             return;
         if (!_sendingVisState)
             return;
-        if (args.Player is not IPlayerSession session)
+        if (args.Player is not ICommonSession session)
             return;
 
         if (!_visSessions.TryGetValue(session, out var filter))
@@ -270,7 +279,7 @@ public sealed partial class NodeGraphSystem
             return;
         if (!_sendingVisState)
             return;
-        if (args.Player is not IPlayerSession session)
+        if (args.Player is not ICommonSession session)
             return;
 
         if (!_visSessions.TryGetValue(session, out var filter))

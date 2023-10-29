@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Nodes;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -49,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
             Toggle(uid, component);
-            SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
+            _audioSystem.PlayPvs(component.ValveSound, uid, AudioParams.Default.WithVariation(0.25f));
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)

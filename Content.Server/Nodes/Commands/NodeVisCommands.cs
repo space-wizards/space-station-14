@@ -2,7 +2,7 @@ using Content.Server.Administration;
 using Content.Server.Nodes.EntitySystems;
 using Content.Server.Nodes.Components;
 using Content.Shared.Administration;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
@@ -26,7 +26,7 @@ public sealed class NodeVisCommand : ToolshedCommand
     [CommandImplementation("show")]
     public void ShowAllGraphs([CommandInvocationContext] IInvocationContext context)
     {
-        if (context.Session is not IPlayerSession session)
+        if (context.Session is not ICommonSession session)
             return;
 
         _sys ??= GetSys<NodeGraphSystem>();
@@ -41,7 +41,7 @@ public sealed class NodeVisCommand : ToolshedCommand
     [CommandImplementation("hide")]
     public void HideAllGraphs([CommandInvocationContext] IInvocationContext context)
     {
-        if (context.Session is not IPlayerSession session)
+        if (context.Session is not ICommonSession session)
             return;
 
         _sys ??= GetSys<NodeGraphSystem>();
