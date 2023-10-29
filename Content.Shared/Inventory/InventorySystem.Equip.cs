@@ -321,18 +321,58 @@ public abstract partial class InventorySystem
         return true;
     }
 
-    public bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null) => TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing);
+    public bool TryUnequip(
+        EntityUid uid,
+        string slot,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        ClothingComponent? clothing = null,
+        bool reparent = true)
+    {
+        return TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing, reparent);
+    }
 
-    public bool TryUnequip(EntityUid actor, EntityUid target, string slot, bool silent = false,
-        bool force = false, bool predicted = false, InventoryComponent? inventory = null, ClothingComponent? clothing = null) =>
-        TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing);
+    public bool TryUnequip(
+        EntityUid actor,
+        EntityUid target,
+        string slot,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        ClothingComponent? clothing = null,
+        bool reparent = true)
+    {
+        return TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing, reparent);
+    }
 
-    public bool TryUnequip(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null) => TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing);
+    public bool TryUnequip(
+        EntityUid uid,
+        string slot,
+        [NotNullWhen(true)] out EntityUid? removedItem,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        ClothingComponent? clothing = null,
+        bool reparent = true)
+    {
+        return TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing, reparent);
+    }
 
-    public bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false,
-        bool force = false, bool predicted = false, InventoryComponent? inventory = null, ClothingComponent? clothing = null)
+    public bool TryUnequip(
+        EntityUid actor,
+        EntityUid target,
+        string slot,
+        [NotNullWhen(true)] out EntityUid? removedItem,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        ClothingComponent? clothing = null,
+        bool reparent = true)
     {
         removedItem = null;
         if (!Resolve(target, ref inventory, false))
@@ -369,11 +409,11 @@ public abstract partial class InventorySystem
             if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
             {
                 //this recursive call might be risky
-                TryUnequip(actor, target, slotDef.Name, true, true, predicted, inventory);
+                TryUnequip(actor, target, slotDef.Name, true, true, predicted, inventory, reparent: reparent);
             }
         }
 
-        if (!slotContainer.Remove(removedItem.Value, force: force))
+        if (!slotContainer.Remove(removedItem.Value, force: force, reparent: reparent))
             return false;
 
         _transform.DropNextTo(removedItem.Value, target);
