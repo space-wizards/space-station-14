@@ -4,7 +4,7 @@
   description: uplink-modsuitoperative-desc
   productEntity: ClothingControlModsuitOperativeSealed
   cost:
-    Telecrystal: 12
+    Telecrystal: 10
   categories:
     - UplinkArmor
   conditions:
@@ -17,9 +17,9 @@
   id: ModsuitOperativeCMDSealed
   name: uplink-modsuitoperativecmd-name
   description: uplink-modsuitoperativecmd-desc
-  productEntity: ClothingControlModsuitOperativeCMDSealed
+  productEntity: ClothingControlModsuitOperativeCMDSealedFractionBoom
   cost:
-    Telecrystal: 20
+    Telecrystal: 18
   categories:
     - UplinkArmor
   conditions:
