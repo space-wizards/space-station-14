@@ -3,9 +3,8 @@ using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Construction;
 using Content.Shared.Tag;
-using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Construction.Commands
 {
@@ -13,7 +12,6 @@ namespace Content.Server.Construction.Commands
     public sealed class FixRotationsCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         // ReSharper disable once StringLiteralTypo
         public string Command => "fixrotations";
@@ -22,7 +20,7 @@ namespace Content.Server.Construction.Commands
 
         public void Execute(IConsoleShell shell, string argsOther, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             EntityUid? gridId;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
@@ -51,13 +49,13 @@ namespace Content.Server.Construction.Commands
                     return;
             }
 
-            if (!_mapManager.TryGetGrid(gridId, out var grid))
+            if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
             {
                 shell.WriteError($"No grid exists with id {gridId}");
                 return;
             }
 
-            if (!_entManager.EntityExists(grid.Owner))
+            if (!_entManager.EntityExists(gridId))
             {
                 shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
@@ -66,7 +64,7 @@ namespace Content.Server.Construction.Commands
             var changed = 0;
             var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
 
-            foreach (var child in xformQuery.GetComponent(grid.Owner).ChildEntities)
+            foreach (var child in xformQuery.GetComponent(gridId.Value).ChildEntities)
             {
                 if (!_entManager.EntityExists(child))
                 {

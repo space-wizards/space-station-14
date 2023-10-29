@@ -489,6 +489,11 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables] public List<NodeId> BatterySupplies = new();
 
             /// <summary>
+            ///     The total load on the power network as of last tick.
+            /// </summary>
+            [ViewVariables] public float LastCombinedLoad = 0f;
+
+            /// <summary>
             ///     Available supply, including both normal supplies and batteries.
             /// </summary>
             [ViewVariables] public float LastCombinedSupply = 0f;

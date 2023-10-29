@@ -94,7 +94,11 @@
   description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
   components:
   - type: Sprite
+    sprite: Objects/Fun/toys.rsi
     state: plushie_h
+  - type: Item
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: bee
   - type: Extractable
     grindableSolutionName: bee
   - type: SolutionContainerManager
@@ -103,6 +107,12 @@
         reagents:
           - ReagentId: GroundBee
             Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: bee
+    slots:
+    - HEAD
 
 - type: entity
   parent: BasePlushie
@@ -168,6 +178,7 @@
     radius: 1.5
     energy: 2
     netsync: false
+
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!

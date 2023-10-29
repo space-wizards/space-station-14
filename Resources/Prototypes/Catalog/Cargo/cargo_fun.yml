@@ -187,3 +187,13 @@
   cost: 4000
   category: Fun
   group: market
+  
+- type: cargoProduct
+  id: FunDartsSet
+  icon:
+    sprite: Objects/Fun/Darts/dart_red.rsi
+    state: icon
+  product: CrateFunDartsSet
+  cost: 900
+  category: Fun
+  group: market
