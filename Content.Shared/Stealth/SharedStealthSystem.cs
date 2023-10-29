@@ -146,6 +146,24 @@ public abstract class SharedStealthSystem : EntitySystem
 
         Dirty(component);
     }
+	
+	/// <summary>
+    /// Sets the maximum visibility directly with no modifications
+    /// </summary>
+    /// <param name="value">The value to set the maximum visibility to. -1 is fully invisible, 1 is fully visible</param>
+    public void SetMaxVisibility(EntityUid uid, float value, StealthComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.MaxVisibility = value;
+		
+		component.LastVisibility = Math.Clamp(component.LastVisibility, component.MinVisibility, component.MaxVisibility);
+		if (component.LastUpdated != null)
+            component.LastUpdated = _timing.CurTime;
+
+        Dirty(component);
+    }
 
     /// <summary>
     /// Gets the current visibility from the <see cref="StealthComponent"/>

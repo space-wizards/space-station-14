@@ -56,6 +56,7 @@ public sealed class StealthClothingSystem : EntitySystem
 		
 		var stealthOnMove = EnsureComp<StealthOnMoveComponent>(user);
 		_stealth.SetEnabled(user, enabled, stealth);
+		_stealth.SetMaxVisibility(user, 0.5f, stealth);
 		
         return true;
     }
