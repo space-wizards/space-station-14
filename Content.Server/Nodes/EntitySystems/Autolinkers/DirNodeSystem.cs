@@ -1,3 +1,4 @@
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.Components.Autolinkers;
 using Content.Server.Nodes.Events;
 using Content.Shared.Atmos;
@@ -13,8 +14,10 @@ namespace Content.Server.Nodes.EntitySystems.Autolinkers;
 /// </summary>
 public sealed partial class DirNodeSystem : EntitySystem
 {
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+
     private EntityQuery<DirNodeComponent> _dirQuery = default!;
 
     public override void Initialize()
@@ -31,22 +34,22 @@ public sealed partial class DirNodeSystem : EntitySystem
     }
 
 
-    private IEnumerable<(EntityUid, DirNodeComponent)> DirNodesInDirection(Vector2i pos, PipeDirection dir, MapGridComponent grid)
+    private IEnumerable<Entity<GraphNodeComponent, DirNodeComponent>> DirNodesInDirection(Entity<MapGridComponent> grid, Vector2i pos, PipeDirection dir)
     {
-        var tilePos = pos.Offset(dir.ToDirection());
-        foreach (var nodeId in _nodeSystem.GetAnchoredNodesOnTile(grid, tilePos))
+        foreach (var (nodeId, node) in _nodeSystem.GetAnchoredNodesInDir(grid, pos, dir.ToDirection()))
         {
             if (_dirQuery.TryGetComponent(nodeId, out var dirNode))
-                yield return (nodeId, dirNode);
+                yield return (nodeId, node, dirNode);
         }
     }
 
-    private IEnumerable<EntityUid> LinkableNodesInDirection(Vector2i pos, PipeDirection dir, MapGridComponent grid)
+    private IEnumerable<Entity<GraphNodeComponent, DirNodeComponent>> LinkableNodesInDirection(Entity<MapGridComponent> grid, Vector2i pos, PipeDirection dir)
     {
-        foreach (var (nodeId, dirNode) in DirNodesInDirection(pos, dir, grid))
+        var opposite = dir.GetOpposite();
+        foreach (var (nodeId, node, dirNode) in DirNodesInDirection(grid, pos, dir))
         {
-            if (dirNode.CurrentDirection.HasDirection(dir.GetOpposite()))
-                yield return nodeId;
+            if (dirNode.CurrentDirection.HasDirection(opposite))
+                yield return (nodeId, node, dirNode);
         }
     }
 
@@ -87,43 +90,40 @@ public sealed partial class DirNodeSystem : EntitySystem
 
     private void OnUpdateEdges(EntityUid uid, DirNodeComponent comp, ref UpdateEdgesEvent args)
     {
-        var xform = args.HostXform;
-        if (!xform.Anchored || args.HostGrid is not { } grid)
+        if (args.Host.Comp is not { Anchored: true } xform || args.Grid is not { } grid)
             return;
 
-        var pos = grid.TileIndicesFor(xform.Coordinates);
+        var pos = _mapSystem.TileIndicesFor(grid.Owner, grid.Comp, xform.Coordinates);
         for (var i = 0; i < PipeDirectionHelpers.PipeDirections; ++i)
         {
             var dir = (PipeDirection) (1 << i);
             if (!comp.CurrentDirection.HasDirection(dir))
                 continue;
 
-            foreach (var nodeId in LinkableNodesInDirection(pos, dir, grid))
+            foreach (var node in LinkableNodesInDirection(grid, pos, dir))
             {
-                if (nodeId == uid)
+                if (node.Owner == uid)
                     continue;
 
                 args.Edges ??= new();
-                args.Edges[nodeId] = (args.Edges.TryGetValue(nodeId, out var flags) ? flags : EdgeFlags.None) | comp.Flags;
+                args.Edges[node] = (args.Edges.TryGetValue(node, out var flags) ? flags : EdgeFlags.None) | comp.Flags;
             }
         }
     }
 
     private void OnCheckEdge(EntityUid uid, DirNodeComponent comp, ref CheckEdgeEvent args)
     {
-        var nodeXform = args.NodeHostXform;
-        if (!nodeXform.Anchored || args.NodeHostGrid is not { } nodeGrid)
+        if (args.FromHost.Comp is not { Anchored: true } nodeXform || args.FromGrid is not { } nodeGrid)
             return;
 
-        var edgeXform = args.EdgeHostXform;
-        if (!edgeXform.Anchored || args.EdgeHostGrid is not { } edgeGrid)
+        if (args.ToHost.Comp is not { Anchored: true } edgeXform || args.ToGrid is not { } edgeGrid)
             return;
 
-        if (!ReferenceEquals(nodeGrid, edgeGrid))
+        if (nodeGrid != edgeGrid)
             return;
 
-        var nodePos = nodeGrid.TileIndicesFor(nodeXform.Coordinates);
-        var edgePos = edgeGrid.TileIndicesFor(edgeXform.Coordinates);
+        var nodePos = _mapSystem.TileIndicesFor(nodeGrid.Owner, nodeGrid.Comp, nodeXform.Coordinates);
+        var edgePos = _mapSystem.TileIndicesFor(edgeGrid.Owner, edgeGrid.Comp, edgeXform.Coordinates);
         var dir = (edgePos - nodePos) switch
         {
             (0, +1) => PipeDirection.North,
@@ -139,10 +139,10 @@ public sealed partial class DirNodeSystem : EntitySystem
         if (!comp.CurrentDirection.HasDirection(dir))
             return;
 
-        if (!_dirQuery.TryGetComponent(args.EdgeId, out var dirNode))
+        if (!_dirQuery.TryGetComponent(args.To, out var toDir))
             return;
 
-        if (!dirNode.CurrentDirection.HasDirection(dir.GetOpposite()))
+        if (!toDir.CurrentDirection.HasDirection(dir.GetOpposite()))
             return;
 
         args.Wanted = true;

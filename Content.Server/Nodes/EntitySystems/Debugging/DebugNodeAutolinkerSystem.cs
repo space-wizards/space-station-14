@@ -31,7 +31,7 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
     /// </summary>
     private void OnUpdateEdges(EntityUid uid, DebugNodeAutolinkerComponent comp, ref UpdateEdgesEvent args)
     {
-        if (!_xformQuery.TryGetComponent(args.HostId, out var xform))
+        if (!_xformQuery.TryGetComponent(args.Host, out var xform))
             return;
 
         var epicenter = _xformSys.GetWorldPosition(xform);
@@ -43,7 +43,7 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
                 continue;
             if (!_nodeQuery.TryGetComponent(nearId, out var edge))
                 continue;
-            if (!comp.AllowBridging && edge.GraphProto != args.Node.GraphProto)
+            if (!comp.AllowBridging && edge.GraphProto != args.Node.Comp.GraphProto)
                 continue;
 
             var distance = (epicenter - _xformSys.GetWorldPosition(nearId)).LengthSquared();
@@ -63,12 +63,12 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
         if (args.Wanted)
             return;
 
-        if (!comp.AllowBridging && args.Edge.GraphProto != args.Node.GraphProto)
+        if (!comp.AllowBridging && args.To.Comp.GraphProto != args.From.Comp.GraphProto)
             return;
 
-        if (!_xformQuery.TryGetComponent(args.NodeHostId, out var xform))
+        if (!_xformQuery.TryGetComponent(args.FromHost, out var xform))
             return;
-        if (!_xformQuery.TryGetComponent(args.EdgeHostId, out var edgeXform))
+        if (!_xformQuery.TryGetComponent(args.ToHost, out var edgeXform))
             return;
 
         var range = comp.BaseRange + MathF.Max(comp.HysteresisRange, 0f);

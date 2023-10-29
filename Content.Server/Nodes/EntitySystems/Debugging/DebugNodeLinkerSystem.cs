@@ -107,7 +107,7 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         {
             // Adds an edge between the selected node and the clicked node.
             case DebugLinkerMode.Link:
-                if (_nodeGraphSys.HasEdge(savedNodeId, targetNodeId, savedNode)
+                if (_nodeGraphSys.HasEdge((savedNodeId, savedNode), targetNodeId)
                     ? !_nodeGraphSys.TrySetEdge(savedNodeId, targetNodeId, flags: comp.Flags, node: savedNode, edge: targetNode)
                     : !_nodeGraphSys.TryAddEdge(savedNodeId, targetNodeId, flags: comp.Flags, node: savedNode, edge: targetNode))
                     break;

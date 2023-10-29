@@ -12,6 +12,7 @@ namespace Content.Server.Nodes.EntitySystems.Autolinkers;
 /// </summary>
 public sealed partial class PortNodeSystem : EntitySystem
 {
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
@@ -81,21 +82,20 @@ public sealed partial class PortNodeSystem : EntitySystem
         if (!comp.ConnectionsEnabled)
             return;
 
-        var xform = args.HostXform;
-        if (!xform.Anchored || args.HostGrid is not { } grid)
+        if (args.Host.Comp is not { Anchored: true } xform || args.Grid is not { } grid)
             return;
 
-        var tileIndex = grid.TileIndicesFor(xform.Coordinates);
-        foreach (var nodeId in _nodeSystem.GetAnchoredNodesOnTile(grid, tileIndex))
+        var tileIndex = _mapSystem.TileIndicesFor(grid.Owner, grid.Comp, xform.Coordinates);
+        foreach (var node in _nodeSystem.GetAnchoredNodesOnTile(grid, tileIndex))
         {
-            if (nodeId == uid)
+            if (node.Owner == uid)
                 continue;
 
-            if (comp.Tag is { } tag && !_tagSystem.HasTag(nodeId, tag))
+            if (comp.Tag is { } tag && !_tagSystem.HasTag(node, tag))
                 continue;
 
             args.Edges ??= new();
-            args.Edges[nodeId] = (args.Edges.TryGetValue(nodeId, out var oldFlags) ? oldFlags : EdgeFlags.None) | comp.Flags;
+            args.Edges[node] = (args.Edges.TryGetValue(node, out var oldFlags) ? oldFlags : EdgeFlags.None) | comp.Flags;
         }
     }
 
@@ -107,21 +107,19 @@ public sealed partial class PortNodeSystem : EntitySystem
         if (!comp.ConnectionsEnabled)
             return;
 
-        var nodeXform = args.NodeHostXform;
-        if (!nodeXform.Anchored || args.NodeHostGrid is not { } nodeGrid)
+        if (args.FromHost.Comp is not { Anchored: true } nodeXform || args.FromGrid is not { } nodeGrid)
             return;
 
-        var edgeXform = args.EdgeHostXform;
-        if (!edgeXform.Anchored || args.EdgeHostGrid is not { } edgeGrid)
+        if (args.ToHost.Comp is not { Anchored: true } edgeXform || args.ToGrid is not { } edgeGrid)
             return;
 
-        if (!ReferenceEquals(nodeGrid, edgeGrid))
+        if (nodeGrid != edgeGrid)
             return;
 
-        if (nodeGrid.TileIndicesFor(nodeXform.Coordinates) != edgeGrid.TileIndicesFor(edgeXform.Coordinates))
+        if (_mapSystem.TileIndicesFor(nodeGrid.Owner, nodeGrid.Comp, nodeXform.Coordinates) != _mapSystem.TileIndicesFor(edgeGrid.Owner, edgeGrid.Comp, edgeXform.Coordinates))
             return;
 
-        if (comp.Tag is { } tag && !_tagSystem.HasTag(args.EdgeId, tag))
+        if (comp.Tag is { } tag && !_tagSystem.HasTag(args.To, tag))
             return;
 
         args.Wanted = true;
