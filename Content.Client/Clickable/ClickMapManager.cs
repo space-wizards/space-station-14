@@ -23,7 +23,7 @@ namespace Content.Client.Clickable
         private const float Threshold = 0.25f;
         private const int ClickRadius = 2;
 
-        [Dependency] private readonly IClientResourceCache _resourceCache = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         [ViewVariables]
         private readonly Dictionary<Texture, ClickMap> _textureMaps = new();

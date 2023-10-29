@@ -1,6 +1,4 @@
 using Content.Shared.Maps;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -17,11 +15,13 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private   readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    protected ISawmill Sawmill = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        Sawmill = Logger.GetSawmill("weather");
         SubscribeLocalEvent<WeatherComponent, EntityUnpausedEvent>(OnWeatherUnpaused);
     }
 
@@ -123,7 +123,7 @@ public abstract class SharedWeatherSystem : EntitySystem
                 // Admin messed up or the likes.
                 if (!ProtoMan.TryIndex<WeatherPrototype>(proto, out var weatherProto))
                 {
-                    Log.Error($"Unable to find weather prototype for {comp.Weather}, ending!");
+                    Sawmill.Error($"Unable to find weather prototype for {comp.Weather}, ending!");
                     EndWeather(uid, comp, proto);
                     continue;
                 }
@@ -156,8 +156,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// </summary>
     public void SetWeather(MapId mapId, WeatherPrototype? proto, TimeSpan? endTime)
     {
-        var mapUid = MapManager.GetMapEntityId(mapId);
-        var weatherComp = EnsureComp<WeatherComponent>(mapUid);
+        var weatherComp = EnsureComp<WeatherComponent>(MapManager.GetMapEntityId(mapId));
 
         foreach (var (eProto, weather) in weatherComp.Weather)
         {
@@ -169,7 +168,7 @@ public abstract class SharedWeatherSystem : EntitySystem
                 if (weather.State == WeatherState.Ending)
                     weather.State = WeatherState.Running;
 
-                Dirty(mapUid, weatherComp);
+                Dirty(weatherComp);
                 continue;
             }
 
@@ -179,7 +178,7 @@ public abstract class SharedWeatherSystem : EntitySystem
             if (weather.EndTime == null || weather.EndTime > end)
             {
                 weather.EndTime = end;
-                Dirty(mapUid, weatherComp);
+                Dirty(weatherComp);
             }
         }
 
@@ -212,10 +211,10 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (!component.Weather.TryGetValue(proto, out var data))
             return;
 
-        _audio.Stop(data.Stream);
+        data.Stream?.Stop();
         data.Stream = null;
         component.Weather.Remove(proto);
-        Dirty(uid, component);
+        Dirty(component);
     }
 
     protected virtual bool SetState(WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)

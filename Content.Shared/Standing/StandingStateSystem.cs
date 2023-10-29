@@ -2,7 +2,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 
@@ -82,7 +81,7 @@ namespace Content.Shared.Standing
 
             if (playSound)
             {
-                _audio.PlayPredicted(standingState.DownSound, uid, uid);
+                _audio.PlayPredicted(standingState.DownSound, uid, uid, AudioParams.Default.WithVariation(0.25f));
             }
 
             return true;

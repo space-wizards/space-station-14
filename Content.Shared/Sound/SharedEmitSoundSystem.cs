@@ -7,7 +7,6 @@ using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
@@ -143,11 +142,8 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / MaxVolumeVelocity);
         var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
         component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
-        var sound = component.Sound;
 
-        if (_netMan.IsServer && sound != null)
-        {
-            _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
-        }
+        if (_netMan.IsServer)
+            _audioSystem.PlayPvs(component.Sound, uid, AudioParams.Default.WithVolume(volume));
     }
 }

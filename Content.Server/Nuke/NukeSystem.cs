@@ -14,7 +14,6 @@ using Content.Shared.Nuke;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -217,7 +216,7 @@ public sealed class NukeSystem : EntitySystem
 
     private void OnClearButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
     {
-        _audio.PlayEntity(component.KeypadPressSound, Filter.Pvs(uid), uid, true);
+        _audio.Play(component.KeypadPressSound, Filter.Pvs(uid), uid, true);
 
         if (component.Status != NukeStatus.AWAIT_CODE)
             return;
@@ -335,12 +334,12 @@ public sealed class NukeSystem : EntitySystem
                 {
                     component.Status = NukeStatus.AWAIT_ARM;
                     component.RemainingTime = component.Timer;
-                    _audio.PlayEntity(component.AccessGrantedSound, Filter.Pvs(uid), uid, true);
+                    _audio.Play(component.AccessGrantedSound, Filter.Pvs(uid), uid, true);
                 }
                 else
                 {
                     component.EnteredCode = "";
-                    _audio.PlayEntity(component.AccessDeniedSound, Filter.Pvs(uid), uid, true);
+                    _audio.Play(component.AccessDeniedSound, Filter.Pvs(uid), uid, true);
                 }
 
                 break;
@@ -410,7 +409,7 @@ public sealed class NukeSystem : EntitySystem
         // Don't double-dip on the octave shifting
         component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
 
-        _audio.PlayEntity(component.KeypadPressSound, Filter.Pvs(uid), uid, true, AudioHelpers.ShiftSemitone(semitoneShift).WithVolume(-5f));
+        _audio.Play(component.KeypadPressSound, Filter.Pvs(uid), uid, true, AudioHelpers.ShiftSemitone(semitoneShift).WithVolume(-5f));
     }
 
     public string GenerateRandomNumberString(int length)
@@ -501,7 +500,7 @@ public sealed class NukeSystem : EntitySystem
 
         // disable sound and reset it
         component.PlayedAlertSound = false;
-        component.AlertAudioStream = _audio.Stop(component.AlertAudioStream);
+        component.AlertAudioStream?.Stop();
 
         // turn off the spinny light
         _pointLight.SetEnabled(uid, false);

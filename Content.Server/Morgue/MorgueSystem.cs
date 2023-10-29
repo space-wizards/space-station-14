@@ -3,9 +3,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Morgue;
 using Content.Shared.Morgue.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Morgue;

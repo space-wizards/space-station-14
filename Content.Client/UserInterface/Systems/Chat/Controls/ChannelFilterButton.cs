@@ -20,7 +20,7 @@ public sealed class ChannelFilterButton : ContainerButton
     public ChannelFilterButton()
     {
         _chatUIController = UserInterfaceManager.GetUIController<ChatUIController>();
-        var filterTexture = IoCManager.Resolve<IClientResourceCache>()
+        var filterTexture = IoCManager.Resolve<IResourceCache>()
             .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
         // needed for same reason as ChannelSelectorButton

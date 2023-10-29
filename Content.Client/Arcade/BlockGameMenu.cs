@@ -65,7 +65,7 @@ namespace Content.Client.Arcade
 
             MinSize = SetSize = new Vector2(410, 490);
 
-            var resourceCache = IoCManager.Resolve<IClientResourceCache>();
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
             var backgroundTexture = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
             _mainPanel = new PanelContainer();

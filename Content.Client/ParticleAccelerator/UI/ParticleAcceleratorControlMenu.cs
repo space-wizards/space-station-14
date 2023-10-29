@@ -60,7 +60,7 @@ namespace Content.Client.ParticleAccelerator.UI
             _drawNoiseGenerator.SetFractalType(FastNoiseLite.FractalType.FBm);
             _drawNoiseGenerator.SetFrequency(0.5f);
 
-            var resourceCache = IoCManager.Resolve<IClientResourceCache>();
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
             var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
             var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
@@ -474,7 +474,7 @@ namespace Content.Client.ParticleAccelerator.UI
             private readonly TextureRect _unlit;
             private readonly RSI _rsi;
 
-            public PASegmentControl(ParticleAcceleratorControlMenu menu, IClientResourceCache cache, string name)
+            public PASegmentControl(ParticleAcceleratorControlMenu menu, IResourceCache cache, string name)
             {
                 _menu = menu;
                 _baseState = name;

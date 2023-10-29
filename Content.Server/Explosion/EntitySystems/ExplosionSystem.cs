@@ -20,7 +20,6 @@ using Content.Shared.Throwing;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -49,7 +48,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsSys = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
@@ -336,7 +334,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // play sound.
         var audioRange = iterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        _audio.PlayStatic(type.Sound.GetSound(), filter, mapEntityCoords, true, _audioParams);
+        SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
 
         return new Explosion(this,
             type,

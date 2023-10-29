@@ -7,8 +7,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -234,10 +232,10 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)
-            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null)?.Entity;
+            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null);
 
-        Dirty(target, tethered);
-        Dirty(gunUid, component);
+        Dirty(tethered);
+        Dirty(component);
     }
 
     protected virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
@@ -271,7 +269,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         if (!transfer)
         {
-            _audio.Stop(component.Stream);
+            component.Stream?.Stop();
             component.Stream = null;
         }
 

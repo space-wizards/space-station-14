@@ -57,17 +57,16 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
         }
 
         var debugParallax = IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.ParallaxDebug);
-        var resManager = IoCManager.Resolve<IResourceManager>();
 
         if (debugParallax
-            || !resManager.UserData.TryReadAllText(PreviousParallaxConfigPath, out var previousParallaxConfig)
+            || !StaticIoC.ResC.UserData.TryReadAllText(PreviousParallaxConfigPath, out var previousParallaxConfig)
             || previousParallaxConfig != parallaxConfig)
         {
             var table = Toml.ReadString(parallaxConfig);
             await UpdateCachedTexture(table, debugParallax, cancel);
 
             //Update the previous config
-            using var writer = resManager.UserData.OpenWriteText(PreviousParallaxConfigPath);
+            using var writer = StaticIoC.ResC.UserData.OpenWriteText(PreviousParallaxConfigPath);
             writer.Write(parallaxConfig);
         }
 
@@ -82,7 +81,7 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
             try
             {
                 // Also try to at least sort of fix this if we've been fooled by a config backup
-                resManager.UserData.Delete(PreviousParallaxConfigPath);
+                StaticIoC.ResC.UserData.Delete(PreviousParallaxConfigPath);
             }
             catch (Exception)
             {
@@ -105,34 +104,31 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
         // And load it in the main thread for safety reasons.
         // But before spending time saving it, make sure to exit out early if it's not wanted.
         cancel.ThrowIfCancellationRequested();
-        var resManager = IoCManager.Resolve<IResourceManager>();
 
         // Store it and CRC so further game starts don't need to regenerate it.
-        await using var imageStream = resManager.UserData.OpenWrite(ParallaxCachedImagePath);
-        await newParallexImage.SaveAsPngAsync(imageStream, cancel);
+        using var imageStream = StaticIoC.ResC.UserData.OpenWrite(ParallaxCachedImagePath);
+        newParallexImage.SaveAsPng(imageStream);
 
         if (saveDebugLayers)
         {
             for (var i = 0; i < debugImages!.Count; i++)
             {
                 var debugImage = debugImages[i];
-                await using var debugImageStream = resManager.UserData.OpenWrite(new ResPath($"/parallax_{Identifier}debug_{i}.png"));
-                await debugImage.SaveAsPngAsync(debugImageStream, cancel);
+                using var debugImageStream = StaticIoC.ResC.UserData.OpenWrite(new ResPath($"/parallax_{Identifier}debug_{i}.png"));
+                debugImage.SaveAsPng(debugImageStream);
             }
         }
     }
 
     private Texture GetCachedTexture()
     {
-        var resManager = IoCManager.Resolve<IResourceManager>();
-        using var imageStream = resManager.UserData.OpenRead(ParallaxCachedImagePath);
+        using var imageStream = StaticIoC.ResC.UserData.OpenRead(ParallaxCachedImagePath);
         return Texture.LoadFromPNGStream(imageStream, "Parallax");
     }
 
     private string? GetParallaxConfig()
     {
-        var resManager = IoCManager.Resolve<IResourceManager>();
-        if (!resManager.TryContentFileRead(ParallaxConfigPath, out var configStream))
+        if (!StaticIoC.ResC.TryContentFileRead(ParallaxConfigPath, out var configStream))
         {
             return null;
         }

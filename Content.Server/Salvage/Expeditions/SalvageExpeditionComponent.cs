@@ -39,7 +39,7 @@ public sealed partial class SalvageExpeditionComponent : SharedSalvageExpedition
     /// <summary>
     /// Countdown audio stream.
     /// </summary>
-    public EntityUid? Stream = null;
+    public IPlayingAudioStream? Stream = null;
 
     /// <summary>
     /// Sound that plays when the mission end is imminent.

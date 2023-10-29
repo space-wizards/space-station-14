@@ -7,18 +7,16 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public sealed class SliceableFoodSystem : EntitySystem
+    internal sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -77,7 +75,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 xform.LocalRotation = 0;
             }
 
-            _audio.PlayPvs(component.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
+                transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             // Decrease size of item based on count - Could implement in the future
             // Bug with this currently is the size in a container is not updated

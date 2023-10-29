@@ -4,8 +4,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Weapons.Melee.Balloon;
 

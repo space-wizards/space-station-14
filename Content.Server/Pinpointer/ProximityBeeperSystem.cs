@@ -2,7 +2,6 @@
 using Content.Shared.Interaction.Events;
 using Content.Shared.Pinpointer;
 using Content.Shared.PowerCell;
-using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 

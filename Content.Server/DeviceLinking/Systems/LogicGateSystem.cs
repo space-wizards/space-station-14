@@ -5,9 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Popups;
-using Content.Shared.Tools.Systems;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems;

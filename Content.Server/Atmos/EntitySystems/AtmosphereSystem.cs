@@ -7,8 +7,6 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
@@ -30,7 +28,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly TileSystem _tile = default!;
 

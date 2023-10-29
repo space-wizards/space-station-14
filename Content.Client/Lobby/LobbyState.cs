@@ -13,7 +13,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
-using Robust.Shared.ResourceManagement.ResourceTypes;
 using Robust.Shared.Timing;
 
 
@@ -24,7 +23,7 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IClientResourceCache _resourceCache = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;

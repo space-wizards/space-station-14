@@ -22,7 +22,7 @@ namespace Content.Client.Wires.UI
 {
     public sealed class WiresMenu : BaseWindow
     {
-        [Dependency] private readonly IClientResourceCache _resourceCache = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public WiresBoundUserInterface Owner { get; }
 
@@ -299,7 +299,7 @@ namespace Content.Client.Wires.UI
 
         private sealed class WireControl : Control
         {
-            private IClientResourceCache _resourceCache;
+            private IResourceCache _resourceCache;
 
             private const string TextureContact = "/Textures/Interface/WireHacking/contact.svg.96dpi.png";
 
@@ -307,7 +307,7 @@ namespace Content.Client.Wires.UI
             public event Action? ContactsClicked;
 
             public WireControl(WireColor color, WireLetter letter, bool isCut, bool flip, bool mirror, int type,
-                IClientResourceCache resourceCache)
+                IResourceCache resourceCache)
             {
                 _resourceCache = resourceCache;
 
@@ -412,10 +412,10 @@ namespace Content.Client.Wires.UI
                     "/Textures/Interface/WireHacking/wire_2_copper.svg.96dpi.png"
                 };
 
-                private readonly IClientResourceCache _resourceCache;
+                private readonly IResourceCache _resourceCache;
 
                 public WireRender(WireColor color, bool isCut, bool flip, bool mirror, int type,
-                    IClientResourceCache resourceCache)
+                    IResourceCache resourceCache)
                 {
                     _resourceCache = resourceCache;
                     _color = color;
@@ -507,7 +507,7 @@ namespace Content.Client.Wires.UI
                 }
             };
 
-            public StatusLight(StatusLightData data, IClientResourceCache resourceCache)
+            public StatusLight(StatusLightData data, IResourceCache resourceCache)
             {
                 var hsv = Color.ToHsv(data.Color);
                 hsv.Z /= 2;
