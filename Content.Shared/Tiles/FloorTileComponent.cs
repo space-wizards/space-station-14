@@ -15,10 +15,7 @@ namespace Content.Shared.Tiles
         [DataField("outputs", customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         public List<string>? OutputTiles;
 
-        [DataField("placeTileSound")] public SoundSpecifier PlaceTileSound =
-            new SoundPathSpecifier("/Audio/Items/genhit.ogg")
-            {
-                Params = AudioParams.Default.WithVariation(0.125f),
-            };
+        [DataField("placeTileSound")]
+        public SoundSpecifier PlaceTileSound = new SoundPathSpecifier("/Audio/Items/genhit.ogg");
     }
 }

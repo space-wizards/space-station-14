@@ -19,7 +19,7 @@ public abstract class SharedAmbientSoundSystem : EntitySystem
 
         ambience.Enabled = value;
         QueueUpdate(uid, ambience);
-        Dirty(uid, ambience);
+        Dirty(ambience);
     }
 
     public virtual void SetRange(EntityUid uid, float value, AmbientSoundComponent? ambience = null)
@@ -29,7 +29,7 @@ public abstract class SharedAmbientSoundSystem : EntitySystem
 
         ambience.Range = value;
         QueueUpdate(uid, ambience);
-        Dirty(uid, ambience);
+        Dirty(ambience);
     }
 
     protected virtual void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
@@ -43,7 +43,7 @@ public abstract class SharedAmbientSoundSystem : EntitySystem
             return;
 
         ambience.Volume = value;
-        Dirty(uid, ambience);
+        Dirty(ambience);
     }
 
     public virtual void SetSound(EntityUid uid, SoundSpecifier sound, AmbientSoundComponent? ambience = null)
@@ -53,7 +53,7 @@ public abstract class SharedAmbientSoundSystem : EntitySystem
 
         ambience.Sound = sound;
         QueueUpdate(uid, ambience);
-        Dirty(uid, ambience);
+        Dirty(ambience);
     }
 
     private void HandleCompState(EntityUid uid, AmbientSoundComponent component, ref ComponentHandleState args)

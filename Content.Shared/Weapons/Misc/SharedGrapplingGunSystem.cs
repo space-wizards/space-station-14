@@ -9,8 +9,6 @@ using Content.Shared.Projectiles;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -63,13 +61,13 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
             // At least show the visuals.
             component.Projectile = shotUid.Value;
-            Dirty(uid, component);
+            Dirty(component);
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
             visuals.Sprite =
                 new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
             visuals.OffsetA = new Vector2(0f, 0.5f);
             visuals.Target = uid;
-            Dirty(shotUid.Value, visuals);
+            Dirty(visuals);
         }
 
         TryComp<AppearanceComponent>(uid, out var appearance);
@@ -135,7 +133,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             }
 
             component.Projectile = null;
-            Dirty(uid, component);
+            Dirty(component);
         }
     }
 
@@ -147,18 +145,19 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         if (value)
         {
             if (Timing.IsFirstTimePredicted)
-                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity;
+                component.Stream = _audio.PlayPredicted(component.ReelSound, uid, user);
         }
         else
         {
             if (Timing.IsFirstTimePredicted)
             {
-                component.Stream = _audio.Stop(component.Stream);
+                component.Stream?.Stop();
+                component.Stream = null;
             }
         }
 
         component.Reeling = value;
-        Dirty(uid, component);
+        Dirty(component);
     }
 
     public override void Update(float frameTime)
@@ -174,7 +173,8 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 if (Timing.IsFirstTimePredicted)
                 {
                     // Just in case.
-                    grappling.Stream = _audio.Stop(grappling.Stream);
+                    grappling.Stream?.Stop();
+                    grappling.Stream = null;
                 }
 
                 continue;
@@ -200,7 +200,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 _physics.WakeBody(jointComp.Relay.Value);
             }
 
-            Dirty(uid, jointComp);
+            Dirty(jointComp);
 
             if (distance.MaxLength.Equals(distance.MinLength))
             {
@@ -221,7 +221,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         joint.MinLength = 0.35f;
         // Setting velocity directly for mob movement fucks this so need to make them aware of it.
         // joint.Breakpoint = 4000f;
-        Dirty(uid, jointComp);
+        Dirty(jointComp);
     }
 
     [Serializable, NetSerializable]

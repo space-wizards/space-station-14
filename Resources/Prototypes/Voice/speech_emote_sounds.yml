@@ -218,7 +218,7 @@
       collection: Whistles
   params:
     variation: 0.125
-    pitch: 0.75
+    pitchscale: 0.75
 
 - type: emoteSounds
   id: FemaleDwarf
@@ -253,7 +253,7 @@
       collection: Whistles
   params:
     variation: 0.125
-    pitch: 0.75
+    pitchscale: 0.75
 
 - type: emoteSounds
   id: UnisexMoth

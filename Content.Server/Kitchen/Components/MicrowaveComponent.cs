@@ -29,8 +29,7 @@ namespace Content.Server.Kitchen.Components
         [DataField("ItemBreakSound")]
         public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
-        public EntityUid? PlayingStream;
-
+        public IPlayingAudioStream? PlayingStream { get; set; }
         [DataField("loopingSound")]
         public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
         #endregion

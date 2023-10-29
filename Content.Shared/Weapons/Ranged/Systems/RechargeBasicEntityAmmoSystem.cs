@@ -1,7 +1,5 @@
 using Content.Shared.Examine;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;

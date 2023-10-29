@@ -7,7 +7,6 @@ using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
@@ -16,7 +15,6 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedPointLightSystem _lights = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -81,7 +79,8 @@ namespace Content.Server.Light.EntitySystems
             var component = matchstick.Comp;
 
             // Play Sound
-            _audio.PlayPvs(component.IgniteSound, matchstick, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
+            SoundSystem.Play(component.IgniteSound.GetSound(), Filter.Pvs(matchstick),
+                matchstick, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             // Change state
             SetState(matchstick, component, SmokableState.Lit);

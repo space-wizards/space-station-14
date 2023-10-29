@@ -18,7 +18,7 @@ namespace Content.Client.NodeContainer
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IClientResourceCache _resourceCache = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public bool VisEnabled { get; private set; }
 

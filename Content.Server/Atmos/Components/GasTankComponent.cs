@@ -30,8 +30,8 @@ namespace Content.Server.Atmos.Components
 
         // Cancel toggles sounds if we re-toggle again.
 
-        public EntityUid? ConnectStream;
-        public EntityUid? DisconnectStream;
+        public IPlayingAudioStream? ConnectStream;
+        public IPlayingAudioStream? DisconnectStream;
 
         [DataField("air"), ViewVariables(VVAccess.ReadWrite)]
         public GasMixture Air { get; set; } = new();

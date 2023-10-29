@@ -45,7 +45,7 @@ public sealed partial class VehicleComponent : Component
     };
 
     [ViewVariables]
-    public EntityUid? HonkPlayingStream;
+    public IPlayingAudioStream? HonkPlayingStream;
 
     /// Use ambient sound component for the idle sound.
 

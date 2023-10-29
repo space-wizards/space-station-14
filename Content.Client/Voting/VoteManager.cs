@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Voting;
 using Robust.Client;
-using Robust.Client.Audio;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;

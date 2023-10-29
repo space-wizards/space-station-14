@@ -5,16 +5,14 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Plants.Systems
 {
     public sealed class PottedPlantHideSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SecretStashSystem _stashSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -60,7 +58,7 @@ namespace Content.Server.Plants.Systems
             if (!Resolve(uid, ref component))
                 return;
 
-            _audio.PlayPvs(component.RustleSound, uid, AudioParams.Default.WithVariation(0.25f));
+            SoundSystem.Play(component.RustleSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
         }
     }
 }

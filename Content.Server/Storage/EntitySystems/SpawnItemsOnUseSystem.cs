@@ -5,7 +5,6 @@ using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -19,7 +18,6 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly PricingSystem _pricing = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -81,9 +79,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             if (component.Sound != null)
-            {
-                _audio.PlayPvs(component.Sound, uid);
-            }
+                SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid), uid);
 
             component.Uses--;
 
