@@ -3,6 +3,7 @@ using Content.Server.TextScreen.Events;
 using Content.Server.DeviceNetwork.Systems;
 
 // TODO:
+// use receivefrequency ids instead of magic numbers
 // - emergency shuttle recall inverts timer?
 //    i saw this happen once. had to do with removing the activecomponent early
 // - deduplicate signaltimer with a maintainer's blessing
@@ -10,7 +11,10 @@ using Content.Server.DeviceNetwork.Systems;
 
 namespace Content.Server.Shuttles.Systems
 {
-    public sealed partial class ShuttleTimerSystem : EntitySystem
+    /// <summary>
+    /// Controls the wallmounted timers on stations and shuttles displaying e.g. FTL duration, ETA
+    /// </summary>
+    public sealed class ShuttleTimerSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -19,9 +23,15 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleTimerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         }
 
+        /// <summary>
+        /// Determines whether this timer gets updated, and with which time in the payload.
+        /// </summary>
         private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
-            // skip any logic if a packet is broadcasted (again) to all networked timers
+            // currently, all packets are broadcast, and subnetting is implemented by filtering events per-map
+            // a payload with "BroadcastTime" skips any filtering
+            // if i can find a way to neatly subnet the timers per-map,
+            // and pass the frequency to systems, this gets simpler and faster
             if (args.Data.TryGetValue("BroadcastTime", out float broadcast))
             {
                 var text = new TextScreenTimerEvent(TimeSpan.FromSeconds(broadcast));
