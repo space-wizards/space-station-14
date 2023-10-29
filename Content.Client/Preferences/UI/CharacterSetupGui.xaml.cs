@@ -42,7 +42,7 @@ namespace Content.Client.Preferences.UI
 
         public CharacterSetupGui(
             IEntityManager entityManager,
-            IResourceCache resourceCache,
+            IClientResourceCache resourceCache,
             IClientPreferencesManager preferencesManager,
             IPrototypeManager prototypeManager,
             IConfigurationManager configurationManager)

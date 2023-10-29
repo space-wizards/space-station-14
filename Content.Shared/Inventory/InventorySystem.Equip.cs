@@ -11,6 +11,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -23,6 +24,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -206,10 +208,10 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(clothing.EquipSound.GetSound(), filter, target, clothing.EquipSound.Params.WithVolume(-2f));
+            _audio.PlayPredicted(clothing.EquipSound, target, actor);
         }
 
-        inventory.Dirty();
+        Dirty(target, inventory);
 
         _movementSpeed.RefreshMovementSpeedModifiers(target);
 
@@ -393,10 +395,11 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(clothing.UnequipSound.GetSound(), filter, target, clothing.UnequipSound.Params.WithVolume(-2f));
+            _audio.PlayPredicted(clothing.UnequipSound, target, actor);
         }
 
         Dirty(target, inventory);
+
         _movementSpeed.RefreshMovementSpeedModifiers(target);
 
         return true;

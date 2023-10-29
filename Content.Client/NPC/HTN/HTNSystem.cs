@@ -19,7 +19,7 @@ public sealed class HTNSystem : EntitySystem
 
             if (_enableOverlay)
             {
-                overlayManager.AddOverlay(new HTNOverlay(EntityManager, IoCManager.Resolve<IResourceCache>()));
+                overlayManager.AddOverlay(new HTNOverlay(EntityManager, IoCManager.Resolve<IClientResourceCache>()));
                 RaiseNetworkEvent(new RequestHTNMessage()
                 {
                     Enabled = true,
