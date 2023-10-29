@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Anomaly.Effects;
 
 /// <summary>
-/// This component exists for a limited time, and after it expires it modifies the entity, greatly reducing its value and changing its visuals
+/// This component reduces the value of the entity during decay
 /// </summary>
 public sealed class AnomalyCoreSystem : EntitySystem
 {
