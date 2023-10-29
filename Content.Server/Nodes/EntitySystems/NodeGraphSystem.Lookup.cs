@@ -1,157 +1,177 @@
 using Content.Server.Nodes.Components;
 using Robust.Shared.Map.Components;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Nodes.EntitySystems;
 
 public sealed partial class NodeGraphSystem
 {
-    /// <summary>
-    /// Returns an enumerable over all extant graphs of a given type.
-    /// </summary>
-    public IEnumerable<EntityUid> GetGraphsByType(string graphProto)
-    {
-        return _graphsByProto.TryGetValue(graphProto, out var graphs) ? graphs : new();
-    }
+    #region TryGetNode
 
-    /// <summary>
-    /// Gets the proxy node attached to a polynode by a certain key.
-    /// </summary>
-    public bool TryGetNode(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, PolyNodeComponent? poly = null)
+    public bool TryGetNode(Entity<PolyNodeComponent?> host, string? key, out Entity<GraphNodeComponent> node)
     {
-        if (proxyKey is not { } key)
-        {
-            nodeId = polyId;
-            return _nodeQuery.TryGetComponent(nodeId, out node);
-        }
-
-        (nodeId, node) = (EntityUid.Invalid, null);
-        if (!_polyQuery.Resolve(polyId, ref poly))
+        node = (EntityUid.Invalid, default!);
+        if (key is null)
+            node.Owner = host;
+        else if (!_polyQuery.Resolve(host.Owner, ref host.Comp) || !host.Comp.ProxyNodes.TryGetValue(key, out node.Owner))
             return false;
 
-        return poly.ProxyNodes.TryGetValue(key, out nodeId) && _nodeQuery.TryGetComponent(nodeId, out node);
+        return _nodeQuery.TryGetComponent(node.Owner, out node.Comp!);
     }
 
-    /// <inheritdoc cref="TryGetNode(EntityUid, string?, EntityUid, GraphNodeComponent, PolyNodeComponent)" />
-    /// <remarks>Variant that check whether the returned node has a specific component.</remarks>
-    public bool TryGetNode<T1>(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, [MaybeNullWhen(false)] out T1 comp1, PolyNodeComponent? poly = null)
-        where T1 : Component
+    public bool TryGetNode<T>(Entity<PolyNodeComponent?> host, string? key, out Entity<GraphNodeComponent, T> node) where T : IComponent
     {
-        comp1 = null;
-        return TryGetNode(polyId, proxyKey, out nodeId, out node, poly) && TryComp<T1>(nodeId, out comp1);
-    }
-
-    /// <inheritdoc cref="TryGetNode(EntityUid, string?, EntityUid, GraphNodeComponent, T1, PolyNodeComponent)" />
-    public bool TryGetNode<T1, T2>(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, [MaybeNullWhen(false)] out T1 comp1, [MaybeNullWhen(false)] out T2 comp2, PolyNodeComponent? poly = null)
-        where T1 : Component
-        where T2 : Component
-    {
-        comp2 = null;
-        return TryGetNode(polyId, proxyKey, out nodeId, out node, out comp1, poly) && TryComp<T2>(nodeId, out comp2);
-    }
-
-    /// <inheritdoc cref="TryGetNode(EntityUid, string?, EntityUid, GraphNodeComponent, T1, T2, PolyNodeComponent)" />
-    public bool TryGetNode<T1, T2, T3>(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, [MaybeNullWhen(false)] out T1 comp1, [MaybeNullWhen(false)] out T2 comp2, [MaybeNullWhen(false)] out T3 comp3, PolyNodeComponent? poly = null)
-        where T1 : Component
-        where T2 : Component
-        where T3 : Component
-    {
-        comp3 = null;
-        return TryGetNode(polyId, proxyKey, out nodeId, out node, out comp1, out comp2, poly) && TryComp<T3>(nodeId, out comp3);
-    }
-
-    /// <inheritdoc cref="TryGetNode(EntityUid, string?, EntityUid, GraphNodeComponent, T1, T2, T3, PolyNodeComponent)" />
-    public bool TryGetNode<T1, T2, T3, T4>(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, [MaybeNullWhen(false)] out T1 comp1, [MaybeNullWhen(false)] out T2 comp2, [MaybeNullWhen(false)] out T3 comp3, [MaybeNullWhen(false)] out T4 comp4, PolyNodeComponent? poly = null)
-        where T1 : Component
-        where T2 : Component
-        where T3 : Component
-        where T4 : Component
-    {
-        comp4 = null;
-        return TryGetNode(polyId, proxyKey, out nodeId, out node, out comp1, out comp2, out comp3, poly) && TryComp<T4>(nodeId, out comp4);
-    }
-
-    /// <summary>Enumerates all of the nodes associated with an entity.</summary>
-    public IEnumerable<(EntityUid NodeId, GraphNodeComponent Node)> EnumerateNodes(EntityUid nodeOrPolyId, GraphNodeComponent? node = null, PolyNodeComponent? poly = null)
-    {
-        if (_nodeQuery.Resolve(nodeOrPolyId, ref node, logMissing: false))
-            yield return (nodeOrPolyId, node);
-
-        if (_polyQuery.Resolve(nodeOrPolyId, ref poly, logMissing: false))
+        if (!TryGetNode(host, key, out var tmp))
         {
-            foreach (var proxyId in poly.ProxyNodes.Values)
-            {
-                if (proxyId == nodeOrPolyId)
-                    continue; // Already handled above.
-
-                if (_nodeQuery.TryGetComponent(proxyId, out var proxyNode))
-                    yield return (proxyId, proxyNode);
-            }
+            node = (tmp, tmp.Comp, default!);
+            return false;
         }
+
+        node = (tmp.Owner, tmp.Comp, default!);
+        return TryComp(node.Owner, out node.Comp2!);
     }
 
-    /// <summary>Enumerates all of the graphs associated with an entity.</summary>
-    public IEnumerable<(EntityUid GraphId, NodeGraphComponent Graph)> EnumerateGraphs(EntityUid nodeOrPolyId, GraphNodeComponent? node = null, PolyNodeComponent? poly = null)
+    public bool TryGetNode<T1, T2>(Entity<PolyNodeComponent?> host, string? key, out Entity<GraphNodeComponent, T1, T2> node)
+        where T1 : IComponent
+        where T2 : IComponent
     {
-        foreach (var (_, enumNode) in EnumerateNodes(nodeOrPolyId, node, poly))
+        if (!TryGetNode<T1>(host, key, out var tmp))
         {
-            if (enumNode.GraphId is { } graphId && _graphQuery.TryGetComponent(graphId, out var graph))
-                yield return (graphId, graph);
+            node = (tmp, tmp.Comp1, tmp.Comp2, default!);
+            return false;
         }
+
+        node = (tmp, tmp.Comp1, tmp.Comp2, default!);
+        return TryComp(node.Owner, out node.Comp3!);
     }
+
+    public bool TryGetNode<T1, T2, T3>(Entity<PolyNodeComponent?> host, string? key, out Entity<GraphNodeComponent, T1, T2, T3> node)
+        where T1 : IComponent
+        where T2 : IComponent
+        where T3 : IComponent
+    {
+        if (!TryGetNode<T1, T2>(host, key, out var tmp))
+        {
+            node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, default!);
+            return false;
+        }
+
+        node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, default!);
+        return TryComp(node.Owner, out node.Comp4!);
+    }
+
+    public bool TryGetNode<T1, T2, T3, T4>(Entity<PolyNodeComponent?> host, string? key, out Entity<GraphNodeComponent, T1, T2, T3, T4> node)
+        where T1 : IComponent
+        where T2 : IComponent
+        where T3 : IComponent
+        where T4 : IComponent
+    {
+        if (!TryGetNode<T1, T2, T3>(host, key, out var tmp))
+        {
+            node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, tmp.Comp4, default!);
+            return false;
+        }
+
+        node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, tmp.Comp4, default!);
+        return TryComp(node.Owner, out node.Comp5!);
+    }
+
+    public bool TryGetNode<T1, T2, T3, T4, T5>(Entity<PolyNodeComponent?> host, string? key, out Entity<GraphNodeComponent, T1, T2, T3, T4, T5> node)
+        where T1 : IComponent
+        where T2 : IComponent
+        where T3 : IComponent
+        where T4 : IComponent
+        where T5 : IComponent
+    {
+        if (!TryGetNode<T1, T2, T3, T4>(host, key, out var tmp))
+        {
+            node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, tmp.Comp4, tmp.Comp5, default!);
+            return false;
+        }
+
+        node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, tmp.Comp4, tmp.Comp5, default!);
+        return TryComp(node.Owner, out node.Comp6!);
+    }
+
+    public bool TryGetNode<T1, T2, T3, T4, T5, T6>(Entity<PolyNodeComponent?> host, string? key, out Entity<GraphNodeComponent, T1, T2, T3, T4, T5, T6> node)
+        where T1 : IComponent
+        where T2 : IComponent
+        where T3 : IComponent
+        where T4 : IComponent
+        where T5 : IComponent
+        where T6 : IComponent
+    {
+        if (!TryGetNode<T1, T2, T3, T4, T5>(host, key, out var tmp))
+        {
+            node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, tmp.Comp4, tmp.Comp5, tmp.Comp6, default!);
+            return false;
+        }
+
+        node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, tmp.Comp4, tmp.Comp5, tmp.Comp6, default!);
+        return TryComp(node.Owner, out node.Comp7!);
+    }
+
+    public bool TryGetNode<T1, T2, T3, T4, T5, T6, T7>(Entity<PolyNodeComponent?> host, string? key, out Entity<GraphNodeComponent, T1, T2, T3, T4, T5, T6, T7> node)
+        where T1 : IComponent
+        where T2 : IComponent
+        where T3 : IComponent
+        where T4 : IComponent
+        where T5 : IComponent
+        where T6 : IComponent
+        where T7 : IComponent
+    {
+        if (!TryGetNode<T1, T2, T3, T4, T5, T6>(host, key, out var tmp))
+        {
+            node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, tmp.Comp4, tmp.Comp5, tmp.Comp6, tmp.Comp7, default!);
+            return false;
+        }
+
+        node = (tmp, tmp.Comp1, tmp.Comp2, tmp.Comp3, tmp.Comp4, tmp.Comp5, tmp.Comp6, tmp.Comp7, default!);
+        return TryComp(node.Owner, out node.Comp8!);
+    }
+
+    #endregion TryGetNode
 
     /// <summary>
     /// Gets the entity acting as a host for a given node.
     /// If the node is a proxy node this is the polynode it is attached to, otherwise it's just itself.
     /// </summary>
-    public EntityUid GetNodeHost(EntityUid nodeId, GraphNodeComponent? node = null, ProxyNodeComponent? proxy = null)
+    public EntityUid GetNodeHost(Entity<GraphNodeComponent?, ProxyNodeComponent?> node)
     {
-        if (!_nodeQuery.Resolve(nodeId, ref node))
+        if (!_nodeQuery.Resolve(node.Owner, ref node.Comp1))
             return EntityUid.Invalid;
 
-        if (_proxyQuery.Resolve(nodeId, ref proxy, logMissing: false) && proxy.ProxyFor is { } proxyFor)
+        if (_proxyQuery.Resolve(node.Owner, ref node.Comp2, logMissing: false) && node.Comp2.ProxyFor is { } proxyFor)
             return proxyFor;
 
-        return nodeId;
+        return node.Owner;
     }
 
-
-    /// <summary>
-    /// Finds the uppermost graph of a tree of node graphs.
-    /// </summary>
-    public EntityUid GetRootGraph(EntityUid uid, GraphNodeComponent? node = null)
+    /// <summary>Enumerates all of the nodes associated with an entity.</summary>
+    public IEnumerable<Entity<GraphNodeComponent>> EnumerateNodes(Entity<GraphNodeComponent?, PolyNodeComponent?> host)
     {
-        while (_nodeQuery.Resolve(uid, ref node))
-        {
-            if (node.GraphId is not { } tmp)
-                break;
+        if (_nodeQuery.Resolve(host.Owner, ref host.Comp1, logMissing: false))
+            yield return (host.Owner, host.Comp1);
 
-            uid = tmp;
+        if (_polyQuery.Resolve(host.Owner, ref host.Comp2, logMissing: false))
+        {
+            foreach (var proxyId in host.Comp2.ProxyNodes.Values)
+            {
+                if (proxyId == host.Owner)
+                    continue; // Already handled above.
+
+                if (_nodeQuery.TryGetComponent(proxyId, out var proxy))
+                    yield return (proxyId, proxy);
+            }
         }
-
-        return _graphQuery.HasComponent(uid) ? uid : EntityUid.Invalid;
     }
 
-    /// <summary>
-    /// Enumerates all of the non-graph descendant nodes of a graph.
-    /// </summary>
-    public IEnumerable<EntityUid> EnumerateLeafNodes(EntityUid graphId, NodeGraphComponent? graph = null)
+    /// <summary>Enumerates all of the graphs associated with an entity.</summary>
+    public IEnumerable<Entity<NodeGraphComponent>> EnumerateGraphs(Entity<GraphNodeComponent?, PolyNodeComponent?> host)
     {
-        if (!_graphQuery.Resolve(graphId, ref graph))
-            yield break;
-
-        foreach (var nodeId in graph.Nodes)
+        foreach (var node in EnumerateNodes(host))
         {
-            if (!_graphQuery.TryGetComponent(nodeId, out var nodeGraph))
-            {
-                yield return nodeId;
-                continue;
-            }
-
-            foreach (var leafId in EnumerateLeafNodes(nodeId, nodeGraph))
-            {
-                yield return leafId;
-            }
+            if (_graphQuery.TryGetComponent(node.Comp.GraphId, out var graph))
+                yield return (node.Comp.GraphId.Value, graph);
         }
     }
 
@@ -159,36 +179,40 @@ public sealed partial class NodeGraphSystem
     /// <summary>
     /// Enumerates all of the nodes anchored to a tile.
     /// </summary>
-    public IEnumerable<EntityUid> GetAnchoredNodesOnTile(MapGridComponent grid, Vector2i tileIndices)
+    public IEnumerable<Entity<GraphNodeComponent>> GetAnchoredNodesOnTile(Entity<MapGridComponent> grid, Vector2i tileIndices)
     {
-        foreach (var entityUid in grid.GetAnchoredEntities(tileIndices))
+        foreach (var entityUid in _mapSys.GetAnchoredEntities(grid.Owner, grid.Comp, tileIndices))
         {
-            foreach (var (nodeId, _) in EnumerateNodes(entityUid))
-                yield return nodeId;
+            foreach (var node in EnumerateNodes(entityUid))
+                yield return node;
         }
     }
 
     /// <summary>
-    /// Enumerates all of the nodes anchored to a tile.
+    /// Enumerates all of the nodes anchored to a tile in a direction.
     /// </summary>
-    public IEnumerable<(EntityUid, Direction)> GetAnchoredNodesInDirs(MapGridComponent grid, Vector2i tileIndices, Direction[] dirs)
+    public IEnumerable<Entity<GraphNodeComponent>> GetAnchoredNodesInDir(Entity<MapGridComponent> grid, Vector2i tileIndices, Direction dir)
+    {
+        foreach (var node in GetAnchoredNodesOnTile(grid, (dir == Direction.Invalid) ? tileIndices : tileIndices.Offset(dir)))
+            yield return node;
+    }
+
+    /// <summary>
+    /// Enumerates all of the nodes anchored to tiles in directions.
+    /// </summary>
+    public IEnumerable<(Entity<GraphNodeComponent>, Direction)> GetAnchoredNodesInDirs<T>(Entity<MapGridComponent> grid, Vector2i tileIndices, T dirs)
+        where T : IEnumerable<Direction>
     {
         foreach (var dir in dirs)
         {
-            if (dir == Direction.Invalid)
-            {
-                foreach (var nodeId in GetAnchoredNodesOnTile(grid, tileIndices))
-                    yield return (nodeId, dir);
-
-                continue;
-            }
-
-            foreach (var nodeId in GetAnchoredNodesOnTile(grid, tileIndices.Offset(dir)))
-                yield return (nodeId, dir);
+            foreach (var node in GetAnchoredNodesInDir(grid, tileIndices, dir))
+                yield return (node, dir);
         }
     }
 
     /// <inheritdoc cref="GetAnchoredNodesInDirs" />
-    public IEnumerable<(EntityUid, Direction)> GetAnchoredNodesInDir(MapGridComponent grid, Vector2i tileIndices, params Direction[] dir)
-        => GetAnchoredNodesInDirs(grid, tileIndices, dir);
+    public IEnumerable<(Entity<GraphNodeComponent>, Direction)> GetAnchoredNodesInDirs(Entity<MapGridComponent> grid, Vector2i tileIndices, params Direction[] dirs)
+    {
+        return GetAnchoredNodesInDirs<Direction[]>(grid, tileIndices, dirs);
+    }
 }

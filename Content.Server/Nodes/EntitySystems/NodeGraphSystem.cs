@@ -1,6 +1,7 @@
 using Content.Server.Nodes.Components;
 using Content.Server.Nodes.Events;
 using Content.Shared.Examine;
+using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.GameStates;
@@ -15,6 +16,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly IPlayerManager _playerMan = default!;
+    [Dependency] private readonly MapSystem _mapSys = default!;
     private EntityQuery<GraphNodeComponent> _nodeQuery = default!;
     private EntityQuery<NodeGraphComponent> _graphQuery = default!;
     private EntityQuery<PolyNodeComponent> _polyQuery = default!;
@@ -43,7 +45,6 @@ public sealed partial class NodeGraphSystem : EntitySystem
 
 
         SubscribeLocalEvent<GraphNodeComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<NodeGraphComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<PolyNodeComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<GraphNodeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PolyNodeComponent, MapInitEvent>(OnMapInit);
@@ -54,15 +55,15 @@ public sealed partial class NodeGraphSystem : EntitySystem
         SubscribeLocalEvent<ProxyNodeComponent, ComponentShutdown>(OnComponentShutdown);
 
         // Proxy/Poly node relays:
-        SubscribeLocalEvent<PolyNodeComponent, AnchorStateChangedEvent>(RelayPolyNodeRefEvent<AnchorStateChangedEvent>);
-        SubscribeLocalEvent<PolyNodeComponent, ReAnchorEvent>(RelayPolyNodeRefEvent<ReAnchorEvent>);
-        SubscribeLocalEvent<PolyNodeComponent, MoveEvent>(RelayPolyNodeRefEvent<MoveEvent>);
+        SubscribeLocalEvent<PolyNodeComponent, AnchorStateChangedEvent>(RelayPolyNodeRefEvent);
+        SubscribeLocalEvent<PolyNodeComponent, ReAnchorEvent>(RelayPolyNodeRefEvent);
+        SubscribeLocalEvent<PolyNodeComponent, MoveEvent>(RelayPolyNodeRefEvent);
         SubscribeLocalEvent<PolyNodeComponent, ExaminedEvent>(RelayPolyNodeValEvent<ExaminedEvent>);
-        SubscribeLocalEvent<ProxyNodeComponent, EdgeAddedEvent>(RelayProxyNodeRefEvent<EdgeAddedEvent>);
-        SubscribeLocalEvent<ProxyNodeComponent, EdgeRemovedEvent>(RelayProxyNodeRefEvent<EdgeRemovedEvent>);
-        SubscribeLocalEvent<ProxyNodeComponent, EdgeChangedEvent>(RelayProxyNodeRefEvent<EdgeChangedEvent>);
-        SubscribeLocalEvent<ProxyNodeComponent, AddedToGraphEvent>(RelayProxyNodeRefEvent<AddedToGraphEvent>);
-        SubscribeLocalEvent<ProxyNodeComponent, RemovedFromGraphEvent>(RelayProxyNodeRefEvent<RemovedFromGraphEvent>);
+        SubscribeLocalEvent<ProxyNodeComponent, EdgeAddedEvent>(RelayProxyNodeRefEvent);
+        SubscribeLocalEvent<ProxyNodeComponent, EdgeRemovedEvent>(RelayProxyNodeRefEvent);
+        SubscribeLocalEvent<ProxyNodeComponent, EdgeChangedEvent>(RelayProxyNodeRefEvent);
+        SubscribeLocalEvent<ProxyNodeComponent, AddedToGraphEvent>(RelayProxyNodeRefEvent);
+        SubscribeLocalEvent<ProxyNodeComponent, RemovedFromGraphEvent>(RelayProxyNodeRefEvent);
 
         // Debug info dispatching:
         SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
@@ -85,7 +86,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
     {
         const int maxUpdateIters = 100;
 
-        var curTime = _gameTiming.CurTime;
+        var curTick = _gameTiming.CurTick;
         var iter = 0;
         bool loop;
         do
@@ -97,7 +98,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
             }
             loop = false;
 
-            var updateIter = new UpdateIter(curTime, iter);
+            var updateIter = new UpdateIter(curTick, iter);
 
 
             // Update the edges on any nodes that need it.
@@ -105,7 +106,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
             {
                 while (_queuedEdgeUpdates.FirstOrNull() is { } nodeId)
                 {
-                    UpdateEdges(nodeId, _nodeQuery.GetComponent(nodeId));
+                    UpdateEdges((nodeId, _nodeQuery.GetComponent(nodeId)));
                 }
             }
 
@@ -116,7 +117,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
 
                 while (_queuedSplitGraphs.FirstOrNull() is { } graphId)
                 {
-                    ResolveSplits(graphId, updateIter, _graphQuery.GetComponent(graphId));
+                    ResolveSplits((graphId, _graphQuery.GetComponent(graphId)), updateIter);
                 }
             }
 
@@ -127,7 +128,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
 
                 while (_queuedMergeGraphs.FirstOrNull() is { } graphId)
                 {
-                    ResolveMerges(graphId, updateIter, _graphQuery.GetComponent(graphId));
+                    ResolveMerges((graphId, _graphQuery.GetComponent(graphId)), updateIter);
                 }
             }
 

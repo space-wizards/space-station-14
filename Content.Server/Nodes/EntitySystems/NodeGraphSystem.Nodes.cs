@@ -10,59 +10,73 @@ public sealed partial class NodeGraphSystem
     /// <summary>
     /// Marks a graph node as the location of a potential split in the graph.
     /// </summary>
-    public void MarkSplit(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
+    public void MarkSplit(Entity<GraphNodeComponent> node, NodeGraphComponent? graph = null)
     {
-        if ((node.Flags & NodeFlags.Split) != NodeFlags.None)
+        if ((node.Comp.Flags & NodeFlags.Split) != NodeFlags.None)
             return;
 
-        node.Flags |= NodeFlags.Split;
+        node.Comp.Flags |= NodeFlags.Split;
 
-        if (node.GraphId is { } graphId && _graphQuery.Resolve(graphId, ref graph, logMissing: false))
-            QueueSplit(graphId, nodeId, graph);
+        if (node.Comp.GraphId is not { } graphId)
+            return;
+
+        if (_graphQuery.Resolve(graphId, ref graph))
+            QueueSplit((graphId, graph), node);
     }
 
     /// <summary>
     /// Marks a graph node as the location of a potential merge between two graphs.
     /// </summary>
-    public void MarkMerge(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
+    public void MarkMerge(Entity<GraphNodeComponent> node, NodeGraphComponent? graph = null)
     {
-        if ((node.Flags & NodeFlags.Merge) != NodeFlags.None)
+        if ((node.Comp.Flags & NodeFlags.Merge) != NodeFlags.None)
             return;
 
-        node.Flags |= NodeFlags.Merge;
+        node.Comp.Flags |= NodeFlags.Merge;
 
-        if (node.GraphId is { } graphId && _graphQuery.Resolve(graphId, ref graph, logMissing: false))
-            QueueMerge(graphId, nodeId, graph);
+        if (node.Comp.GraphId is not { } graphId)
+            return;
+
+        if (_graphQuery.Resolve(graphId, ref graph))
+            QueueMerge((graphId, graph), node);
     }
 
     /// <summary>
     /// Clears a graph node as the location of a potential split in the graph.
     /// </summary>
-    public void ClearSplit(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
+    public void ClearSplit(Entity<GraphNodeComponent> node, NodeGraphComponent? graph = null)
     {
-        if ((node.Flags & NodeFlags.Split) == NodeFlags.None)
+        if ((node.Comp.Flags & NodeFlags.Split) == NodeFlags.None)
             return;
 
-        node.Flags &= ~NodeFlags.Split;
+        node.Comp.Flags &= ~NodeFlags.Split;
 
-        if (node.GraphId is { } graphId && _graphQuery.Resolve(graphId, ref graph, logMissing: false))
-            CancelSplit(graphId, nodeId, graph);
+        if (node.Comp.GraphId is not { } graphId)
+            return;
+
+        if (_graphQuery.Resolve(graphId, ref graph))
+            CancelSplit((graphId, graph), node);
     }
 
     /// <summary>
     /// Clears a graph node as the location of a potential merge between two or more graphs.
     /// </summary>
-    public void ClearMerge(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
+    public void ClearMerge(Entity<GraphNodeComponent> node, NodeGraphComponent? graph = null)
     {
-        if ((node.Flags & NodeFlags.Merge) == NodeFlags.None)
+        if ((node.Comp.Flags & NodeFlags.Merge) == NodeFlags.None)
             return;
 
-        node.Flags &= ~NodeFlags.Merge;
+        node.Comp.Flags &= ~NodeFlags.Merge;
 
-        if (node.GraphId is { } graphId && _graphQuery.Resolve(graphId, ref graph, logMissing: false))
-            CancelMerge(graphId, nodeId, graph);
+        if (node.Comp.GraphId is not { } graphId)
+            return;
+
+        if (_graphQuery.Resolve(graphId, ref graph))
+            CancelMerge((graphId, graph), node);
     }
 
+
+    #region Event Handlers
 
     /// <summary>
     /// Syncs up the cached number of mergeable edges the node has with its initial edges.
@@ -85,11 +99,11 @@ public sealed partial class NodeGraphSystem
         if ((comp.Flags & NodeFlags.Init) == NodeFlags.None)
         {
             comp.Flags |= NodeFlags.Init;
-            UpdateEdges(uid, comp);
+            UpdateEdges((uid, comp));
         }
 
         if (comp.GraphId is not { })
-            FloodSpawnGraph(uid, comp);
+            FloodSpawnGraph((uid, comp));
     }
 
     /// <summary>
@@ -106,10 +120,12 @@ public sealed partial class NodeGraphSystem
         while (comp.Edges.Count > 0)
         {
             var (edgeId, edgeFlags) = comp.Edges[^1];
-            RemoveEdge(uid, edgeId, ^1, edgeFlags, node: comp, edge: _nodeQuery.GetComponent(edgeId));
+            RemoveEdge((uid, comp), (edgeId, _nodeQuery.GetComponent(edgeId)), ^1, edgeFlags);
         }
 
         if (comp.GraphId is { } graphId)
-            RemoveNode(graphId, uid, graph: _graphQuery.GetComponent(graphId), node: comp);
+            RemoveNode((graphId, _graphQuery.GetComponent(graphId)), (uid, comp));
     }
+
+    #endregion Event Handlers
 }

@@ -11,52 +11,55 @@ public sealed partial class NodeGraphSystem
     /// <summary>
     /// Attaches a given node to a polynode as a proxy node under a given key.
     /// </summary>
-    private void AttachProxy(EntityUid polyId, string proxyKey, EntityUid proxyId, PolyNodeComponent? poly = null, ProxyNodeComponent? proxy = null)
+    private void AttachProxy(Entity<PolyNodeComponent?> host, Entity<ProxyNodeComponent?> proxy, string proxyKey)
     {
-        if (!_polyQuery.Resolve(polyId, ref poly))
+        if (!_polyQuery.Resolve(host.Owner, ref host.Comp))
             return;
 
-        if (poly.ProxyNodes.ContainsKey(proxyKey))
+        if (host.Comp.ProxyNodes.ContainsKey(proxyKey))
             return;
 
-        if (!_proxyQuery.Resolve(proxyId, ref proxy))
-            proxy = AddComp<ProxyNodeComponent>(proxyId);
+        if (!_proxyQuery.Resolve(proxy.Owner, ref proxy.Comp, logMissing: false))
+            proxy.Comp = AddComp<ProxyNodeComponent>(proxy);
 
-        proxy.ProxyFor = polyId;
-        proxy.ProxyKey = proxyKey;
-        poly.ProxyNodes.Add(proxyKey, proxyId);
-        Dirty(proxyId, proxy);
-        Dirty(polyId, poly);
+        host.Comp.ProxyNodes.Add(proxyKey, proxy);
+        Dirty(host.Owner, host.Comp);
+
+        proxy.Comp.ProxyFor = host.Owner;
+        proxy.Comp.ProxyKey = proxyKey;
+        Dirty(proxy.Owner, proxy.Comp);
     }
 
     /// <summary>
     /// Detaches a proxy node from a polynode.
     /// </summary>
-    private void DetachProxy(EntityUid polyId, string proxyKey, PolyNodeComponent? poly = null)
+    private void DetachProxy(Entity<PolyNodeComponent?> host, string proxyKey)
     {
-        if (!_polyQuery.Resolve(polyId, ref poly))
+        if (!_polyQuery.Resolve(host.Owner, ref host.Comp))
             return;
 
-        if (!poly.ProxyNodes.Remove(proxyKey, out var proxyId))
+        if (!host.Comp.ProxyNodes.Remove(proxyKey, out var proxyId))
             return;
 
-        Dirty(polyId, poly);
+        Dirty(host.Owner, host.Comp);
+
         if (!_proxyQuery.TryGetComponent(proxyId, out var proxy))
             return;
 
         proxy.ProxyFor = null;
+        proxy.ProxyKey = default!;
         Dirty(proxyId, proxy);
     }
 
     /// <summary>
     /// Creates a new proxy node for a polynode from scratch.
     /// </summary>
-    private void SpawnProxyNode(EntityUid polyId, string proxyKey, string? proxyPrototype, PolyNodeComponent poly)
+    private void SpawnProxyNode(Entity<PolyNodeComponent> host, string proxyKey, string? proxyPrototype)
     {
-        var proxyId = EntityManager.CreateEntityUninitialized(proxyPrototype, new EntityCoordinates(polyId, Vector2.Zero));
+        var proxyId = EntityManager.CreateEntityUninitialized(proxyPrototype, new EntityCoordinates(host, Vector2.Zero));
         var proxy = EnsureComp<ProxyNodeComponent>(proxyId);
 
-        AttachProxy(polyId, proxyKey, proxyId, poly, proxy);
+        AttachProxy((host.Owner, host.Comp), (proxyId, proxy), proxyKey);
 
         EntityManager.InitializeAndStartEntity(proxyId);
     }
@@ -68,7 +71,7 @@ public sealed partial class NodeGraphSystem
     private void OnComponentStartup(EntityUid uid, PolyNodeComponent comp, ComponentStartup args)
     {
         if (comp.ProxySelf is { } selfKey)
-            AttachProxy(uid, selfKey, uid, comp);
+            AttachProxy((uid, comp), uid, selfKey);
 
         if (comp.ProxyPrototypes is null)
             return;
@@ -78,7 +81,7 @@ public sealed partial class NodeGraphSystem
             if (comp.ProxyNodes.ContainsKey(proxyKey))
                 continue;
 
-            SpawnProxyNode(uid, proxyKey, proxyProto, comp);
+            SpawnProxyNode((uid, comp), proxyKey, proxyProto);
         }
     }
 
@@ -99,7 +102,7 @@ public sealed partial class NodeGraphSystem
         {
             var (proxyKey, proxyId) = proxy;
 
-            DetachProxy(uid, proxyKey, comp);
+            DetachProxy((uid, comp), proxyKey);
 
             if (proxyId != uid)
                 QueueDel(proxyId);
@@ -115,7 +118,7 @@ public sealed partial class NodeGraphSystem
             return;
 
         if (_polyQuery.TryGetComponent(polyId, out var poly))
-            DetachProxy(polyId, comp.ProxyKey!, poly);
+            DetachProxy((polyId, poly), comp.ProxyKey!);
     }
 
 
@@ -126,7 +129,7 @@ public sealed partial class NodeGraphSystem
         if (comp.ProxyFor is not { } proxyFor || proxyFor == uid)
             return;
 
-        var hostEv = new ProxyNodeRelayEvent<TEvent>(uid, args, comp);
+        var hostEv = new ProxyNodeRelayEvent<TEvent>((uid, comp), args);
         RaiseLocalEvent(proxyFor, ref hostEv);
     }
 
@@ -137,7 +140,7 @@ public sealed partial class NodeGraphSystem
         if (comp.ProxyFor is not { } proxyFor || proxyFor == uid)
             return;
 
-        var hostEv = new ProxyNodeRelayEvent<TEvent>(uid, args, comp);
+        var hostEv = new ProxyNodeRelayEvent<TEvent>((uid, comp), args);
         RaiseLocalEvent(proxyFor, ref hostEv);
         args = hostEv.Event;
     }
@@ -149,7 +152,7 @@ public sealed partial class NodeGraphSystem
         if (comp.ProxyNodes.Count <= 0)
             return;
 
-        var proxyEv = new PolyNodeRelayEvent<TEvent>(uid, args, comp);
+        var proxyEv = new PolyNodeRelayEvent<TEvent>((uid, comp), args);
         foreach (var proxyId in comp.ProxyNodes.Values)
         {
             if (proxyId == uid)
@@ -166,7 +169,7 @@ public sealed partial class NodeGraphSystem
         if (comp.ProxyNodes.Count <= 0)
             return;
 
-        var proxyEv = new PolyNodeRelayEvent<TEvent>(uid, args, comp);
+        var proxyEv = new PolyNodeRelayEvent<TEvent>((uid, comp), args);
         foreach (var proxyId in comp.ProxyNodes.Values)
         {
             if (proxyId == uid)

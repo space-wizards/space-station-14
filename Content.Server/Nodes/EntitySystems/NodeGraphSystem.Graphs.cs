@@ -13,7 +13,7 @@ public sealed partial class NodeGraphSystem
     /// <remarks>
     /// Exists entirely so that graphs may be easily pooled in the future to cut down on entity alloc/deallocs.
     /// </remarks>
-    private (EntityUid GraphId, NodeGraphComponent Graph) SpawnGraph(string graphProto)
+    private Entity<NodeGraphComponent> SpawnGraph(string graphProto)
     {
         var graphId = EntityManager.CreateEntityUninitialized(graphProto);
 
@@ -21,6 +21,7 @@ public sealed partial class NodeGraphSystem
         graph.GraphProto = graphProto;
 
         EntityManager.InitializeEntity(graphId);
+        EntityManager.StartEntity(graphId);
         // Startup occurrs after all nodes have been loaded.
         return (graphId, graph);
     }
@@ -31,25 +32,21 @@ public sealed partial class NodeGraphSystem
     /// <remarks>
     /// Exists entirely so that graphs may be easily pooled in the future to cut down on entity alloc/deallocs.
     /// </remarks>
-    private void DelGraph(EntityUid graphId, NodeGraphComponent _)
+    private void DelGraph(Entity<NodeGraphComponent> graph)
     {
-        QueueDel(graphId);
+        QueueDel(graph);
     }
 
     /// <summary>
     /// Floodfills connected, uninitialized nodes with a new graph.
     /// </summary>
-    private void FloodSpawnGraph(EntityUid seedId, GraphNodeComponent seed)
+    private void FloodSpawnGraph(Entity<GraphNodeComponent> seed)
     {
-        var graphProto = seed.GraphProto;
-        EntityUid? graphId = null;
-        NodeGraphComponent? graph = null;
+        var graphProto = seed.Comp.GraphProto;
+        Entity<NodeGraphComponent>? graph = null;
 
-        seed.Flags |= NodeFlags.Init;
-        var nodes = new List<(EntityUid NodeId, GraphNodeComponent Nodes)>()
-        {
-            (seedId, seed),
-        };
+        seed.Comp.Flags |= NodeFlags.Init;
+        var nodes = new List<Entity<GraphNodeComponent>>() { seed, };
         for (var i = 0; i < nodes.Count; ++i)
         {
             var (_, node) = nodes[i];
@@ -66,18 +63,18 @@ public sealed partial class NodeGraphSystem
 
                 // Update node edges as necessary so the floodfill actually propagates past the initial node:
                 if ((edge.Flags & NodeFlags.Init) == NodeFlags.None)
-                    UpdateEdges(edgeId, edge);
+                    UpdateEdges((edgeId, edge));
 
                 // We have encountered a mergeable edge leading to some compatible graph:
                 if (edge.GraphId is { } edgeGraphId)
                 {
-                    if (edgeGraphId == graphId)
+                    if (edgeGraphId == graph?.Owner)
                         continue; // Tis the graph we are using to floodfill, don't bother propagating into it b/c we'd just add it to its own graph.
 
                     // Floodfill using largest adjacent extant graph if possible to minimize node handoffs. 
                     var edgeGraph = _graphQuery.GetComponent(edgeGraphId);
-                    if (graph is null || graph.Nodes.Count < edgeGraph.Nodes.Count)
-                        (graphId, graph) = (edgeGraphId, edgeGraph);
+                    if (graph is null || graph.Value.Comp.Nodes.Count < edgeGraph.Nodes.Count)
+                        graph = (edgeGraphId, edgeGraph);
                     continue;
                 }
 
@@ -91,142 +88,134 @@ public sealed partial class NodeGraphSystem
         }
 
         // If we didn't find an extant graph to extend make a new one.
-        if (graphId is null || graph is null)
-            (graphId, graph) = SpawnGraph(graphProto);
+        graph ??= SpawnGraph(graphProto);
 
         // Add all connected, compatible nodes into the new graph (at least 1 due to seed).
-        foreach (var (nodeId, node) in nodes)
+        foreach (var node in nodes)
         {
-            AddNode(graphId.Value, nodeId, graph: graph, node: node);
+            AddNode(graph.Value, node);
         }
 
-        EntityManager.StartEntity(graphId.Value);
+        EntityManager.StartEntity(graph.Value);
     }
 
 
     /// <summary>
     /// Adds a node to a graph.
     /// </summary>
-    private void AddNode(EntityUid graphId, EntityUid nodeId, NodeGraphComponent? graph = null, GraphNodeComponent? node = null)
+    private void AddNode(Entity<NodeGraphComponent> graph, Entity<GraphNodeComponent> node)
     {
-        if (!_graphQuery.Resolve(graphId, ref graph) || !_nodeQuery.Resolve(nodeId, ref node))
-            return;
+        DebugTools.Assert(graph.Comp.GraphProto == node.Comp.GraphProto, $"Attempted to add {ToPrettyString(node)} (wants {node.Comp.GraphProto}) to incompatible graph {ToPrettyString(graph)} (is {graph.Comp.GraphProto}).");
 
-        DebugTools.Assert(graph.GraphProto == node.GraphProto, $"Attempted to add {ToPrettyString(nodeId)} (wants {node.GraphProto}) to incompatible graph {ToPrettyString(graphId)} (is {graph.GraphProto}).");
-
-        (EntityUid Uid, NodeGraphComponent Comp)? oldGraph = null;
-        if (node.GraphId is { } oldGraphId)
+        Entity<NodeGraphComponent>? oldGraph = null;
+        if (node.Comp.GraphId is { } oldGraphId)
         {
-            if (oldGraphId == graphId)
+            if (oldGraphId == graph.Owner)
                 return;
 
             oldGraph = (oldGraphId, _graphQuery.GetComponent(oldGraphId));
-            RemoveNode(oldGraphId, nodeId, nextGraph: (graphId, graph), graph: oldGraph.Value.Comp, node: node);
+            RemoveNode(oldGraph.Value, node, nextGraph: graph);
         }
 
-        node.GraphId = graphId;
-        graph.Nodes.Add(nodeId);
-        Dirty(graphId, graph);
-        Dirty(nodeId, node);
+        node.Comp.GraphId = graph.Owner;
+        graph.Comp.Nodes.Add(node);
+        Dirty(graph);
+        Dirty(node);
 
-        if ((node.Flags & NodeFlags.Merge) != NodeFlags.None)
-            QueueMerge(graphId, nodeId, graph);
-        if ((node.Flags & NodeFlags.Split) != NodeFlags.None)
-            QueueSplit(graphId, nodeId, graph);
+        if ((node.Comp.Flags & NodeFlags.Merge) != NodeFlags.None)
+            QueueMerge(graph, node);
+        if ((node.Comp.Flags & NodeFlags.Split) != NodeFlags.None)
+            QueueSplit(graph, node);
 
-        var graphEv = new NodeAddedEvent(graphId, nodeId, oldGraph, graph, node);
-        RaiseLocalEvent(graphId, ref graphEv);
-        var nodeEv = new AddedToGraphEvent(nodeId, graphId, oldGraph, node, graph);
-        RaiseLocalEvent(nodeId, ref nodeEv);
+        var graphEv = new NodeAddedEvent(graph, node, oldGraph);
+        RaiseLocalEvent(graph, ref graphEv);
+        var nodeEv = new AddedToGraphEvent(node, graph, oldGraph);
+        RaiseLocalEvent(node, ref nodeEv);
     }
 
     /// <summary>
     /// Removes a node from a graph.
     /// </summary>
-    private void RemoveNode(EntityUid graphId, EntityUid nodeId, (EntityUid Uid, NodeGraphComponent Comp)? nextGraph = null, NodeGraphComponent? graph = null, GraphNodeComponent? node = null)
+    private void RemoveNode(Entity<NodeGraphComponent> graph, Entity<GraphNodeComponent> node, Entity<NodeGraphComponent>? nextGraph = null)
     {
-        if (!_graphQuery.Resolve(graphId, ref graph) || !_nodeQuery.Resolve(nodeId, ref node))
-            return;
+        DebugTools.Assert(node.Comp.GraphId == graph, $"Attempted to remove node {ToPrettyString(node)} from graph {ToPrettyString(graph)} while it was a member of {ToPrettyString(node.Comp.GraphId)}!");
 
-        if (node.GraphId != graphId)
-            return;
+        graph.Comp.Nodes.Remove(node);
+        node.Comp.GraphId = null;
+        Dirty(graph);
+        Dirty(node);
 
-        graph.Nodes.Remove(nodeId);
-        node.GraphId = null;
-        Dirty(graphId, graph);
-        Dirty(nodeId, node);
+        if ((node.Comp.Flags & NodeFlags.Merge) != NodeFlags.None)
+            CancelMerge(graph, node);
+        if ((node.Comp.Flags & NodeFlags.Split) != NodeFlags.None)
+            CancelSplit(graph, node);
 
-        if ((node.Flags & NodeFlags.Merge) != NodeFlags.None)
-            CancelMerge(graphId, nodeId, graph);
-        if ((node.Flags & NodeFlags.Split) != NodeFlags.None)
-            CancelSplit(graphId, nodeId, graph);
+        var graphEv = new NodeRemovedEvent(graph, node, nextGraph);
+        RaiseLocalEvent(graph, ref graphEv);
+        var nodeEv = new RemovedFromGraphEvent(node, graph, nextGraph);
+        RaiseLocalEvent(node, ref nodeEv);
 
-        var graphEv = new NodeRemovedEvent(graphId, nodeId, nextGraph, graph, node);
-        RaiseLocalEvent(graphId, ref graphEv);
-        var nodeEv = new RemovedFromGraphEvent(nodeId, graphId, nextGraph, node, graph);
-        RaiseLocalEvent(nodeId, ref nodeEv);
-
-        if (graph.Nodes.Count <= 0)
-            DelGraph(graphId, graph);
+        if (graph.Comp.Nodes.Count <= 0)
+            DelGraph(graph);
     }
 
 
     /// <summary>
     /// Queues a graph to be checked for splits at a given node.
     /// </summary>
-    private void QueueSplit(EntityUid graphId, EntityUid nodeId, NodeGraphComponent graph)
+    private void QueueSplit(Entity<NodeGraphComponent> graph, Entity<GraphNodeComponent> node)
     {
-        if (graph.SplitNodes.Add(nodeId) && graph.SplitNodes.Count == 1)
-            _queuedSplitGraphs.Add(graphId);
+        if (graph.Comp.SplitNodes.Add(node) && graph.Comp.SplitNodes.Count == 1)
+            _queuedSplitGraphs.Add(graph);
     }
 
     /// <summary>
     /// Queues a graph to be checked for merging at a given node.
     /// </summary>
-    private void QueueMerge(EntityUid graphId, EntityUid nodeId, NodeGraphComponent graph)
+    private void QueueMerge(Entity<NodeGraphComponent> graph, Entity<GraphNodeComponent> node)
     {
-        if (graph.MergeNodes.Add(nodeId) && graph.MergeNodes.Count == 1)
-            _queuedMergeGraphs.Add(graphId);
+        if (graph.Comp.MergeNodes.Add(node) && graph.Comp.MergeNodes.Count == 1)
+            _queuedMergeGraphs.Add(graph);
     }
 
     /// <summary>
     /// Cancels a potential split in a graph at a given node.
     /// </summary>
-    private void CancelSplit(EntityUid graphId, EntityUid nodeId, NodeGraphComponent graph)
+    private void CancelSplit(Entity<NodeGraphComponent> graph, Entity<GraphNodeComponent> node)
     {
-        if (graph.SplitNodes.Remove(nodeId) && graph.SplitNodes.Count <= 0)
-            _queuedSplitGraphs.Remove(graphId);
+        if (graph.Comp.SplitNodes.Remove(node) && graph.Comp.SplitNodes.Count <= 0)
+            _queuedSplitGraphs.Remove(graph);
     }
 
     /// <summary>
     /// Cancels a potential merge between graphs at a given node.
     /// </summary>
-    private void CancelMerge(EntityUid graphId, EntityUid nodeId, NodeGraphComponent graph)
+    private void CancelMerge(Entity<NodeGraphComponent> graph, Entity<GraphNodeComponent> node)
     {
-        if (graph.MergeNodes.Remove(nodeId) && graph.MergeNodes.Count <= 0)
-            _queuedMergeGraphs.Remove(graphId);
+        if (graph.Comp.MergeNodes.Remove(node) && graph.Comp.MergeNodes.Count <= 0)
+            _queuedMergeGraphs.Remove(graph);
     }
 
 
     /// <summary>
     /// Merges the smaller of two graphs into the larger.
     /// </summary>
-    private void MergeGraphs(ref EntityUid graphId, ref EntityUid mergeId, ref NodeGraphComponent graph, ref NodeGraphComponent merge)
+    private void MergeGraphs(ref Entity<NodeGraphComponent> graph, ref Entity<NodeGraphComponent> merge)
     {
-        if (graphId == mergeId)
+        if (graph == merge)
             return;
 
-        if (graph.Nodes.Count < merge.Nodes.Count)
-            (graphId, mergeId, graph, merge) = (mergeId, graphId, merge, graph);
+        if (graph.Comp.Nodes.Count < merge.Comp.Nodes.Count)
+            (graph, merge) = (merge, graph);
 
-        var graphEv = new MergingEvent(graphId, mergeId, graph, merge);
-        RaiseLocalEvent(graphId, ref graphEv);
-        var mergeEv = new MergingIntoEvent(mergeId, graphId, merge, graph);
-        RaiseLocalEvent(mergeId, ref mergeEv);
+        var graphEv = new MergingEvent(graph, merge);
+        RaiseLocalEvent(graph, ref graphEv);
+        var mergeEv = new MergingIntoEvent(merge, graph);
+        RaiseLocalEvent(merge, ref mergeEv);
 
-        while (merge.Nodes.FirstOrNull() is { } nodeId)
+        while (merge.Comp.Nodes.FirstOrNull() is { } nodeId)
         {
-            AddNode(graphId, nodeId, graph: graph, node: _nodeQuery.GetComponent(nodeId));
+            AddNode(graph, (nodeId, _nodeQuery.GetComponent(nodeId)));
         }
     }
 
@@ -234,56 +223,53 @@ public sealed partial class NodeGraphSystem
     /// Splits a set of nodes out of a graph and into a new graph.
     /// </summary>
     /// <returns>The split graph or null if no nodes were successfully split from the source graph.</returns>
-    private (EntityUid Uid, NodeGraphComponent Comp)? SplitGraph(EntityUid graphId, List<(EntityUid NodeId, GraphNodeComponent Node)> nodes, NodeGraphComponent graph)
+    private Entity<NodeGraphComponent>? SplitGraph(Entity<NodeGraphComponent> graph, List<Entity<GraphNodeComponent>> nodes)
     {
         if (nodes.Count <= 0)
             return null;
 
-        var (splitId, split) = SpawnGraph(graph.GraphProto);
+        var split = SpawnGraph(graph.Comp.GraphProto);
 
-        var preGraphEv = new SplittingEvent(graphId, splitId, nodes, graph, split);
-        RaiseLocalEvent(graphId, ref preGraphEv);
-        var preSplitEv = new SplittingFromEvent(splitId, graphId, nodes, split, graph);
-        RaiseLocalEvent(splitId, ref preSplitEv);
+        var preGraphEv = new SplittingEvent(graph, split, nodes);
+        RaiseLocalEvent(graph, ref preGraphEv);
+        var preSplitEv = new SplittingFromEvent(split, graph, nodes);
+        RaiseLocalEvent(split, ref preSplitEv);
 
-        foreach (var (nodeId, node) in nodes)
+        foreach (var node in nodes)
         {
-            AddNode(splitId, nodeId, graph: split, node: node);
+            AddNode(split, node);
         }
 
-        if (split.Nodes.Count <= 0)
+        if (split.Comp.Nodes.Count <= 0)
         {
-            DelGraph(splitId, split);
+            DelGraph(split);
             return null;
         }
 
         // If all of the nodes were moved out of the old graph it's being deleted.
-        var postGraphEv = new SplitEvent(graphId, splitId, nodes, graph, split);
-        RaiseLocalEvent(graphId, ref postGraphEv);
+        var postGraphEv = new SplitEvent(graph, split, nodes);
+        RaiseLocalEvent(graph, ref postGraphEv);
 
-        var postSplitEv = new SplitFromEvent(splitId, graphId, nodes, split, graph);
-        RaiseLocalEvent(splitId, ref postSplitEv);
-        return (splitId, split);
+        var postSplitEv = new SplitFromEvent(split, graph, nodes);
+        RaiseLocalEvent(split, ref postSplitEv);
+        return split;
     }
 
 
     /// <summary>
     /// Merges connected, compatible graphs into one large graph.
     /// </summary>
-    private (EntityUid GraphId, NodeGraphComponent Graph) ResolveMerges(EntityUid graphId, UpdateIter iter, NodeGraphComponent graph)
+    private Entity<NodeGraphComponent> ResolveMerges(Entity<NodeGraphComponent> graph, UpdateIter iter)
     {
-        graph.LastUpdate = iter;
-        var graphs = new List<(EntityUid GraphId, NodeGraphComponent Graph)>()
-        {
-            (graphId, graph),
-        };
+        graph.Comp.LastUpdate = iter;
+        var graphs = new List<Entity<NodeGraphComponent>>() { graph, };
         for (var i = 0; i < graphs.Count; ++i)
         {
             var (currId, curr) = graphs[i];
             while (curr.MergeNodes.FirstOrNull() is { } nodeId)
             {
                 var node = _nodeQuery.GetComponent(nodeId);
-                ClearMerge(nodeId, node, curr);
+                ClearMerge((nodeId, node), curr);
 
                 foreach (var (edgeId, edgeFlags) in node.Edges)
                 {
@@ -310,20 +296,20 @@ public sealed partial class NodeGraphSystem
             }
 
             // Largest graph is used as the merge target to minimize node handoffs.
-            if (curr.Nodes.Count > graph.Nodes.Count)
-                ((graphId, graph), graphs[i]) = ((currId, curr), (graphId, graph));
+            if (curr.Nodes.Count > graph.Comp.Nodes.Count)
+                (graph, graphs[i]) = ((currId, curr), graph);
         }
 
         for (var i = 1; i < graphs.Count; ++i)
         {
-            var (mergeId, merge) = graphs[i];
-            if (mergeId == graphId)
+            var merge = graphs[i];
+            if (merge.Owner == graph.Owner)
                 continue; // Don't merge the graph we are merging everything into into itself.
 
-            MergeGraphs(ref graphId, ref mergeId, graph: ref graph, merge: ref merge);
+            MergeGraphs(ref graph, ref merge);
         }
 
-        return (graphId, graph);
+        return graph;
     }
 
     /// <summary>
@@ -333,11 +319,11 @@ public sealed partial class NodeGraphSystem
     /// On the server this has the potential to be parallelized b/c it never crosses graph boundaries.
     /// Would require converting it to an enumerator for connected sets of nodes and transferring the results to the main thread for spawning.
     /// </remarks>
-    private void ResolveSplits(EntityUid graphId, UpdateIter iter, NodeGraphComponent graph)
+    private void ResolveSplits(Entity<NodeGraphComponent> graph, UpdateIter iter)
     {
-        List<(EntityUid NodeID, GraphNodeComponent Node)>? keeping = null;
-        var splitting = new List<(EntityUid NodeID, GraphNodeComponent Node)>();
-        while (graph.SplitNodes.FirstOrNull() is { } seedId)
+        List<Entity<GraphNodeComponent>>? keeping = null;
+        var splitting = new List<Entity<GraphNodeComponent>>();
+        while (graph.Comp.SplitNodes.FirstOrNull() is { } seedId)
         {
             var seed = _nodeQuery.GetComponent(seedId);
 
@@ -349,9 +335,9 @@ public sealed partial class NodeGraphSystem
 
                 if ((node.Flags & NodeFlags.Split) != NodeFlags.None)
                 {
-                    ClearSplit(nodeId, node, graph);
+                    ClearSplit((nodeId, node), graph);
                     // If we have cleared all of the split nodes during the first iteration we don't need to bother BFSing the rest of the nodes because we know it's all one big group.
-                    if (keeping is null && graph.SplitNodes.Count <= 0)
+                    if (keeping is null && graph.Comp.SplitNodes.Count <= 0)
                         return;
                 }
 
@@ -387,7 +373,7 @@ public sealed partial class NodeGraphSystem
                 (keeping, splitting) = (splitting, keeping);
 
             // TODO??? Could be parallelized if this was extracted out to the main thread. (Convert to IEnumerable<...> and aggregate into ConcurrentBox?)
-            SplitGraph(graphId, splitting, graph);
+            SplitGraph(graph, splitting);
 
             // TODO??? Would mean that we would need to build a new list for every group though. Not sure what the impact of all the extra heap allocs/deallocs would be compared to the parallelism.
             splitting.Clear();
@@ -398,44 +384,11 @@ public sealed partial class NodeGraphSystem
     #region Event Handlers
 
     /// <summary>
-    /// Ensures that graph states only get sent if debugging info is enabled.
-    /// </summary>
-    private void OnComponentInit(EntityUid uid, NodeGraphComponent comp, ComponentInit args)
-    {
-        DebugTools.Assert(comp.GraphProto != default, $"Node graph {uid} spawned without having its type set.");
-
-        comp.NetSyncEnabled = _sendingVisState;
-
-        _graphsByProto.GetOrNew(comp.GraphProto).Add(uid);
-    }
-
-    /// <summary>
-    /// If a node graphs gets ungraphed with nodes still in it we should complain about it b/c that will result in nodes with null node graphs.
+    /// If a node graph gets ungraphed with nodes still in it we should complain about it b/c that will result in nodes with null node graphs.
     /// </summary>
     private void OnComponentShutdown(EntityUid uid, NodeGraphComponent comp, ComponentShutdown args)
     {
-        if (_graphsByProto.TryGetValue(comp.GraphProto, out var set))
-            set.Remove(uid);
-
-        if (comp.Nodes.Count <= 0)
-            return;
-
-        Log.Error($"Node graph {ToPrettyString(uid)} was shut down while still containing graph nodes; this should never happen.");
-
-        // Shuffle all of the nodes into the replacement...
-        var (subId, sub) = SpawnGraph(comp.GraphProto);
-        while (comp.Nodes.FirstOrNull() is { } nodeId)
-        {
-            var node = _nodeQuery.GetComponent(nodeId);
-
-            AddNode(subId, nodeId, graph: sub, node: node);
-            RemoveNode(uid, nodeId, graph: comp, node: node); // To be sure...
-        }
-
-        Log.Debug($"Rebuilt graph for nodes of deleted graph {ToPrettyString(uid)}; the new graph is {ToPrettyString(subId)}.");
-
-        DebugTools.Assert(comp.MergeNodes.Count <= 0, "Shut down node graph contained merge nodes after purging nodes.");
-        DebugTools.Assert(comp.SplitNodes.Count <= 0, "Show down node graph contained split nodes after purging nodes.");
+        DebugTools.Assert(comp.Nodes.Count <= 0, $"Attempted to shut down graph {ToPrettyString(uid)} while it still contained nodes. This should never happen.");
     }
 
     /// <remarks>
