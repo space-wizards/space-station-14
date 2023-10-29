@@ -1,8 +1,15 @@
 using Content.Server.Physics.Components;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.Events;
+using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
+using Content.Shared.Singularity.Events;
+using Robust.Server.GameStates;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -199,9 +206,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.Play(comp.FormationSound, Filter.Pvs(uid), uid, true);
+            _audio.PlayPvs(comp.FormationSound, uid);
 
-        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(uid), uid, true);
+        comp.AmbientSoundStream = _audio.PlayPvs(comp.AmbientSound, uid)?.Entity;
         UpdateSingularityLevel(uid, comp);
     }
 

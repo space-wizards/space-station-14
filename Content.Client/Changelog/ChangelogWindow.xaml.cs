@@ -17,7 +17,6 @@ namespace Content.Client.Changelog
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly ChangelogManager _changelog = default!;
-        [Dependency] private readonly IClientResourceCache _resourceCache = default!;
 
         public ChangelogWindow()
         {

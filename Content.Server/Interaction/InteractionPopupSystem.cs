@@ -61,7 +61,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 msg = Loc.GetString(component.InteractSuccessString, ("target", Identity.Entity(uid, EntityManager))); // Success message (localized).
 
             if (component.InteractSuccessSound != null)
-                sfx = component.InteractSuccessSound.GetSound();
+                sfx = component.InteractSuccessSound;
 
             if (component.InteractSuccessSpawn != null)
                 Spawn(component.InteractSuccessSpawn, Transform(uid).MapPosition);
@@ -72,7 +72,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 msg = Loc.GetString(component.InteractFailureString, ("target", Identity.Entity(uid, EntityManager))); // Failure message (localized).
 
             if (component.InteractFailureSound != null)
-                sfx = component.InteractFailureSound.GetSound();
+                sfx = component.InteractFailureSound;
 
             if (component.InteractFailureSpawn != null)
                 Spawn(component.InteractFailureSpawn, Transform(uid).MapPosition);

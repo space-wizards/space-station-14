@@ -10,6 +10,7 @@ using Content.Server.Temperature.Components;
 using Content.Server.Body.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Medical
 {

@@ -87,7 +87,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     /// </summary>
     /// <param name="component"></param>
     /// <returns></returns>
-    public bool IsActive(AmbientSoundComponent component)
+    public bool IsActive(Entity<AmbientSoundComponent> component)
     {
         return _playingSounds.ContainsKey(component);
     }

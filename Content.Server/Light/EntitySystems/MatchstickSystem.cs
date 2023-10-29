@@ -81,8 +81,7 @@ namespace Content.Server.Light.EntitySystems
             var component = matchstick.Comp;
 
             // Play Sound
-            SoundSystem.Play(component.IgniteSound.GetSound(), Filter.Pvs(matchstick),
-                matchstick, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+            _audio.PlayPvs(component.IgniteSound, matchstick, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
 
             // Change state
             SetState(matchstick, component, SmokableState.Lit);
