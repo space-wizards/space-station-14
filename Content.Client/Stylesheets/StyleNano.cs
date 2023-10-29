@@ -20,7 +20,7 @@ namespace Content.Client.Stylesheets
 {
     public static class ResCacheExtension
     {
-        public static Font NotoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
+        public static Font NotoStack(this IClientResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
         {
             var ds = display ? "Display" : "";
             var sv = variation.StartsWith("Bold", StringComparison.Ordinal) ? "Bold" : "Regular";
@@ -144,7 +144,7 @@ namespace Content.Client.Stylesheets
 
         public override Stylesheet Stylesheet { get; }
 
-        public StyleNano(IResourceCache resCache) : base(resCache)
+        public StyleNano(IClientResourceCache resCache) : base(resCache)
         {
             var notoSans8 = resCache.NotoStack(size: 8);
             var notoSans10 = resCache.NotoStack(size: 10);

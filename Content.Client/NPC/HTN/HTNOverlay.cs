@@ -12,7 +12,7 @@ public sealed class HTNOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public HTNOverlay(IEntityManager entManager, IResourceCache resourceCache)
+    public HTNOverlay(IEntityManager entManager, IClientResourceCache resourceCache)
     {
         _entManager = entManager;
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);

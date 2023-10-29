@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests
             await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var client = pair.Client;
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
-            var resourceCache = client.ResolveDependency<IResourceCache>();
+            var resourceCache = client.ResolveDependency<IClientResourceCache>();
 
             await client.WaitAssertion(() =>
             {

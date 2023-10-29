@@ -20,7 +20,7 @@ namespace Content.Client.NPC
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IResourceCache _cache = default!;
+        [Dependency] private readonly IClientResourceCache _cache = default!;
         [Dependency] private readonly NPCSteeringSystem _steering = default!;
         [Dependency] private readonly MapSystem _mapSystem = default!;
 
@@ -151,7 +151,7 @@ namespace Content.Client.NPC
             IEyeManager eyeManager,
             IInputManager inputManager,
             IMapManager mapManager,
-            IResourceCache cache,
+            IClientResourceCache cache,
             PathfindingSystem system,
             MapSystem mapSystem)
         {
