@@ -211,7 +211,6 @@ public sealed class NewsSystem : EntitySystem
                 continue;
 
             _ringer.RingerPlayRingtone(uid, ringer);
-            break;
         }
     }
 
