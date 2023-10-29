@@ -19,6 +19,11 @@ public sealed partial class AmeSystem : EntitySystem
     private EntityQuery<AmeControllerComponent> _controllerQuery = default!;
     private EntityQuery<AmeShieldComponent> _shieldQuery = default!;
 
+    /// <summary>
+    /// The amount of watts an AME produces per unit of injected fuel scaled by fuel/core.
+    /// </summary>
+    public const float BaseAmePower = 20000f;
+
 
     public override void Initialize()
     {
@@ -78,11 +83,7 @@ public sealed partial class AmeSystem : EntitySystem
 
         var safeFuelLimit = coreCount * 2;
 
-        // Note the float conversions. The maths will completely fail if not done using floats.
-        // Oh, and don't ever stuff the result of this in an int. Seriously.
-        var floatFuel = (float) fuel;
-        var floatCores = (float) coreCount;
-        var powerOutput = 20000f * floatFuel * floatFuel / floatCores;
+        var powerOutput = CalculatePower(fuel, coreCount);
         if (fuel <= safeFuelLimit)
             return powerOutput;
 
@@ -97,10 +98,10 @@ public sealed partial class AmeSystem : EntitySystem
             instability = 1;
         // overloadVsSizeResult > 5:
         if (overloadVsSizeResult > 5)
-            instability = 5;
-        // overloadVsSizeResult > 10: This will explode in at most 5 injections.
+            instability = 3;
+        // overloadVsSizeResult > 10: This will explode in at most 20 injections.
         if (overloadVsSizeResult > 10)
-            instability = 20;
+            instability = 5;
 
         // Apply calculated instability
         if (instability == 0)
@@ -127,6 +128,17 @@ public sealed partial class AmeSystem : EntitySystem
             _chatMan.SendAdminAlert($"AME overloading: {ToPrettyString(ameId)}");
 
         return powerOutput;
+    }
+
+    /// <summary>
+    /// Calculates the amount of power the AME can produce with the given settings
+    /// </summary>
+    public float CalculatePower(int fuel, int cores)
+    {
+        // Fuel is squared so more fuel vastly increases power and efficiency
+        // We divide by the number of cores so a larger AME is less efficient at the same fuel settings
+        // this results in all AMEs having the same efficiency at the same fuel-per-core setting
+        return BaseAmePower * fuel * fuel / cores;
     }
 
     /// <summary>
