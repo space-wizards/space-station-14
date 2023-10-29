@@ -1,8 +1,6 @@
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Server.Damage.Components;
 using Content.Server.Damage.Systems;
 
 namespace Content.Server.Clothing;
