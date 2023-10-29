@@ -153,3 +153,12 @@
   files:
   - /Audio/Effects/Footsteps/clownspiderstep1.ogg
   - /Audio/Effects/Footsteps/clownspiderstep2.ogg
+
+- type: soundCollection
+  id: FootstepBells
+  files:
+  - /Audio/Effects/Footsteps/bells1.ogg
+  - /Audio/Effects/Footsteps/bells2.ogg
+  - /Audio/Effects/Footsteps/bells3.ogg
+  - /Audio/Effects/Footsteps/bells4.ogg
+  - /Audio/Effects/Footsteps/bells5.ogg
