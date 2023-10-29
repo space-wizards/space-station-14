@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Robust.Shared.GameStates;
@@ -106,6 +107,18 @@ namespace Content.Shared.Decals
         protected virtual void OnDecalRemoved(EntityUid gridId, uint decalId, DecalGridComponent component, Vector2i indices, DecalChunk chunk)
         {
             // used by client-side overlay code
+        }
+
+        public virtual HashSet<(uint Index, Decal Decal)> GetDecalsInRange(EntityUid gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
+        {
+            // NOOP on client atm.
+            return new HashSet<(uint Index, Decal Decal)>();
+        }
+
+        public virtual bool RemoveDecal(EntityUid gridId, uint decalId, DecalGridComponent? component = null)
+        {
+            // NOOP on client atm.
+            return true;
         }
     }
 

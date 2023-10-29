@@ -4,7 +4,6 @@ using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Sandbox.Commands
@@ -21,9 +20,9 @@ namespace Content.Server.Sandbox.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sandboxManager = _entManager.System<SandboxSystem>();
-
-            if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !_adminManager.HasAdminFlag((IPlayerSession)shell.Player!, AdminFlags.Mapping)))
+            var sandboxManager = EntitySystem.Get<SandboxSystem>();
+            var adminManager = IoCManager.Resolve<IAdminManager>();
+            if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag(shell.Player!, AdminFlags.Mapping)))
             {
                 shell.WriteError("You are not currently able to use mapping commands.");
             }
