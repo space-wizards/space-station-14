@@ -8,6 +8,7 @@ namespace Content.Shared.Movement.Components
     /// If this is not present on the entity then they will use defaults for movement.
     /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [Access(typeof(MovementSpeedModifierSystem))]
     public sealed partial class MovementSpeedModifierComponent : Component
     {
         // Weightless
@@ -86,19 +87,19 @@ namespace Content.Shared.Movement.Components
         /// <summary>
         /// The acceleration applied to mobs when moving.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
         public float Acceleration = DefaultAcceleration;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
         public float Friction = DefaultFriction;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
         public float? FrictionNoInput;
 
         [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
