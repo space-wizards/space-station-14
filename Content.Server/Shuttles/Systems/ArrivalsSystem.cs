@@ -166,12 +166,13 @@ public sealed class ArrivalsSystem : EntitySystem
             return;
 
         var arrivalsMapUid = Transform(arrivals).MapUid;
+        var shuttleMapUid = Transform(shuttleUid).MapUid;
 
         float ftlTime = TryComp<FTLComponent>(shuttleUid, out var ftlComp) ? ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime;
 
         var payload = new NetworkPayload
         {
-            ["ShuttleGrid"] = shuttleUid,
+            ["ShuttleMap"] = shuttleMapUid,
             ["SourceMap"] = args.FromMapUid,
             ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
             ["LocalTimer"] = ftlTime,
@@ -225,7 +226,7 @@ public sealed class ArrivalsSystem : EntitySystem
         float dockTime = (component.NextTransfer - _timing.CurTime).Seconds + ShuttleSystem.DefaultStartupTime;
         var payload = new NetworkPayload
         {
-            ["ShuttleGrid"] = shuttleXform.GridUid,
+            ["ShuttleMap"] = shuttleXform.MapUid,
             ["SourceMap"] = args.MapUid,
 
             ["LocalTimer"] = dockTime,

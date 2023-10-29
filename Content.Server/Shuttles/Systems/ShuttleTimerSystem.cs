@@ -68,17 +68,17 @@ namespace Content.Server.Shuttles.Systems
 
             var timerXform = Transform(uid);
 
-            if (timerXform.GridUid == null)
+            if (timerXform.MapUid == null)
                 return;
 
             string key;
-            args.Data.TryGetValue("ShuttleGrid", out EntityUid? shuttleGrid);
+            args.Data.TryGetValue("ShuttleMap", out EntityUid? shuttleMap);
             args.Data.TryGetValue("SourceMap", out EntityUid? source);
             args.Data.TryGetValue("DestMap", out EntityUid? dest);
 
             switch (timerXform.MapUid)
             {
-                case var local when local == shuttleGrid:
+                case var local when local == shuttleMap:
                     key = "LocalTimer";
                     break;
                 case var origin when origin == source:
