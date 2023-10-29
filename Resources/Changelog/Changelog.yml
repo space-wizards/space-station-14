@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: 'The Syndicate have rebooted the chameleon clothing database, restoring
-      most lost functionality.', type: Fix}
-  id: 4575
-  time: '2023-08-14T04:03:20.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: Fixed an issue which was preventing airlock safeguards from being installed
@@ -2909,3 +2903,8 @@ Entries:
       its container.', type: Tweak}
   id: 5074
   time: '2023-10-28T16:46:59.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The bee plush can now be worn on your head., type: Add}
+  id: 5075
+  time: '2023-10-29T03:55:15.0000000+00:00'
