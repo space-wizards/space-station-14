@@ -28,8 +28,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (environment == null)
                 return;
 
-            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, vent.InletName, out var inletId, out var inletNode, out var inlet)
-            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), vent.InletName, out var inlet) ||
+                !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas))
                 return;
 
             var inletAir = inletGas.RemoveRatio(1f);

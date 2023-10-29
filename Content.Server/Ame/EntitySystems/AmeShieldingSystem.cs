@@ -30,46 +30,46 @@ public sealed class AmeShieldingSystem : EntitySystem
 
 
     /// <summary>Sets whether or not this particular segment of AME shielding is an AME core.</summary>
-    private void SetCore(EntityUid shieldingId, bool value, AmeShieldComponent? shielding = null)
+    private void SetCore(Entity<AmeShieldComponent?> shielding, bool value)
     {
-        if (!Resolve(shieldingId, ref shielding))
+        if (!Resolve(shielding, ref shielding.Comp))
             return;
 
-        if (value == shielding.IsCore)
+        if (value == shielding.Comp.IsCore)
             return;
 
-        shielding.IsCore = value;
+        shielding.Comp.IsCore = value;
 
-        _appearanceSystem.SetData(shieldingId, AmeShieldVisuals.Core, value);
+        _appearanceSystem.SetData(shielding, AmeShieldVisuals.Core, value);
 
-        foreach (var (graphId, _) in _nodeSystem.EnumerateGraphs(shieldingId))
+        foreach (var graph in _nodeSystem.EnumerateGraphs((shielding, null, null)))
         {
-            if (!TryComp<AmeComponent>(graphId, out var ame))
+            if (!TryComp<AmeComponent>(graph, out var ame))
                 continue;
 
             if (value)
-                _ameSystem.AddCore(graphId, shieldingId, ame);
+                _ameSystem.AddCore((graph, ame), shielding);
             else
-                _ameSystem.RemoveCore(graphId, shieldingId, ame);
+                _ameSystem.RemoveCore((graph, ame), shielding);
         }
     }
 
     /// <summary>Updates the appearance of an AME core to reflect the current state of the AME.</summary>
-    public void UpdateVisuals(EntityUid coreId, int injectionRatio, bool injecting, AmeShieldComponent? core = null)
+    public void UpdateVisuals(Entity<AmeShieldComponent?> core, int injectionRatio, bool injecting)
     {
-        if (!Resolve(coreId, ref core))
+        if (!Resolve(core, ref core.Comp))
             return;
 
         if (!injecting)
         {
-            _appearanceSystem.SetData(coreId, AmeShieldVisuals.CoreState, AmeCoreState.Off);
-            _pointLightSystem.SetEnabled(coreId, false);
+            _appearanceSystem.SetData(core, AmeShieldVisuals.CoreState, AmeCoreState.Off);
+            _pointLightSystem.SetEnabled(core, false);
             return;
         }
 
-        _pointLightSystem.SetRadius(coreId, Math.Clamp(injectionRatio, 1, 12));
-        _pointLightSystem.SetEnabled(coreId, true);
-        _appearanceSystem.SetData(coreId, AmeShieldVisuals.CoreState, injectionRatio > 2 ? AmeCoreState.Strong : AmeCoreState.Weak);
+        _pointLightSystem.SetRadius(core, Math.Clamp(injectionRatio, 1, 12));
+        _pointLightSystem.SetEnabled(core, true);
+        _appearanceSystem.SetData(core, AmeShieldVisuals.CoreState, injectionRatio > 2 ? AmeCoreState.Strong : AmeCoreState.Weak);
     }
 
 
@@ -78,33 +78,33 @@ public sealed class AmeShieldingSystem : EntitySystem
     /// <summary>Makes AME shielding that is surrounded by AME shielding a core.</summary>
     private void OnEdgeAdded(EntityUid uid, AmeShieldComponent comp, ref EdgeAddedEvent args)
     {
-        if (args.Node.Edges.Count >= 8 && !comp.IsCore)
-            SetCore(uid, true, comp);
+        if (args.From.Comp.Edges.Count >= 8 && !comp.IsCore)
+            SetCore((uid, comp), true);
     }
 
     /// <summary>Makes AME shielding that is no longer surrounded by AME shielding no longer a core.</summary>
     private void OnEdgeRemoved(EntityUid uid, AmeShieldComponent comp, ref EdgeRemovedEvent args)
     {
-        if (args.Node.Edges.Count < 8 && comp.IsCore)
-            SetCore(uid, false, comp);
+        if (args.From.Comp.Edges.Count < 8 && comp.IsCore)
+            SetCore((uid, comp), false);
     }
 
     /// <summary>Adds AME cores that get added to AMEs to the AMEs list of cores.</summary>
     private void OnAddedToGraph(EntityUid uid, AmeShieldComponent comp, ref AddedToGraphEvent args)
     {
-        if (!comp.IsCore || !TryComp<AmeComponent>(args.GraphId, out var ame))
+        if (!comp.IsCore || !TryComp<AmeComponent>(args.Graph, out var ame))
             return;
 
-        _ameSystem.AddCore(args.GraphId, uid, ame);
+        _ameSystem.AddCore((args.Graph, ame), uid);
     }
 
     /// <summary>Removes AME cores that get removed from AMEs from the AMEs list of cores.</summary>
     private void OnRemovedFromGraph(EntityUid uid, AmeShieldComponent comp, ref RemovedFromGraphEvent args)
     {
-        if (!comp.IsCore || !TryComp<AmeComponent>(args.GraphId, out var ame))
+        if (!comp.IsCore || !TryComp<AmeComponent>(args.Graph, out var ame))
             return;
 
-        _ameSystem.RemoveCore(args.GraphId, uid, ame);
+        _ameSystem.RemoveCore((args.Graph, ame), uid);
     }
 
     private void OnEdgeAdded(EntityUid uid, AmeShieldComponent comp, ref ProxyNodeRelayEvent<EdgeAddedEvent> args)

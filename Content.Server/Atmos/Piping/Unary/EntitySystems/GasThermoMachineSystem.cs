@@ -48,10 +48,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
-            if (!_power.IsPowered(uid)
-            || !TryComp<ApcPowerReceiverComponent>(uid, out var receiver)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, thermoMachine.InletName, out var inletId, out var inletNode, out var inlet)
-            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+            if (!_power.IsPowered(uid) ||
+                !TryComp<ApcPowerReceiverComponent>(uid, out var receiver) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), thermoMachine.InletName, out var inlet) ||
+                !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas))
             {
                 return;
             }

@@ -29,10 +29,9 @@ public sealed class GasPowerReceiverSystem : EntitySystem
     {
         var timeDelta = args.dt;
 
-        if (!HasComp<AtmosDeviceComponent>(uid)
-            || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, component.PipeName, out var pipeId, out var pipeNode, out var pipe)
-            || !_pipeNodeSystem.TryGetGas(pipeId, out var pipeGas, pipe, pipeNode))
+        if (!HasComp<AtmosDeviceComponent>(uid) ||
+            !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), component.PipeName, out var pipe) ||
+            !_pipeNodeSystem.TryGetGas((pipe.Owner, pipe.Comp2, pipe.Comp1), out var pipeGas))
         {
             return;
         }

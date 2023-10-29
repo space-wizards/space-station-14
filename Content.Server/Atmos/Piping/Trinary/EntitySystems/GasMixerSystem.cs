@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Trinary.Components;
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.Components.Autolinkers;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
@@ -54,9 +55,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             // TODO ATMOS: Cache total moles since it's expensive.
 
-            if (!mixer.Enabled
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, mixer.OutletName, out var outletId, out var outletNode, out var outlet)
-            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            if (!mixer.Enabled ||
+                !TryComp<PolyNodeComponent>(uid, out var poly) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), mixer.OutletName, out var outlet) ||
+                !_pipeNodeSystem.TryGetGas((outlet.Owner, outlet.Comp2, outlet.Comp1), out var outletGas))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
@@ -64,11 +66,11 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             var outputStartingPressure = outletGas.Pressure;
 
-            if (outputStartingPressure >= mixer.TargetPressure // Target reached, no need to mix.
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, mixer.InletOneName, out var inletOneId, out var inletOneNode, out var inletOne)
-            || !_pipeNodeSystem.TryGetGas(inletOneId, out var inletOneGas, inletOne, inletOneNode)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, mixer.InletTwoName, out var inletTwoId, out var inletTwoNode, out var inletTwo)
-            || !_pipeNodeSystem.TryGetGas(inletTwoId, out var inletTwoGas, inletTwo, inletTwoNode))
+            if (outputStartingPressure >= mixer.TargetPressure || // Target reached, no need to mix.
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, mixer.InletOneName, out var inletOne) ||
+                !_pipeNodeSystem.TryGetGas((inletOne.Owner, inletOne.Comp2, inletOne.Comp1), out var inletOneGas) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, mixer.InletTwoName, out var inletTwo) ||
+                !_pipeNodeSystem.TryGetGas((inletTwo.Owner, inletTwo.Comp2, inletTwo.Comp1), out var inletTwoGas))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
@@ -213,20 +215,25 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         /// </summary>
         private void OnMixerAnalyzed(EntityUid uid, GasMixerComponent component, GasAnalyzerScanEvent args)
         {
+            if (!TryComp<PolyNodeComponent>(uid, out var poly))
+                return;
+
             var gasMixDict = new Dictionary<string, GasMixture?>();
 
-            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent, DirNodeComponent>(uid, component.InletOneName, out var inletOneId, out var inletOneNode, out var inletOne, out var inletOneDir)
-            && _pipeNodeSystem.TryGetGas(inletOneId, out var inletOneGas, inletOne, inletOneNode))
-                gasMixDict.Add($"{inletOneDir.CurrentDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletOneGas);
-            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent, DirNodeComponent>(uid, component.InletTwoName, out var inletTwoId, out var inletTwoNode, out var inletTwo, out var inletTwoDir)
-            && _pipeNodeSystem.TryGetGas(inletTwoId, out var inletTwoGas, inletTwo, inletTwoNode))
-                gasMixDict.Add($"{inletTwoDir.CurrentDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletTwoGas);
-            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, component.OutletName, out var outletId, out var outletNode, out var outlet)
-            && _pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent, DirNodeComponent>((uid, poly), component.InletOneName, out var inletOne)
+            && _pipeNodeSystem.TryGetGas((inletOne.Owner, inletOne.Comp2, inletOne.Comp1), out var inletOneGas))
+                gasMixDict.Add($"{inletOne.Comp3.CurrentDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletOneGas);
+
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent, DirNodeComponent>((uid, poly), component.InletTwoName, out var inletTwo)
+            && _pipeNodeSystem.TryGetGas((inletTwo.Owner, inletTwo.Comp2, inletTwo.Comp1), out var inletTwoGas))
+                gasMixDict.Add($"{inletTwo.Comp3.CurrentDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletTwoGas);
+
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), component.OutletName, out var outlet)
+            && _pipeNodeSystem.TryGetGas((outlet.Owner, outlet.Comp2, outlet.Comp1), out var outletGas))
                 gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outletGas);
 
             args.GasMixtures = gasMixDict;
-            args.DeviceFlipped = inletOneDir != null && inletTwoDir != null && inletOneDir.CurrentDirection.ToDirection() == inletTwoDir.CurrentDirection.ToDirection().GetClockwise90Degrees();
+            args.DeviceFlipped = inletOne.Comp3 is { } inletOneDir && inletTwo.Comp3 is { } inletTwoDir && inletOneDir.CurrentDirection.ToDirection() == inletTwoDir.CurrentDirection.ToDirection().GetClockwise90Degrees();
         }
     }
 }

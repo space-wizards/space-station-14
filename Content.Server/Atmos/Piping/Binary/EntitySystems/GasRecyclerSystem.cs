@@ -3,6 +3,7 @@ using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
@@ -41,11 +42,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnExamined(Entity<GasRecyclerComponent> ent, ref ExaminedEvent args)
         {
             var comp = ent.Comp;
-            if (!EntityManager.GetComponent<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!Transform(ent).Anchored || !args.IsInDetailsRange || !TryComp<PolyNodeComponent>(ent, out var poly)) // Not anchored? Out of range? No status.
                 return;
 
-            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.InletName, out var inletId, out var inletNode, out var inlet) ||
-                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.OutletName, out var outletId, out var outletNode, out var outlet))
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((ent, poly), comp.InletName, out var inlet) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((ent, poly), comp.OutletName, out var outlet))
                 return;
 
             if (comp.Reacting)
@@ -54,7 +55,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
             else
             {
-                if (!_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode) || inletGas.Pressure < comp.MinPressure)
+                if (!_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas) || inletGas.Pressure < comp.MinPressure)
                 {
                     args.PushMarkup(Loc.GetString("gas-recycler-low-pressure"));
                 }
@@ -69,10 +70,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnUpdate(Entity<GasRecyclerComponent> ent, ref AtmosDeviceUpdateEvent args)
         {
             var comp = ent.Comp;
-            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.InletName, out var inletId, out var inletNode, out var inlet) ||
-                !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode) ||
-                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.OutletName, out var outletId, out var outletNode, out var outlet) ||
-                !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            if (!TryComp<PolyNodeComponent>(ent, out var poly) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((ent, poly), comp.InletName, out var inlet) ||
+                !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((ent, poly), comp.OutletName, out var outlet) ||
+                !_pipeNodeSystem.TryGetGas((outlet.Owner, outlet.Comp2, outlet.Comp1), out var outletGas))
             {
                 _ambientSoundSystem.SetAmbience(ent, false);
                 return;

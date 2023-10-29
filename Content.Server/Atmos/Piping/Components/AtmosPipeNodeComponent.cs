@@ -24,7 +24,7 @@ public sealed partial class AtmosPipeNodeComponent : Component, IGasMixtureHolde
     /// </summary>
     public GasMixture Air
     {
-        get => IoCManager.Resolve<IEntityManager>().System<AtmosPipeNetSystem>().TryGetGas(Owner, out var gas, this) ? gas : new();
+        get => IoCManager.Resolve<IEntityManager>().System<AtmosPipeNetSystem>().TryGetGas((Owner, this, null), out var gas) ? gas : new();
         set
         {
             var entMan = IoCManager.Resolve<IEntityManager>();

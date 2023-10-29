@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Piping.Binary.Components;
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
@@ -56,8 +57,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         public void Set(EntityUid uid, GasValveComponent component, bool value)
         {
             component.Open = value;
-            if (!_nodeSystem.TryGetNode(uid, component.InletName, out var inletId, out var inletNode) ||
-                !_nodeSystem.TryGetNode(uid, component.OutletName, out var outletId, out var outletNode)
+            if (!TryComp<PolyNodeComponent>(uid, out var poly) ||
+                !_nodeSystem.TryGetNode((uid, poly), component.InletName, out var inlet) ||
+                !_nodeSystem.TryGetNode((uid, poly), component.OutletName, out var outlet)
             )
                 return;
 
@@ -66,12 +68,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             if (component.Open)
             {
-                _nodeSystem.TrySetEdge(inletId, outletId, EdgeFlags.None, inletNode, outletNode);
+                _nodeSystem.TrySetEdge(inlet, outlet, EdgeFlags.None, inlet, outlet);
                 _ambientSoundSystem.SetAmbience(uid, true);
             }
             else
             {
-                _nodeSystem.TrySetEdge(inletId, outletId, EdgeFlags.NoMerge, inletNode, outletNode);
+                _nodeSystem.TrySetEdge(inlet, outlet, EdgeFlags.NoMerge, inlet, outlet);
                 _ambientSoundSystem.SetAmbience(uid, false);
             }
         }

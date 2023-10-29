@@ -65,10 +65,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            if (!vent.Enabled
-            || !TryComp(uid, out AtmosDeviceComponent? device)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, nodeName, out var pipeId, out var pipeNode, out var pipe)
-            || !_pipeNodeSystem.TryGetGas(pipeId, out var pipeGas, pipe, pipeNode))
+            if (!vent.Enabled ||
+                !TryComp(uid, out AtmosDeviceComponent? device) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), nodeName, out var pipe) ||
+                !_pipeNodeSystem.TryGetGas((pipe.Owner, pipe.Comp2, pipe.Comp1), out var pipeGas))
             {
                 return;
             }
@@ -302,8 +302,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 VentPumpDirection.Siphoning => component.Outlet,
                 _ => throw new ArgumentOutOfRangeException()
             };
-            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, nodeName, out var pipeId, out var pipeNode, out var pipe)
-            && _pipeNodeSystem.TryGetGas(pipeId, out var pipeGas, pipe, pipeNode))
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), nodeName, out var pipe) &&
+                _pipeNodeSystem.TryGetGas((pipe.Owner, pipe.Comp2, pipe.Comp1), out var pipeGas))
                 gasMixDict.Add(nodeName, pipeGas);
 
             args.GasMixtures = gasMixDict;

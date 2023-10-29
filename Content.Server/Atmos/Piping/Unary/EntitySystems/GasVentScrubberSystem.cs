@@ -56,9 +56,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             var timeDelta = args.dt;
 
-            if (!scrubber.Enabled
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, scrubber.OutletName, out var outletId, out var outletNode, out var outlet)
-            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            if (!scrubber.Enabled ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), scrubber.OutletName, out var outlet) ||
+                !_pipeNodeSystem.TryGetGas((outlet.Owner, outlet.Comp2, outlet.Comp1), out var outletGas))
                 return;
 
             var xform = Transform(uid);

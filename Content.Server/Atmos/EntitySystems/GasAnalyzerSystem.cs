@@ -217,10 +217,10 @@ namespace Content.Server.Atmos.EntitySystems
                 else
                 {
                     // No override, fetch manually, to handle flippable devices you must subscribe to GasAnalyzerScanEvent
-                    foreach (var (nodeId, _) in _nodeSystem.EnumerateNodes(component.Target.Value))
+                    foreach (var (nodeId, node) in _nodeSystem.EnumerateNodes(component.Target.Value))
                     {
-                        if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode)
-                        || !_pipeNetSystem.TryGetGas(nodeId, out var pipeGas, pipeNode))
+                        if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode) ||
+                            !_pipeNetSystem.TryGetGas((nodeId, pipeNode, node), out var pipeGas))
                             continue;
 
                         var name = TryComp<ProxyNodeComponent>(nodeId, out var proxy) ? proxy.ProxyKey : Name(uid);

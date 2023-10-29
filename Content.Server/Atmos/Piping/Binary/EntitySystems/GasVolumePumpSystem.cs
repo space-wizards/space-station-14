@@ -7,6 +7,7 @@ using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
@@ -71,18 +72,19 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
-            if (!pump.Enabled
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, pump.InletName, out var inletId, out var inletNode, out var inlet)
-            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, pump.OutletName, out var outletId, out var outletNode, out var outlet)
-            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            if (!pump.Enabled ||
+                !TryComp<PolyNodeComponent>(uid, out var poly) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), pump.InletName, out var inlet) ||
+                !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), pump.OutletName, out var outlet) ||
+                !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var outletGas))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
-            var inputStartingPressure = inlet.Air.Pressure;
-            var outputStartingPressure = outlet.Air.Pressure;
+            var inputStartingPressure = inletGas.Pressure;
+            var outputStartingPressure = outletGas.Pressure;
 
             var previouslyBlocked = pump.Blocked;
             pump.Blocked = false;

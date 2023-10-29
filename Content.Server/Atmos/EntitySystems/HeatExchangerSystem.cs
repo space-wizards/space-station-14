@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.CCVar;
@@ -39,13 +40,14 @@ public sealed class HeatExchangerSystem : EntitySystem
 
     private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, AtmosDeviceUpdateEvent args)
     {
-        if (!TryComp<AtmosDeviceComponent>(uid, out var device))
+        if (!TryComp<AtmosDeviceComponent>(uid, out var device) || !TryComp<PolyNodeComponent>(uid, out var poly))
             return;
-        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.InletName, out var inletId, out var inletNode, out var inlet)
-        || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), comp.InletName, out var inlet) ||
+            !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas))
             return;
-        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.OutletName, out var outletId, out var outletNode, out var outlet)
-        || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), comp.OutletName, out var outlet) ||
+            !_pipeNodeSystem.TryGetGas((outlet.Owner, outlet.Comp2, outlet.Comp1), out var outletGas))
             return;
 
         var dt = args.dt;

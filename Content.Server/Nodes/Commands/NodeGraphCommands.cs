@@ -44,8 +44,8 @@ public sealed class NodeGraphCommand : ToolshedCommand
             if (!TryComp<GraphNodeComponent>(nodeId, out var node))
                 continue;
 
-            _sys.MarkSplit(nodeId, node);
-            _sys.MarkMerge(nodeId, node);
+            _sys.MarkSplit((nodeId, node));
+            _sys.MarkMerge((nodeId, node));
         }
 
         return graphId;

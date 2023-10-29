@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
@@ -64,11 +65,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
-            if (!pump.Enabled
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, pump.InletName, out var inletId, out var inletNode, out var inlet)
-            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, pump.OutletName, out var outletId, out var outletNode, out var outlet)
-            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            if (!pump.Enabled ||
+                !TryComp<PolyNodeComponent>(uid, out var poly) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), pump.InletName, out var inlet) ||
+                !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), pump.OutletName, out var outlet) ||
+                !_pipeNodeSystem.TryGetGas((outlet.Owner, outlet.Comp2, outlet.Comp1), out var outletGas))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;

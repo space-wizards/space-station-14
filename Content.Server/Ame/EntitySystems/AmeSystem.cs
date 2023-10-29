@@ -33,51 +33,51 @@ public sealed partial class AmeSystem : EntitySystem
         _shieldQuery = GetEntityQuery<AmeShieldComponent>();
     }
 
-    public void AddCore(EntityUid ameId, EntityUid coreId, AmeComponent? ame = null)
+    public void AddCore(Entity<AmeComponent?> ame, EntityUid coreId)
     {
-        if (!Resolve(ameId, ref ame))
+        if (!Resolve(ame, ref ame.Comp))
             return;
 
-        ame.Cores.Add(coreId);
+        ame.Comp.Cores.Add(coreId);
 
-        UpdateVisuals(ameId, ame);
+        UpdateVisuals((ame, ame.Comp));
     }
 
-    public void RemoveCore(EntityUid ameId, EntityUid coreId, AmeComponent? ame = null)
+    public void RemoveCore(Entity<AmeComponent?> ame, EntityUid coreId)
     {
-        if (!Resolve(ameId, ref ame))
+        if (!Resolve(ame, ref ame.Comp))
             return;
 
-        ame.Cores.Remove(coreId);
+        ame.Comp.Cores.Remove(coreId);
 
         _shieldingSystem.UpdateVisuals(coreId, 0, false);
-        UpdateVisuals(ameId, ame);
+        UpdateVisuals((ame, ame.Comp));
     }
 
-    public void SetMasterController(EntityUid ameId, EntityUid? value, AmeComponent? ame = null)
+    public void SetMasterController(Entity<AmeComponent?> ame, EntityUid? value)
     {
-        if (!Resolve(ameId, ref ame))
+        if (!Resolve(ame, ref ame.Comp))
             return;
 
-        if (value == ame.MasterController)
+        if (value == ame.Comp.MasterController)
             return;
 
-        ame.MasterController = value;
+        ame.Comp.MasterController = value;
 
-        UpdateVisuals(ameId, ame);
+        UpdateVisuals((ame, ame.Comp));
     }
 
 
     /// <summary>
     /// 
     /// </summary>
-    public float InjectFuel(EntityUid ameId, int fuel, out bool overloading, AmeComponent? ame = null)
+    public float InjectFuel(Entity<AmeComponent?> ame, int fuel, out bool overloading)
     {
         overloading = false;
-        if (!Resolve(ameId, ref ame))
+        if (!Resolve(ame, ref ame.Comp))
             return 0;
 
-        var coreCount = ame.Cores.Count;
+        var coreCount = ame.Comp.Cores.Count;
         if (fuel <= 0 || coreCount <= 0)
             return 0;
 
@@ -109,7 +109,7 @@ public sealed partial class AmeSystem : EntitySystem
 
         overloading = true;
         var integrityCheck = 100;
-        foreach (var coreUid in ame.Cores)
+        foreach (var coreUid in ame.Comp.Cores)
         {
             if (!_shieldQuery.TryGetComponent(coreUid, out var core))
                 continue;
@@ -125,7 +125,7 @@ public sealed partial class AmeSystem : EntitySystem
 
         // Admin alert
         if (integrityCheck != 100)
-            _chatMan.SendAdminAlert($"AME overloading: {ToPrettyString(ameId)}");
+            _chatMan.SendAdminAlert($"AME overloading: {ToPrettyString(ame)}");
 
         return powerOutput;
     }
@@ -144,22 +144,22 @@ public sealed partial class AmeSystem : EntitySystem
     /// <summary>
     /// 
     /// </summary>
-    public int GetTotalStability(EntityUid ameId, AmeComponent? ame = null)
+    public int GetTotalStability(Entity<AmeComponent?> ame)
     {
-        if (!Resolve(ameId, ref ame))
+        if (!Resolve(ame, ref ame.Comp))
             return 100;
 
-        if (ame.Cores.Count < 1)
+        if (ame.Comp.Cores.Count < 1)
             return 100;
 
         var stability = 0;
-        foreach (var coreUid in ame.Cores)
+        foreach (var coreId in ame.Comp.Cores)
         {
-            if (_shieldQuery.TryGetComponent(coreUid, out var core))
+            if (_shieldQuery.TryGetComponent(coreId, out var core))
                 stability += core.CoreIntegrity;
         }
 
-        stability /= ame.Cores.Count;
+        stability /= ame.Comp.Cores.Count;
 
         return stability;
     }
@@ -167,12 +167,12 @@ public sealed partial class AmeSystem : EntitySystem
     /// <summary>
     /// 
     /// </summary>
-    public void ExplodeCores(EntityUid ameId, AmeComponent? ame = null)
+    public void ExplodeCores(Entity<AmeComponent?> ame)
     {
-        if (!Resolve(ameId, ref ame))
+        if (!Resolve(ame, ref ame.Comp))
             return;
 
-        if (ame.MasterController is not { } controllerId || !TryComp<AmeControllerComponent>(controllerId, out var controller))
+        if (ame.Comp.MasterController is not { } controllerId || !_controllerQuery.TryGetComponent(controllerId, out var controller))
             return;
 
         /*
@@ -182,35 +182,35 @@ public sealed partial class AmeSystem : EntitySystem
         // Note for the future. AME fuel jars currently operate at around 400kJ/unit of antimatter.
         // This gives each unit of antimatter around 1/5 the energy of a C4 demolition charge (~500g/charge).
         // If we assume that the syndie C4 charge is similar to the IRL version at 60 total intensity this gives 12 intensity/antimatter unit.
-        var radius = Math.Min(2 * ame.Cores.Count * controller.InjectionAmount, 8f);
+        var radius = Math.Min(2 * ame.Comp.Cores.Count * controller.InjectionAmount, 8f);
         _explosionSystem.TriggerExplosive(controllerId, radius: radius, delete: false);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public void UpdateVisuals(EntityUid ameId, AmeComponent? ame = null)
+    public void UpdateVisuals(Entity<AmeComponent?> ame)
     {
-        if (!Resolve(ameId, ref ame))
+        if (!Resolve(ame, ref ame.Comp))
             return;
 
         var injectionAmt = 0;
         var injecting = false;
 
-        if (TryComp<AmeControllerComponent>(ame.MasterController, out var controller))
+        if (_controllerQuery.TryGetComponent(ame.Comp.MasterController, out var controller))
         {
             injectionAmt = controller.InjectionAmount;
             injecting = controller.Injecting;
         }
 
-        var injectionRatio = ame.Cores.Count > 0 ? injectionAmt / ame.Cores.Count : 0;
-        foreach (var coreId in ame.Cores)
+        var injectionRatio = ame.Comp.Cores.Count > 0 ? injectionAmt / ame.Comp.Cores.Count : 0;
+        foreach (var coreId in ame.Comp.Cores)
             _shieldingSystem.UpdateVisuals(coreId, injectionRatio, injecting);
 
-        foreach (var nodeId in Comp<NodeGraphComponent>(ameId).Nodes)
+        foreach (var nodeId in Comp<NodeGraphComponent>(ame).Nodes)
         {
-            if (TryComp<AmeControllerComponent>(nodeId, out controller))
-                _controllerSystem.UpdateUi(nodeId, controller);
+            if (_controllerQuery.TryGetComponent(nodeId, out controller))
+                _controllerSystem.UpdateUi((nodeId, controller));
         }
     }
 }

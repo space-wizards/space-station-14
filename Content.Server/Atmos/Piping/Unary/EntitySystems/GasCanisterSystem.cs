@@ -93,7 +93,7 @@ public sealed class GasCanisterSystem : EntitySystem
         string? tankLabel = null;
         var tankPressure = 0f;
 
-        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, canister.PortName, out _, out var portNode, out _) && portNode.NumMergeableEdges > 0)
+        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), canister.PortName, out var port) && port.Comp1.NumMergeableEdges > 0)
             portStatus = true;
 
         if (containerManager.TryGetContainer(canister.ContainerName, out var tankContainer)
@@ -162,11 +162,10 @@ public sealed class GasCanisterSystem : EntitySystem
     {
         _atmos.React(canister.Air, canister);
 
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, canister.PortName, out var portId, out var portName, out var port)
-        && _pipeNodeSystem.TryGetGas(portId, out var portGas, port, portName) && portGas.Volume > 0f)
+        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), canister.PortName, out var port) &&
+            _pipeNodeSystem.TryGetGas((port.Owner, port.Comp2, port.Comp1), out var portGas) &&
+            portGas.Volume > 0f
+        )
             MixContainerWithPipeNet(canister.Air, portGas);
 
         ContainerManagerComponent? containerManager = null;
@@ -197,6 +196,9 @@ public sealed class GasCanisterSystem : EntitySystem
         DirtyUI(uid, canister, containerManager);
 
         canister.LastPressure = canister.Air.Pressure;
+
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
+            return;
 
         if (canister.Air.Pressure < 10)
         {

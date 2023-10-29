@@ -87,9 +87,9 @@ public sealed class TegSystem : EntitySystem
 
     private void OnNodeAdded(EntityUid uid, TegComponent comp, ref NodeAddedEvent args)
     {
-        DebugTools.Assert(args.Graph.Nodes.Count <= 3, "The TEG has at most 3 parts");
+        DebugTools.Assert(args.Graph.Comp.Nodes.Count <= 3, "The TEG has at most 3 parts");
 
-        var hostId = _nodeSystem.GetNodeHost(args.NodeId);
+        var hostId = _nodeSystem.GetNodeHost((args.Node.Owner, args.Node.Comp, null));
         if (HasComp<TegGeneratorComponent>(hostId))
         {
             DebugTools.Assert(comp.Generator is null, "The TEG has at most one generator");
@@ -100,7 +100,7 @@ public sealed class TegSystem : EntitySystem
         {
             var genDir = Transform(genId).LocalRotation.GetDir();
 
-            foreach (var nodeId in args.Graph.Nodes)
+            foreach (var nodeId in args.Graph.Comp.Nodes)
             {
                 var circHostId = _nodeSystem.GetNodeHost(nodeId);
 
@@ -120,7 +120,7 @@ public sealed class TegSystem : EntitySystem
 
         comp.IsFullyBuilt = comp.Generator is { } && comp.CirculatorA is { } && comp.CirculatorB is { };
 
-        foreach (var nodeId in args.Graph.Nodes)
+        foreach (var nodeId in args.Graph.Comp.Nodes)
         {
             hostId = _nodeSystem.GetNodeHost(nodeId);
 
@@ -134,7 +134,7 @@ public sealed class TegSystem : EntitySystem
 
     private void OnNodeRemoved(EntityUid uid, TegComponent comp, ref NodeRemovedEvent args)
     {
-        var hostId = _nodeSystem.GetNodeHost(args.NodeId);
+        var hostId = _nodeSystem.GetNodeHost((args.Node.Owner, args.Node.Comp, null));
         if (hostId == comp.Generator)
             comp.Generator = null;
         else if (hostId == comp.CirculatorA)
@@ -146,7 +146,7 @@ public sealed class TegSystem : EntitySystem
 
         comp.IsFullyBuilt = false;
 
-        foreach (var nodeId in args.Graph.Nodes)
+        foreach (var nodeId in args.Graph.Comp.Nodes)
         {
             hostId = _nodeSystem.GetNodeHost(nodeId);
 
@@ -360,10 +360,10 @@ public sealed class TegSystem : EntitySystem
     /// <returns>Null if the node group is not yet available. This can happen during initialization.</returns>
     private TegComponent? GetNodeGroup(EntityUid uidGenerator)
     {
-        if (!_nodeSystem.TryGetNode<TegNodeComponent>(uidGenerator, NodeNameTeg, out _, out var tegNode, out _))
+        if (!_nodeSystem.TryGetNode<TegNodeComponent>((uidGenerator, null), NodeNameTeg, out var tegNode))
             return null;
 
-        if (!TryComp<TegComponent>(tegNode.GraphId, out var teg))
+        if (!TryComp<TegComponent>(tegNode.Comp1.GraphId, out var teg))
             return null;
 
         return teg;
@@ -395,12 +395,12 @@ public sealed class TegSystem : EntitySystem
 
     private (GasMixture inletGas, GasMixture outletGas) GetPipes(EntityUid uidCirculator)
     {
-        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uidCirculator, NodeNameInlet, out var inletId, out var inletNode, out var inlet)
-        || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uidCirculator, null), NodeNameInlet, out var inlet) ||
+            !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas))
             inletGas = new GasMixture();
 
-        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uidCirculator, NodeNameInlet, out var outletId, out var outletNode, out var outlet)
-        || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uidCirculator, null), NodeNameInlet, out var outlet) ||
+            !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var outletGas))
             outletGas = new GasMixture();
 
         return (inletGas, outletGas);

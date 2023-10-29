@@ -2,6 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Examine;
@@ -26,11 +27,14 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, AtmosDeviceUpdateEvent args)
         {
-            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, gate.InletName, out var inletId, out var inletNode, out var inlet)
-            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+            if (!TryComp<PolyNodeComponent>(uid, out var poly))
                 return;
-            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, gate.OutletName, out var outletId, out var outletNode, out var outlet)
-            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), gate.InletName, out var inlet) ||
+                !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas))
+                return;
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), gate.OutletName, out var outlet) ||
+                !_pipeNodeSystem.TryGetGas((outlet.Owner, outlet.Comp2, outlet.Comp1), out var outletGas))
                 return;
 
             var n1 = inletGas.TotalMoles;

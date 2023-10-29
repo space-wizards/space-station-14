@@ -2,6 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Trinary.Components;
+using Content.Server.Nodes.Components;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
@@ -33,13 +34,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnUpdate(EntityUid uid, PressureControlledValveComponent comp, AtmosDeviceUpdateEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.InletName, out var inletId, out var inletNode, out var inlet)
-            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.ControlName, out var controlId, out var controlNode, out var control)
-            || !_pipeNodeSystem.TryGetGas(controlId, out var controlGas, control, controlNode)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.OutletName, out var outletId, out var outletNode, out var outlet)
-            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            if (!EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device) ||
+                !TryComp<PolyNodeComponent>(uid, out var poly) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), comp.InletName, out var inlet) ||
+                !_pipeNodeSystem.TryGetGas((inlet.Owner, inlet.Comp2, inlet.Comp1), out var inletGas) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), comp.ControlName, out var control) ||
+                !_pipeNodeSystem.TryGetGas((control.Owner, control.Comp2, control.Comp1), out var controlGas) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, poly), comp.OutletName, out var outlet) ||
+                !_pipeNodeSystem.TryGetGas((outlet.Owner, outlet.Comp2, outlet.Comp1), out var outletGas))
             {
                 comp.Enabled = false;
                 _ambientSoundSystem.SetAmbience(uid, false);

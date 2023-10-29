@@ -240,12 +240,12 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         if (!TryComp(uid, out CryoPodAirComponent? cryoPodAir))
             return;
 
-        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, cryoPod.PortName, out var portId, out var portNode, out var port))
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), cryoPod.PortName, out var port))
             return;
 
-        _atmosphereSystem.React(cryoPodAir.Air, port);
+        _atmosphereSystem.React(cryoPodAir.Air, port.Comp2);
 
-        if (_pipeNodeSystem.TryGetGas(portId, out var portGas, port, portNode) && portGas.Volume > 0f)
+        if (_pipeNodeSystem.TryGetGas((port.Owner, port.Comp2, port.Comp1), out var portGas) && portGas.Volume > 0f)
         {
             _gasCanisterSystem.MixContainerWithPipeNet(cryoPodAir.Air, portGas);
         }
@@ -259,8 +259,9 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var gasMixDict = new Dictionary<string, GasMixture?> { { Name(uid), cryoPodAir.Air } };
 
         // If it's connected to a port, include the port side
-        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, component.PortName, out var portId, out var portNode, out var port) && portNode.NumMergeableEdges > 0
-        && _pipeNodeSystem.TryGetGas(portId, out var portGas, port, portNode) && portGas.Volume > 0f)
+        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>((uid, null), component.PortName, out var port) &&
+            port.Comp1.NumMergeableEdges > 0 &&
+            _pipeNodeSystem.TryGetGas((port.Owner, port.Comp2, port.Comp1), out var portGas) && portGas.Volume > 0f)
             gasMixDict.Add(component.PortName, portGas);
 
         args.GasMixtures = gasMixDict;

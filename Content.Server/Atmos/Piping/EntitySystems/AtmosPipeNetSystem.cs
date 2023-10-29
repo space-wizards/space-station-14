@@ -41,13 +41,13 @@ public sealed partial class AtmosPipeNetSystem : EntitySystem
     /// <summary>
     /// 
     /// </summary>
-    public bool TryGetGas(EntityUid pipeId, [MaybeNullWhen(false)] out GasMixture gas, AtmosPipeNodeComponent? pipe = null, GraphNodeComponent? node = null)
+    public bool TryGetGas(Entity<AtmosPipeNodeComponent?, GraphNodeComponent?> pipe, [MaybeNullWhen(false)] out GasMixture gas)
     {
         gas = null;
-        if (!Resolve(pipeId, ref pipe, ref node))
+        if (!Resolve(pipe, ref pipe.Comp1, ref pipe.Comp2))
             return false;
 
-        if (!_netQuery.TryGetComponent(node.GraphId, out var pipeNet))
+        if (!_netQuery.TryGetComponent(pipe.Comp2.GraphId, out var pipeNet))
             return false;
 
         gas = pipeNet.Air;
@@ -88,7 +88,7 @@ public sealed partial class AtmosPipeNetSystem : EntitySystem
     /// </summary>
     private void OnNodeAdded(EntityUid uid, AtmosPipeNetComponent comp, ref NodeAddedEvent args)
     {
-        if (!_pipeQuery.TryGetComponent(args.NodeId, out var pipe))
+        if (!_pipeQuery.TryGetComponent(args.Node, out var pipe))
             return;
 
         comp.Air.Volume += pipe.Volume;
@@ -99,7 +99,7 @@ public sealed partial class AtmosPipeNetSystem : EntitySystem
     /// </summary>
     private void OnNodeRemoved(EntityUid uid, AtmosPipeNetComponent comp, ref NodeRemovedEvent args)
     {
-        if (!_pipeQuery.TryGetComponent(args.NodeId, out var pipe))
+        if (!_pipeQuery.TryGetComponent(args.Node, out var pipe))
             return;
 
         // We want to do this whether or not the pipe is getting moved to a new graph
@@ -113,7 +113,7 @@ public sealed partial class AtmosPipeNetSystem : EntitySystem
     /// </summary>
     private void OnSplit(EntityUid uid, AtmosPipeNetComponent comp, ref SplitEvent args)
     {
-        if (!_netQuery.TryGetComponent(args.SplitId, out var split) || comp.Air.Volume + split.Air.Volume <= 0)
+        if (!_netQuery.TryGetComponent(args.Split, out var split) || comp.Air.Volume + split.Air.Volume <= 0)
             return;
 
         _atmosSystem.DivideInto(comp.Air, new List<GasMixture>(2) { comp.Air, split.Air });
@@ -125,7 +125,7 @@ public sealed partial class AtmosPipeNetSystem : EntitySystem
     /// </summary>
     private void OnMerging(EntityUid uid, AtmosPipeNetComponent comp, ref MergingEvent args)
     {
-        if (!_netQuery.TryGetComponent(args.MergeId, out var merging))
+        if (!_netQuery.TryGetComponent(args.Merge, out var merging))
             return;
 
         _atmosSystem.Merge(comp.Air, merging.Air);

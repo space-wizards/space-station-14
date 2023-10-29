@@ -33,8 +33,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             foreach (var (nodeId, node) in _nodeSystem.EnumerateNodes(uid))
             {
-                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode)
-                || !_pipeNodeSystem.TryGetGas(nodeId, out var nodeGas, pipeNode, node))
+                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipe) ||
+                    !_pipeNodeSystem.TryGetGas((nodeId, pipe, node), out var nodeGas))
                     continue;
 
                 if (nodeGas.Pressure - environment.Pressure < 2 * Atmospherics.OneAtmosphere)
@@ -62,8 +62,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             var timesLost = 0;
             foreach (var (nodeId, node) in _nodeSystem.EnumerateNodes(uid))
             {
-                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode)
-                || !_pipeNodeSystem.TryGetGas(nodeId, out var nodeGas, pipeNode, node))
+                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode) ||
+                    !_pipeNodeSystem.TryGetGas((nodeId, pipeNode, node), out var nodeGas))
                     continue;
 
                 var difference = nodeGas.Pressure - environment.Pressure;
@@ -74,8 +74,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             var sharedLoss = lost / timesLost;
             foreach (var (nodeId, node) in _nodeSystem.EnumerateNodes(uid))
             {
-                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode)
-                || !_pipeNodeSystem.TryGetGas(nodeId, out var nodeGas, pipeNode, node))
+                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode) ||
+                    !_pipeNodeSystem.TryGetGas((nodeId, pipeNode, node), out var nodeGas))
                     continue;
 
                 _atmosphere.Merge(environment, nodeGas.Remove(sharedLoss));

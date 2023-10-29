@@ -29,48 +29,48 @@ public sealed partial class PortNodeSystem : EntitySystem
     /// Sets whether this port can create and maintain links to other nodes.
     /// Also queues an update to the nodes edges so that the change takes effect.
     /// </summary>
-    public void SetConnectable(EntityUid uid, bool value, PortNodeComponent? port = null)
+    public void SetConnectable(Entity<PortNodeComponent?> port, bool value)
     {
-        if (!Resolve(uid, ref port))
+        if (!Resolve(port, ref port.Comp))
             return;
 
-        if (value == port.ConnectionsEnabled)
+        if (value == port.Comp.ConnectionsEnabled)
             return;
 
-        port.ConnectionsEnabled = value;
-        _nodeSystem.QueueEdgeUpdate(uid);
+        port.Comp.ConnectionsEnabled = value;
+        _nodeSystem.QueueEdgeUpdate(port);
     }
 
     /// <summary>
     /// Sets the tag this autoconnector uses to filter ports to connect to.
     /// Also queues an update to the nodes edges so that the change takes effect.
     /// </summary>
-    public void SetTag(EntityUid uid, string? value, PortNodeComponent? port = null)
+    public void SetTag(Entity<PortNodeComponent?> port, string? value)
     {
-        if (!Resolve(uid, ref port))
+        if (!Resolve(port, ref port.Comp))
             return;
 
-        if (value == port.Tag)
+        if (value == port.Comp.Tag)
             return;
 
-        port.Tag = value;
-        _nodeSystem.QueueEdgeUpdate(uid);
+        port.Comp.Tag = value;
+        _nodeSystem.QueueEdgeUpdate(port);
     }
 
     /// <summary>
     /// Sets what edge flags this autoconnector imposes on the edges it creates or enforces.
     /// Also queues an update to the nodes edges so that the change takes effect.
     /// </summary>
-    public void SetEdgeFlags(EntityUid uid, EdgeFlags value, PortNodeComponent? port = null)
+    public void SetEdgeFlags(Entity<PortNodeComponent?> port, EdgeFlags value)
     {
-        if (!Resolve(uid, ref port))
+        if (!Resolve(port, ref port.Comp))
             return;
 
-        if (value == port.Flags)
+        if (value == port.Comp.Flags)
             return;
 
-        port.Flags = value;
-        _nodeSystem.QueueEdgeUpdate(uid);
+        port.Comp.Flags = value;
+        _nodeSystem.QueueEdgeUpdate(port);
     }
 
 

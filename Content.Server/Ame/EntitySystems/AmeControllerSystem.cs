@@ -59,146 +59,146 @@ public sealed class AmeControllerSystem : EntitySystem
         while (query.MoveNext(out var uid, out var controller, out var nodes))
         {
             if (controller.NextUpdate <= curTime)
-                UpdateController(uid, curTime, controller, nodes);
+                UpdateController((uid, controller, nodes), curTime);
             else if (controller.NextUIUpdate <= curTime)
-                UpdateUi(uid, controller);
+                UpdateUi((uid, controller));
         }
     }
 
-    private void UpdateController(EntityUid uid, TimeSpan curTime, AmeControllerComponent? controller = null, PolyNodeComponent? poly = null)
+    private void UpdateController(Entity<AmeControllerComponent?, PolyNodeComponent?> controller, TimeSpan curTime)
     {
-        if (!Resolve(uid, ref controller))
+        if (!Resolve(controller, ref controller.Comp1))
             return;
 
-        controller.LastUpdate = curTime;
-        controller.NextUpdate = curTime + controller.UpdatePeriod;
+        controller.Comp1.LastUpdate = curTime;
+        controller.Comp1.NextUpdate = curTime + controller.Comp1.UpdatePeriod;
         // update the UI regardless of other factors to update the power readings
-        UpdateUi(uid, controller);
+        UpdateUi((controller.Owner, controller.Comp1));
 
-        if (!controller.Injecting)
+        if (!controller.Comp1.Injecting)
             return;
-        if (!TryGetAmeGraph(uid, out var ameId, out var ame, poly: poly))
+        if (!TryGetAmeGraph((controller.Owner, null, controller.Comp2), out var ame))
             return;
 
-        if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar) && fuelJar.FuelAmount > 0)
+        if (TryComp<AmeFuelContainerComponent>(controller.Comp1.JarSlot.ContainedEntity, out var fuelJar) && fuelJar.FuelAmount > 0)
         {
-            var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-            var powerOutput = _ameSystem.InjectFuel(ameId, availableInject, out var overloading, ame);
+            var availableInject = Math.Min(controller.Comp1.InjectionAmount, fuelJar.FuelAmount);
+            var powerOutput = _ameSystem.InjectFuel((ame.Owner, ame.Comp), availableInject, out var overloading);
             fuelJar.FuelAmount -= availableInject;
 
-            if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
+            if (TryComp<PowerSupplierComponent>(controller, out var powerOutlet))
                 powerOutlet.MaxSupply = powerOutput;
 
             if (availableInject > 0)
-                _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+                _audioSystem.PlayPvs(controller.Comp1.InjectSound, controller, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
 
-            UpdateUi(uid, controller);
+            UpdateUi((controller.Owner, controller.Comp1));
         }
         else
         {
-            SetInjecting(uid, false, null, controller);
+            SetInjecting((controller.Owner, controller.Comp1), false, null);
         }
 
-        controller.Stability = _ameSystem.GetTotalStability(ameId, ame);
+        controller.Comp1.Stability = _ameSystem.GetTotalStability((ame.Owner, ame.Comp));
 
-        _ameSystem.UpdateVisuals(ameId, ame);
-        UpdateDisplay(uid, controller.Stability, controller);
+        _ameSystem.UpdateVisuals((ame.Owner, ame.Comp));
+        UpdateDisplay((controller.Owner, controller.Comp1, null), controller.Comp1.Stability);
 
-        if (controller.Stability <= 0)
-            _ameSystem.ExplodeCores(ameId, ame);
+        if (controller.Comp1.Stability <= 0)
+            _ameSystem.ExplodeCores((ame.Owner, ame.Comp));
     }
 
-    public void UpdateUi(EntityUid uid, AmeControllerComponent? controller = null)
+    public void UpdateUi(Entity<AmeControllerComponent?> controller)
     {
-        if (!Resolve(uid, ref controller))
+        if (!Resolve(controller, ref controller.Comp))
             return;
 
-        if (!_userInterfaceSystem.TryGetUi(uid, AmeControllerUiKey.Key, out var bui))
+        if (!_userInterfaceSystem.TryGetUi(controller, AmeControllerUiKey.Key, out var bui))
             return;
 
-        var state = GetUiState(uid, controller);
+        var state = GetUiState((controller.Owner, controller.Comp));
         _userInterfaceSystem.SetUiState(bui, state);
 
-        controller.NextUIUpdate = _gameTiming.CurTime + controller.UpdateUIPeriod;
+        controller.Comp.NextUIUpdate = _gameTiming.CurTime + controller.Comp.UpdateUIPeriod;
     }
 
-    private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
+    private AmeControllerBoundUserInterfaceState GetUiState(Entity<AmeControllerComponent> controller)
     {
-        var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
+        var powered = !TryComp<ApcPowerReceiverComponent>(controller, out var powerSource) || powerSource.Powered;
         var coreCount = 0;
         // how much power can be produced at the current settings, in kW
         // we don't use max. here since this is what is set in the Controller, not what the AME is actually producing
         float targetedPowerSupply = 0;
-        if (TryGetAmeGraph(uid, out var _, out var graph))
+        if (TryGetAmeGraph((controller.Owner, null, null), out var ame))
         {
-            coreCount = graph.Cores.Count;
-            targetedPowerSupply = _ameSystem.CalculatePower(controller.InjectionAmount, coreCount) / 1000;
+            coreCount = ame.Comp.Cores.Count;
+            targetedPowerSupply = _ameSystem.CalculatePower(controller.Comp.InjectionAmount, coreCount) / 1000;
         }
 
         // set current power statistics in kW
         float currentPowerSupply = 0;
-        if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet) && coreCount > 0)
+        if (TryComp<PowerSupplierComponent>(controller, out var powerOutlet) && coreCount > 0)
         {
             currentPowerSupply = powerOutlet.CurrentSupply / 1000;
         }
 
-        var hasJar = Exists(controller.JarSlot.ContainedEntity);
-        if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        var hasJar = Exists(controller.Comp.JarSlot.ContainedEntity);
+        if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.Comp.JarSlot.ContainedEntity, out var jar))
+            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(controller), false, hasJar, 0, controller.Comp.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(controller), controller.Comp.Injecting, hasJar, jar.FuelAmount, controller.Comp.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
     }
 
     private bool IsMasterController(EntityUid uid)
     {
-        return TryGetAmeGraph(uid, out var _, out var ame) && ame.MasterController == uid;
+        return TryGetAmeGraph((uid, null, null), out var ame) && ame.Comp.MasterController == uid;
     }
 
-    private bool TryGetAmeGraph(EntityUid uid, out EntityUid ameId, [MaybeNullWhen(false)] out AmeComponent ame, GraphNodeComponent? node = null, PolyNodeComponent? poly = null)
+    private bool TryGetAmeGraph(Entity<GraphNodeComponent?, PolyNodeComponent?> ameNode, out Entity<AmeComponent> ame)
     {
-        foreach (var (graphId, _) in _nodeSystem.EnumerateGraphs(uid, node, poly))
+        ame = (EntityUid.Invalid, default!);
+        foreach (var graph in _nodeSystem.EnumerateGraphs(ameNode))
         {
-            if (!TryComp(graphId, out ame))
+            if (!TryComp(graph, out ame.Comp!))
                 continue;
 
-            ameId = graphId;
+            ame.Owner = graph;
             return true;
         }
 
-        (ameId, ame) = (EntityUid.Invalid, null);
         return false;
     }
 
-    public void TryEject(EntityUid uid, EntityUid? user = null, AmeControllerComponent? controller = null)
+    public void TryEject(Entity<AmeControllerComponent?> controller, EntityUid? user = null)
     {
-        if (!Resolve(uid, ref controller))
+        if (!Resolve(controller, ref controller.Comp))
             return;
-        if (controller.Injecting)
+        if (controller.Comp.Injecting)
             return;
 
-        var jar = controller.JarSlot.ContainedEntity;
+        var jar = controller.Comp.JarSlot.ContainedEntity;
         if (!Exists(jar))
             return;
 
-        controller.JarSlot.Remove(jar!.Value);
-        UpdateUi(uid, controller);
+        controller.Comp.JarSlot.Remove(jar!.Value);
+        UpdateUi(controller);
         if (Exists(user))
             _handsSystem.PickupOrDrop(user, jar!.Value);
     }
 
-    public void SetInjecting(EntityUid uid, bool value, EntityUid? user = null, AmeControllerComponent? controller = null)
+    public void SetInjecting(Entity<AmeControllerComponent?> controller, bool value, EntityUid? user = null)
     {
-        if (!Resolve(uid, ref controller))
+        if (!Resolve(controller, ref controller.Comp))
             return;
-        if (controller.Injecting == value)
+        if (controller.Comp.Injecting == value)
             return;
 
-        controller.Injecting = value;
-        UpdateDisplay(uid, controller.Stability, controller);
-        if (!value && TryComp<PowerSupplierComponent>(uid, out var powerOut))
+        controller.Comp.Injecting = value;
+        UpdateDisplay((controller.Owner, controller.Comp, null), controller.Comp.Stability);
+        if (!value && TryComp<PowerSupplierComponent>(controller, out var powerOut))
             powerOut.MaxSupply = 0;
 
-        UpdateUi(uid, controller);
+        UpdateUi(controller);
 
         // Logging
         if (!HasComp<MindContainerComponent>(user))
@@ -208,50 +208,50 @@ public sealed class AmeControllerSystem : EntitySystem
         _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{EntityManager.ToPrettyString(user.Value):player} has set the AME to {humanReadableState}");
     }
 
-    public void ToggleInjecting(EntityUid uid, EntityUid? user = null, AmeControllerComponent? controller = null)
+    public void ToggleInjecting(Entity<AmeControllerComponent?> controller, EntityUid? user = null)
     {
-        if (!Resolve(uid, ref controller))
+        if (!Resolve(controller, ref controller.Comp))
             return;
-        SetInjecting(uid, !controller.Injecting, user, controller);
+        SetInjecting(controller, !controller.Comp.Injecting, user);
     }
 
-    public void SetInjectionAmount(EntityUid uid, int value, EntityUid? user = null, AmeControllerComponent? controller = null)
+    public void SetInjectionAmount(Entity<AmeControllerComponent?> controller, int value, EntityUid? user = null)
     {
-        if (!Resolve(uid, ref controller))
+        if (!Resolve(controller, ref controller.Comp))
             return;
-        if (controller.InjectionAmount == value)
+        if (controller.Comp.InjectionAmount == value)
             return;
 
-        var oldValue = controller.InjectionAmount;
-        controller.InjectionAmount = value;
+        var oldValue = controller.Comp.InjectionAmount;
+        controller.Comp.InjectionAmount = value;
 
-        UpdateUi(uid, controller);
+        UpdateUi(controller);
 
         // Logging
         if (!HasComp<MindContainerComponent>(user))
             return;
 
-        var humanReadableState = controller.Injecting ? "Inject" : "Not inject";
-        _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{EntityManager.ToPrettyString(user.Value):player} has set the AME to inject {controller.InjectionAmount} while set to {humanReadableState}");
+        var humanReadableState = controller.Comp.Injecting ? "Inject" : "Not inject";
+        _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{EntityManager.ToPrettyString(user.Value):player} has set the AME to inject {controller.Comp.InjectionAmount} while set to {humanReadableState}");
 
         // Admin alert
         var safeLimit = 0;
-        if (TryGetAmeGraph(uid, out var _, out var graph))
-            safeLimit = graph.Cores.Count * 2;
+        if (TryGetAmeGraph((controller.Owner, null, null), out var ame))
+            safeLimit = ame.Comp.Cores.Count * 2;
 
         if (oldValue <= safeLimit && value > safeLimit)
-            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
+            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.Comp.InjectionAmount}");
     }
 
-    public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
+    public void AdjustInjectionAmount(Entity<AmeControllerComponent?> controller, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null)
     {
-        if (Resolve(uid, ref controller))
-            SetInjectionAmount(uid, MathHelper.Clamp(controller.InjectionAmount + delta, min, max), user, controller);
+        if (Resolve(controller, ref controller.Comp))
+            SetInjectionAmount(controller, MathHelper.Clamp(controller.Comp.InjectionAmount + delta, min, max), user);
     }
 
-    private void UpdateDisplay(EntityUid uid, int stability, AmeControllerComponent? controller = null, AppearanceComponent? appearance = null)
+    private void UpdateDisplay(Entity<AmeControllerComponent?, AppearanceComponent?> controller, int stability)
     {
-        if (!Resolve(uid, ref controller, ref appearance))
+        if (!Resolve(controller, ref controller.Comp1, ref controller.Comp2))
             return;
 
         var ameControllerState = stability switch
@@ -261,14 +261,14 @@ public sealed class AmeControllerSystem : EntitySystem
             _ => AmeControllerState.On,
         };
 
-        if (!controller.Injecting)
+        if (!controller.Comp1.Injecting)
             ameControllerState = AmeControllerState.Off;
 
         _appearanceSystem.SetData(
-            uid,
+            controller.Owner,
             AmeControllerVisuals.DisplayState,
             ameControllerState,
-            appearance
+            controller.Comp2
         );
     }
 
@@ -301,12 +301,12 @@ public sealed class AmeControllerSystem : EntitySystem
         comp.JarSlot.Insert(args.Used);
         _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-success"), uid, args.User, PopupType.Medium);
 
-        UpdateUi(uid, comp);
+        UpdateUi((uid, comp));
     }
 
     private void OnPowerChanged(EntityUid uid, AmeControllerComponent comp, ref PowerChangedEvent args)
     {
-        UpdateUi(uid, comp);
+        UpdateUi((uid, comp));
     }
 
     private void OnUiButtonPressed(EntityUid uid, AmeControllerComponent comp, UiButtonPressedMessage msg)
@@ -321,30 +321,30 @@ public sealed class AmeControllerSystem : EntitySystem
             _ => true,
         };
 
-        if (!PlayerCanUseController(uid, user!.Value, needsPower, comp))
+        if (!PlayerCanUseController((uid, comp), user!.Value, needsPower))
             return;
 
         _audioSystem.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
         switch (msg.Button)
         {
             case UiButton.Eject:
-                TryEject(uid, user: user, controller: comp);
+                TryEject((uid, comp), user: user);
                 break;
             case UiButton.ToggleInjection:
-                ToggleInjecting(uid, user: user, controller: comp);
+                ToggleInjecting((uid, comp), user: user);
                 break;
             case UiButton.IncreaseFuel:
-                AdjustInjectionAmount(uid, +2, user: user, controller: comp);
+                AdjustInjectionAmount((uid, comp), +2, user: user);
                 break;
             case UiButton.DecreaseFuel:
-                AdjustInjectionAmount(uid, -2, user: user, controller: comp);
+                AdjustInjectionAmount((uid, comp), -2, user: user);
                 break;
         }
 
-        if (TryGetAmeGraph(uid, out var graphId, out var graph))
-            _ameSystem.UpdateVisuals(graphId, graph);
+        if (TryGetAmeGraph((uid, null, null), out var ame))
+            _ameSystem.UpdateVisuals((ame.Owner, ame.Comp));
 
-        UpdateUi(uid, comp);
+        UpdateUi((uid, comp));
     }
 
     /// <summary>
@@ -352,9 +352,9 @@ public sealed class AmeControllerSystem : EntitySystem
     /// </summary>
     /// <param name="playerEntity">The player entity.</param>
     /// <returns>Returns true if the entity can use the controller, and false if it cannot.</returns>
-    private bool PlayerCanUseController(EntityUid uid, EntityUid playerEntity, bool needsPower = true, AmeControllerComponent? controller = null)
+    private bool PlayerCanUseController(Entity<AmeControllerComponent?> controller, EntityUid playerEntity, bool needsPower = true)
     {
-        if (!Resolve(uid, ref controller))
+        if (!Resolve(controller, ref controller.Comp))
             return false;
 
         //Need player entity to check if they are still able to use the dispenser
@@ -362,7 +362,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return false;
 
         //Check if device is powered
-        if (needsPower && TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) && !powerSource.Powered)
+        if (needsPower && TryComp<ApcPowerReceiverComponent>(controller, out var powerSource) && !powerSource.Powered)
             return false;
 
         return true;
@@ -371,35 +371,36 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private void OnAddedToGraph(EntityUid uid, AmeControllerComponent comp, ref AddedToGraphEvent args)
     {
-        if (!TryComp<AmeComponent>(args.GraphId, out var ame))
+        if (!TryComp<AmeComponent>(args.Graph, out var ame))
             return;
 
         if (ame.MasterController is { })
             return;
 
-        _ameSystem.SetMasterController(args.GraphId, uid, ame);
+        _ameSystem.SetMasterController((args.Graph.Owner, ame), uid);
 
-        UpdateUi(uid, comp);
+        UpdateUi((uid, comp));
     }
 
     private void OnRemovedFromGraph(EntityUid uid, AmeControllerComponent comp, ref RemovedFromGraphEvent args)
     {
-        if (!TryComp<AmeComponent>(args.GraphId, out var ame))
+        if (!TryComp<AmeComponent>(args.Graph, out var ame))
             return;
 
         if (uid != ame.MasterController)
             return;
 
-        foreach (var nodeId in args.Graph.Nodes)
+        foreach (var nodeId in args.Graph.Comp.Nodes)
         {
-            if (!HasComp<AmeControllerComponent>(nodeId) || nodeId == uid)
+            var hostId = _nodeSystem.GetNodeHost((nodeId, null, null));
+            if (!HasComp<AmeControllerComponent>(hostId) || hostId == uid)
                 continue;
 
-            _ameSystem.SetMasterController(args.GraphId, nodeId, ame);
+            _ameSystem.SetMasterController((args.Graph, ame), hostId);
             return;
         }
 
-        _ameSystem.SetMasterController(args.GraphId, null, ame);
+        _ameSystem.SetMasterController((args.Graph, ame), null);
     }
 
     private void OnAddedToGraph(EntityUid uid, AmeControllerComponent comp, ref ProxyNodeRelayEvent<AddedToGraphEvent> args)
