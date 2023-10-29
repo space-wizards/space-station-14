@@ -731,7 +731,7 @@
     layers:
     - state: green
     - state: luminous_person
-      sprite: Mobs/Elemental/living light/luminous_person.rsi
+      sprite: Mobs/Elemental/living_light/luminous_person.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobLuminousPerson
@@ -745,7 +745,7 @@
     layers:
     - state: green
     - state: luminous_object
-      sprite: Mobs/Elemental/living light/luminous_object.rsi
+      sprite: Mobs/Elemental/living_light/luminous_object.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobLuminousОbject
@@ -759,7 +759,7 @@
     layers:
     - state: green
     - state: luminous_entity
-      sprite: Mobs/Elemental/living light/luminous_entity.rsi
+      sprite: Mobs/Elemental/living_light/luminous_entity.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobLuminousEntity

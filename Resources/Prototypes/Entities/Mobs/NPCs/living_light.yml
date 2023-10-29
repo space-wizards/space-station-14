@@ -22,7 +22,7 @@
     baseSprintSpeed: 5.5
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Elemental/living light/luminous_person.rsi
+    sprite: Mobs/Elemental/living_light/luminous_person.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: luminous_person
@@ -117,7 +117,7 @@
   description: A small glowing object that causes burns on the skin with its glow.
   components:
   - type: Sprite
-    sprite: Mobs/Elemental/living light/luminous_object.rsi
+    sprite: Mobs/Elemental/living_light/luminous_object.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: luminous_object
@@ -157,7 +157,7 @@
   description: A blinding translucent entity, the bright eye seems dangerous and scalding.
   components:
   - type: Sprite
-    sprite: Mobs/Elemental/living light/luminous_entity.rsi
+    sprite: Mobs/Elemental/living_light/luminous_entity.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: luminous_entity
