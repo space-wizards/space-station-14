@@ -1,11 +1,4 @@
 Entries:
-- author: kseandi
-  changes:
-  - {message: 'The new airlock painters are so accurate that you can use them to paint
-      pipes. Because of this, Nanotrasen decided to rename them to "Spray painters".',
-    type: Tweak}
-  id: 4577
-  time: '2023-08-14T12:06:21.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Centcom will now sell Cargo gas canisters at a vastly reduced (and consistent!)
@@ -2916,3 +2909,9 @@ Entries:
       so it's smoother. You may need to adjust your master audio volume., type: Tweak}
   id: 5076
   time: '2023-10-29T03:58:23.0000000+00:00'
+- author: Simyon264
+  changes:
+  - {message: 'The PDA will now ring again, when a new station article gets published.
+      Reporters rejoice!', type: Fix}
+  id: 5077
+  time: '2023-10-29T10:37:40.0000000+00:00'
