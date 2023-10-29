@@ -8,12 +8,12 @@ namespace Content.Client.UserInterface.XamlExtensions;
 [PublicAPI]
 public sealed class TexExtension
 {
-    private IResourceCache _resourceCache;
+    private IClientResourceCache _resourceCache;
     public string Path { get; }
 
     public TexExtension(string path)
     {
-        _resourceCache = IoCManager.Resolve<IResourceCache>();
+        _resourceCache = IoCManager.Resolve<IClientResourceCache>();
         Path = path;
     }
 

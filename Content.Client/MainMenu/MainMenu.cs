@@ -23,7 +23,7 @@ namespace Content.Client.MainMenu
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameController _controllerProxy = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IClientResourceCache _resourceCache = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private MainMenuControl _mainMenuControl = default!;

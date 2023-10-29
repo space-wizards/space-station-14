@@ -41,7 +41,7 @@ namespace Content.Client.Stylesheets
         protected StyleBoxTexture BaseAngleRect { get; }
         protected StyleBoxTexture AngleBorderRect { get; }
 
-        protected StyleBase(IResourceCache resCache)
+        protected StyleBase(IClientResourceCache resCache)
         {
             var notoSans12 = resCache.GetFont
             (

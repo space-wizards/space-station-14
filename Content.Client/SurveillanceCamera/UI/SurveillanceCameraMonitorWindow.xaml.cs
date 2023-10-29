@@ -18,7 +18,7 @@ namespace Content.Client.SurveillanceCamera.UI;
 public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IClientResourceCache _resourceCache = default!;
 
     public event Action<string>? CameraSelected;
     public event Action<string>? SubnetOpened;

@@ -14,7 +14,7 @@ public sealed class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IClientResourceCache _resourceCache = default!;
 
     public override void Initialize()
     {
@@ -138,6 +138,6 @@ public sealed class DoorSystem : SharedDoorSystem
     protected override void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
     {
         if (GameTiming.InPrediction && GameTiming.IsFirstTimePredicted)
-            Audio.Play(soundSpecifier, Filter.Local(), uid, false, audioParams);
+            Audio.PlayEntity(soundSpecifier, Filter.Local(), uid, false, audioParams);
     }
 }

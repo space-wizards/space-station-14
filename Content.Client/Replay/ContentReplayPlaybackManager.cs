@@ -135,7 +135,6 @@ public sealed class ContentReplayPlaybackManager
         {
             case RoundEndMessageEvent:
             case PopupEvent:
-            case AudioMessage:
             case PickupAnimationEvent:
             case MeleeLungeEvent:
             case SharedGunSystem.HitscanEvent:

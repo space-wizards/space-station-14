@@ -39,7 +39,7 @@ public sealed class PopupOverlay : Overlay
         IEntityManager entManager,
         IPlayerManager playerMgr,
         IPrototypeManager protoManager,
-        IResourceCache cache,
+        IClientResourceCache cache,
         IUserInterfaceManager uiManager,
         PopupSystem popup)
     {

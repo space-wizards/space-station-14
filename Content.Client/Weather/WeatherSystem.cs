@@ -1,8 +1,10 @@
 using System.Numerics;
 using Content.Shared.Weather;
+using Robust.Client.Audio;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -10,6 +12,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Weather;
 
@@ -55,18 +58,18 @@ public sealed class WeatherSystem : SharedWeatherSystem
         {
             weather.LastOcclusion = 0f;
             weather.LastAlpha = 0f;
-            weather.Stream?.Stop();
-            weather.Stream = null;
+            weather.Stream = _audio.Stop(weather.Stream);
             return;
         }
 
         if (!Timing.IsFirstTimePredicted || weatherProto.Sound == null)
             return;
 
-        weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true);
+        weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true).Value.Entity;
         var volumeMod = MathF.Pow(10, weatherProto.Sound.Params.Volume / 10f);
 
-        var stream = (AudioSystem.PlayingStream) weather.Stream!;
+        var stream = weather.Stream.Value;
+        var comp = Comp<AudioComponent>(stream);
         var alpha = weather.LastAlpha;
         alpha = MathF.Pow(alpha, 2f) * volumeMod;
         // TODO: Lerp this occlusion.
@@ -132,7 +135,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 {
                     occlusion = _physics.IntersectRayPenetration(entXform.MapID,
                         new CollisionRay(entPos, sourceRelative.Normalized(), _audio.OcclusionCollisionMask),
-                        sourceRelative.Length(), stream.TrackingEntity);
+                        sourceRelative.Length(), stream);
                 }
             }
         }
@@ -148,8 +151,8 @@ public sealed class WeatherSystem : SharedWeatherSystem
             weather.LastAlpha += (alpha - weather.LastAlpha) * AlphaLerpRate * frameTime;
 
         // Full volume if not on grid
-        stream.Source.SetVolumeDirect(weather.LastAlpha);
-        stream.Source.SetOcclusion(weather.LastOcclusion);
+        comp.Gain = weather.LastAlpha;
+        comp.Occlusion = weather.LastOcclusion;
     }
 
     protected override void EndWeather(EntityUid uid, WeatherComponent component, string proto)
@@ -172,9 +175,8 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return true;
 
         // TODO: Fades (properly)
-        weather.Stream?.Stop();
-        weather.Stream = null;
-        weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true);
+        weather.Stream = _audio.Stop(weather.Stream);
+        weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true)?.Entity;
         return true;
     }
 
