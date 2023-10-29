@@ -41,30 +41,8 @@ public sealed class ActionContainerSystem : EntitySystem
 
         mindComp.MindActionsContainer ??= EnsureComp<ActionsContainerComponent>(mindId);
 
-        var originalEnt = mindComp.OriginalOwnedEntity; // compare this
-        var mindEnt = mindComp.OwnedEntity; // against this
-
-        // TODO: Check when actions are being removed.
-        // Actions should be temporarily removed and then re-granted, rather than wiped
-
-        if (!HasComp<GhostComponent>(uid))
-        {
-            // TODO: Prevent some actions from being transferred (combat mode)
-            // TODO: Prevent mind actions from following to a different ghost role (check ghost roles on transfer?)
-            // TODO: Shouldn't be an all or nothing (some actions should be transferred and some shouldn't)
-            // TODO: Actions that were already in the mind should be granted
-            // TODO: Actions that are new should be transferred
-            if (ShouldTransferAllActions(uid, component))
-            {
-                TransferAllActions(uid, mindId, component, mindComp.MindActionsContainer);
-            }
-
-            var mindCont = mindComp.MindActionsContainer.Container.ContainedEntities;
-            var newCont = component.Container.ContainedEntities;
-
-            // If new container already has these actions, don't grant
+        if (!HasComp<GhostComponent>(uid) && mindComp.MindActionsContainer.Container.ContainedEntities.Count > 0 )
             _actions.GrantContainedActions(uid, mindId);
-        }
     }
 
     private void OnMindRemoved(EntityUid uid, ActionsContainerComponent component, MindRemovedMessage args)

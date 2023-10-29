@@ -123,6 +123,7 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     The preferred entity to raise an action event on.
     /// </summary>
+    [DataField("preferredEntity"), ViewVariables]
     public EntityUid PreferredEntity;
 
     /// <summary>
