@@ -16,7 +16,6 @@ public sealed class TextScreenSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
 
-
     public override void Initialize()
     {
         base.Initialize();
@@ -60,11 +59,6 @@ public sealed class TextScreenSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        UpdateTimer();
-    }
-
-    private void UpdateTimer()
-    {
         var query = EntityQueryEnumerator<ActiveTextScreenTimerComponent, TextScreenComponent>();
         while (query.MoveNext(out var uid, out var active, out var timer))
         {
