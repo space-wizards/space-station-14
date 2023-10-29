@@ -41,7 +41,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            _entities.System<MindSystem>().ControlMob(player.UserId, target);
+            _entities.System<MindSystem>().ControlMob(player.UserId, target.Value);
         }
     }
 }
