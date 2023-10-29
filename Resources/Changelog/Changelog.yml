@@ -1,10 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Fixed an issue which was preventing airlock safeguards from being installed
-      on glass airlocks, type: Fix}
-  id: 4576
-  time: '2023-08-14T06:42:02.0000000+00:00'
 - author: kseandi
   changes:
   - {message: 'The new airlock painters are so accurate that you can use them to paint
@@ -2908,3 +2902,17 @@ Entries:
   - {message: The bee plush can now be worn on your head., type: Add}
   id: 5075
   time: '2023-10-29T03:55:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio rework is in which fixes a lot of audio bugs but may also introduce
+      new ones., type: Tweak}
+  - {message: Grid audio will now attenuate properly over distance and won't be ear
+      rupturingly loud., type: Fix}
+  - {message: FTL sound should no longer persist as it's attached to the shuttle instead
+      of being global., type: Fix}
+  - {message: Audio can now start at an offset so if an audio source comes into range
+      it won't play from the start., type: Fix}
+  - {message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
+      so it's smoother. You may need to adjust your master audio volume., type: Tweak}
+  id: 5076
+  time: '2023-10-29T03:58:23.0000000+00:00'
