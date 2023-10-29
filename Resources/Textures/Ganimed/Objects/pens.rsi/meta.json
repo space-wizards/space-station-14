@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "license": "See repository CLA for more info.",
+  "copyright": "atmos.png, bartender.png, cargo.png, chemistry.png, engineering.png, fountain_black.png, green.png, hearts.png, hydroponics.png, janitor.png, medical1.png, medical2.png, military.png, mime.png, pink.png, chaplain.png, purple.png, rainbow.png, reporter.png, scientist_fountain.png, scientist1.png, security_fountain1.png, security1.png, security2.png, star.png, violet.png, yellow.png by thedusteffin, medical3.png, scientist2.png, security_fountain2.png, security3.png by barnaulcommunist for Enterprise Server private use. pen-inhand-left.png, pen-inhand-right.png taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "atmos"
+    },
+    {
+      "name": "bartender"
+    },
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "chemistry"
+    },
+    {
+      "name": "chaplain"
+    },
+    {
+      "name": "engineering"
+    },
+    {
+      "name": "fountain_black"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "hearts"
+    },
+    {
+      "name": "hydroponics"
+    },
+    {
+      "name": "janitor"
+    },
+    {
+      "name": "medical1"
+    },
+    {
+      "name": "medical2"
+    },
+    {
+      "name": "medical3"
+    },
+    {
+      "name": "military"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "pink"
+    },
+    {
+      "name": "purple"
+    },
+    {
+      "name": "rainbow"
+    },
+    {
+      "name": "reporter"
+    },
+    {
+      "name": "scientist_fountain"
+    },
+    {
+      "name": "scientist1"
+    },
+    {
+      "name": "scientist2"
+    },
+    {
+      "name": "security_fountain1"
+    },
+    {
+      "name": "security_fountain2"
+    },
+    {
+      "name": "security1"
+    },
+    {
+      "name": "security2"
+    },
+    {
+      "name": "security3"
+    },
+    {
+      "name": "star"
+    },
+    {
+      "name": "violet"
+    },
+    {
+      "name": "yellow"
+    }
+  ]
+}

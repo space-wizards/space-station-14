@@ -1,0 +1,343 @@
+- type: entity
+  name: atmospheric technician's pen
+  parent: Pen
+  id: PenAtmos
+  description: A pen not too sophisticated. It is of your color palette and that's why you stick to it.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: atmos
+
+- type: entity
+  name: booze pen
+  parent: Pen
+  id: PenBooze
+  description: A pen in the colours of a whiskey bottle. Might just have a hidden vial inside, you'll never know.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: bartender
+
+- type: entity
+  name: cargo pen
+  parent: Pen
+  id: PenCargo
+  description: A cheap tool of writing made with a slightly abrasive carton making it easier to hold in your sweaty hands. Your head probably stokes these in high bulk.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: cargo
+
+- type: entity
+  name: chaplain's pen
+  parent: Pen
+  id: PenChaplain
+  description: A black and white pen manufactured with glossy plastic and stainless steel. Looks great and is not too expensive of a material posession.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: chaplain
+
+- type: entity
+  name: chemist's pen
+  parent: Pen
+  id: PenChemist
+  description: A solid piece of cheap white plastic with orange details standing out. Why do you even need it, all your experiments are practical anyway.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: chemistry
+
+- type: entity
+  name: engineering pen
+  parent: Pen
+  id: PenEngineering
+  description: A pen with an old-style feeling to it. Yellowed-out plastic and all the fax-printer details to it make your paperwork a little more comfortable.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: engineering
+
+- type: entity
+  name: green pen
+  parent: Pen
+  id: PenGreen
+  description: A light-green version of your standart writing equipment.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: green
+
+- type: entity
+  name: hearts pen
+  parent: Pen
+  id: PenHearts
+  description: A bright pink pen thoroughly decorated with hearts. They say to put your heart into writing.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: hearts
+
+- type: entity
+  name: hydroponics pen
+  parent: Pen
+  id: PenHydroponics
+  description: Toxic green and blue plastic pen. This paint is now stuck to your skin forever. Hopefully, your plants are treated better than that.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: hydroponics
+
+- type: entity
+  name: janitorial pen
+  parent: Pen
+  id: PenJanitor
+  description: Standart-issue grey and purple NanoTrasen pen. Actually worth more than it seems.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: janitor
+
+- type: entity
+  name: light-blue pen
+  parent: Pen
+  id: PenLightBlue
+  description: A light-blue version of your standart writing equipment. Wait, isn't it straight from medbay?
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: medical1
+
+- type: entity
+  name: medical pen
+  parent: Pen
+  id: PenMedical1
+  description: Your normal blue pen just what you'd expect from a medical office. Easy to use and sanitize too.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: medical2
+
+- type: entity
+  name: cheap medical pen
+  parent: Pen
+  id: PenMedical2
+  description: Your normal blue pen. Hold on, is it a cheaper version? Still, just as easy to sanitize.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: medical3
+
+- type: entity
+  name: camouflage pen
+  parent: Pen
+  id: PenCamouflage
+  description: A military-design office-use writing tool. As useful for special operations as it is for a fishing vacation.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: military
+
+- type: entity
+  name: mime pen
+  parent: Pen
+  id: PenMime
+  description: Sometimes, silence is worth more than a handful of words. For any other occasion, this stick is stocked with twice the ink.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: mime
+
+- type: entity
+  name: pink pen
+  parent: Pen
+  id: PenPink
+  description: They say, the human hearts are pink. Are other species this way, though? With this pen you will for sure linger in all the hearts.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: pink
+
+- type: entity
+  name: magic pen
+  parent: Pen
+  id: PenPurple
+  description: All the magic is is actually the presentation. Use that to your advantage and win the audience with your mistique.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: purple
+
+- type: entity
+  name: rainbow fountain pen
+  parent: Pen
+  id: PenRainbow
+  description: A cheerful fountain pen prone to joyful splashes of ink at the cost of your documents. No, the ink is plain black, why'd you ask?
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: rainbow
+
+- type: entity
+  name: media pen
+  parent: Pen
+  id: PenMedia
+  description: A pen of a formal design powered by several enhancements to make interviewing in the wildest places imaginable a lot easier.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: reporter
+
+- type: entity
+  name: yellow pen
+  parent: Pen
+  id: PenYellow
+  description: A light-yellow version of your standart writing equipment.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: yellow
+
+- type: entity
+  name: violet pen
+  parent: Pen
+  id: PenViolet
+  description: A violet version of your standart writing equipment.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: violet
+
+- type: entity
+  name: starry pen
+  parent: Pen
+  id: PenStarry
+  description: Deep shades of violet look just like the view outside. Scattered white dots represent the wildest opportunities for you. Go take them all!
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: star
+
+- type: entity
+  name: fountain science pen
+  parent: Pen
+  id: PenScienceFountain
+  description: A piece of scientific progress, main contribution being writing off reports. Utilises advanced ink supply system to make your strokes more reliable.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: scientist_fountain
+
+- type: entity
+  name: overpriced science pen
+  parent: Pen
+  id: PenScienceOverpriced
+  description: A pen you probably spent too much on. It isn't any different from the standart-issue, so what's wrong with the price anyway? At least the component quality is quite worth it.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: scientist1
+  - type: Tool
+    qualities:
+      - Screwing
+    useSound:
+      collection: Screwdriver
+
+- type: entity
+  name: science pen
+  parent: Pen
+  id: PenScience
+  description: A medium-quality pen of a science department. You have inspected all you could and the final verdict. The pen is boring. Just as much as your paperwork.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: scientist2
+
+- type: entity
+  name: brigmedic pen
+  parent: Pen
+  id: PenBrigmedic
+  description: An overly-red pen with white cross sticker plastered on top. Shows how little the corpos care about qualified on-the-spot medicine.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: security1
+
+- type: entity
+  name: black security pen
+  parent: Pen
+  id: PenSecurityBlack
+  description: Thoroughly decorated black and red security pen. Not too good, not too shabby, mediocre.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: security2
+
+- type: entity
+  name: red security pen
+  parent: Pen
+  id: PenSecurityRed
+  description: Simplistic red plastic pen. Looks great and not overly complicated for all the hardheads out there.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: security3
+
+- type: entity
+  name: security fountain pen
+  parent: Pen
+  id: PenSecurityFountain
+  description: Somehow even less reliable than the usual security pen, you just learned to live with it. Even if it doesn't work at times.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: security_fountain1
+
+- type: entity
+  name: metallic fountain pen
+  parent: Pen
+  id: PenSecurityFountainMetallic
+  description: Head of security's preferred writing tool. Made of pure stainless steel with some sickly red elements. You can be sure it will remain working even a century later.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: security_fountain2
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    wideAnimationRotation: -45
+    damage:
+      types:
+        Piercing: 15
+  - type: Tag
+    tags:
+    - Write
+    - Pickaxe
+
+- type: entity
+  name: black fountain pen
+  parent: BaseItem
+  id: BlackFountainPen
+  description: A stylish black fountain pen for signing off orders most devilish.
+  components:
+  - type: Tag
+    tags:
+    - Write
+    - Pickaxe
+  - type: Sprite
+    sprite: Ganimed/Objects/pens.rsi
+    state: fountain_black
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    wideAnimationRotation: -45
+    damage:
+      types:
+        Piercing: 15
+  - type: Tool
+    qualities:
+      - Screwing
+    useSound:
+      collection: Screwdriver
+  - type: Item
+    sprite: Ganimed/Objects/pens.rsi
+    state: fountain_black
+    size: 2

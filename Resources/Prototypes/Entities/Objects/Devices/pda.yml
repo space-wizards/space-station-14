@@ -122,6 +122,12 @@
   - type: Pda
     id: TechnicalAssistantIDCard
     state: pda-interntech
+    penSlot:
+      startingItem: PenEngineering
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#717059"
     accentVColor: "#949137"
@@ -137,6 +143,12 @@
   - type: Pda
     id: MedicalInternIDCard
     state: pda-internmed
+    penSlot:
+      startingItem: PenMedical2
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#717059"
     accentVColor: "#447987"
@@ -159,6 +171,12 @@
   - type: Pda
     id: SecurityCadetIDCard
     state: pda-interncadet
+    penSlot:
+      startingItem: PenSecurityRed
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#717059"
     accentVColor: "#A32D26"
@@ -174,6 +192,12 @@
   - type: Pda
     id: ResearchAssistantIDCard
     state: pda-internsci
+    penSlot:
+      startingItem: PenScience
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#717059"
     accentVColor: "#8900c9"
@@ -189,6 +213,12 @@
   - type: Pda
     id: ServiceWorkerIDCard
     state: pda-internservice
+    penSlot:
+      startingItem: PenGreen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#717059"
     accentVColor: "#00cc35"
@@ -218,6 +248,12 @@
   - type: Pda
     id: BotanistIDCard
     state: pda-hydro
+    penSlot:
+      startingItem: PenHydroponics
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#44843c"
     accentVColor: "#00cc35"
@@ -279,6 +315,12 @@
   - type: Pda
     id: MimeIDCard
     state: pda-mime
+    penSlot:
+      startingItem: PenMime
+      priority: -1
+      whitelist:
+        tags:
+        - Write
     idSlot:
       name: ID Card
       whitelist:
@@ -298,6 +340,12 @@
   components:
   - type: Pda
     id: ChaplainIDCard
+    penSlot:
+      startingItem: PenChaplain
+      priority: -1
+      whitelist:
+        tags:
+        - Write
     state: pda-chaplain
   - type: PdaBorderColor
     borderColor: "#333333"
@@ -313,6 +361,12 @@
   - type: Pda
     id: QuartermasterIDCard
     state: pda-qm
+    penSlot:
+      startingItem: PenCargo
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#e39751"
     accentVColor: "#a23e3e"
@@ -328,6 +382,12 @@
   - type: Pda
     id: CargoIDCard
     state: pda-cargo
+    penSlot:
+      startingItem: PenCargo
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#e39751"
   - type: Icon
@@ -342,6 +402,12 @@
   - type: Pda
     id: SalvageIDCard
     state: pda-miner
+    penSlot:
+      startingItem: PenCargo
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#af9366"
     accentVColor: "#8900c9"
@@ -357,6 +423,12 @@
   - type: Pda
     id: BartenderIDCard
     state: pda-bartender
+    penSlot:
+      startingItem: PenBooze
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#333333"
   - type: Icon
@@ -400,7 +472,7 @@
     id: IAAIDCard
     state: pda-iaa
     penSlot:
-      startingItem: CyberPen
+      startingItem: BlackFountainPen
       priority: -1
       whitelist:
         tags:
@@ -419,6 +491,12 @@
   - type: Pda
     id: JanitorIDCard
     state: pda-janitor
+    penSlot:
+      startingItem: PenJanitor
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#5D2D56"
   - type: Icon
@@ -433,6 +511,12 @@
   - type: Pda
     id: CoronerIDCard
     state: pda-coroner
+    penSlot:
+      startingItem: PenMedical1
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#597789"
   - type: Icon
@@ -495,6 +579,12 @@
   - type: Pda
     id: CEIDCard
     state: pda-ce
+    penSlot:
+      startingItem: PenEngineering
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#949137"
     accentHColor: "#447987"
@@ -510,6 +600,12 @@
   - type: Pda
     id: EngineeringIDCard
     state: pda-engineer
+    penSlot:
+      startingItem: PenEngineering
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#949137"
     accentVColor: "#A32D26"
@@ -525,6 +621,12 @@
   - type: Pda
     id: CMOIDCard
     state: pda-cmo
+    penSlot:
+      startingItem: PenMedical1
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentHColor: "#447987"
@@ -545,6 +647,12 @@
   - type: Pda
     id: MedicalIDCard
     state: pda-medical
+    penSlot:
+      startingItem: PenMedical1
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
@@ -567,6 +675,12 @@
   - type: Pda
     id: ParamedicIDCard
     state: pda-paramedic
+    penSlot:
+      startingItem: PenMedical1
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#2a4b5b"
@@ -586,6 +700,12 @@
   - type: Pda
     id: ChemistIDCard
     state: pda-chemistry
+    penSlot:
+      startingItem: PenChemist
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#B34200"
@@ -605,6 +725,12 @@
   - type: Pda
     id: RDIDCard
     state: pda-rd
+    penSlot:
+      startingItem: PenScienceFountain
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentHColor: "#447987"
@@ -621,6 +747,12 @@
   - type: Pda
     id: ResearchIDCard
     state: pda-science
+    penSlot:
+      startingItem: PenScience
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#8900c9"
@@ -636,6 +768,12 @@
   - type: Pda
     id: HoSIDCard
     state: pda-hos
+    penSlot:
+      startingItem: PenSecurityFountainMetallic
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
@@ -651,6 +789,12 @@
   - type: Pda
     id: WardenIDCard
     state: pda-warden
+    penSlot:
+      startingItem: PenSecurityFountain
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentVColor: "#949137"
@@ -666,6 +810,12 @@
   - type: Pda
     id: BlueShieldIDCard
     state: pda-blueshield
+    penSlot:
+      startingItem: BlackFountainPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#38507D"
     accentVColor: "#dfdfdf"
@@ -681,6 +831,12 @@
   - type: Pda
     id: SecurityIDCard
     state: pda-security
+    penSlot:
+      startingItem: PenSecurityBlack
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#A32D26"
   - type: Icon
@@ -720,6 +876,12 @@
   components:
   - type: Pda
     id: CentcomIDCardDeathsquad
+    penSlot:
+      startingItem: BlackFountainPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
 
 - type: entity
   parent: BasePDA
@@ -749,6 +911,12 @@
   - type: Pda
     id: AtmosIDCard
     state: pda-atmos
+    penSlot:
+      startingItem: PenAtmos
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#949137"
     accentVColor: "#447987"
@@ -804,6 +972,12 @@
   - type: Pda
     id: ERTLeaderIDCard
     state: pda-ert
+    penSlot:
+      startingItem: BlackFountainPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
@@ -820,6 +994,12 @@
   - type: Pda
     id: CBURNIDcard
     state: pda-ert
+    penSlot:
+      startingItem: BlackFountainPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
@@ -834,6 +1014,12 @@
   - type: Pda
     id: PsychologistIDCard
     state: pda-medical
+    penSlot:
+      startingItem: PenMedical1
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
@@ -849,6 +1035,12 @@
   - type: Pda
     id: ReporterIDCard
     state: pda-reporter
+    penSlot:
+      startingItem: PenMedia
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#3f3f74"
   - type: Icon
@@ -892,6 +1084,12 @@
   - type: Pda
     id: DetectiveIDCard
     state: pda-detective
+    penSlot:
+      startingItem: PenSecurityBlack
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#774705"
   - type: Icon
@@ -906,6 +1104,12 @@
   - type: Pda
     id: BrigmedicIDCard
     state: pda-brigmedic
+    penSlot:
+      startingItem: PenBrigmedic
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#d7d7d0"
@@ -949,6 +1153,12 @@
   - type: Pda
     id: SeniorEngineerIDCard
     state: pda-seniorengineer
+    penSlot:
+      startingItem: PenEngineering
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#949137"
     accentVColor: "#CD6900"
@@ -964,6 +1174,12 @@
   - type: Pda
     id: SeniorResearcherIDCard
     state: pda-seniorresearcher
+    penSlot:
+      startingItem: PenScienceOverpriced
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentHColor: "#8900c9"
@@ -980,6 +1196,12 @@
   - type: Pda
     id: RoboticistIDCard
     state: pda-roboticist
+    penSlot:
+      startingItem: PenScienceOverpriced
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#484848"
     accentHColor: "#8b2400"
@@ -996,6 +1218,12 @@
   - type: Pda
     id: SeniorPhysicianIDCard
     state: pda-seniorphysician
+    penSlot:
+      startingItem: PenMedical1
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentHColor: "#447987"
@@ -1016,6 +1244,12 @@
   - type: Pda
     id: SeniorOfficerIDCard
     state: pda-seniorofficer
+    penSlot:
+      startingItem: PenSecurityRed
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentVColor: "#DFDFDF"
