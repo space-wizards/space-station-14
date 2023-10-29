@@ -58,25 +58,27 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
-            // some timer updates just want to broadcast their timing to every networked timer
-            if (args.Data.TryGetValue("BroadcastTime", out TimeSpan broadcast))
+            // skip any logic if a packet is broadcasted (again) to all networked timers
+            if (args.Data.TryGetValue("BroadcastTime", out float broadcast))
             {
-                var text = new TextScreenTimerEvent(broadcast);
+                var text = new TextScreenTimerEvent(TimeSpan.FromSeconds(broadcast));
                 RaiseLocalEvent(uid, ref text);
                 return;
             }
 
-            if (!TryComp<TransformComponent>(uid, out var timerXform) ||
-            timerXform.GridUid == null ||
-            !args.Data.TryGetValue("SourceTimer", out EntityUid source) ||
-            !args.Data.TryGetValue("DestTimer", out EntityUid dest) ||
-            !args.Data.TryGetValue("ShuttleGrid", out EntityUid shuttle))
+            var timerXform = Transform(uid);
+
+            if (timerXform.GridUid == null)
                 return;
 
             string key;
-            switch (timerXform.GridUid.Value)
+            args.Data.TryGetValue("ShuttleGrid", out EntityUid? shuttleGrid);
+            args.Data.TryGetValue("SourceMap", out EntityUid? source);
+            args.Data.TryGetValue("DestMap", out EntityUid? dest);
+
+            switch (timerXform.GridUid)
             {
-                case var local when local == shuttle:
+                case var local when local == shuttleGrid:
                     key = "LocalTimer";
                     break;
                 case var origin when origin == source:
@@ -89,10 +91,10 @@ namespace Content.Server.Shuttles.Systems
                     return;
             }
 
-            if (!args.Data.TryGetValue(key, out TimeSpan duration))
+            if (!args.Data.TryGetValue(key, out float duration))
                 return;
 
-            var ev = new TextScreenTimerEvent(duration);
+            var ev = new TextScreenTimerEvent(TimeSpan.FromSeconds(duration));
             RaiseLocalEvent(uid, ref ev);
         }
 
