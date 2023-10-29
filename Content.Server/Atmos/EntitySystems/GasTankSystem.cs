@@ -13,6 +13,7 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -239,10 +240,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!component.IsConnected)
                 return;
 
-            component.ConnectStream?.Stop();
-
-            if (component.ConnectSound != null)
-                component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, owner);
+            component.ConnectStream = _audioSys.Stop(component.ConnectStream);
+            component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, component.Owner)?.Entity;
 
             UpdateUserInterface(ent);
         }
@@ -259,10 +258,8 @@ namespace Content.Server.Atmos.EntitySystems
             _actions.SetToggled(component.ToggleActionEntity, false);
 
             _internals.DisconnectTank(internals);
-            component.DisconnectStream?.Stop();
-
-            if (component.DisconnectSound != null)
-                component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, owner);
+            component.DisconnectStream = _audioSys.Stop(component.DisconnectStream);
+            component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, component.Owner)?.Entity;
 
             UpdateUserInterface(ent);
         }
@@ -322,7 +319,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if(environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
 
-                    _audioSys.Play(component.RuptureSound, Filter.Pvs(owner), Transform(owner).Coordinates, true, AudioParams.Default.WithVariation(0.125f));
+                    _audioSys.PlayPvs(component.RuptureSound, Transform(component.Owner).Coordinates, AudioParams.Default.WithVariation(0.125f));
 
                     QueueDel(owner);
                     return;

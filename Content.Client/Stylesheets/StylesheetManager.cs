@@ -7,7 +7,7 @@ namespace Content.Client.Stylesheets
     public sealed class StylesheetManager : IStylesheetManager
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IClientResourceCache _resourceCache = default!;
 
         public Stylesheet SheetNano { get; private set; } = default!;
         public Stylesheet SheetSpace { get; private set; } = default!;

@@ -27,7 +27,7 @@ public sealed class PuddleOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _debugOverlaySystem = _entitySystemManager.GetEntitySystem<PuddleDebugOverlaySystem>();
-        var cache = IoCManager.Resolve<IResourceCache>();
+        var cache = IoCManager.Resolve<IClientResourceCache>();
         _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
     }
 

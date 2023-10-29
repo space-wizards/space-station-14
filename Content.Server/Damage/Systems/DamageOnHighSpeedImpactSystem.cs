@@ -3,6 +3,7 @@ using Content.Server.Stunnable;
 using Content.Shared.Damage;
 using Content.Shared.Effects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

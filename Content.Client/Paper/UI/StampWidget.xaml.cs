@@ -32,7 +32,7 @@ public sealed partial class StampWidget : PanelContainer
     public StampWidget()
     {
         RobustXamlLoader.Load(this);
-        var resCache = IoCManager.Resolve<IResourceCache>();
+        var resCache = IoCManager.Resolve<IClientResourceCache>();
         var borderImage = resCache.GetResource<TextureResource>(
                 "/Textures/Interface/Paper/paper_stamp_border.svg.96dpi.png");
         _borderTexture = new StyleBoxTexture {

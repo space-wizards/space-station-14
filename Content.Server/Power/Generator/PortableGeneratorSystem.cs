@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -97,7 +98,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         var clogged = _generator.GetIsClogged(uid);
 
         var sound = empty ? component.StartSoundEmpty : component.StartSound;
-        _audio.Play(sound, Filter.Pvs(uid), uid, true);
+        _audio.PlayEntity(sound, Filter.Pvs(uid), uid, true);
 
         if (!clogged && !empty && _random.Prob(component.StartChance))
         {
