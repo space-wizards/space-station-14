@@ -1,10 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Centcom will now sell Cargo gas canisters at a vastly reduced (and consistent!)
-      price after realizing the station has infinite gasses anyway., type: Tweak}
-  id: 4578
-  time: '2023-08-14T13:56:07.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Asteroid rocks and secret doors should look less weird in certain scenarios,
@@ -2915,3 +2909,11 @@ Entries:
       Reporters rejoice!', type: Fix}
   id: 5077
   time: '2023-10-29T10:37:40.0000000+00:00'
+- author: Subversionary
+  changes:
+  - {message: Bolas no longer deal stamina damage if you're already ensnared., type: Tweak}
+  - {message: Returned old bola recipe, type: Tweak}
+  - {message: Nerfed bola stamina damage from 80 to 55, type: Tweak}
+  - {message: You can break out of bolas while moving., type: Tweak}
+  id: 5078
+  time: '2023-10-29T22:27:44.0000000+00:00'
