@@ -1,0 +1,25 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterArmorBobmer
+  name: бронированный бомбер
+  description: Настоящие лётчики носят и бронежилеты, и модные куртки.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/OuterClothing/Armor/secbomber.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/OuterClothing/Armor/secbomber.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.65
+        Heat: 0.70
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
