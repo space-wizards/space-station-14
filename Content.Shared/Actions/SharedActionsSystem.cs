@@ -39,6 +39,8 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
+        SubscribeLocalEvent<ActionsComponent, ComponentShutdown>(OnShutdown);
+
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(OnActionsGetState);
 
         SubscribeLocalEvent<InstantActionComponent, ComponentGetState>(OnInstantGetState);
@@ -50,6 +52,14 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
+    }
+
+    private void OnShutdown(EntityUid uid, ActionsComponent component, ComponentShutdown args)
+    {
+        foreach (var act in component.Actions)
+        {
+            RemoveAction(uid, act, component);
+        }
     }
 
     private void OnInstantGetState(EntityUid uid, InstantActionComponent component, ref ComponentGetState args)
@@ -619,7 +629,10 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (action.AttachedEntity != performer)
         {
-            Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}");
+            DebugTools.Assert(!Resolve(performer, ref comp, false) || !comp.Actions.Contains(actionId.Value));
+
+            if (!GameTiming.ApplyingState)
+                Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}");
             return;
         }
 
