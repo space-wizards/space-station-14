@@ -229,7 +229,7 @@ public sealed partial class BorgSystem
         if (!TryComp<HandsComponent>(chassis, out var hands))
             return;
 
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
         {
             foreach (var (hand, item) in component.ProvidedItems)
             {

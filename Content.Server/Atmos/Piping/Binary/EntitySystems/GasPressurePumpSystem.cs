@@ -54,10 +54,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             if (Loc.TryGetString("gas-pressure-pump-system-examined", out var str,
-                        ("statusColor", "lightblue"), // TODO: change with pressure?
-                        ("pressure", pump.TargetPressure)
-            ))
+                    ("statusColor", "lightblue"), // TODO: change with pressure?
+                    ("pressure", pump.TargetPressure)
+                ))
+            {
                 args.PushMarkup(str);
+            }
         }
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
@@ -106,7 +108,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (EntityManager.GetComponent<TransformComponent>(uid).Anchored)
+            if (Transform(uid).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasPressurePumpUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, pump);

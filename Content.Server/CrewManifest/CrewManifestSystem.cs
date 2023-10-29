@@ -10,10 +10,9 @@ using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
 using Content.Shared.StationRecords;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Server.CrewManifest;
 
@@ -37,6 +36,7 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
+        SubscribeLocalEvent<RecordRemovedEvent>(OnRecordRemoved);
         SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
@@ -59,7 +59,7 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
     {
-        if (args.SenderSession is not IPlayerSession sessionCast
+        if (args.SenderSession is not { } sessionCast
             || !_configManager.GetCVar(CCVars.CrewManifestWithoutEntity))
         {
             return;
@@ -83,15 +83,21 @@ public sealed class CrewManifestSystem : EntitySystem
         UpdateEuis(ev.Key.OriginStation);
     }
 
+    private void OnRecordRemoved(RecordRemovedEvent ev)
+    {
+        BuildCrewManifest(ev.Key.OriginStation);
+        UpdateEuis(ev.Key.OriginStation);
+    }
+
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
+        if (owningStation == null || ev.Session is not { } session)
         {
             return;
         }
 
-        CloseEui(owningStation.Value, sessionCast, uid);
+        CloseEui(owningStation.Value, session, uid);
     }
 
     /// <summary>
@@ -119,7 +125,7 @@ public sealed class CrewManifestSystem : EntitySystem
     private void OpenEuiFromBui(EntityUid uid, CrewManifestViewerComponent component, CrewManifestOpenUiMessage msg)
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if (owningStation == null || msg.Session is not IPlayerSession sessionCast)
+        if (owningStation == null || msg.Session is not { } session)
         {
             return;
         }
@@ -129,7 +135,7 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        OpenEui(owningStation.Value, sessionCast, uid);
+        OpenEui(owningStation.Value, session, uid);
     }
 
     /// <summary>
@@ -138,7 +144,7 @@ public sealed class CrewManifestSystem : EntitySystem
     /// <param name="station">Station that we're displaying the crew manifest for.</param>
     /// <param name="session">The player's session.</param>
     /// <param name="owner">If this EUI should be 'owned' by an entity.</param>
-    public void OpenEui(EntityUid station, IPlayerSession session, EntityUid? owner = null)
+    public void OpenEui(EntityUid station, ICommonSession session, EntityUid? owner = null)
     {
         if (!HasComp<StationRecordsComponent>(station))
         {
@@ -245,7 +251,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
             return;
         }
 
-        if (shell.Player == null || shell.Player is not IPlayerSession session)
+        if (shell.Player == null || shell.Player is not { } session)
         {
             shell.WriteLine("You must run this from a client.");
             return;
@@ -263,14 +269,13 @@ public sealed class CrewManifestCommand : IConsoleCommand
             return CompletionResult.Empty;
         }
 
-        var stations = _entityManager
-            .EntityQuery<StationDataComponent>()
-            .Select(stationData =>
-            {
-                var meta = _entityManager.GetComponent<MetaDataComponent>(stationData.Owner);
-
-                return new CompletionOption(stationData.Owner.ToString(), meta.EntityName);
-            });
+        var stations = new List<CompletionOption>();
+        var query = _entityManager.EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            var meta = _entityManager.GetComponent<MetaDataComponent>(uid);
+            stations.Add(new CompletionOption(uid.ToString(), meta.EntityName));
+        }
 
         return CompletionResult.FromHintOptions(stations, null);
     }

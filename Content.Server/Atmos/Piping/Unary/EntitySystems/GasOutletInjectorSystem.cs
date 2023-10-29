@@ -6,7 +6,6 @@ using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {

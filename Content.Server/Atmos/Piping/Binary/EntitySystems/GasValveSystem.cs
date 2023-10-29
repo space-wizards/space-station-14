@@ -27,9 +27,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasValveComponent, ExaminedEvent>(OnExamined);
         }
 
-        private void OnExamined(EntityUid uid, GasValveComponent valve, ExaminedEvent args)
+        private void OnExamined(Entity<GasValveComponent> ent, ref ExaminedEvent args)
         {
-            if (!Comp<TransformComponent>(uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            var valve = ent.Comp;
+            if (!Comp<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-valve-system-examined", out var str,
@@ -48,20 +49,19 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
             Toggle(uid, component);
-            _audioSystem.PlayPvs(component.ValveSound, uid, AudioParams.Default.WithVariation(0.25f));
+            SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)
         {
             component.Open = value;
-            if (!_nodeSystem.TryGetNode(uid, component.InletName, out var inletId, out var inletNode)
-            || !_nodeSystem.TryGetNode(uid, component.OutletName, out var outletId, out var outletNode))
+            if (!_nodeSystem.TryGetNode(uid, component.InletName, out var inletId, out var inletNode) ||
+                !_nodeSystem.TryGetNode(uid, component.OutletName, out var outletId, out var outletNode)
+            )
                 return;
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
-            {
                 _appearance.SetData(uid, FilterVisuals.Enabled, component.Open, appearance);
-            }
 
             if (component.Open)
             {

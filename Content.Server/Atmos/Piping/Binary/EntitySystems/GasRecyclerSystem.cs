@@ -1,11 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Atmos.Piping;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -38,12 +38,14 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             UpdateAppearance(uid, comp);
         }
 
-        private void OnExamined(EntityUid uid, GasRecyclerComponent comp, ExaminedEvent args)
+        private void OnExamined(Entity<GasRecyclerComponent> ent, ref ExaminedEvent args)
         {
-            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            var comp = ent.Comp;
+            if (!EntityManager.GetComponent<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
-            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.InletName, out var inletId, out var inletNode, out var inlet))
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.InletName, out var inletId, out var inletNode, out var inlet) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.OutletName, out var outletId, out var outletNode, out var outlet))
                 return;
 
             if (comp.Reacting)
@@ -64,15 +66,15 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
         }
 
-        private void OnUpdate(EntityUid uid, GasRecyclerComponent comp, AtmosDeviceUpdateEvent args)
+        private void OnUpdate(Entity<GasRecyclerComponent> ent, ref AtmosDeviceUpdateEvent args)
         {
 
-            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.InletName, out var inletId, out var inletNode, out var inlet)
-            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode)
-            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.OutletName, out var outletId, out var outletNode, out var outlet)
-            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.InletName, out var inletId, out var inletNode, out var inlet) ||
+                !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode) ||
+                !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(ent, comp.OutletName, out var outletId, out var outletNode, out var outlet) ||
+                !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
             {
-                _ambientSoundSystem.SetAmbience(uid, false);
+                _ambientSoundSystem.SetAmbience(ent, false);
                 return;
             }
 
@@ -90,8 +92,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
 
             _atmosphereSystem.Merge(outletGas, removed);
-            UpdateAppearance(uid, comp);
-            _ambientSoundSystem.SetAmbience(uid, true);
+            UpdateAppearance(ent, comp);
+            _ambientSoundSystem.SetAmbience(ent, true);
         }
 
         public float PassiveTransferVol(GasMixture inlet, GasMixture outlet)

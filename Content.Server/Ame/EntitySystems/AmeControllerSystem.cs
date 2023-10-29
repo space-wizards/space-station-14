@@ -60,6 +60,8 @@ public sealed class AmeControllerSystem : EntitySystem
         {
             if (controller.NextUpdate <= curTime)
                 UpdateController(uid, curTime, controller, nodes);
+            else if (controller.NextUIUpdate <= curTime)
+                UpdateUi(uid, controller);
         }
     }
 
@@ -70,6 +72,8 @@ public sealed class AmeControllerSystem : EntitySystem
 
         controller.LastUpdate = curTime;
         controller.NextUpdate = curTime + controller.UpdatePeriod;
+        // update the UI regardless of other factors to update the power readings
+        UpdateUi(uid, controller);
 
         if (!controller.Injecting)
             return;
@@ -114,18 +118,35 @@ public sealed class AmeControllerSystem : EntitySystem
 
         var state = GetUiState(uid, controller);
         _userInterfaceSystem.SetUiState(bui, state);
+
+        controller.NextUIUpdate = _gameTiming.CurTime + controller.UpdateUIPeriod;
     }
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
     {
         var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
-        var coreCount = TryGetAmeGraph(uid, out var _, out var graph) ? graph.Cores.Count : 0;
+        var coreCount = 0;
+        // how much power can be produced at the current settings, in kW
+        // we don't use max. here since this is what is set in the Controller, not what the AME is actually producing
+        float targetedPowerSupply = 0;
+        if (TryGetAmeGraph(uid, out var _, out var graph))
+        {
+            coreCount = graph.Cores.Count;
+            targetedPowerSupply = _ameSystem.CalculatePower(controller.InjectionAmount, coreCount) / 1000;
+        }
+
+        // set current power statistics in kW
+        float currentPowerSupply = 0;
+        if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet) && coreCount > 0)
+        {
+            currentPowerSupply = powerOutlet.CurrentSupply / 1000;
+        }
 
         var hasJar = Exists(controller.JarSlot.ContainedEntity);
         if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount);
+            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount);
+        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
     }
 
     private bool IsMasterController(EntityUid uid)

@@ -6,7 +6,6 @@ using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
@@ -66,7 +65,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             UpdateAppearance(uid, comp);
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVolume = (float) (transferRate * args.dt);
+            var transferVolume = transferRate * args.dt;
             if (transferVolume <= 0)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);

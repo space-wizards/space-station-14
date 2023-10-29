@@ -70,8 +70,8 @@
   - type: WiresPanelSecurity
     securityLevel: maxSecurity
   - type: Wires
-    BoardName: wires-board-name-highsec
-    LayoutId: HighSec
+    boardName: wires-board-name-highsec
+    layoutId: HighSec
     alwaysRandomize: true
   - type: UserInterface
     interfaces:

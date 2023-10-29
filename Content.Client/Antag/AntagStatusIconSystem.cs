@@ -1,8 +1,8 @@
+using Content.Shared.Ghost;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
-using Robust.Shared.Prototypes;
-using Content.Shared.Ghost;
 using Robust.Client.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Antag;
 
@@ -10,7 +10,7 @@ namespace Content.Client.Antag;
 /// Used for assigning specified icons for antags.
 /// </summary>
 public abstract class AntagStatusIconSystem<T> : SharedStatusIconSystem
-    where T : Component
+    where T : IComponent
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
