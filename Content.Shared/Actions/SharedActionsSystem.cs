@@ -36,6 +36,8 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
+        SubscribeLocalEvent<ActionsComponent, ComponentShutdown>(OnShutdown);
+
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(OnActionsGetState);
 
         SubscribeLocalEvent<InstantActionComponent, ComponentGetState>(OnInstantGetState);
@@ -47,6 +49,14 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
+    }
+
+    private void OnShutdown(EntityUid uid, ActionsComponent component, ComponentShutdown args)
+    {
+        foreach (var act in component.Actions)
+        {
+            RemoveAction(uid, act, component);
+        }
     }
 
     private void OnInstantGetState(EntityUid uid, InstantActionComponent component, ref ComponentGetState args)
