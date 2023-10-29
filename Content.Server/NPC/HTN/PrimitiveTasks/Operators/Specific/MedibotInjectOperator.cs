@@ -1,8 +1,7 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.NPC.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.Emag.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Bots;

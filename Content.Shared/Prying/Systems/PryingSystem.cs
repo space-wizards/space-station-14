@@ -21,6 +21,7 @@ public sealed class PryingSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedPopupSystem Popup = default!;
 
     public override void Initialize()
     {
@@ -70,10 +71,12 @@ public sealed class PryingSystem : EntitySystem
         if (!comp.Enabled)
             return false;
 
-        if (!CanPry(target, user, comp))
+        if (!CanPry(target, user, out var message, comp))
         {
+            if (message != null)
+                Popup.PopupEntity(Loc.GetString(message), target, user);
             // If we have reached this point we want the event that caused this
-            // to be marked as handled as a popup would be generated on failure.
+            // to be marked as handled.
             return true;
         }
 
@@ -89,15 +92,16 @@ public sealed class PryingSystem : EntitySystem
     {
         id = null;
 
-        if (!CanPry(target, user))
+        // We don't care about displaying a message if no tool was used.
+        if (!CanPry(target, user, out _))
             // If we have reached this point we want the event that caused this
-            // to be marked as handled as a popup would be generated on failure.
+            // to be marked as handled.
             return true;
 
-        return StartPry(target, user, null, 1.0f, out id);
+        return StartPry(target, user, null, 0.1f, out id); // hand-prying is much slower
     }
 
-    private bool CanPry(EntityUid target, EntityUid user, PryingComponent? comp = null)
+    private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null)
     {
         BeforePryEvent canev;
 
@@ -108,15 +112,19 @@ public sealed class PryingSystem : EntitySystem
         else
         {
             if (!TryComp<PryUnpoweredComponent>(target, out _))
+            {
+                message = null;
                 return false;
+            }
+
             canev = new BeforePryEvent(user, false, false);
         }
 
         RaiseLocalEvent(target, ref canev);
 
-        if (canev.Cancelled)
-            return false;
-        return true;
+        message = canev.Message;
+
+        return !canev.Cancelled;
     }
 
     private bool StartPry(EntityUid target, EntityUid user, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
@@ -128,6 +136,7 @@ public sealed class PryingSystem : EntitySystem
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
+            BreakOnWeightlessMove = true,
         };
 
         if (tool != null)

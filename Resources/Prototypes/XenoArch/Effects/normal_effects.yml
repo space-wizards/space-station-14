@@ -1,4 +1,4 @@
-﻿- type: artifactEffect
+- type: artifactEffect
   id: EffectBadFeeling
   targetDepth: 0
   effectHint: artifact-effect-hint-mental
@@ -404,6 +404,21 @@
   effectHint: artifact-effect-hint-electrical-interference
   components:
   - type: EmpArtifact
+
+- type: artifactEffect
+  id: EffectPolyMonkey
+  targetDepth: 2
+  effectHint: artifact-effect-hint-polymorph
+  components:
+  - type: PolyArtifact
+
+- type: artifactEffect
+  id: EffectPolyLizard
+  targetDepth: 2
+  effectHint: artifact-effect-hint-polymorph
+  components:
+  - type: PolyArtifact
+    polymorphPrototypeName: ArtifactLizard
 
 - type: artifactEffect
   id: EffectHealAll

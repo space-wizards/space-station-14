@@ -14,11 +14,14 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: FlavorProfile
     flavors:
       - chicken # everything kinda tastes like chicken
+  - type: Tag
+    tags:
+      - Meat
 
 
 - type: entity
@@ -49,7 +52,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
 
 - type: entity
@@ -68,7 +71,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Stomach
   - type: Metabolizer

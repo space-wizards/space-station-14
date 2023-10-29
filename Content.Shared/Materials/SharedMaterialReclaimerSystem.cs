@@ -37,9 +37,15 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<MaterialReclaimerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
+    }
+
+    private void OnMapInit(EntityUid uid, MaterialReclaimerComponent component, MapInitEvent args)
+    {
+        component.NextSound = Timing.CurTime;
     }
 
     private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
@@ -111,9 +117,11 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         }
 
         if (Timing.CurTime > component.NextSound)
-            component.Stream = _audio.PlayPvs(component.Sound, uid)?.Entity;
+        {
+            component.Stream = _audio.PlayPredicted(component.Sound, uid, user);
 
-        component.NextSound = Timing.CurTime + component.SoundCooldown;
+            component.NextSound = Timing.CurTime + component.SoundCooldown;
+        }
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.

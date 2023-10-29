@@ -1,20 +1,25 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
-using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reaction;
 using Content.Server.Spreader;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.Effects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.Popups;
-using Content.Shared.Slippery;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Friction;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Maps;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
+using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.GameObjects;
@@ -22,7 +27,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Solution = Content.Shared.Chemistry.Components.Solution;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -509,8 +513,11 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
 
         var targets = new List<EntityUid>();
+        var reactive = new HashSet<Entity<ReactiveComponent>>();
+        _lookup.GetEntitiesInRange(coordinates, 1.0f, reactive);
+
         // Get reactive entities nearby--if there are some, it'll spill a bit on them instead.
-        foreach (var ent in _lookup.GetComponentsInRange<ReactiveComponent>(coordinates, 1.0f))
+        foreach (var ent in reactive)
         {
             // sorry! no overload for returning uid, so .owner must be used
             var owner = ent.Owner;

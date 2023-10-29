@@ -90,7 +90,7 @@ namespace Content.Shared.Containers.ItemSlots
         public void AddItemSlot(EntityUid uid, string id, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
         {
             itemSlots ??= EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
-            DebugTools.Assert(itemSlots.Owner == uid);
+            DebugTools.AssertOwner(uid, itemSlots);
 
             if (itemSlots.Slots.TryGetValue(id, out var existing))
             {
@@ -257,7 +257,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!swap && slot.HasItem)
                 return false;
 
-            if (slot.Whitelist != null && !slot.Whitelist.IsValid(usedUid))
+            if ((slot.Whitelist != null && !slot.Whitelist.IsValid(usedUid)) || (slot.Blacklist != null && slot.Blacklist.IsValid(usedUid)))
             {
                 if (_netManager.IsClient && _timing.IsFirstTimePredicted && popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
                     _popupSystem.PopupEntity(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);

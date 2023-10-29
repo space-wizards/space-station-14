@@ -9,6 +9,8 @@ using Content.Shared.NPC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
+using ClimbableComponent = Content.Shared.Climbing.Components.ClimbableComponent;
+using ClimbingComponent = Content.Shared.Climbing.Components.ClimbingComponent;
 
 namespace Content.Server.NPC.Systems;
 
@@ -132,7 +134,7 @@ public sealed partial class NPCSteeringSystem
                     {
                         return SteeringObstacleStatus.Completed;
                     }
-                    else if (climbing.OwnerIsTransitioning)
+                    else if (climbing.NextTransition != null)
                     {
                         return SteeringObstacleStatus.Continuing;
                     }

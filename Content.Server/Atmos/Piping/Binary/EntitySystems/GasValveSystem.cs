@@ -7,7 +7,6 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -31,9 +30,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasValveComponent, ExaminedEvent>(OnExamined);
         }
 
-        private void OnExamined(EntityUid uid, GasValveComponent valve, ExaminedEvent args)
+        private void OnExamined(Entity<GasValveComponent> ent, ref ExaminedEvent args)
         {
-            if (!Comp<TransformComponent>(uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            var valve = ent.Comp;
+            if (!Comp<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-valve-system-examined", out var str,
@@ -63,7 +63,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 && _nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet)
                 && _nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
             {
-                if (TryComp<AppearanceComponent>(uid,out var appearance))
+                if (TryComp<AppearanceComponent>(uid, out var appearance))
                 {
                     _appearance.SetData(uid, FilterVisuals.Enabled, component.Open, appearance);
                 }

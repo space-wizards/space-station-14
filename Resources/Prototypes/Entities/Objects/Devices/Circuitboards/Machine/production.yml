@@ -476,7 +476,10 @@
     - type: MachineBoard
       prototype: SMESBasicEmpty
       requirements:
-        Capacitor: 5
+        Capacitor: 1
+        PowerCell: 4
+      materialRequirements:
+        CableHV: 10
 
 - type: entity
   id: CellRechargerCircuitboard
@@ -553,7 +556,8 @@
     - type: MachineBoard
       prototype: SubstationBasicEmpty
       requirements:
-        Capacitor: 3
+        Capacitor: 1
+        PowerCell: 1
       materialRequirements:
         CableMV: 5
         CableHV: 5

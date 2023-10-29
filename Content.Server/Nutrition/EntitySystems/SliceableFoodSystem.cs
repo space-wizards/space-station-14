@@ -1,13 +1,11 @@
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -75,7 +73,7 @@ namespace Content.Server.Nutrition.EntitySystems
             else
             {
                 var xform = Transform(sliceUid);
-                _containerSystem.AttachParentToContainerOrGrid(xform);
+                _containerSystem.AttachParentToContainerOrGrid((sliceUid, xform));
                 xform.LocalRotation = 0;
             }
 
@@ -113,7 +111,7 @@ namespace Content.Server.Nutrition.EntitySystems
             else
             {
                 var xform = Transform(sliceUid);
-                _containerSystem.AttachParentToContainerOrGrid(xform);
+                _containerSystem.AttachParentToContainerOrGrid((sliceUid, xform));
                 xform.LocalRotation = 0;
             }
 

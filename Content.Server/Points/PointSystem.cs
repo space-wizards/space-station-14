@@ -2,9 +2,9 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Points;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Points;

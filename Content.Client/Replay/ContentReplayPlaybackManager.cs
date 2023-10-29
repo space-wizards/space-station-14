@@ -46,6 +46,8 @@ public sealed class ContentReplayPlaybackManager
     /// </summary>
     public Type? DefaultState;
 
+    public bool IsScreenshotMode = false;
+
     private bool _initialized;
 
     public void Initialize()
