@@ -78,7 +78,7 @@ namespace Content.Server.Shuttles.Systems
         /// <summary>
         /// Helper method for <see cref="EmergencyShuttleSystem"/> and <see cref="RoundEndSystem"/>
         /// </summary>
-        /// <param name="duration"></param>
+        /// <param name="duration">Displayed on each evac shuttle timer, in seconds.</param>
         public void FloodEvacPacket(TimeSpan duration)
         {
             var payload = new NetworkPayload
