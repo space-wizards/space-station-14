@@ -305,7 +305,7 @@
       map: ["foldedLayer"]
       visible: false
   - type: Item
-    size: Large
+    size: 50
   - type: Appearance
   - type: MeleeWeapon
     damage:
@@ -339,4 +339,4 @@
   - type: Rotatable
   - type: Sprite
     state: steel-bench
-
+ 

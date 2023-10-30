@@ -127,7 +127,7 @@
   - type: Sprite
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Item
-    size: Small
+    size: 10
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Tool
     speed: 0.05

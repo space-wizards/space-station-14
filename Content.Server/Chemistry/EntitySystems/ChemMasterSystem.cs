@@ -187,7 +187,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Ensure the number is valid.
-            if (message.Number == 0 || _storageSystem.HasSpace((chemMaster, storage)))
+            if (message.Number == 0 || message.Number > storage.StorageCapacityMax - storage.StorageUsed)
                 return;
 
             // Ensure the amount is valid.
@@ -345,7 +345,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
-            if (!TryComp(container, out StorageComponent? storage) || storage.Container == null)
+            if (!TryComp(container, out StorageComponent? storage))
                 return null;
 
             var pills = storage.Container?.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
@@ -358,7 +358,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (pills == null)
                 return null;
 
-            return new ContainerInfo(name, storage.Container!.ContainedEntities.Count, storage.MaxSlots)
+            return new ContainerInfo(name, storage.StorageUsed, storage.StorageCapacityMax)
             {
                 Entities = pills
             };

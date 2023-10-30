@@ -8,7 +8,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/metal.rsi
-    size: Normal
+    size: 30
   - type: StaticPrice
     price: 0
   - type: Tag
@@ -75,6 +75,8 @@
   name: steel
   suffix: 10
   components:
+  - type: Item
+    size: 10
   - type: Sprite
     state: steel
   - type: Stack
@@ -87,6 +89,8 @@
   name: steel
   suffix: Single
   components:
+  - type: Item
+    size: 1
   - type: Sprite
     state: steel
   - type: Stack
@@ -98,6 +102,8 @@
   id: SheetSteelLingering0
   suffix: Lingering, 0
   components:
+  - type: Item
+    size: 0
   - type: Stack
     lingering: true
     count: 0
@@ -139,6 +145,8 @@
   - type: Stack
     stackType: Plasteel
     count: 10
+  - type: Item
+    size: 10
 
 - type: entity
   parent: SheetPlasteel
@@ -151,3 +159,5 @@
   - type: Stack
     stackType: Plasteel
     count: 1
+  - type: Item
+    size: 1

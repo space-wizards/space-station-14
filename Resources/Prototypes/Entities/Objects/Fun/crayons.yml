@@ -9,7 +9,7 @@
     sprite: Objects/Fun/crayons.rsi
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: Tiny
+    size: 1
   - type: Tag
     tags:
     - Write
@@ -235,11 +235,10 @@
     sprite: Objects/Fun/crayons.rsi
     state: box
   - type: Storage
-    maxSlots: 7
-    maxTotalWeight: 7
+    capacity: 7
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: Small
+    size: 7
     heldPrefix: box
   - type: StorageFill
     contents:

@@ -1,5 +1,3 @@
-using Content.Shared.Item;
-using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -21,25 +19,6 @@ namespace Content.Shared.Storage
 
         [ViewVariables]
         public Container Container = default!;
-
-        /// <summary>
-        /// The max number of entities that can be inserted into this storage.
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int MaxSlots = 7;
-
-        /// <summary>
-        /// The maximum size item that can be inserted into this storage,
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        [Access(typeof(SharedStorageSystem))]
-        public ItemSize? MaxItemSize;
-
-        /// <summary>
-        /// A limit for the cumulative ItemSizes that can be inserted in this storage.
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-        public int? MaxTotalWeight;
 
         // TODO: Make area insert its own component.
         [DataField("quickInsert")]
@@ -65,6 +44,18 @@ namespace Content.Shared.Storage
         /// </summary>
         [DataField("blacklist")]
         public EntityWhitelist? Blacklist;
+
+        /// <summary>
+        /// How much storage is currently being used by contained entities.
+        /// </summary>
+        [ViewVariables, DataField("storageUsed"), AutoNetworkedField]
+        public int StorageUsed;
+
+        /// <summary>
+        /// Maximum capacity for storage.
+        /// </summary>
+        [DataField("capacity"), AutoNetworkedField]
+        public int StorageCapacityMax = 10000;
 
         /// <summary>
         /// Sound played whenever an entity is inserted into storage.

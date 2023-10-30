@@ -9,7 +9,7 @@
     tags:
       - MagazineRifle
   - type: Item
-    size: Small
+    size: 5
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:

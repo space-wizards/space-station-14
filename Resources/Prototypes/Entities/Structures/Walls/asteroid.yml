@@ -379,6 +379,7 @@
 # Basalt variants
 - type: entity
   id: WallRockBasalt
+  name: basalt
   parent: WallRock
   components:
     - type: Sprite
@@ -574,6 +575,7 @@
 # Snow variants
 - type: entity
   id: WallRockSnow
+  name: snowdrift
   parent: WallRock
   components:
     - type: Sprite
@@ -770,6 +772,7 @@
 # Sand variants
 - type: entity
   id: WallRockSand
+  name: sandstone
   parent: WallRock
   components:
     - type: Sprite
@@ -965,6 +968,7 @@
 # Chromite variants
 - type: entity
   id: WallRockChromite
+  name: chromite
   parent: WallRock
   components:
     - type: Sprite
@@ -1160,6 +1164,7 @@
 # Andesite variants
 - type: entity
   id: WallRockAndesite
+  name: andesite
   parent: WallRock
   components:
     - type: Sprite

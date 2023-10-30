@@ -14,7 +14,7 @@
         - CartridgeMagnum
     capacity: 25
   - type: Item
-    size: Small
+    size: 10
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
