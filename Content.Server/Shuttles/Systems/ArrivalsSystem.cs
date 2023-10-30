@@ -401,30 +401,23 @@ public sealed class ArrivalsSystem : EntitySystem
                 if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
                     continue;
 
-                var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime;
+                var tripTime = ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultStartupTime ;
 
-                EntityUid target;
                 // Go back to arrivals source
                 if (xform.MapUid != arrivalsXform.MapUid)
                 {
-                    target = arrivals;
-
                     if (arrivals.IsValid())
-                        _shuttles.FTLTravel(uid, shuttle, target, dock: true);
+                        _shuttles.FTLTravel(uid, shuttle, arrivals, dock: true);
 
                     comp.NextArrivalsTime = _timing.CurTime + TimeSpan.FromSeconds(tripTime);
                 }
                 // Go to station
                 else
                 {
-                    var station = _station.GetLargestGrid(data);
+                    var targetGrid = _station.GetLargestGrid(data);
 
-                    if (station == null)
-                        return;
-
-                    target = station.Value;
-
-                    _shuttles.FTLTravel(uid, shuttle, target, dock: true);
+                    if (targetGrid != null)
+                        _shuttles.FTLTravel(uid, shuttle, targetGrid.Value, dock: true);
 
                     // The ArrivalsCooldown includes the trip there, so we only need to add the time taken for
                     // the trip back.
