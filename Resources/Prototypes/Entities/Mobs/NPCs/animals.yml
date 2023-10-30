@@ -2563,10 +2563,6 @@
         Base: mothroach_dead
   - type: Food
   - type: Hunger
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatRat
-      amount: 1
   - type: Tag
     tags:
     - Trash
