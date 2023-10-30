@@ -413,3 +413,18 @@
     earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule
+
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: IonStorm
+  components:
+  - type: StationEvent
+    weight: 5
+    earliestStart: 20
+    reoccurrenceDelay: 60
+    startAnnouncement: station-event-ion-storm-start-announcement
+    startAudio:
+      path: /Audio/Announcements/ion_storm.ogg
+    duration: 1
+  - type: IonStormRule

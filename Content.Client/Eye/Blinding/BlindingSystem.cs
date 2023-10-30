@@ -1,17 +1,7 @@
-
-using Content.Shared.Eye.Blinding;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Shared.Administration;
-using Content.Shared.Administration.Events;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Network;
 
 namespace Content.Client.Eye.Blinding;
 
@@ -31,20 +21,20 @@ public sealed class BlindingSystem : EntitySystem
         SubscribeLocalEvent<BlindableComponent, ComponentInit>(OnBlindInit);
         SubscribeLocalEvent<BlindableComponent, ComponentShutdown>(OnBlindShutdown);
 
-        SubscribeLocalEvent<BlindableComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<BlindableComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<BlindableComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<BlindableComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
         SubscribeNetworkEvent<RoundRestartCleanupEvent>(RoundRestartCleanup);
 
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, BlindableComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, BlindableComponent component, LocalPlayerAttachedEvent args)
     {
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, BlindableComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, BlindableComponent component, LocalPlayerDetachedEvent args)
     {
         _overlayMan.RemoveOverlay(_overlay);
         _lightManager.Enabled = true;

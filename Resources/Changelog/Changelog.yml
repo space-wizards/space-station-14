@@ -1,102 +1,4 @@
 Entries:
-- author: PixelTheKermit
-  changes:
-  - {message: Arachnid zombies no longer get functional hands., type: Fix}
-  id: 4564
-  time: '2023-08-13T19:51:21.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug causing inventory slots to sometimes ignore interactions
-      (e.g., not opening the context menu).', type: Fix}
-  id: 4565
-  time: '2023-08-13T21:55:18.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fix "remove single hand" admin smite having gone missing., type: Fix}
-  - {message: Fix "remove hands" admin smite popup message., type: Fix}
-  id: 4566
-  time: '2023-08-13T22:50:58.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: AHelps now show a typing indicator to admins., type: Tweak}
-  id: 4567
-  time: '2023-08-13T23:03:17.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: 'Emagged recyclers now not only gib people, but other mobs too.', type: Fix}
-  id: 4568
-  time: '2023-08-13T23:54:52.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: 'Fixed new players added to admin logs defaulting to selected, even
-      when not all players are selected.', type: Fix}
-  id: 4569
-  time: '2023-08-14T01:53:48.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Substations produce hot CO2 when destroyed now., type: Tweak}
-  id: 4570
-  time: '2023-08-14T01:55:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Being turned into a cyborg or zombie now counts as a being dead for
-      survival and kill objectives., type: Fix}
-  - {message: Kill objectives no longer reveal a character's true name at all times.,
-    type: Fix}
-  id: 4571
-  time: '2023-08-14T03:34:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed the RPED sound effect cutting off at the end., type: Fix}
-  id: 4572
-  time: '2023-08-14T03:36:08.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Admin notes now require a severity to be set before saving., type: Tweak}
-  id: 4573
-  time: '2023-08-14T03:37:38.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: 'The nuke detonation sound plays to all crew members again, no longer
-      will you have to sit in silence before your demise', type: Fix}
-  id: 4574
-  time: '2023-08-14T03:55:50.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: 'The Syndicate have rebooted the chameleon clothing database, restoring
-      most lost functionality.', type: Fix}
-  id: 4575
-  time: '2023-08-14T04:03:20.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Fixed an issue which was preventing airlock safeguards from being installed
-      on glass airlocks, type: Fix}
-  id: 4576
-  time: '2023-08-14T06:42:02.0000000+00:00'
-- author: kseandi
-  changes:
-  - {message: 'The new airlock painters are so accurate that you can use them to paint
-      pipes. Because of this, Nanotrasen decided to rename them to "Spray painters".',
-    type: Tweak}
-  id: 4577
-  time: '2023-08-14T12:06:21.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Centcom will now sell Cargo gas canisters at a vastly reduced (and consistent!)
-      price after realizing the station has infinite gasses anyway., type: Tweak}
-  id: 4578
-  time: '2023-08-14T13:56:07.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Asteroid rocks and secret doors should look less weird in certain scenarios,
-    type: Fix}
-  id: 4579
-  time: '2023-08-14T15:59:14.0000000+00:00'
-- author: LightVillet
-  changes:
-  - {message: Fixed hand labeler recipe's name, type: Fix}
-  id: 4580
-  time: '2023-08-14T16:04:22.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Bike horn implant now has a short cooldown, sorry', type: Fix}
@@ -2895,3 +2797,124 @@ Entries:
       slots and sizes.', type: Tweak}
   id: 5063
   time: '2023-10-26T08:28:16.776154+00:00'
+- author: nmajask
+  changes:
+  - {message: Bacon burgers require 1 bacon instead of 3 cutlets, type: Tweak}
+  - {message: Ghost burgers require 1 ectoplasm instead of 1 ghost sheet, type: Tweak}
+  - {message: Tofu creation no longer consumes the enzyme, type: Tweak}
+  - {message: Ribs and Mcribs now give back skewers when eaten, type: Fix}
+  id: 5064
+  time: '2023-10-27T02:12:35.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Headrevs now have their own music on spawn, credits to A-Guy on youtube',
+    type: Add}
+  id: 5065
+  time: '2023-10-27T02:19:35.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Bodies of dead players who have taken a ghost role now show as "departed
+      and moved on"., type: Fix}
+  id: 5066
+  time: '2023-10-27T02:27:36.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed being able to give pAIs implants., type: Fix}
+  id: 5067
+  time: '2023-10-27T02:34:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Ion storms have appeared and are causing malfunctions in cyborg law
+      modules., type: Add}
+  id: 5068
+  time: '2023-10-27T02:40:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Foam and smoke can now transfer chemicals when inhaled. Wear internals
+      to avoid this., type: Add}
+  - {message: Fixed foam dissolution animation., type: Fix}
+  id: 5069
+  time: '2023-10-27T02:52:11.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Increased funding in an undisclosed NT Operative Squad., type: Add}
+  - {message: CentComm staff will have their proper ID icons on security's sechud.,
+    type: Add}
+  - {message: CentComm staff will have undying loyalty to Nanotrasen., type: Add}
+  - {message: ERT funding has been improved. Expect specialized ERT units to be able
+      to provide more assistance related to their role., type: Tweak}
+  - {message: Cut funding from ERT weaponry. They'll likely be seen using standard
+      security-level weapons., type: Remove}
+  - {message: 'Cut funding from ERT uniforms, they no longer have built in armor.',
+    type: Fix}
+  - {message: The medical ERT members have had their hardsuits refitted with proper
+      armor., type: Fix}
+  - {message: Updated the localization files., type: Fix}
+  id: 5070
+  time: '2023-10-27T13:54:43.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: Fixed nuclear operatives sound not being played at round start, type: Fix}
+  id: 5071
+  time: '2023-10-28T02:28:21.0000000+00:00'
+- author: Arteben
+  changes:
+  - {message: Nanotrasen improved the health analyzer UI!, type: Tweak}
+  id: 5072
+  time: '2023-10-28T05:54:18.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Stats menu on Character setup for total and role playtime., type: Add}
+  id: 5073
+  time: '2023-10-28T12:01:11.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'The space lube recipe now produces slightly more lube, but can overflow
+      its container.', type: Tweak}
+  id: 5074
+  time: '2023-10-28T16:46:59.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The bee plush can now be worn on your head., type: Add}
+  id: 5075
+  time: '2023-10-29T03:55:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio rework is in which fixes a lot of audio bugs but may also introduce
+      new ones., type: Tweak}
+  - {message: Grid audio will now attenuate properly over distance and won't be ear
+      rupturingly loud., type: Fix}
+  - {message: FTL sound should no longer persist as it's attached to the shuttle instead
+      of being global., type: Fix}
+  - {message: Audio can now start at an offset so if an audio source comes into range
+      it won't play from the start., type: Fix}
+  - {message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
+      so it's smoother. You may need to adjust your master audio volume., type: Tweak}
+  id: 5076
+  time: '2023-10-29T03:58:23.0000000+00:00'
+- author: Simyon264
+  changes:
+  - {message: 'The PDA will now ring again, when a new station article gets published.
+      Reporters rejoice!', type: Fix}
+  id: 5077
+  time: '2023-10-29T10:37:40.0000000+00:00'
+- author: Subversionary
+  changes:
+  - {message: Bolas no longer deal stamina damage if you're already ensnared., type: Tweak}
+  - {message: Returned old bola recipe, type: Tweak}
+  - {message: Nerfed bola stamina damage from 80 to 55, type: Tweak}
+  - {message: You can break out of bolas while moving., type: Tweak}
+  id: 5078
+  time: '2023-10-29T22:27:44.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: Flannel jackets now keep you warm., type: Tweak}
+  id: 5079
+  time: '2023-10-30T00:08:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Made thindows slightly thicker (0.03m to 0.13m) to reduce instances
+      of tunneling through them at high speeds. This only affects the outer edge so
+      you can still move through two parallel thindows on the same tile., type: Tweak}
+  id: 5080
+  time: '2023-10-30T11:48:12.0000000+00:00'

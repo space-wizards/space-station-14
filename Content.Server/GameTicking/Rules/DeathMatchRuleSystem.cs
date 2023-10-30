@@ -14,6 +14,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -105,7 +106,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         // This is ridiculous
         if (component.SelectionStatus == DeathMatchRuleComponent.SelectionState.ReadyToSelect)
         {
-            foreach (var playerSession in _player.ServerSessions)
+            foreach (var playerSession in _player.Sessions)
                 AddUplink(playerSession);
 
             component.SelectionStatus = DeathMatchRuleComponent.SelectionState.SelectionMade;
@@ -180,7 +181,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         }
     }
 
-    public void AddUplink(IPlayerSession session)
+    public void AddUplink(ICommonSession session)
     {
         if (session?.AttachedEntity is not { } user) { return; }
         if (!_uplink.AddUplink(user, _deathMatchStartingBalance)) { }

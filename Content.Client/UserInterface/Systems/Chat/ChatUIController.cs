@@ -162,7 +162,8 @@ public sealed class ChatUIController : UIController
         _sawmill = Logger.GetSawmill("chat");
         _sawmill.Level = LogLevel.Info;
         _admin.AdminStatusUpdated += UpdateChannelPermissions;
-        _player.LocalPlayerChanged += OnLocalPlayerChanged;
+        _player.LocalPlayerAttached += OnAttachedChanged;
+        _player.LocalPlayerDetached += OnAttachedChanged;
         _state.OnStateChanged += StateChanged;
         _net.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
         _net.RegisterNetMessage<MsgDeleteChatMessagesBy>(OnDeleteChatMessagesBy);
@@ -170,7 +171,7 @@ public sealed class ChatUIController : UIController
 
         _speechBubbleRoot = new LayoutContainer();
 
-        OnLocalPlayerChanged(new LocalPlayerChangedEventArgs(null, _player.LocalPlayer));
+        UpdateChannelPermissions();
 
         _input.SetInputCommand(ContentKeyFunctions.FocusChat,
             InputCmdHandler.FromDelegate(_ => FocusChat()));
@@ -363,29 +364,7 @@ public sealed class ChatUIController : UIController
         _speechBubbleRoot.SetPositionLast();
     }
 
-    private void OnLocalPlayerChanged(LocalPlayerChangedEventArgs obj)
-    {
-        if (obj.OldPlayer != null)
-        {
-            obj.OldPlayer.EntityAttached -= OnLocalPlayerEntityAttached;
-            obj.OldPlayer.EntityDetached -= OnLocalPlayerEntityDetached;
-        }
-
-        if (obj.NewPlayer != null)
-        {
-            obj.NewPlayer.EntityAttached += OnLocalPlayerEntityAttached;
-            obj.NewPlayer.EntityDetached += OnLocalPlayerEntityDetached;
-        }
-
-        UpdateChannelPermissions();
-    }
-
-    private void OnLocalPlayerEntityAttached(EntityAttachedEventArgs obj)
-    {
-        UpdateChannelPermissions();
-    }
-
-    private void OnLocalPlayerEntityDetached(EntityDetachedEventArgs obj)
+    private void OnAttachedChanged(EntityUid uid)
     {
         UpdateChannelPermissions();
     }

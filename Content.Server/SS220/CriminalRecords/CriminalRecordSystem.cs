@@ -13,7 +13,7 @@ using Content.Shared.PDA;
 using Content.Shared.SS220.CriminalRecords;
 using Content.Shared.StationRecords;
 using Content.Shared.StatusIcon.Components;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 

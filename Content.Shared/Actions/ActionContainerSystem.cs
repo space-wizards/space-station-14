@@ -213,6 +213,9 @@ public sealed class ActionContainerSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, ActionsContainerComponent component, ComponentShutdown args)
     {
+        if (_timing.ApplyingState && component.NetSyncEnabled)
+            return; // The game state should handle the container removal & action deletion.
+
         component.Container.Shutdown();
     }
 

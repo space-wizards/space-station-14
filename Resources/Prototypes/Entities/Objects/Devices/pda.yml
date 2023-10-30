@@ -643,7 +643,7 @@
     borderColor: "#A32D26"
   - type: Icon
     state: pda-security
-    
+
 - type: entity
   parent: BasePDA
   id: SecurityPilotPDA
@@ -688,7 +688,7 @@
 - type: entity
   parent: CentcomPDA
   id: DeathsquadPDA
-  suffix: Deathsquad
+  suffix: Death Squad
   components:
   - type: Pda
     id: CentcomIDCardDeathsquad

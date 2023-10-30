@@ -26,7 +26,7 @@ public sealed class DiscordPlayerManager
     /// </summary>
     /// <param name="playerData"></param>
     /// <returns></returns>
-    public async Task<string> CheckAndGenerateKey(IPlayerData playerData)
+    public async Task<string> CheckAndGenerateKey(SessionData playerData)
     {
         try
         {
