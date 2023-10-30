@@ -27,7 +27,7 @@
         GlassBeaker:
           Amount: 2
           DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          ExamineName: Мензурка
 
 - type: entity
   id: SecurityTechFabCircuitboard
@@ -46,7 +46,7 @@
         GlassBeaker:
           Amount: 2
           DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          ExamineName: Мензурка
 
 - type: entity
   id: AmmoTechFabCircuitboard
@@ -79,7 +79,7 @@
         GlassBeaker:
           Amount: 2
           DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          ExamineName: Мензурка
 
 - type: entity
   id: CircuitImprinterMachineCircuitboard
@@ -97,7 +97,7 @@
       GlassBeaker:
         Amount: 2
         DefaultPrototype: Beaker
-        ExamineName: Glass Beaker
+        ExamineName: Мензурка
 
 - type: entity
   id: ExosuitFabricatorMachineCircuitboard
@@ -143,6 +143,22 @@
       Manipulator: 2
 
 - type: entity
+  id: BookTerminalMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: book terminal machine board
+  components:
+  - type: MachineBoard
+    prototype: BookTerminal
+    requirements:
+      MatterBin: 2
+      Manipulator: 2
+    tagRequirements:
+      GlassBeaker:
+        Amount: 2
+        DefaultPrototype: Beaker
+        ExamineName: Мензурка
+
+- type: entity
   id: VaccinatorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: vaccinator machine board
@@ -160,7 +176,7 @@
         GlassBeaker:
           Amount: 1
           DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          ExamineName: Мензурка
 
 - type: entity
   id: DiagnoserMachineCircuitboard
@@ -177,7 +193,7 @@
       GlassBeaker:
         Amount: 1
         DefaultPrototype: Beaker
-        ExamineName: Glass Beaker
+        ExamineName: Мензурка
     componentRequirements:
       DiseaseSwab:
         Amount: 1
@@ -384,7 +400,7 @@
         GlassBeaker:
           Amount: 2
           DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          ExamineName: Мензурка
 
 - type: entity
   id: ChemDispenserMachineCircuitboard
@@ -405,7 +421,7 @@
         GlassBeaker:
           Amount: 2
           DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          ExamineName: Мензурка
 
 - type: entity
   id: BiomassReclaimerMachineCircuitboard
@@ -444,7 +460,7 @@
         GlassBeaker:
           Amount: 2
           DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          ExamineName: Мензурка
 
 - type: entity
   id: SeedExtractorMachineCircuitboard
@@ -699,7 +715,7 @@
         GlassBeaker:
           Amount: 1
           DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+          ExamineName: Мензурка
 
 - type: entity
   id: HotplateMachineCircuitboard
@@ -917,7 +933,7 @@
           GlassBeaker:
             Amount: 1
             DefaultPrototype: Beaker
-            ExamineName: Glass Beaker
+            ExamineName: Мензурка
 
 - type: entity
   id: CargoTelepadMachineCircuitboard
@@ -950,7 +966,7 @@
           GlassBeaker:
             Amount: 1
             DefaultPrototype: Beaker
-            ExamineName: Glass Beaker
+            ExamineName: Мензурка
 
 - type: entity
   id: TelecomServerCircuitboard

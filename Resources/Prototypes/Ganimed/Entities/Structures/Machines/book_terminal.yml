@@ -7,8 +7,13 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/dispensers.rsi
-    state: industrial-working
+    sprite: Ganimed/Structures/book_printer.rsi
+    layers:
+    - state: icon
+      map: ["enum.BookTerminalVisualLayers.Base"]
+    - state: slotted
+      map: ["enum.BookTerminalVisualLayers.Slotted"]
+      visible: false
     snapCardinals: true
   - type: Transform
     anchored: true
@@ -57,16 +62,20 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       bookSlot: !type:ContainerSlot
+  - type: Machine
+    board: BookTerminalMachineCircuitboard
   - type: StaticPrice
     price: 1000
   - type: Wires
-    boardName: wires-board-name-chemdispenser
-    layoutId: ChemDispenser
+    boardName: wires-board-name-bookterminal
+    layoutId: BookTerminal
   - type: WiresPanel
   - type: BookTerminal
+  - type: BookTerminalVisuals
   - type: UserInterface
     interfaces:
     - key: enum.BookTerminalUiKey.Key
       type: BookTerminalBoundUserInterface
   - type: ActivatableUI
     key: enum.BookTerminalUiKey.Key
+  - type: Appearance

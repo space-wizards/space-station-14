@@ -18,6 +18,8 @@ using Content.Server.Labels.Components;
 using System.Threading.Tasks;
 using Robust.Shared.Asynchronous;
 using Content.Shared.Ganimed;
+using Content.Shared.Ganimed.Components;
+using Content.Shared.Ganimed.Components;
 
 namespace Content.Server.Ganimed
 {
@@ -25,9 +27,10 @@ namespace Content.Server.Ganimed
 	public sealed class BookTerminalSystem : EntitySystem
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
-        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
@@ -54,6 +57,10 @@ namespace Content.Server.Ganimed
         {
             UpdateUiState(ent);
 			RefreshBookContent();
+			
+			var isFilled = _itemSlotsSystem.GetItemOrNull(ent, "bookSlot") is not null;
+			
+			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Slotted, isFilled);
         }
 		
 		private void UpdateUiState(Entity<BookTerminalComponent> bookTerminal)
@@ -240,9 +247,9 @@ namespace Content.Server.Ganimed
 			RefreshBookContent();
 		}
 		
-		private void ClickSound(Entity<BookTerminalComponent> reagentDispenser)
+		private void ClickSound(Entity<BookTerminalComponent> bookTerminal)
         {
-            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(bookTerminal.Comp.ClickSound, bookTerminal, AudioParams.Default.WithVolume(-2f));
         }
     }
 }
