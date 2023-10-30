@@ -82,6 +82,7 @@ ui-options-header-dev = Development
 ui-options-header-general = General
 
 ui-options-hotkey-keymap = Use US QWERTY Keys
+ui-options-hotkey-toggle-walk = Toggle Walk
 
 ui-options-function-move-up = Move Up
 ui-options-function-move-left = Move Left
@@ -147,6 +148,7 @@ ui-options-function-escape-context = Close recent window or toggle game menu
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
+ui-options-function-toggle-fullscreen = Toggle fullscreen
 
 ui-options-function-editor-place-object = Place object
 ui-options-function-editor-cancel-place = Cancel placement

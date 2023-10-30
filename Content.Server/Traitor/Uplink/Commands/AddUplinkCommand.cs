@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Traitor.Uplink.Commands
 {
@@ -36,7 +37,7 @@ namespace Content.Server.Traitor.Uplink.Commands
                 return;
             }
 
-            IPlayerSession? session;
+            ICommonSession? session;
             if (args.Length > 0)
             {
                 // Get player entity
@@ -48,7 +49,7 @@ namespace Content.Server.Traitor.Uplink.Commands
             }
             else
             {
-                session = (IPlayerSession?) shell.Player;
+                session = shell.Player;
             }
 
             if (session?.AttachedEntity is not { } user)

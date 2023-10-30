@@ -96,12 +96,15 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     /// <summary>
     /// Force uncloaks the user and disables suit abilities.
     /// </summary>
-    public void RevealNinja(EntityUid uid, EntityUid user, NinjaSuitComponent? comp = null, StealthClothingComponent? stealthClothing = null)
+    public void RevealNinja(EntityUid uid, EntityUid user, bool disable = true, NinjaSuitComponent? comp = null, StealthClothingComponent? stealthClothing = null)
     {
         if (!Resolve(uid, ref comp, ref stealthClothing))
             return;
 
         if (!StealthClothing.SetEnabled(uid, user, false, stealthClothing))
+            return;
+
+        if (!disable)
             return;
 
         // previously cloaked, disable abilities for a short time

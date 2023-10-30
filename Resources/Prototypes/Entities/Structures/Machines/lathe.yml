@@ -31,8 +31,8 @@
         acts: ["Destruction"]
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-autolathe
-    LayoutId: Autolathe
+    boardName: wires-board-name-autolathe
+    layoutId: Autolathe
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -114,6 +114,10 @@
       - FoodPlateSmallPlastic
       - SprayBottle
       - PowerCellSmall
+      - VehicleWheelchairFolded
+      - RollerBedSpawnFolded
+      - CheapRollerBedSpawnFolded
+      - EmergencyRollerBedSpawnFolded
       - MicroManipulatorStockPart
       - MatterBinStockPart
       - CapacitorStockPart
@@ -187,8 +191,8 @@
   - type: Machine
     board: ProtolatheMachineCircuitboard
   - type: Wires
-    BoardName: wires-board-name-protolathe
-    LayoutId: Protolathe
+    boardName: wires-board-name-protolathe
+    layoutId: Protolathe
   - type: MaterialStorage
     whitelist:
       tags:
@@ -243,6 +247,7 @@
       - Signaller
       - SignalTrigger
       - VoiceTrigger
+      - Igniter
       - PowerCellMedium
       - PowerCellHigh
       - WeaponPistolCHIMP
@@ -397,7 +402,7 @@
     staticRecipes:
     - MMI
     - PositronicBrain
-    - Flash
+    - SciFlash
     - BorgModuleCable
     - BorgModuleFireExtinguisher
     - BorgModuleGPS
@@ -501,6 +506,7 @@
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: sec
     - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
@@ -663,6 +669,10 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
+      - VehicleWheelchairFolded
+      - RollerBedSpawnFolded
+      - CheapRollerBedSpawnFolded
+      - EmergencyRollerBedSpawnFolded
       - Medkit
       - MedkitBurn
       - MedkitToxin

@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "airloss, brute, toxin and burn edited from /tg/station https://github.com/tgstation/tgstation/tree/master genetic edited from https://iconscout.com/free-icon/dna-2130814 with license CC BY 4.0",
+  "states": [
+    {
+      "name": "airloss"
+    },
+    {
+      "name": "genetic"
+    },
+    {
+      "name": "brute"
+    },
+    {
+      "name": "toxin"
+    },
+    {
+      "name": "burn"
+    },
+    {
+      "name": "unknown"
+    }
+  ]
+}

@@ -11,17 +11,17 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Shared.Hands.EntitySystems;
 
-public abstract partial class SharedHandsSystem : EntitySystem
+public abstract partial class SharedHandsSystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedItemSystem _items = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
-    protected event Action<HandsComponent?>? OnHandSetActive;
+    protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 
     public override void Initialize()
     {
@@ -47,7 +47,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (handsComp.Hands.ContainsKey(handName))
             return;
 
-        var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, handName);
+        var container = ContainerSystem.EnsureContainer<ContainerSlot>(uid, handName);
         container.OccludesLight = false;
 
         var newHand = new Hand(handName, handLocation, container);
@@ -57,8 +57,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (handsComp.ActiveHand == null)
             SetActiveHand(uid, newHand, handsComp);
 
-        RaiseLocalEvent(uid, new HandCountChangedEvent(uid), false);
-        Dirty(handsComp);
+        RaiseLocalEvent(uid, new HandCountChangedEvent(uid));
+        Dirty(uid, handsComp);
     }
 
     public virtual void RemoveHand(EntityUid uid, string handName, HandsComponent? handsComp = null)
@@ -69,15 +69,15 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!handsComp.Hands.Remove(handName, out var hand))
             return;
 
+        handsComp.SortedHands.Remove(hand.Name);
         TryDrop(uid, hand, null, false, true, handsComp);
         hand.Container?.Shutdown();
-        handsComp.SortedHands.Remove(hand.Name);
 
         if (handsComp.ActiveHand == hand)
             TrySetActiveHand(uid, handsComp.SortedHands.FirstOrDefault(), handsComp);
 
-        RaiseLocalEvent(uid, new HandCountChangedEvent(uid), false);
-        Dirty(handsComp);
+        RaiseLocalEvent(uid, new HandCountChangedEvent(uid));
+        Dirty(uid, handsComp);
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             if (name == handsComp.ActiveHand?.Name)
                 continue;
 
-            if (handsComp.Hands[name].HeldEntity is EntityUid held)
+            if (handsComp.Hands[name].HeldEntity is { } held)
                 yield return held;
         }
     }
@@ -206,8 +206,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (hand == handComp.ActiveHand)
             return false;
 
-        if (handComp.ActiveHand?.HeldEntity is EntityUid held)
-            RaiseLocalEvent(held, new HandDeselectedEvent(uid), false);
+        if (handComp.ActiveHand?.HeldEntity is { } held)
+            RaiseLocalEvent(held, new HandDeselectedEvent(uid));
 
         if (hand == null)
         {
@@ -216,11 +216,12 @@ public abstract partial class SharedHandsSystem : EntitySystem
         }
 
         handComp.ActiveHand = hand;
-        OnHandSetActive?.Invoke(handComp);
+        OnHandSetActive?.Invoke((uid, handComp));
 
         if (hand.HeldEntity != null)
-            RaiseLocalEvent(hand.HeldEntity.Value, new HandSelectedEvent(uid), false);
-        Dirty(handComp);
+            RaiseLocalEvent(hand.HeldEntity.Value, new HandSelectedEvent(uid));
+
+        Dirty(uid, handComp);
         return true;
     }
 
