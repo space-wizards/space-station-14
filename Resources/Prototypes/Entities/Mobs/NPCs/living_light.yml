@@ -53,7 +53,7 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.40
+          radius: 0.35
         density: 60
         mask:
           - MobMask
