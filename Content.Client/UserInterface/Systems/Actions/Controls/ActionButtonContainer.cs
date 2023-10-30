@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Actions;
 using Content.Shared.Input;
 using Robust.Client.Input;
@@ -30,6 +31,7 @@ public class ActionButtonContainer : GridContainer
     private void BuildActionButtons(int count)
     {
         var keys = ContentKeyFunctions.GetHotbarBoundKeys();
+
         Children.Clear();
         for (var index = 0; index < count; index++)
         {
@@ -54,21 +56,14 @@ public class ActionButtonContainer : GridContainer
 
     public void SetActionData(ActionsSystem system, params EntityUid?[] actionTypes)
     {
-        ClearActionData();
+        var uniqueCount = Math.Min(system.GetClientActions().Count(), actionTypes.Length + 1);
+        BuildActionButtons(uniqueCount);
 
-        var actions = new List<EntityUid>();
-        foreach (var type in actionTypes)
+        for (var i = 0; i < uniqueCount; i++)
         {
-            if (type != null)
-                actions.Add(type.Value);
-        }
-
-        if (actions.Count != ChildCount)
-            BuildActionButtons(actions.Count);
-
-        for (var i = 0; i < actions.Count; i++)
-        {
-            ((ActionButton) GetChild(i)).UpdateData(actions[i], system);
+            if (!actionTypes.TryGetValue(i, out var action))
+                action = null;
+            ((ActionButton) GetChild(i)).UpdateData(action, system);
         }
     }
 

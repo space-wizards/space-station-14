@@ -311,16 +311,16 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private void TriggerAction(int index)
     {
         if (_actionsSystem == null ||
-            _actions[index] is not { } actionId ||
+            !_actions.TryGetValue(index, out var actionId) ||
             !_actionsSystem.TryGetActionData(actionId, out var baseAction))
         {
             return;
         }
 
         if (baseAction is BaseTargetActionComponent action)
-            ToggleTargeting(actionId, action);
+            ToggleTargeting(actionId.Value, action);
         else
-            _actionsSystem?.TriggerAction(actionId, baseAction);
+            _actionsSystem?.TriggerAction(actionId.Value, baseAction);
     }
 
     private void OnActionAdded(EntityUid actionId)
@@ -339,9 +339,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         _actions.Add(actionId);
-
-        if (_actionsSystem != null)
-            _container?.SetActionData(_actionsSystem, _actions.ToArray());
     }
 
     private void OnActionRemoved(EntityUid actionId)
@@ -349,34 +346,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_container == null)
             return;
 
-        // stop targeting if the action is removed
         if (actionId == SelectingTargetFor)
             StopTargeting();
 
-        foreach (var button in _container.GetButtons())
-        {
-            if (button.ActionId == actionId)
-            {
-                SetAction(button, null);
-            }
-        }
-
-        _actions.Remove(actionId);
-
-        if (_actionsSystem != null)
-            _container?.SetActionData(_actionsSystem, _actions.ToArray());
+        _actions.RemoveAll(x => x == actionId);
     }
 
     private void OnActionsUpdated()
     {
         QueueWindowUpdate();
-        if (_container == null)
-            return;
 
-        foreach (var button in _container.GetButtons())
-        {
-            button.UpdateIcons();
-        }
+        if (_actionsSystem != null)
+            _container?.SetActionData(_actionsSystem, _actions.ToArray());
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)
@@ -523,7 +504,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         PopulateActions(actions);
     }
 
-    private void SetAction(ActionButton button, EntityUid? actionId)
+    private void SetAction(ActionButton button, EntityUid? actionId, bool updateSlots = true)
     {
         if (_actionsSystem == null)
             return;
@@ -535,22 +516,30 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             button.ClearData();
             if (_container?.TryGetButtonIndex(button, out position) ?? false)
             {
-                _actions[position] = actionId;
+                _actions.RemoveAt(position);
             }
-
-            return;
         }
-
-        if (button.TryReplaceWith(actionId.Value, _actionsSystem) &&
+        else if (button.TryReplaceWith(actionId.Value, _actionsSystem) &&
             _container != null &&
             _container.TryGetButtonIndex(button, out position))
         {
-            _actions[position] = actionId;
+            if (position >= _actions.Count)
+            {
+                _actions.Add(actionId);
+            }
+            else
+            {
+                _actions[position] = actionId;
+            }
         }
+
+        if (updateSlots)
+            _container?.SetActionData(_actionsSystem, _actions.ToArray());
     }
 
     private void DragAction()
     {
+        EntityUid? swapAction = null;
         if (UIManager.CurrentlyHovered is ActionButton button)
         {
             if (!_menuDragHelper.IsDragging || _menuDragHelper.Dragged?.ActionId is not { } type)
@@ -559,13 +548,17 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 return;
             }
 
-            SetAction(button, type);
+            swapAction = button.ActionId;
+            SetAction(button, type, false);
         }
 
         if (_menuDragHelper.Dragged is {Parent: ActionButtonContainer} old)
         {
-            SetAction(old, null);
+            SetAction(old, swapAction, false);
         }
+
+        if (_actionsSystem != null)
+            _container?.SetActionData(_actionsSystem, _actions.ToArray());
 
         _menuDragHelper.EndDrag();
     }
@@ -755,11 +748,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void RegisterActionContainer(ActionButtonContainer container)
     {
+        /*
         if (_container != null)
         {
             _container.ActionPressed -= OnActionPressed;
             _container.ActionUnpressed -= OnActionPressed;
-        }
+            return;
+        }*/
 
         _container = container;
         _container.ActionPressed += OnActionPressed;
