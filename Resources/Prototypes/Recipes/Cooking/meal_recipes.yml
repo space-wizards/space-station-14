@@ -24,7 +24,7 @@
   time: 10
   solids:
     FoodBreadBun: 1
-    FoodMeatCutlet: 3 #replace with bacon
+    FoodMeatBacon: 1
     FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
@@ -186,7 +186,7 @@
   time: 10
   solids:
     FoodBreadBun: 1
-    ClothingOuterGhostSheet: 1 #replace with ectoplasm once added
+    Ectoplasm: 1
 
 - type: microwaveMealRecipe
   id: RecipeHumanBurger
@@ -218,7 +218,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBurgerMcrib
-  name: McRib recipe
+  name: BBQ rib sandwich recipe
   result: FoodBurgerMcrib
   time: 10
   solids:
