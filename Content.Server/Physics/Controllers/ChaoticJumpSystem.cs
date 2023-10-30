@@ -51,14 +51,14 @@ public sealed class ChaoticJumpSystem : EntitySystem
     {
         Vector2 startPos = Transform(uid).WorldPosition;
         Vector2 targetPos = new Vector2();
-        var direction = Angle.FromDegrees((double)(_random.Next(8) * 45)); //To Do: attach the selection of degrees not on world coordinates, but on grid coordinates.
+        var direction = _random.NextAngle();
         var range = _random.NextFloat(component.RangeMin, component.RangeMax);
         var ray = new CollisionRay(startPos, direction.ToVec(), component.CollisionMask);
         var rayCastResults = _physics.IntersectRay(Transform(uid).MapID, ray, range, uid, returnOnFirstHit: false).ToList();
 
         if (rayCastResults.Count > 0)
         {
-            targetPos = Transform(rayCastResults[0].HitEntity).WorldPosition;
+            targetPos = rayCastResults[0].HitPos;
             targetPos = new Vector2(targetPos.X - (float) Math.Cos(direction), targetPos.Y - (float) Math.Sin(direction)); //offset so that the teleport does not take place directly inside the target
         }
         else
