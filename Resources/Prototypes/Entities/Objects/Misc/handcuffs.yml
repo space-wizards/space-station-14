@@ -16,9 +16,6 @@
   - type: Tag
     tags:
     - Handcuffs
-  - type: Stack
-    stackType: Zipties
-    count: 1
   - type: MeleeWeapon
     resetOnHandSelected: false
     animation: WeaponArcDisarm
@@ -28,25 +25,6 @@
   - type: GuideHelp
     guides:
     - Security
-
-- type: entity
-  id: Zipties10
-  parent: Zipties
-  suffix: 10
-  components:
-  - type: Stack
-    stackType: Zipties
-    count: 10
-
-- type: entity
-  id: Zipties10Lingering
-  parent: Zipties
-  suffix: 10, Lingering
-  components:
-  - type: Stack
-    stackType: Zipties
-    lingering: true
-    count: 10
 
 - type: entity
   name: makeshift handcuffs
@@ -105,9 +83,31 @@
       path: /Audio/Items/Handcuffs/rope_breakout.ogg
     startBreakoutSound:
       path: /Audio/Items/Handcuffs/rope_takeoff.ogg
+  - type: Stack
+    stackType: Zipties
+    count: 1
   - type: Sprite
     sprite: Objects/Misc/zipties.rsi
     state: cuff
+
+- type: entity
+  id: Zipties10
+  parent: Zipties
+  suffix: 10
+  components:
+  - type: Stack
+    stackType: Zipties
+    count: 10
+
+- type: entity
+  id: Zipties10Lingering
+  parent: Zipties
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    stackType: Zipties
+    lingering: true
+    count: 10
 
 - type: entity
   id: BaseHandcuffsBroken
