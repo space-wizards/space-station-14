@@ -43,6 +43,7 @@
         hit:
           True: { visible: true }
           False: { visible: false }
+  - type: LightningSparking
   - type: AnimationPlayer
   - type: NodeContainer
     examinable: true
@@ -51,11 +52,10 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: Battery
-    maxCharge: 200000
+    maxCharge: 300000
     startingCharge: 0
   - type: BatteryDischarger
-    # This is JUST copy from Radiation Collector
-    activeSupplyRate: 100000
+    activeSupplyRate: 150000
   - type: TeslaCoil
   - type: LightningTarget
     priority: 4
@@ -96,8 +96,9 @@
         power:
           True: { state: grounding_rod }
           False: { state: grounding_rod_open }
+  - type: LightningSparking
   - type: Transform
-    anchored: false
+    anchored: true
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -111,7 +112,6 @@
         layer:
         - MachineLayer
   - type: Appearance
-  - type: TeslaGroundingRod
   - type: LightningTarget
     priority: 3
     lightningResistance: 10

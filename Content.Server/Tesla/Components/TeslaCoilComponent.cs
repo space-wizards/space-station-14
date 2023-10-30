@@ -15,35 +15,5 @@ public sealed partial class TeslaCoilComponent : Component
     /// </summary>
     // To Do: Different lightning bolts have different powers and generate different amounts of energy
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ChargeFromLightning = 30000f;
-
-    /// <summary>
-    /// Spark duration.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan LightningTime = TimeSpan.FromSeconds(4);
-
-    /// <summary>
-    /// When the spark visual should turn off.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan LightningEndTime;
-
-    /// <summary>
-    /// Is this coil sparking right now?
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public bool IsSparking;
-
-    /// <summary>
-    /// Was machine activated by user?
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public bool Enabled;
-
-    [DataField]
-    public SoundSpecifier SoundOpen = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
-
-    [DataField]
-    public SoundSpecifier SoundClose = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
+    public float ChargeFromLightning = 50000f;
 }

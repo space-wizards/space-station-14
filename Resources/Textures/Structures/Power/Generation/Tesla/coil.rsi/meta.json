@@ -8,9 +8,6 @@
   },
   "states": [
     {
-      "name": "coil_open"
-    },
-    {
       "name": "coil"
     },
     {
@@ -25,9 +22,6 @@
           0.1
         ]
       ]
-    },
-    {
-      "name": "grounding_rod_open"
     },
     {
       "name": "grounding_rod"
