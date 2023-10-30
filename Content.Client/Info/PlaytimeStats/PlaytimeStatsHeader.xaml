@@ -1,0 +1,29 @@
+<ContainerButton xmlns="https://spacestation14.io"
+                 xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                 EnableAllKeybinds="True">
+    <PanelContainer Name="BackgroundColorPlaytimePanel" Access="Public"/>
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      SeparationOverride="4">
+            <Label Name="RoleLabel"
+                   SizeFlagsStretchRatio="3"
+                   HorizontalExpand="True"
+                   ClipText="True"
+                   Text="{Loc ui-playtime-header-role-type}"
+                   MouseFilter="Pass"
+                   Margin="5,5,5,5"/>
+            <customControls:VSeparator/>
+            <Label Name="PlaytimeLabel"
+                   SizeFlagsStretchRatio="3"
+                   HorizontalExpand="True"
+                   ClipText="True"
+                   Text="{Loc ui-playtime-header-role-time}"
+                   MouseFilter="Pass"
+                   Margin="5,5,5,5"/>
+        </BoxContainer>
+        <!-- Horizontal Separator -->
+        <customControls:HSeparator/>
+    </BoxContainer>
+</ContainerButton>

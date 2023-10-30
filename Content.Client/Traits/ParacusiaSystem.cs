@@ -1,8 +1,6 @@
 using System.Numerics;
 using Content.Shared.Traits.Assorted;
-using Content.Client.Camera;
 using Robust.Shared.Random;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Timing;
 
@@ -19,7 +17,7 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ParacusiaComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<ParacusiaComponent, PlayerDetachedEvent>(OnPlayerDetach);
+        SubscribeLocalEvent<ParacusiaComponent, LocalPlayerDetachedEvent>(OnPlayerDetach);
     }
 
     public override void Update(float frameTime)
@@ -40,7 +38,7 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
         component.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents));
     }
 
-    private void OnPlayerDetach(EntityUid uid, ParacusiaComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetach(EntityUid uid, ParacusiaComponent component, LocalPlayerDetachedEvent args)
     {
         component.Stream?.Stop();
     }
