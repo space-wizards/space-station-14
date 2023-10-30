@@ -59,3 +59,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumAP
+
+- type: entity
+  id: CartridgeMagnumBouncy
+  name: cartridge (.45 magnum bouncy)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumBouncy

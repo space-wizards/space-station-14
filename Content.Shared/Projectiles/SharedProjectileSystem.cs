@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -30,12 +31,35 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<BouncyProjectileComponent, ProjectileHitEvent>(OnBouncyHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
     }
 
+    private void OnBouncyHit(EntityUid uid, BouncyProjectileComponent component, ProjectileHitEvent args)
+    {
+        if (HasComp<MobStateComponent>(args.Target)
+            || !TryComp(uid, out PhysicsComponent? physics)
+            || component.Bounces <= 0)
+            return;
+
+
+        var rotation = Angle.Zero;
+        var existingVelocity = _physics.GetMapLinearVelocity(uid, component: physics);
+        var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(args.Target);
+        var newVelocity = rotation.RotateVec(relativeVelocity);
+
+        // Have the velocity in world terms above so need to convert it back to local.
+        var difference = newVelocity - existingVelocity;
+
+        _physics.SetLinearVelocity(uid, physics.LinearVelocity + difference, body: physics);
+
+        var locRot = Transform(uid).LocalRotation;
+        var newRot = rotation.RotateVec(locRot.ToVec());
+        _transform.SetLocalRotation(uid, newRot.ToAngle());
+    }
     private void OnEmbedActivate(EntityUid uid, EmbeddableProjectileComponent component, ActivateInWorldEvent args)
     {
         // Nuh uh

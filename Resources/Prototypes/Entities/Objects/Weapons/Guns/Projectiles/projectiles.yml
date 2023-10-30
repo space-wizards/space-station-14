@@ -145,6 +145,18 @@
         Piercing: 11 # 20% decrease
     ignoreResistances: true
 
+- type: entity
+  id: BaseBulletBouncy
+  name: base bullet bouncy
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 10
+  - type: BouncyProjectile
+
 # Energy projectiles
 - type: entity
   name: taser bolt
