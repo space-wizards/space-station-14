@@ -6,7 +6,7 @@
   description: be nothing do crime
   components:
   - type: Item
-    size: Tiny
+    size: 1
 
 - type: entity
   parent: ClothingNeckPinBase

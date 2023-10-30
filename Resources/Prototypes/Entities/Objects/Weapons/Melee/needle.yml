@@ -13,5 +13,5 @@
       types:
         Piercing: 1
   - type: Item
-    size: Tiny
+    size: 1
   - type: BalloonPopper

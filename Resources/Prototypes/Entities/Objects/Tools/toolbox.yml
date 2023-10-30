@@ -8,11 +8,9 @@
     sound:
       path: /Audio/Items/toolbox_drop.ogg
   - type: Storage
-    maxSlots: 7
-    maxItemSize: Normal
-    maxTotalWeight: 14
+    capacity: 60
   - type: Item
-    size: Huge
+    size: 9999
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -116,8 +114,7 @@
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
   - type: Storage
-    maxItemSize: Large
-    maxTotalWeight: 28
+    capacity: 170 # this seems silly high
   - type: MeleeWeapon
     damage:
       types:

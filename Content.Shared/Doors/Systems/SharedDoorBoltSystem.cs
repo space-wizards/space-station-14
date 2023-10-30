@@ -23,11 +23,15 @@ public abstract class SharedDoorBoltSystem : EntitySystem
 
     private void OnDoorPry(EntityUid uid, DoorBoltComponent component, ref BeforePryEvent args)
     {
-        if (component.BoltsDown && !args.Force)
-        {
-            Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-bolted-message"), uid, args.User);
-            args.Cancelled = true;
-        }
+        if (args.Cancelled)
+            return;
+
+        if (!component.BoltsDown || args.Force)
+            return;
+
+        args.Message = "airlock-component-cannot-pry-is-bolted-message";
+
+        args.Cancelled = true;
     }
 
     private void OnBeforeDoorOpened(EntityUid uid, DoorBoltComponent component, BeforeDoorOpenedEvent args)

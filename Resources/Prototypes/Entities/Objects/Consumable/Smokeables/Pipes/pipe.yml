@@ -12,7 +12,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: Tiny
+    size: 3
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
   - type: Appearance
   - type: BurnStateVisuals

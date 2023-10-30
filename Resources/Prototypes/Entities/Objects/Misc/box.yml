@@ -7,9 +7,9 @@
     sprite: Objects/Storage/boxes.rsi
   - type: Item
     sprite: Objects/Storage/boxes.rsi
-    size: Normal
+    size: 30
   - type: Storage
-    maxSlots: 7
+    capacity: 30
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

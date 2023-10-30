@@ -9,8 +9,6 @@
     slots: [gloves]
   - type: Food
     requiresSpecialDigestion: true
-  - type: Item
-    size: Small
   - type: SolutionContainerManager
     solutions:
       food:
