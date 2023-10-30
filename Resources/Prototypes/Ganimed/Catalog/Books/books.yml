@@ -1,0 +1,127 @@
+- type: bookPrototype
+  id: BookPrototypeTestBook
+  name: тестовая книга
+  description: Супер клёвая тестовая книга для братков.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-captain","#3681bb"], ["stamp-component-stamped-name-centcom","#006600"]]
+  stampState: "paper_stamp-cap"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook2
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook3
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook4
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook5
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook6
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook7
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook8
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook9
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook10
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook11
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook12
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook13
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook14
+  name: тестовая книга 14
+  description: Супер клёвая тестовая книга для братков 2.
+  content: "Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать."
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook15
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"
+
+- type: bookPrototype
+  id: BookPrototypeTestBook16
+  name: тестовая книга 2
+  description: Супер клёвая тестовая книга для братков 2.
+  content: Ну короче всё очень сложно\nИ вообще лучше вам такого бы не читать\n\n\n\n\n\nДа, точно лучше бы не читать.
+  stampedBy: [["stamp-component-stamped-name-centcom","#006600"], ["stamp-component-stamped-name-captain","#3681bb"]]
+  stampState: "paper_stamp-centcom"

@@ -44,7 +44,8 @@
                 </PanelContainer.PanelOverride>
                 <BoxContainer Name="ContainerInfo"
                               Orientation="Vertical"
-                              HorizontalExpand="True">
+                              HorizontalExpand="True"
+							  VerticalExpand="False">
                     <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}"/>
                 </BoxContainer>
             </PanelContainer>

@@ -1,0 +1,40 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            Title="{Loc 'book-terminal-bound-user-interface-title'}"
+            SetSize="500 450"
+            MinSize="500 450">
+    <BoxContainer Orientation="Vertical">
+        <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinSize="0 250">
+            <BoxContainer Orientation="Vertical" Name="BooksList" Access="Public">
+            </BoxContainer>
+        </ScrollContainer>
+        <Control MinSize="0 10"/>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'book-terminal-window-book-label'}"/>
+			<Control MinSize="10 0"/>
+            <Button Name="UploadButton"
+                    Access="Public"
+                    Text="{Loc 'book-terminal-window-upload-button'}"
+                    StyleClasses="OpenRight"/>
+            <Button Name="ClearButton"
+                    Access="Public"
+                    Text="{Loc 'book-terminal-window-clear-button'}"
+                    StyleClasses="OpenBoth"/>
+            <Button Name="EjectButton"
+                    Access="Public"
+                    Text="{Loc 'book-terminal-window-eject-button'}"
+                    StyleClasses="OpenLeft"/>
+        </BoxContainer>
+        <Control MinSize="0 10"/>
+            <PanelContainer SizeFlagsStretchRatio="6" MinSize="0 100">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Name="ContainerInfo"
+                          Orientation="Vertical"
+                          HorizontalExpand="True">
+                <Label Text="{Loc 'book-terminal-window-no-book-loaded-text'}"/>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</DefaultWindow>
