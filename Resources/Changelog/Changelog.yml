@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Asteroid rocks and secret doors should look less weird in certain scenarios,
-    type: Fix}
-  id: 4579
-  time: '2023-08-14T15:59:14.0000000+00:00'
 - author: LightVillet
   changes:
   - {message: Fixed hand labeler recipe's name, type: Fix}
@@ -2917,3 +2911,8 @@ Entries:
   - {message: You can break out of bolas while moving., type: Tweak}
   id: 5078
   time: '2023-10-29T22:27:44.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: Flannel jackets now keep you warm., type: Tweak}
+  id: 5079
+  time: '2023-10-30T00:08:06.0000000+00:00'
