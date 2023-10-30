@@ -81,7 +81,7 @@
     noRot: true
     snapCardinals: true
     layers:
-      - state: grounding_rod_open
+      - state: grounding_rod
         map: ["power"]
       - state: grounding_rodhit
         visible: false
