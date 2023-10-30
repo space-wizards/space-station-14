@@ -16,7 +16,7 @@ public sealed class LightningSparkingSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
+    
         SubscribeLocalEvent<LightningSparkingComponent, HitByLightningEvent>(OnHitByLightning);
     }
 
