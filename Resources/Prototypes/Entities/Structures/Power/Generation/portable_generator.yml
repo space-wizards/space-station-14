@@ -1,4 +1,4 @@
-﻿﻿#
+﻿#
 # You can use this Desmos sheet to calculate fuel burn rate values:
 # https://www.desmos.com/calculator/qcektq5dqs
 #
@@ -178,7 +178,7 @@
     - type: NavMapTrackable
       color: Purple
       texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
-
+      
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
   description: |-
@@ -310,13 +310,13 @@
         output:
           !type:CableDeviceNode
           nodeGroupID: Apc
+    - type: PowerSupplier
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
     - type: NavMapTrackable
       color: Purple
-      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png   
-    - type: PowerSupplier
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png  
       # No ramping needed on this bugger.
       voltage: Apc
       supplyRampTolerance: 2000
