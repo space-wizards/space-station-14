@@ -95,13 +95,15 @@
   parent: Zipties
   suffix: 10
   components:
+  - type: Item
+    size: 20
   - type: Stack
     stackType: Zipties
     count: 10
 
 - type: entity
   id: Zipties10Lingering
-  parent: Zipties
+  parent: Zipties10
   suffix: 10, Lingering
   components:
   - type: Stack
