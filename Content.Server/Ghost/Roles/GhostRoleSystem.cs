@@ -27,12 +27,14 @@ using Robust.Shared.Enums;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Server.Administration.Managers;
 
 namespace Content.Server.Ghost.Roles
 {
     [UsedImplicitly]
     public sealed class GhostRoleSystem : EntitySystem
     {
+        [Dependency] private readonly IBanManager _banManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -397,9 +399,28 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            if (HasComp<GhostPlayTimeRestrictComponent>(uid))
+            var userId = args.Player.UserId;
+
+            if (_banManager.GetJobBans(userId) is {} bans && bans.Contains("GhostRole"))
             {
-                if (!_playerManager.TryGetSessionById(args.Player.UserId, out var session))
+                if (!_playerManager.TryGetSessionById(userId, out var session))
+                {
+                    args.TookRole = false;
+                    return;
+                }
+
+                var msg = Loc.GetString("ghost-role-banned");
+                var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
+
+                _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.ConnectedClient, Color.Red);
+
+                args.TookRole = false;
+                return;
+            }
+
+                if (HasComp<GhostPlayTimeRestrictComponent>(uid))
+            {
+                if (!_playerManager.TryGetSessionById(userId, out var session))
                 {
                     args.TookRole = false;
                     return;

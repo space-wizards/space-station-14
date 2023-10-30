@@ -142,6 +142,7 @@ public sealed partial class BanPanel : DefaultWindow
         }
 
         CreateRoleGroup("Antagonist", prototypeManager.EnumeratePrototypes<AntagPrototype>().Select(p => p.ID), Color.Red);
+        CreateRoleGroup("Ghost roles", new List<string>() { "GhostRole" }, Color.DarkGray);
     }
 
     private void CreateRoleGroup(string roleName, IEnumerable<string> roleList, Color color)
