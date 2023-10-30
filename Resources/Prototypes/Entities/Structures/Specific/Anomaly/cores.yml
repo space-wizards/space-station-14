@@ -26,10 +26,10 @@
       collection: RadiationPulse 
   - type: UseDelay
     delay: 2
-  - type: StaticPrice
-    price: 10000
   - type: AnomalyCore
     timeToDecay: 600
+    startPrice: 10000
+    endPrice: 200
 
 - type: entity
   parent: BaseAnomalyCore

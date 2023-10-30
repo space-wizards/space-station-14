@@ -9,18 +9,12 @@ namespace Content.Server.Anomaly.Components;
 [RegisterComponent, Access(typeof(AnomalyCoreSystem))]
 public sealed partial class AnomalyCoreComponent : Component
 {
-    public float AccumulatedFrametime = 3.0f;
-    /// <summary>
-    ///     How frequently should this price changes, in seconds?
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float UpdateInterval = 3.0f;
 
     /// <summary>
     /// Amount of time required for the core to decompose into an inert core
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public double TimeToDecay = 300;
+    public double TimeToDecay = 600;
 
     /// <summary>
     /// The moment of core decay. It is set during entity initialization.
@@ -29,19 +23,19 @@ public sealed partial class AnomalyCoreComponent : Component
     public TimeSpan DecayMoment;
 
     /// <summary>
-    /// The original value of the entity. The value is linked from the StaticPrice component
+    /// The starting value of the entity.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public double OldPrice;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public double StartPrice = 10000;
 
     /// <summary>
     /// The value of the object sought during decaying
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public double FuturePrice = 200;
+    public double EndPrice = 200;
 
     /// <summary>
-    /// Has the nucleus decayed?
+    /// Has the core decayed?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool IsDecayed;

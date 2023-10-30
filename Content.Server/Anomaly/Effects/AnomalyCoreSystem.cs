@@ -1,7 +1,6 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Cargo.Components;
+using Content.Server.Cargo.Systems;
 using Content.Shared.Anomaly;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
@@ -17,16 +16,12 @@ public sealed class AnomalyCoreSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<AnomalyCoreComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<AnomalyCoreComponent, PriceCalculationEvent>(OnGetPrice);
     }
 
     private void OnMapInit(Entity<AnomalyCoreComponent> core, ref MapInitEvent args)
     {
         core.Comp.DecayMoment = _gameTiming.CurTime + TimeSpan.FromSeconds(core.Comp.TimeToDecay);
-
-        if (TryComp<StaticPriceComponent>(core, out var price))
-        {
-            core.Comp.OldPrice = price.Price;
-        }
     }
 
     public override void Update(float frameTime)
@@ -39,30 +34,23 @@ public sealed class AnomalyCoreSystem : EntitySystem
             if (component.IsDecayed)
                 continue;
 
-            //checks every few seconds how much time is left to decompose, and decreases the value of the object
-            component.AccumulatedFrametime += frameTime;
-            if (component.AccumulatedFrametime < component.UpdateInterval)
-                continue;
-
-            var timeLeft = component.DecayMoment - _gameTiming.CurTime;
-            var lerp = (double)(timeLeft.TotalSeconds / component.TimeToDecay);
-            lerp = Math.Clamp(lerp, 0, 1);
-
-            if (TryComp<StaticPriceComponent>(uid, out var price))
-                price.Price = MathHelper.Lerp(component.FuturePrice, component.OldPrice, lerp);
-
             //When time runs out, we completely decompose
             if (component.DecayMoment < _gameTiming.CurTime)
                 Decay(uid, component);
-
-            component.AccumulatedFrametime = 0;
         }
+    }
+    private void OnGetPrice(Entity<AnomalyCoreComponent> core, ref PriceCalculationEvent args)
+    {
+        var timeLeft = core.Comp.DecayMoment - _gameTiming.CurTime;
+        var lerp = (double) (timeLeft.TotalSeconds / core.Comp.TimeToDecay);
+        lerp = Math.Clamp(lerp, 0, 1);
+
+        args.Price = MathHelper.Lerp(core.Comp.EndPrice, core.Comp.StartPrice, lerp);
     }
 
     private void Decay(EntityUid uid, AnomalyCoreComponent component)
     {
         _appearance.SetData(uid, AnomalyCoreVisuals.Decaying, false);
         component.IsDecayed = true;
-
     }
 }
