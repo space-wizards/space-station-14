@@ -455,3 +455,20 @@
     items:
     - BikeHorn
     - ClownRecorder
+
+- type: entity
+  id: BorgModuleTyranny
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: tyranny cyborg module
+  description: Somebody wanna' call a goddamn paramedic!?
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - state: icon-tyranny
+  - type: ItemBorgModule
+    items:
+    - WeaponTaserBorg
+    - Zipties10Lingering
+    - Truncheon
+    - FlashlightSecliteBorg

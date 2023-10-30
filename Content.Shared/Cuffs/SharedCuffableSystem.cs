@@ -26,6 +26,7 @@ using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Stacks;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
@@ -33,6 +34,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Cuffs
 {
@@ -55,6 +57,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedStackSystem _stacks = default!;
 
         public override void Initialize()
         {
@@ -433,6 +436,41 @@ namespace Content.Shared.Cuffs
         }
 
         /// <summary>
+        /// Checks if the handcuff is stackable, and creates a new handcuff entity if the stack requires it.                                   
+        /// </summary>
+        /// <returns></returns>
+        public bool TrySpawnCuffSplitStack(EntityUid handcuff, EntityUid user, EntityUid target, [NotNullWhen(true)] out EntityUid? handcuffsplit)
+        {
+            if (!HasComp<HandcuffComponent>(handcuff))
+            {
+                handcuffsplit = null;
+                return false;
+            }
+            if (TryComp<StackComponent>(handcuff, out var stackComp) && (_stacks.GetCount(handcuff, stackComp) >= 1))
+            {
+                _stacks.Use(handcuff, 1, stackComp);
+
+                if (_net.IsServer) /// let the server spawn because client mispredicts
+                {
+                    var pos = Transform(target).Coordinates;
+                    handcuffsplit = Spawn("Zipties", pos); /// This should somehow get the proto ID instead of zipties, but fuck if I know how.
+                    return true;
+                }
+                else
+                {
+                    handcuffsplit = null;
+                    return false;
+                }
+            }
+            else
+            {
+                handcuffsplit = handcuff;
+                _hands.TryDrop(user, handcuff);
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Add a set of cuffs to an existing CuffedComponent.
         /// </summary>
         public bool TryAddNewCuffs(EntityUid target, EntityUid user, EntityUid handcuff, CuffableComponent? component = null, HandcuffComponent? cuff = null)
@@ -444,11 +482,19 @@ namespace Content.Shared.Cuffs
                 return false;
 
             // Success!
-            _hands.TryDrop(user, handcuff);
 
-            component.Container.Insert(handcuff);
-            UpdateHeldItems(target, handcuff, component);
-            return true;
+            TrySpawnCuffSplitStack(handcuff, user, target, out EntityUid? handcuffsplit);
+
+            if (handcuffsplit.HasValue)
+            {
+                component.Container.Insert((EntityUid) handcuffsplit);
+                UpdateHeldItems(target, (EntityUid) handcuffsplit, component);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <returns>False if the target entity isn't cuffable.</returns>

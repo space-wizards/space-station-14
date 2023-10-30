@@ -466,6 +466,7 @@
     - BorgModuleTreatment
     - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
+    - BorgModuleTyranny
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm

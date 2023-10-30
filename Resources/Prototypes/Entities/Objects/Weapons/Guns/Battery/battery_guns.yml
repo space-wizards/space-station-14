@@ -365,6 +365,16 @@
   - type: Appearance
 
 - type: entity
+  name: self-charging taser
+  description: slowly self recharging taser!
+  id: WeaponTaserBorg
+  parent: WeaponTaser
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 3
+
+- type: entity
   name: antique laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponAntiqueLaser

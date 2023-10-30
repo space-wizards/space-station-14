@@ -156,6 +156,7 @@
   cost: 15000
   recipeUnlocks:
   - WeaponTaser
+  - BorgModuleTyranny
 
 - type: technology
   id: PortableMicrofusionWeaponry

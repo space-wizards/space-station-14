@@ -1,0 +1,7 @@
+- type: stack
+  id: Zipties
+  name: zipties
+  icon: { sprite: "/Textures/Objects/Misc/zipties.rsi", state: cuff }
+  spawn: Zipties
+  maxCount: 10
+  itemSize: 2

@@ -3,6 +3,7 @@
   description: Used to detain criminals and other assholes.
   id: Handcuffs
   parent: BaseItem
+  suffix: single
   components:
   - type: Item
     size: 3
@@ -15,6 +16,9 @@
   - type: Tag
     tags:
     - Handcuffs
+  - type: Stack
+    stackType: Zipties
+    count: 1
   - type: MeleeWeapon
     resetOnHandSelected: false
     animation: WeaponArcDisarm
@@ -24,6 +28,25 @@
   - type: GuideHelp
     guides:
     - Security
+
+- type: entity
+  id: Zipties10
+  parent: Zipties
+  suffix: 10
+  components:
+  - type: Stack
+    stackType: Zipties
+    count: 10
+
+- type: entity
+  id: Zipties10Lingering
+  parent: Zipties
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    stackType: Zipties
+    lingering: true
+    count: 10
 
 - type: entity
   name: makeshift handcuffs
