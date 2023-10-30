@@ -1302,6 +1302,20 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .Include(note => note.Player)
                 .ToListAsync();
         }
+		
+		public async Task<List<BookTerminalEntry>> GetBookTerminalEntries()
+        {
+            await using var db = await GetDb();
+            return await GetBookTerminalEntriesImpl(db);
+        }
+
+        protected async Task<List<BookTerminalEntry>> GetBookTerminalEntriesImpl(DbGuard db)
+        {
+            return await db.DbContext.BookTerminalEntry
+                .Include(entry => entry.StampedBy)
+				.ToListAsync();
+				
+        }
 
         public async Task MarkMessageAsSeen(int id)
         {

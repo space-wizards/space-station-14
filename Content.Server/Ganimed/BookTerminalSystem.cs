@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Database;
 using Content.Server.Ganimed.Components;
 using Content.Shared.Ganimed;
 using JetBrains.Annotations;
@@ -14,6 +15,8 @@ using Content.Shared.Paper;
 using Robust.Shared.Random;
 using Content.Shared.Tag;
 using Content.Server.Labels.Components;
+using System.Threading.Tasks;
+using Robust.Shared.Asynchronous;
 
 namespace Content.Server.Ganimed
 {
@@ -28,7 +31,11 @@ namespace Content.Server.Ganimed
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
 		[Dependency] private readonly IRobustRandom _random = default!;
+		[Dependency] private readonly ITaskManager _task = default!;
 		[Dependency] private readonly TagSystem _tag = default!;
+		
+		private readonly List<Task> _pendingSaveTasks = new();
+		public readonly List<BookTerminalEntry> bookTerminalEntries = new();
 		
 		public override void Initialize()
         {
@@ -46,6 +53,7 @@ namespace Content.Server.Ganimed
 		private void SubscribeUpdateUiState<T>(Entity<BookTerminalComponent> ent, ref T ev)
         {
             UpdateUiState(ent);
+			RefreshBookContent();
         }
 		
 		private void UpdateUiState(Entity<BookTerminalComponent> bookTerminal)
@@ -87,9 +95,15 @@ namespace Content.Server.Ganimed
             var bookContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "bookSlot");
             if (bookContainer is not {Valid: true})
                 return;
+			if (bookTerminalEntries.Count() < 1)
+				return;
 			
+			RefreshBookContent();
 			ClearContent(bookContainer.Value);
-			SetContent(bookContainer.Value, message.BookPrototype);
+			//SetContent(bookContainer.Value, message.BookPrototype);
+			var bookCont = RetrieveBookContent(bookTerminalEntries[0].Id);
+			if (bookCont is not null)
+				SetContent(bookContainer.Value, bookCont);
 
             UpdateUiState(bookTerminal);
             ClickSound(bookTerminal);
@@ -131,7 +145,7 @@ namespace Content.Server.Ganimed
 			RemComp<LabelComponent>(item.Value);
 		}
 		
-		private void SetContent(EntityUid? item, BookTerminalBookPrototype bookProto)
+		private void SetContent(EntityUid? item, BookTerminalEntry bookEntry)
 		{
 			if (item is null)
 				return;
@@ -139,27 +153,52 @@ namespace Content.Server.Ganimed
 			var paperComp = EnsureComp<PaperComponent>(item.Value);
 			var metadata = EnsureComp<MetaDataComponent>(item.Value);
 			
-			_metaData.SetEntityName(item.Value, bookProto.Name, metadata);
-			_metaData.SetEntityDescription(item.Value, bookProto.Description, metadata);
-			_paperSystem.SetContent(item.Value, bookProto.Content, paperComp, false);
+			_metaData.SetEntityName(item.Value, bookEntry.Name, metadata);
+			_metaData.SetEntityDescription(item.Value, bookEntry.Description, metadata);
+			_paperSystem.SetContent(item.Value, bookEntry.Content, paperComp, false);
 			
-			foreach (var stampEntry in bookProto.StampedBy)
+			foreach (var stampEntry in bookEntry.StampedBy)
 			{
 				var stampInfo = new StampDisplayInfo {
-                StampedName = stampEntry[0],
-                StampedColor = Color.FromHex(stampEntry[1])
+                StampedName = stampEntry.Name,
+                StampedColor = Color.FromHex(stampEntry.Color)
 				};
-				
+			
 				_paperSystem.TryStamp(item.Value, stampInfo, "paper_stamp-void", paperComp);
 			}
 			
-			paperComp.StampState = bookProto.StampState != "" ? bookProto.StampState : null;
+			paperComp.StampState = bookEntry.StampState != "" ? bookEntry.StampState : null;
 			_paperSystem.UpdateStampState(item.Value, paperComp);
 		}
 		
-		private int GetBookContentAmount()
+		public async void RefreshBookContent()
 		{
-			return _prototypeManager.EnumeratePrototypes<BookTerminalBookPrototype>().Count();
+			var db = IoCManager.Resolve<IServerDbManager>();
+			var entries = await db.GetBookTerminalEntriesAsync();
+			
+			bookTerminalEntries.Clear();
+			
+			foreach (var entry in entries)
+				bookTerminalEntries.Add(entry);
+		}
+		
+		public BookTerminalEntry? RetrieveBookContent(int id)
+		{
+			return bookTerminalEntries.Find(entry => entry.Id == id);
+		}
+		
+		private async void TrackPending(Task task)
+		{
+			_pendingSaveTasks.Add(task);
+
+			try
+			{
+				await task;
+			}
+			finally
+			{
+				_pendingSaveTasks.Remove(task);
+			}
 		}
 		
 		private void UploadContent(EntityUid? item)
@@ -184,22 +223,10 @@ namespace Content.Server.Ganimed
 				reshapedEntry.Add(entry.StampedColor.ToHex());
 				proto.StampedBy.Add(reshapedEntry);
 			}
-		}
-		
-		private string ConvertToStampList(List<List<string>> lst)
-		{
-			var overList = "[ ";
-			var cntr = 0;
 			
-			foreach (var sublist in lst)
-			{
-				if (cntr > 0)
-					overList += ", ";
-				overList += $"[ \"{sublist[0]}\", \"{sublist[1]}\" ]";
-				cntr += 1;
-			}
+			RefreshBookContent();
 			
-			return overList + " ]";
+			paperComp.Content = (bookTerminalEntries.Count() > 0) ? $"111 { bookTerminalEntries[0].Id }" : "000 _";
 		}
 		
 		private void ClickSound(Entity<BookTerminalComponent> reagentDispenser)
