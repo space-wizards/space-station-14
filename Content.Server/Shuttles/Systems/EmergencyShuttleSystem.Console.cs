@@ -1,7 +1,9 @@
 using System.Threading;
 using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Shuttles.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
 using Content.Shared.CCVar;
@@ -189,17 +191,19 @@ public sealed partial class EmergencyShuttleSystem
                         centcomm.Entity, _consoleAccumulator, TransitTime, true);
                 }
 
-                // if (!TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var network))
-                //     return;
-                var payload = new NetworkPayload
+                // shuttle timer stuff
+                if (TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var netComp))
                 {
-                    ["BroadcastTime"] = TimeSpan.FromSeconds(TransitTime)
-                };
-                // can't think of a way to pass this to a shuttle ftl event handler without giving the emergency shuttle a unique component
-                Timer.Spawn(
-                    (int) (ShuttleSystem.DefaultStartupTime * 1000),
-                    () => { _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, 2451); }
-                    );
+                    var payload = new NetworkPayload
+                    {
+                        ["BroadcastTime"] = TimeSpan.FromSeconds(TransitTime)
+                    };
+                    // can't think of a way to pass this to a shuttle ftl event handler without giving the emergency shuttle a unique component
+                    Timer.Spawn(
+                        (int) (ShuttleSystem.DefaultStartupTime * 1000),
+                        () => { _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency); }
+                        );
+                }
             }
 
             var podQuery = AllEntityQuery<EscapePodComponent>();
@@ -395,20 +399,7 @@ public sealed partial class EmergencyShuttleSystem
         AnnounceLaunch();
         UpdateAllEmergencyConsoles();
 
-        // get the shuttle's uid for QueuePacket
-        var query = AllEntityQuery<StationEmergencyShuttleComponent>();
-        while (query.MoveNext(out var stationUid, out var comp))
-        {
-            if (comp.EmergencyShuttle == null || !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value))
-                break;
-
-            var payload = new NetworkPayload
-            {
-                ["BroadcastTime"] = TimeSpan.FromSeconds(_authorizeTime)
-            };
-            _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, 2451);
-            break;
-        }
+        _shuttleTimerSystem.FloodEvacPacket(TimeSpan.FromSeconds(_authorizeTime));
 
         return true;
     }

@@ -1,4 +1,3 @@
-using Content.Server.DeviceLinking;
 using Content.Server.TextScreen.Components;
 using Content.Server.TextScreen.Events;
 
@@ -29,7 +28,7 @@ public sealed class TextScreenSystem : EntitySystem
     }
 
     /// <summary>
-    /// TODO why
+    /// Enables component.Label to be displayed at roundstart without a <see cref="TextScreenTextEvent"/>.
     /// </summary>
     private void OnInit(EntityUid uid, TextScreenComponent component, ComponentInit args)
     {
@@ -73,16 +72,11 @@ public sealed class TextScreenSystem : EntitySystem
             if (timer.Remaining != null && timer.Remaining > _gameTiming.CurTime)
                 continue;
 
-            Finish(uid, timer);
+            timer.Remaining = null;
+            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
 
             if (timer.DoneSound != null)
                 _audio.PlayPvs(timer.DoneSound, uid);
         }
-    }
-
-    private void Finish(EntityUid uid, TextScreenComponent component)
-    {
-        component.Remaining = null;
-        _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
     }
 }

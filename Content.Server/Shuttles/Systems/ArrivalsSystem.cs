@@ -168,18 +168,25 @@ public sealed class ArrivalsSystem : EntitySystem
         var arrivalsMapUid = Transform(arrivals).MapUid;
         var shuttleMapUid = Transform(shuttleUid).MapUid;
 
-        TimeSpan ftlTime = TimeSpan.FromSeconds(TryComp<FTLComponent>(shuttleUid, out var ftlComp) ? ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime);
+        TimeSpan ftlTime = TimeSpan.FromSeconds
+        (
+            TryComp<FTLComponent>(shuttleUid, out var ftlComp) ?
+            ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime
+        );
 
-        var payload = new NetworkPayload
+        if (TryComp<DeviceNetworkComponent>(shuttleUid, out var netComp))
         {
-            ["ShuttleMap"] = shuttleMapUid,
-            ["SourceMap"] = args.FromMapUid,
-            ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
-            ["LocalTimer"] = ftlTime,
-            ["SourceTimer"] = ftlTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown)),
-            ["DestTimer"] = ftlTime
-        };
-        _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, 2452);
+            var payload = new NetworkPayload
+            {
+                ["ShuttleMap"] = shuttleMapUid,
+                ["SourceMap"] = args.FromMapUid,
+                ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
+                ["LocalTimer"] = ftlTime,
+                ["SourceTimer"] = ftlTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown)),
+                ["DestTimer"] = ftlTime
+            };
+            _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, netComp.TransmitFrequency);
+        }
 
         // Don't do anything here when leaving arrivals.
         if (args.FromMapUid == arrivalsMapUid)
@@ -210,7 +217,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 TryTeleportToMapSpawn(pUid, component.Station, xform);
             }
 
-            // Players who have remained at arrives keep their warp coupon (PendingClockInComponent) for now.
+            // Players who have remained at arrivals keep their warp coupon (PendingClockInComponent) for now.
             if (xform.MapUid == arrivalsMapUid)
                 continue;
 
@@ -224,15 +231,19 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         var shuttleXform = Transform(uid);
         TimeSpan dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime);
-        var payload = new NetworkPayload
-        {
-            ["ShuttleMap"] = shuttleXform.MapUid,
-            ["SourceMap"] = args.MapUid,
 
-            ["LocalTimer"] = dockTime,
-            ["SourceTimer"] = dockTime
-        };
-        _deviceNetworkSystem.QueuePacket(uid, null, payload, 2452);
+        if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
+        {
+            var payload = new NetworkPayload
+            {
+                ["ShuttleMap"] = shuttleXform.MapUid,
+                ["SourceMap"] = args.MapUid,
+
+                ["LocalTimer"] = dockTime,
+                ["SourceTimer"] = dockTime
+            };
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
+        }
     }
 
     private void DumpChildren(EntityUid uid,

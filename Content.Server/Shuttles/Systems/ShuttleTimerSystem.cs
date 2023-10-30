@@ -1,11 +1,12 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.TextScreen.Events;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.RoundEnd;
 
 // TODO:
-// use receivefrequency ids instead of magic numbers
 // - emergency shuttle recall inverts timer?
-//    i saw this happen once. had to do with removing the activecomponent early
 // - deduplicate signaltimer with a maintainer's blessing
 // - scan UI?
 
@@ -16,6 +17,8 @@ namespace Content.Server.Shuttles.Systems
     /// </summary>
     public sealed class ShuttleTimerSystem : EntitySystem
     {
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -24,13 +27,13 @@ namespace Content.Server.Shuttles.Systems
         }
 
         /// <summary>
-        /// Determines if a broadcast affects this timer, and how.
+        /// Determines if/how a broadcast packet affects this timer.
         /// </summary>
         private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
             // currently, all packets are broadcast, and subnetting is implemented by filtering events per-map
             // a payload with "BroadcastTime" skips any filtering
-            // if i can find a way to *neatly* subnet the timers per-map,
+            // if i can find a way to *neatly* subnet the timers per-grid, without having the prototypes filter,
             // and pass the frequency to systems, this gets simpler and faster
             if (args.Data.TryGetValue("BroadcastTime", out TimeSpan broadcast))
             {
@@ -41,7 +44,7 @@ namespace Content.Server.Shuttles.Systems
 
             var timerXform = Transform(uid);
 
-            // no false positives if mapuid is null
+            // no false positives.
             if (timerXform.MapUid == null)
                 return;
 
@@ -70,6 +73,29 @@ namespace Content.Server.Shuttles.Systems
 
             var ev = new TextScreenTimerEvent(duration);
             RaiseLocalEvent(uid, ref ev);
+        }
+
+        /// <summary>
+        /// Helper method for <see cref="EmergencyShuttleSystem"/> and <see cref="RoundEndSystem"/>
+        /// </summary>
+        /// <param name="duration"></param>
+        public void FloodEvacPacket(TimeSpan duration)
+        {
+            var payload = new NetworkPayload
+            {
+                ["BroadcastTime"] = duration
+            };
+
+            var query = AllEntityQuery<StationEmergencyShuttleComponent>();
+            while (query.MoveNext(out var uid, out var comp))
+            {
+                if (comp.EmergencyShuttle == null ||
+                    !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value) ||
+                    !TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var netComp))
+                    return;
+                _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
+                return;
+            }
         }
     }
 }

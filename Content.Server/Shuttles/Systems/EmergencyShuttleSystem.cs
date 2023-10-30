@@ -57,6 +57,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private readonly ShuttleTimerSystem _shuttleTimerSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
@@ -209,11 +210,13 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
             }
 
-            var payload = new NetworkPayload
+            // shuttle timers
+            if (TryComp<DeviceNetworkComponent>(stationShuttle.EmergencyShuttle.Value, out var netComp))
             {
-                ["BroadcastTime"] = TimeSpan.FromSeconds(_consoleAccumulator)
-            };
-            _deviceNetworkSystem.QueuePacket(stationShuttle.EmergencyShuttle.Value, null, payload, 2451);
+                var payload = new NetworkPayload { ["BroadcastTime"] = TimeSpan.FromSeconds(_consoleAccumulator) };
+
+                _deviceNetworkSystem.QueuePacket(stationShuttle.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
+            }
 
             _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} docked with stations");
             // TODO: Need filter extensions or something don't blame me.

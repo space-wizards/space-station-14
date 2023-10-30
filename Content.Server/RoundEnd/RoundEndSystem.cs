@@ -37,8 +37,8 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-
         [Dependency] private readonly EmergencyShuttleSystem _shuttle = default!;
+        [Dependency] private readonly ShuttleTimerSystem _shuttleTimerSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
@@ -172,20 +172,7 @@ namespace Content.Server.RoundEnd
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
-            // update the evac shuttle timers
-            var payload = new NetworkPayload
-            {
-                ["BroadcastTime"] = countdownTime
-            };
-
-            var query = AllEntityQuery<StationEmergencyShuttleComponent>();
-            while (query.MoveNext(out var uid, out var comp))
-            {
-                if (comp.EmergencyShuttle == null || !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value))
-                    return;
-                _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, 2451);
-                return;
-            }
+            _shuttleTimerSystem.FloodEvacPacket(countdownTime);
         }
 
         public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true)
@@ -247,20 +234,7 @@ namespace Content.Server.RoundEnd
                     ("units", Loc.GetString(unitsLocString))));
             Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
 
-            // update the evac shuttle timers
-            var payload = new NetworkPayload
-            {
-                ["BroadcastTime"] = countdownTime
-            };
-
-            var query = AllEntityQuery<StationEmergencyShuttleComponent>();
-            while (query.MoveNext(out var uid, out var comp))
-            {
-                if (comp.EmergencyShuttle == null || !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value))
-                    return;
-                _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, 2451);
-                return;
-            }
+            _shuttleTimerSystem.FloodEvacPacket(countdownTime.Value);
         }
 
         /// <summary>
