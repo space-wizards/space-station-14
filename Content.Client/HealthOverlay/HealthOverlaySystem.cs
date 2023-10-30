@@ -3,8 +3,8 @@ using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 
 namespace Content.Client.HealthOverlay
 {
@@ -13,9 +13,9 @@ namespace Content.Client.HealthOverlay
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IPlayerManager _player = default!;
 
         private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
-        private EntityUid? _attachedEntity;
         private bool _enabled;
 
         public bool Enabled
@@ -42,7 +42,6 @@ namespace Content.Client.HealthOverlay
             base.Initialize();
 
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -53,12 +52,6 @@ namespace Content.Client.HealthOverlay
             }
 
             _guis.Clear();
-            _attachedEntity = default;
-        }
-
-        private void HandlePlayerAttached(PlayerAttachSysMessage message)
-        {
-            _attachedEntity = message.AttachedEntity;
         }
 
         public override void FrameUpdate(float frameTime)
@@ -70,7 +63,7 @@ namespace Content.Client.HealthOverlay
                 return;
             }
 
-            if (_attachedEntity is not {} ent || Deleted(ent))
+            if (_player.LocalEntity is not {} ent || Deleted(ent))
             {
                 return;
             }

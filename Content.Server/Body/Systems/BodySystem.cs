@@ -116,7 +116,7 @@ public sealed class BodySystem : SharedBodySystem
         if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();
 
-        if (LifeStage(bodyId) >= EntityLifeStage.Terminating || EntityManager.IsQueuedForDeletion(bodyId))
+        if (TerminatingOrDeleted(bodyId) || EntityManager.IsQueuedForDeletion(bodyId))
             return new HashSet<EntityUid>();
 
         var xform = Transform(bodyId);
