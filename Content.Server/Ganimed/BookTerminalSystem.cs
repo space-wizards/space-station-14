@@ -17,6 +17,7 @@ using Content.Shared.Tag;
 using Content.Server.Labels.Components;
 using System.Threading.Tasks;
 using Robust.Shared.Asynchronous;
+using Content.Shared.Ganimed;
 
 namespace Content.Server.Ganimed
 {
@@ -35,7 +36,7 @@ namespace Content.Server.Ganimed
 		[Dependency] private readonly TagSystem _tag = default!;
 		
 		private readonly List<Task> _pendingSaveTasks = new();
-		public readonly List<BookTerminalEntry> bookTerminalEntries = new();
+		public readonly List<SharedBookTerminalEntry> bookTerminalEntries = new();
 		
 		public override void Initialize()
         {
@@ -62,7 +63,7 @@ namespace Content.Server.Ganimed
 			var bookName = bookContainer is not null ? Name(bookContainer.Value) : null;
 			var bookDescription = bookContainer is not null ? Description(bookContainer.Value) : null;
 
-            var state = new BookTerminalBoundUserInterfaceState(bookName, bookDescription, GetNetEntity(bookContainer));
+            var state = new BookTerminalBoundUserInterfaceState(bookName, bookDescription, GetNetEntity(bookContainer), bookTerminalEntries);
             _userInterfaceSystem.TrySetUiState(bookTerminal, BookTerminalUiKey.Key, state);
         }
 		
@@ -100,10 +101,7 @@ namespace Content.Server.Ganimed
 			
 			RefreshBookContent();
 			ClearContent(bookContainer.Value);
-			//SetContent(bookContainer.Value, message.BookPrototype);
-			var bookCont = RetrieveBookContent(bookTerminalEntries[0].Id);
-			if (bookCont is not null)
-				SetContent(bookContainer.Value, bookCont);
+			SetContent(bookContainer.Value, message.BookEntry);
 
             UpdateUiState(bookTerminal);
             ClickSound(bookTerminal);
@@ -145,7 +143,7 @@ namespace Content.Server.Ganimed
 			RemComp<LabelComponent>(item.Value);
 		}
 		
-		private void SetContent(EntityUid? item, BookTerminalEntry bookEntry)
+		private void SetContent(EntityUid? item, SharedBookTerminalEntry bookEntry)
 		{
 			if (item is null)
 				return;
@@ -179,10 +177,16 @@ namespace Content.Server.Ganimed
 			bookTerminalEntries.Clear();
 			
 			foreach (var entry in entries)
-				bookTerminalEntries.Add(entry);
+			{
+				var convStampedBy = new List<SharedStampedData>();
+				foreach (var stampEntry in entry.StampedBy)
+					convStampedBy.Add(new SharedStampedData(stampEntry.Id, stampEntry.Name, stampEntry.Color));
+				
+				bookTerminalEntries.Add(new SharedBookTerminalEntry(entry.Id, entry.Name, entry.Description, entry.Content, convStampedBy, entry.StampState));
+			}
 		}
 		
-		public BookTerminalEntry? RetrieveBookContent(int id)
+		public SharedBookTerminalEntry? RetrieveBookContent(int id)
 		{
 			return bookTerminalEntries.Find(entry => entry.Id == id);
 		}

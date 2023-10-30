@@ -35,7 +35,7 @@ namespace Content.Client.Ganimed.BookTerminal
 			_window.OpenCentered();
             _window.OnClose += Close;
 			
-			_window.OnPrintBookButtonPressed += (args, button) => SendMessage(new BookTerminalPrintBookMessage(button.BookPrototype));
+			_window.OnPrintBookButtonPressed += (args, button) => SendMessage(new BookTerminalPrintBookMessage(button.BookEntry));
             _window.OnPrintBookButtonMouseEntered += (args, button) =>
             {
                 if (_lastState is not null)

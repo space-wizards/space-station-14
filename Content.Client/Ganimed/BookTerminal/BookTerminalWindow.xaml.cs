@@ -44,14 +44,16 @@ namespace Content.Client.Ganimed.BookTerminal
         {
             var castState = (BookTerminalBoundUserInterfaceState) state;
 			
-			var booksProtos = _prototypeManager.EnumeratePrototypes<BookTerminalBookPrototype>();
-			
 			if (BooksList == null)
                 return;
 
             BooksList.Children.Clear();
+			
+			if (castState.BookEntries is null)
+				return;
+			
 
-            foreach (var entry in booksProtos.OrderBy(r => r.Name))
+            foreach (var entry in castState.BookEntries.OrderBy(r => r.Name))
             {
                 var button = new PrintBookButton(entry, CutDescription(entry.Name ?? ""));
                 button.OnPressed += args => OnPrintBookButtonPressed?.Invoke(args, button);
@@ -122,11 +124,11 @@ namespace Content.Client.Ganimed.BookTerminal
     }
 	
 	public sealed class PrintBookButton : Button {
-        public BookTerminalBookPrototype BookPrototype { get; }
+        public SharedBookTerminalEntry BookEntry { get; }
 
-        public PrintBookButton(BookTerminalBookPrototype bookPrototype, string text)
+        public PrintBookButton(SharedBookTerminalEntry bookEntry, string text)
         {
-            BookPrototype = bookPrototype;
+            BookEntry = bookEntry;
             Text = text;
         }
     }
