@@ -280,6 +280,7 @@ namespace Content.Server.Database
         #region BookTerminal
 
         Task<List<BookTerminalEntry>> GetBookTerminalEntriesAsync();
+		Task UploadBookTerminalEntryAsync(BookTerminalEntry bookEntry);
 
         #endregion
     }
@@ -856,6 +857,12 @@ namespace Content.Server.Database
 		{
 			DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetBookTerminalEntries());
+		}
+		
+		public Task UploadBookTerminalEntryAsync(BookTerminalEntry bookEntry)
+		{
+			DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.UploadBookTerminalEntry(bookEntry));
 		}
 		
         // Wrapper functions to run DB commands from the thread pool.

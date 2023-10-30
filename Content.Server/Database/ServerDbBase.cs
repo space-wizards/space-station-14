@@ -1316,6 +1316,18 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 				.ToListAsync();
 				
         }
+		
+		public async Task UploadBookTerminalEntry(BookTerminalEntry bookEntry)
+        {
+            await using var db = await GetDb();
+            await UploadBookTerminalEntryImpl(db, bookEntry);
+        }
+
+        protected async Task UploadBookTerminalEntryImpl(DbGuard db, BookTerminalEntry bookEntry)
+        {
+			db.DbContext.BookTerminalEntry.Add(bookEntry);
+			await db.DbContext.SaveChangesAsync();
+        }
 
         public async Task MarkMessageAsSeen(int id)
         {

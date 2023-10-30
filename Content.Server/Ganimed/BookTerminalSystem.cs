@@ -35,7 +35,6 @@ namespace Content.Server.Ganimed
 		[Dependency] private readonly ITaskManager _task = default!;
 		[Dependency] private readonly TagSystem _tag = default!;
 		
-		private readonly List<Task> _pendingSaveTasks = new();
 		public readonly List<SharedBookTerminalEntry> bookTerminalEntries = new();
 		
 		public override void Initialize()
@@ -191,20 +190,6 @@ namespace Content.Server.Ganimed
 			return bookTerminalEntries.Find(entry => entry.Id == id);
 		}
 		
-		private async void TrackPending(Task task)
-		{
-			_pendingSaveTasks.Add(task);
-
-			try
-			{
-				await task;
-			}
-			finally
-			{
-				_pendingSaveTasks.Remove(task);
-			}
-		}
-		
 		private void UploadContent(EntityUid? item)
 		{
 			if (item is null)
@@ -213,24 +198,46 @@ namespace Content.Server.Ganimed
 			var paperComp = EnsureComp<PaperComponent>(item.Value);
 			var metadata = EnsureComp<MetaDataComponent>(item.Value);
 			
-			//var proto = new BookTerminalBookPrototype();
+			var sharedStamps = new List<SharedStampedData>();
 			
-			//proto.Name = Name(item.Value) ?? "";
-			//proto.Description = Description(item.Value) ?? "";
-			//proto.Content = paperComp.Content ?? "";
-			//proto.StampState = paperComp.StampState ?? "paper_stamp-void";
-			//
-			//foreach (var entry in paperComp.StampedBy)
-			//{
-			//	var reshapedEntry = new List<string>();
-			//	reshapedEntry.Add(entry.StampedName);
-			//	reshapedEntry.Add(entry.StampedColor.ToHex());
-			//	proto.StampedBy.Add(reshapedEntry);
-			//}
+			foreach (var entry in paperComp.StampedBy)
+			{
+				sharedStamps.Add(new SharedStampedData(-1, entry.StampedName, entry.StampedColor.ToHex()));
+			}
+			
+			UploadBookContent(new SharedBookTerminalEntry(-1, 
+				Name(item.Value) ?? "",  
+				Description(item.Value) ?? "", 
+				paperComp.Content ?? "",
+				sharedStamps,
+				paperComp.StampState ?? "paper_stamp-void"));
+		}
+		
+		public async void UploadBookContent(SharedBookTerminalEntry sharedBookEntry)
+		{
+			var db = IoCManager.Resolve<IServerDbManager>();
+			
+			BookTerminalEntry bookEntry = new BookTerminalEntry();
+			
+			List<StampedData> stampData = new List<StampedData>();
+			
+			foreach (var entry in sharedBookEntry.StampedBy)
+			{
+				var entryData = new StampedData();
+				entryData.Name = entry.Name;
+				entryData.Color = entry.Color;
+				stampData.Add(entryData);
+			}
+			
+			bookEntry.Name = sharedBookEntry.Name;
+			bookEntry.Description = sharedBookEntry.Description;
+			bookEntry.Content = sharedBookEntry.Content;
+			bookEntry.StampState = sharedBookEntry.StampState;
+			bookEntry.StampedBy = stampData;
+			
+			await db.UploadBookTerminalEntryAsync(bookEntry);
 			
 			RefreshBookContent();
-			
-			paperComp.Content = (bookTerminalEntries.Count() > 0) ? $"111 { bookTerminalEntries[0].Id }" : "000 _";
 		}
 		
 		private void ClickSound(Entity<BookTerminalComponent> reagentDispenser)
