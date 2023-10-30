@@ -388,6 +388,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         component.EmergencyShuttle = shuttle;
         EnsureComp<ProtectedGridComponent>(shuttle.Value);
         EnsureComp<PreventPilotComponent>(shuttle.Value);
+        EnsureComp<ShuttleTimerComponent>(shuttle.Value);
+        EnsureComp<DeviceNetworkComponent>(shuttle.Value);
     }
 
     private void OnEscapeUnpaused(EntityUid uid, EscapePodComponent component, ref EntityUnpausedEvent args)
