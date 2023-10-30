@@ -1,7 +1,7 @@
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    public sealed class ShuttleTimerComponent : Component
+    public sealed partial class ShuttleTimerComponent : Component
     {
 
     }

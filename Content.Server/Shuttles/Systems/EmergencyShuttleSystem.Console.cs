@@ -189,11 +189,17 @@ public sealed partial class EmergencyShuttleSystem
                         centcomm.Entity, _consoleAccumulator, TransitTime, true);
                 }
 
+                // if (!TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var network))
+                //     return;
                 var payload = new NetworkPayload
                 {
-                    ["BroadcastTime"] = TransitTime
+                    ["BroadcastTime"] = TimeSpan.FromSeconds(TransitTime)
                 };
-                _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, 2451);
+                // can't think of a way to pass this to a shuttle ftl event handler without giving the emergency shuttle a unique component
+                Timer.Spawn(
+                    (int) (ShuttleSystem.DefaultStartupTime * 1000),
+                    () => { _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, 2451); }
+                    );
             }
 
             var podQuery = AllEntityQuery<EscapePodComponent>();
@@ -389,15 +395,19 @@ public sealed partial class EmergencyShuttleSystem
         AnnounceLaunch();
         UpdateAllEmergencyConsoles();
 
-        var payload = new NetworkPayload
-        {
-            ["BroadcastTime"] = TimeSpan.FromSeconds(_authorizeTime)
-        };
-
+        // get the shuttle's uid for QueuePacket
         var query = AllEntityQuery<StationEmergencyShuttleComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var stationUid, out var comp))
         {
-            _deviceNetworkSystem.QueuePacket(uid, null, payload, 2451);
+            if (comp.EmergencyShuttle == null || !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value))
+                break;
+
+            var payload = new NetworkPayload
+            {
+                ["BroadcastTime"] = TimeSpan.FromSeconds(_authorizeTime)
+            };
+            _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, 2451);
+            break;
         }
 
         return true;

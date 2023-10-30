@@ -168,7 +168,7 @@ public sealed class ArrivalsSystem : EntitySystem
         var arrivalsMapUid = Transform(arrivals).MapUid;
         var shuttleMapUid = Transform(shuttleUid).MapUid;
 
-        float ftlTime = TryComp<FTLComponent>(shuttleUid, out var ftlComp) ? ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime;
+        TimeSpan ftlTime = TimeSpan.FromSeconds(TryComp<FTLComponent>(shuttleUid, out var ftlComp) ? ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime);
 
         var payload = new NetworkPayload
         {
@@ -176,7 +176,7 @@ public sealed class ArrivalsSystem : EntitySystem
             ["SourceMap"] = args.FromMapUid,
             ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
             ["LocalTimer"] = ftlTime,
-            ["SourceTimer"] = ftlTime + _cfgManager.GetCVar(CCVars.ArrivalsCooldown),
+            ["SourceTimer"] = ftlTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown)),
             ["DestTimer"] = ftlTime
         };
         _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, 2452);
@@ -223,7 +223,7 @@ public sealed class ArrivalsSystem : EntitySystem
     private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
     {
         var shuttleXform = Transform(uid);
-        float dockTime = (component.NextTransfer - _timing.CurTime).Seconds + ShuttleSystem.DefaultStartupTime;
+        TimeSpan dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime);
         var payload = new NetworkPayload
         {
             ["ShuttleMap"] = shuttleXform.MapUid,

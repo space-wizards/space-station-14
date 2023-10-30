@@ -24,23 +24,24 @@ namespace Content.Server.Shuttles.Systems
         }
 
         /// <summary>
-        /// Determines whether this timer gets updated, and with which time in the payload.
+        /// Determines if a broadcast affects this timer, and how.
         /// </summary>
         private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
             // currently, all packets are broadcast, and subnetting is implemented by filtering events per-map
             // a payload with "BroadcastTime" skips any filtering
-            // if i can find a way to neatly subnet the timers per-map,
+            // if i can find a way to *neatly* subnet the timers per-map,
             // and pass the frequency to systems, this gets simpler and faster
-            if (args.Data.TryGetValue("BroadcastTime", out float broadcast))
+            if (args.Data.TryGetValue("BroadcastTime", out TimeSpan broadcast))
             {
-                var text = new TextScreenTimerEvent(TimeSpan.FromSeconds(broadcast));
+                var text = new TextScreenTimerEvent(broadcast);
                 RaiseLocalEvent(uid, ref text);
                 return;
             }
 
             var timerXform = Transform(uid);
 
+            // no false positives if mapuid is null
             if (timerXform.MapUid == null)
                 return;
 
@@ -64,10 +65,10 @@ namespace Content.Server.Shuttles.Systems
                     return;
             }
 
-            if (!args.Data.TryGetValue(key, out float duration))
+            if (!args.Data.TryGetValue(key, out TimeSpan duration))
                 return;
 
-            var ev = new TextScreenTimerEvent(TimeSpan.FromSeconds(duration));
+            var ev = new TextScreenTimerEvent(duration);
             RaiseLocalEvent(uid, ref ev);
         }
     }
