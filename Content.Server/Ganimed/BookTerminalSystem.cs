@@ -213,20 +213,20 @@ namespace Content.Server.Ganimed
 			var paperComp = EnsureComp<PaperComponent>(item.Value);
 			var metadata = EnsureComp<MetaDataComponent>(item.Value);
 			
-			var proto = new BookTerminalBookPrototype();
+			//var proto = new BookTerminalBookPrototype();
 			
-			proto.Name = Name(item.Value) ?? "";
-			proto.Description = Description(item.Value) ?? "";
-			proto.Content = paperComp.Content ?? "";
-			proto.StampState = paperComp.StampState ?? "paper_stamp-void";
-			
-			foreach (var entry in paperComp.StampedBy)
-			{
-				var reshapedEntry = new List<string>();
-				reshapedEntry.Add(entry.StampedName);
-				reshapedEntry.Add(entry.StampedColor.ToHex());
-				proto.StampedBy.Add(reshapedEntry);
-			}
+			//proto.Name = Name(item.Value) ?? "";
+			//proto.Description = Description(item.Value) ?? "";
+			//proto.Content = paperComp.Content ?? "";
+			//proto.StampState = paperComp.StampState ?? "paper_stamp-void";
+			//
+			//foreach (var entry in paperComp.StampedBy)
+			//{
+			//	var reshapedEntry = new List<string>();
+			//	reshapedEntry.Add(entry.StampedName);
+			//	reshapedEntry.Add(entry.StampedColor.ToHex());
+			//	proto.StampedBy.Add(reshapedEntry);
+			//}
 			
 			RefreshBookContent();
 			
