@@ -7,7 +7,7 @@
   components:
   - type: Sprite
   - type: Item
-    size: 60
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     quickEquip: false

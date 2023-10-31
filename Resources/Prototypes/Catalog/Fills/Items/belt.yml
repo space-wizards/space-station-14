@@ -91,14 +91,11 @@
   - type: StorageFill
     contents:
       - id: Brutepack
-        amount: 1
       - id: Ointment
-        amount: 1
       - id: Bloodpack
-        amount: 1
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
-        amount: 6
+        amount: 3
 
 - type: entity
   id: ClothingBeltPlantFilled
@@ -126,6 +123,10 @@
   name: grenadier chest rig
   suffix: Filled
   components:
+  - type: Item
+    size: Large
+  - type: Storage
+    maxSlots: 8
   - type: StorageFill
     contents:
       - id: ExGrenade
