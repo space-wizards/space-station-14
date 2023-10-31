@@ -1,14 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Changed singularity energy levels to require more energy overall to
-      increase in size., type: Tweak}
-  - {message: 'Changed singularity energy drain rates to keep them more stable, and
-      die quicker without food.', type: Tweak}
-  - {message: 'Changed level 2 and 3 PA to feed less energy, slowing the speed of
-      a singuloose slightly.', type: Tweak}
-  id: 4585
-  time: '2023-08-14T21:01:57.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Monkies go horizontal on crit/death again, type: Fix}
@@ -2922,3 +2912,8 @@ Entries:
   - {message: Standardized item sizes into regular categories., type: Tweak}
   id: 5084
   time: '2023-10-31T03:55:56.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Add pea plants., type: Add}
+  id: 5085
+  time: '2023-10-31T04:09:13.0000000+00:00'
