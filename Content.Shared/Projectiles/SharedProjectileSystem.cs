@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
@@ -40,9 +41,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void OnBouncyHit(EntityUid uid, BouncyProjectileComponent component, ProjectileBounceEvent args)
     {
-        if (HasComp<MobStateComponent>(args.HitObject)
-            || !TryComp(uid, out PhysicsComponent? physics)
-            || component.Bounces <= 0)
+        if (HasComp<MobStateComponent>(args.HitObject) ||
+            !TryComp(uid, out PhysicsComponent? physics) ||
+            component.Bounces <= 0)
             return;
 
         args.Bounced = true;
@@ -50,15 +51,15 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         var rotation = Angle.Zero;
         var existingVelocity = _physics.GetMapLinearVelocity(uid, component: physics);
         var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(args.HitObject);
-        var newVelocity = Vector2.Reflect(relativeVelocity, args.HitNormal);
+        var newVelocity = -Vector2.Reflect(relativeVelocity, args.HitNormal);
 
         // Have the velocity in world terms above so need to convert it back to local.
         var difference = newVelocity - existingVelocity;
 
         _physics.SetLinearVelocity(uid, physics.LinearVelocity + difference, body: physics);
 
-        var locRot = Transform(uid).LocalRotation;
-        var newRot = rotation.RotateVec(locRot.ToVec());
+        // var locRot = Transform(uid).LocalRotation;
+        var newRot = newVelocity;
         _transform.SetLocalRotation(uid, newRot.ToAngle());
     }
     private void OnEmbedActivate(EntityUid uid, EmbeddableProjectileComponent component, ActivateInWorldEvent args)
