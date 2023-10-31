@@ -8,7 +8,7 @@
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
     - type: Item
-      size: 2
+      size: Tiny
     - type: StaticPrice
       price: 20
 

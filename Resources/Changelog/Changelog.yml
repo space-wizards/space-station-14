@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Observers can now hear the binary radio., type: Tweak}
-  id: 4584
-  time: '2023-08-14T21:00:08.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Changed singularity energy levels to require more energy overall to
@@ -2918,3 +2913,12 @@ Entries:
     type: Add}
   id: 5083
   time: '2023-10-31T03:40:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Storage containers can now block large items from being inserted into
+      them, regardless of the space available.', type: Add}
+  - {message: Belts now function on a slot based storage system rather than a volume
+      based one., type: Add}
+  - {message: Standardized item sizes into regular categories., type: Tweak}
+  id: 5084
+  time: '2023-10-31T03:55:56.0000000+00:00'

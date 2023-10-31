@@ -29,7 +29,7 @@
         Slash: 10.5
         Structural: 60
   - type: Item
-    size: 150
+    size: Huge
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
