@@ -15,7 +15,7 @@
       types:
         Slash: 12
   - type: Item
-    size: 20
+    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
     slots:
@@ -39,7 +39,7 @@
       types:
         Slash: 33
   - type: Item
-    size: 20
+    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_blade.rsi
     slots:
@@ -75,7 +75,7 @@
         Slash: 12
         Structural: 30
   - type: Item
-    size: 150
+    size: Huge
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_halberd.rsi
     quickEquip: false

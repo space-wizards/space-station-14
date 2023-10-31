@@ -17,7 +17,7 @@
           map: [ "enum.SolutionContainerLayers.Fill" ]
           visible: false
     - type: Item
-      size: 20
+      size: Normal
       sprite: Objects/Specific/Chemistry/jug.rsi
     - type: RefillableSolution
       solution: beaker

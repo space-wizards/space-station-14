@@ -5,7 +5,7 @@
   components:
   - type: Sprite
   - type: Item
-    size: 50
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     quickEquip: false
@@ -37,7 +37,7 @@
   abstract: true
   components:
   - type: Item
-    size: 10
+    size: Small
   - type: Tag
     tags:
     - Sidearm
@@ -408,7 +408,7 @@
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
   - type: Item
-    size: 30  # Intentionally larger than other pistols
+    size: Normal  # Intentionally larger than other pistols
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:

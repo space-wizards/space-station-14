@@ -28,7 +28,7 @@
   abstract: true
   components:
   - type: Item
-    size: 1
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - bread
