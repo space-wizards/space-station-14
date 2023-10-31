@@ -1,49 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Bike horn implant now has a short cooldown, sorry', type: Fix}
-  id: 4581
-  time: '2023-08-14T16:04:42.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: 'Admin ghosts, robots, and other soulless monsters that never tire can
-      now perform wide melee attacks again. Most notably this fixes the borg mining
-      drill.', type: Fix}
-  id: 4582
-  time: '2023-08-14T16:10:16.0000000+00:00'
-- author: Titian3
-  changes:
-  - {message: Fixed Admin watchlists and messages., type: Fix}
-  id: 4583
-  time: '2023-08-14T19:50:33.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Observers can now hear the binary radio., type: Tweak}
-  id: 4584
-  time: '2023-08-14T21:00:08.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Changed singularity energy levels to require more energy overall to
-      increase in size., type: Tweak}
-  - {message: 'Changed singularity energy drain rates to keep them more stable, and
-      die quicker without food.', type: Tweak}
-  - {message: 'Changed level 2 and 3 PA to feed less energy, slowing the speed of
-      a singuloose slightly.', type: Tweak}
-  id: 4585
-  time: '2023-08-14T21:01:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Monkies go horizontal on crit/death again, type: Fix}
-  id: 4586
-  time: '2023-08-14T21:02:28.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Fixed condiment stations & smartfridges being too unshaded, type: Fix}
-  - {message: 'Booze dispenser now only contains booze, everything else it contained
-      was already in the soda dispenser', type: Tweak}
-  - {message: Fixed soda dispenser UI not being wide enough, type: Fix}
-  id: 4587
-  time: '2023-08-14T21:03:21.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed having to reopen ahelp and popped-out ahelp windows after round
@@ -2918,3 +2873,44 @@ Entries:
       you can still move through two parallel thindows on the same tile., type: Tweak}
   id: 5080
   time: '2023-10-30T11:48:12.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Fixed the issue where mice were cannibalizing fallen brethren., type: Fix}
+  id: 5081
+  time: '2023-10-31T01:49:05.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: 'Despite being just as effective as the head, you no longer hit people
+      with the handle of fire axes.', type: Fix}
+  id: 5082
+  time: '2023-10-31T03:30:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletal crewmates have arrived on the station for Halloween only.,
+    type: Add}
+  id: 5083
+  time: '2023-10-31T03:40:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Storage containers can now block large items from being inserted into
+      them, regardless of the space available.', type: Add}
+  - {message: Belts now function on a slot based storage system rather than a volume
+      based one., type: Add}
+  - {message: Standardized item sizes into regular categories., type: Tweak}
+  id: 5084
+  time: '2023-10-31T03:55:56.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Add pea plants., type: Add}
+  id: 5085
+  time: '2023-10-31T04:09:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Smoke now properly transfers reagents when inhaled., type: Fix}
+  id: 5086
+  time: '2023-10-31T12:43:18.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Slimes are fully immune to Nitrous Oxide again., type: Fix}
+  id: 5087
+  time: '2023-10-31T12:57:27.0000000+00:00'

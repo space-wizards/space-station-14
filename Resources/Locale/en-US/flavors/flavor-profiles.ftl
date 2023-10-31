@@ -92,6 +92,7 @@ flavor-complex-eggplant = like eggplant
 flavor-complex-carrot = like carrots
 flavor-complex-cabbage = like cabbages
 flavor-complex-potatoes = like potatoes
+flavor-complex-pumpkin = like pumpkins
 flavor-complex-mushroom = like mushrooms
 flavor-complex-tomato = like tomatoes
 flavor-complex-corn = like corn
