@@ -4,7 +4,7 @@ using Content.Shared.Item;
 using Content.Shared.Storage;
 using Content.Shared.Toggleable;
 
-namespace Content.Server.ContainerHeld;
+namespace Content.Shared.ContainerHeld;
 
 public sealed class ContainerHeldSystem : EntitySystem
 {
@@ -38,5 +38,4 @@ public sealed class ContainerHeldSystem : EntitySystem
             _appearance.SetData(uid, ToggleVisuals.Toggled, false, appearance);
         }
     }
-
 }
