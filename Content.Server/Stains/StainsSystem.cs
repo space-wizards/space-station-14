@@ -27,6 +27,9 @@ public sealed class StainsSystem : SharedStainsSystem
         SubscribeLocalEvent<StainableComponent, SqueezeDoAfterEvent>(OnSqueezeDoAfter);
     }
 
+    /// <summary>
+    /// Adds a solution to the "stains" container, if it can fully fit.
+    /// </summary>
     public bool TryAddSolution(EntityUid uid, Solution addedSolution, Solution? targetSolution = null, StainableComponent? component = null)
     {
         if (!Resolve(uid, ref component, false) || targetSolution == null && !TryGetStainsSolution(uid, out targetSolution, component))
@@ -36,6 +39,9 @@ public sealed class StainsSystem : SharedStainsSystem
         return _solutionContainer.TryAddSolution(uid, targetSolution, addedSolution);
     }
 
+    /// <summary>
+    /// Get the solution holding "stains"
+    /// </summary>
     public bool TryGetStainsSolution(EntityUid uid, [NotNullWhen(true)] out Solution? solution, StainableComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
