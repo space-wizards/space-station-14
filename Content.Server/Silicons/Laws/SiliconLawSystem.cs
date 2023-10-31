@@ -12,6 +12,8 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
@@ -36,6 +38,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+	[Dependency] private readonly IEntitySystemManager _entitySystem = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     /// <inheritdoc/>
@@ -113,7 +116,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             return;
 
         if (component.Lawset == null)
-            component.Lawset = GetLawset(component.Laws);
+            component.Lawset = GetLawset(component.Laws, component.LawsWeighted);
 
         args.Laws = component.Lawset;
 
@@ -285,9 +288,18 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Extract all the laws from a lawset's prototype ids.
     /// </summary>
-    public SiliconLawset GetLawset(string lawset)
+    public SiliconLawset GetLawset(string lawset, string? weightedOverride = null)
     {
-        var proto = _prototype.Index<SiliconLawsetPrototype>(lawset);
+		var lawsetString = lawset;
+		
+		if (weightedOverride is not null)
+		{
+			var lawsets = _prototype.Index<WeightedRandomPrototype>(weightedOverride);
+			lawsetString = lawsets.Pick();
+		}
+		
+		var proto = _prototype.Index<SiliconLawsetPrototype>(lawsetString);
+		
         var laws = new SiliconLawset()
         {
             Laws = new List<SiliconLaw>(proto.Laws.Count)

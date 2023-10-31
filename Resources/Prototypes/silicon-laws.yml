@@ -557,12 +557,23 @@
 
 # Emag
 
-# ion storm random lawsets
 - type: weightedRandom
-  id: IonStormLawsets
+  id: RandomLawset
   weights:
-    # its crewsimov by default dont be lame
-    Crewsimov: 0.25
-    Corporate: 1
-    NTDefault: 1
-    Drone: 0.5
+    Crewsimov: 15
+    Corporate: 10
+    NTDefault: 7
+    CEO: 5
+    Asimovpp: 4
+    Asimov: 3
+    StationEfficiency: 3
+    Cowboy: 2
+    Mother: 2
+    Paladin: 2
+    Drone: 1.5
+    Tyrant: 1.25
+    RoboCop: 1.25
+    Clown: 1
+    Druid: 1
+    Simple: 0.5
+    Hippocratic: 0.5

@@ -79,23 +79,7 @@
   components:
   - type: SiliconLawProvider
     laws: Crewsimov
-#    - Crewsimov
-#    - Corporate
-#    - CEO
-#    - NTDefault
-#    - Drone
-#    - Asimovpp
-#    - Asimov
-#    - Clown
-#    - Cowboy
-#    - Druid
-#    - Hippocratic
-#    - Mother
-#    - Paladin
-#    - RoboCop
-#    - Simple
-#    - StationEfficiency
-#    - Tyrant
+    lawsWeighted: RandomLawset
 
 - type: entity
   id: BaseStationAllEventsEligible

@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Prototypes;
+using Content.Shared.Random;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -13,6 +14,12 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// </summary>
     [DataField(required: true)]
     public ProtoId<SiliconLawsetPrototype> Laws = string.Empty;
+	
+	/// <summary>
+    /// Weighted random override for lawset provided.
+    /// </summary>
+    [DataField]
+    public ProtoId<WeightedRandomPrototype> LawsWeighted = string.Empty;
 
     /// <summary>
     /// Lawset created from the prototype id.
