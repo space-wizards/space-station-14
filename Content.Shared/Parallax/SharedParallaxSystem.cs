@@ -12,7 +12,7 @@ public abstract class SharedParallaxSystem : EntitySystem
         base.Initialize();
 
         _vvManager.GetTypeHandler<ParallaxComponent>()
-            .AddPath(nameof(ParallaxComponent.Parallax), (uid, comp) => comp.Parallax, (uid, value, comp) =>
+            .AddPath(nameof(ParallaxComponent.Parallax), (_, comp) => comp.Parallax, (uid, value, comp) =>
             {
                 if (!Resolve(uid, ref comp) ||
                     value.Equals(comp.Parallax))
@@ -23,5 +23,12 @@ public abstract class SharedParallaxSystem : EntitySystem
                 comp.Parallax = value;
                 Dirty(uid, comp);
             });
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _vvManager.GetTypeHandler<ParallaxComponent>().RemovePath(nameof(ParallaxComponent.Parallax));
     }
 }
