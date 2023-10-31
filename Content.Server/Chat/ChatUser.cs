@@ -23,4 +23,12 @@ public sealed class ChatUser
     {
         Key = key;
     }
+
+    public void AddEntity(NetEntity entity)
+    {
+        if (!entity.Valid)
+            return;
+
+        Entities.Add(entity);
+    }
 }

@@ -202,7 +202,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         // todo free me from chat code
         if (player != null)
         {
-            _chatManager.EnsurePlayer(player.UserId).Entities.Add(GetNetEntity(source));
+            _chatManager.EnsurePlayer(player.UserId).AddEntity(GetNetEntity(source));
         }
 
         if (desiredType == InGameICChatType.Speak && message.StartsWith(LocalPrefix))
