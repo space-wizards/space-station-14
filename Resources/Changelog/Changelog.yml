@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Monkies go horizontal on crit/death again, type: Fix}
-  id: 4586
-  time: '2023-08-14T21:02:28.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Fixed condiment stations & smartfridges being too unshaded, type: Fix}
   - {message: 'Booze dispenser now only contains booze, everything else it contained
       was already in the soda dispenser', type: Tweak}
@@ -2917,3 +2912,8 @@ Entries:
   - {message: Add pea plants., type: Add}
   id: 5085
   time: '2023-10-31T04:09:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Smoke now properly transfers reagents when inhaled., type: Fix}
+  id: 5086
+  time: '2023-10-31T12:43:18.0000000+00:00'
