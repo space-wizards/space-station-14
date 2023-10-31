@@ -173,26 +173,6 @@ namespace Content.Server.RoundEnd
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
-            // update the evac shuttle timers
-            var payload = new NetworkPayload
-            {
-                ["BroadcastTime"] = countdownTime
-            };
-
-            var query = AllEntityQuery<StationEmergencyShuttleComponent, DeviceNetworkComponent>();
-            query.MoveNext(out var uid, out var shuttle, out var network);
-
-            _deviceNetworkSystem.QueuePacket(uid, null, payload, 2451);
-
-            ActivateCooldown();
-            RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
-
-            ActivateCooldown();
-            RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
-
-            ActivateCooldown();
-            RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
-
             _shuttleTimerSystem.FloodEvacPacket(countdownTime);
         }
 
