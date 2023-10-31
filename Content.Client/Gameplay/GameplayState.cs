@@ -96,8 +96,6 @@ namespace Content.Client.Gameplay
                 screenType = default;
             }
 
-            _uiManager.UnloadScreen();
-            _loadController.UnloadScreen();
             switch (screenType)
             {
                 case ScreenType.Default:

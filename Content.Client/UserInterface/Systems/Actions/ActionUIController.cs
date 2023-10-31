@@ -748,14 +748,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void RegisterActionContainer(ActionButtonContainer container)
     {
-        /*
-        if (_container != null)
-        {
-            _container.ActionPressed -= OnActionPressed;
-            _container.ActionUnpressed -= OnActionPressed;
-            return;
-        }*/
-
         _container = container;
         _container.ActionPressed += OnActionPressed;
         _container.ActionUnpressed += OnActionUnpressed;
