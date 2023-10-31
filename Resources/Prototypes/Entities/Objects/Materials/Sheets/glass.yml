@@ -9,7 +9,7 @@
     sprite: Objects/Materials/Sheets/glass.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/glass.rsi
-    size: 30
+    size: Normal
   - type: StaticPrice
     price: 0
   - type: Tag
@@ -83,8 +83,6 @@
   - type: Stack
     stackType: Glass
     count: 10
-  - type: Item
-    size: 10
 
 - type: entity
   parent: SheetGlass
@@ -96,16 +94,12 @@
   - type: Stack
     stackType: Glass
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetGlass
   id: SheetGlassLingering0
   suffix: Lingering, 0
   components:
-  - type: Item
-    size: 0
   - type: Stack
     lingering: true
     count: 0
@@ -174,8 +168,6 @@
   - type: Stack
     stackType: ReinforcedGlass
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetGlassBase
@@ -201,7 +193,6 @@
       map: ["base"]
   - type: Item
     heldPrefix: pglass
-    size: 30
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -239,8 +230,6 @@
   - type: Stack
     stackType: PlasmaGlass
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetPGlass
@@ -281,8 +270,6 @@
   - type: Stack
     stackType: ReinforcedPlasmaGlass
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetGlassBase
@@ -345,8 +332,6 @@
   - type: Stack
     stackType: UraniumGlass
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetUGlass
@@ -386,5 +371,3 @@
   - type: Stack
     stackType: ReinforcedUraniumGlass
     count: 1
-  - type: Item
-    size: 1

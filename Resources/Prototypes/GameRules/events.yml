@@ -187,6 +187,21 @@
       prob: 0.005
 
 - type: entity
+  id: CockroachMigration
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobCockroach
+      prob: 0.03
+    - id: MobMothroach
+      prob: 0.008
+
+- type: entity
   id: PowerGridCheck
   parent: BaseGameRule
   noSpawn: true
