@@ -398,6 +398,19 @@
           Quantity: 10
 
 - type: entity
+  name: copper pill (10u)
+  parent: Pill
+  id: PillCopper
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Copper
+          Quantity: 10
+
+- type: entity
   parent: PillCanister
   id: PillCanisterIron
   suffix: Iron, 5
@@ -405,6 +418,16 @@
   - type: StorageFill
     contents:
     - id: PillIron
+      amount: 5
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterCopper
+  suffix: Copper, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCopper
       amount: 5
 
 - type: entity

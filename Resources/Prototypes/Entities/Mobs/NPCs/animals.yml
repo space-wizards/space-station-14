@@ -726,12 +726,15 @@
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
     bloodMaxVolume: 50
+    bloodReagent: CopperBlood
   - type: Tag
     tags:
     - VimPilot
   - type: HTN
     rootTask:
       task: RuminantCompound
+  - type: Body
+    prototype: AnimalHemocyanin
 
 - type: entity
   name: goat
@@ -1832,6 +1835,8 @@
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
+  - type: Body
+    prototype: AnimalHemocyanin
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -1869,9 +1874,13 @@
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
-    bloodReagent: SpiderBlood
+    bloodReagent: CopperBlood
   - type: Speech
     speechVerb: Arachnid
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
 
 - type: entity
   name: tarantula
@@ -1921,10 +1930,6 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
-    - type: Tag
-      tags:
-      - DoorBumpOpener
-      - FootstepSound
     - type: MeleeWeapon
       angle: 0
       animation: WeaponArcBite

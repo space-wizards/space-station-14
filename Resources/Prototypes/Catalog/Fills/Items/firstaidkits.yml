@@ -43,6 +43,7 @@
       - id: Bloodpack
       - id: SyringeTranexamicAcid
       - id: PillCanisterIron
+      - id: PillCanisterCopper
       - id: PillCanisterBicaridine
 
 - type: entity
