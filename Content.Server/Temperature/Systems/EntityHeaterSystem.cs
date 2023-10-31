@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
@@ -57,7 +58,8 @@ public sealed class EntityHeaterSystem : EntitySystem
 
     private void OnGetVerbs(EntityUid uid, EntityHeaterComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        // cant turn the knob if you have no hands!
+        if (!args.CanAccess || !args.CanInteract || !HasComp<HandsComponent>(args.User))
             return;
 
         var setting = (int) comp.Setting;
