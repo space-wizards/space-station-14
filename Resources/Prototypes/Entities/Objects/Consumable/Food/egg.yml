@@ -16,7 +16,7 @@
     sprite: Objects/Consumable/Food/egg.rsi
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
-    size: 1
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       food:
@@ -69,7 +69,7 @@
     sprite: Objects/Consumable/Food/egg.rsi
     state: eggshells
   - type: Item
-    size: 1
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       food:

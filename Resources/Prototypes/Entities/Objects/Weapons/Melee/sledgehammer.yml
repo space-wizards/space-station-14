@@ -1,0 +1,22 @@
+- type: entity
+  name: sledgehammer
+  parent: BaseItem
+  id: Sledgehammer
+  description: The perfect tool for wanton carnage.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/sledgehammer.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+        Structural: 15
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 10
+        Structural: 60
+  - type: Item
+    size: 80

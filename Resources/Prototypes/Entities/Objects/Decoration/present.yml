@@ -15,9 +15,7 @@
   suffix: Empty
   components:
   - type: Item
-    size: 30
-  - type: Storage
-    capacity: 30
+    size: Normal
 
 - type: entity
   id: PresentRandomUnsafe

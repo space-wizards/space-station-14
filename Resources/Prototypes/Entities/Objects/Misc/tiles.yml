@@ -8,6 +8,7 @@
     sprite: Objects/Tiles/tile.rsi
   - type: Item
     sprite: Objects/Tiles/tile.rsi
+    size: Normal
   - type: DamageOtherOnHit
     damage:
       types:

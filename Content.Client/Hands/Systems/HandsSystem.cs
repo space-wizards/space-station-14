@@ -42,8 +42,8 @@ namespace Content.Client.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
-            SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
+            SubscribeLocalEvent<HandsComponent, LocalPlayerAttachedEvent>(HandlePlayerAttached);
+            SubscribeLocalEvent<HandsComponent, LocalPlayerDetachedEvent>(HandlePlayerDetached);
             SubscribeLocalEvent<HandsComponent, ComponentStartup>(OnHandsStartup);
             SubscribeLocalEvent<HandsComponent, ComponentShutdown>(OnHandsShutdown);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
@@ -95,7 +95,8 @@ namespace Content.Client.Hands.Systems
                     }
                 }
 
-                component.SortedHands = new(state.HandNames);
+                component.SortedHands.Clear();
+                component.SortedHands.AddRange(state.HandNames);
                 var sorted = addedHands.OrderBy(hand => component.SortedHands.IndexOf(hand.Name));
 
                 foreach (var hand in sorted)
@@ -360,12 +361,12 @@ namespace Content.Client.Hands.Systems
 
         #region Gui
 
-        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
+        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, LocalPlayerAttachedEvent args)
         {
             OnPlayerHandsAdded?.Invoke(component);
         }
 
-        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
+        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, LocalPlayerDetachedEvent args)
         {
             OnPlayerHandsRemoved?.Invoke();
         }
