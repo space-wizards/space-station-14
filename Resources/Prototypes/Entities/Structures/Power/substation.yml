@@ -214,6 +214,7 @@
   id: SubstationBasic
   suffix: Basic, 2.5MJ
   components:
+  - type: Substation
   - type: Battery
     maxCharge: 2500000
     startingCharge: 2500000
