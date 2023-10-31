@@ -1,11 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: 'Admin ghosts, robots, and other soulless monsters that never tire can
-      now perform wide melee attacks again. Most notably this fixes the borg mining
-      drill.', type: Fix}
-  id: 4582
-  time: '2023-08-14T16:10:16.0000000+00:00'
 - author: Titian3
   changes:
   - {message: Fixed Admin watchlists and messages., type: Fix}
@@ -2918,3 +2911,9 @@ Entries:
   - {message: Fixed the issue where mice were cannibalizing fallen brethren., type: Fix}
   id: 5081
   time: '2023-10-31T01:49:05.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: 'Despite being just as effective as the head, you no longer hit people
+      with the handle of fire axes.', type: Fix}
+  id: 5082
+  time: '2023-10-31T03:30:59.0000000+00:00'
