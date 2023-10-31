@@ -140,8 +140,8 @@ public partial class SharedGunSystem
 
             DebugTools.Assert(ammo.Count == 0);
             UpdateRevolverAppearance(revolverUid, component);
-            UpdateAmmoCount(uid);
-            Dirty(uid, component);
+            UpdateAmmoCount(revolverUid);
+            Dirty(revolverUid, component);
 
             Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);

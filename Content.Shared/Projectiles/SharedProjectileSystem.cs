@@ -31,25 +31,26 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
-        SubscribeLocalEvent<BouncyProjectileComponent, ProjectileHitEvent>(OnBouncyHit);
+        SubscribeLocalEvent<BouncyProjectileComponent, ProjectileBounceEvent>(OnBouncyHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
     }
 
-    private void OnBouncyHit(EntityUid uid, BouncyProjectileComponent component, ProjectileHitEvent args)
+    private void OnBouncyHit(EntityUid uid, BouncyProjectileComponent component, ProjectileBounceEvent args)
     {
-        if (HasComp<MobStateComponent>(args.Target)
+        if (HasComp<MobStateComponent>(args.HitObject)
             || !TryComp(uid, out PhysicsComponent? physics)
             || component.Bounces <= 0)
             return;
 
+        args.Bounced = true;
 
         var rotation = Angle.Zero;
         var existingVelocity = _physics.GetMapLinearVelocity(uid, component: physics);
-        var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(args.Target);
-        var newVelocity = rotation.RotateVec(relativeVelocity);
+        var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(args.HitObject);
+        var newVelocity = Vector2.Reflect(relativeVelocity, args.HitNormal);
 
         // Have the velocity in world terms above so need to convert it back to local.
         var difference = newVelocity - existingVelocity;
@@ -199,3 +200,9 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
+
+/// <summary>
+/// Raised when a bouncy projectile hits something
+/// </summary>
+[ByRefEvent]
+public record struct ProjectileBounceEvent(EntityUid HitObject, Vector2 HitNormal, bool Bounced = false);
