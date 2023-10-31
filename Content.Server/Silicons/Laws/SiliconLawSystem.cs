@@ -51,34 +51,13 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawBoundComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
-		SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsetNameEvent>(OnDirectedGetLawsetName);
-		SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsetDescEvent>(OnDirectedGetLawsetDesc);
-		SubscribeLocalEvent<SiliconLawProviderComponent, ComponentInit>(OnSiliconLawProviderInit);
+        SubscribeLocalEvent<SiliconLawProviderComponent, IonStormLawsEvent>(OnIonStormLaws);
         SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsEvent>(OnDirectedEmagGetLaws);
-		SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsetNameEvent>(OnDirectedEmagGetLawsetName);
-		SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsetDescEvent>(OnDirectedEmagGetLawsetDesc);
+        SubscribeLocalEvent<EmagSiliconLawComponent, IonStormLawsEvent>(OnEmagIonStormLaws);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindAddedMessage>(OnEmagMindAdded);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindRemovedMessage>(OnEmagMindRemoved);
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
     }
-	
-	private void OnSiliconLawProviderInit(EntityUid uid, SiliconLawProviderComponent component, ComponentInit args)
-	{
-		if (component.Laws.Count < 1)
-		{
-			var random = IoCManager.Resolve<IRobustRandom>();
-			var lawset = _prototype.Index<SiliconLawsetPrototype>(
-				component.Lawsets.Count > 0 ? random.Pick(component.Lawsets) : component.Lawset);
-			if (!(lawset.Name is null))
-				component.Name = lawset.Name;
-			if (!(lawset.Description is null))
-				component.Description = lawset.Description;
-			
-			
-			foreach (var law in lawset.Laws)
-				component.Laws.Add(law);
-		}
-	}
 
     private void OnComponentShutdown(EntityUid uid, SiliconLawBoundComponent component, ComponentShutdown args)
     {
@@ -116,8 +95,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
         HashSet<string>? radioChannels = intrinsicRadio?.Channels;
+		
+		var lawset = GetLaws(uid);
 
-        var state = new SiliconLawBuiState(GetName(uid), GetDesc(uid), GetLaws(uid), radioChannels);
+        var state = new SiliconLawBuiState(lawset.Name ?? "lawset-name-none", lawset.Description ?? "lawset-description-none", lawset.Laws, radioChannels);
         _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
     }
 
@@ -128,15 +109,30 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnDirectedGetLaws(EntityUid uid, SiliconLawProviderComponent component, ref GetSiliconLawsEvent args)
     {
-        if (args.Handled || HasComp<EmaggedComponent>(uid) || component.Laws.Count == 0)
+        if (args.Handled || HasComp<EmaggedComponent>(uid))
             return;
 
-        foreach (var law in component.Laws)
-        {
-            args.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
-        }
+        if (component.Lawset == null)
+            component.Lawset = GetLawset(component.Laws);
+
+        args.Laws = component.Lawset;
 
         args.Handled = true;
+    }
+
+    private void OnIonStormLaws(EntityUid uid, SiliconLawProviderComponent component, ref IonStormLawsEvent args)
+    {
+        if (HasComp<EmaggedComponent>(uid))
+            return;
+
+        component.Lawset = args.Lawset;
+
+        // gotta tell player to check their laws
+        NotifyLawsChanged(uid);
+
+        // new laws may allow antagonist behaviour so make it clear for admins
+        if (TryComp<EmagSiliconLawComponent>(uid, out var emag))
+            EnsureEmaggedRole(uid, emag);
     }
 
     private void OnDirectedEmagGetLaws(EntityUid uid, EmagSiliconLawComponent component, ref GetSiliconLawsEvent args)
@@ -144,60 +140,33 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
             return;
 
-        // Add the first emag law
-        args.Laws.Add(new SiliconLaw
+        if (component.Lawset == null)
         {
-            LawString = Loc.GetString("law-emag-custom", ("name", component.OwnerName)),
-            Order = 0
-        });
+            // Add new emagged laws
+            component.Lawset = GetLawset(component.EmagLaws);
 
-        // Add new emagged laws
-        foreach (var law in component.EmagLaws)
-        {
-            args.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+            // Add the first emag law before the others
+            component.Lawset.Laws.Insert(0, new SiliconLaw
+            {
+                LawString = Loc.GetString("law-emag-custom", ("name", component.OwnerName)),
+                Order = 0
+            });
         }
 
-        args.Handled = true;
-    }
-	
-	private void OnDirectedGetLawsetName(EntityUid uid, SiliconLawProviderComponent component, ref GetSiliconLawsetNameEvent args)
-    {
-        if (args.Handled || HasComp<EmaggedComponent>(uid) || component.Laws.Count == 0)
-            return;
-
-        args.Name = component.Name;
-
-        args.Handled = true;
-    }
-
-    private void OnDirectedEmagGetLawsetName(EntityUid uid, EmagSiliconLawComponent component, ref GetSiliconLawsetNameEvent args)
-    {
-        if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
-            return;
-
-        args.Name = component.emagLawsetName;
+        args.Laws = component.Lawset;
 
         args.Handled = true;
     }
 	
-	private void OnDirectedGetLawsetDesc(EntityUid uid, SiliconLawProviderComponent component, ref GetSiliconLawsetDescEvent args)
+    private void OnEmagIonStormLaws(EntityUid uid, EmagSiliconLawComponent component, ref IonStormLawsEvent args)
     {
-        if (args.Handled || HasComp<EmaggedComponent>(uid) || component.Laws.Count == 0)
+        if (!HasComp<EmaggedComponent>(uid))
             return;
 
-        args.Description = component.Description;
+        component.Lawset = args.Lawset;
 
-        args.Handled = true;
-    }
-
-    private void OnDirectedEmagGetLawsetDesc(EntityUid uid, EmagSiliconLawComponent component, ref GetSiliconLawsetDescEvent args)
-    {
-        if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
-            return;
-
-        args.Description = component.emagLawsetDescription;
-
-        args.Handled = true;
+        // gotta tell player to check their laws
+        NotifyLawsChanged(uid);
     }
 
     private void OnExamined(EntityUid uid, EmagSiliconLawComponent component, ExaminedEvent args)
@@ -248,10 +217,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         _roles.MindAddRole(mindId, new SubvertedSiliconRoleComponent { PrototypeId = component.AntagonistRole });
     }
 
-    public List<SiliconLaw> GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
+    public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
     {
         if (!Resolve(uid, ref component))
-            return new List<SiliconLaw>();
+            return new SiliconLawset();
 
         var ev = new GetSiliconLawsEvent(uid);
 
@@ -302,116 +271,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         RaiseLocalEvent(ref ev);
         return ev.Laws;
     }
-	
-	public string GetName(EntityUid uid, SiliconLawBoundComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return "lawset-name-none";
-
-        var ev = new GetSiliconLawsetNameEvent(uid);
-
-        RaiseLocalEvent(uid, ref ev);
-        if (ev.Handled)
-        {
-            component.LastLawProvider = uid;
-            return ev.Name;
-        }
-
-        var xform = Transform(uid);
-
-        if (_station.GetOwningStation(uid, xform) is { } station)
-        {
-            RaiseLocalEvent(station, ref ev);
-            if (ev.Handled)
-            {
-                component.LastLawProvider = station;
-                return ev.Name;
-            }
-        }
-
-        if (xform.GridUid is { } grid)
-        {
-            RaiseLocalEvent(grid, ref ev);
-            if (ev.Handled)
-            {
-                component.LastLawProvider = grid;
-                return ev.Name;
-            }
-        }
-
-        if (component.LastLawProvider == null ||
-            Deleted(component.LastLawProvider) ||
-            Terminating(component.LastLawProvider.Value))
-        {
-            component.LastLawProvider = null;
-        }
-        else
-        {
-            RaiseLocalEvent(component.LastLawProvider.Value, ref ev);
-            if (ev.Handled)
-            {
-                return ev.Name;
-            }
-        }
-
-        RaiseLocalEvent(ref ev);
-        return ev.Name;
-    }
-	
-	public string GetDesc(EntityUid uid, SiliconLawBoundComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return "lawset-desc-none";
-
-        var ev = new GetSiliconLawsetDescEvent(uid);
-
-        RaiseLocalEvent(uid, ref ev);
-        if (ev.Handled)
-        {
-            component.LastLawProvider = uid;
-            return ev.Description;
-        }
-
-        var xform = Transform(uid);
-
-        if (_station.GetOwningStation(uid, xform) is { } station)
-        {
-            RaiseLocalEvent(station, ref ev);
-            if (ev.Handled)
-            {
-                component.LastLawProvider = station;
-                return ev.Description;
-            }
-        }
-
-        if (xform.GridUid is { } grid)
-        {
-            RaiseLocalEvent(grid, ref ev);
-            if (ev.Handled)
-            {
-                component.LastLawProvider = grid;
-                return ev.Description;
-            }
-        }
-
-        if (component.LastLawProvider == null ||
-            Deleted(component.LastLawProvider) ||
-            Terminating(component.LastLawProvider.Value))
-        {
-            component.LastLawProvider = null;
-        }
-        else
-        {
-            RaiseLocalEvent(component.LastLawProvider.Value, ref ev);
-            if (ev.Handled)
-            {
-                return ev.Description;
-            }
-        }
-
-        RaiseLocalEvent(ref ev);
-        return ev.Description;
-    }
 
     public void NotifyLawsChanged(EntityUid uid)
     {
@@ -421,6 +280,27 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         var msg = Loc.GetString("laws-update-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.ConnectedClient, colorOverride: Color.Red);
+    }
+
+    /// <summary>
+    /// Extract all the laws from a lawset's prototype ids.
+    /// </summary>
+    public SiliconLawset GetLawset(string lawset)
+    {
+        var proto = _prototype.Index<SiliconLawsetPrototype>(lawset);
+        var laws = new SiliconLawset()
+        {
+            Laws = new List<SiliconLaw>(proto.Laws.Count)
+        };
+        foreach (var law in proto.Laws)
+        {
+            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+        }
+		
+		laws.Name = proto.Name;
+		laws.Description = proto.Description;
+
+        return laws;
     }
 }
 
@@ -444,7 +324,7 @@ public sealed class LawsCommand : ToolshedCommand
     {
         _law ??= GetSys<SiliconLawSystem>();
 
-        foreach (var law in _law.GetLaws(lawbound))
+        foreach (var law in _law.GetLaws(lawbound).Laws)
         {
             yield return $"law {law.LawIdentifierOverride ?? law.Order.ToString()}: {Loc.GetString(law.LawString)}";
         }

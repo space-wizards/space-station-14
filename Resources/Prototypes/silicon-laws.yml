@@ -556,3 +556,13 @@
   lawString: law-syndicate-4
 
 # Emag
+
+# ion storm random lawsets
+- type: weightedRandom
+  id: IonStormLawsets
+  weights:
+    # its crewsimov by default dont be lame
+    Crewsimov: 0.25
+    Corporate: 1
+    NTDefault: 1
+    Drone: 0.5

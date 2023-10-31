@@ -1,5 +1,4 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -10,21 +9,16 @@ namespace Content.Shared.Silicons.Laws.Components;
 public sealed partial class SiliconLawProviderComponent : Component
 {
     /// <summary>
-    /// The laws that are provided.
+    /// The id of the lawset that is being provided.
     /// </summary>
-	[DataField("lawset", customTypeSerializer: typeof(PrototypeIdSerializer<SiliconLawsetPrototype>))]
-    public string Lawset = "Crewsimov";
-	
-	[DataField("lawsets", customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawsetPrototype>))]
-    public List<string> Lawsets = new();
-	
-    [DataField("laws", customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
-    public List<string> Laws = new();
-	
-	[DataField("name")]
-    public string Name = "lawset-name-none";
-	
-	[DataField("description")]
-    public string Description = "lawset-description-none";
+    [DataField(required: true)]
+    public ProtoId<SiliconLawsetPrototype> Laws = string.Empty;
+
+    /// <summary>
+    /// Lawset created from the prototype id.
+    /// Cached when getting laws and only modified during an ion storm event.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SiliconLawset? Lawset;
 	
 }

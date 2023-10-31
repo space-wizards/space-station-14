@@ -1,5 +1,5 @@
 ﻿lawset-name-none = Laws
-lawset-desc-none = Rules you are obliged to obey by your manmade nature.
+lawset-description-none = Rules you are obliged to obey by your manmade nature.
 
 lawset-name-crewsimov = Crewsimov
 lawset-description-crewsimov = The Asimov lawset tweaked for specific Nanotrasen usage.

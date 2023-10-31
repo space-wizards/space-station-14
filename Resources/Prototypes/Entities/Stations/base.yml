@@ -71,31 +71,31 @@
   abstract: true
   components:
   - type: SiliconLawProvider
-    lawset: Crewsimov
+    laws: Crewsimov
 
 - type: entity
   id: BaseStationSiliconLawRandomised
   abstract: true
   components:
   - type: SiliconLawProvider
-    lawsets:
-    - Crewsimov
-    - Corporate
-    - CEO
-    - NTDefault
-    - Drone
-    - Asimovpp
-    - Asimov
-    - Clown
-    - Cowboy
-    - Druid
-    - Hippocratic
-    - Mother
-    - Paladin
-    - RoboCop
-    - Simple
-    - StationEfficiency
-    - Tyrant
+    laws: Crewsimov
+#    - Crewsimov
+#    - Corporate
+#    - CEO
+#    - NTDefault
+#    - Drone
+#    - Asimovpp
+#    - Asimov
+#    - Clown
+#    - Cowboy
+#    - Druid
+#    - Hippocratic
+#    - Mother
+#    - Paladin
+#    - RoboCop
+#    - Simple
+#    - StationEfficiency
+#    - Tyrant
 
 - type: entity
   id: BaseStationAllEventsEligible

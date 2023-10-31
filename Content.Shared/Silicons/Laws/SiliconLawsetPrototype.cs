@@ -5,11 +5,59 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Silicons.Laws;
 
-[Virtual, DataDefinition]
-[Serializable, NetSerializable]
+[DataDefinition, Serializable, NetSerializable]
 public partial class SiliconLawset
 {
-    [DataField("laws", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public List<SiliconLaw> Laws = new();
+	
+	[DataField]
+    public string? Name;
+	
+	[DataField]
+    public string? Description;
+	
+	public string LoggingString()
+    {
+        var laws = new List<string>(Laws.Count);
+        foreach (var law in Laws)
+        {
+            laws.Add($"{law.Order}: {Loc.GetString(law.LawString)}");
+        }
+
+        return string.Join(" / ", laws);
+    }
+	
+	public SiliconLawset Clone()
+    {
+        var laws = new List<SiliconLaw>(Laws.Count);
+        foreach (var law in Laws)
+        {
+            laws.Add(law.ShallowClone());
+        }
+
+        return new SiliconLawset()
+        {
+            Laws = laws
+        };
+    }
+}
+
+/// <summary>
+/// This is a prototype for a <see cref="SiliconLawPrototype"/> list.
+/// Cannot be used directly since it is a list of prototype ids rather than List<Siliconlaw>.
+/// </summary>
+[Prototype("siliconLawset"), Serializable, NetSerializable]
+public sealed partial class SiliconLawsetPrototype : IPrototype
+{
+    /// <inheritdoc/>
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
+    /// <summary>
+    /// List of law prototype ids in this lawset.
+    /// </summary>
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
     public List<string> Laws = new();
 	
 	[DataField("name")]
@@ -17,18 +65,6 @@ public partial class SiliconLawset
 	
 	[DataField("description")]
     public string? Description;
-}
-
-/// <summary>
-/// This is a prototype for a lawset governing the behavior of silicons.
-/// </summary>
-[Prototype("siliconLawset")]
-[Serializable, NetSerializable]
-public sealed class SiliconLawsetPrototype : SiliconLawset, IPrototype
-{
-    /// <inheritdoc/>
-    [IdDataField]
-    public string ID { get; private set; } = default!;
 
 
 }
