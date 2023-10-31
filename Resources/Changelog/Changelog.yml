@@ -1,9 +1,4 @@
 Entries:
-- author: Titian3
-  changes:
-  - {message: Fixed Admin watchlists and messages., type: Fix}
-  id: 4583
-  time: '2023-08-14T19:50:33.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Observers can now hear the binary radio., type: Tweak}
@@ -2917,3 +2912,9 @@ Entries:
       with the handle of fire axes.', type: Fix}
   id: 5082
   time: '2023-10-31T03:30:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletal crewmates have arrived on the station for Halloween only.,
+    type: Add}
+  id: 5083
+  time: '2023-10-31T03:40:12.0000000+00:00'
