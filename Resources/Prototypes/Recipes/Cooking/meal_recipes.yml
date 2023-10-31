@@ -1744,6 +1744,17 @@
     FoodButter: 1
 
 - type: microwaveMealRecipe
+  id: RecipePeaSoup
+  name: pea soup recipe
+  result: FoodSoupPea
+  time: 10
+  solids:
+    FoodPeaPod: 2
+    FoodBowlBig: 1
+  reagents:
+    Water: 10
+
+- type: microwaveMealRecipe
   id: RecipeTacoShell
   name: taco shell recipe
   result: FoodTacoShell

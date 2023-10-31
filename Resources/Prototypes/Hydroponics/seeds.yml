@@ -1137,7 +1137,7 @@
     Nutriment:
       Min: 1
       Max: 3
-      PotencyDivisor: 25  
+      PotencyDivisor: 25
 
 - type: seed
   id: koibean
@@ -1302,6 +1302,35 @@
       Min: 5
       Max: 10
       PotencyDivisor: 20
+
+- type: seed
+  id: pea
+  name: seeds-pea-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pea-display-name
+  plantRsi: Objects/Specific/Hydroponics/pea.rsi
+  packetPrototype: PeaSeeds
+  productPrototypes:
+    - FoodPeaPod
+  lifespan: 25
+  growthStages: 3
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 25
+  idealLight: 8
+  harvestRepeat: Repeat
+  nutrientConsumption: 0.5
+  waterConsumption: 0.5
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 33
+    Vitamin:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
 
 - type: seed
   id: pumpkin

@@ -1567,6 +1567,29 @@
   - type: BadFood
 
 - type: entity
+  parent: FoodProduceBase
+  id: FoodPeaPod
+  name: pea pod
+  description: A duck's favorite treat!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - peas
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pea.rsi
+  - type: Produce
+    seedId: pea
+
+- type: entity
   name: pumpkin
   parent: FoodProduceBase
   id: FoodPumpkin
