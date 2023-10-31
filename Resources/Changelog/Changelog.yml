@@ -1,11 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Faded admin notes now pop in when hovering over them., type: Tweak}
-  id: 4589
-  time: '2023-08-14T21:03:53.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Fix editing an admin watchlist note making it temporarily appear as
       a low severity note., type: Fix}
   id: 4590
@@ -2914,3 +2909,9 @@ Entries:
   - {message: Added the glockroach admeme., type: Add}
   id: 5088
   time: '2023-10-31T20:28:43.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'Soap and water now makes soapy water which can clean dirt off of floors.
+      Also please don''t eat the soap, it''s not good for you.', type: Add}
+  id: 5089
+  time: '2023-10-31T20:39:12.0000000+00:00'
