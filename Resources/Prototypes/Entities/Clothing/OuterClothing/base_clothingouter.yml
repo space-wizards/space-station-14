@@ -15,7 +15,7 @@
   id: ClothingOuterBaseLarge
   components:
   - type: Item
-    size: 80
+    size: Large
   - type: Clothing
     slots:
     - outerClothing
@@ -28,10 +28,8 @@
   parent: ClothingOuterBase
   id: ClothingOuterStorageBase
   components:
-  - type: Item
-    size: 10
   - type: Storage
-    capacity: 10
+    maxTotalWeight: 6
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -72,7 +70,7 @@
     walkModifier: 0.4
     sprintModifier: 0.6
   - type: Item
-    size: 121
+    size: Huge
   - type: Armor
     modifiers:
       coefficients:
@@ -107,7 +105,7 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: Item
-    size: 80
+    size: Large
 
 - type: entity
   parent: ClothingOuterBase
@@ -130,7 +128,7 @@
   id: ClothingOuterBaseMedium
   components:
   - type: Item
-    size: 30
+    size: Large
   - type: Clothing
     slots:
     - outerClothing

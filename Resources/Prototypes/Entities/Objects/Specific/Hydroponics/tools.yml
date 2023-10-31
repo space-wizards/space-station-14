@@ -59,7 +59,7 @@
       types:
         Slash: 10
   - type: Item
-    size: 20
+    size: Normal
   - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     slots:
@@ -123,13 +123,13 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     state: icon
-  - type: Item
   - type: Clothing
     quickEquip: false
     slots:
     - belt
   - type: Storage
-    capacity: 200
+    maxSlots: 40
+    maxItemSize: Small
     quickInsert: true
     areaInsert: true
     whitelist:
