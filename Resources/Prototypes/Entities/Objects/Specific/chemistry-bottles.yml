@@ -56,7 +56,7 @@
     damage:
       types:
         Blunt: 0
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
   - type: StaticPrice
     price: 0

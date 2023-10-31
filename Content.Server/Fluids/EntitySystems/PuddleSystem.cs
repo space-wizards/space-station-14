@@ -373,7 +373,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             {
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
             }
-            else if (solution?.ContainsPrototype(EvaporationReagent) == true)
+            else if (solution?.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
             {
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
             }
@@ -602,16 +602,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (tileReact)
         {
             // First, do all tile reactions
-            for (var i = solution.Contents.Count - 1; i >= 0; i--)
-            {
-                var (reagent, quantity) = solution.Contents[i];
-                var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-                var removed = proto.ReactionTile(tileRef, quantity);
-                if (removed <= FixedPoint2.Zero)
-                    continue;
-
-                solution.RemoveReagent(reagent, removed);
-            }
+            DoTileReactions(tileRef, solution);
         }
 
         // Tile reactions used up everything.
@@ -659,6 +650,21 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 
     #endregion
+
+    public void DoTileReactions(TileRef tileRef, Solution solution)
+    {
+        for (var i = solution.Contents.Count - 1; i >= 0; i--)
+        {
+
+            var (reagent, quantity) = solution.Contents[i];
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+            var removed = proto.ReactionTile(tileRef, quantity);
+            if (removed <= FixedPoint2.Zero)
+                continue;
+
+            solution.RemoveReagent(reagent, removed);
+        }
+    }
 
     /// <summary>
     /// Tries to get the relevant puddle entity for a tile.
