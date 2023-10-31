@@ -1573,7 +1573,7 @@
   description: A large, orange... berry. Seriously.
   components:
   - type: Item
-    size: 10
+    size: Small
   - type: FlavorProfile
     flavors:
       - pumpkin

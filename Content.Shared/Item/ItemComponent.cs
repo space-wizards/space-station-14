@@ -84,34 +84,20 @@ public enum ItemSize
     /// <summary>
     /// Items that can fit inside of a standard bag.
     /// </summary>
-    Normal = 3,
+    Normal = 4,
 
     /// <summary>
     /// Items that are too large to fit inside of standard bags, but can worn in exterior slots or placed in custom containers.
     /// </summary>
-    Large = 4,
+    Large = 16,
 
     /// <summary>
     /// Items that are too large to place inside of any kind of container.
     /// </summary>
-    Huge = 5,
+    Huge = 24,
 
     /// <summary>
     /// Picture furry gf
     /// </summary>
-    Ginormous = 6
-}
-
-/// <summary>
-///     Reference sizes for common containers and items.
-/// </summary>
-public enum ReferenceSizes
-{
-    Wallet = 4,
-    Pocket = 12,
-    Box = 24,
-    Belt = 30,
-    Toolbox = 60,
-    Backpack = 100,
-    NoStoring = 9999
+    Ginormous = 48
 }

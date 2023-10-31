@@ -15,13 +15,6 @@ public abstract class SharedItemSystem : EntitySystem
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
 
-    public const int ItemSizeWeightTiny = 1;
-    public const int ItemSizeWeightSmall = 2;
-    public const int ItemSizeWeightNormal = 4;
-    public const int ItemSizeWeightLarge = 16;
-    public const int ItemSizeWeightHuge = 24;
-    public const int ItemSizeWeightGinormous = 48;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -155,22 +148,6 @@ public abstract class SharedItemSystem : EntitySystem
     [PublicAPI]
     public static int GetItemSizeWeight(ItemSize size)
     {
-        switch (size)
-        {
-            case ItemSize.Tiny:
-                return ItemSizeWeightTiny;
-            case ItemSize.Small:
-                return ItemSizeWeightSmall;
-            case ItemSize.Normal:
-                return ItemSizeWeightNormal;
-            case ItemSize.Large:
-                return ItemSizeWeightLarge;
-            case ItemSize.Huge:
-                return ItemSizeWeightHuge;
-            case ItemSize.Ginormous:
-                return ItemSizeWeightGinormous;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(size), size, null);
-        }
+        return (int) size;
     }
 }
