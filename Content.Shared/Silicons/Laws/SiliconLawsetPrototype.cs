@@ -38,7 +38,10 @@ public partial class SiliconLawset
 
         return new SiliconLawset()
         {
-            Laws = laws
+            Laws = laws,
+			Name = Name,
+			Description = Description
+			
         };
     }
 }
