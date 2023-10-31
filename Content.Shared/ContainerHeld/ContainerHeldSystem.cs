@@ -2,6 +2,7 @@ using Robust.Shared.Containers;
 
 using Content.Shared.Item;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Toggleable;
 
 namespace Content.Shared.ContainerHeld;
@@ -10,6 +11,7 @@ public sealed class ContainerHeldSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
 
     public override void Initialize()
     {
@@ -27,7 +29,7 @@ public sealed class ContainerHeldSystem : EntitySystem
         {
             return;
         }
-        if (storage.StorageUsed >= comp.Threshold)
+        if (_storage.GetCumulativeItemSizes(uid, storage) >= comp.Threshold)
         {
             _item.SetHeldPrefix(uid, "full", item);
             _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);

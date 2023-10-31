@@ -4,7 +4,7 @@ namespace Content.Shared.ContainerHeld;
 public sealed partial class ContainerHeldComponent: Component
 {
     /// <summary>
-    ///     The amount of items needed to be in the container
+    ///     The amount of weight needed to be in the container
     ///     in order for it to toggle it's appearance
     ///     to ToggleVisuals.Toggled = true, and
     ///     SetHeldPrefix() to "full" instead of "empty".
