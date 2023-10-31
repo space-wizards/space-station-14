@@ -51,7 +51,7 @@ public sealed class SpiderChargeSystem : EntitySystem
             return;
 
         // assumes warp point still exists
-        var targetXform = Transform(role.SpiderChargeTarget.Value);
+        var targetXform = Transform(obj.Target.Value);
         var locXform = Transform(args.Target);
         if (locXform.MapID != targetXform.MapID ||
             (_transform.GetWorldPosition(locXform) - _transform.GetWorldPosition(targetXform)).LengthSquared() > comp.Range * comp.Range)
