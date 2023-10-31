@@ -2603,7 +2603,7 @@
     slots:
     - HEAD
   - type: Item
-    size: 10
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       food:
