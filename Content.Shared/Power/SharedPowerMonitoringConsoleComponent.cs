@@ -1,8 +1,43 @@
-using Content.Shared.Pinpointer;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power;
+
+/// <summary>
+///     Flags an entity as being a power monitoring console
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class PowerMonitoringConsoleComponent : Component
+{
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? Focus;
+
+    public List<EntityUid>? LastReachableNodes = new();
+
+    [ViewVariables, AutoNetworkedField]
+    public Dictionary<Vector2i, PowerCableChunk> AllChunks = new();
+
+    [ViewVariables, AutoNetworkedField]
+    public Dictionary<Vector2i, PowerCableChunk> FocusChunks = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class PowerCableChunk
+{
+    public readonly Vector2i Origin;
+
+    /// <summary>
+    /// Bitmask for power cables, 1 for occupied and 0 for empty.
+    /// </summary>
+    public Dictionary<CableType, int> PowerCableData;
+
+    public PowerCableChunk(Vector2i origin)
+    {
+        Origin = origin;
+        PowerCableData = new Dictionary<CableType, int>();
+    }
+}
 
 /// <summary>
 ///     Data from by the server to the client for the power monitoring console UI
@@ -16,8 +51,6 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
     public PowerMonitoringConsoleEntry[] AllEntries;
     public PowerMonitoringConsoleEntry[] FocusSources;
     public PowerMonitoringConsoleEntry[] FocusLoads;
-    public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks;
-    public Dictionary<Vector2i, NavMapChunkPowerCables>? FocusCableChunks;
     public PowerMonitoringFlags Flags;
 
     public PowerMonitoringConsoleBoundInterfaceState
@@ -27,8 +60,6 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
         PowerMonitoringConsoleEntry[] allEntries,
         PowerMonitoringConsoleEntry[] focusSources,
         PowerMonitoringConsoleEntry[] focusLoads,
-        Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
-        Dictionary<Vector2i, NavMapChunkPowerCables>? focusCableChunks,
         PowerMonitoringFlags flags)
     {
         TotalSources = totalSources;
@@ -37,8 +68,6 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
         AllEntries = allEntries;
         FocusSources = focusSources;
         FocusLoads = focusLoads;
-        PowerCableChunks = powerCableChunks;
-        FocusCableChunks = focusCableChunks;
         Flags = flags;
     }
 }
@@ -87,7 +116,7 @@ public sealed class RequestPowerMonitoringUpdateMessage : BoundUserInterfaceMess
 /// <summary>
 ///     Determines how entities are grouped and color coded on the power monitor
 /// </summary>
-public enum PowerMonitoringConsoleGroup
+public enum PowerMonitoringConsoleGroup : byte
 {
     Consumer,
     APC,
@@ -97,7 +126,7 @@ public enum PowerMonitoringConsoleGroup
 }
 
 [Flags]
-public enum PowerMonitoringFlags
+public enum PowerMonitoringFlags : byte
 {
     None = 0,
     RoguePowerConsumer = 1,

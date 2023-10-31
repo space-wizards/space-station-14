@@ -16,6 +16,7 @@ using System.Numerics;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 using Robust.Client.GameObjects;
+using Content.Shared.Power;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -29,7 +30,8 @@ public sealed partial class NavMapControl : MapGridControl
     private readonly SharedTransformSystem _transformSystem = default!;
     private readonly SpriteSystem _spriteSystem;
 
-    public EntityUid? MapUid { get; private set; }
+    public EntityUid? MapUid;
+    public PowerMonitoringConsoleComponent? PowerMonitoringConsole;
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
@@ -84,17 +86,6 @@ public sealed partial class NavMapControl : MapGridControl
         HorizontalAlignment = HAlignment.Center,
         Pressed = false,
     };
-
-    public void SetMap(EntityUid? mapUid)
-    {
-        MapUid = mapUid;
-
-        _entManager.TryGetComponent(MapUid, out _navMap);
-        _entManager.TryGetComponent(MapUid, out _grid);
-        _entManager.TryGetComponent(MapUid, out _xform);
-        _entManager.TryGetComponent(MapUid, out _physics);
-        _entManager.TryGetComponent(MapUid, out _fixtures);
-    }
 
     public NavMapControl() : base(8f, 128f, 48f)
     {
@@ -400,8 +391,14 @@ public sealed partial class NavMapControl : MapGridControl
                     var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
-                    float f = 2.5f;
-                    var rect = new UIBox2(position.X - float.Sqrt(MinimapScale) * f, position.Y - float.Sqrt(MinimapScale) * f, position.X + float.Sqrt(MinimapScale) * f, position.Y + float.Sqrt(MinimapScale) * f);
+                    var scalingCoefficient = 2.5f;
+                    var positionOffset = scalingCoefficient * float.Sqrt(MinimapScale);
+
+                    var rect = new UIBox2
+                        (position.X - positionOffset,
+                        position.Y - positionOffset,
+                        position.X + positionOffset,
+                        position.Y + positionOffset);
 
                     if (value.Texture != null)
                         handle.DrawTextureRect(_spriteSystem.Frame0(value.Texture), rect, value.Color);
@@ -436,6 +433,15 @@ public sealed partial class NavMapControl : MapGridControl
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
+        // Get the components necessary for drawing the navmap 
+        // Let's do that here so they only get checked once per frame
+        _entManager.TryGetComponent(MapUid, out _navMap);
+        _entManager.TryGetComponent(MapUid, out _grid);
+        _entManager.TryGetComponent(MapUid, out _xform);
+        _entManager.TryGetComponent(MapUid, out _physics);
+        _entManager.TryGetComponent(MapUid, out _fixtures);
+
+        // Update the timer
         _updateTimer += args.DeltaSeconds;
 
         if (_updateTimer >= UpdateTime)
@@ -446,6 +452,16 @@ public sealed partial class NavMapControl : MapGridControl
                 return;
 
             TileGrid = GetDecodedTileChunks(_navMap.Chunks, _grid);
+            UpdatePowerCableChunks();
+        }
+    }
+
+    public void UpdatePowerCableChunks()
+    {
+        if (PowerMonitoringConsole != null && _grid != null)
+        {
+            FocusCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.FocusChunks, _grid);
+            PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.AllChunks, _grid, PowerMonitoringConsole.Focus != null);
         }
     }
 

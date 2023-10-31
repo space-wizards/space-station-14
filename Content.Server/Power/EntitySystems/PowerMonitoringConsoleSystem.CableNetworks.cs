@@ -2,68 +2,154 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
+using Content.Shared.Power;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
 internal sealed partial class PowerMonitoringConsoleSystem
 {
-    private Dictionary<Vector2i, NavMapChunkPowerCables> GetPowerCableNetworkBitMask(EntityUid gridUid, MapGridComponent grid)
+    private void OnGridSplit(EntityUid uid, PowerMonitoringConsoleComponent component, GridSplitEvent args)
     {
-        var nodeList = new List<Node>();
-        var query = AllEntityQuery<NodeContainerComponent, CableComponent>();
+        var xform = Transform(uid);
+        if (xform.GridUid == null)
+            return;
 
-        while (query.MoveNext(out var ent, out var nodeContainer, out var _))
+        foreach (var grid in args.NewGrids)
         {
-            if (Transform(ent).GridUid != gridUid)
-                continue;
-
-            var node = nodeContainer.Nodes.FirstOrNull()?.Value;
-
-            if (node == null)
-                continue;
-
-            nodeList.Add(node);
+            if (xform.GridUid == grid)
+            {
+                RefreshGrid(uid, component, xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
+                break;
+            }
         }
-
-        return GetPowerCableNetworkBitMask(gridUid, grid, nodeList);
     }
 
-    private Dictionary<Vector2i, NavMapChunkPowerCables> GetPowerCableNetworkBitMask(EntityUid gridUid, MapGridComponent grid, IEnumerable<Node> nodeList)
+    private void OnComponentStartup(EntityUid uid, PowerMonitoringConsoleComponent component, ComponentStartup args)
     {
-        var chunks = new Dictionary<Vector2i, NavMapChunkPowerCables>();
+        var xform = Transform(uid);
+        if (xform.GridUid == null)
+            return;
 
-        foreach (var node in nodeList)
+        RefreshGrid(uid, component, xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
+    }
+
+    public void HandleCableAnchoring(TransformComponent xform)
+    {
+        if (xform.GridUid == null ||
+            !TryComp<MapGridComponent>(xform.GridUid, out var grid))
+            return;
+
+        var tile = _sharedMapSystem.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, SharedNavMapSystem.ChunkSize);
+
+        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var component, out var entXform))
         {
-            if (node == null)
-                continue;
+            if (entXform.GridUid != xform.GridUid)
+                return;
 
-            var ent = node.Owner;
-            var xform = Transform(ent);
-            var tile = _sharedMapSystem.GetTileRef(gridUid, grid, xform.Coordinates);
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, SharedNavMapSystem.ChunkSize);
-
-            if (!chunks.TryGetValue(chunkOrigin, out var chunk))
+            if (!component.AllChunks.TryGetValue(chunkOrigin, out var chunk))
             {
-                chunk = new NavMapChunkPowerCables(chunkOrigin);
-                chunks[chunkOrigin] = chunk;
+                chunk = new PowerCableChunk(chunkOrigin);
+                component.AllChunks[chunkOrigin] = chunk;
             }
 
+            RefreshTile(ent, component, xform.GridUid.Value, grid, chunk, tile);
+        }
+    }
+
+    private void RefreshGrid(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid)
+    {
+        component.AllChunks.Clear();
+
+        var tiles = _sharedMapSystem.GetAllTilesEnumerator(gridUid, grid);
+        while (tiles.MoveNext(out var tile))
+        {
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.Value.GridIndices, SharedNavMapSystem.ChunkSize);
+
+            if (!component.AllChunks.TryGetValue(chunkOrigin, out var chunk))
+            {
+                chunk = new PowerCableChunk(chunkOrigin);
+                component.AllChunks[chunkOrigin] = chunk;
+            }
+
+            RefreshTile(uid, component, gridUid, grid, chunk, tile.Value.GridIndices);
+        }
+    }
+
+    private void RefreshTile
+        (EntityUid uid,
+        PowerMonitoringConsoleComponent component,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        PowerCableChunk chunk,
+        Vector2i tile)
+    {
+        var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
+        var existing = chunk.PowerCableData.ShallowClone();
+        var flag = SharedNavMapSystem.GetFlag(relative);
+
+        foreach (var datum in chunk.PowerCableData)
+            chunk.PowerCableData[datum.Key] &= ~flag;
+
+        var enumerator = _sharedMapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        while (enumerator.MoveNext(out var ent))
+        {
+            if (TryComp<CableComponent>(ent, out var cable))
+            {
+                if (!chunk.PowerCableData.ContainsKey(cable.CableType))
+                    chunk.PowerCableData.Add(cable.CableType, 0);
+
+                chunk.PowerCableData[cable.CableType] |= flag;
+            }
+        }
+
+        if (chunk.PowerCableData.All(x => x.Value == 0))
+            component.AllChunks.Remove(chunk.Origin);
+
+        foreach (var datum in chunk.PowerCableData)
+        {
+            if (!existing.ContainsKey(datum.Key) || existing[datum.Key] != datum.Value)
+            {
+                Dirty(uid, component);
+                return;
+            }
+        }
+    }
+
+    private void UpdateFocusNetwork(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid, IEnumerable<EntityUid> nodeList)
+    {
+        component.FocusChunks.Clear();
+
+        foreach (var ent in nodeList)
+        {
+            var xform = Transform(ent);
+            var tile = _sharedMapSystem.GetTileRef(gridUid, grid, xform.Coordinates);
             var gridIndices = tile.GridIndices;
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(gridIndices, SharedNavMapSystem.ChunkSize);
+
+            if (!component.FocusChunks.TryGetValue(chunkOrigin, out var chunk))
+            {
+                chunk = new PowerCableChunk(chunkOrigin);
+                component.FocusChunks[chunkOrigin] = chunk;
+            }
+
             var relative = SharedMapSystem.GetChunkRelative(gridIndices, SharedNavMapSystem.ChunkSize);
             var flag = SharedNavMapSystem.GetFlag(relative);
 
             if (TryComp<CableComponent>(ent, out var cable))
             {
-                if (!chunk.CableData.ContainsKey(cable.CableType))
-                    chunk.CableData.Add(cable.CableType, 0);
+                if (!chunk.PowerCableData.ContainsKey(cable.CableType))
+                    chunk.PowerCableData.Add(cable.CableType, 0);
 
-                chunk.CableData[cable.CableType] |= flag;
+                chunk.PowerCableData[cable.CableType] |= flag;
             }
         }
 
-        return chunks;
+        Dirty(uid, component);
     }
 
     private List<Node> FloodFillNode(Node rootNode)

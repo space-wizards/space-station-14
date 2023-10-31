@@ -23,6 +23,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
+    private const float BlinkFrequency = 1f;
 
     private EntityUid? _owner;
     private EntityUid? _trackedEntity;
@@ -42,10 +43,13 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         _owner = owner;
 
+        if (_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(owner, out var powerMonitoringConsole))
+            NavMap.PowerMonitoringConsole = powerMonitoringConsole;
+
         // Get grid uid
         if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
         {
-            NavMap.SetMap(xform.GridUid);
+            NavMap.MapUid = xform.GridUid;
 
             // Assign station name      
             var stationName = Loc.GetString("power-monitoring-window-unknown-location");
@@ -100,8 +104,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         PowerMonitoringConsoleEntry[] allEntries,
         PowerMonitoringConsoleEntry[] focusSources,
         PowerMonitoringConsoleEntry[] focusLoads,
-        Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
-        Dictionary<Vector2i, NavMapChunkPowerCables>? focusCableChunks,
         PowerMonitoringFlags flags,
         EntityCoordinates? monitorCoords)
     {
@@ -113,22 +115,13 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         NavMap.TrackedEntities.Clear();
         NavMap.FocusCableNetwork = null;
 
-        // Determine what color scheme to use
-        bool useDarkColors = focusSources.Any() || focusLoads.Any();
-
-        // Update nav map power cable networks
-        NavMap.PowerCableNetwork = NavMap.GetDecodedPowerCableChunks(powerCableChunks, grid, useDarkColors);
-
-        if (focusCableChunks != null)
-            NavMap.FocusCableNetwork = NavMap.GetDecodedPowerCableChunks(focusCableChunks, grid);
-
         // Draw all entities on the map
         foreach (var entry in allEntries)
         {
             if (entry.Coordinates == null)
                 continue;
 
-            AddTrackedEntityToNavMap(_entManager.GetEntity(entry.NetEntity), _entManager.GetCoordinates(entry.Coordinates.Value), useDarkColors);
+            AddTrackedEntityToNavMap(_entManager.GetEntity(entry.NetEntity), _entManager.GetCoordinates(entry.Coordinates.Value), _trackedEntity != null);
         }
 
         // Draw the sources for the focused device
@@ -180,6 +173,9 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         // Update system warnings
         UpdateWarningLabel(flags);
+
+        // Update power cable overlay
+        NavMap.UpdatePowerCableChunks();
     }
 
     private void AddTrackedEntityToNavMap(EntityUid uid, EntityCoordinates coords, bool useDarkColors = false)
@@ -202,9 +198,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         _updateTimer += args.DeltaSeconds;
 
-        // Warning sign pulse
-        var blinkFrequency = 1f;
-        var lit = _gameTiming.RealTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
+        // Warning sign pulse        
+        var lit = _gameTiming.RealTime.TotalSeconds % BlinkFrequency > BlinkFrequency / 2f;
         SystemWarningPanel.Modulate = lit ? Color.White : new Color(178, 178, 178);
 
         if (_updateTimer >= UpdateTime)

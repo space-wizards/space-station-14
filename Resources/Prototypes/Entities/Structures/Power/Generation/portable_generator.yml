@@ -309,14 +309,14 @@
       nodes:
         output:
           !type:CableDeviceNode
-          nodeGroupID: Apc
-    - type: PowerSupplier
+          nodeGroupID: Apc   
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
     - type: NavMapTrackable
       color: Purple
       texture: /Textures/Interface/PowerMonitoring/beveled_circle.png  
+    - type: PowerSupplier
       # No ramping needed on this bugger.
       voltage: Apc
       supplyRampTolerance: 2000

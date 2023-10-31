@@ -311,7 +311,7 @@ public sealed partial class PowerMonitoringWindow
 
         var msg = new FormattedMessage();
 
-        if (flags.HasFlag(PowerMonitoringFlags.RoguePowerConsumer))
+        if ((flags & PowerMonitoringFlags.RoguePowerConsumer) != 0)
         {
             SystemWarningPanel.PanelOverride = new StyleBoxFlat
             {
@@ -324,7 +324,7 @@ public sealed partial class PowerMonitoringWindow
             SystemWarningPanel.Visible = true;
         }
 
-        else if (flags.HasFlag(PowerMonitoringFlags.PowerNetAbnormalities))
+        else if ((flags & PowerMonitoringFlags.PowerNetAbnormalities) != 0)
         {
             SystemWarningPanel.PanelOverride = new StyleBoxFlat
             {

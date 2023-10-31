@@ -1,6 +1,5 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
@@ -36,10 +35,13 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
         SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvsEvent);
         SubscribeLocalEvent<GameRuleStartedEvent>(OnPowerGridCheckStarted);
         SubscribeLocalEvent<GameRuleEndedEvent>(OnPowerGridCheckEnded);
+
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, GridSplitEvent>(OnGridSplit);
     }
 
     public override void Update(float frameTime)
@@ -100,7 +102,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             _powerNetAbnormalities = false;
     }
 
-    public void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent powerMonitoring, EntityUid? focus, ICommonSession session)
+    public void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent powerMonitoringConsole, EntityUid? focus, ICommonSession session)
     {
         if (!_userInterfaceSystem.TryGetUi(uid, PowerMonitoringConsoleUiKey.Key, out var bui))
             return;
@@ -125,8 +127,6 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         var allEntries = new List<PowerMonitoringConsoleEntry>();
         var sourcesForFocus = new List<PowerMonitoringConsoleEntry>();
         var loadsForFocus = new List<PowerMonitoringConsoleEntry>();
-        var cableNetwork = GetPowerCableNetworkBitMask(gridUid, mapGrid);
-        var focusNetwork = new Dictionary<Vector2i, NavMapChunkPowerCables>();
         var flags = PowerMonitoringFlags.None;
 
         // Power grid anomalies event is in-progress
@@ -199,6 +199,13 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         }
 
         // Get data for the device currently selected on the power monitoring console (if applicable)
+        if (powerMonitoringConsole.Focus != focus)
+        {
+            powerMonitoringConsole.LastReachableNodes = null;
+            powerMonitoringConsole.FocusChunks.Clear();
+            powerMonitoringConsole.Focus = focus;
+        }
+
         if (focus != null)
         {
             if (TryComp<NodeContainerComponent>(focus, out var nodeContainer) &&
@@ -230,8 +237,18 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                     reachableLoadNodes = FloodFillNode(loadNode);
                 }
 
-                var reachableNodes = reachableSourceNodes.Concat(reachableLoadNodes).ToList();
-                focusNetwork = GetPowerCableNetworkBitMask(gridUid, mapGrid, reachableNodes);
+                var reachableNodes = reachableSourceNodes.Concat(reachableLoadNodes).Select(x => x.Owner).ToList();
+
+                // Quick check to see if we need to update the focus power cable network
+                // If the number of nodes, or the first or last node, changes then we probably need to update
+                if (powerMonitoringConsole.LastReachableNodes == null ||
+                    powerMonitoringConsole.LastReachableNodes.Count != reachableNodes.Count ||
+                    powerMonitoringConsole.LastReachableNodes.First() != reachableNodes.First() ||
+                    powerMonitoringConsole.LastReachableNodes.Last() != reachableNodes.Last())
+                {
+                    UpdateFocusNetwork(uid, powerMonitoringConsole, gridUid, mapGrid, reachableNodes);
+                    powerMonitoringConsole.LastReachableNodes = reachableNodes;
+                }
             }
         }
 
@@ -249,8 +266,6 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                 allEntries.ToArray(),
                 sourcesForFocus.ToArray(),
                 loadsForFocus.ToArray(),
-                cableNetwork,
-                focusNetwork,
                 flags),
             session);
     }
@@ -316,11 +331,11 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         if (MathHelper.CloseTo(currentSupply, 0))
             return;
 
-        if (!TryComp<PowerNetworkBatteryComponent>(uid, out var _battery))
+        if (!TryComp<PowerNetworkBatteryComponent>(uid, out var entBattery))
             return;
 
         // Update the power value for each source based on the fraction of power the entity is actually draining from each
-        var powerFraction = Math.Min(_battery.CurrentReceiving / currentSupply, 1f) * Math.Min(currentSupply / currentDemand, 1f);
+        var powerFraction = Math.Min(entBattery.CurrentReceiving / currentSupply, 1f) * Math.Min(currentSupply / currentDemand, 1f);
 
         foreach (var entry in sources)
         {
@@ -371,11 +386,11 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 
         var supplying = 0f;
 
-        if (TryComp<PowerNetworkBatteryComponent>(uid, out var _battery))
-            supplying = _battery.CurrentSupply;
+        if (TryComp<PowerNetworkBatteryComponent>(uid, out var entBattery))
+            supplying = entBattery.CurrentSupply;
 
-        else if (TryComp<PowerSupplierComponent>(uid, out var _supplier))
-            supplying = _supplier.CurrentSupply;
+        else if (TryComp<PowerSupplierComponent>(uid, out var entSupplier))
+            supplying = entSupplier.CurrentSupply;
 
         var powerFraction = Math.Min(supplying / currentDemand, 1f);
 

@@ -1,6 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
-using Content.Shared.Power;
 
 namespace Content.Shared.Pinpointer;
 
@@ -32,22 +30,5 @@ public sealed class NavMapChunk
     public NavMapChunk(Vector2i origin)
     {
         Origin = origin;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class NavMapChunkPowerCables
-{
-    public readonly Vector2i Origin;
-
-    /// <summary>
-    /// Bitmask for tiles, 1 for occupied and 0 for empty.
-    /// </summary>
-    public Dictionary<CableType, int> CableData;
-
-    public NavMapChunkPowerCables(Vector2i origin)
-    {
-        Origin = origin;
-        CableData = new Dictionary<CableType, int>();
     }
 }
