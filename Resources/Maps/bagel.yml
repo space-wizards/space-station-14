@@ -115410,7 +115410,7 @@ entities:
     - pos: 1.5,40.5
       parent: 60
       type: Transform
-- proto: RadioHandheld
+- proto: HandheldRadio
   entities:
   - uid: 1490
     components:
