@@ -549,7 +549,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     private Solution SpillSolutionOnTarget(Solution solution, EntityUid target, float fraction)
     {
         var splitAmount = solution.Volume * fraction;
-        if (_stains.CanHaveStains(target, out var targetSolution))
+        if (_stains.TryGetStainsSolution(target, out var targetSolution))
         {
             splitAmount = FixedPoint2.Min(targetSolution.AvailableVolume, splitAmount);
         }
