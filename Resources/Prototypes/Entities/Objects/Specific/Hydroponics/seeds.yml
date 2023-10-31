@@ -498,3 +498,13 @@
       seedId: bungo
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/bungo.rsi
+      
+- type: entity
+  parent: SeedBase
+  name: packet of pumpkin seeds
+  id: PumpkinSeeds
+  components:
+    - type: Seed
+      seedId: pumpkin
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pumpkin.rsi
