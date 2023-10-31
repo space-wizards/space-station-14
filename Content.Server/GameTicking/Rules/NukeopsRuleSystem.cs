@@ -91,6 +91,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [ValidatePrototypeId<AntagPrototype>]
     public const string NukeopsId = "Nukeops";
 
+    [ValidatePrototypeId<DatasetPrototype>]
+    private const string OperationPrefixDataset = "operationPrefix";
+
+    [ValidatePrototypeId<DatasetPrototype>]
+    private const string OperationSuffixDataset = "operationSuffix";
+
     public override void Initialize()
     {
         base.Initialize();
