@@ -254,6 +254,7 @@
         - PillCanister
         - Radio
         - DiscreteHealthAnalyzer
+        - Syringe
       components:
         - Hypospray
         - Injector
@@ -316,6 +317,7 @@
         - Bottle
         - Syringe
         - CigPack
+        - Spray
       components:
         - Seed
         - Smokable
