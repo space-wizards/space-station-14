@@ -97,3 +97,5 @@ seeds-berries-name = berries
 seeds-berries-display-name = berry bush
 seeds-bungo-name = bungo
 seeds-bungo-display-name = bungo plant
+seeds-pumpkin-name = pumpkin
+seeds-pumpkin-display-name = pumpkins

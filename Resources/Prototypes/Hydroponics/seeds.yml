@@ -1302,3 +1302,29 @@
       Min: 5
       Max: 10
       PotencyDivisor: 20
+
+- type: seed
+  id: pumpkin
+  name: seeds-pumpkin-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pumpkin-display-name
+  plantRsi: Objects/Specific/Hydroponics/pumpkin.rsi
+  packetPrototype: PumpkinSeeds
+  productPrototypes:
+    - FoodPumpkin
+  lifespan: 55
+  maturation: 10
+  production: 4
+  yield: 2
+  potency: 10
+  idealHeat: 288
+  growthStages: 3
+  chemicals:
+    PumpkinFlesh:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+    Vitamin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20

@@ -1,0 +1,61 @@
+- type: entity
+  parent: BaseItem
+  id: CarvedPumpkin
+  name: carved pumpkin
+  description: A traditional spooky decoration.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pumpkin.rsi
+    state: carved
+  - type: Item
+    size: 10
+  - type: Construction
+    graph: PumpkinAddLight
+    node: start
+
+- type: entity
+  parent: CarvedPumpkin
+  id: PumpkinLantern
+  name: jack o' lantern
+  description: A carved pumpkin, emitting an eerie glow.
+  components:
+    - type: Sprite
+      state: lantern
+    - type: Appearance
+    - type: PointLight
+      enabled: true
+      color: "#cc6600"
+      radius: 2.0
+      energy: 4.0
+
+- type: entity
+  parent: CarvedPumpkin
+  id: CarvedPumpkinSmall
+  suffix: Small
+  components:
+    - type: Sprite
+      scale: 0.75, 0.75
+
+- type: entity
+  parent: CarvedPumpkin
+  id: CarvedPumpkinLarge
+  suffix: Large
+  components:
+    - type: Sprite
+      scale: 1.5, 1.5
+
+- type: entity
+  parent: PumpkinLantern
+  id: PumpkinLanternSmall
+  suffix: Small
+  components:
+    - type: Sprite
+      scale: 0.75, 0.75
+
+- type: entity
+  parent: PumpkinLantern
+  id: PumpkinLanternLarge
+  suffix: Large
+  components:
+    - type: Sprite
+      scale: 1.5, 1.5

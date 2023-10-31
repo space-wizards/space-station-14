@@ -13,8 +13,6 @@
     sound: /Audio/Weapons/bolathrow.ogg
   - type: EmitSoundOnLand
     sound: /Audio/Effects/snap.ogg
-  - type: StaminaDamageOnCollide
-    damage: 80
   - type: Construction
     graph: Bola
     node: bola
@@ -39,11 +37,13 @@
   - type: DamageOnLand
     damage:
       types:
-        Blunt: 3
+        Blunt: 5
   - type: Ensnaring
     freeTime: 2.0
     breakoutTime: 3.5 #all bola should generally be fast to remove
     walkSpeed: 0.7 #makeshift bola shouldn't slow too much
     sprintSpeed: 0.7
+    staminaDamage: 55 # Sudden weight increase sapping stamina
     canThrowTrigger: true
+    canMoveBreakout: true
 

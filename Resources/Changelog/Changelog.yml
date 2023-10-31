@@ -1,58 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: 'The nuke detonation sound plays to all crew members again, no longer
-      will you have to sit in silence before your demise', type: Fix}
-  id: 4574
-  time: '2023-08-14T03:55:50.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: 'The Syndicate have rebooted the chameleon clothing database, restoring
-      most lost functionality.', type: Fix}
-  id: 4575
-  time: '2023-08-14T04:03:20.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Fixed an issue which was preventing airlock safeguards from being installed
-      on glass airlocks, type: Fix}
-  id: 4576
-  time: '2023-08-14T06:42:02.0000000+00:00'
-- author: kseandi
-  changes:
-  - {message: 'The new airlock painters are so accurate that you can use them to paint
-      pipes. Because of this, Nanotrasen decided to rename them to "Spray painters".',
-    type: Tweak}
-  id: 4577
-  time: '2023-08-14T12:06:21.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Centcom will now sell Cargo gas canisters at a vastly reduced (and consistent!)
-      price after realizing the station has infinite gasses anyway., type: Tweak}
-  id: 4578
-  time: '2023-08-14T13:56:07.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Asteroid rocks and secret doors should look less weird in certain scenarios,
-    type: Fix}
-  id: 4579
-  time: '2023-08-14T15:59:14.0000000+00:00'
-- author: LightVillet
-  changes:
-  - {message: Fixed hand labeler recipe's name, type: Fix}
-  id: 4580
-  time: '2023-08-14T16:04:22.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Bike horn implant now has a short cooldown, sorry', type: Fix}
-  id: 4581
-  time: '2023-08-14T16:04:42.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: 'Admin ghosts, robots, and other soulless monsters that never tire can
-      now perform wide melee attacks again. Most notably this fixes the borg mining
-      drill.', type: Fix}
-  id: 4582
-  time: '2023-08-14T16:10:16.0000000+00:00'
 - author: Titian3
   changes:
   - {message: Fixed Admin watchlists and messages., type: Fix}
@@ -2909,3 +2855,65 @@ Entries:
   - {message: Stats menu on Character setup for total and role playtime., type: Add}
   id: 5073
   time: '2023-10-28T12:01:11.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'The space lube recipe now produces slightly more lube, but can overflow
+      its container.', type: Tweak}
+  id: 5074
+  time: '2023-10-28T16:46:59.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The bee plush can now be worn on your head., type: Add}
+  id: 5075
+  time: '2023-10-29T03:55:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Audio rework is in which fixes a lot of audio bugs but may also introduce
+      new ones., type: Tweak}
+  - {message: Grid audio will now attenuate properly over distance and won't be ear
+      rupturingly loud., type: Fix}
+  - {message: FTL sound should no longer persist as it's attached to the shuttle instead
+      of being global., type: Fix}
+  - {message: Audio can now start at an offset so if an audio source comes into range
+      it won't play from the start., type: Fix}
+  - {message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
+      so it's smoother. You may need to adjust your master audio volume., type: Tweak}
+  id: 5076
+  time: '2023-10-29T03:58:23.0000000+00:00'
+- author: Simyon264
+  changes:
+  - {message: 'The PDA will now ring again, when a new station article gets published.
+      Reporters rejoice!', type: Fix}
+  id: 5077
+  time: '2023-10-29T10:37:40.0000000+00:00'
+- author: Subversionary
+  changes:
+  - {message: Bolas no longer deal stamina damage if you're already ensnared., type: Tweak}
+  - {message: Returned old bola recipe, type: Tweak}
+  - {message: Nerfed bola stamina damage from 80 to 55, type: Tweak}
+  - {message: You can break out of bolas while moving., type: Tweak}
+  id: 5078
+  time: '2023-10-29T22:27:44.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: Flannel jackets now keep you warm., type: Tweak}
+  id: 5079
+  time: '2023-10-30T00:08:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Made thindows slightly thicker (0.03m to 0.13m) to reduce instances
+      of tunneling through them at high speeds. This only affects the outer edge so
+      you can still move through two parallel thindows on the same tile., type: Tweak}
+  id: 5080
+  time: '2023-10-30T11:48:12.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Fixed the issue where mice were cannibalizing fallen brethren., type: Fix}
+  id: 5081
+  time: '2023-10-31T01:49:05.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: 'Despite being just as effective as the head, you no longer hit people
+      with the handle of fire axes.', type: Fix}
+  id: 5082
+  time: '2023-10-31T03:30:59.0000000+00:00'

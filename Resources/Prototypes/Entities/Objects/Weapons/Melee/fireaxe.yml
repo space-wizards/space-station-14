@@ -12,7 +12,7 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -90
+    wideAnimationRotation: 90
     swingLeft: true
     attackRate: 0.75
     damage:

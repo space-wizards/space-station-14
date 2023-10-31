@@ -1058,6 +1058,7 @@
     price: 50
   - type: Puller
     needsHands: true
+  - type: BadFood
 
 - type: entity
   parent: MobMouse
