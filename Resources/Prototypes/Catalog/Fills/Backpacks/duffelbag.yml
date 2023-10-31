@@ -264,11 +264,6 @@
   name: syndicate hardsuit bundle
   description: "Contains the Syndicate's signature blood red hardsuit."
   components:
-  - type: Storage
-    maxItemSize: Huge
-    whitelist: #to snub 'dem metagamers
-      components:
-      - Clothing
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitSyndie
