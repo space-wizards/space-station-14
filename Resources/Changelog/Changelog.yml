@@ -1,12 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Fixed having to reopen ahelp and popped-out ahelp windows after round
-      start and end., type: Fix}
-  id: 4588
-  time: '2023-08-14T21:03:35.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Faded admin notes now pop in when hovering over them., type: Tweak}
   id: 4589
   time: '2023-08-14T21:03:53.0000000+00:00'
@@ -2914,3 +2908,9 @@ Entries:
   - {message: Slimes are fully immune to Nitrous Oxide again., type: Fix}
   id: 5087
   time: '2023-10-31T12:57:27.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Added cockroaches. Expect to see these mapped into maints soon., type: Add}
+  - {message: Added the glockroach admeme., type: Add}
+  id: 5088
+  time: '2023-10-31T20:28:43.0000000+00:00'
