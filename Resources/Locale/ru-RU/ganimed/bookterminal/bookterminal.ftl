@@ -4,6 +4,7 @@ book-terminal-window-eject-button = Извлечь
 book-terminal-window-upload-button = Загрузить
 book-terminal-window-no-book-loaded-text = Носитель не загружен.
 book-terminal-component-cannot-put-entity-message = Вы не можете поместить это в принтер!
+book-terminal-component-access-denied = Доступ запрещён.
 
 book-terminal-book-name-blank = книга
 book-terminal-book-description-blank = Простой бумажный носитель. Так и ждёт, чтобы его страницы наполнились смыслом.

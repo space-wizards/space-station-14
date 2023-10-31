@@ -79,3 +79,5 @@
   - type: ActivatableUI
     key: enum.BookTerminalUiKey.Key
   - type: Appearance
+  - type: AccessReader
+    access: [["Library"]]

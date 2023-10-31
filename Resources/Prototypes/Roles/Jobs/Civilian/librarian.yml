@@ -9,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Library
 
 - type: startingGear
   id: LibrarianGear

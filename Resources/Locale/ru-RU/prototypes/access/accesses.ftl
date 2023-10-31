@@ -24,6 +24,7 @@ id-card-access-level-hydroponics = Гидропоника
 id-card-access-level-service = Сервис
 id-card-access-level-janitor = Уборщик
 id-card-access-level-theatre = Театр
+id-card-access-level-library = Библиотека
 id-card-access-level-chapel = Церковь
 id-card-access-level-maintenance = Техобслуживание
 id-card-access-level-external = Внешний

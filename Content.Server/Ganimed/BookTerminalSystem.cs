@@ -5,6 +5,7 @@ using Content.Server.Ganimed.Components;
 using Content.Shared.Ganimed;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Content.Server.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -14,12 +15,14 @@ using Content.Server.Paper;
 using Content.Shared.Paper;
 using Robust.Shared.Random;
 using Content.Shared.Tag;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Server.Labels.Components;
 using System.Threading.Tasks;
 using Robust.Shared.Asynchronous;
 using Content.Shared.Ganimed;
 using Content.Shared.Ganimed.Components;
-using Content.Shared.Ganimed.Components;
+using Content.Shared.Emag.Components;
 
 namespace Content.Server.Ganimed
 {
@@ -31,7 +34,9 @@ namespace Content.Server.Ganimed
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+		[Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
 		[Dependency] private readonly IRobustRandom _random = default!;
@@ -79,7 +84,11 @@ namespace Content.Server.Ganimed
             if (bookContainer is not {Valid: true})
                 return;
 			
-			ClearContent(bookContainer.Value);
+			if (message.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
+                return;
+			
+			if (IsAuthorized(bookTerminal, entity, bookTerminal))
+				ClearContent(bookContainer.Value);
 			
 			UpdateUiState(bookTerminal);
             ClickSound(bookTerminal);
@@ -91,7 +100,11 @@ namespace Content.Server.Ganimed
             if (bookContainer is not {Valid: true})
                 return;
 			
-			UploadContent(bookContainer.Value);
+			if (message.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
+                return;
+			
+			if (IsAuthorized(bookTerminal, entity, bookTerminal))
+				UploadContent(bookContainer.Value);
 			
 			UpdateUiState(bookTerminal);
             ClickSound(bookTerminal);
@@ -105,10 +118,17 @@ namespace Content.Server.Ganimed
 			if (bookTerminalEntries.Count() < 1)
 				return;
 			
+			if (message.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
+                return;
+			
 			RefreshBookContent();
-			ClearContent(bookContainer.Value);
-			SetContent(bookContainer.Value, message.BookEntry);
-
+			
+			if (IsAuthorized(bookTerminal, entity, bookTerminal))
+			{
+				ClearContent(bookContainer.Value);
+				SetContent(bookContainer.Value, message.BookEntry);
+			}
+			
             UpdateUiState(bookTerminal);
             ClickSound(bookTerminal);
         }
@@ -246,6 +266,21 @@ namespace Content.Server.Ganimed
 			
 			RefreshBookContent();
 		}
+		
+		public bool IsAuthorized(EntityUid uid, EntityUid user, BookTerminalComponent? bookTerminal = null)
+        {
+            if (!Resolve(uid, ref bookTerminal))
+                return false;
+
+            if (!TryComp<AccessReaderComponent>(uid, out var accessReader))
+                return true;
+
+            if (_accessReader.IsAllowed(user, uid, accessReader) || HasComp<EmaggedComponent>(uid))
+                return true;
+
+            _popupSystem.PopupEntity(Loc.GetString("book-terminal-component-access-denied"), uid);
+            return false;
+        }
 		
 		private void ClickSound(Entity<BookTerminalComponent> bookTerminal)
         {
