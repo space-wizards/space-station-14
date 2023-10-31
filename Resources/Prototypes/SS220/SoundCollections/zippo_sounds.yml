@@ -1,0 +1,9 @@
+- type: soundCollection
+  id: zippoOnSound
+  files:
+  - /Audio/SS220/Items/zippolight.ogg
+
+- type: soundCollection
+  id: zippoOffSound
+  files:
+  - /Audio/SS220/Items/zippoclose.ogg

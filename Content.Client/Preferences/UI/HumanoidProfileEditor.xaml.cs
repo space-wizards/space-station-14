@@ -596,7 +596,7 @@ namespace Content.Client.Preferences.UI
                 {
                     var selector = new JobPrioritySelector(job, _prototypeManager);
 
-                    if (!_requirements.IsAllowed(job, out var reason))
+                    if (Profile is not null && !_requirements.IsAllowed(job, Profile, out var reason))
                     {
                         selector.LockRequirements(reason);
                     }
@@ -797,6 +797,7 @@ namespace Content.Client.Preferences.UI
             RebuildSpriteView(); // they might have different inv so we need a new dummy
             IsDirty = true;
             _needUpdatePreview = true;
+            UpdateRoleRequirements(); //SS220 Species-Job-Requirement
         }
 
         private void SetName(string newName)
@@ -832,6 +833,8 @@ namespace Content.Client.Preferences.UI
                 _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
                 OnProfileChanged?.Invoke(Profile, CharacterSlot);
                 _needUpdatePreview = true;
+                UpdateRoleRequirements(); //SS220 Species-Job-Requirement
+                UpdateJobPriorities();
             }
         }
 
@@ -1140,7 +1143,6 @@ namespace Content.Client.Preferences.UI
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
-            UpdateJobPriorities();
             UpdateAntagPreferences();
             UpdateTraitPreferences();
             UpdateMarkings();
@@ -1149,6 +1151,8 @@ namespace Content.Client.Preferences.UI
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
+            UpdateRoleRequirements(); //SS220 Species-Job-Requirement
+            UpdateJobPriorities();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }

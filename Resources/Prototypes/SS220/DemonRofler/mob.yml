@@ -26,6 +26,7 @@
         ents: []
         showEnts: false
         occludes: true
+  - type: AntiRottingContainer
 
   # Visuals and appearance
   - type: Sprite

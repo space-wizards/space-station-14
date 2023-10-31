@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
@@ -63,6 +64,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         SubscribeLocalEvent<DarkReaperComponent, ReaperStunEvent>(OnStunAction);
         SubscribeLocalEvent<DarkReaperComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<DarkReaperComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+        SubscribeLocalEvent<DarkReaperComponent, DamageModifyEvent>(OnDamageModify);
 
         SubscribeLocalEvent<DarkReaperComponent, AfterMaterialize>(OnAfterMaterialize);
         SubscribeLocalEvent<DarkReaperComponent, AfterDeMaterialize>(OnAfterDeMaterialize);
@@ -439,6 +441,21 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         {
             DamageDict = damageSet
         };
+    }
+
+    private void OnDamageModify(EntityUid uid, DarkReaperComponent comp, DamageModifyEvent args)
+    {
+        if (!comp.PhysicalForm)
+        {
+            args.Damage = new();
+        }
+        else
+        {
+            if (!comp.StageDamageResists.TryGetValue(comp.CurrentStage, out var resists))
+                return;
+
+            args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, resists);
+        }
     }
 
     private void UpdateMovementSpeed(EntityUid uid, DarkReaperComponent comp)

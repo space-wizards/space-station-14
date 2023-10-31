@@ -111,3 +111,11 @@
   - Reporter
   - Zookeeper
   - Psychologist
+
+- type: department
+  id: GhostRoles
+  sort: 0
+  description: Ghost roles
+  color: "#A9A9A9"
+  roles:
+  - GhostRole

@@ -4,7 +4,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Permissions)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class AntagonistsCommand : IConsoleCommand
     {
         public string Command => "antagonists";

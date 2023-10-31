@@ -46,6 +46,7 @@
       - id: ForensicScanner
       - id: FlashlightSeclite
       - id: DrinkRelaxingPeachCan
+      - id: ExpensiveLighterDetective #SS220-Zippo
 
 - type: entity
   noSpawn: true
@@ -77,6 +78,7 @@
       - id: Flash
       #- name: StationCharter
       #- name: TelescopicBaton
+      - id: ExpensiveLighterNanotrasen #SS220-Zippo
 
 - type: entity
   noSpawn: true
@@ -255,7 +257,7 @@
     - type: StorageFill
       contents:
       - id: BoxSurvival
-      - id: Lighter
+      - id: ExpensiveLighterDetective #SS220-Zippo
       - id: CigPackBlack
       - id: HandLabeler
       - id: BoxForensicPad

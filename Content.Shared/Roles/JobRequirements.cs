@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
+using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Shared.Roles
 {
@@ -71,6 +72,24 @@ namespace Content.Shared.Roles
 
     public static class JobRequirements
     {
+        //SS220 Species-Job-Requirement begin
+        public static bool TryRequirementsSpeciesMet(
+            JobPrototype job,
+            SpeciesPrototype species,
+            [NotNullWhen(false)] out FormattedMessage? reason,
+            IPrototypeManager prototypes)
+        {
+            reason = null;
+
+            if (species.BlockedJobs is not null && species.BlockedJobs.Contains(job.ID))
+            {
+                reason = FormattedMessage.FromMarkup(Loc.GetString("role-restrict-specie"));
+                return false;
+            }
+            return true;
+        }
+        //SS220 Species-Job-Requirement end
+
         public static bool TryRequirementsMet(
             JobPrototype job,
             Dictionary<string, TimeSpan> playTimes,

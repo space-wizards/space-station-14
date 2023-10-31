@@ -1,0 +1,105 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+- type: statusIcon
+  id: IOTCommand
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: IOTCommand
+
+- type: statusIcon
+  id: IOTEngineerOfficer
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: IOTEngineerOfficer
+
+- type: statusIcon
+  id: IOTMedic
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: IOTMedic
+
+- type: statusIcon
+  id: IOTMedicalOfficer
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: IOTMedicalOfficer
+
+- type: statusIcon
+  id: IOTCombatant
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: IOTCombatant
+
+- type: statusIcon
+  id: NTCombatant
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: NTCombatant
+
+- type: statusIcon
+  id: NTEngineerOfficer
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: NTEngineerOfficer
+
+- type: statusIcon
+  id: NTMedic
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: NTMedic
+
+- type: statusIcon
+  id: NTMedicalOfficer
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: NTMedicalOfficer
+
+- type: statusIcon
+  id: NTSpecOpsOfficer
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: NTSpecOpsOfficer
+
+- type: statusIcon
+  id: USSPCombatant
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: USSPCombatant
+
+- type: statusIcon
+  id: USSPEngineerOfficer
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: USSPEngineerOfficer
+
+- type: statusIcon
+  id: USSPMarshal
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: USSPMarshal
+
+- type: statusIcon
+  id: USSPMedic
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: USSPMedic
+
+- type: statusIcon
+  id: USSPMedicalOfficer
+  priority: 11
+  icon:
+    sprite: SS220/Interface/Misc/event-job-icons.rsi
+    state: USSPMedicalOfficer

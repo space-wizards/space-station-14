@@ -1622,6 +1622,26 @@
   itemDrop: FloorTileItemWeb
   heatCapacity: 10000
 
+- type: tile
+  id: FloorChromite
+  name: tiles-chromite
+  sprite: /Textures/Tiles/chromite.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Space
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+
 #Hull tiles
 - type: tile
   id: FloorHull

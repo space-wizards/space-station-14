@@ -1,13 +1,38 @@
 - type: species
   id: Felinid
   name: Фелинид
-  roundStart: false
+  roundStart: true
   prototype: MobFelinid
   sprites: MobHumanSprites
   markingLimits: MobFelinidMarkingLimits
   dollPrototype: MobFelinidDummy
   skinColoration: HumanToned
-
+  youngAge: 20
+  oldAge: 40
+  maxAge: 40
+  blockedJobs:
+    - Captain
+    - BlueShield
+    - HeadOfPersonnel
+    - Quartermaster
+    - AtmosphericTechnician
+    - SeniorEngineer
+    - StationEngineer
+    - Chemist
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
+    - ResearchDirector
+    - Scientist
+    - SeniorResearcher
+    - Brigmedic
+    - Detective
+    - HeadOfSecurity
+    - SecurityCadet
+    - SecurityOfficer
+    - SeniorOfficer
+    - Warden
+    - Boxer
 - type: markingPoints
   id: MobFelinidMarkingLimits
   points:

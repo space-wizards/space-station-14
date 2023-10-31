@@ -65,7 +65,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_lastHoveredEntity.Value);
     }
 
     public void SetEnabled(bool enabled)
@@ -84,7 +84,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_lastHoveredEntity.Value);
     }
 
     public override void FrameUpdate(float frameTime)
@@ -152,7 +152,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         {
             if (entityToClick != null && TryComp(entityToClick, out outline))
             {
-                outline.UpdateInRange(inRange, renderScale);
+                outline.UpdateInRange(entityToClick.Value, inRange, renderScale);
             }
 
             return;
@@ -161,14 +161,14 @@ public sealed class InteractionOutlineSystem : EntitySystem
         if (_lastHoveredEntity != null && !Deleted(_lastHoveredEntity) &&
             TryComp(_lastHoveredEntity, out outline))
         {
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_lastHoveredEntity.Value);
         }
 
         _lastHoveredEntity = entityToClick;
 
         if (_lastHoveredEntity != null && TryComp(_lastHoveredEntity, out outline))
         {
-            outline.OnMouseEnter(inRange, renderScale);
+            outline.OnMouseEnter(_lastHoveredEntity.Value, inRange, renderScale);
         }
     }
 }

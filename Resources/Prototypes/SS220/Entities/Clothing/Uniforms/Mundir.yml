@@ -1,0 +1,11 @@
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformMundir
+  name: солдатский мундир
+  description: Отражение силы, дисциплины и патриотизма в статной форме.
+  suffix: Ebent
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Uniforms/Mundir.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Uniforms/Mundir.rsi

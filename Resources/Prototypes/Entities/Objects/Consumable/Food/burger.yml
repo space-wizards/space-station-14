@@ -613,10 +613,10 @@
     - Meat
 
 - type: entity
-  name: McRib
+  name: BBQ Rib Sandwich
   parent: FoodBurgerBase
   id: FoodBurgerMcrib
-  description: An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it.
+  description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
   - type: FlavorProfile
     flavors:

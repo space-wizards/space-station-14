@@ -15,11 +15,15 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Content.Client.Preferences;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Preferences;
 
 namespace Content.Client.LateJoin
 {
     public sealed class LateJoinGui : DefaultWindow
     {
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
@@ -253,7 +257,7 @@ namespace Content.Client.LateJoin
 
                         jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
 
-                        if (!_jobRequirements.IsAllowed(prototype, out var reason))
+                        if (!_jobRequirements.IsAllowed(prototype, (_preferencesManager?.Preferences!.SelectedCharacter as HumanoidCharacterProfile)!, out var reason))
                         {
                             jobButton.Disabled = true;
 

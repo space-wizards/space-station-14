@@ -1,12 +1,12 @@
+using Content.Server.Physics.Components;
+using Content.Shared.Follower.Components;
+using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-
-using Content.Server.Physics.Components;
-using Content.Shared.Follower.Components;
-using Content.Shared.Throwing;
+using Content.Shared.Anomaly.Components;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -27,6 +27,7 @@ internal sealed class RandomWalkController : VirtualController
         base.Initialize();
 
         SubscribeLocalEvent<RandomWalkComponent, ComponentStartup>(OnRandomWalkStartup);
+        SubscribeLocalEvent<RandomWalkComponent, AnomalyPulseEvent>(OnPulse);
     }
 
     /// <summary>
@@ -39,16 +40,17 @@ internal sealed class RandomWalkController : VirtualController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        foreach(var (randomWalk, physics) in EntityManager.EntityQuery<RandomWalkComponent, PhysicsComponent>())
+        var query = EntityQueryEnumerator<RandomWalkComponent, PhysicsComponent>();
+        while (query.MoveNext(out var uid, out var randomWalk, out var physics))
         {
-            if (EntityManager.HasComponent<ActorComponent>(randomWalk.Owner)
-            ||  EntityManager.HasComponent<ThrownItemComponent>(randomWalk.Owner)
-            ||  EntityManager.HasComponent<FollowerComponent>(randomWalk.Owner))
+            if (EntityManager.HasComponent<ActorComponent>(uid)
+            ||  EntityManager.HasComponent<ThrownItemComponent>(uid)
+            ||  EntityManager.HasComponent<FollowerComponent>(uid))
                 continue;
 
             var curTime = _timing.CurTime;
             if (randomWalk.NextStepTime <= curTime)
-                Update(randomWalk.Owner, randomWalk, physics);
+                Update(uid, randomWalk, physics);
         }
     }
 
@@ -65,7 +67,7 @@ internal sealed class RandomWalkController : VirtualController
 
         var curTime = _timing.CurTime;
         randomWalk.NextStepTime = curTime + TimeSpan.FromSeconds(_random.NextDouble(randomWalk.MinStepCooldown.TotalSeconds, randomWalk.MaxStepCooldown.TotalSeconds));
-        if(!Resolve(randomWalk.Owner, ref physics))
+        if(!Resolve(uid, ref physics))
             return;
 
         var pushAngle = _random.NextAngle();
@@ -73,6 +75,15 @@ internal sealed class RandomWalkController : VirtualController
 
         _physics.SetLinearVelocity(uid, physics.LinearVelocity * randomWalk.AccumulatorRatio, body: physics);
         _physics.ApplyLinearImpulse(uid, pushAngle.ToVec() * (pushStrength * physics.Mass), body: physics);
+
+        randomWalk.MinSpeed*=randomWalk.Сhange;
+        randomWalk.MaxSpeed*=randomWalk.Сhange;
+        if (randomWalk.MaxSpeed < 0.1)
+        {
+           randomWalk.MinSpeed=0;
+           randomWalk.MaxSpeed=0;
+           randomWalk.Сhange=1;
+        }
     }
 
     /// <summary>
@@ -87,5 +98,24 @@ internal sealed class RandomWalkController : VirtualController
             Update(uid, comp);
         else
             comp.NextStepTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextDouble(comp.MinStepCooldown.TotalSeconds, comp.MaxStepCooldown.TotalSeconds));
+    }
+
+
+    /// <summary>
+    /// Random movement of the anomaly at the pulse
+    /// </summary>
+
+    private void OnPulse(EntityUid uid, RandomWalkComponent? randomWalk, ref AnomalyPulseEvent args)
+    {
+        TryComp<AnomalyComponent>(uid, out var anomaly);
+
+        if (randomWalk != null && anomaly !=null && anomaly.PulseRun == true)
+        {
+            randomWalk.MinStepCooldown=TimeSpan.FromSeconds(1.0);
+            randomWalk.MaxStepCooldown=TimeSpan.FromSeconds(1.0);
+            randomWalk.MinSpeed=10;
+            randomWalk.MaxSpeed=15;
+            randomWalk.Сhange=0.8f;
+        }
     }
 }

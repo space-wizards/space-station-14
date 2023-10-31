@@ -77,10 +77,13 @@
 - type: randomHumanoidSettings
   id: EbentIronSquadLeader
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadLeaderGear ]
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTCommand
 
 - type: job
   id: IronSquadLeader
@@ -200,10 +203,13 @@
 - type: randomHumanoidSettings
   id: EbentIronSquadEngineer
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadEngineerGear ]
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTEngineerOfficer
 
 - type: job
   id: IronSquadEngineer
@@ -314,7 +320,7 @@
 - type: randomHumanoidSettings
   id: EbentIronSquadCorpsman
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadCorpsmanGear ]
@@ -322,6 +328,9 @@
       makeSentient: true
       name: Полевой медик Железного Отряда
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTMedic
 
 - type: job
   id: IronSquadCorpsman
@@ -442,10 +451,13 @@
 - type: randomHumanoidSettings
   id: EbentIronSquadCMO
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadCMOGear ]
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTMedicalOfficer
 
 - type: job
   id: IronSquadCMO
@@ -554,7 +566,7 @@
 - type: randomHumanoidSettings
   id: EbentIronSquadTrooper
   randomizeName: true
-  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth, Felinid ]
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadTrooperGear ]
@@ -562,6 +574,9 @@
       makeSentient: true
       name: Боец Железного Отряда
     - type: GhostTakeoverAvailable
+    - type: EventRole
+      roleGroupKey: IronSquad
+      statusIcon: IOTCombatant
 
 - type: job
   id: IronSquadFighter

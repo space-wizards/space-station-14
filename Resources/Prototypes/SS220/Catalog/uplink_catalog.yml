@@ -1,3 +1,5 @@
+#Guns
+
 - type: listing
   id: UplinkEcrossbow
   name: uplink-ecrossbow-name
@@ -8,3 +10,15 @@
     Telecrystal: 10
   categories:
   - UplinkWeapons
+
+ # Pointless
+
+- type: listing
+  id: UplinkExpensiveLighter
+  name: uplink-expensive-lighter-name
+  description: uplink-expensive-lighter-desc
+  productEntity: ExpensiveLighterSyndicate
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless

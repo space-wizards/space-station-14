@@ -154,7 +154,7 @@
     graph: TaxiBot
     node: bot
   - type: TTS # Corvax-TTS
-    voice: Robold
+    voice: fact_core
   - type: Cart #SS220-Cart-system
   - type: CartPuller #SS220-Cart-system
 

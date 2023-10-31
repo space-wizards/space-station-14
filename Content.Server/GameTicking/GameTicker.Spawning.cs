@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost;
 using Content.Server.Players;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -15,10 +16,12 @@ using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Server.SS220.RoleSpeciesRestrict;
 
 namespace Content.Server.GameTicking
 {
@@ -26,6 +29,7 @@ namespace Content.Server.GameTicking
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
+        [Dependency] private readonly RoleSpeciesRestrictSystem _roleSpeciesRestrictSystem = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string ObserverPrototypeName = "MobObserver";
@@ -34,10 +38,22 @@ namespace Content.Server.GameTicking
         /// How many players have joined the round through normal methods.
         /// Useful for game rules to look at. Doesn't count observers, people in lobby, etc.
         /// </summary>
-        public int PlayersJoinedRoundNormally = 0;
+        public int PlayersJoinedRoundNormally;
 
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
+
+        private List<EntityUid> GetSpawnableStations()
+        {
+            var spawnableStations = new List<EntityUid>();
+            var query = EntityQueryEnumerator<StationJobsComponent, StationSpawningComponent>();
+            while (query.MoveNext(out var uid, out _, out _))
+            {
+                spawnableStations.Add(uid);
+            }
+
+            return spawnableStations;
+        }
 
         private void SpawnPlayers(List<IPlayerSession> readyPlayers, Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
         {
@@ -66,8 +82,7 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var spawnableStations = EntityQuery<StationJobsComponent, StationSpawningComponent>().Select(x => x.Item1.Owner).ToList();
-
+            var spawnableStations = GetSpawnableStations();
             var assignedJobs = _stationJobs.AssignJobs(profiles, spawnableStations);
 
             _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, spawnableStations);
@@ -114,6 +129,11 @@ namespace Content.Server.GameTicking
 
             if (jobId != null && !_playTimeTrackings.IsAllowed(player, jobId))
                 return;
+
+            //SS220 Species-Job-Requirement
+            if (jobId != null && !_roleSpeciesRestrictSystem.IsAllowed(player, jobId))
+                return;
+
             SpawnPlayer(player, character, station, jobId, lateJoin, silent);
         }
 
@@ -125,7 +145,7 @@ namespace Content.Server.GameTicking
 
             if (station == EntityUid.Invalid)
             {
-                var stations = EntityQuery<StationJobsComponent, StationSpawningComponent>().Select(x => x.Item1.Owner).ToList();
+                var stations = GetSpawnableStations();
                 _robustRandom.Shuffle(stations);
                 if (stations.Count == 0)
                     station = EntityUid.Invalid;
@@ -161,7 +181,8 @@ namespace Content.Server.GameTicking
             restrictedRoles.UnionWith(getDisallowed);
 
             var jobBans = _banManager.GetJobBans(player.UserId);
-            if(jobBans != null) restrictedRoles.UnionWith(jobBans);
+            if (jobBans != null)
+                restrictedRoles.UnionWith(jobBans);
 
             // Pick best job best on prefs.
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station, character.JobPriorities, true,
@@ -351,15 +372,16 @@ namespace Content.Server.GameTicking
             // Fallback to a random grid.
             if (_possiblePositions.Count == 0)
             {
-                foreach (var grid in _mapManager.GetAllGrids())
+                var query = AllEntityQuery<MapGridComponent>();
+                while (query.MoveNext(out var uid, out var grid))
                 {
-                    if (!metaQuery.TryGetComponent(grid.Owner, out var meta) ||
+                    if (!metaQuery.TryGetComponent(uid, out var meta) ||
                         meta.EntityPaused)
                     {
                         continue;
                     }
 
-                    _possiblePositions.Add(new EntityCoordinates(grid.Owner, Vector2.Zero));
+                    _possiblePositions.Add(new EntityCoordinates(uid, Vector2.Zero));
                 }
             }
 

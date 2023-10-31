@@ -2,7 +2,7 @@
 - type: entity
   name: crossbow
   parent: BaseItem
-  id: BaseWeaponCrossbow 
+  id: BaseWeaponCrossbow
   abstract: true
   description: Energy crossbow.
   components:
@@ -51,7 +51,8 @@
     capacity: 1
     count: 1
   - type: Wieldable
-    wieldTime: 0.5
     wieldSound:
       path: /Audio/Items/bow_pull.ogg
   - type: GunRequiresWield
+  - type: UseDelay
+    delay: 0.5

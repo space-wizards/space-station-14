@@ -11,6 +11,8 @@
         Slash: 30
         Blunt: -4.5
     litDisarmMalus: 0.6
+    colorOptions:
+    - "#ffcc00"
   - type: Sprite
     sprite: SS220/Objects/Weapons/Melee/e_sickle.rsi
     layers:

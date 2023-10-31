@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPilotBeret
+  name: берет лётчика
+  description: Берет с наушниками... Чтоб уши грели.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Head/Hats/beret_pilot.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Head/Hats/beret_pilot.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

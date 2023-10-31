@@ -72,6 +72,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "._.", "chatsan-surprised" },
         { ".-.", "chatsan-confused" },
         { "-_-", "chatsan-unimpressed" },
+        { "smh", "chatsan-unimpressed" },
         { "o/", "chatsan-waves" },
         { "^^/", "chatsan-waves" },
         { ":/", "chatsan-uncertain" },
@@ -84,10 +85,11 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "lel.", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },
         { "kek.", "chatsan-laughs" },
+        { "rofl", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
         { ";_;7", "chatsan-tearfully-salutes"},
         { "idk", "chatsan-shrugs" },
-        { "idk.", "chatsan-shrugs" }
+        { "idk.", "chatsan-shrugs" },
     };
 
     private bool _doSanitize;

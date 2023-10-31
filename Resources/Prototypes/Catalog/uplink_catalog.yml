@@ -105,7 +105,7 @@
       blacklist:
       components:
       - SurplusBundle
-      
+
 - type: listing
   id: UplinkDisposableTurret
   name: uplink-disposable-turret-name
@@ -222,7 +222,7 @@
   description: uplink-c4-desc
   productEntity: C4
   cost:
-    Telecrystal: 2 # Corvax-Revert
+    Telecrystal: 2
   categories:
   - UplinkExplosives
 
@@ -247,7 +247,7 @@
   description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
-    Telecrystal: 12 # Corvax-Revert
+    Telecrystal: 12 #you're buying bulk so its a 25% discount
   categories:
   - UplinkExplosives
 
@@ -1064,7 +1064,7 @@
   description: uplink-proximity-mine-desc
   productEntity: WetFloorSignMineExplosive
   cost:
-    Telecrystal: 4
+    Telecrystal: 5 # was 4, with my buff made it 5 to be closer to minibomb -panzer
   categories:
   - UplinkJob
   conditions:
@@ -1216,6 +1216,16 @@
   productEntity: CigPackSyndicate
   cost:
     Telecrystal: 2
+  categories:
+  - UplinkMisc
+
+- type: listing
+  id: UplinkSnackBox
+  name: uplink-snack-box-name
+  description: uplink-snack-box-desc
+  productEntity: HappyHonkNukieSnacks
+  cost:
+    Telecrystal: 1
   categories:
   - UplinkMisc
 

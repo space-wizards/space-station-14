@@ -1,0 +1,27 @@
+- type: reaction
+  id: Fomepizole
+  reactants:
+    Ammonia:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Fomepizole: 3
+
+- type: reaction
+  id: Haloperidol
+  reactants:
+    Hyronalin:
+      amount: 1
+    Ammonia:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Lithium:
+      amount: 1
+    Oil:
+      amount: 1
+  products:
+    Haloperidol: 5

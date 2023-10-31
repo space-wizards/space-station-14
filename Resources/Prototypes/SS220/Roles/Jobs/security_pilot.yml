@@ -28,14 +28,10 @@
     back: ClothingBackpackSecurityPilotFilled
     shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHatBeretSecurity # Corvax-Resprite
-    outerClothing: ClothingOuterHardsuitSecurity
-    suitstorage: YellowOxygenTankFilled
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
-    pocket2: HandheldGPSBasic
   innerClothingSkirt: ClothingUniformJumpskirtSec
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

@@ -39,7 +39,7 @@
     angle: 0
     soundHit:
      collection: AlienClaw
-    animation: WeaponArcBite 
+    animation: WeaponArcBite
     damage:
       types:
         Piercing: 9
@@ -122,5 +122,5 @@
     targetSolution: udder
     quantity: 25
     updateRate: 30
-  - type: TTS 
-    voice: Flark
+  - type: TTS
+    voice: ziggs

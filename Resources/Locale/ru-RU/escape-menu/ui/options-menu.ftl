@@ -102,6 +102,7 @@ ui-options-header-map-editor = Редактор карт
 ui-options-header-dev = Разработка
 ui-options-header-general = Основное
 ui-options-hotkey-keymap = Использовать клавиши QWERTY (США)
+ui-options-hotkey-toggle-walk = Переключать шаг\бег
 ui-options-function-move-up = Двигаться вверх
 ui-options-function-move-left = Двигаться налево
 ui-options-function-move-down = Двигаться вниз

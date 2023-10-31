@@ -1,0 +1,6 @@
+- type: job
+  id: GhostRole
+  playTimeTracker: JobGhostRole
+  name: Ghost role
+  description: Utility job for correct work job ban.
+  canBeAntag: true

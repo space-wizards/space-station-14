@@ -214,6 +214,47 @@ public sealed partial class DarkReaperComponent : Component
         }
     };
 
+    /// <summary>
+    /// DamageSpecifier for melee damage that Dark Reaper does at every stage.
+    /// </summary>
+    [ViewVariables, DataField, AutoNetworkedField]
+    public List<DamageModifierSet> StageDamageResists = new()
+    {
+        // Stage 1
+        new()
+        {
+            Coefficients = new()
+            {
+                {"Radiation", 0}
+            }
+        },
+
+        // Stage 2
+        new()
+        {
+            Coefficients = new()
+            {
+                {"Radiation", 0}
+            }
+        },
+
+        // Stage 3
+        new()
+        {
+            Coefficients = new()
+            {
+                {"Piercing", 0.5f},
+                {"Slash", 0.5f},
+                {"Blunt", 0.5f},
+                {"Heat", 0.5f},
+                {"Cold", 0.25f},
+                {"Shock", 0.25f},
+                {"Cellular", 0},
+                {"Radiation", 0}
+            }
+        }
+    };
+
     public List<int> ConsumedPerStage = new()
     {
         // stage 1 is free (initial)

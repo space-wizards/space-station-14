@@ -1,4 +1,4 @@
-﻿using Content.Shared.Humanoid;
+using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SS220.TTS;
@@ -22,6 +22,9 @@ public sealed class TTSVoicePrototype : IPrototype
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("speaker", required: true)]
     public string Speaker { get; } = string.Empty;
+
+    [DataField("description")]
+    public string Description { get; } = string.Empty;
 
     /// <summary>
     /// Whether the species is available "at round start" (In the character editor)

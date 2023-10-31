@@ -61,9 +61,9 @@ namespace Content.Client.Storage
             _window?.BuildEntityList(uid, component);
         }
 
-        public void InteractWithItem(BaseButton.ButtonEventArgs args, ListData cData)
+        public void InteractWithItem(BaseButton.ButtonEventArgs? args, ListData? cData)
         {
-            if (cData is not EntityListData { Uid: var entity })
+            if (args == null || cData is not EntityListData { Uid: var entity })
                 return;
 
             if (args.Event.Function == EngineKeyFunctions.UIClick)

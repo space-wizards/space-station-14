@@ -428,7 +428,16 @@
     {
       "name": "paramed_open"
     },
-	{
+    {
+      "name": "podpil"
+    },
+    {
+      "name": "podpil_door"
+    },
+    {
+      "name": "podpil_open"
+    },
+    {
       "name": "psych_secure"
     },
     {

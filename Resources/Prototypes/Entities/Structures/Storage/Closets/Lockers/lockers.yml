@@ -359,7 +359,7 @@
   components:
   - type: AccessReader
     access: [["Detective"]]
-
+    
 - type: entity
   id: LockerEvidence
   parent: LockerSecurity
@@ -369,6 +369,21 @@
   - type: AccessReader
     access: [["Security"]]
 
+#SS220-Pilot
+- type: entity
+  id: LockerPilot
+  parent: LockerSecurity
+  name: шкаф пилота СБ
+  description: Место для хранения пожитков славных лётчиков Корпорации.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: podpil
+    stateDoorOpen: podpil_open
+    stateDoorClosed: podpil_door
+  - type: AccessReader
+    access: [["Security"]]  #WMT
+    
 # Syndicate
 - type: entity
   id: LockerSyndicatePersonal

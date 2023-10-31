@@ -364,8 +364,7 @@ namespace Content.Server.GameTicking
                 else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
                     playerIcName = icName;
 
-                var entity = mind.OriginalOwnedEntity;
-                if (Exists(entity))
+                if (TryGetEntity(mind.OriginalOwnedEntity, out var entity))
                     _pvsOverride.AddGlobalOverride(entity.Value, recursive: true);
 
                 var roles = _roles.MindGetAllRoles(mindId);
