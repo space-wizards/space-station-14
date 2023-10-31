@@ -29,7 +29,7 @@ public sealed class StainsSystem : SharedStainsSystem
 
     public bool TryAddSolution(EntityUid uid, Solution addedSolution, Solution? targetSolution = null, StainableComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false) || !TryGetStainsSolution(uid, out targetSolution, component))
+        if (!Resolve(uid, ref component, false) || targetSolution == null && !TryGetStainsSolution(uid, out targetSolution, component))
         {
             return false;
         }
