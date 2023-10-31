@@ -850,6 +850,11 @@
   description: flavor-complex-lost-friendship
 
 - type: flavor
+  id: pumpkin
+  flavorType: Complex
+  description: flavor-complex-pumpkin
+
+- type: flavor
   id: punishment
   flavorType: Complex
   description: flavor-complex-punishment

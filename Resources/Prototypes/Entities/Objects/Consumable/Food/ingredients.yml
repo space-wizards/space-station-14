@@ -428,19 +428,6 @@
     node: flat
 
 - type: entity
-  name: bun
-  parent: FoodBakingBase
-  id: FoodDoughBun
-  description: A base for any self-respecting burger.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - bun
-  - type: Sprite
-    sprite: Objects/Consumable/Food/burger.rsi
-    state: bun
-
-- type: entity
   name: raw pastry base
   parent: FoodBakingBase
   id: FoodDoughPastryBaseRaw
