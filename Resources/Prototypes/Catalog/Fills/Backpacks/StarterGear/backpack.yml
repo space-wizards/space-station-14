@@ -267,7 +267,6 @@
     - type: StorageFill
       contents:
         - id: BoxSurvivalMedical
-        - id: WeaponPulseCarbine
         - id: Hypospray
         - id: MedkitAdvancedFilled
         - id: CrowbarRed

@@ -6,10 +6,9 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
 using Content.Shared.Wires;
 using Content.Shared.Prying.Components;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems;
 

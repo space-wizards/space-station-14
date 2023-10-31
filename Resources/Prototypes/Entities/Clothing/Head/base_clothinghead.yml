@@ -73,7 +73,7 @@
   - type: PointLight
     enabled: false
     radius: 3
-    energy: 2
+    energy: 1
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     netsync: false
