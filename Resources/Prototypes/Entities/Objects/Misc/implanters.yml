@@ -97,7 +97,7 @@
   components:
     - type: Item
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
-      size: 3
+      size: Tiny
     - type: Sprite
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
       state: implanter1

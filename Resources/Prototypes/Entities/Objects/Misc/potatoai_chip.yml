@@ -8,7 +8,7 @@
       sprite: Objects/Misc/potatoai_chip.rsi
       state: icon
     - type: Item
-      size: 3
+      size: Tiny
     - type: Tag
       tags:
         - SmallAIChip

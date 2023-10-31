@@ -35,10 +35,10 @@
       map: ["cigar8"]
       visible: false
   - type: Storage
-    capacity: 8
+    maxSlots: 8
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
-    size: 8
+    size: Small
   - type: StorageFill
     contents:
     - id: Cigar
