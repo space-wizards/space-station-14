@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: SalvageEquipment
@@ -54,6 +54,7 @@
   - AutolatheMachineCircuitboard
   - CircuitImprinterMachineCircuitboard
   - MaterialReclaimerMachineCircuitboard
+  - SheetifierMachineCircuitboard
 
 - type: technology
   id: PowerGeneration
