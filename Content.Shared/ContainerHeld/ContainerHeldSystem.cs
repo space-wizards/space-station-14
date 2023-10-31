@@ -38,4 +38,5 @@ public sealed class ContainerHeldSystem : EntitySystem
             _appearance.SetData(uid, ToggleVisuals.Toggled, false, appearance);
         }
     }
+
 }
