@@ -208,6 +208,7 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
+        - LightReplacer
         - JanicartKeys
       components:
         - LightReplacer
@@ -252,7 +253,6 @@
         - PillCanister
         - Radio
         - DiscreteHealthAnalyzer
-        - Syringe
       components:
         - Hypospray
         - Injector
@@ -315,7 +315,6 @@
         - Bottle
         - Syringe
         - CigPack
-        - Spray
       components:
         - Seed
         - Smokable
