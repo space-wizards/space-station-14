@@ -37,7 +37,9 @@
       - id: JawsOfLife
       - id: WelderExperimental
       - id: Multitool
-      - id: CableApcStack
+      - id: HolofanProjector
+      - id: GasAnalyzer
+      - id: trayScanner
 
 - type: entity
   id: ClothingBeltSecurityFilled
@@ -140,7 +142,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyndiHypo
       - id: EpinephrineChemistryBottle
         amount: 2
       - id: EphedrineChemistryBottle

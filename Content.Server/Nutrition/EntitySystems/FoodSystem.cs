@@ -17,6 +17,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
@@ -99,6 +100,9 @@ public sealed class FoodSystem : EntitySystem
 
         // Target can't be fed or they're already eating
         if (!TryComp<BodyComponent>(target, out var body))
+            return (false, false);
+
+        if (HasComp<UnremoveableComponent>(food))
             return (false, false);
 
         if (_openable.IsClosed(food, user))
