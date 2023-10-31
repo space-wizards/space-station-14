@@ -25,7 +25,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Storage
-    capacity: 50
+    maxSlots: 6
+    maxItemSize: Normal
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -67,7 +68,7 @@
       - id: ClothingUniformJumpskirtColorPink
         prob: 0.05
       - id: ClothingUniformJumpsuitLoungewear
-        prob: 0.05    
+        prob: 0.05
         orGroup: dressermainloot
       - id: Pen # It`s pen.
         prob: 0.03
@@ -97,7 +98,7 @@
         prob: 0.03
         orGroup: dressermainloot
       - id: ClothingUniformJumpsuitColorRed
-        prob: 0.03 
+        prob: 0.03
         orGroup: dressermainloot
       - id: ClothingUniformJumpskirtColorRed
         prob: 0.03
@@ -184,7 +185,7 @@
         prob: 0.03
         orGroup: dresserthirdloot
       - id: ClothingUnderSocksCoder
-        prob: 0.03 
+        prob: 0.03
         orGroup: dressermainloot
       - id: ClothingUnderSocksBee
         prob: 0.03
@@ -224,7 +225,7 @@
         orGroup: dresserthirdloot
       - id: PlushieLizard
         prob: 0.03
-        orGroup: dresserthirdloot 
+        orGroup: dresserthirdloot
       - id: ClothingOuterSuitShrineMaiden
         prob: 0.03
         orGroup: dressersecondloot
@@ -423,7 +424,7 @@
       - id: BrokenBottle
         prob: 0.001
         orGroup: dressersecondloot
-      - id: FoodMeatRotten 
+      - id: FoodMeatRotten
         prob: 0.001
         orGroup: dressersecondloot
       - id: ClothingOuterSkub

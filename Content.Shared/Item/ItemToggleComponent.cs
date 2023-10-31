@@ -1,3 +1,4 @@
+using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -20,11 +21,11 @@ public sealed partial class ItemToggleComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offSize")]
-    public int OffSize = 1;
+    public ItemSize OffSize = ItemSize.Small;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("onSize")]
-    public int OnSize = 9999;
+    public ItemSize OnSize = ItemSize.Huge;
 }
 
 [ByRefEvent]

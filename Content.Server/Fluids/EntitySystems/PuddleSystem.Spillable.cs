@@ -34,7 +34,7 @@ public sealed partial class PuddleSystem
         SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
+        SubscribeLocalEvent<SpillableComponent, SolutionOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
     }
 
@@ -46,13 +46,12 @@ public sealed partial class PuddleSystem
             args.PushMarkup(Loc.GetString("spill-examine-spillable-weapon"));
     }
 
-    private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
+    private void OnOverflow(EntityUid uid, SpillableComponent component, ref SolutionOverflowEvent args)
     {
-        if (!args.Handled)
-        {
-            TrySpillAt(Transform(uid).Coordinates, args.Overflow, out _);
-        }
+        if (args.Handled)
+            return;
 
+        TrySpillAt(Transform(uid).Coordinates, args.Overflow, out _);
         args.Handled = true;
     }
 

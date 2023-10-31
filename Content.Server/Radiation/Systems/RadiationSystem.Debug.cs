@@ -7,7 +7,7 @@ using Content.Shared.Radiation.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Server.Radiation.Systems;
 

@@ -1,7 +1,6 @@
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 
 namespace Content.Client.Overlays;
@@ -24,8 +23,8 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
         SubscribeLocalEvent<T, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<T, ComponentRemove>(OnRemove);
 
-        SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
 
         SubscribeLocalEvent<T, GotEquippedEvent>(OnCompEquip);
         SubscribeLocalEvent<T, GotUnequippedEvent>(OnCompUnequip);
@@ -65,12 +64,12 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
         RefreshOverlay(uid);
     }
 
-    private void OnPlayerAttached(PlayerAttachedEvent args)
+    private void OnPlayerAttached(LocalPlayerAttachedEvent args)
     {
         RefreshOverlay(args.Entity);
     }
 
-    private void OnPlayerDetached(PlayerDetachedEvent args)
+    private void OnPlayerDetached(LocalPlayerDetachedEvent args)
     {
         if (_player.LocalPlayer?.ControlledEntity == null)
             Deactivate();

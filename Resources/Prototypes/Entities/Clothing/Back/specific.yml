@@ -33,7 +33,7 @@
     sprite: Clothing/Back/Backpacks/waterbackpack.rsi
     state: icon
   - type: Item
-    size: 200
+    size: Huge
   - type: Clothing
     slots: BACK
     sprite: Clothing/Back/Backpacks/waterbackpack.rsi
