@@ -80,7 +80,10 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
         var scalingFactor = distance / component.MaximumDistance;
         var interval = (component.MaxBeepInterval - component.MinBeepInterval) * scalingFactor + component.MinBeepInterval;
+
         component.NextBeepTime += interval;
+        if (component.NextBeepTime < _timing.CurTime) // Prevents spending time out of range accumulating a deficit which causes a series of very rapid beeps when comeing into range.
+            component.NextBeepTime = _timing.CurTime + interval;
     }
 
     /// <summary>

@@ -1,0 +1,18 @@
+# only used roundstart, names can be changed after
+- type: dataset
+  id: names_borg
+  values:
+  - Bob
+  - Joe
+  - Beep
+  - Beep II
+  - Boombox
+  - Tour Guide-otron
+  - Taffy
+  - Boop
+  - Boop II
+  - Buzz
+  - Buzz II
+  - Toaster
+  - Head of Robots
+  - EVA 1

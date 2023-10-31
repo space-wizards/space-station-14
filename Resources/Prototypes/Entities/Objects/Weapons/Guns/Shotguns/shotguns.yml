@@ -11,7 +11,7 @@
         map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     # If you update this also update the bulldog's size.
-    size: 30
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     quickEquip: false
@@ -57,8 +57,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: 30
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     quickEquip: false
@@ -137,7 +135,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: BallisticAmmoProvider
-  
+
 - type: entity
   name: Enforcer
   parent: BaseWeaponShotgun
@@ -151,7 +149,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
-  
+
 - type: entity
   name: Kammerer
   parent: BaseWeaponShotgun
@@ -162,6 +160,8 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+  - type: Item
+    size: Normal
   - type: BallisticAmmoProvider
     capacity: 4
 
@@ -176,7 +176,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
-    size: 10
+    size: Small
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
@@ -210,8 +210,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
-  - type: Item
-    size: 10
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
@@ -245,8 +243,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
-  - type: Item
-    size: 75
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
   - type: BallisticAmmoProvider

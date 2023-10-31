@@ -17,7 +17,7 @@
         - ReagentId: Nutriment
           Quantity: 8
   - type: Item
-    size: 5
+    size: Small
 
 # Kebabs
 

@@ -6,7 +6,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Specific/Medical/medical.rsi
     heldPrefix: ointment
   # Inherited
@@ -54,8 +54,6 @@
   - type: Stack
     stackType: Ointment
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   id: Ointment10Lingering
@@ -105,8 +103,6 @@
   - type: Stack
     stackType: RegenerativeMesh
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   name: bruise pack
@@ -144,8 +140,6 @@
   - type: Stack
     stackType: Brutepack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   id: Brutepack10Lingering
@@ -193,8 +187,6 @@
   - type: Stack
     stackType: MedicatedSuture
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   name: blood pack
@@ -273,8 +265,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   id: Gauze10Lingering
@@ -339,6 +329,16 @@
           Quantity: 10
 
 - type: entity
+  parent: PillCanister
+  id: PillCanisterDexalin
+  suffix: Dexalin, 7
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillDexalin
+      amount: 7
+
+- type: entity
   name: dylovene pill (10u)
   parent: Pill
   id: PillDylovene
@@ -350,6 +350,16 @@
         reagents:
         - ReagentId: Dylovene
           Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterDylovene
+  suffix: Dylovene, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillDylovene
+      amount: 5
 
 - type: entity
   name: hyronalin pill (10u)
@@ -365,6 +375,16 @@
           Quantity: 10
 
 - type: entity
+  parent: PillCanister
+  id: PillCanisterHyronalin
+  suffix: Hyronalin, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillHyronalin
+      amount: 5
+
+- type: entity
   name: iron pill (10u)
   parent: Pill
   id: PillIron
@@ -376,6 +396,16 @@
         reagents:
         - ReagentId: Iron
           Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterIron
+  suffix: Iron, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillIron
+      amount: 5
 
 - type: entity
   name: kelotane pill (10u)
@@ -391,6 +421,16 @@
           Quantity: 10
 
 - type: entity
+  parent: PillCanister
+  id: PillCanisterKelotane
+  suffix: Kelotane, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillKelotane
+      amount: 5
+
+- type: entity
   name: dermaline pill (10u)
   parent: Pill
   id: PillDermaline
@@ -402,6 +442,16 @@
         reagents:
         - ReagentId: Dermaline
           Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterDermaline
+  suffix: Dermaline, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillDermaline
+      amount: 5
 
 - type: entity
   name: space drugs
@@ -430,6 +480,16 @@
           Quantity: 10
 
 - type: entity
+  parent: PillCanister
+  id: PillCanisterTricordrazine
+  suffix: Tricordrazine, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillTricordrazine
+      amount: 5
+
+- type: entity
   name: bicaridine pill (10u)
   parent: Pill
   id: PillBicaridine
@@ -441,6 +501,16 @@
         reagents:
         - ReagentId: Bicaridine
           Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterBicaridine
+  suffix: Bicaridine, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillBicaridine
+      amount: 5
 
 - type: entity
   name: charcoal pill (10u)
@@ -457,6 +527,16 @@
         reagents:
         - ReagentId: Charcoal
           Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterCharcoal
+  suffix: Charcoal, 3
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCharcoal
+      amount: 3
 
 - type: entity
   name: romerol pill

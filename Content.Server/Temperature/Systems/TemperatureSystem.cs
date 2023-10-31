@@ -12,6 +12,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -19,8 +20,8 @@ public sealed class TemperatureSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
     /// <summary>
@@ -43,6 +44,8 @@ public sealed class TemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
             OnTemperatureChangeAttempt);
 
+        SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
+
         // Allows overriding thresholds based on the parent's thresholds.
         SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentStartup>(
@@ -55,6 +58,34 @@ public sealed class TemperatureSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        // conduct heat from the surface to the inside of entities with internal temperatures
+        var query = EntityQueryEnumerator<InternalTemperatureComponent, TemperatureComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var temp))
+        {
+            // don't do anything if they equalised
+            var diff = Math.Abs(temp.CurrentTemperature - comp.Temperature);
+            if (diff < 0.1f)
+                continue;
+
+            // heat flow in W/m^2 as per fourier's law in 1D.
+            var q = comp.Conductivity * diff / comp.Thickness;
+
+            // convert to J then K
+            var joules = q * comp.Area * frameTime;
+            var degrees = joules / GetHeatCapacity(uid, temp);
+            if (temp.CurrentTemperature < comp.Temperature)
+                degrees *= -1;
+
+            // exchange heat between inside and surface
+            comp.Temperature += degrees;
+            ForceChangeTemperature(uid, temp.CurrentTemperature - degrees, temp);
+        }
+
+        UpdateDamage(frameTime);
+    }
+
+    private void UpdateDamage(float frameTime)
+    {
         _accumulatedFrametime += frameTime;
 
         if (_accumulatedFrametime < UpdateInterval)
@@ -104,7 +135,7 @@ public sealed class TemperatureSystem : EntitySystem
         }
 
         float lastTemp = temperature.CurrentTemperature;
-        temperature.CurrentTemperature += heatAmount / temperature.HeatCapacity;
+        temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
         float delta = temperature.CurrentTemperature - lastTemp;
 
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
@@ -114,6 +145,7 @@ public sealed class TemperatureSystem : EntitySystem
         ref AtmosExposedUpdateEvent args)
     {
         var transform = args.Transform;
+
         if (transform.MapUid == null)
             return;
 
@@ -122,9 +154,28 @@ public sealed class TemperatureSystem : EntitySystem
         var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
         var tileHeatCapacity =
             _atmosphere.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
-        var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity /
-                                       (tileHeatCapacity + temperature.HeatCapacity));
+        var heatCapacity = GetHeatCapacity(uid, temperature);
+        var heat = temperatureDelta * (tileHeatCapacity * heatCapacity /
+                                       (tileHeatCapacity + heatCapacity));
         ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
+    }
+
+    public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
+    {
+        if (!Resolve(uid, ref comp) || !Resolve(uid, ref physics, false) || physics.FixturesMass <= 0)
+        {
+            return Atmospherics.MinimumHeatCapacity;
+        }
+
+        return comp.SpecificHeat * physics.FixturesMass;
+    }
+
+    private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
+    {
+        if (!TryComp<TemperatureComponent>(uid, out var temp))
+            return;
+
+        comp.Temperature = temp.CurrentTemperature;
     }
 
     private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)

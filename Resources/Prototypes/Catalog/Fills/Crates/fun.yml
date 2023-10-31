@@ -302,8 +302,8 @@
       - id: TargetDarts
         amount: 1
       - id: BoxDarts
-        amount: 1
+        amount: 2
       - id: BoxDarts
         amount: 1
         prob: 0.05
-  
+

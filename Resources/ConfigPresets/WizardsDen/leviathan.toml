@@ -4,7 +4,7 @@
 
 [game]
 hostname = "[EN] Wizard's Den Leviathan [US East 1]"
-soft_max_players = 60
+soft_max_players = 80
 
 [hub]
 tags = "lang:en,region:am_n_e,rp:low"
