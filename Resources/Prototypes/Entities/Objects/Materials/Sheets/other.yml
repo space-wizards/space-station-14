@@ -37,6 +37,10 @@
     - paper
     - paper_2
     - paper_3
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 100
   - type: Sprite
     state: paper_3
     layers:
