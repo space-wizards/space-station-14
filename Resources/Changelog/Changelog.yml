@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fix editing an admin watchlist note making it temporarily appear as
-      a low severity note., type: Fix}
-  id: 4590
-  time: '2023-08-14T21:05:47.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Operating table won't get you stuck in walls anymore, type: Fix}
@@ -2915,3 +2909,10 @@ Entries:
       Also please don''t eat the soap, it''s not good for you.', type: Add}
   id: 5089
   time: '2023-10-31T20:39:12.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Arachnid and other Blue (hemocyanin) blooded creatures now require copper
+      to treat bloodloss instead of iron and brute medkits contain 2 copper pills
+      and 1 less iron pill., type: Add}
+  id: 5090
+  time: '2023-10-31T20:41:26.0000000+00:00'
