@@ -36,3 +36,8 @@ Entries:
   - {message: 'Add pop sound effect when using the erase admin verb.', type: Tweak}
   id: 5
   time: '2023-10-14T09:47:00.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fixed not being able to sort the F7 players tab by playtime.', type: Fix}
+  id: 6
+  time: '2023-10-14T23:52:00.0000000+00:00'
