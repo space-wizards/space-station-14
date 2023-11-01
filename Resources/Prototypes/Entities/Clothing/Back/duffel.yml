@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
   - type: Storage
-    maxItemSize: Large
+    maxItemSize: Huge
     maxTotalWeight: 40
   - type: ClothingSpeedModifier
     walkModifier: 1
@@ -230,7 +230,7 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxItemSize: Large
+    maxItemSize: Huge
     maxTotalWeight: 56 #14 normal-sized items.
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
@@ -242,7 +242,7 @@
   description: A duffel bag containing a variety of biological containment equipment.
   components:
   - type: Storage
-    maxItemSize: Large
+    maxItemSize: Huge
     maxTotalWeight: 40
   - type: ClothingSpeedModifier
     walkModifier: 1

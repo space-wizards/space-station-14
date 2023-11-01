@@ -10,7 +10,7 @@
       state: riot-icon
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
-      size: Huge
+      size: Ginormous
       heldPrefix: riot
     - type: Blocking
       passiveBlockModifier:

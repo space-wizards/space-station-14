@@ -416,7 +416,7 @@
   - type: Clothing
     sprite: Clothing/Belt/bandolier.rsi
   - type: Item
-    size: Large
+    size: Huge
   - type: Storage
     whitelist:
       tags:
@@ -461,7 +461,7 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Item
-    size: Large
+    size: Huge
   - type: Storage
     whitelist:
       components:
@@ -524,7 +524,7 @@
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Item
-    size: Large
+    size: Huge
 
 - type: entity
   parent: ClothingBeltBase
