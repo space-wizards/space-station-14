@@ -125,7 +125,7 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 75 # These are limited supply items.
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: pen
 
 - type: entity

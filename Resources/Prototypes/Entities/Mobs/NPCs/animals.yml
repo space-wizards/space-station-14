@@ -236,6 +236,204 @@
   - type: TimedDespawn #delete the egg after the chicken spawns
     lifetime: 21
 
+- type: entity # TODO: figure out how to make these guys gib when stepped on
+  name: cockroach
+  parent: SimpleMobBase
+  id: MobCockroach
+  description: This station is just crawling with bugs.
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/cockroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cockroach
+  - type: Item
+    size: 2
+  - type: HTN
+    rootTask:
+      task: MouseCompound
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: cockroach
+      Dead:
+        Base: cockroach_dead
+  - type: Food
+  - type: Hunger
+    baseDecayRate: 0.25
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Slime
+          Quantity: 5
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSlime
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Cockroach
+  - type: Bloodstream
+    bloodReagent: Slime
+    bloodMaxVolume: 20
+  - type: Tag
+    tags:
+    - Trash
+    - VimPilot
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 10
+      behaviors:
+      - !type:GibBehavior { }
+
+- type: entity
+  name: glockroach
+  parent: MobCockroach
+  suffix: Admeme
+  id: MobGlockroach
+  description: This station is just crawling with bu- OH GOD THAT COCKROACH HAS A GUN!!!
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: glockroach
+  - type: Gun
+    fireRate: 2
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
+    capacity: 500
+  - type: CombatMode
+  - type: HTN
+    rootTask:
+      task: GlockroachCompound
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSlime
+
+- type: entity
+  name: mothroach
+  parent: MobCockroach
+  id: MobMothroach
+  description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    whitelistRequired: false
+    name: ghost-role-information-mothroach-name
+    description: ghost-role-information-mothroach-description
+  - type: GhostTakeoverAvailable
+  - type: Speech
+    speechVerb: Moth
+    speechSounds: Squeak
+  - type: Sprite
+    sprite: Mobs/Animals/mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mothroach
+  - type: Item
+    size: 15
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/mothroach.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mothroach
+      Critical:
+        Base: mothroach_dead
+      Dead:
+        Base: mothroach_dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      25: Critical
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+    weightlessAcceleration: 1.5
+    weightlessFriction: 1
+    weightlessModifier: 1
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Moth
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.5
+    damageRecovery:
+      types:
+        Asphyxiation: -0.5
+  - type: CombatMode
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSlime
+      amount: 2
+  - type: Extractable
+    grindableSolutionName: food
+  - type: ReplacementAccent
+    accent: mothroach
+  - type: Vocal
+    sounds:
+      Male: UnisexMoth
+      Female: UnisexMoth
+      Unsexed: UnisexMoth
+    wilhelmProbability: 0.001
+  - type: MobPrice
+    price: 60
+  - type: Tag
+    tags:
+    - Trash
+    - CannotSuicide
+  - type: CanEscapeInventory
+  - type: NpcFactionMember
+    factions:
+    - Mouse
+  - type: Body
+    prototype: Moth
+  - type: TypingIndicator
+    proto: moth
+
 - type: entity
   name: mallard duck #Quack
   parent: SimpleMobBase
@@ -528,12 +726,15 @@
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
     bloodMaxVolume: 50
+    bloodReagent: CopperBlood
   - type: Tag
     tags:
     - VimPilot
   - type: HTN
     rootTask:
       task: RuminantCompound
+  - type: Body
+    prototype: AnimalHemocyanin
 
 - type: entity
   name: goat
@@ -1634,6 +1835,8 @@
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
+  - type: Body
+    prototype: AnimalHemocyanin
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -1671,9 +1874,13 @@
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
-    bloodReagent: SpiderBlood
+    bloodReagent: CopperBlood
   - type: Speech
     speechVerb: Arachnid
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
 
 - type: entity
   name: tarantula
@@ -1723,10 +1930,6 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
-    - type: Tag
-      tags:
-      - DoorBumpOpener
-      - FootstepSound
     - type: MeleeWeapon
       angle: 0
       animation: WeaponArcBite

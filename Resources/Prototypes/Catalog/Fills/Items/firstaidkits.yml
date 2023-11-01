@@ -32,9 +32,9 @@
   - type: StorageFill
     contents:
       - id: Brutepack
-        amount: 2
       - id: Gauze
-      - id: PillCanisterBicaridine
+      - id: PillCanisterIron
+      - id: PillCanisterCopper
 
 - type: entity
   id: MedkitToxinFilled

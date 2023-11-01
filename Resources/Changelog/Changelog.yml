@@ -1,26 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed having to reopen ahelp and popped-out ahelp windows after round
-      start and end., type: Fix}
-  id: 4588
-  time: '2023-08-14T21:03:35.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Faded admin notes now pop in when hovering over them., type: Tweak}
-  id: 4589
-  time: '2023-08-14T21:03:53.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fix editing an admin watchlist note making it temporarily appear as
-      a low severity note., type: Fix}
-  id: 4590
-  time: '2023-08-14T21:05:47.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Operating table won't get you stuck in walls anymore, type: Fix}
-  id: 4591
-  time: '2023-08-14T22:25:05.0000000+00:00'
 - author: TheArturZh
   changes:
   - {message: Ritual chair no longer deletes mobs on disassembly, type: Fix}
@@ -2914,3 +2892,28 @@ Entries:
   - {message: Slimes are fully immune to Nitrous Oxide again., type: Fix}
   id: 5087
   time: '2023-10-31T12:57:27.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Added cockroaches. Expect to see these mapped into maints soon., type: Add}
+  - {message: Added the glockroach admeme., type: Add}
+  id: 5088
+  time: '2023-10-31T20:28:43.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'Soap and water now makes soapy water which can clean dirt off of floors.
+      Also please don''t eat the soap, it''s not good for you.', type: Add}
+  id: 5089
+  time: '2023-10-31T20:39:12.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Arachnid and other Blue (hemocyanin) blooded creatures now require copper
+      to treat bloodloss instead of iron and brute medkits contain 2 copper pills
+      and 1 less iron pill., type: Add}
+  id: 5090
+  time: '2023-10-31T20:41:26.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'When the anomaly explodes, a very expensive core falls from it. Be
+      sure to sell it in 10 minutes before it becomes useless.', type: Add}
+  id: 5091
+  time: '2023-10-31T23:20:52.0000000+00:00'

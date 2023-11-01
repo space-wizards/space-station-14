@@ -1,0 +1,251 @@
+- type: entity
+  parent: BaseItem
+  id: BaseAnomalyCore
+  abstract: true
+  name: anomaly core
+  description: The core of a detroyed incomprehensible object.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+    layers:
+    - state: core
+    - state: pulse
+      map: ["decay"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnomalyCoreVisuals.Decaying:
+        decay:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Item
+    size: 10
+  - type: ItemCooldown
+  - type: EmitSoundOnUse #placeholder for future unical mechanic
+    sound:
+      collection: RadiationPulse 
+  - type: UseDelay
+    delay: 2
+  - type: AnomalyCore
+    timeToDecay: 600
+    startPrice: 10000
+    endPrice: 200
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCorePyroclastic
+  suffix: Pyroclastic
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 1.5
+    color: "#fca3c0"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreGravity
+  suffix: Gravity
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 10
+    color: "#1e070e"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreIce
+  suffix: Ice
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 1.5
+    color: "#befaff"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreFlesh
+  suffix: Flesh
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flesh_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#cb5b7e"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreRock
+  suffix: Rock
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/rock_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#5ca8cb"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreLiquid
+  suffix: Liquid
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#ffffff"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreBluespace
+  suffix: Bluespace
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#00ccff"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreElectricity
+  suffix: Electricity
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/electric_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#ffffaa"
+    castShadows: false
+  - type: Electrified
+
+# Inert cores
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: BaseAnomalyInertCore
+  abstract: true
+  components:
+  - type: AnomalyCore
+    timeToDecay: 1 #decay very fast
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCorePyroclasticInert
+  suffix: Pyroclastic, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 1.5
+    color: "#fca3c0"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreGravityInert
+  suffix: Gravity, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 10
+    color: "#1e070e"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreIceInert
+  suffix: Ice, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 1.5
+    color: "#befaff"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreFleshInert
+  suffix: Flesh, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flesh_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#cb5b7e"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreRockInert
+  suffix: Rock, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/rock_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#5ca8cb"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreLiquidInert
+  suffix: Liquid, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#ffffff"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreBluespaceInert
+  suffix: Bluespace, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#00ccff"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreElectricityInert
+  suffix: Electricity, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/electric_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#ffffaa"
+    castShadows: false
