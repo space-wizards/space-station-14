@@ -224,12 +224,6 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         DebugTools.Assert(action.AttachedEntity == user);
-        if (action.AttachedEntity == user)
-            action.PreferredEntity = user;
-
-        if (action.Container != null && !HasComp<MindComponent>(action.Container))
-            action.PreferredEntity = action.Container.Value;
-
         if (!action.Enabled)
             return;
 
@@ -307,7 +301,7 @@ public abstract class SharedActionsSystem : EntitySystem
             performEvent.Performer = user;
 
         // All checks passed. Perform the action!
-        PerformAction(action.PreferredEntity, component, actionEnt, action, performEvent, curTime);
+        PerformAction(user, component, actionEnt, action, performEvent, curTime);
     }
 
     public bool ValidateEntityTarget(EntityUid user, EntityUid target, EntityTargetActionComponent action)
@@ -378,7 +372,7 @@ public abstract class SharedActionsSystem : EntitySystem
         var toggledBefore = action.Toggled;
 
         // Note that attached entity and attached container are allowed to be null here.
-        if (action.AttachedEntity != null && (action.AttachedEntity != performer && action.Container != null && action.Container != performer))
+        if (action.AttachedEntity != null && action.AttachedEntity != performer)
         {
             Log.Error($"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(actionId)} that is attached to another entity {ToPrettyString(action.AttachedEntity.Value)}");
             return;
@@ -388,7 +382,15 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             // This here is required because of client-side prediction (RaisePredictiveEvent results in event re-use).
             actionEvent.Handled = false;
-            RaiseLocalEvent(performer, (object) actionEvent, broadcast: true);
+            var target = performer;
+
+            if (action.AttachedEntity == performer || action.RaiseOnUser)
+                target = performer;
+
+            if (action.Container != null && !HasComp<MindComponent>(action.Container))
+                target = action.Container.Value;
+
+            RaiseLocalEvent(target, (object) actionEvent, broadcast: true);
             handled = actionEvent.Handled;
         }
 

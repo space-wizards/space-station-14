@@ -72,12 +72,6 @@ namespace Content.Shared.Mind
         public TimeSpan? TimeOfDeath { get; set; }
 
         /// <summary>
-        ///     Can be null.
-        /// </summary>
-        // TODO: Some sort of data storing? ie component that granted + actioncontainer?
-        [ViewVariables] public ActionsContainerComponent? MindActionsContainer { get; set; }
-
-        /// <summary>
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>

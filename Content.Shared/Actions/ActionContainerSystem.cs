@@ -36,12 +36,13 @@ public sealed class ActionContainerSystem : EntitySystem
 
     private void OnMindAdded(EntityUid uid, ActionsContainerComponent component, MindAddedMessage args)
     {
-        if(!_mind.TryGetMind(uid, out var mindId, out var mindComp))
+        if(!_mind.TryGetMind(uid, out var mindId, out _))
             return;
 
-        mindComp.MindActionsContainer ??= EnsureComp<ActionsContainerComponent>(mindId);
+        if (!TryComp<ActionsContainerComponent>(mindId, out var mindActionContainerComp))
+            return;
 
-        if (!HasComp<GhostComponent>(uid) && mindComp.MindActionsContainer.Container.ContainedEntities.Count > 0 )
+        if (!HasComp<GhostComponent>(uid) && mindActionContainerComp.Container.ContainedEntities.Count > 0 )
             _actions.GrantContainedActions(uid, mindId);
     }
 
@@ -143,8 +144,6 @@ public sealed class ActionContainerSystem : EntitySystem
 
         DebugTools.AssertEqual(action.Container, newContainer);
         DebugTools.AssertNull(action.AttachedEntity);
-        if (HasComp<MindComponent>(action.Container))
-            action.ItemIconStyle = ItemActionIconStyle.BigAction;
 
         if (attached != null)
             _actions.AddActionDirect(attached.Value, actionId, action: action);
@@ -229,7 +228,7 @@ public sealed class ActionContainerSystem : EntitySystem
         if (action.AttachedEntity != null)
             _actions.RemoveAction(action.AttachedEntity.Value, actionId, action: action);
     }
-    
+
     private void OnInit(EntityUid uid, ActionsContainerComponent component, ComponentInit args)
     {
         component.Container = _container.EnsureContainer<Container>(uid, ActionsContainerComponent.ContainerId);
