@@ -9,7 +9,6 @@ namespace Content.Server.Anomaly.Components;
 [RegisterComponent, Access(typeof(AnomalyCoreSystem))]
 public sealed partial class AnomalyCoreComponent : Component
 {
-
     /// <summary>
     /// Amount of time required for the core to decompose into an inert core
     /// </summary>
