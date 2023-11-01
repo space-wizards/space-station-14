@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Using the EMAG on borgs now requires the panel to be open. It also need
-      to be open to tell if it has been EMAG'ed in the past., type: Tweak}
-  - {message: Fixed wiping PAIs and Positronic Brains not actually removing the player
-      from them., type: Fix}
-  id: 4593
-  time: '2023-08-14T23:34:24.0000000+00:00'
 - author: mhamster
   changes:
   - {message: 'Added plastic sheets recipe. Mix together 5u oil, 3u ash and 2u sulfuric
@@ -2918,3 +2910,8 @@ Entries:
     type: Add}
   id: 5092
   time: '2023-11-01T03:11:09.0000000+00:00'
+- author: Titian3
+  changes:
+  - {message: No more skeletal crewmates., type: Remove}
+  id: 5093
+  time: '2023-11-01T21:47:56.0000000+00:00'
