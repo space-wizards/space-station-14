@@ -43,7 +43,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     ///     (0, 8) pixels is the default for the Structures\Wallmounts\textscreen.rsi
     /// </summary>
     [DataField("textOffset"), ViewVariables(VVAccess.ReadWrite)]
-    public Vector2 TextOffset { get; set; } = new(0f * PixelSize, 0f * PixelSize);
+    public Vector2 TextOffset { get; set; } = Vector2.Zero;
 
     /// <summary>
     ///     The amount of characters this component can show.

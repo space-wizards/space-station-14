@@ -51,6 +51,7 @@
   - type: SignalTimer
     canEditLabel: true
   - type: TextScreenVisuals
+    textOffset: 0,8
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/textscreen.rsi
@@ -89,7 +90,7 @@
   - type: TextScreen
   - type: TextScreenVisuals
     color: PowderBlue
-    textOffset: 1,2
+    textOffset: 0,0
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/frame.rsi

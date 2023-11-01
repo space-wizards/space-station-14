@@ -47,9 +47,18 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
+        AdjustOffset(component);
         ResetTextLength(uid, component, sprite);
         PrepareLayerStatesToDraw(uid, component, sprite);
         UpdateLayersToDraw(uid, component, sprite);
+    }
+
+    /// <summary>
+    /// On init, divide the text offset by <see cref="TextScreenVisualsComponent.PixelSize"/>  to allow specifying textOffset in prototypes
+    /// </summary>
+    private void AdjustOffset(TextScreenVisualsComponent comp)
+    {
+        comp.TextOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, comp.TextOffset);
     }
 
     /// <summary>
