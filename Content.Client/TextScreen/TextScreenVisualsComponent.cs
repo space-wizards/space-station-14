@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.TextScreen;
 using Robust.Client.Graphics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Client.TextScreen;
@@ -42,7 +43,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     ///     (0, 8) pixels is the default for the Structures\Wallmounts\textscreen.rsi
     /// </summary>
     [DataField("textOffset"), ViewVariables(VVAccess.ReadWrite)]
-    public Vector2 TextOffset = new(0f, 8f * PixelSize);
+    public Vector2 TextOffset { get; set; } = new(0f * PixelSize, 0f * PixelSize);
 
     /// <summary>
     ///     The amount of characters this component can show.

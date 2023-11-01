@@ -88,10 +88,12 @@
   - type: Rotatable
   - type: TextScreen
   - type: TextScreenVisuals
+    color: PowderBlue
+    textOffset: 1,2
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/textscreen.rsi # placeholder
-    state: textscreen
+    sprite: Structures/Wallmounts/frame.rsi
+    state: frame
     noRot: true
   - type: Construction
     graph: Timer

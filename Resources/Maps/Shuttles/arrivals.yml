@@ -44,7 +44,6 @@ entities:
       type: BecomesStation
     - type: OccluderTree
     - type: Shuttle
-    - type: ShuttleTimer
     - type: DeviceNetwork
       transmitFrequencyId: ArrivalsShuttleTimer
     - gravityShakeSound: !type:SoundPathSpecifier
