@@ -93,7 +93,7 @@
 - type: entity
   id: Zipties5
   parent: Zipties
-  suffix: 10
+  suffix: 5
   components:
   - type: Item
     size: 10
@@ -104,7 +104,7 @@
 - type: entity
   id: Zipties5Lingering
   parent: Zipties5
-  suffix: 10, Lingering
+  suffix: 5, Lingering
   components:
   - type: Stack
     stackType: Zipties
