@@ -44,7 +44,7 @@
   abstract: true
   components:
   - type: Item
-    size: 50
+    size: Huge
 
 - type: entity
   parent: BaseRipleyPart
@@ -172,7 +172,7 @@
   abstract: true
   components:
   - type: Item
-    size: 50
+    size: Huge
 
 - type: entity
   parent: BaseHonkerPart
@@ -300,7 +300,7 @@
   abstract: true
   components:
   - type: Item
-    size: 50
+    size: Large
 
 - type: entity
   parent: BaseHamtrPart
@@ -428,7 +428,7 @@
   abstract: true
   components:
   - type: Item
-    size: 10
+    size: Small
 
 - type: entity
   parent: BaseVimPartItem

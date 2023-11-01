@@ -40,3 +40,7 @@
 - type: metabolizerType
   id: Anuran
   name: anuran
+
+- type: metabolizerType
+  id: Arachnid
+  name: arachnid

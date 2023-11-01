@@ -28,7 +28,7 @@
           mask:
             - Impassable
     - type: Item
-      size: 30
+      size: Normal
     - type: Foldable
       folded: true
     - type: Clickable
@@ -58,7 +58,7 @@
   components:
   - type: Fulton
   - type: Item
-    size: 20
+    size: Normal
   - type: Stack
     stackType: Fulton
     count: 10
@@ -84,7 +84,7 @@
   suffix: One
   components:
   - type: Item
-    size: 2
+    size: Small
   - type: Stack
     count: 1
 

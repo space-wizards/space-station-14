@@ -7,6 +7,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 
 namespace Content.Server.NPC.Systems
 {
