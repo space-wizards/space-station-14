@@ -15,10 +15,10 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -141,7 +141,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 (int) Math.Min(
                     Math.Floor((double) ev.PlayerPool.Count / _cfg.GetCVar(CCVars.PiratesPlayersPerOp)),
                     _cfg.GetCVar(CCVars.PiratesMaxOps)));
-            var ops = new IPlayerSession[numOps];
+            var ops = new ICommonSession[numOps];
             for (var i = 0; i < numOps; i++)
             {
                 ops[i] = _random.PickAndTake(ev.PlayerPool);

@@ -18,6 +18,21 @@
       - MobMouse2
 
 - type: entity
+  name: Cockroach Spawner
+  id: SpawnMobCockroach
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Mobs/Animals/cockroach.rsi
+        state: cockroach_icon
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCockroach
+
+- type: entity
   name: HoP Corgi Spawner
   id: SpawnMobCorgi
   parent: MarkerBase

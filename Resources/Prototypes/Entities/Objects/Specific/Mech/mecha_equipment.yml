@@ -7,7 +7,7 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
   - type: Item
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
-    size: 50
+    size: Huge
   - type: MechEquipment
   - type: GuideHelp
     guides:

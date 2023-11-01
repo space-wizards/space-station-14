@@ -18,7 +18,7 @@
       types:
         Blunt: 8
   - type: Item
-    size: 80
+    size: Normal
   - type: Tool
     qualities:
     - Rolling
@@ -30,6 +30,8 @@
   - type: Construction
     graph: WoodenBat
     node: bat
+  - type: UseDelay
+    delay: 1
   - type: Tag
     tags:
     - BaseballBat

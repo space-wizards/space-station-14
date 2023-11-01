@@ -6,8 +6,8 @@ using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Voting;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Voting.Managers
@@ -21,7 +21,7 @@ namespace Content.Server.Voting.Managers
             {StandardVoteType.Map, CCVars.VoteMapEnabled},
         };
 
-        public void CreateStandardVote(IPlayerSession? initiator, StandardVoteType voteType)
+        public void CreateStandardVote(ICommonSession? initiator, StandardVoteType voteType)
         {
             if (initiator != null)
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{initiator} initiated a {voteType.ToString()} vote");
@@ -47,7 +47,7 @@ namespace Content.Server.Voting.Managers
             TimeoutStandardVote(voteType);
         }
 
-        private void CreateRestartVote(IPlayerSession? initiator)
+        private void CreateRestartVote(ICommonSession? initiator)
         {
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -100,7 +100,7 @@ namespace Content.Server.Voting.Managers
                 vote.CastVote(initiator, 0);
             }
 
-            foreach (var player in _playerManager.ServerSessions)
+            foreach (var player in _playerManager.Sessions)
             {
                 if (player != initiator)
                 {
@@ -110,7 +110,7 @@ namespace Content.Server.Voting.Managers
             }
         }
 
-        private void CreatePresetVote(IPlayerSession? initiator)
+        private void CreatePresetVote(ICommonSession? initiator)
         {
             var presets = GetGamePresets();
 
@@ -156,7 +156,7 @@ namespace Content.Server.Voting.Managers
             };
         }
 
-        private void CreateMapVote(IPlayerSession? initiator)
+        private void CreateMapVote(ICommonSession? initiator)
         {
             var maps = _gameMapManager.CurrentlyEligibleMaps().ToDictionary(map => map, map => map.MapName);
 

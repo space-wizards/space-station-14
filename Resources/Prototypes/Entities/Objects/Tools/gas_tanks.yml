@@ -7,7 +7,7 @@
     sprite: Objects/Tanks/generic.rsi
     state: icon
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Tanks/generic.rsi
   - type: Clothing
     sprite: Objects/Tanks/generic.rsi
@@ -31,6 +31,7 @@
     explosionType: Default
     maxIntensity: 20
   - type: MeleeWeapon
+    wideAnimationRotation: 45
     attackRate: 0.8
     damage:
       types:
@@ -99,7 +100,7 @@
   - type: Sprite
     sprite: Objects/Tanks/emergency.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Tanks/emergency.rsi
   - type: GasTank
     outputPressure: 21.3

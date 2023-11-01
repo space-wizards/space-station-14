@@ -24,11 +24,27 @@
         - ReagentId: Fat
           Quantity: 5
   - type: Item
-    size: 5
+    size: Tiny
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        # less mass so it can cook faster, a single strip of bacon isnt 5kg
+        density: 1
+        mask:
+        - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
   # let air cook and freeze meat for cooking and preservation
   - type: AtmosExposed
   - type: Temperature
     currentTemperature: 290
+  # required for cooking to work
+  - type: InternalTemperature
+    thickness: 0.02
+    area: 0.02 # arbitrary number that sounds right for a slab of meat
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -84,6 +100,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+  - type: InternalTemperature
+    conductivity: 0.43
   - type: Construction
     graph: MeatSteak
     node: start
@@ -159,6 +177,10 @@
           Quantity: 2
         - ReagentId: Fat
           Quantity: 9
+  - type: InternalTemperature
+    conductivity: 0.44
+    thickness: 0.004 # bacon is thin so faster to cook than a steak
+    area: 0.0075 # ~5x15cm
   - type: Construction
     graph: Bacon
     node: start
@@ -187,7 +209,7 @@
     graph: BearSteak
     node: start
     defaultTarget: filet migrawr
-    
+
 
 - type: entity
   name: raw penguin meat
@@ -232,6 +254,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
+  - type: InternalTemperature
+    conductivity: 0.41
   - type: Construction
     graph: ChickenSteak
     node: start
@@ -324,6 +348,8 @@
           Quantity: 5
         - ReagentId: Fat
           Quantity: 3
+  - type: InternalTemperature
+    thickness: 0.1 # very big, do cook it in lava
   - type: Construction
     graph: GoliathSteak
     node: start
