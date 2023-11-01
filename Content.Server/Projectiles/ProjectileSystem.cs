@@ -43,15 +43,10 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
         }
 
-        if (TryComp(uid, out BouncyProjectileComponent? bouncyProjectileComponent))
-        {
-            var bounceEv = new ProjectileBounceEvent(target, args.Contact.Manifold.LocalNormal);
-            RaiseLocalEvent(uid, ref bounceEv);
-            if (bounceEv.Bounced)
-                return;
-        }
-
-        return;
+        var bounceEv = new ProjectileBounceEvent(target, args.Contact.Manifold.LocalNormal);
+        RaiseLocalEvent(uid, ref bounceEv);
+        if (bounceEv.Bounced)
+            return;
 
         var ev = new ProjectileHitEvent(component.Damage, target, component.Shooter);
         RaiseLocalEvent(uid, ref ev);

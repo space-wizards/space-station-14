@@ -154,7 +154,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 10
+        Piercing: 8
   - type: BouncyProjectile
 
 # Energy projectiles
