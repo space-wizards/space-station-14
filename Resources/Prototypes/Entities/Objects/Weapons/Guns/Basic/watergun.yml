@@ -10,7 +10,7 @@
     slots: BELT
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
-    size: 10
+    size: Small
   - type: Gun
     clumsyProof: true
     cameraRecoilScalar: 0 #no recoil
@@ -95,7 +95,7 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    size: 35
+    size: Normal
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -132,7 +132,7 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    size: 35
+    size: Normal
   - type: RandomSprite
     getAllGroups: true
     available:

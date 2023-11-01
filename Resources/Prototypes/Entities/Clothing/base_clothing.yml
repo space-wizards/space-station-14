@@ -3,6 +3,8 @@
   parent: BaseItem
   id: Clothing
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
   - type: Tag
     tags:
