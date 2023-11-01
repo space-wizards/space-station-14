@@ -31,7 +31,7 @@
         Blunt: 5
         Structural: 20
   - type: Item
-    size: 50
+    size: Normal
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
   - type: RefillableSolution

@@ -289,12 +289,12 @@ namespace Content.Shared.Chemistry.Components
         /// If you only want the volume of a single reagent, use <see cref="GetReagentQuantity"/>
         /// </summary>
         [Pure]
-        public FixedPoint2 GetTotalPrototypeQuantity(string prototype)
+        public FixedPoint2 GetTotalPrototypeQuantity(params string[] prototypes)
         {
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
             {
-                if (reagent.Prototype == prototype)
+                if (prototypes.Contains(reagent.Prototype))
                     total += quantity;
             }
 
@@ -546,6 +546,34 @@ namespace Content.Shared.Chemistry.Components
             return sol;
         }
 
+        /// <summary>
+        /// Splits a solution without the specified reagent prototypes.
+        /// </summary>
+        public Solution SplitSolutionWithOnly(FixedPoint2 toTake, params string[] includedPrototypes)
+        {
+            // First remove the non-included prototypes
+            List<ReagentQuantity> excluded = new();
+            for (var i = Contents.Count - 1; i >= 0; i--)
+            {
+                if (includedPrototypes.Contains(Contents[i].Reagent.Prototype))
+                    continue;
+
+                excluded.Add(Contents[i]);
+                RemoveReagent(Contents[i]);
+            }
+
+            // Then split the solution
+            var sol = SplitSolution(toTake);
+
+            // Then re-add the excluded reagents to the original solution.
+            foreach (var reagent in excluded)
+            {
+                AddReagent(reagent);
+            }
+
+            return sol;
+        }
+
         public Solution SplitSolution(FixedPoint2 toTake)
         {
             if (toTake <= FixedPoint2.Zero)
@@ -754,6 +782,44 @@ namespace Content.Shared.Chemistry.Components
         public Color GetColor(IPrototypeManager? protoMan)
         {
             return GetColorWithout(protoMan);
+        }
+
+        public Color GetColorWithOnly(IPrototypeManager? protoMan, params string[] included)
+        {
+            if (Volume == FixedPoint2.Zero)
+            {
+                return Color.Transparent;
+            }
+
+            IoCManager.Resolve(ref protoMan);
+
+            Color mixColor = default;
+            var runningTotalQuantity = FixedPoint2.New(0);
+            bool first = true;
+
+            foreach (var (reagent, quantity) in Contents)
+            {
+                if (!included.Contains(reagent.Prototype))
+                    continue;
+
+                runningTotalQuantity += quantity;
+
+                if (!protoMan.TryIndex(reagent.Prototype, out ReagentPrototype? proto))
+                {
+                    continue;
+                }
+
+                if (first)
+                {
+                    first = false;
+                    mixColor = proto.SubstanceColor;
+                    continue;
+                }
+
+                var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
+                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+            }
+            return mixColor;
         }
 
         #region Enumeration

@@ -197,7 +197,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/chefhat.rsi
   - type: Storage
-    capacity: 5
+    maxSlots: 1
   - type: UserInterface
     interfaces:
       - key: enum.StorageUiKey.Key
@@ -751,10 +751,10 @@
         offset: "0, 0.12"
     sprite: Clothing/Head/Hats/magician.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Clothing/Head/Hats/magician.rsi
   - type: Storage
-    capacity: 10
+    maxSlots: 1
   - type: UserInterface
     interfaces:
       - key: enum.StorageUiKey.Key

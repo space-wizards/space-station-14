@@ -119,9 +119,10 @@
         components:
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Item
-      size: 9999
+      size: Huge
     - type: Storage
-      capacity: 20 #10-20 should be more than enough for this
+      maxSlots: 4
+      maxItemSize: Small
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
