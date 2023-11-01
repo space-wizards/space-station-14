@@ -291,7 +291,6 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
-    size: Small
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -346,7 +345,6 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
-    size: Tiny
   - type: SolutionContainerManager
     solutions:
       pen:

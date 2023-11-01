@@ -119,7 +119,7 @@
         components:
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Item
-      size: Huge
+      size: Ginormous
     - type: Storage
       maxSlots: 4
       maxItemSize: Small

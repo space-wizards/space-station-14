@@ -16,9 +16,9 @@
   suffix: SniperBundle
   components:
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: Storage
-    maxItemSize: Large
+    maxItemSize: Huge
   - type: StorageFill
     contents:
       - id: WeaponSniperHristov

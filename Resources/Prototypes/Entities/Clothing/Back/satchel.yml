@@ -170,5 +170,5 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxItemSize: Large
+    maxItemSize: Huge
     maxTotalWeight: 56 #14 normal-sized items.
