@@ -50,6 +50,11 @@ public sealed class EntityAnomalySystem : EntitySystem
             return;
 
         var localpos = xform.Coordinates.Position;
+        //I really don't know how to get coordinates for objects that are stored in inventory
+        //This is needed here so that the anomaly cores in your inventory will trigger correctly when activated
+        if (localpos == Vector2.Zero)
+            localpos = Transform(xform.Coordinates.EntityId).Coordinates.Position;
+
         var tilerefs = grid.GetLocalTilesIntersecting(
             new Box2(localpos + new Vector2(-radius, -radius), localpos + new Vector2(radius, radius))).ToArray();
 

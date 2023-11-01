@@ -1,6 +1,7 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Anomaly;
+using Content.Shared.Anomaly.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Timing;
@@ -73,6 +74,8 @@ public sealed class AnomalyCoreSystem : EntitySystem
         if (core.Comp.IsDecayed)
             return;
         Log.Debug("BOOM BOOM DETKA");
+        var ev = new AnomalyPulseEvent(0.5f, 0.5f);
+        RaiseLocalEvent(core.Owner, ref ev);
         QueueDel(core);
     }
 

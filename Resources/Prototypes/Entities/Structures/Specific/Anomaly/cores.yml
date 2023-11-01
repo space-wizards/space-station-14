@@ -21,11 +21,8 @@
   - type: Item
     size: 10
   - type: ItemCooldown
-  - type: EmitSoundOnUse #placeholder for future unical mechanic
-    sound:
-      collection: RadiationPulse 
   - type: UseDelay
-    delay: 2
+    delay: 3
   - type: AnomalyCore
     timeToDecay: 600
     startPrice: 10000
@@ -43,6 +40,7 @@
     energy: 1.5
     color: "#fca3c0"
     castShadows: false
+  - type: PyroclasticAnomaly
 
 - type: entity
   parent: BaseAnomalyCore
@@ -56,71 +54,7 @@
     energy: 10
     color: "#1e070e"
     castShadows: false
-
-- type: entity
-  parent: BaseAnomalyCore
-  id: AnomalyCoreIce
-  suffix: Ice
-  components:
-  - type: Sprite
-    sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
-  - type: PointLight
-    radius: 1.5
-    energy: 1.5
-    color: "#befaff"
-    castShadows: false
-
-- type: entity
-  parent: BaseAnomalyCore
-  id: AnomalyCoreFlesh
-  suffix: Flesh
-  components:
-  - type: Sprite
-    sprite: Structures/Specific/Anomalies/Cores/flesh_core.rsi
-  - type: PointLight
-    radius: 1.5
-    energy: 3.5
-    color: "#cb5b7e"
-    castShadows: false
-
-- type: entity
-  parent: BaseAnomalyCore
-  id: AnomalyCoreRock
-  suffix: Rock
-  components:
-  - type: Sprite
-    sprite: Structures/Specific/Anomalies/Cores/rock_core.rsi
-  - type: PointLight
-    radius: 1.5
-    energy: 3.5
-    color: "#5ca8cb"
-    castShadows: false
-
-- type: entity
-  parent: BaseAnomalyCore
-  id: AnomalyCoreLiquid
-  suffix: Liquid
-  components:
-  - type: Sprite
-    sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
-  - type: PointLight
-    radius: 1.5
-    energy: 3.5
-    color: "#ffffff"
-    castShadows: false
-
-- type: entity
-  parent: BaseAnomalyCore
-  id: AnomalyCoreBluespace
-  suffix: Bluespace
-  components:
-  - type: Sprite
-    sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
-  - type: PointLight
-    radius: 1.5
-    energy: 3.5
-    color: "#00ccff"
-    castShadows: false
+  - type: GravityAnomaly
 
 - type: entity
   parent: BaseAnomalyCore
@@ -135,6 +69,94 @@
     color: "#ffffaa"
     castShadows: false
   - type: Electrified
+  - type: ElectricityAnomaly
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreFlesh
+  suffix: Flesh
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/flesh_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#cb5b7e"
+    castShadows: false
+    floorTileId: FloorFlesh
+  - type: EntitySpawnAnomaly
+    spawns:
+    - MobFleshJared
+    - MobFleshGolem
+    - MobFleshClamp
+    - MobFleshLover
+    - FleshBlocker
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreBluespace
+  suffix: Bluespace
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#00ccff"
+    castShadows: false
+  - type: BluespaceAnomaly
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreIce
+  suffix: Ice
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 1.5
+    color: "#befaff"
+    castShadows: false
+  - type: ProjectileAnomaly
+    projectilePrototype: ProjectileIcicle
+    targetNonSentientChance: 0.1
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreRock
+  suffix: Rock
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/rock_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#5ca8cb"
+    castShadows: false
+  - type: TileSpawnAnomaly
+    floorTileId: FloorAsteroidTile
+    spawnChance: 0.8
+  - type: EntitySpawnAnomaly
+    maxSpawnAmount: 50
+    spawnRange: 10
+    spawns:
+    - AsteroidRock
+    - AsteroidCrabSpawner
+    - CrystalSpawner
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreLiquid
+  suffix: Liquid
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 3.5
+    color: "#ffffff"
+    castShadows: false
 
 # Inert cores
 
