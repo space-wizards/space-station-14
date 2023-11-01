@@ -502,3 +502,33 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingBootsModsuitApocryphalSealed
+  noSpawn: true
+  name: salvage modsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Shoes/apocryphal.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Shoes/apocryphal.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.1
+        Heat: 0.1
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitApocryphalSealed
+    slot: head
+    requiredSlot: feet
+  - type: NoSlip
+  - type: Tag
+    tags:
+    - WhitelistChameleon

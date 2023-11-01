@@ -167,8 +167,8 @@
         Shock: 0.65
         Caustic: 0.65 
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 0.95
+    sprintModifier: 0.95
   - type: ToggleableClothing
     clothingPrototype: ClothingGauntletsModsuitMedicalSealed
     requiredSlot: outerClothing
@@ -233,8 +233,8 @@
         Slash: 0.9
         Piercing: 0.9
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingGauntletsModsuitCivillianSealed
     requiredSlot: outerClothing
@@ -529,5 +529,41 @@
     lowPressureMultiplier: 200
   - type: ToggleableClothing
     clothingPrototype: ClothingGauntletsModsuitCCSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitApocryphalSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/apocryphal.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/apocryphal.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.4
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.000005
+  - type: ExplosionResistance
+    damageCoefficient: 0.0005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.2
+        Shock: 0.2
+        Caustic: 0.2
+        Heat: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitApocryphalSealed
     requiredSlot: outerClothing
     slot: gloves

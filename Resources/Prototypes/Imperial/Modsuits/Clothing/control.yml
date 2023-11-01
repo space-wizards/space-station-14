@@ -263,9 +263,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9 #melee 0.5
-        Slash: 0.9 #heat - 0.45
-        Piercing: 0.9 #piercing ~ 0.45
+        Blunt: 0.85 #melee 0.45
+        Slash: 0.85 #heat - 0.4
+        Piercing: 0.85 #piercing ~ 0.4
         Shock: 0.7
         Caustic: 0.7
   - type: ToggleableClothing
@@ -546,6 +546,37 @@
     clothingPrototype: ClothingOuterChestplateModsuitCCSealed
     requiredSlot: back
     slot: outerClothing
+  - type: Storage
+    capacity: 65
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitApocryphalSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/apocryphal.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/apocryphal.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Shock: 0.25
+        Caustic: 0.25
+        Heat: 0.2 
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitApocryphalSealed
   - type: Storage
     capacity: 65
   - type: PointLight
