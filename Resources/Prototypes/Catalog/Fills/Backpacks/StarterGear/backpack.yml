@@ -285,8 +285,7 @@
         - id: trayScanner
         - id: RCD
         - id: RCDAmmo
-        - id: RCDAmmo
-        - id: RCDAmmo
+          amount: 2
         - id: CableMVStack
         - id: CableHVStack
         - id: CableApcStack

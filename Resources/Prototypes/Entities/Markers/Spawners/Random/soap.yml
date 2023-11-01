@@ -7,7 +7,7 @@
     layers:
       - state: red
       - sprite: Objects/Specific/Janitorial/soap.rsi
-        state: soap
+        state: soap-4
   - type: RandomSpawner
     prototypes:
       - Soap

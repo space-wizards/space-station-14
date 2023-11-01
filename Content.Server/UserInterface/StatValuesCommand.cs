@@ -3,7 +3,9 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Server.EUI;
+using Content.Server.Item;
 using Content.Shared.Administration;
+using Content.Shared.Item;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
@@ -23,7 +25,7 @@ public sealed class StatValuesCommand : IConsoleCommand
 
     public string Command => "showvalues";
     public string Description => Loc.GetString("stat-values-desc");
-    public string Help => $"{Command} <cargosell / lathesell / melee>";
+    public string Help => $"{Command} <cargosell / lathesell / melee / itemsize>";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } pSession)
@@ -50,6 +52,9 @@ public sealed class StatValuesCommand : IConsoleCommand
                 break;
             case "melee":
                 message = GetMelee();
+                break;
+            case "itemsize":
+                message = GetItem();
                 break;
             default:
                 shell.WriteError(Loc.GetString("stat-values-invalid", ("arg", args[0])));
@@ -112,6 +117,49 @@ public sealed class StatValuesCommand : IConsoleCommand
             {
                 Loc.GetString("stat-cargo-id"),
                 Loc.GetString("stat-cargo-price"),
+            },
+            Values = values,
+        };
+
+        return state;
+    }
+
+    private StatValuesEuiMessage GetItem()
+    {
+        var values = new List<string[]>();
+        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
+        var itemQuery = _entManager.GetEntityQuery<ItemComponent>();
+        var items = new HashSet<string>(1024);
+        var ents = _entManager.GetEntities().ToArray();
+
+        foreach (var entity in ents)
+        {
+            if (!metaQuery.TryGetComponent(entity, out var meta))
+                continue;
+
+            var id = meta.EntityPrototype?.ID;
+
+            // We'll add it even if we don't have it so we don't have to raise the event again because this is probably faster.
+            if (id == null || !items.Add(id))
+                continue;
+
+            if (!itemQuery.TryGetComponent(entity, out var itemComp))
+                continue;
+
+            values.Add(new[]
+            {
+                id,
+                $"{SharedItemSystem.GetItemSizeLocale(itemComp.Size)}",
+            });
+        }
+
+        var state = new StatValuesEuiMessage
+        {
+            Title = Loc.GetString("stat-item-values"),
+            Headers = new List<string>
+            {
+                Loc.GetString("stat-item-id"),
+                Loc.GetString("stat-item-price"),
             },
             Values = values,
         };

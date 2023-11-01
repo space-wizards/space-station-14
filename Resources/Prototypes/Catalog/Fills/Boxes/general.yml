@@ -37,7 +37,7 @@
       - state: box
       - state: light
   - type: Storage
-    capacity: 60
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -60,7 +60,7 @@
       - state: box
       - state: lighttube
   - type: Storage
-    capacity: 60
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -85,7 +85,7 @@
       - state: box
       - state: lightmixed
   - type: Storage
-    capacity: 60
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -107,11 +107,6 @@
     layers:
       - state: box
       - state: pda
-  - type: Storage
-    capacity: 60
-    whitelist:
-      components:
-      - Pda
 
 - type: entity
   name: ID card box
@@ -127,11 +122,6 @@
     layers:
       - state: box
       - state: pda
-  - type: Storage
-    capacity: 60
-    whitelist:
-      components:
-      - IdCard
 
 - type: entity
   name: headset box
@@ -147,11 +137,6 @@
     layers:
       - state: box
       - state: headset
-  - type: Storage
-    capacity: 60
-    whitelist:
-      components:
-      - Headset
 
 - type: entity
   name: meson box
@@ -191,8 +176,6 @@
   id: BoxHugHealing
   description: A special box for sensitive people.
   components:
-  - type: Storage
-    capacity: 30
   - type: Sprite
     layers:
       - state: box_hug
@@ -234,6 +217,12 @@
   id: BoxPerformer
   description: Happy Hatsune Miku Day!
   components:
+  - type: Storage
+    maxItemSize: Normal
+    whitelist:
+      components:
+      - Clothing
+      - Food
   - type: StorageFill
     contents:
       - id: ClothingShoesBootsPerformer
@@ -267,7 +256,8 @@
       - id: TrashBag
         amount: 6
   - type: Storage
-    capacity: 800
+    maxTotalWeight: 24
+    maxItemSize: Normal
     whitelist:
       tags:
         - TrashBag
@@ -294,7 +284,6 @@
       - state: box
       - state: encryptokey
   - type: Storage
-    capacity: 30
     whitelist:
       components:
       - EncryptionKey
@@ -386,13 +375,12 @@
   description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
   components:
   - type: Item
-    size: 15
+    size: Normal
   - type: StorageFill
     contents:
       - id: EncryptionKeySyndie
         amount: 2
   - type: Storage
-    capacity: 15
 
 - type: entity
   name: deathrattle implant box
@@ -401,7 +389,7 @@
   description: Six deathrattle implants and handheld GPS devices for the whole squad.
   components:
   - type: Item
-    size: 60
+    size: Normal
   - type: StorageFill
     contents:
       - id: DeathRattleImplanter
@@ -409,7 +397,7 @@
       - id: HandheldGPSBasic
         amount: 6
   - type: Storage
-    capacity: 60
+    maxTotalWeight: 24
   - type: Sprite
     layers:
       - state: box
@@ -434,19 +422,19 @@
   description: This box filled with colorful darts.
   components:
   - type: Item
-    size: 40
+    size: Normal
   - type: StorageFill
     contents:
       - id: Dart
-        amount: 5
+        amount: 3
       - id: DartBlue
-        amount: 5
+        amount: 3
       - id: DartPurple
-        amount: 5
+        amount: 3
       - id: DartYellow
-        amount: 5
+        amount: 3
   - type: Storage
-    capacity: 40
+    maxTotalWeight: 24
   - type: Sprite
     layers:
       - state: box

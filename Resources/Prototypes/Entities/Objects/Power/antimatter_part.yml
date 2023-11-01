@@ -5,7 +5,7 @@
   description: A flatpack used for constructing an antimatter engine reactor. Use a multitool to unpack it.
   components:
   - type: Item
-    size: 5
+    size: Small
     sprite: Objects/Power/AME/ame_part.rsi
   - type: Sprite
     sprite: Objects/Power/AME/ame_part.rsi
