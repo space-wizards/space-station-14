@@ -1,10 +1,4 @@
 Entries:
-- author: mhamster
-  changes:
-  - {message: 'Added plastic sheets recipe. Mix together 5u oil, 3u ash and 2u sulfuric
-      acid, heat it up to 374k and receive your homemade plastic sheet.', type: Add}
-  id: 4594
-  time: '2023-08-14T23:40:48.0000000+00:00'
 - author: Just_Art
   changes:
   - {message: Now a mini gravity generator can be constructed using a machine board
@@ -2915,3 +2909,14 @@ Entries:
   - {message: No more skeletal crewmates., type: Remove}
   id: 5093
   time: '2023-11-01T21:47:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Many items have had their sizes adjusted., type: Tweak}
+  - {message: Survival boxes and medkits can no longer hold more items than their
+      size would suggest., type: Tweak}
+  - {message: Fixed missing max size text in storage UIs, type: Fix}
+  - {message: Fixed the ore bag being unable to collect items when there is still
+      room., type: Fix}
+  - {message: Fixed the food cart not being able to hold anything., type: Fix}
+  id: 5094
+  time: '2023-11-01T23:19:41.0000000+00:00'
