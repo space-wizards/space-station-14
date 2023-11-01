@@ -70,10 +70,10 @@
     contentMargin: 16.0, 16.0, 16.0, 16.0
 
 - type: entity
-  name: artifact analyzer printout
+  name: NTX Labs printout
   parent: Paper
-  id: PaperArtifactAnalyzer
-  description: 'The readout of a device forgotten to time'
+  id: PaperNTXLabs
+  description: 'The readout of some infernal machine.'
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -85,9 +85,6 @@
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
-  - type: GuideHelp
-    guides:
-    - ArtifactReports
   - type: PaperVisuals
     headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
     headerMargin: 0.0, 0.0, 0.0, 16.0
@@ -99,6 +96,16 @@
     contentMargin: 16.0, 16.0, 16.0, 0.0
     # Make this a wide dot-matrix printer
     maxWritableArea: 400.0, 0.0
+
+- type: entity
+  name: artifact analyzer printout
+  parent: PaperNTXLabs
+  id: PaperArtifactAnalyzer
+  description: 'The readout of a device forgotten to time'
+  components:
+  - type: GuideHelp
+    guides:
+    - ArtifactReports
 
 - type: entity
   name: captain's thoughts

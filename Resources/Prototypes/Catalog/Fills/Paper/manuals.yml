@@ -27,7 +27,7 @@
 - type: entity
   name: Security Borg Creed
   id: PaperWrittenSecBorgCreed
-  parent: PaperArtifactAnalyzer
+  parent: PaperNTXLabs
   components:
   - type: Paper
     content: book-text-sec-borg-creed

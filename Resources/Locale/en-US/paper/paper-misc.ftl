@@ -33,4 +33,4 @@ book-text-sec-borg-creed = :::::::::::::::::::::::::::::::::::::::::::::::::::::
       
       {"["}bold]I will serve the public trust.[/bold]
       {"["}bold]I will protect the innocent.[/bold]
-      {"["}bold][italic]I will uphold my laws above all other directives[/italic][/bold]
+      {"["}bold][italic]I will uphold my laws above all other directives.[/italic][/bold]
