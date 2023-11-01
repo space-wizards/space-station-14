@@ -468,6 +468,7 @@
     - state: icon-tyranny
   - type: ItemBorgModule
     items:
+    - PaperWrittenSecBorgCreed
     - WeaponTaserBorg
     - Zipties5Lingering
     - FlashlightSecliteBorg

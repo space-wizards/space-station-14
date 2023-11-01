@@ -26,3 +26,11 @@ book-text-ame-scribbles = I don't know if you're trained already, so I hope this
       The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
       Higher will burn the engine out and eventually make it explode. Don't.
       Don't forget to refuel it, it tends to stop at the worst possible time.
+
+book-text-sec-borg-creed = :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+      
+      {"["}head=2][bold][color=red]Security Borg Creed[/head][/bold][/color]
+      
+      {"["}bold]I will serve the public trust.[/bold]
+      {"["}bold]I will protect the innocent.[/bold]
+      {"["}bold][italic]I will uphold my laws above all other directives[/italic][/bold]

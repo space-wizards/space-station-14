@@ -23,3 +23,11 @@
       type: PaperBoundUserInterface
   - type: Paper
     content: book-text-holoparasite-info
+
+- type: entity
+  name: Security Borg Creed
+  id: PaperWrittenSecBorgCreed
+  parent: PaperArtifactAnalyzer
+  components:
+  - type: Paper
+    content: book-text-sec-borg-creed
