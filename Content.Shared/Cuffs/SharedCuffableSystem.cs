@@ -455,7 +455,6 @@ namespace Content.Shared.Cuffs
                     if (_net.IsServer) /// let the server spawn because client mispredicts
                     {
                         var pos = Transform(target).Coordinates;
-                        ///var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                         handcuffsplit = Spawn("Zipties", pos); /// This should somehow get the proto ID instead of zipties, but fuck if I know how.
                         return true;
                     }
