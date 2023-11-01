@@ -370,6 +370,9 @@
   id: WeaponTaserBorg
   parent: WeaponTaser
   components:
+  - type: Battery
+    maxCharge: 800
+    startingCharge: 800
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 3
