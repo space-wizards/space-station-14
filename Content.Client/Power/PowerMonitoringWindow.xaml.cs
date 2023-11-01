@@ -27,6 +27,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     private EntityUid? _owner;
     private EntityUid? _trackedEntity;
+    private List<PowerMonitoringConsoleEntry> _allEntries = new();
 
     private Color _wallColor = new Color(102, 164, 217);
     private Color _tileColor = new Color(30, 57, 67);
@@ -64,6 +65,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         }
         else
         {
+            StationName.SetMessage(Loc.GetString("power-monitoring-window-unknown-location"));
             NavMap.Visible = false;
         }
 
@@ -85,8 +87,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         // Set power monitoring update request action
         RequestPowerMonitoringUpdateAction += userInterface.RequestPowerMonitoringUpdate;
 
-        // Recenter map
-        NavMap.ForceRecenter();
+        // Set trackable entity selected action
+        NavMap.TrackableEntitySelectedAction += SetTrackedEntityFromNavMap;
     }
 
     private void OnShowCableToggled(NavMapLineGroup lineGroup)
@@ -114,6 +116,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
         NavMap.FocusCableNetwork = null;
+        _allEntries = allEntries.ToList();
 
         // Draw all entities on the map
         foreach (var entry in allEntries)
@@ -190,6 +193,38 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             trackable.Blinks = uid == _trackedEntity;
             NavMap.TrackedEntities[coords] = trackable;
         }
+    }
+
+    private void SetTrackedEntityFromNavMap(EntityCoordinates? coords, NavMapTrackableComponent? trackable)
+    {
+        _trackedEntity = trackable?.Owner;
+
+        // Try to find entry
+        var netEntity = _entManager.GetNetEntity(_trackedEntity);
+        var entry = _allEntries.FirstOrDefault(x => x.NetEntity == netEntity);
+
+        if (entry != null)
+        {
+            // Switch tabs
+            switch (entry.Group)
+            {
+                case PowerMonitoringConsoleGroup.Generator:
+                    MasterTabContainer.CurrentTab = 0; break;
+                case PowerMonitoringConsoleGroup.SMES:
+                    MasterTabContainer.CurrentTab = 1; break;
+                case PowerMonitoringConsoleGroup.Substation:
+                    MasterTabContainer.CurrentTab = 2; break;
+                case PowerMonitoringConsoleGroup.APC:
+                    MasterTabContainer.CurrentTab = 3; break;
+            }
+
+            // Get the scroll position of the selected entity on the selected button the UI
+            _tryToScroll = true;
+        }
+
+        // Request new data
+        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity));
+        _updateTimer = 0f;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

@@ -36,8 +36,10 @@ internal sealed partial class PowerMonitoringConsoleSystem
         RefreshGrid(uid, component, xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
     }
 
-    public void HandleCableAnchoring(TransformComponent xform)
+    public void OnCableAnchoringChanged(EntityUid uid, CableComponent component, CableAnchoringChangedEvent args)
     {
+        var xform = Transform(uid);
+
         if (xform.GridUid == null ||
             !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
@@ -46,18 +48,18 @@ internal sealed partial class PowerMonitoringConsoleSystem
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, SharedNavMapSystem.ChunkSize);
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var component, out var entXform))
+        while (query.MoveNext(out var ent, out var powerMonitoringConsole, out var entXform))
         {
             if (entXform.GridUid != xform.GridUid)
                 return;
 
-            if (!component.AllChunks.TryGetValue(chunkOrigin, out var chunk))
+            if (!powerMonitoringConsole.AllChunks.TryGetValue(chunkOrigin, out var chunk))
             {
                 chunk = new PowerCableChunk(chunkOrigin);
-                component.AllChunks[chunkOrigin] = chunk;
+                powerMonitoringConsole.AllChunks[chunkOrigin] = chunk;
             }
 
-            RefreshTile(ent, component, xform.GridUid.Value, grid, chunk, tile);
+            RefreshTile(ent, powerMonitoringConsole, xform.GridUid.Value, grid, chunk, tile);
         }
     }
 

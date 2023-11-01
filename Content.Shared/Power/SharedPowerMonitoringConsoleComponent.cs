@@ -10,9 +10,7 @@ namespace Content.Shared.Power;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PowerMonitoringConsoleComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
     public EntityUid? Focus;
-
     public List<EntityUid>? LastReachableNodes = new();
 
     [ViewVariables, AutoNetworkedField]

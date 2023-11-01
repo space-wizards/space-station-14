@@ -250,6 +250,7 @@
     texture: /Textures/Interface/PowerMonitoring/beveled_circle.png 
     blinks: true
   - type: ActivatableUI
+    singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key
   - type: UserInterface
     interfaces:

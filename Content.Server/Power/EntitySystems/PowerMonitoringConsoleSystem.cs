@@ -42,6 +42,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, GridSplitEvent>(OnGridSplit);
+
+        SubscribeLocalEvent<CableComponent, CableAnchoringChangedEvent>(OnCableAnchoringChanged);
     }
 
     public override void Update(float frameTime)
@@ -204,6 +206,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             powerMonitoringConsole.LastReachableNodes = null;
             powerMonitoringConsole.FocusChunks.Clear();
             powerMonitoringConsole.Focus = focus;
+            Dirty(uid, powerMonitoringConsole);
         }
 
         if (focus != null)
@@ -246,8 +249,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                     powerMonitoringConsole.LastReachableNodes.First() != reachableNodes.First() ||
                     powerMonitoringConsole.LastReachableNodes.Last() != reachableNodes.Last())
                 {
-                    UpdateFocusNetwork(uid, powerMonitoringConsole, gridUid, mapGrid, reachableNodes);
                     powerMonitoringConsole.LastReachableNodes = reachableNodes;
+                    UpdateFocusNetwork(uid, powerMonitoringConsole, gridUid, mapGrid, reachableNodes);
                 }
             }
         }

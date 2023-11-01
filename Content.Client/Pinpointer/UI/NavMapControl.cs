@@ -32,6 +32,7 @@ public sealed partial class NavMapControl : MapGridControl
 
     public EntityUid? MapUid;
     public PowerMonitoringConsoleComponent? PowerMonitoringConsole;
+    public event Action<EntityCoordinates?, NavMapTrackableComponent?>? TrackableEntitySelectedAction;
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
@@ -61,6 +62,7 @@ public sealed partial class NavMapControl : MapGridControl
     private readonly Font _font;
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
+    private const float MaxSelectableDistance = 10f;
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -166,7 +168,40 @@ public sealed partial class NavMapControl : MapGridControl
         base.KeyBindUp(args);
 
         if (args.Function == EngineKeyFunctions.Use)
+        {
             _draggin = false;
+
+            if (_xform == null || _physics == null || !TrackedEntities.Any())
+                return;
+
+            // Get the clicked position
+            var offset = _offset + _physics.LocalCenter;
+            var localPosition = args.PointerLocation.Position - GlobalPixelPosition;
+
+            // Convert to a world position
+            var unscaledPosition = (localPosition - MidpointVector) / MinimapScale;
+            var worldPosition = _transformSystem.GetWorldMatrix(_xform).Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset);
+
+            // Find closest tracked entity in range
+            var coords = TrackedEntities.Keys.ToList();
+            var orderedCoords = coords.OrderBy(x => (x.ToMapPos(_entManager, _transformSystem) - worldPosition).Length());
+            var closestEntity = TrackedEntities[orderedCoords.First()];
+
+            // Try to select it
+            var closestDistance = (orderedCoords.First().ToMapPos(_entManager, _transformSystem) - worldPosition).Length();
+            if (closestDistance * MinimapScale > MaxSelectableDistance)
+                return;
+
+            if (TrackableEntitySelectedAction != null)
+                TrackableEntitySelectedAction.Invoke(orderedCoords.First(), closestEntity);
+        }
+
+        else if (args.Function == EngineKeyFunctions.UIRightClick)
+        {
+            // Clear current selection with right click
+            if (TrackableEntitySelectedAction != null)
+                TrackableEntitySelectedAction.Invoke(null, null);
+        }
     }
 
     protected override void MouseMove(GUIMouseMoveEventArgs args)
@@ -461,7 +496,7 @@ public sealed partial class NavMapControl : MapGridControl
         if (PowerMonitoringConsole != null && _grid != null)
         {
             FocusCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.FocusChunks, _grid);
-            PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.AllChunks, _grid, PowerMonitoringConsole.Focus != null);
+            PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.AllChunks, _grid, PowerMonitoringConsole.FocusChunks.Any());
         }
     }
 
