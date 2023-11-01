@@ -376,3 +376,32 @@
         - state: book5
     - type: Paper
       content: book-text-atmos-vents
+
+- type: entity
+  name: NTX Labs printout
+  parent: BookBase
+  id: PaperNTXLabs
+  description: 'The readout of some infernal machine.'
+  suffix: fireproof
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper_dotmatrix
+    - state: paper_dotmatrix_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
+    headerMargin: 0.0, 0.0, 0.0, 16.0
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
+    backgroundImageTile: true
+    backgroundPatchMargin: 37.0, 0.0, 37.0, 0.0
+    contentImagePath: "/Textures/Interface/Paper/paper_content_dotmatrix.svg.96dpi.png"
+    contentImageNumLines: 2
+    contentMargin: 16.0, 16.0, 16.0, 0.0
+    # Make this a wide dot-matrix printer
+    maxWritableArea: 400.0, 0.0
