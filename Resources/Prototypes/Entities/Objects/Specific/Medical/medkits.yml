@@ -8,7 +8,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: firstaid
   - type: Storage
-    maxTotalWeight: 14
+    maxTotalWeight: 15
   - type: Item
     size: Normal
     sprite: Objects/Specific/Medical/firstaidkits.rsi
