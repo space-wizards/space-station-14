@@ -1,9 +1,4 @@
 Entries:
-- author: TheArturZh
-  changes:
-  - {message: Ritual chair no longer deletes mobs on disassembly, type: Fix}
-  id: 4592
-  time: '2023-08-14T22:57:33.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Using the EMAG on borgs now requires the panel to be open. It also need
@@ -2917,3 +2912,9 @@ Entries:
       sure to sell it in 10 minutes before it becomes useless.', type: Add}
   id: 5091
   time: '2023-10-31T23:20:52.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Getting turned into a rev will now play the rev antag sound effect.,
+    type: Add}
+  id: 5092
+  time: '2023-11-01T03:11:09.0000000+00:00'
