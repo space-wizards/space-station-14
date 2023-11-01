@@ -72,3 +72,9 @@
   license: "CC-BY-SA-3.0"
   copyright: "Recorded by deltanedas for SS14"
   source: "https://github.com/deltanedas"
+
+- files: ["anomaly_core_charge.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Taken from JavierZumer via freesound.org, cropped and converted from stereo to mono."
+  source: "https://freesound.org/people/JavierZumer/sounds/257229/"
+

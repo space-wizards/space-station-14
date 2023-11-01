@@ -27,6 +27,11 @@
     timeToDecay: 600
     startPrice: 10000
     endPrice: 200
+    timeToCollapse: 3.3
+    CollapseSound:
+      collection: RadiationPulse
+      params:
+        volume: 5
 
 - type: entity
   parent: BaseAnomalyCore
@@ -157,6 +162,10 @@
     energy: 3.5
     color: "#ffffff"
     castShadows: false
+  - type: EntitySpawnAnomaly
+    spawns:
+      - PuddleSparkle
+      - ReagentSlimeSpawner
 
 # Inert cores
 
@@ -166,7 +175,7 @@
   abstract: true
   components:
   - type: AnomalyCore
-    timeToDecay: 1 #decay very fast
+    timeToDecay: 0.1 #decay very fast
 
 - type: entity
   parent: BaseAnomalyInertCore
