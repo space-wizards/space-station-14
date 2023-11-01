@@ -91,25 +91,25 @@
     state: cuff
 
 - type: entity
-  id: Zipties10
+  id: Zipties5
   parent: Zipties
   suffix: 10
   components:
   - type: Item
-    size: 20
+    size: 10
   - type: Stack
     stackType: Zipties
-    count: 10
+    count: 5
 
 - type: entity
-  id: Zipties10Lingering
-  parent: Zipties10
+  id: Zipties5Lingering
+  parent: Zipties5
   suffix: 10, Lingering
   components:
   - type: Stack
     stackType: Zipties
     lingering: true
-    count: 10
+    count: 5
 
 - type: entity
   id: BaseHandcuffsBroken

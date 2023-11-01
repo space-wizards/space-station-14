@@ -3,5 +3,5 @@
   name: zipties
   icon: { sprite: "/Textures/Objects/Misc/zipties.rsi", state: cuff }
   spawn: Zipties
-  maxCount: 10
+  maxCount: 5
   itemSize: 2
