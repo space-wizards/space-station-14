@@ -1,1 +1,2 @@
-action-transfer-name = Передать предмет
+action-transfer-name = Pass the item
+action-transfer-verb-popup = Passes to hand...
