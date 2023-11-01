@@ -292,11 +292,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
 		var lawsetString = lawset;
 		
-		if (weightedOverride is not null)
-		{
-			var lawsets = _prototype.Index<WeightedRandomPrototype>(weightedOverride);
+		if (weightedOverride is not null && _prototype.TryIndex<WeightedRandomPrototype>(weightedOverride, out var lawsets))
 			lawsetString = lawsets.Pick();
-		}
 		
 		var proto = _prototype.Index<SiliconLawsetPrototype>(lawsetString);
 		
