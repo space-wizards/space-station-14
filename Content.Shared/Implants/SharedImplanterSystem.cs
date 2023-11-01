@@ -7,6 +7,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
 using Content.Shared.SS220.ReagentImplanter;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
@@ -87,15 +88,26 @@ public abstract class SharedImplanterSystem : EntitySystem
         if (!TryComp(implant, out implantComp))
             return false;
 
+        if (!CheckTarget(target, component.Whitelist, component.Blacklist) ||
+            !CheckTarget(target, implantComp.Whitelist, implantComp.Blacklist))
+        {
+            return false;
+        }
+
         if(TryComp<ReagentCapsuleComponent>(implant, out var capsuleComp) && capsuleComp.IsUsed)
         {
             _popup.PopupEntity(Loc.GetString("implanter-inject-used-capsule"), target);
-            return false;
         }
 
         var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
         RaiseLocalEvent(target, ev);
         return !ev.Cancelled;
+    }
+
+    protected bool CheckTarget(EntityUid target, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
+    {
+        return whitelist?.IsValid(target, EntityManager) != false &&
+            blacklist?.IsValid(target, EntityManager) != true;
     }
 
     //Draw the implant out of the target

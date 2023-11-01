@@ -4,9 +4,9 @@ using Content.Shared.Administration;
 using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mind;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands
 {
@@ -21,7 +21,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             if (player == null)
             {
                 shell.WriteLine($"Nah: could not find player's session, skipping command {Command}");
@@ -79,7 +79,7 @@ namespace Content.Server.Administration.Commands
          * - else if player is aghost -> ghost
          * - else -> aghost
          */
-        private EntityUid SpawnGhost(EntityCoordinates coordinates, IPlayerSession player, bool canReturn)
+        private EntityUid SpawnGhost(EntityCoordinates coordinates, ICommonSession player, bool canReturn)
         {
             if (canReturn)
             {

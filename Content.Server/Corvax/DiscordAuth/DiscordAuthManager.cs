@@ -10,6 +10,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.Corvax.DiscordAuth;
 
@@ -33,7 +34,7 @@ public sealed class DiscordAuthManager
     /// <summary>
     ///     Raised when player passed verification or if feature disabled
     /// </summary>
-    public event EventHandler<IPlayerSession>? PlayerVerified;
+    public event EventHandler<ICommonSession>? PlayerVerified;
 
     public void Initialize()
     {

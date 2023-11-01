@@ -3,9 +3,9 @@
 using Content.Shared.Popups;
 using Robust.Shared.Console;
 using Robust.Shared.Utility;
-using Robust.Shared.Players;
 using Content.Shared.SS220.GhostRoleCast;
 using Robust.Client.UserInterface;
+using Robust.Shared.Player;
 
 namespace Content.Client.SS220.GhostRoleCast
 

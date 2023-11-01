@@ -4,8 +4,8 @@ using System.Text;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.SS220.Discord.Commands;
 
@@ -26,7 +26,7 @@ public sealed class DiscordCommand : IConsoleCommand
     /// <inheritdoc />
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not IPlayerSession player)
+        if (shell.Player is not ICommonSession player)
             return;
         try
         {

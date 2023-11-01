@@ -9,6 +9,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Mind;
 using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Linq;
 
@@ -92,8 +93,8 @@ public sealed class DarkReaperMajorRuleSystem : GameRuleSystem<DarkReaperMajorRu
             _sawmill.Info($"Spawning {comp.RunePrototypeId} at {runeCoords}");
             var rune = Spawn(comp.RunePrototypeId, runeCoords);
 
-            var everyone = new List<IPlayerSession>(ev.PlayerPool);
-            var prefList = new List<IPlayerSession>();
+            var everyone = new List<ICommonSession>(ev.PlayerPool);
+            var prefList = new List<ICommonSession>();
             foreach (var player in everyone)
             {
                 if (!ev.Profiles.ContainsKey(player.UserId))

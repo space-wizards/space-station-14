@@ -3,7 +3,7 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
