@@ -219,8 +219,8 @@ namespace Content.Client.Preferences.UI
                 if (newHeight > prototype.MaxHeight)
                     newHeight = prototype.MaxHeight;
 
-                CHeightLabel.Text = MathF.Round(newHeight, 1).ToString("G");
-                SetProfileHeight(MathF.Round(newHeight, 1));
+                CHeightLabel.Text = MathF.Round(newHeight, 2).ToString("G");
+                SetProfileHeight(MathF.Round(newHeight, 2));
             };
 
             CHeightReset.OnPressed += _ =>

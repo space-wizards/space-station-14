@@ -35,7 +35,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         ApplyMarkingSet(component, sprite);
 
         var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(component.Species);
-        var height = Math.Clamp(MathF.Round(component.Height, 1), speciesPrototype.MinHeight, speciesPrototype.MaxHeight); // should NOT be locked, at all
+        var height = Math.Clamp(MathF.Round(component.Height, 2), speciesPrototype.MinHeight, speciesPrototype.MaxHeight); // should NOT be locked, at all
 
         sprite.Scale = new Vector2(speciesPrototype.ScaleHeight ? height : 1f, height);
 

@@ -478,7 +478,7 @@ namespace Content.Shared.Preferences
 
             var height = Height;
             if (speciesPrototype != null)
-                height = Math.Clamp(MathF.Round(Height, 1), speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
+                height = Math.Clamp(MathF.Round(Height, 2), speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
 
