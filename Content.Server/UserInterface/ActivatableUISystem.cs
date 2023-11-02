@@ -66,7 +66,8 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!args.CanAccess)
             return;
 
-        if (component.RequireHands && args.Hands == null)
+        //SS220-Ghosts-paper-reading
+        if (component.RequireHands && (args.Hands == null && !HasComp<GhostComponent>(args.User)))
             return;
 
         if (component.InHandsOnly && args.Using != uid)
@@ -125,7 +126,8 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!_blockerSystem.CanInteract(user, uiEntity) && (!aui.AllowSpectator || !HasComp<GhostComponent>(user)))
             return false;
 
-        if (aui.RequireHands && !HasComp<HandsComponent>(user))
+        //SS220-Ghosts-paper-reading
+        if (aui.RequireHands && (!HasComp<HandsComponent>(user) && !HasComp<GhostComponent>(user)))
             return false;
 
         if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
