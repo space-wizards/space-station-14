@@ -10,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 // todo: remove this stinky LINQy
 
