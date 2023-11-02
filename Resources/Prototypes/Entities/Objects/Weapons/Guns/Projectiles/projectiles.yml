@@ -96,11 +96,9 @@
   noSpawn: true
   components:
   - type: Sprite
-    noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: practice
-      shader: unshaded  
   - type: Projectile
     damage:
       types:
@@ -113,11 +111,9 @@
   noSpawn: true
   components:
   - type: Sprite
-    noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-    - state: rubber
-      shader: unshaded    
+    - state: rubber  
   - type: Projectile
     damage:
       types:
