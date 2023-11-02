@@ -19,19 +19,19 @@ public sealed partial class AnomalySynchronizerComponent : Component
     public EntityUid? ConnectedAnomaly;
 
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public ProtoId<SourcePortPrototype> DecayingPort = "Decaying";
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public ProtoId<SourcePortPrototype> StabilizePort = "Stabilize";
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public ProtoId<SourcePortPrototype> GrowingPort = "Growing";
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public ProtoId<SourcePortPrototype> PulsePort = "Pulse";
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public ProtoId<SourcePortPrototype> SupercritPort = "Supercritical";
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
