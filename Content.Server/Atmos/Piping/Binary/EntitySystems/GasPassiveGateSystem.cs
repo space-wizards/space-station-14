@@ -79,12 +79,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             gate.FlowRate = a*dV/tau + (1-a)*gate.FlowRate; // in L/sec
         }
 
-        private void OnExamined(EntityUid uid, GasPassiveGateComponent gate, ExaminedEvent args)
+        private void OnExamined(Entity<GasPassiveGateComponent> gate, ref ExaminedEvent args)
         {
-            if (!EntityManager.GetComponent<TransformComponent>(gate.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!Comp<TransformComponent>(gate).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
-            var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.FlowRate:0.#}"));
+            var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.Comp.FlowRate:0.#}"));
             args.PushMarkup(str);
         }
     }

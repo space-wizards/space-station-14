@@ -1,6 +1,6 @@
 - type: entity
   name: behonker
-  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
   id: BaseMobBehonker
   abstract: true
   description: A floating demon aspect of the honkmother.
@@ -96,7 +96,6 @@
         - id: WeaponBehonkerLaser
           amount: 1
     - type: MeleeWeapon
-      hidden: true
       soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
       damage:

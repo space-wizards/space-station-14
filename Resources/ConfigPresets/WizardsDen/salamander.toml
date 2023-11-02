@@ -21,7 +21,7 @@ emergency_early_launch_allowed = true
 easy_mode = false
 
 [ooc]
-enable_during_round = true
+enable_during_round = false
 
 [ic]
 flavor_text = true

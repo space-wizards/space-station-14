@@ -290,3 +290,20 @@
       - id: MysteryFigureBox
         amount: 15
         prob: 0.05
+
+- type: entity
+  name: Dartboard Box Set
+  description: A box with everything you need for a fun game of darts.
+  id: CrateFunDartsSet
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: TargetDarts
+        amount: 1
+      - id: BoxDarts
+        amount: 2
+      - id: BoxDarts
+        amount: 1
+        prob: 0.05
+
