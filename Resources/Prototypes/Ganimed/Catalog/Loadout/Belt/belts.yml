@@ -12,7 +12,7 @@
     - Captain
     - SeniorOfficer
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingBeltMilitaryWebbing
 
 - type: loadout
@@ -26,7 +26,7 @@
     - Captain
     - SeniorOfficer
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingBeltMilitaryWebbingMed
 
 - type: loadout
@@ -45,7 +45,7 @@
     - Bartender
     - ServiceWorker
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingBeltBandolier
 
 - type: loadout
@@ -67,7 +67,6 @@
   category: loadout-category-belt
   cost: 3
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingBeltHolster
 
 - type: loadout
@@ -142,7 +141,7 @@
     - Captain
     - SeniorOfficer
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingBeltSecurityFilled
 
 - type: loadout
@@ -177,7 +176,6 @@
   category: loadout-category-belt
   cost: 1
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Captain
   prototype: ClothingBeltSheath

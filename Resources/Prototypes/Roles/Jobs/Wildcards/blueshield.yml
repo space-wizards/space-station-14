@@ -45,7 +45,7 @@
     shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesBlueShield
     head: ClothingHeadHatBeretBlueShield
-    outerClothing: ClothingOuterBlueShield
+    outerClothing: ClothingOuterCoatBlueShield
     neck: ClothingNeckTieBlueShield
     id: BlueShieldPDA
     mask: ClothingMaskNeckGaiter

@@ -29,6 +29,14 @@
   prototype: ClothingHeadHatSecsoft
 
 - type: loadout
+  id: LoadoutHeadClothingHeadHatPurplesoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatPurplesoft
+
+- type: loadout
   id: LoadoutHeadClothingHeadHatCargosoft
   category: loadout-category-head
   cost: 1
@@ -210,7 +218,6 @@
   category: loadout-category-head
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatGreysoft
 
 - type: loadout
@@ -218,5 +225,4 @@
   category: loadout-category-head
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatBluesoft

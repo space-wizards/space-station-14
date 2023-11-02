@@ -38,7 +38,6 @@
   category: loadout-category-hands
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHandsGlovesColorLightBrown
 
 - type: loadout
@@ -46,7 +45,6 @@
   category: loadout-category-hands
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHandsGlovesColorGray
 
 - type: loadout
@@ -56,3 +54,11 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingHandsGlovesColorBlue
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesColorPurple
+  category: loadout-category-hands
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHandsGlovesColorPurple

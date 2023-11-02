@@ -28,7 +28,7 @@
     - Quartermaster
     - SalvageSpecialist
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingHandsGlovesMercFingerless
 
 - type: loadout
@@ -39,7 +39,7 @@
   whitelistJobs:
     - HeadOfSecurity
     - Captain
-    - Blueshield
+    - BlueShield
   prototype: ClothingHandsGlovesCombat
 
 - type: loadout
@@ -50,8 +50,20 @@
   whitelistJobs:
     - HeadOfSecurity
     - Captain
-    - Blueshield
+    - BlueShield
   prototype: ClothingHandsMercGlovesCombat
+
+- type: loadout
+  id: LoadoutHandsClothingHandsTacticalMaidGloves
+  category: loadout-category-hands
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Captain
+    - BlueShield
+  sponsorOnly: true
+  prototype: ClothingHandsTacticalMaidGloves
 
 - type: loadout
   id: LoadoutHandsClothingHandsGlovesColorYellowBudget
@@ -72,7 +84,6 @@
   category: loadout-category-hands
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHandsGlovesBoxingBlue
 
 - type: loadout
@@ -132,7 +143,7 @@
     - Detective
     - SeniorOfficer
     - Warden
-    - Blueshield
+    - BlueShield
   prototype: ClothingHandsGlovesForensic
 
 - type: loadout
@@ -186,7 +197,6 @@
   category: loadout-category-hands
   cost: 6
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ResearchDirector
     - SeniorResearcher

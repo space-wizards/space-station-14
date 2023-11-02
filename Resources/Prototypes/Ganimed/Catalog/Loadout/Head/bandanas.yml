@@ -27,7 +27,7 @@
     - SeniorOfficer
     - SalvageSpecialist
     - Quartermaster
-    - Blueshield
+    - BlueShield
     - Brigmedic
   prototype: ClothingHeadBandMerc
 
@@ -64,7 +64,6 @@
   category: loadout-category-head
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadBandGrey
 
 - type: loadout
@@ -72,6 +71,5 @@
   category: loadout-category-head
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadBandBlue
   

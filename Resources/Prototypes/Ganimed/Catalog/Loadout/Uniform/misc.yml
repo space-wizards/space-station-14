@@ -109,3 +109,27 @@
   whitelistJobs:
     - HeadOfSecurity
   prototype: ClothingUniformJumpsuitHoSBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtCasualPurple
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtCasualPurple
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCasualPurple
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitCasualPurple
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitFlannel
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: false
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitFlannel

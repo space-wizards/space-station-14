@@ -174,7 +174,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatHairflower
 
 - type: loadout
@@ -182,7 +181,6 @@
   category: loadout-category-head
   cost: 3
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatXmasCrown
 
 - type: loadout
@@ -190,7 +188,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefEngineer
     - SeniorEngineer
@@ -204,7 +201,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefEngineer
     - SeniorEngineer
@@ -218,7 +214,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefEngineer
     - SeniorEngineer
@@ -242,4 +237,75 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingHeadHatSombrero
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatTacticalMaidHeadband
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+    - BlueShield
+    - Brigmedic
+  prototype: ClothingHeadHatTacticalMaidHeadband
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatUshanka
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatUshanka
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatFez
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatFez
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatVioletwizard
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatVioletwizard
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHopcap
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfPersonnel
+  prototype: ClothingHeadHatHopcap
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoshat
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingHeadHatHoshat
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCapcap
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingHeadHatCapcap
   

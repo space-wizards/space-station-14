@@ -217,3 +217,12 @@
 	- Coroner
 	- Brigmedic
   prototype: ClothingBackpackChemistry
+
+- type: loadout
+  id: LoadoutBackClothingBackpackCluwneRemoveable
+  category: loadout-category-back
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingBackpackCluwneRemoveable

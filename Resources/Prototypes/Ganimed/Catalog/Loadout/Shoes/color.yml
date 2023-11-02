@@ -40,3 +40,11 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingShoesColorBlue
+
+- type: loadout
+  id: LoadoutShoesClothingShoesColorPurple
+  category: loadout-category-shoes
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingShoesColorPurple

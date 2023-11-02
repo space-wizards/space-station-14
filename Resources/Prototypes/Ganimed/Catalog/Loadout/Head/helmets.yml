@@ -65,7 +65,6 @@
   category: loadout-category-head
   cost: 5
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefEngineer
     - AtmosphericTechnician
@@ -77,7 +76,6 @@
   category: loadout-category-head
   cost: 7
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHelmetFire
   
 - type: loadout

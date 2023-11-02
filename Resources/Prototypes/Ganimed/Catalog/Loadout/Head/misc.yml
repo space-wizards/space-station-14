@@ -17,7 +17,6 @@
   category: loadout-category-head
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatAnimalCat
 
 - type: loadout
@@ -75,7 +74,6 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatSquid
 
 - type: loadout
@@ -83,5 +81,12 @@
   category: loadout-category-head
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingHeadHatAnimalHeadslime
+
+- type: loadout
+  id: LoadoutHeadClothingHeadPaperSackSmile
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadPaperSackSmile

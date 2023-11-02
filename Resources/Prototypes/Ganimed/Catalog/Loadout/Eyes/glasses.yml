@@ -74,7 +74,7 @@
     - SalvageSpecialist
     - Bartender
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingEyesGlassesMercenary
 
 - type: loadout
@@ -138,7 +138,6 @@
   category: loadout-category-eyes
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingEyesGlassesJamjar
 
 - type: loadout
@@ -160,7 +159,7 @@
     - SalvageSpecialist
     - Bartender
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingEyesGlassesSunglasses
 
 - type: loadout
@@ -179,5 +178,5 @@
     - SeniorOfficer
     - Captain
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingEyesGlassesSecurity

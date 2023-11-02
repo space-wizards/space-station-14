@@ -178,7 +178,6 @@
   category: loadout-category-masks
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: Cigarette
 
 - type: loadout
@@ -194,5 +193,4 @@
   category: loadout-category-masks
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingMaskSterile

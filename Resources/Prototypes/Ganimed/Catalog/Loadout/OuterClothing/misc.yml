@@ -68,7 +68,6 @@
   category: loadout-category-outerClothing
   cost: 5
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingOuterGhostSheet
 
 - type: loadout
@@ -76,7 +75,6 @@
   category: loadout-category-outerClothing
   cost: 4
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Clown
   prototype: ClothingOuterClownPriest
@@ -86,7 +84,6 @@
   category: loadout-category-outerClothing
   cost: 4
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Chaplain
   prototype: ClothingOuterRobesCult
@@ -96,7 +93,6 @@
   category: loadout-category-outerClothing
   cost: 3
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingOuterVestHazard
 
 - type: loadout
@@ -104,7 +100,6 @@
   category: loadout-category-outerClothing
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingOuterHoodieGrey
 
 - type: loadout
@@ -112,7 +107,6 @@
   category: loadout-category-outerClothing
   cost: 2
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingOuterFlannelBlue
 
 - type: loadout
@@ -128,7 +122,6 @@
   category: loadout-category-outerClothing
   cost: 5
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - Lawyer
     - Captain
@@ -140,3 +133,45 @@
     - IAA
     - BlueShield
   prototype: ClothingOuterRobesJudge
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterApronBar
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Bartender
+    - ServiceWorker
+    - Chef
+  prototype: ClothingOuterApronBar
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterApronChef
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Bartender
+    - ServiceWorker
+    - Chef
+  prototype: ClothingOuterApronChef
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterApron
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingOuterApron
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterApronBotanist
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Botanist
+  prototype: ClothingOuterApronBotanist

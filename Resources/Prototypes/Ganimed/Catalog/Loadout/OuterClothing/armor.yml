@@ -96,6 +96,51 @@
   prototype: ClothingOuterArmorBasicOriginal
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterVestWeb
+  category: loadout-category-outerClothing
+  cost: 6
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Quartermaster
+    - ChiefEngineer
+    - ResearchDirector
+    - HeadOfPersonnel
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - Bartender
+    - IAA
+    - BlueShield
+    - Brigmedic
+  prototype: ClothingOuterVestWeb
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterVestWebMerc
+  category: loadout-category-outerClothing
+  cost: 6
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - SalvageSpecialist
+    - Quartermaster
+    - BlueShield
+    - Brigmedic
+  prototype: ClothingOuterVestWebMerc
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterDogi
   category: loadout-category-outerClothing
   cost: 7

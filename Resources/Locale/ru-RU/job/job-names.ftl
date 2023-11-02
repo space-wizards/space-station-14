@@ -93,6 +93,7 @@ JobQuartermaster = квартирмейстер
 JobReporter = репортёр
 JobResearchDirector = научный руководитель
 JobResearchAssistant = лаборант
+JobRoboticist = робототехник
 JobSalvageSpecialist = утилизатор
 JobScientist = научный сотрудник
 JobSecurityCadet = кадет СБ

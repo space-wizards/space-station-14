@@ -24,7 +24,6 @@
   category: loadout-category-neck
   cost: 1
   exclusive: true
-  sponsorOnly: true
   prototype: ClothingNeckTieBlueShield
 
 - type: loadout
@@ -167,7 +166,6 @@
   category: loadout-category-neck
   cost: 3
   exclusive: true
-  sponsorOnly: true
   whitelistJobs:
     - ChiefMedicalOfficer
     - SeniorPhysician

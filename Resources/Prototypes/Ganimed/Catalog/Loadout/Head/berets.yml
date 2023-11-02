@@ -68,7 +68,7 @@
     - SeniorOfficer
     - SalvageSpecialist
     - Quartermaster
-    - Blueshield
+    - BlueShield
     - Brigmedic
   prototype: ClothingHeadHatBeretMerc
 
@@ -85,7 +85,7 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
-    - Blueshield
+    - BlueShield
     - Brigmedic
   prototype: ClothingHeadHatBeretSecurity
 

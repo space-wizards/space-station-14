@@ -11,7 +11,7 @@
   id: JobBartender
 
 - type: playTimeTracker
-  id: JobBlueshield
+  id: JobBlueShield
 
 - type: playTimeTracker # Used as a tracker for all borgs and midround borging.
   id: JobBorg

@@ -67,7 +67,7 @@
 
 - type: entity
   parent: ClothingOuterWinterCoat
-  id: ClothingOuterBlueShield
+  id: ClothingOuterCoatBlueShield
   name: blue shield heavy coat
   description: Indeed quite heavy, it is mostly filled with sturdy synthetic nanofibers and works well to protect you from a bullet just as much as to protect you from the harsh winter. Bonus points for the extra fluffiness.
   components:

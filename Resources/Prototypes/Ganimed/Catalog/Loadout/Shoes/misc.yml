@@ -49,6 +49,22 @@
   prototype: ClothingShoesFlippers
 
 - type: loadout
+  id: LoadoutShoesClothingShoeSlippersDuck
+  category: loadout-category-shoes
+  cost: 3
+  sponsorOnly: true
+  exclusive: true
+  prototype: ClothingShoeSlippersDuck
+
+- type: loadout
+  id: LoadoutShoesClothingShoesSlippers
+  category: loadout-category-shoes
+  cost: 2
+  sponsorOnly: true
+  exclusive: true
+  prototype: ClothingShoesSlippers
+
+- type: loadout
   id: LoadoutShoesClothingShoesWizard
   category: loadout-category-shoes
   cost: 3
@@ -64,5 +80,20 @@
     - Chef
     - ServiceWorker
     - Bartender
-  sponsorOnly: true
   prototype: ClothingShoesChef
+
+- type: loadout
+  id: LoadoutShoesClothingShoesTourist
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingShoesTourist
+
+- type: loadout
+  id: LoadoutShoesClothingShoesDameDane
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingShoesDameDane

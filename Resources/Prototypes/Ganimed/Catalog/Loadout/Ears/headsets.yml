@@ -65,7 +65,7 @@
     - Captain
     - HeadOfPersonnnel
     - IAA
-    - Blueshield
+    - BlueShield
   prototype: ClothingHeadsetCommand
 
 - type: loadout
@@ -152,7 +152,7 @@
     - HeadOfSecurity
     - SeniorOfficer
     - Brigmedic
-    - Blueshield
+    - BlueShield
   prototype: ClothingHeadsetSecurity
 
 - type: loadout
@@ -184,5 +184,4 @@
     - ResearchDirector
     - Roboticist
     - SeniorResearcher
-  sponsorOnly: true
   prototype: ClothingHeadsetRobotics

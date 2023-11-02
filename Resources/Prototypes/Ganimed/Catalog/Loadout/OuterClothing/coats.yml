@@ -288,3 +288,23 @@
   exclusive: true
   sponsorOnly: true
   prototype: ClothingOuterCoatBlueCoat
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatHoSTrench
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingOuterCoatHoSTrench
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatBlueShield
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - BlueShield
+  prototype: ClothingOuterCoatBlueShield

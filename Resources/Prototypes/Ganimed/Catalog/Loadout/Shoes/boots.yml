@@ -125,5 +125,4 @@
     - StationEngineer
     - AtmosphericTechnician
     - TechnicalAssistant
-  sponsorOnly: true
   prototype: ClothingShoesBootsWork
