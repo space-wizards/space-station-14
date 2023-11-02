@@ -245,6 +245,7 @@ public sealed partial class DoAfterArgs
         Delay = other.Delay;
         Target = other.Target;
         Used = other.Used;
+        Hidden = other.Hidden;
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
