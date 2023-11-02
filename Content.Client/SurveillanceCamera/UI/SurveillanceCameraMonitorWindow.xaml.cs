@@ -156,7 +156,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
                 if (address == _currentAddress)
                     _currentName = name;
 
-                if (subnetFreqId != _subnetFilter)
+                if (subnetFreqId == _subnetFilter)
                     AddCameraToList(name, address);
             }
         }

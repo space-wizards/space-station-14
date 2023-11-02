@@ -1,12 +1,16 @@
+using System.Numerics;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
+using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -21,6 +25,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -80,7 +85,15 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
         if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
         {
-            var position = Transform(uid).Coordinates.Position;
+            //SS220 Camera-Map begin
+            Vector2 position;
+            if (_container.TryGetContainingContainer(uid, out var container))
+                // If camera is withing container, report the position of the container instead.
+                // Required for proper work of hidden/bodycams with map mode of surveillance monitor.
+                position = Transform(container.Owner).Coordinates.Position;
+            else
+                position = Transform(uid).Coordinates.Position;
+            //SS220 Camera-Map end
 
             var payload = new NetworkPayload()
             {
