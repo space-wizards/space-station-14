@@ -34,7 +34,7 @@
 - type: entity
   id: HandheldRadio
   parent: HandheldRadioProto
-  suffix: All
+  suffix: Common
   components:
   - type: HandheldRadio
     supportedChannels:
