@@ -29,18 +29,18 @@ namespace Content.Server.SS220.VerbHandTransfer
             EquipmentVerb verb = new EquipmentVerb()
             {
                 Text = Loc.GetString("action-transfer-verb-name"),
-                Act = () => TransferItemInHands(uid, args.User, freeHand)
+                Act = () => TransferItemInHands(uid, args.User, args.Hands.ActiveHandEntity!.Value, freeHand)
             };
 
             args.Verbs.Add(verb);
         }
 
-        private void TransferItemInHands(EntityUid target, EntityUid user, string freeHand)
+        private void TransferItemInHands(EntityUid target, EntityUid user, EntityUid item, string freeHand)
         {
             if (_playerManager.TryGetSessionByEntity(user, out var session) && session is ICommonSession playerSession)
             {
                 RaiseLocalEvent(target, new StrippingSlotButtonPressed(freeHand, true) { Session = playerSession });
-                _popupSystem.PopupEntity(Loc.GetString("action-transfer-verb-popup"), user);
+                _popupSystem.PopupEntity(Loc.GetString("action-transfer-verb-popup", ("item", Name(item))), user);
             }
         }
 
