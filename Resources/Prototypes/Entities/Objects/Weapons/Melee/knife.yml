@@ -20,6 +20,7 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
   - type: Item
+    size: Small
   - type: Tool
     qualities:
       - Slicing
@@ -39,7 +40,6 @@
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
     state: icon
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
   - type: GuideHelp
     guides:
@@ -64,7 +64,7 @@
       types:
         Slash: 10
   - type: Item
-    size: Small
+    size: Normal
     sprite: Objects/Weapons/Melee/cleaver.rsi
   - type: GuideHelp
     guides:
@@ -82,7 +82,6 @@
     - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/combat_knife.rsi
-    size: Tiny
     state: icon
   - type: MeleeWeapon
     wideAnimationRotation: -135
@@ -91,7 +90,6 @@
       types:
         Slash: 10
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Melee/combat_knife.rsi
   - type: DisarmMalus
     malus: 0.225
@@ -104,10 +102,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/survival_knife.rsi
-    size: Tiny
     state: icon
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Melee/survival_knife.rsi
 
 - type: entity
@@ -118,7 +114,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
-    size: Tiny
     state: icon
   - type: MeleeWeapon
     attackRate: 1.0
@@ -126,7 +121,6 @@
       types:
         Slash: 15
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
 
 - type: entity
@@ -145,7 +139,6 @@
     node: icon
   - type: Sprite
     sprite: Objects/Weapons/Melee/shiv.rsi
-    size: Tiny
     state: icon
   - type: MeleeWeapon
     attackRate: 1.5
@@ -153,7 +146,6 @@
       types:
         Slash: 5.5
   - type: Item
-    size: Tiny #as much as a regular glass shard
     sprite: Objects/Weapons/Melee/shiv.rsi
   - type: DisarmMalus
     malus: 0.225
@@ -167,8 +159,6 @@
   - type: Construction
     graph: ReinforcedShiv
     node: icon
-    size: Tiny
-    state: icon
   - type: MeleeWeapon
     attackRate: 1.5
     damage:

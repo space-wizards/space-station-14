@@ -7,7 +7,7 @@
   components:
   - type: Sprite
   - type: Item
-    size: Normal
+    size: Huge
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
     quickEquip: false
