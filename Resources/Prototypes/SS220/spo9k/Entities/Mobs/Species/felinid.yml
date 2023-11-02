@@ -104,9 +104,6 @@
   #MEOW LESS OK THX
   - type: Emoting
     chatEmoteCooldown: 5.0
-  - type: Item
-    size: 120
-  - type: CanEscapeInventory
 
 - type: entity
   save: false
