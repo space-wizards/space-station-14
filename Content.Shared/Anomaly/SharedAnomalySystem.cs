@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -181,6 +181,9 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (Terminating(uid) || _net.IsClient)
             return;
+
+        Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
+
         QueueDel(uid);
     }
 

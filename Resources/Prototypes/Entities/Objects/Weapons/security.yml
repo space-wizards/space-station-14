@@ -12,6 +12,7 @@
   - type: Stunbaton
     energyPerUse: 50
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 7
@@ -30,7 +31,7 @@
   - type: ItemCooldown
   - type: Item
     heldPrefix: off
-    size: 20
+    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     quickEquip: false
@@ -74,12 +75,13 @@
     sprite: Objects/Weapons/Melee/truncheon.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 20
     bluntStaminaDamageFactor: 1.5
   - type: Item
-    size: 20
+    size: Normal
   - type: Clothing
     sprite: Objects\Weapons\Melee\truncheon.rsi
     quickEquip: false
@@ -114,12 +116,13 @@
       maxCharges: 5
       charges: 5
     - type: MeleeWeapon
+      wideAnimationRotation: 180
       damage:
         types:
           Blunt: 0 # melee weapon to allow flashing individual targets
       angle: 10
     - type: Item
-      size: 5
+      size: Small
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: ItemCooldown
     - type: StaticPrice
@@ -141,6 +144,7 @@
 - type: entity
   name: flash
   parent: Flash
+  suffix: 2 charges
   id: SciFlash
   components:
     - type: LimitedCharges
