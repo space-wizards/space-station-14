@@ -46,7 +46,7 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Item
-    size: 3
+    size: Tiny
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
@@ -56,7 +56,7 @@
     damage:
       types:
         Blunt: 0
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
   - type: StaticPrice
     price: 0

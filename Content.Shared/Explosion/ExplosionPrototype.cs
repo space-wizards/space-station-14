@@ -14,7 +14,7 @@ namespace Content.Shared.Explosion;
 ///     that map of airtight entities. This could be done, but is just not yet implemented.
 /// </remarks>
 [Prototype("explosion")]
-public sealed class ExplosionPrototype : IPrototype
+public sealed partial class ExplosionPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

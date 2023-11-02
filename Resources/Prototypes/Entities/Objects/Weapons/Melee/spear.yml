@@ -47,7 +47,7 @@
       types:
         Piercing: 15
   - type: Item
-    size: 95
+    size: Ginormous
   - type: Clothing
     quickEquip: false
     slots:

@@ -13,9 +13,9 @@
     slots:
     - belt
   - type: Item
-    size: 46
+    size: Normal
   - type: Storage
-    capacity: 45
+    maxSlots: 40
     quickInsert: true
     areaInsert: true
     whitelist:
