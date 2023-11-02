@@ -28,8 +28,8 @@ public sealed class NearsightedSystem : EntitySystem
 		SubscribeLocalEvent<NearsightedComponent, ComponentStartup>(OnNearsightedStartup);
         SubscribeLocalEvent<NearsightedComponent, ComponentShutdown>(OnNearsightedShutdown);
 
-        SubscribeLocalEvent<NearsightedComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<NearsightedComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<NearsightedComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<NearsightedComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
         SubscribeLocalEvent<NearsightedComponent, DidEquipEvent>(DidEquip);
         SubscribeLocalEvent<NearsightedComponent, DidUnequipEvent>(DidUnequip);
@@ -37,12 +37,12 @@ public sealed class NearsightedSystem : EntitySystem
 		_overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, NearsightedComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, NearsightedComponent component, LocalPlayerAttachedEvent args)
     {
         UpdateShader(component);
     }
 
-    private void OnPlayerDetached(EntityUid uid, NearsightedComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, NearsightedComponent component, LocalPlayerDetachedEvent args)
     {
         _overlayMan.RemoveOverlay(_overlay);
     }

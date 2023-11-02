@@ -1,5 +1,5 @@
 using System.Linq;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 

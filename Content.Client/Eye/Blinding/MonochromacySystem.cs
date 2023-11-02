@@ -27,8 +27,8 @@ public sealed class MonochromacySystem : EntitySystem
         SubscribeLocalEvent<MonochromacyComponent, ComponentStartup>(OnMonochromacyStartup);
         SubscribeLocalEvent<MonochromacyComponent, ComponentShutdown>(OnMonochromacyShutdown);
 
-        SubscribeLocalEvent<MonochromacyComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<MonochromacyComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<MonochromacyComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<MonochromacyComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
         SubscribeLocalEvent<MonochromacyComponent, DidEquipEvent>(DidEquip);
         SubscribeLocalEvent<MonochromacyComponent, DidUnequipEvent>(DidUnequip);
@@ -36,12 +36,12 @@ public sealed class MonochromacySystem : EntitySystem
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, MonochromacyComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(EntityUid uid, MonochromacyComponent component, LocalPlayerAttachedEvent args)
     {
         UpdateShader(component);
     }
 
-    private void OnPlayerDetached(EntityUid uid, MonochromacyComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, MonochromacyComponent component, LocalPlayerDetachedEvent args)
     {
         _overlayMan.RemoveOverlay(_overlay);
     }

@@ -28,8 +28,8 @@ public sealed class ChromaticAberrationSystem : EntitySystem
         SubscribeLocalEvent<ChromaticAberrationComponent, ComponentStartup>(OnChromaticAberrationStartup);
         SubscribeLocalEvent<ChromaticAberrationComponent, ComponentShutdown>(OnChromaticAberrationShutdown);
 
-        SubscribeLocalEvent<ChromaticAberrationComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<ChromaticAberrationComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<ChromaticAberrationComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<ChromaticAberrationComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
         SubscribeLocalEvent<ChromaticAberrationComponent, DidEquipEvent>(DidEquip);
         SubscribeLocalEvent<ChromaticAberrationComponent, DidUnequipEvent>(DidUnequip);
@@ -37,12 +37,12 @@ public sealed class ChromaticAberrationSystem : EntitySystem
         _overlay = new();
     }
 	
-	private void OnPlayerAttached(EntityUid uid, ChromaticAberrationComponent component, PlayerAttachedEvent args)
+	private void OnPlayerAttached(EntityUid uid, ChromaticAberrationComponent component, LocalPlayerAttachedEvent args)
     {
         UpdateShader(component);
     }
 
-    private void OnPlayerDetached(EntityUid uid, ChromaticAberrationComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(EntityUid uid, ChromaticAberrationComponent component, LocalPlayerDetachedEvent args)
     {
         _overlayMan.RemoveOverlay(_overlay);
     }

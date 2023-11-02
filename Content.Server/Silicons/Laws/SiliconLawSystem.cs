@@ -101,8 +101,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 		
 		var lawset = GetLaws(uid);
 
-		var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
-        _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
+		var state = new SiliconLawBuiState(lawset.Name ?? "lawset-name-none", lawset.Description ?? "lawset-description-none", lawset.Laws, radioChannels);
+        _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, args.Session);
     }
 
     private void OnPlayerSpawnComplete(EntityUid uid, SiliconLawBoundComponent component, PlayerSpawnCompleteEvent args)
