@@ -1,17 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - message: Changed singularity energy levels to require more energy overall to increase
-      in size.
-    type: Tweak
-  - message: Changed singularity energy drain rates to keep them more stable, and
-      die quicker without food.
-    type: Tweak
-  - message: Changed level 2 and 3 PA to feed less energy, slowing the speed of a
-      singuloose slightly.
-    type: Tweak
-  id: 4585
-  time: '2023-08-14T21:01:57.0000000+00:00'
 - author: mirrorcult
   changes:
   - message: Monkies go horizontal on crit/death again
@@ -3489,3 +3476,12 @@ Entries:
     type: Fix
   id: 5084
   time: '2023-11-02T13:46:44.0000000+00:00'
+- author: Dexler
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043B\u043E\
+      \u0433\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0441\u0438\u0433\u043D\u0430\
+      \u043B\u044B \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u043D\u044B\u0445\
+      \ \u0434\u0432\u0435\u0440\u0435\u0439."
+    type: Fix
+  id: 5085
+  time: '2023-11-02T16:00:51.0000000+00:00'
