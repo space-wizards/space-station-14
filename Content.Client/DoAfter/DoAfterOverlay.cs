@@ -40,7 +40,7 @@ public sealed class DoAfterOverlay : Overlay
         _player = player;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _meta = _entManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
-        var sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
+        var sprite = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
@@ -123,7 +123,7 @@ public sealed class DoAfterOverlay : Overlay
                 {
                     var elapsed = doAfter.CancelledTime.Value - doAfter.StartTime;
                     elapsedRatio = (float) Math.Min(1, elapsed.TotalSeconds / doAfter.Args.Delay.TotalSeconds);
-                    var cancelElapsed  = (time - doAfter.CancelledTime.Value).TotalSeconds;
+                    var cancelElapsed = (time - doAfter.CancelledTime.Value).TotalSeconds;
                     var flash = Math.Floor(cancelElapsed / FlashTime) % 2 == 0;
                     color = new Color(1f, 0f, 0f, flash ? alpha : 0f);
                 }
