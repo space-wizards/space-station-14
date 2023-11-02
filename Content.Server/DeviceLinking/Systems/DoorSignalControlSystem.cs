@@ -5,6 +5,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
+using Content.Server.Power.Components;
 
 namespace Content.Server.DeviceLinking.Systems
 {
@@ -33,6 +34,10 @@ namespace Content.Server.DeviceLinking.Systems
         private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, ref SignalReceivedEvent args)
         {
             if (!TryComp(uid, out DoorComponent? door))
+                return;
+
+            //SS220-doors-logic-signals-fix
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var receiverComp) && !receiverComp.Powered)
                 return;
 
             var state = SignalState.Momentary;
@@ -85,6 +90,10 @@ namespace Content.Server.DeviceLinking.Systems
 
         private void OnStateChanged(EntityUid uid, DoorSignalControlComponent door, DoorStateChangedEvent args)
         {
+            //SS220-doors-logic-signals-fix
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var receiverComp) && !receiverComp.Powered)
+                return;
+
             var data = new NetworkPayload()
             {
                 { DeviceNetworkConstants.LogicState, SignalState.Momentary }
