@@ -340,4 +340,4 @@
   - type: Item
     sprite: Ganimed/Objects/pens.rsi
     state: fountain_black
-    size: 2
+    size: Tiny

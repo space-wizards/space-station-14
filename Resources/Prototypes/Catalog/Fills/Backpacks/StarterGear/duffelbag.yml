@@ -47,6 +47,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: BoxSurvivalBrigmedic
       - id: Flash
 
 - type: entity

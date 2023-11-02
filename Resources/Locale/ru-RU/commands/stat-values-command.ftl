@@ -11,3 +11,8 @@ stat-lathe-values = Стоимость печати в лате
 stat-lathe-id = ID
 stat-lathe-cost = Стоимость
 stat-lathe-sell = Цена продажи
+
+# Item Sizes
+stat-item-values = Размер предмета
+stat-item-id = ID
+stat-item-price = Размер

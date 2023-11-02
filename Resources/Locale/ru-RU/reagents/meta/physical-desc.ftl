@@ -81,6 +81,7 @@ reagent-physical-desc-cloudy = мутное
 reagent-physical-desc-sweet = сладкое
 reagent-physical-desc-electric = электрическое
 reagent-physical-desc-chewy = жевательное
+reagent-physical-desc-soapy = мыльное
 reagent-physical-desc-volatile = нестабильное
 reagent-physical-desc-inky = чернильное
 reagent-physical-desc-enigmatic = загадочное

@@ -6,6 +6,7 @@ health-analyzer-window-entity-damage-total-text = Общие поврежден�
 health-analyzer-window-damage-group-text = { $damageGroup }: { $amount }
 health-analyzer-window-damage-type-text = { $damageType }: { $amount }
 health-analyzer-window-damage-type-duplicate-text = { $damageType }: { $amount } (повтор)
+health-analyzer-window-entity-unknown-text = неизвестно
 health-analyzer-window-damage-group-Brute = Механические
 health-analyzer-window-damage-type-Blunt = Удары
 health-analyzer-window-damage-type-Slash = Разрезы

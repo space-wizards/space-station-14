@@ -94,3 +94,7 @@ ent-BerrySeeds = пакет семян ягод
     .desc = { ent-SeedBase.desc }
 ent-BungoSeeds = пакет семян мбунго
     .desc = "Косточки не ешьте."
+ent-PeaSeeds = пакет семян гороха
+    .desc = "Эти непримечательные стебли внесли большой вклад в развитие современной генетики."
+ent-PumpkinSeeds = пакет семян тыквы
+    .desc = { ent-SeedBase.desc }

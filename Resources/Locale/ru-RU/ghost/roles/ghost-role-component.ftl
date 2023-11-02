@@ -117,3 +117,5 @@ ghost-role-information-holoclown-name = Голоклоун
 ghost-role-information-holoclown-description = Слушайте владельца. Используйте свои карманы и руки, чтобы помочь.
 ghost-role-information-smile-name = Слайм Смайл
 ghost-role-information-smile-description = Наисладчайшее существо во всей обозримой вселенной. Слайм Смайл!
+ghost-role-information-mothroach-name = Моль-таракан
+ghost-role-information-mothroach-description = Милый, но озорной моль-таракан.

@@ -8,4 +8,7 @@ reagent-name-protein = протеины
 reagent-desc-protein = Также известные как белки. Содержатся в некоторых блюдах, полезны для здоровья организма.
 
 reagent-name-cocoapowder = какао порошок
-reagent-desc-cocoapowder = Из самых премиальных бобов.
+reagent-desc-cocoapowder = Из самых достойных бобов.
+
+reagent-name-pumpkin-flesh = тыквенная мякоть
+reagent-desc-pumpkin-flesh = Мягкие и сладкие останки тыквы.

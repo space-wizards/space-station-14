@@ -7,3 +7,5 @@ comp-storage-cant-drop = Вы не можете отпустить { $entity }!
 comp-storage-window-title = Предмет хранилище
 comp-storage-window-volume = Занято: { $usedVolume }/{ $maxVolume }, предметов: { $itemCount }
 comp-storage-window-volume-unlimited = Предметов: { $itemCount }
+comp-storage-window-weight = { $weight }/{ $maxWeight }, Максимальный размер: {$size}
+comp-storage-window-slots = Ячеек: { $itemCount }/{ $maxCount }, Максимальный размер: {$size}
