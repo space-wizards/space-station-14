@@ -12,7 +12,7 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -90
+    wideAnimationRotation: 90
     swingLeft: true
     attackRate: 0.75
     damage:
@@ -29,7 +29,7 @@
         Slash: 10.5
         Structural: 60
   - type: Item
-    size: 150
+    size: Ginormous
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false

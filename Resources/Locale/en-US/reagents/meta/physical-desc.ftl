@@ -63,6 +63,7 @@ reagent-physical-desc-sticky = sticky
 reagent-physical-desc-bubbly = bubbly
 reagent-physical-desc-rocky = rocky
 reagent-physical-desc-lemony-fresh = lemony fresh
+reagent-physical-desc-soapy = soapy
 reagent-physical-desc-crisp = crisp
 reagent-physical-desc-citric = citric
 reagent-physical-desc-acidic = acidic

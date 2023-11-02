@@ -2,7 +2,7 @@
 using Content.Shared.Mind.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Mind
 {

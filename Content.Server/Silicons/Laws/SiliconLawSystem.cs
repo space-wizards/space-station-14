@@ -20,7 +20,7 @@ using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Toolshed;
@@ -101,7 +101,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 		
 		var lawset = GetLaws(uid);
 
-        var state = new SiliconLawBuiState(lawset.Name ?? "lawset-name-none", lawset.Description ?? "lawset-description-none", lawset.Laws, radioChannels);
+		var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
         _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
     }
 
