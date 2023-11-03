@@ -1,9 +1,4 @@
 Entries:
-- author: kalane15
-  changes:
-  - {message: Energy swords don't reflect in pockets anymore., type: Fix}
-  id: 4597
-  time: '2023-08-15T05:07:54.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed replay playback a bug that could cause the damage overlay to stay
@@ -2915,3 +2910,8 @@ Entries:
       players, not just the popup.', type: Tweak}
   id: 5096
   time: '2023-11-03T02:10:59.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Tank pressure can no longer be set below zero, type: Fix}
+  id: 5097
+  time: '2023-11-03T02:14:57.0000000+00:00'
