@@ -36,6 +36,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateDestructionSecure
+  name: bluespace destruction crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/Bluespace/destruction_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/Bluespace/destruction_secure.rsi
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CrateLimitedSecure
   name: bluespace limited crate
   components:

@@ -253,3 +253,85 @@
     contents:
     - id: RandomHarvesterDoctorsDelight
       amount: 30
+
+# Destructionl Loot
+- type: entity
+  id: CrateHarvesterTurretSyndicate
+  parent: CrateLimitedSecure
+  suffix: Bluespace Harvester, TurretSyndicate
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: SpawnMobBehonker
+      amount: 4
+
+- type: entity
+  id: CrateHarvesterWeaponElite
+  parent: CrateLimitedSecure
+  suffix: Bluespace Harvester, WeaponElite
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterWeaponElite
+      amount: 3
+
+- type: entity
+  id: CrateHarvesterWeaponLaser
+  parent: CrateDestructionSecure
+  suffix: Bluespace Harvester, WeaponLaser
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterWeaponLaser
+      amount: 6
+
+- type: entity
+  id: CrateHarvesterWeaponShotgun
+  parent: CrateDestructionSecure
+  suffix: Bluespace Harvester, WeaponShotgun
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterWeaponShotgun
+      amount: 4
+
+- type: entity
+  id: CrateHarvesterWeaponRifle
+  parent: CrateDestructionSecure
+  suffix: Bluespace Harvester, WeaponRifle
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterWeaponRifle
+      amount: 3
+
+- type: entity
+  id: CrateHarvesterWeaponLight
+  parent: CrateDestructionSecure
+  suffix: Bluespace Harvester, WeaponLight
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterWeaponLight
+      amount: 5
+
+- type: entity
+  id: CrateHarvesterWeaponDisabler
+  parent: CrateDestructionSecure
+  suffix: Bluespace Harvester, WeaponDisabler
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterWeaponDisabler
+      amount: 8
+
+- type: entity
+  id: CrateHarvesterBomb
+  parent: CrateDestructionSecure
+  suffix: Bluespace Harvester, Bomb
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterBomb
+      amount: 8
+

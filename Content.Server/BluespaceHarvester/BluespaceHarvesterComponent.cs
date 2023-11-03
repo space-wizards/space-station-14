@@ -79,7 +79,7 @@ public sealed partial class BluespaceHarvesterComponent : Component
         },
         new BluespaceHarvesterCategoryInfo()
         {
-            PrototypeId = "RandomHarvesterDestructionlLoot",
+            PrototypeId = "RandomHarvesterDestructionLoot",
             Cost = 15_000,
             Type = BluespaceHarvesterCategory.Destruction,
         },

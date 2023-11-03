@@ -1,6 +1,6 @@
 # Branchs
 - type: entity
-  id: RandomHarvesterDestructionlLoot
+  id: RandomHarvesterDestructionLoot
   name: random harvester biological loot spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
@@ -12,9 +12,19 @@
       - sprite: Structures/Machines/bluespace_harvester.rsi
         state: tap_5
   - type: RandomSpawner
+    prototypes:
+      - CrateHarvesterWeaponLaser
+      - CrateHarvesterWeaponShotgun
+      - CrateHarvesterWeaponRifle
+      - CrateHarvesterWeaponLight
+      - CrateHarvesterWeaponDisabler
+      - CrateHarvesterBomb
     chance: 1.0
     offset: 0.0
-    rareChance: 0.2
+    rarePrototypes:
+      - CrateHarvesterTurretSyndicate # Death
+      - CrateHarvesterWeaponElite
+    rareChance: 0.1
 
 - type: entity
   id: RandomHarvesterIndustrialLoot
@@ -523,3 +533,178 @@
     rarePrototypes:
       - OmnizineChemistryBottle
     rareChance: 0.2
+
+# Destruction Loot
+- type: entity
+  id: RandomHarvesterWeaponLaser
+  name: random harvester weapon laser spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - WeaponLaserCarbine
+      - WeaponLaserCannon
+      - WeaponMakeshiftLaser
+      - WeaponLaserGun
+      - WeaponXrayCannon
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - WeaponAdvancedLaser
+    rareChance: 0.2
+
+- type: entity
+  id: RandomHarvesterWeaponShotgun
+  name: random harvester weapon Shotgun spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - WeaponShotgunEnforcer
+      - WeaponShotgunKammerer
+      - WeaponShotgunDoubleBarreled
+      - WeaponShotgunSawn
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - WeaponShotgunBulldog
+    rareChance: 0.05
+
+- type: entity
+  id: RandomHarvesterWeaponRifle
+  name: random harvester weapon rifle spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - WeaponRifleLecter
+      - WeaponSubMachineGunWt550
+      - WeaponRifleAk
+      - WeaponSubMachineGunDrozd
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - WeaponSubMachineGunC20r
+    rareChance: 0.05
+
+- type: entity
+  id: RandomHarvesterWeaponLight
+  name: random harvester weapon light spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - WeaponRevolverInspector
+      - WeaponRevolverMateba
+      - WeaponPistolMk58
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - WeaponRevolverDeckard
+      - WeaponRevolverPython
+      - WeaponPistolCobra
+      - WeaponPistolViper
+    rareChance: 0.05
+
+- type: entity
+  id: RandomHarvesterWeaponDisabler
+  name: random harvester weapon disabler spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - Stunbaton
+      - WeaponDisabler
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - WeaponTaser
+    rareChance: 0.2
+
+- type: entity
+  id: RandomHarvesterWeaponElite
+  name: random harvester weapon elite spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - WeaponPulseRifle
+      - WeaponPulsePistol
+      - WeaponLightMachineGunL6
+      - WeaponSniperHristov
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - WeaponPulseCarbine
+      - WeaponMinigun
+      - WeaponLauncherMultipleRocket
+    rareChance: 0.2
+
+- type: entity
+  id: RandomHarvesterBomb
+  name: random harvester bomb spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - ExGrenade
+      - GrenadeFlashBang
+      - TrainingBomb
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - SyndicateBomb
+      - SyndieMiniBomb
+      - HolyHandGrenade
+      - C4
+      - EmpGrenade
+    rareChance: 0.05
