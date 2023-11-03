@@ -1,5 +1,5 @@
-﻿- type: dataset
-  id: names_last_male
+- type: dataset
+  id: names_last
   values:
   - Смирнов
   - Иванов

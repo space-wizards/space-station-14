@@ -1,14 +1,14 @@
 - type: dataset
   id: RevenantType
   values:
-  - сущность
+  - Cущность
   - привидение
-  - фантом
-  - полтергейст
-  - ревенант
-  - душа
-  - тень
-  - дух
+  - Фантом
+  - Полтергейст
+  - Ревенант
+  - Душа
+  - Тень
+  - Дух
 
 - type: dataset
   id: RevenantAdjective
@@ -46,10 +46,4 @@
   - муки
   - тоски
   - боли
-  #- despair
-  #- desperation
-  #- destruction
-  #- hellfire
-  #- laughter
-  #- screams
-  #- suffering
+
