@@ -75,7 +75,7 @@
     group: GenericNumber
   - type: GhostTakeoverAvailable
   - type: PointLight
-    color: "#d6db73"
+    color: "#e4de6c"
     radius: 8
     softness: 2
     energy: 5
