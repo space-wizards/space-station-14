@@ -1,14 +1,25 @@
 - type: entity
   id: TeslaCoil
   name: tesla coil
-  parent: BaseStructureDynamic
   description: A machine that converts lightning strikes into an electric current.
   placement:
     mode: SnapgridCenter
   components:
-  - type: InteractionOutline
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     snapCardinals: true
@@ -47,16 +58,18 @@
   - type: LightningTarget
     priority: 4
     lightningExplode: false
-  - type: Rotatable
-  - type: Pullable
   - type: PowerNetworkBattery
     maxSupply: 1000000000
     supplyRampTolerance: 1000000000
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
+  - type: Clickable
+  - type: InteractionOutline
   #- type: GuideHelp #   To Do - add Tesla Guide
   
 - type: entity
   id: TeslaGroundingRod
-  parent: BaseStructureDynamic
   name: grounding rod
   description: A machine that keeps lightning from striking too far away.
   placement:
@@ -64,6 +77,19 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 110
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     noRot: true
@@ -90,7 +116,9 @@
     priority: 3
     lightningResistance: 10
     lightningExplode: false
+  - type: Anchorable
   - type: Rotatable
   - type: Pullable
+  - type: Clickable
   - type: InteractionOutline
   #- type: GuideHelp #   To Do - add Tesla Guide
