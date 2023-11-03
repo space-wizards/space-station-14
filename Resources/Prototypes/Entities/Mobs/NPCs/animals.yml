@@ -249,7 +249,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cockroach
   - type: Item
-    size: 2
+    size: Tiny
   - type: HTN
     rootTask:
       task: MouseCompound
@@ -367,7 +367,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mothroach
   - type: Item
-    size: 15
+    size: Normal
   - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mothroach.rsi

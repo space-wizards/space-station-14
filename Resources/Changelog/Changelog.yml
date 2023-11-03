@@ -1,44 +1,4 @@
 Entries:
-- author: Just_Art
-  changes:
-  - {message: Now a mini gravity generator can be constructed using a machine board
-      and deconstructed., type: Add}
-  - {message: 'The mini gravity generator can be improved by replacing capacitors,
-      which will increase the maximum charge of the generator.', type: Add}
-  - {message: 'The amount of damage required to destroy the mini gravity generator
-      has been changed, and now it is completely destroyed, but it can still be restored
-      by welding.', type: Tweak}
-  id: 4595
-  time: '2023-08-15T00:23:40.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: There is now a delay when disconnecting someone else's internals., type: Tweak}
-  id: 4596
-  time: '2023-08-15T00:25:58.0000000+00:00'
-- author: kalane15
-  changes:
-  - {message: Energy swords don't reflect in pockets anymore., type: Fix}
-  id: 4597
-  time: '2023-08-15T05:07:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed replay playback a bug that could cause the damage overlay to stay
-      permanently active., type: Fix}
-  id: 4598
-  time: '2023-08-15T05:10:56.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has stopped requesting ID card computer boards., type: Remove}
-  id: 4599
-  time: '2023-08-15T14:07:56.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Speech verbs will now change depending on the entity saying them and
-      from punctuation. Have fun chittering as a mothperson., type: Add}
-  - {message: Ending a message with '!!' will now bold the message., type: Add}
-  - {message: Mothpeople now have custom typing indicators., type: Add}
-  id: 4600
-  time: '2023-08-15T20:03:06.0000000+00:00'
 - author: Repo
   changes:
   - {message: Nanotrasen no longer provides imitation head scrubs in the medical scrub
@@ -2920,3 +2880,35 @@ Entries:
   - {message: Fixed the food cart not being able to hold anything., type: Fix}
   id: 5094
   time: '2023-11-01T23:19:41.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed nukie medics not spawning with their hypospray., type: Fix}
+  id: 5095
+  time: '2023-11-02T19:35:56.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'Thieving gloves now hide the entire pickpocketing action from other
+      players, not just the popup.', type: Tweak}
+  id: 5096
+  time: '2023-11-03T02:10:59.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Tank pressure can no longer be set below zero, type: Fix}
+  id: 5097
+  time: '2023-11-03T02:14:57.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Increased the capacity of Bags of holding., type: Tweak}
+  id: 5098
+  time: '2023-11-03T11:31:03.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: Reptilians can now eat rat kebabs., type: Fix}
+  id: 5099
+  time: '2023-11-03T17:50:32.0000000+00:00'
+- author: photonicDog
+  changes:
+  - {message: 'Moth Head (Moonfly) marking texture is no longer rotated incorrectly,
+      causing it to appear offset from the player', type: Fix}
+  id: 5100
+  time: '2023-11-03T20:37:26.0000000+00:00'
