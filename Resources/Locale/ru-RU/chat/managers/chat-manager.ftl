@@ -64,9 +64,9 @@ chat-speech-verb-insect-1 = стрекочет
 chat-speech-verb-insect-2 = жужжит
 chat-speech-verb-insect-3 = щёлкает
 
-chat-speech-verb-winged-1 = щебечет
-chat-speech-verb-winged-2 = чирикает
-chat-speech-verb-winged-3 = пищит
+chat-speech-verb-winged-1 = стрекочет
+chat-speech-verb-winged-2 = жужжит
+chat-speech-verb-winged-3 = щёлкает
 
 chat-speech-verb-slime-1 = булькает
 chat-speech-verb-slime-2 = хлюпает
