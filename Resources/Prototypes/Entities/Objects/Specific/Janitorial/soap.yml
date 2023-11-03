@@ -9,7 +9,14 @@
     - Soap
   - type: Sprite
     sprite: Objects/Specific/Janitorial/soap.rsi
-    state: soap
+    layers:
+    - state: soap-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: soap-
+    changeColor: false
+  - type: Appearance
   - type: Item
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
@@ -37,6 +44,29 @@
         density: 10
         mask:
         - ItemMask
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 50
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 50
+  - type: SolutionTransfer
+    transferAmount: 10
+    minTransferAmount: 1
+    maxTransferAmount: 25
+    canReceive: false
+    canChangeTransferAmount: true
+  - type: DrainableSolution
+    solution: soap
+  - type: DeleteOnSolutionEmpty
+    solution: soap
+  - type: FlavorProfile
+    flavors:
+      - clean
+  - type: Food
+    solution: soap
+
 
 - type: entity
   name: soap
@@ -45,9 +75,20 @@
   description: A Nanotrasen brand bar of soap. Smells of plasma.
   components:
   - type: Sprite
-    state: nt
+    layers:
+    - state: nt-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    fillBaseName: nt-
   - type: Item
     heldPrefix: nt
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 100
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 100
 
 - type: entity
   name: soap
@@ -56,7 +97,11 @@
   description: A deluxe Waffle Co. brand bar of soap. Smells of condoms.
   components:
   - type: Sprite
-    state: deluxe
+    layers:
+    - state: deluxe-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    fillBaseName: deluxe-
   - type: Item
     heldPrefix: deluxe
 
@@ -67,12 +112,20 @@
   description: An untrustworthy bar of soap. Smells of fear.
   components:
   - type: Sprite
-    state: syndie
+    layers:
+    - state: syndie-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    fillBaseName: syndie-
   - type: Slippery
     paralyzeTime: 5
     launchForwardsMultiplier: 2.5
   - type: Item
     heldPrefix: syndie
+  - type: FlavorProfile
+    flavors:
+      - clean
+      - punishment
 
 - type: entity
   name: soap
@@ -81,9 +134,20 @@
   description: A homemade bar of soap. Smells of... well....
   components:
   - type: Sprite
-    state: gibs
+    layers:
+    - state: gibs-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    fillBaseName: gibs-
+  - type: Slippery
+    paralyzeTime: 2
+  - type: StepTrigger
   - type: Item
     heldPrefix: gibs
+  - type: FlavorProfile
+    flavors:
+      - clean
+      - meaty
 
 - type: entity
   name: omega soap
@@ -92,9 +156,20 @@
   description: The most advanced soap known to mankind. Smells of bluespace.
   components:
   - type: Sprite
-    state: omega
+    layers:
+    - state: omega-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    fillBaseName: omega-
   - type: Slippery
     paralyzeTime: 7
     launchForwardsMultiplier: 3
   - type: Item
     heldPrefix: omega
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 240 #In the Greek alphabet, Omega is the 24th letter
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 240

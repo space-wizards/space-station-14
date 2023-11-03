@@ -1,130 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Bike horn implant now has a short cooldown, sorry', type: Fix}
-  id: 4581
-  time: '2023-08-14T16:04:42.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: 'Admin ghosts, robots, and other soulless monsters that never tire can
-      now perform wide melee attacks again. Most notably this fixes the borg mining
-      drill.', type: Fix}
-  id: 4582
-  time: '2023-08-14T16:10:16.0000000+00:00'
-- author: Titian3
-  changes:
-  - {message: Fixed Admin watchlists and messages., type: Fix}
-  id: 4583
-  time: '2023-08-14T19:50:33.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Observers can now hear the binary radio., type: Tweak}
-  id: 4584
-  time: '2023-08-14T21:00:08.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Changed singularity energy levels to require more energy overall to
-      increase in size., type: Tweak}
-  - {message: 'Changed singularity energy drain rates to keep them more stable, and
-      die quicker without food.', type: Tweak}
-  - {message: 'Changed level 2 and 3 PA to feed less energy, slowing the speed of
-      a singuloose slightly.', type: Tweak}
-  id: 4585
-  time: '2023-08-14T21:01:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Monkies go horizontal on crit/death again, type: Fix}
-  id: 4586
-  time: '2023-08-14T21:02:28.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Fixed condiment stations & smartfridges being too unshaded, type: Fix}
-  - {message: 'Booze dispenser now only contains booze, everything else it contained
-      was already in the soda dispenser', type: Tweak}
-  - {message: Fixed soda dispenser UI not being wide enough, type: Fix}
-  id: 4587
-  time: '2023-08-14T21:03:21.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed having to reopen ahelp and popped-out ahelp windows after round
-      start and end., type: Fix}
-  id: 4588
-  time: '2023-08-14T21:03:35.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Faded admin notes now pop in when hovering over them., type: Tweak}
-  id: 4589
-  time: '2023-08-14T21:03:53.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fix editing an admin watchlist note making it temporarily appear as
-      a low severity note., type: Fix}
-  id: 4590
-  time: '2023-08-14T21:05:47.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Operating table won't get you stuck in walls anymore, type: Fix}
-  id: 4591
-  time: '2023-08-14T22:25:05.0000000+00:00'
-- author: TheArturZh
-  changes:
-  - {message: Ritual chair no longer deletes mobs on disassembly, type: Fix}
-  id: 4592
-  time: '2023-08-14T22:57:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Using the EMAG on borgs now requires the panel to be open. It also need
-      to be open to tell if it has been EMAG'ed in the past., type: Tweak}
-  - {message: Fixed wiping PAIs and Positronic Brains not actually removing the player
-      from them., type: Fix}
-  id: 4593
-  time: '2023-08-14T23:34:24.0000000+00:00'
-- author: mhamster
-  changes:
-  - {message: 'Added plastic sheets recipe. Mix together 5u oil, 3u ash and 2u sulfuric
-      acid, heat it up to 374k and receive your homemade plastic sheet.', type: Add}
-  id: 4594
-  time: '2023-08-14T23:40:48.0000000+00:00'
-- author: Just_Art
-  changes:
-  - {message: Now a mini gravity generator can be constructed using a machine board
-      and deconstructed., type: Add}
-  - {message: 'The mini gravity generator can be improved by replacing capacitors,
-      which will increase the maximum charge of the generator.', type: Add}
-  - {message: 'The amount of damage required to destroy the mini gravity generator
-      has been changed, and now it is completely destroyed, but it can still be restored
-      by welding.', type: Tweak}
-  id: 4595
-  time: '2023-08-15T00:23:40.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: There is now a delay when disconnecting someone else's internals., type: Tweak}
-  id: 4596
-  time: '2023-08-15T00:25:58.0000000+00:00'
-- author: kalane15
-  changes:
-  - {message: Energy swords don't reflect in pockets anymore., type: Fix}
-  id: 4597
-  time: '2023-08-15T05:07:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed replay playback a bug that could cause the damage overlay to stay
-      permanently active., type: Fix}
-  id: 4598
-  time: '2023-08-15T05:10:56.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has stopped requesting ID card computer boards., type: Remove}
-  id: 4599
-  time: '2023-08-15T14:07:56.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Speech verbs will now change depending on the entity saying them and
-      from punctuation. Have fun chittering as a mothperson., type: Add}
-  - {message: Ending a message with '!!' will now bold the message., type: Add}
-  - {message: Mothpeople now have custom typing indicators., type: Add}
-  id: 4600
-  time: '2023-08-15T20:03:06.0000000+00:00'
 - author: Repo
   changes:
   - {message: Nanotrasen no longer provides imitation head scrubs in the medical scrub
@@ -2918,3 +2792,123 @@ Entries:
       you can still move through two parallel thindows on the same tile., type: Tweak}
   id: 5080
   time: '2023-10-30T11:48:12.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Fixed the issue where mice were cannibalizing fallen brethren., type: Fix}
+  id: 5081
+  time: '2023-10-31T01:49:05.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: 'Despite being just as effective as the head, you no longer hit people
+      with the handle of fire axes.', type: Fix}
+  id: 5082
+  time: '2023-10-31T03:30:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletal crewmates have arrived on the station for Halloween only.,
+    type: Add}
+  id: 5083
+  time: '2023-10-31T03:40:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Storage containers can now block large items from being inserted into
+      them, regardless of the space available.', type: Add}
+  - {message: Belts now function on a slot based storage system rather than a volume
+      based one., type: Add}
+  - {message: Standardized item sizes into regular categories., type: Tweak}
+  id: 5084
+  time: '2023-10-31T03:55:56.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Add pea plants., type: Add}
+  id: 5085
+  time: '2023-10-31T04:09:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Smoke now properly transfers reagents when inhaled., type: Fix}
+  id: 5086
+  time: '2023-10-31T12:43:18.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Slimes are fully immune to Nitrous Oxide again., type: Fix}
+  id: 5087
+  time: '2023-10-31T12:57:27.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Added cockroaches. Expect to see these mapped into maints soon., type: Add}
+  - {message: Added the glockroach admeme., type: Add}
+  id: 5088
+  time: '2023-10-31T20:28:43.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'Soap and water now makes soapy water which can clean dirt off of floors.
+      Also please don''t eat the soap, it''s not good for you.', type: Add}
+  id: 5089
+  time: '2023-10-31T20:39:12.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Arachnid and other Blue (hemocyanin) blooded creatures now require copper
+      to treat bloodloss instead of iron and brute medkits contain 2 copper pills
+      and 1 less iron pill., type: Add}
+  id: 5090
+  time: '2023-10-31T20:41:26.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'When the anomaly explodes, a very expensive core falls from it. Be
+      sure to sell it in 10 minutes before it becomes useless.', type: Add}
+  id: 5091
+  time: '2023-10-31T23:20:52.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Getting turned into a rev will now play the rev antag sound effect.,
+    type: Add}
+  id: 5092
+  time: '2023-11-01T03:11:09.0000000+00:00'
+- author: Titian3
+  changes:
+  - {message: No more skeletal crewmates., type: Remove}
+  id: 5093
+  time: '2023-11-01T21:47:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Many items have had their sizes adjusted., type: Tweak}
+  - {message: Survival boxes and medkits can no longer hold more items than their
+      size would suggest., type: Tweak}
+  - {message: Fixed missing max size text in storage UIs, type: Fix}
+  - {message: Fixed the ore bag being unable to collect items when there is still
+      room., type: Fix}
+  - {message: Fixed the food cart not being able to hold anything., type: Fix}
+  id: 5094
+  time: '2023-11-01T23:19:41.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed nukie medics not spawning with their hypospray., type: Fix}
+  id: 5095
+  time: '2023-11-02T19:35:56.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'Thieving gloves now hide the entire pickpocketing action from other
+      players, not just the popup.', type: Tweak}
+  id: 5096
+  time: '2023-11-03T02:10:59.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Tank pressure can no longer be set below zero, type: Fix}
+  id: 5097
+  time: '2023-11-03T02:14:57.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Increased the capacity of Bags of holding., type: Tweak}
+  id: 5098
+  time: '2023-11-03T11:31:03.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: Reptilians can now eat rat kebabs., type: Fix}
+  id: 5099
+  time: '2023-11-03T17:50:32.0000000+00:00'
+- author: photonicDog
+  changes:
+  - {message: 'Moth Head (Moonfly) marking texture is no longer rotated incorrectly,
+      causing it to appear offset from the player', type: Fix}
+  id: 5100
+  time: '2023-11-03T20:37:26.0000000+00:00'

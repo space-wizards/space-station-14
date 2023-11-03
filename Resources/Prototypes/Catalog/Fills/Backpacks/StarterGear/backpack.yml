@@ -285,8 +285,7 @@
         - id: trayScanner
         - id: RCD
         - id: RCDAmmo
-        - id: RCDAmmo
-        - id: RCDAmmo
+          amount: 2
         - id: CableMVStack
         - id: CableHVStack
         - id: CableApcStack
@@ -318,6 +317,8 @@
   name: death squad backpack
   description: Holds the kit of CentComm's most feared agents.
   components:
+    - type: Storage
+      maxTotalWeight: 56
     - type: StorageFill
       contents:
         - id: BoxSurvivalEngineering
