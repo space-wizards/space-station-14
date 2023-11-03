@@ -43,7 +43,7 @@
         hit:
           True: { visible: true }
           False: { visible: false }
-  - type: LightningSparking
+  #- type: LightningSparking
   - type: AnimationPlayer
   - type: NodeContainer
     examinable: true
@@ -96,7 +96,7 @@
         power:
           True: { state: grounding_rod }
           False: { state: grounding_rod_open }
-  - type: LightningSparking
+  #- type: LightningSparking
   - type: Transform
     anchored: true
   - type: Physics
