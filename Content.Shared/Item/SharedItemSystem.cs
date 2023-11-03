@@ -1,21 +1,18 @@
-using Content.Shared.CombatMode;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
 public abstract class SharedItemSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
 
     public override void Initialize()
@@ -33,13 +30,13 @@ public abstract class SharedItemSystem : EntitySystem
 
     #region Public API
 
-    public void SetSize(EntityUid uid, int size, ItemComponent? component = null)
+    public void SetSize(EntityUid uid, ItemSize size, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
 
         component.Size = size;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public void SetHeldPrefix(EntityUid uid, string? heldPrefix, ItemComponent? component = null)
@@ -51,7 +48,7 @@ public abstract class SharedItemSystem : EntitySystem
             return;
 
         component.HeldPrefix = heldPrefix;
-        Dirty(component);
+        Dirty(uid, component);
         VisualsChanged(uid);
     }
 
@@ -67,7 +64,7 @@ public abstract class SharedItemSystem : EntitySystem
         item.InhandVisuals = otherItem.InhandVisuals;
         item.HeldPrefix = otherItem.HeldPrefix;
 
-        Dirty(item);
+        Dirty(uid, item);
         VisualsChanged(uid);
     }
 
@@ -83,14 +80,7 @@ public abstract class SharedItemSystem : EntitySystem
 
     protected virtual void OnStackCountChanged(EntityUid uid, ItemComponent component, StackCountChangedEvent args)
     {
-        if (!TryComp<StackComponent>(uid, out var stack))
-            return;
 
-        if (!_prototype.TryIndex<StackPrototype>(stack.StackTypeId, out var stackProto) ||
-            stackProto.ItemSize is not { } size)
-            return;
-
-        SetSize(uid, args.NewCount * size, component);
     }
 
     private void OnHandleState(EntityUid uid, ItemComponent component, ref ComponentHandleState args)
@@ -135,7 +125,7 @@ public abstract class SharedItemSystem : EntitySystem
     private void OnExamine(EntityUid uid, ItemComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("item-component-on-examine-size",
-            ("size", component.Size)));
+            ("size", GetItemSizeLocale(component.Size))));
     }
 
     /// <summary>
@@ -147,5 +137,17 @@ public abstract class SharedItemSystem : EntitySystem
     /// </remarks>
     public virtual void VisualsChanged(EntityUid owner)
     {
+    }
+
+    [PublicAPI]
+    public static string GetItemSizeLocale(ItemSize size)
+    {
+        return Robust.Shared.Localization.Loc.GetString($"item-component-size-{size.ToString()}");
+    }
+
+    [PublicAPI]
+    public static int GetItemSizeWeight(ItemSize size)
+    {
+        return (int) size;
     }
 }

@@ -37,7 +37,7 @@
         components:
         - IdCard
   - type: Item
-    size: 10
+    size: Small
   - type: ContainerContainer
     containers:
       PDA-id: !type:ContainerSlot {}

@@ -1021,6 +1021,9 @@
   id: Toolbox
 
 - type: Tag
+  id: Torch
+
+- type: Tag
   id: Trash
 
 - type: Tag
