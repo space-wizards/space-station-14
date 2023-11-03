@@ -1,0 +1,108 @@
+- type: entity
+  id: EventCaptureFlagBase
+  suffix: Ebent
+  name: флаг фракции
+  description: Флаг вашей фракции для захвата постаментов.
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Overdoors
+    noRot: true
+    layers:
+    - state: flag_nt_up
+      map: ["FlagUnfolded"]
+      offset: 0,0.5
+      sprite: SS220/Structures/Specific/PointCaptureEvent/flags_unfolded.rsi
+      visible: false
+    - state: flag_nt_folded
+      map: ["FlagFolded"]
+      sprite: SS220/Structures/Specific/PointCaptureEvent/flags_folded.rsi
+  - type: Appearance
+  - type: Physics
+    bodyType: Dynamic
+  - type: Item
+    size: 20
+  - type: Clickable
+  - type: InteractionOutline
+  - type: EventCapturePointFlag
+  - type: Pullable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
+  - type: GenericVisualizer
+    visuals:
+      enum.CaptureFlagVisuals.Visuals:
+        FlagUnfolded:
+          True: { visible: true }
+          False: { visible: false }
+        FlagFolded:
+          True: { visible: false }
+          False: { visible: true }
+
+- type: entity
+  id: EventCaptureFlagNT
+  suffix: Ebent
+  name: флаг НаноТрейзен
+  description: Флаг вашей фракции для захвата постаментов.
+  parent: EventCaptureFlagBase
+  components:
+  - type: Sprite
+    drawdepth: Overdoors
+    noRot: true
+    layers:
+    - state: flag_nt_up
+      map: ["FlagUnfolded"]
+      offset: 0,0.5
+      sprite: SS220/Structures/Specific/PointCaptureEvent/flags_unfolded.rsi
+      visible: false
+    - state: flag_nt_folded
+      map: ["FlagFolded"]
+      sprite: SS220/Structures/Specific/PointCaptureEvent/flags_folded.rsi
+
+- type: entity
+  id: EventCaptureFlagSynd
+  suffix: Ebent
+  name: флаг Синдиката
+  description: Флаг вашей фракции для захвата постаментов.
+  parent: EventCaptureFlagBase
+  components:
+  - type: Sprite
+    drawdepth: Overdoors
+    noRot: true
+    layers:
+    - state: flag_synd_up
+      map: ["FlagUnfolded"]
+      offset: 0,0.5
+      sprite: SS220/Structures/Specific/PointCaptureEvent/flags_unfolded.rsi
+      visible: false
+    - state: flag_synd_folded
+      map: ["FlagFolded"]
+      sprite: SS220/Structures/Specific/PointCaptureEvent/flags_folded.rsi
+
+- type: entity
+  id: EventCaptureFlagUssp
+  suffix: Ebent
+  name: флаг СССП
+  description: Флаг вашей фракции для захвата постаментов.
+  parent: EventCaptureFlagBase
+  components:
+  - type: Sprite
+    drawdepth: Overdoors
+    noRot: true
+    layers:
+    - state: flag_ussr_up
+      map: ["FlagUnfolded"]
+      offset: 0,0.5
+      sprite: SS220/Structures/Specific/PointCaptureEvent/flags_unfolded.rsi
+      visible: false
+    - state: flag_ussr_folded
+      map: ["FlagFolded"]
+      sprite: SS220/Structures/Specific/PointCaptureEvent/flags_folded.rsi

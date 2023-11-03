@@ -1,0 +1,40 @@
+- type: entity
+  id: EventCapturablePostament
+  suffix: Ebent
+  name: постамент
+  description: Постамент для флага. Для захвата установите сюда флаг вашей фракции.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Specific/PointCaptureEvent/postament.rsi
+    noRot: true
+    layers:
+    - state: without_flag
+      map: ["PostamentState"]
+  - type: Appearance
+  - type: Physics
+    bodyType: Static
+  - type: Clickable
+  - type: InteractionOutline
+  - type: EventCapturePoint
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 1000
+        hard: true
+  - type: GenericVisualizer
+    visuals:
+      enum.CapturePointVisuals.Visuals:
+        PostamentState:
+          True: { state: with_flag }
+          False: { state: without_flag }
