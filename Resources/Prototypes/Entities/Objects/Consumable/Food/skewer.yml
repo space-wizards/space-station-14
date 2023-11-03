@@ -105,7 +105,7 @@
 
 - type: entity
   name: rat kebab
-  parent: FoodSkewerBase
+  parent: FoodMeatKebab
   id: FoodMeatRatKebab
   description: Not so delicious rat meat, on a stick.
   components:
@@ -124,7 +124,7 @@
 
 - type: entity
   name: double rat kebab
-  parent: FoodSkewerBase
+  parent: FoodMeatKebab
   id: FoodMeatRatdoubleKebab
   description: A double serving of not so delicious rat meat, on a stick.
   components:
