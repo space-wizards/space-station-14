@@ -2,6 +2,7 @@
   id: HeadOfSecurity
   name: job-name-hos
   description: job-description-hos
+  color: "#DE3A3A"
   playTimeTracker: JobHeadOfSecurity
   requirements:
     - !type:RoleTimeRequirement

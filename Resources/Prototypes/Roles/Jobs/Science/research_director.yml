@@ -2,6 +2,7 @@
   id: ResearchDirector
   name: job-name-rd
   description: job-description-rd
+  color: "#D381C9"
   playTimeTracker: JobResearchDirector
   requirements:
     - !type:RoleTimeRequirement

@@ -436,6 +436,8 @@
     layers:
     - state: default
     - state: idbrigmedic
+  - type: PresetIdCard
+    job: Brigmedic
 
 - type: entity
   parent: IDCardStandard
@@ -501,7 +503,7 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Central Commander
+    jobTitle: Офицер ЦК
     jobIcon: JobIconCentCom
   - type: Access
     tags:
@@ -725,6 +727,7 @@
   - type: IdCard
     jobTitle: Cluwne
     jobIcon: JobIconCluwne
+    jobColor: "#AA0000"
   - type: Unremoveable
 
 - type: entity

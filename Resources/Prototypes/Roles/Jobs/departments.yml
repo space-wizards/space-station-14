@@ -1,36 +1,4 @@
 - type: department
-  id: Cargo
-  description: department-Cargo-description
-  color: "#A46106"
-  roles:
-  - CargoTechnician
-  - Quartermaster
-  - SalvageSpecialist
-
-- type: department
-  id: Civilian
-  description: department-Civilian-description
-  color: "#9FED58"
-  roles:
-  - Bartender
-  - Botanist
-  - Boxer
-  - Chaplain
-  - Chef
-  - Clown
-  - HeadOfPersonnel
-  - Janitor
-  - Lawyer
-  - Librarian
-  - Mime
-  - Musician
-  - Passenger
-  - Reporter
-  - Zookeeper
-  - ServiceWorker
-  - Prisoner
-
-- type: department
   id: Command
   description: department-Command-description
   color: "#334E6D"
@@ -44,6 +12,15 @@
   - ResearchDirector
   - IAA
   - BlueShield
+
+- type: department
+  id: Cargo
+  description: department-Cargo-description
+  color: "#A46106"
+  roles:
+  - CargoTechnician
+  - Quartermaster
+  - SalvageSpecialist
 
 - type: department
   id: Engineering
@@ -93,6 +70,29 @@
   - Roboticist
   - Scientist
   - ResearchAssistant
+
+- type: department
+  id: Civilian
+  description: department-Civilian-description
+  color: "#9FED58"
+  roles:
+  - Bartender
+  - Botanist
+  - Boxer
+  - Chaplain
+  - Chef
+  - Clown
+  - HeadOfPersonnel
+  - Janitor
+  - Lawyer
+  - Librarian
+  - Mime
+  - Musician
+  - Passenger
+  - Reporter
+  - Zookeeper
+  - ServiceWorker
+  - Prisoner
 
 - type: department
   id: Specific

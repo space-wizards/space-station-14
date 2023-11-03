@@ -4,6 +4,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 
@@ -15,6 +16,7 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
         [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly SharedJobSystem _jobSystem = default!;
 
         public override void Initialize()
         {
@@ -38,6 +40,7 @@ namespace Content.Server.Access.Systems
 
                 SetupIdAccess(uid, card, true);
                 SetupIdName(uid, card);
+				SetupIdColor(uid, card);
             }
         }
 
@@ -55,6 +58,7 @@ namespace Content.Server.Access.Systems
 
             SetupIdAccess(uid, id, extended);
             SetupIdName(uid, id);
+			SetupIdColor(uid, id);
         }
 
         private void SetupIdName(EntityUid uid, PresetIdCardComponent id)
@@ -62,6 +66,18 @@ namespace Content.Server.Access.Systems
             if (id.IdName == null)
                 return;
             _cardSystem.TryChangeFullName(uid, id.IdName);
+        }
+
+        private void SetupIdColor(EntityUid uid, PresetIdCardComponent id)
+        {
+            if (id.JobName is not null)
+			{
+				var color = _prototypeManager.TryIndex(id.JobName, out JobPrototype? job) && job.Color is not null ? job.Color
+							: _jobSystem.TryGetDepartment(id.JobName, out var department) ? department.Color 
+							: Color.FromHex("#FFFFFF");
+				
+				_cardSystem.TryChangeColor(uid, color);
+			}
         }
 
         private void SetupIdAccess(EntityUid uid, PresetIdCardComponent id, bool extended)

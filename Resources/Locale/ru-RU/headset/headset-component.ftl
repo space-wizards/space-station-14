@@ -1,3 +1,7 @@
+# Chat window radio source name wrap (job title and color)
+chat-radio-format-name-by-title = \[{$jobTitle}\] {$name}
+chat-radio-format-name-by-color = [color={$jobColor}]{$name}[/color]
+
 # Chat window radio wrap (prefix and postfix)
 chat-radio-message-wrap = [color={$color}]{$channel} [bold]{$name}[/bold] {$verb}, [font={$fontType} size={$fontSize}]"{$message}"[/font][/color]
 chat-radio-message-wrap-bold = [color={$color}]{$channel} [bold]{$name}[/bold] {$verb}, [font={$fontType} size={$fontSize}][bold]"{$message}"[/bold][/font][/color]

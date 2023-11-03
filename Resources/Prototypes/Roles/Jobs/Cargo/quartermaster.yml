@@ -2,6 +2,7 @@
   id: Quartermaster
   name: job-name-qm
   description: job-description-qm
+  сolor: "#A46106"
   playTimeTracker: JobQuartermaster
   requirements:
     - !type:RoleTimeRequirement
