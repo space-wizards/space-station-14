@@ -154,7 +154,7 @@
     layers:
       - state: red
       - sprite: Objects/Power/power_cells.rsi
-        state: icon
+        state: hyper
   - type: RandomSpawner
     prototypes:
       - PowerCellMediumPrinted
