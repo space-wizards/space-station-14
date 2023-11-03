@@ -3,7 +3,7 @@
 
 - type: entity
   name: Salvage Material Crate Spawner
-  id: Salvag eMaterialCrateSpawner
+  id: SalvageMaterialCrateSpawner
   parent: MarkerBase
   components:
     - type: Sprite
