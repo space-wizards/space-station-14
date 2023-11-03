@@ -5,20 +5,21 @@ As a botanist, it is your job to grow enough food to stop the chef from seeking 
 ## Starting your shift
 First identify the machines around you that you will be using. Coordinate with the Chef to see if they want anything specific to be grown, otherwise grow wheat and bananas and whatever else you feel like growing. You may also grow plants for Chemistry (Medbay), the Bartender, or to sell by Cargo.
 
+
 # Tools
 There are many tools that can be used to keep your crops healthy and growing. The Hydroponics Tray is where you will spend most of your time as a botanist.
 
 ## Hydroponics Tray
 <Box>
-  <GuideEntityEmbed Entity="hydroponicsTray"/>
+<GuideEntityEmbed Entity="hydroponicsTray"/>
 </Box>
 It's a hydroponics tray, it grows plants with water. First fill the tray with water, then add seeds. 
 Hydroponics tray lights indicate different things depending on color and position:
-- [color=lightgreen]Red Light, Left[/color]: Dead plant that needs re-planting. Use a spade to remove the plant.
-- [color=lightgreen]Flashing Orange Light, Center[/color]: The environment is sub-optimal. Check what is affecting the plant by Shift Clicking on it. It is likely weeds but it could be undesirable pressure or lack of oxygen. If weeds, use a mini hoe or spray 1 time with weed spray. Be warned, however, that overuse of weed killers can lead to unhealthy plants, possibly killing them.
-- [color=lightgreen]Blue Light, Right[/color]: Needs water. Use bucket on the water tank and fill the tray.
-- [color=lightgreen]Green Light, Left[/color]: Ready for harvest. Left click to harvest.
-- [color=lightgreen]Yellow Light, Right[/color]: Needs nutrients. Use any fruit and put it into the soil or get EZ nutrients from chemistry.
+- [color=red]Red Light, Left[/color]: Dead plant that needs re-planting. Use a spade to remove the plant.
+- [color=orange]Flashing Orange Light, Center[/color]: The environment is sub-optimal. Check what is affecting the plant by Shift Clicking on it. It is likely weeds but it could be undesirable pressure or lack of oxygen. If weeds, use a mini hoe or spray 1 time with weed spray. Be warned, however, that overuse of weed killers can lead to unhealthy plants, possibly killing them.
+- [color=#0336ff]Blue Light, Right[/color]: Needs water. Use bucket on the water tank and fill the tray.
+- [color=green]Green Light, Left[/color]: Ready for harvest. Left click to harvest.
+- [color=yellow]Yellow Light, Right[/color]: Needs nutrients. Use any fruit and put it into the soil or get EZ nutrients from chemistry.
 
 The lifecycle of a hydroponics tray is the following:
 - [color=lightgreen]Empty[/color]: no water, seed or nutrients
@@ -34,10 +35,11 @@ The lifecycle of a hydroponics tray is the following:
 
 ## Seed Extractor
 <Box>
-  <GuideEntityEmbed Entity="SeedExtractor"/>
+<GuideEntityEmbed Entity="SeedExtractor"/>
 </Box>
 It extracts seeds. Insert crop, receive seeds.
-  
+
+
 # Plant Genetics
 Like all other forms of life known to NanoTrasen, plants pass traits to offspring in their genes. By manipulating plant genetics, botanists can produce plant varieties with desirable mutations that increase plant health and yield.
 
@@ -62,7 +64,7 @@ Plants treated with [color=cyan]unstable mutagen[/color] will experience random 
 The more unstable mutagen you use, the more mutations you will get. Since many genes are vital to a plant's survival, most mutations will cause a plant to die.
 
 <Box>
-  <GuideEntityEmbed Entity="UnstableMutagenChemistryBottle"/>
+<GuideEntityEmbed Entity="UnstableMutagenChemistryBottle"/>
 </Box>
 
 ## Cross-Pollination
