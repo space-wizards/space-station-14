@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: There is now a delay when disconnecting someone else's internals., type: Tweak}
-  id: 4596
-  time: '2023-08-15T00:25:58.0000000+00:00'
 - author: kalane15
   changes:
   - {message: Energy swords don't reflect in pockets anymore., type: Fix}
@@ -2914,3 +2909,9 @@ Entries:
   - {message: Fixed nukie medics not spawning with their hypospray., type: Fix}
   id: 5095
   time: '2023-11-02T19:35:56.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'Thieving gloves now hide the entire pickpocketing action from other
+      players, not just the popup.', type: Tweak}
+  id: 5096
+  time: '2023-11-03T02:10:59.0000000+00:00'
