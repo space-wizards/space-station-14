@@ -1,15 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - message: Fixed condiment stations & smartfridges being too unshaded
-    type: Fix
-  - message: Booze dispenser now only contains booze, everything else it contained
-      was already in the soda dispenser
-    type: Tweak
-  - message: Fixed soda dispenser UI not being wide enough
-    type: Fix
-  id: 4587
-  time: '2023-08-14T21:03:21.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - message: Fixed having to reopen ahelp and popped-out ahelp windows after round
@@ -3487,3 +3476,19 @@ Entries:
     type: Add
   id: 5086
   time: '2023-11-02T16:36:50.0000000+00:00'
+- author: Nonne46
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5087
+  time: '2023-11-03T15:07:17.0000000+00:00'
