@@ -256,6 +256,27 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
 
+# The only normal way to quickly test a bluespace harvester
+- type: entity
+  parent: GeneratorRTG
+  id: GeneratorRTGDamaged100kW
+  name: RTG
+  description: A Radioisotope Thermoelectric Generator for long term power.
+  suffix: 100kW, Debug
+  components:
+  - type: PowerSupplier
+    supplyRate: 100000
+
+- type: entity
+  parent: GeneratorRTG
+  id: GeneratorRTGDamaged1MW
+  name: RTG
+  description: A Radioisotope Thermoelectric Generator for long term power.
+  suffix: 1MW, Debug
+  components:
+  - type: PowerSupplier
+    supplyRate: 1000000
+
 # TODO: need radioactive fallout when destroyed
 
 - type: entity

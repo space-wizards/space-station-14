@@ -1,0 +1,47 @@
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateIndustrialSecure
+  name: bluespace industrial crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/Bluespace/industrial_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/Bluespace/industrial_secure.rsi
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateTechnologicalSecure
+  name: bluespace technological crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/Bluespace/technological_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/Bluespace/technological_secure.rsi
+  - type: AccessReader
+    access: [["Research"]]
+  
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateBiologicalSecure
+  name: bluespace biological crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/Bluespace/biological_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/Bluespace/biological_secure.rsi
+  - type: AccessReader
+    access: [["Research"], ["Chemistry"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateLimitedSecure
+  name: bluespace limited crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/Bluespace/limited_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/Bluespace/limited_secure.rsi
+  - type: AccessReader
+    access: [["Command"]]

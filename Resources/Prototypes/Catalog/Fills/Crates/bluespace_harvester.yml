@@ -1,7 +1,7 @@
 # Industrial Loot
 - type: entity
   id: CrateHarvesterSingularity
-  parent: CrateCommandSecure
+  parent: CrateLimitedSecure
   description: You've got a bad feeling about this.
   suffix: Bluespace Harvester, Singularity, DO NOT MAP
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: CrateHarvesterSingularityFake
-  parent: CrateCommandSecure
+  parent: CrateLimitedSecure
   description: You've got a bad feeling about this.
   suffix: Bluespace Harvester, Singularity Fake
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   id: CrateHarvesterPartsT3
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, PartsT3
   components:
   - type: BluespaceHarvesterBundle
@@ -32,7 +32,7 @@
 
 - type: entity
   id: CrateHarvesterPartsT4
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, PartsT4
   components:
   - type: BluespaceHarvesterBundle
@@ -42,7 +42,7 @@
 
 - type: entity
   id: CrateHarvesterMaterials
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, Materials
   components:
   - type: BluespaceHarvesterBundle
@@ -52,7 +52,7 @@
 
 - type: entity
   id: CrateHarvesterPowerCell
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, Power Cell
   components:
   - type: BluespaceHarvesterBundle
@@ -62,7 +62,7 @@
 
 - type: entity
   id: CrateHarvesterBeer
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, Beer
   components:
   - type: BluespaceHarvesterBundle
@@ -72,7 +72,7 @@
 
 - type: entity
   id: CrateHarvesterTools
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, Tools
   components:
   - type: BluespaceHarvesterBundle
@@ -82,7 +82,7 @@
 
 - type: entity
   id: CrateHarvesterBackpackHolding
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, Backpack Holding
   components:
   - type: BluespaceHarvesterBundle
@@ -92,7 +92,7 @@
 
 - type: entity
   id: CrateHarvesterAmeJar
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, AmeJar
   components:
   - type: BluespaceHarvesterBundle
@@ -102,7 +102,7 @@
 
 - type: entity
   id: CrateHarvesterCircuitboard
-  parent: CrateEngineering
+  parent: CrateIndustrialSecure
   suffix: Bluespace Harvester, Circuitboard
   components:
   - type: BluespaceHarvesterBundle
@@ -110,20 +110,31 @@
     - id: RandomHarvesterCircuitboard
       amount: 3
 
+# Technological Loot
+- type: entity
+  id: CrateHarvesterResearchDisk
+  parent: CrateTechnologicalSecure
+  suffix: Bluespace Harvester, ResearchDisk
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterResearchDisk
+      amount: 4
+
 - type: entity
   id: CrateHarvesterTechnologyDisk
-  parent: CrateScienceSecure
+  parent: CrateTechnologicalSecure
   suffix: Bluespace Harvester, TechnologyDisk
   components:
   - type: BluespaceHarvesterBundle
     contents:
     - id: RandomHarvesterTechnologyDisk
-      amount: 4
+      amount: 7
 
 - type: entity
   id: CrateHarvesterAnomaly
-  parent: CrateScienceSecure
-  suffix: Bluespace Harvester, CrateHarvesterAnomaly
+  parent: CrateTechnologicalSecure
+  suffix: Bluespace Harvester, Anomaly
   components:
   - type: BluespaceHarvesterBundle
     contents:
@@ -132,10 +143,113 @@
 
 - type: entity
   id: CrateHarvesterArtifact
-  parent: CrateScienceSecure
+  parent: CrateTechnologicalSecure
   suffix: Bluespace Harvester, Artifact
   components:
   - type: BluespaceHarvesterBundle
     contents:
     - id: RandomArtifactSpawner
       amount: 1
+    
+- type: entity
+  id: CrateHarvesterAnomalyKit
+  parent: CrateTechnologicalSecure
+  suffix: Bluespace Harvester, AnomalyKit
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterAnomalyKit
+      amount: 4
+
+- type: entity
+  id: CrateHarvesterEncryptionKey
+  parent: CrateTechnologicalSecure
+  suffix: Bluespace Harvester, EncryptionKey
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterEncryptionKey
+      amount: 5
+
+- type: entity
+  id: CrateHarvesterBorg
+  parent: CrateTechnologicalSecure
+  suffix: Bluespace Harvester, Borg
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterBorg
+      amount: 3
+
+- type: entity
+  id: CrateHarvesterMech
+  parent: CrateTechnologicalSecure
+  suffix: Bluespace Harvester, Mech
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterMech
+      amount: 2
+
+- type: entity
+  id: CrateHarvesterReagentSlime
+  parent: CrateLimitedSecure
+  suffix: Bluespace Harvester, Mech
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: ReagentSlimeSpawner
+      amount: 20
+
+# Biological Loot
+- type: entity
+  id: CrateHarvesterInjection
+  parent: CrateBiologicalSecure
+  suffix: Bluespace Harvester, Injection
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterInjection
+      amount: 4
+
+- type: entity
+  id: CrateHarvesterImplanter
+  parent: CrateBiologicalSecure
+  suffix: Bluespace Harvester, Implanter
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterImplanter
+      amount: 7
+
+- type: entity
+  id: CrateHarvesterMedkit
+  parent: CrateBiologicalSecure
+  suffix: Bluespace Harvester, Medkit
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterMedkit
+      amount: 10
+
+- type: entity
+  id: CrateHarvesterRomerol
+  parent: CrateLimitedSecure
+  suffix: Bluespace Harvester, Romerol
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: SyringeRomerol
+      amount: 3
+    - id: PillRomerol
+      amount: 10
+
+- type: entity
+  id: CrateHarvesterDoctorsDelight
+  parent: CrateLimitedSecure
+  suffix: Bluespace Harvester, DoctorsDelight
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterDoctorsDelight
+      amount: 30

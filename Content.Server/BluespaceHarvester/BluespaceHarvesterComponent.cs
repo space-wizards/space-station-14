@@ -1,4 +1,5 @@
 using Content.Shared.BluespaceHarvester;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -53,7 +54,7 @@ public sealed partial class BluespaceHarvesterComponent : Component
     ///     After this danger value, the generation of dangerous creatures and anomalies will begin.
     /// </summary>
     [DataField("dangerLimit")]
-    public int DangerLimit = 100;
+    public int DangerLimit = 175;
 
     [DataField("categories")]
     public List<BluespaceHarvesterCategoryInfo> Categories = new()
@@ -83,6 +84,12 @@ public sealed partial class BluespaceHarvesterComponent : Component
             Type = BluespaceHarvesterCategory.Destruction,
         },
     };
+
+    [DataField("spawnEffect"), ViewVariables(VVAccess.ReadWrite)]
+    public string SpawnEffectPrototype = "EffectEmpPulse";
+
+    [DataField("spawnSound"), ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier SpawnSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
 }
 
 [Serializable]

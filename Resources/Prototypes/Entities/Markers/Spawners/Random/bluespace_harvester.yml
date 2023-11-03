@@ -4,6 +4,7 @@
   name: random harvester biological loot spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -20,6 +21,7 @@
   name: random harvester industrial loot spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -40,15 +42,16 @@
     chance: 1.0
     offset: 0.0
     rarePrototypes:
-      - CrateHarvesterSingularity
+      - CrateHarvesterSingularity # Death
       - CrateHarvesterSingularityFake
-    rareChance: 0.2
+    rareChance: 0.1
 
 - type: entity
   id: RandomHarvesterTechnologicalLoot
   name: random harvester technological loot spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -60,8 +63,16 @@
       - CrateHarvesterAnomaly
       - CrateHarvesterArtifact
       - CrateHarvesterTechnologyDisk
+      - CrateHarvesterResearchDisk
+      - CrateHarvesterAnomalyKit
+      - CrateHarvesterEncryptionKey
+      - CrateHarvesterBorg
+      - CrateHarvesterMech
     chance: 1.0
     offset: 0.0
+    rarePrototypes:
+      - CrateHarvesterReagentSlime # Death
+      - BaseResearchAndDevelopmentPointSource
     rareChance: 0.2
 
 - type: entity
@@ -69,6 +80,7 @@
   name: random harvester biological loot spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -76,9 +88,17 @@
       - sprite: Structures/Machines/bluespace_harvester.rsi
         state: tap_5
   - type: RandomSpawner
+    prototypes:
+      - CrateHarvesterImplanter
+      - CrateHarvesterInjection
+      - CrateHarvesterMedkit
+      - CrateHarvesterSeeds
+    rarePrototypes:
+      - CrateHarvesterRomerol # Death
+      - CrateHarvesterDoctorsDelight
     chance: 1.0
     offset: 0.0
-    rareChance: 0.2
+    rareChance: 0.1
 
 # Industrial
 - type: entity
@@ -86,6 +106,7 @@
   name: random harvester materials spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -117,6 +138,7 @@
   name: random harvester power cell spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -139,6 +161,7 @@
   name: random harvester beer spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -159,6 +182,7 @@
   name: random harvester tools spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -182,6 +206,7 @@
   name: random harvester backpack holding spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -205,6 +230,7 @@
   name: random harvester circuitboard spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -237,6 +263,7 @@
   name: random harvester technology disk spawner
   suffix: Bluespace Harvester, DO NOT MAP
   parent: MarkerBase
+  noSpawn: true
   components:
   - type: Sprite
     layers:
@@ -251,3 +278,248 @@
     rarePrototypes:
       - TechnologyDiskRare
     rareChance: 0.3
+
+- type: entity
+  id: RandomHarvesterResearchDisk
+  name: random harvester research disk spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Research/researchdisk.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - ResearchDisk5000
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - ResearchDisk10000
+    rareChance: 0.3
+
+- type: entity
+  id: RandomHarvesterAnomalyKit
+  name: random harvester anomaly kit spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+        state: base
+  - type: RandomSpawner
+    prototypes:
+      - AnomalyScanner
+      - WeaponPistolCHIMP
+      - AnomalyLocator
+      - AnomalyLocatorWide
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - WeaponPistolCHIMPUpgraded
+    rareChance: 0.3
+
+- type: entity
+  id: RandomHarvesterEncryptionKey
+  name: random harvester encryption key spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Devices/encryption_keys.rsi
+        state: crypt_gold
+  - type: RandomSpawner
+    prototypes:
+      - BoxEncryptionKeyService
+      - BoxEncryptionKeySecurity
+      - BoxEncryptionKeyScience
+      - BoxEncryptionKeyRobo
+      - BoxEncryptionKeyPassenger
+      - BoxEncryptionKeyMedical
+      - BoxEncryptionKeyMedicalScience
+      - BoxEncryptionKeyEngineering
+      - BoxEncryptionKeyCargo
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - EncryptionKeyStationMaster
+      - EncryptionKeyCentCom
+      - EncryptionKeySyndie
+      - EncryptionKeyBinary
+    rareChance: 0.05
+
+- type: entity
+  id: RandomHarvesterBorg
+  name: random harvester borg spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Mobs/Silicon/chassis.rsi
+        state: engineer
+  - type: RandomSpawner
+    prototypes:
+      - BorgChassisMining
+      - BorgChassisEngineer
+      - BorgChassisJanitor
+      - BorgChassisService
+      - BorgChassisMedical
+    chance: 1.0
+    offset: 0.0
+
+- type: entity
+  id: RandomHarvesterMech
+  name: random harvester mech spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: ripley-open
+  - type: RandomSpawner
+    prototypes:
+      - MechHamtrBattery
+      - MechHonkerBattery
+      - MechRipley
+    chance: 1.0
+    offset: 0.0
+
+# Biological
+- type: entity
+  id: RandomHarvesterInjection
+  name: random harvester injection spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Chemistry/syringe.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - BluespaceBeaker
+      - SyringeBluespace
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - Hypospray
+      - HypopenBox
+    rareChance: 0.02
+
+- type: entity
+  id: RandomHarvesterImplanter
+  name: random harvester implanter spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Medical/implanter.rsi
+        state: implanter0
+  - type: RandomSpawner
+    prototypes:
+      - BikeHornImplanter
+      - LightImplanter
+      - MindShieldImplanter
+      - SadTromboneImplanter
+      - TrackingImplanter
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - MacroBombImplanter
+      - MicroBombImplanter
+      - StorageImplanter
+      - EmpImplanter
+      - FreedomImplanter
+      - DeathRattleImplanter
+      - UplinkImplanter
+      - DnaScramblerImplanter
+    rareChance: 0.01
+
+- type: entity
+  id: RandomHarvesterMedkit
+  name: random harvester medkit spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Medical/firstaidkits.rsi
+        state: blackkit
+  - type: RandomSpawner
+    prototypes:
+      - MedkitOxygenFilled
+      - MedkitAdvancedFilled
+      - MedkitBruteFilled
+      - MedkitBurnFilled
+      - MedkitRadiationFilled
+      - MedkitToxinFilled
+      - MedkitCombatFilled
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - StimkitFilled
+    rareChance: 0.01
+
+- type: entity
+  id: RandomHarvesterSeeds
+  name: random harvester seeds spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
+        state: seed
+  - type: RandomSpawner
+    prototypes:
+      - CrateHydroponicsSeeds
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - CrateHydroponicsSeedsExotic
+      - CrateHydroponicsSeedsMedicinal
+    rareChance: 0.5
+
+- type: entity
+  id: RandomHarvesterDoctorsDelight
+  name: random harvester doctors delight spawner
+  suffix: Bluespace Harvester, DO NOT MAP
+  parent: MarkerBase
+  noSpawn: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Drinks/doctorsdelightglass.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - DrinkDoctorsDelightGlass
+    chance: 1.0
+    offset: 0.0
+    rarePrototypes:
+      - OmnizineChemistryBottle
+    rareChance: 0.2
