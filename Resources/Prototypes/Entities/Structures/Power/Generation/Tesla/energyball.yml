@@ -43,7 +43,7 @@
             radius: 0.65
         hard: true
         restitution: 0.8
-        density: 99999
+        density: 99999 # to do: remove the interaction with the explosions. Now the explosions can push the Tesla very far away from the station.
         mask:
         - Opaque
         layer:
@@ -98,7 +98,7 @@
             radius: 0.35
         hard: true
         restitution: 0.8
-        density: 99999
+        density: 99999 #to do: fix collider - the sphere pushes the entities apart. 9999 density is needed to avoid high velocities when colliding with a containment field. Collision is needed to collide with the containment field.
         mask:
         - Opaque
         layer:
