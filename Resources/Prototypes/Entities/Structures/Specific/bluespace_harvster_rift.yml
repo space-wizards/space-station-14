@@ -81,7 +81,7 @@
     netsync: false
   - type: NavMapBeacon
     color: "#ff0000"
-    text: redspace rift
+    text: bloodspace rift
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
