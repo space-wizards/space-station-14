@@ -254,6 +254,17 @@
     - id: RandomHarvesterDoctorsDelight
       amount: 30
 
+
+- type: entity
+  id: CrateHarvesterSeeds
+  parent: CrateBiologicalSecure
+  suffix: Bluespace Harvester, Seeds
+  components:
+  - type: BluespaceHarvesterBundle
+    contents:
+    - id: RandomHarvesterSeeds
+      amount: 4
+
 # Destructionl Loot
 - type: entity
   id: CrateHarvesterTurretSyndicate
@@ -334,4 +345,3 @@
     contents:
     - id: RandomHarvesterBomb
       amount: 8
-

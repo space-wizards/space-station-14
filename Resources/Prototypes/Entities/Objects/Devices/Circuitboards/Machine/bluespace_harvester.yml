@@ -1,18 +1,23 @@
 - type: entity
   id: MachineBluespaceHarvesterCircuitboard
   parent: BaseMachineCircuitboard
-  name: PA fuel chamber board
-  description: A machine board for a particle accelerator fuel chamber
+  name: Bluespace Harvester board
+  description: A machine board for a Bluespace Harvester
   components:
     - type: Sprite
-      state: engineering
+      state: bluespace
     - type: MachineBoard
-      prototype: ParticleAcceleratorFuelChamberUnfinished
-      componentRequirements:
-        AmeFuelContainer:
-          Amount: 1
-          DefaultPrototype: AmeJar
-          ExamineName: AME Fuel Jar
+      prototype: BluespaceHarvester
+      requirements:
+        Manipulator: 5
+        Capacitor: 5
+        MatterBin: 15
       materialRequirements:
-        Glass: 10
-        Steel: 10
+        Glass: 15
+        Steel: 15
+        CableHV: 5
+      tagRequirements:
+        GlassBeaker:
+          Amount: 5
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
