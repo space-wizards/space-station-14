@@ -420,7 +420,7 @@
     layers:
       - state: red
       - sprite: Objects/Specific/Chemistry/syringe.rsi
-        state: icon
+        state: syringe_base0
   - type: RandomSpawner
     prototypes:
       - BluespaceBeaker
