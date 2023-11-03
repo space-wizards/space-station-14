@@ -61,6 +61,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        SubscribeLocalEvent<RevolutionaryRuleComponent, EntityUnpausedEvent>(OnRuleUnpaused);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
     }
@@ -70,6 +71,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         base.Started(uid, component, gameRule, args);
         component.CommandCheck = _timing.CurTime + component.TimerWait;
         component.StartTime = _timing.CurTime + _random.Next(component.MinStartDelay, component.MaxStartDelay);
+    }
+
+    private void OnRuleUnpaused(EntityUid uid, RevolutionaryRuleComponent comp, EntityUnpausedEvent ev)
+    {
+        comp.StartTime += ev.PausedTime;
     }
 
     /// <summary>
@@ -94,7 +100,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             return;
         }
 
-        if (component.StartTime != null && component.StartTime <= _timing.CurTime)
+        if (component.StartTime <= _timing.CurTime)
         {
             var query = QueryActiveRules();
             while (query.MoveNext(out _, out var comp, out _))

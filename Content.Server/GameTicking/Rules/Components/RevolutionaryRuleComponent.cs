@@ -69,7 +69,7 @@ public sealed partial class RevolutionaryRuleComponent : Component
     /// When Revs will start during a shift.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan? StartTime;
+    public TimeSpan StartTime;
 
     /// <summary>
     /// The minimum amount of time after the round starts that the Head Revs will be chosen.
