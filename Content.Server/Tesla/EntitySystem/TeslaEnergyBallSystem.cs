@@ -6,6 +6,7 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Physics.Events;
+using Content.Server.Lightning.Components;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -45,6 +46,8 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
     private void OnStartCollide(Entity<TeslaEnergyBallComponent> tesla, ref StartCollideEvent args)
     {
         if (TryComp<ContainmentFieldComponent>(args.OtherEntity, out var field))
+            return;
+        if (TryComp<LightningComponent>(args.OtherEntity, out var lightning)) //its dirty. but idk how to setup colliders to not eating lightnings
             return;
         if (TryComp<SinguloFoodComponent>(args.OtherEntity, out var singuloFood))
         {
