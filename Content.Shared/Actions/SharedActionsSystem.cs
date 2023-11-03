@@ -382,10 +382,7 @@ public abstract class SharedActionsSystem : EntitySystem
             actionEvent.Handled = false;
             var target = performer;
 
-            if (action.AttachedEntity == performer || action.RaiseOnUser)
-                target = performer;
-
-            if (action.Container != null && !HasComp<MindComponent>(action.Container))
+            if (!action.RaiseOnUser && action.Container != null && !HasComp<MindComponent>(action.Container))
                 target = action.Container.Value;
 
             RaiseLocalEvent(target, (object) actionEvent, broadcast: true);
