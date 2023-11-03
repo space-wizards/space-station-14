@@ -1,0 +1,14 @@
+ent-BaseMobBehonker = бехонкер
+    .desc = Парящий демонический аспект хонкоматери.
+ent-MobBehonkerElectrical = бехонкер
+    .suffix = Электро
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerPyro = бехонкер
+    .suffix = Пиро
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerGrav = бехонкер
+    .suffix = Гравитация
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerIce = бехонкер
+    .suffix = Лёд
+    .desc = { ent-BaseMobBehonker.desc }

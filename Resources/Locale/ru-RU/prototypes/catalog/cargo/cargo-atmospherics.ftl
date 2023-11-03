@@ -1,0 +1,8 @@
+ent-AtmosphericsAir = { ent-AirCanister }
+    .desc = { ent-AirCanister.desc }
+ent-AtmosphericsOxygen = { ent-OxygenCanister }
+    .desc = { ent-OxygenCanister.desc }
+ent-AtmosphericsNitrogen = { ent-NitrogenCanister }
+    .desc = { ent-NitrogenCanister.desc }
+ent-AtmosphericsCarbonDioxide = { ent-CarbonDioxideCanister }
+    .desc = { ent-CarbonDioxideCanister.desc }
