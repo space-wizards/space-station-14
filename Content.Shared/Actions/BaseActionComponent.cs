@@ -121,7 +121,7 @@ public abstract partial class BaseActionComponent : Component
     [ViewVariables] public EntityUid? AttachedEntity;
 
     /// <summary>
-    ///     The preferred entity to raise an action event on.
+    ///     If true, this will cause the the action event to always be raised directed at the action performer/user instead of the action's container/provider.
     /// </summary>
     [DataField("raiseOnUser"), ViewVariables]
     public bool RaiseOnUser;
