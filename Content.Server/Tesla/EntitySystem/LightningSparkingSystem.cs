@@ -23,7 +23,7 @@ public sealed class LightningSparkingSystem : EntitySystem
     private void OnHitByLightning(Entity<LightningSparkingComponent> uid, ref HitByLightningEvent args)
     {
         _appearance.SetData(uid.Owner, TeslaCoilVisuals.Lightning, true);
-        uid.Comp.LightningEndTime = _gameTiming.CurTime + uid.Comp.LightningTime;
+        uid.Comp.LightningEndTime = _gameTiming.CurTime + TimeSpan.FromSeconds(uid.Comp.LightningTime);
         uid.Comp.IsSparking = true;
     }
 
