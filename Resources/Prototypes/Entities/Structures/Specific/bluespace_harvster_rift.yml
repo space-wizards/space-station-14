@@ -1,7 +1,7 @@
 - type: entity
   id: BluespaceHarvesterRift
-  name: bloodspace rift
-  description: RUN!
+  name: redspace rift
+  description: Run! Run while you can! Just run!
   placement:
     mode: SnapgridCenter
   components:
@@ -31,11 +31,13 @@
         cost: 40
       - id: MobAdultSlimesGreenAngry
         cost: 40
+      - id: ReagentSlimeSpawner
+        cost: 60
       # Carps
       - id: MobCarp
         cost: 70
       - id: MobCarpMagic
-        cost: 70
+        cost: 90
       # Space
       - id: MobKangarooSpace
         cost: 35
@@ -57,6 +59,8 @@
       # DEATH
       - id: FleshKudzu
         cost: 300
+      - id: SpawnMobBehonker
+        cost: 600
       - id: MobDragon
         cost: 700
   - type: Transform
@@ -76,12 +80,12 @@
   - type: PointLight
     enabled: true
     color: "#ff0000"
-    radius: 10.0
+    radius: 12.0
     energy: 5.0
     netsync: false
   - type: NavMapBeacon
     color: "#ff0000"
-    text: bloodspace rift
+    text: redspace rift
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -89,7 +93,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
