@@ -13,13 +13,13 @@ public sealed partial class LightningSparkingComponent : Component
     /// <summary>
     /// Spark duration.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer), required: true)]
     public TimeSpan LightningTime = TimeSpan.FromSeconds(4);
 
     /// <summary>
     /// When the spark visual should turn off.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer), required: true)]
     public TimeSpan LightningEndTime;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
