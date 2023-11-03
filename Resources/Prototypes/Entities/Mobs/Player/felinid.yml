@@ -1,11 +1,10 @@
 - type: entity
   save: false
-  name: Urist McWeb
-  parent: BaseMobArachnid
-  id: MobArachnid
+  name: Urist McFelinid
+  parent: MobFelinidBase
+  id: MobFelinid
   components:
   - type: CombatMode
-    canDisarm: true
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic
@@ -20,10 +19,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 2 # Make sure you have O2 on you at all times
+        Asphyxiation: 1.0
     damageRecovery:
       types:
-        Asphyxiation: -0.5 # Recovery will suck without chems
+        Asphyxiation: -1.0
   - type: Alerts
   - type: Actions
   - type: Eye

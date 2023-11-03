@@ -18,16 +18,12 @@
       proper: true
   - type: Tag
     tags:
-    - DoorBumpOpener
-    - VimPilot
+      - DoorBumpOpener
   - type: Access
     tags:
     - Chapel
   - type: MindContainer
     showExamineInfo: true
-  - type: NpcFactionMember
-    factions:
-    - PetsNT
   - type: Alerts
   - type: Familiar
 
@@ -46,6 +42,7 @@
     rules: ghost-role-information-cerberus-rules
   - type: GhostTakeoverAvailable
   - type: MeleeWeapon
+    hidden: true
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -54,9 +51,6 @@
         Slash: 7
   - type: InputMover
   - type: MobMover
-  - type: NpcFactionMember
-    factions:
-    - SimpleNeutral
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-corrupted-corgi
@@ -65,15 +59,14 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Dead
+      160: Dead
   - type: Grammar
     attributes:
       gender: male
       proper: true
   - type: Tag
     tags:
-    - DoorBumpOpener
-    - VimPilot
+      - DoorBumpOpener
   - type: Access
     tags:
     - Chapel

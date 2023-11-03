@@ -1,8 +1,8 @@
 # Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
-  parent: BaseMobSpeciesOrganic
-  id: BaseMobHuman
   name: Urist McHands
+  parent: BaseMobOrganic
+  id: BaseMobHuman
   abstract: true
   components:
   - type: Hunger
@@ -10,9 +10,6 @@
       types:
         Cold: 0.5
         Bloodloss: 0.5
-  - type: Icon # It will not have an icon in the adminspawn menu without this. Body parts seem fine for whatever reason.
-    sprite: Mobs/Species/Human/parts.rsi
-    state: full
   - type: Thirst
   - type: Perishable
   - type: Butcherable
@@ -22,6 +19,7 @@
       amount: 5
 
 - type: entity
-  parent: BaseSpeciesDummy
+  name: Urist McHands
   id: MobHumanDummy
+  parent: BaseMobOrganicDummy
   noSpawn: true

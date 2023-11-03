@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McFluff
-  parent: BaseMobSpeciesOrganic
+  parent: BaseMobOrganic
   id: BaseMobMoth
   abstract: true
   components:
@@ -112,7 +112,7 @@
         visible: false
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent: BaseMobMoth
   id: MobMothDummy
   noSpawn: true
   components:

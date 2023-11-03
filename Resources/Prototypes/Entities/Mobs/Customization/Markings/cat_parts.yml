@@ -37,4 +37,4 @@
         - !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
-    state: tail_cat
+    state: tail_cat_wag # Corvax-Sponsors

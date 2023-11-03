@@ -4,6 +4,15 @@
   parent: BaseMobDiona
   id: MobDiona
   components:
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+      messagePerceivedByOthers: hugging-success-generic-others
+    - type: MindContainer
+      showExamineInfo: true
+    - type: Input
+      context: "human"
     - type: Respirator
       damage:
         types:
@@ -11,3 +20,10 @@
       damageRecovery:
         types:
           Asphyxiation: -1.0
+    - type: MobMover
+    - type: InputMover
+    - type: Alerts
+    - type: Eye
+    - type: CameraRecoil
+    - type: Examiner
+    - type: CanHostGuardian

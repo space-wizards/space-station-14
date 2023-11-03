@@ -1,0 +1,62 @@
+- type: entity
+  save: false
+  name: Urist McFelinid
+  parent: BaseMobHuman
+  id: MobFelinidBase
+  abstract: true
+  components:
+  - type: Sprite
+    scale: 0.8, 0.8
+  - type: HumanoidAppearance
+    species: Human
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.28
+        density: 140
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Body
+    prototype: Felinid
+  - type: Damageable
+    damageModifierSet: Human
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 1
+        Slash: 5
+  - type: Thieving
+    stealthy: true
+    stripTimeReduction: 1
+  - type: Speech
+    speechSounds: Alto
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 1
+  - type: Stamina
+    excess: 85
+  - type: Vocal
+    wilhelm: "/Audio/Voice/Felinid/cat_wilhelm.ogg"
+    sounds:
+      Male: MaleFelinid
+      Female: FemaleFelinid
+      Unsexed: MaleFelinid
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobFelinidDummy
+  noSpawn: true
+  description: A dummy felinid meant to be used in character setup.
+
+#Nya~~
