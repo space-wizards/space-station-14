@@ -123,7 +123,7 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     If true, this will cause the the action event to always be raised directed at the action performer/user instead of the action's container/provider.
     /// </summary>
-    [DataField("raiseOnUser"), ViewVariables]
+    [DataField]
     public bool RaiseOnUser;
 
     /// <summary>
