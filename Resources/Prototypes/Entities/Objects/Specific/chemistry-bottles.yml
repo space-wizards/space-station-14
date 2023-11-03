@@ -289,6 +289,54 @@
     - Bottle
 
 - type: entity
+  id: PaxChemistryBottle
+  name: pax bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Pax
+              Quantity: 30
+    - type: Tag
+      tags:
+        - Bottle
+
+- type: entity
+  id: MuteToxinChemistryBottle
+  name: mute toxin bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: MuteToxin
+              Quantity: 30
+    - type: Tag
+      tags:
+        - Bottle
+
+- type: entity
+  id: LeadChemistryBottle
+  name: lead bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Lead
+              Quantity: 30
+    - type: Tag
+      tags:
+        - Bottle
+
+- type: entity
   id: ToxinChemistryBottle
   name: toxin bottle
   parent: BaseChemistryEmptyBottle
