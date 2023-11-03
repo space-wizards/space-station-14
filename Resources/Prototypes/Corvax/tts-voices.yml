@@ -1,4 +1,4 @@
-﻿- type: ttsVoice
+- type: ttsVoice
   name: Папич
   description: Голос популярного стримера Папича
   sex: Male
@@ -35,7 +35,7 @@
 
 - type: ttsVoice
   name: Амина
-  description: Голос виртуального ютубера St. Anime Renewal
+  description: Голос виртуального ютубера St. Amina Renewal
   sex: Female
   speaker: amina
   id: amina
@@ -63,22 +63,22 @@
 
 - type: ttsVoice
   name: Добакин
-  sex: Unsexed
-  description: ''
+  description: Голос начинающего диктора Добакина
+  sex: Male
   speaker: dbkn
   id: dbkn
 
 - type: ttsVoice
   name: Хреноид
+  description: Голос начинающего диктора Хреноида
   sex: Male
-  description: ''
   speaker: xrenoid
   id: xrenoid
 
 - type: ttsVoice
   name: Валтос
-  sex: Unsexed
-  description: ''
+  description: Голос начинающего диктора Валтоса
+  sex: Female
   speaker: valtos
   id: valtos
 
@@ -146,13 +146,6 @@
   id: neco
 
 - type: ttsVoice
-  name: Солдат
-  description: Голос персонажа Солдат из Team Fortress 2
-  sex: Male
-  speaker: soldier
-  id: soldier
-
-- type: ttsVoice
   name: SentryBot
   description: Голос персонажа SentryBot из Fallout 3
   sex: Male
@@ -188,6 +181,13 @@
   id: kodlakwhitemane
 
 - type: ttsVoice
+  name: Каджит
+  description: Голос персонажа Каджит из игры TES 5 Skyrim
+  sex: Male
+  speaker: khajiit
+  id: khajiit
+
+- type: ttsVoice
   name: GLaDOS
   description: Голос персонажа GLaDOS из игры Portal 2
   sex: Female
@@ -204,14 +204,14 @@
 - type: ttsVoice
   name: Модуль Фактов
   description: Голос персонажа Модуль Фактов из игры Portal 2
-  sex: Unsexed
+  sex: Male
   speaker: fact_core
   id: fact_core
 
 - type: ttsVoice
   name: Модуль Космоса
   description: Голос персонажа Модуль Космоса из игры Portal 2
-  sex: Unsexed
+  sex: Male
   speaker: space_core
   id: space_core
 
@@ -224,28 +224,28 @@
 
 - type: ttsVoice
   name: Геральт из Ривии
-  description: Голос персонажа Геральт из Ривии из игры Ведьмак 3
+  description: Голос персонажа Геральт из Ривии из игры The Witcher 3
   sex: Male
   speaker: geralt
   id: geralt
 
 - type: ttsVoice
   name: Цирилла
-  description: Голос персонажа Цирилла из игры Ведьмак 3
+  description: Голос персонажа Цирилла из игры The Witcher 3
   sex: Female
   speaker: cirilla
   id: cirilla
 
 - type: ttsVoice
   name: Ламберт
-  description: Голос персонажа Ламберт из игры Ведьмак 3
+  description: Голос персонажа Ламберт из игры The Witcher 3
   sex: Male
   speaker: lambert
   id: lambert
 
 - type: ttsVoice
   name: Трисс
-  description: Голос персонажа Трисс из игры Ведьмак 3
+  description: Голос персонажа Трисс из игры The Witcher 3
   sex: Female
   speaker: triss
   id: triss
@@ -274,7 +274,7 @@
 - type: ttsVoice
   name: Зиггс
   description: Голос персонажа Зиггс из игры League of Legends
-  sex: Unsexed
+  sex: Male
   speaker: ziggs
   id: ziggs
 
@@ -322,21 +322,21 @@
 
 - type: ttsVoice
   name: Лесник
-  description: Голос персонажа Лесник из игры S.T.A.L.K.E.R
+  description: Голос персонажа Лесник из игры S.T.A.L.K.E.R.
   sex: Male
   speaker: forester
   id: forester
 
 - type: ttsVoice
   name: Сидорович
-  description: Голос персонажа Сидорович из игры S.T.A.L.K.E.R
+  description: Голос персонажа Сидорович из игры S.T.A.L.K.E.R.
   sex: Male
   speaker: sidorovich
   id: sidorovich
 
 - type: ttsVoice
   name: Стрелок
-  description: Голос персонажа Стрелок из игры S.T.A.L.K.E.R
+  description: Голос персонажа Стрелок из игры S.T.A.L.K.E.R.
   sex: Male
   speaker: strelok
   id: strelok
@@ -347,6 +347,13 @@
   sex: Female
   speaker: tracer
   id: tracer
+
+- type: ttsVoice
+  name: Солдат
+  description: Голос персонажа Солдат из Team Fortress 2 из английской озвучки
+  sex: Male
+  speaker: soldier
+  id: soldier
 
 - type: ttsVoice
   name: Инженер
@@ -389,3 +396,53 @@
   sex: Male
   speaker: spy
   id: spy
+
+- type: ttsVoice
+  name: Каратель
+  description: Голос персонажа Каратель из игры The Punisher
+  sex: Male
+  speaker: punisher
+  id: punisher
+
+- type: ttsVoice
+  name: Джонни Сильверхенд
+  description: Голос персонажа Джонни Сильверхенд из игры Cyberpunk 2077
+  sex: Male
+  speaker: johnny
+  id: johnny
+
+- type: ttsVoice
+  name: Панам Палмер
+  description: Голос персонажа Панам Палмер из игры Cyberpunk 2077
+  sex: Female
+  speaker: panam
+  id: panam
+
+- type: ttsVoice
+  name: Ви
+  description: Голос персонажа Ви из игры Cyberpunk 2077
+  sex: Female
+  speaker: v_female
+  id: v_female
+
+- type: ttsVoice
+  name: Сержант Дорнан
+  description: Голос персонажа Сержант Дорнан из игры Fallout 2
+  sex: Male
+  speaker: dornan
+  id: dornan
+
+- type: ttsVoice
+  name: Офицер Анклава
+  description: Голос персонажа Офицер Анклава из игры Fallout 2
+  sex: Male
+  speaker: officer_enclave
+  id: officer_enclave
+
+- type: ttsVoice
+  name: Дик Ричардсон
+  description: Голос персонажа Ричард «Дик» Ричардсон из игры Fallout 2
+  sex: Male
+  speaker: richardson
+  id: richardson
+
