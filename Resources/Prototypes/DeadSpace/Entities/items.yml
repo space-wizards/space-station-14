@@ -1,0 +1,123 @@
+- type: entity
+  parent: BaseItem
+  id: ObeliskStoper
+  name: C140
+  description: Останавливает некрообелиск на некоторое время.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Research/anomalyscanner.rsi
+    state: icon
+  - type: NecroobeliskStoper
+
+- type: cargoProduct
+  id: ObeliskStoperProduct
+  icon:
+    sprite: Objects/Specific/Research/anomalyscanner.rsi
+    state: icon
+  product: CrateObeliskStoper
+  cost: 10000
+  category: Science
+  group: market
+
+- type: cargoProduct
+  id: ZetaOneMedipenProduct
+  icon:
+    sprite: Objects/Specific/Medical/medipen.rsi
+    state: medipen
+  product: CrateZetaOneMedipen
+  cost: 5000
+  category: Medicine
+  group: market
+
+- type: entity
+  id: CrateObeliskStoper
+  parent: CrateScienceSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ObeliskStoper
+
+- type: entity
+  parent: CrateMedicalSecure
+  id: CrateZetaOneMedipen
+  components:
+    - type: StorageFill
+      contents:
+        - id: ZetaOneMedipen
+          amount: 5
+
+- type: reagent
+  id: ExtractInfectorDead
+  name: Экстракт инфектора
+  group: Toxins
+  desc: Густой и розовый, пахнет отвратительно. Пробовать не стану!
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sweet
+  color: "#e0a5b9"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:CauseInfectionDead
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
+
+- type: entity
+  name: шприц
+  parent: BaseSyringe
+  id: SyringeExtractInfectorDead
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: ExtractInfectorDead
+              Quantity: 15
+
+- type: reagent
+  id: ZetaOne
+  name: ЗетаВан
+  group: Medicine
+  desc: На вкус как лекарство
+  physicalDesc: reagent-physical-desc-thick
+  flavor: medicine
+  color: "#86caf7"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:CureInfectionDead
+          conditions:
+            - !type:ReagentThreshold
+              min: 14
+
+- type: entity
+  name: zetaOne медипен
+  parent: ChemicalMedipen
+  id: ZetaOneMedipen
+  description: Содержит в себе лекарство от вируса некроморфозы.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: hypovolemic
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: hypovolemic_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+          - ReagentId: ZetaOne
+            Quantity: 15
+          - ReagentId: Phalanximine
+            Quantity: 15
+  - type: Tag
+    tags: []

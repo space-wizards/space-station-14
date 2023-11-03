@@ -1,0 +1,538 @@
+- type: damageModifierSet
+  id: Necro #Blunt resistant and immune to biological threats, but can be hacked apart and burned
+  coefficients:
+    Blunt: 0.7
+    Slash: 1
+    Piercing: 0.9
+    Shock: 1
+    Cold: 0.3
+    Heat: 1
+    Poison: 0.0
+    Radiation: 0.0
+
+- type: emoteSounds
+  id: Necro
+  sound:
+    collection: NecroScreams
+    params:
+      variation: 0.125
+
+
+- type: soundCollection
+  id: NecroScreams
+  files:
+    - /Audio/DeadSpace/Necromorfs/necromorphSound.ogg
+    - /Audio/DeadSpace/Necromorfs/necromorphSound2.ogg
+    - /Audio/DeadSpace/Necromorfs/necroSlasher1.ogg
+    - /Audio/DeadSpace/Necromorfs/necroSlasher2.ogg
+
+- type: entity
+  name: Slasher
+  id: MobSlasher
+  parent: SimpleSpaceMobBase
+  description: Похож на мутировавший труп.
+  components:
+  - type: Insulated
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: XenoCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: Tool
+    speed: 3
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - Necromorfs
+  - type: Hands
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/slasher.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      250: Dead
+  - type: Stamina
+    critThreshold: 200
+  - type: Bloodstream
+    bloodMaxVolume: 100
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 0
+    soundHit:
+     collection: AlienClaw
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 15
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: running
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+  - type: Puller
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-slasher-name
+    description: ghost-role-information-slasher-description
+    rules: ghost-role-information-slasher-rules
+  - type: GhostTakeoverAvailable
+  - type: TypingIndicator
+    proto: alien
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: -150
+    currentTemperature: 310.15
+  - type: Tag
+    tags:
+      - Flesh
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
+    molsPerSecondPerUnitMass: 0.0005
+  - type: Speech
+    speechVerb: LargeMob
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2
+  - type: Vocal
+    sounds:
+      Male: Necro
+      Female: Necro
+      Unsexed: Necro
+  - type: Damageable
+    damageModifierSet: Necro
+  - type: Unitology
+
+
+
+- type: entity
+  name: pregnant
+  id: MobPregnant
+  parent: MobSlasher
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/pregnant.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Dead
+  - type: Pregant
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-pregnant-name
+    description: ghost-role-information-pregnant-description
+    rules: ghost-role-information-pregnant-rules
+
+- type: entity
+  name: brute
+  id: MobBrute
+  parent: MobSlasher
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/brute.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1200: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3
+  - type: Butcherable
+    butcheringType: Knife
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 0
+    soundHit:
+     collection: Punch
+    animation: WeaponArcBite
+    damage:
+      types:
+        Blunt: 75
+        Structural: 50
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-brute-name
+    description: ghost-role-information-brute-description
+    rules: ghost-role-information-brute-rules
+
+
+- type: entity
+  name: Infector
+  id: MobInfector
+  parent: MobSlasher
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/infector.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: InfectorDead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-infector-name
+    description: ghost-role-information-infector-description
+    rules: ghost-role-information-infector-rules
+
+- type: entity
+  name: Divader
+  id: MobDivader
+  parent: MobSlasher
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/divader.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3
+  - type: Divader
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-divader-name
+    description: ghost-role-information-divader-description
+    rules: ghost-role-information-divader-rules
+
+- type: entity
+  name: Divader
+  id: MobDivaderLH
+  parent: MobSlasher
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/divader_left_hand.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+  - type: GhostRole
+    allowMovement: false
+    allowSpeech: false
+    makeSentient: false
+
+- type: entity
+  name: Divader
+  id: MobDivaderRH
+  parent: MobSlasher
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/divader_right_hand.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+  - type: GhostRole
+    allowMovement: false
+    allowSpeech: false
+    makeSentient: false
+
+
+- type: entity
+  name: Divader
+  id: MobDivaderH
+  parent: MobSlasher
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/divader_head.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+  - type: GhostRole
+    allowMovement: false
+    allowSpeech: false
+    makeSentient: false
+
+- type: entity
+  parent: BaseStructure
+  name: красный обелиск
+  id: StructureObelisk
+  pdescription: От него веет смертью.
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    noRot: true
+    sprite: DeadSpace/Mobs/Necromorfs/obelisk.rsi
+    layers:
+    - state: active
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - Impassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: Necroobelisk
+
+- type: entity
+  name: twitcher
+  id: MobTwitcher
+  parent: MobSlasher
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/twitcher.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      250: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-twitcher-name
+    description: ghost-role-information-twitcher-description
+    rules: ghost-role-information-twitcher-rules
+
+- type: npcFaction
+  id: Necromorfs
+  hostile:
+  - Revolutionary
+  - NanoTrasen
+  - SimpleNeutral
+  - SimpleHostile
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Zombie
+
+- type: tile
+  id: NecroFlesh
+  name: tiles-flesh-floor
+  sprite: /Textures/Tiles/necrotile.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: BarestepCarpet
+  itemDrop: FloorTileItemFlesh
+  friction: 0.05 #slippy
+  heatCapacity: 10000
+
+- type: entity
+  id: NecroKudzu
+  name: tendons
+  description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      sprite: DeadSpace/Mobs/Necromorfs/necrokudzu.rsi
+      state: kudzu_11
+      drawdepth: FloorTiles
+    - type: Appearance
+    - type: KudzuVisuals
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - MidImpassable
+    - type: Damageable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Kudzu
+      growthTickChance: 0.05
+      spreadChance: 0.1
+      # Heals each time it manages to do a growth tick:
+      damageRecovery:
+        types:
+          Slash: -0.5
+          Heat: -1.0
+          Cold: -1.0
+          Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 10
+      coldDamage:
+        types:
+          Cold: 5 #per second, scales with temperature & other constants
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 0.10 #per second, scales with pressure and other constants.
+    - type: Flammable
+      fireSpread: true
+      damage:
+       types:
+         Heat: 1
+    - type: GrowingKudzu
+      growthTickChance: 0.05
+    - type: AtmosExposed
+    - type: ActiveEdgeSpreader
+    - type: EdgeSpreader
+      id: Kudzu
+    - type: SlowContacts
+      walkSpeedModifier: 0.3
+      sprintSpeedModifier: 0.3
+      ignoreWhitelist:
+        tags:
+        - Flesh
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 0.25
+      damageRecovery:
+        types:
+          Asphyxiation: -0.25

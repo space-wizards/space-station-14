@@ -20,6 +20,7 @@ head-rev-initial-name-user = [color=#5e9cff]{$name}[/color] ([color=gray]{$usern
 head-rev-initial-count = {$initialCount ->
     [one] There was one Head Revolutionary:
     *[other] There were {$initialCount} Head Revolutionaries:
+
 }
 
 head-rev-break-mindshield = The Mindshield was destroyed!
@@ -43,6 +44,7 @@ rev-briefing = Help your head revolutionaries kill every head to take over the s
 
 rev-title = Revolutionaries
 rev-description = Revolutionaries are among us.
+
 
 rev-not-enough-ready-players = Not enough players readied up for the game. There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start a Revolution.
 rev-no-one-ready = No players readied up! Can't start a Revolution.

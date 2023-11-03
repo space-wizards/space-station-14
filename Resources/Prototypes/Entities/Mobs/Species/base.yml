@@ -219,6 +219,7 @@
     - CanPilot
     - FootstepSound
     - DoorBumpOpener
+  - type: Sanity
 
 - type: entity
   save: false

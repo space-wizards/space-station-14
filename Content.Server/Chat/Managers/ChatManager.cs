@@ -28,7 +28,8 @@ namespace Content.Server.Chat.Managers
             // I had plans for multiple colors and those went nowhere so...
             { "nuclear_operative", "#aa00ff" },
             { "syndicate_agent", "#aa00ff" },
-            { "revolutionary", "#aa00ff" }
+            { "revolutionary", "#aa00ff" },
+            { "unitology", "#aa00ff" }
         };
 
         [Dependency] private readonly IReplayRecordingManager _replay = default!;

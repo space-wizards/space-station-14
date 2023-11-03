@@ -1,0 +1,11 @@
+- type: gamePreset
+  id: Unitology
+  alias:
+    - uni
+    - unis
+    - Unitology
+  name: rev-title
+  description: uni-description
+  showInVote: false
+  rules:
+    - Unitology

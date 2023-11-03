@@ -1,0 +1,22 @@
+- type: entity
+  id: NecroobeliskSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 1
+    minimumPlayers: 1
+    weight: 10
+    duration: 1
+    maxOccurrences: 1
+  - type: VentCrittersRule
+    entries:
+    - id: StructureObelisk
+      prob: 1
+
+- type: entity
+  id: Unitology
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: UnitologyRule

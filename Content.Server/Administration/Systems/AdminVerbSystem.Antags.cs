@@ -19,6 +19,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
+    [Dependency] private readonly UnitologyRuleSystem _unitologyRule = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
@@ -120,5 +121,21 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-head-rev"),
         };
         args.Verbs.Add(headRev);
+
+        Verb uni = new()
+        {
+            Text = Loc.GetString("Сделать юнитолога"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Misc/job_icons.rsi/HeadUnitology.png")),
+            Act = () =>
+            {
+                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
+                    return;
+                _unitologyRule.OnUniAdmin(mindId, mind);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("Превратить в юнитолога."),
+        };
+        args.Verbs.Add(uni);
     }
 }

@@ -145,7 +145,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         while (query.MoveNext(out _, out var comp, out _))
         {
             _antagSelection.EligiblePlayers(comp.HeadRevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
-                "head-rev-role-greeting", "#5e9cff", out var chosen);
+                "rev-role-greeting", "#5e9cff", out var chosen);
             if (chosen.Any())
                 GiveHeadRev(chosen, comp.HeadRevPrototypeId, comp);
             else
@@ -246,7 +246,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
             if (mind.Session != null)
             {
-                var message = Loc.GetString("head-rev-role-greeting");
+                var message = Loc.GetString("rev-role-greeting");
                 var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
                 _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex("#5e9cff"));
             }

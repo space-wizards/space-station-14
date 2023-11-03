@@ -1,0 +1,298 @@
+
+- type: entity
+  id: MobNecromant
+  name: Necromant
+  parent: SimpleSpaceMobBase
+  description: От него веет смертью и загадочностью.
+  components:
+  - type: MindContainer
+  - type: InputMover
+  - type: MobMover
+  - type: Tool
+    speed: 3
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - Necromorfs
+  - type: Hands
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: DeadSpace/Mobs/Necromorfs/necromant.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: necromant
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      250: Dead
+  - type: Stamina
+    critThreshold: 200
+  - type: Bloodstream
+    bloodMaxVolume: 100
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 0
+    soundHit:
+     collection: AlienClaw
+    animation: WeaponArcBite
+    damage:
+      groups:
+        Brute: 15
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: running
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+  - type: Puller
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-information-necromant-name
+    description: ghost-role-information-necromant-description
+    rules: ghost-role-information-necromant-rules
+  - type: GhostTakeoverAvailable
+  - type: TypingIndicator
+    proto: alien
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: -150
+    currentTemperature: 310.15
+  - type: Tag
+    tags:
+      - Flesh
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
+    molsPerSecondPerUnitMass: 0.0005
+  - type: Speech
+    speechVerb: LargeMob
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Necromant
+  - type: PointLight
+    color: MediumPurple
+    radius: 2
+    softness: 1
+  - type: UserInterface
+    interfaces:
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+ # - type: Visibility
+  #  layer: 2 #ghost vis layer
+  - type: Store
+    categories:
+    - NecromantAbilities
+    currencyWhitelist:
+    - StolenEssence
+  - type: RandomMetadata
+    nameSegments:
+    - The
+    - NecromantType
+    - of
+    - NecromantAdjective
+    - NecromantTheme
+  - type: Damageable
+    damageModifierSet: Necro
+  - type: Unitology
+
+- type: entity
+  id: ActionNecromantArmy
+  name: Slasher
+  description: Призыв некромарфа.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: DeadSpace/Actions/slash.png
+    itemIconStyle: NoItem
+    event: !type:NecromantRaiseArmyActionEvent
+    useDelay: 120
+
+- type: entity
+  id: ActionNecromantTwitcher
+  name: Twitcher
+  description: Призыв бегуна.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: DeadSpace/Actions/twitch.png
+    itemIconStyle: NoItem
+    event: !type:NecromantRaiseTwitcherActionEvent
+    useDelay: 300
+
+- type: entity
+  id: ActionNecromantInfector
+  name: Infector
+  description: Призыв заразителя.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: DeadSpace/Actions/infector.png
+    itemIconStyle: NoItem
+    event: !type:NecromantRaiseInfectorActionEvent
+    useDelay: 600
+
+- type: entity
+  id: ActionNecromantDivader
+  name: Divader
+  description: Призыв разделителя.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: DeadSpace/Actions/divader.png
+    itemIconStyle: NoItem
+    event: !type:NecromantRaiseDivaderActionEvent
+    useDelay: 300
+
+- type: entity
+  id: ActionNecromantPregnant
+  name: Pregnant
+  description: Призыв беременного.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: DeadSpace/Actions/preg.png
+    itemIconStyle: NoItem
+    event: !type:NecromantRaisePregnantActionEvent
+    useDelay: 300
+
+- type: entity
+  id: ActionNecromantBrute
+  name: Brute
+  description: Призыв зверя.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: DeadSpace/Actions/brute.png
+    itemIconStyle: NoItem
+    event: !type:NecromantRaiseBruteActionEvent
+    useDelay: 1200
+
+#Necromant
+- type: storeCategory
+  id: NecromantAbilities
+  name: store-category-abilities
+
+
+- type: listing
+  id: NecromantArmy
+  name: Army
+  description: Этой способностью вы сможете призвать рядового некроморфа.
+  productAction: ActionNecromantArmy
+  cost:
+    StolenEssence: 30
+  categories:
+  - NecromantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: NecromantTwitcher
+  name: ArmyTwitcher
+  description: Этой способностью вы сможете призвать бегуна.
+  productAction: ActionNecromantTwitcher
+  cost:
+    StolenEssence: 60
+  categories:
+  - NecromantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: NecromantInfector
+  name: ArmyInfector
+  description: Этой способностью вы сможете призвать инфектора.
+  productAction: ActionNecromantInfector
+  cost:
+    StolenEssence: 100
+  categories:
+  - NecromantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: NecromantDivader
+  name: ArmyDivader
+  description: Этой способностью вы сможете призвать разделителя.
+  productAction: ActionNecromantDivader
+  cost:
+    StolenEssence: 80
+  categories:
+  - NecromantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: NecromantPregnant
+  name: ArmyPregnant
+  description: Этой способностью вы сможете призвать беременного.
+  productAction: ActionNecromantPregnant
+  cost:
+    StolenEssence: 80
+  categories:
+  - NecromantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: NecromantBrute
+  name: Brute
+  description: Этой способностью вы сможете призвать зверя.
+  productAction: ActionNecromantBrute
+  cost:
+    StolenEssence: 200
+  categories:
+  - NecromantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: entity
+  id: ActionNecromantShop
+  name: Shop
+  description: Открыть маазин способностей.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/shop.png
+    event: !type:NecromantShopActionEvent
+
