@@ -89,7 +89,7 @@ public class DockingControl : Control
         // Draw the fixtures around the dock before drawing it
         if (_entManager.TryGetComponent<FixturesComponent>(GridEntity, out var fixtures))
         {
-            foreach (var (_, fixture) in fixtures.Fixtures)
+            foreach (var fixture in fixtures.Fixtures.Values)
             {
                 var poly = (PolygonShape) fixture.Shape;
 
@@ -151,7 +151,7 @@ public class DockingControl : Control
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(worldPos - RangeVector, worldPos + RangeVector));
+        _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(worldPos - RangeVector, worldPos + RangeVector), ref _grids);
 
         foreach (var grid in _grids)
         {

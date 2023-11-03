@@ -9,7 +9,7 @@
       tags:
       - RollingPaper
       - CigFilter
-    capacity: 20
+    maxSlots: 20
   - type: StorageFill
     contents:
       - id: PaperRolling
@@ -31,7 +31,6 @@
       tags:
       - RollingPaper
       - CigFilter
-    capacity: 32
   - type: StorageFill
     contents:
       - id: PaperRolling
@@ -54,7 +53,7 @@
     state: cigpaper
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-    size: 5
+    size: Tiny
   - type: Tag
     tags:
     - RollingPaper
@@ -68,8 +67,6 @@
   components:
     - type: Stack
       count: 1
-    - type: Item
-      size: 1
 
 - type: entity
   id: CigaretteFilter
@@ -86,7 +83,7 @@
     state: cigfilter
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-    size: 10
+    size: Tiny
   - type: Tag
     tags:
     - CigFilter
@@ -99,5 +96,3 @@
   components:
     - type: Stack
       count: 1
-    - type: Item
-      size: 2

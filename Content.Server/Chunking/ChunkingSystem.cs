@@ -1,12 +1,12 @@
 using System.Linq;
 using Content.Shared.Decals;
 using Microsoft.Extensions.ObjectPool;
-using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chunking;
@@ -41,7 +41,7 @@ public sealed class ChunkingSystem : EntitySystem
     private void OnPvsRangeChanged(float value) => _baseViewBounds = Box2.UnitCentered.Scale(value);
 
     public Dictionary<NetEntity, HashSet<Vector2i>> GetChunksForSession(
-        IPlayerSession session,
+        ICommonSession session,
         int chunkSize,
         ObjectPool<HashSet<Vector2i>> indexPool,
         ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> viewerPool,
@@ -52,7 +52,7 @@ public sealed class ChunkingSystem : EntitySystem
         return chunks;
     }
 
-    private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)
+    private HashSet<EntityUid> GetSessionViewers(ICommonSession session)
     {
         var viewers = new HashSet<EntityUid>();
         if (session.Status != SessionStatus.InGame || session.AttachedEntity is null)

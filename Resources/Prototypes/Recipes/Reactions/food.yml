@@ -148,6 +148,7 @@
       amount: 30
     Enzyme:
       amount: 5
+      catalyst: true
   effects:
     - !type:CreateEntityReactionEffect
       entity: FoodTofu
@@ -158,11 +159,11 @@
   id: CookingKetchup
   reactants:
     JuiceTomato:
-      amount: 10
+      amount: 2
     Sugar:
-      amount: 5
+      amount: 1
   products:
-    Ketchup: 15
+    Ketchup: 3
 
 - type: reaction
   id: CookingMayoVinegar
@@ -203,67 +204,67 @@
   id: CookingKetchunaise
   reactants:
     Ketchup:
-      amount: 5
+      amount: 1
     Mayo:
-      amount: 5
+      amount: 1
   products:
-    Ketchunaise: 10
+    Ketchunaise: 2
 
 - type: reaction
   id: CookingBbqSauce
   reactants:
     Ketchup:
-      amount: 5
+      amount: 1
     Vinegar:
-      amount: 5
+      amount: 1
     Sugar:
-      amount: 5
+      amount: 1
   products:
-    BbqSauce: 15
+    BbqSauce: 3
 
 - type: reaction
   id: CookingHotsauce
   reactants:
     JuiceTomato:
-      amount: 5
+      amount: 1
     TableSalt:
-      amount: 5
+      amount: 1
     CapsaicinOil:
-      amount: 5
+      amount: 1
   products:
-    Hotsauce: 15
+    Hotsauce: 3
 
 - type: reaction
   id: CookingVinegar
   reactants:
     Ethanol:
-      amount: 5
+      amount: 1
     Oxygen:
-      amount: 5
+      amount: 1
   products:
-    Vinegar: 10
+    Vinegar: 2
 
 - type: reaction
   id: CookingSoysauce
   reactants:
     MilkSoy:
-      amount: 10
+      amount: 2
     SulfuricAcid:
-      amount: 5
+      amount: 1
   products:
-    Soysauce: 15
+    Soysauce: 3
 
 - type: reaction
   id: CookingVinaigrette
   reactants:
     Vinegar:
-      amount: 5
+      amount: 1
     OilOlive:
-      amount: 5
+      amount: 1
     Blackpepper:
-      amount: 5
+      amount: 1
   products:
-    Vinaigrette: 15
+    Vinaigrette: 3
 
 - type: reaction
   id: CreateMeatball
