@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -98,7 +99,7 @@ public sealed partial class PowerMonitoringWindow
         button.SpriteView.SetEntity(uid);
 
         // Update name
-        var name = Loc.GetString(entry.NameLocalized);
+        var name = Loc.GetString(_entManager.GetComponent<MetaDataComponent>(uid).EntityName);
         var charLimit = (int) (button.NameLocalized.Width / 8f);
 
         // Shorten name if required
@@ -172,7 +173,7 @@ public sealed partial class PowerMonitoringWindow
             _trackedEntity = null;
 
             // Request an update from the power monitoring system
-            RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity));
+            RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity), GetCurrentPowerMonitoringConsoleGroup());
             _updateTimer = 0f;
 
             return;
@@ -197,28 +198,20 @@ public sealed partial class PowerMonitoringWindow
         // Center the nav map on selected entity
         _trackedEntity = entry.EntityUid;
 
-        if (entry.Entry.Coordinates != null)
-            NavMap.CenterToCoordinates(_entManager.GetCoordinates(entry.Entry.Coordinates.Value));
+        if (!TryGetEntityNavMapTrackingData(entry.EntityUid, out var trackingData))
+            return;
+
+        NavMap.CenterToCoordinates(_entManager.GetCoordinates(trackingData.Value.Coordinates));
 
         // Switch tabs
-        switch (entry.Entry.Group)
-        {
-            case PowerMonitoringConsoleGroup.Generator:
-                MasterTabContainer.CurrentTab = 0; break;
-            case PowerMonitoringConsoleGroup.SMES:
-                MasterTabContainer.CurrentTab = 1; break;
-            case PowerMonitoringConsoleGroup.Substation:
-                MasterTabContainer.CurrentTab = 2; break;
-            case PowerMonitoringConsoleGroup.APC:
-                MasterTabContainer.CurrentTab = 3; break;
-        }
+        //SwitchTabsBasedOnPowerMonitoringConsoleGroup(trackingData.);
 
         // Get the scroll position of the selected entity on the selected button the UI
-        _tryToScroll = true;
+        //_tryToScroll = true;
 
         // Request an update from the power monitoring system
-        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity));
-        _updateTimer = 0f;
+        //RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity), trackingData.Group);
+        //_updateTimer = 0f;
     }
 
     private bool TryGetNextScrollPosition([NotNullWhen(true)] out float? nextScrollPosition)
@@ -338,6 +331,26 @@ public sealed partial class PowerMonitoringWindow
         }
 
         SystemWarningLabel.SetMessage(msg);
+    }
+
+    private void SwitchTabsBasedOnPowerMonitoringConsoleGroup(PowerMonitoringConsoleGroup group)
+    {
+        switch (group)
+        {
+            case PowerMonitoringConsoleGroup.Generator:
+                MasterTabContainer.CurrentTab = 0; break;
+            case PowerMonitoringConsoleGroup.SMES:
+                MasterTabContainer.CurrentTab = 1; break;
+            case PowerMonitoringConsoleGroup.Substation:
+                MasterTabContainer.CurrentTab = 2; break;
+            case PowerMonitoringConsoleGroup.APC:
+                MasterTabContainer.CurrentTab = 3; break;
+        }
+    }
+
+    private PowerMonitoringConsoleGroup GetCurrentPowerMonitoringConsoleGroup()
+    {
+        return (PowerMonitoringConsoleGroup) MasterTabContainer.CurrentTab;
     }
 }
 

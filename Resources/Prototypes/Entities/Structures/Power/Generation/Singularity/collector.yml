@@ -54,8 +54,7 @@
     group: Generator
     loadNode: input
   - type: NavMapTrackable
-    color: Purple
-    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png    
+    protoId: Sources  
   - type: RadiationCollector
     chargeModifier: 7500
     radiationReactiveGases:

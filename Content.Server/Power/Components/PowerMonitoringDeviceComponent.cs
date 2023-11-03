@@ -39,4 +39,19 @@ public sealed partial class PowerMonitoringDeviceComponent : Component
     /// </summary>
     [DataField("locationOnMonitor")]
     public bool LocationOnMonitor = true;
+
+    /// <summary>
+    ///     Indicates whether the entity should be grouped with alike entities that are connected
+    /// </summary>
+    [DataField("groupWithAlikeEnitites")]
+    public bool GroupWithAlikeEnitites = false;
+
+    /// <summary>
+    ///     The group ID to which the entity belongs
+    /// </summary>
+    /// <remarks>
+    ///     Used to group multiple entities into a single power monitoring console entry
+    ///     Only used if 'GroupWithAlikeEnitites' is true
+    /// </remarks>
+    public EntityUid GroupId;
 }

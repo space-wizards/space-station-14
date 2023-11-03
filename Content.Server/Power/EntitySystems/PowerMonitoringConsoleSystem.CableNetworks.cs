@@ -1,4 +1,3 @@
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
@@ -11,58 +10,6 @@ namespace Content.Server.Power.EntitySystems;
 
 internal sealed partial class PowerMonitoringConsoleSystem
 {
-    private void OnGridSplit(EntityUid uid, PowerMonitoringConsoleComponent component, GridSplitEvent args)
-    {
-        var xform = Transform(uid);
-        if (xform.GridUid == null)
-            return;
-
-        foreach (var grid in args.NewGrids)
-        {
-            if (xform.GridUid == grid)
-            {
-                RefreshGrid(uid, component, xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
-                break;
-            }
-        }
-    }
-
-    private void OnComponentStartup(EntityUid uid, PowerMonitoringConsoleComponent component, ComponentStartup args)
-    {
-        var xform = Transform(uid);
-        if (xform.GridUid == null)
-            return;
-
-        RefreshGrid(uid, component, xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
-    }
-
-    public void OnCableAnchoringChanged(EntityUid uid, CableComponent component, CableAnchoringChangedEvent args)
-    {
-        var xform = Transform(uid);
-
-        if (xform.GridUid == null ||
-            !TryComp<MapGridComponent>(xform.GridUid, out var grid))
-            return;
-
-        var tile = _sharedMapSystem.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
-        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, SharedNavMapSystem.ChunkSize);
-
-        var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var powerMonitoringConsole, out var entXform))
-        {
-            if (entXform.GridUid != xform.GridUid)
-                return;
-
-            if (!powerMonitoringConsole.AllChunks.TryGetValue(chunkOrigin, out var chunk))
-            {
-                chunk = new PowerCableChunk(chunkOrigin);
-                powerMonitoringConsole.AllChunks[chunkOrigin] = chunk;
-            }
-
-            RefreshTile(ent, powerMonitoringConsole, xform.GridUid.Value, grid, chunk, tile);
-        }
-    }
-
     private void RefreshGrid(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid)
     {
         component.AllChunks.Clear();

@@ -31,4 +31,4 @@ public sealed partial class CableComponent : Component
 }
 
 [ByRefEvent]
-public readonly record struct CableAnchoringChangedEvent;
+public readonly record struct CableAnchorStateChangedEvent;

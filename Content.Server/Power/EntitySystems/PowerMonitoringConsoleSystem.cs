@@ -3,7 +3,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
-using Content.Server.StationEvents.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
@@ -20,16 +19,15 @@ using System.Diagnostics.CodeAnalysis;
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
-internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
+internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitoringConsoleSystem
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
 
-    private List<EntityUid> _trackedDevices = new();
+    private Dictionary<EntityUid, Dictionary<EntityUid, NavMapTrackingData>> _trackedDevices = new();
     private bool _powerNetAbnormalities = false;
+
     private const float RoguePowerConsumerThreshold = 100000;
-    private float _updateTimer = 1.0f;
-    private const float UpdateTime = 1.0f;
 
     public override void Initialize()
     {
@@ -43,68 +41,19 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, GridSplitEvent>(OnGridSplit);
 
-        SubscribeLocalEvent<CableComponent, CableAnchoringChangedEvent>(OnCableAnchoringChanged);
+        SubscribeLocalEvent<CableComponent, CableAnchorStateChangedEvent>(OnCableAnchorStateChanged);
+        SubscribeLocalEvent<PowerMonitoringDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchoringChanged);
+
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIClosedEvent>(OnUIClosed);
     }
 
-    public override void Update(float frameTime)
-    {
-        _updateTimer += frameTime;
-
-        if (_updateTimer >= UpdateTime)
-        {
-            _updateTimer -= UpdateTime;
-
-            // On update, update our list of anchored power monitoring devices
-            _trackedDevices.Clear();
-
-            var query = AllEntityQuery<PowerMonitoringDeviceComponent, TransformComponent>();
-            while (query.MoveNext(out var ent, out var _, out var xform))
-            {
-                if (xform.Anchored)
-                    _trackedDevices.Add(ent);
-            }
-        }
-    }
-
-    // Sends the list of tracked power monitoring devices to all player sessions with one or more power monitoring consoles open
-    // This expansion of PVS is needed so that the sprites for these device are available to the the player UI
-    // Out-of-range devices will be automatically removed from the player PVS when the UI closes
-    private void OnExpandPvsEvent(ref ExpandPvsEvent ev)
-    {
-        var query = AllEntityQuery<PowerMonitoringConsoleComponent>();
-        while (query.MoveNext(out var uid, out var _))
-        {
-            if (_userInterfaceSystem.SessionHasOpenUi(uid, PowerMonitoringConsoleUiKey.Key, ev.Session))
-            {
-                if (ev.Entities == null)
-                    ev.Entities = new List<EntityUid>();
-
-                foreach (var ent in _trackedDevices)
-                    ev.Entities.Add(ent);
-
-                break;
-            }
-        }
-    }
-
-    private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)
-    {
-        UpdateUIState(uid, component, GetEntity(args.FocusDevice), args.Session);
-    }
-
-    private void OnPowerGridCheckStarted(ref GameRuleStartedEvent ev)
-    {
-        if (HasComp<PowerGridCheckRuleComponent>(ev.RuleEntity))
-            _powerNetAbnormalities = true;
-    }
-
-    private void OnPowerGridCheckEnded(ref GameRuleEndedEvent ev)
-    {
-        if (HasComp<PowerGridCheckRuleComponent>(ev.RuleEntity))
-            _powerNetAbnormalities = false;
-    }
-
-    public void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent powerMonitoringConsole, EntityUid? focus, ICommonSession session)
+    public void UpdateUIState
+        (EntityUid uid,
+        PowerMonitoringConsoleComponent powerMonitoringConsole,
+        EntityUid? focus,
+        PowerMonitoringConsoleGroup? focusGroup,
+        ICommonSession session)
     {
         if (!_userInterfaceSystem.TryGetUi(uid, PowerMonitoringConsoleUiKey.Key, out var bui))
             return;
@@ -117,6 +66,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         var gridUid = consoleXform.GridUid.Value;
 
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
+            return;
+
+        if (!_trackedDevices.TryGetValue(gridUid, out var gridDevices))
             return;
 
         // The grid must have a NavMapComponent to visualize the map 
@@ -146,17 +98,20 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         }
 
         // Tracked devices
-        foreach (var ent in _trackedDevices)
+        foreach ((var ent, var data) in gridDevices)
         {
             var xform = Transform(ent);
             if (xform.Anchored == false || xform.GridUid != gridUid)
+                continue;
+
+            if (!TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
                 continue;
 
             // Generate a new console entry
             if (!TryMakeConsoleEntry(ent, out var entry))
                 continue;
 
-            if (entry.Group == PowerMonitoringConsoleGroup.Generator)
+            if (device.Group == PowerMonitoringConsoleGroup.Generator)
             {
                 // Covers most power sources
                 if (TryComp<PowerSupplierComponent>(ent, out var supplier))
@@ -174,9 +129,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                 }
             }
 
-            else if (entry.Group == PowerMonitoringConsoleGroup.SMES ||
-                entry.Group == PowerMonitoringConsoleGroup.Substation ||
-                entry.Group == PowerMonitoringConsoleGroup.APC)
+            else if (device.Group == PowerMonitoringConsoleGroup.SMES ||
+                device.Group == PowerMonitoringConsoleGroup.Substation ||
+                device.Group == PowerMonitoringConsoleGroup.APC)
             {
 
                 if (TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
@@ -190,14 +145,15 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                     totalBatteryUsage += Math.Max(battery.CurrentSupply - battery.CurrentReceiving, 0f);
 
                     // Get loads attached to the APC
-                    if (entry.Group == PowerMonitoringConsoleGroup.APC && battery.Enabled)
+                    if (device.Group == PowerMonitoringConsoleGroup.APC && battery.Enabled)
                     {
                         totalLoads += battery.NetworkBattery.LoadingNetworkDemand;
                     }
                 }
             }
 
-            allEntries.Add(entry);
+            if (focusGroup != null && device.Group == focusGroup)
+                allEntries.Add(entry);
         }
 
         // Get data for the device currently selected on the power monitoring console (if applicable)
@@ -407,15 +363,16 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
     {
         entry = null;
 
-        if (!TryComp<PowerMonitoringDeviceComponent>(uid, out var device))
-            return false;
+        //if (!TryComp<PowerMonitoringDeviceComponent>(uid, out var device))
+        //    return false;
 
         var metaData = MetaData(uid);
-        var xform = Transform(uid);
-        NetCoordinates? coordinates = device.LocationOnMonitor ? GetNetCoordinates(xform.Coordinates) : null;
+        //var xform = Transform(uid);
+        //NetCoordinates? coordinates = device.LocationOnMonitor ? GetNetCoordinates(xform.Coordinates) : null;
         var netEntity = GetNetEntity(uid);
 
-        entry = new PowerMonitoringConsoleEntry(netEntity, coordinates, device.Group, metaData.EntityName, powerValue);
+        entry = new PowerMonitoringConsoleEntry(netEntity, metaData.EntityName, powerValue);
+
         return true;
     }
 

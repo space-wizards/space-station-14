@@ -17,6 +17,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Timing;
 using Robust.Client.GameObjects;
 using Content.Shared.Power;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -27,16 +28,17 @@ namespace Content.Client.Pinpointer.UI;
 public sealed partial class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     private readonly SharedTransformSystem _transformSystem = default!;
     private readonly SpriteSystem _spriteSystem;
 
     public EntityUid? MapUid;
     public PowerMonitoringConsoleComponent? PowerMonitoringConsole;
-    public event Action<EntityCoordinates?, NavMapTrackableComponent?>? TrackableEntitySelectedAction;
+    //public event Action<EntityCoordinates?, NavMapTrackableComponent?>? TrackableEntitySelectedAction;
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
-    public Dictionary<EntityCoordinates, NavMapTrackableComponent> TrackedEntities = new();
+    public Dictionary<EntityCoordinates, NavMapTrackingData> TrackedEntities = new();
     public Dictionary<Vector2i, List<NavMapLine>> PowerCableNetwork = default!;
     public Dictionary<Vector2i, List<NavMapLine>>? FocusCableNetwork;
     public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
@@ -192,15 +194,15 @@ public sealed partial class NavMapControl : MapGridControl
             if (closestDistance * MinimapScale > MaxSelectableDistance)
                 return;
 
-            if (TrackableEntitySelectedAction != null)
-                TrackableEntitySelectedAction.Invoke(orderedCoords.First(), closestEntity);
+            //if (TrackableEntitySelectedAction != null)
+            //    TrackableEntitySelectedAction.Invoke(orderedCoords.First(), closestEntity);
         }
 
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
             // Clear current selection with right click
-            if (TrackableEntitySelectedAction != null)
-                TrackableEntitySelectedAction.Invoke(null, null);
+            //if (TrackableEntitySelectedAction != null)
+            //    TrackableEntitySelectedAction.Invoke(null, null);
         }
     }
 
@@ -417,7 +419,7 @@ public sealed partial class NavMapControl : MapGridControl
         // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this)
         foreach (var (coord, value) in TrackedEntities)
         {
-            if ((lit || !value.Blinks) && value.Visible)
+            if ((lit || !value.Blinks))
             {
                 var mapPos = coord.ToMap(_entManager, _transformSystem);
 
@@ -435,10 +437,14 @@ public sealed partial class NavMapControl : MapGridControl
                         position.X + positionOffset,
                         position.Y + positionOffset);
 
-                    if (value.Texture != null)
-                        handle.DrawTextureRect(_spriteSystem.Frame0(value.Texture), rect, value.Color);
-                    else
-                        handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
+                    if (_protoManager == null)
+                        continue;
+
+                    if (!_protoManager.TryIndex(value.ProtoId, out var proto))
+                        continue;
+
+                    if (proto.Texture != null)
+                        handle.DrawTextureRect(_spriteSystem.Frame0(proto.Texture), rect, proto.Color);
                 }
             }
         }

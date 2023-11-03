@@ -1,0 +1,19 @@
+﻿- type: navMapTrackable
+  id: Sources
+  texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+  color: Purple
+  
+- type: navMapTrackable
+  id: SMES
+  texture: /Textures/Interface/PowerMonitoring/beveled_hexagon.png
+  color: OrangeRed
+  
+- type: navMapTrackable
+  id: Substation
+  texture: /Textures/Interface/PowerMonitoring/beveled_square.png
+  color: Yellow
+  
+- type: navMapTrackable
+  id: APC
+  texture: /Textures/Interface/PowerMonitoring/beveled_triangle.png
+  color: LimeGreen

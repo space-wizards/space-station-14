@@ -1,7 +1,11 @@
 using System.Linq;
+using Content.Shared.Pinpointer;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using static Robust.Shared.Utility.SpriteSpecifier;
 
-namespace Content.Client.Pinpointer.UI;
+namespace Content.Server.Pinpointer.UI;
 
 /// <summary>
 ///     Entities with this component can appear on station navigation (nav) maps
@@ -9,7 +13,10 @@ namespace Content.Client.Pinpointer.UI;
 [RegisterComponent]
 public sealed partial class NavMapTrackableComponent : Component
 {
-    /// <summary>
+    [DataField("protoId", required: true)]
+    public ProtoId<NavMapTrackablePrototype> ProtoId;
+
+    /*/// <summary>
     ///     Determines if the icon should be rendered on the nav map
     /// </summary>
     [DataField("visible")]
@@ -86,5 +93,5 @@ public sealed partial class NavMapTrackableComponent : Component
     ///     Determines if the associated map icon should blink on/off
     /// </summary>
     [DataField("blinks")]
-    public bool Blinks = false;
+    public bool Blinks = false;*/
 }

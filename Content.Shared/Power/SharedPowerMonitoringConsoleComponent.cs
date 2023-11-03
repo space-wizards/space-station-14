@@ -8,6 +8,7 @@ namespace Content.Shared.Power;
 ///     Flags an entity as being a power monitoring console
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedPowerMonitoringConsoleSystem))]
 public sealed partial class PowerMonitoringConsoleComponent : Component
 {
     public EntityUid? Focus;
@@ -18,6 +19,9 @@ public sealed partial class PowerMonitoringConsoleComponent : Component
 
     [ViewVariables, AutoNetworkedField]
     public Dictionary<Vector2i, PowerCableChunk> FocusChunks = new();
+
+    //[ViewVariables, AutoNetworkedField]
+    //public Dictionary<EntityUid, (EntityCoordinates, NavMapTrackableComponent)> TrackedDevices = new();
 }
 
 [Serializable, NetSerializable]
@@ -77,21 +81,15 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
 public sealed class PowerMonitoringConsoleEntry
 {
     public NetEntity NetEntity;
-    public NetCoordinates? Coordinates;
-    public PowerMonitoringConsoleGroup Group;
     public string NameLocalized;
     public double PowerValue;
 
     public PowerMonitoringConsoleEntry
         (NetEntity netEntity,
-        NetCoordinates? coordinates,
-        PowerMonitoringConsoleGroup group,
         string name,
         double powerValue)
     {
         NetEntity = netEntity;
-        Coordinates = coordinates;
-        Group = group;
         NameLocalized = name;
         PowerValue = powerValue;
     }
@@ -104,10 +102,12 @@ public sealed class PowerMonitoringConsoleEntry
 public sealed class RequestPowerMonitoringUpdateMessage : BoundUserInterfaceMessage
 {
     public NetEntity? FocusDevice;
+    public PowerMonitoringConsoleGroup? FocusGroup;
 
-    public RequestPowerMonitoringUpdateMessage(NetEntity? focusDevice)
+    public RequestPowerMonitoringUpdateMessage(NetEntity? focusDevice, PowerMonitoringConsoleGroup? focusGroup)
     {
         FocusDevice = focusDevice;
+        FocusGroup = focusGroup;
     }
 }
 
@@ -116,11 +116,11 @@ public sealed class RequestPowerMonitoringUpdateMessage : BoundUserInterfaceMess
 /// </summary>
 public enum PowerMonitoringConsoleGroup : byte
 {
-    Consumer,
-    APC,
-    Substation,
+    Generator,
     SMES,
-    Generator
+    Substation,
+    APC,
+    Consumer,
 }
 
 [Flags]

@@ -55,8 +55,7 @@
       group: Generator
       loadNode: output
     - type: NavMapTrackable
-      color: Purple
-      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png      
+      protoId: Sources      
     - type: Rotatable
 
     # Note that only the TEG center is an AtmosDevice.
