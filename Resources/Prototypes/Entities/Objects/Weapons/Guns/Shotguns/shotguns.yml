@@ -167,7 +167,7 @@
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Tag
-  id: WeaponShotgunKammerer
+    id: WeaponShotgunKammerer
   
 - type: entity
   name: sawn-off shotgun
