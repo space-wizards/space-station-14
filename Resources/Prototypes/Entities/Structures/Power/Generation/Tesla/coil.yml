@@ -44,6 +44,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: LightningSparking
+    lightningTime: 4
   - type: AnimationPlayer
   - type: NodeContainer
     examinable: true
@@ -97,6 +98,7 @@
           True: { state: grounding_rod }
           False: { state: grounding_rod_open }
   - type: LightningSparking
+    lightningTime: 4
   - type: Transform
     anchored: true
   - type: Physics
