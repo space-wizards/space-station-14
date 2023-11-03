@@ -38,7 +38,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Storage
-    maxSlots: 6
+    maxSlots: 10
     maxItemSize: Small
     whitelist:
       tags:
