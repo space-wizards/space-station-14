@@ -335,7 +335,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (nukeopsRule.TargetStation is not { } station)
             return;
 
-        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("operation_name", nukeopsRule.OperationName)));
+        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station), ("operation_name", nukeopsRule.OperationName)));
         _audio.PlayGlobal(nukeop.GreetSoundNotification, session);
     }
 
@@ -369,7 +369,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         while (query.MoveNext(out _, out var nukeops, out var actor))
         {
             NotifyNukie(actor.PlayerSession, nukeops, component);
-            _audio.PlayGlobal(nukeops.GreetSoundNotification, actor.PlayerSession);
             filter.AddPlayer(actor.PlayerSession);
         }
     }
@@ -812,10 +811,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
             {
-                NotifyNukie(actor.PlayerSession, nukeops, component);
-
-                 // Notificate player about new role assignment
-                 _audio.PlayGlobal(component.GreetSoundNotification, playerSession);
+                NotifyNukie(playerSession, component, nukeops);
             }
         }
     }
@@ -1011,18 +1007,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var operatives = new List<ICommonSession>();
         SpawnOperatives(numNukies, operatives, true, component);
-    }
-
-    /// <summary>
-    /// Display a greeting message and play a sound for a nukie
-    /// </summary>
-    private void NotifyNukie(ICommonSession session, NukeOperativeComponent nukeop, NukeopsRuleComponent nukeopsRule)
-    {
-        if (nukeopsRule.TargetStation is not { } station)
-            return;
-
-        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
-        _audio.PlayGlobal(nukeop.GreetSoundNotification, session);
     }
 
     //For admins forcing someone to nukeOps.
