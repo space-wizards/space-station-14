@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has stopped requesting ID card computer boards., type: Remove}
-  id: 4599
-  time: '2023-08-15T14:07:56.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Speech verbs will now change depending on the entity saying them and
@@ -2914,3 +2909,8 @@ Entries:
   - {message: Increased the capacity of Bags of holding., type: Tweak}
   id: 5098
   time: '2023-11-03T11:31:03.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: Reptilians can now eat rat kebabs., type: Fix}
+  id: 5099
+  time: '2023-11-03T17:50:32.0000000+00:00'
