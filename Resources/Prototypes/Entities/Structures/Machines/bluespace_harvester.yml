@@ -2,7 +2,7 @@
   id: BluespaceHarvester
   parent: [ BaseMachine, ConstructibleMachine ]
   name: bluespace harvester
-  description: It's magic.
+  description: Uses huge amounts of energy to extract matter from all corners of the universe.
   components:
   - type: BluespaceHarvester
   - type: Appearance
@@ -27,6 +27,7 @@
     - state: south_effect
       map: ["effects"]
       visible: false
+      shader: unshaded
   - type: GenericVisualizer
     visuals:
       enum.BluespaceHarvesterVisualLayers.Base:
@@ -58,8 +59,6 @@
       type: BluespaceHarvesterBoundUserInterface
   - type: Machine
     board: MicrowaveMachineCircuitboard
-  - type: GuideHelp
-    guides: [ Power ]
   - type: NodeContainer
     examinable: true
     nodes:
@@ -68,3 +67,17 @@
         nodeGroupID: HVPower
   - type: PowerConsumer
     voltage: High
+  - type: AmbientSound
+    enabled: false
+    volume: -1
+    range: 7
+    sound:
+      path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
+  - type: PointLight
+    radius: 2.5
+    energy: 0.5
+    castShadows: false
+  - type: AccessReader
+    access: [["Engineering"], ["Research"], ["Command"]]
+  - type: GuideHelp
+    guides: [ Power ] # TODO: Add BH guide

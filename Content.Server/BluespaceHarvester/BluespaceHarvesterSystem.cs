@@ -3,6 +3,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
+using Content.Shared.Audio;
 using Content.Shared.BluespaceHarvester;
 using Content.Shared.Emag.Components;
 using Microsoft.CodeAnalysis;
@@ -21,6 +22,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
 
     public List<BluespaceHarvesterTap> Taps = new List<BluespaceHarvesterTap>()
     {
@@ -96,11 +98,14 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
                     if (entity == null)
                         continue;
 
-                    EnsureComp<BluespaceHarvesterRiftComponent>((EntityUid)entity).Danger = harvester.Danger / 3;
+                    EnsureComp<BluespaceHarvesterRiftComponent>((EntityUid) entity).Danger = harvester.Danger / 3;
                 }
 
                 harvester.Danger = 0;
             }
+
+            if (TryComp<AmbientSoundComponent>(uid, out var ambient))
+                _ambientSound.SetAmbience(uid, harvester.Enable, ambient);
 
             UpdateAppearance(uid, harvester);
             UpdateUI(uid, harvester);
@@ -183,12 +188,12 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         ));
     }
 
-    public uint GetUsageNextPower(int level)
+    private uint GetUsageNextPower(int level)
     {
         return GetUsagePower(level + 1);
     }
 
-    public uint GetUsagePower(int level)
+    private uint GetUsagePower(int level)
     {
         return level switch
         {
@@ -241,7 +246,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         return Spawn(prototype, newCoords);
     }
 
-    public int GetPointGeneration(EntityUid uid, BluespaceHarvesterComponent? harvester = null)
+    private int GetPointGeneration(EntityUid uid, BluespaceHarvesterComponent? harvester = null)
     {
         if (!Resolve(uid, ref harvester))
             return 0;
@@ -249,19 +254,23 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         return harvester.CurrentLevel * 4 * (HasComp<EmagComponent>(uid) ? 2 : 1);
     }
 
-    public int GetDangerPointGeneration(EntityUid uid, BluespaceHarvesterComponent? harvester = null)
+    private int GetDangerPointGeneration(EntityUid uid, BluespaceHarvesterComponent? harvester = null)
     {
         if (!Resolve(uid, ref harvester))
             return 0;
 
         var stable = GetStableLevel(uid, harvester);
+
         if (harvester.CurrentLevel < stable)
             return -4;
 
-        return Math.Abs(harvester.CurrentLevel - harvester.MaxLevel) * 2;
+        if (harvester.CurrentLevel == stable)
+            return 0;
+
+        return (harvester.CurrentLevel - stable) * 4;
     }
 
-    public int GetStableLevel(EntityUid uid, BluespaceHarvesterComponent? harvester = null)
+    private int GetStableLevel(EntityUid uid, BluespaceHarvesterComponent? harvester = null)
     {
         if (!Resolve(uid, ref harvester))
             return 0;
@@ -269,7 +278,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         return HasComp<EmaggedComponent>(uid) ? harvester.EmaggedStableLevel : harvester.StableLevel;
     }
 
-    public float GetPowerSupplier(EntityUid uid, BluespaceHarvesterComponent? harvester = null, NodeContainerComponent? nodeComp = null)
+    private float GetPowerSupplier(EntityUid uid, BluespaceHarvesterComponent? harvester = null, NodeContainerComponent? nodeComp = null)
     {
         if (!Resolve(uid, ref harvester, ref nodeComp))
             return 0;
