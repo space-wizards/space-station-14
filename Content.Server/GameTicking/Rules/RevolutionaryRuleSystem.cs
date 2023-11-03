@@ -104,7 +104,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 else
                 {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("rev-no-heads"));
-                    comp.HeadRevsChosen = true;
+                    GameTicker.EndGameRule(uid, gameRule);
                 }
             }
         }
@@ -168,8 +168,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             RemComp<CommandStaffComponent>(headRev);
             //In case some funny guy mindshields themselves before being selected
-            if (TryComp<MindShieldComponent>(headRev, out var mindshield))
-                RemComp<MindShieldComponent>(headRev);
+            RemComp<MindShieldComponent>(headRev);
 
             var inCharacterName = MetaData(headRev).EntityName;
             if (_mind.TryGetMind(headRev, out var mindId, out var mind))
@@ -268,7 +267,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
 
     /// <summary>
-    /// Checks if all of command is dead and if so will remove all sec and command jobs if there were any left.
+    /// Checks if all of command is dead in order to end the round.
     /// </summary>
     private bool CheckCommandLose()
     {
