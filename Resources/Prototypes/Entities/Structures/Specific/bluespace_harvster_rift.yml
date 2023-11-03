@@ -1,6 +1,6 @@
 - type: entity
   id: BluespaceHarvesterRift
-  name: redspace rift
+  name: bloodspace rift
   description: RUN!
   placement:
     mode: SnapgridCenter

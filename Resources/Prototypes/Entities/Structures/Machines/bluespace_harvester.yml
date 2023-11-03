@@ -58,7 +58,7 @@
     - key: enum.BluespaceHarvesterUiKey.Key
       type: BluespaceHarvesterBoundUserInterface
   - type: Machine
-    board: MicrowaveMachineCircuitboard
+    board: MachineBluespaceHarvesterCircuitboard
   - type: NodeContainer
     examinable: true
     nodes:
