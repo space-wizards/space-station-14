@@ -83,7 +83,7 @@
     rarePrototypes:
       - CrateHarvesterReagentSlime # Death
       - BaseResearchAndDevelopmentPointSource
-    rareChance: 0.2
+    rareChance: 0.1
 
 - type: entity
   id: RandomHarvesterBiologicalLoot
