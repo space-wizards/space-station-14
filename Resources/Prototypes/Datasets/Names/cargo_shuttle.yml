@@ -1,11 +1,10 @@
 - type: dataset
   id: ShuttleNames
   values:
-  - A Shuttle Will Not Occur
-  - Big Money Shuttle
-  - Engine Change
-  - Ships-the-Cargo
-  - Shootel
-  - Shuttle McShuttleface
-  - ShuttleShuttle
-  - Urist McShuttle
+  - Большой Денежный Шаттл
+  - Замена Двигателя
+  - Доставляющий-Грузы
+  - Шуттель
+  - Шаттл МакШаттлфейс
+  - ШаттлШаттл
+  - Урист МакШаттл
