@@ -81,16 +81,11 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
 public sealed class PowerMonitoringConsoleEntry
 {
     public NetEntity NetEntity;
-    public string NameLocalized;
     public double PowerValue;
 
-    public PowerMonitoringConsoleEntry
-        (NetEntity netEntity,
-        string name,
-        double powerValue)
+    public PowerMonitoringConsoleEntry(NetEntity netEntity, double powerValue = 0d)
     {
         NetEntity = netEntity;
-        NameLocalized = name;
         PowerValue = powerValue;
     }
 }

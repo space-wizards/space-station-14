@@ -1,12 +1,11 @@
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Pinpointer.UI;
 using Content.Server.Power.Components;
 using Content.Server.StationEvents.Components;
-using Content.Server.UserInterface;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Server.GameStates;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
@@ -26,33 +25,34 @@ internal sealed partial class PowerMonitoringConsoleSystem
     {
         var gridUid = Transform(uid).GridUid;
 
-        if (gridUid == null || !EntityManager.TryGetComponent<NavMapTrackableComponent>(uid, out var navMapTrackable))
+        if (gridUid == null)
             return;
 
-        if (!_trackedDevices.TryGetValue(gridUid.Value, out var gridData))
+        if (!TryGetEntProtoId(uid, out var entProtoId))
+            return;
+
+        if (!_trackedDevices.TryGetValue(gridUid.Value, out var _))
             _trackedDevices[gridUid.Value] = new();
 
         if (args.Anchored)
         {
-            var data = new NavMapTrackingData(EntityManager.GetNetEntity(uid), EntityManager.GetNetCoordinates(Transform(uid).Coordinates), navMapTrackable.ProtoId);
-            _trackedDevices[gridUid.Value].TryAdd(uid, data);
+            _trackedDevices[gridUid.Value].Add((uid, component));
+
+            if (component.JoinAlikeEntities)
+            {
+                AssignEntityToTrackingGroup(uid);
+                _exemplarTypesToUpdate.Add(entProtoId.Value);
+            }
         }
 
         else
         {
-            _trackedDevices[gridUid.Value].Remove(uid);
-        }
+            _trackedDevices[gridUid.Value].Remove((uid, component));
 
-        var query = AllEntityQuery<PowerMonitoringConsoleComponent, NavMapTrackingConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var console, out var navMapTracking, out var xform))
-        {
-            if (xform.GridUid == null || !_trackedDevices.ContainsKey(gridUid.Value))
-                continue;
-
-            if (_userInterfaceSystem.IsUiOpen(ent, PowerMonitoringConsoleUiKey.Key))
+            if (component.JoinAlikeEntities)
             {
-                navMapTracking.TrackingData = _trackedDevices[xform.GridUid.Value].Values.ToList();
-                Dirty(ent, console);
+                RemoveEntityFromTrackingGroup(uid);
+                _exemplarTypesToUpdate.Add(entProtoId.Value);
             }
         }
     }
@@ -82,6 +82,12 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             RefreshTile(ent, powerMonitoringConsole, xform.GridUid.Value, grid, chunk, tile);
         }
+
+        foreach (var exemplar in _exemplarDevices)
+        {
+            if (TryGetEntProtoId(exemplar.Key, out var entProtoId))
+                _exemplarTypesToUpdate.Add(entProtoId.Value);
+        }
     }
 
     private void OnGridSplit(EntityUid uid, PowerMonitoringConsoleComponent component, GridSplitEvent args)
@@ -92,8 +98,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
         _trackedDevices.Clear();
 
-        var query = AllEntityQuery<PowerMonitoringDeviceComponent, NavMapTrackableComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var device, out var navMapTrackable, out var entXform))
+        var query = AllEntityQuery<PowerMonitoringDeviceComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var device, out var entXform))
         {
             if (entXform.GridUid == null || !entXform.Anchored)
                 continue;
@@ -101,8 +107,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
             if (!_trackedDevices.ContainsKey(entXform.GridUid.Value))
                 _trackedDevices[entXform.GridUid.Value] = new();
 
-            var data = new NavMapTrackingData(EntityManager.GetNetEntity(uid), EntityManager.GetNetCoordinates(Transform(uid).Coordinates), navMapTrackable.ProtoId);
-            _trackedDevices[entXform.GridUid.Value].Add(ent, data);
+            _trackedDevices[entXform.GridUid.Value].Add((ent, device));
         }
 
         foreach (var grid in args.NewGrids)
@@ -134,10 +139,13 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 if (ev.Entities == null)
                     ev.Entities = new List<EntityUid>();
 
-                foreach ((var device, var _) in gridDevices)
+                foreach ((var gridEnt, var device) in gridDevices)
                 {
-                    if (Transform(device).GridUid == xform.GridUid)
-                        ev.Entities.Add(device);
+                    if (!device.LocationOnMonitor ||
+                        (device.JoinAlikeEntities && !device.IsExemplar))
+                        continue;
+
+                    ev.Entities.Add(gridEnt);
                 }
 
                 break;
@@ -147,32 +155,12 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
     private void OnUIOpened(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIOpenedEvent args)
     {
-        var gridUid = Transform(uid).GridUid;
-
-        if (gridUid == null || !_trackedDevices.ContainsKey(gridUid.Value))
-            return;
-
-        if (!EntityManager.TryGetComponent<NavMapTrackingConsoleComponent>(uid, out var trackingConsole))
-            return;
-
-        // Force update of all tracked entity data on opening the UI
-        trackingConsole.TrackingData = _trackedDevices[gridUid.Value].Values.ToList();
-        Dirty(uid, trackingConsole);
+        
     }
 
     private void OnUIClosed(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIClosedEvent args)
     {
-        var gridUid = Transform(uid).GridUid;
-
-        if (gridUid == null || !_trackedDevices.ContainsKey(gridUid.Value))
-            return;
-
-        if (!EntityManager.TryGetComponent<NavMapTrackingConsoleComponent>(uid, out var trackingConsole))
-            return;
-
-        // Force clearing of all tracked entity data on closing the UI
-        trackingConsole.TrackingData.Clear();
-        Dirty(uid, trackingConsole);
+        
     }
 
     private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)

@@ -49,7 +49,7 @@ public sealed partial class CableSystem : EntitySystem
             return;
 
         var ev = new CableAnchorStateChangedEvent();
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(uid, ev);
 
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
@@ -62,11 +62,11 @@ public sealed partial class CableSystem : EntitySystem
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
     {
+        var ev = new CableAnchorStateChangedEvent();
+        RaiseLocalEvent(uid, ev);
+
         if (args.Anchored)
             return; // huh? it wasn't anchored?
-
-        var ev = new CableAnchorStateChangedEvent();
-        RaiseLocalEvent(uid, ref ev);
 
         // anchor state can change as a result of deletion (detach to null).
         // We don't want to spawn an entity when deleted.

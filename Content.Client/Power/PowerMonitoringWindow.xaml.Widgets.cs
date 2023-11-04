@@ -85,6 +85,9 @@ public sealed partial class PowerMonitoringWindow
 
     public void UpdateEntryButton(EntityUid uid, PowerMonitoringButton button, PowerMonitoringConsoleEntry entry)
     {
+        if (!uid.IsValid())
+            return;
+
         // Update button style
         if (uid == _trackedEntity)
             button.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
@@ -92,15 +95,15 @@ public sealed partial class PowerMonitoringWindow
         else
             button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
 
-        // Update tool tip
-        button.ToolTip = Loc.GetString(entry.NameLocalized);
-
         // Update sprite view
         button.SpriteView.SetEntity(uid);
 
         // Update name
         var name = Loc.GetString(_entManager.GetComponent<MetaDataComponent>(uid).EntityName);
         var charLimit = (int) (button.NameLocalized.Width / 8f);
+
+        // Update tool tip
+        button.ToolTip = Loc.GetString(name);
 
         // Shorten name if required
         if (charLimit > 3 && name.Length > charLimit)
@@ -198,20 +201,29 @@ public sealed partial class PowerMonitoringWindow
         // Center the nav map on selected entity
         _trackedEntity = entry.EntityUid;
 
-        if (!TryGetEntityNavMapTrackingData(entry.EntityUid, out var trackingData))
+        //if (!TryGetEntityNavMapTrackingData(entry.EntityUid, out var trackingData))
+        //    return;
+
+        if (!_trackedEntities.TryGetValue(entry.EntityUid, out var kvp))
             return;
 
-        NavMap.CenterToCoordinates(_entManager.GetCoordinates(trackingData.Value.Coordinates));
+        var coords = kvp.Item1;
+        var trackable = kvp.Item2;
+
+        if (!_protoManager.TryIndex(trackable.ProtoId, out var proto))
+            return;
+
+        NavMap.CenterToCoordinates(coords);
 
         // Switch tabs
-        //SwitchTabsBasedOnPowerMonitoringConsoleGroup(trackingData.);
+        SwitchTabsBasedOnPowerMonitoringConsoleGroup(proto.Group);
 
         // Get the scroll position of the selected entity on the selected button the UI
-        //_tryToScroll = true;
+        _tryToScroll = true;
 
         // Request an update from the power monitoring system
-        //RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity), trackingData.Group);
-        //_updateTimer = 0f;
+        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity), proto.Group);
+        _updateTimer = 0f;
     }
 
     private bool TryGetNextScrollPosition([NotNullWhen(true)] out float? nextScrollPosition)

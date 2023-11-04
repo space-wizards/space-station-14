@@ -1,6 +1,7 @@
 using Content.Server.NodeContainer;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Power;
+using System.Linq;
 
 namespace Content.Server.Power.Components;
 
@@ -8,7 +9,7 @@ namespace Content.Server.Power.Components;
 ///     Used to flag any entities that should appear on a power monitoring console
 /// </summary>
 [RegisterComponent, Access(typeof(PowerMonitoringConsoleSystem))]
-public sealed partial class PowerMonitoringDeviceComponent : Component
+public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitoringDeviceComponent
 {
     /// <summary>
     ///    Determines what power monitoring group this entity should belong to 
@@ -43,15 +44,36 @@ public sealed partial class PowerMonitoringDeviceComponent : Component
     /// <summary>
     ///     Indicates whether the entity should be grouped with alike entities that are connected
     /// </summary>
-    [DataField("groupWithAlikeEnitites")]
-    public bool GroupWithAlikeEnitites = false;
+    [DataField("joinAlikeEntities")]
+    public bool JoinAlikeEntities = false;
 
     /// <summary>
-    ///     The group ID to which the entity belongs
+    ///     The uid of the entity that represents this one
     /// </summary>
     /// <remarks>
-    ///     Used to group multiple entities into a single power monitoring console entry
-    ///     Only used if 'GroupWithAlikeEnitites' is true
+    ///     Used when grouping multiple entities into a single power monitoring console entry
+    ///     Should only be used if 'GroupWithAlikeEnitites' is true
     /// </remarks>
-    public EntityUid GroupId;
+    [ViewVariables]
+    public EntityUid ExemplarUid;
+
+    /// <summary>
+    ///     A list of other entities that are to be represented by this entity
+    /// </summary>
+    /// /// <remarks>
+    ///     Used when grouping multiple entities into a single power monitoring console entry
+    ///     Should only be used if 'GroupWithAlikeEnitites' is true
+    /// </remarks>
+    [ViewVariables]
+    public List<EntityUid> ChildEntities = new();
+
+    /// <summary>
+    ///     Indicates if this entity represents a group of entities
+    /// </summary>
+    /// <remarks>
+    ///     Used when grouping multiple entities into a single power monitoring console entry
+    ///     Should only be used if 'GroupWithAlikeEnitites' is true
+    /// </remarks>
+    [ViewVariables]
+    public bool IsExemplar { get { return Owner == ExemplarUid; } }
 }

@@ -4,6 +4,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using static Robust.Shared.Utility.SpriteSpecifier;
 using Robust.Shared.Serialization;
+using Content.Shared.Power;
 
 namespace Content.Shared.Pinpointer;
 
@@ -37,6 +38,9 @@ public sealed class NavMapTrackablePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    [DataField("group")]
+    public PowerMonitoringConsoleGroup Group;
 
     /// <summary>
     ///     Sets the texture path for the associated nav map icon

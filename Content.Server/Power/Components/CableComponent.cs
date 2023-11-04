@@ -3,6 +3,7 @@ using Content.Shared.Power;
 using Content.Shared.Tools;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Diagnostics.Tracing;
 
 namespace Content.Server.Power.Components;
 
@@ -30,5 +31,4 @@ public sealed partial class CableComponent : Component
     public float CuttingDelay = 1f;
 }
 
-[ByRefEvent]
 public readonly record struct CableAnchorStateChangedEvent;
