@@ -1,17 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Cyborgs can't get electrocuted anymore., type: Fix}
-  id: 4604
-  time: '2023-08-15T22:37:34.0000000+00:00'
-- author: Fahasor
-  changes:
-  - {message: Nanotrasen Department of Economics has reduced glue expenses in jug
-      production lines. Now labels from jugs can be deleted., type: Fix}
-  id: 4605
-  time: '2023-08-15T22:41:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Artifacts once again fit in artifact containers., type: Fix}
   - {message: Brought crate capacity in line with other storage. (500 -> 30), type: Fix}
   - {message: Hamlet's cage is now hamlet-sized and can only fit a single item., type: Fix}
@@ -2908,3 +2897,13 @@ Entries:
     type: Fix}
   id: 5103
   time: '2023-11-04T13:29:19.0000000+00:00'
+- author: TheEmber
+  changes:
+  - {message: Changed vomit probability for soap to 20% and soapy water to 10%., type: Tweak}
+  id: 5104
+  time: '2023-11-04T15:19:30.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The senior physician now spawns with a medical beret., type: Tweak}
+  id: 5105
+  time: '2023-11-04T15:20:09.0000000+00:00'
