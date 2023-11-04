@@ -136,11 +136,14 @@ accent-french-replacement-45 = je
 accent-french-replaced-46 = yo
 accent-french-replacement-46 = salut
 
-accent-french-replaced-46 = very
-accent-french-replacement-46 = très
+accent-french-replaced-47 = very
+accent-french-replacement-47 = très
 
-accent-french-replaced-47 = france
-accent-french-replacement-47 = la france
+accent-french-replaced-48 = france
+accent-french-replacement-48 = la france
 
-accent-french-replaced-48 = greetings
-accent-french-replacement-48 = bonjour
+accent-french-replaced-49 = greetings
+accent-french-replacement-49 = bonjour
+
+accent-french-replaced-50 = bread
+accent-french-replacement-50 = baguette
