@@ -86,8 +86,6 @@
   suffix: Filled
   parent: ToolboxSyndicate
   components:
-  - type: Storage
-    maxSlots: 8
   - type: StorageFill
     contents:
       - id: Crowbar
