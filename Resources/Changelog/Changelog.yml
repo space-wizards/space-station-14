@@ -1,11 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fix editing an admin watchlist note making it temporarily appear as a
-      low severity note.
-    type: Fix
-  id: 4590
-  time: '2023-08-14T21:05:47.0000000+00:00'
 - author: Emisse
   changes:
   - message: Operating table won't get you stuck in walls anymore
@@ -3493,3 +3486,19 @@ Entries:
     type: Tweak
   id: 5089
   time: '2023-11-04T16:00:16.0000000+00:00'
+- author: CthulhuFhtaghn
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5090
+  time: '2023-11-04T16:23:08.0000000+00:00'
