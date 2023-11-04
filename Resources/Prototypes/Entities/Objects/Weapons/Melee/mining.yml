@@ -57,7 +57,7 @@
         Slash: 2.5
   - type: GunRequiresWield
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: DisarmMalus
   - type: Tool
     qualities:
@@ -112,4 +112,4 @@
     wideAnimationRotation: -135
     attackRate: 1.25
   - type: Item
-    size: Huge
+    size: Ginormous
