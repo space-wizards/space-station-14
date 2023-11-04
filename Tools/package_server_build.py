@@ -33,9 +33,9 @@ p = os.path.join
 
 PLATFORMS = [
     PlatformReg("win-x64", "Windows", True),
-    PlatformReg("linux-x64", "Linux", True),
-    PlatformReg("linux-arm64", "Linux", True),
-    PlatformReg("osx-x64", "MacOS", True),
+    PlatformReg("linux-x64", "Linux", False),
+    PlatformReg("linux-arm64", "Linux", False),
+    PlatformReg("osx-x64", "MacOS", False),
     # Non-default platforms (i.e. for Watchdog Git)
     PlatformReg("win-x86", "Windows", False),
     PlatformReg("linux-x86", "Linux", False),
