@@ -74,6 +74,11 @@
       accent: genericAggressive
     - type: Speech
       speechVerb: LargeMob
+    - type: InteractionPopup
+      interactSuccessString: petting-success-carp
+      interactFailureString: petting-failure-carp
+      interactFailureSound:
+        path: /Audio/Effects/bite.ogg
 
 - type: entity
   parent: BaseMobCarp
