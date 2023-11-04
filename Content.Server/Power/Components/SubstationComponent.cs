@@ -7,10 +7,12 @@ namespace Content.Server.Power.Components;
 public sealed partial class SubstationComponent : Component
 {
 
-    [DataField("integrity")]
+    [DataField("Integrity")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float Integrity = 100.0f;
 
-    [DataField("enabled")]
-    public bool Enabled = true;
+    [DataField("DecayEnabled")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool DecayEnabled = true;
 
 }
