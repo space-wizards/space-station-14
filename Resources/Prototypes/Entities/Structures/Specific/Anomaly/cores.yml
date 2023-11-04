@@ -19,7 +19,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: Item
-    size: 10
+    size: Normal
   - type: ItemCooldown
   - type: EmitSoundOnUse #placeholder for future unical mechanic
     sound:
