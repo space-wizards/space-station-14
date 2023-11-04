@@ -27,10 +27,11 @@ public sealed class FrenchAccentSystem : EntitySystem
         // removes the letter h from the start of words.
         msg = Regex.Replace(msg, @"(?<!\w)[h]", "'", RegexOptions.IgnoreCase);
 
-        // spaces out ! ? and ,.
+        // spaces out ! ? : and ;.
         msg = Regex.Replace(msg, @"(?<=\w\w)!(?!\w)", " !", RegexOptions.IgnoreCase);
         msg = Regex.Replace(msg, @"(?<=\w\w)[?](?!\w)", " ?", RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, @"(?<=\w\w)[,](?!\w)", " ,", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w\w)[;](?!\w)", " ;", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w\w)[:](?!\w)", " :", RegexOptions.IgnoreCase);
 
         return msg;
     }
