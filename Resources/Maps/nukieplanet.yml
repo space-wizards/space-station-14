@@ -13523,7 +13523,7 @@ entities:
     - pos: -10.5,7.5
       parent: 104
       type: Transform
-- proto: VendingMachineChemicals
+- proto: VendingMachineChemicalsSyndicate
   entities:
   - uid: 1335
     components:

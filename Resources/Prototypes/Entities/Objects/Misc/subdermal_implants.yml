@@ -21,6 +21,9 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with trombone implant needs to give the chair mobstate so it can die first
     - type: TriggerOnMobstateChange
       mobState:
       - Dead
@@ -81,6 +84,9 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with tracking implant needs to give the chair mobstate so it can die first
     - type: SuitSensor
       randomMode: false
       controlsLocked: true
@@ -109,10 +115,14 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionOpenStorageImplant
+      whitelist:
+        components:
+        - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Item
-      size: 9999
+      size: Ginormous
     - type: Storage
-      capacity: 20 #10-20 should be more than enough for this
+      maxSlots: 4
+      maxItemSize: Small
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -131,6 +141,9 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateFreedomImplant
+      whitelist:
+        components:
+        - Cuffable # useless if you cant be cuffed
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -141,6 +154,9 @@
   components:
   - type: SubdermalImplant
     implantAction: ActionOpenUplinkImplant
+    whitelist:
+      components:
+      - Hands # prevent mouse buying grenade penguin since its not telepathic
   - type: Store
     preset: StorePresetUplink
     balance:
@@ -174,6 +190,9 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateDnaScramblerImplant
+      whitelist:
+        components:
+        - HumanoidAppearance # syndies cant turn hamlet into a human
 
 #Nuclear Operative/Special Exclusive implants
 
@@ -250,6 +269,9 @@
   components:
     - type: SubdermalImplant
       permanent: true
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with rattle implant needs to give the chair mobstate so it can die first
     - type: TriggerOnMobstateChange
       mobState:
       - Critical
