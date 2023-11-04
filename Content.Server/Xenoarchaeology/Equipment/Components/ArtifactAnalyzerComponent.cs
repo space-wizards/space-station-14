@@ -17,7 +17,7 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     /// How long it takes to analyze an artifact
     /// </summary>
     [DataField("analysisDuration", customTypeSerializer: typeof(TimespanSerializer))]
-    public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(60);
+    public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(30); //SS220-rnd-reb
 
     /// <summary>
     /// A mulitplier on the duration of analysis.
@@ -36,7 +36,7 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     /// The modifier raised to the part rating to determine the duration multiplier.
     /// </summary>
     [DataField("partRatingAnalysisDurationMultiplier")]
-    public float PartRatingAnalysisDurationMultiplier = 0.75f;
+    public float PartRatingAnalysisDurationMultiplier = 0.5f; //SS220-rnd-reb
 
     /// <summary>
     /// The corresponding console entity.

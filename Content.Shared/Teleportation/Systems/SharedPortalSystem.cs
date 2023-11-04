@@ -13,6 +13,8 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.Anomaly;
+using Content.Shared.Anomaly.Components;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -28,6 +30,8 @@ public abstract class SharedPortalSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPullingSystem _pulling = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+
+    [Dependency] private readonly SharedAnomalySystem _anomalySystem = default!;
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
@@ -205,6 +209,10 @@ public abstract class SharedPortalSystem : EntitySystem
         LogTeleport(portal, subject, Transform(subject).Coordinates, target);
 
         _transform.SetCoordinates(subject, target);
+
+        //SS220-rnd-reb
+        if (HasComp<AnomalyComponent>(subject))
+           _anomalySystem.DoAnomalySupercriticalEvent(subject);
 
         if (!playSound)
             return;
