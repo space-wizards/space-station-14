@@ -17,6 +17,7 @@
       shader: unshaded
     - state: full
       shader: unshaded
+  - type: Substation
   - type: UpgradeBattery
     maxChargeMultiplier: 2
     baseMaxCharge: 2500000
@@ -214,7 +215,6 @@
   id: SubstationBasic
   suffix: Basic, 2.5MJ
   components:
-  - type: Substation
   - type: Battery
     maxCharge: 2500000
     startingCharge: 2500000
