@@ -19,17 +19,17 @@ accent-french-replacement-6 = la
 accent-french-replaced-7 = is
 accent-french-replacement-7 = est
 
-accent-french-replaced-8 = love
-accent-french-replacement-8 = amour
+accent-french-replaced-8 = bread
+accent-french-replacement-8 = baguette
 
-accent-french-replaced-9 = your
-accent-french-replacement-9 = ton
+accent-french-replaced-9 = very
+accent-french-replacement-9 = très
 
 accent-french-replaced-10 = good
 accent-french-replacement-10 = bien
 
-accent-nadsat-replaced-11 = great
-accent-nadsat-replacement-11 = super
+accent-french-replaced-11 = great
+accent-french-replacement-11 = super
 
 accent-french-replaced-12 = beautiful
 accent-french-replacement-12 = beau
@@ -37,11 +37,11 @@ accent-french-replacement-12 = beau
 accent-french-replaced-13 = music
 accent-french-replacement-13 = musique
 
-accent-french-replaced-14 = he
-accent-french-replacement-14 = il
+accent-french-replaced-14 = greetings
+accent-french-replacement-14 = bonjour
 
-accent-french-replaced-15 = her
-accent-french-replacement-15 = son
+accent-french-replaced-15 = france
+accent-french-replacement-15 = la france
 
 accent-french-replaced-16 = captain
 accent-french-replacement-16 = capitaine
@@ -53,7 +53,7 @@ accent-french-replaced-18 = wand
 accent-french-replacement-18 = baguette
 
 accent-french-replaced-19 = magic
-accent-french-replacement-19 = la magie
+accent-french-replacement-19 = magie
 
 accent-french-replaced-20 = magic wand
 accent-french-replacement-20 = baguette magique
@@ -124,26 +124,8 @@ accent-french-replacement-41 = français
 accent-french-replaced-42 = librarian
 accent-french-replacement-42 = bibliothécaire
 
-accent-french-replaced-43 = by
-accent-french-replacement-43 = par
+accent-french-replaced-43 = yo
+accent-french-replacement-43 = salut
 
 accent-french-replaced-44 = dead
 accent-french-replacement-44 = morte
-
-accent-french-replaced-45 = i
-accent-french-replacement-45 = je
-
-accent-french-replaced-46 = yo
-accent-french-replacement-46 = salut
-
-accent-french-replaced-47 = very
-accent-french-replacement-47 = très
-
-accent-french-replaced-48 = france
-accent-french-replacement-48 = la france
-
-accent-french-replaced-49 = greetings
-accent-french-replacement-49 = bonjour
-
-accent-french-replaced-50 = bread
-accent-french-replacement-50 = baguette

@@ -22,11 +22,15 @@ public sealed class FrenchAccentSystem : EntitySystem
         msg = _replacement.ApplyReplacements(msg, "french");
 
         // replaces th with dz 
-        msg = Regex.Replace(msg, @"th", "dz", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"th", "'z", RegexOptions.IgnoreCase);
 
         // removes the letter h from the start of words.
-        msg = Regex.Replace(msg, @"(?<!\w)[h]", "", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<!\w)[h]", "'", RegexOptions.IgnoreCase);
 
+        // spaces out ! ? and ,.
+        msg = Regex.Replace(msg, @"(?<=\w\w)!(?!\w)", " !", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w\w)[?](?!\w)", " ?", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<=\w\w)[,](?!\w)", " ,", RegexOptions.IgnoreCase);
 
         return msg;
     }
