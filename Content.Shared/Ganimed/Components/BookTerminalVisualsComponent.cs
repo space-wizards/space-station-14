@@ -14,6 +14,11 @@ namespace Content.Shared.Ganimed.Components
 	public enum BookTerminalVisualLayers : byte
 	{
 		Base,
-		Slotted
+		Slotted,
+		Full,
+		High,
+		Medium,
+		Low,
+		None
 	}
 }

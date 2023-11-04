@@ -136,4 +136,14 @@
   product: FoodCartCold
   cost: 2000
   category: Service
+  group: market  
+
+- type: cargoProduct
+  id: ServiceBookTerminalCartridge
+  icon:
+    sprite: Ganimed/Structures/book_printer.rsi
+    state: cartridge
+  product: CrateServicePrinterInkCartridge
+  cost: 1500
+  category: Service
   group: market

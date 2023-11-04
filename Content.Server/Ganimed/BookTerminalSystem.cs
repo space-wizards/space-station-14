@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.Ganimed.Components;
+using Content.Shared.Examine;
 using Content.Shared.Ganimed;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -56,26 +57,93 @@ namespace Content.Server.Ganimed
             SubscribeLocalEvent<BookTerminalComponent, BookTerminalClearContainerMessage>(OnClearContainerMessage);
 			SubscribeLocalEvent<BookTerminalComponent, BookTerminalUploadMessage>(OnUploadMessage);
             SubscribeLocalEvent<BookTerminalComponent, BookTerminalPrintBookMessage>(OnPrintBookMessage);
+			SubscribeLocalEvent<BookTerminalCartridgeComponent, ExaminedEvent>(OnExamined); // Мне попросту лень писать под это отдельную систему.
         }
+		
+		private void UpdateVisuals(Entity<BookTerminalComponent> ent)
+		{
+			var cartridge = _itemSlotsSystem.GetItemOrNull(ent, "cartridgeSlot");
+			
+			if (cartridge is not null && EntityManager.TryGetComponent<BookTerminalCartridgeComponent>(cartridge, out BookTerminalCartridgeComponent? cartridgeComp))
+			{
+				_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Slotted, true);
+				_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Full, cartridgeComp.CurrentCharge == cartridgeComp.FullCharge);
+				_appearanceSystem.SetData(ent, BookTerminalVisualLayers.High, cartridgeComp.CurrentCharge >= cartridgeComp.FullCharge / 1.43f && cartridgeComp.CurrentCharge < cartridgeComp.FullCharge);
+				_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Medium, cartridgeComp.CurrentCharge >= cartridgeComp.FullCharge / 2.5f && cartridgeComp.CurrentCharge < cartridgeComp.FullCharge / 1.43f);
+				_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Low, cartridgeComp.CurrentCharge > 0 && cartridgeComp.CurrentCharge < cartridgeComp.FullCharge / 2.5f);
+				_appearanceSystem.SetData(ent, BookTerminalVisualLayers.None, cartridgeComp.CurrentCharge < 1);
+				return;
+			}
+			
+			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Slotted, true);
+			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Full, false);
+			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.High, false);
+			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Medium, false);
+			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Low, false);
+			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.None, false);
+		}
 		
 		private void SubscribeUpdateUiState<T>(Entity<BookTerminalComponent> ent, ref T ev)
         {
             UpdateUiState(ent);
 			RefreshBookContent();
-			
-			var isFilled = _itemSlotsSystem.GetItemOrNull(ent, "bookSlot") is not null;
-			
-			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Slotted, isFilled);
         }
+		
+		private bool IsRoutineAllowed(Entity<BookTerminalComponent> bookTerminal)
+		{
+			var bookContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "bookSlot");
+			var cartridgeContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "cartridgeSlot");
+			
+			return bookContainer is not null && 
+				cartridgeContainer is not null && 
+				TryComp<BookTerminalCartridgeComponent>(cartridgeContainer, out var cartridgeComp) && 
+				cartridgeComp.CurrentCharge > 0 &&
+				cartridgeComp.FullCharge > 0;
+		}
+		
+		private void DecreaseCartridgeCharge(Entity<BookTerminalComponent> bookTerminal)
+		{
+			var cartridgeContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "cartridgeSlot");
+			if (!TryComp<BookTerminalCartridgeComponent>(cartridgeContainer, out var cartridgeComp)
+				|| cartridgeComp.CurrentCharge < 1)
+				return;
+				
+			cartridgeComp.CurrentCharge -= 1;
+			Dirty(cartridgeComp);
+		}
+		
+		private bool TryLowerCartridgeCharge(Entity<BookTerminalComponent> bookTerminal)
+		{
+			if (!IsRoutineAllowed(bookTerminal))
+			{
+				_popupSystem.PopupEntity(Loc.GetString("book-terminal-cartridge-component-empty"), bookTerminal);
+				return false;
+			}
+			
+			DecreaseCartridgeCharge(bookTerminal);
+			return true;
+		}
+		
+		private void OnExamined(EntityUid uid, BookTerminalCartridgeComponent component, ExaminedEvent args)
+		{
+			args.PushText(Loc.GetString("book-terminal-cartridge-component-examine", ("charge", component.CurrentCharge)));
+		}
 		
 		private void UpdateUiState(Entity<BookTerminalComponent> bookTerminal)
         {
             var bookContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "bookSlot");
+			var cartridgeContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "cartridgeSlot");
 			var bookName = bookContainer is not null ? Name(bookContainer.Value) : null;
 			var bookDescription = bookContainer is not null ? Description(bookContainer.Value) : null;
+			int? cartridgeCharge = cartridgeContainer is not null ?
+									EntityManager.TryGetComponent<BookTerminalCartridgeComponent>(cartridgeContainer, out var cartridgeComp) ? 
+									cartridgeComp.CurrentCharge : 
+									null :
+									null;
 
-            var state = new BookTerminalBoundUserInterfaceState(bookName, bookDescription, GetNetEntity(bookContainer), bookTerminalEntries);
+            var state = new BookTerminalBoundUserInterfaceState(bookName, bookDescription, GetNetEntity(bookContainer), bookTerminalEntries, IsRoutineAllowed(bookTerminal), cartridgeCharge);
             _userInterfaceSystem.TrySetUiState(bookTerminal, BookTerminalUiKey.Key, state);
+			UpdateVisuals(bookTerminal);
         }
 		
 		private void OnClearContainerMessage(Entity<BookTerminalComponent> bookTerminal, ref BookTerminalClearContainerMessage message)
@@ -87,7 +155,7 @@ namespace Content.Server.Ganimed
 			if (message.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
                 return;
 			
-			if (IsAuthorized(bookTerminal, entity, bookTerminal))
+			if (IsAuthorized(bookTerminal, entity, bookTerminal) && TryLowerCartridgeCharge(bookTerminal))
 				ClearContent(bookContainer.Value);
 			
 			UpdateUiState(bookTerminal);
@@ -103,7 +171,7 @@ namespace Content.Server.Ganimed
 			if (message.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
                 return;
 			
-			if (IsAuthorized(bookTerminal, entity, bookTerminal))
+			if (IsAuthorized(bookTerminal, entity, bookTerminal) && TryLowerCartridgeCharge(bookTerminal))
 				UploadContent(bookContainer.Value);
 			
 			UpdateUiState(bookTerminal);
@@ -123,7 +191,7 @@ namespace Content.Server.Ganimed
 			
 			RefreshBookContent();
 			
-			if (IsAuthorized(bookTerminal, entity, bookTerminal))
+			if (IsAuthorized(bookTerminal, entity, bookTerminal) && TryLowerCartridgeCharge(bookTerminal))
 			{
 				ClearContent(bookContainer.Value);
 				SetContent(bookContainer.Value, message.BookEntry);

@@ -35,9 +35,9 @@ namespace Content.Client.Ganimed.BookTerminal
             UpdateContainerInfo(castState);
             UpdateBooksList(castState);
 			
-            ClearButton.Disabled = castState.BookName is null;
+            UploadButton.Disabled = !castState.RoutineAllowed;
+			ClearButton.Disabled = !castState.RoutineAllowed;
             EjectButton.Disabled = castState.BookName is null;
-            UploadButton.Disabled = castState.BookName is null;
         }
 		
 		public void UpdateBooksList(BoundUserInterfaceState state)
@@ -59,7 +59,7 @@ namespace Content.Client.Ganimed.BookTerminal
                 button.OnPressed += args => OnPrintBookButtonPressed?.Invoke(args, button);
                 button.OnMouseEntered += args => OnPrintBookButtonMouseEntered?.Invoke(args, button);
                 button.OnMouseExited += args => OnPrintBookButtonMouseExited?.Invoke(args, button);
-				button.Disabled = castState.BookName is null;
+				button.Disabled = !castState.RoutineAllowed;
                 BooksList.AddChild(button);
             }
         }
@@ -82,44 +82,55 @@ namespace Content.Client.Ganimed.BookTerminal
             if (state.BookName is null)
             {
                 ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-no-book-loaded-text") });
+            } else {
+			
+				var bookPreview = new SpriteView
+				{
+					Scale = new Vector2(2, 2),
+					OverrideDirection = Direction.South,
+					VerticalAlignment = VAlignment.Center,
+					SizeFlagsStretchRatio = 1
+				};
+				if (_entMan.TryGetEntity(state.BookEntity, out var bookEntity))
+					bookPreview.SetEntity(bookEntity);
+				
+				var bookLabel = new Label
+				{
+					Text = $"{CutDescription(state.BookName)}"
+				};
+				
+				var bookSublabel = new Label
+				{
+					Text = $"{CutDescription(state.BookDescription)}",
+					StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+				};
+				
+				var boxInfo = new BoxContainer
+				{
+					Orientation = LayoutOrientation.Vertical,
+					Children = {
+						new Control { MinSize = new Vector2(0, 10) },
+						bookLabel, 
+						bookSublabel }
+				};
+
+				ContainerInfo.Children.Add(new BoxContainer
+				{
+					Orientation = LayoutOrientation.Horizontal,
+					Children = { bookPreview, boxInfo }
+				});
+				
+			}
+			
+			if (state.CartridgeCharge is null)
+            {
+                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-no-cartridge-loaded-text") });
+                return;
+            } else if (state.CartridgeCharge < 1)
+            {
+                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-cartridge-empty") });
                 return;
             }
-			
-			var bookPreview = new SpriteView
-            {
-                Scale = new Vector2(2, 2),
-                OverrideDirection = Direction.South,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-			if (_entMan.TryGetEntity(state.BookEntity, out var bookEntity))
-				bookPreview.SetEntity(bookEntity);
-			
-			var bookLabel = new Label
-            {
-                Text = $"{CutDescription(state.BookName)}"
-            };
-			
-			var bookSublabel = new Label
-            {
-                Text = $"{CutDescription(state.BookDescription)}",
-				StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
-            };
-			
-			var boxInfo = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                Children = {
-					new Control { MinSize = new Vector2(0, 10) },
-					bookLabel, 
-					bookSublabel }
-            };
-
-            ContainerInfo.Children.Add(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Children = { bookPreview, boxInfo }
-            });
         }
     }
 	

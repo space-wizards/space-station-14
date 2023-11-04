@@ -14,6 +14,21 @@
     - state: slotted
       map: ["enum.BookTerminalVisualLayers.Slotted"]
       visible: false
+    - state: full
+      map: ["enum.BookTerminalVisualLayers.Full"]
+      visible: false
+    - state: high
+      map: ["enum.BookTerminalVisualLayers.High"]
+      visible: false
+    - state: medium
+      map: ["enum.BookTerminalVisualLayers.Medium"]
+      visible: false
+    - state: low
+      map: ["enum.BookTerminalVisualLayers.Low"]
+      visible: false
+    - state: none
+      map: ["enum.BookTerminalVisualLayers.None"]
+      visible: false
     snapCardinals: true
   - type: Transform
     anchored: true
@@ -57,11 +72,17 @@
         whitelist:
           components:
           - Paper
+       cartridgeSlot:
+        whitelistFailPopup: book-terminal-component-cannot-put-entity-message
+        whitelist:
+          components:
+          - BookTerminalCartridge
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
       bookSlot: !type:ContainerSlot
+      cartridgeSlot: !type:ContainerSlot
   - type: Machine
     board: BookTerminalMachineCircuitboard
   - type: StaticPrice
@@ -81,3 +102,28 @@
   - type: Appearance
   - type: AccessReader
     access: [["Library"]]
+
+- type: entity
+  id: BookTerminalFilled
+  parent: BookTerminal
+  prefix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      cartridgeSlot:
+      - BookTerminalInkCartridge
+
+- type: entity
+  id: BookTerminalInkCartridge
+  parent: BaseItem
+  name: printer cartridge
+  description: Black-box kind of thing that does all sorts of magic tricks to your office work.
+  components:
+  - type: BookTerminalCartridge
+  - type: StaticPrice
+    price: 150
+  - type: Sprite
+    sprite: Ganimed/Structures/book_printer.rsi
+    state: cartridge
+  - type: Item
+    size: 20

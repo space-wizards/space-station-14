@@ -240,3 +240,11 @@
           prob: 0.1
         - id: ShardGlassPlasma
           prob: 0.1
+
+- type: entity
+  id: CrateServicePrinterInkCartridge
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: BookTerminalInkCartridge
