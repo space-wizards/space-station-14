@@ -47,14 +47,13 @@ public sealed class ChasingWalkSystem : EntitySystem
         var xform = Transform(uid);
         var range = component.MaxChaseRadius;
         var compType = EntityManager.ComponentFactory.GetRegistration(component.ChasingComponent).Type;
-        var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range) //TO DO: Remove LINQ for optimization
-            .Select(x => x.Owner).ToList();
+        var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range).ToList();
 
         //If there are no required components in the radius, don't moving.
         if (allEnts.Count <= 0) return;
 
         //In the case of finding required components, we choose a random one of them and remember its uid.
-        component.ChasingEntity = _random.Pick(allEnts);
+        component.ChasingEntity = _random.Pick(allEnts).Owner;
         component.Speed = _random.NextFloat(component.MinSpeed, component.MaxSpeed);
     }
 
