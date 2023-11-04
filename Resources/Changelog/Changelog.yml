@@ -1,10 +1,4 @@
 Entries:
-- author: Repo
-  changes:
-  - {message: Nanotrasen no longer provides imitation head scrubs in the medical scrub
-      crate., type: Fix}
-  id: 4601
-  time: '2023-08-15T20:22:28.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Radios no longer display a popup when messages fail to send., type: Remove}
@@ -2912,3 +2906,8 @@ Entries:
       causing it to appear offset from the player', type: Fix}
   id: 5100
   time: '2023-11-03T20:37:26.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Candles can now be found in PietyVend., type: Add}
+  id: 5101
+  time: '2023-11-04T05:53:52.0000000+00:00'
