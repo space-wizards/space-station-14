@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Radios no longer display a popup when messages fail to send., type: Remove}
-  id: 4602
-  time: '2023-08-15T20:56:42.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Portal sprites made less bad hopefully, type: Tweak}
@@ -2911,3 +2906,8 @@ Entries:
   - {message: Candles can now be found in PietyVend., type: Add}
   id: 5101
   time: '2023-11-04T05:53:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to sell the same bounty multiple times., type: Fix}
+  id: 5102
+  time: '2023-11-04T13:19:24.0000000+00:00'
