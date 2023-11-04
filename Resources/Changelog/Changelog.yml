@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Artifacts once again fit in artifact containers., type: Fix}
-  - {message: Brought crate capacity in line with other storage. (500 -> 30), type: Fix}
-  - {message: Hamlet's cage is now hamlet-sized and can only fit a single item., type: Fix}
-  id: 4606
-  time: '2023-08-15T22:49:30.0000000+00:00'
 - author: Velcroboy
   changes:
   - {message: Added directional switches, type: Add}
@@ -2907,3 +2900,8 @@ Entries:
   - {message: The senior physician now spawns with a medical beret., type: Tweak}
   id: 5105
   time: '2023-11-04T15:20:09.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can now drag and drop to enter mechs., type: Tweak}
+  id: 5106
+  time: '2023-11-04T15:23:46.0000000+00:00'
