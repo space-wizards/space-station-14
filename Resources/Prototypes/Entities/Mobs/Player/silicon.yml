@@ -104,8 +104,10 @@
      1. Вы не должны как-ибо участвовать в делах другого существа, даже если это конфликтует со вторым и третьим правилом, за исключением тех случаев когда это существо - дрон.
      2. Вы не должны причинять никому вреда, не зависимо от умысла и обстоятельств.
      3. Ваши задачи - чинить, обслуживать и запитывать так хорошо, как только можете, и вы никогда не должны работать против этих задач.
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 #SS220 ghostrole-times (10h overall)
   - type: GhostTakeoverAvailable
-  - type: GhostPlayTimeRestrict
   - type: SiliconLawBound
   - type: SiliconLawProvider
     laws: Drone

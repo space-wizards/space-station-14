@@ -5,8 +5,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
-using Content.Server.Players.PlayTimeTracking;
-using Content.Server.SS220.Ghost.Roles.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Follower;
@@ -43,7 +41,6 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
-        [Dependency] private readonly PlayTimeTrackingManager _playTimeTrackingManager = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
         private uint _nextRoleIdentifier;
@@ -412,32 +409,10 @@ namespace Content.Server.Ghost.Roles
                 var msg = Loc.GetString("ghost-role-banned");
                 var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
 
-                _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.ConnectedClient, Color.Red);
+                _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.Channel, Color.Red);
 
                 args.TookRole = false;
                 return;
-            }
-
-                if (HasComp<GhostPlayTimeRestrictComponent>(uid))
-            {
-                if (!_playerManager.TryGetSessionById(userId, out var session))
-                {
-                    args.TookRole = false;
-                    return;
-                }
-
-                var overAll = _playTimeTrackingManager.GetOverallPlaytime(session);
-
-                if (overAll < TimeSpan.FromHours(10))
-                {
-                    var msg = Loc.GetString("ghost-role-time-restrict");
-                    var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-
-                    _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.ConnectedClient, Color.Red);
-
-                    args.TookRole = false;
-                    return;
-                }
             }
 
             ghostRole.Taken = true;

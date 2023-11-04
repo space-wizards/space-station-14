@@ -37,6 +37,9 @@
     name: ghost-role-information-kesha-name
     description: ghost-role-information-kesha-description
     rules: "Вы НЕ разумный попугай, вы НЕ знаете слов, но можете запоминать и использовать их не взирая на смысл. Составлять осмысленные предложения или вести диалог запрещено."
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 #SS220 ghostrole-times (10h overall)
   - type: GhostTakeoverAvailable
 
 # Boss
@@ -71,6 +74,9 @@
     name: ghost-role-information-boss-name
     description: ghost-role-information-boss-description
     rules: "Вы НЕ разумный попугай, вы НЕ знаете слов, но можете запоминать и использовать их не взирая на смысл. Составлять осмысленные предложения или вести диалог запрещено."
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 #SS220 ghostrole-times (10h overall)
   - type: GhostTakeoverAvailable
 
 - type: entity
