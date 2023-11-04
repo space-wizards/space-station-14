@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Portal sprites made less bad hopefully, type: Tweak}
-  - {message: Hand teleporter doafter reduced slightly, type: Tweak}
-  - {message: Portals can no longer teleport you to other maps, type: Fix}
-  - {message: Ghosts can now traverse linked portals silently using an altverb, type: Add}
-  - {message: Portals now snap to grid + show up properly in the entity menu, type: Fix}
-  id: 4603
-  time: '2023-08-15T20:56:14.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Cyborgs can't get electrocuted anymore., type: Fix}
@@ -2911,3 +2902,9 @@ Entries:
   - {message: Fixed being able to sell the same bounty multiple times., type: Fix}
   id: 5102
   time: '2023-11-04T13:19:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed needing to manually deselect to switch between borg modules.,
+    type: Fix}
+  id: 5103
+  time: '2023-11-04T13:29:19.0000000+00:00'
