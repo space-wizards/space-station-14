@@ -328,6 +328,15 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             totalConsumer += consume;
         }
 
+        foreach (BatteryChargerComponent pcc in netQ.Chargers)
+        {
+            if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
+                continue;
+
+            var rate = batteryComp.NetworkBattery.CurrentReceiving;
+            totalConsumer += rate;
+        }
+
         return totalSources - totalConsumer;
     }
 
