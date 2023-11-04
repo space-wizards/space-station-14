@@ -22,3 +22,10 @@
     - type: LizardAccent
     - type: ReplacementAccent
       accent: dwarf
+
+- type: trait
+  id: FrenchAccent
+  name: trait-french-accent-name
+  description: trait-french-accent-desc
+  components:
+    - type: FrenchAccent

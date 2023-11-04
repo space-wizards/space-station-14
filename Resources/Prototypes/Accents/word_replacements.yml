@@ -536,3 +536,55 @@
     chatsan-word-40: chatsan-replacement-etcetera
     chatsan-word-41: chatsan-replacement-41
     chatsan-word-42: chatsan-replacement-42
+
+- type: accent
+  id: french
+  wordReplacements:
+    accent-french-replaced-1: accent-french-replacement-1
+    accent-french-replaced-2: accent-french-replacement-2
+    accent-french-replaced-3: accent-french-replacement-3
+    accent-french-replaced-4: accent-french-replacement-4
+    accent-french-replaced-5: accent-french-replacement-5
+    accent-french-replaced-6: accent-french-replacement-6
+    accent-french-replaced-7: accent-french-replacement-7
+    accent-french-replaced-8: accent-french-replacement-8
+    accent-french-replaced-9: accent-french-replacement-9
+    accent-french-replaced-10: accent-french-replacement-10
+    accent-french-replaced-11: accent-french-replacement-11
+    accent-french-replaced-12: accent-french-replacement-12
+    accent-french-replaced-13: accent-french-replacement-13
+    accent-french-replaced-14: accent-french-replacement-14
+    accent-french-replaced-15: accent-french-replacement-15
+    accent-french-replaced-16: accent-french-replacement-16
+    accent-french-replaced-17: accent-french-replacement-17
+    accent-french-replaced-18: accent-french-replacement-18
+    accent-french-replaced-19: accent-french-replacement-19
+    accent-french-replaced-20: accent-french-replacement-20
+    accent-french-replaced-21: accent-french-replacement-21
+    accent-french-replaced-22: accent-french-replacement-22
+    accent-french-replaced-23: accent-french-replacement-23
+    accent-french-replaced-24: accent-french-replacement-24
+    accent-french-replaced-25: accent-french-replacement-25
+    accent-french-replaced-26: accent-french-replacement-26
+    accent-french-replaced-27: accent-french-replacement-27
+    accent-french-replaced-28: accent-french-replacement-28
+    accent-french-replaced-29: accent-french-replacement-29
+    accent-french-replaced-30: accent-french-replacement-30
+    accent-french-replaced-31: accent-french-replacement-31
+    accent-french-replaced-32: accent-french-replacement-32
+    accent-french-replaced-33: accent-french-replacement-33
+    accent-french-replaced-34: accent-french-replacement-34
+    accent-french-replaced-35: accent-french-replacement-35
+    accent-french-replaced-36: accent-french-replacement-36
+    accent-french-replaced-37: accent-french-replacement-37
+    accent-french-replaced-38: accent-french-replacement-38
+    accent-french-replaced-39: accent-french-replacement-39
+    accent-french-replaced-40: accent-french-replacement-40
+    accent-french-replaced-41: accent-french-replacement-41
+    accent-french-replaced-42: accent-french-replacement-42
+    accent-french-replaced-43: accent-french-replacement-43
+    accent-french-replaced-44: accent-french-replacement-44
+    accent-french-replaced-45: accent-french-replacement-45
+    accent-french-replaced-46: accent-french-replacement-46
+    accent-french-replaced-47: accent-french-replacement-47
+    accent-french-replaced-48: accent-french-replacement-48

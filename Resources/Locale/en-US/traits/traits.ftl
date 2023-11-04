@@ -26,6 +26,9 @@ trait-pirate-accent-desc = You can't stop speaking like a pirate!
 trait-archaic-accent-name = Archaic Accent
 trait-archaic-accent-desc = You speak in a way that many others find outdated
 
+trait-french-accent-name = French Accent
+trait-french-accent-desc = You like to throw random french words into your english out of protest.
+
 trait-accentless-name = Accentless
 trait-accentless-desc = You don't have the accent that your species would usually have
 
