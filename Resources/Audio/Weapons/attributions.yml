@@ -69,7 +69,7 @@
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/31c5996a5db8cce0cb431cb1dc20d99cac83f268"
 
 - files: ["pierce.ogg"]
-  license: "AGPL-3.0"
+  license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation"
   source: "https://github.com/tgstation/tgstation/commit/106cd26fc00851a51dd362f3131120318d848a53"
 
@@ -79,9 +79,9 @@
   source: "https://freesound.org/people/ScreamStudio/sounds/392617/"
 
 - files: ["weoweo.ogg"]
-  license: "SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
-  copyright: "Taken from Sonniss.com - GDC 2023 - Systematic Sound - TonalElements Obscurum - Dark Drones"
+  license: "custom"
+  copyright: "Taken from Sonniss.com - GDC 2023 - Systematic Sound - TonalElements Obscurum - Dark Drones. The license is SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
 
 - files: ["soup.ogg"]
-  license: "SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
-  copyright: "Taken from Sonniss.com - GDC 2023 - 344 AUdio - Epic Impacts Vol. 1"
+  license: "custom"
+  copyright: "Taken from Sonniss.com - GDC 2023 - 344 AUdio - Epic Impacts Vol. 1. The license is SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
