@@ -370,7 +370,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(toAdd, out var phys))
         {
-            var aabb = _physics.GetWorldAABB(toAdd, body: phys);
+            var aabb = _physics.GetObjectAABB(toAdd, body: phys);
 
             if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
                 return false;
