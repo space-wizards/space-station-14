@@ -70,24 +70,22 @@ public sealed class LightningSystem : SharedLightningSystem
     public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
     {
         //To Do: add support to different priority target tablem for different lightning types
-        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).Coordinates, range);
-        var sortedTargets = targets
-            .OrderByDescending(target => target.Priority)
-            .ThenBy(_ => _random.Next())
-            .ToList();
+        var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).Coordinates, range).ToList(); //To Do: remove hardcode component
+        _random.Shuffle(targets);
+        targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));
 
-        var realCount = Math.Min(sortedTargets.Count, boltCount);
+        var realCount = Math.Min(targets.Count, boltCount);
 
         if (realCount <= 0)
             return;
 
         for (int i = 0; i < realCount; i++)
         {
-            ShootLightning(user, sortedTargets[i].Owner, lightningPrototype); //idk how to evade .Owner pls help
+            ShootLightning(user, targets[i].Owner, lightningPrototype); //idk how to evade .Owner pls help
 
             if (arcDepth > 0)
             {
-                ShootRandomLightnings(sortedTargets[i].Owner, range, 1, lightningPrototype, arcDepth - sortedTargets[i].LightningResistance);
+                ShootRandomLightnings(targets[i].Owner, range, 1, lightningPrototype, arcDepth - targets[i].LightningResistance);
             }
         }
     }

@@ -22,7 +22,7 @@ public sealed class LightningArcShooterSystem : EntitySystem
         while (query.MoveNext(out var uid, out var arcShooter))
         {
             if (arcShooter.NextShootTime > _gameTiming.CurTime)
-                return;
+                continue;
 
             ArcShoot(uid, arcShooter);
             var delay = TimeSpan.FromSeconds(_random.NextFloat(arcShooter.ShootMinInterval, arcShooter.ShootMaxInterval));

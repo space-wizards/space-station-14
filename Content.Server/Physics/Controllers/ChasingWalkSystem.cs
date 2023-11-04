@@ -47,7 +47,7 @@ public sealed class ChasingWalkSystem : EntitySystem
         var xform = Transform(uid);
         var range = component.MaxChaseRadius;
         var compType = EntityManager.ComponentFactory.GetRegistration(component.ChasingComponent).Type;
-        var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range)
+        var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range) //TO DO: Remove LINQ for optimization
             .Select(x => x.Owner).ToList();
 
         //If there are no required components in the radius, don't moving.
@@ -61,9 +61,6 @@ public sealed class ChasingWalkSystem : EntitySystem
     //pushing the entity toward its target
     private void ForceImpulse(EntityUid uid, ChasingWalkComponent component)
     {
-        if (!Initialized(uid))
-            return;
-
         if (Deleted(component.ChasingEntity) || component.ChasingEntity == null)
         {
             ChangeTarget(uid, component);

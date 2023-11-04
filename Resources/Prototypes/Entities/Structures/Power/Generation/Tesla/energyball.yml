@@ -6,6 +6,7 @@
   - type: Physics
     bodyType: Dynamic
     bodyStatus: InAir
+    sleepingAllowed: false
   - type: CanMoveInAir
   - type: ChasingWalk
     minSpeed: 1
@@ -27,7 +28,7 @@
     shootMinInterval: 4
     shootMaxInterval: 10
     shootRange: 3
-    lightningPrototype: ChargedLightning
+    lightningPrototype: Lightning 
 
 - type: entity
   id: TeslaEnergyBall
@@ -40,7 +41,7 @@
       TeslaCollider:
         shape:
           !type:PhysShapeCircle
-            radius: 0.65
+            radius: 0.55
         hard: true
         restitution: 0.8
         density: 99999 # to do: remove the interaction with the explosions. Now the explosions can push the Tesla very far away from the station.
@@ -61,7 +62,7 @@
     shootMinInterval: 2
     shootMaxInterval: 5
     shootRange: 7
-    lightningPrototype: HyperchargedLightning
+    lightningPrototype: Lightning #To do: change to HyperchargedLightning, after fix beam system
   - type: ChasingWalk
     minSpeed: 1
     maxSpeed: 2
@@ -98,7 +99,7 @@
             radius: 0.35
         hard: true
         restitution: 0.8
-        density: 99999 #to do: fix collider - the sphere pushes the entities apart. 9999 density is needed to avoid high velocities when colliding with a containment field. Collision is needed to collide with the containment field.
+        density: 99999 #to do: fix collider - the sphere pushes the entities apart. 9999 density is needed to avoid high velocities when colliding with a containment field. Collision is needed to collide with the containment field. TESLA raycast from miniballs!
         mask:
         - Opaque
         layer:

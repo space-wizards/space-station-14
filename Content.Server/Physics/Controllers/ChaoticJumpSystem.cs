@@ -49,12 +49,13 @@ public sealed class ChaoticJumpSystem : EntitySystem
 
     private void Jump(EntityUid uid, ChaoticJumpComponent component)
     {
-        Vector2 startPos = Transform(uid).WorldPosition;
-        Vector2 targetPos = new Vector2();
+        var transform = Transform(uid);
+        var startPos = transform.WorldPosition;
+        var targetPos = new Vector2();
         var direction = _random.NextAngle();
         var range = _random.NextFloat(component.RangeMin, component.RangeMax);
         var ray = new CollisionRay(startPos, direction.ToVec(), component.CollisionMask);
-        var rayCastResults = _physics.IntersectRay(Transform(uid).MapID, ray, range, uid, returnOnFirstHit: false).ToList();
+        var rayCastResults = _physics.IntersectRay(transform.MapID, ray, range, uid, returnOnFirstHit: false).ToList();
 
         if (rayCastResults.Count > 0)
         {
@@ -69,6 +70,5 @@ public sealed class ChaoticJumpSystem : EntitySystem
         Spawn(component.Effect, Transform(uid).Coordinates);
 
         _xform.SetWorldPosition(uid, targetPos);
-        _physics.SetLinearVelocity(uid, new Vector2());
     }
 }
