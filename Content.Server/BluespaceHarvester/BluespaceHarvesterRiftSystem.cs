@@ -1,3 +1,4 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 
@@ -20,7 +21,6 @@ public sealed class BluespaceHarvesterRiftSystem : EntitySystem
         base.Update(frameTime);
 
         _updateTimer += frameTime;
-
         if (_updateTimer < UpdateTime)
             return;
 
@@ -41,28 +41,35 @@ public sealed class BluespaceHarvesterRiftSystem : EntitySystem
             return;
 
         comp.PassiveSpawnAccumulator -= comp.PassiveSpawnCooldown;
-        Spawn(_random.Pick(comp.PassiveSpawnPrototypes), xform.Coordinates);
+
+        // Random, not particularly dangerous mob.
+        Spawn(_random.Pick(comp.PassiveSpawn), xform.Coordinates);
     }
 
     private void UpdateSpawn(EntityUid uid, BluespaceHarvesterRiftComponent comp, TransformComponent xform)
     {
         var count = 0;
-
         while (comp.Danger != 0 && count < 3)
         {
             count++;
 
-            var pickable = comp.SpawnPrototypes.Where((spawn) => spawn.Cost <= comp.Danger).ToList();
+            var pickable = new List<EntitySpawn>();
+            foreach (var spawn in comp.Spawn)
+            {
+                if (spawn.Cost <= comp.Danger)
+                    pickable.Add(spawn);
+            }
 
+            // If we cannot choose anything, this means that we have used up all the danger sufficient before spawn.
             if (pickable.Count == 0)
             {
-                comp.Danger = 0;
+                comp.Danger = 0; // This will disable pointless spawn attempts.
                 break;
             }
 
             var pick = _random.Pick(pickable);
-            comp.Danger -= pick.Cost;
-            Spawn(pick.PrototypeId, xform.Coordinates);
+            comp.Danger -= pick.Cost; // Deduct the risk spent on the purchase.
+            Spawn(pick.Id, xform.Coordinates);
         }
     }
 }

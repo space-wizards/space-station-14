@@ -30,6 +30,9 @@ public sealed partial class BluespaceHarvesterBundleSystem : EntitySystem
 
     private void CreateLoot(EntityUid uid, BluespaceHarvesterBundleComponent component)
     {
+        if (component.Spawned)
+            return;
+
         var content = _random.Pick(component.Contents);
         var xfrom = Transform(uid);
         var position = xfrom.Coordinates;
@@ -39,6 +42,6 @@ public sealed partial class BluespaceHarvesterBundleSystem : EntitySystem
             Spawn(content.PrototypeId, position);
         }
 
-        RemComp<BluespaceHarvesterBundleComponent>(uid);
+        component.Spawned = true;
     }
 }

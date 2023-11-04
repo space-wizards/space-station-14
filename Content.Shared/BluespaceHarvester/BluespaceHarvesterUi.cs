@@ -89,13 +89,13 @@ public enum BluespaceHarvesterVisualLayers : byte
 [Serializable, NetSerializable, DataDefinition]
 public partial struct BluespaceHarvesterCategoryInfo
 {
-    [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? PrototypeId = null;
+    [DataField("id")]
+    public EntProtoId PrototypeId = "RandomHarvesterIndustrialLoot";
 
-    [DataField("cost")]
-    public int Cost;
+    [DataField]
+    public int Cost = 0;
 
-    [DataField("type")]
+    [DataField]
     public BluespaceHarvesterCategory Type;
 }
 

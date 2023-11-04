@@ -47,7 +47,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 500 # We don't need to break it
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]

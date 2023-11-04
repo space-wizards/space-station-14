@@ -7,28 +7,37 @@ namespace Content.Server.BluespaceHarvester;
 [RegisterComponent]
 public sealed partial class BluespaceHarvesterRiftComponent : Component
 {
-    [DataField("danger"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The current danger level of the portal with which he will buy things from the Spawn list.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Danger = 0;
 
-    [DataField("passiveSpawnAccumulator"), ViewVariables(VVAccess.ReadWrite)]
-    public float PassiveSpawnAccumulator = 30f;
-
-    [DataField("passiveSpawnCooldown"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The portal also periodically generates a random, weak mob from the PassiveSpawn list.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float PassiveSpawnCooldown = 30f;
 
-    [DataField("passiveSpawn", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public List<string> PassiveSpawnPrototypes = new();
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float PassiveSpawnAccumulator = 0f;
 
-    [DataField("spawn")]
-    public List<EntitySpawn> SpawnPrototypes = new();
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public List<EntProtoId> PassiveSpawn = new();
+
+    /// <summary>
+    /// Monsters and their cost for purchase through the portal are described here; there may be expensive but very dangerous creatures, for example, kudzu or a dragon.
+    /// </summary>
+    [DataField]
+    public List<EntitySpawn> Spawn = new();
 }
 
 [Serializable, DataDefinition]
 public partial struct EntitySpawn
 {
-    [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string? PrototypeId = null;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId? Id = null;
 
-    [DataField("cost"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Cost = 1;
 }

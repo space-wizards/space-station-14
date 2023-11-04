@@ -11,13 +11,3 @@
       - id: ClothingMaskSterile
         amount: 2
 
-- type: entity
-  id: CrateScienceBluespaceHarvesterKit
-  parent: CrateScienceSecure
-  name: bluespace harvester circuitboard create
-  description: Contains a large board for creating large machines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MachineBluespaceHarvesterCircuitboard
-        amount: 1
