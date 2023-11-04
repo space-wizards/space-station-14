@@ -251,7 +251,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterHardsuitSyndie
+      - id: ClothingOuterHardsuitSyndieFactionExplosion #Imperia Change
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesCombat
 
