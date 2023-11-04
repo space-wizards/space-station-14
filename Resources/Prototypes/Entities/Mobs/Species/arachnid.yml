@@ -20,7 +20,7 @@
     baseDecayRate: 0.0125 # Read comment in hunger
   # Damage (Self)
   - type: Bloodstream
-    bloodReagent: SpiderBlood # would be cool if they had to drink copper instead of iron but that might just be more bloat to deal with.
+    bloodReagent: CopperBlood
   # Damage (Others)
   - type: MeleeWeapon
     animation: WeaponArcClaw
@@ -109,6 +109,11 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_arachnid"
         visible: false
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
 
 - type: entity
   parent: BaseSpeciesDummy

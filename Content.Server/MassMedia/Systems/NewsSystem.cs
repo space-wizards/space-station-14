@@ -18,6 +18,7 @@ using Content.Shared.MassMedia.Systems;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.MassMedia.Systems;
@@ -210,7 +211,6 @@ public sealed class NewsSystem : EntitySystem
                 continue;
 
             _ringer.RingerPlayRingtone(uid, ringer);
-            break;
         }
     }
 

@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from TGMC at commit https://github.com/tgstation/TerraGov-Marine-Corps/commit/4bf5d1aafbcbbb7bd2a7d0f52ef87f28e2bbb384",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "sign_left"
+        },
+        {
+            "name": "sign_right"
+        },
+        {
+            "name": "support"
+        },
+        {
+            "name": "support_beams"
+        },
+        {
+            "name": "support_wall"
+        },
+        {
+            "name": "support_wall_broken"
+        }
+    ]
+}

@@ -12,7 +12,6 @@ using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
@@ -60,18 +59,12 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGasTankToggleInternals(Entity<GasTankComponent> ent, ref GasTankToggleInternalsMessage args)
         {
-            if (args.Session is not IPlayerSession playerSession ||
-                playerSession.AttachedEntity == null)
-            {
-                return;
-            }
-
             ToggleInternals(ent);
         }
 
         private void OnGasTankSetPressure(Entity<GasTankComponent> ent, ref GasTankSetPressureMessage args)
         {
-            var pressure = Math.Min(args.Pressure, ent.Comp.MaxOutputPressure);
+            var pressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxOutputPressure);
 
             ent.Comp.OutputPressure = pressure;
 
@@ -143,7 +136,7 @@ namespace Content.Server.Atmos.EntitySystems
             while (query.MoveNext(out var uid, out var comp))
             {
                 var gasTank = (uid, comp);
-                if (comp.IsValveOpen && !comp.IsLowPressure)
+                if (comp.IsValveOpen && !comp.IsLowPressure && comp.OutputPressure > 0)
                 {
                     ReleaseGas(gasTank);
                 }

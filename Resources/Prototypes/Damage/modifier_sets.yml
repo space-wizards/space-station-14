@@ -198,3 +198,15 @@
     Cellular: 0.0
     Radiation: 0.2
     Caustic: 0.0
+
+- type: damageModifierSet
+  id: Cockroach
+  coefficients:
+    Blunt: 1.0
+    Slash: 1.0
+    Piercing: 1.0
+    Cold: 1.0
+    Poison: 1.0
+    Cellular: 1.0
+    Radiation: 0.0 # hehe funny cockroach immune to rads
+    Caustic: 1.0
