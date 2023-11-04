@@ -77,11 +77,3 @@
   license: "CC0-1.0"
   copyright: "Taken from ScreamStudio on freesound.org"
   source: "https://freesound.org/people/ScreamStudio/sounds/392617/"
-
-- files: ["weoweo.ogg"]
-  license: "custom"
-  copyright: "Taken from Sonniss.com - GDC 2023 - Systematic Sound - TonalElements Obscurum - Dark Drones. The license is SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
-
-- files: ["soup.ogg"]
-  license: "custom"
-  copyright: "Taken from Sonniss.com - GDC 2023 - 344 AUdio - Epic Impacts Vol. 1. The license is SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
