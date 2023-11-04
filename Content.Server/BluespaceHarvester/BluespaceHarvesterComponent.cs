@@ -55,9 +55,6 @@ public sealed partial class BluespaceHarvesterComponent : Component
     [DataField]
     public BluespaceHarvesterVisuals RedspaceTap = BluespaceHarvesterVisuals.TapRedspace;
 
-    [DataField]
-    public float SpawnRadius = 5f;
-
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Danger = 0;
 
@@ -110,6 +107,9 @@ public sealed partial class BluespaceHarvesterComponent : Component
             Type = BluespaceHarvesterCategory.Destruction,
         },
     };
+
+    [DataField]
+    public float SpawnRadius = 5f;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId SpawnEffect = "EffectEmpPulse";

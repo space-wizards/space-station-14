@@ -194,7 +194,7 @@
 - type: entity
   id: CrateHarvesterReagentSlime
   parent: CrateLimitedSecure
-  suffix: Bluespace Harvester, Mech
+  suffix: Bluespace Harvester, ReagentSlime
   components:
   - type: BluespaceHarvesterBundle
     contents:
@@ -269,7 +269,7 @@
 - type: entity
   id: CrateHarvesterTurretSyndicate
   parent: CrateLimitedSecure
-  suffix: Bluespace Harvester, TurretSyndicate
+  suffix: Bluespace Harvester, Behonker
   components:
   - type: BluespaceHarvesterBundle
     contents:
