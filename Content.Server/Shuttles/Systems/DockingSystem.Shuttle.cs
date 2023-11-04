@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
+using FastAccessors;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -38,8 +39,10 @@ public sealed partial class DockingSystem
    /// </summary>
    public bool CanDock(
        DockingComponent shuttleDock,
+       EntityUid shuttleDockUid,
        TransformComponent shuttleDockXform,
        DockingComponent gridDock,
+       EntityUid gridDockUid,
        TransformComponent gridDockXform,
        Box2 shuttleAABB,
        Angle targetGridRotation,
@@ -57,7 +60,9 @@ public sealed partial class DockingSystem
        if (shuttleDock.Docked ||
            gridDock.Docked ||
            !shuttleDockXform.Anchored ||
-           !gridDockXform.Anchored)
+           !gridDockXform.Anchored ||
+           _bolts.IsBolted(shuttleDockUid) ||
+           _bolts.IsBolted(gridDockUid))
        {
            return false;
        }
@@ -152,8 +157,8 @@ public sealed partial class DockingSystem
                    var gridXform = xformQuery.GetComponent(gridDockUid);
 
                    if (!CanDock(
-                           shuttleDock, shuttleDockXform,
-                           gridDock, gridXform,
+                           shuttleDock, dockUid, shuttleDockXform,
+                           gridDock, gridDockUid, gridXform,
                            shuttleAABB,
                            targetGridAngle,
                            shuttleFixturesComp,
@@ -204,8 +209,10 @@ public sealed partial class DockingSystem
 
                            if (!CanDock(
                                    other,
+                                   otherUid,
                                    xformQuery.GetComponent(otherUid),
                                    otherGrid,
+                                   otherGridUid,
                                    xformQuery.GetComponent(otherGridUid),
                                    shuttleAABB,
                                    targetGridAngle,
