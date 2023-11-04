@@ -52,9 +52,11 @@
     Food:
       effects:
       - !type:ChemVomit
+        probability: 0.20
     Drink:
       effects:
       - !type:ChemVomit
+        probability: 0.20
 
 - type: reagent
   id: SoapyWater
@@ -71,6 +73,7 @@
       - !type:SatiateThirst
         factor: 3
       - !type:ChemVomit
+        probability: 0.10
         thirstAmount: -10.0
         hungerAmount: -10.0
   plantMetabolism:
