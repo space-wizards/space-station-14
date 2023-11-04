@@ -1,0 +1,241 @@
+# Base
+
+- type: entity
+  id: ArrivalsSpawnPointJobBase
+  parent: MarkerBase
+  abstract: true
+  name: arrivals job spawn
+  components:
+  - type: ArrivalsSpawnPoint
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+
+- type: entity
+  suffix: general
+  id: ArrivalsSpawnPointGeneral
+  parent: ArrivalsSpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+
+# Cargo
+
+- type: entity
+  id: ArrivalsSpawnPointCargo
+  parent: ArrivalsSpawnPointJobBase
+  suffix: cargo
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - CargoTechnician
+  - type: Sprite
+    layers:
+      - state: green
+      - state: cargo_tech
+
+- type: entity
+  id: ArrivalsSpawnPointQuartermaster
+  parent: ArrivalsSpawnPointJobBase
+  suffix: quartermaster
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - Quartermaster
+  - type: Sprite
+    layers:
+      - state: green
+      - state: qm
+
+- type: entity
+  id: ArrivalsSpawnPointSalvage
+  parent: ArrivalsSpawnPointJobBase
+  suffix: salvage
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - SalvageSpecialist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: salvagespecialist
+
+# Civilian
+
+# TODO: Put stuff here. Probably not as important.
+
+# Command
+
+- type: entity
+  id: ArrivalsSpawnPointCaptain
+  parent: ArrivalsSpawnPointJobBase
+  suffix: captain
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - Captain
+  - type: Sprite
+    layers:
+      - state: green
+      - state: captain
+
+- type: entity
+  id: ArrivalsSpawnPointHeadOfPersonnel
+  parent: ArrivalsSpawnPointJobBase
+  suffix: headofpersonnel
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - HeadOfPersonnel
+  - type: Sprite
+    layers:
+      - state: green
+      - state: hop
+
+# Engineering
+
+- type: entity
+  id: ArrivalsSpawnPointEngineer
+  parent: ArrivalsSpawnPointJobBase
+  suffix: engineering
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - SeniorEngineer
+      - StationEngineer
+      - AtmosphericTechnician
+      - TechnicalAssistant
+  - type: Sprite
+    layers:
+      - state: green
+      - state: engineer
+
+- type: entity
+  id: ArrivalsSpawnPointChiefEngineer
+  parent: ArrivalsSpawnPointJobBase
+  suffix: chief engineer
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - ChiefEngineer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ce
+
+# Medical
+
+- type: entity
+  id: ArrivalsSpawnPointMedical
+  parent: ArrivalsSpawnPointJobBase
+  suffix: medical
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - SeniorPhysician
+      - Paramedic
+      - Chemist
+      - MedicalDoctor
+      - MedicalIntern
+  - type: Sprite
+    layers:
+      - state: green
+      - state: doctor
+
+- type: entity
+  id: ArrivalsSpawnPointChiefMedicalOfficer
+  parent: ArrivalsSpawnPointJobBase
+  suffix: chief medical officer
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - ChiefMedicalOfficer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: cmo
+
+# Science
+
+- type: entity
+  id: ArrivalsSpawnPointScience
+  parent: ArrivalsSpawnPointJobBase
+  suffix: science
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - SeniorResearcher
+      - Scientist
+      - ResearchAssistant
+  - type: Sprite
+    layers:
+      - state: green
+      - state: scientist
+
+- type: entity
+  id: ArrivalsSpawnPointResearchDirector
+  parent: ArrivalsSpawnPointJobBase
+  suffix: research director
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - ResearchDirector
+  - type: Sprite
+    layers:
+      - state: green
+      - state: rd
+
+# Security
+
+- type: entity
+  id: ArrivalsSpawnPointHeadOfSecurity
+  parent: ArrivalsSpawnPointJobBase
+  suffix: head of security
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - HeadOfSecurity
+  - type: Sprite
+    layers:
+      - state: green
+      - state: hos
+
+- type: entity
+  id: ArrivalsSpawnPointWarden
+  parent: ArrivalsSpawnPointJobBase
+  suffix: warden
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - Warden
+  - type: Sprite
+    layers:
+      - state: green
+      - state: warden
+
+- type: entity
+  id: ArrivalsSpawnPointSecurity
+  parent: ArrivalsSpawnPointJobBase
+  suffix: security
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - SeniorOfficer
+      - SecurityOfficer
+      - SecurityCadet
+  - type: Sprite
+    layers:
+      - state: green
+      - state: security_officer
+
+- type: entity
+  id: ArrivalsSpawnPointDetective
+  parent: ArrivalsSpawnPointJobBase
+  suffix: detective
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - Detective
+  - type: Sprite
+    layers:
+      - state: green
+      - state: detective
