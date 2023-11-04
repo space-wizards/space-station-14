@@ -67,3 +67,8 @@
   license: "CC-BY-3.0"
   copyright: "User jzdnvdoosj on freesound.org. Converted to ogg by mirrorcult"
   source: "https://freesound.org/people/jzdnvdoosj/sounds/626262/"
+  
+- files: ["candle_blowing.ogg"]
+  license: "CC-BY-NC-3.0"
+  copyright: "Created by Bee09, converted to OGG, cropped and converted to mono by TheShuEd"
+  source: "https://freesound.org/people/Bee09/sounds/326561/"
