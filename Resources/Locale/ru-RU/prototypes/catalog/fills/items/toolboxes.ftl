@@ -1,0 +1,17 @@
+ent-ToolboxEmergencyFilled = { ent-ToolboxEmergency }
+    .desc = { ent-ToolboxEmergency.desc }
+    .suffix = Заполненный
+ent-ToolboxElectricalFilled = { ent-ToolboxElectrical }
+    .desc = { ent-ToolboxElectrical.desc }
+    .suffix = Заполненный
+ent-ToolboxMechanicalFilled = { ent-ToolboxMechanical }
+    .desc = { ent-ToolboxMechanical.desc }
+    .suffix = Заполненный
+ent-ToolboxSyndicateFilled = { ent-ToolboxSyndicate }
+    .desc = { ent-ToolboxSyndicate.desc }
+    .suffix = Заполненный
+ent-ToolboxGoldFilled = { ent-ToolboxGolden }
+    .desc = { ent-ToolboxGolden.desc }
+    .suffix = Заполненный
+ent-ToolboxElectricalTurretFilled = { ent-ToolboxElectrical }
+    .desc = { ent-ToolboxElectrical.desc }

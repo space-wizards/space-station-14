@@ -6,12 +6,13 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 18000
-    - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 21600 #Imperial role timers
+    - !type:RoleTimeRequirement
+      role: JobScientist
+      time: 10800 #Imperial role timers
   weight: 10
   startingGear: ResearchDirectorGear
-  icon: "ResearchDirector"
+  icon: "JobIconResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
@@ -20,6 +21,12 @@
   - Command
   - Maintenance
   - ResearchDirector
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: ResearchDirectorGear
@@ -27,9 +34,9 @@
     jumpsuit: ClothingUniformJumpsuitResearchDirector
     back: ClothingBackpackResearchDirectorFilled
     shoes: ClothingShoesColorBrown
-    outerClothing: ClothingOuterCoatLab
+    outerClothing: ClothingOuterCoatRnd
     id: RnDPDA
     ears: ClothingHeadsetRD
-  innerclothingskirt: ClothingUniformJumpskirtResearchDirector
+  innerClothingSkirt: ClothingUniformJumpskirtResearchDirector
   satchel: ClothingBackpackSatchelResearchDirectorFilled
   duffelbag: ClothingBackpackDuffelResearchDirectorFilled

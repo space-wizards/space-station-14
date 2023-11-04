@@ -17,7 +17,7 @@ public abstract class PathRequest
     public Task<PathResult> Task => Tcs.Task;
     public readonly TaskCompletionSource<PathResult> Tcs;
 
-    public Queue<PathPoly> Polys = new();
+    public List<PathPoly> Polys = new();
 
     public bool Started = false;
 
@@ -103,9 +103,9 @@ public sealed class BFSPathRequest : PathRequest
 public sealed class PathResultEvent
 {
     public PathResult Result;
-    public readonly Queue<PathPoly> Path;
+    public readonly List<PathPoly> Path;
 
-    public PathResultEvent(PathResult result, Queue<PathPoly> path)
+    public PathResultEvent(PathResult result, List<PathPoly> path)
     {
         Result = result;
         Path = path;

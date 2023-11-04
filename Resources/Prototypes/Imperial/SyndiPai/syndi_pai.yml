@@ -1,0 +1,78 @@
+# # Placeholder PAIs, aka semi-automatic ghost roles
+
+# - type: entity
+#   parent: BaseItem
+#   id: SyndicatePersonalAIImperial
+#   name: syndicate personal ai device
+#   description: Your electronic pal who's fun to be with!
+#   components:
+#   - type: Instrument
+#     allowPercussion: false
+#     handheld: false
+#     bank: 1
+#     program: 2
+#   - type: UserInterface
+#     interfaces:
+#     - key: enum.InstrumentUiKey.Key
+#       type: InstrumentBoundUserInterface
+#   - type: Sprite
+#     sprite: Objects/Fun/syndipai.rsi
+#     layers:
+#     - state: pai-base
+#     - state: pai-off-overlay
+#       shader: unshaded
+#       map: ["screen"]
+#   # - type: Sprite
+#   #   netsync: false
+#   #   sprite: Objects/Fun/syndipai.rsi
+#   #   layers:
+#   #   - state: syndi-pai-base
+#   #   - state: syndi-pai-off-overlay
+#   #     shader: unshaded
+#   - type: Input
+#     context: "human"
+#   - type: PAI
+#   - type: Examiner
+#   - type: IntrinsicRadioReceiver
+#   - type: ActiveRadio
+#     channels:
+#     - Syndicate
+#   - type: DoAfter
+#   - type: Actions
+#   - type: TypingIndicator
+#     proto: syndibot
+#   - type: Speech
+#     speechSounds: Pai_syndi
+#     # This has to be installed because otherwise they're not "alive",
+#     #  so they can ghost and come back.
+#     # Note that the personal AI never "dies".
+#   - type: MobState
+#     allowedStates:
+#       - Alive
+#   - type: Appearance
+# #  - type: GenericVisualizer
+# #    visuals:
+# #      enum.PAIVisuals.Status:
+# #        screen:
+# #          Off: { state: pai-off-overlay }
+# #          Searching: { state: pai-searching-overlay }
+# #          On: { state: pai-on-overlay }
+
+- type: entity
+  id: SyndicatePersonalAIImperial
+  parent: PersonalAI
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/syndipai.rsi
+    layers:
+    - state: pai-base
+    - state: pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: TypingIndicator
+    proto: syndibot
+  - type: Speech
+    speechSounds: Pai_syndi

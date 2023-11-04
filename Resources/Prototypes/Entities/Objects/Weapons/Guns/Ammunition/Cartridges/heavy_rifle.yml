@@ -11,7 +11,6 @@
   - type: CartridgeAmmo
     proto: BulletHeavyRifle
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -19,7 +18,7 @@
   - type: Appearance
   - type: SpentAmmoVisuals
   - type: StaticPrice
-    price: 10
+    price: 1 #Imperial price balance
 
 - type: entity
   id: CartridgeMinigun

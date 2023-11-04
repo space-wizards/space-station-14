@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
-    netsync: false
     layers:
     - state: icon
     - state: tank
@@ -28,6 +27,7 @@
       path: /Audio/Effects/thunk.ogg
     soundEmpty:
       path: /Audio/Items/hiss.ogg
+    clumsyProof: true
   - type: ContainerAmmoProvider
     container: storagebase
   - type: PneumaticCannon
@@ -86,6 +86,7 @@
       path: /Audio/Effects/thunk.ogg
     soundEmpty:
       path: /Audio/Items/hiss.ogg
+    clumsyProof: true
   - type: ContainerAmmoProvider
     container: storagebase
   - type: Item

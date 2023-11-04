@@ -1,14 +1,18 @@
 - type: entity
   save: false
   name: Urist McHands The Dwarf
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobDwarf
   abstract: true
   components:
   - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 0.5
+        Bloodloss: 0.5
   - type: Thirst
   - type: Icon
-    sprite: Mobs/Species/Slime/parts.rsi
+    sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.
     state: full
   - type: Respirator
     damage:
@@ -18,29 +22,35 @@
       types:
         Asphyxiation: -1.0
   - type: Sprite
-    netsync: false
     noRot: true
     drawdepth: Mobs
     scale: 1, 0.8
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
+  - type: Perishable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      # they r smaller
-      density: 120
-      restitution: 0.0
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        # they r smaller
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Vocal
     sounds:
       Male: UnisexDwarf
-      Female: UnisexDwarf
+      Female: FemaleDwarf
       Unsexed: UnisexDwarf
   - type: ReplacementAccent
     accent: dwarf
@@ -48,15 +58,9 @@
     speechSounds: Bass
 
 - type: entity
-  save: false
-  name: Urist McHands
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobDwarfDummy
   noSpawn: true
-  description: A dummy human meant to be used in character setup.
   components:
   - type: Sprite
-    netsync: false
-    noRot: true
-    drawdepth: Mobs
     scale: 1, 0.8

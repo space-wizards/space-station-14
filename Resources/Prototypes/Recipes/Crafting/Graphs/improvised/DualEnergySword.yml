@@ -1,0 +1,27 @@
+- type: constructionGraph
+  id: DualEnergySword
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: DualEnergySword
+      completed:
+      - !type:GivePrototype
+        prototype: DualEnergySword
+      - !type:DeleteEntity
+      steps:
+      - tag: EnergySword
+        name: energy sword
+        doAfter: 1
+
+  - node: DualEnergySword
+    edges:
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: EnergySword
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Prying
+        doAfter: 1

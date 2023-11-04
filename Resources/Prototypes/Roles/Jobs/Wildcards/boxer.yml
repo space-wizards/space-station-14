@@ -4,10 +4,11 @@
   description: job-description-boxer
   playTimeTracker: JobBoxer
   startingGear: BoxerGear
-  icon: "Boxer"
+  icon: "JobIconBoxer"
   supervisors: job-supervisors-hop
   access:
-  - Service
+    - Service
+    - Maintenance
 
 - type: startingGear
   id: BoxerGear
@@ -17,6 +18,8 @@
     id: BoxerPDA
     ears: ClothingHeadsetService
     gloves: ClothingHandsGlovesBoxingRed
-  innerclothingskirt: UniformShortsRedWithTop
+    shoes: ClothingShoesColorRed
+    belt: ClothingBeltChampion
+  innerClothingSkirt: UniformShortsRedWithTop
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

@@ -5,7 +5,6 @@
   description: That's an instrument.
   components:
   - type: Sprite
-    netsync: false
   - type: Instrument
   - type: ActivatableUI
     inHandsOnly: true
@@ -56,19 +55,20 @@
       type: InstrumentBoundUserInterface
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 80
-      mask:
-      - Impassable
-      - HighImpassable
-      - MidImpassable
-      layer:
-      - Opaque
-      - HighImpassable
-      - MidImpassable
-      - BulletImpassable
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 80
+        mask:
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+        layer:
+        - Opaque
+        - HighImpassable
+        - MidImpassable
+        - BulletImpassable
   - type: StaticPrice
     price: 300
 

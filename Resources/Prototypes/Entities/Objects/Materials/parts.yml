@@ -4,12 +4,10 @@
   id: PartBase
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/parts.rsi
     state: rods
   - type: Item
     sprite: Objects/Materials/parts.rsi
-  - type: ItemStatus
   - type: Tag
     tags:
       - DroneUsable
@@ -33,22 +31,25 @@
   components:
   - type: Stack
     stackType: MetalRod
+    baseLayer: base
+    layerStates:
+    - rods
+    - rods_2
+    - rods_3
+    - rods_4
+    - rods_5
   - type: Sprite
     state: rods_5
-#  - type: Item
+    layers:
+    - state: rods_5
+      map: ["base"]
+  - type: Item
+    size: 30
 #    heldPrefix: rods
   - type: Construction
     graph: MetalRod
     node: MetalRod
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - rods
-      - rods_2
-      - rods_3
-      - rods_4
-      - rods_5
   - type: FloorTile
     outputs:
     - Lattice
@@ -57,6 +58,23 @@
     price: 0
   - type: StackPrice
     price: 5
+
+- type: entity
+  parent: PartRodMetal
+  id: PartRodMetal10
+  name: metal rod
+  suffix: 10
+  components:
+  - type: Tag
+    tags:
+    - RodMetal1
+    - DroneUsable
+  - type: Sprite
+    state: rods
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
 
 - type: entity
   parent: PartRodMetal
@@ -72,3 +90,16 @@
     state: rods
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  parent: PartRodMetal
+  id: PartRodMetalLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Item
+    size: 0
+  - type: Stack
+    lingering: true
+    count: 0

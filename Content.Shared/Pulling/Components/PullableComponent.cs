@@ -9,7 +9,7 @@ namespace Content.Shared.Pulling.Components
     [NetworkedComponent()]
     [Access(typeof(SharedPullingStateManagementSystem))]
     [RegisterComponent]
-    public sealed class SharedPullableComponent : Component
+    public sealed partial class SharedPullableComponent : Component
     {
         /// <summary>
         /// The current entity pulling this component.
@@ -54,9 +54,9 @@ namespace Content.Shared.Pulling.Components
     [Serializable, NetSerializable]
     public sealed class PullableComponentState : ComponentState
     {
-        public readonly EntityUid? Puller;
+        public readonly NetEntity? Puller;
 
-        public PullableComponentState(EntityUid? puller)
+        public PullableComponentState(NetEntity? puller)
         {
             Puller = puller;
         }

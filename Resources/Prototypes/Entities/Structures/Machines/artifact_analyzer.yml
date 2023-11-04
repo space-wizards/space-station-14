@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     noRot: true
-    netsync: false
     sprite: Structures/Machines/artifact_analyzer.rsi
     drawdepth: FloorObjects
     layers:
@@ -19,13 +18,14 @@
     canCollide: true
   - type: AmbientSound
     enabled: false
-    sound: 
+    sound:
       path: /Audio/Machines/scan_loop.ogg
     range: 5
     volume: -8
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
@@ -46,12 +46,17 @@
     powerDrawMultiplier: 0.80
     scaling: Exponential
   - type: ArtifactAnalyzer
+  - type: ItemPlacer
+    whitelist:
+      components:
+      - Artifact
   - type: DeviceNetwork
     deviceNetId: Wired
+    receiveFrequencyId: BasicDevice
   - type: DeviceList
-  - type: SignalReceiver
-    inputs:
-      ArtifactAnalyzerReceiver: []
+  - type: DeviceLinkSink
+    ports:
+      - ArtifactAnalyzerReceiver
   - type: Machine
     board: ArtifactAnalyzerMachineCircuitboard
   - type: PointLight
@@ -90,7 +95,8 @@
     canCollide: true
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
@@ -107,6 +113,14 @@
     powerDrawMultiplier: 0.80
     scaling: Exponential
   - type: TraversalDistorter
+  - type: ItemPlacer
+    # don't limit the number of artifacts that can be biased
+    maxEntities: 0
+    whitelist:
+      components:
+      - Artifact
+  - type: PlaceableSurface
+    placeCentered: true
   - type: Machine
     board: TraversalDistorterMachineCircuitboard
   - type: Appearance

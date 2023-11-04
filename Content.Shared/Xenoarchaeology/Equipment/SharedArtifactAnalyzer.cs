@@ -25,14 +25,14 @@ public sealed class AnalysisConsolePrintButtonPressedMessage : BoundUserInterfac
 }
 
 [Serializable, NetSerializable]
-public sealed class AnalysisConsoleDestroyButtonPressedMessage : BoundUserInterfaceMessage
+public sealed class AnalysisConsoleExtractButtonPressedMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable, NetSerializable]
 public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 {
-    public EntityUid? Artifact;
+    public NetEntity? Artifact;
 
     public bool AnalyzerConnected;
 
@@ -52,7 +52,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public int PointAmount;
 
-    public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan, bool canPrint,
+    public AnalysisConsoleScanUpdateState(NetEntity? artifact, bool analyzerConnected, bool serverConnected, bool canScan, bool canPrint,
         FormattedMessage? scanReport, bool scanning, TimeSpan timeRemaining, TimeSpan totalTime, int pointAmount)
     {
         Artifact = artifact;

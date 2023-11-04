@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Alert;
@@ -42,7 +41,7 @@ public abstract class AlertsSystem : EntitySystem
             return alertsComponent.Alerts.ContainsKey(alert.AlertKey);
         }
 
-        Logger.DebugS("alert", "unknown alert type {0}", alertType);
+        Log.Debug("Unknown alert type {0}", alertType);
         return false;
     }
 
@@ -101,7 +100,7 @@ public abstract class AlertsSystem : EntitySystem
         }
         else
         {
-            Logger.ErrorS("alert", "Unable to show alert {0}, please ensure this alertType has" +
+            Log.Error("Unable to show alert {0}, please ensure this alertType has" +
                                    " a corresponding YML alert prototype",
                 alertType);
         }
@@ -147,7 +146,7 @@ public abstract class AlertsSystem : EntitySystem
         }
         else
         {
-            Logger.ErrorS("alert", "unable to clear alert, unknown alertType {0}", alertType);
+            Log.Error("Unable to clear alert, unknown alertType {0}", alertType);
         }
     }
 
@@ -170,7 +169,6 @@ public abstract class AlertsSystem : EntitySystem
         SubscribeLocalEvent<AlertsComponent, ComponentStartup>(HandleComponentStartup);
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>(HandleComponentShutdown);
 
-        SubscribeLocalEvent<AlertsComponent, ComponentGetState>(ClientAlertsGetState);
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
 
         LoadPrototypes();
@@ -206,9 +204,8 @@ public abstract class AlertsSystem : EntitySystem
         {
             if (!_typeToAlert.TryAdd(alert.AlertType, alert))
             {
-                Logger.ErrorS("alert",
-                    "Found alert with duplicate alertType {0} - all alerts must have" +
-                    " a unique alerttype, this one will be skipped", alert.AlertType);
+                Log.Error("Found alert with duplicate alertType {0} - all alerts must have" +
+                          " a unique alerttype, this one will be skipped", alert.AlertType);
             }
         }
     }
@@ -230,7 +227,7 @@ public abstract class AlertsSystem : EntitySystem
 
         if (!IsShowingAlert(player.Value, msg.Type))
         {
-            Logger.DebugS("alert", "user {0} attempted to" +
+            Log.Debug("User {0} attempted to" +
                                    " click alert {1} which is not currently showing for them",
                 EntityManager.GetComponent<MetaDataComponent>(player.Value).EntityName, msg.Type);
             return;
@@ -238,15 +235,10 @@ public abstract class AlertsSystem : EntitySystem
 
         if (!TryGet(msg.Type, out var alert))
         {
-            Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.Type);
+            Log.Warning("Unrecognized encoded alert {0}", msg.Type);
             return;
         }
 
         alert.OnClick?.AlertClicked(player.Value);
-    }
-
-    private static void ClientAlertsGetState(EntityUid uid, AlertsComponent component, ref ComponentGetState args)
-    {
-        args.State = new AlertsComponentState(component.Alerts);
     }
 }

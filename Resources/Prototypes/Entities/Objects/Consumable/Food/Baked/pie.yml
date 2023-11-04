@@ -8,11 +8,8 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateTin
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -26,7 +23,9 @@
     count: 4
   - type: Tag
     tags:
-    - NoSpinOnThrow
+    - Pie
+  - type: StaticPrice
+    price: 200 #Imperial price balance
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable
@@ -37,11 +36,8 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -51,9 +47,6 @@
           Quantity: 1.2
         - ReagentId: Vitamin
           Quantity: 1
-  - type: Tag
-    tags:
-    - NoSpinOnThrow
 
 # Pie
 
@@ -73,7 +66,11 @@
     - state: apple
   - type: SliceableFood
     slice: FoodPieAppleSlice
-
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie 
+  
 - type: entity
   name: slice of apple pie
   parent: FoodPieSliceBase
@@ -85,11 +82,13 @@
       - apple
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: orange
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie
 # Tastes like pie, apple.
 
 - type: entity
@@ -120,9 +119,7 @@
       - sweet
       - nutty
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: baklava-slice
+    state: baklava-slice
 # Tastes like pie, nuts.
 
 - type: entity
@@ -136,6 +133,8 @@
       - sweet
       - banana
       - creamy
+  - type: Food
+    trash: FoodPlateTin
   - type: Sprite
     layers:
     - state: tin
@@ -150,10 +149,14 @@
         whitelist:
           components:
           - OnUseTimerTrigger
-        insertSound: 
+        insertSound:
           path: /Audio/Weapons/Guns/Empty/empty.ogg
-        ejectSound: 
+        ejectSound:
           path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie
 # Tastes like pie, cream, banana.
 
 - type: entity
@@ -165,8 +168,7 @@
   - type: FlavorProfile
     flavors:
       - sweet
-      - banana
-      - creamy
+      - berry
   - type: Sprite
     layers:
     - state: tin
@@ -174,6 +176,10 @@
     - state: berryclafoutis
   - type: SliceableFood
     slice: FoodPieClafoutisSlice
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie
 
 - type: entity
   name: slice of berry clafoutis
@@ -183,13 +189,16 @@
   - type: FlavorProfile
     flavors:
       - sweet
+      - berry
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: pink
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie
 # Tastes like pie, blackberries.
 
 - type: entity
@@ -207,6 +216,10 @@
     - state: cherry
   - type: SliceableFood
     slice: FoodPieCherrySlice
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie
 
 - type: entity
   name: slice of cherry pie
@@ -218,11 +231,13 @@
       - sweet
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: red
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie
 # Tastes like pie, cherries.
 
 - type: entity
@@ -240,6 +255,10 @@
     - state: meat
   - type: SliceableFood
     slice: FoodPieMeatSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pie
 
 - type: entity
   name: slice of meat pie
@@ -251,11 +270,13 @@
       - meaty
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: brown
+  - type: Tag
+    tags:
+    - Meat
+    - Pie
 # Tastes like pie, meat.
 
 - type: entity
@@ -266,13 +287,17 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Sprite
     layers:
     - state: tin
     - state: xeno
   - type: SliceableFood
     slice: FoodPieXenoSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pie
 
 - type: entity
   name: slice of xeno pie
@@ -282,14 +307,16 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: green
+  - type: Tag
+    tags:
+    - Meat
+    - Pie
 # Tastes like pie, meat, acid.
 
 - type: entity
@@ -318,8 +345,6 @@
       - cold
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: blue
@@ -337,9 +362,7 @@
     flavors:
       - mushroom
   - type: Sprite
-    layers:
-    - state: plate
-    - state: amanita
+    state: amanita
   - type: SolutionContainerManager
     solutions:
       food:
@@ -363,9 +386,7 @@
     flavors:
       - mushroom
   - type: Sprite
-    layers:
-    - state: plate
-    - state: plump
+    state: plump
 # Tastes like pie, mushrooms.
 
 # Tart
@@ -379,12 +400,12 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-tart
-    - state: grape
+    state: grape
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie
 # Tastes like tart, grape.
 
 - type: entity
@@ -396,12 +417,8 @@
   - type: FlavorProfile
     flavors:
       - nothing
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-tart
-    - state: mime
+    state: mime
 # Tastes like nothing.
 
 - type: entity
@@ -413,12 +430,12 @@
   - type: FlavorProfile
     flavors:
       - apple
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-tart
-    - state: gapple
+    state: gapple
+  - type: Tag
+    tags:
+    - Fruit 
+    - Pie
 # Tastes like tart, apple, expensive metal.
 
 - type: entity
@@ -430,12 +447,8 @@
   - type: FlavorProfile
     flavors:
       - chocolate
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-tart
-    - state: cocolava
+    state: cocolava
   - type: SolutionContainerManager
     solutions:
       food:

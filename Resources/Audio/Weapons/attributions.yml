@@ -1,0 +1,34 @@
+- files: ["plasma_cutter.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel station."
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/5b43cb2545a19957ec6ce3352dceac5e347e77df/sound/weapons/plasma_cutter.ogg"
+
+- files: ["reel.ogg"]
+  license: "CC0-1.0"
+  copyright: "User tosha73 on freesound.org"
+  source: "https://freesound.org/people/tosha73/sounds/509902/"
+
+- files: ["chainsaw.ogg, chainsawidle.ogg, chainsawwield.ogg"]
+  license: "Custom"
+  copyright: "https://www.soundjay.com/tos.html"
+  source: "https://www.soundjay.com/chainsaw-sound-effect.html"
+
+- files: ["guitarsmash.ogg"]
+  license: "CC0-1.0"
+  copyright: "User Mystovski on freesound.org. Modified by LankLTE on github."
+  source: "https://freesound.org/people/Mystovski/sounds/201111/"
+
+- files: ["genhit3.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation."
+  source: "https://github.com/tgstation/tgstation/blob/a7f525bce9a359ab5282fc754078cd4b5678a006/sound/weapons/genhit3.ogg"
+
+- files: ["star_hit.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Based on genhit3.ogg from tgstation, modified by deltanedas on github."
+  source: "https://github.com/deltanedas"
+
+- files: ["telescopicon.ogg, telescopicoff.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "User Nimfar11 on GitHub."
+  source: "https://github.com/Nimfar11"

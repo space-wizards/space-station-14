@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;

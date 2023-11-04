@@ -10,15 +10,14 @@
       - CartridgeCap
   - type: CartridgeAmmo
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/capgun_casing.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
   - type: SpentAmmoVisuals
   - type: Appearance
   - type: StaticPrice
-    price: 5
+    price: 1 #Imperial price balance
 
 - type: entity
   id: CartridgeCap

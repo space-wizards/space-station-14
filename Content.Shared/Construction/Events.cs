@@ -15,7 +15,7 @@ public sealed class TryStartStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     Position to start building.
     /// </summary>
-    public readonly EntityCoordinates Location;
+    public readonly NetCoordinates Location;
 
     /// <summary>
     ///     The construction prototype to start building.
@@ -27,9 +27,13 @@ public sealed class TryStartStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     Identifier to be sent back in the acknowledgement so that the client can clean up its ghost.
     /// </summary>
+    /// <remarks>
+    /// So essentially the client is sending its own entity to the server so it knows to delete it when it gets server
+    /// response back.
+    /// </remarks>
     public readonly int Ack;
 
-    public TryStartStructureConstructionMessage(EntityCoordinates loc, string prototypeName, Angle angle, int ack)
+    public TryStartStructureConstructionMessage(NetCoordinates loc, string prototypeName, Angle angle, int ack)
     {
         Location = loc;
         PrototypeName = prototypeName;
@@ -67,9 +71,9 @@ public sealed class AckStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     The entity that is now being constructed, if any.
     /// </summary>
-    public readonly EntityUid? Uid;
+    public readonly NetEntity? Uid;
 
-    public AckStructureConstructionMessage(int ghostId, EntityUid? uid = null)
+    public AckStructureConstructionMessage(int ghostId, NetEntity? uid = null)
     {
         GhostId = ghostId;
         Uid = uid;
@@ -107,24 +111,24 @@ public sealed class ResponseConstructionGuide : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed class ConstructionInteractDoAfterEvent : DoAfterEvent
+public sealed partial class ConstructionInteractDoAfterEvent : DoAfterEvent
 {
     [DataField("clickLocation")]
-    public readonly EntityCoordinates ClickLocation;
+    public NetCoordinates ClickLocation;
 
     private ConstructionInteractDoAfterEvent()
     {
     }
 
-    public ConstructionInteractDoAfterEvent(InteractUsingEvent ev)
+    public ConstructionInteractDoAfterEvent(IEntityManager entManager, InteractUsingEvent ev)
     {
-        ClickLocation = ev.ClickLocation;
+        ClickLocation = entManager.GetNetCoordinates(ev.ClickLocation);
     }
 
     public override DoAfterEvent Clone() => this;
 }
 
 [Serializable, NetSerializable]
-public sealed class WelderRefineDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class WelderRefineDoAfterEvent : SimpleDoAfterEvent
 {
 }

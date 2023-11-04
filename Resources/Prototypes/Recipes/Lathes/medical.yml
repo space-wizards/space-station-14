@@ -49,8 +49,24 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: Brutepack
+  result: Brutepack1
+  completetime: 1
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: Ointment
+  result: Ointment1
+  completetime: 1
+  materials:
+    Glass: 25
+    Plastic: 25
+
+- type: latheRecipe
   id: HandheldCrewMonitor
-  result: HandheldCrewMonitor
+  result: HandheldCrewMonitorEmpty
   completetime: 2
   materials:
     Glass: 1200
@@ -59,7 +75,7 @@
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
-  result: HandheldHealthAnalyzer
+  result: HandheldHealthAnalyzerEmpty
   completetime: 4
   materials:
     Glass: 500
@@ -104,9 +120,15 @@
     Steel: 500
 
 - type: latheRecipe
+  id: Defibrillator
+  result: DefibrillatorEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
   id: Medkit
   result: Medkit
-  name: first aid kit (empty)
   completetime: 2
   materials:
     Plastic: 300
@@ -114,7 +136,6 @@
 - type: latheRecipe
   id: MedkitBurn
   result: MedkitBurn
-  name: burn treatment kit (empty)
   completetime: 2
   materials:
     Plastic: 300
@@ -122,7 +143,6 @@
 - type: latheRecipe
   id: MedkitToxin
   result: MedkitToxin
-  name: toxin treatment kit (empty)
   completetime: 2
   materials:
     Plastic: 300
@@ -130,7 +150,6 @@
 - type: latheRecipe
   id: MedkitO2
   result: MedkitO2
-  name: oxygen deprivation treatment kit (empty)
   completetime: 2
   materials:
     Plastic: 300
@@ -138,7 +157,6 @@
 - type: latheRecipe
   id: MedkitBrute
   result: MedkitBrute
-  name: brute trauma treatment kit (empty)
   completetime: 2
   materials:
     Plastic: 300
@@ -146,7 +164,6 @@
 - type: latheRecipe
   id: MedkitAdvanced
   result: MedkitAdvanced
-  name: advanced first aid kit (empty)
   completetime: 2
   materials:
     Plastic: 300
@@ -154,7 +171,6 @@
 - type: latheRecipe
   id: MedkitRadiation
   result: MedkitRadiation
-  name: radiation treatment kit (empty)
   completetime: 2
   materials:
     Plastic: 300
@@ -162,7 +178,20 @@
 - type: latheRecipe
   id: MedkitCombat
   result: MedkitCombat
-  name: combat medical kit (empty)
   completetime: 2
   materials:
     Plastic: 300
+
+- type: latheRecipe
+  id: HandLabeler
+  result: HandLabeler
+  completetime: 2
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: Jug
+  result: Jug
+  completetime: 4
+  materials:
+    Plastic: 400

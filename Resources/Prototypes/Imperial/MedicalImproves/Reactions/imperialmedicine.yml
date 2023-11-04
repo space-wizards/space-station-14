@@ -1,0 +1,61 @@
+- type: reaction
+  id: Adenosine
+  reactants:
+    Carbon:
+      amount: 3
+    Hydrogen:
+      amount: 4
+    Nitrogen:
+      amount: 2
+    Oxygen:
+      amount: 2
+  products:
+    Adenosine: 1
+
+- type: reaction
+  id: AdenosineTriPhosphate
+  reactants:
+    Phosphorus:
+      amount: 3
+    Adenosine:
+      amount: 1
+    Oxygen:
+      amount: 4
+  products:
+    AdenosineTriPhosphate: 2 #медицина империал спасе, рецепты
+
+- type: reaction
+  id: Rezocillin
+  reactants:
+    Kelotane:
+      amount: 1
+    Copper:
+      amount: 2
+    Bicaridine:
+      amount: 1
+    Tricordrazine:
+      amount: 1
+  products:
+    Rezocillin: 1
+
+- type: reaction
+  id: Thrivenin
+  reactants:
+    Phalanximine:
+      amount: 1
+    Rezocillin:
+      amount: 1
+    AdenosineTriPhosphate:
+      amount: 1
+  products:
+    Thrivenin: 2
+
+- type: reaction
+  id: Spaceacillin
+  reactants:
+    Inaprovaline:
+      amount: 1
+    Cryptobiolin:
+      amount: 1
+  products:
+    Spaceacillin: 2

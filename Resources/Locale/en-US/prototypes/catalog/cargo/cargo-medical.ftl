@@ -4,6 +4,9 @@ ent-MedicalSupplies = { ent-CrateMedicalSupplies }
 ent-MedicalChemistrySupplies = { ent-CrateChemistrySupplies }
     .desc = { ent-CrateChemistrySupplies.desc }
 
+ent-MedicalMindShieldImplants = { ent-MedicalMindShieldImplants }
+    .desc = { ent-MedicalMindShieldImplants.desc }
+
 ent-EmergencyBurnKit = { ent-CrateEmergencyBurnKit }
     .desc = { ent-CrateEmergencyBurnKit.desc }
 
@@ -21,3 +24,12 @@ ent-EmergencyAdvancedKit = { ent-CrateEmergencyAdvancedKit }
 
 ent-EmergencyRadiationKit = { ent-CrateEmergencyRadiationKit }
     .desc = { ent-CrateEmergencyRadiationKit.desc }
+
+ent-ChemistryP = { ent-CrateChemistryP }
+    .desc = { ent-CrateChemistryP.desc }
+
+ent-ChemistryS = { ent-CrateChemistryS }
+    .desc = { ent-CrateChemistryS.desc }
+
+ent-ChemistryD = { ent-CrateChemistryD }
+    .desc = { ent-CrateChemistryD.desc }

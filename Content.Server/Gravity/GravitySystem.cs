@@ -22,6 +22,9 @@ namespace Content.Server.Gravity
             if (!Resolve(uid, ref gravity))
                 return;
 
+            if (gravity.Inherent)
+                return;
+
             var enabled = false;
 
             foreach (var (comp, xform) in EntityQuery<GravityGeneratorComponent, TransformComponent>(true))
@@ -52,12 +55,17 @@ namespace Content.Server.Gravity
             RefreshGravity(uid);
         }
 
+        /// <summary>
+        /// Enables gravity. Note that this is a fast-path for GravityGeneratorSystem.
+        /// This means it does nothing if Inherent is set and it might be wiped away with a refresh
+        ///  if you're not supposed to be doing whatever you're doing.
+        /// </summary>
         public void EnableGravity(EntityUid uid, GravityComponent? gravity = null)
         {
             if (!Resolve(uid, ref gravity))
                 return;
 
-            if (gravity.Enabled)
+            if (gravity.Enabled || gravity.Inherent)
                 return;
 
             gravity.Enabled = true;

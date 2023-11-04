@@ -1,3 +1,4 @@
+using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
@@ -8,12 +9,14 @@ public sealed class SalvageFactionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("groups", required: true)]
-    public List<SalvageMobGroup> MobGroups = default!;
+    [DataField("desc")] public string Description { get; private set; } = string.Empty;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("entries", required: true)]
+    public List<SalvageMobEntry> MobGroups = new();
 
     /// <summary>
-    /// Per expedition type data for this faction.
+    /// Miscellaneous data for factions.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("configs", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<IFactionExpeditionConfig, SalvageExpeditionPrototype>))]
-    public Dictionary<string, IFactionExpeditionConfig> Configs = new();
+    [ViewVariables(VVAccess.ReadWrite), DataField("configs")]
+    public Dictionary<string, string> Configs = new();
 }

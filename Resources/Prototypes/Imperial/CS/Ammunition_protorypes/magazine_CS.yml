@@ -1,0 +1,254 @@
+#Counter-Space (CS)
+#beretta-magazine
+- type: entity
+  id: BerettaMagazinePistol
+  name: beretta magazine (.35 auto)
+  parent: BaseMagazinePistol
+  suffix: CS
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 13
+    proto: CSCartridgePistolBeretta #special from "ammo_CS.yml"
+    whitelist:
+      tags:
+        - CartridgePistol
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/beretta_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+#dualBeretta-magazine
+- type: entity
+  id: DualBerettaMagazinePistol
+  name: dual berettas magazine (.35 auto)
+  parent: BaseMagazinePistol
+  suffix: CS
+  components:
+  - type: Tag
+    tags:
+      - MagazineDualBeretta
+  - type: BallisticAmmoProvider
+    capacity: 26
+    proto: CSCartridgePistolBeretta #special from "ammo_CS.yml"
+    whitelist:
+      tags:
+        - CartridgePistol
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/dual_Berettas_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+#mac-10 magazine
+- type: entity
+  id: mac10-Magazine
+  name: SMG magazine (.35 auto)
+  parent: BaseMagazinePistolHighCapacity
+  suffix: CS
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 16
+    proto: CartridgePistol
+    whitelist:
+      tags:
+        - CartridgePistol
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/mac10_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+
+#P90 magazine
+- type: entity
+  id: p90-Magazine
+  name: p90 SMG magazine (.35 auto)
+  parent: BaseMagazinePistolSubMachineGun
+  suffix: CS
+  components:
+  - type: Tag
+    tags:
+      - MagazinePistolSubMachineGunP90
+  - type: BallisticAmmoProvider
+    capacity: 40
+    proto: CartridgePistol
+    whitelist:
+      tags:
+        - CartridgePistol
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/p90_mag.rsi
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+#mp5 magazine
+- type: entity
+  id: mp5-Magazine
+  mame: SMG magazine (.35 auto)
+  parent: BaseMagazinePistolSubMachineGun
+  suffix: CS
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 28
+    proto: CartridgePistol
+    whitelist:
+      tags:
+        - CartridgePistol
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/mp5_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+
+#glock18 magazine
+- type: entity
+  id: Glock18MagazinePistol
+  name: glock18 magazine (.35 auto)
+  parent: BaseMagazinePistol
+  suffix: CS
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 17
+    proto: CartridgePistol
+    whitelist:
+      tags:
+        - CartridgePistol
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/glock18_mag.rsi
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+
+#SCAR-L magazine
+- type: entity
+  id: SCAR-Magazine
+  name: SCAR-L magazine
+  parent: BaseMagazineRifle
+  suffix: CS
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 30
+    proto: CartridgeRifle
+    whitelist:
+      tags:
+        - CartridgeRifle
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/scar_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+#SpeedLoader - R-8
+- type: entity
+  id: SpeedLoaderR-8
+  name: "speed loader (.45)"
+  suffix: CS
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
+    capacity: 8
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/SpeadLoader_R8.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: base-8
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: base
+    steps: 9
+    zeroVisible: false
+  - type: Appearance
+
+#Bizon magazine
+- type: entity
+  id: bizon-Magazine
+  name: bizon Magazine (.35 auto)
+  suffix: CS
+  parent: BaseItem
+  components:
+  - type: Tag
+    tags:
+      - MagazinePistolSubMachineGunBizon
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    proto: CartridgePistol
+    whitelist:
+      tags:
+      - CartridgePistol
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/bizon-mag.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-1
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+
+#AWP magazine
+- type: entity
+  id: AWP-magazine
+  name: AWP magazine
+  suffix: CS
+  parent: BaseItem
+  components:
+  - type: Tag
+    tags:
+      - MagazineLightRifle
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    capacity: 5
+    proto: CSCartridgeAWP #special from "ammo_CS.yml"
+    whitelist:
+      tags:
+      - CartridgeAntiMateriel
+  - type: Sprite
+    sprite: Imperial/CS/Ammunition/AWP_mag.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-1
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container

@@ -1,7 +1,5 @@
 #nullable enable
-using System.Threading.Tasks;
 using Content.Shared.Stacks;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -41,7 +39,7 @@ public abstract partial class InteractionTest
 
         public EntitySpecifier(string prototype, int quantity, bool converted = false)
         {
-            Assert.That(quantity > 0);
+            Assert.That(quantity, Is.GreaterThan(0));
             Prototype = prototype;
             Quantity = quantity;
             Converted = converted;
@@ -109,7 +107,7 @@ public abstract partial class InteractionTest
         }
 
         Assert.That(spec.Quantity, Is.EqualTo(1), "SpawnEntity only supports returning a singular entity");
-        await Server.WaitPost(() => uid = SEntMan.SpawnEntity(spec.Prototype, coords));;
+        await Server.WaitPost(() => uid = SEntMan.SpawnEntity(spec.Prototype, coords));
         return uid;
     }
 
@@ -120,11 +118,11 @@ public abstract partial class InteractionTest
     protected EntitySpecifier ToEntitySpecifier(EntityUid uid)
     {
         if (SEntMan.TryGetComponent(uid, out StackComponent? stack))
-            return new EntitySpecifier(stack.StackTypeId, stack.Count) {Converted = true};
+            return new EntitySpecifier(stack.StackTypeId, stack.Count) { Converted = true };
 
         var meta = SEntMan.GetComponent<MetaDataComponent>(uid);
-        Assert.NotNull(meta.EntityPrototype);
+        Assert.That(meta.EntityPrototype, Is.Not.Null);
 
-        return new (meta.EntityPrototype!.ID, 1) { Converted = true };
+        return new(meta.EntityPrototype!.ID, 1) { Converted = true };
     }
 }

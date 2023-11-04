@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsMag
   name: magboots
@@ -6,20 +6,12 @@
   components:
     - type: Sprite
       sprite: Clothing/Shoes/Boots/magboots.rsi
-      netsync: false
       layers:
       - state: icon
         map: [ "enum.ToggleVisuals.Layer" ]
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-      toggleAction:
-        icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
-        iconOn: Clothing/Shoes/Boots/magboots.rsi/icon-on.png
-        name: action-name-magboot-toggle
-        description: action-decription-magboot-toggle
-        itemIconStyle: NoItem
-        event: !type:ToggleActionEvent
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
@@ -33,6 +25,9 @@
             False: {state: icon}
     - type: StaticPrice
       price: 200
+    - type: Tag
+      tags:
+      - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -46,13 +41,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
-    toggleAction:
-      icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
-      iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
-      name: action-name-magboot-toggle
-      description: action-decription-magboot-toggle
-      itemIconStyle: NoItem
-      event: !type:ToggleActionEvent
+    toggleAction: ActionToggleMagbootsAdvanced
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
@@ -72,33 +61,93 @@
   description: These would look fetching on a fetcher like you.
   components:
   - type: ClothingSpeedModifier
-    walkModifier: 2.5 #PVS isn't too much of an issue when you are blind...
-    sprintModifier: 2.5
+    walkModifier: 1.10 #PVS isn't too much of an issue when you are blind...
+    sprintModifier: 1.10
     enabled: false
   - type: StaticPrice
     price: 3000
-  - type: Blindfold
 
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
-  description: Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders.
+  description: Reverse-engineered magnetic boots that have a heavy magnetic pull and integrated thrusters.
   components:
-    - type: Sprite
-      sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
-      state: icon
-    - type: Clothing
-      sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
-    - type: Magboots
-      toggleAction:
-        icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }
-        iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png
-        name: action-name-magboot-toggle
-        description: action-decription-magboot-toggle
-        itemIconStyle: NoItem
-        event: !type:ToggleActionEvent
-    - type: ClothingSpeedModifier
-      walkModifier: 0.85
-      sprintModifier: 0.8
-      enabled: false
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
+  - type: Magboots
+    toggleAction: ActionToggleMagbootsSyndie
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.9
+    enabled: false
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: CanMoveInAir
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1
+    weightlessFriction: 0.3
+    weightlessModifier: 1.2
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+
+- type: entity
+  id: ActionBaseToggleMagboots
+  name: Toggle Magboots
+  description: Toggles the magboots on and off.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    event: !type:ToggleMagbootsEvent
+
+- type: entity
+  id: ActionToggleMagboots
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
+    iconOn: { sprite : Clothing/Shoes/Boots/magboots.rsi, state: icon-on }
+
+- type: entity
+  id: ActionToggleMagbootsAdvanced
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
+    iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
+
+- type: entity
+  id: ActionToggleMagbootsSyndie
+  parent: ActionBaseToggleMagboots
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }
+    iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png

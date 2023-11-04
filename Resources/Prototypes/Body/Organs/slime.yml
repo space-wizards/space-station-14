@@ -1,15 +1,12 @@
 - type: entity
   id: SentientSlimeCore
-  parent: BaseItem
+  parent: [BaseItem, OrganHumanBrain]
   name: sentient slime core
   description: "The source of incredible, unending gooeyness."
   components:
     - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Human/organs.rsi
-      state: brain
-    - type: Organ
-    - type: Brain
+      sprite: Mobs/Species/Slime/organs.rsi
+      state: brain-slime
     - type: Stomach
     - type: Metabolizer
       maxReagents: 6
@@ -27,6 +24,11 @@
       solutions:
         stomach:
           maxVol: 50.0
+        food:
+          maxVol: 5
+          reagents:
+          - ReagentId: UncookedAnimalProteins
+            Quantity: 5
 
 
 - type: entity
@@ -36,10 +38,10 @@
   description: "Collects nitrogen, which slime cells use for maintenance."
   components:
   - type: Sprite
+    sprite: Mobs/Species/Slime/organs.rsi
     layers:
-      - state: lung-l
-      - state: lung-r
-  - type: Organ
+      - state: lung-l-slime
+      - state: lung-r-slime
   - type: Lung
   - type: Metabolizer
     removeEmpty: true
@@ -58,3 +60,8 @@
       Lung:
         maxVol: 100.0
         canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Info;
 using Content.Client.Lobby.UI;
@@ -24,6 +25,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Preferences.UI
 {
@@ -113,6 +115,7 @@ namespace Content.Client.Preferences.UI
                 Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
                 ("maxCharacters", _preferencesManager.Settings!.MaxCharacterSlots));
 
+            var isDisplayedMaxSlots = false; // Corvax-Sponsors: Additional slots possible
             foreach (var (slot, character) in _preferencesManager.Preferences!.Characters)
             {
                 if (character is null)
@@ -120,6 +123,10 @@ namespace Content.Client.Preferences.UI
                     continue;
                 }
 
+                // Corvax-Sponsors-Start
+                isDisplayedMaxSlots = numberOfFullSlots >= _preferencesManager.Settings.MaxCharacterSlots;
+                if (isDisplayedMaxSlots) break;
+                // Corvax-Sponsors-End
                 numberOfFullSlots++;
                 var characterPickerButton = new CharacterPickerButton(_entityManager,
                     _preferencesManager,
@@ -139,9 +146,11 @@ namespace Content.Client.Preferences.UI
                     args.Event.Handle();
                 };
             }
-
-            _createNewCharacterButton.Disabled =
-                numberOfFullSlots >= _preferencesManager.Settings.MaxCharacterSlots;
+            //original start
+            // _createNewCharacterButton.Disabled =
+            //     numberOfFullSlots >= _preferencesManager.Settings.MaxCharacterSlots;
+            //original end
+            _createNewCharacterButton.Disabled = isDisplayedMaxSlots; // Corvax-Sponsors
             Characters.AddChild(_createNewCharacterButton);
         }
 
@@ -185,10 +194,10 @@ namespace Content.Client.Preferences.UI
 
                 var view = new SpriteView
                 {
-                    Sprite = entityManager.GetComponent<SpriteComponent>(_previewDummy),
-                    Scale = (2, 2),
+                    Scale = new Vector2(2, 2),
                     OverrideDirection = Direction.South
                 };
+                view.SetEntity(_previewDummy);
 
                 var description = profile.Name;
 

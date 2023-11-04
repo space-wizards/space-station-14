@@ -55,7 +55,7 @@ namespace Content.Server.Body.Commands
             {
                 if (fac.GetComponentName(organ.Component.GetType()).ToLowerInvariant() == mechanismName)
                 {
-                    bodySystem.DeleteOrgan(organ.Id, organ.Component);
+                    entityManager.QueueDeleteEntity(organ.Id);
                     shell.WriteLine($"Mechanism with name {mechanismName} has been destroyed.");
                     return;
                 }

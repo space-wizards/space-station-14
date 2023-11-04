@@ -1,0 +1,11 @@
+- type: reaction
+  id: Citaloporam
+  reactants:
+    SpaceDrugs:
+      amount: 1
+    MindbreakerToxin:
+      amount: 1
+    SpaceCleaner:
+      amount: 1
+  products:
+    Citaloporam: 2

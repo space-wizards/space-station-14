@@ -16,6 +16,8 @@
   - type: PartExchanger
   - type: Storage
     capacity: 150
+    quickInsert: true
+    areaInsert: true
     whitelist:
       components:
       - MachinePart

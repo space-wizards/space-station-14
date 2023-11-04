@@ -1,3 +1,4 @@
+
 - type: reaction
   id: Dylovene
   reactants:
@@ -5,10 +6,10 @@
       amount: 1
     Nitrogen:
       amount: 1
-    Potassium:
-      amount: 1
+    Alosethasone: #imperial chemistryRework
+      amount: 1 #imperial chemistryRework
   products:
-    Dylovene: 3
+    Dylovene: 3 
 
 - type: reaction
   id: Ethylredoxrazine
@@ -42,17 +43,19 @@
     Hydrogen:
       amount: 1
   products:
-    Arithrazine: 2
+    Arithrazine: 2 
 
 - type: reaction
   id: Bicaridine
   reactants:
     Inaprovaline:
-      amount: 1
+      amount: 1 
+    Flexitaine: #imperial chemistryRework
+      amount: 0.66 #imperial chemistryRework
     Carbon:
       amount: 1
   products:
-    Bicaridine: 2
+    Bicaridine: 3
 
 - type: reaction
   id: Cryoxadone
@@ -67,13 +70,21 @@
     Cryoxadone: 3
 
 - type: reaction
+  id: Doxarubixadone
+  reactants:
+    Cryoxadone:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products:
+    Doxarubixadone: 2
+
+- type: reaction
   id: Epinephrine
   reactants:
     Phenol:
       amount: 1
     Acetone:
-      amount: 1
-    Diethylamine:
       amount: 1
     Oxygen:
       amount: 1
@@ -82,7 +93,7 @@
     Hydrogen:
       amount: 1
   products:
-    Epinephrine: 6
+    Epinephrine: 5
 
 - type: reaction
   id: Dermaline
@@ -102,7 +113,7 @@
     Oxygen:
       amount: 2
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Dexalin: 3
@@ -144,7 +155,9 @@
 - type: reaction
   id: Ipecac
   reactants:
-    Dylovene:
+    Potassium:
+      amount: 1
+    Nitrogen:
       amount: 1
     Ammonia:
       amount: 1
@@ -181,7 +194,7 @@
     Copper:
       amount: 1
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Leporazine: 2
@@ -199,14 +212,27 @@
     Phalanximine: 3
 
 - type: reaction
-  id: Romerol
+  id: Ambuzol
   reactants:
-    Phalanximine:
+    Dylovene:
       amount: 1
-    Tricordrazine:
+    Ammonia:
       amount: 1
+    Blood:
+      amount: 2
   products:
-    Romerol: 2
+    Ambuzol: 4
+
+- type: reaction
+  id: AmbuzolPlus
+  reactants:
+    Ambuzol:
+      amount: 5
+    ZombieBlood:
+      amount: 15
+  products:
+    Blood: 15
+    AmbuzolPlus: 5
 
 - type: reaction
   id: Synaptizine
@@ -242,15 +268,16 @@
 
 - type: reaction
   id: Impedrezene
+  minTemp: 370
   reactants:
     Mercury:
       amount: 1
     Oxygen:
       amount: 1
-    Sugar:
+    Water:
       amount: 1
   products:
-    Impedrezene: 3
+    Impedrezene: 1
 
 - type: reaction
   id: Lexorin
@@ -306,7 +333,7 @@
     Histamine:
       amount: 2
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Ultravasculine: 2
@@ -336,16 +363,6 @@
     Siderlac: 2
 
 - type: reaction
-  id: Spaceacillin
-  reactants:
-    Cryptobiolin:
-      amount: 1
-    Inaprovaline:
-      amount: 1
-  products:
-    Spaceacillin: 2
-
-- type: reaction
   id: Cognizine
   reactants:
     CarpoToxin:
@@ -362,13 +379,23 @@
   impact: Medium
   minTemp: 370
   reactants:
-    SodiumCarbonate: 
+    SodiumCarbonate:
       amount: 1
     Kelotane:
       amount: 1
     Water:
       amount: 1
-    Sugar: 
+    Sugar:
       amount: 1
   products:
     Sigynate: 4
+
+- type: reaction
+  id: Saline
+  reactants:
+    Water:
+      amount: 4
+    TableSalt:
+      amount: 1
+  products:
+    Saline: 5

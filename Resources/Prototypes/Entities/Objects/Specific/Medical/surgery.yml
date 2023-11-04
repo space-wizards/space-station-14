@@ -6,9 +6,8 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: StaticPrice
-    price: 60
+    price: 30 #imperial
 
 # Cautery
 

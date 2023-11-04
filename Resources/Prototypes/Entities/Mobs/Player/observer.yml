@@ -1,26 +1,30 @@
 - type: entity
+  parent: BaseMob
   id: MobObserver
   name: observer
-  noSpawn: true
-  save: false
   description: Boo!
+  noSpawn: true
   components:
-  - type: Mind
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: KinematicController
-    fixedRotation: true
+  - type: CargoSellBlacklist
+  - type: Sprite
+    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
+    drawdepth: Ghosts
+    sprite: Mobs/Ghosts/ghost_human.rsi
+    color: "#fff8"
+    layers:
+    - state: animated
+      shader: unshaded
+  - type: ContentEye
+    maxZoom: 1.44,1.44
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 15
-      mask:
-      - GhostImpassable
-  - type: InputMover
-  - type: Appearance
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+        - GhostImpassable
   - type: Eye
     drawFov: false
   - type: Input
@@ -28,9 +32,15 @@
   - type: Examiner
     skipChecks: true
   - type: Ghost
+  - type: GhostHearing
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+    baseWalkSpeed: 8
+  - type: MovementIgnoreGravity
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
+    - Binary
     - Common
     - Command
     - CentCom
@@ -41,19 +51,89 @@
     - Service
     - Supply
     - Syndicate
+# Imperial custom channels start
+    - Expedition
+    - Cult
+    - Military
+    - Shadow
+    - Radio1
+    - Radio2
+    - Radio3
+    - Radio4
+    - Radio5
+    - Radio6
+    - Radio7
+    - Radio8
+    - Radio9
+    - Radio10
+# Imperial custom channels end
     globalReceive: true
-  - type: Sprite
-    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
-    netsync: false
-    noRot: true
-    drawdepth: Ghosts
-    sprite: Mobs/Ghosts/ghost_human.rsi
-    state: animated
-    color: "#fff8"
-    layers:
-      - state: animated
-        shader: unshaded
-  - type: MovementSpeedModifier
-    baseSprintSpeed: 8
-    baseWalkSpeed: 5
-  - type: MovementIgnoreGravity
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: Tag
+    tags:
+    - BypassInteractionRangeChecks
+
+- type: entity
+  id: ActionGhostBoo
+  name: action-name-boo
+  description: action-description-boo
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/scream.png
+    checkCanInteract: false
+    event: !type:BooActionEvent
+    useDelay: 120
+
+- type: entity
+  id: ActionToggleLighting
+  name: ghost-gui-toggle-lighting-manager-name
+  description: ghost-gui-toggle-lighting-manager-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/VerbIcons/light.svg.192dpi.png
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleLightingActionEvent
+
+- type: entity
+  id: ActionToggleFov
+  name: ghost-gui-toggle-fov-name
+  description: ghost-gui-toggle-fov-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/VerbIcons/vv.svg.192dpi.png
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleFoVActionEvent
+
+- type: entity
+  id: ActionToggleGhosts
+  name: ghost-gui-toggle-ghost-visibility-name
+  description: ghost-gui-toggle-ghost-visibility-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Mobs/Ghosts/ghost_human.rsi, state: icon }
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleGhostsActionEvent
+
+- type: entity
+  id: ActionToggleGhostHearing
+  name: ghost-gui-toggle-ghost-hearing-name
+  description: ghost-gui-toggle-ghost-hearing-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon:
+      sprite: Clothing/Ears/Headsets/base.rsi
+      state: icon
+    iconOn: Interface/Actions/ghostHearingToggled.png
+    event: !type:ToggleGhostHearingActionEvent

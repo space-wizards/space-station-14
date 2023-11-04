@@ -12,9 +12,9 @@ namespace Content.Benchmarks
     {
         private MemoryStream _writeStream;
         private MemoryStream _readStream;
-        private ushort _x16 = 5;
-        private uint _x32 = 5;
-        private ulong _x64 = 5;
+        private readonly ushort _x16 = 5;
+        private readonly uint _x32 = 5;
+        private readonly ulong _x64 = 5;
         private ushort _read16;
         private uint _read32;
         private ulong _read64;
@@ -24,7 +24,7 @@ namespace Content.Benchmarks
         {
             _writeStream = new MemoryStream(64);
             _readStream = new MemoryStream();
-            _readStream.Write(new byte[]{0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8});
+            _readStream.Write(new byte[] { 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8 });
         }
 
         [Benchmark]

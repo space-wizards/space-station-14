@@ -1,6 +1,6 @@
+using System.Numerics;
 using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -8,10 +8,8 @@ using Robust.Shared.Input;
 namespace Content.Client.UserInterface.Controls
 {
     [Virtual]
-    public abstract class SlotControl : Control
+    public abstract class SlotControl : Control, IEntityControl
     {
-        private const string HighlightShader = "SelectionOutlineInrange";
-
         public static int DefaultButtonSize = 64;
 
         public TextureRect ButtonRect { get; }
@@ -22,7 +20,7 @@ namespace Content.Client.UserInterface.Controls
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
-        public EntityUid? Entity => SpriteView.Sprite?.Owner;
+        public EntityUid? Entity => SpriteView.Entity;
 
         private bool _slotNameSet;
 
@@ -52,52 +50,48 @@ namespace Content.Client.UserInterface.Controls
 
         public bool Blocked { get => BlockedRect.Visible; set => BlockedRect.Visible = value;}
 
-        public Texture BlockedTexture => Theme.ResolveTexture(BlockedTexturePath);
-
-        private string _blockedTexturePath = "";
-        public string BlockedTexturePath
+        private string? _blockedTexturePath;
+        public string? BlockedTexturePath
         {
             get => _blockedTexturePath;
             set
             {
                 _blockedTexturePath = value;
-                BlockedRect.Texture = Theme.ResolveTexture(_blockedTexturePath);
+                BlockedRect.Texture = Theme.ResolveTextureOrNull(_blockedTexturePath)?.Texture;
             }
         }
 
-        public Texture ButtonTexture => Theme.ResolveTexture(ButtonTexturePath);
-
-        private string _buttonTexturePath = "";
-        public string ButtonTexturePath {
+        private string? _buttonTexturePath;
+        public string? ButtonTexturePath
+        {
             get => _buttonTexturePath;
             set
             {
                 _buttonTexturePath = value;
-                ButtonRect.Texture = Theme.ResolveTexture(_buttonTexturePath);
+                ButtonRect.Texture = Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
             }
         }
 
-        public Texture StorageTexture => Theme.ResolveTexture(StorageTexturePath);
 
-        private string _storageTexturePath = "";
-        public string StorageTexturePath
+        private string? _storageTexturePath;
+        public string? StorageTexturePath
         {
             get => _buttonTexturePath;
             set
             {
                 _storageTexturePath = value;
-                StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
+                StorageButton.TextureNormal = Theme.ResolveTextureOrNull(_storageTexturePath)?.Texture;
             }
         }
 
-        private string _highlightTexturePath = "";
-        public string HighlightTexturePath
+        private string? _highlightTexturePath;
+        public string? HighlightTexturePath
         {
             get => _highlightTexturePath;
             set
             {
                 _highlightTexturePath = value;
-                HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
+                HighlightRect.Texture = Theme.ResolveTextureOrNull(_highlightTexturePath)?.Texture;
             }
         }
 
@@ -113,16 +107,16 @@ namespace Content.Client.UserInterface.Controls
         {
             IoCManager.InjectDependencies(this);
             Name = "SlotButton_null";
-            MinSize = (DefaultButtonSize, DefaultButtonSize);
+            MinSize = new Vector2(DefaultButtonSize, DefaultButtonSize);
             AddChild(ButtonRect = new TextureRect
             {
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Stop
             });
             AddChild(HighlightRect = new TextureRect
             {
                 Visible = false,
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Ignore
             });
 
@@ -131,19 +125,21 @@ namespace Content.Client.UserInterface.Controls
 
             AddChild(SpriteView = new SpriteView
             {
-                Scale = (2, 2),
+                Scale = new Vector2(2, 2),
+                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(HoverSpriteView = new SpriteView
             {
-                Scale = (2, 2),
+                Scale = new Vector2(2, 2),
+                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(StorageButton = new TextureButton
             {
-                Scale = (0.75f, 0.75f),
+                Scale = new Vector2(0.75f, 0.75f),
                 HorizontalAlignment = HAlignment.Right,
                 VerticalAlignment = VAlignment.Bottom,
                 Visible = false,
@@ -178,7 +174,7 @@ namespace Content.Client.UserInterface.Controls
 
             AddChild(BlockedRect = new TextureRect
             {
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Stop,
                 Visible = false
             });
@@ -195,10 +191,10 @@ namespace Content.Client.UserInterface.Controls
             var tempQualifier = HoverSpriteView.Sprite;
             if (tempQualifier != null)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(tempQualifier.Owner);
             }
 
-            HoverSpriteView.Sprite = null;
+            HoverSpriteView.SetEntity(null);
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)
@@ -230,9 +226,13 @@ namespace Content.Client.UserInterface.Controls
 
         protected override void OnThemeUpdated()
         {
-            StorageButton.TextureNormal = Theme.ResolveTexture(_storageTexturePath);
-            ButtonRect.Texture = Theme.ResolveTexture(_buttonTexturePath);
-            HighlightRect.Texture = Theme.ResolveTexture(_highlightTexturePath);
+            base.OnThemeUpdated();
+
+            StorageButton.TextureNormal = Theme.ResolveTextureOrNull(_storageTexturePath)?.Texture;
+            ButtonRect.Texture = Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
+            HighlightRect.Texture = Theme.ResolveTextureOrNull(_highlightTexturePath)?.Texture;
         }
+
+        EntityUid? IEntityControl.UiEntity => Entity;
     }
 }

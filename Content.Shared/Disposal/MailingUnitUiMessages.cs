@@ -14,10 +14,10 @@ public enum MailingUnitUiKey : byte
 [Serializable, NetSerializable]
 public sealed class TargetSelectedMessage : BoundUserInterfaceMessage
 {
-    public readonly string? target;
+    public readonly string? Target;
 
     public TargetSelectedMessage(string? target)
     {
-        this.target = target;
+        Target = target;
     }
 }

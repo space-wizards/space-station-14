@@ -21,7 +21,6 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_mag.rsi
     layers:
     - state: base
@@ -65,20 +64,6 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineLightRifleHighVelocity
-  name: "magazine (.30 rifle high-velocity)"
-  parent: BaseMagazineLightRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleHighVelocity
-  - type: Sprite
-    layers:
-    - state: high_velocity
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

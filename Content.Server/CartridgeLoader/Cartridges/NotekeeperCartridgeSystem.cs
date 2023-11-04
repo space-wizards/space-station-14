@@ -1,4 +1,4 @@
-﻿using Content.Shared.CartridgeLoader;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
@@ -42,7 +42,7 @@ public sealed class NotekeeperCartridgeSystem : EntitySystem
             component.Notes.Remove(message.Note);
         }
 
-        UpdateUiState(uid, args.LoaderUid, component);
+        UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
 
 

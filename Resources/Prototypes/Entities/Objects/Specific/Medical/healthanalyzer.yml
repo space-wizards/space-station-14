@@ -1,13 +1,18 @@
 - type: entity
-  name: health analyzer
+  id: HandheldHealthAnalyzerUnpowered
   parent: BaseItem
-  id: HandheldHealthAnalyzer
+  name: health analyzer
   description: A hand-held body scanner capable of distinguishing vital signs of the subject.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
-    netsync: false
-    state: analyzer
+    state: icon
+    layers:
+      - state: icon
+      - state: analyzer
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
     closeOnHandDeselect: false
@@ -20,34 +25,34 @@
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: Tag
     tags:
-    - DiscreteHealthAnalyzer
+      - DiscreteHealthAnalyzer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: GuideHelp
+    guides:
+      - Medical Doctor
 
 - type: entity
-  parent: HandheldHealthAnalyzer
-  id: HandheldHealthAnalyzerGigacancer
-  suffix: gigacancer
+  id: HandheldHealthAnalyzer
+  parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
+  suffix: Powered
   components:
-  - type: HealthAnalyzer
-    fake: true
-    disease: Ultragigacancer
-
-## I know admins will want this
-- type: entity
-  parent: HandheldHealthAnalyzer
-  id: HandheldHealthAnalyzerOwOnavirus
-  name: OwOnavirus analyzer
-  suffix: admin abuse
-  components:
-  - type: HealthAnalyzer
-    fake: true
-    disease: OwOnavirus
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 20
+  - type: ActivatableUIRequiresPowerCell
 
 - type: entity
+  id: HandheldHealthAnalyzerEmpty
   parent: HandheldHealthAnalyzer
-  id: HandheldHealthAnalyzerZombie
-  name: Zombie Infector
-  suffix: Active
+  suffix: Empty
   components:
-  - type: HealthAnalyzer
-    fake: true
-    disease: ActiveZombieVirus
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

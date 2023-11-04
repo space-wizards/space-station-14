@@ -17,6 +17,8 @@
       - FoodBreadVolcanic
       - FoodBreadPlain
       - FoodBreadMeat
+      - FoodBreadCorn
+      - FoodBreadSausage
       - FoodBreadBanana
       - FoodBreadTofu
       - FoodBreadCreamcheese
@@ -42,6 +44,7 @@
       - FoodPieCherry
       - FoodPieMeat
       - FoodPieFrosty
+      - FoodBakedBrownieBatch
     chance: 0.8
     offset: 0.0
     #rare
@@ -56,4 +59,5 @@
       - FoodPiePlump
       - FoodBreadMeatXeno
       - FoodPieXeno
+      - FoodBakedCannabisBrownieBatch
     rareChance: 0.05

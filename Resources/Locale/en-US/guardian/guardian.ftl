@@ -11,11 +11,6 @@ guardian-activator-invalid-target = Only humans can be injected!
 guardian-no-soul = Your guardian has no soul.
 guardian-available = Your guardian now has a soul.
 
-# Guardian action
-
-action-name-guardian = Toggle Guardian
-action-description-guardian = Either manifests the guardian or recalls it back into your body
-
 ## Guardian entity specific
 
 guardian-entity-recall = The guardian vanishes into thin air!

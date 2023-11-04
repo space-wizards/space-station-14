@@ -16,7 +16,6 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    netsync: false
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

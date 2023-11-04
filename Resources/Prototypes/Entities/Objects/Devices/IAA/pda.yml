@@ -1,0 +1,13 @@
+- type: entity
+  parent: BasePDA
+  id: IAAPDA
+  name: internal affairs agent PDA
+  description: Corporation and profit are best friends.
+  components:
+    - type: Pda
+      id: IAAIDCard
+      state: pda-lawyer
+    - type: PdaBorderColor
+      borderColor: "#6f6192"
+    - type: Icon
+      state: pda-lawyer

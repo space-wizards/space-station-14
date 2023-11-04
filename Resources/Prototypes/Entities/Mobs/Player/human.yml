@@ -3,50 +3,28 @@
   name: Urist McHands
   parent: BaseMobHuman
   id: MobHuman
-  components:
-  - type: CombatMode
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: hugging-success-generic
-    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-    messagePerceivedByOthers: hugging-success-generic-others
-  - type: Mind
-    showExamineInfo: true
-  - type: Input
-    context: "human"
-  - type: MobMover
-  - type: InputMover
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 1.0
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
-  - type: Alerts
-  - type: Actions
-  - type: Eye
-  - type: CameraRecoil
-  - type: Examiner
-  - type: CanHostGuardian
-  - type: Faction
-    factions:
-    - NanoTrasen
 
 #Syndie
 - type: entity
   parent: MobHuman
   id: MobHumanSyndicateAgent
   name: Syndicate Agent
+  suffix: Human
   components:
     - type: Loadout
-      prototype: SyndicateOperativeGearExtremelyBasic
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
       nameSegments: [names_death_commando]
-    - type: Faction
+    - type: NpcFactionMember
       factions:
-      - Syndicate
+        - Syndicate
+
+- type: entity
+  parent: MobHumanSyndicateAgent
+  id: MobHumanSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
+  suffix: NukeOps
+  components:
+    - type: NukeOperative
 
 # Nuclear Operative
 - type: entity
@@ -68,13 +46,12 @@
       randomizeName: false
     - type: NukeOperative
     - type: Loadout
-      prototype: SyndicateOperativeGearFull
       prototypes: [SyndicateOperativeGearFull]
     - type: RandomMetadata
       nameSegments:
       - SyndicateNamesPrefix
       - SyndicateNamesNormal
-    - type: Faction
+    - type: NpcFactionMember
       factions:
       - Syndicate
 
@@ -85,18 +62,20 @@
   parent: MobHuman
   id: MobHumanSpaceNinja
   components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
   - type: Loadout
-    prototype: SpaceNinjaGear
     prototypes: [SpaceNinjaGear]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Syndicate
-  - type: Ninja
+  - type: SpaceNinja
+  - type: GenericAntag
+    rule: Ninja
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title
     - names_ninja
-  - type: Tag
-    tags:
-    # fight with honor!
-    - GunsDisabled

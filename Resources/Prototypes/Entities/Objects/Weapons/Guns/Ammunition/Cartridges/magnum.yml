@@ -11,7 +11,6 @@
   - type: CartridgeAmmo
     proto: BulletMagnum
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -19,7 +18,7 @@
   - type: Appearance
   - type: SpentAmmoVisuals
   - type: StaticPrice
-    price: 10
+    price: 1 #Imperial price balance
 
 - type: entity
   id: CartridgeMagnum
@@ -28,14 +27,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnum
-
-- type: entity
-  id: CartridgeMagnumHighVelocity
-  name: cartridge (.45 magnum high-velocity)
-  parent: BaseCartridgeMagnum
-  components:
-  - type: CartridgeAmmo
-    proto: BulletMagnumHighVelocity
 
 - type: entity
   id: CartridgeMagnumPractice
@@ -52,3 +43,19 @@
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumRubber
+
+- type: entity
+  id: CartridgeMagnumIncendiary
+  name: cartridge (.45 magnum incendiary)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumIncendiary
+
+- type: entity
+  id: CartridgeMagnumAP
+  name: cartridge (.45 magnum armor-piercing)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumAP

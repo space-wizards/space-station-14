@@ -8,21 +8,33 @@
     anchored: true
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
-    netsync: false
     noRot: true
     state: nuclearbomb_base
   - type: Physics
-    bodyType: Dynamic
+    bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 80 #It has wheels and bluespace tech to make it lighter.
-      mask:
-      - MachineMask
-      layer:
-      - HalfWallLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 80 #It has wheels and bluespace tech to make it lighter.
+        mask:
+        - MachineMask
+        layer:
+        - HalfWallLayer
+  - type: PointLight
+    enabled: false
+    radius: 4
+    energy: 2.0
+    color: "#FF4020"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 120
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: nuclear fission explosive
+    enabled: false
   - type: NukeLabel
   - type: Nuke
     explosionType: Default
@@ -61,8 +73,10 @@
   id: NuclearBombUnanchored
   suffix: unanchored
   components:
-    - type: Transform
-      anchored: false
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
 
 - type: entity
   parent: StorageTank
@@ -74,20 +88,20 @@
   - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
-    netsync: false
     state: nuclearbomb_base
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 80
-      mask:
-      - TabletopMachineMask
-      layer:
-      - TabletopMachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 80
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: SolutionContainerManager
     solutions:
       tank:

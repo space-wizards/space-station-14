@@ -1,8 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles
 {
@@ -10,10 +13,12 @@ namespace Content.Shared.Roles
     /// Abstract class for playtime and other requirements for role gates.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
-    public abstract class JobRequirement{}
+    [Serializable, NetSerializable]
+    public abstract partial class JobRequirement{}
 
     [UsedImplicitly]
-    public sealed class DepartmentTimeRequirement : JobRequirement
+    [Serializable, NetSerializable]
+    public sealed partial class DepartmentTimeRequirement : JobRequirement
     {
         /// <summary>
         /// Which department needs the required amount of time.
@@ -37,7 +42,8 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
-    public sealed class RoleTimeRequirement : JobRequirement
+    [Serializable, NetSerializable]
+    public sealed partial class RoleTimeRequirement : JobRequirement
     {
         /// <summary>
         /// What particular role they need the time requirement with.
@@ -53,7 +59,8 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
-    public sealed class OverallPlaytimeRequirement : JobRequirement
+    [Serializable, NetSerializable]
+    public sealed partial class OverallPlaytimeRequirement : JobRequirement
     {
         /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
         [DataField("time")] public TimeSpan Time;
@@ -67,7 +74,8 @@ namespace Content.Shared.Roles
         public static bool TryRequirementsMet(
             JobPrototype job,
             Dictionary<string, TimeSpan> playTimes,
-            [NotNullWhen(false)] out string? reason,
+            [NotNullWhen(false)] out FormattedMessage? reason,
+            IEntityManager entManager,
             IPrototypeManager prototypes)
         {
             reason = null;
@@ -76,7 +84,7 @@ namespace Content.Shared.Roles
 
             foreach (var requirement in job.Requirements)
             {
-                if (!TryRequirementMet(requirement, playTimes, out reason, prototypes))
+                if (!TryRequirementMet(requirement, playTimes, out reason, entManager, prototypes))
                     return false;
             }
 
@@ -89,9 +97,9 @@ namespace Content.Shared.Roles
         public static bool TryRequirementMet(
             JobRequirement requirement,
             Dictionary<string, TimeSpan> playTimes,
-            [NotNullWhen(false)] out string? reason,
+            [NotNullWhen(false)] out FormattedMessage? reason,
+            IEntityManager entManager,
             IPrototypeManager prototypes)
-
         {
             reason = null;
 
@@ -101,7 +109,8 @@ namespace Content.Shared.Roles
                     var playtime = TimeSpan.Zero;
 
                     // Check all jobs' departments
-                    var jobs = prototypes.Index<DepartmentPrototype>(deptRequirement.Department).Roles;
+                    var department = prototypes.Index<DepartmentPrototype>(deptRequirement.Department);
+                    var jobs = department.Roles;
                     string proto;
 
                     // Check all jobs' playtime
@@ -121,20 +130,22 @@ namespace Content.Shared.Roles
                         if (deptDiff <= 0)
                             return true;
 
-                        reason = Loc.GetString(
+                        reason = FormattedMessage.FromMarkup(Loc.GetString(
                             "role-timer-department-insufficient",
                             ("time", deptDiff),
-                            ("department", Loc.GetString(deptRequirement.Department)));
+                            ("department", Loc.GetString(deptRequirement.Department)),
+                            ("departmentColor", department.Color.ToHex())));
                         return false;
                     }
                     else
                     {
                         if (deptDiff <= 0)
                         {
-                            reason = Loc.GetString(
+                            reason = FormattedMessage.FromMarkup(Loc.GetString(
                                 "role-timer-department-too-high",
                                 ("time", -deptDiff),
-                                ("department", Loc.GetString(deptRequirement.Department)));
+                                ("department", Loc.GetString(deptRequirement.Department)),
+                                ("departmentColor", department.Color.ToHex())));
                             return false;
                         }
 
@@ -150,14 +161,14 @@ namespace Content.Shared.Roles
                         if (overallDiff <= 0 || overallTime >= overallRequirement.Time)
                             return true;
 
-                        reason = Loc.GetString("role-timer-overall-insufficient", ("time", overallDiff));
+                        reason = FormattedMessage.FromMarkup(Loc.GetString("role-timer-overall-insufficient", ("time", overallDiff)));
                         return false;
                     }
                     else
                     {
                         if (overallDiff <= 0 || overallTime >= overallRequirement.Time)
                         {
-                            reason = Loc.GetString("role-timer-overall-too-high", ("time", -overallDiff));
+                            reason = FormattedMessage.FromMarkup(Loc.GetString("role-timer-overall-too-high", ("time", -overallDiff)));
                             return false;
                         }
 
@@ -169,29 +180,39 @@ namespace Content.Shared.Roles
 
                     playTimes.TryGetValue(proto, out var roleTime);
                     var roleDiff = roleRequirement.Time.TotalMinutes - roleTime.TotalMinutes;
+                    var departmentColor = Color.Yellow;
+
+                    if (entManager.EntitySysManager.TryGetEntitySystem(out SharedJobSystem? jobSystem))
+                    {
+                        var jobProto = jobSystem.GetJobPrototype(proto);
+
+                        if (jobSystem.TryGetDepartment(jobProto, out var departmentProto))
+                            departmentColor = departmentProto.Color;
+                    }
 
                     if (!roleRequirement.Inverted)
                     {
                         if (roleDiff <= 0)
                             return true;
 
-                        reason = Loc.GetString(
+                        reason = FormattedMessage.FromMarkup(Loc.GetString(
                             "role-timer-role-insufficient",
                             ("time", roleDiff),
-                            ("job", Loc.GetString(proto)));
+                            ("job", Loc.GetString(proto)),
+                            ("departmentColor", departmentColor.ToHex())));
                         return false;
                     }
                     else
                     {
                         if (roleDiff <= 0)
                         {
-                            reason = Loc.GetString(
+                            reason = FormattedMessage.FromMarkup(Loc.GetString(
                                 "role-timer-role-too-high",
                                 ("time", -roleDiff),
-                                ("job", Loc.GetString(proto)));
+                                ("job", Loc.GetString(proto)),
+                                ("departmentColor", departmentColor.ToHex())));
                             return false;
                         }
-
 
                         return true;
                     }

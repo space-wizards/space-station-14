@@ -1,0 +1,31 @@
+- type: entity #патологоанатом
+  id: LockerCoronerFilled
+  suffix: Filled
+  parent: LockerCoroner
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 2
+      - id: Ointment
+        amount: 2
+      - id: Bloodpack
+        amount: 2
+      - id: Scalpel
+      - id: HandLabeler
+      - id: ClothingHandsGlovesNitrile
+      - id: BoxFolderBlue
+      - id: Dropper
+      - id: BoxSyringe
+      - id: BoxBodyBag
+      - id: Paper
+        amount: 10
+      - id: MedkitOxygenFilled
+        prob: 0.3
+      - id: MedkitBruteFilled
+        prob: 0.8
+      - id: MedkitToxinFilled
+        prob: 0.3
+      - id: MedkitBurnFilled
+        prob: 0.7
+      - id: RubberStampCoroner

@@ -15,6 +15,8 @@ namespace Content.Client.Access.UI
     public sealed partial class IdCardConsoleWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        private readonly ISawmill _logMill = default!;
 
         private readonly IdCardConsoleBoundUserInterface _owner;
 
@@ -26,10 +28,11 @@ namespace Content.Client.Access.UI
         private string? _lastJobProto;
 
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<string> accessLevels)
+            List<ProtoId<AccessLevelPrototype>> accessLevels)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+            _logMill = _logManager.GetSawmill(SharedIdCardConsoleSystem.Sawmill);
 
             _owner = owner;
 
@@ -67,7 +70,7 @@ namespace Content.Client.Access.UI
             {
                 if (!prototypeManager.TryIndex<AccessLevelPrototype>(access, out var accessLevel))
                 {
-                    Logger.ErrorS(SharedIdCardConsoleSystem.Sawmill, $"Unable to find accesslevel for {access}");
+                    _logMill.Error($"Unable to find accesslevel for {access}");
                     continue;
                 }
 
@@ -116,7 +119,7 @@ namespace Content.Client.Access.UI
             // this is a sussy way to do this
             foreach (var access in job.Access)
             {
-                if (_accessButtons.TryGetValue(access, out var button))
+                if (_accessButtons.TryGetValue(access, out var button) && !button.Disabled)
                 {
                     button.Pressed = true;
                 }
@@ -131,7 +134,7 @@ namespace Content.Client.Access.UI
 
                 foreach (var access in groupPrototype.Tags)
                 {
-                    if (_accessButtons.TryGetValue(access, out var button))
+                    if (_accessButtons.TryGetValue(access, out var button) && !button.Disabled)
                     {
                         button.Pressed = true;
                     }
@@ -187,6 +190,7 @@ namespace Content.Client.Access.UI
                 if (interfaceEnabled)
                 {
                     button.Pressed = state.TargetIdAccessList?.Contains(accessName) ?? false;
+                    button.Disabled = (!state.AllowedModifyAccessList?.Contains(accessName)) ?? true;
                 }
             }
 

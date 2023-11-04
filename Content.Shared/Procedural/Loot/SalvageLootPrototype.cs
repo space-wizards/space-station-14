@@ -10,7 +10,10 @@ public sealed class SalvageLootPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description = string.Empty;
+    /// <summary>
+    /// Should this loot always spawn if possible. Used for stuff such as ore.
+    /// </summary>
+    [DataField("guaranteed")] public bool Guaranteed;
 
     /// <summary>
     /// All of the loot rules

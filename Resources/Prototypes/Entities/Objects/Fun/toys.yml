@@ -7,16 +7,18 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
-    netsync: false
   - type: EmitSoundOnUse
-    sound:
-      collection: ToySqueak
-  - type: EmitSoundOnLand
     sound:
       collection: ToySqueak
   - type: EmitSoundOnActivate
     sound:
       collection: ToySqueak
+  - type: EmitSoundOnCollide
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -34,6 +36,59 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieGhost
+  name: ghost soft toy
+  description: The start of your personal GHOST GANG!
+  components:
+    - type: Sprite
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+      noRot: true
+    - type: Item
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          density: 20
+          mask:
+            - ItemMask
+          restitution: 0.98
+          friction: 0.01
+    - type: Physics
+      angularDamping: 0.02
+      linearDamping: 0.02
+      fixedRotation: true
+      bodyType: Dynamic
+    - type: TileFrictionModifier
+      modifier: 0.1
+    - type: Tag
+      tags:
+        - ForceableFollow
+        - PlushieGhost
+    - type: RandomWalk
+      accumulatorRatio: 0.5
+      maxSpeed: 1
+      minSpeed: 0.25
+
+- type: entity
+  parent: PlushieGhost
+  id: PlushieGhostRevenant
+  name: revenant soft toy
+  suffix: DO NOT MAP
+  description: So soft it almost makes you want to take a nap...
+  components:
+    - type: Sprite
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: icon
+      noRot: true
+    - type: Construction
+      graph: PlushieGhostRevenant
+      node: plushie
+
+- type: entity
+  parent: BasePlushie
   id: PlushieBee
   name: bee plushie
   description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
@@ -48,6 +103,27 @@
         reagents:
           - ReagentId: GroundBee
             Quantity: 10
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieHampter
+  name: hampter plushie
+  description: A cute stuffed toy that resembles a hamster. Its face looks squished.
+  components:
+  - type: Sprite
+    state: plushie_hampter
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Items/Toys/mousesqueek.ogg
 
 - type: entity
   parent: PlushieBee
@@ -88,10 +164,9 @@
   - type: Sprite
     state: plushie_lamp
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 2
-
+    netsync: false
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!
@@ -178,16 +253,17 @@
               solution: plushie
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.3,-0.3,0.3,0.3"
           density: 15
           mask:
             - ItemMask
-        - shape:
+        rehydrate:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.3,-0.3,0.3,0.3"
-          id: "rehydrate"
           hard: false
           layer:
             - LowImpassable
@@ -205,6 +281,9 @@
     state: blue
   - type: Item
     heldPrefix: blue
+  - type: Tag
+    tags:
+      - PlushieSharkBlue
 
 - type: entity
   parent: PlushieSharkBlue
@@ -217,6 +296,9 @@
     state: pink
   - type: Item
     heldPrefix: pink
+  - type: Tag
+    tags:
+      - PlushieSharkPink
 
 - type: entity
   parent: PlushieSharkBlue
@@ -229,6 +311,9 @@
     state: grey
   - type: Item
     heldPrefix: grey
+  - type: Tag
+    tags:
+      - PlushieSharkGrey
 
 - type: entity
   parent: BasePlushie
@@ -270,6 +355,8 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite # Rrrr!
 
 - type: entity
   parent: BasePlushie
@@ -342,7 +429,6 @@
   components:
   - type: Sprite
     state: plushie_vox
-    netsync: false
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
@@ -362,26 +448,49 @@
   - type: Sprite
     state: plushie_atmosian
 
-## Figurines
+- type: entity
+  parent: BasePlushie
+  id: PlushieXeno
+  name: xeno plushie
+  description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
+  components:
+  - type: Sprite
+    state: plushie_xeno
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+
+## Cheapo Figurines
 
 - type: entity
   parent: BaseItem
-  id: BaseFigurine
+  id: BaseFigurineCheapo
   name: figurine
   description: A small miniature.
   abstract: true
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
-    netsync: false
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
   - type: StaticPrice
-    price: 10
+    price: 25
+  - type: Tag
+    tags:
+    - Figurine
 
 - type: entity
-  parent: BaseFigurine
+  parent: BaseFigurineCheapo
   id: ToyAi
   name: AI toy
   description: A scaled-down toy AI core.
@@ -390,43 +499,27 @@
     state: AI
 
 - type: entity
-  parent: BaseFigurine
+  parent: BaseFigurineCheapo
   id: ToyNuke
   name: nuke toy
   description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
   components:
   - type: Sprite
     state: nuketoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyAssistant # TODO rename but needs map changes
-  name: passenger toy
-  description: Grey tide world wide!
-  components:
-  - type: Sprite
-    state: doll
-  - type: Item
-    sprite: Objects/Fun/toys.rsi
-    heldPrefix: doll
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyGriffin
-  name: griffin toy
-  description: An action figure modeled after 'The Griffin', criminal mastermind.
-  components:
-  - type: Sprite
-    state: griffinprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyHonk
-  name: H.O.N.K. toy
-  description: Mini-Mecha action figure! 'Mecha No. 6/12' is written on the back.
-  components:
-  - type: Sprite
-    state: honkprize
+  - type: UseDelay
+    delay: 180.0
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxdistance: 10
 
 - type: entity
   parent: BasePlushie
@@ -443,127 +536,6 @@
     soundHit:
       path: /Audio/Items/Toys/ian.ogg
 
-- type: entity
-  parent: BaseFigurine
-  id: ToyMarauder
-  name: marauder toy
-  description: Mini-Mecha action figure! 'Mecha No. 7/12' is written on the back.
-  components:
-  - type: Sprite
-    state: marauderprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyMauler
-  name: mauler toy
-  description: Mini-Mecha action figure! 'Mecha No. 9/12' is written on the back.
-  components:
-  - type: Sprite
-    state: maulerprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyGygax
-  name: gygax toy
-  description: Mini-Mecha action figure! 'Mecha No. 4/12' is written on the back.
-  components:
-  - type: Sprite
-    state: gygaxtoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyOdysseus
-  name: odysseus toy
-  description: Mini-Mecha action figure! 'Mecha No. 10/12' is written on the back.
-  components:
-  - type: Sprite
-    state: odysseusprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyOwlman
-  name: owl toy
-  description: An action figure modeled after 'The Owl', defender of justice.
-  components:
-  - type: Sprite
-    state: owlprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyDeathRipley
-  name: deathripley toy
-  description: Mini-Mecha action figure! 'Mecha No. 3/12' is written on the back.
-  components:
-  - type: Sprite
-    state: deathripleytoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyPhazon
-  name: phazon toy
-  description: Mini-Mecha action figure! 'Mecha No. 11/12' is written on the back.
-  components:
-  - type: Sprite
-    state: phazonprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyFireRipley
-  name: fire ripley
-  description: Mini-Mecha action figure! 'Mecha No. 2/12' is written on the back.
-  components:
-  - type: Sprite
-    state: fireripleytoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyReticence
-  name: reticence toy
-  description: Mini-Mecha action figure! 'Mecha No. 12/12' is written on the back.
-  components:
-  - type: Sprite
-    state: reticenceprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyRipley
-  name: ripley toy
-  description: Mini-Mecha action figure! 'Mecha No. 1/12' is written on the back.
-  components:
-  - type: Sprite
-    state: ripleytoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToySeraph
-  name: seraph toy
-  description: Mini-Mecha action figure! 'Mecha No. 8/12' is written on the back.
-  components:
-  - type: Sprite
-    state: seraphprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyDurand
-  name: durand toy
-  description: Mini-Mecha action figure! 'Mecha No. 5/12' is written on the back.
-  components:
-  - type: Sprite
-    state: durandprize
-
-
-### Yeah I left these all mixed up for a future coder to puzzle over, it's lore.
-### Help i'm sorting these and my previous self let this message here to taunt me aaaaa
-
-- type: entity
-  parent: BaseFigurine
-  id: ToySkeleton
-  name: skeleton toy
-  description: Spooked ya!
-  components:
-  - type: Sprite
-    state: skeletonprize
-
 ## Toyweapons
 
 - type: entity
@@ -572,7 +544,6 @@
   id: FoamWeaponBase
   components:
   - type: Sprite
-    netsync: false
   - type: Item
     size: 24
 
@@ -616,7 +587,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
 
 - type: entity
   parent: ToyGunBase
@@ -632,12 +602,19 @@
   - type: Item
     sprite: Objects/Fun/toys.rsi
     heldPrefix: capgun
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
+    fireRate: 2
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      params:
+        volume: 2.25
+    clumsyProof: true
   - type: RevolverAmmoProvider
     whitelist:
       tags:
@@ -657,6 +634,7 @@
   parent: RevolverCapGun
   id: RevolverCapGunFake
   name: cap gun
+  suffix: Fake
   description: Looks almost like the real thing! Ages 8 and up.
   components:
     - type: RevolverAmmoProvider
@@ -666,7 +644,7 @@
           - SpeedLoaderCap
           - CartridgeMagnum
           - SpeedLoaderMagnum
-      proto: CartridgeMagnum
+      proto: CartridgeMagnumAP
 
 - type: entity
   parent: BaseItem
@@ -701,10 +679,15 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: basketball
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: bask
+  - type: TileFrictionModifier
+    modifier: 0.5
 
 - type: entity
   parent: BaseItem
@@ -722,6 +705,25 @@
 
 - type: entity
   parent: BaseItem
+  id: BeachBall
+  name: beach ball
+  description: The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: beachball
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: beachb
+  - type: TileFrictionModifier
+    modifier: 0.05
+
+- type: entity
+  parent: BaseItem
   id: BalloonSyn
   name: syndie balloon
   description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
@@ -733,6 +735,11 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: synb
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - Balloon
 
 - type: entity
   parent: BaseItem
@@ -747,6 +754,11 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: corgib
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - Balloon
 
 - type: entity
   parent: BaseItem
@@ -785,6 +797,8 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: orb
+  - type: TileFrictionModifier
+    modifier: 0.001
 
 - type: entity
   id: ToySword
@@ -810,11 +824,14 @@
     - type: UseDelay
       delay: 1.0
     - type: PointLight
-      netsync: false
       enabled: false
       radius: 2
       energy: 2
       color: white
+      netsync: false
+    - type: Tag #Добавлено в оригинальный код
+      tags:
+      - ToySword
     - type: Appearance
     - type: ToggleableLightVisuals
       spriteLayer: blade
@@ -827,10 +844,15 @@
             shader: unshaded
     - type: DisarmMalus
       malus: 0
+    - type: StaminaDamageOnHit
+      damage: 8
     - type: MeleeWeapon
       damage:
         types:
           Blunt: 0
+    - type: Construction #Добавлено в оригинальный код
+      graph: DualToySword
+      node: start
 
 - type: entity
   parent: BasePlushie
@@ -840,7 +862,6 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/pequeno.rsi
-    netsync: false
     layers:
     - state: base
       map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -891,3 +912,165 @@
   - type: Tag
     tags:
     - ClownRecorder
+
+- type: entity
+  parent: BaseItem
+  id: ToyHammer
+  name: rubber hammer
+  description: A brightly colored hammer made of rubber.
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/rubber_hammer.rsi
+      layers:
+        - state: icon
+          shader: unshaded
+    - type: WeaponRandom
+      damageBonus:
+          types:
+              Blunt: 1000
+    - type: StaminaDamageOnHit
+      damage: 8
+    - type: Item
+      size: 5
+      sprite: Objects/Fun/rubber_hammer.rsi
+    - type: Appearance
+    - type: DisarmMalus
+      malus: 0
+    - type: MeleeWeapon
+      soundHit:
+        collection: RubberHammer
+        params:
+            variation: 0.03
+            volume: 3
+      soundNoDamage:
+        collection: RubberHammer
+        params:
+            variation: 0.03
+            volume: 3
+      damage:
+        types:
+          Blunt: 0
+
+- type: entity
+  parent: BaseItem
+  id: WhoopieCushion
+  name: whoopie cushion
+  description: A practical joke device involving flatulence humour.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/whoopie.rsi
+    state: icon
+    quickEquip: false
+  - type: ItemCooldown
+  - type: EmitSoundOnUse
+    sound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: UseDelay
+    delay: 0.8
+  - type: Slippery
+    paralyzeTime: 0
+    slipSound:
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: MeleeWeapon
+    soundHit:
+      collection: Parp
+      params:
+        variation: 0.125
+    damage:
+      types:
+        Blunt: 0
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 1
+  - type: TriggerOnStepTrigger
+  - type: Appearance
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+
+- type: entity
+  name: banana
+  parent: FoodProduceBase
+  id: PlasticBanana
+  description: A plastic banana.
+  suffix: Plastic
+  components:
+  - type: FlavorProfile
+    flavors:
+      - plastic
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nothing
+          Quantity: 100
+
+- type: entity
+  parent: DrinkBase
+  id: CrazyGlue
+  name: crazy glue
+  description:  A bottle of crazy glue manufactured by Honk! Co.
+  components:
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
+  - type: Sprite
+    sprite: Objects/Fun/glue.rsi
+    state: icon
+  - type: Appearance
+  - type: Glue
+    consumptionUnit: 10
+  - type: Item
+    sprite: Objects/Fun/glue.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceGlue
+          Quantity: 100
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieMoth
+  name: moth plushie
+  description: Cute and fluffy moth plushie. Enjoy, bz!
+  components:
+  - type: Sprite
+    state: plushie_moth
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Moth/moth_chitter.ogg

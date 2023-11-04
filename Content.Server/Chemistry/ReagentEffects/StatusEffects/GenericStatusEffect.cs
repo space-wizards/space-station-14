@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
 {
@@ -14,7 +15,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     ///     Can be used for things like adding accents or something. I don't know. Go wild.
     /// </remarks>
     [UsedImplicitly]
-    public sealed class GenericStatusEffect : ReagentEffect
+    public sealed partial class GenericStatusEffect : ReagentEffect
     {
         [DataField("key", required: true)]
         public string Key = default!;
@@ -57,6 +58,13 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
                 statusSys.TrySetTime(args.SolutionEntity, Key, TimeSpan.FromSeconds(time));
             }
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString(
+            "reagent-effect-guidebook-status-effect",
+            ("chance", Probability),
+            ("type", Type),
+            ("time", Time),
+            ("key", $"reagent-effect-status-effect-{Key}"));
     }
 
     public enum StatusEffectMetabolismType

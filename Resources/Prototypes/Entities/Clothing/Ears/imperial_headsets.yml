@@ -1,0 +1,14 @@
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetPrisoner
+  name: prisoner headset
+  description: podozritelno napominaet garnituru kargo...
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/prisoner.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/prisoner.rsi

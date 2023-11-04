@@ -10,13 +10,13 @@ public sealed class SpeciesPrototype : IPrototype
     /// Prototype ID of the species.
     /// </summary>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// User visible name of the species.
     /// </summary>
     [DataField("name", required: true)]
-    public string Name { get; } = default!;
+    public string Name { get; private set; } = default!;
 
     /// <summary>
     ///     Descriptor. Unused...? This is intended
@@ -24,13 +24,13 @@ public sealed class SpeciesPrototype : IPrototype
     ///     (i.e., young human person, young lizard person, etc.)
     /// </summary>
     [DataField("descriptor")]
-    public string Descriptor { get; } = "humanoid";
+    public string Descriptor { get; private set; } = "humanoid";
 
     /// <summary>
     /// Whether the species is available "at round start" (In the character editor)
     /// </summary>
     [DataField("roundStart", required: true)]
-    public bool RoundStart { get; } = false;
+    public bool RoundStart { get; private set; } = false;
 
     // The below two are to avoid fetching information about the species from the entity
     // prototype.
@@ -42,59 +42,59 @@ public sealed class SpeciesPrototype : IPrototype
     // sprite accessories.
 
     [DataField("sprites")]
-    public string SpriteSet { get; } = default!;
+    public string SpriteSet { get; private set; } = default!;
 
     /// <summary>
     ///     Default skin tone for this species. This applies for non-human skin tones.
     /// </summary>
     [DataField("defaultSkinTone")]
-    public Color DefaultSkinTone { get; } = Color.White;
+    public Color DefaultSkinTone { get; private set; } = Color.White;
 
     /// <summary>
     ///     Default human skin tone for this species. This applies for human skin tones.
     ///     See <see cref="SkinColor.HumanSkinTone"/> for the valid range of skin tones.
     /// </summary>
     [DataField("defaultHumanSkinTone")]
-    public int DefaultHumanSkinTone { get; } = 20;
+    public int DefaultHumanSkinTone { get; private set; } = 20;
 
     /// <summary>
     ///     The limit of body markings that you can place on this species.
     /// </summary>
     [DataField("markingLimits")]
-    public string MarkingPoints { get; } = default!;
+    public string MarkingPoints { get; private set; } = default!;
 
     /// <summary>
     ///     Humanoid species variant used by this entity.
     /// </summary>
     [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype { get; } = default!;
+    public string Prototype { get; private set; } = default!;
 
     /// <summary>
     /// Prototype used by the species for the dress-up doll in various menus.
     /// </summary>
     [DataField("dollPrototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string DollPrototype { get; } = default!;
+    public string DollPrototype { get; private set; } = default!;
 
     /// <summary>
     /// Method of skin coloration used by the species.
     /// </summary>
     [DataField("skinColoration", required: true)]
-    public HumanoidSkinColor SkinColoration { get; }
+    public HumanoidSkinColor SkinColoration { get; private set; }
 
     [DataField("maleFirstNames")]
-    public string MaleFirstNames { get; } = "names_first_male";
+    public string MaleFirstNames { get; private set; } = "names_first_male";
 
     [DataField("femaleFirstNames")]
-    public string FemaleFirstNames { get; } = "names_first_female";
+    public string FemaleFirstNames { get; private set; } = "names_first_female";
 
     [DataField("lastNames")]
-    public string LastNames { get; } = "names_last";
+    public string LastNames { get; private set; } = "names_last";
 
     [DataField("naming")]
-    public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
+    public SpeciesNaming Naming { get; private set; } = SpeciesNaming.FirstLast;
 
     [DataField("sexes")]
-    public List<Sex> Sexes { get; } = new() { Sex.Male, Sex.Female };
+    public List<Sex> Sexes { get; private set; } = new() { Sex.Male, Sex.Female };
 
     /// <summary>
     ///     Characters younger than this are too young to be hired by Nanotrasen.

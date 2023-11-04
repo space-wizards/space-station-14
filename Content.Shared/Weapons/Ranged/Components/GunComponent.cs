@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -29,6 +28,13 @@ public partial class GunComponent : Component
     #region Recoil
 
     // These values are very small for now until we get a debug overlay and fine tune it
+
+    /// <summary>
+    /// A scalar value applied to the vector governing camera recoil.
+    /// If 0, there will be no camera recoil.
+    /// </summary>
+    [DataField("cameraRecoilScalar"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public float CameraRecoilScalar = 1f;
 
     /// <summary>
     /// Last time the gun fired.
@@ -73,6 +79,12 @@ public partial class GunComponent : Component
     #endregion
 
     /// <summary>
+    /// Whether this gun is shot via the use key or the alt-use key.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("useKey"), AutoNetworkedField]
+    public bool UseKey = true;
+
+    /// <summary>
     /// Where the gun is being requested to shoot.
     /// </summary>
     [ViewVariables]
@@ -91,6 +103,12 @@ public partial class GunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("fireRate")]
     [AutoNetworkedField]
     public float FireRate = 8f;
+
+    /// <summary>
+    /// Starts fire cooldown when equipped if true.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("resetOnHandSelected")]
+    public bool ResetOnHandSelected = true;
 
     /// <summary>
     /// How fast the projectile moves.
@@ -120,15 +138,19 @@ public partial class GunComponent : Component
     [AutoNetworkedField]
     public SelectiveFire SelectedMode = SelectiveFire.SemiAuto;
 
-    [DataField("selectModeAction")]
-    public InstantAction? SelectModeAction;
-
     /// <summary>
     /// Whether or not information about
     /// the gun will be shown on examine.
     /// </summary>
     [DataField("showExamineText")]
     public bool ShowExamineText = true;
+
+    /// <summary>
+    /// Whether or not someone with the
+    /// clumsy trait can shoot this
+    /// </summary>
+    [DataField("clumsyProof")]
+    public bool ClumsyProof = false;
 }
 
 [Flags]

@@ -1,0 +1,300 @@
+- type: entity
+  parent: DrinkGlassBase
+  id: BizarreDrinkGlassBase
+  abstract: true
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkPlasmShakeGlass
+  name: plasmshake
+  description: A plasma shake. As dangerous as tasty.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: PlasmShake
+          Quantity: 30
+  - type: Sprite
+    state: plasmshake
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkAwfulOffalSmoothieGlass
+  name: awful offal smoothie
+  description: Blended rotten food. The greatest invention of Dupont Dewpawnt.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: AwfulOffalSmoothie
+          Quantity: 30
+  - type: Sprite
+    state: aos
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkPutridPestSmoothieGlass
+  name: putrid pest smoothie
+  description: A blended mixture of pest and puss. Guaranteed to flush your bowels.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: PutridPestSmoothie
+          Quantity: 30
+  - type: Sprite
+    state: pps
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkGlueGlassB
+  name: space Glue
+  description: Welcome back to Kindergarten.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SpaceGlue
+          Quantity: 30
+  - type: Sprite
+    state: glue
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkIceSpiritsGlass
+  name: ice spitits
+  description: A chilling drink.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: IceSpirits
+          Quantity: 30
+  - type: Sprite
+    state: icespirits
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkBloodBrandyGlass
+  name: blood brandy
+  description: Red honey and booze combine with a little blood. Super tasty!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BloodBrandy
+          Quantity: 30
+  - type: Sprite
+    state: bloodbrandy
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkScumslimGlass
+  name: scumslim
+  description: Looks pretty toxic, but it tastes surprisingly great.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Scumslim
+          Quantity: 30
+  - type: Sprite
+    state: scumslim
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkMeatWineGlass
+  name: meat wine
+  description: Are you sure this is worth drinking?
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: MeatWine
+          Quantity: 30
+  - type: Sprite
+    state: meatwine
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkMagmaWhiskeyGlass
+  name: magma whiskey
+  description: Is this wise to ingest? It appears to be EXTREMELY hot.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: MagmaWhiskey
+          Quantity: 30
+  - type: Sprite
+    state: magmawhiskey
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkShadowSpiritsGlass
+  name: shadow spirits
+  description: Delicious spirits infused with raw chaos. And you're going to drink it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ShadowSpirits
+          Quantity: 30
+  - type: Sprite
+    state: shadowspirits
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkRadiumBeerGlass
+  name: radium beer
+  description: not safe for carbon lifeforms
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ShadowSpirits
+          Quantity: 30
+  - type: Sprite
+    state: radiumbeer
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkDoomVodkaGlass
+  name: doom vodka
+  description: An extremely strong drink. Drink at your own risk
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: DoomVodka
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkVampireWineGlass
+  name: vampire wine
+  description: One of the strongest known alcohols.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: VampireWine
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkAmbrosiaGlass
+  name: ambrosia
+  description: The drink of the Gods.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Ambrosia
+          Quantity: 30
+  - type: Sprite
+    state: ambrosia
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkLuckyMeadGlass
+  name: lucky mead
+  description: It is said this ale brings amazing luck.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: LuckyMead
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkProtoFuelGlass
+  name: protofuel
+  description: A sort of energy-infused, beer-ish liquid.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ProtoFuel
+          Quantity: 30
+  - type: Sprite
+    state: protofuel
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkKSSpecialBlendGlass
+  name: K.S. special blend
+  description: One of the rarest known alcohols. It's good stuff.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: KSSpecialBlend
+          Quantity: 30
+  - type: Sprite
+    state: ksspecialblend
+
+- type: entity
+  parent: BizarreDrinkGlassBase
+  id: DrinkMiracleAmbrosiaGlass
+  name: miracle ambrosia
+  description: A miraculous ambrosia.
+  suffix: admin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: MiracleAmbrosia
+          Quantity: 30
+  - type: Sprite
+    state: ambrosia

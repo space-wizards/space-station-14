@@ -1,19 +1,33 @@
-﻿- type: lobbyBackground
-  id: Robotics
-  background: /Textures/LobbyScreens/robotics.png
+﻿# - type: lobbyBackground
+#   id: Robotics
+#   background: /Textures/LobbyScreens/robotics.png
+
+# - type: lobbyBackground
+#   id: Supermatter
+#   background: /Textures/LobbyScreens/supermatter.png
+
+# - type: lobbyBackground
+#   id: Warden
+#   background: /Textures/LobbyScreens/warden.png
+
+# - type: lobbyBackground
+#   id: Pharmacy
+#   background: /Textures/LobbyScreens/pharmacy.png
+
+# - type: lobbyBackground
+#   id: SSXIV
+#   background: /Textures/LobbyScreens/ssxiv.png
+
+#Imperial space title screens
 
 - type: lobbyBackground
-  id: Supermatter
-  background: /Textures/LobbyScreens/supermatter.png
+  id: Imperial1
+  background: /Textures/LobbyScreens/imperial1.png
 
 - type: lobbyBackground
-  id: Warden
-  background: /Textures/LobbyScreens/warden.png
+  id: Imperial2
+  background: /Textures/LobbyScreens/imperial2.png
 
 - type: lobbyBackground
-  id: Pharmacy
-  background: /Textures/LobbyScreens/pharmacy.png
-
-- type: lobbyBackground
-  id: SSXIV
-  background: /Textures/LobbyScreens/ssxiv.png
+  id: Imperial3
+  background: /Textures/LobbyScreens/imperial3.png

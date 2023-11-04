@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/245b29599acbb6bba24f005095e7798e954fc81c",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broken"
+    },
+    {
+        "name": "deny",
+        "delays": [
+          [
+            0.1,
+            0.1
+          ]
+        ]
+    },
+    {
+      "name": "normal",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "off"
+    },
+    {
+     "name": "panel"
+    }
+  ]
+}

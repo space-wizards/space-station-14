@@ -1,0 +1,44 @@
+- type: entity
+  name: blue space cube
+  parent: BaseItem
+  id: BlueSpaceCube
+  suffix: 20 BCC
+  description: Small cube of solid blue space matter
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Ert/bluespacecube.rsi
+    netsync: false
+    state: bluespacecube
+  - type: Item
+    sprite: Objects/Specific/Ert/bluespacecube.rsi
+  - type: Stack
+    count: 20
+    stackType: BlueSpaceCube
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      BlueSpaceCube: 1
+
+- type: currency
+  id: BlueSpaceCube
+  displayName: store-currency-display-bluespacecube
+  cash:
+    1: BlueSpaceCube1
+  canWithdraw: true
+
+- type: stack
+  id: BlueSpaceCube
+  name: blueSpaceCube
+  icon: Objects/Specific/Ert/bluespacecube.rsi
+  spawn: BlueSpaceCube1
+
+- type: entity
+  parent: BlueSpaceCube
+  id: BlueSpaceCube1
+  suffix: 1 BCC
+  components:
+  - type: Stack
+    count: 1

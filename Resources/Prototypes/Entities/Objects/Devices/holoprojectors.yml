@@ -21,7 +21,6 @@
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/custodial.rsi
     state: icon
-    netsync: false
   - type: Tag
     tags:
       - HolosignProjector
@@ -38,7 +37,6 @@
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/atmos.rsi
     state: icon
-    netsync: false
   - type: Tag
     tags:
       - HolofanProjector
@@ -58,9 +56,18 @@
     - type: Sprite
       sprite: Objects/Devices/Holoprojectors/security.rsi
       state: icon
-      netsync: false
     - type: Tag
       tags:
         - HolofanProjector
     - type: StaticPrice
       price: 80
+
+- type: entity
+  parent: HoloprojectorSecurity
+  id: HoloprojectorSecurityEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

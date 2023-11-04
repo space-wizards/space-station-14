@@ -9,9 +9,12 @@ namespace Content.Client.Cargo.BUI;
 [UsedImplicitly]
 public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private CargoShuttleMenu? _menu;
 
-    public CargoShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
+    public CargoShuttleConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+    }
 
     protected override void Open()
     {

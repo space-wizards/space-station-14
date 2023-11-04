@@ -1,0 +1,50 @@
+<Document>
+# Криогеника
+Криогеника может быть немного сложной для понимания, но, надеюсь, быстро пробежавшись по этой диаграмме, вы научитесь с ней работать! Итак, давайте рассмотрим, что делает каждая часть:
+
+- Воздух внутри: воздух поступает сюда через распределитель или воздушный резервуар, давая тем, кто находится внутри, чем дышать, а морозильной камере - чем охлаждать.
+- Бензонасос: ограничивает давление в сети, чтобы те, кто находится в трубке, не были раздавлены.
+- Морозильная камера: охлаждает воздух и, как следствие, пациентов в трубке, чтобы криоксадон мог активироваться.
+- Газовые фильтры: удаляют отходящие газы (диоксид углерода и закись азота) из контура.
+- Выход воздуха: сюда поступают отходящие газы либо в резервуар для хранения, либо в сеть утилизации отходов.
+<Box>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="0"/>
+<GuideEntityEmbed Entity="CloningPod" Caption="cryo pod" Rotation="0"/>
+<GuideEntityEmbed Entity="GasThermoMachineFreezerEnabled" Rotation="0"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="180"/>
+<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
+<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="270"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="GasPort" Caption="air out" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
+<GuideEntityEmbed Entity="GasPort" Caption="air in" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPressurePump" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
+</Box>
+
+Не каждая сеть будет выглядеть так, но, надеюсь, этого достаточно, чтобы дать вам общее представление о том, как она функционирует.
+
+Важно отметить, что зимняя одежда (и жесткие костюмы) сделает криогенную обработку менее эффективной или вообще неэффективной. Обязательно снимите одежду, защищающую от холода, прежде чем помещать людей в капсулу.
+
+## Использование модуля
+После того, как все будет готово, вам понадобится конкретное лекарство, криоксадон. Криоксадон лечит все виды повреждений, когда пациент охлажден, и его можно либо ввести предварительно (таблеткой), либо загрузить в клетку непосредственно из стакана. Обратите внимание: пациенты не начнут выздоравливать, пока не остынут до соответствующей температуры; возможно, стоит немного подождать, прежде чем помещать внутрь стакан.
+
+## Дополнительная информация:
+
+Стандартное давление для бензонасоса составляет 1,325 кПа. Криоксадон работает при температуре ниже 170К, но стандартной практикой является установка температуры морозильной камеры на 100К для более быстрого замораживания.
+
+<GuideReagentEmbed Reagent="Cryoxadone"/>
+<GuideReagentEmbed Reagent="Doxarubixadone"/>
+<GuideReagentEmbed Reagent="Dexalin"/>
+
+</Document>

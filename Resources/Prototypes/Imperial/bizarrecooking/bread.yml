@@ -1,0 +1,97 @@
+- type: entity
+  name: bread slime
+  parent: FoodBreadBase
+  id: FoodBreadSlime
+  description: What IS this disgusting creation?!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - terrible
+      - slimy
+  - type: Food
+  - type: Sprite
+    sprite: Imperial/Bizarre/BizarreCooking/bread.rsi
+    layers:
+    - state: slime
+  - type: SliceableFood
+    slice: FoodBreadSlimeSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+
+- type: entity
+  name: bread slime slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadSlimeSlice
+  description: a slice of revolting piece slime
+  components:
+  - type: FlavorProfile
+    flavors:
+      - terrible
+      - slimy
+  - type: Food
+  - type: Sprite
+    sprite: Imperial/Bizarre/BizarreCooking/bread.rsi
+    layers:
+    - state: slime-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+
+- type: entity
+  name: bread bloody slime
+  parent: FoodBreadBase
+  id: FoodBreadBloodySlime
+  description: Whose twisted idea was this?! Revolting!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - terrible
+      - slimy
+      - metallic
+  - type: Food
+  - type: Sprite
+    sprite: Imperial/Bizarre/BizarreCooking/bread.rsi
+    layers:
+    - state: bloodyslime
+  - type: SliceableFood
+    slice: FoodBreadBloodySlimeSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+
+- type: entity
+  name: bread bloody slime slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadBloodySlimeSlice
+  description: a slice of revolting piece slime
+  components:
+  - type: FlavorProfile
+    flavors:
+      - terrible
+      - slimy
+      - metallic
+  - type: Food
+  - type: Sprite
+    sprite: Imperial/Bizarre/BizarreCooking/bread.rsi
+    layers:
+    - state: bloodyslime-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4

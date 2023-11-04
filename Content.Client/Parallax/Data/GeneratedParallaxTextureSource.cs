@@ -9,6 +9,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Graphics;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -16,14 +17,14 @@ namespace Content.Client.Parallax.Data;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
+public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSource
 {
     /// <summary>
     /// Parallax config path (the TOML file).
     /// In client resources.
     /// </summary>
     [DataField("configPath")]
-    public ResourcePath ParallaxConfigPath { get; } = new("/parallax_config.toml");
+    public ResPath ParallaxConfigPath { get; private set; } = new("/parallax_config.toml");
 
     /// <summary>
     /// ID for debugging, caching, and so forth.
@@ -31,19 +32,19 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
     /// It is advisible to provide a roughly unique ID for any unique config contents.
     /// </summary>
     [DataField("id")]
-    public string Identifier { get; } = "other";
+    public string Identifier { get; private set; } = "other";
 
     /// <summary>
     /// Cached path.
     /// In user directory.
     /// </summary>
-    private ResourcePath ParallaxCachedImagePath => new($"/parallax_{Identifier}cache.png");
+    private ResPath ParallaxCachedImagePath => new($"/parallax_{Identifier}cache.png");
 
     /// <summary>
     /// Old parallax config path (for checking for parallax updates).
     /// In user directory.
     /// </summary>
-    private ResourcePath PreviousParallaxConfigPath => new($"/parallax_{Identifier}config_old");
+    private ResPath PreviousParallaxConfigPath => new($"/parallax_{Identifier}config_old");
 
     async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel)
     {
@@ -113,7 +114,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
             for (var i = 0; i < debugImages!.Count; i++)
             {
                 var debugImage = debugImages[i];
-                using var debugImageStream = StaticIoC.ResC.UserData.OpenWrite(new ResourcePath($"/parallax_{Identifier}debug_{i}.png"));
+                using var debugImageStream = StaticIoC.ResC.UserData.OpenWrite(new ResPath($"/parallax_{Identifier}debug_{i}.png"));
                 debugImage.SaveAsPng(debugImageStream);
             }
         }

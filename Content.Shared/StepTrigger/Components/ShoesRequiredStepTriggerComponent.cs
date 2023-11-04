@@ -6,6 +6,6 @@ namespace Content.Shared.StepTrigger.Components;
 /// This is used for cancelling step trigger events if the user is wearing shoes, such as for glass shards.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class ShoesRequiredStepTriggerComponent : Component
+public sealed partial class ShoesRequiredStepTriggerComponent : Component
 {
 }

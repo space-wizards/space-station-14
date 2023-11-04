@@ -2,6 +2,7 @@ using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -34,6 +35,7 @@ namespace Content.Server.Medical.SuitSensors
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
             SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SuitSensorComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
@@ -56,27 +58,30 @@ namespace Content.Server.Medical.SuitSensors
             var curTime = _gameTiming.CurTime;
             var sensors = EntityManager.EntityQueryEnumerator<SuitSensorComponent, DeviceNetworkComponent>();
 
-            while (sensors.MoveNext(out var sensor, out var device))
+            while (sensors.MoveNext(out var uid, out var sensor, out var device))
             {
-                if (device.TransmitFrequency is null || !sensor.StationId.HasValue)
+                if (device.TransmitFrequency is null)
                     continue;
 
                 // check if sensor is ready to update
                 if (curTime < sensor.NextUpdate)
                     continue;
 
+                if (!CheckSensorAssignedStation(uid, sensor))
+                    continue;
+
                 // TODO: This would cause imprecision at different tick rates.
                 sensor.NextUpdate = curTime + sensor.UpdateRate;
 
                 // get sensor status
-                var status = GetSensorState(sensor.Owner, sensor);
+                var status = GetSensorState(uid, sensor);
                 if (status == null)
                     continue;
 
                 //Retrieve active server address if the sensor isn't connected to a server
                 if (sensor.ConnectedServer == null)
                 {
-                    if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId.Value, out var address))
+                    if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId!.Value, out var address))
                         continue;
 
                     sensor.ConnectedServer = address;
@@ -92,13 +97,54 @@ namespace Content.Server.Medical.SuitSensors
                     continue;
                 }
 
-                _deviceNetworkSystem.QueuePacket(sensor.Owner, sensor.ConnectedServer, payload, device: device);
+                _deviceNetworkSystem.QueuePacket(uid, sensor.ConnectedServer, payload, device: device);
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the sensor is assigned to a station or not
+        /// and tries to assign an unassigned sensor to a station if it's currently on a grid
+        /// </summary>
+        /// <returns>True if the sensor is assigned to a station or assigning it was successful. False otherwise.</returns>
+        private bool CheckSensorAssignedStation(EntityUid uid, SuitSensorComponent sensor)
+        {
+            if (!sensor.StationId.HasValue && Transform(uid).GridUid == null)
+                return false;
+
+            sensor.StationId = _stationSystem.GetOwningStation(uid);
+            return sensor.StationId.HasValue;
+        }
+
+        private void OnPlayerSpawn(PlayerSpawnCompleteEvent ev)
+        {
+            // If the player spawns in arrivals then the grid underneath them may not be appropriate.
+            // in which case we'll just use the station spawn code told us they are attached to and set all of their
+            // sensors.
+            var sensorQuery = GetEntityQuery<SuitSensorComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            RecursiveSensor(ev.Mob, ev.Station, sensorQuery, xformQuery);
+        }
+
+        private void RecursiveSensor(EntityUid uid, EntityUid stationUid, EntityQuery<SuitSensorComponent> sensorQuery, EntityQuery<TransformComponent> xformQuery)
+        {
+            var xform = xformQuery.GetComponent(uid);
+            var enumerator = xform.ChildEnumerator;
+
+            while (enumerator.MoveNext(out var child))
+            {
+                if (sensorQuery.TryGetComponent(child, out var sensor))
+                {
+                    sensor.StationId = stationUid;
+                }
+
+                RecursiveSensor(child.Value, stationUid, sensorQuery, xformQuery);
             }
         }
 
         private void OnMapInit(EntityUid uid, SuitSensorComponent component, MapInitEvent args)
         {
-            component.StationId = _stationSystem.GetOwningStation(uid);
+            // Fallback
+            component.StationId ??= _stationSystem.GetOwningStation(uid);
 
             // generate random mode
             if (component.RandomMode)
@@ -267,7 +313,7 @@ namespace Content.Server.Medical.SuitSensors
             // get health mob state
             var isAlive = false;
             if (EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
-                isAlive = _mobStateSystem.IsAlive(sensor.User.Value, mobState);
+                isAlive = !_mobStateSystem.IsDead(sensor.User.Value, mobState);
 
             // get mob total damage
             var totalDamage = 0;
@@ -275,7 +321,7 @@ namespace Content.Server.Medical.SuitSensors
                 totalDamage = damageable.TotalDamage.Int();
 
             // finally, form suit sensor status
-            var status = new SuitSensorStatus(userName, userJob);
+            var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob);
             switch (sensor.Mode)
             {
                 case SuitSensorMode.SensorBinary:
@@ -307,7 +353,7 @@ namespace Content.Server.Medical.SuitSensors
                         coordinates = EntityCoordinates.Invalid;
                     }
 
-                    status.Coordinates = coordinates;
+                    status.Coordinates = GetNetCoordinates(coordinates);
                     break;
             }
 
@@ -325,6 +371,7 @@ namespace Content.Server.Medical.SuitSensors
                 [SuitSensorConstants.NET_NAME] = status.Name,
                 [SuitSensorConstants.NET_JOB] = status.Job,
                 [SuitSensorConstants.NET_IS_ALIVE] = status.IsAlive,
+                [SuitSensorConstants.NET_SUIT_SENSOR_UID] = status.SuitSensorUid,
             };
 
             if (status.TotalDamage != null)
@@ -351,16 +398,17 @@ namespace Content.Server.Medical.SuitSensors
             if (!payload.TryGetValue(SuitSensorConstants.NET_NAME, out string? name)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_JOB, out string? job)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive)) return null;
+            if (!payload.TryGetValue(SuitSensorConstants.NET_SUIT_SENSOR_UID, out NetEntity suitSensorUid)) return null;
 
             // try get total damage and cords (optionals)
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
-            payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out EntityCoordinates? cords);
+            payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
 
-            var status = new SuitSensorStatus(name, job)
+            var status = new SuitSensorStatus(suitSensorUid, name, job)
             {
                 IsAlive = isAlive.Value,
                 TotalDamage = totalDamage,
-                Coordinates = cords,
+                Coordinates = coords,
             };
             return status;
         }

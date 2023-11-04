@@ -8,7 +8,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// an artifact placed on it to move up/down
 /// </summary>
 [RegisterComponent]
-public sealed class TraversalDistorterComponent : Component
+public sealed partial class TraversalDistorterComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public float BiasChance;
@@ -17,7 +17,7 @@ public sealed class TraversalDistorterComponent : Component
     public float BaseBiasChance = 0.7f;
 
     [DataField("machinePartBiasChance", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartBiasChance = "ScanningModule";
+    public string MachinePartBiasChance = "Manipulator";
 
     [DataField("partRatingBiasChance")]
     public float PartRatingBiasChance = 1.1f;

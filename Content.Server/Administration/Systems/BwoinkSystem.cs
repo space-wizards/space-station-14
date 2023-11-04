@@ -3,20 +3,21 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Discord;
 using Content.Server.GameTicking;
-using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Mind;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems
@@ -27,8 +28,10 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly SharedMindSystem _minds = default!;
 
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
@@ -41,6 +44,7 @@ namespace Content.Server.Administration.Systems
         private Dictionary<NetUserId, string> _oldMessageIds = new();
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
+        private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
 
         // Max embed description length is 4096, according to https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
         // Keep small margin, just to be safe
@@ -67,6 +71,7 @@ namespace Content.Server.Administration.Systems
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
+            SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -102,6 +107,31 @@ namespace Content.Server.Administration.Systems
             _relayMessages.Clear();
         }
 
+        private void OnClientTypingUpdated(BwoinkClientTypingUpdated msg, EntitySessionEventArgs args)
+        {
+            if (_typingUpdateTimestamps.TryGetValue(args.SenderSession.UserId, out var tuple) &&
+                tuple.Typing == msg.Typing &&
+                tuple.Timestamp + TimeSpan.FromSeconds(1) > _timing.RealTime)
+            {
+                return;
+            }
+
+            _typingUpdateTimestamps[args.SenderSession.UserId] = (_timing.RealTime, msg.Typing);
+
+            // Non-admins can only ever type on their own ahelp, guard against fake messages
+            var isAdmin = _adminManager.GetAdminData((IPlayerSession) args.SenderSession)?.HasFlag(AdminFlags.Adminhelp) ?? false;
+            var channel = isAdmin ? msg.Channel : args.SenderSession.UserId;
+            var update = new BwoinkPlayerTypingUpdated(channel, args.SenderSession.Name, msg.Typing);
+
+            foreach (var admin in GetTargetAdmins())
+            {
+                if (admin.UserId == args.SenderSession.UserId)
+                    continue;
+
+                RaiseNetworkEvent(update, admin);
+            }
+        }
+
         private void OnServerNameChanged(string obj)
         {
             _serverName = obj;
@@ -115,7 +145,7 @@ namespace Content.Server.Administration.Systems
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
         }
 
-        private void OnWebhookChanged(string url)
+        private async void OnWebhookChanged(string url)
         {
             _webhookUrl = url;
 
@@ -130,13 +160,13 @@ namespace Content.Server.Administration.Systems
             if (!match.Success)
             {
                 // TODO: Ideally, CVar validation during setting should be better integrated
-                Logger.Warning("Webhook URL does not appear to be valid. Using anyways...");
+                Log.Warning("Webhook URL does not appear to be valid. Using anyways...");
                 return;
             }
 
             if (match.Groups.Count <= 2)
             {
-                Logger.Error("Could not get webhook ID or token.");
+                Log.Error("Could not get webhook ID or token.");
                 return;
             }
 
@@ -144,7 +174,7 @@ namespace Content.Server.Administration.Systems
             var webhookToken = match.Groups[2].Value;
 
             // Fire and forget
-            _ = SetWebhookData(webhookId, webhookToken);
+            await SetWebhookData(webhookId, webhookToken);
         }
 
         private async Task SetWebhookData(string id, string token)
@@ -192,8 +222,6 @@ namespace Content.Server.Administration.Systems
                     return;
                 }
 
-                var characterName = _playerManager.GetPlayerData(userId).ContentData()?.Mind?.CharacterName;
-
                 var linkToPrevious = string.Empty;
 
                 // If we have all the data required, we can link to the embed of the previous round or embed that was too long
@@ -209,6 +237,7 @@ namespace Content.Server.Administration.Systems
                     }
                 }
 
+                var characterName = _minds.GetCharacterName(userId);
                 existingEmbed = (null, lookup.Username, linkToPrevious, characterName, _gameTicker.RunLevel);
             }
 
@@ -308,13 +337,13 @@ namespace Content.Server.Administration.Systems
             {
                 Username = username,
                 AvatarUrl = string.IsNullOrWhiteSpace(_avatarUrl) ? null : _avatarUrl,
-                Embeds = new List<Embed>
+                Embeds = new List<WebhookEmbed>
                 {
                     new()
                     {
                         Description = messages,
                         Color = color,
-                        Footer = new EmbedFooter
+                        Footer = new WebhookEmbedFooter
                         {
                             Text = $"{serverName} ({round})",
                             IconUrl = string.IsNullOrWhiteSpace(_footerIconUrl) ? null : _footerIconUrl
@@ -439,75 +468,6 @@ namespace Content.Server.Administration.Systems
             stringbuilder.Append($" **{username}:** ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();
-        }
-
-        // https://discord.com/developers/docs/resources/channel#message-object-message-structure
-        private struct WebhookPayload
-        {
-            [JsonPropertyName("username")]
-            public string Username { get; set; } = "";
-
-            [JsonPropertyName("avatar_url")]
-            public string? AvatarUrl { get; set; } = "";
-
-            [JsonPropertyName("embeds")]
-            public List<Embed>? Embeds { get; set; } = null;
-
-            [JsonPropertyName("allowed_mentions")]
-            public Dictionary<string, string[]> AllowedMentions { get; set; } =
-                new()
-                {
-                    { "parse", Array.Empty<string>() },
-                };
-
-            public WebhookPayload()
-            {
-            }
-        }
-
-        // https://discord.com/developers/docs/resources/channel#embed-object-embed-structure
-        private struct Embed
-        {
-            [JsonPropertyName("description")]
-            public string Description { get; set; } = "";
-
-            [JsonPropertyName("color")]
-            public int Color { get; set; } = 0;
-
-            [JsonPropertyName("footer")]
-            public EmbedFooter? Footer { get; set; } = null;
-
-            public Embed()
-            {
-            }
-        }
-
-        // https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
-        private struct EmbedFooter
-        {
-            [JsonPropertyName("text")]
-            public string Text { get; set; } = "";
-
-            [JsonPropertyName("icon_url")]
-            public string? IconUrl { get; set; }
-
-            public EmbedFooter()
-            {
-            }
-        }
-
-        // https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure
-        private struct WebhookData
-        {
-            [JsonPropertyName("guild_id")]
-            public string? GuildId { get; set; } = null;
-
-            [JsonPropertyName("channel_id")]
-            public string? ChannelId { get; set; } = null;
-
-            public WebhookData()
-            {
-            }
         }
     }
 }

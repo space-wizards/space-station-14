@@ -2,19 +2,23 @@ using Content.Shared.Store;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using System.Linq;
+using System.Threading;
+using Serilog;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Store.Ui;
 
 [UsedImplicitly]
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private StoreMenu? _menu;
 
+    [ViewVariables]
     private string _windowName = Loc.GetString("store-ui-default-title");
 
-    public StoreBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-
     }
 
     protected override void Open()
@@ -39,6 +43,11 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             SendMessage(new StoreRequestWithdrawMessage(type, amount));
         };
+
+        _menu.OnRefreshButtonPressed += (_) =>
+        {
+            SendMessage(new StoreRequestUpdateInterfaceMessage());
+        };
     }
     protected override void UpdateState(BoundUserInterfaceState state)
     {
@@ -52,12 +61,16 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             case StoreUpdateState msg:
                 _menu.UpdateBalance(msg.Balance);
                 _menu.PopulateStoreCategoryButtons(msg.Listings);
+
                 _menu.UpdateListing(msg.Listings.ToList());
+                _menu.SetFooterVisibility(msg.ShowFooter);
                 break;
             case StoreInitializeState msg:
                 _windowName = msg.Name;
                 if (_menu != null && _menu.Window != null)
+                {
                     _menu.Window.Title = msg.Name;
+                }
                 break;
         }
     }
@@ -67,7 +80,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         base.Dispose(disposing);
         if (!disposing)
             return;
-
         _menu?.Close();
         _menu?.Dispose();
     }

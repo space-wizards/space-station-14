@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Edited by Flareguy for Space Station 14, original sprite taken from https://github.com/tgstation/tgstation/blob/master/icons/effects/bleed.dmi",
+  "states": [
+    {
+      "name": "bleed0"
+    },
+    {
+      "name": "bleed1"
+    },
+    {
+      "name": "bleed2"
+    },
+    {
+      "name": "bleed3"
+    },
+    {
+      "name": "bleed4"
+    },
+    {
+      "name": "bleed5"
+    },
+    {
+      "name": "bleed6"
+    },
+    {
+      "name": "bleed7"
+    },
+    {
+      "name": "bleed8"
+    },
+    {
+      "name": "bleed9"
+    },
+    {
+      "name": "bleed10"
+    }
+  ]
+}

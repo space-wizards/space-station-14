@@ -8,62 +8,71 @@
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
-  - type: Armor #explosion damage ignores "normal" armor, see ExplosionResistance.
+  - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
+        Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.75
   - type: ExplosionResistance
-    damageCoefficient: 0.65
+    damageCoefficient: 0.15
   - type: GroupExamine
   - type: Tag
     tags:
     - Hardsuit
-
-- type: entity
-  parent: ClothingOuterEVASuitBase
-  id: ClothingOuterSuitEmergency
-  name: emergency suit
-  description: An emergency suit in cases of... emergencies.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/emergency.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/emergency.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 0.5
-    sprintModifier: 0.5
-  - type: TemperatureProtection
-    coefficient: 0.5
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetEVA
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:ContainerSlot {}
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitFire
   name: fire suit
-  description: A suit that helps protect against fire and heat.
+  description: A suit that helps protect against hazardous temperatures.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+  - type: TemperatureProtection
+    coefficient: 0.005
   - type: Armor
     modifiers:
       coefficients:
         Slash: 0.9
-        Heat: 0.5
+        Heat: 0.3
+        Cold: 0.2
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
+    walkModifier: 0.8
     sprintModifier: 0.7
-  - type: TemperatureProtection
-    coefficient: 0.01
   - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterSuitAtmosFire
+  name: atmos fire suit
+  description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+    - type: PressureProtection
+      highPressureMultiplier: 0.02
+      lowPressureMultiplier: 1000
+    - type: TemperatureProtection
+      coefficient: 0.001
+    - type: Armor
+      modifiers:
+        coefficients:
+          Slash: 0.9
+          Heat: 0.3
+          Cold: 0.2
+    - type: ClothingSpeedModifier
+      walkModifier: 0.8
+      sprintModifier: 0.8
+    - type: GroupExamine
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
@@ -84,28 +93,29 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: ClothingOuterSuitSpaceninja
+  id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
-  description: This black technologically advanced, cybernetically-enhanced suit provides good protection and many abilities like invisibility or teleportation.
+  description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
+  - type: StealthClothing
+    visibility: 0.2
+    toggleAction: ActionTogglePhaseCloak
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: DiseaseProtection
-    protection: 0.05
   - type: TemperatureProtection
     coefficient: 0.01
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.6
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
   - type: NinjaSuit
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -119,9 +129,7 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellSmall
-  # delay for when attacked while cloaked
-  - type: UseDelay
-    delay: 5
+        disableEject: true
 
 - type: entity
   parent: ClothingOuterBase
@@ -155,28 +163,45 @@
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
 
 - type: entity
-  parent: ClothingOuterBaseLarge
-  id: ClothingOuterSuitAtmosFire
-  name: atmos fire suit
-  description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitIan
+  name: ian suit
+  description: Who's a good boy?
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.01
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: Item
+    size: 30
   - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.9
-        Heat: 0.35
-  - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.75
-  - type: GroupExamine
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodIan
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+  - type: Construction
+    graph: ClothingOuterSuitIan
+    node: suit
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitCarp
+  name: carp suit
+  description: A special suit that makes you look just like a space carp, if your eyesight is bad.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: Item
+    size: 30
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodCarp
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}

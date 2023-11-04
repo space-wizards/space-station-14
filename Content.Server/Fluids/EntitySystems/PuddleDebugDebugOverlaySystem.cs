@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Fluids.Components;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
@@ -78,7 +79,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
                     data.Add(new PuddleDebugOverlayData(pos, vol));
                 }
 
-                RaiseNetworkEvent(new PuddleOverlayDebugMessage(gridUid, data.ToArray()));
+                RaiseNetworkEvent(new PuddleOverlayDebugMessage(GetNetEntity(gridUid), data.ToArray()));
             }
         }
 

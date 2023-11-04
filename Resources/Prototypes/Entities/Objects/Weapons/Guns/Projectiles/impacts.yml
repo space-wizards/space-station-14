@@ -5,7 +5,6 @@
   - type: TimedDespawn
     lifetime: 0.25
   - type: Sprite
-    netsync: false
     drawdepth: Effects
     layers:
     - shader: unshaded
@@ -24,7 +23,6 @@
     - type: TimedDespawn
       lifetime: 0.2
     - type: Sprite
-      netsync: false
       drawdepth: Effects
       layers:
         - shader: unshaded
@@ -37,13 +35,31 @@
         - HideContextMenu
 
 - type: entity
+  id: BulletImpactEffectOrangeDisabler
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.2
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: impact_laser_greyscale
+      color: orangered
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
   id: BulletImpactEffectKinetic
   noSpawn: true
   components:
   - type: TimedDespawn
     lifetime: 0.2
   - type: Sprite
-    netsync: false
     drawdepth: Effects
     layers:
     - shader: unshaded

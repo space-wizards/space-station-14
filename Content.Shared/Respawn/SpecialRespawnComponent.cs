@@ -9,7 +9,7 @@ namespace Content.Shared.Respawn;
 /// Items like the nuke disk.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class SpecialRespawnComponent: Component
+public sealed partial class SpecialRespawnComponent: Component
 {
     [ViewVariables]
     [DataField("stationMap")]

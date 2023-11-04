@@ -1,0 +1,109 @@
+# Stack
+- type: stack
+  id: Fulton
+  name: fulton
+  icon:
+    sprite: /Textures/Objects/Tools/fulton.rsi
+    state: extraction_pack
+  spawn: Fulton1
+  maxCount: 10
+  itemSize: 2
+
+# Entities
+- type: entity
+  id: FultonBeacon
+  parent: BaseFoldable
+  name: fulton beacon
+  description: Beacon to receive fulton extractions.
+  components:
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.4,0.25,0.1"
+          density: 20
+          mask:
+            - Impassable
+    - type: Item
+      size: 30
+    - type: Foldable
+      folded: true
+    - type: Clickable
+    - type: InteractionOutline
+    - type: FultonBeacon
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FoldedVisuals.State:
+          foldedLayer:
+            True: { state: folded_extraction }
+            False: { state: extraction_point }
+    - type: Sprite
+      sprite: Objects/Tools/fulton.rsi
+      drawdepth: SmallObjects
+      noRot: true
+      layers:
+        - state: extraction_point
+          map: [ "foldedLayer" ]
+
+- type: entity
+  id: Fulton
+  parent: BaseItem
+  suffix: Full
+  name: fulton
+  description: Used to extract containers, items, or forcibly recruit people into your base of operations.
+  components:
+  - type: Fulton
+  - type: Item
+    size: 20
+  - type: Stack
+    stackType: Fulton
+    count: 10
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Objects/Tools/fulton.rsi
+    state: extraction_pack
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
+  id: Fulton1
+  parent: Fulton
+  name: fulton
+  suffix: One
+  components:
+  - type: Item
+    size: 2
+  - type: Stack
+    count: 1
+
+- type: entity
+  id: FultonEffect
+  noSpawn: true
+  name: fulton effect
+  components:
+  - type: TimedDespawn
+    lifetime: 60
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    offset: 0,0.5
+    layers:
+      - map: [ "enum.FultonVisualLayers.Base" ]
+        sprite: Objects/Tools/fulton_balloon.rsi
+        state: fulton_balloon
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer

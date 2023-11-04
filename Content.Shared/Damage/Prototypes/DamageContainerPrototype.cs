@@ -18,7 +18,7 @@ namespace Content.Shared.Damage.Prototypes
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     List of damage groups that are supported by this container.

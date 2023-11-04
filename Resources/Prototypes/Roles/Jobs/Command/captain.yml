@@ -4,39 +4,51 @@
   description: job-description-captain
   playTimeTracker: JobCaptain
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 18000
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 18000
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 18000
+    - !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 7200 #Imperial role timers
+    - !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 7200 #Imperial role timers
+    - !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 7200 #Imperial role timers
+    - !type:RoleTimeRequirement
+      role: JobChiefEngineer
+      time: 7200 #Imperial role timers
+    - !type:RoleTimeRequirement
+      role: JobResearchDirector
+      time: 7200 #Imperial role timers
     - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 180000 #Imperial role timers
   weight: 20
   startingGear: CaptainGear
-  icon: "Captain"
+  icon: "JobIconCaptain"
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: CaptainGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCaptain
     back: ClothingBackpackCaptainFilled
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesBootsLaceup
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain
     outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
-  innerclothingskirt: ClothingUniformJumpskirtCaptain
+  innerClothingSkirt: ClothingUniformJumpskirtCaptain
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled

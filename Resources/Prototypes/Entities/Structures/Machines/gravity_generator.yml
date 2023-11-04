@@ -12,9 +12,7 @@
     range: 7
     sound:
       path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
-
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/gravity_generator.rsi
     layers:
       - state: on
@@ -32,14 +30,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-1.5,-1.5,1.5,1.5"
-      density: 50
-      mask:
-      - LargeMobMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.5,1.5,1.5"
+        density: 50
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
@@ -77,12 +76,11 @@
 
 - type: entity
   id: GravityGeneratorMini
-  parent: GravityGenerator
+  parent: [ GravityGenerator, ConstructibleMachine ]
   name: mini gravity generator
   description: It's what keeps you to the floor, now in fun size.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/gravity_generator_mini.rsi
     snapCardinals: true
     layers:
@@ -96,14 +94,37 @@
         offset: "0,0.2"
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 3125
-      mask:
-      - LargeMobMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 3125
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-minigravitygenerator
+    layoutId: MiniGravityGenerator
+  - type: Machine
+    board: MiniGravityGeneratorCircuitboard
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: GravityGenerator

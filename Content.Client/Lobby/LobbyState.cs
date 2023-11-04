@@ -1,22 +1,20 @@
-using Content.Client.Chat.Managers;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
+using Content.Client.Message;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
+using Content.Shared.CCVar;
 using Robust.Client;
 using Robust.Client.Console;
-using Robust.Client.Input;
-using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Client.UserInterface.Systems.EscapeMenu;
 
 
 namespace Content.Client.Lobby
@@ -73,7 +71,13 @@ namespace Content.Client.Lobby
             };
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
-            _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
+            //_lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
+
+            // Imperial Space Start
+            var cfgMan = IoCManager.Resolve<IConfigurationManager>();
+            _lobby.ServerName.Text = cfgMan.GetCVar(CCVars.LobbyName);
+            // Imperial Space End
+
             UpdateLobbyUi();
 
             _lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
@@ -83,6 +87,10 @@ namespace Content.Client.Lobby
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
+
+            _preferencesManager.OnServerDataLoaded += PreferencesDataLoaded;
+
+            _lobby.CharacterPreview.UpdateUI();
         }
 
         protected override void Shutdown()
@@ -103,6 +111,13 @@ namespace Content.Client.Lobby
 
             _characterSetup?.Dispose();
             _characterSetup = null;
+
+            _preferencesManager.OnServerDataLoaded -= PreferencesDataLoaded;
+        }
+
+        private void PreferencesDataLoaded()
+        {
+            _lobby?.CharacterPreview.UpdateUI();
         }
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)
@@ -136,15 +151,17 @@ namespace Content.Client.Lobby
                 return;
             }
 
+            _lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
             string text;
 
             if (_gameTicker.Paused)
             {
                 text = Loc.GetString("lobby-state-paused");
             }
-            else if ((_gameTicker.StartTime - _gameTicker.PreloadTime) < _gameTiming.CurTime)
+            else if (_gameTicker.StartTime < _gameTiming.CurTime)
             {
-                text = Loc.GetString("lobby-state-preloading");
+                _lobby!.StartTime.Text = Loc.GetString("lobby-state-soon");
+                return;
             }
             else
             {
@@ -160,7 +177,6 @@ namespace Content.Client.Lobby
                 }
             }
 
-            _lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
             _lobby!.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 
@@ -197,6 +213,29 @@ namespace Content.Client.Lobby
             if (_gameTicker.ServerInfoBlob != null)
             {
                 _lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
+            }
+
+            if (_gameTicker.LobbySong == null)
+            {
+                _lobby!.LobbySong.SetMarkup(Loc.GetString("lobby-state-song-no-song-text"));
+            }
+            else if (_resourceCache.TryGetResource<AudioResource>(_gameTicker.LobbySong, out var lobbySongResource))
+            {
+                var lobbyStream = lobbySongResource.AudioStream;
+
+                var title = string.IsNullOrEmpty(lobbyStream.Title) ?
+                    Loc.GetString("lobby-state-song-unknown-title") :
+                    lobbyStream.Title;
+
+                var artist = string.IsNullOrEmpty(lobbyStream.Artist) ?
+                    Loc.GetString("lobby-state-song-unknown-artist") :
+                    lobbyStream.Artist;
+
+                var markup = Loc.GetString("lobby-state-song-text",
+                    ("songTitle", title),
+                    ("songArtist", artist));
+
+                _lobby!.LobbySong.SetMarkup(markup);
             }
         }
 

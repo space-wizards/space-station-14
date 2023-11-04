@@ -11,11 +11,13 @@ namespace Content.Client.Chemistry.UI
     [UsedImplicitly]
     public sealed class ReagentDispenserBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [ViewVariables]
         private ReagentDispenserWindow? _window;
+
+        [ViewVariables]
         private ReagentDispenserBoundUserInterfaceState? _lastState;
 
-        public ReagentDispenserBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public ReagentDispenserBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -31,7 +33,7 @@ namespace Content.Client.Chemistry.UI
             // Setup window layout/elements
             _window = new()
             {
-                Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
+                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
             };
 
             _window.OpenCentered();
@@ -52,11 +54,13 @@ namespace Content.Client.Chemistry.UI
 
             // Setup reagent button actions.
             _window.OnDispenseReagentButtonPressed += (args, button) => SendMessage(new ReagentDispenserDispenseReagentMessage(button.ReagentId));
-            _window.OnDispenseReagentButtonMouseEntered += (args, button) => {
+            _window.OnDispenseReagentButtonMouseEntered += (args, button) =>
+            {
                 if (_lastState is not null)
                     _window.UpdateContainerInfo(_lastState, button.ReagentId);
             };
-            _window.OnDispenseReagentButtonMouseExited += (args, button) => {
+            _window.OnDispenseReagentButtonMouseExited += (args, button) =>
+            {
                 if (_lastState is not null)
                     _window.UpdateContainerInfo(_lastState);
             };
@@ -73,7 +77,7 @@ namespace Content.Client.Chemistry.UI
         {
             base.UpdateState(state);
 
-            var castState = (ReagentDispenserBoundUserInterfaceState)state;
+            var castState = (ReagentDispenserBoundUserInterfaceState) state;
             _lastState = castState;
 
             _window?.UpdateState(castState); //Update window state

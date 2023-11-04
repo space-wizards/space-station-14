@@ -1,0 +1,127 @@
+# Soup
+
+- type: microwaveMealRecipe
+  id: RecipeBraimSoup
+  name: brain soup recipe
+  result: FoodSoupBrains
+  time: 5
+  reagents:
+    Water: 5
+    TableSalt: 5
+  solids:
+    FoodBowlBig: 1
+    OrganHumanBrain: 1
+
+# Bread
+
+- type: microwaveMealRecipe
+  id: RecipeBreadSlime
+  name: breadslime recipe
+  result: FoodBreadSlime
+  time: 10
+  reagents:
+    Water: 5
+    Slime: 10
+    Flour: 5
+
+- type: microwaveMealRecipe
+  id: RecipeBloodySlimeBread
+  name: bloodyslimebread recipe
+  result: FoodBreadBloodySlime
+  time: 10
+  reagents:
+    Blood: 5
+    Slime: 10
+    Flour: 5
+
+# Misc
+
+- type: microwaveMealRecipe
+  id: RecipeCaramelizedPaper
+  name: caramelized paper recipe
+  result: FoodBakedCaramelizedPaper
+  time: 5
+  reagents:
+    Water: 1
+    Sugar: 3
+  solids:
+    Paper: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDunceCookie
+  name: dunce cookie recipe
+  result: FoodBakedDunceCookie
+  time: 5
+  reagents:
+    Egg: 3
+    Sugar: 3
+    Flour: 5
+  solids:
+    FoodBakedCaramelizedPaper: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMagmaCookie
+  name: magma cookie recipe
+  result: FoodBakedMagmaCookie
+  time: 5
+  reagents:
+    Egg: 3
+    Milk: 3
+    Flour: 5
+    ChlorineTrifluoride: 3
+
+- type: microwaveMealRecipe
+  id: RecipeUraniumCookie
+  name: uranium cookie recipe
+  result: FoodBakedUraniumCookie
+  time: 5
+  reagents:
+    Egg: 3
+    Milk: 3
+    Flour: 5
+    Uranium: 5
+
+- type: microwaveMealRecipe
+  id: RecipeSenrientCookie
+  name: sentient cookie recipe
+  result: FoodBakedSentientCookie
+  time: 5
+  reagents:
+    Egg: 3
+    Milk: 3
+    Flour: 5
+    Sugar: 3
+  solids:
+    OrganHumanBrain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeElderCookie
+  name: elder cookie recipe
+  result: FoodBakedElderCookie
+  time: 10
+  reagents:
+    Egg: 3
+    Milk: 3
+    Flour: 5
+    UnknownSubstance: 5
+
+- type: microwaveMealRecipe
+  id: RecipePlaguePestPancakes
+  name: elder cookie recipe
+  result: FoodBakedElderCookie
+  time: 10
+  reagents:
+    Egg: 5
+    Milk: 5
+    Flour: 6
+  solids:
+    FoodMeatRat: 1
+
+- type: microwaveMealRecipe
+  id: RecipeIdiotSandwich
+  name: idiot sandwich recipe
+  result: FoodBakedIdiotSandwich
+  time: 10
+  solids:
+    FoodBreadPlainSlice: 2
+    HeadHuman: 1

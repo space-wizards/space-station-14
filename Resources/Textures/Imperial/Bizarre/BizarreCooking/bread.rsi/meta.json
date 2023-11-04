@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by NailGrey and Kevin? For Imperial Space",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "slime"
+    },
+    {
+      "name": "slime-slice"
+    },
+    {
+      "name": "bloodyslime"
+    },
+    {
+      "name": "bloodyslime-slice"
+    }
+  ]
+}

@@ -11,7 +11,14 @@
   parent: OrganAnimalStomach
   suffix: "rat"
   components:
-  - type: Stomach
-    maxVolume: 50 # they're hungry
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
   - type: Sprite
     state: stomach

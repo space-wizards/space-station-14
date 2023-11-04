@@ -37,6 +37,7 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
         virtualItem = Spawn("HandVirtualItem", pos);
         var virtualItemComp = EntityManager.GetComponent<HandVirtualItemComponent>(virtualItem.Value);
         virtualItemComp.BlockingEntity = blockingEnt;
+        Dirty(virtualItemComp);
         _hands.DoPickup(user, hand, virtualItem.Value);
         return true;
     }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Physics.Controllers;
 using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
@@ -60,10 +61,12 @@ public sealed class NPCSteeringSystem : SharedNPCSteeringSystem
 
         foreach (var data in ev.Data)
         {
-            if (!Exists(data.EntityUid))
+            var entity = GetEntity(data.EntityUid);
+
+            if (!Exists(entity))
                 continue;
 
-            var comp = EnsureComp<NPCSteeringComponent>(data.EntityUid);
+            var comp = EnsureComp<NPCSteeringComponent>(entity);
             comp.Direction = data.Direction;
             comp.DangerMap = data.Danger;
             comp.InterestMap = data.Interest;

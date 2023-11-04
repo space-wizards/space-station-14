@@ -1,5 +1,6 @@
-﻿using Content.Server.Coordinates.Helpers;
+using System.Numerics;
 using Content.Server.Decals;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -17,6 +18,7 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly DecalSystem _decal = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     public bool PryTile(Vector2i indices, EntityUid gridId)
     {
@@ -25,7 +27,12 @@ public sealed class TileSystem : EntitySystem
         return PryTile(tileRef);
     }
 
-    public bool PryTile(TileRef tileRef)
+	public bool PryTile(TileRef tileRef)
+    {
+        return PryTile(tileRef, false);
+    }
+
+    public bool PryTile(TileRef tileRef, bool pryPlating)
     {
         var tile = tileRef.Tile;
 
@@ -34,7 +41,7 @@ public sealed class TileSystem : EntitySystem
 
         var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
 
-        if (!tileDef.CanCrowbar)
+        if (!tileDef.CanCrowbar && !(pryPlating && tileDef.CanAxe))
             return false;
 
         return DeconstructTile(tileRef);
@@ -67,8 +74,8 @@ public sealed class TileSystem : EntitySystem
         if (!Resolve(grid, ref component))
             return false;
 
-        var variant = _robustRandom.Pick(replacementTile.PlacementVariants);
-        var decals = _decal.GetDecalsInRange(tileref.GridUid, tileref.GridPosition().SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
+        var variant = replacementTile.PickVariant();
+        var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
             _decal.RemoveDecal(tileref.GridUid, id);
@@ -79,13 +86,19 @@ public sealed class TileSystem : EntitySystem
 
     private bool DeconstructTile(TileRef tileRef)
     {
-        var indices = tileRef.GridIndices;
+        if (tileRef.Tile.IsEmpty)
+            return false;
 
         var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
+
+        if (string.IsNullOrEmpty(tileDef.BaseTurf))
+            return false;
+
         var mapGrid = _mapManager.GetGrid(tileRef.GridUid);
 
         const float margin = 0.1f;
         var bounds = mapGrid.TileSize - margin * 2;
+        var indices = tileRef.GridIndices;
         var coordinates = mapGrid.GridTileToLocal(indices)
             .Offset(new Vector2(
                 (_robustRandom.NextFloat() - 0.5f) * bounds,
@@ -102,7 +115,7 @@ public sealed class TileSystem : EntitySystem
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        var plating = _tileDefinitionManager[tileDef.BaseTurfs[^1]];
+        var plating = _tileDefinitionManager[tileDef.BaseTurf];
 
         mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
 

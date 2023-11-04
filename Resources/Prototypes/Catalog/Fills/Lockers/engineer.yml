@@ -37,7 +37,7 @@
         prob: 0.3
       - id: CableApcStack
         prob: 0.3
-      - id: AirlockPainter
+      - id: SprayPainter
         prob: 0.7
 
 - type: entity
@@ -74,8 +74,8 @@
         prob: 0.5
 
 - type: entity
-  id: LockerAtmosphericsFilled
-  suffix: Filled
+  id: LockerAtmosphericsFilledHardsuit
+  suffix: Filled, Hardsuit
   parent: LockerAtmospherics
   components:
   - type: StorageFill
@@ -89,10 +89,26 @@
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
+      - id: DoorRemoteFirefight
 
 - type: entity
-  id: LockerEngineerFilled
+  id: LockerAtmosphericsFilled
   suffix: Filled
+  parent: LockerAtmospherics
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskGasAtmos
+      - id: ClothingOuterSuitAtmosFire
+      - id: ClothingHeadHelmetAtmosFire
+      - id: GasAnalyzer
+      - id: MedkitOxygenFilled
+      - id: HolofanProjector
+      - id: DoorRemoteFirefight
+
+- type: entity
+  id: LockerEngineerFilledHardsuit
+  suffix: Filled, Hardsuit
   parent: LockerEngineer
   components:
   - type: StorageFill
@@ -103,6 +119,17 @@
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
+
+- type: entity
+  id: LockerEngineerFilled
+  suffix: Filled
+  parent: LockerEngineer
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesColorYellow
+      - id: ClothingMaskGas
+      - id: trayScanner
 
 - type: entity
   id: ClosetRadiationSuitFilled

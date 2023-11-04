@@ -6,7 +6,7 @@ using Content.Server.Singularity.EntitySystems;
 namespace Content.Server.Singularity.Components;
 
 [RegisterComponent]
-public sealed class SingularityGeneratorComponent : Component
+public sealed partial class SingularityGeneratorComponent : Component
 {
     /// <summary>
     /// The amount of power this generator has accumulated.

@@ -1,0 +1,22 @@
+<Document>
+# Медицинский
+Это отдел, куда люди обращаются, когда им причиняют вред, и люди, работающие здесь, должны их вылечить.
+
+В настоящее время medbay разделен на два разных набора услуг:
+
+## Медицинское лечение
+<Box>
+<GuideEntityEmbed Entity="Brutepack"/>
+<GuideEntityEmbed Entity="Bloodpack"/>
+<GuideEntityEmbed Entity="Ointment"/>
+<GuideEntityEmbed Entity="Gauze"/>
+<GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
+</Box>
+## Химическое производство
+<Box>
+<GuideEntityEmbed Entity="ChemDispenser"/>
+<GuideEntityEmbed Entity="LargeBeaker"/>
+<GuideEntityEmbed Entity="PillCanister"/>
+<GuideEntityEmbed Entity="chem_master"/>
+</Box>
+</Document>

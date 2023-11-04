@@ -1,12 +1,13 @@
+using System.Numerics;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Components
 {
-    [RegisterComponent]
-    [NetworkedComponent]
-    public sealed class InputMoverComponent : Component
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+    public sealed partial class InputMoverComponent : Component
     {
         // This class has to be able to handle server TPS being lower than client FPS.
         // While still having perfectly responsive movement client side.
@@ -39,36 +40,40 @@ namespace Content.Shared.Movement.Components
         public Vector2 CurTickWalkMovement;
         public Vector2 CurTickSprintMovement;
 
+        [AutoNetworkedField]
         public MoveButtons HeldMoveButtons = MoveButtons.None;
 
         /// <summary>
         /// Entity our movement is relative to.
         /// </summary>
+        [AutoNetworkedField]
         public EntityUid? RelativeEntity;
 
         /// <summary>
         /// Although our movement might be relative to a particular entity we may have an additional relative rotation
         /// e.g. if we've snapped to a different cardinal direction
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, AutoNetworkedField]
         public Angle TargetRelativeRotation = Angle.Zero;
 
         /// <summary>
         /// The current relative rotation. This will lerp towards the <see cref="TargetRelativeRotation"/>.
         /// </summary>
-        [ViewVariables] public Angle RelativeRotation;
+        [ViewVariables, AutoNetworkedField]
+        public Angle RelativeRotation;
 
         /// <summary>
         /// If we traverse on / off a grid then set a timer to update our relative inputs.
         /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float LerpAccumulator;
+        public TimeSpan LerpTarget;
 
         public const float LerpTime = 1.0f;
 
         public bool Sprinting => (HeldMoveButtons & MoveButtons.Walk) == 0x0;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public bool CanMove { get; set; } = true;
     }
 }

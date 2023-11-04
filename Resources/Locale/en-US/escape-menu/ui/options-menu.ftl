@@ -14,6 +14,7 @@ ui-options-default = Default
 
 ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
+ui-options-ambient-music-volume = Ambient music volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-lobby-volume = Lobby & Round-end volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
@@ -21,14 +22,13 @@ ui-options-lobby-music = Lobby & Round-end Music
 ui-options-restart-sounds = Round Restart Sounds
 ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
-ui-options-station-ambience = Station Ambience
-ui-options-space-ambience = Space Ambience
 ui-options-volume-label = Volume
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
 
 ui-options-show-held-item = Show held item next to cursor?
+ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor?
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -92,6 +92,9 @@ ui-options-function-walk = Walk
 ui-options-function-camera-rotate-left = Rotate left
 ui-options-function-camera-rotate-right = Rotate right
 ui-options-function-camera-reset = Reset
+ui-options-function-zoom-in = Zoom in
+ui-options-function-zoom-out = Zoom out
+ui-options-function-reset-zoom = Reset zoom
 
 ui-options-function-use = Use
 ui-options-function-use-secondary = Use secondary
@@ -115,8 +118,10 @@ ui-options-function-point = Point at location
 
 ui-options-function-focus-chat-input-window = Focus chat
 ui-options-function-focus-local-chat-window = Focus chat (IC)
+ui-options-function-focus-emote = Focus chat (Emote)
 ui-options-function-focus-whisper-chat-window = Focus chat (Whisper)
 ui-options-function-focus-radio-window = Focus chat (Radio)
+ui-options-function-focus-looc-window = Focus chat (LOOC)
 ui-options-function-focus-ooc-window = Focus chat (OOC)
 ui-options-function-focus-admin-chat-window = Focus chat (Admin)
 ui-options-function-focus-dead-chat-window = Focus chat (Dead)
@@ -148,11 +153,13 @@ ui-options-function-editor-cancel-place = Cancel placement
 ui-options-function-editor-grid-place = Place in grid
 ui-options-function-editor-line-place = Place line
 ui-options-function-editor-rotate-object = Rotate
+ui-options-function-editor-flip-object = Flip
 ui-options-function-editor-copy-object = Copy
 
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-show-debug-console = Open Console
 ui-options-function-show-debug-monitors = Show Debug Monitors
+ui-options-function-inspect-entity = Inspect Entity
 ui-options-function-hide-ui = Hide UI
 
 ui-options-function-hotbar1 = Hotbar slot 1

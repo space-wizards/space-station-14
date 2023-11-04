@@ -4,11 +4,10 @@
   description: job-description-bartender
   playTimeTracker: JobBartender
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Civilian
-      time: 1800
+    - !type:OverallPlaytimeRequirement
+      time: 3600 #Imperial role timers
   startingGear: BartenderGear
-  icon: "Bartender"
+  icon: "JobIconBartender"
   supervisors: job-supervisors-hop
   access:
   - Service
@@ -23,11 +22,11 @@
   equipment:
     head: ClothingHeadHatTophat
     jumpsuit: ClothingUniformJumpsuitBartender
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterVest
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     id: BartenderPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtBartender
+  innerClothingSkirt: ClothingUniformJumpskirtBartender
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

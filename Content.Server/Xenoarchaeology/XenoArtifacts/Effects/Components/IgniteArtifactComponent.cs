@@ -4,7 +4,7 @@
 /// Artifact that ignites surrounding entities when triggered.
 /// </summary>
 [RegisterComponent]
-public sealed class IgniteArtifactComponent : Component
+public sealed partial class IgniteArtifactComponent : Component
 {
     [DataField("range")]
     public float Range = 2f;

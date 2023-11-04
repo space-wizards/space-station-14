@@ -10,7 +10,7 @@ namespace Content.Shared.Decals
     [RegisterComponent]
     [Access(typeof(SharedDecalSystem))]
     [NetworkedComponent]
-    public sealed class DecalGridComponent : Component
+    public sealed partial class DecalGridComponent : Component
     {
         [DataField("chunkCollection", serverOnly: true)]
         public DecalGridChunkCollection ChunkCollection = new(new ());
@@ -31,7 +31,7 @@ namespace Content.Shared.Decals
 
         [DataDefinition]
         [Serializable, NetSerializable]
-        public sealed class DecalChunk
+        public sealed partial class DecalChunk
         {
             [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<uint, Decal>))]
             public Dictionary<uint, Decal> Decals;

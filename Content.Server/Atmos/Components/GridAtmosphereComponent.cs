@@ -10,7 +10,7 @@ namespace Content.Server.Atmos.Components
     /// </summary>
     [RegisterComponent, Serializable,
      Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
-    public sealed class GridAtmosphereComponent : Component
+    public sealed partial class GridAtmosphereComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Simulated { get; set; } = true;
@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables]
         [IncludeDataField(customTypeSerializer:typeof(TileAtmosCollectionSerializer))]
-        public readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
+        public Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
 
         [ViewVariables]
         public readonly HashSet<TileAtmosphere> ActiveTiles = new(1000);

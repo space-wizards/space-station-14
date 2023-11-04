@@ -8,6 +8,13 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
+      enum.MicrowaveVisualState.Bloody:
+        bloody:
+          True: { visible: true }
+          False: { visible: false }
+        bloodyunshaded:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.VisualState:
         enum.MicrowaveVisualizerLayers.Base:
           Idle: { state: "mw" }
@@ -17,6 +24,9 @@
           Idle: { state: "mw_unlit" }
           Broken: { state: "mw_unlit" }
           Cooking: { state: "mw_running_unlit" }
+        bloodyunshaded:
+          Idle: { visible: false }
+          Broken: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           True: { visible: true }
@@ -30,16 +40,16 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.3,-0.16,0.3,0.16"
-      density: 190
-      mask:
-      - TabletopMachineMask
-      layer:
-      - TabletopMachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.16"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/microwave.rsi
     drawdepth: SmallObjects
     snapCardinals: true
@@ -49,6 +59,13 @@
     - state: mw_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+    - state: mwbloody0
+      map: ["bloody"]
+      visible: false
+    - state: mwbloody1
+      shader: unshaded
+      map: ["bloodyunshaded"]
+      visible: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -59,9 +76,6 @@
         acts: ["Breakage"]
   - type: ApcPowerReceiver
     powerLoad: 400
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
   - type: Machine
     board: MicrowaveMachineCircuitboard
   - type: ContainerContainer
@@ -69,3 +83,8 @@
       microwave_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: GuideHelp
+    guides:
+    - Chef
+  - type: StaticPrice
+    price: 600 #Imperial price

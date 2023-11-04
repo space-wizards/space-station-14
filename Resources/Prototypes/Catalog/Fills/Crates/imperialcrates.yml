@@ -1,0 +1,10 @@
+- type: entity
+  id: CrateArmoryRaxa
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRevolverRaxa
+      amount: 2
+    - id: SpeedLoaderMagnum
+      amount: 4

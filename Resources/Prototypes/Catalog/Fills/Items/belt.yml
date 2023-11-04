@@ -10,6 +10,20 @@
       - id: Screwdriver
       - id: Wirecutter
       - id: Welder
+      - id: NetworkConfigurator
+
+- type: entity
+  id: ClothingBeltUtilityEngineering
+  parent: ClothingBeltUtility
+  suffix: Engineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: Crowbar
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
       - id: Multitool
 
 - type: entity
@@ -61,11 +75,28 @@
       - id: Brutepack
         amount: 2
       - id: Ointment
-        amount: 2
+        amount: 1
       - id: Bloodpack
-        amount: 2
+        amount: 1
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
+
+- type: entity
+  id: ClothingBeltParamedicFilled
+  parent: ClothingBeltMedical
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 1
+      - id: Ointment
+        amount: 1
+      - id: Bloodpack
+        amount: 1
+      - id: Gauze
+      - id: EmergencyMedipen #You never know what people are going to latejoin into
+        amount: 6
 
 - type: entity
   id: ClothingBeltPlantFilled
@@ -86,6 +117,21 @@
   - type: StorageFill
     contents:
       - id: CaptainSabre
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingGrenadeFilled
+  parent: ClothingBeltMilitaryWebbing
+  name: grenadier chest rig
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ExGrenade
+        amount: 4
+      - id: SyndieMiniBomb
+        amount: 2
+      - id: EmpGrenade
+        amount: 2
 
 - type: entity
   id: ClothingBeltMilitaryWebbingMedFilled
@@ -113,3 +159,14 @@
     - id: WeaponWandFireball
     - id: WeaponWandDeath
     - id: WeaponWandPolymorphDoor
+
+- type: entity
+  id: ClothingBeltHolsterFilled
+  parent: ClothingBeltHolster
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+        - id: WeaponRevolverInspector
+        - id: SpeedLoaderMagnum
+        - id: SpeedLoaderMagnumRubber

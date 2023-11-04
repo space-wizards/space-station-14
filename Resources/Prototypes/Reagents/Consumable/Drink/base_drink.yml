@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: BaseDrink
   group: Drinks
   abstract: true
@@ -48,7 +48,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.05
+        amount: 0.06
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

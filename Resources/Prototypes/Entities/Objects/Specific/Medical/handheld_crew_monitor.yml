@@ -1,12 +1,18 @@
 - type: entity
   name: handheld crew monitor
-  parent: BaseItem
+  parent:
+  - BaseItem
+  - PowerCellSlotSmallItem
   id: HandheldCrewMonitor
   description: A hand-held crew monitor displaying the status of suit sensors.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
     state: scanner
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 20
+  - type: ActivatableUIRequiresPowerCell
   - type: ActivatableUI
     key: enum.CrewMonitoringUIKey.Key
     closeOnHandDeselect: false
@@ -23,3 +29,13 @@
   - type: StationLimitedNetwork
   - type: StaticPrice
     price: 500
+
+- type: entity
+  id: HandheldCrewMonitorEmpty
+  parent: HandheldCrewMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default 

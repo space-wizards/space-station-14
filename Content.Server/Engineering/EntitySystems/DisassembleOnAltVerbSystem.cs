@@ -42,7 +42,7 @@ namespace Content.Server.Engineering.EntitySystems
 
             if (component.DoAfterTime > 0 && TryGet<SharedDoAfterSystem>(out var doAfterSystem))
             {
-                var doAfterArgs = new DoAfterArgs(user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
+                var doAfterArgs = new DoAfterArgs(EntityManager, user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
                 {
                     BreakOnUserMove = true,
                 };

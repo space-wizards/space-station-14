@@ -4,11 +4,10 @@
   description: job-description-chef
   playTimeTracker: JobChef
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Civilian
-      time: 1800
+    - !type:OverallPlaytimeRequirement
+      time: 3600 #Imperial role timers
   startingGear: ChefGear
-  icon: "Chef"
+  icon: "JobIconChef"
   supervisors: job-supervisors-hop
   access:
   - Service
@@ -24,10 +23,11 @@
     jumpsuit: ClothingUniformJumpsuitChef
     head: ClothingHeadHatChef
     back: ClothingBackpackFilled
+    mask: ClothingMaskItalianMoustache
     shoes: ClothingShoesColorBlack
     id: ChefPDA
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronChef
-  innerclothingskirt: ClothingUniformJumpskirtChef
+  innerClothingSkirt: ClothingUniformJumpskirtChef
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

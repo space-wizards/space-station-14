@@ -6,6 +6,9 @@
     mode: SnapgridCenter
   components:
     - type: AtmosDevice
+    - type: Tag
+      tags:
+        - Unstackable
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
@@ -16,8 +19,6 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: CollideOnAnchor
-    - type: StaticPrice
-      price: 200
 
 - type: entity
   parent: GasUnaryBase
@@ -40,9 +41,9 @@
     - type: DeviceNetworkRequiresPower
     - type: AtmosDevice
     - type: AtmosMonitor
-      temperatureThreshold: stationTemperature
-      pressureThreshold: stationPressure
-      gasThresholds:
+      temperatureThresholdId: stationTemperature
+      pressureThresholdId: stationPressure
+      gasThresholdPrototypes:
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
@@ -55,8 +56,8 @@
     - type: Tag
       tags:
         - GasVent
+        - Unstackable
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
@@ -81,11 +82,12 @@
       node: ventpump
     - type: VentCritterSpawnLocation
     - type: AmbientSound
-      enabled: false
+      enabled: true
       volume: -12
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
+    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -97,7 +99,6 @@
   components:
     # TODO ATMOS: Find sprite for this.
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
@@ -131,9 +132,9 @@
       examinableAddress: true
     - type: DeviceNetworkRequiresPower
     - type: AtmosMonitor
-      temperatureThreshold: stationTemperature
-      pressureThreshold: stationPressure
-      gasThresholds:
+      temperatureThresholdId: stationTemperature
+      pressureThresholdId: stationPressure
+      gasThresholdPrototypes:
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
@@ -146,8 +147,8 @@
     - type: Tag
       tags:
         - GasScrubber
+        - Unstackable
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
       layers:
@@ -173,11 +174,12 @@
       graph: GasUnary
       node: ventscrubber
     - type: AmbientSound
-      enabled: false
+      enabled: true
       volume: -12
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
+    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -189,7 +191,6 @@
   components:
     - type: Sprite
       drawdepth: FloorObjects
-      netsync: false
       sprite: Structures/Piping/Atmospherics/outletinjector.rsi
       layers:
         - state: pipeHalf
@@ -228,9 +229,8 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-      noRot: true
+      snapCardinals: true
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
@@ -244,19 +244,27 @@
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
+    - type: WiresPanel
     - type: Wires
-      BoardName: "Thermomachine"
-      LayoutId: Thermomachine
+      boardName: wires-board-name-thermomachine
+      layoutId: Thermomachine
+    - type: WiresVisuals
     - type: NodeContainer
       nodes:
         pipe:
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
-    - type: StaticPrice
-      price: 500
     - type: Transform
       noRot: false
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+    - type: PowerSwitch
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -267,21 +275,39 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
+      granularLayersRendering: true
       layers:
-        - state: freezer_off
-          map: [ "enabled" ]
+        - state: freezerOff
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: freezerPanelOpen
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
+          renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
-        enum.ThermoMachineVisuals.Enabled:
-          enabled:
-            True: { state: freezer_on }
-            False: { state: freezer_off }
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: freezerOn }
+            False: { state: freezerOff }
     - type: GasThermoMachine
-      mode: Freezer
+      coefficientOfPerformance: -64
+    - type: ApcPowerReceiver
+      powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
+    - type: DeviceNetwork
+      prefix: device-address-prefix-freezer
+
+- type: entity
+  parent: GasThermoMachineFreezer
+  id: GasThermoMachineFreezerEnabled
+  suffix: Enabled
+  components:
+  - type: GasThermoMachine
+    enabled: true
+  - type: ApcPowerReceiver
+    powerDisabled: false
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -292,18 +318,36 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
+      granularLayersRendering : true
       layers:
-        - state: heater_off
-          map: [ "enabled" ]
+        - state: heaterOff
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: heaterPanelOpen
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
+          renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
-        enum.ThermoMachineVisuals.Enabled:
-          enabled:
-            True: { state: heater_on }
-            False: { state: heater_off }
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: heaterOn }
+            False: { state: heaterOff }
     - type: GasThermoMachine
-      mode: Heater
+      coefficientOfPerformance: 32
+    - type: ApcPowerReceiver
+      powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+    - type: DeviceNetwork
+      prefix: device-address-prefix-heater
+
+- type: entity
+  parent: GasThermoMachineHeater
+  id: GasThermoMachineHeaterEnabled
+  suffix: Enabled
+  components:
+  - type: GasThermoMachine
+    enabled: true
+  - type: ApcPowerReceiver
+    powerDisabled: false

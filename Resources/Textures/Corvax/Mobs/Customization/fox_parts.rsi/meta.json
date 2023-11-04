@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/83f475aa7ec4290c6961f1f14c5da80f340989b8",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ears_fox_inner",
+      "directions": 4
+    },
+    {
+      "name": "ears_fox_outer",
+      "directions": 4
+    }
+  ]
+}

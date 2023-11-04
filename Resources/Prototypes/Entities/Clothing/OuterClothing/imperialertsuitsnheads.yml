@@ -1,0 +1,104 @@
+- type: entity
+  parent: ClothingHeadHelmetHardsuitERTLeader
+  id: ClothingHeadHelmetHardsuitImperialERTLeader
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/Head/Hardsuits/ertleader.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/Head/Hardsuits/ertleader.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitERTMedical
+  id: ClothingHeadHelmetHardsuitImperialERTMedical
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/Head/Hardsuits/ertmedical.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/Head/Hardsuits/ertmedical.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitERTEngineer
+  id: ClothingHeadHelmetHardsuitImperialERTEngineer
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/Head/Hardsuits/ertengineer.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/Head/Hardsuits/ertengineer.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitERTSecurity
+  id: ClothingHeadHelmetHardsuitImperialERTSecurity
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/Head/Hardsuits/ertsecurity.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/Head/Hardsuits/ertsecurity.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitERTJanitor
+  id: ClothingHeadHelmetHardsuitImperialERTJanitor
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/Head/Hardsuits/ertjanitor.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/Head/Hardsuits/ertjanitor.rsi
+
+- type: entity
+  parent: ClothingOuterHardsuitERTLeader
+  id: ClothingOuterHardsuitImperialERTLeader
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertleader.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertleader.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitImperialERTLeader
+
+- type: entity
+  parent: ClothingOuterHardsuitERTMedical
+  id: ClothingOuterHardsuitERTImperialMedical
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertmedical.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertmedical.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitImperialERTMedical
+
+- type: entity
+  parent: ClothingOuterHardsuitERTEngineer
+  id: ClothingOuterHardsuitERTImperialEngineer
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertengineer.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertengineer.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitImperialERTEngineer
+
+- type: entity
+  parent: ClothingOuterHardsuitERTSecurity
+  id: ClothingOuterHardsuitERTImperialSecurity
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertsecurity.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertsecurity.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitImperialERTSecurity
+
+- type: entity
+  parent: ClothingOuterHardsuitERTJanitor
+  id: ClothingOuterHardsuitERTImperialJanitor
+  components:
+  - type: Sprite
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertjanitor.rsi
+  - type: Clothing
+    sprite: Imperial/Clothing/OuterClothing/ERTSuits/ertjanitor.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitImperialERTJanitor

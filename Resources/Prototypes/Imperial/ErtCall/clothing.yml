@@ -1,0 +1,213 @@
+#ERT START
+- type: entity
+  noSpawn: false
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackCallERTLeaderFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: false
+  parent: ClothingBackpackERTSecurity
+  id: ClothingBackpackCallERTSecurityFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: false
+  parent: ClothingBackpackERTMedical
+  id: ClothingBackpackCallERTMedicalFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: false
+  parent: ClothingBackpackERTEngineer
+  id: ClothingBackpackCallERTEngineerFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: false
+  parent: ClothingBackpackERTJanitor
+  id: ClothingBackpackCallERTJanitorFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+#ERT END
+
+#CBURN START
+- type: entity
+  noSpawn: false
+  parent: ClothingBackpackDuffelCBURN
+  id: ClothingBackpackCallERTCBURNFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        # - id: PillAmbuzolPlus
+
+- type: entity
+  noSpawn: false
+  parent: ClothingBackpackDuffelCBURN
+  id: ClothingBackpackCallERTCBURNFilledLeader
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: PillRomerol
+        - id: PinpointerNuclear
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitCBURNLeader
+  name: CBURN exosuit
+  description: A lightweight yet strong exosuit used for special cleanup operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/cburncommander.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/cburncommander.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.6
+        Heat: 0.05
+        Cold: 0.1
+        Shock: 0.1
+        Radiation: 0.1
+        Caustic: 0.1
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetCBURNLeader
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetCBURNLeader
+  noSpawn: true
+  name: CBURN exosuit helmet
+  description: A pressure resistant and fireproof hood worn by special cleanup units.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Clothing/Head/Hardsuits/cburncommander.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+  - type: PointLight
+    color: orange
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.1
+        Shock: 0.1
+        Cold: 0.2
+        Radiation: 0.2
+
+- type: entity
+  id: ClothingOuterHardsuitCBURNMedic
+  parent: ClothingOuterHardsuitCBURNLeader
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/cburnmedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/cburnmedic.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetCBURNMedic
+
+- type: entity
+  id: ClothingHeadHelmetCBURNMedic
+  parent: ClothingHeadHelmetCBURNLeader
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Clothing/Head/Hardsuits/cburnmedic.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+
+#CBURN END
+
+#DEAD SQUAD START
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDeadSquadSecurity
+  name: Dead squad backpack
+  description: You don't have to know whose backpack it is.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/deadsquad.rsi
+  - type: Storage
+    capacity: 250
+
+- type: entity
+  noSpawn: false
+  parent: ClothingBackpackDeadSquadSecurity
+  id: ClothingBackpackDeadSquadSecurityFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  id: ClothingBeltDeadSquadFilled
+  parent: ClothingBeltChiefEngineer
+  suffix: Filled
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/deadsquad.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/deadsquad.rsi
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+      - id: CableApcStack
+#DEAD SQUAD END

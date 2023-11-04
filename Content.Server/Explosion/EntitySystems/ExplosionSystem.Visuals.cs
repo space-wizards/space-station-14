@@ -15,12 +15,18 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, ExplosionVisualsComponent component, ref ComponentGetState args)
     {
+        Dictionary<NetEntity, Dictionary<int, List<Vector2i>>> tileLists = new();
+        foreach (var (grid, data) in component.Tiles)
+        {
+            tileLists.Add(GetNetEntity(grid), data);
+        }
+
         args.State = new ExplosionVisualsState(
             component.Epicenter,
             component.ExplosionType,
             component.Intensity,
             component.SpaceTiles,
-            component.Tiles,
+            tileLists,
             component.SpaceMatrix,
             component.SpaceTileSize);
     }
@@ -50,7 +56,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // restricted to something like the same map, but whatever.
         _pvsSys.AddGlobalOverride(explosionEntity);
 
-        var appearance = AddComp<ServerAppearanceComponent>(explosionEntity);
+        var appearance = AddComp<AppearanceComponent>(explosionEntity);
         _appearance.SetData(explosionEntity, ExplosionAppearanceData.Progress, 1, appearance);
 
         return explosionEntity;

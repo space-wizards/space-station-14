@@ -1,176 +1,119 @@
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Instruments;
-using Content.Server.Mind.Components;
-using Content.Server.Popups;
-using Content.Shared.Examine;
+using Content.Server.Kitchen.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Random;
+using System.Text;
 
-namespace Content.Server.PAI
+namespace Content.Server.PAI;
+
+public sealed class PAISystem : SharedPAISystem
 {
-    public sealed class PAISystem : SharedPAISystem
+    [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
+
+    /// <summary>
+    /// Possible symbols that can be part of a scrambled pai's name.
+    /// </summary>
+    private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*', ' '};
+
+    public override void Initialize()
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<PAIComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
+    }
+
+    private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
+    {
+        if (!TryComp<MindContainerComponent>(uid, out var mind) || !mind.HasMind)
+            component.LastUser = args.User;
+    }
+
+    private void OnMindAdded(EntityUid uid, PAIComponent component, MindAddedMessage args)
+    {
+        if (component.LastUser == null)
+            return;
+
+        // Ownership tag
+        var val = Loc.GetString("pai-system-pai-name", ("owner", component.LastUser));
+
+        // TODO Identity? People shouldn't dox-themselves by carrying around a PAI.
+        // But having the pda's name permanently be "old lady's PAI" is weird.
+        // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
+        // Cause then you could remotely figure out information about the owner's equipped items.
+
+        _metaData.SetEntityName(uid, val);
+    }
+
+    private void OnMindRemoved(EntityUid uid, PAIComponent component, MindRemovedMessage args)
+    {
+        // Mind was removed, shutdown the PAI.
+        PAITurningOff(uid);
+    }
+
+    private void OnMicrowaved(EntityUid uid, PAIComponent comp, BeingMicrowavedEvent args)
+    {
+        // name will always be scrambled whether it gets bricked or not, this is the reward
+        ScrambleName(uid, comp);
+
+        // randomly brick it
+        if (_random.Prob(comp.BrickChance))
         {
-            base.Initialize();
+            _popup.PopupEntity(Loc.GetString(comp.BrickPopup), uid, PopupType.LargeCaution);
+            _toggleableGhostRole.Wipe(uid);
+            RemComp<PAIComponent>(uid);
+            RemComp<ToggleableGhostRoleComponent>(uid);
+        }
+        else
+        {
+            // you are lucky...
+            _popup.PopupEntity(Loc.GetString(comp.ScramblePopup), uid, PopupType.Large);
+        }
+    }
 
-            SubscribeLocalEvent<PAIComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<PAIComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
-            SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
-            SubscribeLocalEvent<PAIComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
+    private void ScrambleName(EntityUid uid, PAIComponent comp)
+    {
+        // create a new random name
+        var len = _random.Next(6, 18);
+        var name = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+        {
+            name.Append(_random.Pick(SYMBOLS));
         }
 
-        private void OnExamined(EntityUid uid, PAIComponent component, ExaminedEvent args)
+        // add 's pAI to the scrambled name
+        var val = Loc.GetString("pai-system-pai-name-raw", ("name", name.ToString()));
+        _metaData.SetEntityName(uid, val);
+    }
+
+    public void PAITurningOff(EntityUid uid)
+    {
+        //  Close the instrument interface if it was open
+        //  before closing
+        if (HasComp<ActiveInstrumentComponent>(uid) && TryComp<ActorComponent>(uid, out var actor))
         {
-            if (args.IsInDetailsRange)
-            {
-                if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
-                {
-                    args.PushMarkup(Loc.GetString("pai-system-pai-installed"));
-                }
-                else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
-                {
-                    args.PushMarkup(Loc.GetString("pai-system-still-searching"));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("pai-system-off"));
-                }
-            }
+            _instrumentSystem.ToggleInstrumentUi(uid, actor.PlayerSession);
         }
 
-        private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
+        //  Stop instrument
+        if (TryComp<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
+        if (TryComp<MetaDataComponent>(uid, out var metadata))
         {
-            if (args.Handled)
-                return;
-
-            // Placeholder PAIs are essentially portable ghost role generators.
-
-            args.Handled = true;
-
-            // Check for pAI activation
-            if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, args.User, PopupType.Large);
-                return;
-            }
-            else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("pai-system-still-searching"), uid, args.User);
-                return;
-            }
-
-            // Ownership tag
-            string val = Loc.GetString("pai-system-pai-name", ("owner", args.User));
-
-            // TODO Identity? People shouldn't dox-themselves by carrying around a PAI.
-            // But having the pda's name permanently be "old lady's PAI" is weird.
-            // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
-            // Cause then you could remotely figure out information about the owner's equipped items.
-
-            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
-
-            var ghostRole = AddComp<GhostRoleComponent>(uid);
-            EnsureComp<GhostTakeoverAvailableComponent>(uid);
-
-            ghostRole.RoleName = Loc.GetString("pai-system-role-name");
-            ghostRole.RoleDescription = Loc.GetString("pai-system-role-description");
-
-            _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, args.User);
-            UpdatePAIAppearance(uid, PAIStatus.Searching);
-        }
-
-        private void OnMindRemoved(EntityUid uid, PAIComponent component, MindRemovedMessage args)
-        {
-            // Mind was removed, shutdown the PAI.
-            PAITurningOff(uid);
-        }
-
-        private void OnMindAdded(EntityUid uid, PAIComponent pai, MindAddedMessage args)
-        {
-            // Mind was added, shutdown the ghost role stuff so it won't get in the way
-            if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
-                EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
-            UpdatePAIAppearance(uid, PAIStatus.On);
-        }
-
-        private void PAITurningOff(EntityUid uid)
-        {
-            UpdatePAIAppearance(uid, PAIStatus.Off);
-
-            //  Close the instrument interface if it was open
-            //  before closing
-            if (HasComp<ActiveInstrumentComponent>(uid) && TryComp<ActorComponent>(uid, out var actor))
-            {
-                _instrumentSystem.ToggleInstrumentUi(uid, actor.PlayerSession);
-            }
-
-            //  Stop instrument
-            if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
-            if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
-            {
-                var proto = metadata.EntityPrototype;
-                if (proto != null)
-                    metadata.EntityName = proto.Name;
-            }
-        }
-
-        private void UpdatePAIAppearance(EntityUid uid, PAIStatus status)
-        {
-            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
-            {
-                _appearance.SetData(uid, PAIVisuals.Status, status, appearance);
-            }
-        }
-
-        private void AddWipeVerb(EntityUid uid, PAIComponent pai, GetVerbsEvent<ActivationVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
-            {
-                ActivationVerb verb = new();
-                verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
-                verb.Act = () => {
-                    if (pai.Deleted)
-                        return;
-                    // Wiping device :(
-                    // The shutdown of the Mind should cause automatic reset of the pAI during OnMindRemoved
-                    // EDIT: But it doesn't!!!! Wtf? Do stuff manually
-                    if (EntityManager.HasComponent<MindComponent>(uid))
-                    {
-                        EntityManager.RemoveComponent<MindComponent>(uid);
-                        _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, args.User, PopupType.Large);
-                        PAITurningOff(uid);
-                    }
-                };
-                args.Verbs.Add(verb);
-            }
-            else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
-            {
-                ActivationVerb verb = new();
-                verb.Text = Loc.GetString("pai-system-stop-searching-verb-text");
-                verb.Act = () => {
-                    if (pai.Deleted)
-                        return;
-                    if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
-                    {
-                        EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
-                        _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, args.User);
-                        PAITurningOff(uid);
-                    }
-                };
-                args.Verbs.Add(verb);
-            }
+            var proto = metadata.EntityPrototype;
+            if (proto != null)
+                _metaData.SetEntityName(uid, proto.Name);
         }
     }
 }

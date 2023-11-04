@@ -488,14 +488,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        IPlayerSession? session = null;
-        if (player != null
-            && TryComp(player, out ActorComponent? actor))
-        {
-            session = actor.PlayerSession;
-        }
-
-        var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
+        var state = new SurveillanceCameraMonitorUiState(GetNetEntity(monitor.ActiveCamera), monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
         _userInterface.TrySetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
     }
 }

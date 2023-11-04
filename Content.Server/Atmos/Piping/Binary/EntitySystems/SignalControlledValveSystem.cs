@@ -1,12 +1,12 @@
 using Content.Server.Atmos.Piping.Binary.Components;
-using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.System;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 
 public sealed class SignalControlledValveSystem : EntitySystem
 {
-    [Dependency] private readonly SignalLinkerSystem _signal = default!;
+    [Dependency] private readonly DeviceLinkSystem _signal = default!;
     [Dependency] private readonly GasValveSystem _valve = default!;
 
     public override void Initialize()
@@ -19,10 +19,10 @@ public sealed class SignalControlledValveSystem : EntitySystem
 
     private void OnInit(EntityUid uid, SignalControlledValveComponent comp, ComponentInit args)
     {
-        _signal.EnsureReceiverPorts(uid, comp.OpenPort, comp.ClosePort, comp.TogglePort);
+        _signal.EnsureSinkPorts(uid, comp.OpenPort, comp.ClosePort, comp.TogglePort);
     }
 
-    private void OnSignalReceived(EntityUid uid, SignalControlledValveComponent comp, SignalReceivedEvent args)
+    private void OnSignalReceived(EntityUid uid, SignalControlledValveComponent comp, ref SignalReceivedEvent args)
     {
         if (!TryComp<GasValveComponent>(uid, out var valve))
             return;

@@ -6,7 +6,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AMEPart
+      - id: AmePart
         amount: 9
 
 - type: entity
@@ -15,7 +15,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AMEJar
+      - id: AmeJar
         amount: 3
 
 - type: entity
@@ -24,7 +24,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AMEControllerUnanchored
+      - id: AmeControllerUnanchored
 
 # Singularity
 
@@ -42,7 +42,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: RadiationCollector
+      - id: RadiationCollectorFullTank
 
 - type: entity
   id: CrateEngineeringSingularityContainment
@@ -69,9 +69,9 @@
   - type: StorageFill
     contents:
       - id: MachineParticleAcceleratorEndCapCircuitboard
-      - id: MachineParticleAcceleratorEmitterLeftCircuitboard
-      - id: MachineParticleAcceleratorEmitterCenterCircuitboard
-      - id: MachineParticleAcceleratorEmitterRightCircuitboard
+      - id: MachineParticleAcceleratorEmitterStarboardCircuitboard
+      - id: MachineParticleAcceleratorEmitterForeCircuitboard
+      - id: MachineParticleAcceleratorEmitterPortCircuitboard
       - id: MachineParticleAcceleratorFuelChamberCircuitboard
       - id: MachineParticleAcceleratorPowerBoxCircuitboard
       - id: ParticleAcceleratorComputerCircuitboard

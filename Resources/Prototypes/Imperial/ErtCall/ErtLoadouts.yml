@@ -1,0 +1,244 @@
+#ERT START
+#Leader
+- type: startingGear
+  id: ERTCallLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTLeader
+    back: ClothingBackpackCallERTLeaderFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityWebbing
+    pocket1: ERTUplinkLeader
+
+- type: startingGear
+  id: ERTCallLeaderGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTLeader
+    back: ClothingBackpackCallERTLeaderFilled
+    shoes: ClothingShoesBootsJack
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTLeader
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityFilled
+    pocket1: ERTUplinkLeader
+
+#Medic
+- type: startingGear
+  id: ERTCallMedicalGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTMedic
+    back: ClothingBackpackCallERTMedicalFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTCallLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMedicalFilled
+    pocket1: ERTUplinkMedic
+
+- type: startingGear
+  id: ERTCallMedicalGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTMedic
+    back: ClothingBackpackCallERTMedicalFilled
+    shoes: ClothingShoesBootsJack
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTMedical
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMedicalFilled
+    pocket1: ERTUplinkMedic
+
+#Security
+- type: startingGear
+  id: ERTCallSecurityGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackCallERTSecurityFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityWebbing
+    pocket1: ERTUplinkSecurity
+
+- type: startingGear
+  id: ERTCallSecurityGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackCallERTSecurityFilled
+    shoes: ClothingShoesBootsJack
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityWebbing
+    pocket1: ERTUplinkSecurity
+
+#Engineer
+- type: startingGear
+  id: ERTCallEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
+    back: ClothingBackpackCallERTEngineerFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesColorYellow
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1: ERTUplinkEngineer
+
+- type: startingGear
+  id: ERTCallEngineerGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
+    back: ClothingBackpackCallERTEngineerFilled
+    shoes: ClothingShoesBootsJack
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesColorYellow
+    outerClothing: ClothingOuterHardsuitERTEngineer
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1: ERTUplinkEngineer
+
+#Junitor
+- type: startingGear
+  id: ERTCallJanitorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTJanitor
+    back: ClothingBackpackCallERTJanitorFilled
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHelmetHelmet
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltJanitorFilled
+    pocket1: ERTUplinkJunitor
+
+- type: startingGear
+  id: ERTCallJanitorGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTJanitor
+    back: ClothingBackpackCallERTJanitorFilled
+    shoes: ClothingShoesGaloshes
+    mask: ClothingMaskBreath
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTJanitor
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltJanitorFilled
+    pocket1: ERTUplinkJunitor
+#ERT END
+
+#CBURN START
+#Leader
+- type: startingGear
+  id: ERTCallCBURNLeaderGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackCallERTCBURNFilledLeader
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNLeader
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNPDA
+    pocket1: CBURNUplinkLeader
+    #pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltBandolier
+  innerclothingskirt: ClothingUniformJumpsuitColorBrown
+  satchel: ClothingBackpackCallERTCBURNFilledLeader
+  duffelbag: ClothingBackpackCallERTCBURNFilledLeader
+
+#Security
+- type: startingGear
+  id: ERTCallCBURNSecurityGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackCallERTCBURNFilled
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURN
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNPDA
+    pocket1: CBURNUplinkSecurity
+    #pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltBandolier
+  innerclothingskirt: ClothingUniformJumpsuitColorBrown
+  satchel: ClothingBackpackCallERTCBURNFilled
+  duffelbag: ClothingBackpackCallERTCBURNFilled
+
+#Medic
+- type: startingGear
+  id: ERTCallCBURNMedicGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackCallERTCBURNFilled
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNMedic
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNPDA
+    pocket1: ERTUplinkMedic
+    #pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltBandolier
+  innerclothingskirt: ClothingUniformJumpsuitColorBrown
+  satchel: ClothingBackpackCallERTCBURNFilled
+  duffelbag: ClothingBackpackCallERTCBURNFilled
+#CBURN END
+
+#DEAD SQUAD START
+- type: startingGear
+  id: ERTCallDeadSquadSecurityGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    back: ClothingBackpackDeadSquadSecurityFilled
+    mask: ClothingMaskGasSwat
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitDeathsquad
+    shoes: ClothingShoesBootsMagAdv #DOTO black variant
+    id: DeadSquadPDA
+    pocket1: ERTUplinkDeadSquad
+    #pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltDeadSquadFilled
+#DEAD SQUAD END
+

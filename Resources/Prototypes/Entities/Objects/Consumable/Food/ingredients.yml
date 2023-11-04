@@ -5,12 +5,11 @@
 # Reagent Containers
 
 - type: entity
+  abstract: true
   parent: BaseItem
   id: ReagentContainerBase
-  abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Food/ingredients.rsi
   - type: SolutionContainerManager
     solutions:
@@ -19,29 +18,68 @@
   - type: SolutionTransfer
     # This is potentially badly-handled due to 'drink opening',
     #  but it lets the flour be tampered with, refilled, etc.
+  - type: DrawableSolution
+    solution: food
   - type: RefillableSolution
     solution: food
   - type: DrainableSolution
     solution: food
   - type: Drink
     solution: food
-    openSounds:
-      collection: packetOpenSounds
     useSound:
       path: /Audio/Items/eating_1.ogg
+  - type: Damageable
+    damageContainer: Inorganic
   - type: Spillable
     solution: food
+  - type: TrashOnEmpty
+    solution: food
+
+- type: entity
+  abstract: true
+  parent: ReagentContainerBase
+  id: ReagentPacketBase
+  components:
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
+  # packet can be broken open
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  # packet contents can be splashed when open
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
     damage:
       types:
         Blunt: 0
-  - type: TrashOnEmpty
-    solution: food
 
 - type: entity
-  parent: ReagentContainerBase
+  abstract: true
+  id: ItemHeftyBase
+  components:
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
+
+- type: entity
+  parent: [ReagentPacketBase, ItemHeftyBase]
   id: ReagentContainerFlour
   name: flour bag
   description: A big bag of flour. Good for baking!
@@ -55,37 +93,9 @@
         reagents:
         - ReagentId: Flour
           Quantity: 50
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 1
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 1
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 2
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleFlour:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: TrashOnEmpty
-    solution: food
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: [ReagentPacketBase, ItemHeftyBase]
   id: ReagentContainerFlourSmall
   name: flour pack
   description: A pack of flour. Good for baking!
@@ -99,35 +109,40 @@
         reagents:
         - ReagentId: Flour
           Quantity: 20
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 1
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 1
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 2
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleFlour:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
+  id: ReagentContainerCornmeal
+  name: cornmeal bag
+  description: A big bag of cornmeal. Good for cooking!
+  components:
+  - type: Sprite
+    state: cornmeal-big
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Cornmeal
+          Quantity: 50
+
+- type: entity
+  parent: ReagentPacketBase
+  id: ReagentContainerCornmealSmall
+  name: cornmeal pack
+  description: A pack of cornmeal. Good for cooking!
+  components:
+  - type: Sprite
+    state: cornmeal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cornmeal
+          Quantity: 20
+
+- type: entity
+  parent: ReagentPacketBase
   id: ReagentContainerRice
   name: rice bag
   description: A big bag of rice. Good for cooking!
@@ -142,7 +157,7 @@
           Quantity: 50
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
   id: ReagentContainerRiceSmall
   name: rice pack
   description: A pack of rice. Good for cooking!
@@ -158,7 +173,7 @@
           Quantity: 20
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
   id: ReagentContainerSugar
   name: sugar bag
   description: A big bag of tasty spacey sugar.
@@ -173,7 +188,7 @@
           Quantity: 50
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
   id: ReagentContainerSugarSmall
   name: sugar pack
   description: A pack of tasty spacey sugar.
@@ -191,7 +206,7 @@
 # Milk
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
   id: ReagentContainerMilk
   name: milk
   description: It's milk. White and nutritious goodness!
@@ -207,7 +222,7 @@
           Quantity: 50
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
   id: ReagentContainerMilkSoy
   name: soy milk
   description: It's soy milk. White and nutritious goodness!
@@ -223,7 +238,7 @@
           Quantity: 50
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
   id: ReagentContainerMilkOat
   name: oat milk
   description: It's oat milk. Tan and nutritious goodness!
@@ -241,7 +256,7 @@
 # Misc
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
   id: ReagentContainerOliveoil
   name: olive oil
   description: Olive oil. From space olives presumably.
@@ -257,7 +272,7 @@
           Quantity: 20
 
 - type: entity
-  parent: ReagentContainerBase
+  parent: ReagentPacketBase
   id: ReagentContainerMayo
   name: mayonnaise
   description: Bottle of mayonnaise.
@@ -273,7 +288,7 @@
           Quantity: 20
 
 # - type: entity
-#   parent: ReagentContainerBase
+#   parent: ReagentPacketBase
 #   id: ReagentContainerAllspice
 #   name: all-spice
 #   description:
@@ -291,14 +306,12 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: FoodBase
   id: FoodBakingBase
   description: Used in various recipes.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
-    netsync: false
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -321,6 +334,9 @@
   - type: SliceableFood
     count: 3
     slice: FoodDoughSlice
+  - type: Construction
+    graph: Pizza
+    node: start
 
 - type: entity
   name: dough slice
@@ -333,6 +349,35 @@
       - dough
   - type: Sprite
     state: dough-slice
+
+- type: entity
+  name: cornmeal dough
+  parent: FoodBakingBase
+  id: FoodDoughCornmeal
+  description: A piece of cornmeal dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chalky
+      - dough
+  - type: Sprite
+    state: cornmealdough
+  - type: SliceableFood
+    count: 3
+    slice: FoodDoughCornmealSlice
+
+- type: entity
+  name: cornmeal dough slice
+  parent: FoodBakingBase
+  id: FoodDoughCornmealSlice
+  description: A slice of cornmeal dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chalky
+      - dough
+  - type: Sprite
+    state: cornmealdough-slice
 
 - type: entity
   name: bun
@@ -382,6 +427,9 @@
   components:
   - type: Sprite
     state: dough-flat
+  - type: Construction
+    graph: Pizza
+    node: flat
 
 - type: entity
   name: pizza bread
@@ -412,6 +460,27 @@
   components:
   - type: Sprite
     state: butter
+    
+- type: entity
+  name: stick of cannabis butter
+  parent: FoodBakingBase
+  id: FoodCannabisButter
+  description: Add this to your favorite baked goods for an irie time.
+  components:
+  - type: Sprite
+    state: butter
+    color: "#82C36E"
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Butter
+          Quantity: 10
+        - ReagentId: THC
+          Quantity: 82
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: cheese wheel
@@ -446,6 +515,53 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+
+- type: entity
+  name: chèvre log
+  parent: FoodBakingBase
+  id: FoodChevre
+  description: A soft log of creamy Chèvre.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - creamy
+  - type: Sprite
+    state: chevrelog
+  - type: SliceableFood
+    count: 3
+    slice: FoodChevreSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 0.6
+
+- type: entity
+  name: chèvre disk
+  parent: FoodBakingBase
+  id: FoodChevreSlice
+  description: A small disk of creamy Chèvre. An ideal adornment for French side dishes.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - creamy
+  - type: Sprite
+    state: chevredisk
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 0.2
 
 - type: entity
   name: tofu
@@ -512,3 +628,35 @@
           Quantity: 2
         - ReagentId: Toxin
           Quantity: 3
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  name: cocoa beans
+  parent: FoodProduceBase
+  id: FoodCocoaBeans
+  description: You can never have too much chocolate!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cocoa.rsi
+    state: produce-beans
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: CocoaPowder
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CocoaPowder
+        Quantity: 2

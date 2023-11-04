@@ -1,0 +1,103 @@
+{"version": 1,
+"size": {"x": 32, "y": 32},
+"license": "CC-BY-SA-3.0",
+"copyright": "created by NailGrey for Imperai Space",
+"states":
+[
+    {
+    "name": "plasmshake"
+    },
+    {
+     "name": "aos"
+    },
+    {
+     "name": "pps"
+    },
+    {
+     "name": "glue"
+    },
+    {
+     "name": "icespirits"
+    },
+    {
+     "name": "icespiritsbottle"
+    },
+    {
+     "name": "bloodbrandy"
+    },
+    {
+     "name": "bloodbrandybottle"
+    },
+    {
+     "name": "scumslim"
+    },
+    {
+     "name": "scumslimbottle"
+    },
+    {
+     "name": "meatwine"
+    },
+    {
+     "name": "meatwinebottle"
+    },
+    {
+     "name": "magmawhiskey"
+    },
+    {
+     "name": "magmawhiskeybottle"
+    },
+    {
+     "name": "shadowspirits",
+     "delays":
+     [[
+     100.0,
+     3.0,
+     3.0,
+     3.0,
+     3.0,
+     3.0,
+     2.0,
+     2.0,
+     2.0,
+     2.0,
+     2.0
+     ]]
+    },
+    {
+     "name": "shadowspiritsbottle"
+    },
+    {
+     "name": "radiumbeer"
+    },
+    {
+     "name": "doomvodkabottle"
+    },
+    {
+     "name": "vampirewinebottle"
+    },
+    {
+     "name": "ambrosiabottle"
+    },
+    {
+     "name": "ambrosia"
+    },
+    {
+     "name": "luckymeadbottle"
+    },
+    {
+     "name": "protofuel"
+    },
+    {
+     "name": "protofuelbottle"
+    },
+    {
+     "name": "ksspecialblend"
+    },
+    {
+     "name": "ksspecialblendbottle"
+    },
+    {
+     "name": "secret"
+    }
+]
+}

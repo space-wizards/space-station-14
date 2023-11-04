@@ -8,10 +8,11 @@
   },
   "states": [
     {
-      "name": "icon"
+      "name": "equipped-HELMET",
+      "directions": 4
     },
     {
-      "name": "equipped-HELMET",
+      "name": "equipped-HELMET-hamster",
       "directions": 4
     },
     {
@@ -21,6 +22,9 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "icon"
     }
   ]
 }

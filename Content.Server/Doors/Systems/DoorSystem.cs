@@ -1,51 +1,39 @@
 using Content.Server.Access;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Construction;
-using Content.Server.Tools.Systems;
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
+using Content.Shared.Prying.Components;
+using Content.Shared.Prying.Systems;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
-using System.Linq;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.Tools;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Content.Shared.DoAfter;
 
 namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly AirlockSystem _airlock = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly DoorBoltSystem _bolts = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly PryingSystem _pryingSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
 
-        // Mob prying doors
-        SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
-
-        SubscribeLocalEvent<DoorComponent, DoorPryDoAfterEvent>(OnPryFinished);
+        SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforeDoorPry);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<DoorComponent, PriedEvent>(OnAfterPry);
     }
 
     protected override void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
@@ -54,7 +42,9 @@ public sealed class DoorSystem : SharedDoorSystem
         if (args.Handled || !door.ClickOpen)
             return;
 
-        TryToggleDoor(uid, door, args.User);
+        if (!TryToggleDoor(uid, door, args.User))
+            _pryingSystem.TryPry(uid, args.User, out _);
+
         args.Handled = true;
     }
 
@@ -113,24 +103,7 @@ public sealed class DoorSystem : SharedDoorSystem
             Audio.PlayPvs(soundSpecifier, uid, audioParams);
     }
 
-#region DoAfters
-    /// <summary>
-    ///     Weld or pry open a door.
-    /// </summary>
-    private void OnInteractUsing(EntityUid uid, DoorComponent door, InteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp(args.Used, out ToolComponent? tool))
-            return;
-
-        if (tool.Qualities.Contains(door.PryingQuality))
-        {
-            args.Handled = TryPryDoor(uid, args.Used, args.User, door);
-        }
-    }
-
+    #region DoAfters
     private void OnWeldAttempt(EntityUid uid, DoorComponent component, WeldableAttemptEvent args)
     {
         if (component.CurrentlyCrushing.Count > 0)
@@ -144,7 +117,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
-    private void OnWeldChanged(EntityUid uid, DoorComponent component, WeldableChangedEvent args)
+    private void OnWeldChanged(EntityUid uid, DoorComponent component, ref WeldableChangedEvent args)
     {
         if (component.State == DoorState.Closed)
             SetState(uid, DoorState.Welded, component);
@@ -152,89 +125,13 @@ public sealed class DoorSystem : SharedDoorSystem
             SetState(uid, DoorState.Closed, component);
     }
 
-    private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnBeforeDoorPry(EntityUid id, DoorComponent door, ref BeforePryEvent args)
     {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
-        if (!TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality))
-            return;
-
-        args.Verbs.Add(new AlternativeVerb()
-        {
-            Text = Loc.GetString("door-pry"),
-            Impact = LogImpact.Low,
-            Act = () => TryPryDoor(uid, args.User, args.User, component, true),
-        });
+        if (door.State == DoorState.Welded || !door.CanPry)
+            args.Cancelled = true;
     }
+    #endregion
 
-
-    /// <summary>
-    ///     Pry open a door. This does not check if the user is holding the required tool.
-    /// </summary>
-    public bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
-    {
-        if (door.State == DoorState.Welded)
-            return false;
-
-        if (!force)
-        {
-            var canEv = new BeforeDoorPryEvent(user, tool);
-            RaiseLocalEvent(target, canEv, false);
-
-            if (canEv.Cancelled)
-                // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
-                // under a windoor.
-                return true;
-        }
-
-        var modEv = new DoorGetPryTimeModifierEvent(user);
-        RaiseLocalEvent(target, modEv, false);
-
-        _toolSystem.UseTool(tool, user, target, modEv.PryTimeModifier * door.PryTime, door.PryingQuality, new DoorPryDoAfterEvent());
-        return true; // we might not actually succeeded, but a do-after has started
-    }
-
-    private void OnPryFinished(EntityUid uid, DoorComponent door, DoAfterEvent args)
-    {
-        if (args.Cancelled)
-            return;
-
-        if (door.State == DoorState.Closed)
-            StartOpening(uid, door);
-        else if (door.State == DoorState.Open)
-            StartClosing(uid, door);
-    }
-#endregion
-
-    /// <summary>
-    ///     Does the user have the permissions required to open this door?
-    /// </summary>
-    public override bool HasAccess(EntityUid uid, EntityUid? user = null, AccessReaderComponent? access = null)
-    {
-        // TODO network AccessComponent for predicting doors
-
-        // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
-        if (user == null || AccessType == AccessTypes.AllowAll)
-            return true;
-
-        // If the door is on emergency access we skip the checks.
-        if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
-            return true;
-
-        if (!Resolve(uid, ref access, false))
-            return true;
-
-        var isExternal = access.AccessLists.Any(list => list.Contains("External"));
-
-        return AccessType switch
-        {
-            // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
-            AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(user.Value, access)
-        };
-    }
 
     /// <summary>
     ///     Open a door if a player or door-bumper (PDA, ID-card) collide with the door. Sadly, bullets no longer
@@ -250,24 +147,22 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.State != DoorState.Closed)
             return;
 
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
     }
     private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {
-        if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+        if (TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
-            if (airlockComponent.BoltsDown || !this.IsPowered(uid, EntityManager))
+            if (_bolts.IsBolted(uid) || !this.IsPowered(uid, EntityManager))
                 return;
 
             if (door.State == DoorState.Closed)
             {
                 SetState(uid, DoorState.Emagging, door);
                 PlaySound(uid, door.SparkSound, AudioParams.Default.WithVolume(8), args.UserUid, false);
-                var emagged = new DoorEmaggedEvent(args.UserUid);
-                RaiseLocalEvent(uid, ref emagged);
                 args.Handled = true;
             }
         }
@@ -285,29 +180,37 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.OpenSound != null)
             PlaySound(uid, door.OpenSound, AudioParams.Default.WithVolume(-5), user, predicted);
 
-        if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(uid, out var airlockComponent))
-            _airlock.SetBoltsWithAudio(uid, airlockComponent, !airlockComponent.BoltsDown);
+        if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
+            _bolts.SetBoltsWithAudio(uid, doorBoltComponent, !doorBoltComponent.BoltsDown);
+    }
+
+    /// <summary>
+    ///     Open or close a door after it has been successfuly pried.
+    /// </summary>
+    private void OnAfterPry(EntityUid uid, DoorComponent door, ref PriedEvent args)
+    {
+        if (door.State == DoorState.Closed)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} open");
+            StartOpening(uid, door, args.User);
+        }
+        else if (door.State == DoorState.Open)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed");
+            StartClosing(uid, door, args.User);
+        }
     }
 
     protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
     {
+        var uid = body.Owner;
         if (component.BumpOpen)
         {
-            foreach (var other in PhysicsSystem.GetContactingEntities(body, approximate: true))
+            foreach (var other in PhysicsSystem.GetContactingEntities(uid, body, approximate: true))
             {
-                if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
-                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
+                if (Tags.HasTag(other, "DoorBumpOpener") && TryOpen(uid, component, other, false, quiet: true))
+                    break;
             }
         }
     }
 }
-
-public sealed class PryFinishedEvent : EntityEventArgs { }
-public sealed class PryCancelledEvent : EntityEventArgs { }
-
-/// <summary>
-/// Event raised when a door is emagged, either with an emag or a Space Ninja's doorjack ability.
-/// Used to track doors for ninja's objective.
-/// </summary>
-[ByRefEvent]
-public readonly record struct DoorEmaggedEvent(EntityUid UserUid);

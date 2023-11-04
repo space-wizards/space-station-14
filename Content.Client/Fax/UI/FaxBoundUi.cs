@@ -7,9 +7,10 @@ namespace Content.Client.Fax.UI;
 [UsedImplicitly]
 public sealed class FaxBoundUi : BoundUserInterface
 {
+    [ViewVariables]
     private FaxWindow? _window;
 
-    public FaxBoundUi(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public FaxBoundUi(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 

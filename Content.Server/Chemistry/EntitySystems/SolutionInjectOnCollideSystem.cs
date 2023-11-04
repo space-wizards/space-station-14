@@ -1,7 +1,8 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Dynamics;
@@ -22,21 +23,14 @@ namespace Content.Server.Chemistry.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SolutionInjectOnCollideComponent, ComponentInit>(HandleInit);
             SubscribeLocalEvent<SolutionInjectOnCollideComponent, StartCollideEvent>(HandleInjection);
-        }
-
-        private void HandleInit(EntityUid uid, SolutionInjectOnCollideComponent component, ComponentInit args)
-        {
-            component.Owner
-                .EnsureComponentWarn<SolutionContainerManagerComponent>($"{nameof(SolutionInjectOnCollideComponent)} requires a SolutionContainerManager on {component.Owner}!");
         }
 
         private void HandleInjection(EntityUid uid, SolutionInjectOnCollideComponent component, ref StartCollideEvent args)
         {
-            var target = args.OtherFixture.Body.Owner;
+            var target = args.OtherEntity;
 
-            if (!args.OtherFixture.Body.Hard ||
+            if (!args.OtherBody.Hard ||
                 !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
                 !_solutionsSystem.TryGetInjectableSolution(component.Owner, out var solution)) return;
 

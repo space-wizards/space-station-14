@@ -2,9 +2,9 @@ using Content.Server.Actions;
 using Content.Server.Bed.Components;
 using Content.Server.Bed.Sleep;
 using Content.Server.Body.Systems;
+using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Bed;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Components;
@@ -12,9 +12,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
-using Content.Server.Construction;
 using Content.Shared.Mobs.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Bed
@@ -23,7 +21,6 @@ namespace Content.Server.Bed
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
@@ -40,21 +37,18 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
-        private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, BuckleChangeEvent args)
+        private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, ref BuckleChangeEvent args)
         {
-            _prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction);
             if (args.Buckling)
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
                 component.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(component.HealTime);
-                if (sleepAction != null)
-                    _actionsSystem.AddAction(args.BuckledEntity, new InstantAction(sleepAction), null);
+                _actionsSystem.AddAction(args.BuckledEntity, ref component.SleepAction, SleepingSystem.SleepActionId, uid);
+                Dirty(uid, component);
                 return;
             }
 
-            if (sleepAction != null)
-                _actionsSystem.RemoveAction(args.BuckledEntity, sleepAction);
-
+            _actionsSystem.RemoveAction(args.BuckledEntity, component.SleepAction);
             _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);
         }
@@ -92,7 +86,7 @@ namespace Content.Server.Bed
             _appearance.SetData(uid, StasisBedVisuals.IsOn, isOn);
         }
 
-        private void OnBuckleChange(EntityUid uid, StasisBedComponent component, BuckleChangeEvent args)
+        private void OnBuckleChange(EntityUid uid, StasisBedComponent component, ref BuckleChangeEvent args)
         {
             // In testing this also received an unbuckle event when the bed is destroyed
             // So don't worry about that

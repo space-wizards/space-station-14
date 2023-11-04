@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Weather;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class WeatherComponent : Component
+public sealed partial class WeatherComponent : Component
 {
     /// <summary>
     /// Currently running weathers
@@ -20,7 +20,7 @@ public sealed class WeatherComponent : Component
 }
 
 [DataDefinition, Serializable, NetSerializable]
-public sealed class WeatherData
+public sealed partial class WeatherData
 {
     // Client audio stream.
     [NonSerialized]

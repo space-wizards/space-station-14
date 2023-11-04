@@ -63,6 +63,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: StationRecordsComputerCircuitboard
+  name: station records computer board
+  description: A computer printed circuit board for a station records computer.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerStationRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CargoRequestComputerCircuitboard
   name: cargo request computer board
   description: A computer printed circuit board for a cargo request computer.
@@ -76,7 +87,21 @@
     - type: Tag
       tags:
       - DroneUsable
-      - HighRiskItem
+
+- type: entity
+  id: CargoBountyComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: cargo bounty computer board
+  description: A computer printed circuit board for a cargo bounty computer.
+  components:
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerCargoBounty
+  - type: StaticPrice
+  - type: Tag
+    tags:
+    - DroneUsable
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -91,12 +116,32 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: SalvageExpeditionsComputerCircuitboard
+  name: salvage expeditions computer board
+  description: A computer printed circuit board for a salvage expeditions computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerSalvageExpedition
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CargoShuttleConsoleCircuitboard
-  name: supply shuttle console board
+  name: cargo shuttle console board
   description: A computer printed circuit board for a cargo shuttle console.
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleCargo
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SalvageShuttleConsoleCircuitboard
+  name: salvage shuttle console board
+  description: A computer printed circuit board for a salvage shuttle console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleSalvage
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -158,7 +203,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: TechDiskComputerCircuitboard
-  name: technology disk terminal board
+  name: tech disk terminal board
   description: A computer printed circuit board for a technology disk terminal.
   components:
   - type: Sprite
@@ -319,3 +364,27 @@
   components:
     - type: ComputerBoard
       prototype: ComputerIFFSyndicate
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerMassMediaCircuitboard
+  name: mass-media console board
+  description: Write your message to the world!
+  components:
+    - type: Sprite
+      state: cpu_service
+    - type: StaticPrice
+      price: 150
+    - type: ComputerBoard
+      prototype: ComputerMassMedia
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SensorConsoleCircuitboard
+  name: sensor monitoring console board
+  description: A computer printed circuit board for a sensor monitoring console.
+  components:
+    - type: Sprite
+      state: cpu_engineering
+    - type: ComputerBoard
+      prototype: ComputerSensorMonitoring

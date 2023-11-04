@@ -53,11 +53,6 @@ public sealed partial class AdminLogManager
         CacheLog(record);
     }
 
-    private void CacheLog(QueuedLog log)
-    {
-        CacheLog(log.Log);
-    }
-
     private void CacheLog(SharedAdminLog log)
     {
         // TODO ADMIN LOGS remove redundant data and don't do a dictionary lookup per log

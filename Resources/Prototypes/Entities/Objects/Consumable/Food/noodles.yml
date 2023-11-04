@@ -6,11 +6,8 @@
   abstract: true
   description: Now that's a nice pasta!
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -18,6 +15,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
+  - type: StaticPrice
+    price: 225 #Imperial price balance
 
 # Noodles
 
@@ -31,9 +30,7 @@
     flavors:
       - pasta
   - type: Sprite
-    layers:
-    - state: plate
-    - state: boiled
+    state: boiled
 # Tastes like pasta.
 
 - type: entity
@@ -47,9 +44,10 @@
       - pasta
       - tomato
   - type: Sprite
-    layers:
-    - state: plate
-    - state: tomato
+    state: tomato
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like pasta, tomato.
 
 - type: entity
@@ -66,7 +64,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 25
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 12
@@ -85,18 +83,19 @@
       - pasta
       - meaty
   - type: Sprite
-    layers:
-    - state: plate
-    - state: meatball
+    state: meatball
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like pasta, meat.
 
 - type: entity
@@ -110,13 +109,11 @@
       - pasta
       - meaty
   - type: Sprite
-    layers:
-    - state: plate
-    - state: spesslaw
+    state: spesslaw
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
@@ -137,13 +134,11 @@
       - eggplant
       - carrot
   - type: Sprite
-    layers:
-    - state: plate
-    - state: chowmein
+    state: chowmein
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 7
@@ -162,13 +157,11 @@
       - pasta
       - butter
   - type: Sprite
-    layers:
-    - state: plate
-    - state: butter
+    state: butter
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 8

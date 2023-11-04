@@ -9,4 +9,4 @@
             - tool: Sawing
               doAfter: 2
     - node: shotgunsawn
-      entity: WeaponShotgunSawn
+      entity: WeaponShotgunSawnEmpty # Makes the sawn-off spawn empty. At max they're losing 2 shells.

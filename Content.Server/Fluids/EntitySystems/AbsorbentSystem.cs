@@ -1,6 +1,6 @@
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
@@ -25,12 +25,14 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AbsorbentComponent, InteractNoHandEvent>(OnInteractNoHand);
         SubscribeLocalEvent<AbsorbentComponent, SolutionChangedEvent>(OnAbsorbentSolutionChange);
     }
 
@@ -53,7 +55,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var oldProgress = component.Progress.ShallowClone();
         component.Progress.Clear();
 
-        if (solution.TryGetReagent(PuddleSystem.EvaporationReagent, out var water))
+        var water = solution.GetTotalPrototypeQuantity(PuddleSystem.EvaporationReagent);
+        if (water > FixedPoint2.Zero)
         {
             component.Progress[_prototype.Index<ReagentPrototype>(PuddleSystem.EvaporationReagent).SubstanceColor] = water.Float();
         }
@@ -79,31 +82,41 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         Dirty(component);
     }
 
+    private void OnInteractNoHand(EntityUid uid, AbsorbentComponent component, InteractNoHandEvent args)
+    {
+        if (args.Handled || args.Target == null)
+            return;
+
+        Mop(uid, args.Target.Value, uid, component);
+        args.Handled = true;
+    }
+
     private void OnAfterInteract(EntityUid uid, AbsorbentComponent component, AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Handled || _useDelay.ActiveDelay(uid))
+        if (!args.CanReach || args.Handled || args.Target == null)
             return;
 
-        if (!_solutionSystem.TryGetSolution(args.Used, AbsorbentComponent.SolutionName, out var absorberSoln))
+        Mop(args.User, args.Target.Value, args.Used, component);
+        args.Handled = true;
+    }
+
+    private void Mop(EntityUid user, EntityUid target, EntityUid used, AbsorbentComponent component)
+    {
+        if (!_solutionSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
 
-        // Didn't click anything so don't do anything.
-        if (args.Target is not { Valid: true } target)
-        {
+        if (_useDelay.ActiveDelay(used))
             return;
-        }
 
         // If it's a puddle try to grab from
-        if (!TryPuddleInteract(args.User, uid, target, component, absorberSoln))
+        if (!TryPuddleInteract(user, used, target, component, absorberSoln))
         {
             // Do a transfer, try to get water onto us and transfer anything else to them.
 
             // If it's anything else transfer to
-            if (!TryTransferAbsorber(args.User, uid, target, component, absorberSoln))
+            if (!TryTransferAbsorber(user, used, target, component, absorberSoln))
                 return;
         }
-
-        args.Handled = true;
     }
 
     /// <summary>
@@ -128,6 +141,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         // Remove water on target
         // Then do the transfer.
         var nonWater = absorberSoln.SplitSolutionWithout(component.PickupAmount, PuddleSystem.EvaporationReagent);
+        _solutionContainerSystem.UpdateChemicals(used, absorberSoln, true);
 
         if (nonWater.Volume == FixedPoint2.Zero && absorberSoln.AvailableVolume == FixedPoint2.Zero)
         {
@@ -140,6 +154,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             absorberSoln.AvailableVolume;
 
         var water = refillableSolution.RemoveReagent(PuddleSystem.EvaporationReagent, transferAmount);
+        _solutionContainerSystem.UpdateChemicals(target, refillableSolution);
 
         if (water == FixedPoint2.Zero && nonWater.Volume == FixedPoint2.Zero)
         {
@@ -147,11 +162,51 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return false;
         }
 
-        absorberSoln.AddReagent(PuddleSystem.EvaporationReagent, water);
-        refillableSolution.AddSolution(nonWater, _prototype);
 
-        _solutionSystem.UpdateChemicals(used, absorberSoln);
-        _solutionSystem.UpdateChemicals(target, refillableSolution);
+        if (water > 0 && !_solutionContainerSystem.TryAddReagent(used, absorberSoln, PuddleSystem.EvaporationReagent, water,
+                out _))
+        {
+            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", used)), used, user);
+        }
+
+        // Attempt to transfer the full nonWater solution to the bucket.
+        if (nonWater.Volume > 0)
+        {
+            bool fullTransferSuccess = _solutionContainerSystem.TryAddSolution(target, refillableSolution, nonWater);
+
+            // If full transfer was unsuccessful, try a partial transfer.
+            if (!fullTransferSuccess)
+            {
+                var partiallyTransferSolution = nonWater.SplitSolution(refillableSolution.AvailableVolume);
+
+                // Try to transfer the split solution to the bucket.
+                if (_solutionContainerSystem.TryAddSolution(target, refillableSolution, partiallyTransferSolution))
+                {
+                    // The transfer was successful. nonWater now contains the amount that wasn't transferred.
+                    // If there's any leftover nonWater solution, add it back to the mop.
+                    if (nonWater.Volume > 0)
+                    {
+                        absorberSoln.AddSolution(nonWater, _prototype);
+                        _solutionContainerSystem.UpdateChemicals(used, absorberSoln);
+                    }
+                }
+                else
+                {
+                    // If the transfer was unsuccessful, combine both solutions and return them to the mop.
+                    nonWater.AddSolution(partiallyTransferSolution, _prototype);
+                    absorberSoln.AddSolution(nonWater, _prototype);
+                    _solutionContainerSystem.UpdateChemicals(used, absorberSoln);
+                }
+            }
+        }
+        else
+        {
+            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", target)), user, user);
+        }
+
+        _audio.PlayPvs(component.TransferSound, target);
+        _useDelay.BeginDelay(used);
+        return true;
         _audio.PlayPvs(component.TransferSound, target);
         _useDelay.BeginDelay(used);
         return true;
@@ -176,7 +231,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         // Check if we have any evaporative reagents on our absorber to transfer
-        absorberSoln.TryGetReagent(PuddleSystem.EvaporationReagent, out var available);
+        var available = absorberSoln.GetTotalPrototypeQuantity(PuddleSystem.EvaporationReagent);
 
         // No material
         if (available == FixedPoint2.Zero)

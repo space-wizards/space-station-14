@@ -1,16 +1,10 @@
 using System.Linq;
-using Robust.Shared.GameStates;
+using Content.Shared.DeviceNetwork.Components;
 
-namespace Content.Shared.DeviceNetwork;
+namespace Content.Shared.DeviceNetwork.Systems;
 
 public abstract class SharedDeviceListSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<DeviceListComponent, ComponentGetState>(GetDeviceListState);
-        SubscribeLocalEvent<DeviceListComponent, ComponentHandleState>(HandleDeviceListState);
-    }
-
     /// <summary>
     ///     Updates the device list stored on this entity.
     /// </summary>
@@ -35,6 +29,8 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
         deviceList.Devices = newDevices;
 
+        UpdateShutdownSubscription(uid, devicesList, oldDevices);
+
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(oldDevices, devicesList));
 
         Dirty(deviceList);
@@ -51,21 +47,8 @@ public abstract class SharedDeviceListSystem : EntitySystem
         return component.Devices;
     }
 
-    private void GetDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentGetState args)
+    protected virtual void UpdateShutdownSubscription(EntityUid uid, List<EntityUid> devicesList, List<EntityUid> oldDevices)
     {
-        args.State = new DeviceListComponentState(comp.Devices, comp.IsAllowList, comp.HandleIncomingPackets);
-    }
-
-    private void HandleDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentHandleState args)
-    {
-        if (args.Current is not DeviceListComponentState state)
-        {
-            return;
-        }
-
-        comp.Devices = state.Devices;
-        comp.HandleIncomingPackets = state.HandleIncomingPackets;
-        comp.IsAllowList = state.IsAllowList;
     }
 }
 

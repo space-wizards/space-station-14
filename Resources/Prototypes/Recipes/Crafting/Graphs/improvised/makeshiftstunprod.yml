@@ -1,0 +1,31 @@
+- type: constructionGraph
+  id: makeshiftstunprod
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: msstunprod
+          steps:
+            - material: MetalRod
+              amount: 1
+            - material: Cable
+              amount: 15
+            - tag: DrinkSpaceGlue
+              name: Drink Space Glue
+              icon:
+                sprite: Objects/Consumable/Drinks/glue-tube.rsi
+                state: icon
+            - tag: PowerCellSmall
+              name: Power Cell Small
+              icon:
+                sprite: Objects/Power/power_cells.rsi
+                state: small
+            - tag: CapacitorStockPart
+              name: Capacitor Stock Part
+              icon:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: capacitor
+              doAfter: 20
+    - node: msstunprod
+      entity: Stunprod
+      

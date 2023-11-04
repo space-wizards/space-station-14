@@ -6,18 +6,22 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 3600
+      time: 10800 #Imperial role timers
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 3600
+      time: 10800 #Imperial role timers
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 3600
-    - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 7200 #Imperial role timers
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 3600 #Imperial role timers
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600 #Imperial role timers
   weight: 20
   startingGear: HoPGear
-  icon: "HeadOfPersonnel"
+  icon: "JobIconHeadOfPersonnel"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
@@ -34,6 +38,24 @@
   - Hydroponics
   - External
   # I mean they'll give themselves the rest of the access levels *anyways*.
+  # As of 15/03/23 they can't do that so here's MOST of the rest of the access levels.
+  # Head level access that isn't their own was deliberately left out, get AA from the captain instead.
+  - Chemistry
+  - Engineering
+  - Research
+  - Detective
+  - Salvage
+  - Security
+  - Brig
+  - Cargo
+  - Atmospherics
+  - Medical
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: HoPGear
@@ -44,6 +66,7 @@
     head: ClothingHeadHatHopcap
     id: HoPPDA
     ears: ClothingHeadsetAltCommand
-  innerclothingskirt: ClothingUniformJumpskirtHoP
+    belt: BoxFolderClipboard
+  innerClothingSkirt: ClothingUniformJumpskirtHoP
   satchel: ClothingBackpackSatchelHOPFilled
   duffelbag: ClothingBackpackDuffelHOPFilled

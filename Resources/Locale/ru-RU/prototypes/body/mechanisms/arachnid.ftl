@@ -1,0 +1,17 @@
+ent-OrganArachnidStomach = желудок арахнида
+ent-OrganArachnidHeart = сердце арахнида
+ent-OrganArachnidLiver = печень арахнида
+ent-OrganArachnidKidneys = почки арахнида
+ent-OrganArachnidEyes = глаза арахнида
+ent-OrganArachnidTongue = язык арахнида
+ent-TorsoArachnid = туловище арахнида
+ent-HeadArachnid = голова арахнида
+ent-LeftArmArachnid = левая рука арахнида
+ent-RightArmArachnid = правая рука арахнида
+ent-LeftHandArachnid = левая ладонь арахнида
+ent-RightHandArachnid = правая ладонь арахнида
+ent-LeftLegArachnid = левая нога арахнида
+ent-RightLegArachnid = правая нога арахнида
+ent-LeftFootArachnid = левая ступня арахнида
+ent-RightFootArachnid = правая ступня арахнида
+ent-OrganArachnidLungs = легкие арахнида

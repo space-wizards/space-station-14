@@ -8,8 +8,11 @@ using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Content.Shared.Chat;
+using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;//for admin pray sound
+using Content.Server.Administration.Managers;//for admin pray sound
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -24,6 +27,7 @@ public sealed class PrayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;//for admin pray sound
 
     public override void Initialize()
     {
@@ -35,7 +39,7 @@ public sealed class PrayerSystem : EntitySystem
     private void AddPrayVerb(EntityUid uid, PrayableComponent comp, GetVerbsEvent<ActivationVerb> args)
     {
         // if it doesn't have an actor and we can't reach it then don't add the verb
-        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
         // this is to prevent ghosts from using it
@@ -50,7 +54,7 @@ public sealed class PrayerSystem : EntitySystem
             {
                 if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-locked"), uid, actor.PlayerSession, PopupType.Large);
+                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.PlayerSession, PopupType.Large);
                     return;
                 }
 
@@ -100,10 +104,26 @@ public sealed class PrayerSystem : EntitySystem
         if (sender.AttachedEntity == null)
             return;
 
-
         _popupSystem.PopupEntity(Loc.GetString(comp.SentMessage), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
-        _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotifiactionPrefix)} <{sender.Name}>: {message}");
-        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotifiactionPrefix)}): {message}");
+        _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
+        //imperial admin pray sounds start
+        switch (comp.NotificationPrefix)
+        {
+            case "prayer-chat-notify-pray":
+                SoundSystem.Play("/Audio/Effects/admin_pray_sound.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
+                break;
+            case "prayer-chat-notify-honkmother":
+                SoundSystem.Play("/Audio/Items/bikehorn.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
+                break;
+            case "prayer-chat-notify-centcom":
+                SoundSystem.Play("/Audio/Effects/admin_cc_call_sound.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
+                break;
+            default:
+                SoundSystem.Play("/Audio/Effects/beep1.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
+                break;
+        }
+        //imperial admin pray sound end
     }
 }

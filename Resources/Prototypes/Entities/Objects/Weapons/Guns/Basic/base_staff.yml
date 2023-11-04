@@ -16,6 +16,7 @@
   - type: AmmoCounter
   # All staves recharge. Wands are not.
   - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 30
   - type: Tag
     tags:
     - WizardStaff

@@ -1,0 +1,114 @@
+#Basic EVA
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitEVA
+  name: EVA suit
+  description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/eva.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
+    - WhitelistChameleon
+
+#Syndicate EVA
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitSyndicate # TODO: rename to ClothingOuterEVASuitSyndicate
+  name: syndicate EVA suit
+  description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
+    - WhitelistChameleon
+
+#Emergency EVA
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterSuitEmergency
+  name: emergency EVA suit
+  description: An emergency EVA suit with a built-in helmet. It's horribly slow and lacking in temperature protection, but enough to bide you time from the harsh vaccuum of space.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: TemperatureProtection
+    coefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetEVALarge
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+
+#Prisoner EVA
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id:  ClothingOuterHardsuitEVAPrisoner
+  name: prisoner EVA suit
+  description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
+    - WhitelistChameleon
+
+#NTSRA Voidsuit / Ancient Voidsuit
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitAncientEVA
+  name: NTSRA voidsuit #Nanotrasen Space Research Association
+  description: An ancient space suit, designed by the NTSRA branch of CentCom. It is very finely crafted, allowing for greater mobility than most modern space suits.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+
+#Paramedic Voidsuit
+#Despite having resistances and looking like one, this is two-piece and parents off the EVA suit so it goes here.
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitVoidParamed
+  name: Paramedic Void Suit
+  description: A void suit made for paramedics.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75
+        Caustic: 0.5
+  - type: GroupExamine

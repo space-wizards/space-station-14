@@ -9,7 +9,6 @@
       tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
-      netsync: false
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpsuit/Color/black.rsi
     - type: SuitSensor

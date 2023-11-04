@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Machines/telecomms.rsi
     snapCardinals: true
-    netsync: false
     layers:
     - state: icon
     - state: unlit
@@ -27,14 +26,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -47,9 +47,10 @@
         acts: ["Destruction"]
   - type: Machine
     board: TelecomServerCircuitboard
+  - type: WiresPanel
   - type: Wires
-    BoardName: "TelecomServer"
-    LayoutId: TelecomServer
+    boardName: wires-board-name-telecomserver
+    layoutId: TelecomServer
   - type: Transform
     anchored: true
   - type: Pullable

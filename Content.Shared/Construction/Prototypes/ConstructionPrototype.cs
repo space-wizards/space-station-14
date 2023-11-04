@@ -3,86 +3,96 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Construction.Prototypes
+namespace Content.Shared.Construction.Prototypes;
+
+[Prototype("construction")]
+public sealed class ConstructionPrototype : IPrototype
 {
-    [Prototype("construction")]
-    public sealed class ConstructionPrototype : IPrototype
-    {
-        [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
+    [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 
-        /// <summary>
-        ///     Friendly name displayed in the construction GUI.
-        /// </summary>
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
+    /// <summary>
+    ///     Hide from the construction list
+    /// </summary>
+    [DataField("hide")]
+    public bool Hide = false;
 
-        /// <summary>
-        ///     "Useful" description displayed in the construction GUI.
-        /// </summary>
-        [DataField("description")]
-        public string Description { get; } = string.Empty;
+    /// <summary>
+    ///     Friendly name displayed in the construction GUI.
+    /// </summary>
+    [DataField("name")]
+    public string Name= string.Empty;
 
-        /// <summary>
-        ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
-        /// </summary>
-        [DataField("graph", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
-        public string Graph { get; } = string.Empty;
+    /// <summary>
+    ///     "Useful" description displayed in the construction GUI.
+    /// </summary>
+    [DataField("description")]
+    public string Description = string.Empty;
 
-        /// <summary>
-        ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
-        /// </summary>
-        [DataField("targetNode")]
-        public string TargetNode { get; } = string.Empty;
+    /// <summary>
+    ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
+    /// </summary>
+    [DataField("graph", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>), required: true)]
+    public string Graph = string.Empty;
 
-        /// <summary>
-        ///     The starting <see cref="ConstructionGraphNode"/> this construction will start at.
-        /// </summary>
-        [DataField("startNode")]
-        public string StartNode { get; } = string.Empty;
+    /// <summary>
+    ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
+    /// </summary>
+    [DataField("targetNode")]
+    public string TargetNode = string.Empty;
 
-        /// <summary>
-        ///     Texture path inside the construction GUI.
-        /// </summary>
-        [DataField("icon")]
-        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
+    /// <summary>
+    ///     The starting <see cref="ConstructionGraphNode"/> this construction will start at.
+    /// </summary>
+    [DataField("startNode")]
+    public string StartNode = string.Empty;
 
-        /// <summary>
-        ///     Texture paths used for the construction ghost.
-        /// </summary>
-        [DataField("layers")]
-        private List<SpriteSpecifier>? _layers;
+    /// <summary>
+    ///     Texture path inside the construction GUI.
+    /// </summary>
+    [DataField("icon")]
+    public SpriteSpecifier Icon = SpriteSpecifier.Invalid;
 
-        /// <summary>
-        ///     If you can start building or complete steps on impassable terrain.
-        /// </summary>
-        [DataField("canBuildInImpassable")]
-        public bool CanBuildInImpassable { get; private set; }
+    /// <summary>
+    ///     Texture paths used for the construction ghost.
+    /// </summary>
+    [DataField("layers")]
+    private List<SpriteSpecifier>? _layers;
 
-        [DataField("category")] public string Category { get; private set; } = "";
+    /// <summary>
+    ///     If you can start building or complete steps on impassable terrain.
+    /// </summary>
+    [DataField("canBuildInImpassable")]
+    public bool CanBuildInImpassable { get; private set; }
 
-        [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
+    [DataField("category")] public string Category { get; private set; } = "";
 
-        [ViewVariables]
-        [IdDataField]
-        public string ID { get; } = default!;
+    [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 
-        [DataField("placementMode")]
-        public string PlacementMode { get; } = "PlaceFree";
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
 
-        /// <summary>
-        ///     Whether this construction can be constructed rotated or not.
-        /// </summary>
-        [DataField("canRotate")]
-        public bool CanRotate { get; } = true;
+    [DataField("placementMode")]
+    public string PlacementMode = "PlaceFree";
 
-        public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
-        public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier>{Icon};
-    }
+    /// <summary>
+    ///     Whether this construction can be constructed rotated or not.
+    /// </summary>
+    [DataField("canRotate")]
+    public bool CanRotate = true;
 
-    public enum ConstructionType
-    {
-        Structure,
-        Item,
-    }
+    /// <summary>
+    ///     Construction to replace this construction with when the current one is 'flipped'
+    /// </summary>
+    [DataField("mirror", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionPrototype>))]
+    public string? Mirror;
+
+    public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
+    public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier>{Icon};
 }
 
+public enum ConstructionType
+{
+    Structure,
+    Item,
+}

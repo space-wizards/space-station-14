@@ -22,6 +22,11 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+  # for H.O.N.K. construction
+  - type: Tag
+    tags:
+    - ClownShoes
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -37,12 +42,11 @@
     footstepSoundCollection:
       collection: FootstepClown
   - type: PointLight
-    netsync: false
     enabled: true
     radius: 3
     energy: 2
     color: "#FFD800"
-
+    netsync: false
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesCult
@@ -115,7 +119,6 @@
       tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Shoes/Color/black.rsi
-      netsync: false
     - type: Clothing
       sprite: Clothing/Shoes/Color/black.rsi
     - type: ChameleonClothing
@@ -161,3 +164,25 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/cluwne.rsi
   - type: Unremoveable
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesClownLarge
+  name: large clown shoes
+  description: "When you need to stand out in a room full of clowns!"
+  components:
+  - type: Sprite
+    state: "icon"
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+        offset: "0, -0.02"
+  - type: Item
+    size: 10
+    sprite: Clothing/Shoes/Specific/large_clown.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.8

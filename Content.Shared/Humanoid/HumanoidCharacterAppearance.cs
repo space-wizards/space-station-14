@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.Corvax.Sponsors;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
@@ -9,7 +10,7 @@ namespace Content.Shared.Humanoid
 {
     [DataDefinition]
     [Serializable, NetSerializable]
-    public sealed class HumanoidCharacterAppearance : ICharacterAppearance
+    public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
     {
         public HumanoidCharacterAppearance(string hairStyleId,
             Color hairColor,
@@ -29,25 +30,25 @@ namespace Content.Shared.Humanoid
         }
 
         [DataField("hair")]
-        public string HairStyleId { get; }
+        public string HairStyleId { get; private set; }
 
         [DataField("hairColor")]
-        public Color HairColor { get; }
+        public Color HairColor { get; private set; }
 
         [DataField("facialHair")]
-        public string FacialHairStyleId { get; }
+        public string FacialHairStyleId { get; private set; }
 
         [DataField("facialHairColor")]
-        public Color FacialHairColor { get; }
+        public Color FacialHairColor { get; private set; }
 
         [DataField("eyeColor")]
-        public Color EyeColor { get; }
+        public Color EyeColor { get; private set; }
 
         [DataField("skinColor")]
-        public Color SkinColor { get; }
+        public Color SkinColor { get; private set; }
 
         [DataField("markings")]
-        public List<Marking> Markings { get; }
+        public List<Marking> Markings { get; private set; }
 
         public HumanoidCharacterAppearance WithHairStyleName(string newName)
         {
@@ -163,9 +164,9 @@ namespace Content.Shared.Humanoid
                     break;
                 case HumanoidSkinColor.Hues:
                 case HumanoidSkinColor.TintedHues:
-                    var rbyte = random.Next(0, 255);
-                    var gbyte = random.Next(0, 255);
-                    var bbyte = random.Next(0, 255);
+                    var rbyte = random.NextByte();
+                    var gbyte = random.NextByte();
+                    var bbyte = random.NextByte();
                     newSkinColor = new Color(rbyte, gbyte, bbyte);
                     break;
             }
@@ -188,7 +189,7 @@ namespace Content.Shared.Humanoid
             return new(color.RByte, color.GByte, color.BByte);
         }
 
-        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species)
+        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species, Sex sex)
         {
             var hairStyleId = appearance.HairStyleId;
             var facialHairStyleId = appearance.FacialHairStyleId;
@@ -205,10 +206,28 @@ namespace Content.Shared.Humanoid
                 hairStyleId = HairStyles.DefaultHairStyle;
             }
 
+            // Corvax-Sponsors-Start
+            if (proto.TryIndex(hairStyleId, out MarkingPrototype? hairProto) &&
+                hairProto.SponsorOnly) //&&
+                //!sponsorMarkings.Contains(hairStyleId))
+            {
+                hairStyleId = HairStyles.DefaultHairStyle;
+            }
+            // Corvax-Sponsors-End
+
             if (!markingManager.MarkingsByCategory(MarkingCategories.FacialHair).ContainsKey(facialHairStyleId))
             {
                 facialHairStyleId = HairStyles.DefaultFacialHairStyle;
             }
+
+            // Corvax-Sponsors-Start
+            if (proto.TryIndex(facialHairStyleId, out MarkingPrototype? facialHairProto) &&
+                facialHairProto.SponsorOnly)// &&
+                //!sponsorMarkings.Contains(facialHairStyleId))
+            {
+                facialHairStyleId = HairStyles.DefaultFacialHairStyle;
+            }
+            // Corvax-Sponsors-End
 
             var markingSet = new MarkingSet();
             var skinColor = appearance.SkinColor;
@@ -223,6 +242,7 @@ namespace Content.Shared.Humanoid
                 }
 
                 markingSet.EnsureSpecies(species, skinColor, markingManager);
+                markingSet.EnsureSexes(sex, markingManager);
             }
 
             return new HumanoidCharacterAppearance(

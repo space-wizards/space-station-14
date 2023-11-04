@@ -22,7 +22,7 @@ namespace Content.Server.Verbs.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var verbSystem = EntitySystem.Get<SharedVerbSystem>();
+            var verbSystem = entityManager.System<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
             EntityUid? playerEntity = null;

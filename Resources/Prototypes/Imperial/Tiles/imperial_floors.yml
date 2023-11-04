@@ -1,0 +1,177 @@
+#Lattice
+- type: tile
+  id: LatticeSmall1
+  name: tiles-lattice-small1
+  sprite: /Textures/Tiles/Imperial/LatticeSmall1.png
+  baseTurf: Space
+  isSubfloor: true
+  canWirecutter: true
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
+- type: tile
+  id: LatticeSmall2
+  name: tiles-lattice-small2
+  sprite: /Textures/Tiles/Imperial/LatticeSmall2.png
+  baseTurf: Space
+  isSubfloor: true
+  canWirecutter: true
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
+- type: tile
+  id: LatticeSmall3
+  name: tiles-lattice-small3
+  sprite: /Textures/Tiles/Imperial/LatticeSmall3.png
+  baseTurf: Space
+  isSubfloor: true
+  canWirecutter: true
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
+- type: tile
+  id: LatticeSmall4
+  name: tiles-lattice-small4
+  sprite: /Textures/Tiles/Imperial/LatticeSmall4.png
+  baseTurf: Space
+  isSubfloor: true
+  canWirecutter: true
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
+- type: tile
+  id: LatticeCorner1
+  name: tiles-lattice-corner1
+  sprite: /Textures/Tiles/Imperial/LatticeCorner1.png
+  baseTurf: Space
+  isSubfloor: true
+  canWirecutter: true
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
+- type: tile
+  id: LatticeCorner2
+  name: tiles-lattice-corner2
+  sprite: /Textures/Tiles/Imperial/LatticeCorner2.png
+  baseTurf: Space
+  isSubfloor: true
+  canWirecutter: true
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
+- type: tile
+  id: LatticeCorner3
+  name: tiles-lattice-corner3
+  sprite: /Textures/Tiles/Imperial/LatticeCorner3.png
+  baseTurf: Space
+  isSubfloor: true
+  canWirecutter: true
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
+- type: tile
+  id: LatticeCorner4
+  name: tiles-lattice-corner4
+  sprite: /Textures/Tiles/Imperial/LatticeCorner4.png
+  baseTurf: Space
+  isSubfloor: true
+  canWirecutter: true
+  weather: true
+  footstepSounds:
+    collection: FootstepPlating
+  friction: 0.3
+  isSpace: true
+  itemDrop: PartRodMetal1
+  heatCapacity: 10000
+
+#Floor window
+- type: tile
+  id: FloorGlassUran
+  name: tiles-glass-uran-floor
+  sprite: /Textures/Tiles/Imperial/glassUran.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetUGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorGlassPlasma
+  name: tiles-glass-plasma-floor
+  sprite: /Textures/Tiles/Imperial/glassPlasma.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetPGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorRGlassUran
+  name: tiles-glass-ruran-floor
+  sprite: /Textures/Tiles/Imperial/rglassUran.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetRUGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorRGlassPlasma
+  name: tiles-glass-rplasma-floor
+  sprite: /Textures/Tiles/Imperial/rglassPlasma.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetRPGlass1
+  heatCapacity: 10000

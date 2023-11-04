@@ -8,7 +8,7 @@
     - /Audio/Lobby/atomicamnesiammx.ogg
     - /Audio/Lobby/singuloose.ogg
     - /Audio/Lobby/comet_haley.ogg
-    - /Audio/Lobby/marhaba.ogg
+    # - /Audio/Lobby/marhaba.ogg
     - /Audio/Lobby/title3.ogg
     - /Audio/Lobby/mod.flip-flap.ogg
     - /Audio/Lobby/Monument.ogg
@@ -16,3 +16,24 @@
     - /Audio/Lobby/pwmur.ogg
     - /Audio/Lobby/lasers_rip_apart_the_bulkhead.ogg
     - /Audio/Lobby/every_light_is_blinking_at_once.ogg
+    - /Audio/Lobby/gneiss_bluespace.ogg
+    - /Audio/Lobby/gneiss_codebrain.ogg
+    - /Audio/Lobby/gneiss_downtown.ogg
+    - /Audio/Lobby/gneiss_exploring.ogg
+    - /Audio/Lobby/gneiss_metropolis.ogg
+    - /Audio/Lobby/gneiss_phoron_industry.ogg
+    - /Audio/Lobby/gneiss_phoron_leak.ogg
+    - /Audio/Lobby/gneiss_quantums_escape_plan.ogg
+    # - /Audio/Lobby/clown.ogg
+
+# - type: soundCollection
+#   id: LobbyMusicImperial
+#   files:
+#     - /Audio/Lobby/gneiss_bluespace.ogg
+#     - /Audio/Lobby/gneiss_codebrain.ogg
+#     - /Audio/Lobby/gneiss_downtown.ogg
+#     - /Audio/Lobby/gneiss_exploring.ogg
+#     - /Audio/Lobby/gneiss_metropolis.ogg
+#     - /Audio/Lobby/gneiss_phoron_industry.ogg
+#     - /Audio/Lobby/gneiss_phoron_leak.ogg
+#     - /Audio/Lobby/gneiss_quantums_escape_plan.ogg

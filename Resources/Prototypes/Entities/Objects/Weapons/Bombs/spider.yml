@@ -1,5 +1,5 @@
 - type: entity
-  name: spider charge
+  name: spider clan charge
   description: A modified C-4 charge supplied to you by the Spider Clan. Its explosive power has been juiced up, but only works in one specific area.
   # not actually modified C-4! oh the horror!
   parent: BaseItem
@@ -27,21 +27,21 @@
     canUnstick: false
     blacklist: # can't stick it to movable things, even if they are in the target area
       components:
-        - Anchorable
-        - Item
-        - Body
-  - type: Explosive # Powerful explosion in a medium radius. Will break underplating.
+      - Anchorable
+      - Item
+      - Body
+  - type: Explosive # Powerful explosion in a large radius. Will break underplating.
     explosionType: DemolitionCharge
-    totalIntensity: 60
+    totalIntensity: 360
     intensitySlope: 10
-    maxIntensity: 60
+    maxIntensity: 120
     canCreateVacuum: true
   - type: ExplodeOnTrigger
   - type: StickyVisualizer
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: GenericEnumVisualizer
-        key: enum.Trigger.TriggerVisuals.VisualState
-        states:
-          enum.Trigger.TriggerVisualState.Primed: primed
-          enum.Trigger.TriggerVisualState.Unprimed: complete
+      enum.Trigger.TriggerVisuals.VisualState:
+        base:
+          Primed: { state: primed }
+          Unprimed: { state: complete }

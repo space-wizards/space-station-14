@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal;
 
 [Serializable, NetSerializable]
-public sealed class MailingUnitBoundUserInterfaceState: BoundUserInterfaceState, IEquatable<MailingUnitBoundUserInterfaceState>
+public sealed class MailingUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<MailingUnitBoundUserInterfaceState>
 {
     public string? Target;
     public List<string> TargetList;
@@ -21,11 +21,25 @@ public sealed class MailingUnitBoundUserInterfaceState: BoundUserInterfaceState,
 
     public bool Equals(MailingUnitBoundUserInterfaceState? other)
     {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
+        if (other is null)
+            return false;
+        if (ReferenceEquals(this, other))
+            return true;
         return DisposalState.Equals(other.DisposalState)
                && Target == other.Target
                && TargetList.Equals(other.TargetList)
                && Tag == other.Tag;
+    }
+
+    public override bool Equals(object? other)
+    {
+        if (other is MailingUnitBoundUserInterfaceState otherState)
+            return Equals(otherState);
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
     }
 }

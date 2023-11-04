@@ -9,7 +9,6 @@
     - Disposal
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/disposal.rsi
     snapCardinals: true
     layers:
@@ -17,8 +16,6 @@
       map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
     - state: disposal
       map: [ "enum.DisposalUnitVisualLayers.Base" ]
-    - state: disposal-charging
-      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
     - state: disposal-flush
       map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
     - state: dispover-charge
@@ -33,14 +30,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.4,0.25,0.4"
-      density: 75
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        density: 75
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -70,9 +68,9 @@
       type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
-      DisposalUnit: !type:Container
+      disposals: !type:Container
   - type: StaticPrice
-    price: 100
+    price: 62
   - type: PowerSwitch
 
 - type: entity
@@ -84,13 +82,11 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
-    flushSound:
-      path: /Audio/Machines/disposalflush.ogg
-    flushTime: 2
   - type: UserInterface
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: RatKingRummageable
 
 - type: entity
   id: MailingUnit
@@ -99,7 +95,6 @@
   description: A pneumatic mail delivery unit.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/disposal.rsi
     layers:
       - state: conmailing
@@ -124,9 +119,6 @@
   - type: DisposalUnit
     autoEngageEnabled: false
     mobsCanEnter: false
-    flushSound:
-      path: /Audio/Machines/disposalflush.ogg
-    flushTime: 2
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired
@@ -134,6 +126,8 @@
     transmitFrequencyId: MailingUnit
   - type: WiredNetworkConnection
   - type: Configuration
+    config:
+      tag:
   - type: Appearance
   - type: UserInterface
     interfaces:

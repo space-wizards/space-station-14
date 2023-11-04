@@ -1,20 +1,15 @@
 ﻿using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
-namespace Content.MapRenderer.Painters
+namespace Content.MapRenderer.Painters;
+
+public readonly record struct EntityData(EntityUid Owner, SpriteComponent Sprite, float X, float Y)
 {
-    public sealed class EntityData
-    {
-        public EntityData(SpriteComponent sprite, float x, float y)
-        {
-            Sprite = sprite;
-            X = x;
-            Y = y;
-        }
+    public readonly EntityUid Owner = Owner;
 
-        public SpriteComponent Sprite { get; }
+    public readonly SpriteComponent Sprite = Sprite;
 
-        public float X { get; }
+    public readonly float X = X;
 
-        public float Y { get; }
-    }
+    public readonly float Y = Y;
 }

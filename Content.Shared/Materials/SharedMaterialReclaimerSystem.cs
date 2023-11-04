@@ -9,7 +9,6 @@ using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -32,33 +31,19 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<MaterialReclaimerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
     }
 
-    private void OnGetState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentGetState args)
+    private void OnMapInit(EntityUid uid, MaterialReclaimerComponent component, MapInitEvent args)
     {
-        args.State = new MaterialReclaimerComponentState(component.Powered,
-            component.Enabled,
-            component.MaterialProcessRate,
-            component.ItemsProcessed);
-    }
-
-    private void OnHandleState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MaterialReclaimerComponentState state)
-            return;
-        component.Powered = state.Powered;
-        component.Enabled = state.Enabled;
-        component.MaterialProcessRate = state.MaterialProcessRate;
-        component.ItemsProcessed = state.ItemsProcessed;
+        component.NextSound = Timing.CurTime;
     }
 
     private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
@@ -83,11 +68,11 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, CollideMaterialReclaimerComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != component.FixtureId)
+        if (args.OurFixtureId != component.FixtureId)
             return;
         if (!TryComp<MaterialReclaimerComponent>(uid, out var reclaimer))
             return;
-        TryStartProcessItem(uid, args.OtherFixture.Body.Owner, reclaimer);
+        TryStartProcessItem(uid, args.OtherEntity, reclaimer);
     }
 
     private void OnActiveStartup(EntityUid uid, ActiveMaterialReclaimerComponent component, ComponentStartup args)
@@ -111,11 +96,16 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (!CanStart(uid, component))
             return false;
 
-        if (component.Whitelist != null && !component.Whitelist.IsValid(item) ||
-            HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
+        if (HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
             return false;
 
-        if (component.Blacklist != null && component.Blacklist.IsValid(item))
+        if (component.Whitelist is {} whitelist && !whitelist.IsValid(item))
+            return false;
+
+        if (component.Blacklist is {} blacklist && blacklist.IsValid(item))
+            return false;
+
+        if (_container.TryGetContainingContainer(item, out _) && !_container.TryRemoveFromContainer(item))
             return false;
 
         if (user != null)
@@ -125,8 +115,11 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         }
 
         if (Timing.CurTime > component.NextSound)
-            component.Stream = _audio.PlayPvs(component.Sound, uid);
-        component.NextSound = Timing.CurTime + component.SoundCooldown;
+        {
+            component.Stream = _audio.PlayPredicted(component.Sound, uid, user);
+
+            component.NextSound = Timing.CurTime + component.SoundCooldown;
+        }
 
         var duration = GetReclaimingDuration(uid, item, component);
         // if it's instant, don't bother with all the active comp stuff.

@@ -7,16 +7,13 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
     [Access(typeof(GasVentScrubberSystem))]
-    public sealed class GasVentScrubberComponent : Component
+    public sealed partial class GasVentScrubberComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Welded { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]

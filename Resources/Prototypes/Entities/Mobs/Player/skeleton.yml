@@ -3,26 +3,11 @@
   parent: BaseMobSkeletonPerson
   id: MobSkeletonPerson
   components:
-    - type: InteractionPopup
-      successChance: 1
-      interactSuccessString: hugging-success-generic
-      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-      messagePerceivedByOthers: hugging-success-generic-others
-    - type: Mind
-      showExamineInfo: true
-    - type: Input
-      context: "human"
-    - type: MobMover
-    - type: InputMover
-    - type: Alerts
-    - type: Actions
-    - type: Eye
-    - type: CameraRecoil
-    - type: Examiner
-    - type: CanHostGuardian
-    - type: Faction
-      factions:
-        - NanoTrasen
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
 
 - type: entity
   name: Skeleton Pirate
@@ -30,8 +15,8 @@
   id: MobSkeletonPirate
   components:
   - type: GhostRole
-    name: Skeleton Pirate
-    description: Cause chaos and loot the station for treasure.
+    name: ghost-role-information-skeleton-pirate-name
+    description: ghost-role-information-skeleton-pirate-description
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [PirateGear]
@@ -44,9 +29,22 @@
   id: MobSkeletonBiker
   components:
   - type: GhostRole
-    name: Skeleton Biker
-    description: Ride around on your sweet ride.
+    name: ghost-role-information-skeleton-biker-name
+    description: ghost-role-information-skeleton-biker-description
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SkeletonBiker]
+  - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobSkeletonPerson
+  id: MobSkeletonCloset
+  name: Closet Skeleton
+  components:
+  - type: GhostRole
+    name: ghost-role-information-closet-skeleton-name
+    description: ghost-role-information-closet-skeleton-description
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [LimitedPassengerGear]
   - type: RandomHumanoidAppearance

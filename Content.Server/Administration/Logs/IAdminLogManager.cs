@@ -23,4 +23,5 @@ public interface IAdminLogManager : ISharedAdminLogManager
     IAsyncEnumerable<string> CurrentRoundMessages(LogFilter? filter = null);
     IAsyncEnumerable<JsonDocument> CurrentRoundJson(LogFilter? filter = null);
     Task<Round> CurrentRound();
+    Task<int> CountLogs(int round);
 }

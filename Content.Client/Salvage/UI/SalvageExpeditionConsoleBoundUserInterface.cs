@@ -1,4 +1,4 @@
-using Content.Shared.Salvage;
+using Content.Shared.Salvage.Expeditions;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -7,9 +7,10 @@ namespace Content.Client.Salvage.UI;
 [UsedImplicitly]
 public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private SalvageExpeditionWindow? _window;
 
-    public SalvageExpeditionConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public SalvageExpeditionConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 

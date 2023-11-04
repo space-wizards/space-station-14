@@ -1,0 +1,89 @@
+- type: flavor
+  id: bpaper
+  flavorType: Complex
+  description: flavor-complex-bpaper
+
+- type: flavor
+  id: dunce
+  flavorType: Complex
+  description: flavor-complex-dunce
+
+- type: flavor
+  id: elder
+  flavorType: Complex
+  description: flavor-complex-elder
+
+- type: flavor
+  id: plasmshake
+  flavorType: Complex
+  description: flavor-complex-plasmshake
+
+- type: flavor
+  id: aos
+  flavorType: Complex
+  description: flavor-complex-aos
+
+- type: flavor
+  id: icespirits
+  flavorType: Complex
+  description: flavor-complex-ice-spirits
+
+- type: flavor
+  id: bloodbrandy
+  flavorType: Complex
+  description: flavor-complex-blood-brandy
+
+- type: flavor
+  id: scumslim
+  flavorType: Complex
+  description: flavor-complex-scumslim
+
+- type: flavor
+  id: meatwine
+  flavorType: Complex
+  description: flavor-complex-meat-wine
+
+- type: flavor
+  id: magmawhiskey
+  flavorType: Complex
+  description: flavor-complex-magma-whiskey
+
+- type: flavor
+  id: shadowspirits
+  flavorType: Complex
+  description: flavor-complex-shadow-spirits
+
+- type: flavor
+  id: radiumbeer
+  flavorType: Complex
+  description: flavor-complex-radium-beer
+
+- type: flavor
+  id: vampirewine
+  flavorType: Complex
+  description: flavor-complex-vampire-wine
+
+- type: flavor
+  id: ambrosia
+  flavorType: Complex
+  description: flavor-complex-ambrosia
+
+- type: flavor
+  id: luckymead
+  flavorType: Complex
+  description: flavor-complex-lucky-mead
+
+- type: flavor
+  id: protofuel
+  flavorType: Complex
+  description: flavor-complex-protofuel
+
+- type: flavor
+  id: ksspecialblend
+  flavorType: Complex
+  description: flavor-complex-k-s-special-blend
+
+- type: flavor
+  id: miracleambrosia
+  flavorType: Complex
+  description: flavor-complex-miracle-ambrosia

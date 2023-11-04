@@ -31,7 +31,7 @@ namespace Content.Server.Rotatable
                 Act = () => TryFlip(uid, component, args.User),
                 Text = Loc.GetString("flippable-verb-get-data-text"),
                 Category = VerbCategory.Rotate,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/flip.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/flip.svg.192dpi.png")),
                 Priority = -3, // show flip last
                 DoContactInteraction = true
             };
@@ -56,7 +56,7 @@ namespace Content.Server.Rotatable
                 DoContactInteraction = true,
                 Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation = Angle.Zero,
                 Category = VerbCategory.Rotate,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/refresh.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/refresh.svg.192dpi.png")),
                 Text = "Reset",
                 Priority = -2, // show CCW, then CW, then reset
                 CloseMenu = false,
@@ -68,7 +68,7 @@ namespace Content.Server.Rotatable
             {
                 Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation -= component.Increment,
                 Category = VerbCategory.Rotate,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png")),
                 Priority = -1,
                 CloseMenu = false, // allow for easy double rotations.
             };
@@ -79,7 +79,7 @@ namespace Content.Server.Rotatable
             {
                 Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation += component.Increment,
                 Category = VerbCategory.Rotate,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png")),
                 Priority = 0,
                 CloseMenu = false, // allow for easy double rotations.
             };

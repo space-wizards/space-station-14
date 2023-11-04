@@ -7,7 +7,7 @@ namespace Content.Client.Chemistry.Visualizers;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(VaporVisualizerSystem))]
-public sealed class VaporVisualsComponent : Component
+public sealed partial class VaporVisualsComponent : Component
 {
     /// <summary>
     /// The id of the animation played when the vapor spawns in.

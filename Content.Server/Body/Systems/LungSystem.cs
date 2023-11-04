@@ -1,8 +1,8 @@
 ﻿using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Body.Systems;

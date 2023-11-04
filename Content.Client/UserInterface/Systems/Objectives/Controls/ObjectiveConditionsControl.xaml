@@ -1,12 +1,12 @@
-﻿<controls:ObjectiveConditionsControl
+<controls:ObjectiveConditionsControl
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Objectives.Controls"
     Orientation="Horizontal">
-    <cc:ProgressTextureRect Name="ProgressTexture" VerticalAlignment="Center" Access="Public"/>
+    <cc:ProgressTextureRect Name="ProgressTexture" VerticalAlignment="Top" Access="Public" Margin="0 8 0 0"/>
     <Control MinSize="10 0"/>
     <BoxContainer Orientation="Vertical">
-        <Label Name="Title" Access="Public"/>
-        <Label Name="Description" Access="Public"/>
+        <RichTextLabel Name="Title" Access="Public" SetWidth="325" HorizontalAlignment="Left"/>
+        <RichTextLabel Name="Description" Access="Public" SetWidth="325" HorizontalAlignment="Left"/>
     </BoxContainer>
 </controls:ObjectiveConditionsControl>

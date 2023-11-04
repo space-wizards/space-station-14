@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
@@ -10,7 +11,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     ///     This can also trigger on -other- reagents, not just the one metabolizing. By default, it uses the
     ///     one being metabolized.
     /// </summary>
-    public sealed class ReagentThreshold : ReagentEffectCondition
+    public sealed partial class ReagentThreshold : ReagentEffectCondition
     {
         [DataField("min")]
         public FixedPoint2 Min = FixedPoint2.Zero;
@@ -18,21 +19,33 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("max")]
         public FixedPoint2 Max = FixedPoint2.MaxValue;
 
+        // TODO use ReagentId
         [DataField("reagent")]
         public string? Reagent;
 
         public override bool Condition(ReagentEffectArgs args)
         {
-            if (Reagent == null)
-                Reagent = args.Reagent.ID;
+            var reagent = Reagent ?? args.Reagent?.ID;
+            if (reagent == null)
+                return true; // No condition to apply.
 
             var quant = FixedPoint2.Zero;
-            if (args.Source != null && args.Source.ContainsReagent(Reagent))
-            {
-                quant = args.Source.GetReagentQuantity(args.Reagent.ID);
-            }
+            if (args.Source != null)
+                quant = args.Source.GetTotalPrototypeQuantity(reagent);
 
             return quant >= Min && quant <= Max;
+        }
+
+        public override string GuidebookExplanation(IPrototypeManager prototype)
+        {
+            ReagentPrototype? reagentProto = null;
+            if (Reagent is not null)
+                prototype.TryIndex(Reagent, out reagentProto);
+
+            return Loc.GetString("reagent-effect-condition-guidebook-reagent-threshold",
+                ("reagent", reagentProto?.LocalizedName ?? "this reagent"),
+                ("max", Max == FixedPoint2.MaxValue ? (float) int.MaxValue : Max.Float()),
+                ("min", Min.Float()));
         }
     }
 }

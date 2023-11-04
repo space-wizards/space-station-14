@@ -1,0 +1,22 @@
+<Document>
+# Письменность
+
+С помощью ручки можно писать на бумаге или в книгах. Nanotrasen предоставляет каждому запасную ручку в своем КПК.
+
+## Форматирование
+
+Вы можете использовать следующие символы:
+
+- [color=tan]\[color=color\]\[\/color\][/color]  —  для изменения цвета текста
+- [color=tan]\[head=n\]\[\/head\][/color]  —  где [italic]n[/italic] — уровень заголовка (1 – 3)
+- [color=tan]\[bullet\/\][/color]  —  для вставки маркера (полезно для списков)
+- [color=tan][bold]\[bold\]\[\/bold\][/bold][/color], [color=tan][italic]\[italic\]\[\/italic\] [/italic][/color] — для выделения
+
+Вы можете комбинировать теги [bold][italic]bold и italic[/italic][/bold] или использовать ярлык [color=tan][bolditalic]\[bolditalic\][/bolditalic][/color].
+
+Цвет поддерживает как шестнадцатеричные, так и большинство названий цветов в формате HTML. Например:
+
+- [color=#ff0000]\[color=#ff0000\]\[\/color\][/color]
+- [color=red]\[color=red\]\[\/color\][/color]
+
+</Document>

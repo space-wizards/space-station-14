@@ -13,6 +13,12 @@
     damage:
       types:
         Slash: 17 #cmon, it has to be at least BETTER than the rest.
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    enabled: true
+    reflectProb: .5
+    spread: 90
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
@@ -38,6 +44,8 @@
     damage:
       types:
         Slash: 25
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/katana.rsi
@@ -60,11 +68,18 @@
     size: 15
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
+  - type: DashAbility
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: AutoRecharge
+    rechargeDuration: 20
   - type: Clothing
     sprite: Objects/Weapons/Melee/energykatana.rsi
     slots:
     - Back
     - Belt
+  - type: Reflect
 
 - type: entity
   name: machete
@@ -83,6 +98,8 @@
     damage:
       types:
         Slash: 20
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/machete.rsi
@@ -103,6 +120,8 @@
     damage:
       types:
         Slash: 33
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 20
   - type: Clothing
@@ -128,6 +147,8 @@
     damage:
       types:
         Slash: 16
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/cutlass.rsi

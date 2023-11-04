@@ -8,7 +8,7 @@ namespace Content.Server.Anomaly.Components;
 /// displaying information about them in the ui
 /// </summary>
 [RegisterComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class AnomalyScannerComponent : Component
+public sealed partial class AnomalyScannerComponent : Component
 {
     /// <summary>
     /// The anomaly that was last scanned by this scanner.

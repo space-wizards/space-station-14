@@ -1,4 +1,5 @@
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
+
+using Content.Shared.Actions;
 
 namespace Content.Shared.Clothing;
 
@@ -56,3 +57,5 @@ public sealed class EquipmentVisualsUpdatedEvent : EntityEventArgs
         RevealedLayers = revealedLayers;
     }
 }
+
+public sealed partial class ToggleMaskEvent : InstantActionEvent { }

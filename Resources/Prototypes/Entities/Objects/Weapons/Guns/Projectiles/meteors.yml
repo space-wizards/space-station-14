@@ -5,7 +5,6 @@
   components:
   - type: Sprite
     noRot: false
-    netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/meteor.rsi
     scale: 4,4
     layers:
@@ -27,15 +26,15 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.8
-      density: 100
-      hard: true
-      id: projectile
-      # Didn't use MapGridComponent for now as the bounds are stuffed.
-      layer:
-      - LargeMobLayer
-      mask:
-      - Impassable
-      - BulletImpassable
+      projectile:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.8
+        density: 100
+        hard: true
+        # Didn't use MapGridComponent for now as the bounds are stuffed.
+        layer:
+        - LargeMobLayer
+        mask:
+        - Impassable
+        - BulletImpassable

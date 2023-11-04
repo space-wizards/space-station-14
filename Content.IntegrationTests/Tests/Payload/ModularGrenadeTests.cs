@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Explosion.Components;
-using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
@@ -20,7 +18,7 @@ public sealed class ModularGrenadeTests : InteractionTest
     {
         await PlaceInHands(Steel, 5);
         await CraftItem("ModularGrenadeRecipe");
-        Target = await FindEntity("ModularGrenade");
+        Target = SEntMan.GetNetEntity(await FindEntity("ModularGrenade"));
 
         await Drop();
         await Interact(Cable);
@@ -73,4 +71,3 @@ public sealed class ModularGrenadeTests : InteractionTest
         AssertDeleted();
     }
 }
-

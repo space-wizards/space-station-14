@@ -6,3 +6,13 @@
   - type: StorageFill
     contents:
       - id: CombatKnife
+
+- type: entity
+  id: ClothingShoesBootsMercFilled
+  parent: ClothingShoesBootsMerc
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: KukriKnife
+

@@ -1,0 +1,28 @@
+﻿<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal">
+        <PanelContainer Name="Background"
+                        Access="Public"
+                        StyleClasses="PdaBackground"
+                        VerticalExpand="False"
+                        HorizontalExpand="False"
+                        MaxWidth="10"
+                        Margin="0 0 -5 0"/>
+        <Button Name="Main"
+                Disabled="True"
+                HorizontalExpand="True"
+                VerticalExpand="False"
+                StyleClasses="ButtonSquare"
+                Margin="0"
+                ToolTip="foobar">
+            <BoxContainer Orientation="Horizontal" Margin="0">
+                <TextureRect Name="Texture"
+                             HorizontalExpand="False"
+                             VerticalExpand="False"
+                             Margin="1"
+                             TextureScale="0.5 0.5"/>
+                <Control MinWidth="5"/>
+                <RichTextLabel Name="NameLabel" StyleClasses="LabelSubText" VerticalAlignment="Center"/>
+            </BoxContainer>
+        </Button>
+    </BoxContainer>
+</Control>

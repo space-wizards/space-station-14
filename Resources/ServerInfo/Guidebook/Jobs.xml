@@ -1,41 +1,41 @@
-﻿<Document>
-# Jobs
+<Document>
+# Должности
 
-SS14 has a large number of jobs, divided into seven major departments:
+SS14 имеет большое количество должностей, которые разделены по 7 основным отделам:
 
-## Service
-This department includes the janitor, passengers, clown, mime, musician, chef, bartender, the head of personnel, and other jobs who exist to serve the station.
+## Сервисный отдел
+В этот отдел входят глава персонала (ГП), пассажиры, уборщик, клоун, мим, музыкант, шеф-повар, бармен, и другие должности, которые занимаются обслуживанием станции.
 
-It primarily functions as folks who entertain, clean, and serve the rest of the crew, with the exception of passengers who have no particular job beyond getting lost in maintenance.
+Они те кто развлекают, кормят и поят остальных членов экипажа, и убирают за ними. Исключением являются пассажиры, у которых нет определённой задачи, кроме как теряться в техтуннелях.
 
-## Cargo
-Cargo consists of the cargo technicians, salvage technicians, and the quartermaster. As a department, it responsible resource distribution and trade, capable of buying and selling things on the galactic market.
+## Отдел снабжения
+В отдел снабжения входят грузчики, утилизаторы, и их глава — квартирмейстер (КМ). Этот отдел занимается распределением грузов и ресурсов по станции, и торговлей на галактическом рынке.
 
-For the most part, this means they scrounge around the station and assorted wrecks to find materials to sell and redistribute, and purchase materials other departments request.
+Это означает, что они занимаются поиском материалов и вещей на станции и обломках в космосе для продажи, а также закупкой всего, что запрашивают другие отделы.
 
-## Security
-Security consists of the security cadets, lawyers, detective, security officers, warden, and the head of security. As a department it is responsible for dealing with troublemakers and non-humanoid threats like giant rats and carp.
+## Служба безопасности
+В службу безопасности входят кадеты, офицеры, детектив, смотритель, и глава службы безопасности (ГСБ). В обязанности отдела входит борьба с нарушителями спокойствия и негуманоидными угрозами, такими как гигантские крысы и карпы.
 
-As a result of this, and the need to walk a fine line, security sometimes is overwhelmed by angry crew (don't kill the clown), and it is important for members of it to try and stay on their best behavior.
+В результате этого, а также необходимости соблюдать тонкую грань, служба безопасности иногда оказывается под давлением разъяренного экипажа (не убивайте клоуна), и для сотрудников отдела важно стараться вести себя как можно лучше.
 
-## Medical
-Medical consists of the medical interns, chemists, medical doctors, and the chief medical officer. As a department it is responsible for taking care of the crew, treat and/or clone the wounded and dead, treat disease, and prevent everyone from dying a horrible, bloody death in a closet somewhere.
+## Медицинский отдел
+В медицинский отдел входят интерны, врачи, химики, психолог, и главный врач (ГВ). Этот отдел отвечает за заботу о здоровье экипажа, лечение и/или клонирование раненых и мертвых, лечение вирусных болезней, и предотвращение того, чтобы все умерли ужасной, кровавой смертью где-нибудь в шкафу.
 
-Medical is one of the more well-equipped departments, with the ability to locate injured crew using the crew monitor, a nigh infinite supply of chems should chemistry be on-par, and the ability to rapidly diagnose and vaccinate contagious diseases.
+Медицинский отдел является одним из наиболее хорошо оснащённых, с возможностью определения местонахождения раненых членов экипажа с помощью монитора экипажа, почти бесконечным запасом медикаментов если химики не подведут, и способностью быстро диагностировать и вакцинировать контагиозные заболевания.
 
-## Science
-Science consists of scientists, and the research director. As a department it is responsible for researching technologies and artifacts, upgrading machines, and printing new and useful dev ices.
+## Научный отдел
+В научный отдел входят учёные и научный руководитель (НР). Этот отдел отвечает за исследование технологий, изучение артефактов и аномалий, улучшение оборудования, и печать новых и полезных устройств.
 
-Scientists should seek out new artifacts to study, as well as solicit departments to help upgrade their machines.
+Учёные должны искать новые артефакты и аномалии для изучения, а также отвечать на запросы других отделов о модернизации их оборудования.
 
-## Engineering
-Engineering consists of technical assistants, station engineers, atmospheric technicians, and the chief engineer. As a department it is responsible for keeping the station powered, its structure intact and its air supply working.
+## Инженерный отдел
+В инженерный отдел входят технические ассистенты, инженеры, атмосферные техники, и старший инженер (СИ). Этот отдел отвечает за отвечает за обеспечение станции электроэнергией, целостность её корпуса и работоспособность системы подачи воздуха.
 
-Engineering is readily equipped to go safely into space, and as such they should always attempt to repair uninhabitable parts of the station.
+Инженерный отдел оснащен снаряжением для работы в космосе, и поэтому он всегда должен стараться ремонтировать непригодные для жизни отсеки станции.
 
-## Command
-Command consists of the captain, the head of personnel, the head of security, the chief engineer, the chief medical officer, the research director, and the quartermaster. As a department it is responsible for keeping the station and its departments running efficiently.
+## Командование
+Командование состоит из капитана, главы персонала, главы службы безопастности, старшего инженера, главного врача, научного руководителя, и квартирмейстера. Командование отвечает за эффективную работу станции вцелом, и её отделов в частности.
 
-Command members should always be relatively competent in their respective departments and attempt to delegate responsibility and direct work.
+Командный состав должен быть относительно компетентен в вопросах своего подопечного отдела, стараться делегировать функции и направлять работу.
 
 </Document>

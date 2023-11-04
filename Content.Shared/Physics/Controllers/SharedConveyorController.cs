@@ -1,7 +1,7 @@
-﻿using Content.Shared.Conveyor;
+﻿using System.Numerics;
+using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -13,17 +13,18 @@ namespace Content.Shared.Physics.Controllers;
 
 public abstract class SharedConveyorController : VirtualController
 {
-    [Dependency] protected readonly IMapManager _mapManager = default!;
-    [Dependency] protected readonly EntityLookupSystem _lookup = default!;
-    [Dependency] protected readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly EntityLookupSystem Lookup = default!;
+    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     protected const string ConveyorFixture = "conveyor";
+
+    private static readonly Vector2 _expansion = new Vector2(0.1f, 0.1f);
+
     public override void Initialize()
     {
         UpdatesAfter.Add(typeof(SharedMoverController));
-        SubscribeLocalEvent<ConveyorComponent, ComponentGetState>(OnConveyorGetState);
-        SubscribeLocalEvent<ConveyorComponent, ComponentHandleState>(OnConveyorHandleState);
 
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
@@ -31,27 +32,11 @@ public abstract class SharedConveyorController : VirtualController
         base.Initialize();
     }
 
-    private void OnConveyorGetState(EntityUid uid, ConveyorComponent component, ref ComponentGetState args)
-    {
-        args.State = new ConveyorComponentState(component.Angle, component.Speed, component.State, component.Powered);
-    }
-
-    private void OnConveyorHandleState(EntityUid uid, ConveyorComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ConveyorComponentState state)
-            return;
-
-        component.Powered = state.Powered;
-        component.Angle = state.Angle;
-        component.Speed = state.Speed;
-        component.State = state.State;
-    }
-
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.Owner;
+        var otherUid = args.OtherEntity;
 
-        if (args.OtherFixture.Body.BodyType == BodyType.Static || component.State == ConveyorState.Off)
+        if (args.OtherBody.BodyType == BodyType.Static || component.State == ConveyorState.Off)
             return;
 
         component.Intersecting.Add(otherUid);
@@ -60,7 +45,7 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyorEndCollide(EntityUid uid, ConveyorComponent component, ref EndCollideEvent args)
     {
-        component.Intersecting.Remove(args.OtherFixture.Body.Owner);
+        component.Intersecting.Remove(args.OtherEntity);
 
         if (component.Intersecting.Count == 0)
             RemComp<ActiveConveyorComponent>(uid);
@@ -74,10 +59,10 @@ public abstract class SharedConveyorController : VirtualController
         // Don't use it directly in EntityQuery because we may be able to save getcomponents.
         var xformQuery = GetEntityQuery<TransformComponent>();
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
+        var query = EntityQueryEnumerator<ActiveConveyorComponent, ConveyorComponent>();
 
-        foreach (var (_, comp) in EntityQuery<ActiveConveyorComponent, ConveyorComponent>())
+        while (query.MoveNext(out var uid, out var _, out var comp))
         {
-            var uid = comp.Owner;
             Convey(uid, comp, xformQuery, bodyQuery, conveyed, frameTime, prediction);
         }
     }
@@ -115,15 +100,15 @@ public abstract class SharedConveyorController : VirtualController
             transform.LocalPosition = localPos;
 
             // Force it awake for collisionwake reasons.
-            _physics.SetAwake(entity, body, true);
-            _physics.SetSleepTime(body, 0f);
+            Physics.SetAwake(entity, body, true);
+            Physics.SetSleepTime(body, 0f);
         }
         Dirty(comp);
     }
 
     private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
     {
-        if (speed == 0 || direction.Length == 0)
+        if (speed == 0 || direction.Length() == 0)
             return Vector2.Zero;
 
         /*
@@ -139,7 +124,7 @@ public abstract class SharedConveyorController : VirtualController
         var p = direction * (Vector2.Dot(itemRelative, direction) / Vector2.Dot(direction, direction));
         var r = itemRelative - p;
 
-        if (r.Length < 0.1)
+        if (r.Length() < 0.1)
         {
             var velocity = direction * speed;
             return velocity * frameTime;
@@ -149,7 +134,7 @@ public abstract class SharedConveyorController : VirtualController
             // Give a slight nudge in the direction of the conveyor to prevent
             // to collidable objects (e.g. crates) on the locker from getting stuck
             // pushing each other when rounding a corner.
-            var velocity = (r + direction*0.2f).Normalized * speed;
+            var velocity = (r + direction*0.2f).Normalized() * speed;
             return velocity * frameTime;
         }
     }
@@ -161,9 +146,9 @@ public abstract class SharedConveyorController : VirtualController
         EntityQuery<PhysicsComponent> bodyQuery)
     {
         // Check if the thing's centre overlaps the grid tile.
-        var grid = _mapManager.GetGrid(xform.GridUid!.Value);
+        var grid = MapManager.GetGrid(xform.GridUid!.Value);
         var tile = grid.GetTileRef(xform.Coordinates);
-        var conveyorBounds = _lookup.GetLocalBounds(tile, grid.TileSize);
+        var conveyorBounds = Lookup.GetLocalBounds(tile, grid.TileSize);
 
         foreach (var entity in comp.Intersecting)
         {
@@ -175,7 +160,7 @@ public abstract class SharedConveyorController : VirtualController
 
             // Yes there's still going to be the occasional rounding issue where it stops getting conveyed
             // When you fix the corner issue that will fix this anyway.
-            var gridAABB = new Box2(entityXform.LocalPosition - 0.1f, entityXform.LocalPosition + 0.1f);
+            var gridAABB = new Box2(entityXform.LocalPosition - _expansion, entityXform.LocalPosition + _expansion);
 
             if (!conveyorBounds.Intersects(gridAABB))
                 continue;

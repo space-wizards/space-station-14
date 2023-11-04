@@ -1,0 +1,149 @@
+#Imperial space unbreakable walls and windows
+#walls
+- type: entity
+  parent: BaseWall
+  id: WallSolidUnbreakable
+  name: solid wall
+  suffix: wall
+  components:
+    - type: Tag
+      tags:
+        - Wall
+    - type: Sprite
+      sprite: Structures/Walls/solid.rsi
+    - type: Icon
+      sprite: Structures/Walls/solid.rsi
+    - type: IconSmooth
+      key: walls
+      base: solid
+
+- type: entity
+  parent: BaseWall
+  id: WallReinforcedUnbreakable
+  name: reinforced wall
+  suffix: wall
+  components:
+    - type: Tag
+      tags:
+        - Wall
+    - type: Sprite
+      sprite: Structures/Walls/solid.rsi
+    - type: Icon
+      sprite: Structures/Walls/solid.rsi
+      state: rgeneric
+    - type: IconSmooth
+      key: walls
+      base: reinf_over
+
+- type: entity
+  parent: BaseWall
+  id: WallRivetedUnbreakable
+  name: riveted wall
+  suffix: wall
+  components:
+    - type: Tag
+      tags:
+        - Wall
+    - type: Sprite
+      sprite: Structures/Walls/riveted.rsi
+    - type: Icon
+      sprite: Structures/Walls/riveted.rsi
+    - type: IconSmooth
+      key: walls
+      base: riveted
+
+#windows
+- type: entity
+  id: WindowUnbreakable
+  parent: BaseStructure
+  name: window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
+  - type: WallMount
+    arc: 360 # interact despite grilles
+  - type: Tag
+    tags:
+      - ForceFixRotations
+      - Window
+  - type: Sprite
+    netsync: false
+    drawdepth: WallTops
+    sprite: Structures/Windows/window.rsi
+  - type: Icon
+    sprite: Structures/Windows/window.rsi
+    state: full
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Repairable
+  - type: Airtight
+  - type: IconSmooth
+    key: walls
+    base: window
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    messagePerceivedByOthers: comp-window-knock
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
+  - type: Appearance
+  - type: StaticPrice
+    price: 75
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+
+- type: entity
+  parent: WindowUnbreakable
+  id: ReinforcedPlasmaWindowUnbreakable
+  name: reinforced plasma window
+  components:
+    - type: Tag
+      tags:
+        - Window
+    - type: Sprite
+      drawdepth: WallTops
+      sprite: Structures/Windows/reinforced_plasma_window.rsi
+    - type: Icon
+      sprite: Structures/Windows/reinforced_plasma_window.rsi
+    - type: IconSmooth
+      key: walls
+      base: rpwindow
+    - type: RadiationBlocker
+      resistance: 4
+
+- type: entity
+  parent: WindowUnbreakable
+  id: ReinforcedWindowUnbreakable
+  name: reinforced window
+  components:
+    - type: Tag
+      tags:
+        - Window
+    - type: Sprite
+      drawdepth: WallTops
+      sprite: Structures/Windows/tinted_window.rsi
+    - type: Icon
+      sprite: Structures/Windows/tinted_window.rsi
+    - type: IconSmooth
+      key: walls
+      base: twindow
+

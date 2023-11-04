@@ -3,12 +3,13 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
     [DataDefinition]
-    public sealed class ExplosionReactionEffect : ReagentEffect
+    public sealed partial class ExplosionReactionEffect : ReagentEffect
     {
         /// <summary>
         ///     The type of explosion. Determines damage types and tile break chance scaling.
@@ -24,7 +25,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("maxIntensity")]
         [JsonIgnore]
         public float MaxIntensity = 5;
-        
+
         /// <summary>
         ///     How quickly intensity drops off as you move away from the epicenter
         /// </summary>
@@ -51,6 +52,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         public float IntensityPerUnit = 1;
 
         public override bool ShouldLog => true;
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-explosion-reaction-effect", ("chance", Probability));
         public override LogImpact LogImpact => LogImpact.High;
 
         public override void Effect(ReagentEffectArgs args)

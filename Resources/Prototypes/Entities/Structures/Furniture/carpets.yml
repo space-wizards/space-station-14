@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     drawdepth: FloorTiles
-    netsync: false
   - type: Icon
     state: full
   - type: IconSmooth

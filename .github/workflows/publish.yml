@@ -13,13 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: sudo apt-get install -y python3-paramiko
+
+    - uses: actions/checkout@v3.6.0
       with:
         submodules: 'recursive'
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v3.2.0
       with:
-        dotnet-version: 6.0.100
+        dotnet-version: 7.0.x
 
     - name: Get Engine Tag
       run: |
@@ -57,8 +60,13 @@ jobs:
         key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
         script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
 
-    - name: Publish changelog
+    - name: Publish changelog (Discord)
       run: Tools/actions_changelogs_since_last_run.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+
+    - name: Publish changelog (RSS)
+      run: Tools/actions_changelog_rss.py
+      env:
+        CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}

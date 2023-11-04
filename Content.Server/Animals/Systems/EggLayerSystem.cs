@@ -1,20 +1,18 @@
 using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Animals.Systems;
 
 public sealed class EggLayerSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
@@ -25,7 +23,7 @@ public sealed class EggLayerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EggLayerComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<EggLayerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EggLayerComponent, EggLayInstantActionEvent>(OnEggLayAction);
     }
 
@@ -52,12 +50,9 @@ public sealed class EggLayerSystem : EntitySystem
         }
     }
 
-    private void OnComponentInit(EntityUid uid, EggLayerComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
     {
-        if (!_prototype.TryIndex<InstantActionPrototype>(component.EggLayAction, out var action))
-            return;
-
-        _actions.AddAction(uid, new InstantAction(action), uid);
+        _actions.AddAction(uid, ref component.Action, component.EggLayAction);
         component.CurrentEggLayCooldown = _random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax);
     }
 

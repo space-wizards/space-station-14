@@ -1,0 +1,101 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/8442af39ee82b813194f71db82edd2923d97818d, watercooler Taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/ae2258d9235752ac6d80ec11e36553fe3b6ae59e",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "tank_base"
+      },
+      {
+        "name": "tank"
+      },
+      {
+        "name": "content-1"
+      },
+      {
+        "name": "content-2"
+      },
+      {
+        "name": "content-3"
+      },
+      {
+        "name": "content-4"
+      },
+      {
+        "name": "content-5"
+      },
+      {
+        "name": "content-6"
+      },
+      {
+        "name": "content-7"
+      },
+      {
+        "name": "content-8"
+      },
+      {
+        "name": "content-9"
+      },
+      {
+        "name": "content-10"
+      },
+      {
+        "name": "content-11"
+      },
+      {
+        "name": "content-12"
+      },
+      {
+        "name": "logo-water"
+      },
+      {
+        "name": "logo-water-high"
+      },
+      {
+        "name": "logo-weldingfuel"
+      },
+      {
+        "name": "logo-weldingfuel-high"
+      },
+      {
+        "name": "line-normal"
+      },
+      {
+        "name": "line-high"
+      },
+      {
+        "name": "water-empty"
+      },
+      {
+        "name": "water-full"
+      },
+      {
+        "name": "water-high-empty"
+      },
+      {
+        "name": "water-high-full"
+      },
+      {
+        "name": "welding-empty"
+      },
+      {
+        "name": "welding-full"
+      },
+      {
+        "name": "welding-high-empty"
+      },
+      {
+        "name": "welding-high-full"
+      },
+      {
+        "name": "logo-spacecleaner"
+      },
+      {
+        "name": "line-green"
+      }
+    ]
+  }

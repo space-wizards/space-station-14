@@ -1,0 +1,108 @@
+#ERT START
+#Full
+- type: storePreset
+  id: ErtCallUplinkPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  - ERTUplinkExplosives
+  - ERTUplinkMedial
+  - ERTUplinkEngineering
+  - ERTUplinkUtilities
+  - ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - BlueSpaceCube
+
+#Medic
+- type: storePreset
+  id: ErtCallUplinkMedicPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  #- ERTUplinkExplosives
+  - ERTUplinkMedial
+  #- ERTUplinkEngineering
+  - ERTUplinkUtilities
+  #- ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - BlueSpaceCube
+
+#Security
+- type: storePreset
+  id: ErtCallUplinkSecurityPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  - ERTUplinkExplosives
+  #- ERTUplinkMedial
+  #- ERTUplinkEngineering
+  - ERTUplinkUtilities
+  #- ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - BlueSpaceCube
+
+#Engineer
+- type: storePreset
+  id: ErtCallUplinkEngineerPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  - ERTUplinkExplosives
+  #- ERTUplinkMedial
+  - ERTUplinkEngineering
+  - ERTUplinkUtilities
+  #- ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - BlueSpaceCube
+
+#Janitor
+- type: storePreset
+  id: ErtCallUplinkJanitorPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  #- ERTUplinkExplosives
+  #- ERTUplinkMedial
+  #- ERTUplinkEngineering
+  - ERTUplinkUtilities
+  - ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - BlueSpaceCube
+#ERT END
+
+#CBURN START
+
+#CBURN END
+
+#DEAD SQUAD START
+- type: storePreset
+  id: ErtCallUplinkDeadSquadPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  - ERTUplinkExplosives
+  - ERTUplinkMedial
+  #- ERTUplinkEngineering
+  - ERTUplinkUtilities
+  #- ERTUplinkJunitor
+  #- ERTUplinkPointless
+  currencyWhitelist:
+  - BlueSpaceCube
+#DEAD SQUAD END

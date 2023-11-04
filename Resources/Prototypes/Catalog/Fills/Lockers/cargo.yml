@@ -1,11 +1,10 @@
 - type: entity
-  id: LockerSalvageSpecialistFilled
-  suffix: Filled
+  id: LockerSalvageSpecialistFilledHardsuit
+  suffix: Filled, Hardsuit
   parent: LockerSalvageSpecialist
   components:
   - type: StorageFill
     contents:
-# Should be moved to a suit storage unit when/if they are added.
       - id: ClothingOuterHardsuitSpatio
       - id: YellowOxygenTankFilled
       - id: NitrogenTankFilled
@@ -14,6 +13,36 @@
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
-        prob: 0.8
       - id: SurvivalKnife
-      - id: WeaponProtoKineticAccelerator
+      - id: HandheldGPSBasic
+      - id: RadioHandheld
+      - id: OreBag
+        prob: 0.5
+      - id: Flare
+        prob: 0.3
+      - id: Flare
+        prob: 0.3
+      - id: Flare
+        prob: 0.3
+
+- type: entity
+  id: LockerSalvageSpecialistFilled
+  suffix: Filled
+  parent: LockerSalvageSpecialist
+  components:
+  - type: StorageFill
+    contents:
+# Currently do not function as 'true' mesons, so they're useless for salvagers.
+#      - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltUtilityFilled
+      - id: SurvivalKnife
+      - id: HandheldGPSBasic
+      - id: RadioHandheld
+      - id: OreBag
+        prob: 0.5
+      - id: Flare
+        prob: 0.3
+      - id: Flare
+        prob: 0.3
+      - id: Flare
+        prob: 0.3

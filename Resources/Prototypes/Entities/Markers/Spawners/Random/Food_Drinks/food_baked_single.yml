@@ -19,7 +19,12 @@
       - FoodBreadCreamcheeseSlice
       - FoodBreadMoldySlice
       - FoodBreadGarlicSlice
+      - FoodBreadCornSlice
+      - FoodBreadSausageSlice
       - FoodBreadButteredToast
+      - FoodBreadJellySlice
+      - FoodBreadFrenchToast
+      - FoodBreadTwoSlice
       - FoodCakeBlueberrySlice
       - FoodCakePlainSlice
       - FoodCakeCarrotSlice
@@ -42,7 +47,6 @@
       - FoodBakedBunHotX
       - FoodBakedBunMeat
       - FoodBakedCookie
-      - FoodBakedCookieFortune
       - FoodBakedCookieOatmeal
       - FoodBakedCookieRaisin
       - FoodBakedCookieSugar
@@ -64,6 +68,7 @@
       - FoodPieFrostySlice
       - FoodTartGrape
       - FoodTartCoco
+      - FoodBakedBrownie
     chance: 0.8
     offset: 0.0
     #rare
@@ -76,4 +81,5 @@
       - FoodTartGapple
       - FoodBreadMeatXenoSlice
       - FoodPieXenoSlice
+      - FoodBakedCannabisBrownie
     rareChance: 0.05

@@ -1,7 +1,10 @@
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -14,6 +17,8 @@ namespace Content.Server.Stack
     [UsedImplicitly]
     public sealed class StackSystem : SharedStackSystem
     {
+        [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly StorageSystem _storage = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
@@ -33,7 +38,7 @@ namespace Content.Server.Stack
             base.SetCount(uid, amount, component);
 
             // Queue delete stack if count reaches zero.
-            if (component.Count <= 0)
+            if (component.Count <= 0 && !component.Lingering)
                 QueueDel(uid);
         }
 
@@ -45,17 +50,14 @@ namespace Content.Server.Stack
             if (!Resolve(uid, ref stack))
                 return null;
 
-            if (stack.StackTypeId == null)
+            // Try to remove the amount of things we want to split from the original stack...
+            if (!Use(uid, amount, stack))
                 return null;
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
-                : Prototype(stack.Owner)?.ID;
-
-            // Try to remove the amount of things we want to split from the original stack...
-            if (!Use(uid, amount, stack))
-                return null;
+                : Prototype(uid)?.ID;
 
             // Set the output parameter in the event instance to the newly split stack.
             var entity = Spawn(prototype, spawnPosition);
@@ -67,6 +69,9 @@ namespace Content.Server.Stack
                 // Don't let people dupe unlimited stacks
                 stackComp.Unlimited = false;
             }
+
+            var ev = new StackSplitEvent(entity);
+            RaiseLocalEvent(uid, ref ev);
 
             return entity;
         }
@@ -108,7 +113,7 @@ namespace Content.Server.Stack
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
                 return;
 
             AlternativeVerb halve = new()
@@ -153,16 +158,22 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), userUid, PopupType.Medium);
+                Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), userUid, PopupType.Medium);
                 return;
             }
 
             if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
                 return;
 
-            HandsSystem.PickupOrDrop(userUid, split);
+            if (_container.TryGetContainingContainer(uid, out var container) &&
+                TryComp<StorageComponent>(container.Owner, out var storage))
+            {
+                _storage.UpdateUI(container.Owner, storage);
+            }
 
-            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), userUid);
+            Hands.PickupOrDrop(userUid, split);
+
+            Popup.PopupCursor(Loc.GetString("comp-stack-split"), userUid);
         }
     }
 }

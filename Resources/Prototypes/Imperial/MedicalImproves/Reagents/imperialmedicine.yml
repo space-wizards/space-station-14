@@ -1,0 +1,112 @@
+- type: reagent #Медицина империал спасе, сами реагенты
+  id: Adenosine
+  name: reagent-name-adenosine
+  group: Medicine
+  desc: reagent-desc-adenosine
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  color: "#71bd85"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Airloss: -1
+            Brute: -0.25 #В случае введения системы органов должно будет лечить сердце, ведь инозин доставляет миокардам дополнительные пищевые клетки.
+            Poison: -0.1
+
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
+        damage:
+          types: 
+            Airloss: 1
+            Brute: 1
+            Poison: 0.2
+
+- type: reagent
+  id: AdenosineTriPhosphate
+  name: reagent-name-atf
+  group: Medicine
+  desc: reagent-desc-atf
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  pricePerUnit: 2 
+  color: "#2bd558"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: -0.65
+            Brute: -0.35
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types: 
+            Brute: 0.66
+            Poison: 1
+            Cellular: 1
+
+- type: reagent
+  id: Rezocillin
+  name: reagent-name-rezocillin
+  group: Medicine
+  desc: reagent-desc-rezocillin
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  pricePerUnit: 3
+  color: "#7e916e"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.85
+            Brute: 0.6
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types: 
+            Brute: -2
+            Poison: -2
+            Cellular: 4
+
+- type: reagent
+  id: Thrivenin
+  name: reagent-name-thrivenin
+  group: Medicine
+  desc: reagent-desc-thrivenin
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  pricePerUnit: 10
+  color: "#ffaa00"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: -1.35
+            Poison: -0.75
+            Radiation: -1.5
+            Heat: -1.5
+          groups:
+            Brute: -3.25
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 26
+        damage:
+          types: 
+            Cellular: 2.5
+            Asphyxiation: 4.5
+

@@ -1,6 +1,6 @@
-using Content.Client.Disposal.Components;
 using Content.Client.Disposal.Systems;
 using Content.Shared.Disposal;
+using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -14,14 +14,15 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
+        // What are you doing here
+        [ViewVariables]
         public MailingUnitWindow? MailingUnitWindow;
+
+        [ViewVariables]
         public DisposalUnitWindow? DisposalUnitWindow;
 
-        public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public DisposalUnitBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            IoCManager.InjectDependencies(this);
         }
 
         private void ButtonPressed(UiButton button)
@@ -54,7 +55,7 @@ namespace Content.Client.Disposal.UI
 
                 MailingUnitWindow.TargetListContainer.OnItemSelected += TargetSelected;
             }
-            else if(UiKey is DisposalUnitUiKey)
+            else if (UiKey is DisposalUnitUiKey)
             {
                 DisposalUnitWindow = new DisposalUnitWindow();
 
@@ -76,41 +77,27 @@ namespace Content.Client.Disposal.UI
                 return;
             }
 
-            var entityId = Owner.Owner;
-            if (!_entityManager.TryGetComponent(entityId, out DisposalUnitComponent? component))
-                return;
-
             switch (state)
             {
                 case MailingUnitBoundUserInterfaceState mailingUnitState:
                     MailingUnitWindow?.UpdateState(mailingUnitState);
-                    component.UiState = mailingUnitState.DisposalState;
                     break;
 
                 case DisposalUnitBoundUserInterfaceState disposalUnitState:
                     DisposalUnitWindow?.UpdateState(disposalUnitState);
-                    component.UiState = disposalUnitState;
                     break;
             }
-
-            _entityManager.System<DisposalUnitSystem>().UpdateActive(entityId, true);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
 
-            if (!disposing) return;
+            if (!disposing)
+                return;
 
             MailingUnitWindow?.Dispose();
             DisposalUnitWindow?.Dispose();
-        }
-
-        public bool? UpdateWindowState(DisposalUnitBoundUserInterfaceState state)
-        {
-            return UiKey is DisposalUnitUiKey
-                ? DisposalUnitWindow?.UpdateState(state)
-                : MailingUnitWindow?.UpdatePressure(state.FullPressureTime);
         }
     }
 }

@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Implants;
 
@@ -24,7 +23,6 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         InitializeImplanted();
 
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
-        SubscribeLocalEvent<ImplanterComponent, ComponentGetState>(OnImplanterGetState);
 
         SubscribeLocalEvent<ImplanterComponent, ImplantEvent>(OnImplant);
         SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
@@ -48,10 +46,12 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         }
         else
         {
+            if (!CanImplant(args.User, args.Target.Value, uid, component, out _, out _))
+                return;
+
             //Implant self instantly, otherwise try to inject the target.
             if (args.User == args.Target)
-                Implant(uid, args.Target.Value, component);
-
+                Implant(args.User, args.Target.Value, uid, component);
             else
                 TryImplant(component, args.User, args.Target.Value, uid);
         }
@@ -67,7 +67,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        var args = new DoAfterArgs(user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
+        var args = new DoAfterArgs(EntityManager, user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
@@ -94,7 +94,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        var args = new DoAfterArgs(user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
+        var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
@@ -107,17 +107,12 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
     }
 
-    private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
-    {
-        args.State = new ImplanterComponentState(component.CurrentMode, component.ImplantOnly);
-    }
-
     private void OnImplant(EntityUid uid, ImplanterComponent component, ImplantEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
             return;
 
-        Implant(args.Used.Value, args.Target.Value, component);
+        Implant(args.User, args.Target.Value, args.Used.Value, component);
 
         args.Handled = true;
     }

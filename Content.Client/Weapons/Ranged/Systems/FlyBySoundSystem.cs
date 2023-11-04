@@ -26,14 +26,14 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
 
         // If it's not our ent or we shot it.
         if (attachedEnt == null ||
-            args.OtherFixture.Body.Owner != attachedEnt ||
-            TryComp<ProjectileComponent>(args.OurFixture.Body.Owner, out var projectile) &&
+            args.OtherEntity != attachedEnt ||
+            TryComp<ProjectileComponent>(uid, out var projectile) &&
             projectile.Shooter == attachedEnt)
         {
             return;
         }
 
-        if (args.OurFixture.ID != FlyByFixture ||
+        if (args.OurFixtureId != FlyByFixture ||
             !_random.Prob(component.Prob))
         {
             return;

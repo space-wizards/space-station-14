@@ -1,0 +1,123 @@
+﻿- type: speechVerb
+  id: Default
+  speechVerbStrings:
+  - chat-speech-verb-default
+
+- type: speechVerb
+  id: DefaultQuestion
+  speechVerbStrings:
+  - chat-speech-verb-question
+
+- type: speechVerb
+  id: DefaultStutter
+  speechVerbStrings:
+  - chat-speech-verb-stutter
+
+- type: speechVerb
+  id: DefaultMumble
+  speechVerbStrings:
+  - chat-speech-verb-mumble
+
+- type: speechVerb
+  id: DefaultExclamation
+  speechVerbStrings:
+  - chat-speech-verb-exclamation
+
+- type: speechVerb
+  id: DefaultExclamationStrong
+  bold: true
+  speechVerbStrings:
+  - chat-speech-verb-exclamation-strong
+  priority: 10
+
+- type: speechVerb
+  id: Arachnid
+  speechVerbStrings:
+  - chat-speech-verb-insect-1
+  - chat-speech-verb-insect-2
+  - chat-speech-verb-insect-3
+  - chat-speech-verb-reptilian-1
+
+- type: speechVerb
+  id: Moth
+  speechVerbStrings:
+  - chat-speech-verb-winged-1
+  - chat-speech-verb-winged-2
+  - chat-speech-verb-winged-3
+  - chat-speech-verb-insect-1
+
+- type: speechVerb
+  id: Robotic
+  speechVerbStrings:
+  - chat-speech-verb-robotic-1
+  - chat-speech-verb-robotic-2
+
+- type: speechVerb
+  id: Reptilian
+  speechVerbStrings:
+  - chat-speech-verb-reptilian-1
+  - chat-speech-verb-reptilian-2
+  - chat-speech-verb-reptilian-3
+  - chat-speech-verb-insect-2
+
+- type: speechVerb
+  id: Skeleton
+  speechVerbStrings:
+  - chat-speech-verb-skeleton-1
+  - chat-speech-verb-skeleton-2
+  - chat-speech-verb-skeleton-3
+
+- type: speechVerb
+  id: Slime
+  speechVerbStrings:
+  - chat-speech-verb-slime-1
+  - chat-speech-verb-slime-2
+  - chat-speech-verb-slime-3
+
+- type: speechVerb
+  id: Plant
+  speechVerbStrings:
+  - chat-speech-verb-plant-1
+  - chat-speech-verb-plant-2
+  - chat-speech-verb-plant-3
+
+- type: speechVerb
+  id: Canine
+  speechVerbStrings:
+  - chat-speech-verb-canine-1
+  - chat-speech-verb-canine-2
+  - chat-speech-verb-canine-3
+
+- type: speechVerb
+  id: LargeMob
+  speechVerbStrings:
+  - chat-speech-verb-large-mob-1
+  - chat-speech-verb-large-mob-2
+
+- type: speechVerb
+  id: SmallMob
+  speechVerbStrings:
+  - chat-speech-verb-small-mob-1
+  - chat-speech-verb-small-mob-2
+
+- type: speechVerb
+  id: Monkey
+  speechVerbStrings:
+  - chat-speech-verb-monkey-1
+  - chat-speech-verb-monkey-2
+
+- type: speechVerb
+  id: Cluwne
+  speechVerbStrings:
+  - chat-speech-verb-cluwne-1
+  - chat-speech-verb-cluwne-2
+  - chat-speech-verb-cluwne-3
+
+- type: speechVerb
+  id: Ghost
+  speechVerbStrings:
+  - chat-speech-verb-ghost-1
+  - chat-speech-verb-ghost-2
+  - chat-speech-verb-ghost-3
+  - chat-speech-verb-ghost-4
+  - chat-speech-verb-mumble

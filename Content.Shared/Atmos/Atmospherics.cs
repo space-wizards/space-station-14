@@ -123,7 +123,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
-        public const float MinimumTemperatureDeltaToConsider = 0.5f;
+        public const float MinimumTemperatureDeltaToConsider = 0.1f;
 
         /// <summary>
         ///     Minimum temperature for starting superconduction.
@@ -187,6 +187,7 @@ namespace Content.Shared.Atmos
         public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
+        public const float SuperSaturationEnds = SuperSaturationThreshold / 3;
 
         public const float OxygenBurnRateBase = 1.4f;
         public const float PlasmaMinimumBurnTemperature = (100f+T0C);
@@ -197,7 +198,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
         /// </summary>
-        public const float MinimumTritiumOxyburnEnergy = 2000000f;
+        public const float MinimumTritiumOxyburnEnergy = 143000f;
 
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;
@@ -225,6 +226,14 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float FrezonProductionNitrogenRatio = 10f;
 
+        /// <summary>
+        ///     1 mol of Tritium is required per X mol of oxygen.
+        /// </summary>
+        public const float FrezonProductionTritRatio = 50.0f;
+
+        /// <summary>
+        ///     1 / X of the tritium is converted into Frezon each tick
+        /// </summary>
         public const float FrezonProductionConversionRate = 50f;
 
         /// <summary>

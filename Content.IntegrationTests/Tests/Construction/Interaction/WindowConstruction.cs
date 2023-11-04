@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
-using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
@@ -14,7 +12,7 @@ public sealed class WindowConstruction : InteractionTest
     {
         await StartConstruction(Window);
         await Interact(Glass, 5);
-        AssertPrototype(Window);
+        ClientAssertPrototype(Window, ClientTarget);
     }
 
     [Test]
@@ -31,7 +29,7 @@ public sealed class WindowConstruction : InteractionTest
     {
         await StartConstruction(RWindow);
         await Interact(RGlass, 5);
-        AssertPrototype(RWindow);
+        ClientAssertPrototype(RWindow, ClientTarget);
     }
 
     [Test]

@@ -30,28 +30,36 @@
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
-    - shape:
-        # Circles, cuz rotation of rectangles looks very bad
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          # Circles, cuz rotation of rectangles looks very bad
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 3
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    netsync: false
   - type: Physics
     bodyType: KinematicController
   - type: Hands
     showInHands: false
   - type: Body
     prototype: Drone
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
   - type: DoAfter
   - type: Pullable
   - type: Examiner
@@ -84,6 +92,8 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
+    - key: enum.SiliconLawsUiKey.Key
+      type: SiliconLawBoundUserInterface
   #- type: GhostRole
   #  makeSentient: true
   #  name: Maintenance Drone
@@ -94,6 +104,12 @@
   #   2. You may not harm any being, regardless of intent or circumstance.
   #   3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
   #- type: GhostTakeoverAvailable
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws:
+    - Drone1
+    - Drone2
+    - Drone3
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
@@ -125,29 +141,29 @@
         Heat : 1 #per second, scales with temperature & other constants
   - type: Sprite
     drawdepth: SmallMobs
-    netsync: false
     layers:
     - state: shell
       sprite: Mobs/Silicon/drone.rsi
+      map: ["base"]
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: GenericEnumVisualizer
-        key: enum.DroneVisuals.Status
-        layer: 0
-        states:
-          enum.DroneStatus.Off: shell
-          enum.DroneStatus.On: drone
+      enum.DroneVisuals.Status:
+        base:
+          Off: { state: shell }
+          On: { state: drone }
   - type: ReplacementAccent
     accent: silicon
   - type: Repairable
@@ -155,12 +171,6 @@
     doAfterDelay: 8
   - type: Actions
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 3.5
@@ -189,9 +199,9 @@
       type: StrippableBoundUserInterface
   - type: GhostRole
     makeSentient: true
-    name: Onestar Mecha
-    description: You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
-    rules: Use your weapons to cause havoc. You are an antagonist.
+    name: ghost-role-information-onestar-mecha-name
+    description: ghost-role-information-onestar-mecha-description
+    rules: ghost-role-information-onestar-mecha-rules
   - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
@@ -206,29 +216,61 @@
       1000: Dead
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     layers:
     - state: onestar_boss
       sprite: Mobs/Silicon/onestar.rsi
     - state: onestar_boss_screen
       sprite: Mobs/Silicon/onestar.rsi
       shader: unshaded
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 1
-      density: 160
-      mask:
-      - LargeMobMask
-      layer:
-      - LargeMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 1
+        density: 160
+        mask:
+        - LargeMobMask
+        layer:
+        - MobLayer
   - type: Appearance
-    rotate: true
-    states:
-      Alive:
-        Base: onestar_boss
-      Dead:
-        Base: onestar_boss_wrecked
   - type: CombatMode
+  - type: Tag
+    tags:
+      - FootstepSound
+
+- type: entity
+  id: PlayerBorgGeneric
+  parent: BorgChassisGeneric
+  suffix: Battery, Tools
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+- type: entity
+  id: PlayerBorgBattery
+  parent: BorgChassisGeneric
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium

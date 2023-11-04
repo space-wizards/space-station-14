@@ -8,9 +8,26 @@
   - type: MobMover
   - type: Loadout
     prototypes: [PassengerGear]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - NanoTrasen
+
+- type: entity
+  name: Salvager
+  parent: BaseMobHuman
+  id: MobSalvager
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SalvageSpecialistGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
 
 - type: entity
   name: Spirate
@@ -18,26 +35,37 @@
   id: MobSpirate
   description: Yarr!
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - Syndicate
+  - type: Loadout
+    prototypes:
+      - PirateGear
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: RangedCombatCompound
+    rootTask:
+      task: SimpleHumanoidHostileCompound
 
 - type: entity
   parent: BaseMobHuman
   suffix: Dead
   save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse
-  name: unidentified human
-  description: We barely knew ye.
+  name: unidentified corpse
+  description: I think he's dead.
   components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
   - type: Damageable
     damage:
       types:
-        Blunt: 200
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
 
 - type: entity
   parent: MobHuman
@@ -46,3 +74,5 @@
   description: A polymorphed unfortunate.
   components:
   - type: Cluwne
+  - type: Speech
+    speechVerb: Cluwne

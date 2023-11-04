@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Grille sprite taken from https://github.com/tgstation/tgstation at commit  17c603f1d037f22081d446b9a3f3ae8d41f52e86", 
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "randomgrille"
+    }
+  ]
+}

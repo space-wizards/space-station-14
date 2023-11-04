@@ -1,4 +1,3 @@
-# TODO probably needs a base grenade
 - type: entity
   abstract: true
   parent: BaseItem
@@ -29,8 +28,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
 
 - type: entity
   name: explosive grenade
@@ -45,6 +44,13 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
   name: flashbang
@@ -60,33 +66,164 @@
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
-  name: Syndicate minibomb
-  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
+  id: GrenadeFlashEffect
+  noSpawn: true
+  components:
+    - type: PointLight
+      enabled: true
+      radius: 5
+      energy: 8
+      netsync: false
+    - type: LightFade
+      duration: 0.5
+    - type: TimedDespawn
+      lifetime: 0.5
+
+#The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
+#Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.
+- type: entity
+  name: syndicate minibomb
+  description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
   parent: GrenadeBase
   id: SyndieMiniBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
   - type: OnUseTimerTrigger
-    delay: 10
+    delay: 5
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
+    explosionType: Minibomb
     totalIntensity: 200
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/minibombcountdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/minibombcountdown.ogg
+      params:
+        volume: 12
+
+- type: entity
+  name: supermatter grenade
+  description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
+  parent: GrenadeBase
+  id: SupermatterGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/supermattergrenade.rsi
+  - type: OnUseTimerTrigger
+    delay: 3
+    beepInterval: 0.46
+    beepSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 200
+    intensitySlope: 30
+    maxIntensity: 120
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
+      volume: 5
+  - type: AnchorOnTrigger
+    removeOnTrigger: true
+  - type: TwoStageTrigger
+    triggerDelay: 10.45
+    components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+      - type: GravityWell
+        maxRange: 8
+        baseRadialAcceleration: 145
+        baseTangentialAcceleration: 5
+        gravPulsePeriod: 0.01
+      - type: SingularityDistortion
+        intensity: 150
+        falloffPower: 1.5
+      - type: PointLight
+        enabled: true
+        color: "#ffaa44"
+        energy: 8
+        radius: 6
+        softness: 1
+        offset: "0, 0"
+      - type: SoundOnTrigger
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
+          params:
+            volume: 5
+      - type: ExplodeOnTrigger
+
+- type: entity
+  name: whitehole grenade
+  description: Grenade that repulses everything around for some time.
+  parent: SupermatterGrenade
+  id: WhiteholeGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
+  - type: OnUseTimerTrigger
+    delay: 3
+    beepInterval: 0.69
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
+      volume: 5
+  - type: TwoStageTrigger
+    triggerDelay: 11.14
+    components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
+      - type: GravityWell
+        maxRange: 10
+        baseRadialAcceleration: -180
+        baseTangentialAcceleration: -5
+        gravPulsePeriod: 0.01
+      - type: SingularityDistortion
+        intensity: -200
+        falloffPower: 1.5
+      - type: PointLight
+        enabled: true
+        color: "#ffffff"
+        energy: 8
+        radius: 6
+        softness: 1
+        offset: "0, 0"
+      - type: SoundOnTrigger
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
+          params:
+            volume: 15
+      - type: DeleteOnTrigger
 
 - type: entity
   name: the nuclear option
@@ -114,10 +251,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: modular grenade
@@ -127,7 +263,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/modular.rsi
-    state: empty
+    layers:
+    - state: empty
+      map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
     size: 8
   - type: PayloadCase
@@ -146,18 +284,24 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: GenericEnumVisualizer
-      key: enum.Trigger.TriggerVisuals.VisualState
-      states:
-        enum.Trigger.TriggerVisualState.Primed: primed
-        enum.Trigger.TriggerVisualState.Unprimed: complete
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          emptyCase: { state: empty }
+          wiredCase: { state: wired }
+          caseWithTrigger: { state: no-payload }
+          grenade: { state: complete }
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: complete }
   - type: StaticPrice
     price: 25
 
 - type: entity
-  name: emp grenade
-  description: Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
+  name: EMP grenade
+  description: A grenade designed to wreak havoc on electronic systems.
   parent: GrenadeBase
   id: EmpGrenade
   components:
@@ -168,7 +312,31 @@
     energyConsumption: 50000
   - type: DeleteOnTrigger
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: holy hand grenade
+  description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
+  parent: GrenadeBase
+  id: HolyHandGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/holyhandgrenade.rsi
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default # same as macrobomb
+    totalIntensity: 3500
+    intensitySlope: 15
+    maxIntensity: 70
+    canCreateVacuum: true
+  - type: OnUseTimerTrigger
+    delay: 3 # by canon
+  - type: PointLight
+    radius: 7
+    energy: 3
+    netsync: false
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/hallelujah.ogg

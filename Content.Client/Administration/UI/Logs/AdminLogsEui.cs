@@ -19,6 +19,7 @@ public sealed class AdminLogsEui : BaseEui
     public AdminLogsEui()
     {
         LogsWindow = new AdminLogsWindow();
+        LogsWindow.OnClose += OnCloseWindow;
         LogsControl = LogsWindow.Logs;
 
         LogsControl.LogSearch.OnTextEntered += _ => RequestLogs();
@@ -39,7 +40,13 @@ public sealed class AdminLogsEui : BaseEui
 
     private void OnRequestClosed(WindowRequestClosedEventArgs args)
     {
-        SendMessage(new Close());
+        SendMessage(new CloseEuiMessage());
+    }
+
+    private void OnCloseWindow()
+    {
+        if (ClydeWindow == null)
+            SendMessage(new CloseEuiMessage());
     }
 
     private void RequestLogs()
@@ -55,7 +62,6 @@ public sealed class AdminLogsEui : BaseEui
             LogsControl.SelectedPlayers.ToArray(),
             null,
             LogsControl.IncludeNonPlayerLogs,
-            null,
             DateOrder.Descending);
 
         SendMessage(request);
@@ -63,6 +69,7 @@ public sealed class AdminLogsEui : BaseEui
 
     private void NextLogs()
     {
+        LogsControl.NextButton.Disabled = true;
         var request = new NextLogsRequest();
         SendMessage(request);
     }
@@ -74,10 +81,6 @@ public sealed class AdminLogsEui : BaseEui
             return;
         }
 
-        LogsControl.Orphan();
-        LogsWindow.Dispose();
-        LogsWindow = null;
-
         var monitor = _clyde.EnumerateMonitors().First();
 
         ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
@@ -85,9 +88,13 @@ public sealed class AdminLogsEui : BaseEui
             Maximized = false,
             Title = "Admin Logs",
             Monitor = monitor,
-            Width = 1000,
+            Width = 1100,
             Height = 400
         });
+
+        LogsControl.Orphan();
+        LogsWindow.Dispose();
+        LogsWindow = null;
 
         ClydeWindow.RequestClosed += OnRequestClosed;
         ClydeWindow.DisposeOnClose = true;
@@ -110,6 +117,7 @@ public sealed class AdminLogsEui : BaseEui
 
         LogsControl.SetCurrentRound(s.RoundId);
         LogsControl.SetPlayers(s.Players);
+        LogsControl.UpdateCount(round: s.RoundLogs);
 
         if (!FirstState)
         {

@@ -1,0 +1,74 @@
+- type: entity
+  name: Demon
+  id: Demon
+  parent: SimpleMobBase
+  description: Demon from other world.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4.00
+    baseSprintSpeed : 6.00
+  - type: InputMover
+  - type: MobMover
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Ghosts/demon.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: demon
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.50
+        density: 400
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      399: Critical
+      400: Dead
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcSlash
+    damage:
+      types:
+        Slash: 50
+  - type: Appearance
+  - type: Respirator
+    damage:
+      types:
+        Brute: 0.5
+        Airloss: 0.0
+        Burn: 1.0
+    damageRecovery:
+      types:
+        Brute: -1.0
+        Airloss: -5.0
+        Burn: -0.5
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: demon
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Puller
+    needsHands: false
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: MobPrice
+    price: 20000

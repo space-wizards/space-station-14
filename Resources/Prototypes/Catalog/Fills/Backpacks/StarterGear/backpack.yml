@@ -27,6 +27,19 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
+      - id: MagazinePistol
+      
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSecurity
+  id: ClothingBackpackSecurityFilledDetective
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
+      - id: ForensicPad
+      - id: ForensicScanner
 
 - type: entity
   noSpawn: true
@@ -88,13 +101,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMedical
       - id: Flash
       #- id: TelescopicBaton
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpack
+  parent: ClothingBackpackCargo
   id: ClothingBackpackQuartermasterFilled
   components:
   - type: StorageFill
@@ -110,13 +123,23 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalSecurity
       - id: Flash
+      - id: MagazinePistol
 
 - type: entity
   noSpawn: true
   parent: ClothingBackpackEngineering
   id: ClothingBackpackEngineeringFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalEngineering
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackAtmospherics
+  id: ClothingBackpackAtmosphericsFilled
   components:
   - type: StorageFill
     contents:
@@ -214,12 +237,13 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
+        - id: WeaponPulseCarbine
         - id: WeaponPulsePistol
-        - id: WeaponPistolMk58
-        - id: MagazinePistolHighCapacityRubber
-        - id: MagazinePistol
+        - id: WeaponDisabler
+        - id: MedicatedSuture
+        - id: RegenerativeMesh
         - id: Handcuffs
-
+        - id: CrowbarRed
 
 - type: entity
   noSpawn: true
@@ -232,8 +256,10 @@
         - id: WeaponDisabler
         - id: WeaponPulsePistol
         - id: WeaponPulseCarbine
+        - id: MedicatedSuture
+        - id: RegenerativeMesh
         - id: BoxHandcuff
-        - id: Handcuffs
+        - id: CrowbarRed
 
 - type: entity
   noSpawn: true
@@ -242,11 +268,14 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalMedical
         - id: WeaponPulseCarbine
         - id: Hypospray
         - id: MedkitAdvancedFilled
-
+        - id: CrowbarRed
+        - id: OmnizineChemistryBottle
+        - id: EpinephrineChemistryBottle
+        - id: EpinephrineChemistryBottle
 
 - type: entity
   noSpawn: true
@@ -258,10 +287,14 @@
         - id: BoxSurvival
         - id: trayScanner
         - id: WeaponPulseCarbine
+        - id: MedicatedSuture
+        - id: RegenerativeMesh
         - id: RCD
         - id: RCDAmmo
         - id: RCDAmmo
         - id: RCDAmmo
+        - id: CableMVStack
+        - id: CableHVStack
 
 - type: entity
   noSpawn: true
@@ -276,6 +309,17 @@
         - id: BoxLightMixed
         - id: BoxLightMixed
         - id: Soap
+        - id: CrowbarRed
+        - id: AdvMopItem
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackCargo
+  id: ClothingBackpackCargoFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
 
 - type: entity
   noSpawn: true
@@ -297,3 +341,22 @@
         - id: Cutlass
         - id: WeaponRevolverPirate
         - id: ClothingEyesEyepatch
+
+# - type: entity
+#   parent: ClothingBackpack
+#   id: ClothingBackpackBrigmedic
+#   name: brigmedic bag
+#   description: A large duffel bag for holding extra medical related goods.
+#   components:
+#   - type: Sprite
+#     sprite: Clothing/Back/Backpacks/brigmedic.rsi
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackBrigmedic
+  id: ClothingBackpackBrigmedicFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalBrigmedic
+      - id: Flash

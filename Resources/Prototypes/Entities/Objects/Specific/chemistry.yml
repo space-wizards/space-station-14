@@ -8,7 +8,6 @@
     - GlassBeaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker.rsi
-    netsync: false
     layers:
       - state: beaker
       - state: beaker1
@@ -46,7 +45,6 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Drink
-    isOpen: true
     solution: beaker
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -91,6 +89,64 @@
     price: 30
 
 - type: entity
+  parent: BaseItem
+  id: BaseBeakerMetallic
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - GlassBeaker
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    layers:
+      - state: beaker
+      - state: beaker1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        canMix: true
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: Drink
+    solution: beaker
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: StaticPrice
+    price: 30
+
+- type: entity
   name: beaker
   parent: BaseBeaker
   description: Used to contain a moderate amount of chemicals and solutions.
@@ -98,6 +154,22 @@
   components:
   - type: Spillable
     solution: beaker
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  name: cryoxadone beaker
+  description: Filled with a reagent used in cryogenic tubes.
+  parent: Beaker
+  id: CryoxadoneBeakerSmall
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Cryoxadone
+          Quantity: 50
 
 - type: entity
   name: large beaker
@@ -131,10 +203,12 @@
 
 - type: entity
   name: cryostasis beaker
-  parent: BaseBeaker
+  parent: BaseBeakerMetallic
   description: Used to contain chemicals or solutions without reactions.
   id: CryostasisBeaker
   components:
+  - type: Spillable
+    solution: beaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
@@ -142,29 +216,12 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 40
+        maxVol: 60
         canReact: false
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: FlimsyMetallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:SpillBehavior
-        solution: beaker
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Tag
-    tags:
-    - GlassBeaker
-    - Cryobeaker
 
 - type: entity
   name: bluespace beaker
-  parent: BaseBeaker
+  parent: BaseBeakerMetallic
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:
@@ -177,7 +234,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 300
+        maxVol: 1000
         canMix: true
 
 - type: entity
@@ -188,7 +245,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
-    netsync: false
     layers:
       - state: dropper
       - state: dropper1
@@ -223,6 +279,26 @@
     price: 40
 
 - type: entity
+  name: borgdropper
+  parent: Dropper
+  description: Used to transfer small amounts of chemical solution between containers. Extended for use by medical borgs.
+  id: BorgDropper
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+    layers:
+      - state: borgdropper
+      - state: dropper1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 10
+  - type: Item
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+
+- type: entity
   name: syringe
   parent: BaseItem
   description: Used to draw blood samples from mobs, or to inject them with reagents.
@@ -231,7 +307,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    netsync: false
     layers:
       - state: syringe1
         map: ["enum.SolutionContainerLayers.Fill"]
@@ -242,6 +317,7 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: "syringe_base0"
   - type: Item
+    size: 3
     sprite: Objects/Specific/Chemistry/syringe.rsi
     heldPrefix: 0
   - type: SolutionContainerManager
@@ -250,13 +326,15 @@
         maxVol: 15
   - type: Injector
     injectOnly: false
+  - type: ExaminableSolution
+    solution: injector
   - type: Spillable
     solution: injector
   - type: TrashOnEmpty
     solution: injector
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    maxFillLevels: 2
     fillBaseName: syringe
   - type: Tag
     tags:
@@ -266,6 +344,40 @@
   parent: BaseSyringe
   id: Syringe
   components:
+  - type: Injector
+    transferAmount: 15
+    toggleState: Draw
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
+
+- type: entity
+  id: SyringeBluespace
+  parent: BaseSyringe
+  name: bluespace syringe
+  description: Injecting with advanced bluespace technology.
+  components:
+  - type: Sprite
+    layers:
+    - state: syringe1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: bluespace_base0
+      map: ["enum.SolutionContainerLayers.Base"]
+  - type: Icon
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: bluespace_base0
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 100
+  - type: Injector
+    delay: 2.5
+    injectOnly: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: syringe
   - type: Tag
     tags:
     - Syringe
@@ -283,14 +395,13 @@
   - type: Item
     size: 1
     sprite: Objects/Specific/Chemistry/pills.rsi
-  - type: Tag
-    tags:
-      - Pill
+  - type: Pill
   - type: Food
     forceFeedDelay: 1
     transferAmount: null
     eatMessage: food-swallow
     useSound: /Audio/Items/pill.ogg
+  - type: BadFood
   - type: FlavorProfile
     ignoreReagents: []
   - type: SolutionContainerManager
@@ -304,6 +415,22 @@
     grindableSolutionName: food
   - type: StaticPrice
     price: 0
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Pill
 
 - type: entity
   name: pill canister
@@ -327,6 +454,6 @@
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
     whitelist:
-      tags:
-        - Pill
+      components:
+      - Pill
   - type: Dumpable

@@ -10,9 +10,7 @@ namespace Content.Server.Spreader;
 [ByRefEvent]
 public record struct SpreadNeighborsEvent
 {
-    public MapGridComponent? Grid;
-    public ValueList<Vector2i> NeighborFreeTiles;
-    public ValueList<Vector2i> NeighborOccupiedTiles;
+    public ValueList<(MapGridComponent Grid, Vector2i Tile)> NeighborFreeTiles;
     public ValueList<EntityUid> Neighbors;
 
     /// <summary>

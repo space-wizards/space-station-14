@@ -30,3 +30,6 @@ ent-CrateEngineeringMiniJetpack = Mini jetpack crate
 
 ent-CrateAirlockKit = Airlock kit
     .desc = A kit for building 6 airlocks, doesn't include tools.
+
+ent-CrateEvaKit = EVA kit
+    .desc = A set consisting of two prestigious EVA suits and helmets.

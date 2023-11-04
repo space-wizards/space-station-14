@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
 using Content.Shared.Access.Components;
+using Content.Shared.Climbing;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
@@ -16,6 +18,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using ClimbableComponent = Content.Shared.Climbing.Components.ClimbableComponent;
 
 namespace Content.Server.NPC.Pathfinding;
 
@@ -48,6 +51,7 @@ public sealed partial class PathfindingSystem
         SubscribeLocalEvent<GridPathfindingComponent, EntityUnpausedEvent>(OnGridPathPause);
         SubscribeLocalEvent<GridPathfindingComponent, ComponentShutdown>(OnGridPathShutdown);
         SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
+        SubscribeLocalEvent<CollisionLayerChangeEvent>(OnCollisionLayerChange);
         SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
         SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
@@ -81,7 +85,7 @@ public sealed partial class PathfindingSystem
         component.Chunks.Clear();
     }
 
-    private void UpdateGrid()
+    private void UpdateGrid(ParallelOptions options)
     {
         if (PauseUpdating)
             return;
@@ -91,20 +95,17 @@ public sealed partial class PathfindingSystem
         var updateCount = 0;
 #endif
         _stopwatch.Restart();
-        var options = new ParallelOptions()
-        {
-            MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
-        };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
         // Still run even when paused.
         var query = AllEntityQuery<GridPathfindingComponent>();
 
-        while (query.MoveNext(out var comp))
+        while (query.MoveNext(out var uid, out var comp))
         {
+            // TODO: Dump all this shit and just do it live it's probably fast enough.
             if (comp.DirtyChunks.Count == 0 ||
-                comp.NextUpdate < curTime ||
-                !TryComp<MapGridComponent>(comp.Owner, out var mapGridComp))
+                curTime < comp.NextUpdate ||
+                !TryComp<MapGridComponent>(uid, out var mapGridComp))
             {
                 continue;
             }
@@ -119,7 +120,7 @@ public sealed partial class PathfindingSystem
 
             foreach (var origin in comp.DirtyChunks)
             {
-                var chunk = GetChunk(origin, comp.Owner, comp);
+                var chunk = GetChunk(origin, uid, comp);
                 dirt[idx] = chunk;
                 idx++;
             }
@@ -151,11 +152,11 @@ public sealed partial class PathfindingSystem
                 var accessQuery = GetEntityQuery<AccessReaderComponent>();
                 var destructibleQuery = GetEntityQuery<DestructibleComponent>();
                 var doorQuery = GetEntityQuery<DoorComponent>();
+                var climbableQuery = GetEntityQuery<ClimbableComponent>();
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
-                var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, fixturesQuery,
-                    physicsQuery, xformQuery);
+                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, climbableQuery,
+                    fixturesQuery, xformQuery);
             });
 
             const int Division = 4;
@@ -234,17 +235,18 @@ public sealed partial class PathfindingSystem
         }
     }
 
-    private bool IsBodyRelevant(PhysicsComponent body)
+    private bool IsBodyRelevant(FixturesComponent fixtures)
     {
-        if (!body.Hard || body.BodyType != BodyType.Static)
+        foreach (var fixture in fixtures.Fixtures.Values)
         {
-            return false;
-        }
+            if (!fixture.Hard)
+                continue;
 
-        if ((body.CollisionMask & PathfindingCollisionLayer) != 0x0 ||
-            (body.CollisionLayer & PathfindingCollisionMask) != 0x0)
-        {
-            return true;
+            if ((fixture.CollisionMask & PathfindingCollisionLayer) != 0x0 ||
+                (fixture.CollisionLayer & PathfindingCollisionMask) != 0x0)
+            {
+                return true;
+            }
         }
 
         return false;
@@ -252,35 +254,42 @@ public sealed partial class PathfindingSystem
 
     private void OnCollisionChange(ref CollisionChangeEvent ev)
     {
-        if (!IsBodyRelevant(ev.Body))
-            return;
-
         var xform = Transform(ev.Body.Owner);
 
         if (xform.GridUid == null)
             return;
 
         // This will also rebuild on door open / closes which I think is good?
-        DirtyChunk(xform.GridUid.Value, xform.Coordinates);
+        var aabb = _lookup.GetAABBNoContainer(ev.Body.Owner, xform.Coordinates.Position, xform.LocalRotation);
+        DirtyChunkArea(xform.GridUid.Value, aabb);
+    }
+
+    private void OnCollisionLayerChange(ref CollisionLayerChangeEvent ev)
+    {
+        var xform = Transform(ev.Body.Owner);
+
+        if (xform.GridUid == null)
+            return;
+
+        var aabb = _lookup.GetAABBNoContainer(ev.Body.Owner, xform.Coordinates.Position, xform.LocalRotation);
+        DirtyChunkArea(xform.GridUid.Value, aabb);
     }
 
     private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
     {
-        if (ev.Component.CanCollide &&
-            IsBodyRelevant(ev.Component) &&
-            TryComp<TransformComponent>(ev.Entity, out var xform) &&
+        if (TryComp<TransformComponent>(ev.Entity, out var xform) &&
             xform.GridUid != null)
         {
-            DirtyChunk(xform.GridUid.Value, xform.Coordinates);
+            var aabb = _lookup.GetAABBNoContainer(ev.Entity, xform.Coordinates.Position, xform.LocalRotation);
+            DirtyChunkArea(xform.GridUid.Value, aabb);
         }
     }
 
     private void OnMoveEvent(ref MoveEvent ev)
     {
-        if (!TryComp<PhysicsComponent>(ev.Sender, out var body) ||
-            body.BodyType != BodyType.Static ||
-            HasComp<MapGridComponent>(ev.Sender) ||
-            ev.OldPosition.Equals(ev.NewPosition))
+        if (!TryComp<FixturesComponent>(ev.Sender, out var fixtures) ||
+            !IsBodyRelevant(fixtures) ||
+            HasComp<MapGridComponent>(ev.Sender))
         {
             return;
         }
@@ -290,34 +299,16 @@ public sealed partial class PathfindingSystem
             ? gridUid
             : ev.OldPosition.GetGridUid(EntityManager);
 
-        // Not on a grid at all so just ignore.
-        if (oldGridUid == gridUid && oldGridUid == null)
+        if (oldGridUid != null && oldGridUid != gridUid)
         {
-            return;
-        }
-
-        if (oldGridUid != null && gridUid != null)
-        {
-            // If the chunk hasn't changed then just dirty that one.
-            var oldOrigin = GetOrigin(ev.OldPosition, oldGridUid.Value);
-            var origin = GetOrigin(ev.NewPosition, gridUid.Value);
-
-            if (oldOrigin == origin)
-            {
-                // TODO: Don't need to transform again numpty.
-                DirtyChunk(oldGridUid.Value, ev.NewPosition);
-                return;
-            }
-        }
-
-        if (oldGridUid != null)
-        {
-            DirtyChunk(oldGridUid.Value, ev.OldPosition);
+            var aabb = _lookup.GetAABBNoContainer(ev.Sender, ev.OldPosition.Position, ev.OldRotation);
+            DirtyChunkArea(oldGridUid.Value, aabb);
         }
 
         if (gridUid != null)
         {
-            DirtyChunk(gridUid.Value, ev.NewPosition);
+            var aabb = _lookup.GetAABBNoContainer(ev.Sender, ev.NewPosition.Position, ev.NewRotation);
+            DirtyChunkArea(gridUid.Value, aabb);
         }
     }
 
@@ -352,12 +343,36 @@ public sealed partial class PathfindingSystem
 
         var currentTime = _timing.CurTime;
 
-        if (comp.NextUpdate < currentTime)
+        if (comp.NextUpdate < currentTime && !MetaData(gridUid).EntityPaused)
             comp.NextUpdate = currentTime + UpdateCooldown;
 
         var chunks = comp.DirtyChunks;
         // TODO: Change these args around.
         chunks.Add(GetOrigin(coordinates, gridUid));
+    }
+
+    private void DirtyChunkArea(EntityUid gridUid, Box2 aabb)
+    {
+        if (!TryComp<GridPathfindingComponent>(gridUid, out var comp))
+            return;
+
+        var currentTime = _timing.CurTime;
+
+        if (comp.NextUpdate < currentTime)
+            comp.NextUpdate = currentTime + UpdateCooldown;
+
+        var chunks = comp.DirtyChunks;
+
+        // This assumes you never have bounds equal to or larger than 2 * ChunkSize.
+        var corners = new Vector2[] { aabb.BottomLeft, aabb.TopRight, aabb.BottomRight, aabb.TopLeft };
+        foreach (var corner in corners)
+        {
+            var sampledPoint = new Vector2i(
+                (int) Math.Floor((corner.X) / ChunkSize),
+                (int) Math.Floor((corner.Y) / ChunkSize));
+
+            chunks.Add(sampledPoint);
+        }
     }
 
     private GridPathfindingChunk GetChunk(Vector2i origin, EntityUid uid, GridPathfindingComponent? component = null)
@@ -406,8 +421,8 @@ public sealed partial class PathfindingSystem
         EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<DoorComponent> doorQuery,
+        EntityQuery<ClimbableComponent> climbableQuery,
         EntityQuery<FixturesComponent> fixturesQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
         var sw = new Stopwatch();
@@ -440,18 +455,26 @@ public sealed partial class PathfindingSystem
                 // var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
 
                 tileEntities.Clear();
-                var anchored = grid.GetAnchoredEntitiesEnumerator(tilePos);
+                var available = _lookup.GetEntitiesIntersecting(tile, flags: LookupFlags.Dynamic | LookupFlags.Static);
 
-                while (anchored.MoveNext(out var ent))
+                foreach (var ent in available)
                 {
                     // Irrelevant for pathfinding
-                    if (!physicsQuery.TryGetComponent(ent, out var body) ||
-                        !IsBodyRelevant(body))
+                    if (!fixturesQuery.TryGetComponent(ent, out var fixtures) ||
+                        !IsBodyRelevant(fixtures))
                     {
                         continue;
                     }
 
-                    tileEntities.Add(ent.Value);
+                    var xform = xformQuery.GetComponent(ent);
+
+                    if (xform.ParentUid != grid.Owner ||
+                        grid.LocalToTile(xform.Coordinates) != tilePos)
+                    {
+                        continue;
+                    }
+
+                    tileEntities.Add(ent);
                 }
 
                 for (var subX = 0; subX < SubStep; subX++)
@@ -480,7 +503,9 @@ public sealed partial class PathfindingSystem
                                 if (!fixture.Hard ||
                                     (collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
                                     (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
+                                {
                                     continue;
+                                }
 
                                 // Do an AABB check first as it's probably faster, then do an actual point check.
                                 var intersects = false;
@@ -523,16 +548,24 @@ public sealed partial class PathfindingSystem
                                 flags |= PathfindingBreadcrumbFlag.Door;
                             }
 
+                            if (climbableQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Climb;
+                            }
+
                             if (destructibleQuery.TryGetComponent(ent, out var damageable))
                             {
                                 damage += _destructible.DestroyedAt(ent, damageable).Float();
                             }
                         }
 
+                        /*This is causing too many issues and I'd rather just ignore it until pathfinder refactor
+                          to just get tiles at runtime.
                         if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
                         {
-                            DebugTools.Assert(tileEntities.Count == 0);
+                            // DebugTools.Assert(tileEntities.Count == 0);
                         }
+                        */
 
                         var crumb = new PathfindingBreadcrumb()
                         {
@@ -620,7 +653,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
         SendBreadcrumbs(chunk, grid.Owner);
     }
 
@@ -806,7 +839,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
         SendPolys(chunk, component.Owner, chunkPolys);
     }
 

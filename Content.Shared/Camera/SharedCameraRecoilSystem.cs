@@ -1,3 +1,4 @@
+using System.Numerics;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
@@ -27,19 +28,13 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     /// </summary>
     protected const float KickMagnitudeMax = 1f;
 
-    private ISawmill _log = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        _log = Logger.GetSawmill($"ecs.systems.{nameof(SharedCameraRecoilSystem)}");
-    }
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     /// <summary>
     ///     Applies explosion/recoil/etc kickback to the view of the entity.
     /// </summary>
     /// <remarks>
-    ///     If the entity is missing <see cref="CameraRecoilComponent" /> and/or <see cref="SharedEyeComponent" />,
+    ///     If the entity is missing <see cref="CameraRecoilComponent" /> and/or <see cref="EyeComponent" />,
     ///     this call will have no effect. It is safe to call this function on any entity.
     /// </remarks>
     public abstract void KickCamera(EntityUid euid, Vector2 kickback, CameraRecoilComponent? component = null);
@@ -48,19 +43,19 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        foreach (var entity in EntityManager.EntityQuery<SharedEyeComponent, CameraRecoilComponent>(true))
+        var query = AllEntityQuery<EyeComponent, CameraRecoilComponent>();
+
+        while (query.MoveNext(out var uid, out var eye, out var recoil))
         {
-            var recoil = entity.Item2;
-            var eye = entity.Item1;
-            var magnitude = recoil.CurrentKick.Length;
+            var magnitude = recoil.CurrentKick.Length();
             if (magnitude <= 0.005f)
             {
                 recoil.CurrentKick = Vector2.Zero;
-                eye.Offset = recoil.BaseOffset + recoil.CurrentKick;
+                _eye.SetOffset(uid, recoil.BaseOffset + recoil.CurrentKick, eye);
             }
             else // Continually restore camera to 0.
             {
-                var normalized = recoil.CurrentKick.Normalized;
+                var normalized = recoil.CurrentKick.Normalized();
                 recoil.LastKickTime += frameTime;
                 var restoreRate = MathHelper.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, recoil.LastKickTime / RestoreRateRamp));
                 var restore = normalized * restoreRate * frameTime;
@@ -69,9 +64,9 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 
                 if (Math.Sign(y) != Math.Sign(recoil.CurrentKick.Y)) y = 0;
 
-                recoil.CurrentKick = (x, y);
+                recoil.CurrentKick = new Vector2(x, y);
 
-                eye.Offset = recoil.BaseOffset + recoil.CurrentKick;
+                _eye.SetOffset(uid, recoil.BaseOffset + recoil.CurrentKick, eye);
             }
         }
     }
@@ -81,12 +76,12 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 [NetSerializable]
 public sealed class CameraKickEvent : EntityEventArgs
 {
-    public readonly EntityUid Euid;
+    public readonly NetEntity NetEntity;
     public readonly Vector2 Recoil;
 
-    public CameraKickEvent(EntityUid euid, Vector2 recoil)
+    public CameraKickEvent(NetEntity netEntity, Vector2 recoil)
     {
         Recoil = recoil;
-        Euid = euid;
+        NetEntity = netEntity;
     }
 }

@@ -11,7 +11,7 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class StopBeingPulled : IAlertClick
+    public sealed partial class StopBeingPulled : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {
@@ -20,7 +20,7 @@ namespace Content.Server.Alert.Click
             if (!entityManager.System<ActionBlockerSystem>().CanInteract(player, null))
                 return;
 
-            if (entityManager.TryGetComponent<SharedPullableComponent?>(player, out var playerPullable))
+            if (entityManager.TryGetComponent(player, out SharedPullableComponent? playerPullable))
             {
                 entityManager.System<SharedPullingSystem>().TryStopPull(playerPullable);
             }

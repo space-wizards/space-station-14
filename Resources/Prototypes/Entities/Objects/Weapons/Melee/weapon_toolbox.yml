@@ -1,0 +1,18 @@
+- type: entity
+  parent: BaseItem
+  id: WeaponMeleeToolboxRobust
+  name: robust toolbox
+  description: A tider's weapon.
+  suffix: Do Not Map
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+    state: icon
+  - type: Item
+    size: 150
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 20

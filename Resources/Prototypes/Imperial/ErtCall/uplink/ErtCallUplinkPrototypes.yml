@@ -1,0 +1,157 @@
+#ERT START
+- type: entity
+  parent: BaseItem
+  id: BaseERTUplink
+  name: ert uplink
+  description: super ert uplink
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/ert_tablet.rsi
+    layers:
+    - state: device-on
+    - state: device-anim
+      shader: unshaded
+      visible: true
+    netsync: false
+  - type: Item
+    sprite: Objects/Devices/ert_tablet.rsi
+    heldPrefix: device
+  - type: UserInterface
+    interfaces:
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    preset: ErtCallUplinkPreset
+    balance:
+      BlueSpaceCube: 0
+
+#Leader
+#ERT
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkLeader
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkPreset
+    balance:
+      BlueSpaceCube: 30
+  - type: Tag
+    tags:
+      - ErtUplinkCombat
+
+#Medic
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkMedic
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkMedicPreset
+    balance:
+      BlueSpaceCube: 20
+  # - type: Tag
+  #   tags:
+  #     - ErtUplinkCombat
+
+#Security
+#ERT
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkSecurity
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkSecurityPreset
+    balance:
+      BlueSpaceCube: 20
+  - type: Tag
+    tags:
+      - ErtUplinkCombat
+
+#Engineer
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkEngineer
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkEngineerPreset
+    balance:
+      BlueSpaceCube: 20
+  # - type: Tag
+  #   tags:
+  #     - ErtUplinkCombat
+
+#Junitor
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkJunitor
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkJanitorPreset
+    balance:
+      BlueSpaceCube: 20
+  # - type: Tag
+  #   tags:
+  #     - ErtUplinkCombat
+#ERT END
+
+#CBURN START
+- type: entity
+  parent: BaseERTUplink
+  id: CBURNUplinkLeader
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkPreset
+    balance:
+      BlueSpaceCube: 30
+  - type: Tag
+    tags:
+      - ErtUplinkCombat
+      - ErtUplinkCBURN
+
+- type: entity
+  parent: BaseERTUplink
+  id: CBURNUplinkSecurity
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkSecurityPreset
+    balance:
+      BlueSpaceCube: 20
+  - type: Tag
+    tags:
+      - ErtUplinkCombat
+      - ErtUplinkCBURN
+
+#CBURN END
+
+#DEAD SQUAD START
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkDeadSquad
+  suffix: ERT
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/ert_tablet.rsi
+    layers:
+    - state: device-on
+    - state: device-deadsquad-anim
+      shader: unshaded
+      visible: true
+  - type: Store
+    preset: ErtCallUplinkDeadSquadPreset
+    balance:
+      BlueSpaceCube: 60
+  - type: Tag
+    tags:
+      - ErtUplinkDeadSquad
+      - ErtUplinkCombat
+#DEAD SQUAD END
+

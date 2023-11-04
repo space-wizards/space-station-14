@@ -1,9 +1,5 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
-using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 
 namespace Content.IntegrationTests.Tests.Tiles;
 
@@ -21,7 +17,7 @@ public sealed class TileConstructionTests : InteractionTest
         await SetTile(null);
         await Interact(Rod);
         await AssertTile(Lattice);
-        Assert.IsNull(Hands.ActiveHandEntity);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
         await Interact(Cut);
         await AssertTile(null);
         await AssertEntityLookup((Rod, 1));
@@ -46,14 +42,14 @@ public sealed class TileConstructionTests : InteractionTest
 
         // Place Lattice
         var oldPos = TargetCoords;
-        TargetCoords = new EntityCoordinates(MapData.MapUid, 1, 0);
+        TargetCoords = SEntMan.GetNetCoordinates(new EntityCoordinates(MapData.MapUid, 1, 0));
         await Interact(Rod);
         TargetCoords = oldPos;
         await AssertTile(Lattice);
         AssertGridCount(1);
 
         // Cut lattice
-        Assert.IsNull(Hands.ActiveHandEntity);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
         await Interact(Cut);
         await AssertTile(null);
         AssertGridCount(0);
@@ -79,7 +75,7 @@ public sealed class TileConstructionTests : InteractionTest
 
         // Space -> Lattice
         var oldPos = TargetCoords;
-        TargetCoords = new EntityCoordinates(MapData.MapUid, 1, 0);
+        TargetCoords = SEntMan.GetNetCoordinates(new EntityCoordinates(MapData.MapUid, 1, 0));
         await Interact(Rod);
         TargetCoords = oldPos;
         await AssertTile(Lattice);
@@ -87,13 +83,13 @@ public sealed class TileConstructionTests : InteractionTest
 
         // Lattice -> Plating
         await Interact(Steel);
-        Assert.IsNull(Hands.ActiveHandEntity);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
         await AssertTile(Plating);
         AssertGridCount(1);
 
         // Plating -> Tile
         await Interact(FloorItem);
-        Assert.IsNull(Hands.ActiveHandEntity);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
         await AssertTile(Floor);
         AssertGridCount(1);
 
@@ -105,4 +101,3 @@ public sealed class TileConstructionTests : InteractionTest
         await AssertEntityLookup((FloorItem, 1));
     }
 }
-

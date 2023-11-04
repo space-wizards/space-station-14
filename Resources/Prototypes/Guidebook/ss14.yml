@@ -1,8 +1,16 @@
-﻿- type: guideEntry
+- type: guideEntry
   id: SS14
   name: guide-entry-ss14
-  text: "/ServerInfo/Guidebook/Space Station 14.xml"
+  text: "/ServerInfo/Guidebook/SpaceStation14.xml"
   children:
   - Controls
   - Jobs
   - Survival
+  - Chemicals
+  - Antagonists
+  - Writing
+
+- type: guideEntry
+  id: Writing
+  name: guide-entry-writing
+  text: "/ServerInfo/Guidebook/Writing.xml"

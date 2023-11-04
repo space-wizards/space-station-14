@@ -1,0 +1,30 @@
+- type: constructionGraph
+  id: GoldToilet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: goldtoilet
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Gold
+              amount: 5
+              doAfter: 1
+    - node: goldtoilet
+      entity: GoldToilet
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: IngotGold1
+              amount: 5
+            - !type:EmptyAllContainers {}
+            - !type:DestroyEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+            - !type:ToiletLidClosed {}
+          steps:
+            - tool: Welding
+              doAfter: 2

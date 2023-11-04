@@ -24,7 +24,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "torso_m"
     - type: Icon
@@ -40,7 +39,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "skull_icon"
     - type: Icon
@@ -50,10 +48,8 @@
       partType: Head
     - type: Input
       context: "human"
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 0
-      baseSprintSpeed: 0
     - type: Speech
+      speechVerb: Skeleton
     - type: SkeletonAccent
     - type: Actions
     - type: Vocal
@@ -81,7 +77,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "l_arm"
     - type: Icon
@@ -97,7 +92,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "r_arm"
     - type: Icon
@@ -113,7 +107,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "l_hand"
     - type: Icon
@@ -129,7 +122,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "r_hand"
     - type: Icon
@@ -145,7 +137,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "l_leg"
     - type: Icon
@@ -154,7 +145,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Left
-    - type: MovementSpeedModifier
+    - type: MovementBodyPart
 
 - type: entity
   id: RightLegSkeleton
@@ -162,7 +153,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "r_leg"
     - type: Icon
@@ -171,7 +161,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Right
-    - type: MovementSpeedModifier
+    - type: MovementBodyPart
 
 - type: entity
   id: LeftFootSkeleton
@@ -179,7 +169,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "l_foot"
     - type: Icon
@@ -195,7 +184,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "r_foot"
     - type: Icon

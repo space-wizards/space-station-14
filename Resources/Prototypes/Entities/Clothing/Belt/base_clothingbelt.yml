@@ -23,8 +23,6 @@
   components:
   - type: Storage
     capacity: 40
-    equipSound:
-      path: /Audio/Items/belt_equip.ogg
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

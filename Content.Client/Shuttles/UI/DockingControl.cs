@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
 using Robust.Client.Graphics;
@@ -19,14 +20,19 @@ public class DockingControl : Control
 
     private float _range = 8f;
     private float _rangeSquared = 0f;
+
+    private Vector2 RangeVector => new Vector2(_range, _range);
+
     private const float GridLinesDistance = 32f;
 
     private int MidPoint => SizeFull / 2;
+    private Vector2 MidPointVector => new Vector2(MidPoint, MidPoint);
+
     private int SizeFull => (int) (MapGridControl.UIDisplayRadius * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MapGridControl.UIDisplayRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
-    public EntityUid? ViewedDock;
+    public NetEntity? ViewedDock;
     public EntityUid? GridEntity;
 
     public EntityCoordinates? Coordinates;
@@ -35,14 +41,14 @@ public class DockingControl : Control
     /// <summary>
     /// Stored by GridID then by docks
     /// </summary>
-    public Dictionary<EntityUid, List<DockingInterfaceState>> Docks = new();
+    public Dictionary<NetEntity, List<DockingInterfaceState>> Docks = new();
 
     public DockingControl()
     {
         _entManager = IoCManager.Resolve<IEntityManager>();
         _mapManager = IoCManager.Resolve<IMapManager>();
         _rangeSquared = _range * _range;
-        MinSize = (SizeFull, SizeFull);
+        MinSize = new Vector2(SizeFull, SizeFull);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -51,8 +57,8 @@ public class DockingControl : Control
 
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
+        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
         var gridLinesRadial = 8;
@@ -60,14 +66,14 @@ public class DockingControl : Control
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
+            handle.DrawCircle(new Vector2(MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
+            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, gridLines);
         }
 
         if (Coordinates == null ||
@@ -89,8 +95,8 @@ public class DockingControl : Control
                     var start = matrix.Transform(poly.Vertices[i]);
                     var end = matrix.Transform(poly.Vertices[(i + 1) % poly.VertexCount]);
 
-                    var startOut = start.LengthSquared > _rangeSquared;
-                    var endOut = end.LengthSquared > _rangeSquared;
+                    var startOut = start.LengthSquared() > _rangeSquared;
+                    var endOut = end.LengthSquared() > _rangeSquared;
 
                     // We need to draw to the radar border so we'll cap the range,
                     // but if none of the verts are in range then just leave it.
@@ -104,13 +110,17 @@ public class DockingControl : Control
                     if (startOut)
                     {
                         // It's called Jobseeker now.
-                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart)) continue;
+                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart))
+                            continue;
+
                         start = newStart.Value;
                     }
                     // otherwise vice versa
                     else if (endOut)
                     {
-                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd)) continue;
+                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd))
+                            continue;
+
                         end = newEnd.Value;
                     }
 
@@ -138,7 +148,7 @@ public class DockingControl : Control
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
-                     new Box2(worldPos - _range, worldPos + _range)))
+                     new Box2(worldPos - RangeVector, worldPos + RangeVector)))
         {
             if (grid.Owner == GridEntity)
                 continue;
@@ -164,8 +174,8 @@ public class DockingControl : Control
                     var start = matty.Transform(startPos);
                     var end = matty.Transform(endPos);
 
-                    var startOut = start.LengthSquared > _rangeSquared;
-                    var endOut = end.LengthSquared > _rangeSquared;
+                    var startOut = start.LengthSquared() > _rangeSquared;
+                    var endOut = end.LengthSquared() > _rangeSquared;
 
                     // We need to draw to the radar border so we'll cap the range,
                     // but if none of the verts are in range then just leave it.
@@ -194,13 +204,14 @@ public class DockingControl : Control
             }
 
             // Draw any docks on that grid
-            if (Docks.TryGetValue(grid.Owner, out var gridDocks))
+            if (Docks.TryGetValue(_entManager.GetNetEntity(grid.Owner), out var gridDocks))
             {
                 foreach (var dock in gridDocks)
                 {
                     var position = matty.Transform(dock.Coordinates.Position);
 
-                    if (position.Length > _range - 0.8f) continue;
+                    if (position.Length() > _range - 0.8f)
+                        continue;
 
                     var otherDockRotation = Matrix3.CreateRotation(dock.Angle);
 
@@ -251,6 +262,6 @@ public class DockingControl : Control
 
     private Vector2 ScalePosition(Vector2 value)
     {
-        return value * MinimapScale + MidPoint;
+        return value * MinimapScale + MidPointVector;
     }
 }

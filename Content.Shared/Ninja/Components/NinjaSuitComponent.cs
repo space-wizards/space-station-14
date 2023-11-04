@@ -1,6 +1,6 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ninja.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -9,32 +9,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
 
-// TODO: ResourcePath -> ResPath when thing gets merged
-
 /// <summary>
 /// Component for ninja suit abilities and power consumption.
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
 /// </summary>
-[Access(typeof(SharedNinjaSuitSystem))]
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedNinjaSuitSystem))]
 public sealed partial class NinjaSuitComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
-    public bool Cloaked = false;
-
-    /// <summary>
-    /// The action for toggling suit phase cloak ability
-    /// </summary>
-    [DataField("togglePhaseCloakAction")]
-    public InstantAction TogglePhaseCloakAction = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(5), // have to plan un/cloaking ahead of time
-        DisplayName = "action-name-toggle-phase-cloak",
-        Description = "action-desc-toggle-phase-cloak",
-        Priority = -9,
-        Event = new TogglePhaseCloakEvent()
-    };
-
     /// <summary>
     /// Battery charge used passively, in watts. Will last 1000 seconds on a small-capacity power cell.
     /// </summary>
@@ -48,77 +29,63 @@ public sealed partial class NinjaSuitComponent : Component
     public float CloakWattage = 1.44f;
 
     /// <summary>
-    /// The action for creating throwing soap, in place of ninja throwing stars since embedding doesn't exist.
+    /// Sound played when a ninja is hit while cloaked.
     /// </summary>
-    [DataField("createSoapAction")]
-    public InstantAction CreateSoapAction = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(10),
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Specific/Janitorial/soap.rsi"), "soap"),
-        ItemIconStyle = ItemActionIconStyle.NoItem,
-        DisplayName = "action-name-create-soap",
-        Description = "action-desc-create-soap",
-        Priority = -10,
-        Event = new CreateSoapEvent()
-    };
+    [DataField("revealSound")]
+    public SoundSpecifier RevealSound = new SoundPathSpecifier("/Audio/Effects/chime.ogg");
 
     /// <summary>
-    /// Battery charge used to create a throwing soap. Can do it 25 times on a small-capacity power cell.
+    /// How long to disable all abilities for when revealed.
+    /// This adds a UseDelay to the ninja so it should not be set by anything else.
     /// </summary>
-    [DataField("soapCharge")]
-    public float SoapCharge = 14.4f;
+    [DataField("disableTime")]
+    public TimeSpan DisableTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// Soap item to create with the action
+    /// The action id for creating throwing stars.
     /// </summary>
-    [DataField("soapPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SoapPrototype = "SoapNinja";
+    [DataField("createThrowingStarAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string CreateThrowingStarAction = "ActionCreateThrowingStar";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? CreateThrowingStarActionEntity;
 
     /// <summary>
-    /// The action for recalling a bound energy katana
+    /// Battery charge used to create a throwing star. Can do it 25 times on a small-capacity power cell.
     /// </summary>
-    [DataField("recallkatanaAction")]
-    public InstantAction RecallKatanaAction = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(1),
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Melee/energykatana.rsi"), "icon"),
-        ItemIconStyle = ItemActionIconStyle.NoItem,
-        DisplayName = "action-name-recall-katana",
-        Description = "action-desc-recall-katana",
-        Priority = -11,
-        Event = new RecallKatanaEvent()
-    };
+    [DataField("throwingStarCharge")]
+    public float ThrowingStarCharge = 14.4f;
 
     /// <summary>
-    /// The action for dashing somewhere using katana
+    /// Throwing star item to create with the action
     /// </summary>
-    [DataField("katanaDashAction")]
-    public WorldTargetAction KatanaDashAction = new()
-    {
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Magic/magicactions.rsi"), "blink"),
-        ItemIconStyle = ItemActionIconStyle.NoItem,
-        DisplayName = "action-name-katana-dash",
-        Description = "action-desc-katana-dash",
-        Priority = -12,
-        Event = new KatanaDashEvent(),
-        // doing checks manually
-        CheckCanAccess = false,
-        Range = 0f
-    };
+    [DataField("throwingStarPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ThrowingStarPrototype = "ThrowingStarNinja";
 
     /// <summary>
-    /// The action for creating an EMP burst
+    /// The action id for recalling a bound energy katana
     /// </summary>
-    [DataField("empAction")]
-    public InstantAction EmpAction = new()
-    {
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Grenades/empgrenade.rsi"), "icon"),
-        ItemIconStyle = ItemActionIconStyle.BigAction,
-        DisplayName = "action-name-em-burst",
-        Description = "action-desc-em-burst",
-        Priority = -13,
-        Event = new NinjaEmpEvent()
-    };
+    [DataField("recallKatanaAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string RecallKatanaAction = "ActionRecallKatana";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? RecallKatanaActionEntity;
+
+    /// <summary>
+    /// Battery charge used per tile the katana teleported.
+    /// Uses 1% of a default battery per tile.
+    /// </summary>
+    [DataField("recallCharge")]
+    public float RecallCharge = 3.6f;
+
+    /// <summary>
+    /// The action id for creating an EMP burst
+    /// </summary>
+    [DataField("empAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string EmpAction = "ActionNinjaEmp";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? EmpActionEntity;
 
     /// <summary>
     /// Battery charge used to create an EMP burst. Can do it 2 times on a small-capacity power cell.
@@ -137,12 +104,22 @@ public sealed partial class NinjaSuitComponent : Component
     /// </summary>
     [DataField("empConsumption")]
     public float EmpConsumption = 100000f;
+
+    /// <summary>
+    /// How long the EMP effects last for, in seconds
+    /// </summary>
+    [DataField("empDuration")]
+    public float EmpDuration = 60f;
 }
 
-public sealed class TogglePhaseCloakEvent : InstantActionEvent { }
+public sealed partial class CreateThrowingStarEvent : InstantActionEvent
+{
+}
 
-public sealed class CreateSoapEvent : InstantActionEvent { }
+public sealed partial class RecallKatanaEvent : InstantActionEvent
+{
+}
 
-public sealed class RecallKatanaEvent : InstantActionEvent { }
-
-public sealed class NinjaEmpEvent : InstantActionEvent { }
+public sealed partial class NinjaEmpEvent : InstantActionEvent
+{
+}

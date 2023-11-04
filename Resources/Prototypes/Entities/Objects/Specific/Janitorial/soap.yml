@@ -23,19 +23,20 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      density: 10
-      mask:
-      - ItemMask
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        layer:
+        - SlipLayer
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 10
+        mask:
+        - ItemMask
 
 - type: entity
   name: soap
@@ -69,8 +70,7 @@
     state: syndie
   - type: Slippery
     paralyzeTime: 5
-    launchForwardsMultiplier: 9.0
-  - type: StepTrigger
+    launchForwardsMultiplier: 2.5
   - type: Item
     heldPrefix: syndie
 
@@ -82,9 +82,6 @@
   components:
   - type: Sprite
     state: gibs
-  - type: Slippery
-    paralyzeTime: 2
-  - type: StepTrigger
   - type: Item
     heldPrefix: gibs
 
@@ -98,22 +95,6 @@
     state: omega
   - type: Slippery
     paralyzeTime: 7
-    launchForwardsMultiplier: 9.0
-  - type: StepTrigger
+    launchForwardsMultiplier: 3
   - type: Item
     heldPrefix: omega
-
-- type: entity
-  name: ninja soap
-  id: SoapNinja
-  parent: Soap
-  description: The most important soap in the entire universe, as without it we would all cease to exist. Smells of honor.
-  components:
-  - type: Item
-    heldPrefix: ninja
-  # despawn to prevent ninja killing server
-  - type: TimedDespawn
-    lifetime: 60
-  # no holding ninja hostage and forcing him to make infinite money for cargo
-  - type: StaticPrice
-    price: 0

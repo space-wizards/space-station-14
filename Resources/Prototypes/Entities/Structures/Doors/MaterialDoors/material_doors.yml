@@ -7,22 +7,23 @@
   components:
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/metal_door.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,0.49"
-      density: 100
-      mask:
-      - FullTileMask
-      layer:
-      - AirlockLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
   - type: Door
     bumpOpen: false
     clickOpen: true
@@ -31,15 +32,13 @@
     closeTimeTwo: 0.6
     openTimeOne: 0.6
     openTimeTwo: 0.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
     openSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
     closeSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
   - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        simpleVisuals: true
-        animationTime: 1.2
   - type: Airtight
     fixVacuum: true
   - type: Damageable
@@ -139,7 +138,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/wood_door.rsi
     layers:
     - state: closed
@@ -177,7 +175,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/paper_door.rsi
     layers:
     - state: closed
@@ -201,7 +198,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/plasma_door.rsi
     layers:
     - state: closed
@@ -228,7 +224,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/gold_door.rsi
     layers:
     - state: closed
@@ -244,7 +239,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/silver_door.rsi
     layers:
     - state: closed
@@ -253,3 +247,60 @@
     graph: DoorGraph
     node: silverDoor
 
+- type: entity
+  id: BananiumDoor
+  name: bananium door
+  parent: BaseMaterialDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/bananium_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: DoorGraph
+    node: bananiumDoor
+  - type: Door
+    openSound:
+      path: /Audio/Items/bikehorn.ogg
+    closeSound:
+      path: /Audio/Items/bikehorn.ogg
+
+- type: entity
+  id: WebDoor
+  name: web door
+  parent: BaseMaterialDoor
+  description: A door, leading to the lands of the spiders... or a spaced room.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/web_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: WebStructures
+    node: door
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 3
+            max: 5
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Door
+    closeSound:
+      path: /Audio/Effects/rustle1.ogg
+    openSound:
+      path: /Audio/Effects/rustle2.ogg

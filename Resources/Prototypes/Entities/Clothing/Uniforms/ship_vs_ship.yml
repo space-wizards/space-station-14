@@ -1,0 +1,96 @@
+#Where all of the uniforms for the yet-to-be-implimented ship vs. ship gamemode go (or Nanotrasen VS. Syndicate, if you'd like.)
+#In its own file to further avoid bloating jumpsuits.yml.
+
+#CREW
+#Recruit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRecruitNT
+  name: recruit jumpsuit
+  description: A classy grey jumpsuit with blue trims. Perfect for the dignified helper.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/recruit_nt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/recruit_nt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRecruitSyndie
+  name: syndicate recuit jumpsuit
+  description: A dubious,, dark-grey jumpsuit. As if passengers weren't dubious enough already.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/recruit_syndie.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/recruit_syndie.rsi
+
+#Repairman
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRepairmanNT
+  name: repairman jumpsuit
+  description: A jumpsuit that reminds you of a certain crew-sector work position. Hopefully, you won't have to do the same job as THOSE freaks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/repairman_nt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/repairman_nt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRepairmanSyndie
+  name: syndicate repairman jumpsuit
+  description: Functional, fashionable, and badass. Nanotrasen's engineers wish they could look as good as this.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/repairman_syndie.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/repairman_syndie.rsi
+
+#Paramedic
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitParamedicNT
+  name: paramedic jumpsuit
+  description: A basic white & blue jumpsuit made for Nanotrasen paramedics stationed in combat sectors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/paramedic_nt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/paramedic_nt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitParamedicSyndie
+  name: syndicate paramedic jumpsuit
+  description: For some reason, wearing this makes you feel like you're awfully close to violating the Geneva Convention.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/paramedic_syndie.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/paramedic_syndie.rsi
+
+#HEADS OF STAFF
+#Chief Engineer
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChiefEngineerNT
+  name: chief engineer jumpsuit
+  description: It is often joked that the role of the combat-sector Chief Engineer is where the actual, logistically-minded engineers are promoted to. Good luck.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ce_nt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ce_nt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChiefEngineerSyndie
+  name: syndicate chief engineer jumpsuit
+  description: An evil-looking jumpsuit with a reflective vest & red undershirt. #TODO: Write a better description for this once Ship vs. Ship is real and actual player habits begin forming
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ce_syndie.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ce_syndie.rsi

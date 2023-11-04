@@ -1,10 +1,15 @@
+using Content.Server.Body.Systems;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
+using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
 using Content.Shared.GameTicking;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -12,165 +17,156 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
-namespace Content.Server.Shuttles.Systems
+namespace Content.Server.Shuttles.Systems;
+
+[UsedImplicitly]
+public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
-    [UsedImplicitly]
-    public sealed partial class ShuttleSystem : SharedShuttleSystem
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly BodySystem _bobby = default!;
+    [Dependency] private readonly DockingSystem _dockSystem = default!;
+    [Dependency] private readonly DoorSystem _doors = default!;
+    [Dependency] private readonly DoorBoltSystem _bolts = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly FixtureSystem _fixtures = default!;
+    [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly StunSystem _stuns = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly ThrusterSystem _thruster = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
+    private ISawmill _sawmill = default!;
+
+    public const float TileMassMultiplier = 0.5f;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AirlockSystem _airlock = default!;
-        [Dependency] private readonly DockingSystem _dockSystem = default!;
-        [Dependency] private readonly DoorSystem _doors = default!;
-        [Dependency] private readonly FixtureSystem _fixtures = default!;
-        [Dependency] private readonly MapLoaderSystem _loader = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-        [Dependency] private readonly StunSystem _stuns = default!;
-        [Dependency] private readonly ThrusterSystem _thruster = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        base.Initialize();
+        _sawmill = Logger.GetSawmill("shuttles");
 
-        private ISawmill _sawmill = default!;
+        InitializeFTL();
+        InitializeGridFills();
+        InitializeIFF();
+        InitializeImpact();
 
-        public const float TileMassMultiplier = 0.5f;
+        SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
+        SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
 
-        public const float ShuttleLinearDamping = 0.05f;
-        public const float ShuttleAngularDamping = 0.05f;
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
-        public override void Initialize()
+        SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+        SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        ShutdownGridFills();
+    }
+
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        UpdateHyperspace(frameTime);
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        CleanupHyperspace();
+    }
+
+    private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
+    {
+        foreach (var fixture in args.NewFixtures)
         {
-            base.Initialize();
-            _sawmill = Logger.GetSawmill("shuttles");
+            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileMassMultiplier, false, manager);
+            _fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
+        }
+    }
 
-            InitializeFTL();
-            InitializeGridFills();
-            InitializeIFF();
-            InitializeImpact();
+    private void OnGridInit(GridInitializeEvent ev)
+    {
+        if (HasComp<MapComponent>(ev.EntityUid))
+            return;
 
-            SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
-            SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
-            SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
+        EntityManager.EnsureComponent<ShuttleComponent>(ev.EntityUid);
+    }
 
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-
-            SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-            SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
+    private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
+    {
+        if (!EntityManager.HasComponent<MapGridComponent>(uid))
+        {
+            return;
         }
 
-        public override void Update(float frameTime)
+        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
         {
-            base.Update(frameTime);
-            UpdateHyperspace(frameTime);
+            return;
         }
 
-        private void OnRoundRestart(RoundRestartCleanupEvent ev)
+        if (component.Enabled)
         {
-            CleanupHyperspace();
+            Enable(uid, physicsComponent, component);
         }
+    }
 
-        private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)
+    public void Toggle(EntityUid uid, ShuttleComponent component)
+    {
+        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+            return;
+
+        component.Enabled = !component.Enabled;
+
+        if (component.Enabled)
         {
-            // Easier than doing it in the comp and they don't have constructors.
-            for (var i = 0; i < component.LinearThrusters.Length; i++)
-            {
-                component.LinearThrusters[i] = new List<ThrusterComponent>();
-            }
+            Enable(uid, physicsComponent, component);
         }
-
-        private void OnGridFixtureChange(GridFixtureChangeEvent args)
+        else
         {
-            // Look this is jank but it's a placeholder until we design it.
-            if (args.NewFixtures.Count == 0)
-                return;
-
-            var uid = args.NewFixtures[0].Body.Owner;
-            var manager = Comp<FixturesComponent>(uid);
-
-            foreach (var fixture in args.NewFixtures)
-            {
-                _physics.SetDensity(uid, fixture, TileMassMultiplier, false, manager);
-                _fixtures.SetRestitution(uid, fixture, 0.1f, false, manager);
-            }
-
-            _fixtures.FixtureUpdate(uid, manager: manager);
-        }
-
-        private void OnGridInit(GridInitializeEvent ev)
-        {
-            if (HasComp<MapComponent>(ev.EntityUid))
-                return;
-
-            EntityManager.EnsureComponent<ShuttleComponent>(ev.EntityUid);
-        }
-
-        private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
-        {
-            if (!EntityManager.HasComponent<MapGridComponent>(uid))
-            {
-                return;
-            }
-
-            if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
-            {
-                return;
-            }
-
-            if (component.Enabled)
-            {
-                Enable(uid, physicsComponent);
-            }
-        }
-
-        public void Toggle(EntityUid uid, ShuttleComponent component)
-        {
-            if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
-                return;
-
-            component.Enabled = !component.Enabled;
-
-            if (component.Enabled)
-            {
-                Enable(uid, physicsComponent);
-            }
-            else
-            {
-                Disable(uid, physicsComponent);
-            }
-        }
-
-        private void Enable(EntityUid uid, PhysicsComponent component)
-        {
-            FixturesComponent? manager = null;
-
-            _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
-            _physics.SetBodyStatus(component, BodyStatus.InAir);
-            _physics.SetFixedRotation(uid, false, manager: manager, body: component);
-            _physics.SetLinearDamping(component, ShuttleLinearDamping);
-            _physics.SetAngularDamping(component, ShuttleAngularDamping);
-        }
-
-        private void Disable(EntityUid uid, PhysicsComponent component)
-        {
-            FixturesComponent? manager = null;
-
-            _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
-            _physics.SetBodyStatus(component, BodyStatus.OnGround);
-            _physics.SetFixedRotation(uid, true, manager: manager, body: component);
-        }
-
-        private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
-        {
-            // None of the below is necessary for any cleanup if we're just deleting.
-            if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating) return;
-
-            if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
-            {
-                return;
-            }
-
             Disable(uid, physicsComponent);
         }
+    }
+
+    private void Enable(EntityUid uid, PhysicsComponent component, ShuttleComponent shuttle)
+    {
+        FixturesComponent? manager = null;
+
+        _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
+        _physics.SetBodyStatus(component, BodyStatus.InAir);
+        _physics.SetFixedRotation(uid, false, manager: manager, body: component);
+        _physics.SetLinearDamping(component, shuttle.LinearDamping);
+        _physics.SetAngularDamping(component, shuttle.AngularDamping);
+    }
+
+    private void Disable(EntityUid uid, PhysicsComponent component)
+    {
+        FixturesComponent? manager = null;
+
+        _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
+        _physics.SetBodyStatus(component, BodyStatus.OnGround);
+        _physics.SetFixedRotation(uid, true, manager: manager, body: component);
+    }
+
+    private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
+    {
+        // None of the below is necessary for any cleanup if we're just deleting.
+        if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+        {
+            return;
+        }
+
+        Disable(uid, physicsComponent);
     }
 }

@@ -56,10 +56,12 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!_interaction.InRangeUnobstructed(mech, targetCoords))
             return;
 
-        if (!component.ItemContainer.Contains(msg.Item))
+        var item = GetEntity(msg.Item);
+
+        if (!component.ItemContainer.Contains(item))
             return;
 
-        RemoveItem(uid, mech, msg.Item, component);
+        RemoveItem(uid, mech, item, component);
     }
 
     /// <summary>
@@ -77,11 +79,11 @@ public sealed class MechGrabberSystem : EntitySystem
         component.ItemContainer.Remove(toRemove);
         var mechxform = Transform(mech);
         var xform = Transform(toRemove);
-        xform.AttachToGridOrMap();
+        _transform.AttachToGridOrMap(toRemove, xform);
+        var (mechPos, mechRot) = _transform.GetWorldPositionRotation(mechxform);
 
-        var offset = _transform.GetWorldPosition(mechxform) + _transform.GetWorldRotation(mechxform).RotateVec(component.DepositOffset);
-        _transform.SetWorldPosition(xform, offset);
-        _transform.SetWorldRotation(xform, Angle.Zero);
+        var offset = mechPos + mechRot.RotateVec(component.DepositOffset);
+        _transform.SetWorldPositionRotation(xform, offset, Angle.Zero);
         _mech.UpdateUserInterface(mech);
     }
 
@@ -113,10 +115,10 @@ public sealed class MechGrabberSystem : EntitySystem
     {
         var state = new MechGrabberUiState
         {
-            Contents = component.ItemContainer.ContainedEntities.ToList(),
+            Contents = GetNetEntityList(component.ItemContainer.ContainedEntities.ToList()),
             MaxContents = component.MaxContents
         };
-        args.States.Add(uid, state);
+        args.States.Add(GetNetEntity(uid), state);
     }
 
     private void OnInteract(EntityUid uid, MechGrabberComponent component, InteractNoHandEvent args)
@@ -148,7 +150,7 @@ public sealed class MechGrabberSystem : EntitySystem
 
         args.Handled = true;
         component.AudioStream = _audio.PlayPvs(component.GrabSound, uid);
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true

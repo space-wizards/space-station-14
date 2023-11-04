@@ -1,14 +1,14 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Access.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedIdCardConsoleSystem))]
-public sealed class IdCardConsoleComponent : Component
+public sealed partial class IdCardConsoleComponent : Component
 {
     public const int MaxFullNameLength = 30;
     public const int MaxJobTitleLength = 30;
@@ -16,10 +16,10 @@ public sealed class IdCardConsoleComponent : Component
     public static string PrivilegedIdCardSlotId = "IdCardConsole-privilegedId";
     public static string TargetIdCardSlotId = "IdCardConsole-targetId";
 
-    [DataField("privilegedIdSlot")]
+    [DataField]
     public ItemSlot PrivilegedIdSlot = new();
 
-    [DataField("targetIdSlot")]
+    [DataField]
     public ItemSlot TargetIdSlot = new();
 
     [Serializable, NetSerializable]
@@ -41,8 +41,8 @@ public sealed class IdCardConsoleComponent : Component
 
     // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
-    [DataField("accessLevels", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-    public List<string> AccessLevels = new()
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new()
     {
         "Armory",
         "Atmospherics",
@@ -85,6 +85,7 @@ public sealed class IdCardConsoleComponent : Component
         public readonly string? TargetIdFullName;
         public readonly string? TargetIdJobTitle;
         public readonly string[]? TargetIdAccessList;
+        public readonly string[]? AllowedModifyAccessList;
         public readonly string TargetIdJobPrototype;
 
         public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
@@ -93,6 +94,7 @@ public sealed class IdCardConsoleComponent : Component
             string? targetIdFullName,
             string? targetIdJobTitle,
             string[]? targetIdAccessList,
+            string[]? allowedModifyAccessList,
             string targetIdJobPrototype,
             string privilegedIdName,
             string targetIdName)
@@ -103,6 +105,7 @@ public sealed class IdCardConsoleComponent : Component
             TargetIdFullName = targetIdFullName;
             TargetIdJobTitle = targetIdJobTitle;
             TargetIdAccessList = targetIdAccessList;
+            AllowedModifyAccessList = allowedModifyAccessList;
             TargetIdJobPrototype = targetIdJobPrototype;
             PrivilegedIdName = privilegedIdName;
             TargetIdName = targetIdName;

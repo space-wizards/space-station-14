@@ -28,7 +28,7 @@ public sealed partial class ArtifactSystem
     {
         if (nodeAmount < 1)
         {
-            Logger.Error($"nodeAmount {nodeAmount} is less than 1. Aborting artifact tree generation.");
+            Log.Error($"nodeAmount {nodeAmount} is less than 1. Aborting artifact tree generation.");
             return;
         }
 
@@ -226,12 +226,24 @@ public sealed partial class ArtifactSystem
         var trigger = _prototype.Index<ArtifactTriggerPrototype>(currentNode.Trigger);
         var effect = _prototype.Index<ArtifactEffectPrototype>(currentNode.Effect);
 
-        foreach (var name in effect.Components.Keys.Concat(trigger.Components.Keys))
-        {
-            var comp = _componentFactory.GetRegistration(name);
-            EntityManager.RemoveComponentDeferred(uid, comp.Type);
-        }
+        var entityPrototype = MetaData(uid).EntityPrototype;
+        var toRemove = effect.Components.Keys.Concat(trigger.Components.Keys).ToList();
 
+        foreach (var name in toRemove)
+        {
+            // if the entity prototype contained the component originally
+            if (entityPrototype?.Components.TryGetComponent(name, out var entry) ?? false)
+            {
+                var comp = (Component) _componentFactory.GetComponent(name);
+                comp.Owner = uid;
+                var temp = (object) comp;
+                _serialization.CopyTo(entry, ref temp);
+                EntityManager.AddComponent(uid, (Component) temp!, true);
+                continue;
+            }
+
+            EntityManager.RemoveComponentDeferred(uid, _componentFactory.GetRegistration(name).Type);
+        }
         component.CurrentNodeId = null;
     }
 

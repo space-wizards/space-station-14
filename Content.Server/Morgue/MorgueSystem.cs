@@ -3,6 +3,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Morgue;
+using Content.Shared.Morgue.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Morgue;
@@ -61,7 +62,7 @@ public sealed class MorgueSystem : EntitySystem
             if (!hasMob && HasComp<BodyComponent>(ent))
                 hasMob = true;
 
-            if (HasComp<ActorComponent?>(ent))
+            if (HasComp<ActorComponent>(ent))
             {
                 _appearance.SetData(uid, MorgueVisuals.Contents, MorgueContents.HasSoul, app);
                 return;

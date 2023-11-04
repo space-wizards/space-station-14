@@ -2,3 +2,6 @@
 
 [game]
 hostname = "[EN] Wizard's Den Centipede [Oceania]"
+
+[hub]
+tags = "lang:en,region:oce,rp:low"

@@ -1,9 +1,7 @@
 ﻿using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {
@@ -13,12 +11,19 @@ namespace Content.Client.Atmos.UI
     [UsedImplicitly]
     public sealed class GasThermomachineBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private GasThermomachineWindow? _window;
 
+        [ViewVariables]
         private float _minTemp = 0.0f;
+
+        [ViewVariables]
         private float _maxTemp = 0.0f;
 
-        public GasThermomachineBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        [ViewVariables]
+        private bool _isHeater = true;
+
+        public GasThermomachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -28,7 +33,7 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasThermomachineWindow();
 
-            if(State != null)
+            if (State != null)
                 UpdateState(State);
 
             _window.OpenCentered();
@@ -49,7 +54,12 @@ namespace Content.Client.Atmos.UI
 
         private void OnTemperatureChanged(float value)
         {
-            var actual = Math.Clamp(value, _minTemp, _maxTemp);
+            var actual = 0f;
+            if (_isHeater)
+                actual = Math.Min(value, _maxTemp);
+            else
+                actual = Math.Max(value, _minTemp);
+            actual = Math.Max(actual, Atmospherics.TCMB);
             if (!MathHelper.CloseTo(actual, value, 0.09))
             {
                 _window?.SetTemperature(actual);
@@ -71,14 +81,14 @@ namespace Content.Client.Atmos.UI
 
             _minTemp = cast.MinTemperature;
             _maxTemp = cast.MaxTemperature;
+            _isHeater = cast.IsHeater;
 
             _window.SetTemperature(cast.Temperature);
             _window.SetActive(cast.Enabled);
-            _window.Title = cast.Mode switch
+            _window.Title = _isHeater switch
             {
-                ThermoMachineMode.Freezer => Loc.GetString("comp-gas-thermomachine-ui-title-freezer"),
-                ThermoMachineMode.Heater => Loc.GetString("comp-gas-thermomachine-ui-title-heater"),
-                _ => string.Empty
+                false => Loc.GetString("comp-gas-thermomachine-ui-title-freezer"),
+                true => Loc.GetString("comp-gas-thermomachine-ui-title-heater")
             };
         }
 

@@ -4,7 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
-public sealed class PickRandomRotationOperator : HTNOperator
+public sealed partial class PickRandomRotationOperator : HTNOperator
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 

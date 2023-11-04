@@ -1,0 +1,216 @@
+# Loot table
+# Main loot table for random spawns
+- type: salvageLoot
+  id: SalvageLoot
+  loots:
+    - !type:RandomSpawnsLoot
+      entries:
+        - proto: AdvMopItem
+          prob: 0.5
+        - proto: AmmoTechFabCircuitboard
+          cost: 2
+        - proto: AutolatheMachineCircuitboard
+          cost: 2
+        - proto: BiomassReclaimerMachineCircuitboard
+          cost: 2
+        - proto: BluespaceBeaker
+          cost: 2
+        - proto: CyborgEndoskeleton
+          cost: 3
+          prob: 0.5
+        - proto: ChemDispenserMachineCircuitboard
+          cost: 2
+        - proto: CircuitImprinter
+          cost: 2
+        - proto: CloningConsoleComputerCircuitboard
+          cost: 2
+        - proto: CloningPodMachineCircuitboard
+          cost: 2
+        - proto: CognizineChemistryBottle
+        - proto: CratePartsT3
+          cost: 2
+          prob: 0.5
+        - proto: CratePartsT3T4
+          cost: 5
+          prob: 0.5
+        - proto: CratePartsT4
+          cost: 5
+          prob: 0.5
+        - proto: CrateSalvageEquipment
+          cost: 3
+          prob: 0.5
+        - proto: GasRecycler
+          cost: 2
+        - proto: GeneratorRTG
+          cost: 5
+        - proto: GravityGeneratorMini
+          cost: 2
+        - proto: GyroscopeUnanchored
+          cost: 2
+          prob: 0.1
+        - proto: MedicalScannerMachineCircuitboard
+          cost: 2
+        - proto: NuclearBombKeg
+          cost: 5
+        - proto: OmnizineChemistryBottle
+          prob: 0.5
+        - proto: PortableGeneratorPacman
+          cost: 2
+        - proto: PortableGeneratorSuperPacman
+          cost: 3
+        - proto: PowerCellAntiqueProto
+          cost: 5
+          prob: 0.5
+        - proto: ProtolatheMachineCircuitboard
+        - proto: RandomArtifactSpawner
+          cost: 2
+        - proto: RandomCargoCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomCommandCorpseSpawner
+          cost: 5
+          prob: 0.5
+        - proto: RandomEngineerCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomMedicCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomScienceCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomSecurityCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomServiceCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: ResearchAndDevelopmentServerMachineCircuitboard
+          cost: 5
+          prob: 0.5
+        - proto: ResearchDisk10000
+          prob: 0.5
+        - proto: ResearchDisk5000
+          prob: 0.5
+        - proto: RipleyHarness
+          cost: 3
+          prob: 0.5
+        - proto: RPED
+        - proto: SpaceCash1000
+        - proto: SpaceCash10000
+          cost: 10
+        - proto: SpaceCash2500
+          cost: 3
+        - proto: SpaceCash5000
+          cost: 5
+        - proto: TechnologyDiskRare
+          cost: 5
+          prob: 0.5
+        - proto: ThrusterUnanchored
+        - proto: WaterTankHighCapacity
+        - proto: WeldingFuelTankHighCapacity
+          cost: 3
+
+# Mob loot table
+
+
+# Boss loot table
+
+# Ores - these are guaranteed
+# - Low value
+- type: salvageLoot
+  id: OreTin
+  desc: Залежи стали
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto:
+        Caves: OreTin
+        Grasslands: OreTin
+        Lava: BasaltOreTin
+        Snow: SnowOreTin
+
+- type: salvageLoot
+  id: OreQuartz
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto:
+        Caves: OreQuartz
+        Grasslands: OreQuartz
+        Lava: BasaltOreQuartz
+        Snow: SnowOreQuartz
+
+# - Medium value
+- type: salvageLoot
+  id: OreGold
+  desc: Залежи золота
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto:
+        Caves: OreGold
+        Grasslands: OreGold
+        Lava: BasaltOreGold
+        Snow: SnowOreGold
+
+- type: salvageLoot
+  id: OreSilver
+  desc: Залежи серебра
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto:
+        Caves: OreSilver
+        Grasslands: OreSilver
+        Lava: BasaltOreSilver
+        Snow: SnowOreSilver
+
+# - High value
+- type: salvageLoot
+  id: OrePlasma
+  desc: Залежи плазмы
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto:
+        Caves: OrePlasma
+        Grasslands: OrePlasma
+        Lava: BasaltOrePlasma
+        Snow: SnowOrePlasma
+
+- type: salvageLoot
+  id: OreUranium
+  desc: Залежи урана
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto:
+        Caves: OreUranium
+        Grasslands: OreUranium
+        Lava: BasaltOreUranium
+        Snow: SnowOreUranium
+
+- type: salvageLoot
+  id: OreBananium
+  desc: Залежи бананиума
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto:
+        Caves: OreBananium
+        Grasslands: OreBananium
+        Lava: BasaltOreBananium
+        Snow: SnowOreBananium
+
+- type: salvageLoot
+  id: OreArtifactFragment
+  desc: фрагмент артефакта в скале
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto:
+        Caves: OreArtifactFragment
+        Grasslands: OreArtifactFragment
+        Lava: BasaltOreArtifactFragment
+        Snow: SnowOreArtifactFragment

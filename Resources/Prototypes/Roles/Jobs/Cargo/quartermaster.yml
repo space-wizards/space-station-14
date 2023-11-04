@@ -6,16 +6,14 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 3600
+      time: 3600 #Imperial role timers
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 18000
-    - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 21600 #Imperial role timers
   weight: 10
   startingGear: QuartermasterGear
-  icon: "QuarterMaster"
-  supervisors: job-supervisors-hop
+  icon: "JobIconQuarterMaster"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Cargo
@@ -24,6 +22,12 @@
   - Maintenance
   - External
   - Command
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: QuartermasterGear
@@ -34,7 +38,8 @@
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
     ears: ClothingHeadsetQM
+    belt: BoxFolderClipboard
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtQM
+  innerClothingSkirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelQuartermasterFilled
   duffelbag: ClothingBackpackDuffelQuartermasterFilled

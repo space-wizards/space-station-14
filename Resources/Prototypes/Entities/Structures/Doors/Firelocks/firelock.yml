@@ -21,39 +21,41 @@
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 500
-        behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+        - trigger: !type:DamageTrigger
+            damage: 500
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
     - type: Sprite
-      netsync: false
       sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
       snapCardinals: true
       layers:
         - state: closed
           map: ["enum.DoorVisualLayers.Base"]
-#        - state: closed_unlit # Corvax-Resprite-Airlocks
-#          shader: unshaded
-#          map: ["enum.DoorVisualLayers.BaseUnlit"]
+        - state: closed_unlit
+          shader: unshaded
+          map: ["enum.DoorVisualLayers.BaseUnlit"]
+          visible: false
         - state: welded
           map: ["enum.WeldableLayers.BaseWelded"]
-#        - state: bolted_unlit  # Corvax-Resprite-Airlocks
-#          shader: unshaded
-#          map: ["enum.DoorVisualLayers.BaseBolted"]
+        - state: bolted_unlit
+          shader: unshaded
+          map: ["enum.DoorVisualLayers.BaseBolted"]
+          visible: false
         - state: panel_open
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: AnimationPlayer
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"  # don't want this colliding with walls or they won't close
-        density: 100
-        mask:
-        - FullTileMask
-        layer:
-        - AirlockLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.49,-0.49,0.49,0.49"  # don't want this colliding with walls or they won't close
+          density: 100
+          mask:
+          - FullTileMask
+          layer:
+          - AirlockLayer
     - type: Door
       openDrawDepth: WallTops
       closeTimeOne: 0.1
@@ -62,7 +64,7 @@
       openTimeTwo: 0.6
       state: Open
       bumpOpen: false
-      clickOpen: false
+      clickOpen: true
       crushDamage:
         types:
           Blunt: 15
@@ -72,20 +74,17 @@
         path: /Audio/Machines/airlock_close.ogg
       denySound:
         path: /Audio/Machines/airlock_deny.ogg
+      openingAnimationTime: 0.6
+      closingAnimationTime: 0.6
     - type: Weldable
-      fuel: 3
       time: 3
     - type: Firelock
     - type: Appearance
-      visuals:
-        - type: AirlockVisualizer
-#          animationTime: 0.6
-#          emergencyAccessLayer: false
-          simpleVisuals: true # Corvax-Resprite-Airlocks
     - type: WiresVisuals
+    - type: WiresPanel
     - type: Wires
-      BoardName: "Firelock Control"
-      LayoutId: Firelock
+      boardName: wires-board-name-firelock
+      layoutId: Firelock
     - type: UserInterface
       interfaces:
         - key: enum.WiresUiKey.Key
@@ -104,22 +103,25 @@
       arc: 360
     - type: StaticPrice
       price: 150
+    - type: DoorBolt
+    - type: AccessReader
+      access: [ [ "Engineering" ] ]
 
 - type: entity
   id: Firelock
   parent: BaseFirelock
   components:
-  - type: ContainerContainer
-    containers:
-      board: !type:Container
-  - type: Construction
-    graph: Firelock
-    node: Firelock
-    containers:
-    - board
-  - type: ContainerFill
-    containers:
-      board: [ FirelockElectronics ]
+    - type: ContainerContainer
+      containers:
+        board: !type:Container
+    - type: Construction
+      graph: Firelock
+      node: Firelock
+      containers:
+        - board
+    - type: ContainerFill
+      containers:
+        board: [FirelockElectronics]
 
 - type: entity
   id: FirelockGlass
@@ -132,14 +134,15 @@
       enabled: false
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49"  # don't want this colliding with walls or they won't close
-        mask:
-        - Impassable
-        - HighImpassable
-        layer:
-        - GlassAirlockLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.49,-0.49,0.49,0.49"  # don't want this colliding with walls or they won't close
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - GlassAirlockLayer
     - type: Door
       occludes: false
     - type: Construction
@@ -161,14 +164,15 @@
         - South
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,-0.2" # don't want this colliding with walls or they won't close
-        mask:
-        - Impassable
-        - HighImpassable
-        layer:
-        - GlassAirlockLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.49,-0.49,0.49,-0.2" # don't want this colliding with walls or they won't close
+          mask:
+          - Impassable
+          - HighImpassable
+          layer:
+          - GlassAirlockLayer
     - type: Occluder
       enabled: false
     - type: Door

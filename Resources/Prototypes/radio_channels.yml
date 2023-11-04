@@ -8,7 +8,7 @@
 - type: radioChannel
   id: CentCom
   name: chat-radio-centcom
-  keycode: 'y'
+  keycode: 'ц'
   frequency: 1337
   color: "#2681a5"
   longRange: true
@@ -16,56 +16,73 @@
 - type: radioChannel
   id: Command
   name: chat-radio-command
-  keycode: 'c'
+  keycode: 'к'
   frequency: 1353
   color: "#fcdf03"
 
 - type: radioChannel
   id: Engineering
   name: chat-radio-engineering
-  keycode: 'e'
+  keycode: 'и'
   frequency: 1357
   color: "#f37746"
 
 - type: radioChannel
   id: Medical
   name: chat-radio-medical
-  keycode: 'm'
+  keycode: 'м'
   frequency: 1355
   color: "#57b8f0"
 
 - type: radioChannel
   id: Science
   name: chat-radio-science
-  keycode: 'n'
+  keycode: 'н'
   frequency: 1351
   color: "#c68cfa"
 
 - type: radioChannel
   id: Security
   name: chat-radio-security
-  keycode: 's'
+  keycode: 'о'
   frequency: 1359
   color: "#dd3535"
 
 - type: radioChannel
   id: Service
   name: chat-radio-service
-  keycode: 'v'
+  keycode: 'с'
   frequency: 1349
   color: "#6ca729"
 
 - type: radioChannel
   id: Supply
   name: chat-radio-supply
-  keycode: 'u'
+  keycode: 'п'
   frequency: 1347
   color: "#b88646"
 
 - type: radioChannel
   id: Syndicate
   name: chat-radio-syndicate
-  keycode: 't'
+  keycode: 'т'
   frequency: 1213
   color: "#8f4a4b"
+  longRange: true
+
+- type: radioChannel
+  id: Handheld
+  name: chat-radio-handheld
+  frequency: 1330
+  color: "#d39f01"
+  # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
+  longRange: true
+
+- type: radioChannel
+  id: Binary
+  name: chat-radio-binary
+  keycode: 'b'
+  frequency: 1001
+  color: "#2ed2fd"
+  # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true

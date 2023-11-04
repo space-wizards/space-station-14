@@ -5,7 +5,7 @@
       "y": 32
   },
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken from https://github.com/goonstation/goonstation at commit e77d85d9c1d93aa32da7702737ceeac2b56738ac.",
+  "copyright": "Taken from https://github.com/goonstation/goonstation at commit e77d85d9c1d93aa32da7702737ceeac2b56738ac, slightly modified by PixelTK",
   "states": [
       {
         "name": "back",
@@ -58,7 +58,7 @@
       {
         "name": "mask"
       },
-	    {
+	  {
         "name": "neck"
       },
       {
@@ -81,6 +81,9 @@
       },
       {
         "name": "pda"
+      },
+      {
+        "name": "web"
       }
    ]
 }

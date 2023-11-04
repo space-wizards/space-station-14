@@ -1,0 +1,32 @@
+- type: job
+  id: Coroner
+  name: job-name-coroner
+  description: job-description-coroner
+  playTimeTracker: JobCoroner
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 14400 #Imperial role timers
+  startingGear: CoronerGear
+  icon: "JobIconCoroner"
+  supervisors: job-supervisors-medicine
+  canBeAntag: true
+  access:
+  - Medical
+  - Maintenance
+
+- type: startingGear
+  id: CoronerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoroner
+    back: ClothingBackpackMedicalFilled
+    pocket1: Paper
+    shoes: ClothingShoesColorBlack
+    mask: ClothingMaskSterile
+    head: ClothingHeadHatSurgcapGreen
+    id: CoronerPDA
+    ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedicalFilled
+  innerclothingskirt: ClothingUniformJumpskirtCoroner
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled

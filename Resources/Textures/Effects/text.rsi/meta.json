@@ -1,0 +1,239 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by rolfero (github) for Space Station 14",
+  "size": {
+    "x": 4,
+    "y": 6
+  },
+  "states": [
+    {
+      "name": "0"
+    },
+    {
+      "name": "1"
+    },
+    {
+      "name": "2"
+    },
+    {
+      "name": "3"
+    },
+    {
+      "name": "4"
+    },
+    {
+      "name": "5"
+    },
+    {
+      "name": "6"
+    },
+    {
+      "name": "7"
+    },
+    {
+      "name": "8"
+    },
+    {
+      "name": "9"
+    },
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "c"
+    },
+    {
+      "name": "d"
+    },
+    {
+      "name": "e"
+    },
+    {
+      "name": "f"
+    },
+    {
+      "name": "g"
+    },
+    {
+      "name": "h"
+    },
+    {
+      "name": "i"
+    },
+    {
+      "name": "j"
+    },
+    {
+      "name": "k"
+    },
+    {
+      "name": "l"
+    },
+    {
+      "name": "m"
+    },
+    {
+      "name": "n"
+    },
+    {
+      "name": "o"
+    },
+    {
+      "name": "p"
+    },
+    {
+      "name": "q"
+    },
+    {
+      "name": "r"
+    },
+    {
+      "name": "s"
+    },
+    {
+      "name": "t"
+    },
+    {
+      "name": "u"
+    },
+    {
+      "name": "v"
+    },
+    {
+      "name": "w"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "z"
+    },
+    {
+      "name": "exclamation"
+    },
+    {
+      "name": "question"
+    },
+    {
+      "name": "star"
+    },
+    {
+      "name": "plus"
+    },
+    {
+      "name": "dash"
+    },
+    {
+      "name": "colon"
+    },
+    {
+      "name": "blank"
+    },
+    {
+        "name": "а"
+    },
+    {
+        "name": "б"
+    },
+    {
+        "name": "в"
+    },
+    {
+        "name": "г"
+    },
+    {
+        "name": "д"
+    },
+    {
+        "name": "е"
+    },
+    {
+        "name": "ё"
+    },
+    {
+        "name": "ж"
+    },
+    {
+        "name": "з"
+    },
+    {
+        "name": "и"
+    },
+    {
+        "name": "й"
+    },
+    {
+        "name": "к"
+    },
+    {
+        "name": "л"
+    },
+    {
+        "name": "м"
+    },
+    {
+        "name": "н"
+    },
+    {
+        "name": "о"
+    },
+    {
+        "name": "п"
+    },
+    {
+        "name": "р"
+    },
+    {
+        "name": "с"
+    },
+    {
+        "name": "т"
+    },
+    {
+        "name": "у"
+    },
+    {
+        "name": "ф"
+    },
+    {
+        "name": "х"
+    },
+    {
+        "name": "ц"
+    },
+    {
+        "name": "ч"
+    },
+    {
+        "name": "ш"
+    },
+    {
+        "name": "щ"
+    },
+    {
+        "name": "ы"
+    },
+    {
+        "name": "ь"
+    },
+    {
+        "name": "ъ"
+    },
+    {
+        "name": "э"
+    },
+    {
+        "name": "ю"
+    },
+    {
+        "name": "я"
+    }
+  ]
+}

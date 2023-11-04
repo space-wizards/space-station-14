@@ -1,9 +1,9 @@
 using Content.Client.Administration.Managers;
+using Content.Client.Movement.Systems;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
 using Robust.Client.Placement;
 using Robust.Client.Placement.Modes;
-using Robust.Client.UserInterface;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 
@@ -15,7 +15,7 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlacementManager _placement = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly ContentEyeSystem _contentEye = default!;
 
         private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
@@ -108,7 +108,7 @@ namespace Content.Client.Sandbox
             }
 
             // Try copy tile.
-            if (!_map.TryFindGridAt(coords.ToMap(EntityManager), out var grid) || !grid.TryGetTileRef(coords, out var tileRef))
+            if (!_map.TryFindGridAt(coords.ToMap(EntityManager), out _, out var grid) || !grid.TryGetTileRef(coords, out var tileRef))
                 return false;
 
             if (_placement.Eraser)
@@ -132,7 +132,7 @@ namespace Content.Client.Sandbox
 
         public void ToggleFov()
         {
-            _consoleHost.ExecuteCommand("togglefov");
+            _contentEye.RequestToggleFov();
         }
 
         public void ToggleShadows()

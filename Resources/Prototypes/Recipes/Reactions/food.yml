@@ -2,6 +2,7 @@
   id: Curdling
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Milk:
       amount: 40
@@ -13,9 +14,25 @@
       entity: FoodCheese
 
 - type: reaction
+  id: ChevreCurdling
+  impact: low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    MilkGoat:
+      amount: 10 #Batches of chevre are traditionally made in far lower quantities than that of milk
+    Enzyme:
+      amount: 5
+      catalyst: true
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodChevre
+
+- type: reaction
   id: CreateDough
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -26,9 +43,26 @@
       entity: FoodDough
 
 - type: reaction
+  id: CreateCornmealDough
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Cornmeal:
+      amount: 15
+    Milk: #replace with yoghurt when added
+      amount: 10
+    Egg:
+      amount: 6
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDoughCornmeal
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -44,6 +78,7 @@
   id: CreateButter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Milk:
       amount: 30
@@ -58,6 +93,7 @@
   id: CreatePieDough
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -76,6 +112,7 @@
   id: CreateVeganCakeBatter
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     Flour:
       amount: 15
@@ -91,6 +128,7 @@
   id: CreateTofu
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     MilkSoy:
       amount: 30
@@ -135,6 +173,17 @@
       amount: 6
   products:
     Mayo: 15
+
+# Gas not included
+- type: reaction
+  id: CookingMustard
+  reactants:
+    Bleach:
+      amount: 1
+    Ammonia:
+      amount: 1
+  products:
+    Mustard: 2
 
 - type: reaction
   id: CookingKetchunaise
@@ -206,6 +255,7 @@
   id: CreateMeatball
   impact: Low
   quantized: true
+  conserveEnergy: false
   reactants:
     UncookedAnimalProteins:
       amount: 5
@@ -216,3 +266,19 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: FoodMeatMeatball
+
+- type: reaction
+  id: CreateChocolate
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    CocoaPowder:
+      amount: 4
+    Milk:
+      amount: 2
+    Sugar:
+      amount: 2
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodSnackChocolateBar

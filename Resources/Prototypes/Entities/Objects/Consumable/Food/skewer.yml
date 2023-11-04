@@ -9,7 +9,6 @@
     trash: FoodKebabSkewer
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -19,6 +18,8 @@
           Quantity: 8
   - type: Item
     size: 5
+  - type: StaticPrice
+    price: 100
 
 # Kebabs
 
@@ -65,6 +66,10 @@
         color: green
       - state: skewer-meat-alpha4
         color: brown
+  - type: Tag
+    tags:
+    - Meat
+    - Fruit
 
 - type: entity
   name: meat kebab
@@ -79,6 +84,11 @@
       - state: skewer-meat2
       - state: skewer-meat3
       - state: skewer-meat4
+  - type: Tag
+    tags:
+    - Meat
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   name: human kebab
@@ -135,6 +145,8 @@
           Quantity: 12
         - ReagentId: Vitamin
           Quantity: 6
+  - type: StaticPrice
+    price: 25 #Imperial price balance
 
 - type: entity
   name: fiesta kebab

@@ -5,7 +5,6 @@
   - type: TimedDespawn
     lifetime: 0.8
   - type: Sprite
-    netsync: false
     drawdepth: Effects
     noRot: true
     layers:
@@ -29,7 +28,6 @@
   - type: TimedDespawn
     lifetime: 0.4
   - type: Sprite
-    netsync: false
     drawdepth: Effects
     noRot: true
     layers:

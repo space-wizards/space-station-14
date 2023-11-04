@@ -24,7 +24,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
 
     private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, ref StartCollideEvent args)
     {
-        var otherBody = args.OtherFixture.Body.Owner;
+        var otherBody = args.OtherEntity;
 
         if (TryComp<SpaceGarbageComponent>(otherBody, out var garbage))
         {
@@ -41,9 +41,9 @@ public sealed class ContainmentFieldSystem : EntitySystem
         }
     }
 
-    private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, EventHorizonAttemptConsumeEntityEvent args)
+    private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, ref EventHorizonAttemptConsumeEntityEvent args)
     {
         if(!args.Cancelled && !args.EventHorizon.CanBreachContainment)
-            args.Cancel();
+            args.Cancelled = true;
     }
 }

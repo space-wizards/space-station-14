@@ -7,25 +7,43 @@
     FoodDoughSlice: 1 # one third of a standard bread dough recipe
 
 #Burgers
-- type: microwaveMealRecipe
-  id: RecipeCheeseburger
-  name: cheeseburger recipe
-  result: FoodBurgerCheese
-  time: 5
-  solids:
-    FoodBreadBun: 1
-    FoodMeat: 1
-    FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
-  id: RecipeFiveBurger
-  name: five alarm burger recipe
-  result: FoodBurgerFive
-  time: 5
+  id: RecipeAppendixBurger
+  name: appendix burger recipe
+  result: FoodBurgerAppendix
+  time: 10
   solids:
     FoodBreadBun: 1
-    FoodMeat: 1
-    FoodChili: 3
+    OrganHumanAppendix: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBaconBurger
+  name: bacon burger recipe
+  result: FoodBurgerBacon
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeatCutlet: 3 #replace with bacon
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeBaseballBurger
+  name: baseball burger recipe
+  result: FoodBurgerBaseball
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    BaseBallBat: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBearger
+  name: bearger recipe
+  result: FoodBurgerBear
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeatBear: 1
 
 - type: microwaveMealRecipe
   id: RecipeBigBiteBurger
@@ -40,108 +58,229 @@
     FoodOnionSlice: 2
 
 - type: microwaveMealRecipe
+  id: RecipeBrainBurger
+  name: brain burger recipe
+  result: FoodBurgerBrain
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    OrganHumanBrain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCatBurger
+  name: cat burger recipe
+  result: FoodBurgerCat
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 1
+    ClothingHeadHatCatEars: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCheeseburger
+  name: cheeseburger recipe
+  result: FoodBurgerCheese
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 1
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
   id: RecipeChickenSandwich
   name: chicken sandwich recipe
   result: FoodBurgerChicken
-  time: 5
+  time: 10
+  reagents:
+    Mayo: 5
   solids:
     FoodBreadBun: 1
     FoodMeatChicken: 1
-    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeClownBurger
+  name: clownburger recipe
+  result: FoodBurgerClown
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    ClothingMaskClown: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCorgiBurger
+  name: corgi burger recipe
+  result: FoodBurgerCorgi
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeatCorgi: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCrabBurger
+  name: crab burger recipe
+  result: FoodBurgerCrab
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeatCrab: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCrazyHamburger
+  name: crazy hamburger recipe
+  result: FoodBurgerCrazy
+  time: 15
+  reagents:
+    OilOlive: 15
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 2
+    FoodCheeseSlice: 2
+    FoodChili: 1
+    FoodCabbage: 1
+    CrayonGreen: 1
+    Flare: 1
 
 - type: microwaveMealRecipe
   id: RecipeDuckBurger
   name: duck sandwich recipe
   result: FoodBurgerDuck
-  time: 5
+  time: 10
   solids:
     FoodBreadBun: 1
     FoodMeatDuck: 1
     FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
+  id: RecipeEmpoweredBurger
+  name: empowered burger recipe
+  result: FoodBurgerEmpowered
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    SheetPlasma1: 2
+
+- type: microwaveMealRecipe
   id: RecipeCarpBurger
-  name: carp burger recipe
+  name: fillet-o-carp burger recipe
   result: FoodBurgerCarp
-  time: 5
+  time: 10
   solids:
     FoodBreadBun: 1
     FoodMeatFish: 1
     FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
-  id: RecipeBrainBurger
-  name: brain burger recipe
-  result: FoodBurgerBrain
-  time: 5
+  id: RecipeFiveBurger
+  name: five alarm burger recipe
+  result: FoodBurgerFive
+  time: 10
   solids:
     FoodBreadBun: 1
-    OrganHumanBrain: 1
-    FoodCheeseSlice: 1
+    FoodMeat: 1
+    FoodChili: 3
 
 - type: microwaveMealRecipe
-  id: RecipeAppendixBurger
-  name: appendix burger recipe
-  result: FoodBurgerAppendix
-  time: 5
+  id: RecipeGhostBurger
+  name: ghost burger recipe
+  result: FoodBurgerGhost
+  time: 10
   solids:
     FoodBreadBun: 1
-    OrganHumanAppendix: 1
-    FoodCheeseSlice: 1
+    ClothingOuterGhostSheet: 1 #replace with ectoplasm once added
 
 - type: microwaveMealRecipe
-  id: RecipeClownBurger
-  name: clownburger recipe
-  result: FoodBurgerClown
-  time: 5
+  id: RecipeHumanBurger
+  name: human burger recipe
+  result: FoodBurgerHuman
+  time: 10
   solids:
     FoodBreadBun: 1
-    ClothingMaskClown: 1
+    FoodMeatHuman: 1
+
+- type: microwaveMealRecipe
+  id: RecipeJellyBurger
+  name: jelly burger recipe
+  result: FoodBurgerJelly
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodJellyAmanita: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBurgerMcguffin
+  name: McGuffin recipe
+  result: FoodBurgerMcguffin
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodCheeseSlice: 1
+    FoodEgg: 2
+
+- type: microwaveMealRecipe
+  id: RecipeBurgerMcrib
+  name: McRib recipe
+  result: FoodBurgerMcrib
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMealRibs: 1
+    FoodOnionSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeMimeBurger
-  name: mimeburger recipe
+  name: mime burger recipe
   result: FoodBurgerMime
-  time: 5
+  time: 10
   solids:
     FoodBreadBun: 1
-    ClothingHeadHatBeret: 1
+    ClothingMaskMime: 1
 
 - type: microwaveMealRecipe
-  id: RecipeTofuBurger
-  name: tofu burger recipe
-  result: FoodBurgerTofu
-  time: 5
+  id: RecipePlainBurger
+  name: plain burger recipe
+  result: FoodBurgerPlain
+  time: 10
   solids:
     FoodBreadBun: 1
-    FoodTofuSlice: 1
+    FoodMeat: 1
 
 - type: microwaveMealRecipe
-  id: RecipeXenoburger
-  name: xenoburger recipe
-  result: FoodBurgerXeno
-  time: 5
+  id: RecipeRatBurger
+  name: rat burger recipe
+  result: FoodBurgerRat
+  time: 10
   solids:
     FoodBreadBun: 1
-    FoodMeatXeno: 1
+    FoodMeatRat: 1
 
 - type: microwaveMealRecipe
-  id: RecipeBearger
-  name: bearger recipe
-  result: FoodBurgerBear
-  time: 5
+  id: RecipeRobotBurger
+  name: roburger recipe
+  result: FoodBurgerRobot
+  time: 10
   solids:
     FoodBreadBun: 1
-    FoodMeatBear: 1
+    CapacitorStockPart: 2
+    # i would add steel to this recipe but the microwave explodes
 
 - type: microwaveMealRecipe
-  id: RecipeCurger
-  name: curger recipe
-  result: FoodBurgerCorgi
-  time: 5
+  id: RecipeSoylentBurger
+  name: soylent burger recipe
+  result: FoodBurgerSoy
+  time: 10
   solids:
     FoodBreadBun: 1
-    FoodMeatCorgi: 1
+    FoodCheeseSlice: 2
+    FoodSoybeans: 2 #replace with soylent green when those become craftable
+
+- type: microwaveMealRecipe
+  id: RecipeSpellBurger
+  name: spell burger recipe
+  result: FoodBurgerSpell
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    ClothingHeadHatWizard: 1
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
@@ -158,69 +297,171 @@
     FoodEgg: 2
 
 - type: microwaveMealRecipe
-  id: RecipeEmpoweredBurger
-  name: empowered burger recipe
-  result: FoodBurgerEmpowered
-  time: 5
+  id: RecipeTofuBurger
+  name: tofu burger recipe
+  result: FoodBurgerTofu
+  time: 10
   solids:
     FoodBreadBun: 1
-    SheetPlasma1: 2
+    FoodTofuSlice: 1
 
 - type: microwaveMealRecipe
-  id: RecipeJellyBurger
-  name: jelly burger recipe
-  result: FoodBurgerJelly
-  time: 5
+  id: RecipeXenoburger
+  name: xenoburger recipe
+  result: FoodBurgerXeno
+  time: 10
   solids:
     FoodBreadBun: 1
-    FoodJellyAmanita: 1
-
-- type: microwaveMealRecipe
-  id: RecipeBurgerMcguffin
-  name: mcguffin recipe
-  result: FoodBurgerMcguffin
-  time: 5
-  solids:
-    FoodBreadBun: 1
-    FoodCheeseSlice: 1
-    FoodEgg: 2
+    FoodMeatXeno: 1
 
 #Breads & Sandwiches
-- type: microwaveMealRecipe
-  id: RecipeBread
-  name: bread recipe
-  result: FoodBreadPlain
-  time: 15
-  solids:
-    FoodDough: 1
-
-- type: microwaveMealRecipe
-  id: RecipeBaguette
-  name: baguette recipe
-  result: FoodBreadBaguette
-  time: 10
-  reagents:
-    TableSalt: 5
-  solids:
-    FoodDough: 1
-
-- type: microwaveMealRecipe
-  id: RecipeCreamCheeseBread
-  name: cream cheese bread recipe
-  result: FoodBreadCreamcheese
-  time: 20
-  solids:
-    FoodDough: 1
-    FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeBananaBread
   name: banana bread recipe
   result: FoodBreadBanana
-  time: 25
+  time: 15
   solids:
     FoodDough: 1
     FoodBanana: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCornbread
+  name: cornbread recipe
+  result: FoodBreadCorn
+  time: 10
+  solids:
+    FoodDoughCornmeal: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCreamCheeseBread
+  name: cream cheese bread recipe
+  result: FoodBreadCreamcheese
+  time: 15
+  reagents:
+    Milk: 5
+  solids:
+    FoodDough: 1
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeMeatBread
+  name: meat bread recipe
+  result: FoodBreadMeat
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodMeatCutlet: 2
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeMimanaBread
+  name: mimana bread recipe
+  result: FoodBreadMimana
+  time: 15
+  reagents:
+    Nothing: 5
+  solids:
+    FoodDough: 1
+    FoodMimana: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBread
+  name: bread recipe
+  result: FoodBreadPlain
+  time: 10
+  solids:
+    FoodDough: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSausageBread
+  name: sausage bread recipe
+  result: FoodBreadSausage
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodMeat: 1 #replace with sausage
+
+- type: microwaveMealRecipe
+  id: RecipeSpiderMeatBread
+  name: spider meat bread recipe
+  result: FoodBreadMeatSpider
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodMeatSpiderCutlet: 2
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeTofuBread
+  name: tofu bread recipe
+  result: FoodBreadTofu
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodTofu: 1
+
+- type: microwaveMealRecipe
+  id: RecipeXenoMeatBread
+  name: xeno meat bread recipe
+  result: FoodBreadMeatXeno
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodMeatXenoCutlet: 2
+    FoodCheeseSlice: 2
+
+#Slices Only
+
+- type: microwaveMealRecipe
+  id: RecipeBaguette
+  name: baguette recipe
+  result: FoodBreadBaguette
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodDough: 1
+
+- type: microwaveMealRecipe
+  id: RecipeButteredToast
+  name: buttered toast recipe
+  result: FoodBreadButteredToast
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFrenchToast
+  name: french toast recipe
+  result: FoodBreadFrenchToast
+  time: 5
+  reagents:
+    Milk: 5
+    Egg: 12
+  solids:
+    FoodBreadPlainSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGarlicBread
+  name: garlic bread slice recipe
+  result: FoodBreadGarlicSlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodGarlic: 1
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeJellyToast
+  name: jelly toast recipe
+  result: FoodBreadJellySlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodJellyAmanita: 1 #replace with jelly
 
 - type: microwaveMealRecipe
   id: RecipeMoldyBreadSlice
@@ -232,31 +473,31 @@
     FoodFlyAmanita: 1
 
 - type: microwaveMealRecipe
-  id: RecipeTofuBread
-  name: tofu bread recipe
-  result: FoodBreadTofu
-  time: 20
+  id: RecipeTwoBreadSlice
+  name: two slice recipe
+  result: FoodBreadTwoSlice
+  time: 5
+  reagents:
+    Wine: 5
   solids:
-    FoodDough: 1
-    FoodTofu: 1
+    FoodBreadPlainSlice: 2
 
 - type: microwaveMealRecipe
-  id: RecipeGarlicBread
-  name: garlic bread slice recipe
-  result: FoodBreadGarlicSlice
-  time: 5
+  id: RecipeOnionRings
+  name: onion rings recipe
+  result: FoodOnionRings
+  time: 15
   solids:
-    FoodBreadPlainSlice: 1
-    FoodGarlic: 1
+    FoodOnionSlice: 1
 
-#Pizzas
+#Pizzas TODO: contruction graph based pizza
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
   name: margherita pizza recipe
   result: FoodPizzaMargherita
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodCheeseSlice: 1
     FoodTomato: 4
 
@@ -266,7 +507,7 @@
   result: FoodPizzaMushroom
   time: 25
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMushroom: 5
 
 - type: microwaveMealRecipe
@@ -275,7 +516,7 @@
   result: FoodPizzaMeat
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMeat: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -286,7 +527,7 @@
   result: FoodPizzaVegetable
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
@@ -298,7 +539,7 @@
   result: FoodPizzaPineapple
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMeatChickenCutlet: 3
     FoodPineappleSlice: 5
 
@@ -308,7 +549,7 @@
   result: FoodPizzaDank
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodAmbrosiaVulgaris: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -319,7 +560,7 @@
   result: FoodPizzaDonkpocket
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodDonkpocketWarm: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -334,7 +575,6 @@
     Flour: 15
     Egg: 6
   solids:
-    FoodPlate: 1
     FoodButter: 1
 
 - type: microwaveMealRecipe
@@ -511,6 +751,143 @@
   solids:
     FoodFlyAmanita: 3
 
+- type: microwaveMealRecipe
+  id: RecipeOnionSoup
+  name: onion soup recipe
+  result: FoodSoupOnion
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodOnionSlice: 5
+    FoodCheeseSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMushroomSoup
+  name: mushroom soup recipe
+  result: FoodSoupMushroom
+  time: 10
+  reagents:
+    Water: 5
+    Milk: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMushroom: 2
+
+- type: microwaveMealRecipe
+  id: RecipeStewSoup
+  name: stew recipe
+  result: FoodSoupStew
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodMeatCutlet: 3
+    FoodTomato: 1
+    FoodPotato: 1
+    FoodCarrot: 1
+    FoodEggplant: 1
+    FoodMushroom: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTomatoSoup
+  name: tomato soup recipe
+  result: FoodSoupTomato
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodTomato: 2
+
+- type: microwaveMealRecipe
+  id: RecipeTomatoBloodSoup
+  name: tomato blood soup recipe
+  result: FoodSoupTomatoBlood
+  time: 10
+  reagents:
+    Blood: 10
+  solids:
+    FoodBowlBig: 1
+    FoodBloodTomato: 2
+
+- type: microwaveMealRecipe
+  id: RecipeWingFangChuSoup
+  name: wing fang chu recipe
+  result: FoodSoupWingFangChu
+  time: 10
+  reagents:
+    Soysauce: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMeatXenoCutlet: 2
+
+- type: microwaveMealRecipe
+  id: RecipeWingFangChuSoupSpider
+  name: wing fang chu recipe
+  result: FoodSoupWingFangChu
+  time: 10
+  reagents:
+    Soysauce: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMeatSpider: 2
+
+- type: microwaveMealRecipe
+  id: RecipeVegetableSoup
+  name: vegetable soup recipe
+  result: FoodSoupVegetable
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodCorn: 1
+    FoodCarrot: 1
+    FoodPotato: 1
+    FoodEggplant: 1
+
+- type: microwaveMealRecipe
+  id: RecipeClownTearsSoup
+  name: clown tears soup recipe
+  result: FoodSoupClown
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodBanana: 1
+    ShardGlass: 1
+    #idk probably replace shard with someting bananium when #14663 merged
+
+- type: microwaveMealRecipe
+  id: RecipeMonkeysDelightSoup
+  name: monkeys delight recipe
+  result: FoodSoupMonkey
+  time: 10
+  reagents:
+    Flour: 5
+    TableSalt: 1
+    Blackpepper: 1
+  solids:
+    FoodBowlBig: 1
+    FoodBanana: 1
+    MonkeyCube: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBungoSoup
+  name: bungo soup recipe
+  result: FoodSoupBungo
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodBungo: 2
+    FoodChili: 1
+
 #Other
 
 - type: microwaveMealRecipe
@@ -536,7 +913,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
-  name: salty sweet milocola soup recipe
+  name: salty sweet misocola soup recipe
   result: DisgustingSweptSoup
   time: 15
   reagents:
@@ -588,7 +965,7 @@
   id: RecipePopcorn
   name: popcorn recipe
   result: FoodSnackPopcorn
-  time: 5
+  time: 20
   solids:
     FoodCorn: 1
 
@@ -601,6 +978,18 @@
     Flour: 5
     Milk: 5
     Egg: 6
+
+- type: microwaveMealRecipe
+  id: RecipeBlueberryPancake
+  name: blueberry pancake recipe
+  result: FoodBakedPancakeBb
+  time: 5
+  reagents:
+    Flour: 5
+    Milk: 5
+    Egg: 6
+  solids:
+    FoodBerries: 2
 
 - type: microwaveMealRecipe
   id: RecipeWaffles
@@ -692,6 +1081,16 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBerryClafoutis
+  name: berry clafoutis
+  result: FoodPieClafoutis
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodBerries: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
   id: RecipeMeatPie
   name: meat pie recipe
   result: FoodPieMeat
@@ -746,6 +1145,15 @@
   solids:
     FoodCakePlain: 1
     FoodOrange: 3
+
+- type: microwaveMealRecipe
+  id: RecipeBlueberryCake
+  name: blueberry cake recipe
+  result: FoodCakeBlueberry
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodBerries: 3
 
 - type: microwaveMealRecipe
   id: RecipeLimeCake
@@ -853,6 +1261,30 @@
   solids:
     FoodDoughPie: 1
     FoodGrape: 3
+
+- type: microwaveMealRecipe
+  id: RecipeDumplings
+  name: dumplings recipe
+  result: FoodBakedDumplings
+  time: 15
+  reagents:
+    Water: 10
+    UncookedAnimalProteins: 6
+  solids:
+    FoodDoughSlice: 3
+
+- type: microwaveMealRecipe
+  id: RecipeBrownies
+  name: brownie recipe
+  result: FoodBakedBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3
 
 #Donks i guess
 - type: microwaveMealRecipe
@@ -976,6 +1408,17 @@
   solids:
     FoodChili: 1
     FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeRibs
+  name: BBQ ribs recipe
+  result: FoodMealRibs
+  time: 15
+  reagents:
+    BbqSauce: 5
+  solids:
+    FoodMeat: 2
+    FoodKebabSkewer: 1
 
 - type: microwaveMealRecipe
   id: RecipeEnchiladas
@@ -1122,6 +1565,32 @@
   solids:
     FoodAloe: 1
 
+- type: microwaveMealRecipe
+  id: RecipeMedicatedSuture
+  name: medicated suture recipe
+  result: MedicatedSuture
+  time: 10
+  solids:
+    FoodPoppy: 1
+    Brutepack: 1
+    MaterialCloth1: 1
+  reagents:
+    TranexamicAcid: 50
+    Cryptobiolin: 50
+
+- type: microwaveMealRecipe
+  id: RecipeRegenerativeMesh
+  name: regenerative mesh recipe
+  result: RegenerativeMesh
+  time: 10
+  solids:
+    FoodAloe: 1
+    Ointment: 1
+    MaterialCloth1: 1
+  reagents:
+    Sigynate: 50
+    Dermaline: 50
+
 # Suppermatter
 - type: microwaveMealRecipe
   id: RecipeSuppermatter
@@ -1203,3 +1672,64 @@
   solids:
     FoodMeatLizard: 1
     FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodMealTaco
+  name: taco recipe
+  result: FoodMealTaco
+  time: 10
+  solids:
+    FoodDoughSlice: 1
+    FoodTomato: 1
+    FoodOnionSlice: 2
+    FoodCheeseSlice: 1
+    FoodMeatCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodBakedChevreChaud
+  name: chevre chaud recipe
+  result: FoodBakedChevreChaud
+  time: 5
+  solids:
+    FoodChevreSlice: 1
+    FoodBreadBaguetteSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCookedSpaceshroom
+  name: cooked spaceshroom recipe
+  result: FoodSpaceshroomCooked
+  time: 5
+  solids:
+    FoodSpaceshroom: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCannabisButter
+  name: cannabis butter recipe
+  result: FoodCannabisButter
+  time: 15
+  solids:
+    FoodButter: 1
+    LeavesCannabis: 6
+
+- type: microwaveMealRecipe
+  id: RecipeCannabisBrownies
+  name: cannabis brownie recipe
+  result: FoodBakedCannabisBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodCannabisButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3
+
+- type: microwaveMealRecipe
+  id: RecipeCornInButter
+  name: corn in butter recipe
+  result: FoodMealCornInButter
+  time: 10
+  solids:
+    FoodCorn: 1
+    FoodPlate: 1
+    FoodButter: 1

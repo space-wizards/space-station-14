@@ -2,13 +2,14 @@ using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class RobustHarvest : ReagentEffect
+    public sealed partial class RobustHarvest : ReagentEffect
     {
         [DataField("potencyLimit")]
         public int PotencyLimit = 50;
@@ -47,5 +48,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                 plantHolderComp.Seed.Yield--;
             }
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
     }
 }

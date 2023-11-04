@@ -1,0 +1,980 @@
+- type: entity
+  name: Loot Spawner
+  id: BackroomsSpawner
+  suffix: BACKROOMS
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+    - type: RandomSpawner
+      prototypes:
+        - SheetSteel
+        - SheetSteel
+        - SheetPlasteel
+        - SheetGlass
+        - PartRodMetal
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+      chance: 0.028
+      offset: 0.4
+
+- type: entity
+  name: Loot Spawner periodic
+  id: BackroomsSpawnerForPeriodic
+  suffix: BACKROOMS
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+    - type: RandomSpawner
+      prototypes:
+        - SheetSteel
+        - SheetSteel
+        - SheetPlasteel
+        - SheetGlass
+        - PartRodMetal
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+      chance: 0.012
+      offset: 0.4
+
+- type: entity
+  name: Timer spawner
+  id: BackroomsTimedSpawner
+  parent: MarkerBase
+  suffix: BACKROOMS
+  components:
+    - type: Sprite
+      layers:
+      - state: blue
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+      - BackroomsSpawnerForPeriodic
+      chance: 0.55
+      intervalSeconds: 300
+      minimumEntitiesSpawned: 2
+      maximumEntitiesSpawned: 16
+
+- type: storePreset
+  id: StorePresetBackrooms
+  storeName: store-preset-backrooms
+  categories:
+  - BackroomsEquip
+  - BackroomsWeapon
+  - BackroomsBuild
+  - BackroomsExit
+  - BackroomsSome
+  - BackroomsHum
+  - BackroomsArmor
+  currencyWhitelist:
+  - Backrooms
+
+- type: entity
+  name: telecrystal
+  parent: BaseItem
+  id: Backroomstal
+  suffix: 20 TC
+  description: It seems to be pulsing with suspiciously enticing energies.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Syndicate/telecrystal.rsi
+    netsync: false
+    state: telecrystal
+  - type: Item
+    sprite: Objects/Specific/Syndicate/telecrystal.rsi
+  - type: Stack
+    count: 20
+    stackType: Backrooms
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      Backrooms: 1
+
+- type: entity
+  parent: Backroomstal
+  id: Backroomstal1
+  suffix: 1 TC
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: Backroomstal
+  id: Backroomstal5
+  suffix: 5 TC
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: Backroomstal
+  id: Backroomstal10
+  suffix: 10 TC
+  components:
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: BaseItem
+  id: BaseBackroomsRadio
+  name: syndicate uplink
+  description: Suspiciously looking old radio...
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
+    netsync: false
+  - type: Item
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: old-radio
+  - type: UserInterface
+    interfaces:
+    - key: enum.StoreUiKey.Key
+      type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    preset: StorePresetBackrooms
+    balance:
+      Backrooms: 0
+
+- type: stack
+  id: Backrooms
+  name: spacecrystal
+  icon: Objects/Specific/Syndicate/telecrystal.rsi
+  spawn: Backroomstal1
+
+- type: currency
+  id: Backrooms
+  displayName: store-currency-display-backroomstal
+  cash:
+    1: Backroomstal1
+  canWithdraw: true
+
+- type: storeCategory
+  id: BackroomsEquip
+  name: backrooms-category-equip
+  priority: 0
+
+- type: storeCategory
+  id: BackroomsWeapon
+  name: backrooms-category-weapon
+  priority: 1
+
+- type: storeCategory
+  id: BackroomsBuild
+  name: backrooms-category-build
+  priority: 2
+
+- type: storeCategory
+  id: BackroomsExit
+  name: backrooms-category-exit
+  priority: 4
+
+- type: storeCategory
+  id: BackroomsSome
+  name: backrooms-category-some
+  priority: 3
+
+- type: storeCategory
+  id: BackroomsHum
+  name: backrooms-category-hum
+  priority: 5
+
+- type: storeCategory
+  id: BackroomsArmor
+  name: backrooms-category-armor
+  priority: 6
+
+- type: listing
+  id: WeaponShotgunDoubleBarreledBackrooms
+  productEntity: WeaponShotgunDoubleBarreled
+  cost:
+    Backrooms: 26
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: BoxLethalshotBackrooms
+  productEntity: BoxLethalshot
+  cost:
+    Backrooms: 8
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: WeaponRevolverRaxaBackrooms
+  productEntity: WeaponRevolverRaxa
+  cost:
+    Backrooms: 30
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: WeaponShotgunHandmadeBackrooms
+  productEntity: WeaponShotgunHandmade
+  cost:
+    Backrooms: 18
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: WeaponDisablerBackrooms
+  productEntity: WeaponDisabler
+  cost:
+    Backrooms: 32
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: WeaponMakeshiftLaserBackrooms
+  productEntity: WeaponMakeshiftLaser
+  cost:
+    Backrooms: 28
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: WeaponCapacitorRechargerBackrooms
+  productEntity: WeaponCapacitorRecharger
+  cost:
+    Backrooms: 8
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: ClothingHandsGlovesColorYellowBackrooms
+  productEntity: ClothingHandsGlovesColorYellow
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: GeneratorPlasmaBackrooms
+  productEntity: GeneratorPlasma
+  cost:
+    Backrooms: 6
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: ClothingOuterBioVirologyBackrooms
+  productEntity: ClothingOuterBioVirology
+  cost:
+    Backrooms: 1
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: ClothingHeadHatHoodBioVirologyBackrooms
+  productEntity: ClothingHeadHatHoodBioVirology
+  cost:
+    Backrooms: 1
+  categories:
+  - BackroomsArmor
+
+- type: listing
+  id: ClothingOuterArmorBulletproofBackrooms
+  productEntity: ClothingOuterArmorBulletproof
+  cost:
+    Backrooms: 14
+  categories:
+  - BackroomsArmor
+
+- type: listing
+  id: ClothingOuterArmorRiotBackrooms
+  productEntity: ClothingOuterArmorRiot
+  cost:
+    Backrooms: 14
+  categories:
+  - BackroomsArmor
+
+- type: listing
+  id: ClothingOuterArmorHeavyBackrooms
+  productEntity: ClothingOuterArmorHeavy
+  cost:
+    Backrooms: 68
+  categories:
+  - BackroomsArmor
+
+- type: listing
+  id: CombatKnifeBackrooms
+  productEntity: CombatKnife
+  cost:
+    Backrooms: 5
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: GauzeBackrooms
+  productEntity: Gauze
+  cost:
+    Backrooms: 1
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: BrutepackBackrooms
+  productEntity: Brutepack
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: OintmentBackrooms
+  productEntity: Ointment
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: KitchenMicrowaveBackrooms
+  productEntity: KitchenMicrowave
+  cost:
+    Backrooms: 7
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: StasisBedBackrooms
+  productEntity: StasisBed
+  cost:
+    Backrooms: 9
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: SubstationBasicBackrooms
+  productEntity: SubstationBasic
+  cost:
+    Backrooms: 8
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: APCBasicBackrooms
+  productEntity: APCBasic
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: CableHVStackBackrooms
+  productEntity: CableHVStack
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: CableApcStackBackrooms
+  productEntity: CableApcStack
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: CableMVStackBackrooms
+  productEntity: CableMVStack
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: WaterTankFullBackrooms
+  productEntity: WaterTankFull
+  cost:
+    Backrooms: 6
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: MagazineBoxMagnumBackrooms
+  productEntity: MagazineBoxMagnum
+  cost:
+    Backrooms: 8
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: BoxMREBackrooms
+  productEntity: BoxMRE
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: MagazineBoxLightRifleBackrooms
+  productEntity: MagazineBoxLightRifle
+  cost:
+    Backrooms: 8
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: WeaponSniperMosinBackrooms
+  productEntity: WeaponSniperMosin
+  cost:
+    Backrooms: 34
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: HandcuffsBackrooms
+  productEntity: Handcuffs
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: PersonalAIBackrooms
+  productEntity: PersonalAI
+  cost:
+    Backrooms: 6
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: CrowbarBackrooms
+  productEntity: Crowbar
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: WrenchBackrooms
+  productEntity: Wrench
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: ScrewdriverBackrooms
+  productEntity: Screwdriver
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: WirecutterBackrooms
+  productEntity: Wirecutter
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: WelderBackrooms
+  productEntity: Welder
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: MultitoolBackrooms
+  productEntity: Multitool
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: CrateHydroponicsSeedsBackrooms
+  productEntity: CrateHydroponicsSeeds
+  cost:
+    Backrooms: 10
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: CrateHydroponicsSeedsMedicinalBackrooms
+  productEntity: CrateHydroponicsSeedsMedicinal
+  cost:
+    Backrooms: 17
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: CrateHydroponicsSeedsExoticBackrooms
+  productEntity: CrateHydroponicsSeedsExotic
+  cost:
+    Backrooms: 15
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: SeedExtractorBackrooms
+  productEntity: SeedExtractor
+  cost:
+    Backrooms: 11
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: ShovelBackrooms
+  productEntity: Shovel
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: HydroponicsToolClippersBackrooms
+  productEntity: HydroponicsToolClippers
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: HydroponicsToolMiniHoeBackrooms
+  productEntity: HydroponicsToolMiniHoe
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: RobustHarvestChemistryBottleBackrooms
+  productEntity: RobustHarvestChemistryBottle
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: BucketBackrooms
+  productEntity: Bucket
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: MopBucketBackrooms
+  productEntity: MopBucket
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: MopItemBackrooms
+  productEntity: MopItem
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: WeldingFuelTankFullBackrooms
+  productEntity: WeldingFuelTankFull
+  cost:
+    Backrooms: 7
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: FlareBackrooms
+  productEntity: Flare
+  cost:
+    Backrooms: 1
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: AcousticGuitarInstrumentBackrooms
+  productEntity: AcousticGuitarInstrument
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: AltarConvertMaintBackrooms
+  productEntity: AltarConvertMaint
+  cost:
+    Backrooms: 100
+  categories:
+  - BackroomsExit
+
+- type: listing
+  id: HandheldHealthAnalyzerBackrooms
+  productEntity: HandheldHealthAnalyzer
+  cost:
+    Backrooms: 9
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: MedkitFilledBackrooms
+  productEntity: MedkitFilled
+  cost:
+    Backrooms: 16
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: ClothingBeltMilitaryWebbingBackrooms
+  productEntity: ClothingBeltMilitaryWebbing
+  cost:
+    Backrooms: 9
+  categories:
+  - BackroomsArmor
+
+- type: listing
+  id: ClothingBeltBandolierBackrooms
+  productEntity: ClothingBeltBandolier
+  cost:
+    Backrooms: 7
+  categories:
+  - BackroomsArmor
+
+- type: listing
+  id: PowerCellSmallBackrooms
+  productEntity: PowerCellSmall
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: BaseBallBatBackrooms
+  productEntity: BaseBallBat
+  cost:
+    Backrooms: 5
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: PaperBackrooms
+  productEntity: Paper
+  cost:
+    Backrooms: 1
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: OmnizineChemistryBottleBackrooms
+  productEntity: OmnizineChemistryBottle
+  cost:
+    Backrooms: 10
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: BoxBeakerBackrooms
+  productEntity: BoxBeaker
+  cost:
+    Backrooms: 7
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: BodyBag_FoldedBackrooms
+  productEntity: BodyBag_Folded
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: SheetPlasma1Backrooms
+  productEntity: SheetPlasma1
+  cost:
+    Backrooms: 6
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: lanternBackrooms
+  productEntity: lantern
+  cost:
+    Backrooms: 5
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: GrenadeFlashBangBackrooms
+  productEntity: GrenadeFlashBang
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsExit
+
+- type: listing
+  id: FlashlightLanternBackrooms
+  productEntity: FlashlightLantern
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsExit
+
+- type: listing
+  id: KitchenReagentGrinderBackrooms
+  productEntity: KitchenReagentGrinder
+  cost:
+    Backrooms: 7
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: BloodpackBackrooms
+  productEntity: Bloodpack
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: ClothingEyesHudMedicalBackrooms
+  productEntity: ClothingEyesHudMedical
+  cost:
+    Backrooms: 13
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: PenBackrooms
+  productEntity: Pen
+  cost:
+    Backrooms: 1
+  categories:
+  - BackroomsSome
+
+- type: startingGear
+  id: BackroomsGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitVirology
+    back: ClothingBackpackSatchelVirology
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesColorWhite
+    pocket1: BaseBackroomsRadio
+    pocket2: BookBackrooms
+    mask: ClothingMaskSterile
+    head: ClothingHeadHatPaper
+
+- type: listing
+  id: GasAnalyzerBackrooms
+  productEntity: GasAnalyzer
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: CrayonBoxBackrooms
+  productEntity: CrayonBox
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: DefibrillatorBackrooms
+  productEntity: Defibrillator
+  cost:
+    Backrooms: 18
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: MaterialClothBackrooms
+  productEntity: MaterialCloth
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: BlastDoorOpenBackrooms
+  productEntity: BlastDoorOpen
+  cost:
+    Backrooms: 9
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: ClothingEyesGlassesMesonBackrooms
+  productEntity: ClothingEyesGlassesMeson
+  cost:
+    Backrooms: 7
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: hydroponicsTrayBackrooms
+  productEntity: hydroponicsTray
+  cost:
+    Backrooms: 5
+  categories:
+  - BackroomsEquip
+
+- type: listing
+  id: HandheldGPSBasicBackrooms
+  productEntity: HandheldGPSBasic
+  cost:
+    Backrooms: 6
+  categories:
+  - BackroomsExit
+
+- type: entity
+  parent: BookBase
+  id: BookBackrooms
+  name: watched
+  description: The book is in good condition, with a slightly worn cover that features a dark and ominous space station looming in the background. The title "Watched" is written in bold letters that seem to be staring back at the reader, conveying the feeling of being constantly observed. The blurb on the back cover hints at a thrilling and suspenseful tale of paranoia and danger in a confined setting.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/authorbooks.rsi
+      layers:
+        - state: book_watched
+    - type: Paper
+      content: book-backrooms
+
+- type: listing
+  id: DisposalUnitBackrooms
+  productEntity: DisposalUnit
+  cost:
+    Backrooms: 10
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: ToyRubberDuckBackrooms
+  productEntity: ToyRubberDuck
+  cost:
+    Backrooms: 2
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: VendingMachineChemicalsBackrooms
+  productEntity: VendingMachineChemicals
+  cost:
+    Backrooms: 26
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: chem_masterBackrooms
+  productEntity: chem_master
+  cost:
+    Backrooms: 15
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: EphedrineChemistryBottleBackrooms
+  productEntity: EphedrineChemistryBottle
+  cost:
+    Backrooms: 7
+  categories:
+  - BackroomsSome
+
+- type: listing
+  id: ChemistryHotplateBackrooms
+  productEntity: ChemistryHotplate
+  cost:
+    Backrooms: 6
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: FloorDrainBackrooms
+  productEntity: FloorDrain
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: StunbatonBackrooms
+  productEntity: Stunbaton
+  cost:
+    Backrooms: 24
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: AirlockBackrooms
+  productEntity: Airlock
+  cost:
+    Backrooms: 5
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: ClothingHeadsetPrisonerBackrooms
+  productEntity: ClothingHeadsetPrisoner
+  cost:
+    Backrooms: 10
+  categories:
+  - BackroomsHum
+
+- type: listing
+  id: EncryptionKeyRadio1Backrooms
+  productEntity: EncryptionKeyRadio1
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsHum
+
+- type: listing
+  id: EncryptionKeyRadio2Backrooms
+  productEntity: EncryptionKeyRadio2
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsHum
+
+- type: listing
+  id: EncryptionKeyRadio3Backrooms
+  productEntity: EncryptionKeyRadio3
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsHum
+
+- type: listing
+  id: EncryptionKeyRadio4Backrooms
+  productEntity: EncryptionKeyRadio4
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsHum

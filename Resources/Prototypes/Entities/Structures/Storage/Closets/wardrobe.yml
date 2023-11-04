@@ -15,11 +15,10 @@
   description: "A wardrobe packed with stylish blue clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: blue_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: blue_door
 
 # Pink wardrobe
 - type: entity
@@ -29,11 +28,10 @@
   description: "A wardrobe packed with fabulous pink clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: pink_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: pink_door
 
 # Black wardrobe
 - type: entity
@@ -43,11 +41,10 @@
   description: "A wardrobe packed with stylish black clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: black_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: black_door
 
 # Green wardrobe
 - type: entity
@@ -57,11 +54,10 @@
   description: "A wardrobe packed with stylish green clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: green_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: green_door
 
 # Prison wardrobe
 - type: entity
@@ -70,11 +66,10 @@
   name: prison wardrobe
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: orange_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: orange_door
 
 # Yellow wardrobe
 - type: entity
@@ -84,11 +79,10 @@
   description: "A wardrobe packed with stylish yellow clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: yellow_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: yellow_door
 
 # White wardrobe
 - type: entity
@@ -98,11 +92,10 @@
   description: "A wardrobe packed with stylish white clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: white_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: white_door
 
 # Grey wardrobe
 - type: entity
@@ -112,11 +105,10 @@
   description: "A wardrobe packed with a tide of grey clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: grey_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: grey_door
 
 # Mixed wardrobe
 - type: entity
@@ -126,11 +118,10 @@
   description: "A wardrobe packed with a mix of colorful clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: mixed_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: mixed_door
 
 # Jobs
 
@@ -140,11 +131,10 @@
   name: security wardrobe
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: red_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: red_door
 
 - type: entity
   id: WardrobeAtmospherics
@@ -152,11 +142,10 @@
   name: atmospherics wardrobe
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: atmos_wardrobe_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: atmos_wardrobe_door
 
 - type: entity
   id: ClosetJanitor

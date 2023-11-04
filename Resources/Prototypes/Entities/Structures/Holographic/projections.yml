@@ -13,9 +13,18 @@
   - type: Sprite
     sprite: Structures/Holo/wetfloor.rsi
     state: icon
-    netsync: false
   - type: TimedDespawn
-    lifetime: 30
+    lifetime: 90
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 30
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
 
 - type: entity
   id: HoloFan
@@ -26,12 +35,12 @@
   - type: Sprite
     sprite: Structures/Holo/holofan.rsi
     state: icon
-    netsync: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
   - type: TimedDespawn
     lifetime: 180
   - type: Airtight
@@ -41,7 +50,7 @@
   id: HolosignSecurity
   parent: HolosignWetFloor
   name: holographic barrier
-  description: A barrier of hard light that blocks movenment, but pretty weak.
+  description: A barrier of hard light that blocks movement, but pretty weak.
   components:
     - type: Physics
       bodyType: Static
@@ -49,28 +58,21 @@
     - type: Sprite
       sprite: Structures/Holo/security.rsi
       state: icon
-      netsync: false
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.3,-0.3,0.3,0.3"
           mask:
             - TableMask
           layer:
             - TableLayer
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 30
     - type: TimedDespawn
-      lifetime: 60
+      lifetime: 180
     - type: PointLight
       enabled: true
       radius: 3
       color: red
     - type: Climbable
+    - type: Clickable

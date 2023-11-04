@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
-using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
@@ -15,10 +13,11 @@ public sealed class WallConstruction : InteractionTest
     {
         await StartConstruction(Wall);
         await Interact(Steel, 2);
-        Assert.IsNull(Hands.ActiveHandEntity);
-        AssertPrototype(Girder);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
+        ClientAssertPrototype(Girder, ClientTarget);
+        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
         await Interact(Steel, 2);
-        Assert.IsNull(Hands.ActiveHandEntity);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
         AssertPrototype(WallSolid);
     }
 
@@ -33,4 +32,3 @@ public sealed class WallConstruction : InteractionTest
         await AssertEntityLookup((Steel, 4));
     }
 }
-

@@ -1,6 +1,9 @@
 reagent-name-flour = flour
 reagent-desc-flour = Used for baking.
 
+reagent-name-cornmeal = cornmeal
+reagent-desc-cornmeal = Used for baking.
+
 reagent-name-oats = oats
 reagent-desc-oats = Used for a variety of tasty purposes.
 

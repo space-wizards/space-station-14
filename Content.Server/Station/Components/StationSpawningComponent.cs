@@ -6,6 +6,6 @@ namespace Content.Server.Station.Components;
 /// Controls spawning on the given station, tracking spawners present on it.
 /// </summary>
 [RegisterComponent, Access(typeof(StationSpawningSystem))]
-public sealed class StationSpawningComponent : Component
+public sealed partial class StationSpawningComponent : Component
 {
 }

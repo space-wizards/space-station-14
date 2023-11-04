@@ -1,5 +1,8 @@
 - type: latheRecipe
   id: Wirecutter
+  icon:
+    sprite: Objects/Tools/wirecutters.rsi
+    state: cutters-map
   result: Wirecutter
   completetime: 2
   materials:
@@ -8,6 +11,9 @@
 
 - type: latheRecipe
   id: Screwdriver
+  icon:
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver-map
   result: Screwdriver
   completetime: 2
   materials:
@@ -33,21 +39,21 @@
   result: CableApcStack1
   completetime: 2
   materials:
-    Steel: 100
+    Steel: 30
 
 - type: latheRecipe
   id: CableMVStack
   result: CableMVStack1
   completetime: 2
   materials:
-    Steel: 150
+    Steel: 30
 
 - type: latheRecipe
   id: CableHVStack
   result: CableHVStack1
   completetime: 2
   materials:
-    Steel: 200
+    Steel: 30
 
 - type: latheRecipe
   id: Crowbar
@@ -59,10 +65,10 @@
 - type: latheRecipe
   id: Pickaxe
   result: Pickaxe
-  completetime: 2
+  completetime: 4
   materials:
-    Steel: 200
-    Wood: 100
+    Steel: 1000
+    Wood: 500
 
 - type: latheRecipe
   id: Shovel
@@ -75,6 +81,14 @@
 - type: latheRecipe
   id: Multitool
   result: Multitool
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 200
+
+- type: latheRecipe
+  id: NetworkConfigurator
+  result: NetworkConfigurator
   completetime: 2
   materials:
     Steel: 200
@@ -129,8 +143,8 @@
     Glass: 300
 
 - type: latheRecipe
-  id: AirlockPainter
-  result: AirlockPainter
+  id: SprayPainter
+  result: SprayPainter
   completetime: 2
   materials:
     Steel: 300
@@ -170,3 +184,21 @@
   materials:
     Steel: 500
     Plastic: 100
+
+- type: latheRecipe
+  id: WelderExperimental
+  result: WelderExperimental
+  completetime: 6
+  materials:
+    Steel: 800
+    Plasma: 200
+
+- type: latheRecipe
+  id: JawsOfLife
+  result: JawsOfLife
+  completetime: 6
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plasma: 300
+    Gold: 50

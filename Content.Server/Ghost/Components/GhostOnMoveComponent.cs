@@ -1,7 +1,7 @@
 namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
-    public sealed class GhostOnMoveComponent : Component
+    public sealed partial class GhostOnMoveComponent : Component
     {
         [DataField("canReturn")] public bool CanReturn { get; set; } = true;
 

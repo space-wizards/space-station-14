@@ -1,13 +1,13 @@
 using Robust.Client.GameObjects;
-using Robust.Client.Player;
 
 namespace Content.Client.Pinpointer.UI;
 
 public sealed class StationMapBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private StationMapWindow? _window;
 
-    public StationMapBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public StationMapBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -17,12 +17,12 @@ public sealed class StationMapBoundUserInterface : BoundUserInterface
         _window?.Close();
         EntityUid? gridUid = null;
 
-        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<TransformComponent>(Owner.Owner, out var xform))
+        if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
         {
             gridUid = xform.GridUid;
         }
 
-        _window = new StationMapWindow(gridUid, Owner.Owner);
+        _window = new StationMapWindow(gridUid, Owner);
         _window.OpenCentered();
         _window.OnClose += Close;
     }

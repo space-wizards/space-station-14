@@ -1,14 +1,17 @@
 using System.Linq;
+using System.Numerics;
+using System.Reflection;
 using Content.Server.Explosion.Components;
-using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
-using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
+using Content.Shared.Mind.Components;
 using Content.Shared.Physics;
-using Content.Shared.Spawners.Components;
+using Content.Shared.Projectiles;
+using Robust.Shared.Spawners;
+using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -16,10 +19,12 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem
 {
     /// <summary>
     ///     Used to limit explosion processing time. See <see cref="MaxProcessingTime"/>.
@@ -173,12 +178,12 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Used for a variation of <see cref="TurfHelpers.IsBlockedTurf()"/> that makes use of the fact that we have
     ///     already done an entity lookup on a tile, and don't need to do so again.
     /// </remarks>
-    public bool IsBlockingTurf(EntityUid uid, EntityQuery<PhysicsComponent> physicsQuery)
+    public bool IsBlockingTurf(EntityUid uid)
     {
         if (EntityManager.IsQueuedForDeletion(uid))
             return false;
 
-        if (!physicsQuery.TryGetComponent(uid, out var physics))
+        if (!_physicsQuery.TryGetComponent(uid, out var physics))
             return false;
 
         return physics.CanCollide && physics.Hard && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0;
@@ -195,18 +200,14 @@ public sealed partial class ExplosionSystem : EntitySystem
         DamageSpecifier damage,
         MapCoordinates epicenter,
         HashSet<EntityUid> processed,
-        string id,
-        EntityQuery<TransformComponent> xformQuery,
-        EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
-        LookupFlags flags)
+        string id)
     {
         var gridBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
 
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
-        List<TransformComponent> list = new();
-        var state = (list, processed, xformQuery);
+        List<(EntityUid, TransformComponent)> list = new();
+        var state = (list, processed, _transformQuery);
 
         // get entities:
         lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
@@ -215,9 +216,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         lookup.StaticSundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
         // process those entities
-        foreach (var xform in list)
+        foreach (var (uid, xform) in list)
         {
-            ProcessEntity(xform.Owner, epicenter, damage, throwForce, id, damageQuery, physicsQuery, xform);
+            ProcessEntity(uid, epicenter, damage, throwForce, id, xform);
         }
 
         // process anchored entities
@@ -226,7 +227,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         foreach (var entity in anchoredList)
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, damageQuery, physicsQuery);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, null);
         }
 
         // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
@@ -237,7 +238,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             foreach (var entity in grid.GetAnchoredEntities(tile))
             {
-                tileBlocked |= IsBlockingTurf(entity, physicsQuery);
+                tileBlocked |= IsBlockingTurf(entity);
             }
         }
 
@@ -256,31 +257,31 @@ public sealed partial class ExplosionSystem : EntitySystem
         lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
         lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
-        foreach (var xform in list)
+        foreach (var (uid, xform) in list)
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
             // they should handle their own damage pass-through, with their own damage reduction calculation.
-            ProcessEntity(xform.Owner, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
+            ProcessEntity(uid, epicenter, null, throwForce, id, xform);
         }
 
         return !tileBlocked;
     }
 
     private bool GridQueryCallback(
-        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in EntityUid uid)
     {
         if (state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
-            state.List.Add(xform);
+            state.List.Add((uid, xform));
 
         return true;
     }
 
     private bool GridQueryCallback(
-        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in FixtureProxy proxy)
     {
-        var owner = proxy.Fixture.Body.Owner;
+        var owner = proxy.Entity;
         return GridQueryCallback(ref state, in owner);
     }
 
@@ -295,16 +296,12 @@ public sealed partial class ExplosionSystem : EntitySystem
         DamageSpecifier damage,
         MapCoordinates epicenter,
         HashSet<EntityUid> processed,
-        string id,
-        EntityQuery<TransformComponent> xformQuery,
-        EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
-        LookupFlags flags)
+        string id)
     {
-        var gridBox = Box2.FromDimensions(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
+        var gridBox = Box2.FromDimensions(tile * DefaultTileSize, new Vector2(DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
-        var list = new List<TransformComponent>();
-        var state = (list, processed, invSpaceMatrix, lookup.Owner, xformQuery, gridBox);
+        var list = new List<(EntityUid, TransformComponent)>();
+        var state = (list, processed, invSpaceMatrix, lookup.Owner, _transformQuery, gridBox);
 
         // get entities:
         lookup.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
@@ -312,10 +309,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         lookup.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
         lookup.StaticSundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
-        foreach (var xform in state.Item1)
+        foreach (var (uid, xform) in state.Item1)
         {
-            processed.Add(xform.Owner);
-            ProcessEntity(xform.Owner, epicenter, damage, throwForce, id, damageQuery, physicsQuery, xform);
+            processed.Add(uid);
+            ProcessEntity(uid, epicenter, damage, throwForce, id, xform);
         }
 
         if (throwForce <= 0)
@@ -327,14 +324,14 @@ public sealed partial class ExplosionSystem : EntitySystem
         lookup.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
         lookup.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
-        foreach (var xform in list)
+        foreach (var (uid, xform) in list)
         {
-            ProcessEntity(xform.Owner, epicenter, null, throwForce, id, damageQuery, physicsQuery, xform);
+            ProcessEntity(uid, epicenter, null, throwForce, id, xform);
         }
     }
 
     private bool SpaceQueryCallback(
-        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
         in EntityUid uid)
     {
         if (state.Processed.Contains(uid))
@@ -346,24 +343,24 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             // parented directly to the map, use local position
             if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(xform.LocalPosition)))
-                state.List.Add(xform);
+                state.List.Add((uid, xform));
 
             return true;
         }
 
         // finally check if it intersects our tile
         if (state.GridBox.Contains(state.InvSpaceMatrix.Transform(_transformSystem.GetWorldPosition(xform, state.XformQuery))))
-            state.List.Add(xform);
+            state.List.Add((uid, xform));
 
         return true;
     }
 
     private bool SpaceQueryCallback(
-        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
+        ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
         in FixtureProxy proxy)
     {
-        var owner = proxy.Fixture.Body.Owner;
-        return SpaceQueryCallback(ref state, in owner);
+        var uid = proxy.Entity;
+        return SpaceQueryCallback(ref state, in uid);
     }
 
     /// <summary>
@@ -375,53 +372,56 @@ public sealed partial class ExplosionSystem : EntitySystem
         DamageSpecifier? damage,
         float throwForce,
         string id,
-        EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
-        TransformComponent? xform = null)
+        TransformComponent? xform)
     {
         // damage
-        if (damage != null && damageQuery.TryGetComponent(uid, out var damageable))
+        if (damage != null && _damageQuery.TryGetComponent(uid, out var damageable))
         {
+            // TODO Explosion Performance
+            // Cache this? I.e., instead of raising an event, check for a component?
             var ev = new GetExplosionResistanceEvent(id);
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ref ev);
 
             ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
 
-            //todo need a way to track origin of explosion
-            if (ev.DamageCoefficient == 1)
+            // TODO explosion entity
+            // Move explosion data into the existing explosion visuals entity
+            // Give each explosion a unique name, include in admin logs.
+
+            // TODO Explosion Performance
+            // This creates a new dictionary. Maybe we should just re-use a private local damage specifier and update it.
+            // Though most entities shouldn't have explosion resistance, so maybe its fine.
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (ev.DamageCoefficient != 1)
+                damage *= ev.DamageCoefficient;
+
+            // Log damage to players. Damage is logged before dealing damage so that the position can be logged before
+            // the entity gets deleted.
+            if (_mindQuery.HasComponent(uid))
             {
-                // no damage-dict multiplication required.
-                _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
-                if (HasComp<MindComponent>(uid) || HasComp<ExplosiveComponent>(uid))
-                {
-                    var damageStr = string.Join(", ", damage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
-                    _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                        $"Explosion caused [{damageStr}] to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
-                }
+                _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
+                    $"Explosion caused [{damage.Total}] damage to {ToPrettyString(uid):target} at {xform?.Coordinates}");
             }
-            else
-            {
-                var appliedDamage = damage * ev.DamageCoefficient;
-                _damageableSystem.TryChangeDamage(uid, appliedDamage, ignoreResistances: true, damageable: damageable);
-                if (HasComp<MindComponent>(uid) || HasComp<ExplosiveComponent>(uid))
-                {
-                    var damageStr = string.Join(", ", appliedDamage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
-                    _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                        $"Explosion caused [{damageStr}] to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
-                }
-            }
+
+            _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
         }
 
         // throw
-        if (xform != null
+        if (xform != null // null implies anchored
             && !xform.Anchored
             && throwForce > 0
             && !EntityManager.IsQueuedForDeletion(uid)
-            && physicsQuery.TryGetComponent(uid, out var physics)
+            && _physicsQuery.TryGetComponent(uid, out var physics)
             && physics.BodyType == BodyType.Dynamic)
         {
-            // TODO purge throw helpers and pass in physics component
-            _throwingSystem.TryThrow(uid, xform.WorldPosition - epicenter.Position, throwForce);
+            var pos = _transformSystem.GetWorldPosition(xform);
+            _throwingSystem.TryThrow(
+                uid,
+                 pos - epicenter.Position,
+                physics,
+                xform,
+                _projectileQuery,
+                throwForce);
         }
 
         // TODO EXPLOSION puddle / flammable ignite?
@@ -453,10 +453,10 @@ public sealed partial class ExplosionSystem : EntitySystem
             effectiveIntensity -= type.TileBreakRerollReduction;
 
             // does this have a base-turf that we can break it down to?
-            if (tileDef.BaseTurfs.Count == 0)
+            if (string.IsNullOrEmpty(tileDef.BaseTurf))
                 break;
 
-            if (_tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef)
+            if (_tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef)
                 break;
 
             if (newDef.IsSpace && !canCreateVacuum)
@@ -550,6 +550,9 @@ sealed class Explosion
 
     // Variables used for enumerating over tiles, grids, etc
     private DamageSpecifier _currentDamage = default!;
+#if DEBUG
+    private DamageSpecifier? _expectedDamage;
+#endif
     private BroadphaseComponent _currentLookup = default!;
     private MapGridComponent? _currentGrid;
     private float _currentIntensity;
@@ -567,13 +570,13 @@ sealed class Explosion
     private readonly EntityQuery<TransformComponent> _xformQuery;
     private readonly EntityQuery<PhysicsComponent> _physicsQuery;
     private readonly EntityQuery<DamageableComponent> _damageQuery;
+    private readonly EntityQuery<ProjectileComponent> _projectileQuery;
+    private readonly EntityQuery<TagComponent> _tagQuery;
 
     /// <summary>
     ///     Total area that the explosion covers.
     /// </summary>
     public readonly int Area;
-
-    private readonly LookupFlags _flags = LookupFlags.None;
 
     /// <summary>
     ///     factor used to scale the tile break chances.
@@ -625,14 +628,11 @@ sealed class Explosion
         _canCreateVacuum = canCreateVacuum;
         _entMan = entMan;
 
-        // yeah this should be a cvar, but this is only temporary anyways
-        // see lookup todo
-        if (Area > 100)
-            _flags |= LookupFlags.Approximate;
-
         _xformQuery = entMan.GetEntityQuery<TransformComponent>();
         _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
         _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
+        _tagQuery = entMan.GetEntityQuery<TagComponent>();
+        _projectileQuery = entMan.GetEntityQuery<ProjectileComponent>();
 
         if (spaceData != null)
         {
@@ -672,6 +672,16 @@ sealed class Explosion
         while (CurrentIteration < _tileSetIntensity.Count)
         {
             _currentIntensity = _tileSetIntensity[CurrentIteration];
+
+            #if DEBUG
+            if (_expectedDamage != null)
+            {
+                // Check that explosion processing hasn't somehow accidentally mutated the damage set.
+                DebugTools.Assert(_expectedDamage.Equals(_currentDamage));
+                _expectedDamage = ExplosionType.DamagePerIntensity * _currentIntensity;
+            }
+            #endif
+
             _currentDamage = ExplosionType.DamagePerIntensity * _currentIntensity;
 
             // only throw if either the explosion is small, or if this is the outer ring of a large explosion.
@@ -769,11 +779,7 @@ sealed class Explosion
                     _currentDamage,
                     Epicenter,
                     ProcessedEntities,
-                    ExplosionType.ID,
-                    _xformQuery,
-                    _damageQuery,
-                    _physicsQuery,
-                    _flags);
+                    ExplosionType.ID);
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
@@ -790,11 +796,7 @@ sealed class Explosion
                     _currentDamage,
                     Epicenter,
                     ProcessedEntities,
-                    ExplosionType.ID,
-                    _xformQuery,
-                    _damageQuery,
-                    _physicsQuery,
-                    _flags);
+                    ExplosionType.ID);
             }
 
             if (!MoveNext())

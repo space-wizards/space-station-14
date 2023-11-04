@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Radiation.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -58,8 +59,10 @@ public sealed class RadiationDebugOverlay : Overlay
                 handle.DrawString(_font, screenCenter, ray.Rads.ToString("F2"), 2f, Color.White);
             }
 
-            foreach (var (gridUid, blockers) in ray.Blockers)
+            foreach (var (netGrid, blockers) in ray.Blockers)
             {
+                var gridUid = _entityManager.GetEntity(netGrid);
+
                 if (!_mapManager.TryGetGrid(gridUid, out var grid))
                     continue;
 
@@ -81,8 +84,10 @@ public sealed class RadiationDebugOverlay : Overlay
 
         var handle = args.ScreenHandle;
         var query = _entityManager.GetEntityQuery<TransformComponent>();
-        foreach (var (gridUid, resMap) in resistance)
+        foreach (var (netGrid, resMap) in resistance)
         {
+            var gridUid = _entityManager.GetEntity(netGrid);
+
             if (!_mapManager.TryGetGrid(gridUid, out var grid))
                 continue;
             if (query.TryGetComponent(gridUid, out var trs) && trs.MapID != args.MapId)
@@ -118,8 +123,10 @@ public sealed class RadiationDebugOverlay : Overlay
                 continue;
             }
 
-            foreach (var (gridUid, blockers) in ray.Blockers)
+            foreach (var (netGrid, blockers) in ray.Blockers)
             {
+                var gridUid = _entityManager.GetEntity(netGrid);
+
                 if (!_mapManager.TryGetGrid(gridUid, out var grid))
                     continue;
                 var (destTile, _) = blockers.Last();

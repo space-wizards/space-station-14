@@ -8,7 +8,6 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/mixer.rsi
-    netsync: false
     snapCardinals: true
     layers:
     - state: mixer_empty
@@ -24,14 +23,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.4,0.25,0.4"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -59,9 +59,10 @@
           True: { visible: true }
           False: { visible: false }
   # Machine / Construction stuff
+  - type: WiresPanel
   - type: Wires
-    BoardName: "chem_master"
-    LayoutId: chem_master
+    boardName: wires-board-name-chemmaster
+    layoutId: chem_master
   - type: Machine
     board: ChemMasterMachineCircuitboard
   - type: ContainerContainer
@@ -85,3 +86,10 @@
   - type: SolutionContainerManager
     solutions:
       buffer: {}
+  - type: DumpableSolution
+    solution: buffer
+    unlimited: true
+  - type: GuideHelp
+    guides:
+    - Chemicals
+    - Chemist

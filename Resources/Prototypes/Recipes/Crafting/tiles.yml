@@ -1,47 +1,58 @@
 # These should be lathe recipes but lathe code sucks so hard rn so they'll be crafted by hand.
 
 - type: construction
-  name: steel tile
+  name: стальная плитка
   id: TileSteel
   graph: TileSteel
   startNode: start
   targetNode: steeltile
   category: construction-category-tiles
-  description: "Four steel station tiles."
+  description: "Четыре стальных плитки"
   icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
   objectType: Item
 
 - type: construction
-  name: wood floor
+  name: деревянный пол
   id: TileWood
   graph: TileWood
   startNode: start
   targetNode: woodtile
   category: construction-category-tiles
-  description: "Four pieces of wooden station flooring."
+  description: "Четыре листа деревянного паркета"
   icon: { sprite: Objects/Tiles/tile.rsi, state: wood }
   objectType: Item
 
 - type: construction
-  name: white tile
+  name: светлая плитка
   id: TileWhite
   graph: TileWhite
   startNode: start
   targetNode: whitetile
   category: construction-category-tiles
-  description: "Four white station tiles."
+  description: "Четыре светлых плитки"
   icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
-  name: dark tile
+  name: тёмная плитка
   id: TileDark
   graph: TileDark
   startNode: start
   targetNode: darktile
   category: construction-category-tiles
-  description: "Four dark station tiles."
+  description: "Четыре тёмных плитки"
   icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
+  objectType: Item
+
+- type: construction
+  name: мясная плитка
+  id: TileFlesh
+  graph: TileFlesh
+  startNode: start
+  targetNode: fleshTile
+  category: construction-category-tiles
+  description: "Четыре мясных плитки"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: meat }
   objectType: Item
 
 # - type: construction
@@ -54,7 +65,7 @@
 #   description: "A piece of techmaint flooring."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: steel_techfloor_grid }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: freezer tile
 #   id: tileFreezer
@@ -65,7 +76,7 @@
 #   description: "A freezer station tile."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: showroom }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: showroom tile
 #   id: tileShowroom
@@ -76,7 +87,7 @@
 #   description: "A showroom station tile."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: showroom }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: green-circuit floor
 #   id: tileGCircuit
@@ -87,7 +98,7 @@
 #   description: "A piece of green-circuit flooring."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: gcircuit }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: gold floor
 #   id: tileGold
@@ -98,7 +109,7 @@
 #   description: "A piece of gold flooring."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: reinforced tile
 #   id: tileReinforced
@@ -109,7 +120,7 @@
 #   description: "A reinforced station tile."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: reinforced }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: mono tile
 #   id: tileMono
@@ -120,7 +131,7 @@
 #   description: "A mono station tile."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: white_monofloor }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: linoleum floor
 #   id: tileLino
@@ -131,7 +142,7 @@
 #   description: "A piece of linoleum flooring."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: white_monofloor }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: hydro tile
 #   id: tileHydro
@@ -142,7 +153,7 @@
 #   description: "A hydro station tile."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: hydro }
 #   objectType: Item
-#
+
 # - type: construction
 #   name: dirty tile
 #   id: tileDirty

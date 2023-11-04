@@ -26,19 +26,23 @@
   - type: SolutionContainerManager
     solutions:
       absorbed:
-        maxVol: 60
+        maxVol: 100
   - type: UseDelay
-    delay: 1.5
+    delay: 1
   - type: Tag
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
+      - MopBasic
+  - type: GuideHelp
+    guides:
+    - Janitorial
 
 - type: entity
   parent: BaseItem
   name: advanced mop
   id: AdvMopItem
-  description: Motorized mop that have a bigger reservoir and can mop multiple puddles at once. Automatic Clown Countermeasure no included.
+  description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -49,6 +53,11 @@
           Blunt: 10
     - type: Spillable
       solution: absorbed
+    - type: Wieldable
+    - type: IncreaseDamageOnWield
+      damage:
+        types:
+          Blunt: 5
     - type: Item
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -56,6 +65,17 @@
       pickupAmount: 100
     - type: UseDelay
       delay: 1.0
+    - type: SolutionRegeneration
+      solution: absorbed
+      generated:
+        reagents:
+          - ReagentId: Water
+            Quantity: 5
+    - type: SolutionPurge
+      solution: absorbed
+      preserve:
+        - Water
+      quantity: 10
     - type: SolutionContainerManager
       solutions:
         absorbed:
@@ -64,6 +84,7 @@
       tags:
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
         - Mop
+        - MopAdv
 
 - type: entity
   name: mop bucket
@@ -73,7 +94,6 @@
   - type: Clickable
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
-    netsync: false
     noRot: true
     layers:
     - state: mopbucket
@@ -87,6 +107,7 @@
       bucket:
         maxVol: 600
   - type: Spillable
+    solution: bucket
     spillDelay: 3.0
   - type: DrainableSolution
     solution: bucket
@@ -97,28 +118,61 @@
   - type: Tag
     tags:
       - Wringer
+  - type: ItemMapper
+    mapLayers:
+      mopbucket_shark_blue:
+        whitelist:
+          tags:
+            - PlushieSharkBlue
+      mopbucket_shark_pink:
+        whitelist:
+          tags:
+            - PlushieSharkPink
+      mopbucket_shark_grey:
+        whitelist:
+          tags:
+            - PlushieSharkGrey
+    sprite: Objects/Fun/sharkplush.rsi
   - type: Physics
     bodyType: Dynamic
   - type: Transform
     noRot: true
+  - type: ItemSlots
+    slots:
+      shark_slot:
+        name: Shark
+        whitelist:
+          tags:
+            - PlushieSharkBlue
+            - PlushieSharkPink
+            - PlushieSharkGrey
+        priority: 3 # Higher than drinking priority
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.40,0.25,0.25"
-      density: 60
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.40,0.25,0.25"
+        density: 60
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Pullable
   - type: Drink
-    isOpen: true
     solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: mopbucket_water-
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      shark_slot: !type:ContainerSlot {}
+  - type: GuideHelp
+    guides:
+    - Janitorial
 
 - type: entity
   name: mop bucket
@@ -130,7 +184,7 @@
       layers:
         - state: mopbucket
         - state: mopbucket_water-3
-          map: [ "enum.SolutionContainerLayers.Fill" ]
+          map: ["enum.SolutionContainerLayers.Fill"]
     - type: SolutionContainerManager
       solutions:
         bucket:
@@ -142,17 +196,70 @@
 - type: entity
   name: wet floor sign
   id: WetFloorSign
-  parent: BaseItem
+  parent: ClothingOuterBase
   description: Caution! Wet Floor!
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     size: 15
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
   - type: Tag
     tags:
+      - WetFloorSign
+      - WhitelistChameleon
+
+
+- type: entity
+  suffix: Explosive
+  parent: WetFloorSign
+  id: WetFloorSignMineExplosive
+  components:
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+          - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: LandMine
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 5 # about a ~67.5 total damage
+    totalIntensity: 60 # about a ~3 tile radius
+    canCreateVacuum: false
+  - type: DeleteOnTrigger
+  - type: OnUseTimerTrigger
+    useVerbInstead: true
+    beepInterval: .25
+    beepSound: /Audio/Items/Janitor/floor_sign_beep.ogg
+    params:
+      volume: 1
+    examinable: false
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
       - WetFloorSign
 
 - type: entity
@@ -162,7 +269,6 @@
   description: This is the alpha and omega of sanitation.
   components:
     - type: Sprite
-      netSync: false
       noRot: true
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
       layers:
@@ -172,14 +278,15 @@
           visible: false
     - type: Rotatable
     - type: InteractionOutline
-    - type: Storage
-      popup: false
-      capacity: 80
-      blacklist: # there is exclusive item slots for that
-        tags:
-          - Mop
-          - TrashBag
-          - Bucket
+    # Removing storage until OnInteractUsing logic resolved
+    #- type: Storage
+    #  popup: false
+    #  capacity: 80
+    #  blacklist: # there is exclusive item slots for that
+    #    tags:
+    #      - Mop
+    #      - TrashBag
+    #      - Bucket
     - type: ItemSlots
       slots:
         mop_slot:
@@ -204,15 +311,17 @@
           priority: 3 # Higher than drinking priority
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.3
-        density: 250
-        layer:
-        - MobLayer
-        mask:
-        - MobMask
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          density: 250
+          layer:
+          - MobLayer
+          mask:
+          - MobMask
     - type: Spillable
+      solution: bucket
       spillDelay: 3.0
     - type: SolutionContainerManager
       solutions:
@@ -225,6 +334,8 @@
       solution: bucket
     - type: RefillableSolution
       solution: bucket
+    - type: ExaminableSolution
+      solution: bucket
     - type: Tag
       tags:
         - Wringer
@@ -233,14 +344,12 @@
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
+        - trigger: !type:DamageTrigger
             damage: 400
           behaviors:
             - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
+              acts: ["Destruction"]
+        - trigger: !type:DamageTrigger
             damage: 200
           behaviors:
             - !type:EmptyAllContainersBehaviour
@@ -251,6 +360,30 @@
                 path: /Audio/Effects/metalbreak.ogg
     - type: ItemMapper
       mapLayers:
+        cart_plunger:
+          whitelist:
+            tags:
+              - Plunger
+        cart_mop:
+          whitelist:
+            tags:
+              - MopBasic
+        cart_advmop:
+          whitelist:
+            tags:
+              - MopAdv
+        cart_garbage:
+          whitelist:
+            tags:
+              - TrashBag
+        cart_replacer:
+          whitelist:
+            components:
+              - LightReplacer
+        cart_spray:
+          whitelist:
+            tags:
+              - Spray
         cart_sign1: # this is like stack of floor signs
           minCount: 1
           whitelist:
@@ -271,26 +404,10 @@
           whitelist:
             tags:
               - WetFloorSign
-        cart_spray:
-          whitelist:
-            tags:
-              - Spray
-        cart_garbage:
-          whitelist:
-            tags:
-              - TrashBag
-        cart_replacer:
-          whitelist:
-            components:
-              - LightReplacer
         cart_bucket:
           whitelist:
             tags:
               - Bucket
-        cart_mop:
-          whitelist:
-            tags:
-              - Mop
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: Appearance
     - type: SolutionContainerVisuals
@@ -298,10 +415,9 @@
       fillBaseName: cart_water-
     - type: UserInterface
       interfaces:
-      - key: enum.StorageUiKey.Key
-        type: StorageBoundUserInterface
+        - key: enum.StorageUiKey.Key
+          type: StorageBoundUserInterface
     - type: Drink
-      isOpen: true
       solution: bucket
     - type: ContainerContainer
       containers:
@@ -310,6 +426,11 @@
         mop_slot: !type:ContainerSlot {}
         trashbag_slot: !type:ContainerSlot {}
         bucket_slot: !type:ContainerSlot {}
+    - type: GuideHelp
+      guides:
+      - Janitorial
+    - type: TileFrictionModifier
+      modifier: 0.4 # makes it slide
 
 - type: entity
   id: FloorDrain
@@ -319,10 +440,13 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Objects/Specific/Janitorial/drain.rsi
-      state: icon
+      layers:
+      - state: icon
+      - map: [ "enum.SolutionContainerLayers.Fill" ]
+        state: fill-1
+        visible: false
     - type: InteractionOutline
     - type: Clickable
     - type: Transform
@@ -330,13 +454,20 @@
     - type: Physics
       bodyType: Static
       canCollide: false
-    - type: Drain
     - type: AmbientSound
       enabled: false
       volume: -8
       range: 8
       sound:
         path: /Audio/Ambience/Objects/drain.ogg
+    - type: Drain
+    - type: DumpableSolution
+      solution: drainBuffer
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      fillBaseName: fill-
+      solutionName: drainBuffer
     - type: SolutionContainerManager
       solutions:
         drainBuffer:
@@ -348,18 +479,81 @@
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
+        - trigger: !type:DamageTrigger
             damage: 200
           behaviors:
             - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
+              acts: ["Destruction"]
+        - trigger: !type:DamageTrigger
             damage: 100
           behaviors:
             - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+              acts: ["Destruction"]
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  name: plunger
+  id: Plunger
+  parent: BaseItem
+  description: A plunger with a red plastic suction-cup and a wooden handle. Used to unclog drains.
+  components:
+    - type: Tag
+      tags:
+        - Plunger
+        - WhitelistChameleon
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/plunger.rsi
+      state: plunger
+    - type: Item
+      sprite: Objects/Specific/Janitorial/plunger.rsi
+      heldPrefix: plunger
+    - type: ItemCooldown
+    - type: GuideHelp
+      guides:
+      - Janitorial
+    - type: Clothing
+      sprite: Objects/Specific/Janitorial/plunger.rsi
+      slots:
+        - HEAD
+      clothingVisuals:
+        head:
+          - state: equipped-HELMET
+            offset: "0, 0.15625"
+
+- type: entity
+  parent: BaseItem
+  name: damp rag
+  id: RagItem
+  description: For cleaning up messes, you suppose.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/rag.rsi
+      state: rag
+    - type: Spillable
+      solution: absorbed
+    - type: MeleeWeapon
+      soundNoDamage:
+        path: "/Audio/Effects/Fluids/splat.ogg"
+      damage:
+        types:
+          Blunt: 0
+    - type: Item
+      size: 10
+      sprite: Objects/Specific/Janitorial/rag.rsi
+    - type: Absorbent
+      pickupAmount: 15
+    - type: Construction
+      graph: Rag
+      node: rag
+    - type: SolutionContainerManager
+      solutions:
+        absorbed:
+          maxVol: 30
+    - type: UseDelay
+      delay: 1.5
+    - type: Tag
+      tags:
+        - DroneUsable
+        - Mop

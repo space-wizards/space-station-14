@@ -1,0 +1,21 @@
+<Document>
+# Ботаника
+
+Ботаника и химия часто могут работать вместе, чтобы производить лучшие лекарства (или развлекательные коктейли). Возможно, стоит дать им необходимые удобрения и попросить взамен немного лекарственных растений.
+
+<Box>
+<GuideEntityEmbed Entity="FoodGalaxythistle"/>
+<GuideEntityEmbed Entity="FoodLingzhi"/>
+<GuideEntityEmbed Entity="FoodAmbrosiaVulgaris"/>
+<GuideEntityEmbed Entity="FoodAloe"/>
+<GuideEntityEmbed Entity="Nettle"/>
+</Box>
+
+<GuideReagentEmbed Reagent="Ammonia"/>
+<GuideReagentEmbed Reagent="Diethylamine"/>
+<GuideReagentEmbed Reagent="EZNutrient"/>
+<GuideReagentEmbed Reagent="Left4Zed"/>
+<GuideReagentEmbed Reagent="RobustHarvest"/>
+<GuideReagentEmbed Reagent="UnstableMutagen"/>
+
+</Document>

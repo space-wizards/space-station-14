@@ -14,6 +14,21 @@
       "name": "dirty"
     },
     {
+      "name": "checker-light"
+    },
+    {
+      "name": "checker-dark"
+    },
+    {
+      "name": "concrete"
+    },
+    {
+      "name": "grayconcrete"
+    },
+    {
+      "name": "oldconcrete"
+    },
+    {
       "name": "gcircuit"
     },
     {
@@ -39,6 +54,17 @@
     },
     {
       "name": "lino"
+    },
+    {
+      "name": "meat"
+    },
+    {
+      "name": "meat-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "meat-inhand-left",
+      "directions": 4
     },
     {
       "name": "mime"

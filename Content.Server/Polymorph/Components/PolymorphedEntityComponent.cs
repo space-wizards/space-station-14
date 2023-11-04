@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Polymorph.Components
 {
     [RegisterComponent]
-    public sealed class PolymorphedEntityComponent : Component
+    public sealed partial class PolymorphedEntityComponent : Component
     {
         /// <summary>
         /// The polymorph prototype, used to track various information
@@ -25,5 +25,7 @@ namespace Content.Server.Polymorph.Components
         /// </summary>
         [DataField("time")]
         public float Time;
+
+        [DataField] public EntityUid? Action;
     }
 }

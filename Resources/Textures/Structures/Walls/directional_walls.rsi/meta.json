@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "mirton Discord mirton#4005",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "d_wall_frame",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_frame_corner",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_gold",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_gold_corner",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_plastic",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_plastic_corner",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_r_solid",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_r_solid_corner",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_silver",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_silver_corner",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_sold",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_solid_corner",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_uran",
+      "directions": 4
+    },
+    {
+      "name": "d_wall_uran_corner",
+      "directions": 4
+    }
+  ]
+}

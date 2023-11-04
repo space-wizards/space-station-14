@@ -4,7 +4,7 @@ namespace Content.Server.Gatherable.Components;
 
 [RegisterComponent]
 [Access(typeof(GatherableSystem))]
-public sealed class GatherableComponent : Component
+public sealed partial class GatherableComponent : Component
 {
     /// <summary>
     ///     Whitelist for specifying the kind of tools can be used on a resource

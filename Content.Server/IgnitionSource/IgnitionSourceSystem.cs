@@ -23,12 +23,18 @@ public sealed class IgnitionSourceSystem : EntitySystem
 
     private void OnIsHot(EntityUid uid, IgnitionSourceComponent component, IsHotEvent args)
     {
-        SetIgnited(uid,component,args.IsHot);
+        SetIgnited(uid, args.IsHot, component);
     }
 
-    private void SetIgnited(EntityUid uid, IgnitionSourceComponent component, bool newState)
+    /// <summary>
+    /// Simply sets the ignited field to the ignited param.
+    /// </summary>
+    public void SetIgnited(EntityUid uid, bool ignited = true, IgnitionSourceComponent? comp = null)
     {
-        component.Ignited = newState;
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.Ignited = ignited;
     }
 
     public override void Update(float frameTime)

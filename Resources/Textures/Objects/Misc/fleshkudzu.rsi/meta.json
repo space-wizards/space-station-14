@@ -1,14 +1,38 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage404 (github) for space-station-14",
+  "copyright": "Created by EmoGarbage404 & tom-leys (github) for space-station-14",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "base"
-    }
+      {
+          "name": "kudzu_33"
+      },
+      {
+          "name": "kudzu_32"
+      },
+      {
+          "name": "kudzu_31"
+      },
+      {
+          "name": "kudzu_23"
+      },
+      {
+          "name": "kudzu_22"
+      },
+      {
+          "name": "kudzu_21"
+      },
+      {
+          "name": "kudzu_13"
+      },
+      {
+          "name": "kudzu_12"
+      },
+      {
+          "name": "kudzu_11"
+      }
   ]
 }

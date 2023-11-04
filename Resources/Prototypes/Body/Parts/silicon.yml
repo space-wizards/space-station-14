@@ -1,9 +1,12 @@
 - type: entity
   id: PartSilicon
   parent: BaseItem
-  name: "silicon body part"
   abstract: true
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+  - type: Icon
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
   - type: Damageable
     damageContainer: Inorganic
   - type: BodyPart
@@ -21,17 +24,11 @@
       Steel: 25
 
 - type: entity
-  id: LeftArmBorg
-  name: "left borg arm"
+  id: BaseBorgArmLeft
   parent: PartSilicon
+  name: left cyborg arm
+  abstract: true
   components:
-  - type: Sprite
-    netsync: false
-    sprite: Mobs/Silicon/drone.rsi
-    state: "l_hand"
-  - type: Icon
-    sprite: Mobs/Silicon/drone.rsi
-    state: "l_hand"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -41,17 +38,11 @@
     - BorgArm
 
 - type: entity
-  id: RightArmBorg
-  name: "right borg arm"
+  id: BaseBorgArmRight
   parent: PartSilicon
+  name: right cyborg arm
+  abstract: true
   components:
-  - type: Sprite
-    netsync: false
-    sprite: Mobs/Silicon/drone.rsi
-    state: "r_hand"
-  - type: Icon
-    sprite: Mobs/Silicon/drone.rsi
-    state: "r_hand"
   - type: BodyPart
     partType: Hand
     symmetry: Right
@@ -59,3 +50,56 @@
     tags:
     - Trash
     - BorgArm
+
+- type: entity
+  id: BaseBorgLegLeft
+  parent: PartSilicon
+  name: left cyborg leg
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Leg
+    symmetry: Left
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+
+- type: entity
+  id: BaseBorgLegRight
+  parent: PartSilicon
+  name: right cyborg leg
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+
+- type: entity
+  id: BaseBorgHead
+  parent: PartSilicon
+  name: cyborg head
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Head
+  - type: Tag
+    tags:
+    - Trash
+    - BorgHead
+
+- type: entity
+  id: BaseBorgTorso
+  parent: PartSilicon
+  name: cyborg torso
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Torso
+  - type: Tag
+    tags:
+    - Trash

@@ -1,0 +1,10 @@
+﻿- type: entity
+  id: CrateCrewMonitoringBoards
+  parent: CrateEngineeringSecure
+  components:
+    - type: StorageFill
+      contents:
+        - id: CrewMonitoringComputerCircuitboard
+          amount: 2
+        - id: CrewMonitoringServerMachineCircuitboard
+          amount: 2

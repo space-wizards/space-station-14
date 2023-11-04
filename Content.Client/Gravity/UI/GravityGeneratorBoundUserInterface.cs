@@ -1,16 +1,16 @@
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Gravity.UI
 {
     [UsedImplicitly]
     public sealed class GravityGeneratorBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private GravityGeneratorWindow? _window;
 
-        public GravityGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base (owner, uiKey)
+        public GravityGeneratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Content.Client.Gravity.UI
         {
             base.Open();
 
-            _window = new GravityGeneratorWindow(this, Owner);
+            _window = new GravityGeneratorWindow(this);
 
             /*
             _window.Switch.OnPressed += _ =>

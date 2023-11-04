@@ -64,6 +64,8 @@
   - tilelookup
   - net_entityreport
   - scene
+  - replay_recording_stats
+  - print_pvs_ack
 
 
 - Flags: MAPPING
@@ -120,7 +122,15 @@
   - gcf
   - getcomponentregistration
   - fuck
+  - replay_recording_start
+  - replay_recording_stop
 
 - Flags: QUERY
   Commands:
-  - forall
+  - uploadfile
+  - loadprototype
+  - uploadfolder
+
+- Commands:
+  - "|"
+  - oldhelp

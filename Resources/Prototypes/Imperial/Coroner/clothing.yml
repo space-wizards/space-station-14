@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCoroner
+  name: coroner jumpsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/coroner.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/coroner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtCoroner
+  name: jumpskirt le coroner
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/coroner.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/coroner.rsi

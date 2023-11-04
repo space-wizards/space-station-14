@@ -7,6 +7,15 @@
       - id: VendingMachineRestockBooze
 
 - type: entity
+  id: CrateVendingMachineRestockChefvendFilled
+  name: ChefVend restock crate
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockChefvend
+
+- type: entity
   id: CrateVendingMachineRestockClothesFilled
   parent: CratePlastic
   components:
@@ -14,6 +23,15 @@
     contents:
       - id: VendingMachineRestockClothes
       - id: VendingMachineRestockCostumes
+
+- type: entity
+  id: CrateVendingMachineRestockCondimentStationFilled
+  name: Condiment Station restock crate
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockCondimentStation
 
 - type: entity
   id: CrateVendingMachineRestockDinnerwareFilled
@@ -55,6 +73,14 @@
   - type: StorageFill
     contents:
       - id: VendingMachineRestockMedical
+
+- type: entity
+  id: CrateVendingMachineRestockChemVendFilled
+  parent: CrateMedicalSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockChemVend
 
 - type: entity
   id: CrateVendingMachineRestockNutriMaxFilled
@@ -115,17 +141,6 @@
         amount: 2
 
 - type: entity
-  id: CrateVendingMachineRestockSnacksFilled
-  parent: CratePlastic
-  components:
-  - type: StorageFill
-    contents:
-      - id: VendingMachineRestockChang
-      - id: VendingMachineRestockDiscountDans
-      - id: VendingMachineRestockDonut
-      - id: VendingMachineRestockGetmoreChocolateCorp
-
-- type: entity
   id: CrateVendingMachineRestockVendomatFilled
   parent: CratePlastic
   components:
@@ -156,4 +171,40 @@
   - type: StorageFill
     contents:
       - id: VendingMachineRestockHappyHonk
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockGetmoreChocolateCorpFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockGetmoreChocolateCorp
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockChangFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockChang
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockDiscountDansFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockDiscountDans
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockDonutFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockDonut
         amount: 2

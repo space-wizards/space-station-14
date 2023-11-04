@@ -1,4 +1,5 @@
-﻿using Content.Client.Actions.UI;
+﻿using System.Numerics;
+using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
@@ -10,10 +11,6 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
 {
     public sealed class AlertControl : BaseButton
     {
-        // shorter than default tooltip delay so user can more easily
-        // see what alerts they have
-        private const float CustomTooltipDelay = 0.5f;
-
         public AlertPrototype Alert { get; }
 
         /// <summary>
@@ -47,14 +44,13 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         public AlertControl(AlertPrototype alert, short? severity)
         {
             _gameTiming = IoCManager.Resolve<IGameTiming>();
-            TooltipDelay = CustomTooltipDelay;
             TooltipSupplier = SupplyTooltip;
             Alert = alert;
             _severity = severity;
             var specifier = alert.GetIcon(_severity);
             _icon = new AnimatedTextureRect
             {
-                DisplayRect = {TextureScale = (2, 2)}
+                DisplayRect = {TextureScale = new Vector2(2, 2)}
             };
 
             _icon.SetFromSpriteSpecifier(specifier);

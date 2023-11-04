@@ -12,8 +12,10 @@
     PestSpray: 20
     Syringe: 5
     RobustHarvestChemistryBottle: 3
+    EZNutrientChemistryBottle: 3
     Bucket: 3
     DiseaseSwab: 20
     #TO DO:
     #plant analyzer
-
+  emaggedInventory:
+    Left4ZedChemistryBottle: 1

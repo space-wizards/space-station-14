@@ -7,7 +7,6 @@
   components:
   - type: VendingMachineRestock
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     layers:
     - state: base
@@ -80,6 +79,38 @@
 
 - type: entity
   parent: BaseVendingMachineRestock
+  id: VendingMachineRestockChefvend
+  name: ChefVend restock box
+  description: Refill the ChefVend. Just don't break any more of the eggs.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - ChefvendInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_chef
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockCondimentStation
+  name: Condiment Station restock box
+  description: Refill the Condiment Station. Mmmm, cold sauce.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - CondimentInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_condiment
+
+- type: entity
+  parent: BaseVendingMachineRestock
   id: VendingMachineRestockClothes
   name: wardrobe restock box
   description: It's time to step up your fashion! Place inside any clothes vendor restock slot to begin.
@@ -103,6 +134,8 @@
     - SciDrobeInventory
     - SecDrobeInventory
     - ViroDrobeInventory
+    - WinterDrobeInventory
+    - CuraDrobeInventory
   - type: Sprite
     layers:
     - state: base
@@ -291,7 +324,7 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockRobustSoftdrinks
-  name: Robust Softdrinks box
+  name: beverage restock box
   description: A cold, clunky container of colliding chilly cylinders. Use only as directed by Robust Industries, LLC.
   components:
   - type: VendingMachineRestock
@@ -303,6 +336,7 @@
     - StarkistInventory
     - SpaceUpInventory
     - SodaInventory
+    - DrGibbInventory
   - type: Sprite
     layers:
     - state: base
@@ -438,3 +472,19 @@
     - state: green_bit
       shader: unshaded
     - state: refill_honk
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockChemVend
+  name: ChemVend restock box
+  description: A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a ChemVend to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - ChemVendInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_medical

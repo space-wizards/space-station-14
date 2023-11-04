@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Construction.Prototypes;
-using NUnit.Framework;
 using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
@@ -20,14 +18,16 @@ public sealed class GrilleWindowConstruction : InteractionTest
         // Construct Grille
         await StartConstruction(Grille);
         await Interact(Rod, 10);
-        AssertPrototype(Grille);
+        ClientAssertPrototype(Grille, ClientTarget);
 
+        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
         var grille = Target;
 
         // Construct Window
         await StartConstruction(Window);
         await Interact(Glass, 10);
-        AssertPrototype(Window);
+        ClientAssertPrototype(Window, ClientTarget);
+        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
 
         // Deconstruct Window
         await Interact(Screw, Wrench);
@@ -52,7 +52,7 @@ public sealed class GrilleWindowConstruction : InteractionTest
         await Client.WaitPost(() =>
         {
             var proto = ProtoMan.Index<ConstructionPrototype>(second);
-            Assert.That(CConSys.TrySpawnGhost(proto, TargetCoords, Direction.South, out _), Is.False);
+            Assert.That(CConSys.TrySpawnGhost(proto, CEntMan.GetCoordinates(TargetCoords), Direction.South, out _), Is.False);
         });
     }
 }

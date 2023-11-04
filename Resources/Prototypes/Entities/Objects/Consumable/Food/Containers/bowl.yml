@@ -13,7 +13,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl
-    netsync: false
   - type: DamageOnLand
     damage:
       types:
@@ -22,19 +21,12 @@
     damage:
       types:
         Blunt: 5
-  - type: Drink
-    solution: food
-    isOpen: true
-  - type: DrawableSolution
-    solution: food
-  - type: Damageable
-    damageContainer: Inorganic
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
-      - key: enum.TransferAmountUiKey.Key
-        type: TransferAmountBoundUserInterface
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Destructible
     thresholds:
     - trigger:
@@ -65,7 +57,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl-trash
-    netsync: false
   - type: Tag
     tags:
     - Trash

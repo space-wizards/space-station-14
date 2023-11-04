@@ -1,0 +1,208 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieCapitan
+  name: August von Stierletz
+  description: Capitan.
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_capitan
+  - type: StaticPrice
+    price: 299
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieChemist
+  name: Sarah Morningstar
+  description: The most furious follower of the great god Kum'Ar. So furious that even the toy seems to be saturated with drugs... NanoTrasen, seriously?
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_chemist
+  - type: StaticPrice
+    price: 299
+  - type: Storage
+    capacity: 5
+  - type: UserInterface
+    interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+#Armenian Stuff. No Thrivenin here!
+- type: entity
+  parent: PlushieChemist
+  id: PlushieChemistGift
+  suffix: COMMUNITY,TOY,GIFT
+  components:
+  - type: StorageFill
+    contents:
+      - id: ArmenianStuff
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieCP #Chief Medical Officer
+  name: Ekaterina Nazintseva
+  description: The only chief medical officer who finds Trayvovin useful. Will teach the ENTIRE station to create the perfect medical base.
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_CP
+  - type: StaticPrice
+    price: 299
+  - type: Storage
+    capacity: 5
+  - type: UserInterface
+    interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+#THE BEST MEDICAL BASE!!!!
+- type: entity
+  parent: PlushieCP
+  id: PlushieCPGift
+  suffix: COMMUNITY,TOY,GIFT
+  components:
+  - type: StorageFill
+    contents:
+      - id: PillThrivevin
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieEngineer
+  name: Kevin Ackerley
+  description: He believed that he could build a shuttle in 20 minutes, and whoever does not do this has no right to be called an “engineer.” He disappeared into obscurity in space after an unexpected depressurization of a weakly welded body of his own design.
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_engineer
+  - type: StaticPrice
+    price: 299
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieGSB  #Head of Security
+  name: Linda Astereich
+  description: The best representative of the Kesis race, who does not stand out in any way from the rest of the NT employees. Literally. Even this toy seems... not special to you.
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_GSB
+  - type: StaticPrice
+    price: 299
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieParamedic
+  name: Egor Paletov
+  description: #none
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_paramedic
+  - type: StaticPrice
+    price: 299
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePCC #Central Command Representative
+  name: Arvely Snegov
+  description:
+  suffix: COMMUNITY,TOY
+  components: #None/ Soon
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_PCC
+  - type: StaticPrice
+    price: 299
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieScientist
+  name: Madeline Rogers
+  description: #None
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_scientist
+  - type: StaticPrice
+    price: 299
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieSurgeon
+  name: Molly Matthews
+  description: #None
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_surgeon
+  - type: StaticPrice
+    price: 299
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBartender
+  name: Keturah Mur'r
+  description: She will always pour you a drink, even if you are a zombie. Just follow the unbreakable rule - no brawls in her bar!
+  suffix: COMMUNITY,TOY
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_bartender
+  - type: StaticPrice
+    price: 3000
+
+#Bartender with a flask
+- type: entity
+  parent: PlushieBartender
+  id: PlushieBartenderGift
+  suffix: COMMUNITY,TOY,GIFT
+  components:
+  - type: Sprite
+    sprite: Imperial/Toughguys
+    state: plushie_bartender_full
+  - type: Drink
+    isOpen: True
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: DoctorsDelight
+          Quantity: 20
+        - ReagentId: Tea
+          Quantity: 4
+        - ReagentId: Cream
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 2
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+      Steel: 50

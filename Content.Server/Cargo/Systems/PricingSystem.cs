@@ -2,9 +2,9 @@
 using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
@@ -51,7 +51,7 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var gid in args)
         {
-            if (!EntityUid.TryParse(gid, out var gridId) || !gridId.IsValid())
+            if (!EntityManager.TryParseNetEntity(gid, out var gridId) || !gridId.Value.IsValid())
             {
                 shell.WriteError($"Invalid grid ID \"{gid}\".");
                 continue;
@@ -73,11 +73,11 @@ public sealed class PricingSystem : EntitySystem
                     mostValuable.Pop();
             });
 
-            shell.WriteLine($"Grid {gid} appraised to {value} spacebucks.");
+            shell.WriteLine($"Grid {gid} appraised to {value} spesos.");
             shell.WriteLine($"The top most valuable items were:");
             foreach (var (price, ent) in mostValuable)
             {
-                shell.WriteLine($"- {ToPrettyString(ent)} @ {price} spacebucks");
+                shell.WriteLine($"- {ToPrettyString(ent)} @ {price} spesos");
             }
         }
     }
@@ -90,12 +90,13 @@ public sealed class PricingSystem : EntitySystem
 
         if (!TryComp<BodyComponent>(uid, out var body) || !TryComp<MobStateComponent>(uid, out var state))
         {
-            Logger.ErrorS("pricing", $"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
+            Log.Error($"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
             return;
         }
 
-        var partList = _bodySystem.GetBodyAllSlots(uid, body).ToList();
-        var totalPartsPresent = partList.Sum(x => x.Child != null ? 1 : 0);
+        // TODO: Better handling of missing.
+        var partList = _bodySystem.GetBodyChildren(uid, body).ToList();
+        var totalPartsPresent = partList.Sum(_ => 1);
         var totalParts = partList.Count;
 
         var partRatio = totalPartsPresent / (double) totalParts;
@@ -110,21 +111,23 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var solution in component.Solutions.Values)
         {
-            foreach (var reagent in solution.Contents)
+            foreach (var (reagent, quantity) in solution.Contents)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
                     continue;
-                price += (float) reagent.Quantity * reagentProto.PricePerUnit;
+
+                // TODO check ReagentData for price information?
+                price += (float) quantity * reagentProto.PricePerUnit;
             }
         }
 
         return price;
     }
 
-    private double GetMaterialPrice(MaterialComponent component)
+    private double GetMaterialPrice(PhysicalCompositionComponent component)
     {
         double price = 0;
-        foreach (var (id, quantity) in component.Materials)
+        foreach (var (id, quantity) in component.MaterialComposition)
         {
             price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
         }
@@ -213,9 +216,10 @@ public sealed class PricingSystem : EntitySystem
     {
         double price = 0;
 
-        if (TryComp<MaterialComponent>(uid, out var material))
+        if (HasComp<MaterialComponent>(uid) &&
+            TryComp<PhysicalCompositionComponent>(uid, out var composition))
         {
-            var matPrice = GetMaterialPrice(material);
+            var matPrice = GetMaterialPrice(composition);
             if (TryComp<StackComponent>(uid, out var stack))
                 matPrice *= stack.Count;
 
@@ -229,10 +233,11 @@ public sealed class PricingSystem : EntitySystem
     {
         double price = 0;
 
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(MaterialComponent)), out var materials))
+        if (prototype.Components.ContainsKey(_factory.GetComponentName(typeof(MaterialComponent))) &&
+            prototype.Components.TryGetValue(_factory.GetComponentName(typeof(PhysicalCompositionComponent)), out var composition))
         {
-            var materialsComp = (MaterialComponent) materials.Component;
-            var matPrice = GetMaterialPrice(materialsComp);
+            var compositionComp = (PhysicalCompositionComponent) composition.Component;
+            var matPrice = GetMaterialPrice(compositionComp);
 
             if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out var stackProto))
             {

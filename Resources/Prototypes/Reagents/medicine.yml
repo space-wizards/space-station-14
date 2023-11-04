@@ -5,6 +5,7 @@
   desc: reagent-desc-cryptobiolin
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
+  pricePerUnit: 1 #imperial
   color: "#081a80"
   metabolisms:
     Medicine:
@@ -25,6 +26,7 @@
   desc: reagent-desc-dylovene
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
+  pricePerUnit: 1.6 #imperial chemistryRework
   color: "#3a1d8a"
   metabolisms:
     Medicine:
@@ -36,18 +38,18 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
         damage:
           types:
-            Brute: 0.5
+            Brute: 2
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
         type: Local
         visualType: Medium
         messages: [ "generic-reagent-effect-nauseous" ]
@@ -55,7 +57,7 @@
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
         probability: 0.02
     Alcohol:
       effects:
@@ -87,6 +89,10 @@
         key: Jitter
         time: 3.0
         type: Remove
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -3
 
 - type: reagent
   id: Ethylredoxrazine
@@ -96,6 +102,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#2d5708"
+  pricePerUnit: 1 #imperial
   metabolisms:
     Medicine:
       effects:
@@ -103,6 +110,10 @@
         key: Drunk
         time: 2.0
         type: Remove
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.5
 
 - type: reagent
   id: Arithrazine
@@ -111,6 +122,7 @@
   desc: reagent-desc-arithrazine
   physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
+  pricePerUnit: 1 #imperial
   color: "#bd5902"
   metabolisms:
     Medicine:
@@ -129,6 +141,7 @@
   desc: reagent-desc-bicaridine
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
+  pricePerUnit: 1.8 #imperial chemistryRework
   color: "#ffaa00"
   metabolisms:
     Medicine:
@@ -140,15 +153,20 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 15
         damage:
           types:
-            Asphyxiation: 1
-            Poison: 0.5
-      - !type:Jitter
+            Asphyxiation: 0.5
+            Poison: 1.5
+      - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
           min: 30
+        probability: 0.02
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
     Alcohol:
       effects:
       - !type:Drunk
@@ -160,6 +178,7 @@
   desc: reagent-desc-cryoxadone
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
+  pricePerUnit: 1.2 #imperial
   color: "#0091ff"
   plantMetabolism:
   - !type:PlantAdjustToxins
@@ -184,12 +203,33 @@
               Toxin: -4
 
 - type: reagent
+  id: Doxarubixadone
+  name: reagent-name-doxarubixadone
+  group: Medicine
+  desc: reagent-desc-doxarubixadone
+  physicalDesc: reagent-physical-desc-bubbling
+  flavor: medicine
+  pricePerUnit: 2 #imperial
+  color: "#32cd32"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 150.0
+          damage:
+            types:
+             Cellular: -2
+
+- type: reagent 
   id: Dermaline
   name: reagent-name-dermaline
   group: Medicine
   desc: reagent-desc-dermaline
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
+  pricePerUnit: 1 #imperial
   color: "#215263"
   metabolisms:
     Medicine:
@@ -197,22 +237,23 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -1
-            Shock: -1
-            Cold: -1
+            Heat: -1.25 #imperial chemistryRework start #-1.5
+            Shock: -1.25 #-1.5
+            Cold: -1.25 #-1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 12 #imperial chemistryRework #10
         damage:
           types:
-            Asphyxiation: 1
+            Asphyxiation: 1.25 #imperial chemistryRework #1
+            Cold: 2
         groups:
             Brute: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 12 #imperial chemistryRework $10
 
 - type: reagent
   id: Dexalin
@@ -221,6 +262,7 @@
   desc: reagent-desc-dexalin
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
+  pricePerUnit: 0.6 #imperial
   color: "#0041a8"
   metabolisms:
     Medicine:
@@ -230,6 +272,14 @@
           types:
             Asphyxiation: -1
             Bloodloss: -0.5
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 20
+        damage:
+          types:
+            Asphyxiation: 3
+            Cold: 1
 
 - type: reagent
   id: DexalinPlus
@@ -238,6 +288,7 @@
   desc: reagent-desc-dexalin-plus
   physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
+  pricePerUnit: 1 #imperial
   color: "#4da0bd"
   metabolisms:
     Medicine:
@@ -254,6 +305,14 @@
           min: 1
         reagent: Lexorin
         amount: -3
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 25
+        damage:
+          types:
+            Asphyxiation: 5
+            Cold: 3
 
 # this ones a doozy
 - type: reagent
@@ -264,6 +323,7 @@
   physicalDesc: reagent-physical-desc-odorless
   flavor: medicine
   color: "#d2fffa"
+  pricePerUnit: 2.5 #imperial
   metabolisms:
     Medicine:
       effects:
@@ -324,6 +384,7 @@
   desc: reagent-desc-hyronalin
   physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
+  pricePerUnit: 0.6 #imperial
   color: "#4cb580"
   metabolisms:
     Medicine:
@@ -340,11 +401,18 @@
           min: 30
         damage:
           types:
-           Heat: 0.5
+           Heat: 2
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
           min: 30
+      - !type:HealthChange #imperial chemistryRework start
+        conditions:
+        - !type:Temperature
+          max: 157.0
+        damage:
+          types: 
+            Poison: -3.25 #imperial chemistryRework end
 
 - type: reagent
   id: Ipecac
@@ -368,14 +436,15 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
   color: "#731024"
+  pricePerUnit: 1 #imperial
   metabolisms:
     Medicine:
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
           # they gotta be in crit first
-          min: 100
+        - !type:MobStateCondition
+          mobstate: Critical
         damage:
           types:
             Asphyxiation: -5
@@ -387,6 +456,7 @@
   name: reagent-name-kelotane
   group: Medicine
   desc: reagent-desc-kelotane
+  pricePerUnit: 0.6 #imperial
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: medicine
   color: "#bf3d19"
@@ -399,6 +469,28 @@
             Heat: -0.33
             Shock: -0.33
             Cold: -0.33
+      - !type:SatiateThirst
+        factor: -10
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-nauseous
+        - generic-reagent-effect-thirsty
+        - generic-reagent-effect-parched
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
+      - !type:HealthChange #imperial chemistryRework start
+        conditions:
+        - !type:Temperature
+          max: 162.0
+        damage:
+          groups:
+            Burn: -3.75 #imperial chemistryRework end
 
 - type: reagent
   id: Leporazine
@@ -407,6 +499,7 @@
   desc: reagent-desc-leporazine
   physicalDesc: reagent-physical-desc-pungent
   flavor: medicine
+  pricePerUnit: 1 #imperial
   color: "#ff7db5"
   metabolisms:
     Medicine:
@@ -435,6 +528,7 @@
   id: Barozine
   name: reagent-name-barozine
   group: Medicine
+  pricePerUnit: 0.5 #imperial
   desc: reagent-desc-barozine
   physicalDesc: reagent-physical-desc-viscous
   flavor: medicine
@@ -482,7 +576,15 @@
   desc: reagent-desc-phalanximine
   physicalDesc: reagent-physical-desc-acrid
   flavor: medicine
+  pricePerUnit: 2 #imperial
   color: "#c8ff75"
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 6
+    - !type:PlantPhalanximine
+      conditions:
+      - !type:ReagentThreshold
+        min: 4
   metabolisms:
     Medicine:
       effects:
@@ -495,25 +597,45 @@
         probability: 0.05
 
 - type: reagent
-  id: Romerol
-  name: reagent-name-romerol
+  id: Ambuzol
+  name: reagent-name-ambuzol
   group: Medicine
-  desc: reagent-desc-romerol
-  physicalDesc: reagent-physical-desc-acrid
+  desc: reagent-desc-ambuzol
+  pricePerUnit: 10 #imperial
+  physicalDesc: reagent-physical-desc-crisp
   flavor: medicine
-  color: "#7e916e"
+  color: "#86caf7"
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 0.5
+        - !type:CureZombieInfection
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
+
+- type: reagent
+  id: AmbuzolPlus
+  name: reagent-name-ambuzol-plus
+  group: Medicine
+  desc: reagent-desc-ambuzol-plus
+  pricePerUnit: 20 #imperial
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: medicine
+  color: "#1274b5"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:CureZombieInfection
+          innoculate: true
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
 
 - type: reagent
   id: PulpedBananaPeel
   name: reagent-name-pulped-banana-peel
   group: Medicine
+  pricePerUnit: 0.3 #imperial
   desc: reagent-desc-pulped-banana-peel
   physicalDesc: reagent-physical-desc-pulpy
   flavor: medicine
@@ -525,9 +647,27 @@
         amount: -0.5
 
 - type: reagent
+  id: Saline
+  pricePerUnit: 0.3 #imperial
+  name: reagent-name-saline
+  group: Medicine
+  desc: reagent-desc-saline
+  physicalDesc: reagent-physical-desc-salty
+  flavor: salty
+  color: "#0064C8"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 6
+        - !type:ModifyBloodLevel
+          amount: 6
+
+- type: reagent
   id: Siderlac
   name: reagent-name-siderlac
   group: Medicine
+  pricePerUnit: 2 #imperial
   desc: reagent-desc-siderlac
   physicalDesc: reagent-physical-desc-milky
   flavor: medicine
@@ -544,6 +684,7 @@
   id: Spaceacillin
   name: reagent-name-spaceacillin
   group: Medicine
+  pricePerUnit: 1.1 #imperial
   desc: reagent-desc-spaceacillin
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
@@ -551,7 +692,6 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ChemCureDisease
       - !type:HealthChange
         damage:
           types:
@@ -564,6 +704,7 @@
   desc: reagent-desc-stellibinin
   physicalDesc: reagent-physical-desc-starry
   flavor: medicine
+  pricePerUnit: 2 #imperial
   color: "#2b2f77"
   metabolisms:
     Medicine:
@@ -584,6 +725,7 @@
   id: Synaptizine
   name: reagent-name-synaptizine
   group: Medicine
+  pricePerUnit: 1 #imperial
   desc: reagent-desc-synaptizine
   physicalDesc: reagent-physical-desc-pungent
   flavor: medicine
@@ -610,6 +752,7 @@
 
 - type: reagent
   id: TranexamicAcid
+  pricePerUnit: 1.5 #imperial
   name: reagent-name-tranexamic-acid
   group: Medicine
   desc: reagent-desc-tranexamic-acid
@@ -633,6 +776,7 @@
 
 - type: reagent
   id: Tricordrazine
+  pricePerUnit: 1 #imperial
   name: reagent-name-tricordrazine
   group: Medicine
   desc: reagent-desc-tricordrazine
@@ -657,6 +801,7 @@
 
 - type: reagent
   id: Lipozine
+  pricePerUnit: 1 #imperial
   name: reagent-name-lipozine
   group: Medicine
   desc: reagent-desc-lipozine
@@ -673,6 +818,7 @@
   # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
+  pricePerUnit: 50 #imperial
   name: reagent-name-omnizine
   group: Medicine
   desc: reagent-desc-omnizine
@@ -692,6 +838,7 @@
 
 - type: reagent
   id: Ultravasculine
+  pricePerUnit: 2 #imperial
   name: reagent-name-ultravasculine
   group: Medicine
   desc: reagent-desc-ultravasculine
@@ -735,6 +882,7 @@
 
 - type: reagent
   id: Oculine
+  pricePerUnit: 2.5 #imperial
   name: reagent-name-oculine
   desc: reagent-desc-oculine
   group: Medicine
@@ -748,6 +896,7 @@
 
 - type: reagent
   id: Cognizine
+  pricePerUnit: 7.5 #imperial
   name: reagent-name-cognizine
   desc: reagent-desc-cognizine
   group: Medicine
@@ -764,6 +913,7 @@
 
 - type: reagent
   id: Ethyloxyephedrine
+  pricePerUnit: 3 #imperial
   name: reagent-name-ethyloxyephedrine
   desc: reagent-desc-ethyloxyephedrine
   group: Medicine
@@ -789,6 +939,7 @@
 
 - type: reagent
   id: Diphenylmethylamine
+  pricePerUnit: 10 #imperial
   name: reagent-name-diphenylmethylamine
   desc: reagent-desc-diphenylmethylamine
   group: Medicine
@@ -807,7 +958,7 @@
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
         probability: 0.1
-        
+
 - type: reagent
   id: Sigynate
   name: reagent-name-sigynate
@@ -815,6 +966,7 @@
   desc: reagent-desc-sigynate
   physicalDesc: reagent-physical-desc-thick
   flavor: sweet
+  pricePerUnit: 5 #imperial
   color: "#e0a5b9"
   metabolisms:
     Medicine:

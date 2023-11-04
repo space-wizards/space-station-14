@@ -80,6 +80,26 @@
               amount: 1
               doAfter: 1
 
+        #Imperial start
+        - to: TableUraniumGlass
+          steps:
+            - material: UraniumGlass
+              amount: 1
+              doAfter: 1
+
+        - to: TableRUraniumGlass
+          steps:
+            - material: ReinforcedUraniumGlass
+              amount: 1
+              doAfter: 1
+
+        - to: TableRPlasmaGlass
+          steps:
+            - material: ReinforcedPlasmaGlass
+              amount: 1
+              doAfter: 1
+        #Imperial end
+
 
     - node: CounterWoodFrame
       entity: CounterWoodFrame
@@ -229,3 +249,41 @@
           steps:
             - tool: Prying
               doAfter: 1
+
+    #Imperial start
+    - node: TableUraniumGlass
+      entity: TableUraniumGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TableRUraniumGlass
+      entity: TableReinforcedUraniumGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRUGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TableRPlasmaGlass
+      entity: TableReinforcedPlasmaGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRPGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    #Imperial end

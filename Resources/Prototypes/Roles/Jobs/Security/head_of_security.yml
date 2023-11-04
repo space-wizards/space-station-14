@@ -6,15 +6,10 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 3600
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 18000
-    - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 10800 #Imperial role timers
   weight: 10
   startingGear: HoSGear
-  icon: "HeadOfSecurity"
+  icon: "JobIconHeadOfSecurity"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
@@ -28,6 +23,12 @@
   - Service
   - External
   - Detective
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: HoSGear
@@ -42,6 +43,7 @@
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
-  innerclothingskirt: ClothingUniformJumpskirtHoS
+    pocket1: WeaponPistolMk58Nonlethal
+  innerClothingSkirt: ClothingUniformJumpskirtHoS
   satchel: ClothingBackpackSatchelHOSFilled
   duffelbag: ClothingBackpackDuffelHOSFilled

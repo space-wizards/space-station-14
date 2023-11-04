@@ -5,6 +5,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 using Content.Server.Physics.Components;
+using Content.Shared.Follower.Components;
 using Content.Shared.Throwing;
 
 namespace Content.Server.Physics.Controllers;
@@ -41,7 +42,8 @@ internal sealed class RandomWalkController : VirtualController
         foreach(var (randomWalk, physics) in EntityManager.EntityQuery<RandomWalkComponent, PhysicsComponent>())
         {
             if (EntityManager.HasComponent<ActorComponent>(randomWalk.Owner)
-            ||  EntityManager.HasComponent<ThrownItemComponent>(randomWalk.Owner))
+            ||  EntityManager.HasComponent<ThrownItemComponent>(randomWalk.Owner)
+            ||  EntityManager.HasComponent<FollowerComponent>(randomWalk.Owner))
                 continue;
 
             var curTime = _timing.CurTime;

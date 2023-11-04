@@ -11,16 +11,17 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: SmallMobs
     sprite: Mobs/Animals/regalrat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -29,19 +30,19 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.3
-      density: 230
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 230
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Critical
       200: Dead
   - type: MeleeWeapon
     hidden: true
@@ -72,67 +73,48 @@
       Parched: 150
       Dead: 0
     baseDecayRate: 0.1
-  - type: Appearance
   - type: DamageStateVisuals
     rotate: true
     states:
       Alive:
         Base: regalrat
       Critical:
-        Base: dead
+        Base: critical
       Dead:
         Base: dead
   - type: GhostRole
     makeSentient: true
-    name: Rat King
-    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoard!
+    name: ghost-role-information-rat-king-name
+    description: ghost-role-information-rat-king-description
+    rules: ghost-role-information-rat-king-rules
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide
-      - DoorBumpOpener
       - FootstepSound
   - type: NoSlip
   - type: RatKing
-    actionRaiseArmy:
-      useDelay: 4
-      icon: Interface/Actions/ratKingArmy.png
-      name: rat-king-raise-army-name
-      description: rat-king-raise-army-description
-      itemIconStyle: NoItem
-      event: !type:RatKingRaiseArmyActionEvent
     hungerPerArmyUse: 25
-    actionDomain:
-      useDelay: 10
-      icon: Interface/Actions/ratKingDomain.png
-      name: rat-king-domain-name
-      description: rat-king-domain-description
-      itemIconStyle: NoItem
-      event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
+  - type: Speech
+    speechVerb: SmallMob
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
-  - type: DiseaseCarrier
-    carrierDiseases:
-    - VentCough
-    - AMIV
-    - SpaceCold
-    - SpaceFlu
-    - BirdFlew
-    - VanAusdallsRobovirus
-    - BleedersBite
-    - Plague
-    - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
   - type: RandomMetadata
     nameSegments:
     - RegalRatNameKingdom
     - RegalRatNameTitle
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+  - type: Grammar
+    attributes:
+      gender: male
 
 - type: entity
   id: MobRatKingBuff
@@ -140,7 +122,6 @@
   suffix: Buff
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Animals/buffrat.rsi
     scale: 1.2, 1.2
     layers:
@@ -150,7 +131,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Critical
       350: Dead
   - type: MeleeWeapon
     hidden: true
@@ -162,26 +142,20 @@
     damage:
       types:
         Blunt: 66 #oof ouch owie my bones
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 400
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
       250: 0.5
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
 
 - type: entity
   name: Rat Servant
   id: MobRatServant
   parent: SimpleMobBase
   description: He's da mini rat. He don't make da roolz.
+  noSpawn: true #Must be configured to a King or the AI breaks.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
@@ -190,12 +164,20 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: RatServantCompound
+    blackboard:
+      IdleRange: !type:Single
+        3.5
+      FollowCloseRange: !type:Single
+        2.0
+      FollowRange: !type:Single
+        3.0
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -208,14 +190,15 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 30 #Bulky by mouse standards...
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 30 #Bulky by mouse standards...
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -223,7 +206,7 @@
       15: Critical
       30: Dead
   - type: Stamina
-    excess: 60
+    critThreshold: 60
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -253,9 +236,7 @@
       Parched: 150
       Dead: 0
     baseDecayRate: 0.1
-  - type: Appearance
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: mouse-3
@@ -267,36 +248,132 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  - type: DiseaseCarrier
-    carrierDiseases:
-    - VentCough
-    - AMIV
-    - SpaceCold
-    - SpaceFlu
-    - BirdFlew
-    - VanAusdallsRobovirus
-    - BleedersBite
-    - Plague
-    - TongueTwister
   - type: Vocal
     sounds:
       Male: Mouse
       Female: Mouse
       Unsexed: Mouse
     wilhelmProbability: 0.001
-  - type: GhostRole
-    makeSentient: true
-    name: Rat Servant
-    description: You are a Rat Servant. You must follow your king's orders.
-    rules: You are an antagonist, scavenge, attack, and serve your king!
-  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide
-      - DoorBumpOpener
       - FootstepSound
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth
   - type: MobsterAccent
     isBoss: false
+  - type: Speech
+    speechVerb: SmallMob
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
+
+- type: weightedRandomEntity
+  id: RatKingLoot
+  weights:
+    RandomSpawner100: 66 #garbage
+    FoodCheese: 28 #food
+    IngotGold1: 5 #loot
+
+- type: entity
+  id: ActionRatKingRaiseArmy
+  name: rat-king-raise-army-name
+  description: rat-king-raise-army-description
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 4
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingArmy
+    event: !type:RatKingRaiseArmyActionEvent
+
+- type: entity
+  id: ActionRatKingDomain
+  name: rat-king-domain-name
+  description: rat-king-domain-description
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 6
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingDomain
+    event: !type:RatKingDomainActionEvent
+
+- type: entity
+  id: ActionRatKingOrderStay
+  name: rat-king-stay-name
+  description: rat-king-stay-description
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: stayOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: stay
+    event:
+      !type:RatKingOrderActionEvent
+        type: Stay
+    priority: 5
+
+- type: entity
+  id: ActionRatKingOrderFollow
+  name: rat-king-follow-name
+  description: rat-king-follow-description
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: followOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: follow
+    event:
+      !type:RatKingOrderActionEvent
+      type: Follow
+    priority: 6
+
+- type: entity
+  id: ActionRatKingOrderCheeseEm
+  name: rat-king-cheeseem-name
+  description: rat-king-cheeseem-description
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: attackOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: attack
+    event:
+      !type:RatKingOrderActionEvent
+      type: CheeseEm
+    priority: 7
+
+- type: entity
+  id: ActionRatKingOrderLoose
+  name: rat-king-loose-name
+  description: rat-king-loose-description
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: looseOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: loose
+    event:
+      !type:RatKingOrderActionEvent
+      type: Loose
+    priority: 8

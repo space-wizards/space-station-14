@@ -1,0 +1,28 @@
+- type: entity
+  parent: BasePDA
+  id: DeadSquadPDA
+  name: dead squad PDA
+  description: Oh no ...
+  components:
+    - type: Pda
+      id: DeadSquadIDCard
+      state: pda-bartender
+    - type: PdaBorderColor
+      borderColor: "#242424"
+      accentHColor: "#447987"
+    - type: Icon
+      sprite: Objects/Devices/pda.rsi
+      state: pda-bartender
+
+- type: entity
+  parent: CentcomIDCard
+  id: DeadSquadIDCard
+  name: ERT ID card
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/deadsquad.rsi
+      layers:
+        - state: blackcard
+        - state: deadsquadID # we have the sprites but don't need individual ID entities for now.
+    - type: Item
+      # heldPrefix: gold

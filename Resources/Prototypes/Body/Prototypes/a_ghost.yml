@@ -6,17 +6,17 @@
     torso:
       part: TorsoHuman
       connections:
-      - right arm
-      - left arm
-    right arm:
+      - left_arm
+      - right_arm
+    right_arm:
       part: RightArmHuman
       connections:
-      - right hand
-    left arm:
+      - right_hand
+    left_arm:
       part: LeftArmHuman
       connections:
-      - left hand
-    right hand:
+      - left_hand
+    right_hand:
       part: RightHandHuman
-    left hand:
+    left_hand:
       part: LeftHandHuman

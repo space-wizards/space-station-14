@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Players;
+using Content.Server.Construction;
 
 namespace Content.Server.Gravity
 {
@@ -16,6 +17,7 @@ namespace Content.Server.Gravity
         [Dependency] private readonly AmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly GravitySystem _gravitySystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPointLightSystem _lights = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
@@ -26,6 +28,7 @@ namespace Content.Server.Gravity
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentShutdown>(OnComponentShutdown);
             SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged); // Or just anchor changed?
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<GravityGeneratorComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
         }
@@ -84,11 +87,11 @@ namespace Content.Server.Gravity
 
                 var active = gravGen.GravityActive;
                 var lastCharge = gravGen.Charge;
-                gravGen.Charge = Math.Clamp(gravGen.Charge + frameTime * chargeRate, 0, 1);
+                gravGen.Charge = Math.Clamp(gravGen.Charge + frameTime * chargeRate, 0, gravGen.MaxCharge);
                 if (chargeRate > 0)
                 {
                     // Charging.
-                    if (MathHelper.CloseTo(gravGen.Charge, 1) && !gravGen.GravityActive)
+                    if (MathHelper.CloseTo(gravGen.Charge, gravGen.MaxCharge) && !gravGen.GravityActive)
                     {
                         gravGen.GravityActive = true;
                     }
@@ -158,7 +161,7 @@ namespace Content.Server.Gravity
             if (!_uiSystem.IsUiOpen(component.Owner, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key))
                 return;
 
-            var chargeTarget = chargeRate < 0 ? 0 : 1;
+            var chargeTarget = chargeRate < 0 ? 0 : component.MaxCharge;
             short chargeEta;
             var atTarget = false;
             if (MathHelper.CloseTo(component.Charge, chargeTarget))
@@ -231,10 +234,10 @@ namespace Content.Server.Gravity
             var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
             _appearance.SetData(uid, GravityGeneratorVisuals.Charge, grav.Charge, appearance);
 
-            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
+            if (_lights.TryGetLight(uid, out var pointLight))
             {
-                pointLight.Enabled = grav.Charge > 0;
-                pointLight.Radius = MathHelper.Lerp(grav.LightRadiusMin, grav.LightRadiusMax, grav.Charge);
+                _lights.SetEnabled(uid, grav.Charge > 0, pointLight);
+                _lights.SetRadius(uid, MathHelper.Lerp(grav.LightRadiusMin, grav.LightRadiusMax, grav.Charge), pointLight);
             }
 
             if (!grav.Intact)
@@ -253,6 +256,12 @@ namespace Content.Server.Gravity
             {
                 MakeOn(uid, grav, appearance);
             }
+        }
+
+        private void OnRefreshParts(EntityUid uid, GravityGeneratorComponent component, RefreshPartsEvent args)
+        {
+            var maxChargeMultipler = args.PartRatings[component.MachinePartMaxChargeMultiplier];
+            component.MaxCharge = maxChargeMultipler * 1;
         }
 
         private void MakeBroken(EntityUid uid, GravityGeneratorComponent component, AppearanceComponent? appearance)

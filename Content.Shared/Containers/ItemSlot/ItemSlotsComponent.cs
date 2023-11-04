@@ -15,14 +15,14 @@ namespace Content.Shared.Containers.ItemSlots
     [RegisterComponent]
     [Access(typeof(ItemSlotsSystem))]
     [NetworkedComponent]
-    public sealed class ItemSlotsComponent : Component
+    public sealed partial class ItemSlotsComponent : Component
     {
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
         ///     cref="ItemSlotsSystem"/>.
         /// </summary>
         [DataField("slots", readOnly:true)]
-        public readonly Dictionary<string, ItemSlot> Slots = new();
+        public Dictionary<string, ItemSlot> Slots = new();
 
         // There are two ways to use item slots:
         //
@@ -58,7 +58,7 @@ namespace Content.Shared.Containers.ItemSlots
     [DataDefinition]
     [Access(typeof(ItemSlotsSystem))]
     [Serializable, NetSerializable]
-    public sealed class ItemSlot
+    public sealed partial class ItemSlot
     {
         public ItemSlot() { }
 
@@ -76,13 +76,6 @@ namespace Content.Shared.Containers.ItemSlots
 
         [DataField("ejectSound")]
         public SoundSpecifier EjectSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
-
-        /// <summary>
-        ///     Options used for playing the insert/eject sounds.
-        /// </summary>
-        [DataField("soundOptions")]
-        [Obsolete("Use the sound specifer parameters instead")]
-        public AudioParams SoundOptions = AudioParams.Default;
 
         /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
@@ -118,6 +111,15 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("locked", readOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked = false;
+
+        /// <summary>
+        /// Prevents adding the eject alt-verb, but still lets you swap items.
+        /// </summary>
+        /// <remarks>
+        ///     This does not affect EjectOnInteract, since if you do that you probably want ejecting to work.
+        /// </remarks>
+        [DataField("disableEject"), ViewVariables(VVAccess.ReadWrite)]
+        public bool DisableEject = false;
 
         /// <summary>
         ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.
@@ -228,7 +230,6 @@ namespace Content.Shared.Containers.ItemSlots
             InsertSound = other.InsertSound;
             EjectSound = other.EjectSound;
 
-            SoundOptions = other.SoundOptions;
             Name = other.Name;
             Locked = other.Locked;
             InsertOnInteract = other.InsertOnInteract;
@@ -241,4 +242,16 @@ namespace Content.Shared.Containers.ItemSlots
             Priority = other.Priority;
         }
     }
+
+    /// <summary>
+    /// Event raised on the slot entity and the item being inserted to determine if an item can be inserted into an item slot.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ItemSlotInsertAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
+
+    /// <summary>
+    /// Event raised on the slot entity and the item being inserted to determine if an item can be ejected from an item slot.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ItemSlotEjectAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
 }

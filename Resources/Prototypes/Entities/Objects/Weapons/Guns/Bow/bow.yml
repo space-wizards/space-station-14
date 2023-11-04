@@ -1,0 +1,81 @@
+﻿- type: entity
+  name: bow
+  parent: BaseItem
+  id: BaseBow
+  description: The original rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+  - type: Item
+    size: 60
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+  - type: Wieldable
+    wieldTime: 0.5
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 5
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      collection: BulletMiss
+    soundEmpty: null
+  - type: ItemSlots
+    slots:
+      arrow:
+        name: Arrow
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - Arrow
+  - type: ContainerContainer
+    containers:
+      arrow: !type:ContainerSlot
+  - type: ContainerAmmoProvider
+    container: arrow
+
+- type: entity
+  id: BowImprovised
+  parent: BaseBow
+  components:
+  - type: Sprite
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
+  # to elucidate whats intended here:
+  # arrow is inserted -> ItemMapper sets layer with map `arrow` to visible
+  # bow is wielded -> generic vis sets states of layers with map `arrow` and `base`
+  # arrow is removed -> itemmapper sets layer with map `arrow` to invisible
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Arrow
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrow:
+          True: { state: wielded-arrow }
+          False: { state: unwielded-arrow }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }
+  - type: Construction
+    graph: ImprovisedBow
+    node: ImprovisedBow

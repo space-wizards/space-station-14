@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.SubFloor;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class TrayScannerComponent : Component
+public sealed partial class TrayScannerComponent : Component
 {
     /// <summary>
     ///     Whether the scanner is currently on.

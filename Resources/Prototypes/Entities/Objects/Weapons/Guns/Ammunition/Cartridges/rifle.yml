@@ -11,7 +11,6 @@
   - type: CartridgeAmmo
     proto: BulletRifle
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -19,7 +18,7 @@
   - type: Appearance
   - type: SpentAmmoVisuals
   - type: StaticPrice
-    price: 10
+    price: 1 #Imperial price balance
 
 - type: entity
   id: CartridgeRifle
@@ -28,14 +27,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletRifle
-
-- type: entity
-  id: CartridgeRifleHighVelocity
-  name: cartridge (.20 rifle high-velocity)
-  parent: BaseCartridgeRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletRifleHighVelocity
 
 - type: entity
   id: CartridgeRiflePractice
@@ -52,3 +43,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletRifleRubber
+
+- type: entity
+  id: CartridgeRifleIncendiary
+  name: cartridge (.20 rifle incendiary)
+  parent: BaseCartridgeRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleIncendiary

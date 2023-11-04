@@ -16,7 +16,7 @@ namespace Content.Shared.Construction
             if (!canBuildInImpassable)
                 return null;
 
-            if (!_mapManager.TryFindGridAt(coords, out var grid))
+            if (!_mapManager.TryFindGridAt(coords, out _, out var grid))
                 return null;
 
             var ignored = grid.GetAnchoredEntities(coords).ToHashSet();

@@ -1,0 +1,381 @@
+- type: radioChannel
+  id: Expedition
+  name: chat-radio-expedition
+  keycode: 'э'
+  frequency: 1067
+  color: "#10313c"
+  longRange: true
+
+- type: radioChannel
+  id: Cult
+  name: chat-radio-cult
+  keycode: 'q'
+  frequency: 1068
+  color: "#9a0e10"
+  longRange: true
+
+- type: radioChannel
+  id: Military
+  name: chat-radio-military
+  keycode: 'в'
+  frequency: 1069
+  color: "#0f4910"
+  longRange: true
+
+- type: radioChannel
+  id: Shadow
+  name: chat-radio-shadow
+  keycode: 's'
+  frequency: 1070
+  color: "#292d28"
+  longRange: true
+
+- type: radioChannel
+  id: Radio1
+  name: chat-radio-1
+  keycode: '1'
+  frequency: 1072
+  color: "#9c3117"
+  longRange: true
+
+- type: radioChannel
+  id: Radio2
+  name: chat-radio-2
+  keycode: '2'
+  frequency: 1073
+  color: "#17549c"
+  longRange: true
+
+- type: radioChannel
+  id: Radio3
+  name: chat-radio-3
+  keycode: '3'
+  frequency: 1074
+  color: "#19aa31"
+  longRange: true
+
+- type: radioChannel
+  id: Radio4
+  name: chat-radio-4
+  keycode: '4'
+  frequency: 1075
+  color: "#c6c317"
+  longRange: true
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyExpedition
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Expedition
+    defaultChannel: Expedition
+  - type: Sprite
+    layers:
+    - state: crypt_silver
+    - state: expedition_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyCult
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Cult
+    defaultChannel: Cult
+  - type: Sprite
+    layers:
+    - state: crypt_red
+    - state: cult_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyMilitary
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Military
+    defaultChannel: Military
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: military_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyShadow
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Shadow
+    defaultChannel: Shadow
+  - type: Sprite
+    layers:
+    - state: crypt_rusted
+    - state: shadow_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio1
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio1
+    defaultChannel: Radio1
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 1_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio2
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio2
+    defaultChannel: Radio2
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 2_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio3
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio3
+    defaultChannel: Radio3
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 3_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio4
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio4
+    defaultChannel: Radio4
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 4_label
+
+- type: radioChannel
+  id: SSSP
+  name: chat-radio-sssp
+  keycode: 'з'
+  frequency: 1076
+  color: "#c63e17"
+  longRange: true
+
+- type: radioChannel
+  id: Ganza
+  name: chat-radio-ganza
+  keycode: 'г'
+  frequency: 1077
+  color: "#10417b"
+  longRange: true
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeySSSP
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - SSSP
+    defaultChannel: SSSP
+  - type: Sprite
+    layers:
+    - state: crypt_red
+    - state: sssp_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyGanza
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Ganza
+    defaultChannel: Ganza
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: ganza_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio5
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio5
+    defaultChannel: Radio5
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 5_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio6
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio6
+    defaultChannel: Radio6
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 6_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio7
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio7
+    defaultChannel: Radio7
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 7_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio8
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio8
+    defaultChannel: Radio8
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 8_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio9
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio9
+    defaultChannel: Radio9
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 9_label
+
+- type: entity
+  parent: EncryptionKeyCustomBase
+  id: EncryptionKeyRadio10
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio10
+    defaultChannel: Radio10
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: 10_label
+
+- type: radioChannel
+  id: Radio5
+  name: chat-radio-5
+  keycode: '5'
+  frequency: 1078
+  color: "#58b884"
+  longRange: true
+
+- type: radioChannel
+  id: Radio6
+  name: chat-radio-6
+  keycode: '6'
+  frequency: 1079
+  color: "#5e1bb8"
+  longRange: true
+
+- type: radioChannel
+  id: Radio7
+  name: chat-radio-7
+  keycode: '7'
+  frequency: 1080
+  color: "#b81ba6"
+  longRange: true
+
+- type: radioChannel
+  id: Radio8
+  name: chat-radio-8
+  keycode: '8'
+  frequency: 1081
+  color: "#6db81b"
+  longRange: true
+
+- type: radioChannel
+  id: Radio9
+  name: chat-radio-9
+  keycode: '9'
+  frequency: 1082
+  color: "#7690d9"
+  longRange: true
+
+- type: radioChannel
+  id: Radio10
+  name: chat-radio-10
+  keycode: ')'
+  frequency: 1083
+  color: "#455e05"
+  longRange: true
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: EncryptionKeyCustomBase
+  name: encryption key
+  description: A small cypher chip for headsets.
+  components:
+  - type: EncryptionKey
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    sprite: Objects/Devices/imperial_encryption_keys.rsi
+    netsync: false

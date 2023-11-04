@@ -8,9 +8,9 @@
     makeSentient: true
     allowMovement: true
     allowSpeech: true
-    name: Remilia, the chaplain's familiar
-    description: Obey your master. Eat fruit.
-    rules: You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
+    name: ghost-role-information-remilia-name
+    description: ghost-role-information-remilia-description
+    rules: ghost-role-information-remilia-rules
   - type: GhostTakeoverAvailable
   - type: Grammar
     attributes:
@@ -18,12 +18,16 @@
       proper: true
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: Access
     tags:
     - Chapel
-  - type: Mind
+  - type: MindContainer
     showExamineInfo: true
+  - type: NpcFactionMember
+    factions:
+    - PetsNT
   - type: Alerts
   - type: Familiar
 
@@ -37,9 +41,9 @@
     makeSentient: true
     allowMovement: true
     allowSpeech: true
-    name: Cerberus, Evil Familiar
-    description: Obey your master. Spread chaos.
-    rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
+    name: ghost-role-information-cerberus-name
+    description: ghost-role-information-cerberus-description
+    rules: ghost-role-information-cerberus-rules
   - type: GhostTakeoverAvailable
   - type: MeleeWeapon
     hidden: true
@@ -51,7 +55,7 @@
         Slash: 7
   - type: InputMover
   - type: MobMover
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: InteractionPopup
@@ -62,19 +66,19 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Critical
-      160: Dead
+      120: Dead
   - type: Grammar
     attributes:
       gender: male
       proper: true
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: Access
     tags:
     - Chapel
-  - type: Mind
+  - type: MindContainer
     showExamineInfo: true
   - type: Familiar
   - type: Vocal

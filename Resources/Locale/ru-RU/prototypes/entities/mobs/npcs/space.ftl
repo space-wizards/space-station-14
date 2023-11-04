@@ -1,0 +1,12 @@
+ent-MobSpiderSpace = Космический паук
+    .desc = Он так светится, что выглядит опасно.
+    .suffix = { "" }
+ent-MobSpiderSpaceSalvage = { ent-MobSpiderSpace }
+    .desc = { ent-MobSpiderSpace.desc }
+    .suffix = Руины
+ent-MobKangarooSpace = Космический кенгуру
+    .desc = Выглядит дружелюбно. Почему бы тебе не обнять его?
+    .suffix = { "" }
+ent-MobKangarooSpaceSalvage = { ent-MobKangarooSpace }
+    .desc = { ent-MobKangarooSpace.desc }
+    .suffix = Руины

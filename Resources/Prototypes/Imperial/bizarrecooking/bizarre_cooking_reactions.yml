@@ -1,0 +1,178 @@
+- type: reaction
+  id: UnknownSubstance
+  reactants:
+    Nothing:
+      amount: 10
+    Plasma:
+      amount: 10
+    Uranium:
+      amount: 10
+    SulfuricAcid:
+      amount: 20
+    CarpoToxin:
+      amount: 10
+    Ethanol:
+      amount: 10
+    Licoxide:
+      amount: 20
+  effects:
+  - !type:CreateGas
+    gas: Plasma
+  - !type:PopupMessage
+    visualType: LargeCaution
+    messages: [ "phlogiston-plasma-created" ]
+    type: Pvs
+  products:
+    UnknownSubstance: 1
+
+- type: reaction
+  id: UnknownSubstanceClone
+  reactants:
+    Nothing:
+      amount: 1
+    UnknownSubstance:
+      amount: 1
+  products:
+    UnknownSubstance: 2
+
+- type: reaction
+  id: PlasmShake
+  reactants:
+    IceCream:
+      amount: 9
+    Plasma:
+      amount: 1
+  products:
+    PlasmShake: 10
+
+- type: reaction
+  id: IceSpirits
+  reactants:
+    Ethanol:
+      amount: 1
+    Mead:
+      amount: 1
+    Nitrogen:
+      amount: 2
+  products:
+    IceSpirits: 4
+
+- type: reaction
+  id: BloodBrandy
+  reactants:
+    Blood:
+      amount: 5
+    Mead:
+      amount: 1
+    Rum:
+      amount: 1
+  products:
+    BloodBrandy: 7
+
+- type: reaction
+  id: Scumslim
+  reactants:
+    Slime:
+      amount: 5
+    Ethanol:
+      amount: 1
+    Rum:
+      amount: 1
+  products:
+    Scumslim: 7
+
+- type: reaction
+  id: MagmaWhiskey
+  reactants:
+    Iron:
+      amount: 2
+    Ethanol:
+      amount: 1
+    Whiskey:
+      amount: 1
+  products:
+    MagmaWhiskey: 4
+
+- type: reaction
+  id: RadiumBeer
+  reactants:
+    Rum:
+      amount: 1
+    Sugar:
+      amount: 2
+    Radium:
+      amount: 5
+  products:
+    RadiumBeer: 8
+
+- type: reaction
+  id: DoomVodka
+  reactants:
+    Ethanol:
+      amount: 4
+    Vodka:
+      amount: 2
+    Sugar:
+      amount: 1
+  products:
+    DoomVodka: 7
+
+- type: reaction
+  id: VampireWine
+  reactants:
+    Carbon:
+      amount: 3
+    Ethanol:
+      amount: 2
+    Blood:
+      amount: 2
+  products:
+    VampireWine: 7
+
+- type: reaction
+  id: Ambrosia
+  reactants:
+    Rum:
+      amount: 5
+    Mead:
+      amount: 5
+    DoctorsDelight:
+      amount: 10
+  products:
+    Ambrosia: 5
+
+- type: reaction
+  id: LuckyMead
+  reactants:
+    Sugar:
+      amount: 1
+    Mead:
+      amount: 5
+    Gold:
+      amount: 1
+  products:
+    LuckyMead: 5
+
+- type: reaction
+  id: ProtoFuel
+  reactants:
+    Ale:
+      amount: 2
+    WeldingFuel:
+      amount: 5
+    SulfuricAcid:
+      amount: 1
+  products:
+    ProtoFuel: 5
+
+- type: reaction
+  id: KSSpecialBlend
+  reactants:
+    Ale:
+      amount: 2
+    Mead:
+      amount: 2
+    ProtoFuel:
+      amount: 1
+  products:
+    KSSpecialBlend: 5

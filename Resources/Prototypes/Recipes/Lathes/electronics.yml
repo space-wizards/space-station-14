@@ -3,13 +3,37 @@
   result: FirelockElectronics
   completetime: 2
   materials:
-     Steel: 50
-     Plastic: 50
+     Steel: 100
+     Plastic: 300
 
 - type: latheRecipe
   id: MailingUnitElectronics
   result: MailingUnitElectronics
   completetime: 4
+  materials:
+    Steel: 50
+    Plastic: 300
+
+- type: latheRecipe
+  id: CellRechargerCircuitboard
+  result: CellRechargerCircuitboard
+  completetime: 2
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
+  id: BorgChargerCircuitboard
+  result: BorgChargerCircuitboard
+  completetime: 2
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
+  id: WeaponCapacitorRechargerCircuitboard
+  result: WeaponCapacitorRechargerCircuitboard
+  completetime: 2
   materials:
     Steel: 50
     Plastic: 50
@@ -20,11 +44,19 @@
   completetime: 2
   materials:
      Steel: 50
-     Plastic: 50
+     Plastic: 300
 
 - type: latheRecipe
   id: AirAlarmElectronics
   result: AirAlarmElectronics
+  completetime: 2
+  materials:
+     Steel: 100
+     Plastic: 300
+
+- type: latheRecipe
+  id: StationMapElectronics
+  result: StationMapCircuitboard
   completetime: 2
   materials:
      Steel: 50
@@ -36,11 +68,19 @@
   completetime: 2
   materials:
      Steel: 50
-     Plastic: 50
+     Plastic: 300
 
 - type: latheRecipe
   id: FireAlarmElectronics
   result: FireAlarmElectronics
+  completetime: 2
+  materials:
+     Steel: 100
+     Plastic: 300
+
+- type: latheRecipe
+  id: SignalTimerElectronics
+  result: SignalTimerElectronics
   completetime: 2
   materials:
      Steel: 50
@@ -251,14 +291,6 @@
      Gold: 100
 
 - type: latheRecipe
-  id: CrewMonitoringComputerCircuitboard
-  result: CrewMonitoringComputerCircuitboard
-  completetime: 4
-  materials:
-     Steel: 100
-     Glass: 900
-
-- type: latheRecipe
   id: ShuttleConsoleCircuitboard
   result: ShuttleConsoleCircuitboard
   completetime: 4
@@ -327,6 +359,51 @@
     Glass: 900
     Gold: 100
 
+- type: latheRecipe
+  id: HonkerCentralElectronics
+  result: HonkerCentralElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Bananium: 100
+
+- type: latheRecipe
+  id: HonkerPeripheralsElectronics
+  result: HonkerPeripheralsElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Bananium: 100
+
+- type: latheRecipe
+  id: HonkerTargetingElectronics
+  result: HonkerTargetingElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Bananium: 100
+
+- type: latheRecipe
+  id: HamtrCentralElectronics
+  result: HamtrCentralElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: HamtrPeripheralsElectronics
+  result: HamtrPeripheralsElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
 # Power
 - type: latheRecipe
   id: APCElectronics
@@ -334,7 +411,7 @@
   completetime: 2
   materials:
      Steel: 50
-     Glass: 100
+     Glass: 250
 
 - type: latheRecipe
   id: SubstationMachineCircuitboard
@@ -361,20 +438,28 @@
      Glass: 900
 
 - type: latheRecipe
-  id: GeneratorPlasmaMachineCircuitboard
-  result: GeneratorPlasmaMachineCircuitboard
+  id: PortableGeneratorPacmanMachineCircuitboard
+  result: PortableGeneratorPacmanMachineCircuitboard
   completetime: 4
   materials:
      Steel: 50
      Glass: 350
 
 - type: latheRecipe
-  id: GeneratorUraniumMachineCircuitboard
-  result: GeneratorUraniumMachineCircuitboard
+  id: PortableGeneratorSuperPacmanMachineCircuitboard
+  result: PortableGeneratorSuperPacmanMachineCircuitboard
   completetime: 4
   materials:
      Steel: 50
      Glass: 350
+
+- type: latheRecipe
+  id: PortableGeneratorJrPacmanMachineCircuitboard
+  result: PortableGeneratorJrPacmanMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 50
+    Glass: 350
 
 - type: latheRecipe
   id: WallmountGeneratorElectronics
@@ -382,7 +467,7 @@
   completetime: 4
   materials:
      Steel: 50
-     Glass: 350
+     Glass: 150
 
 - type: latheRecipe
   id: WallmountGeneratorAPUElectronics
@@ -399,6 +484,14 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: SolarTrackerElectronics
+  result: SolarTrackerElectronics
+  completetime: 4
+  materials:
+     Steel: 150
+     Glass: 600
 
 - type: latheRecipe
   id: PowerComputerCircuitboard
@@ -423,6 +516,30 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: ElectricGrillMachineCircuitboard
+  result: ElectricGrillMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: FatExtractorMachineCircuitboard
+  result: FatExtractorMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: SheetifierMachineCircuitboard
+  result: SheetifierMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
 
 - type: latheRecipe
   id: SurveillanceCameraRouterCircuitboard
@@ -529,6 +646,15 @@
      Glass: 900
 
 - type: latheRecipe
+  id: CargoTelepadMachineCircuitboard
+  result: CargoTelepadMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: SodaDispenserMachineCircuitboard
   result: SodaDispenserMachineCircuitboard
   completetime: 4
@@ -543,3 +669,20 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: MassMediaCircuitboard
+  result: ComputerMassMediaCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: MiniGravityGeneratorCircuitboard
+  result: MiniGravityGeneratorCircuitboard
+  completetime: 6
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100     

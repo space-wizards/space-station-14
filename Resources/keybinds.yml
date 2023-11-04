@@ -76,10 +76,22 @@ binds:
 - function: CameraReset
   type: State
   key: NumpadNum8
+- function: ZoomOut
+  type: State
+  key: NumpadNum4
+- function: ZoomIn
+  type: State
+  key: NumpadNum6
+- function: ResetZoom
+  type: State
+  key: NumpadNum5
 # Misc
 - function: ShowEscapeMenu
   type: State
   key: F10
+- function: ToggleFullscreen
+  type: State
+  key: F11
 - function: CycleChatChannelForward
   type: State
   key: Tab
@@ -94,12 +106,20 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusEmote
+  type: State
+  mod1: Shift
+  key: Apostrophe
 - function: FocusWhisperChatWindow
   type: State
   key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon
+- function: FocusLOOCWindow
+  type: State
+  mod1: Shift
+  key: Num9
 - function: FocusOOCWindow
   type: State
   key: LBracket
@@ -133,6 +153,10 @@ binds:
 - function: EditorRotateObject
   type: State
   key: MouseMiddle
+- function: EditorFlipObject
+  type: State
+  key: MouseMiddle
+  mod1: Control
 - function: EditorCopyObject
   type: State
   key: P
@@ -180,7 +204,6 @@ binds:
 - function: ThrowItemInHand
   type: State
   key: Q
-  canFocus: true
   mod1: Control
 - function: TryPullObject
   type: State
@@ -217,6 +240,10 @@ binds:
 - function: ShowDebugConsole
   type: State
   key: Tilde
+- function: InspectEntity
+  type: State
+  key: v
+  mod1: Alt
 - function: MouseMiddle
   type: State
   key: MouseMiddle

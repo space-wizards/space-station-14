@@ -1,0 +1,174 @@
+#ERT START
+#Leader
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTLeaderEVAPreset
+  name: ERT leader
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertleadereva
+    - type: Loadout
+      prototypes: [ ERTCallLeaderGearEVA ]
+
+#Medic
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTMedicEVAPreset
+  name: ERT medic
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertmedicaleva
+    - type: Loadout
+      prototypes: [ ERTCallMedicalGearEVA ]
+
+#Security
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTSecurityEVAPreset
+  name: ERT security
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertsecurityeva
+    - type: Loadout
+      prototypes: [ ERTCallSecurityGearEVA ]
+
+#Engineer
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTEngineerEVAPreset
+  name: ERT engineer
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertengineereva
+    - type: Loadout
+      prototypes: [ ERTCallEngineerGearEVA ]
+
+#Junitor
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: ERTJunitorEVAPreset
+  name: ERT junitor
+  suffix: EVA
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: ertjanitoreva
+    - type: Loadout
+      prototypes: [ ERTCallJanitorGearEVA ]
+
+#ERT END
+
+#CBURN START
+#Leader
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: CBURNLeaderEVAPreset
+  name: CBURN Agent
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitaryLeader
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/imperial_jobs.rsi
+      state: cburnLeader
+    - type: Loadout
+      prototypes: [ ERTCallCBURNLeaderGearEVA ]
+
+#Security
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: CBURNSecurityEVAPreset
+  name: CBURN Agent
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/imperial_jobs.rsi
+      state: cburn
+    - type: Loadout
+      prototypes: [ ERTCallCBURNSecurityGearEVA ]
+
+#Medic
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: CBURNMedicEVAPreset
+  name: CBURN Agent
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/imperial_jobs.rsi
+      state: cburnMedic
+    - type: Loadout
+      prototypes: [ ERTCallCBURNMedicGearEVA ]
+#CBURN END
+
+#DEAD SQUAD START
+- type: entity
+  noSpawn: false
+  parent: MobHuman
+  id: DeadSquadSecurityEVAPreset
+  name: Dead Squad Agent
+  components:
+    # - type: RandomMetadata
+    #   nameSegments:
+    #   - NamesFirstMilitary
+    #   - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/imperial_jobs.rsi
+      state: deadSquad
+    - type: Loadout
+      prototypes: [ ERTCallDeadSquadSecurityGearEVA ]
+#DEAD SQUAD END
+
+

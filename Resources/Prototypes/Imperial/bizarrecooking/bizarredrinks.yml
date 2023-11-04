@@ -1,0 +1,381 @@
+- type: reagent
+  id: PlasmShake
+  name: reagent-name-plasm-shake
+  parent: BaseSoda
+  desc: reagent-desc-plasm-shake
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: plasmshake
+  color: "#ffDAff"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: plasmshake
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+      - !type:AdjustReagent
+        reagent: Inaprovaline
+        amount: -2.0
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: -0.1
+  - !type:PlantAdjustWater
+    amount: 0.2
+  - !type:PlantAdjustHealth
+    amount: -1
+
+- type: reagent
+  id: AwfulOffalSmoothie #I have not figured out how to add meat to the drink. Will add the conda recipe sometime in the future. rec. me sug mi fer
+  name: reagent-name-awful-offal-smoothie
+  parent: BaseSoda
+  desc: reagent-desc-awful-offal-smoothie
+  physicalDesc: reagent-physical-desc-putrid
+  flavor: aos
+  color: "#FF173D"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: aos
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.2
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 1.0
+  - !type:PlantAdjustWater
+    amount: 0.1
+  - !type:PlantAdjustHealth
+    amount: 0.1
+
+- type: reagent
+  id: PutridPestSmoothie #I have not figured out how to add meat to the drink. Will add the conda recipe sometime in the future. rec. r-me sug mi fer
+  name: reagent-name-autrid-pest-smoothie
+  parent: BaseSoda
+  desc: reagent-desc-autrid-pest-smoothie
+  physicalDesc: reagent-physical-desc-putrid
+  flavor: aos
+  color: "#CC2B29"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: pps
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.2
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 1.0
+  - !type:PlantAdjustWater
+    amount: 0.1
+  - !type:PlantAdjustHealth
+    amount: 0.1
+
+- type: reagent
+  id: IceSpirits
+  name: reagent-name-ice-spirits
+  parent: BaseAlcohol
+  desc: reagent-desc-ice-spirits
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: icespirits
+  color: "#A7BBBD"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: icespirits
+  metabolisms:
+    Poison:
+      effects:
+      - !type:AdjustTemperature
+        amount: -7000
+
+- type: reagent
+  id: BloodBrandy
+  name: reagent-name-blood-brandy
+  parent: BaseAlcohol
+  desc: reagent-desc-blood-brandy
+  physicalDesc: reagent-physical-desc-tangy
+  flavor: bloodbrandy
+  color: "#E1432F"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: bloodbrandy
+
+- type: reagent
+  id: Scumslim
+  name: reagent-name-scumslim
+  parent: BaseAlcohol
+  desc: reagent-desc-scumslim
+  physicalDesc: reagent-physical-desc-mucus-like
+  flavor: scumslim
+  color: "#586B00"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: scumslim
+
+- type: reagent
+  id: MeatWine #I have not figured out how to add meat to the drink. Will add the conda recipe sometime in the future. rec. gr/wi me et
+  name: reagent-name-meat-wine
+  parent: BaseAlcohol
+  desc: reagent-desc-meat-wine
+  physicalDesc: reagent-physical-desc-thick-and-grainy
+  flavor: meatwine
+  color: "#645547"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: meatwine
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: MagmaWhiskey
+  name: reagent-name-magma-whiskey
+  parent: BaseAlcohol
+  desc: reagent-desc-magma-whiskey
+  physicalDesc: reagent-physical-desc-mucus-like
+  flavor: magmawhiskey
+  color: "#D67F29"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: magmawhiskey
+  metabolisms:
+    Poison:
+      effects:
+      - !type:AdjustTemperature
+        amount: 100000
+
+- type: reagent
+  id: ShadowSpirits
+  name: reagent-name-shadow-spirits
+  parent: BaseAlcohol
+  desc: reagent-desc-shadow-spirits
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: shadowspirits
+  color: "#461F55"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: shadowspirits
+
+- type: reagent
+  id: RadiumBeer
+  name: reagent-name-radium-beer
+  parent: BaseAlcohol
+  desc: reagent-desc-radium-beer
+  physicalDesc: reagent-physical-desc-ionizing
+  flavor: radiumbeer
+  color: "#AEEFFF"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: radiumbeer
+  plantMetabolism:
+  - !type:PlantAdjustMutationLevel
+    amount: 0.6
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustHealth
+    amount: -1.5
+  - !type:PlantAdjustMutationMod
+    prob: 0.2
+    amount: 0.1
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 2
+
+- type: reagent
+  id: DoomVodka
+  name: reagent-name-doom-vodka
+  parent: BaseAlcohol
+  desc: reagent-desc-doom-vodka
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: vodka
+  color: "#d1d1d155"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.6
+
+- type: reagent
+  id: VampireWine
+  name: reagent-name-vampire-wine
+  parent: BaseAlcohol
+  desc: reagent-desc-vampire-wine
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: VampireWine
+  color: "#7E4043"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.45
+
+- type: reagent
+  id: Ambrosia
+  name: reagent-name-ambrosia
+  parent: BaseAlcohol
+  desc: reagent-desc-ambrosia
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: ambrosia
+  color: "#D8C524"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: ambrosia
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -2
+            Toxin: -2
+            Airloss: -2
+            Brute: -2
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.45
+
+- type: reagent
+  id: LuckyMead
+  name: reagent-name-lucky-mead
+  parent: BaseAlcohol
+  desc: reagent-desc-lucky-mead
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: luckymead
+  color: "#CFA85F"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.10
+
+- type: reagent
+  id: ProtoFuel
+  name: reagent-name-protofuel
+  parent: BaseAlcohol
+  desc: reagent-desc-protofuel
+  physicalDesc: reagent-physical-desc-gloopy
+  flavor: protofuel
+  color: "#C8FF77"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: protofuel
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+            Caustic: 0.1
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+
+- type: reagent
+  id: KSSpecialBlend
+  name: reagent-name-k-s-special-blend
+  parent: BaseAlcohol
+  desc: reagent-desc-k-s-special-blend
+  physicalDesc: reagent-physical-desc-gloopy
+  flavor: ksspecialblend
+  color: "#B7541A"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: ksspecialblend
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.49
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 2
+        refresh: false
+
+- type: reagent
+  id: MiracleAmbrosia
+  name: reagent-name-airacle-ambrosia
+  parent: BaseAlcohol
+  desc: reagent-desc-miracle-ambrosia
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: miracleambrosia
+  color: "#D8C524"
+  metamorphicSprite:
+    sprite: Imperial/Bizarre/bizarrecooking.rsi
+    state: ambrosia
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          max: 293.15
+        amount: 100000
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 293.15
+        amount: -10000
+      - !type:GenericStatusEffect
+        key: PressureImmunity
+        component: PressureImmunity
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: -20
+            Bloodloss: -20
+          groups:
+            Burn: -20
+            Toxin: -20
+            Airloss: -20
+            Brute: -20
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.45

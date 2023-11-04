@@ -7,7 +7,7 @@ namespace Content.Shared.BarSign
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
 
         [DataField("icon")] public string Icon { get; private set; } = string.Empty;

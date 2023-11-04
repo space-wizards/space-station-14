@@ -11,6 +11,16 @@
               icon:
                 sprite: Objects/Specific/Hydroponics/poppy.rsi
                 state: produce
+            - tag: Flower
+              name: flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+            - tag: Ambrosia
+              name: ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
               doAfter: 10
     - node: flowercrown
       entity: ClothingHeadHatFlowerCrown

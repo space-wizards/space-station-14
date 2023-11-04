@@ -1,0 +1,16 @@
+news-read-ui-next-text = Далее
+news-read-ui-past-text = Назад
+news-read-ui-default-title = Новости станции
+news-read-ui-not-found-text = Статьи не найдены
+news-read-ui-time-prefix-text = Время издания:
+news-read-ui-notification-off =  ̶♫̶
+news-read-ui-notification-on = ♫
+news-read-ui-no-author = Аноним
+news-read-ui-author-prefix = Автор(ы):
+news-write-ui-default-title = Консоль СМИ
+news-write-ui-articles-label = Статьи:
+news-write-ui-delete-text = Удалить
+news-write-ui-share-text = Опубликовать
+news-write-ui-article-name-label = Заголовок:
+news-write-ui-article-content-label = Содержимое:
+news-write-no-access-popup = Доступ отсутствует

@@ -6,9 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 10800
+      time: 21600 #Imperial role timers
   startingGear: WardenGear
-  icon: "Warden"
+  icon: "JobIconWarden"
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
@@ -19,6 +19,9 @@
   - Brig
   - External
   - Detective
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: WardenGear
@@ -32,6 +35,7 @@
     id: WardenPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
-  innerclothingskirt: ClothingUniformJumpskirtWarden
+    pocket1: WeaponPistolMk58Nonlethal
+  innerClothingSkirt: ClothingUniformJumpskirtWarden
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

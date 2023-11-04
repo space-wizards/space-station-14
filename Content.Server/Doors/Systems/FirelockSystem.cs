@@ -1,11 +1,13 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Doors.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Remotes;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
@@ -16,6 +18,7 @@ using Microsoft.Extensions.Options;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Content.Shared.Prying.Components;
 
 namespace Content.Server.Doors.Systems
 {
@@ -26,6 +29,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
         private static float _visualUpdateInterval = 0.5f;
         private float _accumulatedFrameTime;
@@ -35,7 +39,7 @@ namespace Content.Server.Doors.Systems
             base.Initialize();
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
+            SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
@@ -134,11 +138,14 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
-            if (!this.IsPowered(uid, EntityManager) || IsHoldingPressureOrFire(uid, component))
+            // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
+            var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
+
+            if (!this.IsPowered(uid, EntityManager) || (!overrideAccess && IsHoldingPressureOrFire(uid, component)))
                 args.Cancel();
         }
 
-        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, DoorGetPryTimeModifierEvent args)
+        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
         {
             var state = CheckPressureAndFire(uid, component);
 
@@ -161,13 +168,13 @@ namespace Content.Server.Doors.Systems
         {
             var ev = new BeforeDoorAutoCloseEvent();
             RaiseLocalEvent(uid, ev);
+            UpdateVisuals(uid, component, args);
             if (ev.Cancelled)
             {
                 return;
             }
 
             _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
-            UpdateVisuals(uid, component, args);
         }
 
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
@@ -255,7 +262,7 @@ namespace Content.Server.Doors.Systems
             List<AtmosDirection> directions = new(4);
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
-                var dir = (AtmosDirection) (1 << i);
+                var dir = (AtmosDirection)(1 << i);
                 if (airtight.AirBlockedDirection.HasFlag(dir))
                 {
                     directions.Add(dir);

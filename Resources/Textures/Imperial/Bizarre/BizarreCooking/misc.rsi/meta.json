@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by NailGrey and Kevin? for Imperial Space",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "caramelized-paper"
+    },
+    {
+      "name": "dunce"
+    },
+    {
+      "name": "magma"
+    },
+    {
+      "name": "uranium"
+    },
+    {
+      "name": "sentient"
+    },
+    {
+      "name": "elder",
+      "directions": 1,
+      "delays": [
+        [
+          1.9,
+          0.2,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ppp"
+    },
+    {
+      "name": "idiot"
+    },
+    {
+      "name": "iscream"
+    }
+  ]
+}

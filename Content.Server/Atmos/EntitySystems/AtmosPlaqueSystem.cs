@@ -9,6 +9,7 @@ public sealed class AtmosPlaqueSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -34,7 +35,7 @@ public sealed class AtmosPlaqueSystem : EntitySystem
 
     public void UpdateSign(EntityUid uid, AtmosPlaqueComponent component)
     {
-        var metaData = MetaData(component.Owner);
+        var metaData = MetaData(uid);
 
         var val = component.Type switch
         {
@@ -50,7 +51,7 @@ public sealed class AtmosPlaqueSystem : EntitySystem
             _ => Loc.GetString("atmos-plaque-component-desc-unset"),
         };
 
-        metaData.EntityDescription = val;
+        _metaData.SetEntityDescription(uid, val, metaData);
 
         var val1 = component.Type switch
         {
@@ -66,9 +67,9 @@ public sealed class AtmosPlaqueSystem : EntitySystem
             _ => Loc.GetString("atmos-plaque-component-name-unset"),
         };
 
-        metaData.EntityName = val1;
+        _metaData.SetEntityName(uid, val1, metaData);
 
-        if (TryComp<AppearanceComponent>(component.Owner, out var appearance))
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
             var state = component.Type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 

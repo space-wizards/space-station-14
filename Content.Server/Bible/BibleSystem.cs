@@ -4,6 +4,7 @@ using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
+using Content.Shared.Bible;
 using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -132,7 +133,7 @@ namespace Content.Server.Bible
 
             var damage = _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true, origin: uid);
 
-            if (damage == null || damage.Total == 0)
+            if (damage == null || damage.Empty)
             {
                 var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-none-others", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                 _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
@@ -179,8 +180,9 @@ namespace Content.Server.Bible
             if (component.AlreadySummoned)
                 return;
 
-            args.Actions.Add(component.SummonAction);
+            args.AddAction(ref component.SummonActionEntity, component.SummonAction);
         }
+
         private void OnSummon(EntityUid uid, SummonableComponent component, SummonActionEvent args)
         {
             AttemptSummon(component, args.Performer, Transform(args.Performer));
@@ -238,12 +240,7 @@ namespace Content.Server.Bible
                 Transform(familiar).AttachParent(component.Owner);
             }
             component.AlreadySummoned = true;
-            _actionsSystem.RemoveAction(user, component.SummonAction);
+            _actionsSystem.RemoveAction(user, component.SummonActionEntity);
         }
-    }
-
-    public sealed class SummonActionEvent : InstantActionEvent
-    {
-
     }
 }

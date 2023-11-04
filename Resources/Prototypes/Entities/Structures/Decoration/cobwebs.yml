@@ -1,0 +1,41 @@
+#BaseCobweb doesn't really need to exist since, as of writing, these only have 2 sprite states & obviously have no need for variation beyond that.
+
+- type: entity
+  id: Cobweb1
+  name: cobweb
+  description: Somebody should remove that.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Decoration/cobweb.rsi
+    state: cobweb1
+    drawdepth: OverMobs #We want this to appear below doors but above mobs
+  - type: Icon
+    sprite: Structures/Decoration/cobweb.rsi
+    state: cobweb1
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20 #With the damage modifier you should have a hard time getting through it with something blunt, but an axe or something flammable will do the trick.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: Cobweb2
+  parent: Cobweb1
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/cobweb.rsi
+    state: cobweb2
+  - type: Icon
+    sprite: Structures/Decoration/cobweb.rsi
+    state: cobweb2

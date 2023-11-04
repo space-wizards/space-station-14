@@ -6,9 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 1800
+      time: 10800 #Imperial role timers
   startingGear: ScientistGear
-  icon: "Scientist"
+  icon: "JobIconScientist"
   supervisors: job-supervisors-rd
   access:
   - Research
@@ -20,9 +20,9 @@
     jumpsuit: ClothingUniformJumpsuitScientist
     back: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorWhite
-    outerClothing: ClothingOuterCoatLab
+    outerClothing: ClothingOuterCoatRnd
     id: SciencePDA
     ears: ClothingHeadsetScience
-  innerclothingskirt: ClothingUniformJumpskirtScientist
+  innerClothingSkirt: ClothingUniformJumpskirtScientist
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled

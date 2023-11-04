@@ -1,1 +1,0 @@
-1 sheet = 100cm3 of material

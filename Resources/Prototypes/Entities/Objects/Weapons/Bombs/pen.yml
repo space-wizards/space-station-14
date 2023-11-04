@@ -16,6 +16,10 @@
     canCreateVacuum: false
   - type: ActivateOnPaperOpened
   - type: ExplodeOnTrigger
+  - type: TriggerOnSignal
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
 
 - type: entity
   parent: BaseItem
@@ -26,7 +30,6 @@
   - type: Sprite
     sprite: Objects/Storage/penbox.rsi
     state: exploding_pen
-    netsync: false
   - type: SpawnItemsOnUse
     items:
     - id: PenExploding

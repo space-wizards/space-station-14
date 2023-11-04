@@ -1,7 +1,4 @@
-using System;
-using Robust.Client.Graphics;
-using Content.Client.Parallax.Data;
-using Robust.Shared.Serialization.Manager.Attributes;
+using System.Numerics;
 
 namespace Content.Client.Parallax.Data;
 
@@ -9,7 +6,7 @@ namespace Content.Client.Parallax.Data;
 /// The configuration for a parallax layer.
 /// </summary>
 [DataDefinition]
-public sealed class ParallaxLayerConfig
+public sealed partial class ParallaxLayerConfig
 {
     /// <summary>
     /// The texture source for this layer.

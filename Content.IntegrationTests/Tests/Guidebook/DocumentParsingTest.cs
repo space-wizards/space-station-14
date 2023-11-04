@@ -1,10 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
-using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -19,13 +17,13 @@ public sealed class DocumentParsingTest
 {
 
     public string TestDocument = @"multiple
-   lines    
- separated by  
-only single newlines                        
+   lines
+ separated by
+only single newlines
 make a single rich text control
 
-unless there is a double newline. Also   	    
-whitespace before newlines are ignored.		
+unless there is a double newline. Also
+whitespace before newlines are ignored.
 
 <TestControl/>
 
@@ -36,10 +34,10 @@ whitespace before newlines are ignored.
   <TestControl/>
 </TestControl>
 
-<TestControl key1=""value1"" key2=""value2 with spaces"" key3=""value3 with a 
+<TestControl key1=""value1"" key2=""value2 with spaces"" key3=""value3 with a
   newline""/>
 
-<TestControl > 
+<TestControl >
   <TestControl  k=""<\>\\>=\""=<-_?*3.0//"">
   </TestControl>
 </TestControl>";
@@ -47,8 +45,8 @@ whitespace before newlines are ignored.
     [Test]
     public async Task ParseTestDocument()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var client = pairTracker.Pair.Client;
+        await using var pair = await PoolManager.GetServerClient();
+        var client = pair.Client;
         await client.WaitIdleAsync();
         var parser = client.ResolveDependency<DocumentParsingManager>();
 
@@ -64,12 +62,15 @@ whitespace before newlines are ignored.
         var richText1 = ctrl.GetChild(0) as RichTextLabel;
         var richText2 = ctrl.GetChild(1) as RichTextLabel;
 
-        Assert.NotNull(richText1);
-        Assert.NotNull(richText2);
+        Assert.Multiple(() =>
+        {
+            Assert.That(richText1, Is.Not.Null);
+            Assert.That(richText2, Is.Not.Null);
+        });
 
         // uhh.. WTF. rich text has no means of getting the contents!?!?
         // TODO assert text content is correct after fixing that bullshit.
-        //Assert.That(richText1?.Text, Is.EqualTo("multiple lines separated by only single newlines make a single rich text control"));
+        // Assert.That(richText1?.Text, Is.EqualTo("multiple lines separated by only single newlines make a single rich text control"));
         // Assert.That(richText2?.Text, Is.EqualTo("unless there is a double newline. Also whitespace before newlines are ignored."));
 
         var test1 = ctrl.GetChild(2) as TestControl;
@@ -78,51 +79,62 @@ whitespace before newlines are ignored.
         var test4 = ctrl.GetChild(5) as TestControl;
         var test5 = ctrl.GetChild(6) as TestControl;
 
-        Assert.NotNull(test1);
-        Assert.NotNull(test2);
-        Assert.NotNull(test3);
-        Assert.NotNull(test4);
-        Assert.NotNull(test5);
+        Assert.Multiple(() =>
+        {
+            Assert.That(test1, Is.Not.Null);
+            Assert.That(test2, Is.Not.Null);
+            Assert.That(test3, Is.Not.Null);
+            Assert.That(test4, Is.Not.Null);
+            Assert.That(test5, Is.Not.Null);
+        });
 
-        Assert.That(test1!.ChildCount, Is.EqualTo(0));
-        Assert.That(test2!.ChildCount, Is.EqualTo(0));
-        Assert.That(test3!.ChildCount, Is.EqualTo(2));
-        Assert.That(test4!.ChildCount, Is.EqualTo(0));
-        Assert.That(test5!.ChildCount, Is.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(test1!.ChildCount, Is.EqualTo(0));
+            Assert.That(test2!.ChildCount, Is.EqualTo(0));
+            Assert.That(test3!.ChildCount, Is.EqualTo(2));
+            Assert.That(test4!.ChildCount, Is.EqualTo(0));
+            Assert.That(test5!.ChildCount, Is.EqualTo(1));
+        });
 
-        var subText = test3.GetChild(0) as RichTextLabel;
+        var subText = test3!.GetChild(0) as RichTextLabel;
         var subTest = test3.GetChild(1) as TestControl;
-        Assert.NotNull(subText);
-        //Assert.That(subText?.Text, Is.EqualTo("some text with a nested control"));
-        Assert.NotNull(subTest);
-        Assert.That(subTest?.ChildCount, Is.EqualTo(0));
 
-        var subTest2 = test5.GetChild(0) as TestControl;
-        Assert.NotNull(subTest2);
+#pragma warning disable NUnit2045
+        Assert.That(subText, Is.Not.Null);
+        //Assert.That(subText?.Text, Is.EqualTo("some text with a nested control"));
+        Assert.That(subTest, Is.Not.Null);
+        Assert.That(subTest?.ChildCount, Is.EqualTo(0));
+#pragma warning restore NUnit2045
+
+        var subTest2 = test5!.GetChild(0) as TestControl;
+        Assert.That(subTest2, Is.Not.Null);
         Assert.That(subTest2!.ChildCount, Is.EqualTo(0));
 
-        Assert.That(test1.Params.Count, Is.EqualTo(0));
-        Assert.That(test2.Params.Count, Is.EqualTo(0));
-        Assert.That(test3.Params.Count, Is.EqualTo(0));
-        Assert.That(test4.Params.Count, Is.EqualTo(3));
-        Assert.That(test5.Params.Count, Is.EqualTo(0));
-        Assert.That(subTest2.Params.Count, Is.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(test1!.Params, Has.Count.EqualTo(0));
+            Assert.That(test2!.Params, Has.Count.EqualTo(0));
+            Assert.That(test3.Params, Has.Count.EqualTo(0));
+            Assert.That(test4!.Params, Has.Count.EqualTo(3));
+            Assert.That(test5.Params, Has.Count.EqualTo(0));
+            Assert.That(subTest2.Params, Has.Count.EqualTo(1));
+        });
 
-        string? val;
-        test4.Params.TryGetValue("key1", out val);
+        test4!.Params.TryGetValue("key1", out var val);
         Assert.That(val, Is.EqualTo("value1"));
 
         test4.Params.TryGetValue("key2", out val);
         Assert.That(val, Is.EqualTo("value2 with spaces"));
 
         test4.Params.TryGetValue("key3", out val);
-        Assert.That(val, Is.EqualTo(@"value3 with a 
+        Assert.That(val, Is.EqualTo(@"value3 with a
   newline"));
 
         subTest2.Params.TryGetValue("k", out val);
         Assert.That(val, Is.EqualTo(@"<>\>=""=<-_?*3.0//"));
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     public sealed class TestControl : Control, IDocumentTag

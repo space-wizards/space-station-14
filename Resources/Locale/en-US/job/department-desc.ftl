@@ -5,3 +5,4 @@ department-Engineering-description = Keep the station operational.
 department-Medical-description = Keep the crew healthy.
 department-Security-description = Keep the peace around the station.
 department-Science-description = Research new technologies and dangerous artifacts.
+department-Specific-description = Jobs that not all stations have.

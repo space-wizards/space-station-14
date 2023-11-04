@@ -6,6 +6,6 @@ namespace Content.Shared.Decals;
 public sealed class ColorPalettePrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = null!;
-    [DataField("name")] public string Name { get; } = null!;
-    [DataField("colors")] public Dictionary<string, Color> Colors { get; } = null!;
+    [DataField("name")] public string Name { get; private set; } = null!;
+    [DataField("colors")] public Dictionary<string, Color> Colors { get; private set; } = null!;
 }

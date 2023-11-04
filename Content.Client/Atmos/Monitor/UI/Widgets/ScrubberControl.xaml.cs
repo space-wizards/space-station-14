@@ -20,12 +20,14 @@ public sealed partial class ScrubberControl : BoxContainer
     private string _address;
 
     public event Action<string, IAtmosDeviceData>? ScrubberDataChanged;
+	public event Action<IAtmosDeviceData>? ScrubberDataCopied;
 
     private CheckBox _enabled => CEnableDevice;
     private CollapsibleHeading _addressLabel => CAddress;
     private OptionButton _pumpDirection => CPumpDirection;
     private FloatSpinBox _volumeRate => CVolumeRate;
     private CheckBox _wideNet => CWideNet;
+	private Button _copySettings => CCopySettings;
 
     private GridContainer _gases => CGasContainer;
     private Dictionary<Gas, Button> _gasControls = new();
@@ -75,6 +77,11 @@ public sealed partial class ScrubberControl : BoxContainer
             _data.PumpDirection = (ScrubberPumpDirection) args.Id;
             ScrubberDataChanged?.Invoke(_address, _data);
         };
+		
+		_copySettings.OnPressed += _ =>
+		{
+			ScrubberDataCopied?.Invoke(_data);
+		};
 
         foreach (var value in Enum.GetValues<Gas>())
         {

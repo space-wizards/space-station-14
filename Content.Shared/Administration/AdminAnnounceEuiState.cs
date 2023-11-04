@@ -17,12 +17,6 @@ namespace Content.Shared.Administration
     public static class AdminAnnounceEuiMsg
     {
         [Serializable, NetSerializable]
-        public sealed class Close : EuiMessageBase
-        {
-
-        }
-
-        [Serializable, NetSerializable]
         public sealed class DoAnnounce : EuiMessageBase
         {
             public bool CloseAfter;
