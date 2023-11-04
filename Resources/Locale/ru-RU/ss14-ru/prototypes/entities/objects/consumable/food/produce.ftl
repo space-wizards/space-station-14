@@ -113,3 +113,7 @@ ent-FoodBungo = плод бунго
     .desc = Скромный плод бунго.
 ent-FoodBungoPit = косточка бунго
     .desc = { ent-FoodInjectableBase.desc }
+ent-FoodPeaPod = стручок гороха
+    .desc = Любимое лакомство уток!
+ent-FoodPumpkin = тыква
+    .desc = Большой, оранжевый... ягода. Серьёзно.
