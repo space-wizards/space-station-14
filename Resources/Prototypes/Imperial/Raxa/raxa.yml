@@ -5,9 +5,9 @@
   description: luchiy drug gruzhika. Uses .45 magnum ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/raxa.rsi
+    sprite: Imperial/cargo-revolver/raxa.rsi
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/raxa.rsi
+    sprite: Imperial/cargo-revolver/raxa.rsi
   - type: RevolverAmmoProvider
     capacity: 6
     chambers: [ True, True, True, True, True, True ]

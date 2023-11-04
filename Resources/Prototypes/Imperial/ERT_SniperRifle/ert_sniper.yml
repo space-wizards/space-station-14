@@ -5,7 +5,7 @@
   description: A high tech energy sniper favoured by the NT-ERT operatives.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/pulse_sniper.rsi
+    sprite: Imperial/Ert_sniper/pulse_sniper.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -13,14 +13,14 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_sniper.rsi
+    sprite: Imperial/Ert_sniper/pulse_sniper.rsi
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 0.5
     availableModes:
       - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_sniper.ogg
+      path: /Audio/Imperial/ert_sniper/laser_sniper.ogg
   - type: HitscanBatteryAmmoProvider
     proto: PulseSniper
     fireCost: 1500
