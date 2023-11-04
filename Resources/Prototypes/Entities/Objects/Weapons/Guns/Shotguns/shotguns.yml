@@ -158,8 +158,6 @@
   id: WeaponShotgunKammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
-  - type: Tag
-    id: WeaponShotgunKammerer
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
@@ -168,6 +166,8 @@
     size: Normal
   - type: BallisticAmmoProvider
     capacity: 4
+  - type: Tag
+      id: WeaponShotgunKammerer
   
 - type: entity
   name: sawn-off shotgun
