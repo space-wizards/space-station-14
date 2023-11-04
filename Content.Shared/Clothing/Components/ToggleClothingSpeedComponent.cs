@@ -14,7 +14,7 @@ public sealed partial class ToggleClothingSpeedComponent : Component
     /// The action for toggling the clothing.
     /// </summary>
     [DataField]
-    public EntProtoId ToggleAction;
+    public EntProtoId ToggleAction = "ActionToggleSpeedBoots";
 
     /// <summary>
     /// The action entity
