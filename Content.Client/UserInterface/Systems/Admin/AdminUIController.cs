@@ -187,7 +187,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {entity}");
         else if (function == EngineKeyFunctions.UseSecondary)
-            _verb.OpenVerbMenu(EntityManager.GetEntity(entity), true);
+            _verb.OpenVerbMenu(entity, true);
         else
             return;
 

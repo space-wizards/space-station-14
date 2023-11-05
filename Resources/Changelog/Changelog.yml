@@ -1,58 +1,4 @@
 Entries:
-- author: Repo
-  changes:
-  - {message: Nanotrasen no longer provides imitation head scrubs in the medical scrub
-      crate., type: Fix}
-  id: 4601
-  time: '2023-08-15T20:22:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Radios no longer display a popup when messages fail to send., type: Remove}
-  id: 4602
-  time: '2023-08-15T20:56:42.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Portal sprites made less bad hopefully, type: Tweak}
-  - {message: Hand teleporter doafter reduced slightly, type: Tweak}
-  - {message: Portals can no longer teleport you to other maps, type: Fix}
-  - {message: Ghosts can now traverse linked portals silently using an altverb, type: Add}
-  - {message: Portals now snap to grid + show up properly in the entity menu, type: Fix}
-  id: 4603
-  time: '2023-08-15T20:56:14.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Cyborgs can't get electrocuted anymore., type: Fix}
-  id: 4604
-  time: '2023-08-15T22:37:34.0000000+00:00'
-- author: Fahasor
-  changes:
-  - {message: Nanotrasen Department of Economics has reduced glue expenses in jug
-      production lines. Now labels from jugs can be deleted., type: Fix}
-  id: 4605
-  time: '2023-08-15T22:41:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Artifacts once again fit in artifact containers., type: Fix}
-  - {message: Brought crate capacity in line with other storage. (500 -> 30), type: Fix}
-  - {message: Hamlet's cage is now hamlet-sized and can only fit a single item., type: Fix}
-  id: 4606
-  time: '2023-08-15T22:49:30.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - {message: Added directional switches, type: Add}
-  id: 4607
-  time: '2023-08-15T23:01:50.0000000+00:00'
-- author: Tollhouse
-  changes:
-  - {message: Discount Dan has finalized a deal with NT chemistry and Shady Smokes
-      to bring you a new smoking sensation., type: Add}
-  id: 4608
-  time: '2023-08-16T00:27:18.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Syndicate pAI's are now equipped with radio transmitters., type: Tweak}
-  id: 4609
-  time: '2023-08-16T06:59:42.0000000+00:00'
 - author: Velcroboy
   changes:
   - {message: Restructured cannabis!, type: Tweak}
@@ -2912,3 +2858,50 @@ Entries:
       causing it to appear offset from the player', type: Fix}
   id: 5100
   time: '2023-11-03T20:37:26.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Candles can now be found in PietyVend., type: Add}
+  id: 5101
+  time: '2023-11-04T05:53:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to sell the same bounty multiple times., type: Fix}
+  id: 5102
+  time: '2023-11-04T13:19:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed needing to manually deselect to switch between borg modules.,
+    type: Fix}
+  id: 5103
+  time: '2023-11-04T13:29:19.0000000+00:00'
+- author: TheEmber
+  changes:
+  - {message: Changed vomit probability for soap to 20% and soapy water to 10%., type: Tweak}
+  id: 5104
+  time: '2023-11-04T15:19:30.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The senior physician now spawns with a medical beret., type: Tweak}
+  id: 5105
+  time: '2023-11-04T15:20:09.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can now drag and drop to enter mechs., type: Tweak}
+  id: 5106
+  time: '2023-11-04T15:23:46.0000000+00:00'
+- author: daerSeebaer
+  changes:
+  - {message: Radiation Shutters (and some other things) are now better at keeping
+      out radiation., type: Tweak}
+  id: 5107
+  time: '2023-11-04T15:25:56.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Critical vaccinated crew no longer immune to zombie fists, type: Fix}
+  id: 5108
+  time: '2023-11-04T17:57:21.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed accidental crayon graffiti when writing on paper, type: Fix}
+  id: 5109
+  time: '2023-11-04T22:44:10.0000000+00:00'

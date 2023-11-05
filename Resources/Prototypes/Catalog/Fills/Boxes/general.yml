@@ -410,6 +410,58 @@
     resistance: 2
 
 - type: entity
+  name: candle box
+  parent: BoxCardboard
+  id: BoxCandle
+  components:
+  - type: Item
+    size: 30
+  - type: Sprite
+    layers:
+      - state: box
+      - state: candle
+  - type: Storage
+    maxTotalWeight: 30
+  - type: StorageFill
+    contents:
+      - id: Candle
+        amount: 3
+      - id: CandleBlue
+        amount: 3
+      - id: CandleRed
+        amount: 3
+      - id: CandleGreen
+        amount: 3
+      - id: CandlePurple
+        amount: 3
+        
+- type: entity
+  name: small candle box
+  parent: BoxCardboard
+  id: BoxCandleSmall
+  components:
+  - type: Item
+    size: 30
+  - type: Sprite
+    layers:
+      - state: box
+      - state: candle
+  - type: Storage
+    maxTotalWeight: 30
+  - type: StorageFill
+    contents:
+      - id: CandleSmall
+        amount: 5
+      - id: CandleBlueSmall
+        amount: 5
+      - id: CandleRedSmall
+        amount: 5
+      - id: CandleGreenSmall
+        amount: 5
+      - id: CandlePurpleSmall
+        amount: 5
+
+- type: entity
   name: darts box
   parent: BoxCardboard
   id: BoxDarts
