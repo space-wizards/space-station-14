@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
@@ -11,6 +11,7 @@ public abstract class SharedRoleSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     // TODO please lord make role entities
     private readonly HashSet<Type> _antagTypes = new();
@@ -85,6 +86,10 @@ public abstract class SharedRoleSystem : EntitySystem
         if (mind.OwnedEntity != null)
         {
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+        if (_minds.TryGetSession(mindId, out var session))
+        {
+            _audioSystem.PlayGlobal(component.GreetSoundNotification, session);
         }
 
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
