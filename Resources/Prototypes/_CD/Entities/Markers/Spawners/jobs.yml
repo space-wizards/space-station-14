@@ -94,20 +94,17 @@
 # Engineering
 
 - type: entity
-  id: ArrivalsSpawnPointEngineer
+  id: ArrivalsSpawnPointAtmosphericTechnician
   parent: ArrivalsSpawnPointJobBase
-  suffix: engineering
+  suffix: atmospheric technician
   components:
   - type: ArrivalsSpawnPoint
     jobs:
-      - SeniorEngineer
-      - StationEngineer
       - AtmosphericTechnician
-      - TechnicalAssistant
   - type: Sprite
     layers:
       - state: green
-      - state: engineer
+      - state: atmospherics
 
 - type: entity
   id: ArrivalsSpawnPointChiefEngineer
@@ -122,24 +119,35 @@
       - state: green
       - state: ce
 
-# Medical
-
 - type: entity
-  id: ArrivalsSpawnPointMedical
+  id: ArrivalsSpawnPointEngineer
   parent: ArrivalsSpawnPointJobBase
-  suffix: medical
+  suffix: engineering
   components:
   - type: ArrivalsSpawnPoint
     jobs:
-      - SeniorPhysician
-      - Paramedic
-      - Chemist
-      - MedicalDoctor
-      - MedicalIntern
+      - SeniorEngineer
+      - StationEngineer
+      - TechnicalAssistant
   - type: Sprite
     layers:
       - state: green
-      - state: doctor
+      - state: engineer
+
+# Medical
+
+- type: entity
+  id: ArrivalsSpawnPointChemist
+  parent: ArrivalsSpawnPointJobBase
+  suffix: chemist
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - Chemist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: chemist
 
 - type: entity
   id: ArrivalsSpawnPointChiefMedicalOfficer
@@ -154,7 +162,36 @@
       - state: green
       - state: cmo
 
+- type: entity
+  id: ArrivalsSpawnPointMedical
+  parent: ArrivalsSpawnPointJobBase
+  suffix: medical
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - SeniorPhysician
+      - Paramedic
+      - MedicalDoctor
+      - MedicalIntern
+  - type: Sprite
+    layers:
+      - state: green
+      - state: doctor
+
 # Science
+
+- type: entity
+  id: ArrivalsSpawnPointResearchDirector
+  parent: ArrivalsSpawnPointJobBase
+  suffix: research director
+  components:
+  - type: ArrivalsSpawnPoint
+    jobs:
+      - ResearchDirector
+  - type: Sprite
+    layers:
+      - state: green
+      - state: rd
 
 - type: entity
   id: ArrivalsSpawnPointScience
@@ -171,20 +208,20 @@
       - state: green
       - state: scientist
 
+# Security
+
 - type: entity
-  id: ArrivalsSpawnPointResearchDirector
+  id: ArrivalsSpawnPointDetective
   parent: ArrivalsSpawnPointJobBase
-  suffix: research director
+  suffix: detective
   components:
   - type: ArrivalsSpawnPoint
     jobs:
-      - ResearchDirector
+      - Detective
   - type: Sprite
     layers:
       - state: green
-      - state: rd
-
-# Security
+      - state: detective
 
 - type: entity
   id: ArrivalsSpawnPointHeadOfSecurity
@@ -198,19 +235,6 @@
     layers:
       - state: green
       - state: hos
-
-- type: entity
-  id: ArrivalsSpawnPointWarden
-  parent: ArrivalsSpawnPointJobBase
-  suffix: warden
-  components:
-  - type: ArrivalsSpawnPoint
-    jobs:
-      - Warden
-  - type: Sprite
-    layers:
-      - state: green
-      - state: warden
 
 - type: entity
   id: ArrivalsSpawnPointSecurity
@@ -228,14 +252,14 @@
       - state: security_officer
 
 - type: entity
-  id: ArrivalsSpawnPointDetective
+  id: ArrivalsSpawnPointWarden
   parent: ArrivalsSpawnPointJobBase
-  suffix: detective
+  suffix: warden
   components:
   - type: ArrivalsSpawnPoint
     jobs:
-      - Detective
+      - Warden
   - type: Sprite
     layers:
       - state: green
-      - state: detective
+      - state: warden
