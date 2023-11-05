@@ -9,9 +9,9 @@ namespace Content.Shared.Ganimed.Components
 	public sealed partial class BookTerminalCartridgeComponent : Component
 	{
 		[DataField("fullCharge"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-		public int FullCharge = 20;
+		public float FullCharge = 20.0f;
 		
 		[DataField("currentCharge"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-		public int CurrentCharge = 20;
+		public float CurrentCharge = 20.0f;
 	}
 }

@@ -102,6 +102,12 @@
   - type: Appearance
   - type: AccessReader
     access: [["Library"]]
+  - type: AmbientSound
+    enabled: false
+    volume: -10
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
 
 - type: entity
   id: BookTerminalFilled

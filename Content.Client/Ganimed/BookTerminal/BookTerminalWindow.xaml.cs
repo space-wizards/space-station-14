@@ -35,9 +35,9 @@ namespace Content.Client.Ganimed.BookTerminal
             UpdateContainerInfo(castState);
             UpdateBooksList(castState);
 			
-            UploadButton.Disabled = !castState.RoutineAllowed;
-			ClearButton.Disabled = !castState.RoutineAllowed;
-            EjectButton.Disabled = castState.BookName is null;
+            UploadButton.Disabled = !castState.RoutineAllowed || castState.WorkProgress is not null;
+			ClearButton.Disabled = !castState.RoutineAllowed || castState.WorkProgress is not null;
+            EjectButton.Disabled = castState.BookName is null || castState.WorkProgress is not null;
         }
 		
 		public void UpdateBooksList(BoundUserInterfaceState state)
@@ -59,7 +59,7 @@ namespace Content.Client.Ganimed.BookTerminal
                 button.OnPressed += args => OnPrintBookButtonPressed?.Invoke(args, button);
                 button.OnMouseEntered += args => OnPrintBookButtonMouseEntered?.Invoke(args, button);
                 button.OnMouseExited += args => OnPrintBookButtonMouseExited?.Invoke(args, button);
-				button.Disabled = !castState.RoutineAllowed;
+				button.Disabled = !castState.RoutineAllowed || castState.WorkProgress is not null;
                 BooksList.AddChild(button);
             }
         }
@@ -78,6 +78,12 @@ namespace Content.Client.Ganimed.BookTerminal
         public void UpdateContainerInfo(BookTerminalBoundUserInterfaceState state)
         {
             ContainerInfo.Children.Clear();
+			
+			if (state.WorkProgress is not null)
+			{
+				ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-working", ("progress", (int)(100.0f * (1 - state.WorkProgress)))) });
+				return;
+			}
 
             if (state.BookName is null)
             {
@@ -124,13 +130,14 @@ namespace Content.Client.Ganimed.BookTerminal
 			
 			if (state.CartridgeCharge is null)
             {
-                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-no-cartridge-loaded-text") });
+                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-no-cartridge-loaded-text"), FontColorOverride = Color.DarkRed});
                 return;
-            } else if (state.CartridgeCharge < 1)
+            } else if (state.CartridgeCharge <= -10.0f)
             {
-                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-cartridge-empty") });
+                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-cartridge-empty"), FontColorOverride = Color.DarkRed});
                 return;
             }
+			ContainerInfo.Children.Add(new Label {Text = Loc.GetString("book-terminal-window-cartridge-charge", ("charge", (int) (100 * state.CartridgeCharge)))});
         }
     }
 	

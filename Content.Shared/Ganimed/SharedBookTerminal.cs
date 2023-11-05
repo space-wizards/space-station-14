@@ -11,9 +11,10 @@ namespace Content.Shared.Ganimed
 		public readonly NetEntity? BookEntity;
 		public readonly List<SharedBookTerminalEntry>? BookEntries;
 		public readonly bool RoutineAllowed;
-		public readonly int? CartridgeCharge;
+		public readonly float? CartridgeCharge;
+		public readonly float? WorkProgress;
         
-		public BookTerminalBoundUserInterfaceState(string? bookName, string? bookDescription, NetEntity? bookEntity, List<SharedBookTerminalEntry>? bookEntries, bool routineAllowed = false, int? cartridgeCharge = null)
+		public BookTerminalBoundUserInterfaceState(string? bookName, string? bookDescription, NetEntity? bookEntity, List<SharedBookTerminalEntry>? bookEntries, bool routineAllowed = false, float? cartridgeCharge = null, float? workProgress = null)
         {
             BookName = bookName;
 			BookDescription = bookDescription;
@@ -21,6 +22,7 @@ namespace Content.Shared.Ganimed
 			BookEntries = bookEntries;
 			RoutineAllowed = routineAllowed;
 			CartridgeCharge = cartridgeCharge;
+			WorkProgress = workProgress;
         }
     }
 	

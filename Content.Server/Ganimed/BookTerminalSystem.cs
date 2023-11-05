@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Power.Components;
 using Content.Server.Ganimed.Components;
 using Content.Shared.Examine;
 using Content.Shared.Ganimed;
@@ -21,9 +23,12 @@ using Content.Shared.Access.Systems;
 using Content.Server.Labels.Components;
 using System.Threading.Tasks;
 using Robust.Shared.Asynchronous;
+using Content.Shared.Audio;
 using Content.Shared.Ganimed;
 using Content.Shared.Ganimed.Components;
 using Content.Shared.Emag.Components;
+using Content.Shared.Construction.Components;
+using Content.Server.Construction;
 
 namespace Content.Server.Ganimed
 {
@@ -31,6 +36,7 @@ namespace Content.Server.Ganimed
 	public sealed class BookTerminalSystem : EntitySystem
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
@@ -57,8 +63,33 @@ namespace Content.Server.Ganimed
             SubscribeLocalEvent<BookTerminalComponent, BookTerminalClearContainerMessage>(OnClearContainerMessage);
 			SubscribeLocalEvent<BookTerminalComponent, BookTerminalUploadMessage>(OnUploadMessage);
             SubscribeLocalEvent<BookTerminalComponent, BookTerminalPrintBookMessage>(OnPrintBookMessage);
+			SubscribeLocalEvent<BookTerminalComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<BookTerminalComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
 			SubscribeLocalEvent<BookTerminalCartridgeComponent, ExaminedEvent>(OnExamined); // Мне попросту лень писать под это отдельную систему.
         }
+		
+		public override void Update(float frameTime)
+		{
+			base.Update(frameTime);
+
+			var query = EntityQueryEnumerator<BookTerminalComponent, ApcPowerReceiverComponent>();
+			while (query.MoveNext(out var uid, out var terminal, out var receiver))
+			{
+				if (!Transform(uid).Anchored || !receiver.Powered)
+				{
+					FlushTask((uid, terminal));
+					SetLockOnAllSlots((uid, terminal), !receiver.Powered && Transform(uid).Anchored);
+					continue;
+				}
+				
+				if (terminal.WorkType is not null && terminal.WorkTimeRemaining > 0.0f)
+				{
+					terminal.WorkTimeRemaining -= frameTime;
+					if (terminal.WorkTimeRemaining <= 0.0f)
+						ProcessTask((uid, terminal));
+				}
+			}
+		}
 		
 		private void UpdateVisuals(Entity<BookTerminalComponent> ent)
 		{
@@ -97,18 +128,18 @@ namespace Content.Server.Ganimed
 			return bookContainer is not null && 
 				cartridgeContainer is not null && 
 				TryComp<BookTerminalCartridgeComponent>(cartridgeContainer, out var cartridgeComp) && 
-				cartridgeComp.CurrentCharge > 0 &&
-				cartridgeComp.FullCharge > 0;
+				cartridgeComp.CurrentCharge > 0.0f &&
+				cartridgeComp.FullCharge > 0.0f;
 		}
 		
 		private void DecreaseCartridgeCharge(Entity<BookTerminalComponent> bookTerminal)
 		{
 			var cartridgeContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "cartridgeSlot");
 			if (!TryComp<BookTerminalCartridgeComponent>(cartridgeContainer, out var cartridgeComp)
-				|| cartridgeComp.CurrentCharge < 1)
+				|| cartridgeComp.CurrentCharge < 1.0f)
 				return;
 				
-			cartridgeComp.CurrentCharge -= 1;
+			cartridgeComp.CurrentCharge -= 1.0f;
 			Dirty(cartridgeComp);
 		}
 		
@@ -129,22 +160,46 @@ namespace Content.Server.Ganimed
 			args.PushText(Loc.GetString("book-terminal-cartridge-component-examine", ("charge", component.CurrentCharge)));
 		}
 		
+		private void OnPowerChanged(EntityUid uid, BookTerminalComponent component, ref PowerChangedEvent args)
+		{
+			FlushTask((uid, component));
+			
+			SetLockOnAllSlots((uid, component), !args.Powered);
+
+			UpdateVisuals((uid, component));
+		}
+		
+		private void OnUnanchorAttempt(EntityUid uid, BookTerminalComponent component, UnanchorAttemptEvent args)
+        {
+            if (!Transform(uid).Anchored)
+				FlushTask((uid, component));
+        }
+		
 		private void UpdateUiState(Entity<BookTerminalComponent> bookTerminal)
         {
             var bookContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "bookSlot");
 			var cartridgeContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "cartridgeSlot");
 			var bookName = bookContainer is not null ? Name(bookContainer.Value) : null;
 			var bookDescription = bookContainer is not null ? Description(bookContainer.Value) : null;
-			int? cartridgeCharge = cartridgeContainer is not null ?
+			float? cartridgeCharge = cartridgeContainer is not null ?
 									EntityManager.TryGetComponent<BookTerminalCartridgeComponent>(cartridgeContainer, out var cartridgeComp) ? 
-									cartridgeComp.CurrentCharge : 
+									cartridgeComp.CurrentCharge / cartridgeComp.FullCharge : 
 									null :
 									null;
+			
+			float? workProgress = bookTerminal.Comp.WorkTimeRemaining > 0.0f && bookTerminal.Comp.WorkType is not null ?
+									bookTerminal.Comp.WorkTimeRemaining / bookTerminal.Comp.WorkTime : null;
 
-            var state = new BookTerminalBoundUserInterfaceState(bookName, bookDescription, GetNetEntity(bookContainer), bookTerminalEntries, IsRoutineAllowed(bookTerminal), cartridgeCharge);
+            var state = new BookTerminalBoundUserInterfaceState(bookName, bookDescription, GetNetEntity(bookContainer), bookTerminalEntries, IsRoutineAllowed(bookTerminal), cartridgeCharge, workProgress);
             _userInterfaceSystem.TrySetUiState(bookTerminal, BookTerminalUiKey.Key, state);
 			UpdateVisuals(bookTerminal);
         }
+		
+		private void SetLockOnAllSlots(Entity<BookTerminalComponent> bookTerminal, bool lockValue)
+		{
+			_itemSlotsSystem.SetLock(bookTerminal, "cartridgeSlot", lockValue);
+			_itemSlotsSystem.SetLock(bookTerminal, "bookSlot", lockValue);
+		}
 		
 		private void OnClearContainerMessage(Entity<BookTerminalComponent> bookTerminal, ref BookTerminalClearContainerMessage message)
         {
@@ -156,10 +211,9 @@ namespace Content.Server.Ganimed
                 return;
 			
 			if (IsAuthorized(bookTerminal, entity, bookTerminal) && TryLowerCartridgeCharge(bookTerminal))
-				ClearContent(bookContainer.Value);
+				SetupTask(bookTerminal, "Clearing");
 			
 			UpdateUiState(bookTerminal);
-            ClickSound(bookTerminal);
         }
 		
 		private void OnUploadMessage(Entity<BookTerminalComponent> bookTerminal, ref BookTerminalUploadMessage message)
@@ -172,10 +226,12 @@ namespace Content.Server.Ganimed
                 return;
 			
 			if (IsAuthorized(bookTerminal, entity, bookTerminal) && TryLowerCartridgeCharge(bookTerminal))
-				UploadContent(bookContainer.Value);
+			{
+				UploadContent(bookContainer.Value); // Иначе, асинхронное обновление просто не поспевает :\
+				SetupTask(bookTerminal, "Uploading");
+			}
 			
 			UpdateUiState(bookTerminal);
-            ClickSound(bookTerminal);
         }
 		
 		private void OnPrintBookMessage(Entity<BookTerminalComponent> bookTerminal, ref BookTerminalPrintBookMessage message)
@@ -193,13 +249,57 @@ namespace Content.Server.Ganimed
 			
 			if (IsAuthorized(bookTerminal, entity, bookTerminal) && TryLowerCartridgeCharge(bookTerminal))
 			{
-				ClearContent(bookContainer.Value);
-				SetContent(bookContainer.Value, message.BookEntry);
+				bookTerminal.Comp.PrintBookEntry = message.BookEntry;
+				SetupTask(bookTerminal, "Printing");
 			}
 			
             UpdateUiState(bookTerminal);
-            ClickSound(bookTerminal);
         }
+		
+		private void ProcessTask(Entity<BookTerminalComponent> bookTerminal)
+		{
+			var bookContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "bookSlot");
+			
+			if (bookContainer is {Valid: true})
+			{
+				if (bookTerminal.Comp.WorkType == "Clearing" || bookTerminal.Comp.WorkType == "Printing")
+					ClearContent(bookContainer.Value);
+				
+				if (bookTerminal.Comp.WorkType == "Printing" && bookTerminal.Comp.PrintBookEntry is not null)
+					SetContent(bookContainer.Value, bookTerminal.Comp.PrintBookEntry);
+				
+			}
+			
+			FlushTask(bookTerminal);
+			UpdateUiState(bookTerminal);
+			
+            _audioSystem.PlayPvs(bookTerminal.Comp.ClickSound, bookTerminal, AudioParams.Default.WithVolume(-2f));
+			
+		}
+		
+		private void SetupTask(Entity<BookTerminalComponent> bookTerminal, string? taskName)
+		{
+			SetLockOnAllSlots(bookTerminal, true);
+			bookTerminal.Comp.WorkTimeRemaining = bookTerminal.Comp.WorkTime;
+			bookTerminal.Comp.WorkType = taskName;
+			
+			_audioSystem.PlayPvs(bookTerminal.Comp.WorkSound, bookTerminal, AudioParams.Default.WithVolume(-2f));
+            _ambientSoundSystem.SetAmbience(bookTerminal, true);
+			UpdateVisuals(bookTerminal);
+		}
+		
+		private void FlushTask(Entity<BookTerminalComponent> bookTerminal)
+		{
+			RefreshBookContent();
+			SetLockOnAllSlots(bookTerminal, false);
+			bookTerminal.Comp.PrintBookEntry = null;
+			bookTerminal.Comp.WorkType = null;
+			bookTerminal.Comp.WorkTimeRemaining = 0.0f;
+			
+            _ambientSoundSystem.SetAmbience(bookTerminal, false);
+			UpdateVisuals(bookTerminal);
+			UpdateUiState(bookTerminal);
+		}
 		
 		private void ClearContent(EntityUid? item)
 		{
@@ -348,11 +448,6 @@ namespace Content.Server.Ganimed
 
             _popupSystem.PopupEntity(Loc.GetString("book-terminal-component-access-denied"), uid);
             return false;
-        }
-		
-		private void ClickSound(Entity<BookTerminalComponent> bookTerminal)
-        {
-            _audioSystem.PlayPvs(bookTerminal.Comp.ClickSound, bookTerminal, AudioParams.Default.WithVolume(-2f));
         }
     }
 }
