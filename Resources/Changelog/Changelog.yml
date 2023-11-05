@@ -1,15 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Admin ghosts are now able to interact with user interfaces from any
-      range., type: Fix}
-  id: 4611
-  time: '2023-08-16T08:03:42.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Lockers and crates work again., type: Fix}
-  id: 4612
-  time: '2023-08-16T13:08:53.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: 'Taxibots, cleanbots, and similar now have binary radio.', type: Add}
@@ -2905,3 +2894,14 @@ Entries:
   - {message: Mice no longer eat soap., type: Fix}
   id: 5110
   time: '2023-11-05T23:47:19.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Chemistry bags had their storage rebalanced and can now hold beakers.,
+    type: Tweak}
+  id: 5111
+  time: '2023-11-05T23:49:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed hotplates and some other devices not working., type: Fix}
+  id: 5112
+  time: '2023-11-05T23:49:59.0000000+00:00'
