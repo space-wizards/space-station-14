@@ -368,14 +368,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (toAdd == container)
             return false;
 
-        if (TryComp<TransformComponent>(toAdd, out var xform))
-        {
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var aabb = _lookup.GetAABB(toAdd, Vector2.Zero, 0, xform, xformQuery);
-
-            if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
-                return false;
-        }
+        var aabb = _lookup.GetAABBNoContainer(toAdd, Vector2.Zero, 0);
+        if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
+            return false;
 
         return Insert(toAdd, container, component);
     }
