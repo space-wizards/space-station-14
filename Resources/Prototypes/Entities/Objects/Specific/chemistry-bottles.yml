@@ -136,6 +136,7 @@
   parent: BaseChemistryEmptyBottle
   id: BaseChemistryBottleFilled
   abstract: true
+  components:
   - type: Tag
     tags:
     - Bottle
