@@ -413,7 +413,7 @@ public sealed class FaxSystem : EntitySystem
 
         if (HasComp<MobStateComponent>(sendEntity))
         {
-            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Physical"), 300);
+            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Brute"), 300);
             _damageable.TryChangeDamage(sendEntity, damageSpec);
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(sender != null ? ToPrettyString(sender.Value) : "Unknown"):user} tried to send foreign object from \"{component.FaxName}\" {ToPrettyString(uid)} to {faxName} ({component.DestinationFaxAddress}): {paper.Content}");
