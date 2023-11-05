@@ -407,6 +407,9 @@
     Medicine:
       effects:
       - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 4
         probability: 0.3
 
 - type: reagent
