@@ -63,6 +63,7 @@ namespace Content.Server.Ganimed
             SubscribeLocalEvent<BookTerminalComponent, BookTerminalClearContainerMessage>(OnClearContainerMessage);
 			SubscribeLocalEvent<BookTerminalComponent, BookTerminalUploadMessage>(OnUploadMessage);
             SubscribeLocalEvent<BookTerminalComponent, BookTerminalPrintBookMessage>(OnPrintBookMessage);
+            SubscribeLocalEvent<BookTerminalComponent, BookTerminalCopyPasteMessage>(OnCopyPasteMessage);
 			SubscribeLocalEvent<BookTerminalComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<BookTerminalComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
 			SubscribeLocalEvent<BookTerminalCartridgeComponent, ExaminedEvent>(OnExamined); // Мне попросту лень писать под это отдельную систему.
@@ -190,7 +191,14 @@ namespace Content.Server.Ganimed
 			float? workProgress = bookTerminal.Comp.WorkTimeRemaining > 0.0f && bookTerminal.Comp.WorkType is not null ?
 									bookTerminal.Comp.WorkTimeRemaining / bookTerminal.Comp.WorkTime : null;
 
-            var state = new BookTerminalBoundUserInterfaceState(bookName, bookDescription, GetNetEntity(bookContainer), bookTerminalEntries, IsRoutineAllowed(bookTerminal), cartridgeCharge, workProgress);
+            var state = new BookTerminalBoundUserInterfaceState(bookName, 
+							bookDescription, 
+							GetNetEntity(bookContainer), 
+							bookTerminalEntries, 
+							IsRoutineAllowed(bookTerminal), 
+							cartridgeCharge, 
+							workProgress,
+							bookTerminal.Comp.PrintBookEntry is not null);
             _userInterfaceSystem.TrySetUiState(bookTerminal, BookTerminalUiKey.Key, state);
 			UpdateVisuals(bookTerminal);
         }
@@ -227,8 +235,9 @@ namespace Content.Server.Ganimed
 			
 			if (IsAuthorized(bookTerminal, entity, bookTerminal) && TryLowerCartridgeCharge(bookTerminal))
 			{
-				UploadContent(bookContainer.Value); // Иначе, асинхронное обновление просто не поспевает :\
-				SetupTask(bookTerminal, "Uploading");
+				var content = GetContent(bookContainer.Value);
+				if (content is not null)
+					UploadBookContent(content); // Иначе, асинхронное обновление просто не поспевает :\
 			}
 			
 			UpdateUiState(bookTerminal);
@@ -251,6 +260,35 @@ namespace Content.Server.Ganimed
 			{
 				bookTerminal.Comp.PrintBookEntry = message.BookEntry;
 				SetupTask(bookTerminal, "Printing");
+			}
+			
+            UpdateUiState(bookTerminal);
+        }
+		
+		private void OnCopyPasteMessage(Entity<BookTerminalComponent> bookTerminal, ref BookTerminalCopyPasteMessage message)
+        {
+            var bookContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "bookSlot");
+            if (bookContainer is not {Valid: true})
+                return;
+			if (bookTerminalEntries.Count() < 1)
+				return;
+			
+			if (message.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
+                return;
+			
+			RefreshBookContent();
+			
+			if (IsAuthorized(bookTerminal, entity, bookTerminal))
+			{
+				if (bookTerminal.Comp.PrintBookEntry is null)
+				{
+					bookTerminal.Comp.PrintBookEntry = GetContent(bookContainer.Value);
+				} 
+				else if (TryLowerCartridgeCharge(bookTerminal))
+				{
+					SetupTask(bookTerminal, "Printing");
+				}
+					
 			}
 			
             UpdateUiState(bookTerminal);
@@ -400,10 +438,10 @@ namespace Content.Server.Ganimed
 			return bookTerminalEntries.Find(entry => entry.Id == id);
 		}
 		
-		private void UploadContent(EntityUid? item)
+		private SharedBookTerminalEntry? GetContent(EntityUid? item)
 		{
 			if (item is null)
-				return;
+				return null;
 			
 			var paperComp = EnsureComp<PaperComponent>(item.Value);
 			var metadata = EnsureComp<MetaDataComponent>(item.Value);
@@ -415,12 +453,12 @@ namespace Content.Server.Ganimed
 				sharedStamps.Add(new SharedStampedData(-1, entry.StampedName, entry.StampedColor.ToHex()));
 			}
 			
-			UploadBookContent(new SharedBookTerminalEntry(-1, 
+			return new SharedBookTerminalEntry(-1, 
 				Name(item.Value) ?? "",  
 				Description(item.Value) ?? "", 
 				paperComp.Content ?? "",
 				sharedStamps,
-				paperComp.StampState ?? "paper_stamp-void"));
+				paperComp.StampState ?? "paper_stamp-void");
 		}
 		
 		public async void UploadBookContent(SharedBookTerminalEntry sharedBookEntry)

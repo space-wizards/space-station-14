@@ -13,8 +13,9 @@ namespace Content.Shared.Ganimed
 		public readonly bool RoutineAllowed;
 		public readonly float? CartridgeCharge;
 		public readonly float? WorkProgress;
+		public readonly bool CopyPaste;
         
-		public BookTerminalBoundUserInterfaceState(string? bookName, string? bookDescription, NetEntity? bookEntity, List<SharedBookTerminalEntry>? bookEntries, bool routineAllowed = false, float? cartridgeCharge = null, float? workProgress = null)
+		public BookTerminalBoundUserInterfaceState(string? bookName, string? bookDescription, NetEntity? bookEntity, List<SharedBookTerminalEntry>? bookEntries, bool routineAllowed = false, float? cartridgeCharge = null, float? workProgress = null, bool copyPaste = false)
         {
             BookName = bookName;
 			BookDescription = bookDescription;
@@ -23,6 +24,7 @@ namespace Content.Shared.Ganimed
 			RoutineAllowed = routineAllowed;
 			CartridgeCharge = cartridgeCharge;
 			WorkProgress = workProgress;
+			CopyPaste = copyPaste;
         }
     }
 	
@@ -45,6 +47,12 @@ namespace Content.Shared.Ganimed
 	
 	[Serializable, NetSerializable]
     public sealed class BookTerminalUploadMessage : BoundUserInterfaceMessage
+    {
+
+    }
+	
+	[Serializable, NetSerializable]
+    public sealed class BookTerminalCopyPasteMessage : BoundUserInterfaceMessage
     {
 
     }

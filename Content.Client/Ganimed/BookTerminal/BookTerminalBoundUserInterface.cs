@@ -30,6 +30,7 @@ namespace Content.Client.Ganimed.BookTerminal
             _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent("bookSlot"));
             _window.ClearButton.OnPressed += _ => SendMessage(new BookTerminalClearContainerMessage());
             _window.UploadButton.OnPressed += _ => SendMessage(new BookTerminalUploadMessage());
+            _window.CopyPasteButton.OnPressed += _ => SendMessage(new BookTerminalCopyPasteMessage());
             
 			
 			_window.OpenCentered();

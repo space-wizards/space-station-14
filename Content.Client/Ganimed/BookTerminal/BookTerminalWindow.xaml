@@ -1,8 +1,8 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'book-terminal-bound-user-interface-title'}"
-            SetSize="500 450"
-            MinSize="500 450">
+            SetSize="525 475"
+            MinSize="525 475">
     <BoxContainer Orientation="Vertical">
         <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" MinSize="0 250">
             <BoxContainer Orientation="Vertical" Name="BooksList" Access="Public">
@@ -19,6 +19,10 @@
             <Button Name="ClearButton"
                     Access="Public"
                     Text="{Loc 'book-terminal-window-clear-button'}"
+                    StyleClasses="OpenBoth"/>
+            <Button Name="CopyPasteButton"
+                    Access="Public"
+                    Text="{Loc 'book-terminal-window-copy-button'}"
                     StyleClasses="OpenBoth"/>
             <Button Name="EjectButton"
                     Access="Public"

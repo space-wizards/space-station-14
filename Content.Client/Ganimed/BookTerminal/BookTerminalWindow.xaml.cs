@@ -35,9 +35,14 @@ namespace Content.Client.Ganimed.BookTerminal
             UpdateContainerInfo(castState);
             UpdateBooksList(castState);
 			
+			CopyPasteButton.Text = Loc.GetString(castState.CopyPaste 
+									? "book-terminal-window-paste-button" 
+									: "book-terminal-window-copy-button");
+			
             UploadButton.Disabled = !castState.RoutineAllowed || castState.WorkProgress is not null;
 			ClearButton.Disabled = !castState.RoutineAllowed || castState.WorkProgress is not null;
             EjectButton.Disabled = castState.BookName is null || castState.WorkProgress is not null;
+			CopyPasteButton.Disabled = !castState.RoutineAllowed || castState.WorkProgress is not null;
         }
 		
 		public void UpdateBooksList(BoundUserInterfaceState state)
