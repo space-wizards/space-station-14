@@ -10,8 +10,8 @@ var skipBuild = args.Contains("--skip-build");
 if (!skipBuild)
     WipeBin();
 
-await ServerPackaging.PackageServer(skipBuild, true, logger);
-// await ContentPackaging.PackageClient(skipBuild, logger);
+await ServerPackaging.PackageServer(skipBuild, false, logger);
+// await ClientPackaging.PackageClient(skipBuild, logger);
 
 
 void WipeBin()
