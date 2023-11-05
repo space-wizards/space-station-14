@@ -266,7 +266,7 @@ namespace Content.Server.Ganimed
 					ClearContent(bookContainer.Value);
 				
 				if (bookTerminal.Comp.WorkType == "Printing" && bookTerminal.Comp.PrintBookEntry is not null)
-					SetContent(bookContainer.Value, bookTerminal.Comp.PrintBookEntry);
+					SetContent(bookContainer.Value, bookTerminal.Comp.PrintBookEntry, bookTerminal);
 				
 			}
 			
@@ -337,7 +337,7 @@ namespace Content.Server.Ganimed
 			RemComp<LabelComponent>(item.Value);
 		}
 		
-		private void SetContent(EntityUid? item, SharedBookTerminalEntry bookEntry)
+		private void SetContent(EntityUid? item, SharedBookTerminalEntry bookEntry, Entity<BookTerminalComponent> bookTerminal)
 		{
 			if (item is null)
 				return;
@@ -356,6 +356,21 @@ namespace Content.Server.Ganimed
                 StampedColor = Color.FromHex(stampEntry.Color)
 				};
 			
+				_paperSystem.TryStamp(item.Value, stampInfo, "paper_stamp-void", paperComp);
+			}
+			
+			if (!HasComp<EmaggedComponent>(bookTerminal) && bookTerminal.Comp.StampedName is not null)
+			{
+				var stampedColor = bookTerminal.Comp.StampedColor is not null ? 
+									Color.FromHex(bookTerminal.Comp.StampedColor) : 
+									Color.FromHex("#000000");
+				
+				var stampInfo = new StampDisplayInfo {
+				BlockWriting = bookTerminal.Comp.BlockWriting,
+                StampedName = bookTerminal.Comp.StampedName,
+                StampedColor = stampedColor,
+				};
+				
 				_paperSystem.TryStamp(item.Value, stampInfo, "paper_stamp-void", paperComp);
 			}
 			

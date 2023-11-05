@@ -18,4 +18,5 @@ stamp-component-stamped-name-ce = Старший инженер
 stamp-component-stamped-name-iaa = Агент внутренних дел
 stamp-component-stamped-name-legal = Юридический департамент
 stamp-component-stamped-name-psychologist = Психолог
+stamp-component-stamped-name-terminal = Копия
 

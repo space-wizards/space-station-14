@@ -22,6 +22,9 @@ public partial struct StampDisplayInfo
 
     [DataField("stampedColor")]
     public Color StampedColor;
+
+    [DataField("blockWriting")]
+    public bool BlockWriting = true;
 };
 
 [RegisterComponent]
@@ -43,6 +46,12 @@ public sealed partial class StampComponent : Component
     /// </summary>
     [DataField("stampedColor")]
     public Color StampedColor = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
+
+    /// <summary>
+    /// Whether to block writing after the paper being stamped
+    /// </summary>
+    [DataField("blockWriting")]
+    public bool BlockWriting = true;
 
     [DataField("sound")]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Stamp/thick_stamp_sub.ogg")

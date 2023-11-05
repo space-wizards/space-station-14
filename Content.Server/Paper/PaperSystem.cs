@@ -98,10 +98,21 @@ namespace Content.Server.Paper
                 );
             }
         }
+		
+		private bool CanWriteStamped(List<StampDisplayInfo> stamps)
+		{
+			foreach (var stamp in stamps)
+			{
+				if (stamp.BlockWriting)
+					return false;
+			}
+			
+			return true;
+		}
 
         private void OnInteractUsing(EntityUid uid, PaperComponent paperComp, InteractUsingEvent args)
         {
-            if (_tagSystem.HasTag(args.Used, "Write") && paperComp.StampedBy.Count == 0)
+            if (_tagSystem.HasTag(args.Used, "Write") && CanWriteStamped(paperComp.StampedBy))
             {
                 var writeEvent = new PaperWriteEvent(uid, args.User);
                 RaiseLocalEvent(args.Used, ref writeEvent);

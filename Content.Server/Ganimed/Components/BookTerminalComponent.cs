@@ -10,7 +10,7 @@ namespace Content.Server.Ganimed.Components
     public sealed partial class BookTerminalComponent : Component
     {
 
-        [DataField("workSound"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField("workSound")]
         public SoundSpecifier WorkSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
 		
 		[DataField("clickSound")]
@@ -21,6 +21,15 @@ namespace Content.Server.Ganimed.Components
 		
 		[DataField("workType")]
         public string? WorkType;
+		
+		[DataField("stampName"), ViewVariables(VVAccess.ReadWrite)]
+        public string? StampedName = "stamp-component-stamped-name-terminal";
+		
+		[DataField("stampColor"), ViewVariables(VVAccess.ReadWrite)]
+        public string? StampedColor = "#999999";
+		
+		[DataField("blockWriting"), ViewVariables(VVAccess.ReadWrite)]
+        public bool BlockWriting = false;
 		
 		[DataField("printBookEntry")]
         public SharedBookTerminalEntry? PrintBookEntry;
