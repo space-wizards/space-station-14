@@ -1,11 +1,11 @@
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Server.GameStates;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
@@ -41,7 +41,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
             if (component.JoinAlikeEntities)
             {
                 AssignEntityToTrackingGroup(uid);
-                _exemplarTypesToUpdate.Add(entProtoId.Value);
+                AssignExemplarsToEntities(entProtoId.Value);
             }
         }
 
@@ -52,7 +52,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
             if (component.JoinAlikeEntities)
             {
                 RemoveEntityFromTrackingGroup(uid);
-                _exemplarTypesToUpdate.Add(entProtoId.Value);
+                AssignExemplarsToEntities(entProtoId.Value);
             }
         }
     }
@@ -61,8 +61,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
     {
         var xform = Transform(uid);
 
-        if (xform.GridUid == null ||
-            !TryComp<MapGridComponent>(xform.GridUid, out var grid))
+        if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
         var tile = _sharedMapSystem.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
@@ -72,7 +71,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
         while (query.MoveNext(out var ent, out var powerMonitoringConsole, out var entXform))
         {
             if (entXform.GridUid != xform.GridUid)
-                return;
+                continue;
 
             if (!powerMonitoringConsole.AllChunks.TryGetValue(chunkOrigin, out var chunk))
             {
@@ -82,12 +81,12 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             RefreshTile(ent, powerMonitoringConsole, xform.GridUid.Value, grid, chunk, tile);
         }
+    }
 
-        foreach (var exemplar in _exemplarDevices)
-        {
-            if (TryGetEntProtoId(exemplar.Key, out var entProtoId))
-                _exemplarTypesToUpdate.Add(entProtoId.Value);
-        }
+    public void OnNodeGroupRebuilt(EntityUid uid, PowerMonitoringDeviceComponent component, NodeGroupsRebuilt args)
+    {
+        if (component.JoinAlikeEntities && TryGetEntProtoId(uid, out var entProtoId))
+            AssignExemplarsToEntities(entProtoId.Value);
     }
 
     private void OnGridSplit(EntityUid uid, PowerMonitoringConsoleComponent component, GridSplitEvent args)
@@ -155,12 +154,12 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
     private void OnUIOpened(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIOpenedEvent args)
     {
-        
+
     }
 
     private void OnUIClosed(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIClosedEvent args)
     {
-        
+
     }
 
     private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)

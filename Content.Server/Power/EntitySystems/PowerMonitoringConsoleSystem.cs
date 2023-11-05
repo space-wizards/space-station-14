@@ -1,6 +1,7 @@
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
@@ -11,10 +12,10 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
-using System.Linq;
 using Robust.Shared.Prototypes;
-using static Content.Server.Power.Pow3r.PowerState;
+using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -43,6 +44,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         SubscribeLocalEvent<CableComponent, CableAnchorStateChangedEvent>(OnCableAnchorStateChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchoringChanged);
+        SubscribeLocalEvent<PowerMonitoringDeviceComponent, NodeGroupsRebuilt>(OnNodeGroupRebuilt);
 
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIClosedEvent>(OnUIClosed);
@@ -55,15 +57,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         PowerMonitoringConsoleGroup? focusGroup,
         ICommonSession session)
     {
-        // Ensure all entities to be joined are assigned an exemplar
-        if (_exemplarTypesToUpdate.Any())
-        {
-            foreach (var protoId in _exemplarTypesToUpdate)
-            {
-                AssignExemplarsToEntities(protoId);
-                _exemplarTypesToUpdate.Remove(protoId);
-            }
-        }
+        // Ensure that all entities that are to be joined together have been assigned an exemplar
+        //UpdateEntityExamplers();
 
         if (!_userInterfaceSystem.TryGetUi(uid, PowerMonitoringConsoleUiKey.Key, out var bui))
             return;
@@ -110,58 +105,25 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Tracked devices
         foreach ((var ent, var device) in gridDevices)
         {
+            // Ignore joined, non-exemplar entities
+            if (device.JoinAlikeEntities && !device.IsExemplar)
+                continue;
+
+            // Ignore unachored devices or those on another grid
             var xform = Transform(ent);
             if (xform.Anchored == false || xform.GridUid != gridUid)
                 continue;
 
             // Generate a new console entry
             var entry = new PowerMonitoringConsoleEntry(EntityManager.GetNetEntity(ent));
+            entry.PowerValue = GetPrimaryPowerValues(ent, device, out var powerSupplied, out var powerUsage, out var batteryUsage);
 
-            if (device.Group == PowerMonitoringConsoleGroup.Generator)
-            {
-                // Covers most power sources
-                if (TryComp<PowerSupplierComponent>(ent, out var supplier))
-                {
-                    entry.PowerValue = supplier.CurrentSupply;
-                    totalSources += entry.PowerValue;
-                }
+            // Update running totals
+            totalSources += powerSupplied;
+            totalLoads += powerUsage;
+            totalBatteryUsage += batteryUsage;
 
-                // Radiation collectors
-                else if (TryComp<BatteryDischargerComponent>(ent, out var discharger) &&
-                    TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
-                {
-                    entry.PowerValue = battery.NetworkBattery.CurrentSupply;
-                    totalSources += entry.PowerValue;
-                }
-            }
-
-            else if (device.Group == PowerMonitoringConsoleGroup.SMES ||
-                device.Group == PowerMonitoringConsoleGroup.Substation ||
-                device.Group == PowerMonitoringConsoleGroup.APC)
-            {
-
-                if (TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
-                {
-                    entry.PowerValue = battery.CurrentSupply;
-
-                    // Load due to network battery recharging
-                    totalLoads += Math.Max(battery.CurrentReceiving - battery.CurrentSupply, 0f);
-
-                    // Track battery usage
-                    totalBatteryUsage += Math.Max(battery.CurrentSupply - battery.CurrentReceiving, 0f);
-
-                    // Get loads attached to the APC
-                    if (device.Group == PowerMonitoringConsoleGroup.APC && battery.Enabled)
-                    {
-                        totalLoads += battery.NetworkBattery.LoadingNetworkDemand;
-                    }
-                }
-            }
-
-            // Do not add the console entry if it belongs to a group and is not the exemplar
-            if (device.JoinAlikeEntities && !device.IsExemplar)
-                continue;
-
+            // Only add the entry if the device is in the current focus group
             if (focusGroup != null && device.Group == focusGroup)
                 allEntries.Add(entry);
         }
@@ -239,6 +201,78 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             session);
     }
 
+    private double GetPrimaryPowerValues(EntityUid uid, PowerMonitoringDeviceComponent device, out double powerSupplied, out double powerUsage, out double batteryUsage)
+    {
+        var powerValue = 0d;
+        powerSupplied = 0d;
+        powerUsage = 0d;
+        batteryUsage = 0d;
+
+        if (device.Group == PowerMonitoringConsoleGroup.Generator)
+        {
+            // Covers most power sources
+            if (TryComp<PowerSupplierComponent>(uid, out var supplier))
+            {
+                powerValue = supplier.CurrentSupply;
+                powerSupplied += powerValue;
+            }
+
+            // Radiation collectors
+            else if (TryComp<BatteryDischargerComponent>(uid, out var _) &&
+                TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
+            {
+                powerValue = battery.NetworkBattery.CurrentSupply;
+                powerSupplied += powerValue;
+            }
+        }
+
+        else if (device.Group == PowerMonitoringConsoleGroup.SMES ||
+            device.Group == PowerMonitoringConsoleGroup.Substation ||
+            device.Group == PowerMonitoringConsoleGroup.APC)
+        {
+
+            if (TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
+            {
+                powerValue = battery.CurrentSupply;
+
+                // Load due to network battery recharging
+                powerUsage += Math.Max(battery.CurrentReceiving - battery.CurrentSupply, 0d);
+
+                // Track battery usage
+                batteryUsage += Math.Max(battery.CurrentSupply - battery.CurrentReceiving, 0d);
+
+                // Get loads attached to the APC
+                if (device.Group == PowerMonitoringConsoleGroup.APC && battery.Enabled)
+                {
+                    powerUsage += battery.NetworkBattery.LoadingNetworkDemand;
+                }
+            }
+        }
+
+        // Update power values with those from any child entities, if applicable
+        if (device.JoinAlikeEntities && device.IsExemplar)
+        {
+            foreach (var child in device.ChildEntities)
+            {
+                if (child == uid)
+                    continue;
+
+                if (!TryComp<PowerMonitoringDeviceComponent>(child, out var childDevice) ||
+                    (childDevice.IsExemplar && childDevice.ChildEntities.Contains(uid)))
+                    continue;
+
+                var childPowerValue = GetPrimaryPowerValues(child, childDevice, out var childPowerSupplied, out var childPowerUsage, out var childBatteryUsage);
+
+                powerValue += childPowerValue;
+                powerSupplied += childPowerSupplied;
+                powerUsage += childPowerUsage;
+                batteryUsage += childBatteryUsage;
+            }
+        }
+
+        return powerValue;
+    }
+
     private void GetSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)
     {
         sources = new List<PowerMonitoringConsoleEntry>();
@@ -259,15 +293,17 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             currentSupply += powerSupplier.CurrentSupply;
 
-            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
+            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
                 // Groups entities with the same prototype into one entry
-                if (device.JoinAlikeEntities && !device.IsExemplar)
-                    ent = device.ExemplarUid;
+                if (entDevice.JoinAlikeEntities && !entDevice.IsExemplar)
+                    ent = entDevice.ExemplarUid;
 
                 if (indexedSources.TryGetValue(ent, out var entry))
                 {
                     entry.PowerValue += powerSupplier.CurrentSupply;
+                    indexedSources[ent] = entry;
+
                     continue;
                 }
 
@@ -282,24 +318,26 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             if (uid == ent)
                 continue;
 
-            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
+            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var entBattery))
                 continue;
 
-            currentSupply += battery.CurrentSupply;
+            currentSupply += entBattery.CurrentSupply;
 
-            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
+            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
                 // Groups entities with the same prototype into one entry
-                if (device.JoinAlikeEntities && !device.IsExemplar)
-                    ent = device.ExemplarUid;
+                if (entDevice.JoinAlikeEntities && !entDevice.IsExemplar)
+                    ent = entDevice.ExemplarUid;
 
                 if (indexedSources.TryGetValue(ent, out var entry))
                 {
-                    entry.PowerValue += battery.CurrentSupply;
+                    entry.PowerValue += entBattery.CurrentSupply;
+                    indexedSources[ent] = entry;
+
                     continue;
                 }
 
-                indexedSources.Add(ent, new PowerMonitoringConsoleEntry(EntityManager.GetNetEntity(ent), battery.CurrentSupply));
+                indexedSources.Add(ent, new PowerMonitoringConsoleEntry(EntityManager.GetNetEntity(ent), entBattery.CurrentSupply));
             }
         }
 
@@ -315,10 +353,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         {
             var ent = batteryCharger.Owner;
 
-            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
+            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var entBattery))
                 continue;
 
-            currentDemand += battery.CurrentReceiving;
+            currentDemand += entBattery.CurrentReceiving;
         }
 
         if (MathHelper.CloseTo(currentDemand, 0))
@@ -327,11 +365,22 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         if (MathHelper.CloseTo(currentSupply, 0))
             return;
 
-        if (!TryComp<PowerNetworkBatteryComponent>(uid, out var entBattery))
+        if (!TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
             return;
 
+        var powerUsage = battery.CurrentReceiving;
+
+        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsExemplar)
+        {
+            foreach (var child in device.ChildEntities)
+            {
+                if (TryComp<PowerNetworkBatteryComponent>(uid, out var childBattery))
+                    powerUsage += childBattery.CurrentReceiving;
+            }
+        }
+
         // Update the power value for each source based on the fraction of power the entity is actually draining from each
-        var powerFraction = Math.Min(entBattery.CurrentReceiving / currentSupply, 1f) * Math.Min(currentSupply / currentDemand, 1f);
+        var powerFraction = Math.Min(powerUsage / currentSupply, 1f) * Math.Min(currentSupply / currentDemand, 1f);
 
         foreach (var entry in sources)
             entry.PowerValue *= powerFraction;
@@ -356,15 +405,17 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             currentDemand += powerConsumer.ReceivedPower;
 
-            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
+            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
                 // Groups entities with the same prototype into one entry
-                if (device.JoinAlikeEntities && !device.IsExemplar)
-                    ent = device.ExemplarUid;
+                if (entDevice.JoinAlikeEntities && !entDevice.IsExemplar)
+                    ent = entDevice.ExemplarUid;
 
                 if (indexedLoads.TryGetValue(ent, out var entry))
                 {
                     entry.PowerValue += powerConsumer.ReceivedPower;
+                    indexedLoads[ent] = entry;
+
                     continue;
                 }
 
@@ -384,15 +435,17 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             currentDemand += battery.CurrentReceiving;
 
-            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
+            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
                 // Groups entities with the same prototype into one entry
-                if (device.JoinAlikeEntities && !device.IsExemplar)
-                    ent = device.ExemplarUid;
+                if (entDevice.JoinAlikeEntities && !entDevice.IsExemplar)
+                    ent = entDevice.ExemplarUid;
 
                 if (indexedLoads.TryGetValue(ent, out var entry))
                 {
                     entry.PowerValue += battery.CurrentReceiving;
+                    indexedLoads[ent] = entry;
+
                     continue;
                 }
 
@@ -413,10 +466,34 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         else if (TryComp<PowerSupplierComponent>(uid, out var entSupplier))
             supplying = entSupplier.CurrentSupply;
 
+        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsExemplar)
+        {
+            foreach (var child in device.ChildEntities)
+            {
+                if (TryComp<PowerNetworkBatteryComponent>(uid, out var childBattery))
+                    supplying += childBattery.CurrentSupply;
+
+                else if (TryComp<PowerSupplierComponent>(uid, out var childSupplier))
+                    supplying += childSupplier.CurrentSupply;
+            }
+        }
+
         var powerFraction = Math.Min(supplying / currentDemand, 1f);
 
         foreach (var entry in loads)
             entry.PowerValue *= powerFraction;
+    }
+
+    private bool TryGetEntProtoId(EntityUid uid, [NotNullWhen(true)] out EntProtoId? entProtoId)
+    {
+        entProtoId = null;
+        var protoId = MetaData(uid)?.EntityPrototype?.ID;
+
+        if (protoId == null)
+            return false;
+
+        entProtoId = (EntProtoId) protoId;
+        return true;
     }
 
     private int AlphabeticalSort(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)

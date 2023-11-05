@@ -1,18 +1,10 @@
-using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Pinpointer.UI;
 using Content.Server.Power.Components;
-using Content.Server.StationEvents.Components;
-using Content.Server.UserInterface;
-using Content.Shared.Pinpointer;
-using Content.Shared.Power;
-using Robust.Server.GameStates;
-using Robust.Shared.Map.Components;
 using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Map;
 using Content.Server.NodeContainer;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -21,6 +13,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
     private Dictionary<EntProtoId, Dictionary<EntityUid, EntityCoordinates>> _groupableEntityCoords = new();
     private Dictionary<EntityUid, PowerMonitoringDeviceComponent> _exemplarDevices = new();
     private HashSet<EntProtoId> _exemplarTypesToUpdate = new();
+    private bool _updateAllExemplars = false;
 
     private void AssignEntityToTrackingGroup(EntityUid uid)
     {
@@ -109,21 +102,32 @@ internal sealed partial class PowerMonitoringConsoleSystem
                     foundDevice.ExemplarUid = currentEntity;
 
                     if (trackable != null)
-                        trackable.ChildCoordinates.Add(EntityManager.GetNetCoordinates(foundCoords));
+                        trackable.ChildCoordinates.Add(EntityManager.GetNetCoordinates(foundCoords - coords));
                 }
             }
         }
     }
 
-    private bool TryGetEntProtoId(EntityUid uid, [NotNullWhen(true)] out EntProtoId? entProtoId)
+    private void UpdateEntityExamplers()
     {
-        entProtoId = null;
-        var protoId = MetaData(uid)?.EntityPrototype?.ID;
+        if (_updateAllExemplars)
+        {
+            foreach (var exemplar in _exemplarDevices)
+            {
+                if (TryGetEntProtoId(exemplar.Key, out var entProtoId))
+                    _exemplarTypesToUpdate.Add(entProtoId.Value);
+            }
 
-        if (protoId == null)
-            return false;
+            _exemplarDevices.Clear();
+            _updateAllExemplars = false;
+        }
 
-        entProtoId = (EntProtoId) protoId;
-        return true;
+        if (_exemplarTypesToUpdate.Any())
+        {
+            foreach (var protoId in _exemplarTypesToUpdate)
+                AssignExemplarsToEntities(protoId);
+
+            _exemplarTypesToUpdate.Clear();
+        }
     }
 }

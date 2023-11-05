@@ -65,7 +65,7 @@ public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitori
     ///     Should only be used if 'GroupWithAlikeEnitites' is true
     /// </remarks>
     [ViewVariables]
-    public List<EntityUid> ChildEntities = new();
+    public HashSet<EntityUid> ChildEntities = new();
 
     /// <summary>
     ///     Indicates if this entity represents a group of entities
