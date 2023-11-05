@@ -4,7 +4,7 @@
   source: "https://github.com/goonstation/goonstation/blob/4059e4be90832b02b1228b1bee3db342094e4f1e/sound/voice/screams/monkey_scream.ogg"
 
 - files: ["cat_meow.ogg"]
-  license: "CCBY-3.0"
+  license: "CC-BY-3.0"
   copyright: "Modified from 'Meow 4.wav' by freesound user 'TRNGLE. The original audio was trimmed, split to mono, and converted from WAV to OGG format"
   source: "https://freesound.org/people/TRNGLE/sounds/368006/"
 
