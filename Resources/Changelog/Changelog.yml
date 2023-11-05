@@ -1,9 +1,4 @@
 Entries:
-- author: Velcroboy
-  changes:
-  - {message: Restructured cannabis!, type: Tweak}
-  id: 4610
-  time: '2023-08-16T07:04:26.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Admin ghosts are now able to interact with user interfaces from any
@@ -2905,3 +2900,8 @@ Entries:
   - {message: Fixed accidental crayon graffiti when writing on paper, type: Fix}
   id: 5109
   time: '2023-11-04T22:44:10.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Mice no longer eat soap., type: Fix}
+  id: 5110
+  time: '2023-11-05T23:47:19.0000000+00:00'
