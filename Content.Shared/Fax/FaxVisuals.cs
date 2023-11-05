@@ -13,5 +13,7 @@ public enum FaxMachineVisualState : byte
 {
     Normal,
     Inserting,
+    InsertingHamlet,
+    InsertingMouse,
     Printing
 }

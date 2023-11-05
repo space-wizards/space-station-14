@@ -1,13 +1,21 @@
+using System.Threading;
 using Content.Server.Administration;
+using Content.Server.Administration.Commands;
+using Content.Server.Administration.Components;
 using Content.Server.Administration.Managers;
+using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
+using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Paper;
+using Content.Shared.Popups;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
+using Robust.Shared.Timing;
 using Content.Server.UserInterface;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
@@ -16,11 +24,17 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Timer = Robust.Shared.Timing.Timer;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
+using Content.Server.Nutrition.Components;
 
 namespace Content.Server.Fax;
 
@@ -39,6 +53,8 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private const string PaperSlotId = "Paper";
 
@@ -310,8 +326,12 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.InsertingTimeRemaining > 0)
+        if (component.InsertingTimeRemaining > 0 && !HasComp<MobStateComponent>(component.PaperSlot.Item))
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
+        else if (component.InsertingTimeRemaining > 0 && HasComp<BadFoodComponent>(component.PaperSlot.Item))
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
+        else if (component.InsertingTimeRemaining > 0)
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
         else if (component.PrintingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
         else
@@ -388,8 +408,17 @@ public sealed class FaxSystem : EntitySystem
             return;
 
         if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
-            !TryComp<PaperComponent>(sendEntity, out var paper))
+           !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
+
+        if (HasComp<MobStateComponent>(sendEntity))
+        {
+            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Physical"), 300);
+            _damageable.TryChangeDamage(sendEntity, damageSpec);
+            _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(sender != null ? ToPrettyString(sender.Value) : "Unknown"):user} tried to send foreign object from \"{component.FaxName}\" {ToPrettyString(uid)} to {faxName} ({component.DestinationFaxAddress}): {paper.Content}");
+            return;
+        }
 
         var payload = new NetworkPayload()
         {

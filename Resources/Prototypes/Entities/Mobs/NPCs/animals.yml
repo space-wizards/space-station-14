@@ -1174,6 +1174,7 @@
     rootTask:
       task: MouseCompound
   - type: Physics
+  - type: Paper
   - type: Fixtures
     fixtures:
       fix1:
@@ -2548,6 +2549,7 @@
         - SmallMobLayer
   - type: MobState
   - type: Deathgasp
+  - type: Paper
   - type: MobStateActions
     actions:
       Critical:

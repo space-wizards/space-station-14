@@ -35,3 +35,11 @@
   id: Genetic
   damageTypes:
     - Cellular
+
+- type: damageGroup
+  id: Physical
+  damageTypes:
+    - Blunt
+    - Slash
+    - Piercing
+

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseMachinePowered
   id: FaxMachineBase
   name: long range fax machine
@@ -52,6 +52,8 @@
       enum.FaxMachineVisuals.VisualState:
         base:
           Inserting: { state: inserting }
+          InsertingHamlet: { state: inserting_hamster }
+          InsertingMouse: { state: inserting_mouse }
           Printing: { state: printing }
   - type: ItemSlots
   - type: ContainerContainer
