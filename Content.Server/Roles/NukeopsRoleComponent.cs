@@ -1,4 +1,5 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Roles;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Roles;
 
@@ -8,4 +9,5 @@ namespace Content.Server.Roles;
 [RegisterComponent]
 public sealed partial class NukeopsRoleComponent : AntagonistRoleComponent
 {
+    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/nukeops_start.ogg");
 }

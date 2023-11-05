@@ -87,13 +87,23 @@ public abstract class SharedRoleSystem : EntitySystem
         {
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
-        if (_minds.TryGetSession(mindId, out var session))
-        {
-            _audioSystem.PlayGlobal(component.GreetSoundNotification, session);
-        }
-
+        NotifyPlayerOfRole(mindId, component);
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"'Role {typeof(T).Name}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
+    }
+
+    /// <summary>
+    /// Notify the player of a role change
+    /// </summary>
+    private void NotifyPlayerOfRole<T>(EntityUid mindId, T roleComponent)
+    {
+        AntagonistRoleComponent? comp = roleComponent as AntagonistRoleComponent;
+        if (comp == null)
+            return;
+        if (_minds.TryGetSession(mindId, out var session))
+        {
+            _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
+        }
     }
 
     /// <summary>
