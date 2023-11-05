@@ -1,8 +1,11 @@
 using System.Numerics;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Atmos;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Shuttles.Events;
@@ -19,6 +22,7 @@ namespace Content.Server.Shuttles.Systems
 {
     public sealed partial class DockingSystem : EntitySystem
     {
+        [Dependency] private readonly AirtightSystem _airtight = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
@@ -361,6 +365,13 @@ namespace Content.Server.Shuttles.Systems
                 if (_doorSystem.TryOpen(dockAUid, doorA))
                 {
                     doorA.ChangeAirtight = false;
+                    if (TryComp(dockAUid, out AirtightComponent? doorAAirtight) && TryComp(dockAUid, out TransformComponent? doorATransform) )
+                    {
+                        var doorAEntity = new Entity<AirtightComponent>(dockAUid, doorAAirtight);
+                        _airtight.SetAirblocked(doorAEntity, true);
+                        doorAAirtight.CurrentAirBlockedDirection = (int) doorATransform.LocalRotation.ToAtmosDirection();
+                    }
+
                     if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
                         _bolts.SetBoltsWithAudio(dockAUid, airlockA, true);
@@ -373,6 +384,13 @@ namespace Content.Server.Shuttles.Systems
                 if (_doorSystem.TryOpen(dockBUid, doorB))
                 {
                     doorB.ChangeAirtight = false;
+                    if (TryComp(dockBUid, out AirtightComponent? doorBAirtight) && TryComp(dockBUid, out TransformComponent? doorBTransform))
+                    {
+                        var doorBEntity = new Entity<AirtightComponent>(dockAUid, doorBAirtight);
+                        _airtight.SetAirblocked(doorBEntity, true);
+                        doorBAirtight.CurrentAirBlockedDirection = (int) doorBTransform.LocalRotation.ToAtmosDirection();
+                    }
+
                     if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
                         _bolts.SetBoltsWithAudio(dockBUid, airlockB, true);
@@ -473,17 +491,19 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp(dockUid, out DoorComponent? doorA))
             {
-                if (_doorSystem.TryClose(dockUid, doorA))
+                if (_doorSystem.TryClose(dockUid, doorA) && TryComp(dockUid, out AirtightComponent? doorAAirtight))
                 {
                     doorA.ChangeAirtight = true;
+                    doorAAirtight.CurrentAirBlockedDirection = (int) AtmosDirection.All;
                 }
             }
 
             if (TryComp(dock.DockedWith, out DoorComponent? doorB))
             {
-                if (_doorSystem.TryClose(dock.DockedWith.Value, doorB))
+                if (_doorSystem.TryClose(dock.DockedWith.Value, doorB) && TryComp(dock.DockedWith, out AirtightComponent? doorBAirtight))
                 {
                     doorB.ChangeAirtight = true;
+                    doorBAirtight.CurrentAirBlockedDirection = (int) AtmosDirection.All;
                 }
             }
 

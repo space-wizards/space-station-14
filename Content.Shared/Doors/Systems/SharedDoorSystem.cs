@@ -117,8 +117,8 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         // If no change, return to avoid firing a new DoorStateChangedEvent.
-        if (state == door.State)
-            return;
+        // if (state == door.State)
+        //    return;
 
         switch (state)
         {
