@@ -329,9 +329,9 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.InsertingTimeRemaining > 0 && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster"))
+        if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster"))
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
-        else if (component.InsertingTimeRemaining > 0 && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse"))
+        else if (component.InsertingTimeRemaining > 0 && component.PaperSlot.Item != null && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse"))
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
         else if (component.InsertingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
