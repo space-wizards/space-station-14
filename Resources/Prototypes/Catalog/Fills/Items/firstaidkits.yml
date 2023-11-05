@@ -6,11 +6,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: HandheldHealthAnalyzer
       - id: Brutepack
-        amount: 2
       - id: Ointment
-        amount: 2
       - id: Gauze
       - id: PillCanisterTricordrazine
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
@@ -22,11 +19,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: RegenerativeMesh
-        amount: 2
       - id: Ointment
         amount: 2
-      - id: SyringeSigynate
       - id: PillCanisterKelotane
       - id: PillCanisterDermaline
 
@@ -37,14 +31,10 @@
   components:
   - type: StorageFill
     contents:
-      - id: MedicatedSuture
       - id: Brutepack
       - id: Gauze
-      - id: Bloodpack
-      - id: SyringeTranexamicAcid
       - id: PillCanisterIron
       - id: PillCanisterCopper
-      - id: PillCanisterBicaridine
 
 - type: entity
   id: MedkitToxinFilled
@@ -79,12 +69,9 @@
   components:
   - type: StorageFill
     contents:
-      - id: GeigerCounter
       - id: SyringePhalanximine
       - id: RadAutoInjector
-        amount: 1
       - id: EmergencyMedipen
-        amount: 1
       - id: PillCanisterHyronalin
 
 - type: entity
@@ -95,9 +82,7 @@
   - type: StorageFill
     contents:
       - id: MedicatedSuture
-        amount: 2
       - id: RegenerativeMesh
-        amount: 2
       - id: Bloodpack
         amount: 2
 
@@ -108,13 +93,11 @@
   components:
   - type: StorageFill
     contents:
-      - id: HandheldHealthAnalyzer
       - id: MedicatedSuture
       - id: RegenerativeMesh
       - id: SyringeEphedrine
       - id: BruteAutoInjector
       - id: BurnAutoInjector
-      - id: EmergencyMedipen
 
 - type: entity
   id: StimkitFilled

@@ -236,7 +236,7 @@
     state: box
   - type: Storage
     maxSlots: 7
-    maxTotalWeight: 7
+    maxItemSize: Tiny
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: Small

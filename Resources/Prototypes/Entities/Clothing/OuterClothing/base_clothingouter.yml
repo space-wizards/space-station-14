@@ -15,7 +15,7 @@
   id: ClothingOuterBaseLarge
   components:
   - type: Item
-    size: Large
+    size: Huge
   - type: Clothing
     slots:
     - outerClothing
@@ -70,7 +70,7 @@
     walkModifier: 0.4
     sprintModifier: 0.6
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: Armor
     modifiers:
       coefficients:
@@ -105,7 +105,7 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: Item
-    size: Large
+    size: Huge
 
 - type: entity
   parent: ClothingOuterBase
@@ -128,7 +128,7 @@
   id: ClothingOuterBaseMedium
   components:
   - type: Item
-    size: Large
+    size: Huge
   - type: Clothing
     slots:
     - outerClothing

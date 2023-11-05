@@ -12,7 +12,7 @@
     slots:
     - Back
   - type: Item
-    size: Large
+    size: Huge
   - type: StaticPrice
     price: 500
   - type: ContainerContainer
