@@ -306,3 +306,5 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+.vscode/launch.json
+.gitignore

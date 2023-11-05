@@ -12,6 +12,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using FastAccessors;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -178,7 +179,7 @@ public sealed class RadioDeviceSystem : EntitySystem
 
         var proto = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel);
         args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", proto.Frequency)));
-        args.PushMarkup(Loc.GetString("handheld-radio-component-chennel-examine", ("channel", proto.LocalizedName)));
+        args.PushMarkup(Loc.GetString("handheld-radio-component-channel-examine", ("channel", proto.LocalizedName)));
     }
 
     private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)
@@ -288,10 +289,8 @@ public sealed class RadioDeviceSystem : EntitySystem
     {
         if (component.RequiresPower && !this.IsPowered(uid, EntityManager) || args.Session.AttachedEntity is not { })
             return;
-
-        if (!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel, out _) || !component.SupportedChannels.Contains(args.Channel))
+        if (!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel, out _))
             return;
-
         if (TryComp<RadioMicrophoneComponent>(uid, out var mic))
             mic.BroadcastChannel = args.Channel;
         if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
