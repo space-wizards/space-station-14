@@ -172,15 +172,6 @@ public static class ServerPackaging
         var graph = new RobustClientAssetGraph();
         var passes = graph.AllPasses.ToList();
 
-        // Bundle audio metadata
-        // TODO: Sometimes the pass gets skipped due to uhh dependency stuff
-        // This is honestly a mess but I just want audio rework and
-        // this is significantly easier to fix than porting it from python was.
-        var audioPass = new AssetPassAudioMetadata("Resources/audio_metadata.yml");
-        pass.Dependencies.Add(new AssetPassDependency(audioPass.Name));
-        passes.Add(audioPass);
-        audioPass.Dependencies.Add(new AssetPassDependency(graph.Output.Name));
-
         pass.Dependencies.Add(new AssetPassDependency(graph.Output.Name));
         passes.Add(pass);
 
@@ -229,95 +220,6 @@ public static class ServerPackaging
         }
 
         inputPass.InjectFinished();
-    }
-
-    /// <summary>
-    /// Strips out audio files and writes them to a metadata .yml
-    /// </summary>
-    private sealed class AssetPassAudioMetadata : AssetPass
-    {
-        private string[] _audioExtensions = new[]
-        {
-            ".ogg",
-            ".wav",
-        };
-
-        private List<AudioMetadataPrototype> _audioMetadata = new();
-
-        private readonly string _metadataPath;
-
-        public AssetPassAudioMetadata(string metadataPath = "audio_metadata.yml")
-        {
-            _metadataPath = metadataPath;
-        }
-
-        protected override AssetFileAcceptResult AcceptFile(AssetFile file)
-        {
-            var ext = Path.GetExtension(file.Path);
-
-            if (!_audioExtensions.Contains(ext))
-            {
-                return AssetFileAcceptResult.Pass;
-            }
-
-            var updatedName = file.Path.Replace("/", "_");
-            TimeSpan length;
-
-            if (ext == ".ogg")
-            {
-                // TODO: This should just be using the engine to derive it.
-                using var stream = file.Open();
-                using var vorbis = new NVorbis.VorbisReader(stream, false);
-                length = vorbis.TotalTime;
-            }
-            else if (ext == ".wav")
-            {
-                // Good luck
-                throw new NotImplementedException();
-            }
-            else
-            {
-                throw new NotImplementedException($"No audio metadata processing implemented for {ext}");
-            }
-
-            _audioMetadata.Add(new AudioMetadataPrototype()
-            {
-                ID = updatedName,
-                Length = length,
-            });
-
-            return AssetFileAcceptResult.Consumed;
-        }
-
-        protected override void AcceptFinished()
-        {
-            if (_audioMetadata.Count == 0)
-                return;
-
-            // ReSharper disable once InconsistentlySynchronizedField
-            var root = new YamlSequenceNode();
-            var document = new YamlDocument(root);
-
-            foreach (var prototype in _audioMetadata)
-            {
-                // TODO: I know but sermanager and please get me out of this hell.
-                var jaml = new YamlMappingNode();
-                jaml.Add("id", new YamlScalarNode(prototype.ID));
-                jaml.Add("length", new YamlScalarNode(prototype.Length.TotalSeconds.ToString(CultureInfo.InvariantCulture)));
-                root.Add(jaml);
-            }
-
-            RunJob(() =>
-            {
-                using var memory = new MemoryStream();
-                using var writer = new StreamWriter(memory);
-                var yamlStream = new YamlStream(document);
-                yamlStream.Save(new YamlNoDocEndDotsFix(new YamlMappingFix(new Emitter(writer))), false);
-                writer.Flush();
-                var result = new AssetFileMemory(_metadataPath, memory.ToArray());
-                SendFile(result);
-            });
-        }
     }
 
     private readonly record struct PlatformReg(string Rid, string TargetOs, bool BuildByDefault);
