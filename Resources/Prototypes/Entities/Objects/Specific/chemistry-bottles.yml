@@ -155,7 +155,7 @@
           Quantity: 30
 
 - type: entity
-  id: RobustHarvestChemistryBottleFilled
+  id: RobustHarvestChemistryBottle
   name: robust harvest bottle
   description: This will increase the potency of your plants.
   parent: BaseChemistryBottleFilled
