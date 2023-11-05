@@ -74,9 +74,9 @@
   source: "https://freesound.org/people/Bee09/sounds/326561/"
 
 - files: ["pill.ogg"]
-  license: "CC BY-NC 3.0"
-  copyright: "Combined from '437480__ruanza__swallowing.wav' by user RuanZA and part from '330657__diniunicorn__popping-pills.wav' by user diniunicorn"
-  source: ["https://freesound.org/people/RuanZA/sounds/437480/", "https://freesound.org/people/diniunicorn/sounds/330657/"]
+  license: "CC-BY-NC-3.0"
+  copyright: "Combined from '437480__ruanza__swallowing.wav' by user RuanZA and part from '330657__diniunicorn__popping-pills.wav' by user diniunicorn. Sources are https://freesound.org/people/RuanZA/sounds/437480/ and https://freesound.org/people/diniunicorn/sounds/330657/ respectively"
+  source: "https://freesound.org/"
 
 - files: ["ring.ogg"]
   license: "CC-BY-SA-3.0"
