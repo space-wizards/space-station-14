@@ -13,13 +13,15 @@
     slots:
     - belt
   - type: Item
-    size: Normal
+    size: Ginormous
   - type: Storage
-    maxSlots: 40
+    maxItemSize: Normal # allow up to 5 large beakers / 10 beakers / 10 pill canisters
+    maxTotalWeight: 20
     quickInsert: true
     areaInsert: true
     whitelist:
       components:
+        - FitsInDispenser
         - Pill
       tags:
         - PillCanister
