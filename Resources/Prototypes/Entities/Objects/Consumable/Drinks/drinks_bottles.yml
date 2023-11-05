@@ -43,7 +43,7 @@
     qualities:
     - Rolling
     speed: 0.75 # not as good as a rolling pin but does the job
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity

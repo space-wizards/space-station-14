@@ -1,18 +1,17 @@
 #nullable enable
 using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using Content.Server.Storage.Components;
 using Content.Server.VendingMachines;
+using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.VendingMachines;
-using Content.Shared.Wires;
-using Content.Server.Wires;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage.Components;
+using Content.Shared.VendingMachines;
+using Content.Shared.Wires;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -96,7 +95,7 @@ namespace Content.IntegrationTests.Tests
   name: Test Ramen
   components:
   - type: Wires
-    LayoutId: Vending
+    layoutId: Vending
   - type: VendingMachine
     pack: TestInventory
   - type: Sprite

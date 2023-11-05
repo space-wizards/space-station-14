@@ -12,7 +12,7 @@ namespace Content.Shared.Chemistry.Dispenser
     /// machines define their inventory.
     /// </summary>
     [Serializable, NetSerializable, Prototype("reagentDispenserInventory")]
-    public sealed class ReagentDispenserInventoryPrototype : IPrototype
+    public sealed partial class ReagentDispenserInventoryPrototype : IPrototype
     {
         // TODO use ReagentId
         [DataField("inventory", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]

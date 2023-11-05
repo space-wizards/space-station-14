@@ -47,11 +47,11 @@
         factor: 1.5
 
 - type: reagent
-  id: SpiderBlood
   parent: Blood
-  name: reagent-name-spider-blood
+  id: CopperBlood
+  name: reagent-name-hemocyanin-blood
   group: Biological
-  desc: reagent-desc-spider-blood
+  desc: reagent-desc-hemocyanin-blood
   flavor: metallic
   color: "#162581"
   recognizable: true

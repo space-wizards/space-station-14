@@ -58,14 +58,13 @@ public sealed class NinjaConditionsSystem : EntitySystem
     {
         if (!TryComp<NinjaRoleComponent>(mindId, out var role) ||
             role.SpiderChargeTarget == null ||
-            !TryComp<WarpPointComponent>(role.SpiderChargeTarget, out var warp) ||
-            warp.Location == null)
+            !TryComp<WarpPointComponent>(role.SpiderChargeTarget, out var warp))
         {
             // this should never really happen but eh
             return Loc.GetString("objective-condition-spider-charge-title-no-target");
         }
 
-        return Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location));
+        return Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location ?? Name(role.SpiderChargeTarget.Value)));
     }
 
     // steal research

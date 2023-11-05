@@ -1,7 +1,7 @@
 - type: entity
   name: Rat King
   id: MobRatKing
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
@@ -45,7 +45,6 @@
       0: Alive
       200: Dead
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
@@ -133,7 +132,6 @@
       0: Alive
       350: Dead
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
@@ -153,7 +151,7 @@
 - type: entity
   name: Rat Servant
   id: MobRatServant
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   description: He's da mini rat. He don't make da roolz.
   noSpawn: true #Must be configured to a King or the AI breaks.
   components:
@@ -208,7 +206,6 @@
   - type: Stamina
     critThreshold: 60
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
     angle: 0
