@@ -48,7 +48,7 @@
           - ReagentId: Sugar
             Quantity: 5
   - type: StaticPrice
-    price: 1
+    price: 10
 
 - type: entity
   id: GoldenSpoon
