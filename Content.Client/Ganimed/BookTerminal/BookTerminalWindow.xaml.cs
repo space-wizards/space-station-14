@@ -74,10 +74,10 @@ namespace Content.Client.Ganimed.BookTerminal
 			if (text is null)
 				return "";
 			
-			if (text.Length <= 40)
+			if (text.Length <= 47)
 				return text;
 			
-			return text.Substring(0, 40) + "...";
+			return text.Substring(0, 47) + "...";
 		}
 
         public void UpdateContainerInfo(BookTerminalBoundUserInterfaceState state)
