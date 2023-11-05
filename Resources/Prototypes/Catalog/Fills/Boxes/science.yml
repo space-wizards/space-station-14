@@ -4,6 +4,8 @@
   id: BoxBeaker
   description: A box full of beakers.
   components:
+  - type: Storage
+    maxItemSize: Normal
   - type: StorageFill
     contents:
       - id: Beaker
