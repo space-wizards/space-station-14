@@ -32,6 +32,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Damage;
+using Content.Shared.Random;
+using Content.Shared.Tag;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
 using Content.Server.Nutrition.Components;
@@ -55,6 +57,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private const string PaperSlotId = "Paper";
 
@@ -326,12 +329,12 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.InsertingTimeRemaining > 0 && !HasComp<MobStateComponent>(component.PaperSlot.Item))
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
-        else if (component.InsertingTimeRemaining > 0 && HasComp<BadFoodComponent>(component.PaperSlot.Item))
+        if (component.InsertingTimeRemaining > 0 && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Hamster"))
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
+        else if (component.InsertingTimeRemaining > 0 && _tagSystem.HasTag(component.PaperSlot.Item.Value, "Mouse"))
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingMouse);
         else if (component.InsertingTimeRemaining > 0)
-            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.InsertingHamlet);
+            _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
         else if (component.PrintingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
         else
