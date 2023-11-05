@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
@@ -371,7 +371,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (TryComp<TransformComponent>(toAdd, out var xform))
         {
             var xformQuery = GetEntityQuery<TransformComponent>();
-            xform ??= xformQuery.GetComponent(toAdd);
             var aabb = _lookup.GetAABB(toAdd, Vector2.Zero, 0, xform, xformQuery);
 
             if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
