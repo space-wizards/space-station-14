@@ -82,11 +82,11 @@
       - map: ["enum.HumanoidVisualLayers.RFoot"]
       - map: ["enum.HumanoidVisualLayers.LHand"]
       - map: ["enum.HumanoidVisualLayers.RHand"]
-      - map: [ "id" ]
       - map: [ "gloves" ]
       - map: [ "shoes" ]
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
+      - map: [ "id" ]
       - map: [ "eyes" ]
       - map: [ "belt" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] # Mentioned in moth code: This needs renaming lol.
