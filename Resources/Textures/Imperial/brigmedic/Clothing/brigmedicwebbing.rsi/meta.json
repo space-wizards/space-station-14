@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by Hülle#2562 (Discord), resprited by @sentryprimies",
+  "copyright": "made by @sentryprimies",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "equipped-BACKPACK",
+      "name": "equipped-BELT",
       "directions": 4
     },
     {
