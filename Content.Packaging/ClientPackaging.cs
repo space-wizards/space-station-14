@@ -8,8 +8,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Packaging;
 
-public static class ContentPackaging
+public static class ClientPackaging
 {
+    /// <summary>
+    /// Be advised this can be called from server packaging during a HybridACZ build.
+    /// </summary>
     public static async Task PackageClient(bool skipBuild, IPackageLogger logger)
     {
         logger.Info("Building client...");
@@ -43,7 +46,6 @@ public static class ContentPackaging
             var writer = new AssetPassZipWriter(zip);
 
             await WriteResources("", writer, logger, default);
-
             await writer.FinishedTask;
         }
 
@@ -68,9 +70,9 @@ public static class ContentPackaging
             contentDir,
             "Content.Client",
             new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" },
-            cancel);
+            cancel: cancel);
 
-        await RobustClientPackaging.WriteClientResources(contentDir, inputPass, cancel);
+        await RobustClientPackaging.WriteClientResources(contentDir, pass, cancel);
 
         inputPass.InjectFinished();
     }
