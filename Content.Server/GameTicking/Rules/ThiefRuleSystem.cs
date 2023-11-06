@@ -38,13 +38,14 @@ using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Server.GameTicking.Rules;
 
-namespace Content.Server.StationEvents.Events;
+namespace Content.Server.GameTicking.Rules;
 
 /// <summary>
 /// Event for spawning a Thief. Auto invoke on start round in Suitable game modes, or can be invoked in mid-game.
 /// </summary>
-public sealed class ThiefRule : StationEventSystem<ThiefRuleComponent>
+public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
     [Dependency] private readonly RoleSystem _role = default!;
 
@@ -67,15 +68,50 @@ public sealed class ThiefRule : StationEventSystem<ThiefRuleComponent>
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
     }
 
-    protected override void Started(EntityUid uid, ThiefRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev) //Момент спавна игроков. Инициализация игрового правила.
     {
-        base.Started(uid, comp, gameRule, args);
-        Log.Error("------------ Start Thief Event ------------");
+        var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var thief, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                continue;
 
-        var thiefPool = FindPotentialThiefs(comp.StartCandidates, comp);
+            foreach (var player in ev.Players)
+            {
+                if (!ev.Profiles.ContainsKey(player.UserId))
+                    continue;
+
+                thief.StartCandidates[player] = ev.Profiles[player.UserId];
+            }
+            DoThiefStart(thief);
+        }
+    }
+
+    private void DoThiefStart(ThiefRuleComponent component)
+    {
+        if (!component.StartCandidates.Any())
+        {
+            Log.Error("There are no players who can become thieves.");
+            return;
+        }
+
+        var startThiefCount = Math.Min(component.MaxAllowThief, component.StartCandidates.Count);
+        var thiefPool = FindPotentialThiefs(component.StartCandidates, component);
+        var selectedThieves = PickThieves(startThiefCount, thiefPool);
+
+        foreach(var thief in selectedThieves)
+        {
+            MakeThief(thief);
+        }
+    }
+
+    private void HandleLatejoin(PlayerSpawnCompleteEvent ev) //Это кстати сработало и при раундстарт подключении. До OnPlayerSpawned
+    {
+        //Если по какой-то причине текущее колиество воров еще недостаточно, тут мы добираем игроков?
     }
 
     private List<ICommonSession> FindPotentialThiefs(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, ThiefRuleComponent component)
@@ -115,49 +151,82 @@ public sealed class ThiefRule : StationEventSystem<ThiefRuleComponent>
         return prefList;
     }
 
-
-
-    private void HandleLatejoin(PlayerSpawnCompleteEvent ev) //Это кстати сработало и при раундстарт подключении. До OnPlayerSpawned
+    private List<ICommonSession> PickThieves(int thiefCount, List<ICommonSession> prefList)
     {
-        //Если по какой-то причине текущее колиество воров еще недостаточно, тут мы добираем игроков
+        var results = new List<ICommonSession>(thiefCount);
+        if (prefList.Count == 0)
+        {
+            Log.Info("Insufficient ready players to fill up with thieves, stopping the selection.");
+            return results;
+        }
 
-        //Log.Error("---------------- HandleLatejoin " + ev.Player.Name);
-        //foreach (var r in _gameTicker.GetAddedGameRules())
-        //{
-        //    Log.Error("----- Rule: " + r.ToString());
-        //}
+        for (var i = 0; i < thiefCount; i++)
+        {
+            results.Add(_random.PickAndTake(prefList));
+            Log.Info("Selected a preferred thief.");
+        }
+        return results;
     }
 
-    public void MakeThief(ICommonSession thief)
+    public bool MakeThief(ICommonSession thief)
     {
         var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
         if (thiefRule == null)
         {
-            //todo fuck me this shit is awful
-            //no i wont fuck you, erp is against rules
             GameTicker.StartGameRule("Thief", out var ruleEntity);
             thiefRule = Comp<ThiefRuleComponent>(ruleEntity);
         }
 
-        Log.Error(thief.Name + "is now thief!");
-        _audioSystem.PlayGlobal(thiefRule.GreetingSound, thief);
+        if (!_mindSystem.TryGetMind(thief, out var mindId, out var mind))
+        {
+            Log.Info("Failed getting mind for picked thief.");
+            return false;
+        }
+
+        if (HasComp<ThiefRoleComponent>(mindId))
+        {
+            Log.Error($"Player {thief.Name} is already a thief.");
+            return false;
+        }
+
+        if (mind.OwnedEntity is not { } entity)
+        {
+            Log.Error("Mind picked for thief did not have an attached entity.");
+            return false;
+        }
+
+        // Prepare thief role
+        var thiefRole = new ThiefRoleComponent
+        {
+            PrototypeId = thiefRule.ThiefPrototypeId,
+        };
+
+        // Assign thief roles
+        _roleSystem.MindAddRole(mindId, new ThiefRoleComponent
+        {
+            PrototypeId = thiefRule.ThiefPrototypeId
+        });
+
+        // Assign briefing
+        //_roleSystem.MindAddRole(mindId, new RoleBriefingComponent
+        //{
+        //    Briefing = briefing
+        //});
+        //SendTraitorBriefing(mindId, traitorRule.Codewords, code);
+
+        if (_mindSystem.TryGetSession(mindId, out var session))
+        {
+            // Notificate player about new role assignment
+            _audioSystem.PlayGlobal(thiefRule.GreetingSound, session);
+        }
+
+        Log.Error(thief.Name + "-------- is now thief! --------");
+
+        // Give thieves their objectives
+        // Give starting items
+
+        thiefRule.ThiefMinds.Add(mindId);
+        return true;
     }
-
-    /// <summary>
-    /// Returns a thief's gamerule config data.
-    /// If the gamerule was not started then it will be started automatically.
-    /// </summary>
-    public ThiefRuleComponent? GetThiefRule(EntityUid uid, GenericAntagComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return null;
-
-        // mind not added yet so no rule
-        if (comp.RuleEntity == null)
-            return null;
-
-        return CompOrNull<ThiefRuleComponent>(comp.RuleEntity);
-    }
-
 
 }

@@ -74,6 +74,7 @@
   noSpawn: true
   components:
   - type: TraitorRule
+  - type: ThiefRule #the thieves come as an extension of another gamemode
 
 - type: entity
   id: Revolutionary
@@ -102,13 +103,6 @@
   noSpawn: true
   components:
   - type: ZombieRule
-
-- type: entity
-  id: Thief
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: ThiefRule
 
 # event schedulers
 - type: entity

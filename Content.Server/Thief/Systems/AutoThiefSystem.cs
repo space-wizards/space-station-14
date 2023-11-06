@@ -12,7 +12,7 @@ namespace Content.Server.Thief.Systems;
 /// </summary>
 public sealed class AutoThiefSystem : EntitySystem
 {
-    [Dependency] private readonly ThiefRule _thief = default!;
+    [Dependency] private readonly ThiefRuleSystem _thief = default!;
 
     public override void Initialize()
     {

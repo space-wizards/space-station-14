@@ -61,10 +61,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         base.ActiveTick(uid, component, gameRule, frameTime);
 
         if (component.SelectionStatus == TraitorRuleComponent.SelectionState.ReadyToSelect && _gameTiming.CurTime > component.AnnounceAt)
-        {
             DoTraitorStart(component);
-            GameTicker.StartGameRule("Thief", out var thiefRule); //additional thieves rule appearing in this mode
-        }
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

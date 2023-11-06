@@ -16,7 +16,7 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly ZombieSystem _zombie = default!;
-    [Dependency] private readonly ThiefRule _thief = default!;
+    [Dependency] private readonly ThiefRuleSystem _thief = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;

@@ -12,9 +12,9 @@ using Content.Shared.Preferences;
 namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
-/// Stores data for <see cref="ThiefRule/">.
+/// Stores data for <see cref="ThiefRuleSystem/">.
 /// </summary>
-[RegisterComponent, Access(typeof(ThiefRule))]
+[RegisterComponent, Access(typeof(ThiefRuleSystem))]
 public sealed partial class ThiefRuleComponent : Component
 {
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
