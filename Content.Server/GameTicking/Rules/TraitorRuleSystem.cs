@@ -82,8 +82,17 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (code != null)
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
 
+        if(!_mindSystem.TryGetMind(session, out var mindId, out var mind))
+            return;
+        var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
+        if (pda == null)
+            return;
+        // Give traitors their codewords and uplink code to keep in their character info menu
+        code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+        // If giveUplink is false the uplink code part is omitted
+        briefing = string.Format("{0}\n{1}", briefing,
+            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
 
-        // Move notification briefing in here too
         _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
     }
 
@@ -271,11 +280,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             if (pda == null || !_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
                 return false;
 
-            // Give traitors their codewords and uplink code to keep in their character info menu
-            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
-            // If giveUplink is false the uplink code part is omitted
-            briefing = string.Format("{0}\n{1}", briefing,
-                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
         }
 
         // Prepare traitor role
@@ -289,11 +293,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
             PrototypeId = traitorRule.TraitorPrototypeId
         });
+        // so this is why we're using templates huh
+        // ----------------------------------------
         // Assign briefing
-        _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
-        {
-            Briefing = briefing
-        });
+       // _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
+       // {
+       //     Briefing = briefing
+       // });
         // This is the point at which the player notification
         // was done in the old system.
         // now moved to OnRoleChangeNotify():
@@ -348,15 +354,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
 
         return false;
-    }
-    /// <summary>
-    ///     Send a codewords and uplink codes to traitor chat.
-    /// </summary>
-    /// <param name="mind">A mind (player)</param>
-    /// <param name="codewords">Codewords</param>
-    /// <param name="code">Uplink codes</param>
-    private void SendTraitorBriefing(EntityUid mind, string[] codewords, Note[]? code)
-    {
     }
 
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
