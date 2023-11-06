@@ -1,0 +1,12 @@
+ent-CheckerBoard = checkerboard
+    .desc = A checkerboard. Pieces included!
+ent-CheckerBoardTabletop = checkerboard
+    .desc = { ent-BaseBoardTabletop.desc }
+ent-CheckerPieceWhite = white checker piece
+    .desc = { ent-BaseTabletopPiece.desc }
+ent-CheckerCrownWhite = white checker crown
+    .desc = { ent-BaseTabletopPiece.desc }
+ent-CheckerPieceBlack = black checker piece
+    .desc = { ent-BaseTabletopPiece.desc }
+ent-CheckerCrownBlack = black checker crown
+    .desc = { ent-BaseTabletopPiece.desc }

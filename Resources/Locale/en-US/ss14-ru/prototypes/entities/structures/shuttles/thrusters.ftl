@@ -1,0 +1,12 @@
+ent-BaseThruster = { ent-BaseStructureDynamic }
+    .desc = { ent-BaseStructureDynamic.desc }
+ent-Thruster = { ent-BaseThruster }
+  .desc = { ent-BaseThruster.desc }
+ent-DebugThruster = { ent-BaseThruster }
+    .suffix = DEBUG
+    .desc = { ent-BaseThruster.desc }
+ent-Gyroscope = { ent-BaseThruster }
+  .desc = { ent-BaseThruster.desc }
+ent-DebugGyroscope = { ent-BaseThruster }
+    .suffix = DEBUG
+    .desc = { ent-BaseThruster.desc }
