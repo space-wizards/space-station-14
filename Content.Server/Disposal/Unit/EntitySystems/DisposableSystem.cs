@@ -5,8 +5,9 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Item;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -14,13 +15,13 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 {
     public sealed class DisposableSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnit = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly MapSystem _map = default!;
 
         public override void Initialize()
         {
@@ -84,9 +85,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             EntityUid? disposalId = null;
             DisposalUnitComponent? duc = null;
-            if (_mapManager.TryGetGrid(holderTransform.GridUid, out var grid))
+            var gridUid = holderTransform.GridUid;
+            if (TryComp<MapGridComponent>(gridUid, out var grid))
             {
-                foreach (var contentUid in grid.GetLocal(holderTransform.Coordinates))
+                foreach (var contentUid in _map.GetLocal(gridUid.Value, grid, holderTransform.Coordinates))
                 {
                     if (EntityManager.TryGetComponent(contentUid, out duc))
                     {
