@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Added two reboot themes., type: Add}
-  id: 4626
-  time: '2023-08-18T13:58:44.0000000+00:00'
 - author: Partmedia
   changes:
   - {message: Added fun!, type: Add}
@@ -2914,3 +2909,9 @@ Entries:
   - {message: Humans will "feel sick" when they metabolize uncooked proteins., type: Add}
   id: 5125
   time: '2023-11-06T03:51:33.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added anomaly synchronizer! It allows you to link anomaly activity to
+      triggers on different devices., type: Add}
+  id: 5126
+  time: '2023-11-06T04:02:03.0000000+00:00'
