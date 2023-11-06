@@ -53,7 +53,7 @@ research-technology-advanced-parts = Advanced Parts
 research-technology-grappling = Grappling
 research-technology-abnormal-artifact-manipulation = Abnormal Artifact Manipulation
 research-technology-gravity-manipulation = Gravity Manipulation
-research-technology-mobile-anomaly-tech = Mobile Anomaly Tech
+research-technology-advanced-anomaly-research = Advanced Anomaly Research
 research-technology-rped = Rapid Part Exchange
 research-technology-super-parts = Super Parts
 
