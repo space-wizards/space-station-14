@@ -208,7 +208,7 @@
     {
       "name": "pda-ert"
     },
-	{
+    {
       "name": "pda-cluwne"
     },
     {
@@ -222,6 +222,10 @@
     },
     {
       "name": "pda-seniorofficer"
+    },
+    {
+      "name": "equipped-IDCARD",
+      "directions": 4
     }
   ]
 }
