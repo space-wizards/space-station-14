@@ -511,8 +511,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
 
         var targets = _lookup.GetEntitiesInRange(coordinates, 1.0f, LookupFlags.Uncontained);
-
-        // Get reactive entities nearby--if there are some, it'll spill a bit on them instead.
         foreach (var ent in targets)
         {
             SpillSolutionOnTarget(solution, ent, _random.NextFloat(0.05f, 0.30f));
@@ -530,7 +528,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private void SpillSolutionOnTarget(Solution solution, EntityUid target, float fraction)
     {
-        var ev = new SolutionSpilledEvent(solution, fraction);
+        var toTakePerEntity = solution.Volume * fraction;
+        var ev = new SolutionSpilledEvent(solution, toTakePerEntity);
         RaiseLocalEvent(target, ref ev);
     }
 
