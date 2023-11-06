@@ -6,6 +6,7 @@ using Content.Shared.Stains;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Content.Shared.Inventory;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Stains;
 
@@ -38,7 +39,8 @@ public sealed class StainsSystem : SharedStainsSystem
     {
         if (_solutionContainer.TryGetSolution(uid, component.Solution, out var targetSolution))
         {
-            _solutionContainer.TryTransferSolution(uid, target: targetSolution, source: @event.Solution, @event.ToTakePerEntity);
+            var toTake = FixedPoint2.Min(@event.ToTakePerEntity, targetSolution.AvailableVolume);
+            _solutionContainer.TryTransferSolution(uid, target: targetSolution, source: @event.Solution, toTake);
         }
     }
 
