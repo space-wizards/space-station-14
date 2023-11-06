@@ -66,6 +66,7 @@
       - clean
   - type: Food
     solution: soap
+  - type: BadFood
 
 
 - type: entity

@@ -38,3 +38,13 @@
   license: "CC0-1.0"
   copyright: "Made by philRacoIndie freesound.org, modified by brainfood1183 (github)"
   source: "https://freesound.org/people/philRacoIndie/sounds/512483/"
+
+- files:
+  - bells1.ogg
+  - bells2.ogg
+  - bells3.ogg
+  - bells4.ogg
+  - bells5.ogg
+  license: "CC-BY-SA-4.0"
+  copyright: "Taken and modified from el1n freesound.org"
+  source: "https://freesound.org/people/el1n/sounds/442746/"
