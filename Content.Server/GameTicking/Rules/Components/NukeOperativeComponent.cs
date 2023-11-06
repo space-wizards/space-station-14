@@ -8,4 +8,5 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent]
 public sealed partial class NukeOperativeComponent : Component
 {
+    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/nukeops_start.ogg");
 }

@@ -107,12 +107,31 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
         SubscribeLocalEvent<ShuttleConsoleFTLTravelStartEvent>(OnShuttleConsoleFTLStart);
         SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnShuttleFTLAttempt);
+        SubscribeLocalEvent<NukeOperativeComponent, RoleChangeNotifyEvent>(OnRoleChangeNotify);
     }
 
+
+    private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent comp, ref RoleChangeNotifyEvent args)
+    {
+
+        if (!TryComp<NukeopsRuleComponent>(uid, out NukeopsRuleComponent? rulecomp))
+            return;
+
+        if (rulecomp.TargetStation is not { } station)
+            return;
+
+        if (!_mind.TryGetSession(uid, out var session))
+            return;
+
+        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
+        _audio.PlayGlobal(comp.GreetSoundNotification, session);
+        return;
+    }
     /// <summary>
     ///     Returns true when the player with UID opUid is a nuclear operative. Prevents random
     ///     people from using the war declarator outside of the game mode.
     /// </summary>
+
     public bool TryGetRuleFromOperative(EntityUid opUid, [NotNullWhen(true)] out (NukeopsRuleComponent, GameRuleComponent)? comps)
     {
         comps = null;
@@ -349,7 +368,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var query = EntityQueryEnumerator<NukeOperativeComponent, ActorComponent>();
         while (query.MoveNext(out _, out var nukeops, out var actor))
         {
-            NotifyNukie(actor.PlayerSession, nukeops, component);
+            // This is a point at which the nukies would have
+            // been notified with the old system
+            //NotifyNukie(actor.PlayerSession, nukeops, component);
             filter.AddPlayer(actor.PlayerSession);
         }
     }
@@ -790,10 +811,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (GameTicker.RunLevel != GameRunLevel.InRound)
                 return;
 
-            if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
-            {
-                NotifyNukie(playerSession, component, nukeops);
-            }
+           // Point at which old system would notify nukies,
+           // now moved to OnRoleChangeNotify()
+           // if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
+           // {
+           //     NotifyNukie(playerSession, component, nukeops);
+           // }
         }
     }
 
@@ -988,18 +1011,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var operatives = new List<ICommonSession>();
         SpawnOperatives(numNukies, operatives, true, component);
-    }
-
-    /// <summary>
-    /// Display a greeting message and play a sound for a nukie
-    /// </summary>
-    private void NotifyNukie(ICommonSession session, NukeOperativeComponent nukeop, NukeopsRuleComponent nukeopsRule)
-    {
-        if (nukeopsRule.TargetStation is not { } station)
-            return;
-
-        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
-        _audio.PlayGlobal(nukeop.GreetSoundNotification, session);
     }
 
     //For admins forcing someone to nukeOps.

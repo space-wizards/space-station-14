@@ -52,6 +52,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
 
+        SubscribeLocalEvent<TraitorRuleComponent, RoleChangeNotifyEvent>(OnRoleChangeNotify);
+
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
     }
@@ -62,6 +64,15 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         if (component.SelectionStatus == TraitorRuleComponent.SelectionState.ReadyToSelect && _gameTiming.CurTime > component.AnnounceAt)
             DoTraitorStart(component);
+    }
+
+    private void OnRoleChangeNotify(EntityUid uid, TraitorRuleComponent comp, ref RoleChangeNotifyEvent args)
+    {
+        if (_mindSystem.TryGetSession(uid, out var session))
+        {
+            // Move notification briefing in here too
+            _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
+        }
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

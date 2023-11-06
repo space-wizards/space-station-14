@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Serialization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Roles;
@@ -87,23 +88,10 @@ public abstract class SharedRoleSystem : EntitySystem
         {
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
-        NotifyPlayerOfRole(mindId, component);
+        var ev = new RoleChangeNotifyEvent();
+        RaiseLocalEvent(ref ev);
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"'Role {typeof(T).Name}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
-    }
-
-    /// <summary>
-    /// Notify the player of a role change
-    /// </summary>
-    private void NotifyPlayerOfRole<T>(EntityUid mindId, T roleComponent)
-    {
-        AntagonistRoleComponent? comp = roleComponent as AntagonistRoleComponent;
-        if (comp == null)
-            return;
-        if (_minds.TryGetSession(mindId, out var session))
-        {
-            _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
-        }
     }
 
     /// <summary>
@@ -169,3 +157,10 @@ public abstract class SharedRoleSystem : EntitySystem
         return _antagTypes.Contains(typeof(T));
     }
 }
+
+/// <summary>
+/// Event for role systems to implement notification to the player,
+/// raised when a role is added to a mindId
+/// </summary>
+[ByRefEvent]
+public record struct RoleChangeNotifyEvent();
