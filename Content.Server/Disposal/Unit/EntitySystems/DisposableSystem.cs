@@ -4,6 +4,7 @@ using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Damage;
 using Content.Shared.Item;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -22,6 +23,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly MapSystem _map = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -186,6 +189,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;
             }
+
+            // damage entities on turns and play sound
+            if (holder.CurrentDirection != holder.PreviousDirection)
+            {
+                foreach (var ent in holder.Container.ContainedEntities)
+                {
+                    _damageable.TryChangeDamage(ent, to.DamageOnTurn);
+                }
+                _audio.PlayPvs(to.ClangSound, toUid);
+            }
+
             return true;
         }
 

@@ -1,4 +1,5 @@
 using Content.Server.Disposal.Unit.EntitySystems;
+using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
@@ -28,4 +29,16 @@ public sealed partial class DisposalTubeComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
+
+    /// <summary>
+    /// Damage dealt to containing entities on every turn
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier DamageOnTurn = new()
+    {
+        DamageDict = new()
+        {
+            { "Blunt", 3.0 },
+        }
+    };
 }
