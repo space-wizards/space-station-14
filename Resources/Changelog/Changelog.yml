@@ -1,9 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: You no longer yell uncontrollably when feeling joy., type: Tweak}
-  id: 4623
-  time: '2023-08-17T22:00:13.0000000+00:00'
 - author: Repo
   changes:
   - {message: 'Janitors have remembered how to wring a mop, mops can transfer chemicals
@@ -2907,3 +2902,9 @@ Entries:
       angle of space itself., type: Fix}
   id: 5122
   time: '2023-11-06T02:40:25.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Microreactor powercells can be researched under the Tier 3 Portable
+      Fission technology, they slowly recharge on their own.', type: Add}
+  id: 5123
+  time: '2023-11-06T03:00:12.0000000+00:00'
