@@ -27,3 +27,6 @@ roles-antag-subverted-silicon-objective = Follow your new laws and do bad unto t
 
 roles-antag-space-ninja-name = Space Ninja
 roles-antag-space-ninja-objective = Use your stealth to sabotage the station, nom on electrical wires.
+
+roles-antag-thief-name = Thief
+roles-antag-space-ninja-objective = Add to your personal collection with some of NanoTreasen's property. Without using violence.
