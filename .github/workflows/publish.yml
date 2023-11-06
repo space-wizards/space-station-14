@@ -30,7 +30,7 @@ jobs:
         git fetch --depth=1
 
     - name: Install dependencies
-        run: dotnet restore
+      run: dotnet restore
 
     - name: Build Packaging
       run: dotnet build Content.Packaging --configuration Release --no-restore /m
