@@ -72,16 +72,18 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         // Give traitors their codewords and uplink code to keep in their character info menu
         var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", comp.Codewords)));
 
-        Note[]? code = null;
 
         if (!_mindSystem.TryGetSession(uid, out var session))
             return;
 
         _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
         _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
+
+        Note[]? code = null;
         if (code != null)
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
 
+        // Here we do all the PDA stuff involved with notifying the players
         if(!_mindSystem.TryGetMind(session, out var mindId, out var mind))
             return;
         var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
@@ -277,7 +279,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             // creadth: we need to create uplink for the antag.
             // PDA should be in place already
             var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
-            if (pda == null || !_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
+            if (!_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
                 return false;
 
         }
@@ -332,6 +334,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     /// <summary>
     ///     Returns true when the player with UID is a traitor.
+    ///     Currently not used anywhere, just mimics function in NukeopsRuleSystem.
     /// </summary>
     public bool TryGetRuleFromTraitor(EntityUid uid, [NotNullWhen(true)] out (TraitorRuleComponent, GameRuleComponent)? comps)
     {
