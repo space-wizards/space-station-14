@@ -69,11 +69,22 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     private void OnRoleChangeNotify(EntityUid uid, TraitorRuleComponent comp, ref RoleChangeNotifyEvent args)
     {
-        if (_mindSystem.TryGetSession(uid, out var session))
-        {
-            // Move notification briefing in here too
-            _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
-        }
+        // Give traitors their codewords and uplink code to keep in their character info menu
+        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", comp.Codewords)));
+
+        Note[]? code = null;
+
+        if (!_mindSystem.TryGetSession(uid, out var session))
+            return;
+
+        _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
+        _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
+        if (code != null)
+            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
+
+
+        // Move notification briefing in here too
+        _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -252,9 +263,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
             startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
 
-        // Give traitors their codewords and uplink code to keep in their character info menu
-        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords)));
-        Note[]? code = null;
         if (giveUplink)
         {
             // creadth: we need to create uplink for the antag.
@@ -349,13 +357,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     /// <param name="code">Uplink codes</param>
     private void SendTraitorBriefing(EntityUid mind, string[] codewords, Note[]? code)
     {
-        if (!_mindSystem.TryGetSession(mind, out var session))
-            return;
-
-       _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
-       _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
-       if (code != null)
-           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
     }
 
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
