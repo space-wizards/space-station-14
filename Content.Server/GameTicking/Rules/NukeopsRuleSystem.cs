@@ -1115,7 +1115,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     }
 
     /// <summary>
-    /// Notfifies play of being a nukie with message and sound
+    /// Notfifies player of being a nukie with message and sound
     /// </summary>
     private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent nukeop, ref RoleChangeNotifyEvent args)
     {

@@ -78,7 +78,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         Note[]? code = null;
         if (code != null)
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
-        _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
 
         _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
 
