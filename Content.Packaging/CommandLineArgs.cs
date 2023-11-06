@@ -17,6 +17,11 @@ public sealed class CommandLineArgs
     public bool SkipBuild { get; set; }
 
     /// <summary>
+    /// Should we wipe the release folder or ignore it.
+    /// </summary>
+    public bool WipeRelease { get; set; }
+
+    /// <summary>
     /// Platforms for server packaging.
     /// </summary>
     public List<string>? Platforms { get; set; }
@@ -32,6 +37,7 @@ public sealed class CommandLineArgs
         parsed = null;
         bool? client = null;
         var skipBuild = false;
+        var wipeRelease = false;
         var hybridAcz = false;
         List<string>? platforms = null;
 
@@ -63,6 +69,10 @@ public sealed class CommandLineArgs
             if (arg == "--skip-build")
             {
                 skipBuild = true;
+            }
+            else if (arg == "--wipe-release")
+            {
+                wipeRelease = true;
             }
             else if (arg == "--hybrid-acz")
             {
@@ -96,7 +106,7 @@ public sealed class CommandLineArgs
             return false;
         }
 
-        parsed = new CommandLineArgs(client.Value, skipBuild, hybridAcz, platforms);
+        parsed = new CommandLineArgs(client.Value, skipBuild, wipeRelease, hybridAcz, platforms);
         return true;
     }
 
@@ -106,20 +116,23 @@ public sealed class CommandLineArgs
 Usage: Content.Packaging [client/server] [options]
 
 Options:
-  --skip-build     Should we skip building the project and use what's already there.
-  --hybrid-acz     Use HybridACZ for server builds.
-  --platform       Platform for server builds. Default will output several x64 targets.
+  --skip-build      Should we skip building the project and use what's already there.
+  --wipe-release    Wipe the release folder before creating files.
+  --hybrid-acz      Use HybridACZ for server builds.
+  --platform        Platform for server builds. Default will output several x64 targets.
 ");
     }
 
     private CommandLineArgs(
         bool client,
         bool skipBuild,
+        bool wipeRelease,
         bool hybridAcz,
         List<string>? platforms)
     {
         Client = client;
         SkipBuild = skipBuild;
+        WipeRelease = wipeRelease;
         HybridAcz = hybridAcz;
         Platforms = platforms;
     }

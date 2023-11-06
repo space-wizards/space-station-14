@@ -3,13 +3,14 @@ using Robust.Packaging;
 
 IPackageLogger logger = new PackageLoggerConsole();
 
-WipeRelease();
-
 if (!CommandLineArgs.TryParse(args, out var parsed))
 {
     logger.Error("Unable to parse args, aborting.");
     return;
 }
+
+if (parsed.WipeRelease)
+    WipeRelease();
 
 if (!parsed.SkipBuild)
     WipeBin();
