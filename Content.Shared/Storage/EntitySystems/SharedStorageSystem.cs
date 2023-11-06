@@ -729,7 +729,6 @@ public abstract class SharedStorageSystem : EntitySystem
             return DefaultStorageMaxItemSize;
         var size = _item.GetSizePrototype(item.Size);
 
-        //todo needs rewrite
         // if there is no max item size specified, the value used
         // is one below the item size of the storage entity, clamped at ItemSize.Tiny
         var sizes = _prototype.EnumeratePrototypes<ItemSizePrototype>().ToList();

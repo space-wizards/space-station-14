@@ -119,7 +119,7 @@ namespace Content.IntegrationTests.Tests
                         }
                         else
                         {
-                            var curIndex = allSizes.IndexOf(itemSys.GetSizePrototype(item.Size));
+                            var curIndex = allSizes.IndexOf(protoMan.Index(item.Size));
                             var index = Math.Max(0, curIndex - 1);
                             maxSize = allSizes[index].ID;
                         }
@@ -149,8 +149,8 @@ namespace Content.IntegrationTests.Tests
                         if (!fillItem.TryGetComponent<ItemComponent>("Item", out var entryItem))
                             continue;
 
-                        Assert.That(itemSys.GetItemSizeWeight(entryItem.Size),
-                            Is.LessThanOrEqualTo(itemSys.GetItemSizeWeight(maxSize.Value)),
+                        Assert.That(protoMan.Index(entryItem.Size).Weight,
+                            Is.LessThanOrEqualTo(protoMan.Index(maxSize.Value).Weight),
                             $"Entity {proto.ID} has storage-fill item, {entry.PrototypeId}, that is too large");
                     }
                 }

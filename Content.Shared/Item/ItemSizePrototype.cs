@@ -28,7 +28,7 @@ public sealed partial class ItemSizePrototype : IPrototype, IComparable<ItemSize
     {
         if (other is not { } otherItemSize)
             return 0;
-        return otherItemSize.Weight.CompareTo(Weight);
+        return Weight.CompareTo(otherItemSize.Weight);
     }
 
     public static bool operator <(ItemSizePrototype a, ItemSizePrototype b)

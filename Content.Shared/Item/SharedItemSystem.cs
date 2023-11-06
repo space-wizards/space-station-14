@@ -17,8 +17,6 @@ public abstract class SharedItemSystem : EntitySystem
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
 
-    private Dictionary<string, ItemSizePrototype> _itemSizeLookup = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -30,32 +28,6 @@ public abstract class SharedItemSystem : EntitySystem
         SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<ItemComponent, ExaminedEvent>(OnExamine);
-
-        RefreshItemSizeLookup();
-        _prototype.PrototypesReloaded += OnPrototypesReloaded;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _prototype.PrototypesReloaded -= OnPrototypesReloaded;
-    }
-
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
-    {
-        if (!obj.ByType.TryGetValue(typeof(ItemSizePrototype), out _))
-            return;
-        RefreshItemSizeLookup();
-    }
-
-    private void RefreshItemSizeLookup()
-    {
-        _itemSizeLookup.Clear();
-        foreach (var size in _prototype.EnumeratePrototypes<ItemSizePrototype>())
-        {
-            _itemSizeLookup.Add(size.ID, size);
-        }
     }
 
     #region Public API
@@ -160,7 +132,7 @@ public abstract class SharedItemSystem : EntitySystem
 
     public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
     {
-        return _itemSizeLookup[id];
+        return _prototype.Index(id);
     }
 
     /// <summary>

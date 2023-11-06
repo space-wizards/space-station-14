@@ -414,8 +414,6 @@
   parent: BoxCardboard
   id: BoxCandle
   components:
-  - type: Item
-    size: 30
   - type: Sprite
     layers:
       - state: box
@@ -434,14 +432,12 @@
         amount: 3
       - id: CandlePurple
         amount: 3
-        
+
 - type: entity
   name: small candle box
   parent: BoxCardboard
   id: BoxCandleSmall
   components:
-  - type: Item
-    size: 30
   - type: Sprite
     layers:
       - state: box
