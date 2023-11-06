@@ -13,12 +13,6 @@ public sealed partial class DisposalTubeComponent : Component
     public string ContainerId = "DisposalTube";
 
     [ViewVariables]
-    public readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
-
-    [ViewVariables]
-    public TimeSpan LastClang;
-
-    [ViewVariables]
     public bool Connected;
 
     [DataField]
