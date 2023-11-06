@@ -178,7 +178,7 @@
         wizardball6: ""
   - type: Appearance
   - type: Item
-    size: 150
+    size: Normal
   - type: Tag
     tags:
     - ArtifactFragment
@@ -202,5 +202,3 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 5
