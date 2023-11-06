@@ -4,6 +4,8 @@
   description: A large storage container for holding unprocessed ores.
   parent: BaseStructureDynamic
   components:
+  - type: StaticPrice
+    price: 500
   - type: Anchorable
   - type: InteractionOutline
   - type: Damageable
@@ -48,7 +50,8 @@
           True: { visible: false }
           False: { visible: true }
   - type: Storage
-    capacity: 525
+    maxSlots: 60
+    maxItemSize: Normal
     storageOpenSound: /Audio/Effects/closetopen.ogg
     storageCloseSound: /Audio/Effects/closetclose.ogg
     whitelist:

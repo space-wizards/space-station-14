@@ -78,6 +78,7 @@ public sealed class SpawnExplosionEui : BaseEui
             tiles[_entManager.GetEntity(nent)] = det;
         }
 
+        _debugOverlay.Tiles = tiles;
         _debugOverlay.SpaceTiles = data.Explosion.SpaceTiles;
         _debugOverlay.Intensity = data.Explosion.Intensity;
         _debugOverlay.Slope = data.Slope;

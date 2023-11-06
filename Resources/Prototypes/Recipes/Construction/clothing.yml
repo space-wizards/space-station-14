@@ -8,3 +8,25 @@
   description: A modified hardsuit fit for a clown.
   icon: { sprite: Clothing/OuterClothing/Hardsuits/clown.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  name: bone armor
+  id: BoneArmor
+  graph: BoneArmor
+  startNode: start
+  targetNode: armor
+  category: construction-category-clothing
+  description: Armor made of bones.
+  icon: { sprite: Clothing/OuterClothing/Armor/bone_armor.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: bone helmet
+  id: BoneHelmet
+  graph: BoneHelmet
+  startNode: start
+  targetNode: helmet
+  category: construction-category-clothing
+  description: Helmet made of bones.
+  icon: { sprite: Clothing/Head/Helmets/bone_helmet.rsi, state: icon }
+  objectType: Item

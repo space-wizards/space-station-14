@@ -83,7 +83,7 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             var readyLabel = new Label
             {
-                Text = ReadyText(now, nextReady),
+                Text = ReadyText(now, nextReady, busy),
                 Margin = new Thickness(10f, 0f, 0f, 0f)
             };
             _readyLabels.Add(readyLabel);
@@ -163,13 +163,16 @@ public sealed partial class GatewayWindow : FancyWindow,
             var dest = _destinations[i];
             var nextReady = dest.Item3;
             var busy = dest.Item4;
-            _readyLabels[i].Text = ReadyText(now, nextReady);
+            _readyLabels[i].Text = ReadyText(now, nextReady, busy);
             _openButtons[i].Disabled = _current != null || busy || now < nextReady;
         }
     }
 
-    private string ReadyText(TimeSpan now, TimeSpan nextReady)
+    private string ReadyText(TimeSpan now, TimeSpan nextReady, bool busy)
     {
+        if (busy)
+            return Loc.GetString("gateway-window-already-active");
+
         if (now < nextReady)
         {
             var time = nextReady - now;

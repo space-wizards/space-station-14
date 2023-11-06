@@ -1,10 +1,8 @@
-using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Body.Commands
@@ -20,7 +18,7 @@ namespace Content.Server.Body.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
 
             EntityUid bodyId;
             EntityUid? partUid;
@@ -94,7 +92,7 @@ namespace Content.Server.Body.Commands
             }
 
             var bodySystem = _entManager.System<BodySystem>();
-            if (bodySystem.BodyHasChild(bodyId, partUid, body, part))
+            if (bodySystem.BodyHasChild(bodyId, partUid.Value, body, part))
             {
                 shell.WriteLine($"Body part {_entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName} with uid {partUid} is already attached to entity {_entManager.GetComponent<MetaDataComponent>(bodyId).EntityName} with uid {bodyId}");
                 return;
@@ -103,16 +101,14 @@ namespace Content.Server.Body.Commands
             var slotId = $"AttachBodyPartVerb-{partUid}";
 
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-            if (bodySystem.TryCreateBodyRootSlot(bodyId, slotId, out var rootSlot, body))
+            if (body.RootContainer.ContainedEntity != null)
             {
-                bodySystem.DropPart(partUid, part);
-                bodySystem.AttachPart(partUid, rootSlot, part);
+                bodySystem.AttachPartToRoot(bodyId,partUid.Value, body ,part);
             }
             else
             {
-                var attachAt = bodySystem.GetBodyChildren(bodyId, body).First();
-
-                if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, partUid, attachAt.Component, part))
+                var (rootPartId,rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
+                if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId, slotId, partUid.Value, part.PartType, rootPart, part))
                 {
                     shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");
                     return;

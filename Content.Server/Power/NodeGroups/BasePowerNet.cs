@@ -1,4 +1,6 @@
-﻿using Content.Server.Power.Components;
+﻿using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using Robust.Shared.Utility;
 
@@ -9,9 +11,16 @@ public abstract class BasePowerNet<TNetType> : BaseNetConnectorNodeGroup<TNetTyp
 {
     [ViewVariables] public readonly List<PowerConsumerComponent> Consumers = new();
     [ViewVariables] public readonly List<PowerSupplierComponent> Suppliers = new();
+    public PowerNetSystem PowerNetSystem = default!;
 
     [ViewVariables]
     public PowerState.Network NetworkNode { get; } = new();
+
+    public override void Initialize(Node sourceNode, IEntityManager entMan)
+    {
+        base.Initialize(sourceNode, entMan);
+        PowerNetSystem = entMan.EntitySysManager.GetEntitySystem<PowerNetSystem>();
+    }
 
     public void AddConsumer(PowerConsumerComponent consumer)
     {

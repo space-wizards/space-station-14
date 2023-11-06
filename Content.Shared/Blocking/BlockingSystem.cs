@@ -27,6 +27,7 @@ public sealed partial class BlockingSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -51,11 +52,19 @@ public sealed partial class BlockingSystem : EntitySystem
         SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<BlockingComponent, GetVerbsEvent<ExamineVerb>>(OnVerbExamine);
+        SubscribeLocalEvent<BlockingComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, BlockingComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.BlockingToggleActionEntity, component.BlockingToggleAction);
+        Dirty(uid, component);
     }
 
     private void OnEquip(EntityUid uid, BlockingComponent component, GotEquippedHandEvent args)
     {
         component.User = args.User;
+        Dirty(uid, component);
 
         //To make sure that this bodytype doesn't get set as anything but the original
         if (TryComp<PhysicsComponent>(args.User, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static && !HasComp<BlockingUserComponent>(args.User))
@@ -201,6 +210,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         component.IsBlocking = true;
+        Dirty(item, component);
 
         return true;
     }
@@ -254,6 +264,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         component.IsBlocking = false;
+        Dirty(item, component);
 
         return true;
     }

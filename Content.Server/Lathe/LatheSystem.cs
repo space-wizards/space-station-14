@@ -107,11 +107,11 @@ namespace Content.Server.Lathe
         {
             if (args.Storage != uid)
                 return;
-            var materialWhitelist = new List<string>();
+            var materialWhitelist = new List<ProtoId<MaterialPrototype>>();
             var recipes = GetAllBaseRecipes(component);
             foreach (var id in recipes)
             {
-                if (!_proto.TryIndex<LatheRecipePrototype>(id, out var proto))
+                if (!_proto.TryIndex(id, out var proto))
                     continue;
                 foreach (var (mat, _) in proto.RequiredMaterials)
                 {
@@ -127,7 +127,7 @@ namespace Content.Server.Lathe
         }
 
         [PublicAPI]
-        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<string>? recipes, [NotNullWhen(true)] LatheComponent? component = null)
+        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, [NotNullWhen(true)] LatheComponent? component = null)
         {
             recipes = null;
             if (!Resolve(uid, ref component))
@@ -136,17 +136,17 @@ namespace Content.Server.Lathe
             return true;
         }
 
-        public List<string> GetAvailableRecipes(EntityUid uid, LatheComponent component)
+        public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component)
         {
             var ev = new LatheGetRecipesEvent(uid)
             {
-                Recipes = new List<string>(component.StaticRecipes)
+                Recipes = new List<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
             };
             RaiseLocalEvent(uid, ev);
             return ev.Recipes;
         }
 
-        public static List<string> GetAllBaseRecipes(LatheComponent component)
+        public static List<ProtoId<LatheRecipePrototype>> GetAllBaseRecipes(LatheComponent component)
         {
             return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
@@ -300,7 +300,7 @@ namespace Content.Server.Lathe
 
         private void OnPartsRefresh(EntityUid uid, LatheComponent component, RefreshPartsEvent args)
         {
-            var printTimeRating = args.PartRatings[component.MachinePartPrintTime];
+            var printTimeRating = args.PartRatings[component.MachinePartPrintSpeed];
             var materialUseRating = args.PartRatings[component.MachinePartMaterialUse];
 
             component.TimeMultiplier = MathF.Pow(component.PartRatingPrintTimeMultiplier, printTimeRating - 1);

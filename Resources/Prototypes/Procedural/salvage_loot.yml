@@ -1,8 +1,125 @@
-# Ores
+# Loot table
+# Main loot table for random spawns
+- type: salvageLoot
+  id: SalvageLoot
+  loots:
+    - !type:RandomSpawnsLoot
+      entries:
+        - proto: AdvMopItem
+          prob: 0.5
+        - proto: AmmoTechFabCircuitboard
+          cost: 2
+        - proto: AutolatheMachineCircuitboard
+          cost: 2
+        - proto: BiomassReclaimerMachineCircuitboard
+          cost: 2
+        - proto: BluespaceBeaker
+          cost: 2
+        - proto: CyborgEndoskeleton
+          cost: 3
+          prob: 0.5
+        - proto: ChemDispenserMachineCircuitboard
+          cost: 2
+        - proto: CircuitImprinter
+          cost: 2
+        - proto: CloningConsoleComputerCircuitboard
+          cost: 2
+        - proto: CloningPodMachineCircuitboard
+          cost: 2
+        - proto: CognizineChemistryBottle
+        - proto: CratePartsT3
+          cost: 2
+          prob: 0.5
+        - proto: CratePartsT3T4
+          cost: 5
+          prob: 0.5
+        - proto: CratePartsT4
+          cost: 5
+          prob: 0.5
+        - proto: CrateSalvageEquipment
+          cost: 3
+          prob: 0.5
+        - proto: GasRecycler
+          cost: 2
+        - proto: GeneratorRTG
+          cost: 5
+        - proto: GravityGeneratorMini
+          cost: 2
+        - proto: GyroscopeUnanchored
+          cost: 2
+          prob: 0.1
+        - proto: MedicalScannerMachineCircuitboard
+          cost: 2
+        - proto: NuclearBombKeg
+          cost: 5
+        - proto: OmnizineChemistryBottle
+          prob: 0.5
+        - proto: PortableGeneratorPacman
+          cost: 2
+        - proto: PortableGeneratorSuperPacman
+          cost: 3
+        - proto: PowerCellAntiqueProto
+          cost: 5
+          prob: 0.5
+        - proto: ProtolatheMachineCircuitboard
+        - proto: RandomArtifactSpawner
+          cost: 2
+        - proto: RandomCargoCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomCommandCorpseSpawner
+          cost: 5
+          prob: 0.5
+        - proto: RandomEngineerCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomMedicCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomScienceCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomSecurityCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: RandomServiceCorpseSpawner
+          cost: 2
+          prob: 0.5
+        - proto: ResearchAndDevelopmentServerMachineCircuitboard
+          cost: 5
+          prob: 0.5
+        - proto: ResearchDisk10000
+          prob: 0.5
+        - proto: ResearchDisk5000
+          prob: 0.5
+        - proto: RipleyHarness
+          cost: 3
+          prob: 0.5
+        - proto: RPED
+        - proto: SpaceCash1000
+        - proto: SpaceCash10000
+          cost: 10
+        - proto: SpaceCash2500
+          cost: 3
+        - proto: SpaceCash5000
+          cost: 5
+        - proto: TechnologyDiskRare
+          cost: 5
+          prob: 0.5
+        - proto: ThrusterUnanchored
+        - proto: WaterTankHighCapacity
+        - proto: WeldingFuelTankHighCapacity
+          cost: 3
+
+# Mob loot table
+
+
+# Boss loot table
+
+# Ores - these are guaranteed
 # - Low value
 - type: salvageLoot
   id: OreTin
-  desc: Veins of steel
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
@@ -14,7 +131,6 @@
 
 - type: salvageLoot
   id: OreQuartz
-  desc: Veins of quartz
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
@@ -27,7 +143,6 @@
 # - Medium value
 - type: salvageLoot
   id: OreGold
-  desc: Veins of gold ore
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
@@ -39,7 +154,6 @@
 
 - type: salvageLoot
   id: OreSilver
-  desc: Veins of silver ore
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
@@ -52,7 +166,6 @@
 # - High value
 - type: salvageLoot
   id: OrePlasma
-  desc: Veins of plasma ore
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
@@ -64,7 +177,6 @@
 
 - type: salvageLoot
   id: OreUranium
-  desc: Veins of uranium ore
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
@@ -76,7 +188,6 @@
 
 - type: salvageLoot
   id: OreBananium
-  desc: Veins of bananium ore
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
@@ -88,7 +199,6 @@
 
 - type: salvageLoot
   id: OreArtifactFragment
-  desc: artifact fragment-embedded rock
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot

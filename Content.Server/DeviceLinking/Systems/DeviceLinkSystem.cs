@@ -73,7 +73,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
                 sinkComponent.InvokeCounter++;
 
                 //Just skip using device networking if the source or the sink doesn't support it
-                if (!HasComp<DeviceNetworkComponent>(uid) || !TryComp<DeviceNetworkComponent?>(sinkUid, out var sinkNetworkComponent))
+                if (!HasComp<DeviceNetworkComponent>(uid) || !TryComp<DeviceNetworkComponent>(sinkUid, out var sinkNetworkComponent))
                 {
                     var eventArgs = new SignalReceivedEvent(sink, uid);
 

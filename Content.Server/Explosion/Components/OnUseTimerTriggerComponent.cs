@@ -30,6 +30,12 @@ namespace Content.Server.Explosion.Components
         public float BeepInterval = 1;
 
         /// <summary>
+        ///     Whether the timer should instead be activated through a verb in the right-click menu
+        /// </summary>
+        [DataField("useVerbInstead")]
+        public bool UseVerbInstead = false;
+
+        /// <summary>
         ///     Should timer be started when it was stuck to another entity.
         ///     Used for C4 charges and similar behaviour.
         /// </summary>

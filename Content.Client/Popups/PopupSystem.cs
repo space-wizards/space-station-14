@@ -9,7 +9,6 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
@@ -150,7 +149,7 @@ namespace Content.Client.Popups
         public override void PopupClient(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
             if (_timing.IsFirstTimePredicted)
-                PopupEntity(message, uid, recipient);
+                PopupEntity(message, uid, recipient, type);
         }
 
         public override void PopupEntity(string message, EntityUid uid, PopupType type = PopupType.Small)

@@ -15,6 +15,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
     [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
+    [Dependency] private readonly SharedActionsSystem _actionContainer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
@@ -27,6 +28,13 @@ public abstract class SharedMagbootsSystem : EntitySystem
         SubscribeLocalEvent<MagbootsComponent, InventoryRelayedEvent<SlipAttemptEvent>>(OnSlipAttempt);
         SubscribeLocalEvent<MagbootsComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<MagbootsComponent, ToggleMagbootsEvent>(OnToggleMagboots);
+        SubscribeLocalEvent<MagbootsComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, MagbootsComponent component, MapInitEvent args)
+    {
+        _actionContainer.AddAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+        Dirty(uid, component);
     }
 
     private void OnToggleMagboots(EntityUid uid, MagbootsComponent component, ToggleMagbootsEvent args)
@@ -55,7 +63,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
 
         _appearance.SetData(uid, ToggleVisuals.Toggled, magboots.On);
         OnChanged(uid, magboots);
-        Dirty(magboots);
+        Dirty(uid, magboots);
     }
 
     protected virtual void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component) { }

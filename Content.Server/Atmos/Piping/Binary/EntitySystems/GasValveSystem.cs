@@ -7,7 +7,6 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -29,9 +28,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasValveComponent, ExaminedEvent>(OnExamined);
         }
 
-        private void OnExamined(EntityUid uid, GasValveComponent valve, ExaminedEvent args)
+        private void OnExamined(Entity<GasValveComponent> ent, ref ExaminedEvent args)
         {
-            if (!Comp<TransformComponent>(valve.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            var valve = ent.Comp;
+            if (!Comp<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-valve-system-examined", out var str,
@@ -50,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
             Toggle(uid, component);
-            SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)
@@ -60,7 +60,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 && _nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet)
                 && _nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
             {
-                if (TryComp<AppearanceComponent>(component.Owner,out var appearance))
+                if (TryComp<AppearanceComponent>(uid, out var appearance))
                 {
                     _appearance.SetData(uid, FilterVisuals.Enabled, component.Open, appearance);
                 }
@@ -68,13 +68,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 {
                     inlet.AddAlwaysReachable(outlet);
                     outlet.AddAlwaysReachable(inlet);
-                    _ambientSoundSystem.SetAmbience(component.Owner, true);
+                    _ambientSoundSystem.SetAmbience(uid, true);
                 }
                 else
                 {
                     inlet.RemoveAlwaysReachable(outlet);
                     outlet.RemoveAlwaysReachable(inlet);
-                    _ambientSoundSystem.SetAmbience(component.Owner, false);
+                    _ambientSoundSystem.SetAmbience(uid, false);
                 }
             }
         }

@@ -119,7 +119,7 @@ public abstract class SharedReflectSystem : EntitySystem
 
         if (Resolve(projectile, ref projectileComp, false))
         {
-            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectileComp.Weapon)} shot by {projectileComp.Shooter}");
+            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectileComp.Weapon!.Value)} shot by {projectileComp.Shooter!.Value}");
 
             projectileComp.Shooter = user;
             projectileComp.Weapon = user;

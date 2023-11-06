@@ -2,7 +2,6 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions;
@@ -18,14 +17,19 @@ namespace Content.Shared.Actions;
 /// </remarks>
 public sealed class GetItemActionsEvent : EntityEventArgs
 {
-    private readonly IEntityManager _entities;
-    private readonly INetManager _net;
+    private readonly ActionContainerSystem _system;
     public readonly SortedSet<EntityUid> Actions = new();
 
     /// <summary>
     /// User equipping the item.
     /// </summary>
     public EntityUid User;
+
+    /// <summary>
+    /// The entity that is being asked to provide the actions. This is used as a default argument to <see cref="AddAction(ref System.Nullable{Robust.Shared.GameObjects.EntityUid},string,Robust.Shared.GameObjects.EntityUid)"/>.
+    /// I.e., if a new action needs to be spawned, then it will be inserted into this entity unless otherwise specified.
+    /// </summary>
+    public EntityUid Provider;
 
     /// <summary>
     ///     Slot flags for the inventory slot that this item got equipped to. Null if not in a slot (i.e., if equipped to hands).
@@ -37,25 +41,36 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     /// </summary>
     public bool InHands => SlotFlags == null;
 
-    public GetItemActionsEvent(IEntityManager entities, INetManager net, EntityUid user, SlotFlags? slotFlags = null)
+    public GetItemActionsEvent(ActionContainerSystem system, EntityUid user, EntityUid provider, SlotFlags? slotFlags = null)
     {
-        _entities = entities;
-        _net = net;
+        _system = system;
         User = user;
+        Provider = provider;
         SlotFlags = slotFlags;
     }
 
-    public void AddAction(ref EntityUid? actionId, string? prototypeId)
+    /// <summary>
+    /// Grant the given action. If the EntityUid does not refer to a valid action entity, it will create a new action and
+    /// store it in <see cref="container"/>.
+    /// </summary>
+    public void AddAction(ref EntityUid? actionId, string prototypeId, EntityUid container)
     {
-        if (_entities.Deleted(actionId))
-        {
-            if (string.IsNullOrWhiteSpace(prototypeId) || _net.IsClient)
-                return;
+        if (_system.EnsureAction(container, ref actionId, prototypeId))
+            Actions.Add(actionId.Value);
+    }
 
-            actionId = _entities.Spawn(prototypeId);
-        }
+    /// <summary>
+    /// Grant the given action. If the EntityUid does not refer to a valid action entity, it will create a new action and
+    /// store it in <see cref="Provider"/>.
+    /// </summary>
+    public void AddAction(ref EntityUid? actionId, string prototypeId)
+    {
+        AddAction(ref actionId, prototypeId, Provider);
+    }
 
-        Actions.Add(actionId.Value);
+    public void AddAction(EntityUid actionId)
+    {
+        Actions.Add(actionId);
     }
 }
 

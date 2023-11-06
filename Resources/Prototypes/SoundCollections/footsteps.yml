@@ -73,6 +73,11 @@
   - /Audio/Effects/Footsteps/jesterstep2.ogg
 
 - type: soundCollection
+  id: FootstepSkates
+  files:
+  - /Audio/Items/Toys/skates.ogg
+
+- type: soundCollection
   id: FootstepDuck
   files:
   - /Audio/Items/Toys/quack.ogg
@@ -160,3 +165,12 @@
   - /Audio/Effects/Footsteps/snake1.ogg
   - /Audio/Effects/Footsteps/snake2.ogg
   - /Audio/Effects/Footsteps/snake3.ogg
+
+- type: soundCollection
+  id: FootstepBells
+  files:
+  - /Audio/Effects/Footsteps/bells1.ogg
+  - /Audio/Effects/Footsteps/bells2.ogg
+  - /Audio/Effects/Footsteps/bells3.ogg
+  - /Audio/Effects/Footsteps/bells4.ogg
+  - /Audio/Effects/Footsteps/bells5.ogg

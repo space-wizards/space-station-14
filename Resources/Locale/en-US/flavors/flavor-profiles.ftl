@@ -43,6 +43,7 @@ flavor-base-piquant = piquant
 flavor-base-sharp = sharp
 flavor-base-syrupy = syrupy
 flavor-base-spaceshroom = mysterious
+flavor-base-clean = clean
 
 # lmao
 flavor-base-terrible = terrible
@@ -92,6 +93,7 @@ flavor-complex-eggplant = like eggplant
 flavor-complex-carrot = like carrots
 flavor-complex-cabbage = like cabbages
 flavor-complex-potatoes = like potatoes
+flavor-complex-pumpkin = like pumpkins
 flavor-complex-mushroom = like mushrooms
 flavor-complex-tomato = like tomatoes
 flavor-complex-corn = like corn
@@ -103,6 +105,7 @@ flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
 flavor-complex-garlic = like garlic
 flavor-complex-grape = like grapes
+flavor-complex-berry = like berries
 flavor-complex-meatballs = like meatballs
 flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
@@ -147,6 +150,7 @@ flavor-complex-parents = like someone's parents
 flavor-complex-plastic = like plastic
 flavor-complex-glue = like glue
 flavor-complex-spaceshroom-cooked = like space umami
+flavor-complex-lost-friendship = like lost friendship
 
 # Drink-specific flavors.
 
@@ -210,3 +214,4 @@ flavor-complex-carpet = like a handful of fur
 flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
+flavor-complex-punishment = like punishment

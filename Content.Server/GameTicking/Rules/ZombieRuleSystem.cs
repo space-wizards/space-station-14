@@ -23,7 +23,7 @@ using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -31,7 +31,6 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -55,7 +54,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-        SubscribeLocalEvent<ZombifyOnDeathComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -191,10 +190,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         InfectInitialPlayers(component);
     }
 
-    private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
+    private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)
     {
         _zombie.ZombifyEntity(uid);
-        _action.RemoveAction(uid, ZombieRuleComponent.ZombifySelfActionPrototype);
+        if (component.Action != null)
+            Del(component.Action.Value);
     }
 
     private float GetInfectedFraction(bool includeOffStation = true, bool includeDead = false)
@@ -264,9 +264,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             return;
         component.InfectedChosen = true;
 
-        var allPlayers = _playerManager.ServerSessions.ToList();
-        var playerList = new List<IPlayerSession>();
-        var prefList = new List<IPlayerSession>();
+        var allPlayers = _playerManager.Sessions.ToList();
+        var playerList = new List<ICommonSession>();
+        var prefList = new List<ICommonSession>();
         foreach (var player in allPlayers)
         {
             if (player.AttachedEntity == null || !HasComp<HumanoidAppearanceComponent>(player.AttachedEntity) || HasComp<ZombieImmuneComponent>(player.AttachedEntity))
@@ -288,7 +288,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var totalInfected = 0;
         while (totalInfected < numInfected)
         {
-            IPlayerSession zombie;
+            ICommonSession zombie;
             if (prefList.Count == 0)
             {
                 if (playerList.Count == 0)
@@ -322,8 +322,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             EnsureComp<ZombifyOnDeathComponent>(ownedEntity);
             EnsureComp<IncurableZombieComponent>(ownedEntity);
             var inCharacterName = MetaData(ownedEntity).EntityName;
-            var action = Spawn(ZombieRuleComponent.ZombifySelfActionPrototype);
-            _action.AddAction(mind.OwnedEntity.Value, action, null);
+            _action.AddAction(ownedEntity, ref pending.Action, ZombieRuleComponent.ZombifySelfActionPrototype, ownedEntity);
 
             var message = Loc.GetString("zombie-patientzero-role-greeting");
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));

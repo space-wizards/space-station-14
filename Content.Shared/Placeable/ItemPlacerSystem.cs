@@ -1,8 +1,5 @@
 ﻿using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using System.Linq;
-using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Placeable;
 
@@ -12,6 +9,7 @@ namespace Content.Shared.Placeable;
 /// </summary>
 public sealed class ItemPlacerSystem : EntitySystem
 {
+    [Dependency] private readonly CollisionWakeSystem _wake = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
@@ -21,28 +19,6 @@ public sealed class ItemPlacerSystem : EntitySystem
 
         SubscribeLocalEvent<ItemPlacerComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<ItemPlacerComponent, EndCollideEvent>(OnEndCollide);
-        SubscribeLocalEvent<ItemPlacerComponent, ComponentGetState>(OnPlacerGetState);
-        SubscribeLocalEvent<ItemPlacerComponent, ComponentHandleState>(OnPlacerHandleState);
-    }
-
-    private void OnPlacerHandleState(EntityUid uid, ItemPlacerComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ItemPlacerComponentState state)
-            return;
-
-        component.MaxEntities = state.MaxEntities;
-        component.PlacedEntities.Clear();
-        var ents = EnsureEntitySet<ItemPlacerComponent>(state.Entities, uid);
-        component.PlacedEntities.UnionWith(ents);
-    }
-
-    private void OnPlacerGetState(EntityUid uid, ItemPlacerComponent component, ref ComponentGetState args)
-    {
-        args.State = new ItemPlacerComponentState()
-        {
-            MaxEntities = component.MaxEntities,
-            Entities = GetNetEntitySet(component.PlacedEntities),
-        };
     }
 
     private void OnStartCollide(EntityUid uid, ItemPlacerComponent comp, ref StartCollideEvent args)
@@ -50,8 +26,8 @@ public sealed class ItemPlacerSystem : EntitySystem
         if (comp.Whitelist != null && !comp.Whitelist.IsValid(args.OtherEntity))
             return;
 
-        // Disallow sleeping so we can detect when entity is removed from the heater.
-        _physics.SetSleepingAllowed(args.OtherEntity, args.OtherBody, false);
+        if (TryComp<CollisionWakeComponent>(args.OtherEntity, out var wakeComp))
+            _wake.SetEnabled(args.OtherEntity, false, wakeComp);
 
         var count = comp.PlacedEntities.Count;
         if (comp.MaxEntities == 0 || count < comp.MaxEntities)
@@ -71,8 +47,8 @@ public sealed class ItemPlacerSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, ItemPlacerComponent comp, ref EndCollideEvent args)
     {
-        // Re-allow sleeping.
-        _physics.SetSleepingAllowed(args.OtherEntity, args.OtherBody, true);
+        if (TryComp<CollisionWakeComponent>(args.OtherEntity, out var wakeComp))
+            _wake.SetEnabled(args.OtherEntity, true, wakeComp);
 
         comp.PlacedEntities.Remove(args.OtherEntity);
 
@@ -80,13 +56,6 @@ public sealed class ItemPlacerSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
 
         _placeableSurface.SetPlaceable(uid, true);
-    }
-
-    [Serializable, NetSerializable]
-    private sealed class ItemPlacerComponentState : ComponentState
-    {
-        public uint MaxEntities;
-        public HashSet<NetEntity> Entities = default!;
     }
 }
 
