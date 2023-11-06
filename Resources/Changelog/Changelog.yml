@@ -1,9 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: 'Taxibots, cleanbots, and similar now have binary radio.', type: Add}
-  id: 4613
-  time: '2023-08-16T13:18:57.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Reworked the loot table from salvage spawners, the stuff you can find
@@ -2905,3 +2900,12 @@ Entries:
   - {message: Fixed hotplates and some other devices not working., type: Fix}
   id: 5112
   time: '2023-11-05T23:49:59.0000000+00:00'
+- author: RiceMar
+  changes:
+  - {message: Paper is now lathable from the sheet-meister 2000., type: Add}
+  - {message: Crates of paper can now be purchased from the cargo request computer.,
+    type: Add}
+  - {message: The sheet-meister 2000 research unlock has moved from the civilian services
+      tree to the industrial tree., type: Tweak}
+  id: 5113
+  time: '2023-11-06T02:14:03.0000000+00:00'
