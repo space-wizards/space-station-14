@@ -25,7 +25,6 @@
     solution: stains
     useAltExamineText: true
   - type: Stainable
-  - type: Reactive
   - type: Tag
     tags:
     - ClothMade

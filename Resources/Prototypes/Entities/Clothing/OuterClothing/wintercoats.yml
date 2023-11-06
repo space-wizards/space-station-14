@@ -32,7 +32,6 @@
     solution: stains
     useAltExamineText: true
   - type: Stainable
-  - type: Reactive
   - type: Tag
     tags:
     - ClothMade
@@ -519,6 +518,5 @@
     solution: stains
     useAltExamineText: true
   - type: Stainable
-  - type: Reactive
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterWeb

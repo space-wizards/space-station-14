@@ -1296,7 +1296,6 @@
     solution: stains
     useAltExamineText: true
   - type: Stainable
-  - type: Reactive
   - type: Construction
     graph: WebObjects
     node: jumpsuit
