@@ -88,8 +88,6 @@ public sealed class CommandLineArgs
             {
                 Console.WriteLine("Unknown argument: {0}", arg);
             }
-
-            i++;
         }
 
         if (client == null)
