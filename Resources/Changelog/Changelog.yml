@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix emote sounds., type: Fix}
-  id: 4622
-  time: '2023-08-17T20:40:10.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: You no longer yell uncontrollably when feeling joy., type: Tweak}
@@ -2906,3 +2901,9 @@ Entries:
   - {message: Aspid station has had its cargo department expanded., type: Tweak}
   id: 5121
   time: '2023-11-06T02:36:46.0000000+00:00'
+- author: ChrisThirtle
+  changes:
+  - {message: Fixed certain objects not fitting into crates and lockers due to the
+      angle of space itself., type: Fix}
+  id: 5122
+  time: '2023-11-06T02:40:25.0000000+00:00'
