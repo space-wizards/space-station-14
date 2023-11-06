@@ -88,9 +88,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var gridUid = holderTransform.GridUid;
             if (TryComp<MapGridComponent>(gridUid, out var grid))
             {
+                var ducQuery = GetEntityQuery<DisposalUnitComponent>();
                 foreach (var contentUid in _map.GetLocal(gridUid.Value, grid, holderTransform.Coordinates))
                 {
-                    if (EntityManager.TryGetComponent(contentUid, out duc))
+                    if (ducQuery.TryGetComponent(contentUid, out duc))
                     {
                         disposalId = contentUid;
                         break;
@@ -98,14 +99,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
+            var physQuery = GetEntityQuery<PhysicsComponent>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            var transformQuery = GetEntityQuery<TransformComponent>();
             foreach (var entity in holder.Container.ContainedEntities.ToArray())
             {
                 RemComp<BeingDisposedComponent>(entity);
 
-                var meta = MetaData(entity);
+                var meta = metaQuery.GetComponent(entity);
                 holder.Container.Remove(entity, EntityManager, meta: meta, reparent: false, force: true);
 
-                var xform = Transform(entity);
+                var xform = transformQuery.GetComponent(entity);
                 if (xform.ParentUid != uid)
                     continue;
 
@@ -114,7 +118,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 else
                     _transform.AttachToGridOrMap(entity, xform);
 
-                if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
+                if (physQuery.TryGetComponent(entity, out var physics))
                 {
                     _physics.WakeBody(entity, body: physics);
                 }
