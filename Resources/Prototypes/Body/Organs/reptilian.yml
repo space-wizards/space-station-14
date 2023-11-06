@@ -9,6 +9,8 @@
       - Fruit
       - Meat
       - Pill
+      - RawMaterial
+      - Sheet
   - type: SolutionContainerManager
     solutions:
       stomach:
