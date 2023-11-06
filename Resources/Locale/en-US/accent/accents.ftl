@@ -88,3 +88,6 @@ accent-words-slimes-2 = Blimpuf?
 accent-words-slimes-3 = Blump!
 accent-words-slimes-4 = Bluuump...
 accent-words-slimes-5 = Blabl blump!
+
+# Mothroach
+accent-words-mothroach-1 = Chirp!
