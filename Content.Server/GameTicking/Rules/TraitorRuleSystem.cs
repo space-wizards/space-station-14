@@ -69,10 +69,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     private void OnRoleChangeNotify(EntityUid uid, TraitorRuleComponent comp, ref RoleChangeNotifyEvent args)
     {
-        // Give traitors their codewords and uplink code to keep in their character info menu
-        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", comp.Codewords)));
-
-
         if (!_mindSystem.TryGetSession(uid, out var session))
             return;
 
@@ -82,20 +78,25 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         Note[]? code = null;
         if (code != null)
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
-
-        // Here we do all the PDA stuff involved with notifying the players
-        if(!_mindSystem.TryGetMind(session, out var mindId, out var mind))
-            return;
-        var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
-        if (pda == null)
-            return;
-        // Give traitors their codewords and uplink code to keep in their character info menu
-        code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
-        // If giveUplink is false the uplink code part is omitted
-        briefing = string.Format("{0}\n{1}", briefing,
-            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
+        _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
 
         _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
+
+        // The RoleBriefingComponent wasn't even implemented seemingly, the above should work
+        // as it always has before
+
+    //    // Here we do all the PDA stuff involved with notifying the players
+    //    if(!_mindSystem.TryGetMind(session, out var mindId, out var mind))
+    //        return;
+    //    // FindUplinkTarget just finds a PDA the players has,
+    //    var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
+    //    if (pda == null)
+    //        return;
+    //    // Give traitors their codewords and uplink code to keep in their character info menu
+    //    code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+    //    if (code == null)
+    //        return;
+
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
