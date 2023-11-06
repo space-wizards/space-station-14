@@ -32,7 +32,7 @@ public sealed partial class DisposalTubeComponent : Component
     {
         DamageDict = new()
         {
-            { "Blunt", 3.0 },
+            { "Blunt", 1.0 },
         }
     };
 }
