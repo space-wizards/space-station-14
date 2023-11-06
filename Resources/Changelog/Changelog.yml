@@ -1,12 +1,6 @@
 Entries:
 - author: DogZeroX
   changes:
-  - {message: 'Reworked the loot table from salvage spawners, the stuff you can find
-      is more varied and valuable overall.', type: Add}
-  id: 4614
-  time: '2023-08-16T19:11:02.0000000+00:00'
-- author: DogZeroX
-  changes:
   - {message: Higher rating stock parts are now cheaper to make. Print a bunch of
       them and upgrade stuff!, type: Tweak}
   id: 4615
@@ -2909,3 +2903,8 @@ Entries:
       tree to the industrial tree., type: Tweak}
   id: 5113
   time: '2023-11-06T02:14:03.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: 'Vomit, so much vomit. Now vomiting chems are less awful.', type: Remove}
+  id: 5114
+  time: '2023-11-06T02:16:56.0000000+00:00'
