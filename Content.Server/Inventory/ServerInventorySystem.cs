@@ -1,3 +1,4 @@
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Interaction.Events;
@@ -18,6 +19,8 @@ namespace Content.Server.Inventory
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
+
+            SubscribeLocalEvent<InventoryComponent, SolutionSpilledEvent>(RefRelayInventoryEvent);
         }
 
         private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
