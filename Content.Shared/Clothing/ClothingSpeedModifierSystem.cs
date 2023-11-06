@@ -147,22 +147,25 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         _actions.AddAction(uid, ref uid.Comp.ToggleActionEntity, uid.Comp.ToggleAction);
     }
 
-    private void OnToggleSpeed(EntityUid uid, ToggleClothingSpeedComponent component, ToggleClothingSpeedEvent args)
+    private void OnToggleSpeed(Entity<ToggleClothingSpeedComponent> uid, ref ToggleClothingSpeedEvent args)
     {
         if (args.Handled)
             return;
 
         args.Handled = true;
-        Toggle((uid, component), args.Performer);
+        SetSpeedToggleEnabled(uid, !uid.Comp.Enabled, args.Performer);
     }
 
-    private void Toggle(Entity<ToggleClothingSpeedComponent> uid, EntityUid? user)
+    private void SetSpeedToggleEnabled(Entity<ToggleClothingSpeedComponent> uid, bool value, EntityUid? user)
     {
-        TryComp<PowerCellDrawComponent>(uid, out var draw);
-        if (!uid.Comp.Enabled && !_powerCell.HasDrawCharge(uid, draw, user: user))
+        if (uid.Comp.Enabled == value)
             return;
 
-        uid.Comp.Enabled = !uid.Comp.Enabled;
+        TryComp<PowerCellDrawComponent>(uid, out var draw);
+        if (value && !_powerCell.HasDrawCharge(uid, draw, user: user))
+            return;
+
+        uid.Comp.Enabled = value;
 
         _appearance.SetData(uid, ToggleVisuals.Toggled, uid.Comp.Enabled);
         _actions.SetToggled(uid.Comp.ToggleActionEntity, uid.Comp.Enabled);
@@ -181,7 +184,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         {
             Text = Loc.GetString("toggle-clothing-verb-text",
                 ("entity", Identity.Entity(uid, EntityManager))),
-            Act = () => Toggle(uid, user)
+            Act = () => SetSpeedToggleEnabled(uid, !uid.Comp.Enabled, user)
         };
         args.Verbs.Add(verb);
     }
@@ -193,7 +196,6 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnPowerCellSlotEmpty(Entity<ToggleClothingSpeedComponent> uid, ref PowerCellSlotEmptyEvent args)
     {
-        if (uid.Comp.Enabled)
-            Toggle(uid, null);
+        SetSpeedToggleEnabled(uid, false, null);
     }
 }
