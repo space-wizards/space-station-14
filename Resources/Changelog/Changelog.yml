@@ -1,11 +1,6 @@
 Entries:
 - author: DogZeroX
   changes:
-  - {message: Research point requirement has been reduced for a lot of techs., type: Tweak}
-  id: 4625
-  time: '2023-08-18T01:41:53.0000000+00:00'
-- author: DogZeroX
-  changes:
   - {message: Added two reboot themes., type: Add}
   id: 4626
   time: '2023-08-18T13:58:44.0000000+00:00'
@@ -2907,3 +2902,15 @@ Entries:
   - {message: IEDs can be crafted in desperate times to make a small explosion., type: Add}
   id: 5124
   time: '2023-11-06T03:04:48.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Blood when consumed metabolizes into uncooked proteins, and sates thirst
+      of non-humans', type: Add}
+  - {message: Non-humans will have a small amount of hunger sated when consuming uncooked
+      proteins., type: Add}
+  - {message: Humans will take poison damage with a chance to vomit when metabolizing
+      uncooked protein., type: Tweak}
+  - {message: Humans take less damage from uncooked proteins (2->1), type: Tweak}
+  - {message: Humans will "feel sick" when they metabolize uncooked proteins., type: Add}
+  id: 5125
+  time: '2023-11-06T03:51:33.0000000+00:00'
