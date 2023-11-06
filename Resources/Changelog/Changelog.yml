@@ -1,9 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - {message: New machine frame sprites, type: Tweak}
-  id: 4618
-  time: '2023-08-17T04:16:13.0000000+00:00'
 - author: hord-brayden
   changes:
   - {message: Whoopsie - Dan's Soaked Cigs finally hired some Quality Control. They've
@@ -2908,3 +2903,8 @@ Entries:
   - {message: The access configurator now has a proper sprite., type: Tweak}
   id: 5117
   time: '2023-11-06T02:21:41.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds three new mobs from the Living Light family, type: Add}
+  id: 5118
+  time: '2023-11-06T02:24:15.0000000+00:00'
