@@ -39,6 +39,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Server.GameTicking.Rules;
+using Content.Shared.CombatMode.Pacification;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -233,6 +234,10 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             Briefing = briefing
         });
         SendThiefBriefing(mindId);
+
+        // Add Pacific
+        AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
+
 
         if (_mindSystem.TryGetSession(mindId, out var session))
         {
