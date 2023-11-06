@@ -113,11 +113,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent comp, ref RoleChangeNotifyEvent args)
     {
-
-        if (!TryComp<NukeopsRuleComponent>(uid, out NukeopsRuleComponent? rulecomp))
+        if(!TryGetRuleFromOperative(uid, out var rulecomps))
             return;
 
-        if (rulecomp.TargetStation is not { } station)
+        var nukieRule = rulecomps.Value.Item1;
+        if (nukieRule.TargetStation is not { } station)
             return;
 
         if (!_mind.TryGetSession(uid, out var session))
