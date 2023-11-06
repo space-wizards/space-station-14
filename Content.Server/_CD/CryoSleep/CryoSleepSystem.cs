@@ -1,18 +1,23 @@
 using System.Linq;
-using Content.Server.Climbing;
 using Content.Server.Mind;
-using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Systems;
+using Content.Server.Forensics;
+using Content.Server.StationRecords.Systems;
+using Content.Server.Chat.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Destructible;
 using Content.Shared.Mind;
 using Content.Server.EUI;
+using Content.Server.GameTicking;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
-using Content.Server.GameTicking;
+using Content.Shared.Climbing.Systems;
+using Content.Shared.PDA;
+using Content.Shared.Inventory;
+using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Enums;
@@ -38,6 +43,9 @@ public sealed class CryoSleepSystem : EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
 
     public override void Initialize()
     {
@@ -130,6 +138,33 @@ public sealed class CryoSleepSystem : EntitySystem
         var body = mind.CurrentEntity;
         var job = prototype;
 
+        var name = mind.CharacterName;
+
+        if (body == null)
+            return;
+
+        // Remove the record. Hopefully.
+        foreach (var item in _inventory.GetHandOrInventoryEntities(body.Value))
+        {
+            if (TryComp(item, out PdaComponent? pda) && TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) && keyStorage.Key is { } key && _stationRecords.TryGetRecord(key.OriginStation, key, out GeneralStationRecord? record))
+            {
+                if (TryComp(body, out DnaComponent? dna) &&
+                    dna.DNA != record.DNA)
+                {
+                    continue;
+                }
+
+                if (TryComp(body, out FingerprintComponent? fingerPrint) &&
+                    fingerPrint.Fingerprint != record.Fingerprint)
+                {
+                    continue;
+                }
+
+                _stationRecords.RemoveRecord(key.OriginStation, key);
+                Del(item);
+            }
+        }
+
         _gameTicker.OnGhostAttempt(mindId, false, true, mind: mind);
         EntityManager.DeleteEntity(body);
 
@@ -156,6 +191,8 @@ public sealed class CryoSleepSystem : EntitySystem
             return;
 
         _stationJobsSystem.TrySetJobSlot(station.Value, job, (int) amount.Value + 1, true);
+
+        _chatSystem.DispatchStationAnnouncement(station.Value, Loc.GetString("cryo-leave-announcement", ("character", name!), ("job", job.LocalizedName)), "Cryo Pod", false);
     }
 
     private bool EjectBody(EntityUid pod, CryoSleepComponent component)
