@@ -516,9 +516,6 @@ namespace Content.Server.Database
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
 
         public List<AdminLogPlayer> Players { get; set; } = default!;
-
-        // Unused
-        public List<AdminLogEntity> Entities { get; set; } = default!;
     }
 
     public class AdminLogPlayer
@@ -529,13 +526,6 @@ namespace Content.Server.Database
         [Required, Key] public int LogId { get; set; }
         [Required, Key] public int RoundId { get; set; }
         [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
-    }
-
-    // Unused
-    public class AdminLogEntity
-    {
-        [Required, Key] public int Uid { get; set; }
-        public string? Name { get; set; } = default!;
     }
 
     // Used by SS14.Admin

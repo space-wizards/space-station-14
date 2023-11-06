@@ -8,6 +8,7 @@ using Content.Server.Emoting.Systems;
 using Content.Server.Inventory;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Cloning;
 using Content.Shared.Damage;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
@@ -225,7 +226,7 @@ namespace Content.Server.Zombies
                     }
                 }
 
-                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity))
+                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity))
                 {
                     ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;

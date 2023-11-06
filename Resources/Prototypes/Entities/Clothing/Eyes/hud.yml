@@ -129,6 +129,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medsecengi.rsi
   - type: ShowSecurityIcons
+  - type: ShowSyndicateIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -143,3 +144,18 @@
   - type: ShowSecurityIcons
   - type: ShowHungerIcons
   - type: ShowThirstIcons
+  - type: ShowSyndicateIcons
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudSyndicate
+  name: syndicate visor
+  description: The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/synd.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/synd.rsi
+  - type: ShowSyndicateIcons
+  - type: ShowSecurityIcons
+  
