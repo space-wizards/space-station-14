@@ -7908,6 +7908,11 @@ entities:
     - pos: 35.5,-24.5
       parent: 1
       type: Transform
+    - invokeCounter: 1
+      links:
+      - 6068
+      - 1357
+      type: DeviceLinkSink
   - uid: 7432
     components:
     - pos: 10.5,-28.5
@@ -51376,11 +51381,6 @@ entities:
     - pos: 36.5,-19.5
       parent: 1
       type: Transform
-  - uid: 1357
-    components:
-    - pos: 37.5,-19.5
-      parent: 1
-      type: Transform
   - uid: 1358
     components:
     - pos: 38.5,-19.5
@@ -63313,11 +63313,6 @@ entities:
     - pos: 38.5,-19.5
       parent: 1
       type: Transform
-  - uid: 1344
-    components:
-    - pos: 37.5,-19.5
-      parent: 1
-      type: Transform
   - uid: 1345
     components:
     - pos: 36.5,-19.5
@@ -65401,6 +65396,28 @@ entities:
         11731:
         - Pressed: Toggle
       type: DeviceLinkSource
+- proto: SignalButtonDirectional
+  entities:
+  - uid: 1357
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 37.5,-19.5
+      parent: 1
+      type: Transform
+    - linkedPorts:
+        3795:
+        - Pressed: Toggle
+      type: DeviceLinkSource
+  - uid: 6068
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 34.5,-24.5
+      parent: 1
+      type: Transform
+    - linkedPorts:
+        3795:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SignAnomaly
   entities:
   - uid: 6077
@@ -65846,6 +65863,14 @@ entities:
     components:
     - rot: 1.5707963267948966 rad
       pos: 18.5,20.5
+      parent: 1
+      type: Transform
+- proto: SignJanitor
+  entities:
+  - uid: 7181
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 16.5,0.5
       parent: 1
       type: Transform
 - proto: SignMedical
@@ -73529,6 +73554,11 @@ entities:
   - uid: 1307
     components:
     - pos: 30.5,-19.5
+      parent: 1
+      type: Transform
+  - uid: 1344
+    components:
+    - pos: 37.5,-19.5
       parent: 1
       type: Transform
   - uid: 1353

@@ -1,17 +1,31 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
+using Content.Server.Forensics;
+using Content.Server.GameTicking;
+using Content.Server.Hands.Systems;
 using Content.Server.IdentityManagement;
 using Content.Server.Mind;
+using Content.Server.Players.PlayTimeTracking;
+using Content.Server.Popups;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
+using Content.Shared.PDA;
+using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.StationRecords;
+using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
@@ -25,9 +39,18 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly HandsSystem _hands = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly PhysicsSystem _physics = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
 
         private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
@@ -86,7 +109,7 @@ namespace Content.Server.Administration.Systems
             }
         }
 
-        public void UpdatePlayerList(IPlayerSession player)
+        public void UpdatePlayerList(ICommonSession player)
         {
             _playerList[player.UserId] = GetPlayerInfo(player.Data, player);
 
@@ -180,7 +203,7 @@ namespace Content.Server.Administration.Systems
             UpdatePanicBunker();
         }
 
-        private void SendFullPlayerList(IPlayerSession playerSession)
+        private void SendFullPlayerList(ICommonSession playerSession)
         {
             var ev = new FullPlayerListEvent();
 
@@ -189,7 +212,7 @@ namespace Content.Server.Administration.Systems
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
 
-        private PlayerInfo GetPlayerInfo(IPlayerData data, IPlayerSession? session)
+        private PlayerInfo GetPlayerInfo(SessionData data, ICommonSession? session)
         {
             var name = data.UserName;
             var entityName = string.Empty;
@@ -210,9 +233,16 @@ namespace Content.Server.Administration.Systems
             }
 
             var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
+            TimeSpan? overallPlaytime = null;
+            if (session != null &&
+                _playTime.TryGetTrackerTimes(session, out var playTimes) &&
+                playTimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var playTime))
+            {
+                overallPlaytime = playTime;
+            }
 
             return new PlayerInfo(name, entityName, identityName, startingRole, antag, GetNetEntity(session?.AttachedEntity), data.UserId,
-                connected, _roundActivePlayers.Contains(data.UserId));
+                connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
         }
 
         private void OnPanicBunkerChanged(bool enabled)
@@ -288,6 +318,80 @@ namespace Content.Server.Administration.Systems
             {
                 RaiseNetworkEvent(ev, admin);
             }
+        }
+
+        /// <summary>
+        ///     Erases a player from the round.
+        ///     This removes them and any trace of them from the round, deleting their
+        ///     chat messages and showing a popup to other players.
+        ///     Their items are dropped on the ground.
+        /// </summary>
+        public void Erase(ICommonSession player)
+        {
+            var entity = player.AttachedEntity;
+            _chat.DeleteMessagesBy(player);
+
+            if (entity != null && !TerminatingOrDeleted(entity.Value))
+            {
+                if (TryComp(entity.Value, out TransformComponent? transform))
+                {
+                    var coordinates = _transform.GetMoverCoordinates(entity.Value, transform);
+                    var name = Identity.Entity(entity.Value, EntityManager);
+                    _popup.PopupCoordinates(Loc.GetString("admin-erase-popup", ("user", name)), coordinates, PopupType.LargeCaution);
+                    var filter = Filter.Pvs(coordinates, 1, EntityManager, _playerManager);
+                    var audioParams = new AudioParams().WithVolume(3);
+                    _audio.Play("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
+                }
+
+                foreach (var item in _inventory.GetHandOrInventoryEntities(entity.Value))
+                {
+                    if (TryComp(item, out PdaComponent? pda) &&
+                        TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) &&
+                        keyStorage.Key is { } key &&
+                        _stationRecords.TryGetRecord(key.OriginStation, key, out GeneralStationRecord? record))
+                    {
+                        if (TryComp(entity, out DnaComponent? dna) &&
+                            dna.DNA != record.DNA)
+                        {
+                            continue;
+                        }
+
+                        if (TryComp(entity, out FingerprintComponent? fingerPrint) &&
+                            fingerPrint.Fingerprint != record.Fingerprint)
+                        {
+                            continue;
+                        }
+
+                        _stationRecords.RemoveRecord(key.OriginStation, key);
+                        Del(item);
+                    }
+                }
+
+                if (TryComp(entity.Value, out InventoryComponent? inventory) &&
+                    _inventory.TryGetSlots(entity.Value, out var slots, inventory))
+                {
+                    foreach (var slot in slots)
+                    {
+                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, out var item, true, true))
+                        {
+                            _physics.ApplyAngularImpulse(item.Value, ThrowingSystem.ThrowAngularImpulse);
+                        }
+                    }
+                }
+
+                if (TryComp(entity.Value, out HandsComponent? hands))
+                {
+                    foreach (var hand in _hands.EnumerateHands(entity.Value, hands))
+                    {
+                        _hands.TryDrop(entity.Value, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
+                    }
+                }
+            }
+
+            _minds.WipeMind(player);
+            QueueDel(entity);
+
+            _gameTicker.SpawnObserver(player);
         }
     }
 }

@@ -32,7 +32,7 @@
     damageContainer: Inorganic
   - type: Spillable
     solution: food
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: food
 
 - type: entity
@@ -380,17 +380,52 @@
     state: cornmealdough-slice
 
 - type: entity
-  name: bun
+  name: tortilla dough
   parent: FoodBakingBase
-  id: FoodDoughBun
-  description: A base for any self-respecting burger.
+  id: FoodDoughTortilla
+  description: A piece of tortilla dough.
   components:
   - type: FlavorProfile
     flavors:
-      - bun
+      - chalky
+      - dough
   - type: Sprite
-    sprite: Objects/Consumable/Food/burger.rsi
-    state: bun
+    state: tortilladough
+  - type: SliceableFood
+    count: 3
+    slice: FoodDoughTortillaSlice
+
+- type: entity
+  name: tortilla dough slice
+  parent: FoodBakingBase
+  id: FoodDoughTortillaSlice
+  description: A slice of tortilla dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chalky
+      - dough
+  - type: Sprite
+    state: tortilladough-slice
+  - type: Construction
+    graph: Tortilla
+    node: start
+
+- type: entity
+  name: flattened tortilla dough
+  parent: FoodBakingBase
+  id: FoodDoughTortillaFlat
+  description: A flattened slice of tortilla dough, cook this to get a taco shell.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chalky
+      - dough
+  - type: Sprite
+    state: tortilladough-flat
+  - type: Construction
+    graph: Tortilla
+    node: flat
 
 - type: entity
   name: raw pastry base
@@ -460,7 +495,7 @@
   components:
   - type: Sprite
     state: butter
-    
+
 - type: entity
   name: stick of cannabis butter
   parent: FoodBakingBase

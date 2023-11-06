@@ -31,13 +31,13 @@
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Specific/Chapel/bible.rsi
   - type: Clothing
     slots:
     - Belt
   - type: Storage
-    capacity: 10
+    maxSlots: 1
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -74,7 +74,7 @@
     sprite: Objects/Specific/Chapel/necronomicon.rsi
     state: icon
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Specific/Chapel/necronomicon.rsi
   - type: Clothing
     slots:

@@ -8,7 +8,7 @@
     id: PassengerPDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpsuitPirate
+  innerClothingSkirt: ClothingUniformJumpsuitPirate
   satchel: ClothingBackpackPirateFilled
   duffelbag: ClothingBackpackPirateFilled
 
@@ -24,7 +24,7 @@
     pocket1: AppraisalTool
     pocket2: EnergyCutlass
     outerClothing: ClothingOuterCoatPirate
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
+  innerClothingSkirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackPirateFilled
   duffelbag: ClothingBackpackPirateFilled
 
@@ -39,6 +39,6 @@
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle
-  innerclothingskirt: ClothingUniformJumpsuitPirate
+  innerClothingSkirt: ClothingUniformJumpsuitPirate
   satchel: ClothingBackpackPirateFilled
   duffelbag: ClothingBackpackPirateFilled

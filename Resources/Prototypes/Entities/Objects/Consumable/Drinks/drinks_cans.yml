@@ -54,7 +54,7 @@
     speed: 0.25 # its small so takes longer to roll the entire dough flat
   - type: ItemCooldown
   - type: SpaceGarbage
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
   - type: PhysicalComposition
     materialComposition:
@@ -370,9 +370,9 @@
         map: ["6pack6"]
         visible: false
   - type: Item
-    size: 6
+    size: Normal
   - type: Storage
-    capacity: 30
+    maxSlots: 6
     whitelist:
       tags:
         - Cola

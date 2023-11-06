@@ -1,4 +1,4 @@
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -13,10 +13,10 @@ public sealed partial class BlockGameArcadeComponent : Component
     /// <summary>
     /// The player currently playing the active session of NT-BG.
     /// </summary>
-    public IPlayerSession? Player = null;
+    public ICommonSession? Player = null;
 
     /// <summary>
     /// The players currently viewing (but not playing) the active session of NT-BG.
     /// </summary>
-    public readonly List<IPlayerSession> Spectators = new();
+    public readonly List<ICommonSession> Spectators = new();
 }
