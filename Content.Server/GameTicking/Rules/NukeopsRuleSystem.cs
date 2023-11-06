@@ -110,28 +110,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<NukeOperativeComponent, RoleChangeNotifyEvent>(OnRoleChangeNotify);
     }
 
-
-    private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent comp, ref RoleChangeNotifyEvent args)
-    {
-        if(!TryGetRuleFromOperative(uid, out var rulecomps))
-            return;
-
-        var nukieRule = rulecomps.Value.Item1;
-        if (nukieRule.TargetStation is not { } station)
-            return;
-
-        if (!_mind.TryGetSession(uid, out var session))
-            return;
-
-        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
-        _audio.PlayGlobal(comp.GreetSoundNotification, session);
-        return;
-    }
     /// <summary>
     ///     Returns true when the player with UID opUid is a nuclear operative. Prevents random
     ///     people from using the war declarator outside of the game mode.
     /// </summary>
-
     public bool TryGetRuleFromOperative(EntityUid opUid, [NotNullWhen(true)] out (NukeopsRuleComponent, GameRuleComponent)? comps)
     {
         comps = null;
@@ -1130,6 +1112,23 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 return;
             }
         }
+    }
+
+    private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent comp, ref RoleChangeNotifyEvent args)
+    {
+        if(!TryGetRuleFromOperative(uid, out var rulecomps))
+            return;
+
+        var nukieRule = rulecomps.Value.Item1;
+        if (nukieRule.TargetStation is not { } station)
+            return;
+
+        if (!_mind.TryGetSession(uid, out var session))
+            return;
+
+        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
+        _audio.PlayGlobal(comp.GreetSoundNotification, session);
+        return;
     }
 
     protected override void Started(EntityUid uid, NukeopsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
