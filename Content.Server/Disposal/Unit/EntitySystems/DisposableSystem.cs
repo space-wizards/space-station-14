@@ -7,6 +7,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Item;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -197,7 +198,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     _damageable.TryChangeDamage(ent, to.DamageOnTurn);
                 }
-                _audio.PlayPvs(to.ClangSound, toUid);
+                _audio.PlayPvs(to.ClangSound, toUid, AudioParams.Default.WithVolume(-5f));
             }
 
             return true;
