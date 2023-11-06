@@ -56,7 +56,7 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      - name: Build Project
+      - name: Build Packaging
         run: dotnet build Content.Packaging --configuration Release --no-restore /m
 
       - name: Package client
