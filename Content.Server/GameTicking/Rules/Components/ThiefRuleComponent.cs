@@ -40,5 +40,5 @@ public sealed partial class ThiefRuleComponent : Component
     /// Sound played when making the player a thief via antag control or ghost role
     /// </summary>
     [DataField]
-    public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Voice/Cluwne/cluwnelaugh1.ogg"); //TO DO NEW SOUND
+    public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/thief_greeting.ogg"); //TO DO COOL SOUND
 }

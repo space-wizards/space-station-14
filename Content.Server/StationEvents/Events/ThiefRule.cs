@@ -73,7 +73,7 @@ public sealed class ThiefRule : StationEventSystem<ThiefRuleComponent>
     protected override void Started(EntityUid uid, ThiefRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, comp, gameRule, args);
-        Log.Error("Start Thief Event");
+        Log.Error("------------ Start Thief Event ------------");
 
         var thiefPool = FindPotentialThiefs(comp.StartCandidates, comp);
     }
