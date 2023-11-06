@@ -520,16 +520,17 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(ent):target}");
             }
         }
-
-        _color.RaiseEffect(solution.GetColor(_prototypeManager), targets.ToList(), Filter.Pvs(uid, entityManager: EntityManager));
-
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }
 
     private void SpillSolutionOnTarget(Solution solution, EntityUid target, float fraction)
     {
-        var ev = new SolutionSpilledEvent(solution, fraction);
+        var ev = new SolutionSpilledEvent(solution, fraction, false);
         RaiseLocalEvent(target, ref ev);
+        if (ev.ShowEffect)
+        {
+            _color.RaiseEffect(solution.GetColor(_prototypeManager), new List<EntityUid>() { target }, Filter.Pvs(target, entityManager: EntityManager));
+        }
     }
 
     /// <summary>
@@ -681,7 +682,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 }
 
 [ByRefEvent]
-public record struct SolutionSpilledEvent(Solution Solution, float Fraction) : IInventoryRelayEvent
+public record struct SolutionSpilledEvent(Solution Solution, float Fraction, bool ShowEffect) : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
 }

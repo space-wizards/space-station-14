@@ -41,6 +41,7 @@ public sealed class StainsSystem : SharedStainsSystem
         {
             var toTake = FixedPoint2.Min(@event.Fraction * @event.Solution.Volume, targetSolution.AvailableVolume);
             _solutionContainer.TryTransferSolution(uid, target: targetSolution, source: @event.Solution, toTake);
+            @event.ShowEffect = true;
         }
     }
 
