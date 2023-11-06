@@ -98,7 +98,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesGlassesJamjar
   name: jamjar glasses
-  description: Also known as Virginity Protectors.
+  description: What are you looking at?
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/jamjar.rsi
