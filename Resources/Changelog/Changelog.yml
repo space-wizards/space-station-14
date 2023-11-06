@@ -1,10 +1,4 @@
 Entries:
-- author: hord-brayden
-  changes:
-  - {message: Whoopsie - Dan's Soaked Cigs finally hired some Quality Control. They've
-      resolved a small reagent solution in some of their swisher sweets., type: Fix}
-  id: 4619
-  time: '2023-08-17T05:15:39.0000000+00:00'
 - author: Equivocateur
   changes:
   - {message: 'Origin station now features ID Card computer''s in every Command member''s
@@ -2908,3 +2902,8 @@ Entries:
   - {message: Adds three new mobs from the Living Light family, type: Add}
   id: 5118
   time: '2023-11-06T02:24:15.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Livestock crates are no longer airtight., type: Tweak}
+  id: 5119
+  time: '2023-11-06T02:27:48.0000000+00:00'
