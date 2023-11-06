@@ -116,6 +116,8 @@
           prob: 0.2
         - id: PlushieSnake
           prob: 0.2
+        - id: ClothingShoesSkates
+          prob: 0.1
         - id: ClothingHandsGlovesColorYellow
           prob: 0.05
         - id: ClothingHandsGlovesFingerlessInsulated
