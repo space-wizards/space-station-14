@@ -209,3 +209,17 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
+
+- type: technology
+  id: PortableFission
+  name: research-technology-portable-fission
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: microreactor
+  discipline: Industrial
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - PowerCellMicroreactor
+  technologyPrerequisites:
+  - SuperPowercells
