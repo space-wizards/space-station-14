@@ -9,9 +9,8 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
@@ -57,7 +56,7 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length == 1)
             {
-                if (shell.Player is not IPlayerSession player)
+                if (shell.Player is not { } player)
                 {
                     shell.WriteError(Loc.GetString("set-outfit-command-is-not-player-error"));
                     return;
@@ -121,10 +120,10 @@ namespace Content.Server.Administration.Commands
             {
                 var handsSystem = entityManager.System<HandsSystem>();
                 var coords = entityManager.GetComponent<TransformComponent>(target).Coordinates;
-                foreach (var (hand, prototype) in startingGear.Inhand)
+                foreach (var prototype in startingGear.Inhand)
                 {
                     var inhandEntity = entityManager.SpawnEntity(prototype, coords);
-                    handsSystem.TryPickup(target, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
+                    handsSystem.TryPickup(target, inhandEntity, checkActionBlocker: false, handsComp: handsComponent);
                 }
             }
 

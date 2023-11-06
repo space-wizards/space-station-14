@@ -44,6 +44,7 @@
     capacity: 1
     count: 1
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 8
@@ -56,7 +57,7 @@
         Slash: 2.5
   - type: GunRequiresWield
   - type: Item
-    size: 150
+    size: Ginormous
   - type: DisarmMalus
   - type: Tool
     qualities:
@@ -73,12 +74,16 @@
     sprite: Objects/Weapons/Melee/crusher_dagger.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.5
     damage:
       types:
         Slash: 6.5
   - type: Item
-    size: 10
+    size: Small
+  - type: Tag
+    tags:
+    - Knife
 
 # Like a crusher... but better
 - type: entity
@@ -104,6 +109,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.25
   - type: Item
-    size: 150
+    size: Ginormous

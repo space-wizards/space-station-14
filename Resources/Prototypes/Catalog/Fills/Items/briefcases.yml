@@ -2,7 +2,7 @@
   id: BriefcaseBrownFilled
   name: brown briefcase
   parent: BriefcaseBrown
-  suffix: Filled
+  suffix: Filled, Paper
   components:
   - type: StorageFill
     contents:
@@ -15,6 +15,10 @@
   parent: BriefcaseSyndie
   suffix: SniperBundle
   components:
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Huge
   - type: StorageFill
     contents:
       - id: WeaponSniperHristov
@@ -27,7 +31,7 @@
   id: BriefcaseSyndieLobbyingBundleFilled
   name: brown briefcase
   parent: BriefcaseSyndie
-  suffix: Filled, Spesos
+  suffix: Syndicate, Spesos
   components:
   - type: StorageFill
     contents:

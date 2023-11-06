@@ -48,13 +48,20 @@
     damage:
       types:
         Blunt: 0
+  - type: Tool
+    qualities:
+    - Rolling
+    speed: 0.25 # its small so takes longer to roll the entire dough flat
   - type: ItemCooldown
   - type: SpaceGarbage
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
   - type: PhysicalComposition
     materialComposition:
       Steel: 50 #reduce, reuse, recycle
+  - type: Tag
+    tags:
+    - DrinkCan
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -72,11 +79,37 @@
   - type: Tag
     tags:
     - Cola
+    - DrinkCan
     - Recyclable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
+
+# created when taking apart an ied
+- type: entity
+  parent: DrinkColaCan
+  id: DrinkColaCanEmpty
+  suffix: empty
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Openable
+    opened: true
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cola.rsi
+    layers:
+    - state: icon_open
+  - type: Item
+    sprite: Objects/Consumable/Drinks/cola.rsi
+  - type: Tag
+    tags:
+    - Cola
+    - DrinkCan
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -313,6 +346,7 @@
           Quantity: 5
   - type: Tag
     tags:
+    - DrinkCan
     - Recyclable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/robustnukie.rsi
@@ -366,9 +400,9 @@
         map: ["6pack6"]
         visible: false
   - type: Item
-    size: 6
+    size: Normal
   - type: Storage
-    capacity: 30
+    maxSlots: 6
     whitelist:
       tags:
         - Cola

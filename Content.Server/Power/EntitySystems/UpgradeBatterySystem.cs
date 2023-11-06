@@ -7,6 +7,8 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class UpgradeBatterySystem : EntitySystem
     {
+        [Dependency] private readonly BatterySystem _batterySystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -17,11 +19,11 @@ namespace Content.Server.Power.EntitySystems
 
         public void OnRefreshParts(EntityUid uid, UpgradeBatteryComponent component, RefreshPartsEvent args)
         {
-            var capacitorRating = args.PartRatings[component.MachinePartPowerCapacity];
+            var powerCellRating = args.PartRatings[component.MachinePartPowerCapacity];
 
             if (TryComp<BatteryComponent>(uid, out var batteryComp))
             {
-                batteryComp.MaxCharge = MathF.Pow(component.MaxChargeMultiplier, capacitorRating - 1) * component.BaseMaxCharge;
+                _batterySystem.SetMaxCharge(uid, MathF.Pow(component.MaxChargeMultiplier, powerCellRating - 1) * component.BaseMaxCharge, batteryComp);
             }
         }
 

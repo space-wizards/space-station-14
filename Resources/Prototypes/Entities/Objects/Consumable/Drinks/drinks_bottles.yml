@@ -12,6 +12,8 @@
         maxVol: 100
   - type: Sprite
     state: icon
+  - type: Item
+    size: Normal
   - type: DamageOnLand
     damage:
       types:
@@ -39,7 +41,11 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: TrashOnEmpty
+  - type: Tool
+    qualities:
+    - Rolling
+    speed: 0.75 # not as good as a rolling pin but does the job
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity

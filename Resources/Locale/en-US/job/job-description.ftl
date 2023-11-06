@@ -47,4 +47,4 @@ job-description-zookeeper = Put on a joyful display of cute animals and space ca
 job-description-senior-engineer = Teach new engineers the basics of the station's engine, repairing, atmospherics and power.
 job-description-senior-researcher = Teach new scientists the basics of item printing, artifact research and anomalous objects.
 job-description-senior-physician = Teach new medics the basics of tending to the wounded, chemistry, diagnosing the diseased and disposing of the dead.
-job-description-senior-officer = Teach new officers the basics of searches, preforming arrests, prison times and how to properly shoot a firearm.
+job-description-senior-officer = Teach new officers the basics of searches, performing arrests, prison times and how to properly shoot a firearm.

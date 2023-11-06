@@ -8,7 +8,7 @@
     mode: SnapgridCenter
   components:
   - type: Item
-    size: 10
+    size: Normal
   - type: Transform
     anchored: true
   - type: Damageable

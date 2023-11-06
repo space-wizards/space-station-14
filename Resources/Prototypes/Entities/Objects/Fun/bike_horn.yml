@@ -9,7 +9,7 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/bikehorn.rsi
-    size: 5
+    size: Tiny
   - type: Clothing
     sprite: Objects/Fun/bikehorn.rsi
     slots: [Belt]
@@ -32,6 +32,7 @@
     - Payload # yes, you can make re-usable prank grenades
     - BikeHorn
   - type: MeleeWeapon
+    wideAnimationRotation: 135
     soundHit:
       collection: BikeHorn
       params:
@@ -57,7 +58,7 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/cluwnehorn.rsi
-    size: 5
+    size: Tiny
   - type: Clothing
     sprite: Objects/Fun/cluwnehorn.rsi
     slots: [Belt]
@@ -77,6 +78,7 @@
       params:
         variation: 0.246
   - type: MeleeWeapon
+    wideAnimationRotation: 135
     soundHit:
       collection: CluwneHorn
       params:
@@ -98,7 +100,7 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/goldbikehorn.rsi
-    size: 5
+    size: Tiny
   - type: Clothing
     sprite: Objects/Fun/goldbikehorn.rsi
     slots: [Belt]
@@ -117,7 +119,7 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/bananiumhorn.rsi
-    size: 5
+    size: Tiny
   - type: Clothing
     sprite: Objects/Fun/bananiumhorn.rsi
     slots: [Belt]

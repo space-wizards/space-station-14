@@ -18,7 +18,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Medical;
@@ -230,8 +230,6 @@ public sealed class DefibrillatorSystem : EntitySystem
                 // notify them they're being revived.
                 if (mind.CurrentEntity != target)
                 {
-                    _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
-                        InGameICChatType.Speak, true);
                     _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind), session);
                 }
             }

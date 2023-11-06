@@ -24,7 +24,7 @@
   - type: ExtensionCableReceiver
   - type: WiresPanel
   - type: Wires
-    LayoutId: rndserver
+    layoutId: rndserver
   - type: WiresVisuals
   - type: Machine
     board: ResearchAndDevelopmentServerMachineCircuitboard

@@ -1,8 +1,8 @@
 using Content.Server.Database;
 using Content.Shared.CCVar;
-using Robust.Server.Player;
 using Robust.Server.Upload;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 using Robust.Shared.Upload;
 
 namespace Content.Server.Administration;
@@ -22,7 +22,7 @@ public sealed class ContentNetworkResourceManager
         _netRes.OnResourceUploaded += OnUploadResource;
     }
 
-    private async void OnUploadResource(IPlayerSession session, NetworkResourceUploadMessage msg)
+    private async void OnUploadResource(ICommonSession session, NetworkResourceUploadMessage msg)
     {
         if (StoreUploaded)
             await _serverDb.AddUploadedResourceLogAsync(session.UserId, DateTime.Now, msg.RelativePath.ToString(), msg.Data);

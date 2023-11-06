@@ -21,7 +21,7 @@
         - ReagentId: Vitamin
           Quantity: 5
   - type: Item
-    size: 25
+    size: Normal
 
 - type: entity
   parent: FoodCakeBase
@@ -43,7 +43,7 @@
         - ReagentId: Vitamin
           Quantity: 1
   - type: Item
-    size: 5
+    size: Tiny
 
 # Custom Cake Example
 
@@ -296,6 +296,9 @@
     state: apple
   - type: SliceableFood
     slice: FoodCakeAppleSlice
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: slice of apple cake
@@ -305,6 +308,9 @@
   components:
   - type: Sprite
     state: apple-slice
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like sweetness, cake, slime.
 
 - type: entity
@@ -347,6 +353,9 @@
           Quantity: 32
         - ReagentId: Vitamin
           Quantity: 11
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: slice of pumpkin-spice cake
@@ -365,6 +374,9 @@
           Quantity: 6.4
         - ReagentId: Vitamin
           Quantity: 2.2
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like sweetness, cake, pumpkin.
 
 - type: entity
@@ -562,7 +574,7 @@
   - type: Food
     transferAmount: 12
   - type: Item
-    size: 40
+    size: Normal
   - type: PointLight
     color: "#FFFF00"
     radius: 2

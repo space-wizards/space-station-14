@@ -56,7 +56,7 @@ public sealed partial class BodyPartComponent : Component
 
             foreach (var slotId in Children.Keys)
             {
-                temp.Add((ContainerSlot) containerSystem.GetContainer(Owner, slotId));
+                temp.Add((ContainerSlot) containerSystem.GetContainer(Owner, SharedBodySystem.PartSlotContainerIdPrefix+slotId));
             }
 
             return temp;
@@ -73,7 +73,7 @@ public sealed partial class BodyPartComponent : Component
 
             foreach (var slotId in Organs.Keys)
             {
-                temp.Add((ContainerSlot) containerSystem.GetContainer(Owner, slotId));
+                temp.Add((ContainerSlot) containerSystem.GetContainer(Owner, SharedBodySystem.OrganSlotContainerIdPrefix+slotId));
             }
 
             return temp;

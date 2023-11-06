@@ -291,7 +291,7 @@ namespace Content.Server.Singularity.EntitySystems
             var xform = Transform(uid);
             var ent = Spawn(component.BoltType, xform.Coordinates);
             var proj = EnsureComp<ProjectileComponent>(ent);
-            _projectile.SetShooter(proj, uid);
+            _projectile.SetShooter(ent, proj, uid);
 
             var targetPos = new EntityCoordinates(uid, new Vector2(0, -1));
 

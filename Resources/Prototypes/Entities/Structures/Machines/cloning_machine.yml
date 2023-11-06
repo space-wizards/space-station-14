@@ -61,8 +61,8 @@
     - Biomass
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-cloningpod
-    LayoutId: CloningPod
+    boardName: wires-board-name-cloningpod
+    layoutId: CloningPod
   - type: ApcPowerReceiver
     powerLoad: 200 #Receives most of its power from the console
   - type: Appearance

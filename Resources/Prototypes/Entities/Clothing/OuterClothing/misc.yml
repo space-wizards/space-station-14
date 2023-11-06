@@ -114,6 +114,8 @@
     sprite: Clothing/OuterClothing/Misc/classicponcho.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/classicponcho.rsi
+  - type: AddAccentClothing
+    accent: SpanishAccent
 
 - type: entity
   parent: ClothingOuterBase
@@ -147,6 +149,8 @@
     sprite: Clothing/OuterClothing/Misc/poncho.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/poncho.rsi
+  - type: AddAccentClothing
+    accent: SpanishAccent
 
 - type: entity
   parent: ClothingOuterBase
@@ -251,3 +255,111 @@
     sprite: Clothing/OuterClothing/Misc/hospitalgown.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/hospitalgown.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterFlannelRed
+  name: red flannel jacket
+  description: An old fashioned red flannel jacket for space autumn.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
+    layers:
+    - state: icon
+      color: "#670a09"
+    - state: icon-lines
+      color: "#000000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#670a09"
+      - state: inhand-left-lines
+        color: "#000000"
+      right:
+      - state: inhand-right
+        color: "#670a09"
+      - state: inhand-right-lines
+        color: "#000000"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#670a09"
+      - state: equipped-OUTERCLOTHING-lines
+        color: "#000000"
+  - type: TemperatureProtection
+    coefficient: 0.3
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterFlannelBlue
+  name: blue flannel jacket
+  description: An old fashioned blue flannel jacket for space autumn.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
+    layers:
+    - state: icon
+      color: "#3232a6"
+    - state: icon-lines
+      color: "#000000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3232a6"
+      - state: inhand-left-lines
+        color: "#000000"
+      right:
+      - state: inhand-right
+        color: "#3232a6"
+      - state: inhand-right-lines
+        color: "#000000"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#3232a6"
+      - state: equipped-OUTERCLOTHING-lines
+        color: "#000000"
+  - type: TemperatureProtection
+    coefficient: 0.3
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterFlannelGreen
+  name: green flannel jacket
+  description: An old fashioned green flannel jacket for space autumn.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
+    layers:
+    - state: icon
+      color: "#164d0f"
+    - state: icon-lines
+      color: "#000000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#164d0f"
+      - state: inhand-left-lines
+        color: "#000000"
+      right:
+      - state: inhand-right
+        color: "#164d0f"
+      - state: inhand-right-lines
+        color: "#000000"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#164d0f"
+      - state: equipped-OUTERCLOTHING-lines
+        color: "#000000"
+  - type: TemperatureProtection
+    coefficient: 0.3
