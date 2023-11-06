@@ -1114,15 +1114,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
     }
 
+    /// <summary>
+    /// Notfifies play of being a nukie with message and sound
+    /// </summary>
     private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent nukeop, ref RoleChangeNotifyEvent args)
     {
         if(!TryGetRuleFromOperative(uid, out var rulecomps))
             return;
 
+        var nukieRule = rulecomps.Value.Item1;
+
         if (!_mind.TryGetSession(uid, out var session))
             return;
-
-        var nukieRule = rulecomps.Value.Item1;
 
         if(nukieRule.TargetStation is not { } station)
             return;

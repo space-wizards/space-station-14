@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -312,6 +313,31 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return true;
     }
 
+    /// <summary>
+    ///     Returns true when the player with UID is a traitor.
+    /// </summary>
+    public bool TryGetRuleFromTraitor(EntityUid uid, [NotNullWhen(true)] out (TraitorRuleComponent, GameRuleComponent)? comps)
+    {
+        comps = null;
+        var query = EntityQueryEnumerator<TraitorRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var ruleEnt, out var traitors, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleAdded(ruleEnt, gameRule))
+                continue;
+
+            if (_mindSystem.TryGetMind(uid, out var mind, out _))
+            {
+                var found = traitors.TraitorMinds.Any(v => v == mind);
+                if (found)
+                {
+                    comps = (traitors, gameRule);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
     /// <summary>
     ///     Send a codewords and uplink codes to traitor chat.
     /// </summary>
