@@ -736,3 +736,45 @@
       - MobUraniumCrab
       - MobIronCrab
       - MobQuartzCrab
+
+- type: entity
+  name: luminous person spawner
+  id: SpawnMobLuminousPerson
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: luminous_person
+      sprite: Mobs/Elemental/living_light/luminous_person.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLuminousPerson
+
+- type: entity
+  name: luminous object spawner
+  id: SpawnMobLuminousОbject
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: luminous_object
+      sprite: Mobs/Elemental/living_light/luminous_object.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLuminousОbject
+
+- type: entity
+  name: luminous entity spawner
+  id: SpawnMobLuminousEntity
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: luminous_entity
+      sprite: Mobs/Elemental/living_light/luminous_entity.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLuminousEntity
