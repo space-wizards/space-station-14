@@ -247,7 +247,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: NavMapTrackable
-    protoId: Sources
+    protoId: Monitor
   - type: ActivatableUI
     singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key

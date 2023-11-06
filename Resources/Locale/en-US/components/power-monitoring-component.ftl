@@ -6,6 +6,8 @@ power-monitoring-window-label-substation = Substation
 power-monitoring-window-label-apc = APC
 power-monitoring-window-label-misc = Misc
 
+power-monitoring-window-object-array = {$name} array [{$count}]
+
 power-monitoring-window-station-name = [color=white][font size=14]{$stationName}[/font][/color]
 power-monitoring-window-unknown-location = Unknown location
 power-monitoring-window-total-sources = Total generator output

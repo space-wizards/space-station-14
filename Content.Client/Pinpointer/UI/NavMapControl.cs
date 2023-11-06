@@ -18,6 +18,7 @@ using Robust.Shared.Timing;
 using Robust.Client.GameObjects;
 using Content.Shared.Power;
 using Robust.Shared.Prototypes;
+using Content.Shared.Pinpointer.UI;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -34,7 +35,7 @@ public sealed partial class NavMapControl : MapGridControl
 
     public EntityUid? MapUid;
     public PowerMonitoringConsoleComponent? PowerMonitoringConsole;
-    //public event Action<EntityCoordinates?, NavMapTrackableComponent?>? TrackableEntitySelectedAction;
+    public event Action<EntityCoordinates?, NavMapTrackingData?>? TrackableEntitySelectedAction;
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
@@ -194,15 +195,15 @@ public sealed partial class NavMapControl : MapGridControl
             if (closestDistance * MinimapScale > MaxSelectableDistance)
                 return;
 
-            //if (TrackableEntitySelectedAction != null)
-            //    TrackableEntitySelectedAction.Invoke(orderedCoords.First(), closestEntity);
+            if (TrackableEntitySelectedAction != null)
+                TrackableEntitySelectedAction.Invoke(orderedCoords.First(), closestEntity);
         }
 
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
             // Clear current selection with right click
-            //if (TrackableEntitySelectedAction != null)
-            //    TrackableEntitySelectedAction.Invoke(null, null);
+            if (TrackableEntitySelectedAction != null)
+                TrackableEntitySelectedAction.Invoke(null, null);
         }
     }
 
@@ -444,7 +445,7 @@ public sealed partial class NavMapControl : MapGridControl
                         continue;
 
                     if (proto.Texture != null)
-                        handle.DrawTextureRect(_spriteSystem.Frame0(proto.Texture), rect, proto.Color);
+                        handle.DrawTextureRect(_spriteSystem.Frame0(proto.Texture), rect, value.Modulate * proto.Color);
                 }
             }
         }

@@ -21,3 +21,8 @@
   group: APC
   texture: /Textures/Interface/PowerMonitoring/beveled_triangle.png
   color: LimeGreen
+  
+- type: navMapTrackable
+  id: Monitor
+  texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+  color: Cyan

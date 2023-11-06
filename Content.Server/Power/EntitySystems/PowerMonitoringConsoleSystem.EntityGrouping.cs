@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Map;
 using Content.Server.NodeContainer;
 using Robust.Shared.Utility;
+using Content.Server.NodeContainer.NodeGroups;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -62,8 +63,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             if (TryComp<NavMapTrackableComponent>(ent, out var trackable))
             {
-                trackable.Coordinates = EntityManager.GetNetCoordinates(coords);
-                trackable.ChildCoordinates.Clear();
+                trackable.ChildPositionOffsets.Clear();
                 Dirty(ent, trackable);
             }
 
@@ -84,25 +84,31 @@ internal sealed partial class PowerMonitoringConsoleSystem
             device.ExemplarUid = ent;
             _exemplarDevices.TryAdd(ent, device);
 
-            var reachableNodes = FloodFillNode(loadNode);
-
-            foreach (var node in reachableNodes)
+            foreach ((var otherEnt, var otherCoords) in devices)
             {
-                var foundCoords = Transform(node.Owner).Coordinates;
-                var foundEnt = devices.FirstOrNull(x => x.Value == foundCoords)?.Key;
+                if (ent == otherEnt)
+                    continue;
 
-                if (foundEnt != null)
+                if (!TryComp<PowerMonitoringDeviceComponent>(otherEnt, out var otherDevice))
+                    continue;
+
+                if (!TryComp<NodeContainerComponent>(otherEnt, out var otherContainer) ||
+                    !otherContainer.Nodes.TryGetValue(otherDevice.LoadNode, out var otherLoadNode) ||
+                    !otherLoadNode.ReachableNodes.Any())
+                    continue;
+
+                if ((loadNode.NodeGroup as BaseNodeGroup)?.NetId == (otherLoadNode.NodeGroup as BaseNodeGroup)?.NetId)
                 {
-                    if (!TryComp<PowerMonitoringDeviceComponent>(foundEnt, out var foundDevice))
-                        continue;
+                    _exemplarDevices.Remove(otherEnt);
 
-                    _exemplarDevices.Remove(foundEnt.Value);
-
-                    device.ChildEntities.Add(foundEnt.Value);
-                    foundDevice.ExemplarUid = currentEntity;
+                    device.ChildEntities.Add(otherEnt);
+                    otherDevice.ExemplarUid = ent;
 
                     if (trackable != null)
-                        trackable.ChildCoordinates.Add(EntityManager.GetNetCoordinates(foundCoords - coords));
+                    {
+                        trackable.ChildPositionOffsets.Add(EntityManager.GetNetCoordinates(otherCoords - coords));
+                        Dirty(ent, trackable);
+                    }
                 }
             }
         }

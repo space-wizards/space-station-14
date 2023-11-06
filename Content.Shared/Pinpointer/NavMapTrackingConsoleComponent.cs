@@ -40,7 +40,7 @@ public sealed class NavMapTrackablePrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     [DataField("group")]
-    public PowerMonitoringConsoleGroup Group;
+    public PowerMonitoringConsoleGroup? Group = null;
 
     /// <summary>
     ///     Sets the texture path for the associated nav map icon

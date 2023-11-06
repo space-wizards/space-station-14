@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Pinpointer;
+using Content.Shared.Pinpointer.UI;
 using Content.Shared.Power;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -70,7 +71,7 @@ public sealed partial class PowerMonitoringWindow
             UpdateEntryButton(uid, castChild.Button, entry);
 
             // Update sources and loads (if applicable)
-            if (_trackedEntity == uid)
+            if (_focusEntity == uid)
             {
                 castChild.MainContainer.Visible = true;
 
@@ -89,7 +90,7 @@ public sealed partial class PowerMonitoringWindow
             return;
 
         // Update button style
-        if (uid == _trackedEntity)
+        if (uid == _focusEntity)
             button.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
 
         else
@@ -99,8 +100,16 @@ public sealed partial class PowerMonitoringWindow
         button.SpriteView.SetEntity(uid);
 
         // Update name
-        var name = Loc.GetString(_entManager.GetComponent<MetaDataComponent>(uid).EntityName);
+        var meta = _entManager.GetComponent<MetaDataComponent>(uid);
+        var name = Loc.GetString(meta.EntityName);
         var charLimit = (int) (button.NameLocalized.Width / 8f);
+
+        if (_entManager.TryGetComponent<NavMapTrackableComponent>(uid, out var trackable) &&
+            trackable.ChildPositionOffsets.Any() &&
+            meta.EntityPrototype != null)
+        {
+            name = Loc.GetString("power-monitoring-window-object-array", ("name", meta.EntityPrototype.Name), ("count", trackable.ChildPositionOffsets.Count + 1));
+        }
 
         // Update tool tip
         button.ToolTip = Loc.GetString(name);
@@ -170,13 +179,13 @@ public sealed partial class PowerMonitoringWindow
     private void ButtonAction(PowerMonitoringWindowBaseEntry entry, BoxContainer masterContainer)
     {
         // Toggle off button?
-        if (entry.EntityUid == _trackedEntity)
+        if (entry.EntityUid == _focusEntity)
         {
             entry.Button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
-            _trackedEntity = null;
+            _focusEntity = null;
 
             // Request an update from the power monitoring system
-            RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity), GetCurrentPowerMonitoringConsoleGroup());
+            RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), GetCurrentPowerMonitoringConsoleGroup());
             _updateTimer = 0f;
 
             return;
@@ -186,11 +195,11 @@ public sealed partial class PowerMonitoringWindow
         entry.Button.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
 
         // Toggle off the old button (if applicable)
-        if (_trackedEntity != null)
+        if (_focusEntity != null)
         {
             foreach (PowerMonitoringWindowEntry sibling in masterContainer.Children)
             {
-                if (sibling.EntityUid == _trackedEntity)
+                if (sibling.EntityUid == _focusEntity)
                 {
                     sibling.Button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
                     break;
@@ -199,7 +208,7 @@ public sealed partial class PowerMonitoringWindow
         }
 
         // Center the nav map on selected entity
-        _trackedEntity = entry.EntityUid;
+        _focusEntity = entry.EntityUid;
 
         //if (!TryGetEntityNavMapTrackingData(entry.EntityUid, out var trackingData))
         //    return;
@@ -216,13 +225,14 @@ public sealed partial class PowerMonitoringWindow
         NavMap.CenterToCoordinates(coords);
 
         // Switch tabs
-        SwitchTabsBasedOnPowerMonitoringConsoleGroup(proto.Group);
+        if (proto.Group != null)
+            SwitchTabsBasedOnPowerMonitoringConsoleGroup(proto.Group.Value);
 
         // Get the scroll position of the selected entity on the selected button the UI
         _tryToScroll = true;
 
         // Request an update from the power monitoring system
-        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity), proto.Group);
+        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), proto.Group);
         _updateTimer = 0f;
     }
 
@@ -249,7 +259,7 @@ public sealed partial class PowerMonitoringWindow
             if (control == null || control is not PowerMonitoringWindowEntry)
                 continue;
 
-            if (((PowerMonitoringWindowEntry) control).EntityUid == _trackedEntity)
+            if (((PowerMonitoringWindowEntry) control).EntityUid == _focusEntity)
                 return true;
 
             nextScrollPosition += control.Height;
