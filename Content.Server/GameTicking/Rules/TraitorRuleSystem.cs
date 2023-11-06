@@ -286,7 +286,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
             Briefing = briefing
         });
-        SendTraitorBriefing(mindId, traitorRule.Codewords, code);
+        // This is the point at which the player notification
+        // was done in the old system.
+        // now moved to OnRoleChangeNotify():
+        // SendTraitorBriefing(mindId, traitorRule.Codewords, code);
         traitorRule.TraitorMinds.Add(mindId);
 
         // Change the faction
