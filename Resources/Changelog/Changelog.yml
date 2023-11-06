@@ -1,12 +1,4 @@
 Entries:
-- author: Partmedia
-  changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  - {message: Changed fun!, type: Tweak}
-  - {message: Fixed fun!, type: Fix}
-  id: 4627
-  time: '2023-08-18T17:22:00.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: More shortcuts to guide entries on various items., type: Tweak}
@@ -2915,3 +2907,8 @@ Entries:
       triggers on different devices., type: Add}
   id: 5126
   time: '2023-11-06T04:02:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a few items with invalid sizes., type: Fix}
+  id: 5127
+  time: '2023-11-06T07:20:50.0000000+00:00'
