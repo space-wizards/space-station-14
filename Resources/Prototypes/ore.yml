@@ -54,7 +54,7 @@
 
 - type: ore
   id: OreArtifactFragment
-  oreEntity: ArtifactFragment
+  oreEntity: ArtifactFragment1
   minOreYield: 2
   maxOreYield: 4
 
