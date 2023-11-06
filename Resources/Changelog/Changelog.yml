@@ -1,10 +1,4 @@
 Entries:
-- author: Repo
-  changes:
-  - {message: 'Janitors have remembered how to wring a mop, mops can transfer chemicals
-      back to buckets etc again.', type: Fix}
-  id: 4624
-  time: '2023-08-17T22:00:46.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Research point requirement has been reduced for a lot of techs., type: Tweak}
@@ -2908,3 +2902,8 @@ Entries:
       Fission technology, they slowly recharge on their own.', type: Add}
   id: 5123
   time: '2023-11-06T03:00:12.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: IEDs can be crafted in desperate times to make a small explosion., type: Add}
+  id: 5124
+  time: '2023-11-06T03:04:48.0000000+00:00'
