@@ -92,11 +92,14 @@ public sealed partial class PuddleSystem
                 continue;
             }
 
-            var spilledSolution = SpillSolutionOnTarget(solution, hit, (totalSplit / (solution.Volume * hitCount)).Float());
-            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(spilledSolution):solution} from {ToPrettyString(uid):entity} onto {ToPrettyString(hit):target}");
+            var initialVolume = solution.Volume;
+            SpillSolutionOnTarget(solution, hit, (totalSplit / (solution.Volume * hitCount)).Float());
+            var volumeAfterSpill = solution.Volume;
+
+            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(solution):solution} from {ToPrettyString(uid):entity} onto {ToPrettyString(hit):target}");
 
             _popups.PopupEntity(
-                Loc.GetString("spill-melee-hit-attacker", ("amount", spilledSolution), ("spillable", uid),
+                Loc.GetString("spill-melee-hit-attacker", ("amount", initialVolume - volumeAfterSpill), ("spillable", uid),
                     ("target", Identity.Entity(hit, EntityManager))),
                 hit, args.User);
 

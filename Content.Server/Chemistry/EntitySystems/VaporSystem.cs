@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
-        [Dependency] private readonly ReactiveSystem _reactive = default!;
+        [Dependency] private readonly SharedReactiveSystem _reactive = default!;
 
         private const float ReactTime = 0.125f;
 

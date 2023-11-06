@@ -31,6 +31,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Server.Stains;
 using Content.Shared.Inventory;
+using System.Linq;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -48,7 +49,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly SharedReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
@@ -229,17 +230,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             args.Slipped, args.Slipped, PopupType.SmallCaution);
 
         SpillSolutionOnTarget(solution, args.Slipped, 0.15f);
-        if (_inventory.TryGetContainerSlotEnumerator(args.Slipped, out var containerSlotEnumerator))
-        {
-            while (containerSlotEnumerator.MoveNext(out var container))
-            {
-                var equipped = container.ContainedEntity;
-                if (equipped != null && HasComp<ReactiveComponent>(equipped))
-                {
-                    SpillSolutionOnTarget(solution, equipped.Value, 0.05f); // Clothing and etc.
-                }
-            }
-        }
     }
 
     /// <inheritdoc/>
@@ -520,44 +510,28 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (solution.Volume == 0)
             return false;
 
-        var targets = new List<EntityUid>();
-        var reactive = new HashSet<Entity<ReactiveComponent>>();
-        _lookup.GetEntitiesInRange(coordinates, 1.0f, reactive);
+        var targets = _lookup.GetEntitiesInRange(coordinates, 1.0f, LookupFlags.Uncontained);
 
         // Get reactive entities nearby--if there are some, it'll spill a bit on them instead.
-        foreach (var ent in reactive)
+        foreach (var ent in targets)
         {
-            // sorry! no overload for returning uid, so .owner must be used
-            var owner = ent.Owner;
-
+            SpillSolutionOnTarget(solution, ent, _random.NextFloat(0.05f, 0.30f));
             if (user != null)
             {
                 _adminLogger.Add(LogType.Landed,
-                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
+                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(ent):target}");
             }
-
-            SpillSolutionOnTarget(solution, owner, _random.NextFloat(0.05f, 0.30f));
-
-            targets.Add(owner);
         }
 
-        _color.RaiseEffect(solution.GetColor(_prototypeManager), targets, Filter.Pvs(uid, entityManager: EntityManager));
+        _color.RaiseEffect(solution.GetColor(_prototypeManager), targets.ToList(), Filter.Pvs(uid, entityManager: EntityManager));
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }
 
-    private Solution SpillSolutionOnTarget(Solution solution, EntityUid target, float fraction)
+    private void SpillSolutionOnTarget(Solution solution, EntityUid target, float fraction)
     {
-        var splitAmount = solution.Volume * fraction;
-        if (_stains.TryGetStainsSolution(target, out var targetSolution))
-        {
-            splitAmount = FixedPoint2.Min(targetSolution.AvailableVolume, splitAmount);
-        }
-        var splitSolution = solution.SplitSolution(splitAmount);
-
-        _stains.TryAddSolution(target, splitSolution, targetSolution);
-        _reactive.DoEntityReaction(target, splitSolution, ReactionMethod.Touch);
-        return splitSolution;
+        var ev = new SolutionSpilledEvent(solution, fraction);
+        RaiseLocalEvent(target, ref ev);
     }
 
     /// <summary>
@@ -706,4 +680,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         return false;
     }
+}
+
+[ByRefEvent]
+public record struct SolutionSpilledEvent(Solution Solution, float Fraction) : IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots => SlotFlags.All;
 }

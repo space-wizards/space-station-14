@@ -7,6 +7,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Stains;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
+using Content.Shared.Inventory;
 
 namespace Content.Server.Stains;
 
@@ -22,34 +23,22 @@ public sealed class StainsSystem : SharedStainsSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<StainableComponent, SolutionSpilledEvent>(OnSolutionSpilled);
+        SubscribeLocalEvent<StainableComponent, InventoryRelayedEvent<SolutionSpilledEvent>>(OnSolutionSpilled);
+
         SubscribeLocalEvent<StainableComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<StainableComponent, GetVerbsEvent<AlternativeVerb>>(AddSqueezeVerb);
         SubscribeLocalEvent<StainableComponent, SqueezeDoAfterEvent>(OnSqueezeDoAfter);
     }
 
-    /// <summary>
-    /// Adds a solution to the "stains" container, if it can fully fit.
-    /// </summary>
-    public bool TryAddSolution(EntityUid uid, Solution addedSolution, Solution? targetSolution = null, StainableComponent? component = null)
+    private void OnSolutionSpilled(EntityUid uid, StainableComponent component, ref SolutionSpilledEvent @event)
     {
-        if (!Resolve(uid, ref component, false) || targetSolution == null && !TryGetStainsSolution(uid, out targetSolution, component))
-        {
-            return false;
-        }
-        return _solutionContainer.TryAddSolution(uid, targetSolution, addedSolution);
+
     }
 
-    /// <summary>
-    /// Get the solution holding "stains"
-    /// </summary>
-    public bool TryGetStainsSolution(EntityUid uid, [NotNullWhen(true)] out Solution? solution, StainableComponent? component = null)
+    private void OnSolutionSpilled(EntityUid uid, StainableComponent component, InventoryRelayedEvent<SolutionSpilledEvent> @event)
     {
-        if (!Resolve(uid, ref component, false))
-        {
-            solution = null;
-            return false;
-        }
-        return _solutionContainer.TryGetSolution(uid, component.Solution, out solution);
+
     }
 
     private void OnSolutionChanged(EntityUid uid, StainableComponent component, SolutionChangedEvent @event)
