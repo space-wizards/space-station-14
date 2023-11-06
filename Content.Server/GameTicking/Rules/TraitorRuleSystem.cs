@@ -74,12 +74,17 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
         _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
+        _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
 
+        // I think this takes the uid of the entity holding the PDA, need to test idk
+        var pda = _uplink.FindUplinkTarget(uid);
+        if (pda == null)
+            return;
         Note[]? code = null;
+        code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
         if (code != null)
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
 
-        _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
 
         // The RoleBriefingComponent wasn't even implemented seemingly, the above should work
         // as it always has before
