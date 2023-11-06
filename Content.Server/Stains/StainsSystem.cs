@@ -1,8 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Stains;
 using Content.Shared.Verbs;
@@ -23,22 +21,25 @@ public sealed class StainsSystem : SharedStainsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StainableComponent, SolutionSpilledEvent>(OnSolutionSpilled);
         SubscribeLocalEvent<StainableComponent, InventoryRelayedEvent<SolutionSpilledEvent>>(OnSolutionSpilled);
+        SubscribeLocalEvent<StainableComponent, SolutionSpilledEvent>(OnSolutionSpilled);
 
         SubscribeLocalEvent<StainableComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<StainableComponent, GetVerbsEvent<AlternativeVerb>>(AddSqueezeVerb);
         SubscribeLocalEvent<StainableComponent, SqueezeDoAfterEvent>(OnSqueezeDoAfter);
     }
 
-    private void OnSolutionSpilled(EntityUid uid, StainableComponent component, ref SolutionSpilledEvent @event)
-    {
-
-    }
-
     private void OnSolutionSpilled(EntityUid uid, StainableComponent component, InventoryRelayedEvent<SolutionSpilledEvent> @event)
     {
+        OnSolutionSpilled(uid, component, ref @event.Args);
+    }
 
+    private void OnSolutionSpilled(EntityUid uid, StainableComponent component, ref SolutionSpilledEvent @event)
+    {
+        if (_solutionContainer.TryGetSolution(uid, component.Solution, out var targetSolution))
+        {
+            _solutionContainer.TryTransferSolution(uid, target: targetSolution, source: @event.Solution, @event.ToTakePerEntity);
+        }
     }
 
     private void OnSolutionChanged(EntityUid uid, StainableComponent component, SolutionChangedEvent @event)

@@ -683,7 +683,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 }
 
 [ByRefEvent]
-public record struct SolutionSpilledEvent(Solution Solution, float Fraction) : IInventoryRelayEvent
+public record struct SolutionSpilledEvent(Solution Solution, FixedPoint2 ToTakePerEntity) : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
 }

@@ -12,17 +12,17 @@ public sealed class ReactiveSystem : SharedReactiveSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ReactiveComponent, SolutionSpilledEvent>(OnSolutionSpilled);
         SubscribeLocalEvent<ReactiveComponent, InventoryRelayedEvent<SolutionSpilledEvent>>(OnSolutionSpilled);
-    }
-
-    private void OnSolutionSpilled(EntityUid uid, ReactiveComponent component, ref SolutionSpilledEvent @event)
-    {
-        DoEntityReaction(uid, @event.Solution, ReactionMethod.Touch);
+        SubscribeLocalEvent<ReactiveComponent, SolutionSpilledEvent>(OnSolutionSpilled);
     }
 
     private void OnSolutionSpilled(EntityUid uid, ReactiveComponent component, InventoryRelayedEvent<SolutionSpilledEvent> @event)
     {
-        DoEntityReaction(uid, @event.Args.Solution, ReactionMethod.Touch);
+        OnSolutionSpilled(uid, component, ref @event.Args);
+    }
+
+    private void OnSolutionSpilled(EntityUid uid, ReactiveComponent component, ref SolutionSpilledEvent @event)
+    {
+        DoEntityReaction(uid, @event.Solution.SplitSolution(@event.ToTakePerEntity), ReactionMethod.Touch);
     }
 }
