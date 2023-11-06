@@ -528,8 +528,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private void SpillSolutionOnTarget(Solution solution, EntityUid target, float fraction)
     {
-        var toTakePerEntity = solution.Volume * fraction;
-        var ev = new SolutionSpilledEvent(solution, toTakePerEntity);
+        var ev = new SolutionSpilledEvent(solution, fraction);
         RaiseLocalEvent(target, ref ev);
     }
 
@@ -682,7 +681,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 }
 
 [ByRefEvent]
-public record struct SolutionSpilledEvent(Solution Solution, FixedPoint2 ToTakePerEntity) : IInventoryRelayEvent
+public record struct SolutionSpilledEvent(Solution Solution, float Fraction) : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
 }

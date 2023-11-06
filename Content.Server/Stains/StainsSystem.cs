@@ -39,7 +39,7 @@ public sealed class StainsSystem : SharedStainsSystem
     {
         if (_solutionContainer.TryGetSolution(uid, component.Solution, out var targetSolution))
         {
-            var toTake = FixedPoint2.Min(@event.ToTakePerEntity, targetSolution.AvailableVolume);
+            var toTake = FixedPoint2.Min(@event.Fraction * @event.Solution.Volume, targetSolution.AvailableVolume);
             _solutionContainer.TryTransferSolution(uid, target: targetSolution, source: @event.Solution, toTake);
         }
     }

@@ -23,6 +23,6 @@ public sealed class ReactiveSystem : SharedReactiveSystem
 
     private void OnSolutionSpilled(EntityUid uid, ReactiveComponent component, ref SolutionSpilledEvent @event)
     {
-        DoEntityReaction(uid, @event.Solution.SplitSolution(@event.ToTakePerEntity), ReactionMethod.Touch);
+        DoEntityReaction(uid, @event.Solution.SplitSolution(@event.Fraction * @event.Solution.Volume), ReactionMethod.Touch);
     }
 }
