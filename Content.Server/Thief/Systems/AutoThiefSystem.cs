@@ -3,6 +3,7 @@ using Content.Server.Thief.Systems;
 using Content.Server.Thief.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Server.StationEvents.Events;
 
 namespace Content.Server.Thief.Systems;
 
@@ -11,7 +12,7 @@ namespace Content.Server.Thief.Systems;
 /// </summary>
 public sealed class AutoThiefSystem : EntitySystem
 {
-    [Dependency] private readonly ThiefSystem _thief = default!;
+    [Dependency] private readonly ThiefRule _thief = default!;
 
     public override void Initialize()
     {
@@ -41,8 +42,9 @@ public sealed class AutoThiefSystem : EntitySystem
             return false;
 
         var session = mind.Session;
-        //_thief.MakeThief( component settings to making thief here);
-        Log.Debug(ToPrettyString(autoThief) + "TO DO: becoming a thief?");
+        _thief.MakeThief(session); // component settings to making thief here
+
+        Log.Debug(ToPrettyString(autoThief) + "TO DO: AutoThiefSystem: becoming a thief?");
         // prevent spamming anything if it fails (AutoTraitorSystem comment copy)
         RemComp<AutoThiefComponent>(autoThief);
         return true;

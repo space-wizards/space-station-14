@@ -103,6 +103,13 @@
   components:
   - type: ZombieRule
 
+- type: entity
+  id: Thief
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: ThiefRule
+
 # event schedulers
 - type: entity
   id: BasicStationEventScheduler
