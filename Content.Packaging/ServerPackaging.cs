@@ -102,7 +102,7 @@ public static class ServerPackaging
 
     private static async Task BuildPlatform(PlatformReg platform, bool skipBuild, bool hybridAcz, IPackageLogger logger)
     {
-        logger.Info("Building project for {platform}...");
+        logger.Info($"Building project for {platform}...");
 
         if (!skipBuild)
         {
