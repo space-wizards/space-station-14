@@ -1,26 +1,26 @@
 <Document>
-# Antimatter Engine (AME)
+# Двигатель антиматерии (ДАМ)
 
-The AME is one of the simplest engines available. You put together the multi-tile structure, stick some fuel into it, and you're all set. This doesn't mean it isn't potentially dangerous with overheating though.
+Двигатель антиматерии — один из самых простых в применении генераторов электроэнергии. Соберите мультиблоковую структуру генератора на небольшой площади, закиньте баллон топлива, и всё готово. Однако, это не означает что этот тип генератора является полностью безопасным, потенциальной опасностью является риск его перегрева.
 
-## Construction
-<Box>Required parts:</Box>
+## Строительство
+<Box>Требуемые компоненты:</Box>
 <Box>
 <GuideEntityEmbed Entity="AmeController"/>
 <GuideEntityEmbed Entity="AmePart"/>
 <GuideEntityEmbed Entity="AmeJar"/>
 </Box>
 
-To assemble an AME, start by wrenching down the controller on the far end of a HV wire. On most stations, there's catwalks to assist with this. From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all 8 sides.
+Начните сборку ДАМ с установки и закрепления контроллера ДАМ на ВВ кабеле. На многих станциях в генераторных на полу имеются решётчатые мостики, которые упростят понимание где что, и куда. Разложите части ДАМ квадратом минимум 3 на 3, старайтесь максимизировать количество "центральных" ядер ДАМ, такие ядра должны быть окружены другими частями со всех 8-ми сторон.
 
-Once this is done, you can use a multitool to convert each AME part into shielding, which should form a finished AME configuration. From there, insert a fuel jar, set the fuel rate to [color=#a4885c]twice the core count or less[/color], and turn on injection.
+Разложив, воспользуйтесь мультитулом чтобы превратить части ДАМ в его экранирование, что должно завершить создание двигателя антиматерии. Затем, поместите баллон топлива ДАМ в контроллер ДАМ, установите расход топлива на [color=#a4885c]количество ядер умноженное на два[/color] (или меньше) и переключите впрыск.
 
-## Fuel Economy
-The closer you are to the perfect ratio of [color=#a4885c]1:2[/color] (1 AME core to 2 fuel rate) the more efficient you'll be. You're cutting fuel efficiency to [color=#a4885c]50% and less[/color] if you're using more cores, but less fuel injection rate.
-For an example [color=#76db91]3 core and 6 fuel rate[/color] will generate [color=#76db91]240kW[/color], while [color=#f0684d]8 core 8 fuel rate[/color] will generate [color=#f0684d]160kW[/color]. Generating 80kW less while spending 2 more fuel each injection.
+## Экономия топлива
+Чем ближе вы к идеальному соотношению [color=#a4885c]1:2[/color] (1 ядро ДАМ к 2 впрыскам топлива), тем эффективнее будет ваша работа. Вы снижаете эффективность использования топлива до [color=#a4885c]50% и менее[/color], если используете больше ядер, но меньше скорость впрыска топлива.
+Например, [color=#76db91]3 ядра и 6 впрыска[/color] будут генерировать [color=#76db91]240 кВт[/color], а [color=#f0684d]8 ядер и 8 впрыска[/color] будут генерировать [color=#f0684d]160 кВт[/color]. Генерируя на 80 кВт меньше, тратя на 2 топлива больше при каждом впрыске.
 
-## Upgrading the AME
+## Модернизация ДАМ
 
-You can generally only upgrade the AME by getting more cores, which can be done by ordering more AME packages from [color=#a4885c]cargo[/color].
+Как правило, модернизировать ДАМ можно только за счет увеличения количества ядер, что можно сделать, заказав дополнительные ДАМ пакеты в [color=#a4885c]отделе снабжения[/color].
 
 </Document>

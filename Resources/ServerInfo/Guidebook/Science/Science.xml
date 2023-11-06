@@ -1,39 +1,39 @@
 <Document>
-# Science
+# Научный отдел
 
-Science, often called Research and Development, is a job made up of both generating research points to unlock new technologies as well as using said technologies to produce new items at lathes to help out the station.
+Научный отдел, часто именуемый "РнД", занимается заработком очков исследований, используемых для изучения новых технологий, которые в свою очередь позволяют создавать полезные для станции предметы на различных станках, принтерах, и фабрикаторах.
 
-## Technologies
+## Технологии
 <Box>
 <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
 <GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
 </Box>
-The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D computer, which allows you to unlock technologies.
+Самыми важными устройствами вашего отдела являются сервер РнД, на котором хранятся все изученные технологии, и исследовательская консоль, который позволяет вам эти технологии открывать.
 
-Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequisites you have to unlock before you can research them.
+Каждая технология стоит определённое число [color=#a4885c]Очков исследований[/color], и их изучение открывает новые рецепты для печати на производственных станках. Некоторые технологии нельзя разблокировать, не изучив технологии им предшествующие.
 
-Information about the different technologies can be viewed [textlink="on the technology guidebook page" link="Technologies"].
+Информацию о различных технологиях можно посмотреть [textlink="на странице справочника технологий" link="Technologies"].
 
-## Disciplines
-Technologies are spread over 5 different Disciplines:
+## Дисциплины
+Технологии распределены по 5 различным дисциплинам:
 <Box>
-<GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
-<GuideEntityEmbed Entity="Syringe" Caption="Biochemical"/>
-<GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
-<GuideEntityEmbed Entity="ComputerTelevision" Caption="Civil Services"/>
-<GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Arsenal"/>
+  <GuideEntityEmbed Entity="Wrench" Caption="Промышленность"/>
+  <GuideEntityEmbed Entity="Syringe" Caption="Биохимия"/>
+  <GuideEntityEmbed Entity="WeaponTetherGun" Caption="Экспериментальное"/>
+  <GuideEntityEmbed Entity="ComputerTelevision" Caption="Обслуживание персонала"/>
+  <GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Арсенал"/>
 </Box>
 
-<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Use your nearest R&D console to take note of which kind of research is locked behind each Discipline tree.
+<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Воспользуйтесь ближайшей консолью РнД, чтобы узнать, какой вид исследований закреплен за каждым древом дисциплины.
 
-## Tiers
-Each Discipline tree has up to 3 tiers of technologies. At the start the only tier that is open and available for you is tier 1.
+## Уровни
+Каждое древо дисциплины имеет до 3 уровней технологий. На начальном этапе единственным открытым и доступным для вас уровнем является уровень 1.
 
-In order to progress further, you have to research up to [color=brown]75%[/color] of the current tier to move to the next one. So in order to unlock T2 researches you need to research 75% of T1.
+Чтобы продвинуться дальше, вам нужно исследовать до [color=brown]75%[/color] текущего уровня, чтобы перейти на следующий. Таким образом, чтобы разблокировать исследования T2, вам нужно исследовать 75% исследований T1.
 
-Now [color=green]Tier 3[/color] is where it gets interesting. If you research a T3 tech, you [color=brown]lock out[/color] T3 techs from other Discipline trees. That is, unless... you find some other way around it, probably should ask your [color=purple]Research Director[/color].
+Теперь [color=green]уровень 3[/color] - вот где становится интересно. Если вы исследуете технологию Т3, вы [color=brown]блокируете[/color] технологии Т3 из других древ дисциплин. То есть, если только... вы не найдете какой-нибудь другой способ обойти это, возможно, вам стоит спросить вашего [color=purple]научного руководителя[/color].
 
-## Lathes
+## Фабрикаторы и станки
 <Box>
 <GuideEntityEmbed Entity="Protolathe"/>
 <GuideEntityEmbed Entity="CircuitImprinter"/>
@@ -43,6 +43,6 @@ Now [color=green]Tier 3[/color] is where it gets interesting. If you research a 
 <GuideEntityEmbed Entity="MedicalTechFab"/>
 <GuideEntityEmbed Entity="SecurityTechFab"/>
 </Box>
-At a lathe, you can choose a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, plasma) which can be acquired at Cargo or Salvage.
+На станке вы можете выбрать сервер, чтобы позволить ему печатать любые рецепты, которые вы разблокировали. Для рецептов требуются различные материалы (сталь, стекло, пластик, золото, плазма), которые можно получить в отделе снабжения или от утилизаторов.
 
 </Document>

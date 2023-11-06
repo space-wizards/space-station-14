@@ -1,25 +1,25 @@
 <Document>
-# Networking
-Some devices on the station need to communicate with each other, and they do this by utilizing device networking.
-With networking machines and devices can send arbitrary data between each other.
-There are multiple networks that get used, such as the wireless and wired network.
-Each network device has a frequency it receives on. PDAs for example, use the frequency: [color=green]220.2[/color]
+# Сеть
+Некоторые устройства на станции общаются друг с другом по беспроводной сети для работы.
+Устройства могут обмениваться условными данными между друг другом.
+В использовании находятся различные виды сетей, такие как беспроводная и проводная.
+У каждого устройства есть своя частота получения сигнала. К примеру, КПК используют частоту: [color=green]220.2[/color]
 
-## Device Lists
-Some devices need to know what other devices to communicate with specifically.
+## Списки устройств
+Некоторым устройствам необходимо чётко указывать, с какой конкретно техникой им обмениваться информацией.
 <Box>
   <GuideEntityEmbed Entity="AirAlarm"/>
 </Box>
-Air alarms for example require you to tell it which vents, scrubbers, sensors, and firelocks to interact with.
-You do that by using the Network Configurator.
+К примеру, воздушным сигнализациям обязательно нужно указывать, с какими вентиляциями, скрубберами, сенсорами и пожарными шлюзами им взаимодействовать.
+Всё это вы можете сделать с помощью Конфигуратора Сетей.
 
-## Linking
-If devices basic or still more advanced but need finer control of how and what connects to each other they will generally use device linking.
+## Соединение
+Независимо от сложности прибора, вся его работа настраивается посредством соединения других устройств к нему или друг к другу.
   <Box>
     <GuideEntityEmbed Entity="SignalSwitch"/>
     <GuideEntityEmbed Entity="Airlock"/>
   </Box>
-With linking you can connect the outputs of a device like [color=gray]On[/color] or [color=gray]Off[/color] with the inputs of a device like the airlocks
-[color=gray]Open[/color] or [color=gray]Close[/color] inputs.
-The Network Configurator is also used for linking devices together.
+С помощью связей вы можете соединить вывод устройств [color=gray]Вкл[/color] или [color=gray]Выкл[/color] с вводом устройств, как шлюзы:
+[color=gray]Открыто[/color] или [color=gray]Закрыто[/color].
+Конфигуратор сетей также используется для связывания устройств вместе.
 </Document>

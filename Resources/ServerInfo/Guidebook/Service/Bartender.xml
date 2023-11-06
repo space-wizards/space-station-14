@@ -1,9 +1,9 @@
 <Document>
-# Bartender
-The bartender has a pretty simple job: serve drinks. People will come up to you and request drinks, and your job is just to hand it to them.
+# Бармен
+Работа бармена довольно проста: подавайте напитки. Люди будут приходить к вам и просить напитки, а ваша задача - просто передать их им.
 
 <Box>
-The materials for these drinks can be found in various places:
+Реагенты для напитков можно найти в разных местах:
 </Box>
 <Box>
 <GuideEntityEmbed Entity="BoozeDispenser"/>
@@ -15,13 +15,13 @@ The materials for these drinks can be found in various places:
 Don't forget containers to serve them in!
 </Box>
 <Box>
-<GuideEntityEmbed Entity="DrinkGlass" Caption="Glass"/>
+<GuideEntityEmbed Entity="DrinkGlass" Caption="Стакан"/>
 <GuideEntityEmbed Entity="DrinkGlassCoupeShaped"/>
 <GuideEntityEmbed Entity="DrinkShaker"/>
 </Box>
 
-## Drinks
-Knowing how to make a requested drink is important. Here are the different drinks in the game, including their recipes:
+## Напитки
+Знание того, как приготовить требуемый напиток, очень важно. Здесь представлены различные напитки, включая их рецепты:
 
 <GuideReagentGroupEmbed Group="Drinks"/>
 </Document>
