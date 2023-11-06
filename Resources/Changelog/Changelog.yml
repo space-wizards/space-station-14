@@ -1,15 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Higher rating stock parts are now cheaper to make. Print a bunch of
-      them and upgrade stuff!, type: Tweak}
-  id: 4615
-  time: '2023-08-16T22:12:09.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Reduced freedom implanter cost from 8 -> 5 TC., type: Tweak}
-  id: 4616
-  time: '2023-08-17T04:08:47.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: 'Increased crafting costs of the advanced laser, and laser cannon.',
@@ -2908,3 +2897,15 @@ Entries:
   - {message: 'Vomit, so much vomit. Now vomiting chems are less awful.', type: Remove}
   id: 5114
   time: '2023-11-06T02:16:56.0000000+00:00'
+- author: themias
+  changes:
+  - {message: 'Bicaridine, Dylovene and Crytobiolin now metabolize at the same rate
+      for all species.', type: Fix}
+  id: 5115
+  time: '2023-11-06T02:18:21.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: CentCom allocated funds for the purchase of notice boards for kitchens,
+    type: Add}
+  id: 5116
+  time: '2023-11-06T02:18:39.0000000+00:00'
