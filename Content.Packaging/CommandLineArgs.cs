@@ -37,7 +37,7 @@ public sealed class CommandLineArgs
         parsed = null;
         bool? client = null;
         var skipBuild = false;
-        var wipeRelease = false;
+        var wipeRelease = true;
         var hybridAcz = false;
         List<string>? platforms = null;
 
@@ -70,9 +70,9 @@ public sealed class CommandLineArgs
             {
                 skipBuild = true;
             }
-            else if (arg == "--wipe-release")
+            else if (arg == "--no-wipe-release")
             {
-                wipeRelease = true;
+                wipeRelease = false;
             }
             else if (arg == "--hybrid-acz")
             {
@@ -116,10 +116,10 @@ public sealed class CommandLineArgs
 Usage: Content.Packaging [client/server] [options]
 
 Options:
-  --skip-build      Should we skip building the project and use what's already there.
-  --wipe-release    Wipe the release folder before creating files.
-  --hybrid-acz      Use HybridACZ for server builds.
-  --platform        Platform for server builds. Default will output several x64 targets.
+  --skip-build          Should we skip building the project and use what's already there.
+  --no-wipe-release     Don't wipe the release folder before creating files.
+  --hybrid-acz          Use HybridACZ for server builds.
+  --platform            Platform for server builds. Default will output several x64 targets.
 ");
     }
 
