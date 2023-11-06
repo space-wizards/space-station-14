@@ -241,6 +241,13 @@
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
     targetNonSentientChance: 0.1
+  - type: EntitySpawnAnomaly
+    spawns:
+    - IceCrust
+    maxSpawnAmount: 17
+    spawnOnPulse: false
+    spawnOnSuperCritical: false
+    spawnOnStabilityChanged: true
   - type: TempAffectingAnomaly
     tempChangePerSecond: -25
     hotspotExposeTemperature: -1000

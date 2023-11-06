@@ -12,6 +12,8 @@
         maxVol: 100
   - type: Sprite
     state: icon
+  - type: Item
+    size: Normal
   - type: DamageOnLand
     damage:
       types:
