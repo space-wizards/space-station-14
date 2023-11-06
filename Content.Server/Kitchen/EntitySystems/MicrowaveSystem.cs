@@ -1,9 +1,13 @@
 using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
+using Content.Server.DeviceNetwork;
 using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Body.Components;
@@ -33,7 +37,9 @@ namespace Content.Server.Kitchen.EntitySystems
     {
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly RecipeManager _recipeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -49,6 +55,7 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
@@ -56,6 +63,8 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<MicrowaveComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<MicrowaveComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+
+            SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
 
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Session.AttachedEntity));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
@@ -172,9 +181,15 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private void OnInit(EntityUid uid, MicrowaveComponent component, ComponentInit ags)
+        private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
         {
-            component.Storage = _container.EnsureContainer<Container>(uid, "microwave_entity_container");
+            // this really does have to be in ComponentInit
+            ent.Comp.Storage = _container.EnsureContainer<Container>(ent, "microwave_entity_container");
+        }
+
+        private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
+        {
+            _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
         }
 
         private void OnSuicide(EntityUid uid, MicrowaveComponent component, SuicideEvent args)
@@ -275,6 +290,17 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnUpgradeExamine(EntityUid uid, MicrowaveComponent component, UpgradeExamineEvent args)
         {
             args.AddPercentageUpgrade("microwave-component-upgrade-cook-time", component.CookTimeMultiplier);
+        }
+
+        private void OnSignalReceived(Entity<MicrowaveComponent> ent, ref SignalReceivedEvent args)
+        {
+            if (args.Port != ent.Comp.OnPort)
+                return;
+
+            if (ent.Comp.Broken || !_power.IsPowered(ent))
+                return;
+
+            Wzhzhzh(ent.Owner, ent.Comp, null);
         }
 
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
