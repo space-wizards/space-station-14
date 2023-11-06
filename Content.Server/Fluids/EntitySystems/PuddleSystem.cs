@@ -681,6 +681,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 }
 
+/// <summary>
+/// Raised when solution is spilled on entity. 
+/// </summary>
+/// <param name="Solution">Spilled solution, can be modified by multiple entities and systems. Transfer solution from it to use somewhere else.</param>
+/// <param name="Fraction">Fraction of volume that can be taken, though not necessary.</param>
+/// <param name="ShowEffect">Show a visual effect or not</param>
 [ByRefEvent]
 public record struct SolutionSpilledEvent(Solution Solution, float Fraction, bool ShowEffect) : IInventoryRelayEvent
 {
