@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Item
-    size: 5
+    size: Small
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure

@@ -60,7 +60,7 @@ namespace Content.Client.Administration.UI.CustomControls
             }
             else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedPlayer.NetEntity != null)
             {
-                _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(_entManager.GetEntity(selectedPlayer.NetEntity.Value));
+                _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedPlayer.NetEntity.Value, true);
             }
         }
 

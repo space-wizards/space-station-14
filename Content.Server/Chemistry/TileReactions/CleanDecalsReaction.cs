@@ -44,11 +44,11 @@ public sealed partial class CleanDecalsReaction : ITileReaction
             if (!decal.Decal.Cleanable)
                 continue;
 
+            if (amount + CleanCost > reactVolume)
+                break;
+
             decalSystem.RemoveDecal(tile.GridUid, decal.Index, decalGrid);
             amount += CleanCost;
-
-            if (amount > reactVolume)
-                break;
         }
 
         return amount;
