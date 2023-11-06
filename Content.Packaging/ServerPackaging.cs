@@ -102,7 +102,7 @@ public static class ServerPackaging
 
     private static async Task BuildPlatform(PlatformReg platform, bool skipBuild, bool hybridAcz, IPackageLogger logger)
     {
-        logger.Info("Building project for {platform}...");
+        logger.Info($"Building project for {platform}...");
 
         if (!skipBuild)
         {
@@ -171,15 +171,6 @@ public static class ServerPackaging
     {
         var graph = new RobustClientAssetGraph();
         var passes = graph.AllPasses.ToList();
-
-        // Bundle audio metadata
-        // TODO: Sometimes the pass gets skipped due to uhh dependency stuff
-        // This is honestly a mess but I just want audio rework and
-        // this is significantly easier to fix than porting it from python was.
-        var audioPass = new AssetPassAudioMetadata("Resources/audio_metadata.yml");
-        pass.Dependencies.Add(new AssetPassDependency(audioPass.Name));
-        passes.Add(audioPass);
-        audioPass.Dependencies.Add(new AssetPassDependency(graph.Output.Name));
 
         pass.Dependencies.Add(new AssetPassDependency(graph.Output.Name));
         passes.Add(pass);

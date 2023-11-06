@@ -3,16 +3,26 @@ using Robust.Packaging;
 
 IPackageLogger logger = new PackageLoggerConsole();
 
-WipeRelease();
+if (!CommandLineArgs.TryParse(args, out var parsed))
+{
+    logger.Error("Unable to parse args, aborting.");
+    return;
+}
 
-var skipBuild = args.Contains("--skip-build");
+if (parsed.WipeRelease)
+    WipeRelease();
 
-if (!skipBuild)
+if (!parsed.SkipBuild)
     WipeBin();
 
-await ServerPackaging.PackageServer(skipBuild, false, logger);
-// await ClientPackaging.PackageClient(skipBuild, logger);
-
+if (parsed.Client)
+{
+    await ClientPackaging.PackageClient(parsed.SkipBuild, logger);
+}
+else
+{
+    await ServerPackaging.PackageServer(parsed.SkipBuild, parsed.HybridAcz, logger, parsed.Platforms);
+}
 
 void WipeBin()
 {

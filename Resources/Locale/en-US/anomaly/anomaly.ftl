@@ -25,6 +25,9 @@ anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
 anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
 
+anomaly-sync-connected = Anomaly successfully attached
+anomaly-sync-disconnected = The connection to the anomaly has been lost!
+
 anomaly-generator-ui-title = Anomaly Generator
 anomaly-generator-fuel-display = Fuel:
 anomaly-generator-cooldown = Cooldown: [color=gray]{$time}[/color]
