@@ -1114,20 +1114,23 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
     }
 
-    private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent comp, ref RoleChangeNotifyEvent args)
+    private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent nukeop, ref RoleChangeNotifyEvent args)
     {
         if(!TryGetRuleFromOperative(uid, out var rulecomps))
-            return;
-
-        var nukieRule = rulecomps.Value.Item1;
-        if (nukieRule.TargetStation is not { } station)
             return;
 
         if (!_mind.TryGetSession(uid, out var session))
             return;
 
-        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
-        _audio.PlayGlobal(comp.GreetSoundNotification, session);
+        var nukieRule = rulecomps.Value.Item1;
+
+        if(nukieRule.TargetStation is not { } station)
+            return;
+
+        if(nukieRule.TargetStation != null && !string.IsNullOrEmpty(Name(nukieRule.TargetStation.Value)))
+            _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
+
+        _audio.PlayGlobal(nukeop.GreetSoundNotification, session);
         return;
     }
 
