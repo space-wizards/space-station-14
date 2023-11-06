@@ -98,7 +98,7 @@ public sealed class EnergySwordSystem : EntitySystem
     {
         if (TryComp(uid, out ItemComponent? item))
         {
-            _item.SetSize(uid, ItemSize.Small, item);
+            _item.SetSize(uid, "Small", item);
         }
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
@@ -125,7 +125,7 @@ public sealed class EnergySwordSystem : EntitySystem
     {
         if (TryComp(uid, out ItemComponent? item))
         {
-            _item.SetSize(uid, ItemSize.Huge, item);
+            _item.SetSize(uid, "Huge", item);
         }
 
         if (comp.IsSharp)

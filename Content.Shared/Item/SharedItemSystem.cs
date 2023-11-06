@@ -6,14 +6,18 @@ using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
 public abstract class SharedItemSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
+
+    private Dictionary<string, ItemSizePrototype> _itemSizeLookup = new();
 
     public override void Initialize()
     {
@@ -26,11 +30,37 @@ public abstract class SharedItemSystem : EntitySystem
         SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<ItemComponent, ExaminedEvent>(OnExamine);
+
+        RefreshItemSizeLookup();
+        _prototype.PrototypesReloaded += OnPrototypesReloaded;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _prototype.PrototypesReloaded -= OnPrototypesReloaded;
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
+    {
+        if (!obj.ByType.TryGetValue(typeof(ItemSizePrototype), out _))
+            return;
+        RefreshItemSizeLookup();
+    }
+
+    private void RefreshItemSizeLookup()
+    {
+        _itemSizeLookup.Clear();
+        foreach (var size in _prototype.EnumeratePrototypes<ItemSizePrototype>())
+        {
+            _itemSizeLookup.Add(size.ID, size);
+        }
     }
 
     #region Public API
 
-    public void SetSize(EntityUid uid, ItemSize size, ItemComponent? component = null)
+    public void SetSize(EntityUid uid, ProtoId<ItemSizePrototype> size, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
@@ -128,6 +158,11 @@ public abstract class SharedItemSystem : EntitySystem
             ("size", GetItemSizeLocale(component.Size))));
     }
 
+    public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
+    {
+        return _itemSizeLookup[id];
+    }
+
     /// <summary>
     ///     Notifies any entity that is holding or wearing this item that they may need to update their sprite.
     /// </summary>
@@ -140,14 +175,14 @@ public abstract class SharedItemSystem : EntitySystem
     }
 
     [PublicAPI]
-    public static string GetItemSizeLocale(ItemSize size)
+    public string GetItemSizeLocale(ProtoId<ItemSizePrototype> size)
     {
-        return Robust.Shared.Localization.Loc.GetString($"item-component-size-{size.ToString()}");
+        return Loc.GetString(GetSizePrototype(size).Name);
     }
 
     [PublicAPI]
-    public static int GetItemSizeWeight(ItemSize size)
+    public int GetItemSizeWeight(ProtoId<ItemSizePrototype> size)
     {
-        return (int) size;
+        return GetSizePrototype(size).Weight;
     }
 }
