@@ -16,7 +16,7 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxSlots: 10
+    maxSlots: 14
     maxItemSize: Normal
     quickInsert: true
     areaInsert: true
