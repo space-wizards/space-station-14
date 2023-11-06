@@ -109,9 +109,33 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
     }
 
+    /// <summary>
+    /// If there are not enough thieves in a round after the start of the game, we make the incoming connecting players thieves
+    /// </summary>
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev) //Это кстати сработало и при раундстарт подключении. До OnPlayerSpawned
     {
-        //Если по какой-то причине текущее колиество воров еще недостаточно, тут мы добираем игроков?
+        Log.Debug("Подключение игрока!");
+        var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var thief, out var gameRule))
+        {
+            Log.Debug("1");
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                continue;
+
+            Log.Debug("2");
+            if (thief.ThiefMinds.Count >= thief.MaxAllowThief)
+                continue;
+            if (!ev.LateJoin)
+                continue;
+            if (!ev.Profile.AntagPreferences.Contains(thief.ThiefPrototypeId))
+                continue;
+            if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
+                continue;
+            if (!job.CanBeAntag)
+                continue;
+
+            MakeThief(ev.Player);
+        }
     }
 
     private List<ICommonSession> FindPotentialThiefs(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, ThiefRuleComponent component)
@@ -195,24 +219,20 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             return false;
         }
 
-        // Prepare thief role
-        var thiefRole = new ThiefRoleComponent
-        {
-            PrototypeId = thiefRule.ThiefPrototypeId,
-        };
-
         // Assign thief roles
         _roleSystem.MindAddRole(mindId, new ThiefRoleComponent
         {
             PrototypeId = thiefRule.ThiefPrototypeId
         });
 
+
+        var briefing = Loc.GetString("thief-role-greeting");
         // Assign briefing
-        //_roleSystem.MindAddRole(mindId, new RoleBriefingComponent
-        //{
-        //    Briefing = briefing
-        //});
-        //SendTraitorBriefing(mindId, traitorRule.Codewords, code);
+        _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
+        {
+            Briefing = briefing
+        });
+        SendThiefBriefing(mindId);
 
         if (_mindSystem.TryGetSession(mindId, out var session))
         {
@@ -229,4 +249,11 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         return true;
     }
 
+    private void SendThiefBriefing(EntityUid mind)
+    {
+        if (!_mindSystem.TryGetSession(mind, out var session))
+            return;
+
+        _chatManager.DispatchServerMessage(session, Loc.GetString("thief-role-greeting"));
+    }
 }
