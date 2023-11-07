@@ -421,6 +421,14 @@
     polymorphPrototypeName: ArtifactLizard
 
 - type: artifactEffect
+  id: EffectPolyLuminous
+  targetDepth: 3
+  effectHint: artifact-effect-hint-polymorph
+  components:
+  - type: PolyArtifact
+    polymorphPrototypeName: ArtifactLuminous
+
+- type: artifactEffect
   id: EffectHealAll
   targetDepth: 3
   effectHint: artifact-effect-hint-environment

@@ -90,12 +90,10 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: bottle
   parent: BaseChemistryEmptyBottle
   id: ChemistryEmptyBottle01
 
 - type: entity
-  name: bottle
   parent: BaseChemistryEmptyBottle
   id: ChemistryEmptyBottle02
   components:
@@ -106,11 +104,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
     fillBaseName: bottle-2-
 
 - type: entity
-  name: bottle
   parent: BaseChemistryEmptyBottle
   id: ChemistryEmptyBottle03
   components:
@@ -121,11 +117,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
     fillBaseName: bottle-3-
 
 - type: entity
-  name: bottle
   parent: BaseChemistryEmptyBottle
   id: ChemistryEmptyBottle04
   components:
@@ -136,13 +130,21 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
-    maxFillLevels: 6
     fillBaseName: bottle-4-
+
+- type: entity
+  parent: BaseChemistryEmptyBottle
+  id: BaseChemistryBottleFilled
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: EpinephrineChemistryBottle
   name: epinephrine bottle
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -151,15 +153,12 @@
         reagents:
         - ReagentId: Epinephrine
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
   id: RobustHarvestChemistryBottle
   name: robust harvest bottle
   description: This will increase the potency of your plants.
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -168,15 +167,12 @@
         reagents:
         - ReagentId: RobustHarvest
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
   id: EZNutrientChemistryBottle
   name: ez nutrient bottle
   description: This will provide some nutrition to your plants.
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -185,15 +181,12 @@
         reagents:
         - ReagentId: EZNutrient
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
   id: Left4ZedChemistryBottle
   name: left-4-zed bottle
   description: This will increase the effectiveness of mutagen.
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -202,15 +195,12 @@
         reagents:
         - ReagentId: Left4Zed
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
   id: UnstableMutagenChemistryBottle
   name: unstable mutagen bottle
   description: This will cause rapid mutations in your plants.
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -219,15 +209,12 @@
         reagents:
         - ReagentId: UnstableMutagen
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
   id: NocturineChemistryBottle
   name: nocturine bottle
   description: This will make someone fall down almost immediately. Hard to overdose on.
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -236,14 +223,11 @@
         reagents:
         - ReagentId: Nocturine
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
   id: EphedrineChemistryBottle
   name: ephedrine bottle
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -252,14 +236,11 @@
         reagents:
         - ReagentId: Ephedrine
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
   id: OmnizineChemistryBottle
   name: omnizine bottle
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -268,12 +249,9 @@
         reagents:
         - ReagentId: Omnizine
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   id: CognizineChemistryBottle
   name: cognizine bottle
   components:
@@ -284,14 +262,11 @@
         reagents:
         - ReagentId: Cognizine
           Quantity: 30
-  - type: Tag
-    tags:
-    - Bottle
 
 - type: entity
   id: PaxChemistryBottle
   name: pax bottle
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
     - type: SolutionContainerManager
       solutions:
@@ -300,14 +275,11 @@
           reagents:
             - ReagentId: Pax
               Quantity: 30
-    - type: Tag
-      tags:
-        - Bottle
 
 - type: entity
   id: MuteToxinChemistryBottle
   name: mute toxin bottle
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
     - type: SolutionContainerManager
       solutions:
@@ -316,14 +288,11 @@
           reagents:
             - ReagentId: MuteToxin
               Quantity: 30
-    - type: Tag
-      tags:
-        - Bottle
 
 - type: entity
   id: LeadChemistryBottle
   name: lead bottle
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
     - type: SolutionContainerManager
       solutions:
@@ -332,14 +301,11 @@
           reagents:
             - ReagentId: Lead
               Quantity: 30
-    - type: Tag
-      tags:
-        - Bottle
 
 - type: entity
   id: ToxinChemistryBottle
   name: toxin bottle
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryBottleFilled
   components:
     - type: SolutionContainerManager
       solutions:
@@ -348,6 +314,3 @@
           reagents:
             - ReagentId: Toxin
               Quantity: 30
-    - type: Tag
-      tags:
-        - Bottle
