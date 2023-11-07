@@ -1,27 +1,37 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                     Title="{Loc 'intercom-menu-title'}"
-                     MinSize="300 170"
-                     SetSize="300 170">
+                     Title="{Loc 'hanheld-radio-component-title'}"
+                     MinSize="240 170"
+                     SetSize="240 170">
     <BoxContainer Orientation="Vertical"
-                  HorizontalExpand="True"
-                  VerticalExpand="True"
+                  HorizontalExpand="False"
+                  VerticalExpand="False"
                   Margin="5 0 5 0">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center">
-                <Label Text="{Loc 'intercom-channel-label'}"  HorizontalAlignment="Center"/>
-                <OptionButton Name="ChannelOptions" VerticalExpand="True" MinWidth="125"/>
+                <Label Text="{Loc 'handheld-radio-component-channel-label'}"  HorizontalAlignment="Center"/>
+                <SpinBox Name="Channel"
+                     Access="Public"
+                     HorizontalExpand="True"
+                     SetSize="150 30"
+                     Value="1390" />
+                <Button Name="ChannelButton"
+                Access="Public"
+                ToggleMode="False"
+                SetSize="150 30"
+                Text="{Loc 'handheld-radio-component-on-channel-set'}"
+                TextAlign="Center" />
             </BoxContainer>
         </BoxContainer>
         <Control MinHeight="10"/>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right" Margin="5 0 5 5">
-            <Button Name="MicButton" ToggleMode="True" Text="{Loc 'intercom-button-text-mic'}" StyleClasses="OpenRight" MinWidth="70"/>
-            <Button Name="SpeakerButton" ToggleMode="True" Text="{Loc 'intercom-button-text-speaker'}" StyleClasses="OpenLeft" MinWidth="70"/>
+            <Button Name="MicButton" ToggleMode="True" Text="{Loc 'handheld-radio-button-text-mic'}" StyleClasses="OpenRight" MinWidth="70"/>
+            <Button Name="SpeakerButton" ToggleMode="True" Text="{Loc 'handheld-radio-button-text-speaker'}" StyleClasses="OpenLeft" MinWidth="70"/>
         </BoxContainer>
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'intercom-flavor-text-left'}" StyleClasses="WindowFooterText"
+                <Label Text="{Loc 'handheld-radio-component-flavor-text-left'}" StyleClasses="WindowFooterText"
                        HorizontalAlignment="Left" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
                              VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>

@@ -2,10 +2,10 @@
   name: handheld radio
   description: A handy handheld radio.
   parent: BaseItem
-  id: HandheldRadioProto
-  abstract: true
+  id: HandheldRadio
   components:
   - type: RadioMicrophone
+    broadcastChannel: Hanheld0
     powerRequired: false
     toggleOnInteract: false
   - type: RadioSpeaker
@@ -31,30 +31,4 @@
     interfaces:
       - key: enum.HandheldRadioUiKey.Key
         type: HandheldRadioBoundUserInterface
-- type: entity
-  id: HandheldRadio
-  parent: HandheldRadioProto
-  suffix: All
-  components:
-  - type: HandheldRadio
-    supportedChannels:
-    - Common
-    - Handheld
 
-- type: entity
-  id: HandheldRadioAll
-  parent: HandheldRadioProto
-  suffix: All
-  components:
-  - type: HandheldRadio
-    supportedChannels:
-    - Common
-    - Command
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Service
-    - Supply
-    - Handheld
-    - NotHandheld
