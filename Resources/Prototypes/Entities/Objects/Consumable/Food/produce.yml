@@ -1651,7 +1651,7 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: log
+  - type: Log
     spawnedPrototype: MaterialCotton
     spawnCount: 2
   - type: Produce
