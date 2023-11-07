@@ -52,4 +52,9 @@ public sealed partial class ProjectileComponent : Component
     ///     Whether this projectile has already damaged an entity.
     /// </summary>
     public bool DamagedEntity;
+
+    /// <summary>
+    ///     What entity the mouse was hovering over when this projectile was shot.
+    /// </summary>
+    public EntityUid? CursorTarget;
 }

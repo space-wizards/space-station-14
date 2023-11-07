@@ -1,9 +1,13 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.MouseRotator;
 using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Events;
@@ -33,6 +37,13 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
 
         var target = args.OtherEntity;
+
+        if (component.CursorTarget != target
+            && TryComp(target, out MobStateComponent? targetState)
+            && (targetState.CurrentState == MobState.Critical || targetState.CurrentState == MobState.Dead)
+            && (!TryComp(target, out BuckleComponent? buckleComponent) || !buckleComponent.Buckled))
+            return;
+
         // it's here so this check is only done once before possible hit
         var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
         RaiseLocalEvent(target, ref attemptEv);
