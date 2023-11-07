@@ -70,13 +70,8 @@
   - type: Stack
     stackType: Plasma
     baseLayer: base
-    layerStates:
-    - plasma
   - type: Sprite
     state: plasma
-    layers:
-    - state: plasma
-      map: ["base"]
   - type: Item
     heldPrefix: plasma
   - type: Appearance
