@@ -88,74 +88,55 @@
   color: "#d39f01"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
+  abstract: true
 - type: radioChannel
   id: Handheld0
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "0"
   frequency: 1390
 - type: radioChannel
   id: Handheld1
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "1"
   frequency: 1391
 - type: radioChannel
   id: Handheld2
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "2"
   frequency: 1392
 - type: radioChannel
   id: Handheld3
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "3"
   frequency: 1393
 - type: radioChannel
   id: Handheld4
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "4"
   frequency: 1394
 - type: radioChannel
   id: Handheld5
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "5"
   frequency: 1395
 - type: radioChannel
   id: Handheld6
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "6"
   frequency: 1396
 - type: radioChannel
   id: Handheld7
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "7"
   frequency: 1397
 - type: radioChannel
   id: Handheld8
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "8"
   frequency: 1398
 - type: radioChannel
   id: Handheld9
-  name: chat-radio-handheld
-  color: "#d39f01"
-  longRange: true
+  parent: Handheld
   keycode: "9"
   frequency: 1399
 
