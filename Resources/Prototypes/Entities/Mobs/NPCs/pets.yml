@@ -97,6 +97,7 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
+    - id: MaterialHideCorgi
 
 - type: entity
   name: Runtime
