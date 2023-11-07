@@ -50,9 +50,9 @@ public sealed class ToggleHandheldRadioSpeakerMessage : BoundUserInterfaceMessag
 [Serializable, NetSerializable]
 public sealed class SelectHandheldRadioChannelMessage : BoundUserInterfaceMessage
 {
-    public int Channel;
+    public string Channel;
 
-    public SelectHandheldRadioChannelMessage(int channel)
+    public SelectHandheldRadioChannelMessage(string channel)
     {
         Channel = channel;
     }

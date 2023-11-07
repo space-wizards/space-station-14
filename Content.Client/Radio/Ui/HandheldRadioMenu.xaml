@@ -14,7 +14,7 @@
                      Access="Public"
                      HorizontalExpand="True"
                      SetSize="150 30"
-                     Value="1390" />
+                />
                 <Button Name="ChannelButton"
                 Access="Public"
                 ToggleMode="False"

@@ -5,7 +5,7 @@
   id: HandheldRadio
   components:
   - type: RadioMicrophone
-    broadcastChannel: Hanheld0
+    broadcastChannel: Handheld0
     powerRequired: false
     toggleOnInteract: false
   - type: RadioSpeaker

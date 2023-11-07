@@ -247,6 +247,11 @@ public sealed class RadioDeviceSystem : EntitySystem
             mic.BroadcastChannel = args.Channel;
         if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
             speaker.Channels = new(){ args.Channel };
+        if (TryComp<ActiveRadioComponent>(uid, out var activeRadioComp))
+            {// To prevent speaking to previous channel instead of selected one
+                activeRadioComp.Channels.Clear();
+                activeRadioComp.Channels = new(){ args.Channel };
+            }
         UpdateIntercomUi(uid, component);
     }
 
@@ -290,20 +295,21 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (component.RequiresPower && !this.IsPowered(uid, EntityManager) || args.Session.AttachedEntity is not { })
             return;
 
-        foreach (var item in _protoMan.EnumeratePrototypes<RadioChannelPrototype>())
-        {
-            if(item.Frequency == args.Channel)
+        if(!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel,out _))
+            return;
+        if (TryComp<RadioMicrophoneComponent>(uid, out var mic))
+            mic.BroadcastChannel = args.Channel;
+        if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
+            speaker.Channels = new(){ args.Channel };
+        if (TryComp<ActiveRadioComponent>(uid, out var speakerComp))
             {
-                var channel = item.ID;
-                if (TryComp<RadioMicrophoneComponent>(uid, out var mic))
-                    mic.BroadcastChannel = channel;
-                if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
-                    speaker.Channels = new(){ channel };
-                if (TryComp<ActiveRadioComponent>(uid, out var channels))
-                    channels.Channels = new(){ channel };
-                UpdateHandheldRadioUi(uid, component);
+                speakerComp.Channels.Clear();
+                speakerComp.Channels = new(){ args.Channel };
             }
-        }        
+
+        UpdateHandheldRadioUi(uid, component);
+
+        
     }
 
     private void UpdateHandheldRadioUi(EntityUid uid, HandheldRadioComponent component)
