@@ -172,3 +172,12 @@
   - type: Storage
     maxItemSize: Huge
     maxTotalWeight: 200 #5 duffels worth of gear
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelChiefEngineer
+  name: chief engineer satchel
+  description: A white satchel for best engineers.
+  components:
+  - type: Sprite
+    sprite: Corvax/Back/Satchels/ce.rsi

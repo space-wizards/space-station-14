@@ -288,3 +288,12 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/cluwne.rsi
 
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackChiefEngineer
+  name: chief engineer backpack
+  description: Technicially progressive backpack.
+  components:
+  - type: Sprite
+    sprite: Corvax/Back/Backpacks/ce.rsi
+
