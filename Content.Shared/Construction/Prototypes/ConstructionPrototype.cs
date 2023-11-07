@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Construction.Conditions;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
@@ -65,11 +66,11 @@ public sealed partial class ConstructionPrototype : IPrototype
     public bool CanBuildInImpassable { get; private set; }
 
     /// <summary>
-    /// If not null, then this is used to check if the entity trying to construct this has the required tag.
-    /// If they don't have the tag, this construction is hidden.
+    /// If not null, then this is used to check if the entity trying to construct this is whitelisted.
+    /// If they're not whitelisted, hide the item.
     /// </summary>
-    [DataField("requiredTag")]
-    public string? RequiredTag = null;
+    [DataField("entityWhitelist")]
+    public EntityWhitelist? EntityWhitelist = null;
 
     [DataField("category")] public string Category { get; private set; } = "";
 

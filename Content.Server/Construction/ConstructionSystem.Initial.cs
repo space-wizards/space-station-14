@@ -333,7 +333,7 @@ namespace Content.Server.Construction
                 return false;
             }
 
-            if (constructionPrototype.RequiredTag != null && !_tagSystem.HasTag(user, constructionPrototype.RequiredTag))
+            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return false;
@@ -412,7 +412,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (constructionPrototype.RequiredTag != null && !_tagSystem.HasTag(user, constructionPrototype.RequiredTag))
+            if (constructionPrototype.EntityWhitelist != null && !constructionPrototype.EntityWhitelist.IsValid(user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return;

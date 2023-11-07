@@ -144,8 +144,6 @@ namespace Content.Client.Construction.UI
 
         private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
         {
-            var tagSystem = _systemManager.GetEntitySystem<TagSystem>();
-
             var (search, category) = args;
             var recipesList = _constructionView.Recipes;
 
@@ -157,11 +155,10 @@ namespace Content.Client.Construction.UI
                 if (recipe.Hide)
                     continue;
 
-                if (recipe.RequiredTag != null)
-                    if (_playerManager.LocalPlayer == null
-                    || _playerManager.LocalPlayer.ControlledEntity == null
-                    || !tagSystem.HasTag(_playerManager.LocalPlayer.ControlledEntity.Value, recipe.RequiredTag))
-                        continue;
+                if (_playerManager.LocalSession == null
+                || _playerManager.LocalEntity == null
+                || (recipe.EntityWhitelist != null && !recipe.EntityWhitelist.IsValid(_playerManager.LocalEntity.Value)))
+                    continue;
 
                 if (!string.IsNullOrEmpty(search))
                 {

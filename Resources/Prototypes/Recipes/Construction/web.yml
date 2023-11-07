@@ -13,7 +13,9 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-  requiredTag: SpiderCraft
+  entityWhitelist:
+    tags:
+    - SpiderCraft
   conditions:
     - !type:TileNotBlocked
 
@@ -32,7 +34,9 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-  requiredTag: SpiderCraft
+  entityWhitelist:
+    tags:
+    - SpiderCraft
   conditions:
     - !type:TileNotBlocked
 
@@ -51,7 +55,9 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-  requiredTag: SpiderCraft
+  entityWhitelist:
+    tags:
+    - SpiderCraft
   conditions:
     - !type:TileNotBlocked
 
@@ -69,7 +75,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  requiredTag: SpiderCraft
+  entityWhitelist:
+    tags:
+    - SpiderCraft
 
 - type: construction
   name: web crate
@@ -86,7 +94,9 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-  requiredTag: SpiderCraft
+  entityWhitelist:
+    tags:
+    - SpiderCraft
 
 - type: construction
   name: web door
@@ -102,6 +112,8 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  requiredTag: SpiderCraft
+  entityWhitelist:
+    tags:
+    - SpiderCraft
   conditions:
     - !type:TileNotBlocked
