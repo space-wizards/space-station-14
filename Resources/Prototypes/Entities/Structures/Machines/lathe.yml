@@ -371,8 +371,8 @@
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
-      - CriminalRecordsComputerCircuitboard
       - MassMediaCircuitboard
+      - CriminalRecordsComputerCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -795,6 +795,7 @@
       - ClothingNeckMantleCMO
       - ClothingNeckMantleHOP
       - ClothingNeckMantleHOS
+      - ClothingNeckMantleHOSShoulder # Corvax-Resprite: Old mantle
       - ClothingNeckMantleRD
       - ClothingNeckMantleQM
       - ClothingOuterWinterMusician
