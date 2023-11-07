@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,6 @@ using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SpriteComponent = Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
@@ -46,7 +44,7 @@ namespace Content.MapRenderer.Painters
 
             await client.WaitPost(() =>
             {
-                if (cEntityManager.TryGetComponent(cPlayerManager.LocalPlayer!.ControlledEntity!, out SpriteComponent? sprite))
+                if (cEntityManager.TryGetComponent(cPlayerManager.LocalEntity, out SpriteComponent? sprite))
                 {
                     sprite.Visible = false;
                 }
@@ -62,7 +60,7 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            (EntityUid Uid, MapGridComponent Grid)[] grids = null!;
+            Entity<MapGridComponent>[] grids = null!;
             var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
             var xformSystem = sEntityManager.System<SharedTransformSystem>();
 
@@ -76,7 +74,7 @@ namespace Content.MapRenderer.Painters
                 }
 
                 var mapId = sMapManager.GetAllMapIds().Last();
-                grids = sMapManager.GetAllMapGrids(mapId).Select(o => (o.Owner, o)).ToArray();
+                grids = sMapManager.GetAllGrids(mapId).ToArray();
 
                 foreach (var (uid, _) in grids)
                 {
