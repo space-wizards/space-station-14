@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by KEEYNy (Github) for Space Station 14. contacts: https://github.com/KEEYNy  discord: KEEYN#3805",
+  "copyright": "Sprited by KEEYNy (Github) for Space Station 14. contacts: https://github.com/KEEYNy  discord: KEEYN#3805, digi made by kuro(388673708753027083)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-digi",
       "directions": 4
     },
     {
