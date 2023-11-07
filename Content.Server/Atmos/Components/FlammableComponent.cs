@@ -56,5 +56,11 @@ namespace Content.Server.Atmos.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("firestacksOnIgnite")]
         public float FirestacksOnIgnite = 2.0f;
+
+        /// <summary>
+        /// Determines how quickly the object will fade out. With positive values, the object will flare up instead of going out.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public float FirestackFade = -0.1f;
     }
 }
