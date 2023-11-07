@@ -280,3 +280,22 @@
   - type: Construction
     graph: BoneArmor
     node: armor
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorPodWars
+  name: ironclad II armor
+  description: A repurposed suit of ironclad II armor, a relic of the pod wars.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/podwars_armor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/podwars_armor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+  - type: GroupExamine

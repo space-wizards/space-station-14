@@ -210,3 +210,18 @@
     Cellular: 1.0
     Radiation: 0.0 # hehe funny cockroach immune to rads
     Caustic: 1.0
+
+# Massive heat damage, presumably to kill with lasers
+- type: damageModifierSet
+  id: LivingLight
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.7
+    Shock: 0.0
+    Cold: 0.0
+    Poison: 0.0
+    Radiation: 0.0
+    Cellular: 0.0
+    Heat: 2.5
+    Caustic: 0.0

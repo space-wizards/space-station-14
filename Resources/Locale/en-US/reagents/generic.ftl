@@ -7,3 +7,4 @@ generic-reagent-effect-tearing-up = Your eyes start to tear up.
 generic-reagent-effect-nauseous = You feel nauseous.
 generic-reagent-effect-parched = You feel parched.
 generic-reagent-effect-thirsty = You feel thirsty.
+generic-reagent-effect-sick = You feel sick after consuming that...
