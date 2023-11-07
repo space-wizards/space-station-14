@@ -121,6 +121,7 @@
       task: SimpleHostileCompound
   - type: Puller
     needsHands: true
+  - type: ZombieImmune
 
 - type: entity
   name: bee
@@ -147,6 +148,7 @@
     - SimpleHostile
   - type: Bloodstream
     bloodMaxVolume: 0.1
+  - type: ZombieImmune
 
 
 - type: entity
