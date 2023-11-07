@@ -260,7 +260,7 @@
     outerClothing: ClothingOuterHardsuitCBURN
     shoes: ClothingShoesBootsCombatFilled
     id: CBURNPDA
-    pocket1: RadioHandheld
+    pocket1: HandheldRadio
     pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
