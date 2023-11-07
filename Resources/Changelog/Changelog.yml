@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: More shortcuts to guide entries on various items., type: Tweak}
-  id: 4628
-  time: '2023-08-18T23:53:45.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: The legendary John Barber came to Centcomm with a business proposal.
@@ -2912,3 +2907,8 @@ Entries:
   - {message: Fixed a few items with invalid sizes., type: Fix}
   id: 5127
   time: '2023-11-06T07:20:50.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: NT found clown and mime lockers in its stockpiles., type: Add}
+  id: 5128
+  time: '2023-11-07T23:38:18.0000000+00:00'
