@@ -93196,7 +93196,7 @@ entities:
       pos: 24.5,56.5
       parent: 1
       type: Transform
-- proto: HandheldRadio
+- proto: RadioHandheld
   entities:
   - uid: 2144
     components:

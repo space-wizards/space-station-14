@@ -31974,7 +31974,7 @@ entities:
     - pos: 5.5,-40.5
       parent: 1668
       type: Transform
-- proto: HandheldRadio
+- proto: RadioHandheld
   entities:
   - uid: 3903
     components:

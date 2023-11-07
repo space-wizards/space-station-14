@@ -15,7 +15,7 @@
       - id: ClothingBeltUtilityFilled
       - id: SurvivalKnife
       - id: HandheldGPSBasic
-      - id: HandheldRadio
+      - id: RadioHandheld
       - id: OreBag
         prob: 0.5
       - id: Flare
@@ -37,7 +37,7 @@
       - id: ClothingBeltUtilityFilled
       - id: SurvivalKnife
       - id: HandheldGPSBasic
-      - id: HandheldRadio
+      - id: RadioHandheld
       - id: OreBag
         prob: 0.5
       - id: Flare

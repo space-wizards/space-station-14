@@ -60557,7 +60557,7 @@ entities:
     - pos: -7.3932076,-33.368607
       parent: 1
       type: Transform
-- proto: HandheldRadio
+- proto: RadioHandheld
   entities:
   - uid: 12547
     components:

@@ -78662,7 +78662,7 @@ entities:
     - pos: -100.5,18.5
       parent: 1
       type: Transform
-- proto: HandheldRadio
+- proto: RadioHandheld
   entities:
   - uid: 15945
     components:

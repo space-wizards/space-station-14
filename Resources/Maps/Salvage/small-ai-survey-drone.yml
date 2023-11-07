@@ -1041,7 +1041,7 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-- proto: HandheldRadio
+- proto: RadioHandheld
   entities:
   - uid: 250
     components:
