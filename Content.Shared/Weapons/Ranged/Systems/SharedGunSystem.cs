@@ -138,7 +138,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
         Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
-        AttemptShoot(user.Value, ent, gun);
+        AttemptShoot(user.Value, ent, gun, GetEntity(msg.Hovered));
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
@@ -212,7 +212,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
     }
 
-    private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
+    private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityUid? hovered = null)
     {
         if (gun.FireRate <= 0f ||
             !_actionBlockerSystem.CanUseHeldEntity(user))
@@ -357,10 +357,11 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityCoordinates toCoordinates,
         out bool userImpulse,
         EntityUid? user = null,
-        bool throwItems = false)
+        bool throwItems = false,
+        EntityUid? hovered = null)
     {
         var shootable = EnsureShootable(ammo);
-        Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) }, fromCoordinates, toCoordinates, out userImpulse, user, throwItems);
+        Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) }, fromCoordinates, toCoordinates, out userImpulse, user, throwItems, hovered);
     }
 
     public abstract void Shoot(
@@ -371,7 +372,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityCoordinates toCoordinates,
         out bool userImpulse,
         EntityUid? user = null,
-        bool throwItems = false);
+        bool throwItems = false,
+        EntityUid? hovered = null);
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 

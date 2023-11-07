@@ -70,7 +70,7 @@ public sealed partial class GunSystem : SharedGunSystem
     }
 
     public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
-        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, out bool userImpulse, EntityUid? user = null, bool throwItems = false)
+        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, out bool userImpulse, EntityUid? user = null, bool throwItems = false, EntityUid? hovered = null)
     {
         userImpulse = true;
 
@@ -142,11 +142,8 @@ public sealed partial class GunSystem : SharedGunSystem
                             for (var i = 0; i < cartridge.Count; i++)
                             {
                                 var uid = Spawn(cartridge.Prototype, fromEnt);
-                                if (user is not null &&
-                                    _playerManager.TryGetSessionByEntity(user.Value, out var userEntity))
-                                {
-
-                                }
+                                if (TryComp(uid, out ProjectileComponent? proj))
+                                    proj.CursorTarget = hovered;
                                 ShootOrThrow(uid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
                                 shotProjectiles.Add(uid);
                             }
@@ -154,6 +151,8 @@ public sealed partial class GunSystem : SharedGunSystem
                         else
                         {
                             var uid = Spawn(cartridge.Prototype, fromEnt);
+                            if (TryComp(uid, out ProjectileComponent? proj))
+                                proj.CursorTarget = hovered;
                             ShootOrThrow(uid, mapDirection, gunVelocity, gun, gunUid, user);
                             shotProjectiles.Add(uid);
                         }
