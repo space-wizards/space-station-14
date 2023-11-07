@@ -76,6 +76,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
         _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
 
+        // Doing this pda stuff a second time just to print the message is suboptimal
+
         // I think this takes the uid of the entity holding the PDA, need to test idk
         var pda = _uplink.FindUplinkTarget(uid);
         if (pda == null)
@@ -85,22 +87,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (code != null)
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
 
-
-        // The RoleBriefingComponent wasn't even implemented seemingly, the above should work
-        // as it always has before
-
-    //    // Here we do all the PDA stuff involved with notifying the players
-    //    if(!_mindSystem.TryGetMind(session, out var mindId, out var mind))
-    //        return;
-    //    // FindUplinkTarget just finds a PDA the players has,
-    //    var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
-    //    if (pda == null)
-    //        return;
-    //    // Give traitors their codewords and uplink code to keep in their character info menu
-    //    code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
-    //    if (code == null)
-    //        return;
-
+        _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -278,15 +265,20 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
         if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
             startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
-
+        // Give traitors their codewords and uplink code to keep in their character info menu
+        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords)));
+        Note[]? code = null;
         if (giveUplink)
         {
             // creadth: we need to create uplink for the antag.
             // PDA should be in place already
             var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
-            if (!_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
+            if (pda == null || !_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
                 return false;
-
+            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+            // If giveUplink is false the uplink code part is omitted
+            briefing = string.Format("{0}\n{1}", briefing,
+                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
         }
 
         // Prepare traitor role
@@ -300,17 +292,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
             PrototypeId = traitorRule.TraitorPrototypeId
         });
-        // so this is why we're using templates huh
-        // ----------------------------------------
         // Assign briefing
-       // _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
-       // {
-       //     Briefing = briefing
-       // });
-        // This is the point at which the player notification
-        // was done in the old system.
-        // now moved to OnRoleChangeNotify():
-        // SendTraitorBriefing(mindId, traitorRule.Codewords, code);
+         _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
+        {
+            Briefing = briefing
+        });
         traitorRule.TraitorMinds.Add(mindId);
 
         // Change the faction

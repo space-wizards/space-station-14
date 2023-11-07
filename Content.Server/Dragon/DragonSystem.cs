@@ -194,6 +194,10 @@ public sealed partial class DragonSystem : EntitySystem
         var mind = args.Mind;
 
         _role.MindAddRole(mindId, new DragonRoleComponent(), mind);
+        _role.MindAddRole(mindId, new RoleBriefingComponent()
+        {
+            Briefing = Loc.GetString("dragon-role-briefing")
+        }, mind);
     }
 
     private void Roar(EntityUid uid, DragonComponent comp)
