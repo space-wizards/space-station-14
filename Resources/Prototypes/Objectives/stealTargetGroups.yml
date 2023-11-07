@@ -27,3 +27,31 @@
   sprite:
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cap
+    
+- type: stealTargetGroup
+  id: ThiefDoorRemote
+  name: any door remotes
+  sprite:
+    sprite: Objects/Devices/door_remote.rsi
+    state: door_remotebase
+    
+- type: stealTargetGroup
+  id: ThiefResearchDisk
+  name: research disks
+  sprite:
+    sprite: Objects/Specific/Research/researchdisk.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: ThiefIDCard
+  name: any ID Cards
+  sprite:
+    sprite: Objects/Misc/id_cards.rsi
+    state: default
+
+- type: stealTargetGroup
+  id: ThiefCannabis
+  name: cannabis
+  sprite:
+    sprite: Objects/Specific/Hydroponics/cannabis.rsi
+    state: produce

@@ -26,9 +26,7 @@ public sealed partial class ThiefRuleComponent : Component
     public float MaxObjectiveDifficulty = 3f;
 
     [DataField]
-    public int MaxStealObjectives = 3;
-
-    //Правило должно спавнить, не думая о том, правильно ли ему вызываться. Т.к. его могут форсануть
+    public int MaxStealObjectives = 10;
 
     /// <summary>
     /// All Thiefes created by this rule

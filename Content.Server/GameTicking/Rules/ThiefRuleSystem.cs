@@ -241,6 +241,16 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         // Give thieves their objectives
         var difficulty = 0f;
+        //while (difficulty < thiefRule.MaxObjectiveDifficulty)
+        //{
+        //    var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefObjectiveGroups");
+        //    if (objective == null)
+        //        continue;
+
+        //    _mindSystem.AddObjective(mindId, mind, objective.Value);
+        //    difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
+        //}
+
         for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)
         {
             var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefObjectiveGroups");

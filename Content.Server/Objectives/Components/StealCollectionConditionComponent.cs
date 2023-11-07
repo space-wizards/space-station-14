@@ -17,6 +17,11 @@ public sealed partial class StealCollectionConditionComponent : Component
     public string StealGroup;
 
     /// <summary>
+    /// When enabled, disables generation of this target if there is no entity on the map (disable for objects that can be created mid-round).
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool VerifyMapExistance = true;
+    /// <summary>
     /// The minimum number of items you need to steal to fulfill a objective
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -33,12 +38,6 @@ public sealed partial class StealCollectionConditionComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int CollectionSize;
-    /// <summary>
-    /// Help newer players by saying e.g. "steal the chief engineer's advanced magboots"
-    /// instead of "steal advanced magboots. Should be a loc string.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string? OwnerText;
 
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public string ObjectiveText;

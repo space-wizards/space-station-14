@@ -11,6 +11,8 @@
   - type: GuideHelp
     guides:
     - Science
+  - type: StealCollectionTarget
+    stealGroup: ThiefResearchDisk
 
 - type: entity
   parent: ResearchDisk

@@ -45,43 +45,43 @@
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
-    ThiefObjectiveGroupItem: 0.2
-    ThiefObjectiveGroupCollection: 2
+    ThiefObjectiveGroupItem: 1
+    ThiefObjectiveGroupCollection: 1
     #ThiefObjectiveGroupAnimal: 0.5
     #ThiefObjectiveGroupStructure: 1
     
 - type: weightedRandom
   id: ThiefObjectiveGroupCollection
   weights:
-    FigurineThiefStealCollectionObjective: 1
-    HeadCloakThiefStealCollectionObjective: 1
+    HeadCloakThiefStealCollectionObjective: 1           #command
     HeadBedsheetThiefStealCollectionObjective: 1
     StampThiefStealCollectionObjective: 1
+    DoorRemoteThiefStealCollectionObjective: 1
+    ResearchDiskThiefStealCollectionObjective: 1        #rnd
+    FigurineThiefStealCollectionObjective: 0.2          #service
+    IDCardsThiefStealCollectionObjective: 1
+    CannabisThiefStealCollectionObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
   weights:
-    ForensicScannerStealObjective: 1
+    ForensicScannerStealObjective: 1                    #sec
+    AmmoTechFabCircuitboardStealObjective: 1
     ClothingHeadHatWardenStealObjective: 1
-    DefibrillatorStealObjective: 1
-    HandheldCrewMonitorStealObjective: 1
-    ClothingEyesGlassesChemicalStealObjective: 1
-    PositronicBrainStealObjective: 1
-    WeaponPistolCHIMPStealObjective: 1
-    APECircuitboardStealObjective: 1
-    FireAxeStealObjective: 1
-    JawsOfLifeStealObjective: 1
-    GasAnalyzerStealObjective: 1
-    WeaponProtoKineticAcceleratorStealObjective: 1
-    MiningDrillStealObjective: 1
-    AppraisalToolStealObjective: 1
-    ButchCleaverStealObjective: 1
-    DeathNettleStealObjective: 1
-    WeaponShotgunDoubleBarreledRubberStealObjective: 1
+    ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
+    MedicalTechFabCircuitboardStealObjective: 1
+    ClothingHeadsetAltMedicalStealObjective: 1
+    RnDServerMachineCircuitboardStealObjective: 1       #rnd
+    FireAxeStealObjective: 1                            #eng
+    RCDStealObjective: 1
+    AmePartStealObjective: 1
+    ExpeditionsCircuitboardStealObjective: 1            #sup
+    CargoShuttleCircuitboardStealObjective: 1
+    SalvageShuttleCircuitboardStealObjective: 1
+    ClothingEyesHudBeerStealObjective: 1                #srv
     BibleStealObjective: 1
-    ClothingMaskMimeStealObjective: 1
-    BananaPhoneInstrumentStealObjective: 1
-    ClothingNeckGoldmedalStealObjective: 1
+    ClothingNeckGoldmedalStealObjective: 1              #other
+    ClothingNeckClownmedalStealObjective: 0.5
     DrinkGoldenCupStealObjective: 1
 
 #Changeling, crew, wizard, when you code it...

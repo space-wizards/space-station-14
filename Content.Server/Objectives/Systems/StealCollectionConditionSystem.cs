@@ -55,18 +55,24 @@ public sealed class StealCollectionConditionSystem : EntitySystem
         }
 
         // cancel if the required items do not exist
-        if (targetList.Count == 0)
+        if (targetList.Count == 0 && condition.Comp.VerifyMapExistance)
         {
             args.Cancelled = true;
             return;
         }
 
         //setup condition settings
-        var maxSize = Math.Min(targetList.Count, condition.Comp.MaxCollectionSize);
-        var minSize = Math.Min(targetList.Count, condition.Comp.MinCollectionSize);
+        var maxSize = condition.Comp.VerifyMapExistance
+            ? Math.Min(targetList.Count, condition.Comp.MaxCollectionSize)
+            : condition.Comp.MaxCollectionSize;
+        var minSize = condition.Comp.VerifyMapExistance
+            ? Math.Min(targetList.Count, condition.Comp.MinCollectionSize)
+            : condition.Comp.MinCollectionSize;
+
         condition.Comp.CollectionSize = _random.Next(minSize, maxSize);
     }
 
+    //Set the visual, name, icon for the objective.
     private void OnAfterAssign(Entity<StealCollectionConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
         //установить иконку, описание и название цели
@@ -99,7 +105,7 @@ public sealed class StealCollectionConditionSystem : EntitySystem
         var stack = new Stack<ContainerManagerComponent>();
         var count = 0;
 
-        //check pulling object
+        //check pulling object 
         if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull))
         {
             var pullid = pull.Pulling;
@@ -109,6 +115,7 @@ public sealed class StealCollectionConditionSystem : EntitySystem
                 if (TryComp<StealCollectionTargetComponent>(pullid, out var target))
                     if (target.StealGroup == condition.StealGroup) count++;
 
+                // TO DO - ignore if target alive
                 // if it is a container check its contents
                 if (containerQuery.TryGetComponent(pullid, out var containerManager))
                     stack.Push(containerManager);
@@ -134,9 +141,7 @@ public sealed class StealCollectionConditionSystem : EntitySystem
             }
         } while (stack.TryPop(out currentManager));
 
-        
-
-            var result = (float) count / (float) condition.CollectionSize;
+        var result = (float) count / (float) condition.CollectionSize;
         result = Math.Clamp(result, 0, 1);
         return result;
     }
