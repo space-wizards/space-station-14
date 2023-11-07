@@ -72,7 +72,7 @@
   id: LivestockPupCorgi
   icon:
     sprite: Mobs/Pets/corgi.rsi
-    state: corgi
+    state: puppy
   product: CrateNPCPuppyCorgi
   cost: 1200
   category: Livestock
