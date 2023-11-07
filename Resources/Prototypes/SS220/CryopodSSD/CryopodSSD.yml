@@ -22,7 +22,8 @@
     - type: Transform
       anchored: true
     - type: Storage
-      capacity: 2000000000
+      maxSlots: 9999
+      maxItemSize: Ginormous
       clickInsert: false
     - type: ActivatableUI
       key: enum.SSDStorageConsoleKey.Key
