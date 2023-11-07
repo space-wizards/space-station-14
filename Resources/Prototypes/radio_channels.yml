@@ -159,7 +159,6 @@
   keycode: "9"
   frequency: 1399
 
-<<<<<<< HEAD
 - type: radioChannel
   id: Freelance
   name: chat-radio-freelance
@@ -168,5 +167,3 @@
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
-=======
->>>>>>> d96e872a656d3e176f159cdcdc07d5f7e91e2737
