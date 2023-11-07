@@ -1,4 +1,6 @@
 using Content.Server.Objectives.Systems;
+using Content.Shared.Objectives;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives.Components;
 
@@ -12,7 +14,7 @@ public sealed partial class StealConditionComponent : Component
     /// A group of items to be stolen
     /// </summary>
     [DataField(required: true)]
-    public string StealGroup;
+    public ProtoId<StealTargetGroupPrototype> StealGroup;
 
     /// <summary>
     /// When enabled, disables generation of this target if there is no entity on the map (disable for objects that can be created mid-round).

@@ -78,7 +78,7 @@ public sealed class StealConditionSystem : EntitySystem
     //Set the visual, name, icon for the objective.
     private void OnAfterAssign(Entity<StealConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
-        var group = _proto.Index<StealTargetGroupPrototype>(condition.Comp.StealGroup);
+        var group = _proto.Index(condition.Comp.StealGroup);
 
         var title =condition.Comp.OwnerText == null
             ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", group.Name))
