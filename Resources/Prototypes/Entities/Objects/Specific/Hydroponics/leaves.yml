@@ -17,7 +17,7 @@
         reagents:
         - ReagentId: THC
           Quantity: 15
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefCannabis
 
 - type: entity
@@ -38,7 +38,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefCannabis
 
 - type: entity
@@ -68,7 +68,7 @@
       - Smokable
   - type: Item
     size: Tiny
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefCannabis
 
 - type: entity

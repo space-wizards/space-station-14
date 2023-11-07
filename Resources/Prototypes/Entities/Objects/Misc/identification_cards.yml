@@ -20,7 +20,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefIDCard
 
 #IDs with layers

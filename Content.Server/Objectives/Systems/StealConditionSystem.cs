@@ -2,6 +2,7 @@ using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Pulling.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -68,9 +69,27 @@ public sealed class StealConditionSystem : EntitySystem
         if (!containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
             return 0;
 
+
+        var stack = new Stack<ContainerManagerComponent>();
+
+        //check pulling object 
+        if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull))
+        {
+            var pullid = pull.Pulling;
+            if (pullid != null)
+            {
+                // check if this is the item
+                if (metaQuery.GetComponent(pullid.Value).EntityPrototype?.ID == prototype)
+                    return 1;
+
+                // if it is a container check its contents
+                if (containerQuery.TryGetComponent(pullid, out var containerManager))
+                    stack.Push(containerManager);
+            }
+        }
+
         // recursively check each container for the item
         // checks inventory, bag, implants, etc.
-        var stack = new Stack<ContainerManagerComponent>();
         do
         {
             foreach (var container in currentManager.Containers.Values)

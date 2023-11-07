@@ -7,8 +7,8 @@ namespace Content.Server.Objectives.Components.Targets;
 /// <summary>
 /// Allows an object to become the target of a StealCollection  objection
 /// </summary>
-[RegisterComponent, Access(typeof(StealCollectionConditionSystem))]
-public sealed partial class StealCollectionTargetComponent : Component
+[RegisterComponent]
+public sealed partial class StealTargetComponent : Component
 {
     /// <summary>
     /// The theft group to which this item belongs.

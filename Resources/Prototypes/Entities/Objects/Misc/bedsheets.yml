@@ -61,7 +61,7 @@
     state: sheetcaptain
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/captain.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadBedsheet
 
 - type: entity
@@ -74,7 +74,7 @@
     state: sheetce
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/ce.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadBedsheet
 
 - type: entity
@@ -87,7 +87,7 @@
     state: sheetcentcom
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/centcom.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadBedsheet
 
 - type: entity
@@ -111,7 +111,7 @@
     state: sheetcmo
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/cmo.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadBedsheet
 
 - type: entity
@@ -166,7 +166,7 @@
     state: sheethop
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/hop.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadBedsheet
 
 - type: entity
@@ -179,7 +179,7 @@
     state: sheethos
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/hos.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadBedsheet
 
 - type: entity
@@ -254,7 +254,7 @@
     state: sheetqm
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/qm.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadBedsheet
 
 - type: entity
@@ -277,7 +277,7 @@
     state: sheetrd
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/rd.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadBedsheet
 
 - type: entity

@@ -34,7 +34,7 @@ public sealed class StealCollectionConditionSystem : EntitySystem
     }
     private void OnAssigned(Entity<StealCollectionConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
-        List<StealCollectionTargetComponent?> targetList = new();
+        List<StealTargetComponent?> targetList = new();
 
         // cancel if invalid TargetStealName
         var group = _proto.Index<StealTargetGroupPrototype>(condition.Comp.StealGroup);
@@ -45,7 +45,7 @@ public sealed class StealCollectionConditionSystem : EntitySystem
             return;
         }
 
-        var query = EntityQueryEnumerator<StealCollectionTargetComponent>();
+        var query = EntityQueryEnumerator<StealTargetComponent>();
         while (query.MoveNext(out var uid, out var target))
         {
             if (condition.Comp.StealGroup != target.StealGroup)
@@ -112,7 +112,7 @@ public sealed class StealCollectionConditionSystem : EntitySystem
             if (pullid != null)
             {
                 // check if this is the item
-                if (TryComp<StealCollectionTargetComponent>(pullid, out var target))
+                if (TryComp<StealTargetComponent>(pullid, out var target))
                     if (target.StealGroup == condition.StealGroup) count++;
 
                 // TO DO - ignore if target alive
@@ -131,7 +131,7 @@ public sealed class StealCollectionConditionSystem : EntitySystem
                 foreach (var entity in container.ContainedEntities)
                 {
                     // check if this is the item
-                    if (TryComp<StealCollectionTargetComponent>(entity, out var target))
+                    if (TryComp<StealTargetComponent>(entity, out var target))
                         if (target.StealGroup == condition.StealGroup) count++;
 
                     // if it is a container check its contents

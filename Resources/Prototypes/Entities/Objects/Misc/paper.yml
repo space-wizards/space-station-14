@@ -589,7 +589,7 @@
     state: stamp-mime
   - type: Item
     size: Tiny
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefStamp
 
 - type: entity
