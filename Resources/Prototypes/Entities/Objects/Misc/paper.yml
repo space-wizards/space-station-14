@@ -566,6 +566,8 @@
     damage:
       types:
         Blunt: 10
+  - type: StealTarget
+    stealGroup: TraitorBoxFolderQmClipboard
 
 # Stamps
 - type: entity

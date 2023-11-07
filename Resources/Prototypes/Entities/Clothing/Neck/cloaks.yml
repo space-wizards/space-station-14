@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cap.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity
@@ -17,7 +17,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hos.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity
@@ -28,7 +28,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ce.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity
@@ -39,7 +39,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/cmo.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity
@@ -50,7 +50,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/rd.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity
@@ -61,7 +61,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/qm.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity
@@ -72,7 +72,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/hop.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity
@@ -101,7 +101,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/capcloakformal.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity
@@ -112,7 +112,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admin.rsi
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefHeadCloak
 
 - type: entity

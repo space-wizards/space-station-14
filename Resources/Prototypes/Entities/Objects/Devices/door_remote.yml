@@ -9,7 +9,7 @@
     sprite: Objects/Devices/door_remote.rsi
   - type: Access
   - type: DoorRemote
-  - type: StealCollectionTarget
+  - type: StealTarget
     stealGroup: ThiefDoorRemote
 
 - type: entity

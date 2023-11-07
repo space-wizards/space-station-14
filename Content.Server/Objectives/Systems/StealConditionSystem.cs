@@ -1,16 +1,19 @@
 using Content.Server.Objectives.Components;
+using Content.Server.Objectives.Components.Targets;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
-using Content.Shared.Pulling.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Random;
+using Content.Shared.Pulling.Components;
 
 namespace Content.Server.Objectives.Systems;
 
 public sealed class StealConditionSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
@@ -30,47 +33,79 @@ public sealed class StealConditionSystem : EntitySystem
         SubscribeLocalEvent<StealConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
-    private void OnAssigned(EntityUid uid, StealConditionComponent comp, ref ObjectiveAssignedEvent args)
+    /// start checks of target acceptability, and generation of start values.
+    private void OnAssigned(Entity<StealConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
-        // cancel if the item to steal doesn't exist
-        args.Cancelled |= !_proto.HasIndex<EntityPrototype>(comp.Prototype);
+        List<StealTargetComponent?> targetList = new();
+
+        // cancel if invalid TargetStealName
+        var group = _proto.Index<StealTargetGroupPrototype>(condition.Comp.StealGroup);
+        if (group == null)
+        {
+            args.Cancelled = true;
+            Log.Error("StealTargetGroup invalid prototype!");
+            return;
+        }
+
+        var query = EntityQueryEnumerator<StealTargetComponent>();
+        while (query.MoveNext(out var uid, out var target))
+        {
+            if (condition.Comp.StealGroup != target.StealGroup)
+                continue;
+
+            targetList.Add(target);
+        }
+
+        // cancel if the required items do not exist
+        if (targetList.Count == 0 && condition.Comp.VerifyMapExistance)
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        //setup condition settings
+        var maxSize = condition.Comp.VerifyMapExistance
+            ? Math.Min(targetList.Count, condition.Comp.MaxCollectionSize)
+            : condition.Comp.MaxCollectionSize;
+        var minSize = condition.Comp.VerifyMapExistance
+            ? Math.Min(targetList.Count, condition.Comp.MinCollectionSize)
+            : condition.Comp.MinCollectionSize;
+
+        condition.Comp.CollectionSize = _random.Next(minSize, maxSize);
     }
 
-    private void OnAfterAssign(EntityUid uid, StealConditionComponent comp, ref ObjectiveAfterAssignEvent args)
+    //Set the visual, name, icon for the objective.
+    private void OnAfterAssign(Entity<StealConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
-        var proto = _proto.Index<EntityPrototype>(comp.Prototype);
-        var title = comp.OwnerText == null
-            ? Loc.GetString(comp.ObjectiveNoOwnerText, ("itemName", proto.Name))
-            : Loc.GetString(comp.ObjectiveText, ("owner", Loc.GetString(comp.OwnerText)), ("itemName", proto.Name));
-        var description = Loc.GetString(comp.DescriptionText, ("itemName", proto.Name));
+        var group = _proto.Index<StealTargetGroupPrototype>(condition.Comp.StealGroup);
 
-        _metaData.SetEntityName(uid, title, args.Meta);
-        _metaData.SetEntityDescription(uid, description, args.Meta);
-        _objectives.SetIcon(uid, new SpriteSpecifier.EntityPrototype(comp.Prototype), args.Objective);
+        var title =condition.Comp.OwnerText == null
+            ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", group.Name))
+            : Loc.GetString(condition.Comp.ObjectiveText, ("owner", Loc.GetString(condition.Comp.OwnerText)), ("itemName", group.Name));
+
+        var description = condition.Comp.CollectionSize > 1
+            ? Loc.GetString(condition.Comp.DescriptionMultiplyText, ("itemName", group.Name), ("count", condition.Comp.CollectionSize))
+            : Loc.GetString(condition.Comp.DescriptionText, ("itemName", group.Name));
+
+        _metaData.SetEntityName(condition.Owner, title, args.Meta);
+        _metaData.SetEntityDescription(condition.Owner, description, args.Meta);
+        _objectives.SetIcon(condition.Owner, group.Sprite, args.Objective);
     }
 
-    private void OnGetProgress(EntityUid uid, StealConditionComponent comp, ref ObjectiveGetProgressEvent args)
+    private void OnGetProgress(Entity<StealConditionComponent> condition, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetProgress(args.Mind, comp.Prototype);
+        args.Progress = GetProgress(args.Mind, condition);
     }
 
-    private float GetProgress(MindComponent mind, string prototype)
+    private float GetProgress(MindComponent mind, StealConditionComponent condition)
     {
-        // TODO make this a container system function
-        // or: just iterate through transform children, instead of containers?
-
         if (!metaQuery.TryGetComponent(mind.OwnedEntity, out var meta))
             return 0;
-
-        // who added this check bruh
-        if (meta.EntityPrototype?.ID == prototype)
-            return 1;
-
         if (!containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
             return 0;
 
-
         var stack = new Stack<ContainerManagerComponent>();
+        var count = 0;
 
         //check pulling object 
         if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull))
@@ -79,9 +114,10 @@ public sealed class StealConditionSystem : EntitySystem
             if (pullid != null)
             {
                 // check if this is the item
-                if (metaQuery.GetComponent(pullid.Value).EntityPrototype?.ID == prototype)
-                    return 1;
+                if (TryComp<StealTargetComponent>(pullid, out var target))
+                    if (target.StealGroup == condition.StealGroup) count++;
 
+                // TO DO - ignore if target alive
                 // if it is a container check its contents
                 if (containerQuery.TryGetComponent(pullid, out var containerManager))
                     stack.Push(containerManager);
@@ -97,8 +133,8 @@ public sealed class StealConditionSystem : EntitySystem
                 foreach (var entity in container.ContainedEntities)
                 {
                     // check if this is the item
-                    if (metaQuery.GetComponent(entity).EntityPrototype?.ID == prototype)
-                        return 1;
+                    if (TryComp<StealTargetComponent>(entity, out var target))
+                        if (target.StealGroup == condition.StealGroup) count++;
 
                     // if it is a container check its contents
                     if (containerQuery.TryGetComponent(entity, out var containerManager))
@@ -107,6 +143,8 @@ public sealed class StealConditionSystem : EntitySystem
             }
         } while (stack.TryPop(out currentManager));
 
-        return 0;
+        var result = (float) count / (float) condition.CollectionSize;
+        result = Math.Clamp(result, 0, 1);
+        return result;
     }
 }

@@ -115,6 +115,8 @@
     - DoorBumpOpener
     - WhitelistChameleon
     - HighRiskItem
+  - type: StealTarget
+    stealGroup: CaptainIDCard
 
 - type: entity
   parent: IDCardStandard

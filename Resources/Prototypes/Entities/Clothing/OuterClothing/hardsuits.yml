@@ -359,6 +359,8 @@
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
     price: 750
+  - type: StealTarget
+    stealGroup: ClothingOuterHardsuitRd
 
 #Head of Security's Hardsuit
 - type: entity

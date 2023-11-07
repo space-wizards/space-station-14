@@ -45,7 +45,7 @@
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
-    ThiefObjectiveGroupItem: 1
+    #ThiefObjectiveGroupItem: 1
     ThiefObjectiveGroupCollection: 1
     #ThiefObjectiveGroupAnimal: 0.5
     #ThiefObjectiveGroupStructure: 1
@@ -62,26 +62,26 @@
     IDCardsThiefStealCollectionObjective: 1
     CannabisThiefStealCollectionObjective: 1
 
-- type: weightedRandom
-  id: ThiefObjectiveGroupItem
-  weights:
-    ForensicScannerStealObjective: 1                    #sec
-    AmmoTechFabCircuitboardStealObjective: 1
-    ClothingHeadHatWardenStealObjective: 1
-    ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
-    MedicalTechFabCircuitboardStealObjective: 1
-    ClothingHeadsetAltMedicalStealObjective: 1
-    RnDServerMachineCircuitboardStealObjective: 1       #rnd
-    FireAxeStealObjective: 1                            #eng
-    RCDStealObjective: 1
-    AmePartStealObjective: 1
-    ExpeditionsCircuitboardStealObjective: 1            #sup
-    CargoShuttleCircuitboardStealObjective: 1
-    SalvageShuttleCircuitboardStealObjective: 1
-    ClothingEyesHudBeerStealObjective: 1                #srv
-    BibleStealObjective: 1
-    ClothingNeckGoldmedalStealObjective: 1              #other
-    ClothingNeckClownmedalStealObjective: 0.5
-    DrinkGoldenCupStealObjective: 1
+#- type: weightedRandom
+#  id: ThiefObjectiveGroupItem
+#  weights:
+#    ForensicScannerStealObjective: 1                    #sec
+#    AmmoTechFabCircuitboardStealObjective: 1
+#    ClothingHeadHatWardenStealObjective: 1
+#    ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
+#    MedicalTechFabCircuitboardStealObjective: 1
+#    ClothingHeadsetAltMedicalStealObjective: 1
+#    RnDServerMachineCircuitboardStealObjective: 1       #rnd
+#    FireAxeStealObjective: 1                            #eng
+#    RCDStealObjective: 1
+#    AmePartStealObjective: 1
+#    ExpeditionsCircuitboardStealObjective: 1            #sup
+#    CargoShuttleCircuitboardStealObjective: 1
+#    SalvageShuttleCircuitboardStealObjective: 1
+#    ClothingEyesHudBeerStealObjective: 1                #srv
+#    BibleStealObjective: 1
+#    ClothingNeckGoldmedalStealObjective: 1              #other
+#    ClothingNeckClownmedalStealObjective: 0.5
+#    DrinkGoldenCupStealObjective: 1
 
 #Changeling, crew, wizard, when you code it...
