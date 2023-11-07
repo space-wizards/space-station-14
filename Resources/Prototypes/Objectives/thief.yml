@@ -203,145 +203,134 @@
   - type: Objective
     difficulty: 1
 
-#- type: entity                                      #Science subgroup
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: RnDServerMachineCircuitboardStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: Scientist
-#  - type: StealCondition
-#    prototype: ResearchAndDevelopmentServerMachineCircuitboard
-#  - type: Objective
-#    difficulty: 1
-#
-#- type: entity                                      #Engineering subgroup
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: FireAxeStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: AtmosphericTechnician
-#  - type: StealCondition
-#    prototype: FireAxe
-#  - type: Objective
-#    difficulty: 0.8
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: RCDStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: StationEngineer
-#  - type: StealCondition
-#    prototype: RCD
-#  - type: Objective
-#    difficulty: 0.7
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: AmePartStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: StationEngineer
-#  - type: StealCondition
-#    prototype: AmePart
-#  - type: Objective
-#    difficulty: 1
-#
-#- type: entity                                      #Cargo subgroup
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: ExpeditionsCircuitboardStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: SalvageSpecialist
-#  - type: StealCondition
-#    prototype: SalvageExpeditionsComputerCircuitboard
-#  - type: Objective
-#    difficulty: 0.7
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: CargoShuttleCircuitboardStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: CargoTechnician
-#  - type: StealCondition
-#    prototype: CargoShuttleConsoleCircuitboard
-#  - type: Objective
-#    difficulty: 0.7
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: SalvageShuttleCircuitboardStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: SalvageSpecialist
-#  - type: StealCondition
-#    prototype: SalvageShuttleConsoleCircuitboard
-#  - type: Objective
-#    difficulty: 0.7
-#
-#- type: entity                                      #Service subgroup
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: ClothingEyesHudBeerStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: Bartender
-#  - type: StealCondition
-#    prototype: ClothingEyesHudBeer
-#  - type: Objective
-#    difficulty: 0.5
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: BibleStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: Chaplain
-#  - type: StealCondition
-#    prototype: Bible
-#  - type: Objective
-#    difficulty: 0.5
-#
-#- type: entity                                      #Other subgroup
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: ClothingNeckGoldmedalStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: HeadOfPersonnel
-#  - type: StealCondition
-#    prototype: ClothingNeckGoldmedal
-#  - type: Objective
-#    difficulty: 1
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: ClothingNeckClownmedalStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: Captain
-#  - type: StealCondition
-#    prototype: ClothingNeckClownmedal
-#  - type: Objective
-#    difficulty: 1
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: DrinkGoldenCupStealObjective
-#  components:
-#  - type: StealCondition
-#    prototype: DrinkGoldenCup
-#  - type: Objective
-#    difficulty: 0.5
-#
+- type: entity                                      #Science subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: RnDServerMachineCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: ResearchAndDevelopmentServerMachineCircuitboard
+  - type: Objective
+    difficulty: 1
+
+- type: entity                                      #Engineering subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: FireAxeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: FireAxe
+  - type: Objective
+    difficulty: 0.8
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: RCDStealObjective
+  components:
+  - type: NotJobRequirement
+    job: StationEngineer
+  - type: StealCondition
+    stealGroup: RCD
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: AmePartStealObjective
+  components:
+  - type: NotJobRequirement
+    job: StationEngineer
+  - type: StealCondition
+    stealGroup: AmePart
+  - type: Objective
+    difficulty: 1
+
+- type: entity                                      #Cargo subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ExpeditionsCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: SalvageExpeditionsComputerCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: CargoShuttleCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: CargoTechnician
+  - type: StealCondition
+    stealGroup: CargoShuttleConsoleCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: SalvageShuttleCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: SalvageShuttleConsoleCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity                                      #Service subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingEyesHudBeerStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Bartender
+  - type: StealCondition
+    stealGroup: ClothingEyesHudBeer
+  - type: Objective
+    difficulty: 0.3
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: BibleStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chaplain
+  - type: StealCondition
+    stealGroup: Bible
+  - type: Objective
+    difficulty: 0.4
+
+- type: entity                                      #Other subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckGoldmedalStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
+  - type: StealCondition
+    stealGroup: ClothingNeckGoldmedal
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckClownmedalStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: ClothingNeckClownmedal
+  - type: Objective
+    difficulty: 1

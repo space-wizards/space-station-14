@@ -137,7 +137,7 @@ public sealed class StealConditionSystem : EntitySystem
                 {
                     // check if this is the item
                     if (TryComp<StealTargetComponent>(entity, out var target))
-                        if (target.StealGroup == condition.StealGroup) count++;
+                        if (target.StealGroup == condition.StealGroup) count++; //To Do: add support for stackable items
 
                     // if it is a container check its contents
                     if (_containerQuery.TryGetComponent(entity, out var containerManager))

@@ -82,8 +82,8 @@
           Amount: 2
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
-  - type: StealTarget
-    stealGroup: MedicalTechFabCircuitboard
+    - type: StealTarget
+      stealGroup: MedicalTechFabCircuitboard
 
 - type: entity
   id: CircuitImprinterMachineCircuitboard
@@ -134,6 +134,8 @@
     prototype: ResearchAndDevelopmentServer
     materialRequirements:
       Plasma: 5
+  - type: StealTarget
+    stealGroup: ResearchAndDevelopmentServerMachineCircuitboard
 
 - type: entity
   id: UniformPrinterMachineCircuitboard

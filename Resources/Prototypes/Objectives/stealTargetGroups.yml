@@ -179,3 +179,80 @@
     sprite: Clothing/Ears/Headsets/medical.rsi
     state: icon_alt
     
+- type: stealTargetGroup
+  id: ResearchAndDevelopmentServerMachineCircuitboard
+  name: R&D server machine board
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: science
+    
+- type: stealTargetGroup
+  id: FireAxe
+  name: fireaxe
+  sprite:
+    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    state: icon
+    
+- type: stealTargetGroup
+  id: RCD
+  name: RCD
+  sprite:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+    
+- type: stealTargetGroup
+  id: AmePart
+  name: AME part
+  sprite:
+    sprite: Objects/Power/AME/ame_part.rsi
+    state: box
+    
+- type: stealTargetGroup
+  id: SalvageExpeditionsComputerCircuitboard
+  name: salvage expeditions computer board
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_supply
+    
+- type: stealTargetGroup
+  id: CargoShuttleConsoleCircuitboard
+  name: AME part
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpuboard
+    
+- type: stealTargetGroup
+  id: SalvageShuttleConsoleCircuitboard
+  name: AME part
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpuboard
+    
+- type: stealTargetGroup
+  id: ClothingEyesHudBeer
+  name: beer goggles
+  sprite:
+    sprite: Clothing/Eyes/Hud/beergoggles.rsi
+    state: icon
+    
+- type: stealTargetGroup
+  id: Bible
+  name: bible
+  sprite:
+    sprite: Objects/Specific/Chapel/bible.rsi
+    state: icon
+    
+- type: stealTargetGroup
+  id: ClothingNeckGoldmedal
+  name: gold medal of crewmanship
+  sprite:
+    sprite: Clothing/Neck/Medals/gold.rsi
+    state: icon
+    
+- type: stealTargetGroup
+  id: ClothingNeckClownmedal
+  name: clown medal
+  sprite:
+    sprite: Clothing/Neck/Medals/clownmedal.rsi
+    state: icon
+    
