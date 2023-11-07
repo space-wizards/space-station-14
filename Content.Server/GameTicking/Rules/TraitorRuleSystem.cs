@@ -323,33 +323,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return true;
     }
 
-    /// <summary>
-    ///     Returns true when the player with UID is a traitor.
-    ///     Currently not used anywhere, just mimics function in NukeopsRuleSystem.
-    /// </summary>
-    public bool TryGetRuleFromTraitor(EntityUid uid, [NotNullWhen(true)] out (TraitorRuleComponent, GameRuleComponent)? comps)
-    {
-        comps = null;
-        var query = EntityQueryEnumerator<TraitorRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var ruleEnt, out var traitors, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleAdded(ruleEnt, gameRule))
-                continue;
-
-            if (_mindSystem.TryGetMind(uid, out var mind, out _))
-            {
-                var found = traitors.TraitorMinds.Any(v => v == mind);
-                if (found)
-                {
-                    comps = (traitors, gameRule);
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
     {
         var query = EntityQueryEnumerator<TraitorRuleComponent, GameRuleComponent>();
