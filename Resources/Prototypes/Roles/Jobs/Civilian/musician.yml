@@ -5,7 +5,7 @@
   playTimeTracker: JobMusician
   startingGear: MusicianGear
   icon: "JobIconMusician"
-  supervisors: job-supervisors-hire
+  supervisors: job-supervisors-hop # Corvax-JobSupervisors
   access:
   - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
   - Theatre
