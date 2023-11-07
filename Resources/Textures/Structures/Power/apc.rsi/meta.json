@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9c7d509354ee030300f63c701da63c17928c3b3b and modified by Swept",
+  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fca7f2a0f9154c0c6c4efc2f8f58441fb9b34759",
   "size": {
     "x": 32,
     "y": 32
@@ -71,17 +71,8 @@
       "name": "display-lack",
       "delays": [
         [
-          0.15,
-          0.15,
-          0.15,
-          0.15,
-          0.15,
-          0.1,
-          0.15,
-          0.1,
-          0.15,
-          0.1,
-          0.3
+          1,
+          2
         ]
       ]
     },
@@ -90,12 +81,10 @@
       "delays": [
         [
           0.1,
-          0.075,
-          0.075,
-          0.075,
-          0.075,
-          0.075,
-          0.075,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
           0.2
         ]
       ]
@@ -104,8 +93,8 @@
       "name": "display-full",
       "delays": [
         [
-          0.75,
-          0.75
+          1,
+          1
         ]
       ]
     },
@@ -113,14 +102,6 @@
       "name": "display-remote",
       "delays": [
         [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
           0.1,
           0.1,
           0.1,
@@ -133,14 +114,8 @@
       "name": "emag-unlit",
       "delays": [
         [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+          0.5,
+          0.5
         ]
       ]
     },
