@@ -1,0 +1,56 @@
+- type: gameMap
+  id: CorvaxSilly
+  mapName: 'Silly Station'
+  mapPath: /Maps/corvax_silly.yml
+  minPlayers: 0
+  maxPlayers: 30
+  stations:
+    Silly:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Silly {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'AB'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_corvaxsilly.yml
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            CargoTechnician: [ 3, 3 ]
+            Passenger: [ -1, -1 ]
+            Bartender: [ 1, 1 ]
+            Botanist: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            Clown: [ 1, 1 ]
+            Janitor: [ 1, 2 ]
+            Mime: [ 1, 1 ]
+            Captain: [ 1, 1 ]
+            IAA: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            StationEngineer: [ 2, 2 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            MedicalDoctor: [ 1, 1 ]
+            Chemist: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 2, 2 ]
+            HeadOfSecurity: [ 1, 1 ]
+            SecurityOfficer: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            Musician: [ 1, 1 ]
+            AtmosphericTechnician: [ 1, 1 ]
+            TechnicalAssistant: [ 2, 2 ]
+            ResearchAssistant: [ 2, 2 ]
+            Reporter: [ 0, 0 ]
+            MedicalIntern: [ 1, 1 ]
+            ServiceWorker: [ 0, 0 ]
+            SecurityCadet: [ 1, 1 ]
+            Psychologist: [ 0, 0 ]
+            Detective: [ 1, 1 ]
+            Paramedic: [ 1, 1 ]

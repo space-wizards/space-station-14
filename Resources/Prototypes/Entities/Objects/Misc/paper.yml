@@ -869,3 +869,17 @@
       stampedBy:
       - stampedName: stamp-component-stamped-name-centcom
         stampedColor: "#bb3232"
+
+- type: entity
+  name: psychologist's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampPsychologist
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-psychologist
+    stampedColor: "#0082AE"
+    stampState: "paper_stamp-psychologist"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-psychologist

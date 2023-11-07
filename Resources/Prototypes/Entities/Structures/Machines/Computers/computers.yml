@@ -1041,3 +1041,19 @@
     - type: WiredNetworkConnection
     - type: DeviceList
     - type: AtmosDevice
+
+- type: entity
+  parent: ComputerComms
+  id: CentcomComputerComms
+  name: centcom communications computer
+  components:
+    - type: AccessReader
+      access: [[ "Command" ]]
+    - type: CommunicationsConsole
+      title: comms-console-announcement-title-centcom
+      global: true
+      sound:
+        path: /Audio/Corvax/Announcements/centcomm.ogg
+        params:
+          volume: -4
+

@@ -181,3 +181,14 @@
   components:
   - type: Sprite
     sprite: Corvax/Back/Satchels/ce.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackMilitarySatchel
+  name: army satchel
+  description: A tactical satchel for army related needs.
+  components:
+  - type: Sprite
+    sprite: Corvax/Back/Satchels/military.rsi
+  - type: Storage
+    maxTotalWeight: 44

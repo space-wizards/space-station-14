@@ -96,3 +96,14 @@
     sprite: Clothing/Neck/mantles/hosmantle_shoulder.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/hosmantle_shoulder.rsi   
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleERTLeader
+  name: ERT leader's mantle
+  description: Extraordinary decorative drape over the shoulders.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Neck/Mantles/ERTmantle.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Neck/Mantles/ERTmantle.rsi

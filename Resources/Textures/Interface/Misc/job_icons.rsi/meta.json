@@ -27,6 +27,9 @@
             "name": "AtmosphericTechnician"
         },
         {
+            "name": "CentCom"
+        },
+        {
             "name": "Nanotrasen"
         },
         {
@@ -79,6 +82,9 @@
         },
         {
             "name": "Clown"
+        },
+        {
+            "name": "Cluwne"
         },
         {
             "name": "Captain"
@@ -147,9 +153,6 @@
             "name": "SecurityCadet"
         },
         {
-            "name": "IAA"
-        },
-        {
             "name": "Zombie"
         },
         {
@@ -172,6 +175,15 @@
         },
         {
             "name": "HeadRevolutionary"
+        },
+        {
+            "name": "BlueShield"
+        },
+        {
+            "name": "Coroner"
+        },
+        {
+            "name": "IAA"
         }
     ]
 }
