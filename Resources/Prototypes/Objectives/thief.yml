@@ -25,10 +25,10 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: FigurineThiefStealCollectionObjective
+  id: FigurineStealCollectionObjective
   components:
   - type: StealCondition
-    stealGroup: ThiefFigurines
+    stealGroup: Figurines
     minCollectionSize: 10
     maxCollectionSize: 50 #will be limited to the number of figures on the station anyway.
   - type: Objective
@@ -37,10 +37,10 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: HeadCloakThiefStealCollectionObjective
+  id: HeadCloakStealCollectionObjective
   components:
   - type: StealCondition
-    stealGroup: ThiefHeadCloak
+    stealGroup: HeadCloak
     minCollectionSize: 3
     maxCollectionSize: 6
   - type: Objective
@@ -49,10 +49,10 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: HeadBedsheetThiefStealCollectionObjective
+  id: HeadBedsheetStealCollectionObjective
   components:
   - type: StealCondition
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
     minCollectionSize: 3
     maxCollectionSize: 6
   - type: Objective
@@ -61,10 +61,10 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: StampThiefStealCollectionObjective
+  id: StampStealCollectionObjective
   components:
   - type: StealCondition
-    stealGroup: ThiefStamp
+    stealGroup: Stamp
     minCollectionSize: 6
     maxCollectionSize: 15
   - type: Objective
@@ -73,10 +73,10 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: DoorRemoteThiefStealCollectionObjective
+  id: DoorRemoteStealCollectionObjective
   components:
   - type: StealCondition
-    stealGroup: ThiefDoorRemote
+    stealGroup: DoorRemote
     minCollectionSize: 2
     maxCollectionSize: 5
   - type: Objective
@@ -85,12 +85,12 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: ResearchDiskThiefStealCollectionObjective
+  id: ResearchDiskStealCollectionObjective
   components:
   - type: NotJobRequirement
     job: Scientist
   - type: StealCondition
-    stealGroup: ThiefResearchDisk
+    stealGroup: ResearchDisk
     minCollectionSize: 10
     maxCollectionSize: 20
     verifyMapExistance: false
@@ -100,10 +100,10 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: IDCardsThiefStealCollectionObjective
+  id: IDCardsStealCollectionObjective
   components:
   - type: StealCondition
-    stealGroup: ThiefIDCard
+    stealGroup: IDCard
     minCollectionSize: 10
     maxCollectionSize: 20
     verifyMapExistance: false
@@ -113,12 +113,12 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: CannabisThiefStealCollectionObjective
+  id: CannabisStealCollectionObjective
   components:
   - type: NotJobRequirement
     job: Botanist
   - type: StealCondition
-    stealGroup: ThiefCannabis
+    stealGroup: Cannabis
     minCollectionSize: 20
     maxCollectionSize: 30
     verifyMapExistance: false
@@ -127,17 +127,17 @@
 
 # steal item
 
-#- type: entity                                      #Security subgroup
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: ForensicScannerStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: Detective
-#  - type: StealCondition
-#    prototype: ForensicScanner
-#  - type: Objective
-#    difficulty: 0.8
+- type: entity                                      #Security subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ForensicScannerStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: ForensicScanner
+  - type: Objective
+    difficulty: 0.8
 #
 #- type: entity
 #  noSpawn: true
@@ -157,7 +157,7 @@
 #  - type: StealCondition
 #    prototype: ClothingHeadHatWarden
 #  - type: Objective
-#    difficulty: 1
+#    difficulty: 1.2
 #
 #- type: entity                                      #Medical subgroup
 #  noSpawn: true

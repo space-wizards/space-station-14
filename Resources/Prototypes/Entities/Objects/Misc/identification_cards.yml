@@ -21,7 +21,7 @@
     tags:
     - DoorBumpOpener
   - type: StealTarget
-    stealGroup: ThiefIDCard
+    stealGroup: IDCard
 
 #IDs with layers
 

@@ -12,7 +12,7 @@
     guides:
     - Science
   - type: StealTarget
-    stealGroup: ThiefResearchDisk
+    stealGroup: ResearchDisk
 
 - type: entity
   parent: ResearchDisk

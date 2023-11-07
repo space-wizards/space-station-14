@@ -77,61 +77,70 @@
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
 
-
 # Thief Collection
 
 - type: stealTargetGroup
-  id: ThiefFigurines
-  name: any figurines
+  id: Figurines
+  name: figurines (any)
   sprite: 
     sprite: Objects/Fun/figurines.rsi
     state: figurine_spawner
 
 - type: stealTargetGroup
-  id: ThiefHeadCloak
-  name: any head's cloaks
+  id: HeadCloak
+  name: head's cloaks (any)
   sprite: 
     sprite: Clothing/Neck/Cloaks/cap.rsi
     state: icon
 
 - type: stealTargetGroup
-  id: ThiefHeadBedsheet
-  name: any head's bedsheets
+  id: HeadBedsheet
+  name: head's bedsheets (any)
   sprite: 
     sprite: Objects/Misc/bedsheets.rsi
     state: sheetNT
 
 - type: stealTargetGroup
-  id: ThiefStamp
-  name: any stamps
+  id: Stamp
+  name: stamps (any)
   sprite:
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cap
     
 - type: stealTargetGroup
-  id: ThiefDoorRemote
-  name: any door remotes
+  id: DoorRemote
+  name: door remotes (any)
   sprite:
     sprite: Objects/Devices/door_remote.rsi
     state: door_remotebase
     
 - type: stealTargetGroup
-  id: ThiefResearchDisk
+  id: ResearchDisk
   name: research disks
   sprite:
     sprite: Objects/Specific/Research/researchdisk.rsi
     state: icon
 
 - type: stealTargetGroup
-  id: ThiefIDCard
-  name: any ID Cards
+  id: IDCard
+  name: ID Cards (any)
   sprite:
     sprite: Objects/Misc/id_cards.rsi
     state: default
 
 - type: stealTargetGroup
-  id: ThiefCannabis
+  id: Cannabis
   name: cannabis
   sprite:
     sprite: Objects/Specific/Hydroponics/cannabis.rsi
     state: produce
+
+# Thief single item
+
+- type: stealTargetGroup
+  id: ForensicScanner
+  name: forensic scanner
+  sprite:
+    sprite: Objects/Devices/forensic_scanner.rsi
+    state: forensicnew
+    

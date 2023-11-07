@@ -10,7 +10,7 @@
   - type: Access
   - type: DoorRemote
   - type: StealTarget
-    stealGroup: ThiefDoorRemote
+    stealGroup: DoorRemote
 
 - type: entity
   parent: DoorRemoteDefault

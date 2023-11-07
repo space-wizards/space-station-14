@@ -18,7 +18,7 @@
         - ReagentId: THC
           Quantity: 15
   - type: StealTarget
-    stealGroup: ThiefCannabis
+    stealGroup: Cannabis
 
 - type: entity
   name: dried cannabis leaves
@@ -39,7 +39,7 @@
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
   - type: StealTarget
-    stealGroup: ThiefCannabis
+    stealGroup: Cannabis
 
 - type: entity
   name: ground cannabis
@@ -69,7 +69,7 @@
   - type: Item
     size: Tiny
   - type: StealTarget
-    stealGroup: ThiefCannabis
+    stealGroup: Cannabis
 
 - type: entity
   name: tobacco leaves

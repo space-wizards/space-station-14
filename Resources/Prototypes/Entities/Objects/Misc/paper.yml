@@ -592,7 +592,7 @@
   - type: Item
     size: Tiny
   - type: StealTarget
-    stealGroup: ThiefStamp
+    stealGroup: Stamp
 
 - type: entity
   name: alternate rubber stamp

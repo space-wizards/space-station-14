@@ -62,7 +62,7 @@
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/captain.rsi
   - type: StealTarget
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetCE
@@ -75,7 +75,7 @@
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/ce.rsi
   - type: StealTarget
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetCentcom
@@ -88,7 +88,7 @@
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/centcom.rsi
   - type: StealTarget
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetClown
@@ -112,7 +112,7 @@
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/cmo.rsi
   - type: StealTarget
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetCosmos
@@ -167,7 +167,7 @@
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/hop.rsi
   - type: StealTarget
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetHOS
@@ -180,7 +180,7 @@
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/hos.rsi
   - type: StealTarget
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetIan
@@ -255,7 +255,7 @@
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/qm.rsi
   - type: StealTarget
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetRainbow
@@ -278,7 +278,7 @@
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/rd.rsi
   - type: StealTarget
-    stealGroup: ThiefHeadBedsheet
+    stealGroup: HeadBedsheet
 
 - type: entity
   id: BedsheetBrigmedic

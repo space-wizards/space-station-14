@@ -45,7 +45,7 @@
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
-    #ThiefObjectiveGroupItem: 1
+    ThiefObjectiveGroupItem: 1
     ThiefObjectiveGroupCollection: 1
     #ThiefObjectiveGroupAnimal: 0.5
     #ThiefObjectiveGroupStructure: 1
@@ -53,19 +53,19 @@
 - type: weightedRandom
   id: ThiefObjectiveGroupCollection
   weights:
-    HeadCloakThiefStealCollectionObjective: 1           #command
-    HeadBedsheetThiefStealCollectionObjective: 1
-    StampThiefStealCollectionObjective: 1
-    DoorRemoteThiefStealCollectionObjective: 1
-    ResearchDiskThiefStealCollectionObjective: 1        #rnd
-    FigurineThiefStealCollectionObjective: 0.2          #service
-    IDCardsThiefStealCollectionObjective: 1
-    CannabisThiefStealCollectionObjective: 1
+    HeadCloakStealCollectionObjective: 1           #command
+    HeadBedsheetStealCollectionObjective: 1
+    StampStealCollectionObjective: 1
+    DoorRemoteStealCollectionObjective: 1
+    ResearchDiskStealCollectionObjective: 1        #rnd
+    FigurineStealCollectionObjective: 0.3          #service
+    IDCardsStealCollectionObjective: 1
+    CannabisStealCollectionObjective: 1
 
-#- type: weightedRandom
-#  id: ThiefObjectiveGroupItem
-#  weights:
-#    ForensicScannerStealObjective: 1                    #sec
+- type: weightedRandom
+  id: ThiefObjectiveGroupItem
+  weights:
+    ForensicScannerStealObjective: 1                    #sec
 #    AmmoTechFabCircuitboardStealObjective: 1
 #    ClothingHeadHatWardenStealObjective: 1
 #    ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
