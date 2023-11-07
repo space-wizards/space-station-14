@@ -271,8 +271,8 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var briefing = Loc.GetString("thief-role-greeting");
         args.Append(briefing);
 
-        if (!_mindSystem.TryGetSession(mind, out var session))
-            return;
-        _chatManager.DispatchServerMessage(session, briefing);
+        //if (!_mindSystem.TryGetSession(mind, out var session))
+        //    return;
+        //_chatManager.DispatchServerMessage(session, briefing);
     }
 }

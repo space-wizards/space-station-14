@@ -17,6 +17,8 @@
   - type: Tag
     tags:
     - Figurine
+  - type: StealCollectionTarget
+    stealGroup: ThiefFigurines
 
 - type: entity
   parent: BaseFigurine

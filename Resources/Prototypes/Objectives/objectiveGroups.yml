@@ -45,10 +45,17 @@
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
-    ThiefObjectiveGroupItem: 1
-    #ThiefObjectiveGroupCollection: 2
+    #ThiefObjectiveGroupItem: 1
+    ThiefObjectiveGroupCollection: 2
     #ThiefObjectiveGroupAnimal: 0.5
     #ThiefObjectiveGroupStructure: 1
+    
+- type: weightedRandom
+  id: ThiefObjectiveGroupCollection
+  weights:
+    FigurineThiefStealCollectionObjective: 1
+    HeadCloakThiefStealCollectionObjective: 1
+    HeadBedsheetThiefStealCollectionObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem

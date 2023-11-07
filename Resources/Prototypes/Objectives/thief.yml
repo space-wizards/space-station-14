@@ -19,6 +19,60 @@
     difficulty: 1
   - type: StealCondition
     descriptionText: objective-condition-thief-description
+
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealCollectionObjective]
+  id: BaseThiefStealCollectionObjective
+  components:
+  - type: Objective
+    difficulty: 1
+  - type: StealCollectionCondition
+    minCollectionSize: 5
+    maxCollectionSize: 125
+    descriptionText: objective-condition-thief-description
+
+# Collections
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: FigurineThiefStealCollectionObjective
+  components:
+  - type: StealCollectionCondition
+    stealGroup: ThiefFigurines
+    minCollectionSize: 5
+    maxCollectionSize: 30
+    descriptionText: objective-condition-thief-description
+  - type: Objective
+    difficulty: 0.25
+    
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: HeadCloakThiefStealCollectionObjective
+  components:
+  - type: StealCollectionCondition
+    stealGroup: ThiefHeadCloak
+    minCollectionSize: 3
+    maxCollectionSize: 6
+    descriptionText: objective-condition-thief-description
+  - type: Objective
+    difficulty: 1.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: HeadBedsheetThiefStealCollectionObjective
+  components:
+  - type: StealCollectionCondition
+    stealGroup: ThiefHeadBedsheet
+    minCollectionSize: 3
+    maxCollectionSize: 6
+    descriptionText: objective-condition-thief-description
+  - type: Objective
+    difficulty: 1.0
+    
 # steal item
 
 - type: entity                                      #command subgroup
