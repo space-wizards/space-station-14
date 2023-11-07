@@ -4,7 +4,8 @@ bwoink-system-messages-being-relayed-to-discord =
     Ваше сообщение было передано администраторам в Discord. 
     Проблемы могут быть разобраны и без текстового ответа.
 
-bwoink-system-typing-indicator = {$players} {$count ->
-[one]
-*[other]
-} печатает...
+bwoink-system-typing-indicator =
+    { $players } { $count ->
+        [one] печатает
+       *[other] печатают
+    }...

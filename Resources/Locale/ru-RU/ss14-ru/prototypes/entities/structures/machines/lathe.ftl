@@ -1,5 +1,5 @@
 ent-BaseLathe = лат
-  .desc = { ent-['BaseMachinePowered', 'ConstructibleMachine'].desc }
+    .desc = { ent-BaseMachinePowered.desc }
 ent-Autolathe = автолат
     .desc = Он производит изделия из металла и стекла.
 ent-Protolathe = протолат

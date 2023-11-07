@@ -25,7 +25,7 @@ shuttle-console-dock-button = Пристыковать { $suffix }
 shuttle-console-hyperspace-label = Пункты назначения БСС
 shuttle-console-hyperspace-none = Пункты назначения не найдены
 shuttle-console-unknown = Неизвестно
-shuttle-console-iff-label = "{ $name } ({ $distance }м)
+shuttle-console-iff-label = { $name } ({ $distance }м)
 # Buttons
 shuttle-console-strafing = Режим стрейфа
 shuttle-console-iff-toggle = Показать "свой-чужой"

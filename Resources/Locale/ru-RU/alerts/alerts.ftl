@@ -30,6 +30,10 @@ alerts-dead-name = Смерть
 alerts-dead-desc = Вы мертвы. Учтите, что вас еще можно воскресить!
 alerts-health-name = Здоровье
 alerts-health-desc = [color=green]Синий и зелёный[/color] хорошо. [color=red]Красный[/color] плохо.
+alerts-battery-name = Батарея
+alerts-battery-desc = Если батарея разрядится, вы не сможете использовать свои способности.
+alerts-no-battery-name = Нет батареи
+alerts-no-battery-desc = У вас нет батареи, в результате чего вы не можете заряжаться или использовать свои способности.
 alerts-internals-name = Переключить баллон
 alerts-internals-desc = Включает или отключает подачу газа из баллона.
 alerts-piloting-name = Пилотирование шаттла
@@ -56,11 +60,7 @@ alerts-pulling-name = Вы тянете
 alerts-pulling-desc = Вы что-то тянете. Щелкните по иконке, чтобы перестать.
 alerts-bleed-name = [color=red]Кровотечение[/color]
 alerts-bleed-desc = У вас [color=red]кровотечение[/color].
-alerts-pacified-name = [color=green]Пацифист[/color]
-alerts-pacified-desc = Вы - пацифист. Вы не сможете напрямую никого атаковать.
-alerts-battery-name = Заряд
-alerts-battery-desc = Если ваш заряд полностью истощится, вы не сможете использовать свои способности.
-alerts-no-battery-name = Разряжен
-alerts-no-battery-desc = У вас отсутствует заряд. Вы не можете использовать или заряжать свои способности.
+alerts-pacified-name = [color=green]Пацифизм[/color]
+alerts-pacified-desc = Вы чувствуете себя умиротворенно и не можете атаковать кого-либо напрямую.
 alerts-suit-power-name = Заряд костюма
-alerts-suit-power-desc = Уровень заряда костюма космического ниндзя.
+alerts-suit-power-desc = Запас энергии вашего костюма космического ниндзя.

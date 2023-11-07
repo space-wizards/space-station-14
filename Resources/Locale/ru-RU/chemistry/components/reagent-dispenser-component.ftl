@@ -5,7 +5,7 @@ reagent-dispenser-component-cannot-put-entity-message = Вы не можете �
 
 ## Bound UI
 
-reagent-dispenser-bound-user-interface-title = Раздатчик реагентов
+reagent-dispenser-bound-user-interface-title = Раздатчик химикатов
 
 ## UI
 

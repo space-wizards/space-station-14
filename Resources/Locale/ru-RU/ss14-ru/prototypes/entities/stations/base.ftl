@@ -18,5 +18,7 @@ ent-BaseStationAlertLevels = { "" }
     .desc = { "" }
 ent-BaseStationExpeditions = { "" }
     .desc = { "" }
+ent-BaseStationSiliconLawCrewsimov = { "" }
+    .desc = { "" }
 ent-BaseStationAllEventsEligible = { "" }
     .desc = { "" }

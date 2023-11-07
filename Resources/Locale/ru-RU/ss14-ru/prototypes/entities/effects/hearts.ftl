@@ -1,0 +1,2 @@
+ent-EffectHearts = { "" }
+    .desc = { "" }

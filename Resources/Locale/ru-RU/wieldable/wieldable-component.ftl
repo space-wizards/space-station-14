@@ -8,7 +8,7 @@ wieldable-component-successful-wield-other = { $user } берёт { $item } в �
 wieldable-component-failed-wield-other = { $user } берёт { $item } в одну руку.
 wieldable-component-no-hands = Вам не хватает рук!
 wieldable-component-not-enough-free-hands =
-    Чтобы использовать { $item } вам понадобится { $number } { $number ->
+    Чтобы использовать { $item } вам понадобится ещё { $number } { $number ->
         [one] свободная рука
         [few] свободные руки
        *[other] свободных рук

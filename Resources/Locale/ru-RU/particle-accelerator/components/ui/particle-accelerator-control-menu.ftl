@@ -8,7 +8,7 @@ particle-accelerator-control-menu-alarm-control =
     МОЩНОСТЬ ЧАСТИЦ
     СБОЙ ОГРАНИЧИТЕЛЯ
 particle-accelerator-control-menu-scan-parts-button = Сканировать части
-particle-accelerator-control-menu-check-containment-field-warning = Перед началом работы убедитесь, что сдерживающее поле активно!
+particle-accelerator-control-menu-check-containment-field-warning = Убедитесь, что сдерживающее поле активно!
 particle-accelerator-control-menu-foo-bar-baz = FOO-BAR-BAZ
 particle-accelerator-control-menu-status-label = Статус: { $status }
 particle-accelerator-control-menu-status-operational = Работает

@@ -11,9 +11,9 @@ research-console-cost = Стоимость: [color=orchid]{ $amount }[/color]
 research-console-unlocks-list-start = Открывает:
 research-console-unlocks-list-entry = - [color=yellow]{ $name }[/color]
 research-console-unlocks-list-entry-generic = - [color=green]{ $text }[/color]
-research-console-prereqs-list-start = Требуется:
-research-console-prereqs-list-entry = - [color=orchid]{$text}[/color]
 research-console-menu-research-points-text = Очки исследований: { $points }
 research-console-menu-server-selection-button = Список серверов
 research-console-menu-server-sync-button = Синхронизировать
+research-console-prereqs-list-start = Требует:
+research-console-prereqs-list-entry = - [color=orchid]{ $text }[/color]
 research-console-no-access-popup = Нет доступа!

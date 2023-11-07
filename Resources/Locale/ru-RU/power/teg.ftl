@@ -1,2 +1,2 @@
-teg-generator-examine-power = Оно генерирует [color=yellow]{ POWERWATTS($power) }[/color].
-teg-generator-examine-connection = Для работы, [color=white]циркулятор[/color] должен быть соединен с обеих сторон.
+teg-generator-examine-power = Он генерирует [color=yellow]{ POWERWATTS($power) }[/color].
+teg-generator-examine-connection = Для функционирования [color=white]циркуляционные насосы[/color] должен быть подключены с обеих сторон.

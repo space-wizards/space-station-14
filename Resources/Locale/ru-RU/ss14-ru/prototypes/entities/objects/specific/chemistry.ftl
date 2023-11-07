@@ -25,4 +25,4 @@ ent-SyringeBluespace = блюспейс-шприц
 ent-Pill = таблетка
     .desc = Это не свеча.
 ent-PillCanister = баночка для таблеток
-    .desc = Вмещает до 9 таблеток.
+    .desc = Вмещает до 10 таблеток.

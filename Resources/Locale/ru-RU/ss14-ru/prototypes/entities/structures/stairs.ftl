@@ -1,6 +1,5 @@
 ent-Stairs = ступеньки
-    .desc = Лучшее изобретение со времён дистанционно-управляемых гранат.
-
+    .desc = Величайшее изобретение после гранатомётов.
 ent-StairStage = { ent-Stairs }
+    .suffix = ступенька
     .desc = { ent-Stairs.desc }
-	.suffix = Этап

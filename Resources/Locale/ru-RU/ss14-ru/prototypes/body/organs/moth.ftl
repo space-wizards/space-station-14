@@ -1,3 +1,2 @@
-ent-OrganMothStomach = { ent-['OrganAnimalStomach', 'OrganHumanStomach'] }
-
-  .desc = { ent-['OrganAnimalStomach', 'OrganHumanStomach'].desc }
+ent-OrganMothStomach = { ent-OrganAnimalStomach }
+    .desc = { ent-OrganAnimalStomach.desc }

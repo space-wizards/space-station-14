@@ -1,1 +1,1 @@
-qm-clipboard-computer-verb-text = Переключить запросы
+qm-clipboard-computer-verb-text = Переключить список запросов

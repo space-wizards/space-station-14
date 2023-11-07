@@ -1,8 +1,8 @@
 ent-ActionCritSuccumb = Уступить
     .desc = Принять свою судьбу.
 
-ent-ActionCritFakeDeath = Инсценировать Смерть
+ent-ActionCritFakeDeath = Инсценировать смерть
     .desc = Сымитировать последний вздох, оставаясь в живых.
 
-ent-ActionCritLastWords = Сказать Последние Слова
+ent-ActionCritLastWords = Произнести последние слова
     .desc = Прошептать свои последние слова всем поблизости, после чего уступить своей судьбе. У вас только 30 символов.

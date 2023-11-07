@@ -1,4 +1,5 @@
 health-analyzer-window-no-patient-data-text = Нет данных о пациенте.
+health-analyzer-window-entity-unknown-text = неизвестно
 health-analyzer-window-entity-health-text = Состояние { $entityName }:
 health-analyzer-window-entity-temperature-text = Температура: { $temperature }
 health-analyzer-window-entity-blood-level-text = Уровень крови: { $bloodLevel }
@@ -6,7 +7,6 @@ health-analyzer-window-entity-damage-total-text = Общие поврежден�
 health-analyzer-window-damage-group-text = { $damageGroup }: { $amount }
 health-analyzer-window-damage-type-text = { $damageType }: { $amount }
 health-analyzer-window-damage-type-duplicate-text = { $damageType }: { $amount } (повтор)
-health-analyzer-window-entity-unknown-text = неизвестно
 health-analyzer-window-damage-group-Brute = Механические
 health-analyzer-window-damage-type-Blunt = Удары
 health-analyzer-window-damage-type-Slash = Разрезы

@@ -1,8 +1,12 @@
+ent-BaseRecharger = { ent-BaseMachinePowered }
+    .desc = { ent-BaseMachinePowered.desc }
+ent-BaseItemRecharger = { ent-BaseRecharger }
+    .desc = { ent-BaseRecharger.desc }
 ent-PowerCellRecharger = зарядник батарей
-    .desc = { ent-ConstructibleMachine.desc }
+    .desc = { ent-BaseItemRecharger.desc }
 ent-WeaponCapacitorRecharger = зарядник энергооружия
-    .desc = { ent-PowerCellRecharger.desc }
+    .desc = { ent-BaseItemRecharger.desc }
 ent-WallWeaponCapacitorRecharger = настенный зарядник энергооружия
-    .desc = { "" }
-ent-BorgCharger = зарядная станция киборгов
-    .desc = Стационарный зарядник для различных роботизированных и кибернетических сущностей. На удивление вместительный.
+    .desc = { ent-BaseItemRecharger.desc }
+ent-BorgCharger = станция зарядки киборгов
+    .desc = Стационарное устройство для зарядки различных роботов и киборгов. Удивительно вместительное.

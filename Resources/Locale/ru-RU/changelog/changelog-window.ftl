@@ -8,5 +8,5 @@ changelog-new-changes = новые обновления
 changelog-version-tag = версия v{ $version }
 changelog-button = Обновления
 changelog-button-new-entries = Обновления (!)
-changelog-tab-title-Changelog = Обновления
-changelog-tab-title-Admin = Админ
+changelog-tab-title-Changelog = Список изменений
+changelog-tab-title-Admin = Админское
