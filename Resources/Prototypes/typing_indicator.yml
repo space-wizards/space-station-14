@@ -1,35 +1,43 @@
-- type: typingIndicator
+﻿- type: typingIndicator
   id: default
   typingState: default0
+  idleState: default3 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: robot
   typingState: robot0
+  idleState: robot3 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: alien
   typingState: alien0
+  idleState: alien3 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: guardian
   typingState: guardian0
+  idleState: guardian3 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: holo
   typingState: holo0
+  idleState: holo3 # Corvax-TypingIndicator
   offset: 0, 0.0625
 
 - type: typingIndicator
   id: lawyer
   typingState: lawyer0
+  idleState: lawyer3 # Corvax-TypingIndicator
   offset: 0, 0.125
 
 - type: typingIndicator
   id: moth
   typingState: moth0
+  idleState: moth3 # Corvax-TypingIndicator
   offset: 0, 0.125
 
 - type: typingIndicator
   id: spider
   typingState: spider0
+  idleState: spider3 # Corvax-TypingIndicator
   offset: 0, 0.125

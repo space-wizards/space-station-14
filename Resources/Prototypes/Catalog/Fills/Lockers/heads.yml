@@ -90,6 +90,10 @@
       - id: JetpackCaptainFilled
       - id: MedalCase
       - id: ClothingHeadHatCapcap
+      # Corvax-Resprite-Start
+      - id: ClothingHeadCaptainHat
+      - id: ClothingOuterCoatCaptain
+      # Corvax-Resprite-End
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -119,6 +123,7 @@
       - id: BoxEncryptionKeyService
       - id: ClothingBackpackIan
         prob: 0.5
+      - id: ClothingOuterCoatHOP # Corvax-Resprite
       - id: AccessConfigurator
 
 - type: entity
@@ -271,13 +276,20 @@
       - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
+      - id: ClothingHeadHatCapHoS # Corvax-SecFashion
+        prob: 0.5
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
       - id: ClothingOuterCoatHoSTrench
+      - id: ClothingOuterCoatHoSGreatcoat # Corvax-Resprite
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingOuterHardsuitSecurityRed
       - id: ClothingMaskGasSwat
+#      - id: ClothingShoeSlippersDuck # Corvax-Resprite: Need more space for style
+#        prob: 0.2
+      - id: DrinkVacuumFlask
+        prob: 0.8
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSecurity
@@ -293,6 +305,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: BookBusido # Corvax-Books
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -304,11 +317,26 @@
       - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
+      - id: ClothingHeadHatCapHoS # Corvax-SecFashion
+        prob: 0.5
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
       - id: ClothingOuterCoatHoSTrench
+      - id: ClothingOuterCoatHoSGreatcoat # Corvax-Resprite
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
+      - id: ClothingUniformJumpsuitHoSBlue
+        prob: 0.5
+      - id: ClothingUniformJumpsuitHoSGrey
+        prob: 0.5
+      - id: ClothingUniformJumpsuitHoSParadeMale
+        prob: 0.1
+      - id: ClothingUniformJumpskirtHoSParadeMale
+        prob: 0.1
+#      - id: ClothingShoeSlippersDuck # Corvax-Resprite: Need more space for style
+#        prob: 0.2
+      - id: DrinkVacuumFlask
+        prob: 0.8
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSecurity

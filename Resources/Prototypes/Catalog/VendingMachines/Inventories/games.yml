@@ -8,6 +8,7 @@
     BackgammonBoard: 1
     ParchisBoard: 1
     CheckerBoard: 1
+    BookStationsAndAgents: 4 # Corvax-Tabletop
     ShipBattlemap: 1
     SnowBattlemap: 1
     SandBattlemap: 1

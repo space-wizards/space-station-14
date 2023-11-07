@@ -72,7 +72,7 @@
       #- name: TelescopicBaton
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackDuffelEngineering
+  parent: ClothingBackpackDuffelChiefEngineer
   id: ClothingBackpackDuffelChiefEngineerFilled
   components:
   - type: StorageFill

@@ -19,6 +19,10 @@
 
 - type: wireLayout
   parent: Airlock
+  id: AirlockArmory
+
+- type: wireLayout
+  parent: Airlock
   id: AirlockCentcom
   wires:
   - !type:PowerWireAction

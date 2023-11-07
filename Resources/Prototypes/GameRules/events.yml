@@ -7,6 +7,10 @@
     weight: 10
     startDelay: 30
     duration: 35
+    startAudio: # Corvax-Announcements
+      path: /Audio/Corvax/Announcements/flux.ogg
+      params:
+        volume: -4
   - type: AnomalySpawnRule
 
 - type: entity
@@ -18,6 +22,10 @@
     weight: 5
     startDelay: 30
     duration: 35
+    startAudio: # Corvax-Announcements
+      path: /Audio/Corvax/Announcements/blusp_anomalies.ogg
+      params:
+        volume: -4
   - type: BluespaceArtifactRule
 
 - type: entity
@@ -40,7 +48,7 @@
   - type: StationEvent
     weight: 10
     duration: 1
-    minimumPlayers: 10
+    minimumPlayers: 15
   - type: BreakerFlipRule
 
 - type: entity
@@ -61,7 +69,6 @@
   noSpawn: true
   components:
   - type: StationEvent
-    minimumPlayers: 35
     weight: 10
     duration: 1
   - type: RandomEntityStorageSpawnRule
@@ -103,7 +110,7 @@
     weight: 7.5
     duration: 1
     earliestStart: 45
-    minimumPlayers: 15
+    minimumPlayers: 20
   - type: RandomSpawnRule
     prototype: MobRevenant
 
@@ -125,8 +132,14 @@
   - type: StationEvent
     startAnnouncement: station-event-gas-leak-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/gasleak_start.ogg # Corvax-Announcements
+      params:
+        volume: -4
     endAnnouncement: station-event-gas-leak-end-announcement
+    endAudio:
+      path: /Audio/Announcements/gasleak_end.ogg # Corvax-Announcements
+      params:
+        volume: -4
     earliestStart: 10
     minimumPlayers: 5
     weight: 5
@@ -158,7 +171,11 @@
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
     startAudio:
-      path: /Audio/Announcements/meteors.ogg
+      path: /Audio/Announcements/meteors_start.ogg
+      params:
+        volume: -4
+    endAudio:
+      path: /Audio/Announcements/meteors_end.ogg # Corvax-Announcements
       params:
         volume: -4
     duration: null #ending is handled by MeteorSwarmRule
@@ -172,7 +189,7 @@
   components:
   - type: StationEvent
     earliestStart: 30
-    minimumPlayers: 20
+    minimumPlayers: 35
     weight: 5
     duration: 50
   - type: VentCrittersRule
@@ -229,7 +246,9 @@
     weight: 10
     duration: 1
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/sentience.ogg # Corvax-Announcements
+      params:
+        volume: -4
   - type: RandomSentienceRule
 
 - type: entity
@@ -241,8 +260,10 @@
     weight: 10
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
+    startAudio: # Corvax-Announcements
+      path: /Audio/Corvax/Announcements/comms_blackout.ogg
+      params:
+        volume: -4
     duration: 120
     maxDuration: 240
   - type: SolarFlareRule
@@ -269,9 +290,11 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-clog-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/ventclog.ogg # Corvax-Announcements
+      params:
+        volume: -4
     earliestStart: 15
-    minimumPlayers: 10
+    minimumPlayers: 15
     weight: 5
     startDelay: 50
     duration: 60
@@ -353,7 +376,7 @@
   components:
   - type: StationEvent
     earliestStart: 50
-    minimumPlayers: 20
+    minimumPlayers: 10
     weight: 5
     duration: 1
   - type: ZombieRule
