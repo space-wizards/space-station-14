@@ -41,6 +41,13 @@
                 "Client"
             ],
             "preLaunchTask": "build"
+        },
+        {
+            "name": "Server/Client (w/o build)",
+            "configurations": [
+                "Server",
+                "Client"
+            ]
         }
     ]
 }
