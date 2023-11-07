@@ -436,20 +436,6 @@
     stateDoorOpen: mime_open
     stateDoorClosed: mime_door
 
-# Blueshield
-- type: entity
-  id: LockerBlueshied
-  name: blueshield locker
-  parent: LockerBaseSecure
-  components:
-  - type: Appearance
-  - type: AccessReader
-    access: [["Command"]]
-  - type: EntityStorageVisuals
-    stateBaseClosed: hop
-    stateDoorOpen: hop_open
-    stateDoorClosed: blueshield_door
-
 # Representative
 - type: entity
   id: LockerRepresentative
