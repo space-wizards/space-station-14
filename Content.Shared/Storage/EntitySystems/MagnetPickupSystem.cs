@@ -1,10 +1,7 @@
 using Content.Server.Storage.Components;
-using Content.Shared.Hands;
 using Content.Shared.Inventory;
-using Content.Shared.Stacks;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Storage.EntitySystems;
@@ -56,7 +53,7 @@ public sealed class MagnetPickupSystem : EntitySystem
             comp.NextScan += ScanDelay;
 
             // No space
-            if (storage.StorageUsed >= storage.StorageCapacityMax)
+            if (!_storage.HasSpace((uid, storage)))
                 continue;
 
             if (!_inventory.TryGetContainingSlot(uid, out var slotDef))

@@ -20,7 +20,7 @@
       types:
         Blunt: 5
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
   - type: SolutionContainerManager
@@ -59,7 +59,7 @@
         types:
           Blunt: 5
     - type: Item
-      size: 15
+      size: Normal
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
@@ -203,7 +203,7 @@
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    size: 15
+    size: Normal
   - type: Armor
     modifiers:
       coefficients:
@@ -544,7 +544,7 @@
         types:
           Blunt: 0
     - type: Item
-      size: 10
+      size: Small
       sprite: Objects/Specific/Janitorial/rag.rsi
     - type: Absorbent
       pickupAmount: 15

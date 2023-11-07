@@ -24,6 +24,7 @@
 - type: startingGear
   id: SeniorPhysicianGear
   equipment:
+    head: ClothingHeadHatBeretBrigmedic
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorBlack
