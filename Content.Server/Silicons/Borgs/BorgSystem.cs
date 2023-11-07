@@ -21,7 +21,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Silicons.Borgs;
