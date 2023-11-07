@@ -9,14 +9,14 @@
 
 - type: stealTargetGroup
   id: ThiefHeadCloak
-  name: any head's cloak
+  name: any head's cloaks
   sprite: 
     sprite: Clothing/Neck/Cloaks/cap.rsi
     state: icon
 
 - type: stealTargetGroup
   id: ThiefHeadBedsheet
-  name: any head's bedsheet
+  name: any head's bedsheets
   sprite: 
     sprite: Objects/Misc/bedsheets.rsi
     state: sheetNT

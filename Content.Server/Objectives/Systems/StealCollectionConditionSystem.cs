@@ -45,15 +45,16 @@ public sealed class StealCollectionConditionSystem : EntitySystem
         }
 
         var query = EntityQueryEnumerator<StealCollectionTargetComponent>();
-        while (query.MoveNext(out var uid, out var target)) {
+        while (query.MoveNext(out var uid, out var target))
+        {
             if (condition.Comp.StealGroup != target.StealGroup)
                 continue;
 
             targetList.Add(target);
         }
 
-        // cancel if the required items do not exist or are insufficient
-        if (targetList.Count < condition.Comp.MinCollectionSize)
+        // cancel if the required items do not exist
+        if (targetList.Count == 0)
         {
             args.Cancelled = true;
             return;
@@ -61,7 +62,8 @@ public sealed class StealCollectionConditionSystem : EntitySystem
 
         //setup condition settings
         var maxSize = Math.Min(targetList.Count, condition.Comp.MaxCollectionSize);
-        condition.Comp.CollectionSize = _random.Next(condition.Comp.MinCollectionSize, maxSize);
+        var minSize = Math.Min(targetList.Count, condition.Comp.MinCollectionSize);
+        condition.Comp.CollectionSize = _random.Next(minSize, maxSize);
     }
 
     private void OnAfterAssign(Entity<StealCollectionConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
@@ -85,6 +87,39 @@ public sealed class StealCollectionConditionSystem : EntitySystem
 
     private void OnGetProgress(Entity<StealCollectionConditionComponent> condition, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = 0.4f;
+        args.Progress = GetProgress(args.Mind, condition);
+    }
+
+    private float GetProgress(MindComponent mind, StealCollectionConditionComponent condition)
+    {
+        if (!metaQuery.TryGetComponent(mind.OwnedEntity, out var meta))
+            return 0;
+        if (!containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
+            return 0;
+
+        // recursively check each container for the item
+        // checks inventory, bag, implants, etc.
+        var stack = new Stack<ContainerManagerComponent>();
+        var count = 0;
+        do
+        {
+            foreach (var container in currentManager.Containers.Values)
+            {
+                foreach (var entity in container.ContainedEntities)
+                {
+                    // check if this is the item
+                    if (TryComp<StealCollectionTargetComponent>(entity, out var target))
+                        if (target.StealGroup == condition.StealGroup) count++;
+
+                    // if it is a container check its contents
+                    if (containerQuery.TryGetComponent(entity, out var containerManager))
+                        stack.Push(containerManager);
+                }
+            }
+        } while (stack.TryPop(out currentManager));
+
+        var result = (float) count / (float) condition.CollectionSize;
+        result = Math.Clamp(result, 0, 1);
+        return result;
     }
 }
