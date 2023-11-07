@@ -18,6 +18,7 @@ materials-durathread = durathread
 materials-plasma = plasma
 materials-plastic = plastic
 materials-wood = wood
+materials-paper = paper
 materials-uranium = uranium
 materials-bananium = bananium
 materials-meat = meat
