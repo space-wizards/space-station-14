@@ -9,7 +9,7 @@ namespace Content.Client.TextScreen;
 /// <summary>
 ///     The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
 /// </summary>
-public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
+public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -39,15 +39,15 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TextScreenRowComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, TextScreenRowComponent component, ComponentInit args)
+    private void OnInit(EntityUid uid, TextScreenVisualsComponent component, ComponentInit args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        component.TextOffset = Vector2.Multiply(TextScreenRowComponent.PixelSize, component.TextOffset);
+        component.TextOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, component.TextOffset);
         ResetTextLength(uid, component, sprite);
         PrepareLayerStatesToDraw(uid, component, sprite);
         UpdateLayersToDraw(uid, component, sprite);
@@ -56,7 +56,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
     /// <summary>
     ///     Resets all TextScreenComponent sprite layers, through removing them and then creating new ones.
     /// </summary>
-    public void ResetTextLength(EntityUid uid, TextScreenRowComponent component, SpriteComponent? sprite = null)
+    public void ResetTextLength(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
@@ -74,9 +74,9 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
     }
 
     /// <summary>
-    ///     Sets <see cref="TextScreenRowComponent.TextLength"/>, adding or removing sprite layers if necessary.
+    ///     Sets <see cref="TextScreenVisualsComponent.TextLength"/>, adding or removing sprite layers if necessary.
     /// </summary>
-    public void SetTextLength(EntityUid uid, TextScreenRowComponent component, int newLength, SpriteComponent? sprite = null)
+    public void SetTextLength(EntityUid uid, TextScreenVisualsComponent component, int newLength, SpriteComponent? sprite = null)
     {
         if (newLength == component.TextLength)
             return;
@@ -113,24 +113,25 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
     /// <summary>
     ///     Updates the layers offsets based on the text length, so it is drawn correctly.
     /// </summary>
-    public void UpdateOffsets(EntityUid uid, TextScreenRowComponent component, SpriteComponent? sprite = null)
+    public void UpdateOffsets(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
 
-        for (var i = 0; i < component.LayerStatesToDraw.Count; i++)
-        {
-            var offset = i - (component.LayerStatesToDraw.Count - 1) / 2.0f;
-            sprite.LayerSetOffset(TextScreenLayerMapKey + i, new Vector2(offset * TextScreenRowComponent.PixelSize * 4f, 0.0f) + component.TextOffset);
-        }
+        for (var vert = 0; vert < component.Rows; vert++)
+            for (var horiz = 0; horiz < component.LayerStatesToDraw.Count; horiz++)
+            {
+                var offset = horiz - (component.LayerStatesToDraw.Count - 1) / 2.0f;
+                sprite.LayerSetOffset(TextScreenLayerMapKey + horiz, new Vector2(offset * TextScreenVisualsComponent.PixelSize * 4f, 0.0f) + component.TextOffset);
+            }
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, TextScreenRowComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent component, ref AppearanceChangeEvent args)
     {
         UpdateAppearance(uid, component, args.Component, args.Sprite);
     }
 
-    public void UpdateAppearance(EntityUid uid, TextScreenRowComponent component, AppearanceComponent? appearance = null, SpriteComponent? sprite = null)
+    public void UpdateAppearance(EntityUid uid, TextScreenVisualsComponent component, AppearanceComponent? appearance = null, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref appearance, ref sprite))
             return;
@@ -169,18 +170,18 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
 
     /// <summary>
     ///     If currently in <see cref="TextScreenMode.Text"/> mode: <br/>
-    ///     Sets <see cref="TextScreenRowComponent.TextToDraw"/> to the value of <see cref="TextScreenRowComponent.Text"/>
+    ///     Sets <see cref="TextScreenVisualsComponent.TextToDraw"/> to the value of <see cref="TextScreenVisualsComponent.Text"/>
     /// </summary>
-    public static void UpdateText(TextScreenRowComponent component)
+    public static void UpdateText(TextScreenVisualsComponent component)
     {
         if (component.CurrentMode == TextScreenMode.Text)
             component.TextToDraw = component.Text;
     }
 
     /// <summary>
-    ///     Sets visibility of text to <see cref="TextScreenRowComponent.Activated"/>.
+    ///     Sets visibility of text to <see cref="TextScreenVisualsComponent.Activated"/>.
     /// </summary>
-    public void UpdateVisibility(EntityUid uid, TextScreenRowComponent component, SpriteComponent? sprite = null)
+    public void UpdateVisibility(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
@@ -192,12 +193,12 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
     }
 
     /// <summary>
-    ///     Sets the states in the <see cref="TextScreenRowComponent.LayerStatesToDraw"/> to match the component <see cref="TextScreenRowComponent.TextToDraw"/> string.
+    ///     Sets the states in the <see cref="TextScreenVisualsComponent.LayerStatesToDraw"/> to match the component <see cref="TextScreenVisualsComponent.TextToDraw"/> string.
     /// </summary>
     /// <remarks>
-    ///     Remember to set <see cref="TextScreenRowComponent.TextToDraw"/> to a string first.
+    ///     Remember to set <see cref="TextScreenVisualsComponent.TextToDraw"/> to a string first.
     /// </remarks>
-    public void PrepareLayerStatesToDraw(EntityUid uid, TextScreenRowComponent component, SpriteComponent? sprite = null)
+    public void PrepareLayerStatesToDraw(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
@@ -214,9 +215,9 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
     }
 
     /// <summary>
-    ///     Iterates through <see cref="TextScreenRowComponent.LayerStatesToDraw"/>, setting sprite states to the appropriate layers.
+    ///     Iterates through <see cref="TextScreenVisualsComponent.LayerStatesToDraw"/>, setting sprite states to the appropriate layers.
     /// </summary>
-    public void UpdateLayersToDraw(EntityUid uid, TextScreenRowComponent component, SpriteComponent? sprite = null)
+    public void UpdateLayersToDraw(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
@@ -233,8 +234,8 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<TextScreenRowComponent, TextScreenTimerComponent>();
-        while (query.MoveNext(out var uid, out var comp, out _))
+        var query = EntityQueryEnumerator<TextScreenTimerComponent, TextScreenVisualsComponent>();
+        while (query.MoveNext(out var uid, out var _, out var comp))
         {
             // Basically Abs(TimeSpan, TimeSpan) -> Gives the difference between the current time and the target time.
             var timeToShow = _gameTiming.CurTime > comp.TargetTime ? _gameTiming.CurTime - comp.TargetTime : comp.TargetTime - _gameTiming.CurTime;
@@ -249,24 +250,24 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenRowComponent>
     /// </summary>
     /// <param name="timeSpan">TimeSpan to convert into string.</param>
     /// <param name="getMilliseconds">Should the string be ss:ms if minutes are less than 1?</param>
-    public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true)
+    public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true, string hours = "D2", string minutes = "D2", string seconds = "D2")
     {
         string firstString;
         string lastString;
 
         if (timeSpan.TotalHours >= 1)
         {
-            firstString = timeSpan.Hours.ToString("D2");
-            lastString = timeSpan.Minutes.ToString("D2");
+            firstString = timeSpan.Hours.ToString(hours);
+            lastString = timeSpan.Minutes.ToString(minutes);
         }
         else if (timeSpan.TotalMinutes >= 1 || !getMilliseconds)
         {
-            firstString = timeSpan.Minutes.ToString("D2");
-            lastString = timeSpan.Seconds.ToString("D2");
+            firstString = timeSpan.Minutes.ToString(minutes);
+            lastString = timeSpan.Seconds.ToString(seconds);
         }
         else
         {
-            firstString = timeSpan.Seconds.ToString("D2");
+            firstString = timeSpan.Seconds.ToString(seconds);
             var centiseconds = timeSpan.Milliseconds / 10;
             lastString = centiseconds.ToString("D2");
         }
