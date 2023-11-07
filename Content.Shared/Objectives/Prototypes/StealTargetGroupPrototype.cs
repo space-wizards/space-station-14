@@ -1,7 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Objectives;
+namespace Content.Shared.Objectives;
 
 /// <summary>
 /// General data about a group of items, such as icon, description, name. Used for Steal objective
@@ -10,7 +10,6 @@ namespace Content.Server.Objectives;
 public sealed partial class StealTargetGroupPrototype : IPrototype
 {
     /// ID
-    [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
 

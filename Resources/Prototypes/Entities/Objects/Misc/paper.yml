@@ -567,7 +567,7 @@
       types:
         Blunt: 10
   - type: StealTarget
-    stealGroup: TraitorBoxFolderQmClipboard
+    stealGroup: BoxFolderQmClipboard
 
 # Stamps
 - type: entity

@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Random;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Objectives;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -18,15 +19,15 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
-    private EntityQuery<ContainerManagerComponent> containerQuery;
-    private EntityQuery<MetaDataComponent> metaQuery;
+    private EntityQuery<ContainerManagerComponent> _containerQuery;
+    private EntityQuery<MetaDataComponent> _metaQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        containerQuery = GetEntityQuery<ContainerManagerComponent>();
-        metaQuery = GetEntityQuery<MetaDataComponent>();
+        _containerQuery = GetEntityQuery<ContainerManagerComponent>();
+        _metaQuery = GetEntityQuery<MetaDataComponent>();
 
         SubscribeLocalEvent<StealConditionComponent, ObjectiveAssignedEvent>(OnAssigned);
         SubscribeLocalEvent<StealConditionComponent, ObjectiveAfterAssignEvent>(OnAfterAssign);
@@ -99,9 +100,9 @@ public sealed class StealConditionSystem : EntitySystem
 
     private float GetProgress(MindComponent mind, StealConditionComponent condition)
     {
-        if (!metaQuery.TryGetComponent(mind.OwnedEntity, out var meta))
+        if (!_metaQuery.TryGetComponent(mind.OwnedEntity, out var meta))
             return 0;
-        if (!containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
+        if (!_containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
             return 0;
 
         var stack = new Stack<ContainerManagerComponent>();
@@ -119,7 +120,7 @@ public sealed class StealConditionSystem : EntitySystem
 
                 // TO DO - ignore if target alive
                 // if it is a container check its contents
-                if (containerQuery.TryGetComponent(pullid, out var containerManager))
+                if (_containerQuery.TryGetComponent(pullid, out var containerManager))
                     stack.Push(containerManager);
             }
         }
@@ -137,7 +138,7 @@ public sealed class StealConditionSystem : EntitySystem
                         if (target.StealGroup == condition.StealGroup) count++;
 
                     // if it is a container check its contents
-                    if (containerQuery.TryGetComponent(entity, out var containerManager))
+                    if (_containerQuery.TryGetComponent(entity, out var containerManager))
                         stack.Push(containerManager);
                 }
             }

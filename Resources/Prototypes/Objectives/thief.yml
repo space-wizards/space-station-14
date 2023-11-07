@@ -20,21 +20,11 @@
   - type: StealCondition
     descriptionText: objective-condition-thief-description
 
-- type: entity
-  abstract: true
-  parent: [BaseThiefObjective, BaseStealCollectionObjective]
-  id: BaseThiefStealCollectionObjective
-  components:
-  - type: Objective
-    difficulty: 1
-  - type: StealCondition
-    descriptionText: objective-condition-thief-description
-
 # Collections
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: FigurineThiefStealCollectionObjective
   components:
   - type: StealCondition
@@ -46,7 +36,7 @@
     
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: HeadCloakThiefStealCollectionObjective
   components:
   - type: StealCondition
@@ -58,7 +48,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: HeadBedsheetThiefStealCollectionObjective
   components:
   - type: StealCondition
@@ -70,7 +60,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: StampThiefStealCollectionObjective
   components:
   - type: StealCondition
@@ -82,7 +72,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: DoorRemoteThiefStealCollectionObjective
   components:
   - type: StealCondition
@@ -94,7 +84,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: ResearchDiskThiefStealCollectionObjective
   components:
   - type: NotJobRequirement
@@ -109,7 +99,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: IDCardsThiefStealCollectionObjective
   components:
   - type: StealCondition
@@ -122,7 +112,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealCollectionObjective
+  parent: BaseThiefStealObjective
   id: CannabisThiefStealCollectionObjective
   components:
   - type: NotJobRequirement
