@@ -41,8 +41,6 @@ public sealed partial class StealCollectionConditionComponent : Component
     public string? OwnerText;
 
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public string ObjectiveNoOwnerText;
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public string ObjectiveText;
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public string DescriptionText;

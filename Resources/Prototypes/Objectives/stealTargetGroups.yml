@@ -20,3 +20,10 @@
   sprite: 
     sprite: Objects/Misc/bedsheets.rsi
     state: sheetNT
+
+- type: stealTargetGroup
+  id: ThiefStamp
+  name: any stamps
+  sprite:
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-cap

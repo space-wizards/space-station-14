@@ -45,7 +45,7 @@
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
-    #ThiefObjectiveGroupItem: 1
+    ThiefObjectiveGroupItem: 0.2
     ThiefObjectiveGroupCollection: 2
     #ThiefObjectiveGroupAnimal: 0.5
     #ThiefObjectiveGroupStructure: 1
@@ -56,18 +56,13 @@
     FigurineThiefStealCollectionObjective: 1
     HeadCloakThiefStealCollectionObjective: 1
     HeadBedsheetThiefStealCollectionObjective: 1
+    StampThiefStealCollectionObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
   weights:
-    ClothingNeckCloackCeStealObjective: 1
-    ClothingNeckCloackCapStealObjective: 1
-    ClothingNeckCloackHosStealObjective: 1
-    ClothingNeckCloackQmStealObjective: 1
-    ClothingNeckCloackRdStealObjective: 1
-    ClothingBackpackIanStealObjective: 1
     ForensicScannerStealObjective: 1
-    VehicleKeySecwayStealObjective: 1
+    ClothingHeadHatWardenStealObjective: 1
     DefibrillatorStealObjective: 1
     HandheldCrewMonitorStealObjective: 1
     ClothingEyesGlassesChemicalStealObjective: 1

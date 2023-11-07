@@ -28,8 +28,6 @@
   - type: Objective
     difficulty: 1
   - type: StealCollectionCondition
-    minCollectionSize: 5
-    maxCollectionSize: 125
     descriptionText: objective-condition-thief-description
 
 # Collections
@@ -43,7 +41,6 @@
     stealGroup: ThiefFigurines
     minCollectionSize: 5
     maxCollectionSize: 30
-    descriptionText: objective-condition-thief-description
   - type: Objective
     difficulty: 0.25
     
@@ -56,7 +53,6 @@
     stealGroup: ThiefHeadCloak
     minCollectionSize: 3
     maxCollectionSize: 6
-    descriptionText: objective-condition-thief-description
   - type: Objective
     difficulty: 1.5
 
@@ -69,61 +65,22 @@
     stealGroup: ThiefHeadBedsheet
     minCollectionSize: 3
     maxCollectionSize: 6
-    descriptionText: objective-condition-thief-description
   - type: Objective
     difficulty: 1.0
-    
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: StampThiefStealCollectionObjective
+  components:
+  - type: StealCollectionCondition
+    stealGroup: ThiefStamp
+    minCollectionSize: 6
+    maxCollectionSize: 15
+  - type: Objective
+    difficulty: 1.0
+
 # steal item
-
-- type: entity                                      #command subgroup
-  noSpawn: true
-  parent: BaseThiefStealObjective
-  id: ClothingNeckCloackCeStealObjective
-  components:
-  #- type: NotJobRequirement
-    #job: ChiefMedicalOfficer
-  - type: StealCondition
-    prototype: ClothingNeckCloackCe
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealObjective
-  id: ClothingNeckCloackCapStealObjective
-  components:
-  - type: StealCondition
-    prototype: ClothingNeckCloackCap
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealObjective
-  id: ClothingNeckCloackHosStealObjective
-  components:
-  - type: StealCondition
-    prototype: ClothingNeckCloackHos
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealObjective
-  id: ClothingNeckCloackQmStealObjective
-  components:
-  - type: StealCondition
-    prototype: ClothingNeckCloackQm
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealObjective
-  id: ClothingNeckCloackRdStealObjective
-  components:
-  - type: StealCondition
-    prototype: ClothingNeckCloackRd
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealObjective
-  id: ClothingBackpackIanStealObjective
-  components:
-  - type: StealCondition
-    prototype: ClothingBackpackIan
 
 - type: entity                                      #Security subgroup
   noSpawn: true
@@ -136,10 +93,10 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: VehicleKeySecwayStealObjective
+  id: ClothingHeadHatWardenStealObjective
   components:
   - type: StealCondition
-    prototype: VehicleKeySecway
+    prototype: ClothingHeadHatWarden
 
 - type: entity                                      #Medical subgroup
   noSpawn: true

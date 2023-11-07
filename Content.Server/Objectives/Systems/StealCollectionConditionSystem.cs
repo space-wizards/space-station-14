@@ -7,6 +7,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Random;
+using Content.Shared.Pulling.Components;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -71,9 +72,7 @@ public sealed class StealCollectionConditionSystem : EntitySystem
         //установить иконку, описание и название цели
         var group = _proto.Index<StealTargetGroupPrototype>(condition.Comp.StealGroup);
 
-        var title = condition.Comp.OwnerText == null
-            ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", group.Name))
-            : Loc.GetString(condition.Comp.ObjectiveText, ("owner", Loc.GetString(condition.Comp.OwnerText)), ("itemName", group.Name));
+        var title = Loc.GetString(condition.Comp.ObjectiveText, ("itemName", group.Name));
 
         var description = condition.Comp.CollectionSize > 1
             ? Loc.GetString(condition.Comp.DescriptionMultiplyText, ("itemName", group.Name), ("count", condition.Comp.CollectionSize))
@@ -97,10 +96,27 @@ public sealed class StealCollectionConditionSystem : EntitySystem
         if (!containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
             return 0;
 
-        // recursively check each container for the item
-        // checks inventory, bag, implants, etc.
         var stack = new Stack<ContainerManagerComponent>();
         var count = 0;
+
+        //check pulling object
+        if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull))
+        {
+            var pullid = pull.Pulling;
+            if (pullid != null)
+            {
+                // check if this is the item
+                if (TryComp<StealCollectionTargetComponent>(pullid, out var target))
+                    if (target.StealGroup == condition.StealGroup) count++;
+
+                // if it is a container check its contents
+                if (containerQuery.TryGetComponent(pullid, out var containerManager))
+                    stack.Push(containerManager);
+            }
+        }
+
+        // recursively check each container for the item
+        // checks inventory, bag, implants, etc.
         do
         {
             foreach (var container in currentManager.Containers.Values)
@@ -118,7 +134,9 @@ public sealed class StealCollectionConditionSystem : EntitySystem
             }
         } while (stack.TryPop(out currentManager));
 
-        var result = (float) count / (float) condition.CollectionSize;
+        
+
+            var result = (float) count / (float) condition.CollectionSize;
         result = Math.Clamp(result, 0, 1);
         return result;
     }

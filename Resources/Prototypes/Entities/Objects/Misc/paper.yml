@@ -589,6 +589,8 @@
     state: stamp-mime
   - type: Item
     size: Tiny
+  - type: StealCollectionTarget
+    stealGroup: ThiefStamp
 
 - type: entity
   name: alternate rubber stamp
