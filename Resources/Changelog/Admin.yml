@@ -61,7 +61,7 @@ Entries:
       in some cases.', type: Fix}
   id: 9
   time: '2023-10-30T01:28:00.0000000+00:00'
-  - author: Vasilis
+- author: Vasilis
   changes:
   - {message: 'AME and PA make a sound effect when they are being overloaded. Similar to being sent a fax.', type: Add}
   id: 10
