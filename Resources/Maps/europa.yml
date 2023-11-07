@@ -78331,8 +78331,6 @@ entities:
       type: Transform
     - count: 15
       type: Stack
-    - size: 30
-      type: Item
 - proto: StoolBar
   entities:
   - uid: 921

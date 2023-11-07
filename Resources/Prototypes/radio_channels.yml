@@ -159,3 +159,11 @@
   keycode: "9"
   frequency: 1399
 
+- type: radioChannel
+  id: Freelance
+  name: chat-radio-freelance
+  keycode: 'f'
+  frequency: 1984
+  color: "#f6ce64"
+  # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
+  longRange: true

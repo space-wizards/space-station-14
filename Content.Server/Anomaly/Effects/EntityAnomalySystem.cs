@@ -21,27 +21,46 @@ public sealed class EntityAnomalySystem : EntitySystem
     {
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<EntitySpawnAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
     }
 
     private void OnPulse(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyPulseEvent args)
     {
+        if (!component.SpawnOnPulse)
+            return;
+
         var range = component.SpawnRange * args.Stability;
         var amount = (int) (component.MaxSpawnAmount * args.Severity + 0.5f);
 
         var xform = Transform(uid);
-        SpawnMonstersOnOpenTiles(component, xform, amount, range, component.Spawns);
+        SpawnEntitesOnOpenTiles(component, xform, amount, range, component.Spawns);
     }
 
     private void OnSupercritical(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
+        if (!component.SpawnOnSuperCritical)
+            return;
+
         var xform = Transform(uid);
-        // A cluster of monsters
-        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.Spawns);
+        // A cluster of entities
+        SpawnEntitesOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.Spawns);
         // And so much meat (for the meat anomaly at least)
-        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.SuperCriticalSpawns);
+        SpawnEntitesOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.SuperCriticalSpawns);
     }
 
-    private void SpawnMonstersOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius, List<EntProtoId> spawns)
+    private void OnStabilityChanged(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyStabilityChangedEvent args)
+    {
+        if (!component.SpawnOnStabilityChanged)
+            return;
+
+        var range = component.SpawnRange * args.Stability;
+        var amount = (int) (component.MaxSpawnAmount * args.Stability + 0.5f);
+
+        var xform = Transform(uid);
+        SpawnEntitesOnOpenTiles(component, xform, amount, range, component.Spawns);
+    }
+
+    private void SpawnEntitesOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius, List<EntProtoId> spawns)
     {
         if (!component.Spawns.Any())
             return;

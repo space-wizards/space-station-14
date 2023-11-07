@@ -16,7 +16,7 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Item
-    size: 1
+    size: Tiny
 
 # Muffins/Buns
 

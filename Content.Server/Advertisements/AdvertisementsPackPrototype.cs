@@ -3,7 +3,7 @@
 namespace Content.Server.Advertisements
 {
     [Serializable, Prototype("advertisementsPack")]
-    public sealed class AdvertisementsPackPrototype : IPrototype
+    public sealed partial class AdvertisementsPackPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]
