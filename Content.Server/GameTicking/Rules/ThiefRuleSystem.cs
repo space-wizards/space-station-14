@@ -1,46 +1,23 @@
-using Content.Server.Administration.Commands;
-using Content.Server.Communications;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
-using Content.Server.Roles;
-using Content.Server.GenericAntag;
-using Content.Shared.Alert;
-using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.Doors.Components;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
-using Content.Shared.Popups;
-using Content.Shared.Rounding;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.Objectives.Components;
-
-using System.Linq;
 using Content.Server.Mind;
 using Content.Server.NPC.Systems;
 using Content.Server.Objectives;
-using Content.Server.PDA.Ringer;
 using Content.Server.Shuttles.Components;
-using Content.Shared.CCVar;
-using Content.Shared.Dataset;
+using Content.Server.Roles;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Components;
-using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Server.GameTicking.Rules;
 using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Chat;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -112,20 +89,18 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
     }
 
+    //TO DO TEST IT!!!
     /// <summary>
     /// If there are not enough thieves in a round after the start of the game, we make the incoming connecting players thieves
     /// </summary>
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev) //Это кстати сработало и при раундстарт подключении. До OnPlayerSpawned
     {
-        Log.Debug("Подключение игрока!");
         var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var thief, out var gameRule))
         {
-            Log.Debug("1");
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
-            Log.Debug("2");
             if (thief.ThiefMinds.Count >= thief.MaxAllowThief)
                 continue;
             if (!ev.LateJoin)
@@ -241,16 +216,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         // Give thieves their objectives
         var difficulty = 0f;
-        //while (difficulty < thiefRule.MaxObjectiveDifficulty)
-        //{
-        //    var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefObjectiveGroups");
-        //    if (objective == null)
-        //        continue;
-
-        //    _mindSystem.AddObjective(mindId, mind, objective.Value);
-        //    difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
-        //}
-
         for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)
         {
             var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefObjectiveGroups");
