@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, orb, orb-inhand-left and orb-inhand-right created by Pancake, plushie_diona and plushie_diona1 created by discord user Deos#5630, toy-mouse-equipped-HELMET is a resprited 1-equipped-HELMET in mouse.rsi by PuroSlavKing (Github), plushie_xeno by LinkUyx#6557, plushie_hampter by RenLou#4333, beachball taken from https://github.com/ss220-space/Paradise/commit/662c08272acd7be79531550919f56f846726eabb, beachb-inhand by ;3#1161, bee hat and in-hand sprites drawn by Ubaser",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, orb, orb-inhand-left and orb-inhand-right created by Pancake, plushie_diona and plushie_diona1 created by discord user Deos#5630, toy-mouse-equipped-HELMET is a resprited 1-equipped-HELMET in mouse.rsi by PuroSlavKing (Github), plushie_xeno by LinkUyx#6557, plushie_hampter by RenLou#4333, beachball taken from https://github.com/ss220-space/Paradise/commit/662c08272acd7be79531550919f56f846726eabb, beachb-inhand by ;3#1161, bee hat and in-hand sprites drawn by Ubaser, plushie_penguin by netwy",
   "size": {
     "x": 32,
     "y": 32
@@ -10,7 +10,10 @@
         {
             "name": "plushie_ratvar"
         },
-	    {
+        {
+            "name": "plushie_penguin"
+        },
+		    {
             "name": "plushie_moth"
         },
         {
