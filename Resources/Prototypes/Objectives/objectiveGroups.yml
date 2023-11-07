@@ -41,4 +41,45 @@
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
 
+#Thief
+- type: weightedRandom
+  id: ThiefObjectiveGroups
+  weights:
+    ThiefObjectiveGroupItem: 1
+    #ThiefObjectiveGroupCollection: 2
+    #ThiefObjectiveGroupAnimal: 0.5
+    #ThiefObjectiveGroupStructure: 1
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupItem
+  weights:
+    ClothingNeckCloackCeStealObjective: 1
+    ClothingNeckCloackCapStealObjective: 1
+    ClothingNeckCloackHosStealObjective: 1
+    ClothingNeckCloackQmStealObjective: 1
+    ClothingNeckCloackRdStealObjective: 1
+    ClothingBackpackIanStealObjective: 1
+    ForensicScannerStealObjective: 1
+    VehicleKeySecwayStealObjective: 1
+    DefibrillatorStealObjective: 1
+    HandheldCrewMonitorStealObjective: 1
+    ClothingEyesGlassesChemicalStealObjective: 1
+    PositronicBrainStealObjective: 1
+    WeaponPistolCHIMPStealObjective: 1
+    APECircuitboardStealObjective: 1
+    FireAxeStealObjective: 1
+    JawsOfLifeStealObjective: 1
+    GasAnalyzerStealObjective: 1
+    WeaponProtoKineticAcceleratorStealObjective: 1
+    MiningDrillStealObjective: 1
+    AppraisalToolStealObjective: 1
+    ButchCleaverStealObjective: 1
+    DeathNettleStealObjective: 1
+    WeaponShotgunDoubleBarreledRubberStealObjective: 1
+    BibleStealObjective: 1
+    ClothingMaskMimeStealObjective: 1
+    BananaPhoneInstrumentStealObjective: 1
+    ClothingNeckGoldmedalStealObjective: 1
+    DrinkGoldenCupStealObjective: 1
+
 #Changeling, crew, wizard, when you code it...

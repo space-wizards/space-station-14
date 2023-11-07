@@ -25,4 +25,11 @@ public sealed partial class StealConditionComponent : Component
     /// </summary>
     [DataField("owner"), ViewVariables(VVAccess.ReadWrite)]
     public string? OwnerText;
+
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string ObjectiveNoOwnerText;
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string ObjectiveText;
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string DescriptionText;
 }

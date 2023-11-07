@@ -4,3 +4,5 @@ objective-condition-steal-description = We need you to steal {$itemName}. Don't 
 
 objective-condition-steal-station = station
 objective-condition-steal-Ian = head of personnel's corgi
+
+objective-condition-thief-description = The {$itemName} would be a great addition to my collection!

@@ -207,13 +207,11 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             Log.Info("Failed getting mind for picked thief.");
             return false;
         }
-
         if (HasComp<ThiefRoleComponent>(mindId))
         {
             Log.Error($"Player {thief.Name} is already a thief.");
             return false;
         }
-
         if (mind.OwnedEntity is not { } entity)
         {
             Log.Error("Mind picked for thief did not have an attached entity.");
@@ -226,10 +224,9 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             PrototypeId = thiefRule.ThiefPrototypeId
         });
 
-
-        var briefing = Loc.GetString("thief-role-greeting");
         // Assign briefing
-        _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
+        var briefing = Loc.GetString("thief-role-greeting");
+        _roleSystem.MindAddRole(mindId, new RoleBriefingComponent //TO DO: Server crash if make player traitor and thief at the same time. Player Can't hold 2 RoleBriefingcomponent at the same time 
         {
             Briefing = briefing
         });
@@ -238,16 +235,27 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         // Add Pacific
         AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
 
-
+        // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))
         {
-            // Notificate player about new role assignment
             _audioSystem.PlayGlobal(thiefRule.GreetingSound, session);
         }
 
-        Log.Error(thief.Name + "-------- is now thief! --------");
-
         // Give thieves their objectives
+        var difficulty = 0f;
+        for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)
+        {
+            var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefObjectiveGroups");
+            if (objective == null)
+                continue;
+
+            _mindSystem.AddObjective(mindId, mind, objective.Value);
+            difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
+        }
+        // Цель на коллекционирование
+        // Цель на существо / предмет / структуру
+        // Цель сбежать
+
         // Give starting items
 
         thiefRule.ThiefMinds.Add(mindId);

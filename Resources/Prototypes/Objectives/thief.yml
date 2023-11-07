@@ -1,0 +1,248 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseThiefObjective
+  components:
+  - type: Objective
+    issuer: thief
+  - type: RoleRequirement
+    roles:
+      components:
+      - ThiefRole
+
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealObjective
+  components:
+  - type: Objective
+    difficulty: 1
+  - type: StealCondition
+    descriptionText: objective-condition-thief-description
+# steal item
+
+- type: entity                                      #command subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckCloackCeStealObjective
+  components:
+  #- type: NotJobRequirement
+    #job: ChiefMedicalOfficer
+  - type: StealCondition
+    prototype: ClothingNeckCloackCe
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckCloackCapStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingNeckCloackCap
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckCloackHosStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingNeckCloackHos
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckCloackQmStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingNeckCloackQm
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckCloackRdStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingNeckCloackRd
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingBackpackIanStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingBackpackIan
+
+- type: entity                                      #Security subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ForensicScannerStealObjective
+  components:
+  - type: StealCondition
+    prototype: ForensicScanner
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: VehicleKeySecwayStealObjective
+  components:
+  - type: StealCondition
+    prototype: VehicleKeySecway
+
+- type: entity                                      #Medical subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: DefibrillatorStealObjective
+  components:
+  - type: StealCondition
+    prototype: Defibrillator
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: HandheldCrewMonitorStealObjective
+  components:
+  - type: StealCondition
+    prototype: HandheldCrewMonitor
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingEyesGlassesChemicalStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingEyesGlassesChemical
+
+- type: entity                                      #Science subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: PositronicBrainStealObjective
+  components:
+  - type: StealCondition
+    prototype: PositronicBrain
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: WeaponPistolCHIMPStealObjective
+  components:
+  - type: StealCondition
+    prototype: WeaponPistolCHIMP
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: APECircuitboardStealObjective
+  components:
+  - type: StealCondition
+    prototype: APECircuitboard
+
+- type: entity                                      #Engineering subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: FireAxeStealObjective
+  components:
+  - type: StealCondition
+    prototype: FireAxe
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: JawsOfLifeStealObjective
+  components:
+  - type: StealCondition
+    prototype: JawsOfLife
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: GasAnalyzerStealObjective
+  components:
+  - type: StealCondition
+    prototype: GasAnalyzer
+
+- type: entity                                      #Cargo subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: WeaponProtoKineticAcceleratorStealObjective
+  components:
+  - type: StealCondition
+    prototype: WeaponProtoKineticAccelerator
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: MiningDrillStealObjective
+  components:
+  - type: StealCondition
+    prototype: MiningDrill
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: AppraisalToolStealObjective
+  components:
+  - type: StealCondition
+    prototype: AppraisalTool
+
+- type: entity                                      #Service subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ButchCleaverStealObjective
+  components:
+  - type: StealCondition
+    prototype: ButchCleaver
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: DeathNettleStealObjective
+  components:
+  - type: StealCondition
+    prototype: DeathNettle
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: WeaponShotgunDoubleBarreledRubberStealObjective
+  components:
+  - type: StealCondition
+    prototype: WeaponShotgunDoubleBarreledRubber
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: BibleStealObjective
+  components:
+  - type: StealCondition
+    prototype: Bible
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingMaskMimeStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingMaskMime
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: BananaPhoneInstrumentStealObjective
+  components:
+  - type: StealCondition
+    prototype: BananaPhoneInstrument
+
+- type: entity                                      #Other subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingNeckGoldmedalStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingNeckGoldmedal
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: DrinkGoldenCupStealObjective
+  components:
+  - type: StealCondition
+    prototype: DrinkGoldenCup

@@ -39,9 +39,9 @@ public sealed class StealConditionSystem : EntitySystem
     {
         var proto = _proto.Index<EntityPrototype>(comp.Prototype);
         var title = comp.OwnerText == null
-            ? Loc.GetString("objective-condition-steal-title-no-owner", ("itemName", proto.Name))
-            : Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(comp.OwnerText)), ("itemName", proto.Name));
-        var description = Loc.GetString("objective-condition-steal-description", ("itemName", proto.Name));
+            ? Loc.GetString(comp.ObjectiveNoOwnerText, ("itemName", proto.Name))
+            : Loc.GetString(comp.ObjectiveText, ("owner", Loc.GetString(comp.OwnerText)), ("itemName", proto.Name));
+        var description = Loc.GetString(comp.DescriptionText, ("itemName", proto.Name));
 
         _metaData.SetEntityName(uid, title, args.Meta);
         _metaData.SetEntityDescription(uid, description, args.Meta);

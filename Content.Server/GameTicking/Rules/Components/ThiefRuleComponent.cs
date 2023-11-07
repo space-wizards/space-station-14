@@ -20,9 +20,13 @@ public sealed partial class ThiefRuleComponent : Component
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string ThiefPrototypeId = "Thief";
 
+    public Dictionary<ICommonSession, HumanoidCharacterProfile> StartCandidates = new();
 
+    [DataField]
+    public float MaxObjectiveDifficulty = 3f;
 
-    public Dictionary<ICommonSession, HumanoidCharacterProfile> StartCandidates = new(); //Но кто тебя заполнит?
+    [DataField]
+    public int MaxStealObjectives = 3;
 
     //Правило должно спавнить, не думая о том, правильно ли ему вызываться. Т.к. его могут форсануть
 
