@@ -1366,7 +1366,7 @@
   plantRsi: Objects/Specific/Hydroponics/cotton.rsi
   packetPrototype: CottonSeeds
   productPrototypes:
-    - CottonBal
+    - CottonBol
   lifespan: 25
   maturation: 8
   production: 3

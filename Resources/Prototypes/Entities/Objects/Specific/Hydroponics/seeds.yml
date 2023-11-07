@@ -523,7 +523,7 @@
 - type: entity
   parent: SeedBase
   name: packet of cotton seeds
-  id: cottonSeeds
+  id: CottonSeeds
   components:
     - type: Seed
       seedId: cotton

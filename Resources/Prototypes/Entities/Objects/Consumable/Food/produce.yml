@@ -1638,9 +1638,9 @@
     - Fruit
 
 - type: entity
-  name: cotton bal
+  name: cotton bol
   description: Moth people's favorite snack, and just as fluffy as them.
-  id: CottonBal
+  id: CottonBol
   parent: ProduceBase
   components:
   - type: Sprite
