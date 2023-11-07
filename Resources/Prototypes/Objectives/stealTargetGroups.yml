@@ -144,3 +144,38 @@
     sprite: Objects/Devices/forensic_scanner.rsi
     state: forensicnew
     
+- type: stealTargetGroup
+  id: AmmoTechFabCircuitboard
+  name: ammo techfab circuit board
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: security
+    
+- type: stealTargetGroup
+  id: ClothingHeadHatWarden
+  name: warden's cap
+  sprite:
+    sprite: Clothing/Head/Hats/warden.rsi
+    state: icon
+    
+- type: stealTargetGroup
+  id: ClothingOuterHardsuitVoidParamed
+  name: Paramedic Void Suit
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+    state: icon
+    
+- type: stealTargetGroup
+  id: MedicalTechFabCircuitboard
+  name: medical techfab machine board
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: medical
+    
+- type: stealTargetGroup
+  id: ClothingHeadsetAltMedical
+  name: chief medical officer's over-ear headset
+  sprite:
+    sprite: Clothing/Ears/Headsets/medical.rsi
+    state: icon_alt
+    

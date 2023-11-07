@@ -15,8 +15,16 @@
   parent: [BaseThiefObjective, BaseStealObjective]
   id: BaseThiefStealObjective
   components:
-  - type: Objective
-    difficulty: 1
+  - type: StealCondition
+    verifyMapExistance: false
+    descriptionText: objective-condition-thief-description
+    
+
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealCollectionObjective
+  components:
   - type: StealCondition
     descriptionText: objective-condition-thief-description
 
@@ -24,7 +32,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealCollectionObjective
   id: FigurineStealCollectionObjective
   components:
   - type: StealCondition
@@ -36,7 +44,7 @@
     
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealCollectionObjective
   id: HeadCloakStealCollectionObjective
   components:
   - type: StealCondition
@@ -48,7 +56,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealCollectionObjective
   id: HeadBedsheetStealCollectionObjective
   components:
   - type: StealCondition
@@ -60,7 +68,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealCollectionObjective
   id: StampStealCollectionObjective
   components:
   - type: StealCondition
@@ -72,7 +80,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealCollectionObjective
   id: DoorRemoteStealCollectionObjective
   components:
   - type: StealCondition
@@ -84,7 +92,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealCollectionObjective
   id: ResearchDiskStealCollectionObjective
   components:
   - type: NotJobRequirement
@@ -99,7 +107,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealCollectionObjective
   id: IDCardsStealCollectionObjective
   components:
   - type: StealCondition
@@ -112,7 +120,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealCollectionObjective
   id: CannabisStealCollectionObjective
   components:
   - type: NotJobRequirement
@@ -137,64 +145,64 @@
   - type: StealCondition
     stealGroup: ForensicScanner
   - type: Objective
-    difficulty: 0.8
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: AmmoTechFabCircuitboardStealObjective
-#  components:
-#  - type: StealCondition
-#    prototype: AmmoTechFabCircuitboard
-#  - type: Objective
-#    difficulty: 1.5
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: ClothingHeadHatWardenStealObjective
-#  components:
-#  - type: StealCondition
-#    prototype: ClothingHeadHatWarden
-#  - type: Objective
-#    difficulty: 1.2
-#
-#- type: entity                                      #Medical subgroup
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: ClothingOuterHardsuitVoidParamedStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: Paramedic
-#  - type: StealCondition
-#    prototype: ClothingOuterHardsuitVoidParamed
-#  - type: Objective
-#    difficulty: 1
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: MedicalTechFabCircuitboardStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: MedicalDoctor
-#  - type: StealCondition
-#    prototype: MedicalTechFabCircuitboard
-#  - type: Objective
-#    difficulty: 1
-#
-#- type: entity
-#  noSpawn: true
-#  parent: BaseThiefStealObjective
-#  id: ClothingHeadsetAltMedicalStealObjective
-#  components:
-#  - type: NotJobRequirement
-#    job: ChiefMedicalOfficer
-#  - type: StealCondition
-#    prototype: ClothingHeadsetAltMedical
-#  - type: Objective
-#    difficulty: 1
-#
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: AmmoTechFabCircuitboardStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: AmmoTechFabCircuitboard
+  - type: Objective
+    difficulty: 1.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingHeadHatWardenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: ClothingHeadHatWarden
+  - type: Objective
+    difficulty: 1.2
+
+- type: entity                                      #Medical subgroup
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingOuterHardsuitVoidParamedStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Paramedic
+  - type: StealCondition
+    stealGroup: ClothingOuterHardsuitVoidParamed
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: MedicalTechFabCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: MedicalDoctor
+  - type: StealCondition
+    stealGroup: MedicalTechFabCircuitboard
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealObjective
+  id: ClothingHeadsetAltMedicalStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefMedicalOfficer
+  - type: StealCondition
+    stealGroup: ClothingHeadsetAltMedical
+  - type: Objective
+    difficulty: 1
+
 #- type: entity                                      #Science subgroup
 #  noSpawn: true
 #  parent: BaseThiefStealObjective
