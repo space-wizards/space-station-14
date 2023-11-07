@@ -5,11 +5,7 @@
   id: HandheldRadio
   components:
   - type: RadioMicrophone
-<<<<<<< Updated upstream
-    broadcastChannel: Hanheld0
-=======
     broadcastChannel: Handheld0
->>>>>>> Stashed changes
     powerRequired: false
     toggleOnInteract: false
   - type: RadioSpeaker

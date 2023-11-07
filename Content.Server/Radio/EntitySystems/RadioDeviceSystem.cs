@@ -295,22 +295,6 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (component.RequiresPower && !this.IsPowered(uid, EntityManager) || args.Session.AttachedEntity is not { })
             return;
 
-<<<<<<< Updated upstream
-        foreach (var item in _protoMan.EnumeratePrototypes<RadioChannelPrototype>())
-        {
-            if(item.Frequency == args.Channel)
-            {
-                var channel = item.ID;
-                if (TryComp<RadioMicrophoneComponent>(uid, out var mic))
-                    mic.BroadcastChannel = channel;
-                if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
-                    speaker.Channels = new(){ channel };
-                if (TryComp<ActiveRadioComponent>(uid, out var channels))
-                    channels.Channels = new(){ channel };
-                UpdateHandheldRadioUi(uid, component);
-            }
-        }        
-=======
         if(!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel,out _))
             return;
         if (TryComp<RadioMicrophoneComponent>(uid, out var mic))
@@ -326,7 +310,6 @@ public sealed class RadioDeviceSystem : EntitySystem
         UpdateHandheldRadioUi(uid, component);
 
         
->>>>>>> Stashed changes
     }
 
     private void UpdateHandheldRadioUi(EntityUid uid, HandheldRadioComponent component)

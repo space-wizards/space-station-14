@@ -14,11 +14,7 @@
                      Access="Public"
                      HorizontalExpand="True"
                      SetSize="150 30"
-<<<<<<< Updated upstream
-                     Value="1390" />
-=======
                 />
->>>>>>> Stashed changes
                 <Button Name="ChannelButton"
                 Access="Public"
                 ToggleMode="False"
