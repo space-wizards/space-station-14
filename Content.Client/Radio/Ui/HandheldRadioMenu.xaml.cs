@@ -14,7 +14,11 @@ public sealed partial class HandheldRadioMenu : FancyWindow
 
     public event Action<bool>? OnMicPressed;
     public event Action<bool>? OnSpeakerPressed;
+<<<<<<< Updated upstream
     public event Action<int>? OnChannelSelected;
+=======
+    public event Action<string>? OnChannelSelected;
+>>>>>>> Stashed changes
     public HandheldRadioMenu()
     {
         RobustXamlLoader.Load(this);
@@ -24,11 +28,20 @@ public sealed partial class HandheldRadioMenu : FancyWindow
         Channel.IsValid = n => n>1389 && n<1400;
         MicButton.OnPressed += args => OnMicPressed?.Invoke(args.Button.Pressed);
         SpeakerButton.OnPressed += args => OnSpeakerPressed?.Invoke(args.Button.Pressed);
+<<<<<<< Updated upstream
         ChannelButton.OnPressed += args => OnChannelSelected?.Invoke(Channel.Value);
     }
 
     public void Update(HandheldRadioBoundUIState state)
     {
+=======
+        ChannelButton.OnPressed += args => OnChannelSelected?.Invoke(String.Format("Handheld{0}",Channel.Value%1390));
+    }
+
+    public void Update(HandheldRadioBoundUIState state)
+    {   
+        Channel.Value = _prototype.Index<RadioChannelPrototype>(state.SelectedChannel).Frequency;
+>>>>>>> Stashed changes
         MicButton.Pressed = state.MicEnabled;
         SpeakerButton.Pressed = state.SpeakerEnabled;
     }
