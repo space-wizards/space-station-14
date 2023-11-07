@@ -206,28 +206,6 @@
       "directions": 1
     },
     {
-      "name": "fire_detected",
-      "directions": 4,
-      "delays": [
-        [
-          0.25,
-          0.25
-        ],
-        [
-          0.25,
-          0.25
-        ],
-        [
-          0.25,
-          0.25
-        ],
-        [
-          0.25,
-          0.25
-        ]
-      ]
-    },
-    {
       "name": "alarmp",
       "directions": 4
     },
