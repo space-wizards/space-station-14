@@ -1362,7 +1362,7 @@
   id: cotton
   name: seeds-cotton-name
   noun: seeds-noun-seeds
-  displayName: seeds-wheat-display-name
+  displayName: seeds-cotton-display-name
   plantRsi: Objects/Specific/Hydroponics/cotton.rsi
   packetPrototype: CottonSeeds
   productPrototypes:
