@@ -1636,3 +1636,23 @@
   - type: Tag
     tags:
     - Fruit
+
+- type: entity
+  name: cotton bal
+  description: Sickly sweet.
+  id: CottonBal
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cotton.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: log
+    spawnedPrototype: MaterialCotton
+    spawnCount: 2
+  - type: Produce
+    seedId: cotton
