@@ -88,58 +88,78 @@
   color: "#d39f01"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
-  abstract: true
 - type: radioChannel
   id: Handheld0
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "0"
   frequency: 1390
 - type: radioChannel
   id: Handheld1
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "1"
   frequency: 1391
 - type: radioChannel
   id: Handheld2
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "2"
   frequency: 1392
 - type: radioChannel
   id: Handheld3
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "3"
   frequency: 1393
 - type: radioChannel
   id: Handheld4
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "4"
   frequency: 1394
 - type: radioChannel
   id: Handheld5
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "5"
   frequency: 1395
 - type: radioChannel
   id: Handheld6
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "6"
   frequency: 1396
 - type: radioChannel
   id: Handheld7
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "7"
   frequency: 1397
 - type: radioChannel
   id: Handheld8
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "8"
   frequency: 1398
 - type: radioChannel
   id: Handheld9
-  parent: Handheld
+  name: chat-radio-handheld
+  color: "#d39f01"
+  longRange: true
   keycode: "9"
   frequency: 1399
 
+<<<<<<< HEAD
 - type: radioChannel
   id: Freelance
   name: chat-radio-freelance
@@ -148,3 +168,5 @@
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
+=======
+>>>>>>> d96e872a656d3e176f159cdcdc07d5f7e91e2737
