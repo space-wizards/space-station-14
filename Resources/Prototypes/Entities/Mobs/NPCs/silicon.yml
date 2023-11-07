@@ -172,7 +172,7 @@
     graph: SupplyBot
     node: bot
   - type: Storage
-    maxItemSize: Large
+    maxItemSize: Huge
     maxTotalWeight: 40
   - type: UserInterface
     interfaces:

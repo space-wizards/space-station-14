@@ -170,6 +170,11 @@
   description: flavor-base-syrupy
 
 - type: flavor
+  id: clean
+  flavorType: Base
+  description: flavor-base-clean
+
+- type: flavor
   id: nothing
   flavorType: Complex
   description: flavor-complex-nothing
@@ -838,7 +843,7 @@
   id: spaceshroomcooked
   flavorType: Complex
   description: flavor-complex-spaceshroom-cooked
-
+  
 - type: flavor
   id: lostfriendship
   flavorType: Complex
@@ -848,3 +853,8 @@
   id: pumpkin
   flavorType: Complex
   description: flavor-complex-pumpkin
+
+- type: flavor
+  id: punishment
+  flavorType: Complex
+  description: flavor-complex-punishment

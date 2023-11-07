@@ -187,7 +187,7 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
-    size: Small
+    size: Normal
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainerManager
     solutions:
@@ -330,7 +330,7 @@
     solution: injector
   - type: Spillable
     solution: injector
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: injector
   - type: Appearance
   - type: SolutionContainerVisuals
