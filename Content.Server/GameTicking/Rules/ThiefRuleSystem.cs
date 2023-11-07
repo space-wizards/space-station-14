@@ -40,6 +40,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Server.GameTicking.Rules;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Chat;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -71,6 +72,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
+        SubscribeLocalEvent<ThiefRoleComponent, GetBriefingEvent>(OnGetBriefing);
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev) //Момент спавна игроков. Инициализация игрового правила.
@@ -202,6 +204,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             thiefRule = Comp<ThiefRuleComponent>(ruleEntity);
         }
 
+        //checks
         if (!_mindSystem.TryGetMind(thief, out var mindId, out var mind))
         {
             Log.Info("Failed getting mind for picked thief.");
@@ -224,16 +227,11 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             PrototypeId = thiefRule.ThiefPrototypeId
         });
 
-        // Assign briefing
-        var briefing = Loc.GetString("thief-role-greeting");
-        _roleSystem.MindAddRole(mindId, new RoleBriefingComponent //TO DO: Server crash if make player traitor and thief at the same time. Player Can't hold 2 RoleBriefingcomponent at the same time 
-        {
-            Briefing = briefing
-        });
-        SendThiefBriefing(mindId);
-
         // Add Pacific
         AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
+        //TO DO: Component boolean checker for pacifism
+        //TO DO: Pacifism Implanter
+        //TO DO: Check if pacifism added before (crash warning)
 
         // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))
@@ -262,11 +260,19 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         return true;
     }
 
-    private void SendThiefBriefing(EntityUid mind)
+    /// <summary>
+    /// Add mind briefing
+    /// </summary>
+    private void OnGetBriefing(Entity<ThiefRoleComponent> thief, ref GetBriefingEvent args)
     {
-        if (!_mindSystem.TryGetSession(mind, out var session))
+        if (!TryComp<MindComponent>(thief.Owner, out var mind) || mind.OwnedEntity == null)
             return;
 
-        _chatManager.DispatchServerMessage(session, Loc.GetString("thief-role-greeting"));
+        var briefing = Loc.GetString("thief-role-greeting");
+        args.Append(briefing);
+
+        if (!_mindSystem.TryGetSession(mind, out var session))
+            return;
+        _chatManager.DispatchServerMessage(session, briefing);
     }
 }
