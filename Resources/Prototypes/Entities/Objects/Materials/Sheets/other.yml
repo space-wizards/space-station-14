@@ -72,12 +72,10 @@
     baseLayer: base
     layerStates:
     - plasma
-    - plasma_2
-    - plasma_3
   - type: Sprite
-    state: plasma_3
+    state: plasma
     layers:
-    - state: plasma_3
+    - state: plasma
       map: ["base"]
   - type: Item
     heldPrefix: plasma

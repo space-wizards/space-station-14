@@ -26,7 +26,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     layers:
-    - state: emitter2
+    - state: emitter
     - state: beam
       shader: unshaded
       visible: false
