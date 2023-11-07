@@ -69,6 +69,9 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/galoshes.rsi
   - type: NoSlip
+  - type: ClothingSpeedModifier # Corvax-MRP
+    walkModifier: 0.8
+    sprintModifier: 0.75 # Try to run fast in big rubber boots, lol
 
 - type: entity
   parent: ClothingShoesBaseButcherable

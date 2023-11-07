@@ -1,0 +1,157 @@
+- type: entity
+  id: BaseShippingContainer
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: SpriteFade
+  - type: Clickable
+  - type: Sprite
+    sprite: Corvax/Objects/Decoration/containers.rsi
+    netsync: false
+    drawdepth: Overdoors
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,0,1.5,-1"
+        density: 1000
+        layer:
+        - WallLayer
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 500
+        behaviors:
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel:
+                min: 10
+                max: 20
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
+  id: ShippingContainerBlank
+  parent: BaseShippingContainer
+  name: shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is blank, offering no clue as to its contents.
+  components:
+  - type: Sprite
+    state: container_blank
+
+- type: entity
+  id: ShippingContainerConarex
+  parent: BaseShippingContainer
+  name: Conarex Aeronautics shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from Conarex Aeronautics, and is probably carrying spacecraft parts (or a bribery scandal) as a result.
+  components:
+  - type: Sprite
+    state: conarex
+
+- type: entity
+  id: ShippingContainerDeforest
+  parent: BaseShippingContainer
+  name: DeForest Medical Corp. shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from DeForest, and so is probably carrying medical supplies.
+  components:
+  - type: Sprite
+    state: deforest
+
+- type: entity
+  id: ShippingContainerKahraman
+  parent: BaseShippingContainer
+  name: Kahraman Heavy Industry shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from Kahraman, and is reinforced for carrying ore.
+  components:
+  - type: Sprite
+    state: kahraman
+
+- type: entity
+  id: ShippingContainerKosmologistika
+  parent: BaseShippingContainer
+  name: Kosmologistika shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from Kosmologistika, the logistics company owned and operated by the SSC.
+  components:
+  - type: Sprite
+    state: kosmologistika
+
+- type: entity
+  id: ShippingContainerInterdyne
+  parent: BaseShippingContainer
+  name: Interdyne shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from Interdyne, a private pharmaceutical company. Probably carrying medical or research supplies, probably.
+  components:
+  - type: Sprite
+    state: interdyne
+
+- type: entity
+  id: ShippingContainerNakamura
+  parent: BaseShippingContainer
+  name: Nakamura Engineering shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from Nakamura, presumably for transporting tools or heavy industrial equipment.
+  components:
+  - type: Sprite
+    state: nakamura
+
+- type: entity
+  id: ShippingContainerNanotrasen
+  parent: BaseShippingContainer
+  name: Nanotrasen shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one prominently features Nanotrasen's logo, and so presumably could be carrying anything.
+  components:
+  - type: Sprite
+    state: nthi
+
+- type: entity
+  id: ShippingContainerVitezstvi
+  parent: BaseShippingContainer
+  name: Vítězství Arms shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from Vítězství Arms, proudly proclaiming that Vítězství weapons mean victory.
+  components:
+  - type: Sprite
+    state: vitezstvi
+
+- type: entity
+  id: ShippingContainerCybersun
+  parent: BaseShippingContainer
+  name: Cybersun Industries shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one prominently features Cybersun's logo, and so presumably could be carrying almost anything.
+  components:
+  - type: Sprite
+    state: cybersun
+
+- type: entity
+  id: ShippingContainerDonkCo
+  parent: BaseShippingContainer
+  name: Donk Co. shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from Donk Co. and so could be carrying just about anything- although it's probably Donk Pockets.
+  components:
+  - type: Sprite
+    state: donk_co
+
+- type: entity
+  id: ShippingContainerGorlex
+  parent: BaseShippingContainer
+  name: Gorlex Securities shipping container
+  description: A standard-measure shipping container for bulk transport of goods. This one is from Gorlex Securities, and is probably carrying their primary export - war crimes.
+  components:
+  - type: Sprite
+    state: gorlex
+
+- type: entity
+  id: ShippingContainerGorlexRed
+  parent: ShippingContainerGorlex
+  components:
+  - type: Sprite
+    state: gorlex_red
