@@ -114,3 +114,9 @@ chatsan-replacement-41 = what are you doing
 
 chatsan-word-42 = ofc
 chatsan-replacement-42 = of course
+
+chatsan-word-43 = secoff 
+chatsan-replacement-43 = security officer 
+
+chatsan-word-44 = secoffs 
+chatsan-replacement-44 = security officers 
