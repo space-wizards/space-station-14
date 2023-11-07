@@ -1639,7 +1639,7 @@
 
 - type: entity
   name: cotton bal
-  description: Sickly sweet.
+  description: Moth people's favorite snack, and just as fluffy as them.
   id: CottonBal
   parent: ProduceBase
   components:
@@ -1656,3 +1656,5 @@
     spawnCount: 2
   - type: Produce
     seedId: cotton
+    tags:
+    - ClothMade
