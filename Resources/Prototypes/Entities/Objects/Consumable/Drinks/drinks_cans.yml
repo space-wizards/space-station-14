@@ -59,6 +59,9 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50 #reduce, reuse, recycle
+  - type: Tag
+    tags:
+    - DrinkCan
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -76,11 +79,37 @@
   - type: Tag
     tags:
     - Cola
+    - DrinkCan
     - Recyclable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
+
+# created when taking apart an ied
+- type: entity
+  parent: DrinkColaCan
+  id: DrinkColaCanEmpty
+  suffix: empty
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Openable
+    opened: true
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cola.rsi
+    layers:
+    - state: icon_open
+  - type: Item
+    sprite: Objects/Consumable/Drinks/cola.rsi
+  - type: Tag
+    tags:
+    - Cola
+    - DrinkCan
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -317,6 +346,7 @@
           Quantity: 5
   - type: Tag
     tags:
+    - DrinkCan
     - Recyclable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/robustnukie.rsi

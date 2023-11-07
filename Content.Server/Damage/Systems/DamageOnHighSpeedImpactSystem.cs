@@ -53,4 +53,15 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
         _color.RaiseEffect(Color.Red, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
     }
+
+    public void ChangeCollide(EntityUid uid, float minimumSpeed, float stunSeconds, float damageCooldown, DamageOnHighSpeedImpactComponent? collide = null)
+    {
+        if (!Resolve(uid, ref collide, false))
+            return;
+
+        collide.MinimumSpeed = minimumSpeed;
+        collide.StunSeconds = stunSeconds;
+        collide.DamageCooldown = damageCooldown;
+        Dirty(uid, collide);
+    }
 }
