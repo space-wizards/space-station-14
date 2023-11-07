@@ -12,7 +12,7 @@ namespace Content.Shared.Random;
 /// e.g. "choose maintenance audio if 90% of tiles nearby are maintenance tiles"
 /// </summary>
 [Prototype("rules")]
-public sealed class RulesPrototype : IPrototype
+public sealed partial class RulesPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 

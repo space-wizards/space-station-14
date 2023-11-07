@@ -19,7 +19,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: Item
-    size: 10
+    size: Large
 
 - type: entity
   name: mini energy crossbow
@@ -45,7 +45,7 @@
     sprite: SS220/Objects/Weapons/Guns/Crossbow/crossbow.rsi
     state: icon
   - type: Item
-    size: 30
+    size: Huge
   - type: BasicEntityAmmoProvider
     proto: BulletEnergyCrossbow
     capacity: 1

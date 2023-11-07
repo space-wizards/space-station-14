@@ -21,7 +21,7 @@
   - type: Physics
     bodyType: Dynamic
   - type: Item
-    size: 20
+    size: Large
   - type: Clickable
   - type: InteractionOutline
   - type: EventCapturePointFlag

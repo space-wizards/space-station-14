@@ -36,6 +36,7 @@ namespace Content.Server.GameTicking
             lock (_statusShellLock)
             {
                 jObject["name"] = _baseServer.ServerName;
+                jObject["map"] = _gameMapManager.GetSelectedMap()?.MapName;
                 jObject["players"] = _queueManager.ActualPlayersCount; // Corvax-Queue
                 jObject["soft_max_players"] = _cfg.GetCVar(CCVars.SoftMaxPlayers);
                 jObject["run_level"] = (int) _runLevel;

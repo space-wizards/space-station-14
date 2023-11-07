@@ -11,7 +11,7 @@
         map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     # If you update this also update the bulldog's size.
-    size: 30
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     quickEquip: false
@@ -58,7 +58,7 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 30
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     quickEquip: false
@@ -168,6 +168,8 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+  - type: Item
+    size: Normal
   - type: BallisticAmmoProvider
     capacity: 4
   - type: Gun # Corvax-Guns
@@ -185,7 +187,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
-    size: 10
+    size: Small
   - type: Gun
     fireRate: 4
     soundGunshot: # Corvax-Guns
@@ -221,8 +223,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
-  - type: Item
-    size: 10
   - type: Gun
     fireRate: 4
     soundGunshot: # Corvax-Guns
@@ -233,6 +233,8 @@
     graph: ShotgunSawn
     node: shotgunsawn
     deconstructionTarget: null
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: blunderbuss
@@ -247,6 +249,8 @@
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 1
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: improvised shotgun
@@ -258,8 +262,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
-  - type: Item
-    size: 75
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
   - type: BallisticAmmoProvider
@@ -269,7 +271,7 @@
     graph: ImprovisedShotgunGraph
     node: shotgun
   - type: StaticPrice
-    price: 400
+    price: 20
 
 - type: entity
   name: improvised shotgun

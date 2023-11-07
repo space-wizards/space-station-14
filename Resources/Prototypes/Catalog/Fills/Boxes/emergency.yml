@@ -50,10 +50,7 @@
       - id: SpaceMedipen
       - id: EmergencyMedipen
       - id: Flare
-      - id: Brutepack1
-      - id: Brutepack1
-      - id: Brutepack1
-      - id: Brutepack1
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals

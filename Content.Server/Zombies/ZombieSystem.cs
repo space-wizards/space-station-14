@@ -235,7 +235,7 @@ namespace Content.Server.Zombies
                     }
                 }
 
-                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity))
+                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity))
                 {
                     ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;

@@ -21,7 +21,7 @@
     reflectProb: .5
     spread: 90
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
   - type: Tag
     tags:
@@ -54,7 +54,7 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Weapons/Melee/katana.rsi
   - type: DisarmMalus
 
@@ -73,7 +73,7 @@
       types:
         Slash: 30
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
   - type: DashAbility
@@ -110,7 +110,7 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Weapons/Melee/machete.rsi
   - type: DisarmMalus
 
@@ -133,7 +133,7 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: 20
+    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/claymore.rsi
     slots:
@@ -161,6 +161,6 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Weapons/Melee/cutlass.rsi
   - type: DisarmMalus

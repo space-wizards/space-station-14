@@ -1,7 +1,9 @@
 ﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using Content.Shared.Damage;
+using Content.Shared.Item;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SS220.SwitchableWeapon;
 
@@ -34,8 +36,8 @@ public sealed partial class SwitchableWeaponComponent : Component
     public SoundSpecifier? CloseSound;
 
     [ViewVariables(VVAccess.ReadWrite)][DataField("sizeOpened")]
-    public int SizeOpened = 15;
+    public ProtoId<ItemSizePrototype> SizeOpened = "Large";
 
     [ViewVariables(VVAccess.ReadWrite)][DataField("sizeClosed")]
-    public int SizeClosed = 5;
+    public ProtoId<ItemSizePrototype> SizeClosed = "Small";
 }

@@ -11,7 +11,7 @@
       sprite: Objects/Tools/access_configurator.rsi
       state: icon
     - type: Item
-      size: 5
+      size: Small
     - type: Clothing
       sprite: Objects/Tools/access_configurator.rsi
       quickEquip: false

@@ -40,6 +40,12 @@ public sealed partial class DoAfterArgs
 
     public NetEntity? NetUsed;
 
+    /// <summary>
+    /// Whether the progress bar for this DoAfter should be hidden from other players.
+    /// </summary>
+    [DataField]
+    public bool Hidden;
+
     #region Event options
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>
@@ -173,14 +179,6 @@ public sealed partial class DoAfterArgs
     [Obsolete("Use checkEvent instead")]
     public Func<bool>? ExtraCheck;
 
-    // SS220 Invisible-DoAfter begin
-    /// <summary>
-    ///     Makes it visible only to player who controls user entity
-    /// </summary>
-    [DataField]
-    public bool VisibleOnlyToUser;
-    // SS220 Invisible-DoAfter end
-
     #region Constructors
 
     /// <summary>
@@ -247,6 +245,7 @@ public sealed partial class DoAfterArgs
         Delay = other.Delay;
         Target = other.Target;
         Used = other.Used;
+        Hidden = other.Hidden;
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
@@ -263,7 +262,6 @@ public sealed partial class DoAfterArgs
         BlockDuplicate = other.BlockDuplicate;
         CancelDuplicate = other.CancelDuplicate;
         DuplicateCondition = other.DuplicateCondition;
-        VisibleOnlyToUser = other.VisibleOnlyToUser; // SS220 Invisible-DoAfter
 
         // Networked
         NetUser = other.NetUser;

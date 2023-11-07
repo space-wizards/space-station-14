@@ -30,7 +30,7 @@
       types:
         Blunt: 4.5
   - type: Item
-    size: 5
+    size: Normal
     sprite: SS220/Objects/Weapons/Melee/e_sickle.rsi
   - type: UseDelay
     delay: 1.0

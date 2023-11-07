@@ -7,6 +7,7 @@ petting-success-soft-floofy = You pet {THE($target)} on {POSS-ADJ($target)} soft
 
 petting-success-bingus = You pet {THE($target)} on {POSS-ADJ($target)} wrinkly little head.
 petting-success-bird = You pet {THE($target)} on {POSS-ADJ($target)} cute feathery head.
+petting-success-carp = You pet {THE($target)} on {POSS-ADJ($target)} fishy little head.
 petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little head.
 petting-success-corrupted-corgi = In an act of hubris, you pet {THE($target)} on {POSS-ADJ($target)} cursed little head.
 petting-success-crab = You pet {THE($target)} on {POSS-ADJ($target)} smooth little head.
@@ -32,6 +33,7 @@ petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous su
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
 petting-failure-bat = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too hard to catch!
+petting-failure-carp = You reach out to pet {THE($target)}, but {POSS_ADJ($target)} sharp teeth make you think twice.
 petting-failure-corrupted-corgi = You reach out to pet {THE($target)}, but think better of it.
 petting-failure-crab = You reach out to pet {THE($target)}, but {SUBJECT($target)} snaps {POSS-ADJ($target)} claws in your general direction!
 petting-failure-dehydrated-carp = You pet {THE($target)} on {POSS-ADJ($target)} dry little head.
@@ -39,7 +41,7 @@ petting-failure-goat = You reach out to pet {THE($target)}, but {SUBJECT($target
 petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too horrible!
 petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too australian!
 petting-failure-possum = You reach out to pet {THE($target)}, but are met with hisses and snarls!
-petting-success-pig = You reach out to pet {THE($target)}, but are met with irritated oinks and squeals!
+petting-failure-pig = You reach out to pet {THE($target)}, but are met with irritated oinks and squeals!
 petting-failure-raccoon = You reach out to pet {THE($target)}, but {THE($target)} is busy raccooning around.
 petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($target)} somehow dodge with ludicrous speed!
 petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} spikes almost impale your hand!

@@ -104,7 +104,7 @@
     layers:
     - state: "icon"
   - type: Item
-    size: 20
+    size: Normal
     sprite: SS220/Objects/Misc/toner_cartridge.rsi
   - type: TonerCartridge
     capacity: 60
@@ -124,7 +124,7 @@
     layers:
     - state: "icon_bluespace"
   - type: Item
-    size: 20
+    size: Normal
     sprite: SS220/Objects/Misc/toner_cartridge.rsi
   - type: TonerCartridge
     capacity: 10000

@@ -30,7 +30,7 @@
   - type: Storage
     capacity: 30
   - type: Item
-    size: 30
+    size: Large
   - type: StorageFill
     contents:
       - id: WeaponRevolverMatebaSouvenir

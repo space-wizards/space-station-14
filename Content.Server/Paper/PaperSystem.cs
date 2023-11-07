@@ -107,6 +107,7 @@ namespace Content.Server.Paper
                 paperComp.Mode = PaperAction.Write;
                 _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.PlayerSession);
                 UpdateUserInterface(uid, paperComp, actor.PlayerSession);
+                args.Handled = true;
                 return;
             }
 
