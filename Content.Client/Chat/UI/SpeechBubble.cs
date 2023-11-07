@@ -13,7 +13,8 @@ namespace Content.Client.Chat.UI
         {
             Emote,
             Say,
-            Whisper
+            Whisper,
+            Looc
         }
 
         /// <summary>
@@ -59,6 +60,9 @@ namespace Content.Client.Chat.UI
 
                 case SpeechType.Whisper:
                     return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "whisperBox");
+
+                case SpeechType.Looc:
+                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "emoteBox");
 
                 default:
                     throw new ArgumentOutOfRangeException();
