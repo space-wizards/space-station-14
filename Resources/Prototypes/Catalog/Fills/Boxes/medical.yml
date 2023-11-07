@@ -22,7 +22,7 @@
   - type: StorageFill
     contents:
       - id: PillCanister
-        amount: 6
+        amount: 4
   - type: Sprite
     layers:
       - state: box
@@ -52,7 +52,7 @@
   - type: StorageFill
     contents:
       - id: ClothingMaskSterile
-        amount: 6
+        amount: 4
   - type: Sprite
     layers:
       - state: box
@@ -93,10 +93,12 @@
   parent: BoxCardboard
   id: BoxMouthSwab
   components:
+  - type: Storage
+    maxTotalWeight: 20
   - type: StorageFill
     contents:
       - id: DiseaseSwab
-        amount: 30
+        amount: 10
   - type: Sprite
     layers:
       - state: box
@@ -115,7 +117,7 @@
   - type: StorageFill
     contents:
       - id: BodyBag_Folded
-        amount: 5
+        amount: 4
   - type: Sprite
     layers:
       - state: box

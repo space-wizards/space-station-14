@@ -1,8 +1,6 @@
-
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -16,7 +14,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (!(shell.Player is IPlayerSession))
+            if (shell.Player == null)
             {
                 shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;

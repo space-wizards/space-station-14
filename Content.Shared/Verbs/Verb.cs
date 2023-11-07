@@ -1,5 +1,6 @@
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -349,9 +350,10 @@ namespace Content.Shared.Verbs
     }
 
     /// <summary>
-    ///     Verbs specifically for interactions that occur with equipped entities. These verbs should be accessible via
-    ///     the stripping UI, and may optionally also be accessible via a verb on the equipee if the via inventory relay
-    ///     events.get-verbs event.
+    ///     Verbs specifically for interactions that occur with equipped entities. These verbs are unique in that they
+    ///     can be used via the stripping UI. Additionally, when getting verbs on an entity with an inventory it will
+    ///     these automatically relay the <see cref="GetVerbsEvent{EquipmentVerb}"/> event to all equipped items via a
+    ///     <see cref="InventoryRelayedEvent{T}"/>.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class EquipmentVerb : Verb

@@ -6,6 +6,9 @@
     mode: SnapgridCenter
   components:
     - type: AtmosDevice
+    - type: Tag
+      tags:
+        - Unstackable
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
@@ -53,6 +56,7 @@
     - type: Tag
       tags:
         - GasVent
+        - Unstackable
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -143,6 +147,7 @@
     - type: Tag
       tags:
         - GasScrubber
+        - Unstackable
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
@@ -241,8 +246,8 @@
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: Wires
-      BoardName: wires-board-name-thermomachine
-      LayoutId: Thermomachine
+      boardName: wires-board-name-thermomachine
+      layoutId: Thermomachine
     - type: WiresVisuals
     - type: NodeContainer
       nodes:

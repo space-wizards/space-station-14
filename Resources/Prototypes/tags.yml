@@ -3,7 +3,7 @@
 
 - type: Tag
   id: AirAlarmElectronics
-  
+
 - type: Tag
   id: Airlock
 
@@ -234,6 +234,9 @@
 
 - type: Tag
   id: CanPilot
+  
+- type: Tag
+  id: CannonRestrict
 
 - type: Tag
   id: CannotSuicide
@@ -405,6 +408,9 @@
   id: Donut
 
 - type: Tag
+  id: DrinkCan
+
+- type: Tag
   id: DrinkSpaceGlue
 
 - type: Tag
@@ -493,7 +499,7 @@
 
 - type: Tag
   id: GeigerCounter
-  
+
 - type: Tag
   id: GlassAirlock
 
@@ -562,7 +568,7 @@
 
 - type: Tag
   id: HighRiskItem
-  
+
 - type: Tag
   id: HighSecDoor
 
@@ -598,6 +604,9 @@
 
 - type: Tag
   id: Hotsauce
+
+- type: Tag
+  id: Igniter
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -834,6 +843,12 @@
   id: PlushieSharkGrey
 
 - type: Tag
+  id: Potato
+
+- type: Tag
+  id: PotatoBattery
+
+- type: Tag
   id: PowerCellSmall
 
 - type: Tag
@@ -917,6 +932,9 @@
 
 - type: Tag
   id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: SmallAIChip
 
 - type: Tag
   id: SmallMech
@@ -1007,6 +1025,9 @@
 
 - type: Tag
   id: Toolbox
+
+- type: Tag
+  id: Torch
 
 - type: Tag
   id: Trash

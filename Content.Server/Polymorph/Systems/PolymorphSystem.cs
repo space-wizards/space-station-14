@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
@@ -173,10 +172,9 @@ namespace Content.Server.Polymorph.Systems
             MakeSentientCommand.MakeSentient(child, EntityManager);
 
             var comp = _compFact.GetComponent<PolymorphedEntityComponent>();
-            comp.Owner = child;
             comp.Parent = uid;
             comp.Prototype = proto.ID;
-            EntityManager.AddComponent(child, comp);
+            AddComp(child, comp);
 
             var childXform = Transform(child);
             childXform.LocalRotation = targetTransformComp.LocalRotation;

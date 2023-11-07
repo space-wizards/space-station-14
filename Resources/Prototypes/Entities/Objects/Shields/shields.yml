@@ -10,7 +10,7 @@
       state: riot-icon
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
-      size: 100
+      size: Ginormous
       heldPrefix: riot
     - type: Blocking
       passiveBlockModifier:
@@ -361,7 +361,7 @@
         path: /Audio/Weapons/ebladeon.ogg
       deActivateSound:
         path: /Audio/Weapons/ebladeoff.ogg
-      offSize: 5
+      offSize: Small
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -372,7 +372,7 @@
           shader: unshaded
           map: [ "shield" ]
     - type: Item
-      size: 5
+      size: Small
       sprite: Objects/Weapons/Melee/e_shield.rsi
       heldPrefix: eshield
     - type: UseDelay
@@ -451,7 +451,7 @@
       state: eshield-icon
     - type: Item
       sprite: Objects/Weapons/Melee/e_shield.rsi
-      size: 5
+      size: Small
       heldPrefix: eshield
 
 - type: entity
@@ -470,7 +470,7 @@
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-      offSize: 10
+      offSize: Small
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:
@@ -479,7 +479,7 @@
           visible: false
           map: [ "shield" ]
     - type: Item
-      size: 10
+      size: Small
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       heldPrefix: teleriot
     - type: UseDelay

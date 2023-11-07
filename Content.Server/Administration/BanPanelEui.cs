@@ -2,21 +2,28 @@ using System.Collections.Immutable;
 using System.Net;
 using System.Net.Sockets;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
+using Robust.Server.Player;
 using Robust.Shared.Network;
 
 namespace Content.Server.Administration;
 
-public sealed class BanPanelEui : BaseEui
+public sealed class BanPanelEui : BaseEui, IPostInjectInit
 {
     [Dependency] private readonly IBanManager _banManager = default!;
+    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly ILogManager _log = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
+
+    private ISawmill _sawmill = default!;
 
     private NetUserId? PlayerId { get; set; }
     private string PlayerName { get; set; } = string.Empty;
@@ -41,7 +48,7 @@ public sealed class BanPanelEui : BaseEui
         switch (msg)
         {
             case BanPanelEuiStateMsg.CreateBanRequest r:
-                BanPlayer(r.Player, r.IpAddress, r.UseLastIp, r.Hwid?.ToImmutableArray(), r.UseLastHwid, r.Minutes, r.Severity, r.Reason, r.Roles);
+                BanPlayer(r.Player, r.IpAddress, r.UseLastIp, r.Hwid?.ToImmutableArray(), r.UseLastHwid, r.Minutes, r.Severity, r.Reason, r.Roles, r.Erase);
                 break;
             case BanPanelEuiStateMsg.GetPlayerInfoRequest r:
                 ChangePlayer(r.PlayerUsername);
@@ -49,11 +56,11 @@ public sealed class BanPanelEui : BaseEui
         }
     }
 
-    private async void BanPlayer(string? target, string? ipAddressString, bool useLastIp, ImmutableArray<byte>? hwid, bool useLastHwid, uint minutes, NoteSeverity severity, string reason, IReadOnlyCollection<string>? roles)
+    private async void BanPlayer(string? target, string? ipAddressString, bool useLastIp, ImmutableArray<byte>? hwid, bool useLastHwid, uint minutes, NoteSeverity severity, string reason, IReadOnlyCollection<string>? roles, bool erase)
     {
         if (!_admins.HasAdminFlag(Player, AdminFlags.Ban))
         {
-            Logger.WarningS("admin.bans_eui", $"{Player.Name} ({Player.UserId}) tried to create a ban with no ban flag");
+            _sawmill.Warning($"{Player.Name} ({Player.UserId}) tried to create a ban with no ban flag");
             return;
         }
         if (target == null && string.IsNullOrWhiteSpace(ipAddressString) && hwid == null)
@@ -120,7 +127,23 @@ public sealed class BanPanelEui : BaseEui
             return;
         }
 
+        if (erase &&
+            targetUid != null &&
+            _playerManager.TryGetSessionById(targetUid.Value, out var targetPlayer))
+        {
+            try
+            {
+                if (_entities.TrySystem(out AdminSystem? adminSystem))
+                    adminSystem.Erase(targetPlayer);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Error while erasing banned player:\n{e}");
+            }
+        }
+
         _banManager.CreateServerBan(targetUid, target, Player.UserId, addressRange, targetHWid, minutes, severity, reason);
+
         Close();
     }
 
@@ -159,5 +182,10 @@ public sealed class BanPanelEui : BaseEui
         }
 
         StateDirty();
+    }
+
+    public void PostInject()
+    {
+        _sawmill = _log.GetSawmill("admin.bans_eui");
     }
 }
