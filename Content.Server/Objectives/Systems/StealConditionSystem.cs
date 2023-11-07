@@ -5,10 +5,10 @@ using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using Robust.Shared.Random;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Objectives;
+using Content.Shared.Mind.Components;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -92,7 +92,6 @@ public sealed class StealConditionSystem : EntitySystem
         _metaData.SetEntityDescription(condition.Owner, description, args.Meta);
         _objectives.SetIcon(condition.Owner, group.Sprite, args.Objective);
     }
-
     private void OnGetProgress(Entity<StealConditionComponent> condition, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = GetProgress(args.Mind, condition);
@@ -118,10 +117,13 @@ public sealed class StealConditionSystem : EntitySystem
                 if (TryComp<StealTargetComponent>(pullid, out var target))
                     if (target.StealGroup == condition.StealGroup) count++;
 
-                // TO DO - ignore if target alive
-                // if it is a container check its contents
-                if (_containerQuery.TryGetComponent(pullid, out var containerManager))
-                    stack.Push(containerManager);
+                //we don't check the inventories of sentient entity
+                if (!TryComp<MindContainerComponent>(pullid, out var pullMind))
+                {
+                    // if it is a container check its contents
+                    if (_containerQuery.TryGetComponent(pullid, out var containerManager))
+                        stack.Push(containerManager);
+                }
             }
         }
 
