@@ -1,5 +1,6 @@
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Guardian
 {
@@ -15,7 +16,6 @@ namespace Content.Server.Guardian
         /// <remarks>
         /// Can be null if the component is added at any time.
         /// </remarks>
-        [DataField]
         public EntityUid? HostedGuardian;
 
         /// <summary>
@@ -23,9 +23,9 @@ namespace Content.Server.Guardian
         /// </summary>
         [ViewVariables] public ContainerSlot GuardianContainer = default!;
 
-        [DataField]
-        public EntProtoId Action = "ActionToggleGuardian";
+        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string Action = "ActionToggleGuardian";
 
-        [DataField] public EntityUid? ActionEntity;
+        [DataField("actionEntity")] public EntityUid? ActionEntity;
     }
 }
