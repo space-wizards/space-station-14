@@ -69,7 +69,7 @@
   group: market
 
 - type: cargoProduct
-  id: LivestockCorgi
+  id: LivestockPupCorgi
   icon:
     sprite: Mobs/Pets/corgi.rsi
     state: corgi
