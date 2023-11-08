@@ -463,6 +463,8 @@
   parent: BaseThiefStealAnimalObjective
   id: IanStealObjective
   components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
   - type: StealCondition
     stealGroup: AnimalIan
   - type: Objective
@@ -483,6 +485,8 @@
   parent: BaseThiefStealAnimalObjective
   id: McGriffStealObjective
   components:
+  - type: NotJobRequirement
+    job: Detective
   - type: StealCondition
     stealGroup: AnimalMcGriff
   - type: Objective
@@ -493,6 +497,8 @@
   parent: BaseThiefStealAnimalObjective
   id: WalterStealObjective
   components:
+  - type: NotJobRequirement
+    job: Chemist
   - type: StealCondition
     stealGroup: AnimalWalter
   - type: Objective
@@ -503,6 +509,8 @@
   parent: BaseThiefStealAnimalObjective
   id: RenaultStealObjective
   components:
+  - type: NotJobRequirement
+    job: Captain
   - type: StealCondition
     stealGroup: AnimalRenault
   - type: Objective
@@ -513,6 +521,8 @@
   parent: BaseThiefStealAnimalObjective
   id: HamletStealObjective
   components:
+  - type: NotJobRequirement
+    job: Captain
   - type: StealCondition
     stealGroup: AnimalHamlet
   - type: Objective
@@ -523,6 +533,8 @@
   parent: BaseThiefStealAnimalObjective
   id: ShivaStealObjective
   components:
+  - type: NotJobRequirement
+    job: SecurityOfficer
   - type: StealCondition
     stealGroup: AnimalShiva
   - type: Objective
@@ -533,6 +545,8 @@
   parent: BaseThiefStealAnimalObjective
   id: SmileStealObjective
   components:
+  - type: NotJobRequirement
+    job: Scientist
   - type: StealCondition
     stealGroup: AnimalSmile
   - type: Objective
@@ -543,6 +557,8 @@
   parent: BaseThiefStealAnimalObjective
   id: PunPunStealObjective
   components:
+  - type: NotJobRequirement
+    job: Bartender
   - type: StealCondition
     stealGroup: AnimalPunPun
   - type: Objective
