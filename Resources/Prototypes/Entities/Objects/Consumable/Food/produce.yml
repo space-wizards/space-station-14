@@ -1645,6 +1645,8 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
+  - type: Food
+    requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
       food:
