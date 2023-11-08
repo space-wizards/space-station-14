@@ -39,3 +39,6 @@ anomaly-command-supercritical = Целевая аномалия переходи
 # Flavor text on the footer
 anomaly-generator-flavor-left = Аномалия может возникнуть внутри оператора.
 anomaly-generator-flavor-right = v1.1
+
+anomaly-sync-connected = Аномалия успешно соединена
+anomaly-sync-disconnected = Соединение с аномалией потеряно!

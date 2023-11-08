@@ -29,3 +29,5 @@ ent-ClothingShoesCluwneRemoveable = клувеньские туфли
     .desc = Проклятая пара клувеньских туфель.
 ent-ClothingShoesClownLarge = большие клоунские туфли
     .desc = Когда вам нужно выделиться в комнате, полной клоунов!
+ent-ClothingShoesSkates = роликовые коньки
+    .desc = Прокатись с ветерком!

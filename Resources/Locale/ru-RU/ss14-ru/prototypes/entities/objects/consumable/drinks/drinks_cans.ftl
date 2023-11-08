@@ -36,3 +36,6 @@ ent-DrinkShamblersJuiceCan = банка сока Shambler
     .desc = ~Встряхните мне немного этого сока Shambler!~
 ent-DrinkPwrGameCan = банка pwr game
     .desc = Единственный напиток, обладающий СИЛОЙ, которую жаждут настоящие геймеры. Когда геймеры говорят о геймерском топливе, они имеют в виду именно это.
+ent-DrinkColaCanEmpty = { ent-DrinkColaCan }
+    .desc = { ent-DrinkColaCan.desc }
+	.suffix = Пустая

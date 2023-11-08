@@ -109,7 +109,7 @@ ent-SeniorOfficerIDCard = ID карта инструктора СБ
     .desc = { ent-IDCardStandard.desc }
 ent-PunPunIDCard = ID карта Пун Пуна
     .desc = { ent-IDCardStandard.desc }
-ent-NukieAgentIDCard = { ent-PassengerIDCard.desc }
+ent-NukieAgentIDCard = { ent-PassengerIDCard }
     .desc = { ent-PassengerIDCard.desc }
 	.suffix = Ядерный оперативник
 ent-PrisonerIDCard = ID карта заключённого
@@ -121,5 +121,7 @@ ent-RoboticistIDCard = ID карта робототехника
 ent-CoronerIDCard = ID карта патологоанатома
     .desc = { ent-IDCardStandard.desc }
 ent-BlueShieldIDCard = ID карта офицера синего щита
+    .desc = { ent-IDCardStandard.desc }
+ent-PirateIDCard = ID карта пирата
     .desc = { ent-IDCardStandard.desc }
 

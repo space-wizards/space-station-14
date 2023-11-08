@@ -17,6 +17,7 @@ materials-plasma = плазма
 materials-plastic = пластик
 materials-wood = дерево
 materials-uranium = уран
+materials-paper = бумага
 materials-bananium = бананиум
 materials-meat = мясо
 materials-web = шёлк
