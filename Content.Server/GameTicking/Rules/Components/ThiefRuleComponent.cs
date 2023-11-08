@@ -17,6 +17,12 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(ThiefRuleSystem))]
 public sealed partial class ThiefRuleComponent : Component
 {
+    /// <summary>
+    /// A chance for this mode to be added to the game.
+    /// </summary>
+    [DataField]
+    public float RuleChance = 1f;
+
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string ThiefPrototypeId = "Thief";
 
@@ -34,9 +40,9 @@ public sealed partial class ThiefRuleComponent : Component
     public readonly List<EntityUid> ThiefMinds = new();
 
     /// <summary>
-    /// Max Thiefs created by rule
+    /// Max Thiefs created by rule on roundstart
     /// </summary>
-    public int MaxAllowThief = 2;
+    public int MaxAllowThief = 3;
 
     /// <summary>
     /// Sound played when making the player a thief via antag control or ghost role

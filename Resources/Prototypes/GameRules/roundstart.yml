@@ -75,6 +75,7 @@
   components:
   - type: TraitorRule
   - type: ThiefRule #the thieves come as an extension of another gamemode
+    ruleChance: 0.5
 
 - type: entity
   id: Revolutionary
@@ -83,6 +84,7 @@
   components:
   - type: RevolutionaryRule
   - type: ThiefRule #the thieves come as an extension of another gamemode
+    ruleChance: 0.5
 
 - type: entity
   id: Sandbox

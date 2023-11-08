@@ -27,22 +27,14 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
-    [Dependency] private readonly RoleSystem _role = default!;
-
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
-
-    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -60,6 +52,13 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var thief, out var gameRule))
         {
+            //Chance to not lauch gamerule
+            if (!_random.Prob(thief.RuleChance))
+            {
+                RemComp<ThiefRuleComponent>(uid); //TO DO: NOT TESTED
+                continue;
+            }
+
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
@@ -84,7 +83,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         var startThiefCount = Math.Min(component.MaxAllowThief, component.StartCandidates.Count);
         var thiefPool = FindPotentialThiefs(component.StartCandidates, component);
-        var selectedThieves = PickThieves(startThiefCount, thiefPool);
+        var selectedThieves = PickThieves(_random.Next(1,startThiefCount), thiefPool);
 
         foreach(var thief in selectedThieves)
         {
