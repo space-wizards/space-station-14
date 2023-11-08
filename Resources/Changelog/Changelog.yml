@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Fixed modern hair trongles, type: Fix}
-  id: 4634
-  time: '2023-08-20T08:54:44.0000000+00:00'
 - author: Errant
   changes:
   - {message: Pressing the "rack gun" key on a gun with an open bolt will now close
@@ -2906,3 +2901,8 @@ Entries:
   - {message: Lizards rediscovered their hunger for crayons., type: Tweak}
   id: 5133
   time: '2023-11-08T01:28:37.0000000+00:00'
+- author: Darkie
+  changes:
+  - {message: Added directional window cracks when damaged., type: Add}
+  id: 5134
+  time: '2023-11-08T01:31:45.0000000+00:00'
