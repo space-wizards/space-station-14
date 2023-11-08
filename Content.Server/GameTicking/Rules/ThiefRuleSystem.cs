@@ -51,6 +51,8 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
         SubscribeLocalEvent<ThiefRoleComponent, GetBriefingEvent>(OnGetBriefing);
+
+        SubscribeLocalEvent<ThiefRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev) //Момент спавна игроков. Инициализация игрового правила.
@@ -275,5 +277,11 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         //briefing += Loc.GetString("thief-role-greeting-equipment"); //TO DO - equipment setting
         return briefing;
+    }
+
+    private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args) // TO DO - Fix duplicating in manifest
+    {
+        args.Minds = thiefs.Comp.ThiefMinds;
+        args.AgentName = Loc.GetString("thief-round-end-agent-name");
     }
 }
