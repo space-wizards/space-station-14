@@ -160,6 +160,16 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
+    public void SetUseDelay(EntityUid? actionId, TimeSpan? delay)
+    {
+        if (!TryGetActionData(actionId, out var action) || action.UseDelay == delay)
+            return;
+
+        action.UseDelay = delay;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
     #region ComponentStateManagement
     protected virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
     {
@@ -219,16 +229,6 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         action.UsesBeforeDelay = usesBeforeDelay;
-        UpdateAction(actionId, action);
-        Dirty(actionId.Value, action);
-    }
-
-    public void SetUseDelay(EntityUid? actionId, TimeSpan? delay)
-    {
-        if (!TryGetActionData(actionId, out var action) || action.UseDelay == delay)
-            return;
-
-        action.UseDelay = delay;
         UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
