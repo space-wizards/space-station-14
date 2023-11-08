@@ -56,11 +56,15 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      - name: Package client
-        run: |
-          Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
-          Tools/package_client_build.py
+      - name: Build Packaging
+        run: dotnet build Content.Packaging --configuration Release --no-restore /m
 
+      - name: Package server
+        run: dotnet run --project Content.Packaging server --platform win-x64 --platform linux-x64 --platform osx-x64 --platform linux-arm64
+
+      - name: Package client
+        run: dotnet run --project Content.Packaging client --no-wipe-release
+      
       - name: Update Build Info
         run: Tools/gen_build_info.py
 

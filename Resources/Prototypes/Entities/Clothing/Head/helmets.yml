@@ -391,3 +391,14 @@
       sprite: Corvax/Clothing/Head/Helmets/security_medic.rsi
     - type: Clothing
       sprite: Corvax/Clothing/Head/Helmets/security_medic.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetPodWars
+  name: ironclad II helmet
+  description: An ironclad II helmet, a relic of the pod wars.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/podwars_helmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/podwars_helmet.rsi

@@ -1,0 +1,35 @@
+# Items that can be held completely in one's hand.
+- type: itemSize
+  id: Tiny
+  weight: 1
+  name: item-component-size-Tiny
+
+# Items that can fit inside of a standard pocket.
+- type: itemSize
+  id: Small
+  weight: 2
+  name: item-component-size-Small
+
+# Items that can fit inside of a standard bag.
+- type: itemSize
+  id: Normal
+  weight: 4
+  name: item-component-size-Normal
+
+# Items that are too large to fit inside of standard bags, but can worn in exterior slots or placed in custom containers.
+- type: itemSize
+  id: Large
+  weight: 8
+  name: item-component-size-Large
+
+# Items that are too large to place inside of any kind of container.
+- type: itemSize
+  id: Huge
+  weight: 16
+  name: item-component-size-Huge
+
+# Picture furry gf
+- type: itemSize
+  id: Ginormous
+  weight: 32
+  name: item-component-size-Ginormous

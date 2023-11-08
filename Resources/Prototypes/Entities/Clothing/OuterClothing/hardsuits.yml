@@ -693,6 +693,8 @@
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
   - type: StaminaProtection
     coefficient: 0.75
+  - type: StaticPrice
+    price: 0
 
 #Pirate Captain Hardsuit
 - type: entity
@@ -725,7 +727,8 @@
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
   - type: StaminaProtection
     coefficient: 0.7
-
+  - type: StaticPrice
+    price: 0
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit

@@ -229,8 +229,6 @@
     stripTimeReduction: 1
     stealthy: true
   - type: NinjaGloves
-  # not actually electrified, just used to make stun ability work
-  - type: Electrified
   - type: StaminaProtection
     coefficient: 0.95
 

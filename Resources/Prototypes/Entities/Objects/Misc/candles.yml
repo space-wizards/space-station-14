@@ -11,26 +11,26 @@
         - state: candle-big
           color: "#decb8e"
     - type: Item
-      size: 2
+      size: Small
     - type: Appearance
     - type: Reactive
       groups:
         Flammable: [ Touch ]
         Extinguish: [ Touch ]
-#    - type: ExtinguishOnInteract
-#      extinguishAttemptSound: 
-#        path: /Audio/Items/candle_blowing.ogg
-#        params:
-#         variation: 0.05
-#          volume: 10
+    - type: ExtinguishOnInteract
+      extinguishAttemptSound:
+        path: /Audio/Items/candle_blowing.ogg
+        params:
+          variation: 0.05
+          volume: 10
     - type: UseDelay
     - type: Flammable
       fireSpread: false
       canResistFire: false
       alwaysCombustible: true
-      canExtinguish: true 
+      canExtinguish: true
       firestacksOnIgnite: 3.0
-      firestackFade: -0.01 
+      firestackFade: -0.01
       damage:
         types:
           Heat: 0.1
@@ -38,7 +38,7 @@
       sprite: Objects/Misc/candles.rsi
       normalState: fire-big
     - type: ToggleableLightVisuals
-      spriteLayer: transparent
+      spriteLayer: null
       inhandVisuals:
         left:
         - state: inhand-left-flame
@@ -56,14 +56,13 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-          
+
 - type: entity
   name: red candle
   parent: Candle
   id: CandleRed
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-big
         color: "#a12349"
@@ -83,7 +82,6 @@
   id: CandleBlue
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-big
         color: "#425d7d"
@@ -102,7 +100,6 @@
   id: CandleBlack
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-big
         color: "#1b1724"
@@ -121,10 +118,9 @@
   id: CandleGreen
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-big
-        color: "#5d997e"  
+        color: "#5d997e"
   - type: Item
     inhandVisuals:
       left:
@@ -140,7 +136,6 @@
   id: CandlePurple
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-big
         color: "#984aa1"
@@ -154,15 +149,14 @@
         color: "#984aa1"
 
 
-- type: entity 
+- type: entity
   name: small candle
   parent: Candle
   id: CandleSmall
   components:
     - type: Item
-      size: 1
+      size: Tiny
     - type: Sprite
-      sprite: Objects/Misc/candles.rsi
       layers:
         - state: candle-small
           color: "#e2ca90"
@@ -186,7 +180,6 @@
   id: CandleRedSmall
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-small
         color: "#a12349"
@@ -205,7 +198,6 @@
   id: CandleBlueSmall
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-small
         color: "#425d7d"
@@ -224,7 +216,6 @@
   id: CandleBlackSmall
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-small
         color: "#1b1724"
@@ -243,10 +234,9 @@
   id: CandleGreenSmall
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-small
-        color: "#5d997e"  
+        color: "#5d997e"
   - type: Item
     inhandVisuals:
       left:
@@ -262,7 +252,6 @@
   id: CandlePurpleSmall
   components:
   - type: Sprite
-    sprite: Objects/Misc/candles.rsi
     layers:
       - state: candle-small
         color: "#984aa1"
@@ -277,8 +266,8 @@
 
 #Purely decorative candles for mappers. Do not have any functionality.
 
-- type: entity 
-  name: magic candle 
+- type: entity
+  name: magic candle
   description: It's either magic or high tech, but this candle never goes out. On the other hand, its flame is quite cold.
   parent: BaseItem
   suffix: Decorative
@@ -365,7 +354,7 @@
   - type: Sprite
     layers:
       - state: candle-big
-        color: "#5d997e" 
+        color: "#5d997e"
       - state: fire-big
         shader: unshaded
   - type: Item
@@ -455,7 +444,7 @@
         color: "#1b1724"
       right:
       - state: inhand-right
-        color: "#1b1724"    
+        color: "#1b1724"
 
 - type: entity
   name: small magic green candle
@@ -467,7 +456,7 @@
       - state: candle-small
         color: "#5d997e"
       - state: fire-small
-        shader: unshaded        
+        shader: unshaded
   - type: Item
     inhandVisuals:
       left:
@@ -475,7 +464,7 @@
         color: "#5d997e"
       right:
       - state: inhand-right
-        color: "#5d997e"  
+        color: "#5d997e"
 
 - type: entity
   name: small magic purple candle
@@ -495,4 +484,4 @@
         color: "#984aa1"
       right:
       - state: inhand-right
-        color: "#984aa1"  
+        color: "#984aa1"
