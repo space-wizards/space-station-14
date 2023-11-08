@@ -335,7 +335,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (nukeopsRule.TargetStation is not { } station)
             return;
 
-        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station), ("operation_name", nukeopsRule.OperationName)));
+        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station), ("name", nukeopsRule.OperationName)));
         _audio.PlayGlobal(nukeop.GreetSoundNotification, session);
     }
 
