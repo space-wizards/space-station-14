@@ -1,7 +1,17 @@
-thief-role-greeting = 
+thief-role-greeting-human = 
+    You are a criminal scum.
+    You want to add to your collection
+    some property of Nanotrasen station. 
+
+thief-role-greeting-animal = 
+    You are an kleptomaniс animal. 
+    Steal things you like.
+
+thief-role-greeting-pacified = 
     You were caught and have had a pacifism 
     implant installed due to your prior criminal activity. 
-    A thief looking to add to his collection, 
-    some property of Nanotrasen station. 
-    Choose your starting equipment, 
-    and try to do your job discreetly. 
+
+thief-role-greeting-equipment = 
+    Choose your starting equipment,
+    and do your work stealthily.
+

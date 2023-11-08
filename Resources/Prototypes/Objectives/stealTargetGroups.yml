@@ -160,7 +160,7 @@
     
 - type: stealTargetGroup
   id: ClothingOuterHardsuitVoidParamed
-  name: Paramedic Void Suit
+  name: paramedic Void Suit
   sprite:
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
     state: icon
@@ -216,14 +216,14 @@
     
 - type: stealTargetGroup
   id: CargoShuttleConsoleCircuitboard
-  name: AME part
+  name: cargo shuttle console board
   sprite:
     sprite: Objects/Misc/module.rsi
     state: cpuboard
     
 - type: stealTargetGroup
   id: SalvageShuttleConsoleCircuitboard
-  name: AME part
+  name: salvage shuttle console board
   sprite:
     sprite: Objects/Misc/module.rsi
     state: cpuboard

@@ -18,6 +18,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.CombatMode.Pacification;
 using System.Linq;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -246,11 +247,24 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         if (!TryComp<MindComponent>(thief.Owner, out var mind) || mind.OwnedEntity == null)
             return;
 
-        var briefing = Loc.GetString("thief-role-greeting");
-        args.Append(briefing);
+        args.Append(MakeBriefing(mind.OwnedEntity.Value));
 
         //if (!_mindSystem.TryGetSession(mind, out var session))
         //    return;
         //_chatManager.DispatchServerMessage(session, briefing);
+    }
+
+    private string MakeBriefing(EntityUid thief)
+    {
+        var isHuman = HasComp<HumanoidAppearanceComponent>(thief);
+        var briefing = isHuman
+            ? Loc.GetString("thief-role-greeting-human")
+            : Loc.GetString("thief-role-greeting-animal");
+
+        if (HasComp<PacifiedComponent>(thief)) // TO DO - update to pacified implanter?
+            briefing = briefing + "\n" + Loc.GetString("thief-role-greeting-pacified");
+
+        //briefing += Loc.GetString("thief-role-greeting-equipment"); //TO DO - equipment setting
+        return briefing;
     }
 }
