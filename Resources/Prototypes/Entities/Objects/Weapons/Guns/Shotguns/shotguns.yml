@@ -166,7 +166,10 @@
     size: Normal
   - type: BallisticAmmoProvider
     capacity: 4
-
+  - type: Tag
+    tags:
+      - WeaponShotgunKammerer
+  
 - type: entity
   name: sawn-off shotgun
   parent: BaseWeaponShotgun
