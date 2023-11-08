@@ -1641,7 +1641,7 @@
   name: cotton bol
   description: Moth people's favorite snack, and just as fluffy as them.
   id: CottonBol
-  parent: ProduceBase
+  parent: FoodProduceBase
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
