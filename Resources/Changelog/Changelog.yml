@@ -1,15 +1,4 @@
 Entries:
-- author: CrigCrag
-  changes:
-  - {message: Loneops have grown impatient and may attack a bit earlier in the shift.,
-    type: Tweak}
-  id: 4636
-  time: '2023-08-20T12:12:28.0000000+00:00'
-- author: kalane15
-  changes:
-  - {message: 'Crusher can be used with one hand, but with less damage.', type: Tweak}
-  id: 4637
-  time: '2023-08-20T12:13:45.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Buff sniper firerate and nerf damage. Nerf stamina damage a lot., type: Tweak}
@@ -2907,3 +2896,14 @@ Entries:
   - {message: Arachnids now produce silk more efficiently., type: Tweak}
   id: 5135
   time: '2023-11-08T20:18:53.0000000+00:00'
+- author: Brandon_H
+  changes:
+  - {message: Fixed a spelling mistake in the description of the emergency medipen.,
+    type: Fix}
+  id: 5136
+  time: '2023-11-08T20:23:58.0000000+00:00'
+- author: ps3moira
+  changes:
+  - {message: Changed electric grill sprites, type: Tweak}
+  id: 5137
+  time: '2023-11-08T20:24:36.0000000+00:00'
