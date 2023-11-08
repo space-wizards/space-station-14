@@ -1459,3 +1459,25 @@
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPajamaBlue
+  name: blue pajamas
+  description: Made for true eepers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pajama_blue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pajama_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPajamaRed
+  name: red pajamas
+  description: Made for true eepers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pajama_red.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pajama_red.rsi
