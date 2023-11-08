@@ -229,6 +229,9 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
             return;
 
+        if (action.RemainingUses < 1)
+            action.RemainingUses = action.UsesBeforeDelay;
+
         BaseActionEvent? performEvent = null;
 
         // Validate request by checking action blockers and the like:
@@ -395,7 +398,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!handled)
             return; // no interaction occurred.
 
-        // reduce charges, start cooldown, and mark as dirty (if required).
+        // reduce charges, reduce remaining uses, start cooldown, and mark as dirty (if required).
 
         var dirty = toggledBefore == action.Toggled;
 
@@ -404,11 +407,20 @@ public abstract class SharedActionsSystem : EntitySystem
             dirty = true;
             action.Charges--;
             if (action.Charges == 0)
+            {
                 action.Enabled = false;
+                action.RemainingUses = 0;
+            }
+        }
+
+        if (action.RemainingUses > 0)
+        {
+            dirty = true;
+            action.RemainingUses--;
         }
 
         action.Cooldown = null;
-        if (action.UseDelay != null)
+        if (action.UseDelay != null && action.RemainingUses < 1)
         {
             dirty = true;
             action.Cooldown = (curTime, curTime + action.UseDelay.Value);
