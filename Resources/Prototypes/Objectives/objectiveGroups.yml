@@ -77,7 +77,6 @@
     ClothingHeadsetAltMedicalStealObjective: 1
     RnDServerMachineCircuitboardStealObjective: 1       #rnd
     FireAxeStealObjective: 1                            #eng
-    RCDStealObjective: 1
     AmePartStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1

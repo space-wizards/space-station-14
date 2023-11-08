@@ -194,13 +194,6 @@
     state: icon
     
 - type: stealTargetGroup
-  id: RCD
-  name: RCD
-  sprite:
-    sprite: Objects/Tools/rcd.rsi
-    state: icon
-    
-- type: stealTargetGroup
   id: AmePart
   name: AME part
   sprite:

@@ -358,8 +358,6 @@
       Plastic: 100
   - type: StaticPrice
     price: 100
-  - type: StealTarget
-    stealGroup: RCD
 
 - type: entity
   id: RCDEmpty

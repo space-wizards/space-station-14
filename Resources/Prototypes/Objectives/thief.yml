@@ -241,18 +241,6 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealObjective
-  id: RCDStealObjective
-  components:
-  - type: NotJobRequirement
-    job: StationEngineer
-  - type: StealCondition
-    stealGroup: RCD
-  - type: Objective
-    difficulty: 0.7
-
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealObjective
   id: AmePartStealObjective
   components:
   - type: NotJobRequirement
