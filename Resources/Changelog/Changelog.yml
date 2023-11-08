@@ -1,23 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: The legendary John Barber came to Centcomm with a business proposal.
-      All human hairs have been cut with love!, type: Tweak}
-  id: 4629
-  time: '2023-08-19T22:37:56.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: 'The C.H.I.M.P. handcannon now has an internal power pack, much like
-      a laser, and different firing modes for the different particle types.', type: Tweak}
-  - {message: Each anomalous particle type now has a unique color, type: Tweak}
-  - {message: An upgrade kit for C.H.I.M.P. handcannons was added for purchase to
-      syndicate scientist uplinks for 4 TC, type: Add}
-  - {message: All C.H.I.M.P. particle cartridges have been removed from the game,
-    type: Remove}
-  - {message: The omega particle cartridge box has been removed from the syndicate
-      uplink, type: Remove}
-  id: 4630
-  time: '2023-08-19T22:54:53.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Solar Flares can randomly disable up to 2 radio channels, rather than
@@ -2912,3 +2893,16 @@ Entries:
   - {message: NT found clown and mime lockers in its stockpiles., type: Add}
   id: 5128
   time: '2023-11-07T23:38:18.0000000+00:00'
+- author: VasilisThePikachu
+  changes:
+  - {message: Janibots and medibots cant bleed oil anymore, type: Remove}
+  - {message: Janibots and medibots health status on the inspection menu uses proper
+      "robot" terms (will say they are dented etc), type: Fix}
+  id: 5129
+  time: '2023-11-08T01:24:05.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: The cloning pod and medical scanner can now fit through vertical doors.,
+    type: Fix}
+  id: 5130
+  time: '2023-11-08T01:24:25.0000000+00:00'
