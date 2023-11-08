@@ -345,6 +345,13 @@
     state: walter
     
 - type: stealTargetGroup
+  id: AnimalMorty
+  name: Morty
+  sprite:
+    sprite: Mobs/Animals/possum.rsi
+    state: possum
+    
+- type: stealTargetGroup
   id: AnimalRenault
   name: Renault
   sprite:

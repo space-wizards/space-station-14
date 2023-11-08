@@ -507,6 +507,16 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealAnimalObjective
+  id: MortyStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: AnimalMorty
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
   id: RenaultStealObjective
   components:
   - type: NotJobRequirement

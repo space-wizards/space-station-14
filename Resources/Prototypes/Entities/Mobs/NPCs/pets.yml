@@ -412,6 +412,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalMorty
 
 - type: entity
   name: Morticia
