@@ -1652,9 +1652,10 @@
         - ReagentId: Fiber
           Quantity: 10
   - type: Log
-    spawnedPrototype: MaterialCotton
+    spawnedPrototype: MaterialCotton1
     spawnCount: 2
   - type: Produce
     seedId: cotton
+  - type: Tag
     tags:
     - ClothMade
