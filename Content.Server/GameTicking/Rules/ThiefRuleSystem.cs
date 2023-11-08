@@ -211,7 +211,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         {
             if (!TryComp<PacifiedComponent>(mind.OwnedEntity, out var pacific))
                 AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
-            //TO DO: Component boolean checker for pacifism
             //TO DO: Pacifism Implanter??
         }
 
@@ -219,6 +218,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         if (_mindSystem.TryGetSession(mindId, out var session))
         {
             _audioSystem.PlayGlobal(thiefRule.GreetingSound, session);
+            _chatManager.DispatchServerMessage(session, MakeBriefing(mind.OwnedEntity.Value));
         }
 
         // Give thieves their objectives
@@ -264,10 +264,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             return;
 
         args.Append(MakeBriefing(mind.OwnedEntity.Value));
-
-        //if (!_mindSystem.TryGetSession(mind, out var session))
-        //    return;
-        //_chatManager.DispatchServerMessage(session, briefing);
     }
 
     private string MakeBriefing(EntityUid thief)
