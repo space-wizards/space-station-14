@@ -82,6 +82,7 @@
   noSpawn: true
   components:
   - type: RevolutionaryRule
+  - type: ThiefRule #the thieves come as an extension of another gamemode
 
 - type: entity
   id: Sandbox
