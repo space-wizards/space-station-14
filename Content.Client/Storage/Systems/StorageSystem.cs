@@ -13,7 +13,11 @@ public sealed class StorageSystem : SharedStorageSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
 
+    private (EntityUid, StorageComponent)? _currentStorage;
+
     public event Action<EntityUid, StorageComponent>? StorageUpdated;
+    public event Action<EntityUid, StorageComponent>? StorageOpened;
+    public event Action<EntityUid, StorageComponent>? StorageClosed;
 
     public override void Initialize()
     {
@@ -27,6 +31,29 @@ public sealed class StorageSystem : SharedStorageSystem
     {
         // Should we wrap this in some prediction call maybe?
         StorageUpdated?.Invoke(uid, component);
+    }
+
+    public void OpenStorageUI(EntityUid uid, StorageComponent component)
+    {
+        if (_currentStorage is (var ent, { } comp))
+        {
+            CloseStorageUI(ent, comp);
+        }
+
+        _currentStorage = (uid, component);
+        StorageOpened?.Invoke(uid, component);
+    }
+
+    public void CloseStorageUI(EntityUid uid, StorageComponent component)
+    {
+        if (_currentStorage?.Item1 != uid)
+            return;
+        _currentStorage = null;
+
+        if (TryComp<UserInterfaceComponent>(uid, out var ui))
+            ui.OpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key)?.Close();
+
+        StorageClosed?.Invoke(uid, component);
     }
 
     /// <inheritdoc />

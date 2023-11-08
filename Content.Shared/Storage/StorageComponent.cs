@@ -30,6 +30,10 @@ namespace Content.Shared.Storage
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public int MaxTotalWeight;
 
+        //todo doc
+        [DataField, AutoNetworkedField]
+        public List<Box2i> StorageGrid = new();
+
         /// <summary>
         /// The maximum size item that can be inserted into this storage,
         /// </summary>
