@@ -25,7 +25,7 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         var name = "game-ticker-unknown-role";
         string? playTimeTracker = null;
-        if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out JobPrototype? job))
+        if (component.Prototype != null && _prototypes.TryIndex(component.Prototype, out JobPrototype? job))
         {
             name = job.Name;
             playTimeTracker = job.PlayTimeTracker;

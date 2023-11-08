@@ -21,7 +21,7 @@
           Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    size: 1
+    size: Tiny
 # Tastes like donut.
 
 # The sprinkles are now an overlay, so you can put them on any donut! If we really
