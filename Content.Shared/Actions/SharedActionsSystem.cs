@@ -27,6 +27,7 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -182,7 +183,7 @@ public abstract class SharedActionsSystem : EntitySystem
         UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
-    
+
     public int? GetCharges(EntityUid? actionId)
     {
         if (!TryGetActionData(actionId, out var action))
@@ -203,13 +204,20 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetUseDelay(EntityUid? actionId, TimeSpan? delay)
     {
-        if (!TryGetActionData(actionId, out var action) ||
-            action.UseDelay == delay)
-        {
+        if (!TryGetActionData(actionId, out var action) || action.UseDelay == delay)
             return;
-        }
 
         action.UseDelay = delay;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
+    public void ChangeName(EntityUid? actionId, string name)
+    {
+        if (!TryGetActionData(actionId, out var action) || !TryComp(actionId, out MetaDataComponent? metadata) || metadata.EntityName == name)
+            return;
+
+        _metaData.SetEntityName(actionId.Value, name, metadata);
         UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
