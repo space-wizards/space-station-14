@@ -201,7 +201,7 @@
 - type: cargoProduct
   id: LivestockTurtle
   icon:
-    sprite: Mobs/Animals/kangaroo.rsi
+    sprite: Mobs/Animals/turtle.rsi
     state: turtle
   product: CrateNPCTurtle
   cost: 1200
