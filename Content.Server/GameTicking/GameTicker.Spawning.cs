@@ -16,6 +16,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -34,6 +35,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly LoadoutSystem _loadout = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly SharedStorageSystem _storage = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
@@ -246,10 +248,9 @@ namespace Content.Server.GameTicking
                     EntityManager.TryGetComponent<StorageComponent>(item, out var inventory))
                     // Try inserting the entity into the storage, if it can't, it leaves the loadout item on the ground
                     foreach (var loadout in failedLoadouts)
-                        // Check if the item can fit in the storage
                         if (EntityManager.TryGetComponent<ItemComponent>(loadout, out var itemComp) &&
-                            inventory.StorageUsed + itemComp.Size <= inventory.StorageCapacityMax)
-                            inventory.Container.Insert(loadout);
+                            _storage.CanInsert(item.Value, loadout, out _, inventory, itemComp))
+                            _storage.Insert(item.Value, loadout, out _);
             }
 
 
