@@ -1,5 +1,4 @@
-using Content.Server.Power.NodeGroups;
-using Robust.Shared.Audio;
+using Content.Shared.Power.Substation;
 
 namespace Content.Server.Power.Components;
 
@@ -7,12 +6,15 @@ namespace Content.Server.Power.Components;
 public sealed partial class SubstationComponent : Component
 {
 
-    [DataField("Integrity")]
+    [DataField("integrity")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float Integrity = 100.0f;
 
-    [DataField("DecayEnabled")]
+    [DataField("decayEnabled")]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool DecayEnabled = true;
+   
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SubstationIntegrityState State = SubstationIntegrityState.Healthy;
 
 }

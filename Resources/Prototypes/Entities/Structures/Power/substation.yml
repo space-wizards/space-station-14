@@ -13,11 +13,21 @@
     snapCardinals: true
     layers:
     - state: substation
-    - state: screen
+      map: ["substationBase"]
+    - state: screen0
+      map: ["substationScreen"]
       shader: unshaded
     - state: full
+      map: ["substationBattery"]
       shader: unshaded
   - type: Substation
+  - type: SubstationVisuals
+    screenLayer: "substationScreen"
+    integrityStates:
+      Healthy: screen0
+      Unhealthy: screen1
+      Bad: screen2
+  - type: Appearance
   - type: UpgradeBattery
     maxChargeMultiplier: 2
     baseMaxCharge: 2500000
@@ -152,8 +162,18 @@
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
-    - state: screen
+      map: ["substationBase"]
+    - state: screen0
+      map: ["substationScreen"]
       shader: unshaded
+  - type: Substation
+  - type: SubstationVisuals
+    screenLayer: "substationScreen"
+    integrityStates:
+      Healthy: screen0
+      Unhealthy: screen1
+      Bad: screen2
+  - type: Appearance
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
