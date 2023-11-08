@@ -1,15 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: 'Roundstart nukeops greeting sound is back, now they''ll remember their
-      main objective.', type: Fix}
-  id: 4632
-  time: '2023-08-20T01:07:09.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Containment fields now have synced animations, type: Fix}
-  id: 4633
-  time: '2023-08-20T05:33:49.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Fixed modern hair trongles, type: Fix}
@@ -2906,3 +2895,14 @@ Entries:
       significantly faster.', type: Add}
   id: 5131
   time: '2023-11-08T01:25:44.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Characters with the pacifist trait will get their pacifist trait removed
+      as soon as they turn into a zombie., type: Fix}
+  id: 5132
+  time: '2023-11-08T01:27:50.0000000+00:00'
+- author: FluidRock
+  changes:
+  - {message: Lizards rediscovered their hunger for crayons., type: Tweak}
+  id: 5133
+  time: '2023-11-08T01:28:37.0000000+00:00'
