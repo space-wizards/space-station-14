@@ -197,3 +197,13 @@
   cost: 2800
   category: Livestock
   group: market
+
+- type: cargoProduct
+  id: LivestockTurtle
+  icon:
+    sprite: Mobs/Animals/kangaroo.rsi
+    state: turtle
+  product: CrateNPCTurtle
+  cost: 1200
+  category: Livestock
+  group: market
