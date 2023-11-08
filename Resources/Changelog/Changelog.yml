@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Buff sniper firerate and nerf damage. Nerf stamina damage a lot., type: Tweak}
-  id: 4638
-  time: '2023-08-20T20:54:22.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Explosive banana peels now need to be armed before they can be used.,
@@ -2907,3 +2902,8 @@ Entries:
   - {message: Changed electric grill sprites, type: Tweak}
   id: 5137
   time: '2023-11-08T20:24:36.0000000+00:00'
+- author: KingFroozy
+  changes:
+  - {message: Nitrile gloves have got their own sprite., type: Add}
+  id: 5138
+  time: '2023-11-08T20:31:24.0000000+00:00'
