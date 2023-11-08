@@ -34,6 +34,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalIan
 
 - type: entity
   name: Old Ian
@@ -222,6 +224,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalBingus
 
 - type: entity
   name: McGriff
@@ -285,6 +289,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalMcGriff
 
 - type: entity
   name: Paperwork
@@ -382,6 +388,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalWalter
 
 - type: entity
   name: Morty
@@ -476,6 +484,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalRenault
 
 - type: entity
   name: Hamlet
@@ -517,7 +527,7 @@
     - Hamster
     - VimPilot
   - type: StealTarget
-    stealGroup: Hamlet
+    stealGroup: AnimalHamlet
 
 - type: entity
   name: Shiva
@@ -593,6 +603,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalShiva
 
 - type: entity
   name: Willow
@@ -691,6 +703,8 @@
     attributes:
       proper: true
       gender: female
+  - type: StealTarget
+    stealGroup: AnimalSmile
 
 - type: entity
   name: Pun Pun
@@ -724,3 +738,5 @@
     attributes:
       proper: true
       gender: male
+  - type: StealTarget
+    stealGroup: AnimalPunPun

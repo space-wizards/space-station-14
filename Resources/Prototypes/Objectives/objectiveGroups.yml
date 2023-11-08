@@ -52,7 +52,7 @@
   id: ThiefBigObjectiveGroups
   weights:
     ThiefObjectiveGroupStructure: 1
-    ThiefObjectiveGroupAnimal: 10
+    ThiefObjectiveGroupAnimal: 1
 
 - type: weightedRandom
   id: ThiefEscapeObjectiveGroups
@@ -109,7 +109,15 @@
 - type: weightedRandom
   id: ThiefObjectiveGroupAnimal
   weights:
+    IanStealObjective: 1
+    BingusStealObjective: 1
+    McGriffStealObjective: 1
+    WalterStealObjective: 1
+    RenaultStealObjective: 1
     HamletStealObjective: 1
+    ShivaStealObjective: 1
+    SmileStealObjective: 1
+    PunPunStealObjective: 1
     
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape
