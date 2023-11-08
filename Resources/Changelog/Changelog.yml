@@ -1,12 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: Pressing the "rack gun" key on a gun with an open bolt will now close
-      the bolt., type: Tweak}
-  - {message: Ghosts and animals without hands can no longer manipulate gun bolts.,
-    type: Fix}
-  id: 4635
-  time: '2023-08-20T11:42:36.0000000+00:00'
 - author: CrigCrag
   changes:
   - {message: Loneops have grown impatient and may attack a bit earlier in the shift.,
@@ -2906,3 +2898,12 @@ Entries:
   - {message: Added directional window cracks when damaged., type: Add}
   id: 5134
   time: '2023-11-08T01:31:45.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Arachnids can now weave a simple shield made out of silk., type: Add}
+  - {message: 'Arachnids now have two additional pocket slots. In exchange, they no
+      longer have slower hunger.', type: Tweak}
+  - {message: Arachnids are now the only species that can craft with silk., type: Tweak}
+  - {message: Arachnids now produce silk more efficiently., type: Tweak}
+  id: 5135
+  time: '2023-11-08T20:18:53.0000000+00:00'
