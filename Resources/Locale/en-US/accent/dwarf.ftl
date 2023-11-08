@@ -261,9 +261,6 @@ accent-dwarf-words-replace-87 = babee
 accent-dwarf-words-88 = after
 accent-dwarf-words-replace-88 = efter
 
-accent-dwarf-words-89 = for
-accent-dwarf-words-replace-89 = fer
-
 accent-dwarf-words-90 = gonna
 accent-dwarf-words-replace-90 = gaun'ae
 
