@@ -170,7 +170,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         return results;
     }
 
-    public bool MakeThief(ICommonSession thief)
+    public bool MakeThief(ICommonSession thief, bool addPacified = true)
     {
         var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
         if (thiefRule == null)
@@ -203,10 +203,13 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         });
 
         // Add Pacific
-        AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
-        //TO DO: Component boolean checker for pacifism
-        //TO DO: Pacifism Implanter
-        //TO DO: Check if pacifism added before (crash warning)
+        if (addPacified)
+        {
+            if (!TryComp<PacifiedComponent>(mind.OwnedEntity, out var pacific))
+                AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
+            //TO DO: Component boolean checker for pacifism
+            //TO DO: Pacifism Implanter??
+        }
 
         // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))

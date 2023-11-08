@@ -42,7 +42,7 @@ public sealed class AutoThiefSystem : EntitySystem
             return false;
 
         var session = mind.Session;
-        _thief.MakeThief(session); // component settings to making thief here
+        _thief.MakeThief(session, addPacified: autoThief.Comp.AddPacified);
 
         Log.Debug(ToPrettyString(autoThief) + "TO DO: AutoThiefSystem: becoming a thief?");
         // prevent spamming anything if it fails (AutoTraitorSystem comment copy)

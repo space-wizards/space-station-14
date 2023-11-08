@@ -9,17 +9,8 @@ namespace Content.Server.Thief.Components;
 public sealed partial class AutoThiefComponent : Component
 {
     /// <summary>
-    /// Whether to give the traitor an uplink or not.
+    /// Whether to give the pacified component
     /// </summary>
-    //[DataField("giveUplink"), ViewVariables(VVAccess.ReadWrite)]
-    //public bool GiveUplink = true;
-
-    /// <summary>
-    /// Whether to give the traitor objectives or not.
-    /// </summary>
-    //[DataField("giveObjectives"), ViewVariables(VVAccess.ReadWrite)]
-    //public bool GiveObjectives = true;
-    //
-
-    //Settings for make thief
+    [DataField]
+    public bool AddPacified = true;
 }

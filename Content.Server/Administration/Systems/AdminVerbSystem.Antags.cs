@@ -133,8 +133,9 @@ public sealed partial class AdminVerbSystem
                 if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
                     return;
 
-                // if its a monkey or mouse or something dont give uplink or objectives
-                _thief.MakeThief(session);
+                // if its a monkey or mouse or something dont give pacified for fun
+                var isHuman = HasComp<HumanoidAppearanceComponent>(args.Target);
+                _thief.MakeThief(session, addPacified: isHuman);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-thief"),
