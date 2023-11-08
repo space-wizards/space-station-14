@@ -182,6 +182,37 @@ public abstract class SharedActionsSystem : EntitySystem
         UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
+    
+    public int? GetCharges(EntityUid? actionId)
+    {
+        if (!TryGetActionData(actionId, out var action))
+            return null;
+
+        return action.Charges;
+    }
+
+    public void SetUsesBeforeDelay(EntityUid? actionId, int usesBeforeDelay)
+    {
+        if (!TryGetActionData(actionId, out var action) || action.UsesBeforeDelay == usesBeforeDelay)
+            return;
+
+        action.UsesBeforeDelay = usesBeforeDelay;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
+    public void SetUseDelay(EntityUid? actionId, TimeSpan? delay)
+    {
+        if (!TryGetActionData(actionId, out var action) ||
+            action.UseDelay == delay)
+        {
+            return;
+        }
+
+        action.UseDelay = delay;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
 
     private void OnActionsGetState(EntityUid uid, ActionsComponent component, ref ComponentGetState args)
     {
