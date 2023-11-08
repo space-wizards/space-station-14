@@ -2744,13 +2744,13 @@
     solutions:
       chamber:
         reagents:
-        - ReagentId: Water
+        - ReagentId: Saline # Salt water, get it?
           Quantity: 15
   - type: SolutionRegeneration
     solution: chamber
     generated:
       reagents:
-      - ReagentId: Water
+      - ReagentId: Saline
         Quantity: .2
   - type: SolutionAmmoProvider
     solutionId: chamber
