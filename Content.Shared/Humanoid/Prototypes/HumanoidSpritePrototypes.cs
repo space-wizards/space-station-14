@@ -1,4 +1,3 @@
-using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -9,7 +8,7 @@ namespace Content.Shared.Humanoid.Prototypes;
 ///     or settings per layer)
 /// </summary>
 [Prototype("speciesBaseSprites")]
-public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
+public sealed partial class HumanoidSpeciesBaseSpritesPrototype : IPrototype
 {
      [IdDataField]
      public string ID { get; private set; } = default!;
@@ -30,7 +29,7 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
 ///     that sprite (or at least, the layer this sprite is on).
 /// </summary>
 [Prototype("humanoidBaseSprite")]
-public sealed class HumanoidSpeciesSpriteLayer : IPrototype
+public sealed partial class HumanoidSpeciesSpriteLayer : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

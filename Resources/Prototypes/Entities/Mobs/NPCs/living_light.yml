@@ -1,0 +1,211 @@
+- type: entity
+  id: MobLivingLight
+  parent: [ BaseMob, MobCombat ]
+  abstract: true
+  name: luminous person
+  description: A blinding figure of pure light, seemingly intangible.
+  components:
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: MovementIgnoreGravity
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5.5
+    baseSprintSpeed: 5.5
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Elemental/living_light/luminous_person.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: luminous_person
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: luminous_person
+        BaseUnshaded: glow
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_glow
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - Corporeal
+    - Electrocution
+    - StaminaModifier
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 60
+        mask:
+          - MobMask
+        layer:
+          - Opaque
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: LivingLight
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damageCap: 20
+    damage:
+      types:
+        Heat: -0.2
+  - type: NoSlip
+  - type: ZombieImmune
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: GhostTakeoverAvailable
+  - type: PointLight
+    color: "#e4de6c"
+    radius: 8
+    softness: 2
+    energy: 5
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBells
+  - type: Speech
+    speechVerb: Ghost
+  - type: Tag
+    tags:
+      - FootstepSound
+      - DoorBumpOpener
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: MobLuminousPerson
+  parent: MobLivingLight
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 16
+    animation: WeaponArcFist
+  - type: StaminaDamageOnHit
+    damage: 16
+
+- type: entity
+  id: MobLuminousОbject
+  parent: MobLivingLight
+  name: luminous object
+  description: A small glowing object that causes burns on the skin with its glow.
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/living_light/luminous_object.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: luminous_object
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: luminous_object
+        BaseUnshaded: glow
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_glow
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 8
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 80
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: MobLuminousEntity
+  parent: MobLivingLight
+  name: luminous entity
+  description: A blinding translucent entity, the bright eye seems dangerous and scalding.
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/living_light/luminous_entity.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: luminous_entity
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: luminous_entity
+        BaseUnshaded: glow
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_glow
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 5
+  - type: HitscanBatteryAmmoProvider
+    proto: Pulse
+    fireCost: 140
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
+  - type: Gun
+    fireRate: 0.3
+    useKey: false
+    showExamineText: false
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+    soundEmpty:
+      path: /Audio/Items/lighter_off.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

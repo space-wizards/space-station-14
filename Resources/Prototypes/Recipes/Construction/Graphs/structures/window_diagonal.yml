@@ -1,0 +1,163 @@
+- type: constructionGraph
+  id: WindowDiagonal
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: plasmaWindowDiagonal
+          steps:
+            - material: PlasmaGlass
+              amount: 2
+              doAfter: 2
+
+        - to: reinforcedWindowDiagonal
+          steps:
+            - material: ReinforcedGlass
+              amount: 2
+              doAfter: 2
+
+        - to: reinforcedPlasmaWindowDiagonal
+          steps:
+            - material: ReinforcedPlasmaGlass
+              amount: 2
+              doAfter: 3
+
+        - to: uraniumWindowDiagonal
+          steps:
+            - material: UraniumGlass
+              amount: 2
+              doAfter: 2
+
+        - to: reinforcedUraniumWindowDiagonal
+          steps:
+            - material: ReinforcedUraniumGlass
+              amount: 2
+              doAfter: 3
+
+        - to: windowDiagonal
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 3
+
+    - node: windowDiagonal
+      entity: WindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: reinforcedWindowDiagonal
+      entity: ReinforcedWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: plasmaWindowDiagonal
+      entity: PlasmaWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: reinforcedPlasmaWindowDiagonal
+      entity: ReinforcedPlasmaWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRPGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: uraniumWindowDiagonal
+      entity: UraniumWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: reinforcedUraniumWindowDiagonal
+      entity: ReinforcedUraniumWindowDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRUGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
