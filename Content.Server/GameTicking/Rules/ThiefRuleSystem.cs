@@ -220,7 +220,18 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
         // Give thieves their objectives
         var difficulty = 0f;
-        for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)
+
+        if (_random.Prob(0.5f)) // 50% chance to 1 big objective (structure or animal)
+        {
+            var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefBigObjectiveGroups");
+            if (objective != null)
+            {
+                _mindSystem.AddObjective(mindId, mind, objective.Value);
+                difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
+            }
+        }
+
+        for (var i = 0; i < thiefRule.MaxStealObjectives && thiefRule.MaxObjectiveDifficulty > difficulty; i++)  // Many small objectives
         {
             var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefObjectiveGroups");
             if (objective == null)
@@ -229,8 +240,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             _mindSystem.AddObjective(mindId, mind, objective.Value);
             difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
         }
-        // Цель на коллекционирование
-        // Цель на существо / предмет / структуру
         // Цель сбежать
 
         // Give starting items

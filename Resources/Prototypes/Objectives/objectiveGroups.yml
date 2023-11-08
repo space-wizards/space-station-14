@@ -45,11 +45,15 @@
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
-    ThiefObjectiveGroupItem: 1
     ThiefObjectiveGroupCollection: 1
-    #ThiefObjectiveGroupAnimal: 0.5
-    #ThiefObjectiveGroupStructure: 1
-    
+    ThiefObjectiveGroupItem: 1
+
+- type: weightedRandom
+  id: ThiefBigObjectiveGroups
+  weights:
+    ThiefObjectiveGroupStructure: 1
+    #ThiefObjectiveGroupAnimal: 1
+
 - type: weightedRandom
   id: ThiefObjectiveGroupCollection
   weights:
@@ -82,5 +86,19 @@
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
-
+    
+- type: weightedRandom
+  id: ThiefObjectiveGroupStructure
+  weights:
+    NuclearBombStealObjective: 0.5
+    FaxMachineCaptainStealObjective: 1
+    VehicleSecwayStealObjective: 1
+    ChemDispenserStealObjective: 1
+    XenoArtifactStealObjective: 1
+    FreezerHeaterStealObjective: 1
+    TegStealObjective: 1
+    BoozeDispenserStealObjective: 1
+    AltarNanotrasenStealObjective: 1
+    
+    
 #Changeling, crew, wizard, when you code it...

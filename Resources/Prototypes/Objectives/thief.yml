@@ -18,7 +18,6 @@
   - type: StealCondition
     verifyMapExistance: false
     descriptionText: objective-condition-thief-description
-    
 
 - type: entity
   abstract: true
@@ -26,7 +25,19 @@
   id: BaseThiefStealCollectionObjective
   components:
   - type: StealCondition
+    verifyMapExistance: true
     descriptionText: objective-condition-thief-description
+    
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealStructureObjective
+  components:
+  - type: StealCondition
+    verifyMapExistance: true
+    descriptionText: objective-condition-thief-description
+  - type: Objective
+    difficulty: 2 # it's hard to hide
 
 # Collections
 
@@ -334,3 +345,113 @@
     stealGroup: ClothingNeckClownmedal
   - type: Objective
     difficulty: 1
+
+# Structures
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: NuclearBombStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: NuclearBomb
+  - type: Objective
+    difficulty: 2.5 #Good luck
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: FaxMachineCaptainStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: FaxMachineCaptain
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: VehicleSecwayStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SecurityOfficer
+  - type: StealCondition
+    stealGroup: VehicleSecway
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: ChemDispenserStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chemist
+  - type: StealCondition
+    stealGroup: ChemDispenser
+  - type: Objective
+    difficulty: 1
+    
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: XenoArtifactStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: XenoArtifact
+  - type: Objective
+    difficulty: 0.5
+    
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: FreezerHeaterStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: FreezerHeater
+  - type: Objective
+    difficulty: 0.5
+    
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: TegStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: Teg
+  - type: Objective
+    difficulty: 1
+    
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: BoozeDispenserStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Bartender
+  - type: StealCondition
+    stealGroup: BoozeDispenser
+  - type: Objective
+    difficulty: 0.5
+    
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: AltarNanotrasenStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chaplain
+  - type: StealCondition
+    stealGroup: AltarNanotrasen
+  - type: Objective
+    difficulty: 0.5

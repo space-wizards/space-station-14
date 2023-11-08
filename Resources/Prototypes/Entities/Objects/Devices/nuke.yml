@@ -67,6 +67,8 @@
   - type: ContainerContainer
     containers:
       Nuke: !type:ContainerSlot
+  - type: StealTarget
+    stealGroup: NuclearBomb
 
 - type: entity
   parent: NuclearBomb

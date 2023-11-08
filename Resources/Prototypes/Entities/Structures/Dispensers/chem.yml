@@ -35,3 +35,5 @@
     guides:
     - Chemicals
     - Chemist
+  - type: StealTarget
+    stealGroup: ChemDispenser

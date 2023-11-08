@@ -255,4 +255,68 @@
   sprite:
     sprite: Clothing/Neck/Medals/clownmedal.rsi
     state: icon
-    
+
+#Thief structures
+
+- type: stealTargetGroup
+  id: NuclearBomb
+  name: nuclear fission explosive
+  sprite:
+    sprite: Objects/Devices/nuke.rsi
+    state: nuclearbomb_base
+
+- type: stealTargetGroup
+  id: FaxMachineCaptain
+  name: captain long range fax machine
+  sprite:
+    sprite: Structures/Machines/fax_machine.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: VehicleSecway
+  name: secway
+  sprite:
+    sprite: Objects/Vehicles/secway.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: ChemDispenser
+  name: chemical dispenser
+  sprite:
+    sprite: Structures/dispensers.rsi
+    state: industrial-working
+
+- type: stealTargetGroup
+  id: XenoArtifact
+  name: big alien artifact
+  sprite:
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano28
+
+- type: stealTargetGroup
+  id: FreezerHeater
+  name: freezer or heater
+  sprite:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: heaterOff
+
+- type: stealTargetGroup
+  id: Teg
+  name: teg generator part
+  sprite:
+    sprite: Structures/Power/Generation/teg.rsi
+    state: teg
+
+- type: stealTargetGroup
+  id: BoozeDispenser
+  name: booze dispenser
+  sprite:
+    sprite: Structures/smalldispensers.rsi
+    state: booze
+
+- type: stealTargetGroup
+  id: AltarNanotrasen
+  name: nanotrasen altar (any)
+  sprite:
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
