@@ -4,5 +4,3 @@ thief-role-greeting =
     some property of Nanotrasen station. 
     Choose your starting equipment, 
     and try to do your job discreetly. 
-    You are not a killer, 
-    and violence is not acceptable to you.
