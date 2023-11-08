@@ -362,7 +362,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         component.TargetStation = _random.Pick(eligible);
-        component.OperationName = _randomMetadata.GetRandomFromSegments(new List<string> {"operationPrefix", "operationSuffix"}, " ");
+        component.OperationName = _randomMetadata.GetRandomFromSegments(new List<string> {OperationPrefixDataset, OperationSuffixDataset}, " ");
 
         var filter = Filter.Empty();
         var query = EntityQueryEnumerator<NukeOperativeComponent, ActorComponent>();
