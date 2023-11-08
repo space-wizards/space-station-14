@@ -41,7 +41,8 @@
     loadNode: output
     joinAlikeEntities: true
   - type: NavMapTrackable
-    protoId: Sources
+    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+    color: Purple
   - type: Anchorable
   - type: Pullable
   - type: Electrified

@@ -45,7 +45,8 @@
     sourceNode: input
     loadNode: output
   - type: NavMapTrackable
-    protoId: Substation
+    texture: /Textures/Interface/PowerMonitoring/beveled_square.png
+    color: Yellow
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -177,7 +178,8 @@
     sourceNode: input
     loadNode: output
   - type: NavMapTrackable
-    protoId: Substation
+    texture: /Textures/Interface/PowerMonitoring/beveled_square.png
+    color: Yellow
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger

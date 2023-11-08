@@ -6,7 +6,6 @@ using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Server.GameStates;
 using Robust.Shared.Map.Components;
-using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -40,7 +39,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             if (component.JoinAlikeEntities)
             {
-                AssignEntityToTrackingGroup(uid);
+                AssignEntityToExemplarGroup(uid);
                 AssignExemplarsToEntities(entProtoId.Value);
             }
         }
@@ -51,7 +50,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             if (component.JoinAlikeEntities)
             {
-                RemoveEntityFromTrackingGroup(uid);
+                RemoveEntityFromExemplarGroup(uid);
                 AssignExemplarsToEntities(entProtoId.Value);
             }
         }
@@ -68,18 +67,18 @@ internal sealed partial class PowerMonitoringConsoleSystem
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, SharedNavMapSystem.ChunkSize);
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var powerMonitoringConsole, out var entXform))
+        while (query.MoveNext(out var ent, out var console, out var entXform))
         {
             if (entXform.GridUid != xform.GridUid)
                 continue;
 
-            if (!powerMonitoringConsole.AllChunks.TryGetValue(chunkOrigin, out var chunk))
+            if (!console.AllChunks.TryGetValue(chunkOrigin, out var chunk))
             {
                 chunk = new PowerCableChunk(chunkOrigin);
-                powerMonitoringConsole.AllChunks[chunkOrigin] = chunk;
+                console.AllChunks[chunkOrigin] = chunk;
             }
 
-            RefreshTile(ent, powerMonitoringConsole, xform.GridUid.Value, grid, chunk, tile);
+            RefreshTile(ent, console, xform.GridUid.Value, grid, chunk, tile);
         }
     }
 
@@ -87,6 +86,16 @@ internal sealed partial class PowerMonitoringConsoleSystem
     {
         if (component.JoinAlikeEntities && TryGetEntProtoId(uid, out var entProtoId))
             AssignExemplarsToEntities(entProtoId.Value);
+
+        if (_rebuildingNetwork)
+            return;
+
+        var query = AllEntityQuery<PowerMonitoringConsoleComponent>();
+        while (query.MoveNext(out var ent, out var console))
+        {
+            if (console.Focus == uid)
+                ResetPowerMonitoringConsoleFocus(ent, console);
+        }
     }
 
     private void OnGridSplit(EntityUid uid, PowerMonitoringConsoleComponent component, GridSplitEvent args)
@@ -120,7 +129,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
     }
 
     // Sends the list of tracked power monitoring devices to all player sessions with one or more power monitoring consoles open
-    // This expansion of PVS is needed so that the sprites for these device are available to the the player UI
+    // This expansion of PVS is needed so that the metadata and sprite data for these device are available to the the player
     // Out-of-range devices will be automatically removed from the player PVS when the UI closes
     private void OnExpandPvsEvent(ref ExpandPvsEvent ev)
     {
@@ -130,6 +139,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
             if (xform.GridUid == null)
                 continue;
 
+            // Only players with the power monitoring console UI open will have their PVS expanded
+            // Note: only one player may have a given console's UI open at a time 
             if (_userInterfaceSystem.SessionHasOpenUi(ent, PowerMonitoringConsoleUiKey.Key, ev.Session))
             {
                 if (!_trackedDevices.TryGetValue(xform.GridUid.Value, out var gridDevices))
@@ -140,8 +151,9 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
                 foreach ((var gridEnt, var device) in gridDevices)
                 {
-                    if (!device.LocationOnMonitor ||
-                        (device.JoinAlikeEntities && !device.IsExemplar))
+                    // Skip entities which are represented by an exemplar
+                    // This will cut down the number of entities that need to be added
+                    if (device.JoinAlikeEntities && !device.IsExemplar)
                         continue;
 
                     ev.Entities.Add(gridEnt);
@@ -150,16 +162,6 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 break;
             }
         }
-    }
-
-    private void OnUIOpened(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIOpenedEvent args)
-    {
-
-    }
-
-    private void OnUIClosed(EntityUid uid, PowerMonitoringConsoleComponent component, BoundUIClosedEvent args)
-    {
-
     }
 
     private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)

@@ -1,6 +1,5 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Pinpointer;
-using Content.Shared.Pinpointer.UI;
 using Content.Shared.Power;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -105,10 +104,10 @@ public sealed partial class PowerMonitoringWindow
         var charLimit = (int) (button.NameLocalized.Width / 8f);
 
         if (_entManager.TryGetComponent<NavMapTrackableComponent>(uid, out var trackable) &&
-            trackable.ChildPositionOffsets.Any() &&
+            trackable.ChildOffsets.Any() &&
             meta.EntityPrototype != null)
         {
-            name = Loc.GetString("power-monitoring-window-object-array", ("name", meta.EntityPrototype.Name), ("count", trackable.ChildPositionOffsets.Count + 1));
+            name = Loc.GetString("power-monitoring-window-object-array", ("name", meta.EntityPrototype.Name), ("count", trackable.ChildOffsets.Count + 1));
         }
 
         // Update tool tip
@@ -219,20 +218,16 @@ public sealed partial class PowerMonitoringWindow
         var coords = kvp.Item1;
         var trackable = kvp.Item2;
 
-        if (!_protoManager.TryIndex(trackable.ProtoId, out var proto))
-            return;
-
         NavMap.CenterToCoordinates(coords);
 
         // Switch tabs
-        if (proto.Group != null)
-            SwitchTabsBasedOnPowerMonitoringConsoleGroup(proto.Group.Value);
+        SwitchTabsBasedOnPowerMonitoringConsoleGroup(entry.Entry.Group);
 
         // Get the scroll position of the selected entity on the selected button the UI
         _tryToScroll = true;
 
         // Request an update from the power monitoring system
-        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), proto.Group);
+        RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), entry.Entry.Group);
         _updateTimer = 0f;
     }
 

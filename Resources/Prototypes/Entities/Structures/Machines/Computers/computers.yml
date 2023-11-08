@@ -239,7 +239,6 @@
   - type: Computer
     board: PowerComputerCircuitboard
   - type: PowerMonitoringConsole
-  - type: NavMapTrackingConsole
   - type: NodeContainer
     examinable: true
     nodes:
@@ -247,7 +246,8 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: NavMapTrackable
-    protoId: Monitor
+    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+    color: Cyan
   - type: ActivatableUI
     singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key

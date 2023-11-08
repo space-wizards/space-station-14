@@ -44,7 +44,8 @@
     group: Generator
     loadNode: output
   - type: NavMapTrackable
-    protoId: Sources
+    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+    color: Purple
   - type: PowerSupplier
     supplyRate: 3000
     supplyRampRate: 500
@@ -133,7 +134,8 @@
     group: Generator
     loadNode: output
   - type: NavMapTrackable
-    protoId: Sources
+    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+    color: Purple
   - type: PowerSupplier
     supplyRate: 3000
     supplyRampRate: 500

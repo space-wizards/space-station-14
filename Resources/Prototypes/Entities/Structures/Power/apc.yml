@@ -70,7 +70,8 @@
     sourceNode: input
     loadNode: output
   - type: NavMapTrackable
-    protoId: APC
+    texture: /Textures/Interface/PowerMonitoring/beveled_triangle.png
+    color: LimeGreen
   - type: BatteryCharger
     voltage: Medium
   - type: PowerProvider

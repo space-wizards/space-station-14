@@ -53,7 +53,8 @@
       sourceNode: input
       loadNode: output
     - type: NavMapTrackable
-      protoId: SMES
+      texture: /Textures/Interface/PowerMonitoring/beveled_hexagon.png
+      color: OrangeRed
     - type: BatteryDischarger
       voltage: High
       node: output

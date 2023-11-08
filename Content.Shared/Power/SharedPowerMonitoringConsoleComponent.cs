@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power;
@@ -12,16 +11,12 @@ namespace Content.Shared.Power;
 public sealed partial class PowerMonitoringConsoleComponent : Component
 {
     public EntityUid? Focus;
-    public List<EntityUid>? LastReachableNodes = new();
 
     [ViewVariables, AutoNetworkedField]
     public Dictionary<Vector2i, PowerCableChunk> AllChunks = new();
 
     [ViewVariables, AutoNetworkedField]
     public Dictionary<Vector2i, PowerCableChunk> FocusChunks = new();
-
-    //[ViewVariables, AutoNetworkedField]
-    //public Dictionary<EntityUid, (EntityCoordinates, NavMapTrackableComponent)> TrackedDevices = new();
 }
 
 [Serializable, NetSerializable]
@@ -81,11 +76,13 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
 public sealed class PowerMonitoringConsoleEntry
 {
     public NetEntity NetEntity;
+    public PowerMonitoringConsoleGroup Group;
     public double PowerValue;
 
-    public PowerMonitoringConsoleEntry(NetEntity netEntity, double powerValue = 0d)
+    public PowerMonitoringConsoleEntry(NetEntity netEntity, PowerMonitoringConsoleGroup group, double powerValue = 0d)
     {
         NetEntity = netEntity;
+        Group = group;
         PowerValue = powerValue;
     }
 }

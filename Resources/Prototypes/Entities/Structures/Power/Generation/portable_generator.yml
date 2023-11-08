@@ -176,7 +176,8 @@
         - output_hv
         - output_mv
     - type: NavMapTrackable
-      protoId: Sources
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+      color: Purple
       
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
@@ -232,7 +233,8 @@
         - output_hv
         - output_mv
     - type: NavMapTrackable
-      protoId: Sources
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+      color: Purple
       
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
@@ -312,7 +314,8 @@
       group: Generator
       loadNode: output
     - type: NavMapTrackable
-      protoId: Sources
+      texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+      color: Purple
     - type: PowerSupplier
       # No ramping needed on this bugger.
       voltage: Apc

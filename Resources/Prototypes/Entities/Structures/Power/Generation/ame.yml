@@ -82,7 +82,8 @@
     group: Generator
     loadNode: input
   - type: NavMapTrackable
-    protoId: Sources
+    texture: /Textures/Interface/PowerMonitoring/beveled_circle.png
+    color: Purple
   - type: PowerSupplier
     supplyRate: 0
   - type: ContainerContainer

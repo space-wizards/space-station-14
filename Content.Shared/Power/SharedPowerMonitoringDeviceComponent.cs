@@ -8,5 +8,9 @@ namespace Content.Shared.Power;
 [NetworkedComponent]
 public abstract partial class SharedPowerMonitoringDeviceComponent : Component
 {
-
+    /// <summary>
+    ///    Determines what power monitoring group this entity should belong to 
+    /// </summary>
+    [DataField("group", required: true)]
+    public PowerMonitoringConsoleGroup Group;
 }

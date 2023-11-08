@@ -1,22 +1,16 @@
-using Content.Shared.Pinpointer.UI;
-using Content.Server.Power.Components;
-using System.Linq;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Map;
 using Content.Server.NodeContainer;
-using Robust.Shared.Utility;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.Power.Components;
+using Content.Shared.Pinpointer;
+using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
 internal sealed partial class PowerMonitoringConsoleSystem
 {
-    private Dictionary<EntProtoId, Dictionary<EntityUid, EntityCoordinates>> _groupableEntityCoords = new();
-    private Dictionary<EntityUid, PowerMonitoringDeviceComponent> _exemplarDevices = new();
-    private HashSet<EntProtoId> _exemplarTypesToUpdate = new();
-    private bool _updateAllExemplars = false;
-
-    private void AssignEntityToTrackingGroup(EntityUid uid)
+    // Groups an entity based on its prototype
+    private void AssignEntityToExemplarGroup(EntityUid uid)
     {
         var protoId = MetaData(uid).EntityPrototype?.ID;
 
@@ -31,7 +25,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
         _groupableEntityCoords[entProtoId].Add(uid, Transform(uid).Coordinates);
     }
 
-    private void RemoveEntityFromTrackingGroup(EntityUid uid)
+    // Remove an entity from consideration for exemplar assignment
+    private void RemoveEntityFromExemplarGroup(EntityUid uid)
     {
         _exemplarDevices.Remove(uid);
 
@@ -47,26 +42,34 @@ internal sealed partial class PowerMonitoringConsoleSystem
         _groupableEntityCoords[entProtoId.Value].Remove(uid);
     }
 
+    // Designates entities as 'exemplars' on a per prototype and per load network basis
+    // Entities which share this prototype and sit on the same load network are assigned
+    // to the exemplar that represents this device for this network. In this way you
+    // can have one device represent multiple identical, connected devices
     private void AssignExemplarsToEntities(EntProtoId entProtoId)
     {
+        // Retrieve all devices of the specified prototype
         if (!_groupableEntityCoords.TryGetValue(entProtoId, out var devices) || !devices.Any())
             return;
 
-        var currentEntity = devices.Last().Key;
+        var currentExemplar = devices.Last().Key;
 
+        // Note: the first device found on a given network is dubbed its exemplar
         foreach ((var ent, var coords) in devices)
         {
             if (!TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
                 continue;
 
+            // Clear outdated component data
             device.ChildEntities.Clear();
 
             if (TryComp<NavMapTrackableComponent>(ent, out var trackable))
             {
-                trackable.ChildPositionOffsets.Clear();
+                trackable.ChildOffsets.Clear();
                 Dirty(ent, trackable);
             }
 
+            // If the device is not attached to a network, continue on
             if (!TryComp<NodeContainerComponent>(ent, out var container) ||
                 !container.Nodes.TryGetValue(device.LoadNode, out var loadNode) ||
                 !loadNode.ReachableNodes.Any())
@@ -77,13 +80,16 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 continue;
             }
 
-            if (device.ExemplarUid == currentEntity)
+            // If the device has been assigned to the current exemplar, continue on
+            if (device.ExemplarUid == currentExemplar)
                 continue;
 
-            currentEntity = ent;
+            // Dub this device an exemplar
+            currentExemplar = ent;
             device.ExemplarUid = ent;
             _exemplarDevices.TryAdd(ent, device);
 
+            // Check all other devices to see if this exemplar should represent them
             foreach ((var otherEnt, var otherCoords) in devices)
             {
                 if (ent == otherEnt)
@@ -97,6 +103,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
                     !otherLoadNode.ReachableNodes.Any())
                     continue;
 
+                // Matching netIds - this device should be represented by the exemplar
                 if ((loadNode.NodeGroup as BaseNodeGroup)?.NetId == (otherLoadNode.NodeGroup as BaseNodeGroup)?.NetId)
                 {
                     _exemplarDevices.Remove(otherEnt);
@@ -104,36 +111,21 @@ internal sealed partial class PowerMonitoringConsoleSystem
                     device.ChildEntities.Add(otherEnt);
                     otherDevice.ExemplarUid = ent;
 
+                    // Update the exemplar and device NavMapTrackableComponent
                     if (trackable != null)
                     {
-                        trackable.ChildPositionOffsets.Add(EntityManager.GetNetCoordinates(otherCoords - coords));
+                        trackable.ParentUid = null;
+                        trackable.ChildOffsets.Add(otherCoords - coords);
                         Dirty(ent, trackable);
+
+                        if (TryComp<NavMapTrackableComponent>(otherEnt, out var otherTrackable))
+                        {
+                            otherTrackable.ParentUid = ent;
+                            Dirty(otherEnt, otherTrackable);
+                        }
                     }
                 }
             }
-        }
-    }
-
-    private void UpdateEntityExamplers()
-    {
-        if (_updateAllExemplars)
-        {
-            foreach (var exemplar in _exemplarDevices)
-            {
-                if (TryGetEntProtoId(exemplar.Key, out var entProtoId))
-                    _exemplarTypesToUpdate.Add(entProtoId.Value);
-            }
-
-            _exemplarDevices.Clear();
-            _updateAllExemplars = false;
-        }
-
-        if (_exemplarTypesToUpdate.Any())
-        {
-            foreach (var protoId in _exemplarTypesToUpdate)
-                AssignExemplarsToEntities(protoId);
-
-            _exemplarTypesToUpdate.Clear();
         }
     }
 }
