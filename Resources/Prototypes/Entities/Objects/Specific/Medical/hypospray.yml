@@ -225,7 +225,7 @@
   name: rad auto-injector
   parent: ChemicalMedipen
   id: RadAutoInjector
-  description: A rapid dose of anti-radiation. Contains arithrazine and bicardine.
+  description: A rapid dose of anti-radiation. Contains arithrazine and bicaridine.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
