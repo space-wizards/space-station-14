@@ -2728,6 +2728,33 @@
       state: turtle
       sprite: Mobs/Animals/turtle.rsi
   - type: Physics
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+  - type: Gun
+    clumsyProof: true
+    cameraRecoilScalar: 0 #no recoil
+    fireRate: .5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: SolutionContainerManager
+    solutions:
+      chamber:
+        reagents:
+        - ReagentId: Water
+          Quantity: 15
+  - type: SolutionRegeneration
+    solution: chamber
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: .2
+  - type: SolutionAmmoProvider
+    solutionId: chamber
+    proto: BulletWaterShot
   - type: Fixtures
     fixtures:
       fix1:
