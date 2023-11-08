@@ -2716,7 +2716,7 @@
   name: sea turtle 
   parent: SimpleMobBase
   id: MobTurtle #Just trust me it does not make sound. https://www.npr.org/2022/10/31/1132951238/what-sound-does-a-turtle-make
-  description: splish splash in the bath
+  description: Splish splash in the bath
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
