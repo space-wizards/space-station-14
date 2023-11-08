@@ -1645,6 +1645,9 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
+  - type: FlavorProfile
+    flavors:
+      - cotton
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
