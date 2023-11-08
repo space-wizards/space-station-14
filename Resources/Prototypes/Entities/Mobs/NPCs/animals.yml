@@ -2715,7 +2715,7 @@
 - type: entity
   name: sea turtle 
   parent: SimpleMobBase
-  id: MobTurtle #Just trust me it does not make sound. https://www.npr.org/2022/10/31/1132951238/what-sound-does-a-turtle-make
+  id: MobTurtle
   description: Splish splash in the bath
   components:
   - type: MovementSpeedModifier
@@ -2755,7 +2755,7 @@
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
     #interactSuccessSound:
-    #  path: /Audio/Animals/lizard_happy.ogg #Just trust me no it does not. https://www.npr.org/2022/10/31/1132951238/what-sound-does-a-turtle-make
+    #  path: /Audio/Animals/lizard_happy.ogg #Just trust me it does not make sound. https://www.npr.org/2022/10/31/1132951238/what-sound-does-a-turtle-make
   - type: Bloodstream
     bloodMaxVolume: 150
   - type: Damageable
