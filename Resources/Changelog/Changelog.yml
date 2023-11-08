@@ -1,50 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: More shortcuts to guide entries on various items., type: Tweak}
-  id: 4628
-  time: '2023-08-18T23:53:45.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: The legendary John Barber came to Centcomm with a business proposal.
-      All human hairs have been cut with love!, type: Tweak}
-  id: 4629
-  time: '2023-08-19T22:37:56.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: 'The C.H.I.M.P. handcannon now has an internal power pack, much like
-      a laser, and different firing modes for the different particle types.', type: Tweak}
-  - {message: Each anomalous particle type now has a unique color, type: Tweak}
-  - {message: An upgrade kit for C.H.I.M.P. handcannons was added for purchase to
-      syndicate scientist uplinks for 4 TC, type: Add}
-  - {message: All C.H.I.M.P. particle cartridges have been removed from the game,
-    type: Remove}
-  - {message: The omega particle cartridge box has been removed from the syndicate
-      uplink, type: Remove}
-  id: 4630
-  time: '2023-08-19T22:54:53.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Solar Flares can randomly disable up to 2 radio channels, rather than
-      just service. Syndicate and CentCom channels remain unaffected.', type: Tweak}
-  id: 4631
-  time: '2023-08-19T23:39:36.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: 'Roundstart nukeops greeting sound is back, now they''ll remember their
-      main objective.', type: Fix}
-  id: 4632
-  time: '2023-08-20T01:07:09.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Containment fields now have synced animations, type: Fix}
-  id: 4633
-  time: '2023-08-20T05:33:49.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Fixed modern hair trongles, type: Fix}
-  id: 4634
-  time: '2023-08-20T08:54:44.0000000+00:00'
 - author: Errant
   changes:
   - {message: Pressing the "rack gun" key on a gun with an open bolt will now close
@@ -2912,3 +2866,43 @@ Entries:
   - {message: Fixed a few items with invalid sizes., type: Fix}
   id: 5127
   time: '2023-11-06T07:20:50.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: NT found clown and mime lockers in its stockpiles., type: Add}
+  id: 5128
+  time: '2023-11-07T23:38:18.0000000+00:00'
+- author: VasilisThePikachu
+  changes:
+  - {message: Janibots and medibots cant bleed oil anymore, type: Remove}
+  - {message: Janibots and medibots health status on the inspection menu uses proper
+      "robot" terms (will say they are dented etc), type: Fix}
+  id: 5129
+  time: '2023-11-08T01:24:05.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: The cloning pod and medical scanner can now fit through vertical doors.,
+    type: Fix}
+  id: 5130
+  time: '2023-11-08T01:24:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added speed boots! When powered, this research tech allows you to run
+      significantly faster.', type: Add}
+  id: 5131
+  time: '2023-11-08T01:25:44.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Characters with the pacifist trait will get their pacifist trait removed
+      as soon as they turn into a zombie., type: Fix}
+  id: 5132
+  time: '2023-11-08T01:27:50.0000000+00:00'
+- author: FluidRock
+  changes:
+  - {message: Lizards rediscovered their hunger for crayons., type: Tweak}
+  id: 5133
+  time: '2023-11-08T01:28:37.0000000+00:00'
+- author: Darkie
+  changes:
+  - {message: Added directional window cracks when damaged., type: Add}
+  id: 5134
+  time: '2023-11-08T01:31:45.0000000+00:00'
