@@ -39,6 +39,20 @@
   - type: Objective
     difficulty: 2 # it's hard to hide
 
+- type: entity
+  noSpawn: true
+  parent: [BaseThiefObjective, BaseLivingObjective]
+  id: EscapeThiefShuttleObjective
+  name: Escape to centcom alive and unrestrained.
+  description: You don't want your illegal activities to be discovered by anyone, do you?
+  components:
+  - type: Objective
+    difficulty: 1.3
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeShuttleCondition
+
 # Collections
 
 - type: entity

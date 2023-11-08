@@ -121,6 +121,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
     private List<ICommonSession> FindPotentialThiefs(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, ThiefRuleComponent component)
     {
+        //TO DO: When voxels are added, increase their chance of becoming a thief by 4 times >:)
         var list = new List<ICommonSession>();
         var pendingQuery = GetEntityQuery<PendingClockInComponent>();
 
@@ -242,7 +243,11 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             _mindSystem.AddObjective(mindId, mind, objective.Value);
             difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
         }
-        // Цель сбежать
+
+        //Escape target
+        var escapeObjective = _objectives.GetRandomObjective(mindId, mind, "ThiefEscapeObjectiveGroups");
+        if (escapeObjective != null)
+            _mindSystem.AddObjective(mindId, mind, escapeObjective.Value);
 
         // Give starting items
 
@@ -279,7 +284,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         return briefing;
     }
 
-    private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args) // TO DO - Fix duplicating in manifest
+    private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args) // TO DO - Fix traitor duplicating in manifest
     {
         args.Minds = thiefs.Comp.ThiefMinds;
         args.AgentName = Loc.GetString("thief-round-end-agent-name");
