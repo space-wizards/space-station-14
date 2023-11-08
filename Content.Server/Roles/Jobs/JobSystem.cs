@@ -4,6 +4,7 @@ using Content.Server.Mind;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles.Jobs;
 
@@ -47,6 +48,6 @@ public sealed class JobSystem : SharedJobSystem
         if (MindHasJobWithId(mindId, jobPrototypeId))
             return;
 
-        _roles.MindAddRole(mindId, new JobComponent { Prototype = jobPrototypeId });
+        _roles.MindAddRole(mindId, new JobComponent { PrototypeId = jobPrototypeId });
     }
 }

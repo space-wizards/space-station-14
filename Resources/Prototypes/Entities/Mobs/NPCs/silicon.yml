@@ -10,6 +10,16 @@
   - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
+  - type: Bloodstream
+    bloodReagent: Oil
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -46,10 +56,11 @@
     - Piercing
     - Heat
     - Shock
-    locPrefix: silicon
   - type: MovedByPressure
   - type: Physics
     bodyType: KinematicController # Same for all inheritors
+  - type: DrawableSolution
+    solution: bloodstream
   - type: StatusEffects
     allowed:
     - Stun
@@ -75,9 +86,6 @@
     thresholds:
       0: Alive
       120: Dead
-    stateAlertDict:
-      Alive: BorgHealth
-    showOverlays: false
   - type: Stamina
     critThreshold: 120
   - type: Destructible

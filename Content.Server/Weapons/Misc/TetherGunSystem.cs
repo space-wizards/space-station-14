@@ -1,5 +1,4 @@
 using Content.Server.PowerCell;
-using Content.Shared.PowerCell;
 using Content.Shared.Weapons.Misc;
 using Robust.Shared.Physics.Components;
 
