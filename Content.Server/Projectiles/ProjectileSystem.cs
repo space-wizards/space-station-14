@@ -40,8 +40,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (component.CursorTarget != target
             && TryComp(target, out MobStateComponent? targetState)
-            && (targetState.CurrentState == MobState.Critical || targetState.CurrentState == MobState.Dead)
-            && (!TryComp(target, out BuckleComponent? buckleComponent) || !buckleComponent.Buckled))
+            && targetState is { CurrentState: MobState.Critical or MobState.Dead }
+            && !(TryComp(target, out BuckleComponent? buckleComponent) && buckleComponent.Buckled))
             return;
 
         // it's here so this check is only done once before possible hit

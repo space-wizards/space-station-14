@@ -6,11 +6,14 @@ using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -205,6 +208,19 @@ public sealed partial class GunSystem : SharedGunSystem
                                 break;
 
                             var result = rayCastResults[0];
+                            foreach (var Hit in rayCastResults)
+                            {
+                                var tHit = Hit.HitEntity;
+                                if (hovered != tHit
+                                    && TryComp(tHit, out MobStateComponent? targetState)
+                                    && targetState is { CurrentState: MobState.Critical or MobState.Dead }
+                                    && !(TryComp(tHit, out BuckleComponent? buckleComponent) && buckleComponent.Buckled))
+                                    continue;
+
+                                result = Hit;
+                                break;
+                            }
+
                             var hit = result.HitEntity;
                             lastHit = hit;
 
