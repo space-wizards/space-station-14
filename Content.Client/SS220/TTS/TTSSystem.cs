@@ -146,7 +146,7 @@ public sealed partial class TTSSystem : EntitySystem
             SoundPathSpecifier soundPath;
             if (request is PlayRequestById requestById)
             {
-                tempFilePath = new ResPath($"{requestById.FileIdx}.ogg");
+                tempFilePath = new ResPath($"{requestById.FileIdx}.wav");
                 soundPath = new SoundPathSpecifier(Prefix / tempFilePath.Value, requestById.Params);
             }
             else if (request is PlayRequestByPath requestByPath)
@@ -224,7 +224,7 @@ public sealed partial class TTSSystem : EntitySystem
 
         var finalParams = audioParams ?? AudioParams.Default;
 
-        var filePath = new ResPath($"{_fileIdx}.ogg");
+        var filePath = new ResPath($"{_fileIdx}.wav");
         ContentRoot.AddOrUpdateFile(filePath, data);
 
         // Cache does a funny.

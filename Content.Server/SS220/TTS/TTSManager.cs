@@ -89,7 +89,7 @@ public sealed class TTSManager
     /// </summary>
     /// <param name="speaker">Identifier of speaker</param>
     /// <param name="text">SSML formatted text</param>
-    /// <returns>OGG audio bytes or null if failed</returns>
+    /// <returns>WAV audio bytes or null if failed</returns>
     public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text)
     {
         WantedCount.Inc();
@@ -105,13 +105,6 @@ public sealed class TTSManager
             }
 
             _sawmill.Debug($"Generate new audio for '{text}' speech by '{speaker}' speaker");
-
-            var body = new GenerateVoiceRequest
-            {
-                Text = text,
-                Speaker = speaker,
-            };
-
             var reqTime = DateTime.UtcNow;
             try
             {
@@ -120,7 +113,7 @@ public sealed class TTSManager
                 var requestUrl = $"{_apiUrl}" + ToQueryString(new NameValueCollection() {
                     { "speaker", speaker },
                     { "text", text },
-                    { "ext", "ogg" }});
+                    { "ext", "wav" }});
 
                 var response = await _httpClient.GetAsync(requestUrl, cts.Token);
                 if (!response.IsSuccessStatusCode)
@@ -200,7 +193,7 @@ public sealed class TTSManager
             var reqTime = DateTime.UtcNow;
             try
             {
-                var outputFilename = Path.GetTempPath() + Guid.NewGuid() + ".ogg";
+                var outputFilename = Path.GetTempPath() + Guid.NewGuid() + ".wav";
                 await FFMpegArguments
                     .FromPipeInput(new StreamPipeSource(new MemoryStream(soundData)))
                     .OutputToFile(outputFilename, true, options =>
@@ -315,39 +308,5 @@ public sealed class TTSManager
         public string Key => "acrusher";
 
         public string Value => string.Join(":", _arguments.Select<KeyValuePair<string, string>, string>(pair => pair.Key + "=" + pair.Value));
-    }
-
-    private struct GenerateVoiceRequest
-    {
-        public GenerateVoiceRequest()
-        {
-        }
-
-        [JsonPropertyName("speaker")]
-        public string Speaker { get; set; } = "";
-
-        [JsonPropertyName("text")]
-        public string Text { get; set; } = "";
-
-        [JsonPropertyName("ext")]
-        public string Extension { get; } = "ogg";
-    }
-
-    private struct GenerateVoiceResponse
-    {
-        [JsonPropertyName("results")]
-        // ReSharper disable once CollectionNeverUpdated.Local
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        public List<VoiceResult> Results { get; set; }
-
-        [JsonPropertyName("original_sha1")]
-        public string Hash { get; set; }
-    }
-
-    private struct VoiceResult
-    {
-        [JsonPropertyName("audio")]
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        public string Audio { get; set; }
     }
 }
