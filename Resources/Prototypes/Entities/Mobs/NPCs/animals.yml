@@ -2716,7 +2716,7 @@
   name: sea turtle 
   parent: SimpleMobBase
   id: MobTurtle
-  description: Splish splash in the bath
+  description: Splish splash in the bath.
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
