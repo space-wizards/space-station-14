@@ -848,9 +848,12 @@ public sealed class ChatUIController : UIController
                 break;
 
             case ChatChannel.LOOC:
-                const string prefixText = "(LOOC: ";
-                const string prefixEndText = ")";
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc, prefixText, prefixEndText);
+                if (_cfg.GetCVar(CCVars.LoocAboveHeadShow))
+                {
+                    const string prefixText = "(LOOC: ";
+                    const string prefixEndText = ")";
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc, prefixText, prefixEndText);
+                }
                 break;
         }
     }
