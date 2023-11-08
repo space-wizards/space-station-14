@@ -45,9 +45,11 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
+    // Combine Gateway + GatewayDestination
+    // Gateway takes the spawning gateway as the unlock timer
+    // One-way portals
 
     // GATEWAY WINDOW
-    // Need a separate bar on GatewayWindow for unlocks
     // Mark any locked ones as locked until unlocked
     // If NextUnlock < curtime then undisable all locked ones (assuming NextReady is also up)
     // After taken then disable them all again
@@ -57,7 +59,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     // Re-use salvage config stuff for the RNG
     // Also add weather coz it's funny.
 
-    // TODO: Portals to avoid people being stranded
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
     // Add dungeon name to thing
     // Add biome template to thing
@@ -208,13 +209,19 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// How long it takes to unlock another destination once one is taken.
     /// </summary>
     [DataField]
-    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(45);
+    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(1);
 
     /// <summary>
     /// Maps we've generated.
     /// </summary>
     [DataField]
     public List<EntityUid> Generated = new();
+
+    /// <summary>
+    /// Destinations that have been unlocked.
+    /// </summary>
+    [DataField]
+    public List<EntityUid> Unlocked = new();
 }
 
 [RegisterComponent]

@@ -18,10 +18,11 @@ public sealed partial class GatewayDestinationComponent : Component
     public bool Enabled;
 
     /// <summary>
-    /// When the destination will unlock if applicable.
+    /// Generator that made this destination if applicable.
+    /// Used to determine whether it can be unlocked or not.
     /// </summary>
-    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan? UnlockTime;
+    [DataField]
+    public EntityUid? Generator;
 
     /// <summary>
     /// Name as it shows up on the ui of station gateways.

@@ -3,10 +3,21 @@
                       Title="{Loc 'gateway-window-title'}"
                       MinSize="800 360">
     <BoxContainer Orientation="Vertical">
-	    <BoxContainer Orientation="Horizontal">
-	        <Label Name="NextReadyLabel"
-	               Text="{Loc 'gateway-window-portal-cooldown'}"
-	               Margin="5"></Label>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="NextUnlockLabel"
+                   Text="{Loc 'gateway-window-portal-unlock'}"
+                   Margin="5"/>
+            <ProgressBar Name="NextUnlockBar"
+                         HorizontalExpand="True"
+                         MinValue="0"
+                         MaxValue="1"
+                         SetHeight="25"/>
+            <Label Name="NextUnlockText" Text="0" Margin="5"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="NextReadyLabel"
+                   Text="{Loc 'gateway-window-portal-cooldown'}"
+                   Margin="5"/>
 	        <ProgressBar Name="NextReadyBar"
 	                     HorizontalExpand="True"
 	                     MinValue="0"

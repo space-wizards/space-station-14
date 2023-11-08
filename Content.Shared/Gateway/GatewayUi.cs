@@ -46,14 +46,20 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     /// </summary>
     public readonly TimeSpan NextUnlock;
 
+    /// <summary>
+    /// How long an unlock takes.
+    /// </summary>
+    public readonly TimeSpan UnlockTime;
+
     public GatewayBoundUserInterfaceState(List<GatewayDestinationData> destinations,
-        NetEntity? current, TimeSpan nextReady, TimeSpan cooldown, TimeSpan nextUnlock)
+        NetEntity? current, TimeSpan nextReady, TimeSpan cooldown, TimeSpan nextUnlock, TimeSpan unlockTime)
     {
         Destinations = destinations;
         Current = current;
         NextReady = nextReady;
         Cooldown = cooldown;
         NextUnlock = nextUnlock;
+        UnlockTime = unlockTime;
     }
 }
 

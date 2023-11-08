@@ -73,7 +73,7 @@ public sealed class GatewaySystem : EntitySystem
         }
     }
 
-    private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)
+    private void UpdateUserInterface(EntityUid uid, GatewayComponent comp, bool update = true)
     {
         var destinations = new List<GatewayDestinationData>();
         var query = AllEntityQuery<GatewayDestinationComponent>();
@@ -87,20 +87,34 @@ public sealed class GatewaySystem : EntitySystem
             {
                 Entity = GetNetEntity(destUid),
                 Name = dest.Name,
-                Portal = HasComp<PortalComponent>(destUid)
+                Portal = HasComp<PortalComponent>(destUid),
             });
         }
 
         var nextUnlock = TimeSpan.Zero;
+        var unlockTime = TimeSpan.Zero;
 
         if (TryComp(_stations.GetOwningStation(uid), out GatewayGeneratorComponent? generatorComp))
         {
             nextUnlock = generatorComp.NextUnlock;
+            unlockTime = generatorComp.UnlockCooldown;
         }
 
         _linkedEntity.GetLink(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextReady, comp.Cooldown, nextUnlock);
-        _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
+
+        if (update)
+        {
+            var state = new GatewayBoundUserInterfaceState(
+                destinations,
+                GetNetEntity(current),
+                comp.NextReady,
+                comp.Cooldown,
+                nextUnlock,
+                unlockTime
+            );
+
+            _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
+        }
     }
 
     private void UpdateAppearance(EntityUid uid)
@@ -131,7 +145,7 @@ public sealed class GatewaySystem : EntitySystem
         }
 
         // TODO: admin log???
-        ClosePortal(uid, comp);
+        ClosePortal(uid, comp, false);
         OpenPortal(uid, comp, desto, dest);
     }
 
@@ -150,6 +164,9 @@ public sealed class GatewaySystem : EntitySystem
         EnsureComp<PortalComponent>(uid).CanTeleportToOtherMaps = true;
         EnsureComp<PortalComponent>(dest).CanTeleportToOtherMaps = true;
 
+        var openEv = new GatewayOpenEvent(destXform.MapUid.Value, dest);
+        RaiseLocalEvent(destXform.MapUid.Value, ref openEv);
+
         // for ui
         comp.NextReady = _timing.CurTime + comp.Cooldown;
 
@@ -161,7 +178,7 @@ public sealed class GatewaySystem : EntitySystem
         UpdateAppearance(dest);
     }
 
-    private void ClosePortal(EntityUid uid, GatewayComponent? comp = null)
+    private void ClosePortal(EntityUid uid, GatewayComponent? comp = null, bool update = true)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -181,9 +198,13 @@ public sealed class GatewaySystem : EntitySystem
 
         _linkedEntity.TryUnlink(uid, dest.Value);
         RemComp<PortalComponent>(dest.Value);
-        UpdateUserInterface(uid, comp);
-        UpdateAppearance(uid);
-        UpdateAppearance(dest.Value);
+
+        if (update)
+        {
+            UpdateUserInterface(uid, comp);
+            UpdateAppearance(uid);
+            UpdateAppearance(dest.Value);
+        }
     }
 
     private void OnDestinationStartup(EntityUid uid, GatewayDestinationComponent comp, ComponentStartup args)
