@@ -738,6 +738,20 @@
       - MobQuartzCrab
 
 - type: entity
+  name: Turtle Spawner
+  id: SpawnMobTurtle
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: turtle
+      sprite: Mobs/Animals/turtle.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobTurtle
+
+- type: entity
   name: luminous person spawner
   id: SpawnMobLuminousPerson
   parent: MarkerBase

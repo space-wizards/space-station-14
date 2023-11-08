@@ -2711,3 +2711,85 @@
   - type: NpcFactionMember
     factions:
     - Passive
+
+- type: entity
+  name: turtle 
+  parent: SimpleMobBase
+  id: MobTurtle #Just trust me it does not make sound. https://www.npr.org/2022/10/31/1132951238/what-sound-does-a-turtle-make
+  description: splish splash in the bath
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: turtle
+      sprite: Mobs/Animals/turtle.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 75
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: turtle
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatLizard
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.3
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    #interactSuccessSound:
+    #  path: /Audio/Animals/lizard_happy.ogg #Just trust me no it does not. https://www.npr.org/2022/10/31/1132951238/what-sound-does-a-turtle-make
+  - type: Bloodstream
+    bloodMaxVolume: 150
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
+  - type: Puller
+    needsHands: true
+  - type: Tag
+    tags:
+    - Turtle
+  - type: NoSlip # no feet no slip
+  - type: Reproductive
+    breedChance: 0.05
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+      - Turtle
+    offspring:
+    - id: FoodEggTurtleFertilized
+      maxAmount: 3
+  - type: ReproductivePartner
+  
+- type: entity
+  id: FoodEggTurtleFertilized
+  parent: FoodEgg
+  suffix: Fertilized, Turtle
+  components:
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobTurtle
+    intervalSeconds: 20
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn #delete the egg after the turtle spawns
+    lifetime: 21

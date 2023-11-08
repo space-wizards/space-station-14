@@ -722,3 +722,26 @@
     attributes:
       proper: true
       gender: male
+
+- type: entity
+  name: Squirt
+  parent: MobTurtle
+  id: MobTurtleSquirt
+  description: She's a long way from the ocean...
+  components:
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-kangaroo
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+  - type: NpcFactionMember
+    factions:
+      - PetsNT
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
