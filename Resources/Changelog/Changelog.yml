@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Solar Flares can randomly disable up to 2 radio channels, rather than
-      just service. Syndicate and CentCom channels remain unaffected.', type: Tweak}
-  id: 4631
-  time: '2023-08-19T23:39:36.0000000+00:00'
 - author: Morb0
   changes:
   - {message: 'Roundstart nukeops greeting sound is back, now they''ll remember their
@@ -2906,3 +2900,9 @@ Entries:
     type: Fix}
   id: 5130
   time: '2023-11-08T01:24:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added speed boots! When powered, this research tech allows you to run
+      significantly faster.', type: Add}
+  id: 5131
+  time: '2023-11-08T01:25:44.0000000+00:00'
