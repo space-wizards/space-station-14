@@ -41,7 +41,7 @@
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
 
-#Thief
+#Thief groups
 - type: weightedRandom
   id: ThiefObjectiveGroups
   weights:
@@ -52,13 +52,15 @@
   id: ThiefBigObjectiveGroups
   weights:
     ThiefObjectiveGroupStructure: 1
-    #ThiefObjectiveGroupAnimal: 1
+    ThiefObjectiveGroupAnimal: 10
 
 - type: weightedRandom
   id: ThiefEscapeObjectiveGroups
   weights:
     ThiefObjectiveGroupEscape: 1
-    
+
+
+
 - type: weightedRandom
   id: ThiefObjectiveGroupCollection
   weights:
@@ -103,6 +105,11 @@
     TegStealObjective: 1
     BoozeDispenserStealObjective: 1
     AltarNanotrasenStealObjective: 1
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupAnimal
+  weights:
+    HamletStealObjective: 1
     
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

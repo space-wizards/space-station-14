@@ -207,12 +207,12 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         });
 
         // Add Pacific
-        if (addPacified)
-        {
-            if (!TryComp<PacifiedComponent>(mind.OwnedEntity, out var pacific))
-                AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
-            //TO DO: Pacifism Implanter??
-        }
+        //if (addPacified)
+        //{
+        //    if (!TryComp<PacifiedComponent>(mind.OwnedEntity, out var pacific))
+        //        AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
+        //    //TO DO: Pacifism Implanter??
+        //}
 
         // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))

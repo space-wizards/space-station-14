@@ -313,3 +313,12 @@
   sprite:
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: nanotrasen
+
+# Thief Animal
+
+- type: stealTargetGroup
+  id: Hamlet
+  name: Hamlet
+  sprite:
+    sprite: Mobs/Pets/hamlet.rsi
+    state: hamster-0

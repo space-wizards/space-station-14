@@ -9,6 +9,8 @@ using Robust.Shared.Random;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Objectives;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -17,6 +19,7 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
     private EntityQuery<ContainerManagerComponent> _containerQuery;
@@ -108,14 +111,13 @@ public sealed class StealConditionSystem : EntitySystem
         var count = 0;
 
         //check pulling object 
-        if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull))
+        if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: prettify
         {
             var pullid = pull.Pulling;
             if (pullid != null)
             {
                 // check if this is the item
-                if (TryComp<StealTargetComponent>(pullid, out var target))
-                    if (target.StealGroup == condition.StealGroup) count++;
+                if (CheckStealTarget(pullid.Value, condition)) count++;
 
                 //we don't check the inventories of sentient entity
                 if (!TryComp<MindContainerComponent>(pullid, out var pullMind))
@@ -136,8 +138,7 @@ public sealed class StealConditionSystem : EntitySystem
                 foreach (var entity in container.ContainedEntities)
                 {
                     // check if this is the item
-                    if (TryComp<StealTargetComponent>(entity, out var target))
-                        if (target.StealGroup == condition.StealGroup) count++; //To Do: add support for stackable items
+                    if (CheckStealTarget(entity, condition)) count++; //To Do: add support for stackable items
 
                     // if it is a container check its contents
                     if (_containerQuery.TryGetComponent(entity, out var containerManager))
@@ -149,5 +150,26 @@ public sealed class StealConditionSystem : EntitySystem
         var result = (float) count / (float) condition.CollectionSize;
         result = Math.Clamp(result, 0, 1);
         return result;
+    }
+
+    private bool CheckStealTarget(EntityUid entity, StealConditionComponent condition)
+    {
+        // check if this is the target
+        if (!TryComp<StealTargetComponent>(entity, out var target))
+            return false;
+
+        if (target.StealGroup != condition.StealGroup)
+            return false;
+
+        // check if needed target alive
+        if (condition.CheckAlive)
+        {
+            if (TryComp<MobStateComponent>(entity, out var state))
+            {
+                if (!_mobState.IsAlive(entity))
+                    return false;
+            }
+        }
+        return true;
     }
 }

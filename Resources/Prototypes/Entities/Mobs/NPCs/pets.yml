@@ -516,6 +516,8 @@
     - CannotSuicide
     - Hamster
     - VimPilot
+  - type: StealTarget
+    stealGroup: Hamlet
 
 - type: entity
   name: Shiva

@@ -23,6 +23,11 @@ public sealed partial class StealConditionComponent : Component
     public bool VerifyMapExistance = true;
 
     /// <summary>
+    /// If the target may be alive but has died, it will not be counted
+    /// </summary>
+    [DataField]
+    public bool CheckAlive = false;
+    /// <summary>
     /// The minimum number of items you need to steal to fulfill a objective
     /// </summary>
     [DataField]

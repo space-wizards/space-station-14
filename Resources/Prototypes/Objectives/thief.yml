@@ -38,20 +38,18 @@
     descriptionText: objective-condition-thief-description
   - type: Objective
     difficulty: 2 # it's hard to hide
-
+    
 - type: entity
-  noSpawn: true
-  parent: [BaseThiefObjective, BaseLivingObjective]
-  id: EscapeThiefShuttleObjective
-  name: Escape to centcom alive and unrestrained.
-  description: You don't want your illegal activities to be discovered by anyone, do you?
+  abstract: true
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealAnimalObjective
   components:
+  - type: StealCondition
+    verifyMapExistance: false
+    checkAlive: true
+    descriptionText: objective-condition-thief-animal-description
   - type: Objective
-    difficulty: 1.3
-    icon:
-      sprite: Structures/Furniture/chairs.rsi
-      state: shuttle
-  - type: EscapeShuttleCondition
+    difficulty: 2 # it's hard to hide
 
 # Collections
 
@@ -456,4 +454,32 @@
   - type: StealCondition
     stealGroup: AltarNanotrasen
   - type: Objective
-    difficulty: 0.5
+    difficulty: 0.5    
+
+# Animal
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealAnimalObjective
+  id: HamletStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: Hamlet
+  - type: Objective
+    difficulty: 1
+
+# Escape
+
+- type: entity
+  noSpawn: true
+  parent: [BaseThiefObjective, BaseLivingObjective]
+  id: EscapeThiefShuttleObjective
+  name: Escape to centcom alive and unrestrained.
+  description: You don't want your illegal activities to be discovered by anyone, do you?
+  components:
+  - type: Objective
+    difficulty: 1.3
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeShuttleCondition
