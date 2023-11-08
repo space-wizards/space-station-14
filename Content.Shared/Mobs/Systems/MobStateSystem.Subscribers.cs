@@ -70,6 +70,11 @@ public partial class MobStateSystem
 
     private void OnStateEnteredSubscribers(EntityUid target, MobStateComponent component, MobState state)
     {
+        // All of the state changes here should already be networked, so we do nothing if we are currently applying a
+        // server state.
+        if (_timing.ApplyingState)
+            return;
+
         _blocker.UpdateCanMove(target); //update movement anytime a state changes
         switch (state)
         {
