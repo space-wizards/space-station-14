@@ -198,7 +198,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
-        job.Run();
     }
 
     public async Task<Dungeon> GenerateDungeonAsync(

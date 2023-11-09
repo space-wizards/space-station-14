@@ -45,6 +45,9 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
+    // The destination maps get some kind of unlock
+    // Whether a gateway is unlocked depends if its host map is unlocked.
+
     // Combine Gateway + GatewayDestination
     // Gateway takes the spawning gateway as the unlock timer
     // One-way portals
@@ -187,9 +190,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonPosition = origin + dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance)).Floored();
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        _dungeon.GenerateDungeonAsync(_protoManager.Index<DungeonConfigPrototype>("Experiment"), args.MapUid, grid, dungeonPosition, seed);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), args.MapUid, grid, dungeonPosition, seed);
     }
 }
 
@@ -216,12 +217,6 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// </summary>
     [DataField]
     public List<EntityUid> Generated = new();
-
-    /// <summary>
-    /// Destinations that have been unlocked.
-    /// </summary>
-    [DataField]
-    public List<EntityUid> Unlocked = new();
 }
 
 [RegisterComponent]
@@ -233,12 +228,25 @@ public sealed partial class GatewayGeneratorDestinationComponent : Component
     [DataField]
     public EntityUid Generator;
 
+    /// <summary>
+    /// Is the map locked from being used still or unlocked.
+    /// Used in conjunction with the attached generator's NextUnlock.
+    /// </summary>
+    [DataField]
+    public bool Locked;
+
     [DataField]
     public bool Loaded;
 
+    /// <summary>
+    /// Seed used for this destination.
+    /// </summary>
     [DataField]
     public int Seed;
 
+    /// <summary>
+    /// Origin of the gateway.
+    /// </summary>
     [DataField]
     public Vector2i Origin;
 }

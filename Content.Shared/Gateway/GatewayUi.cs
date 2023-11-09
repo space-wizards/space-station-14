@@ -70,7 +70,15 @@ public record struct GatewayDestinationData
 
     public FormattedMessage Name;
 
+    /// <summary>
+    /// Is the portal currently open.
+    /// </summary>
     public bool Portal;
+
+    /// <summary>
+    /// Is the map the gateway on locked or unlocked.
+    /// </summary>
+    public bool Locked;
 }
 
 [Serializable, NetSerializable]

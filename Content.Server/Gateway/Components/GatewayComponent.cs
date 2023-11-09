@@ -1,6 +1,7 @@
 using Content.Server.Gateway.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Gateway.Components;
 
@@ -10,6 +11,19 @@ namespace Content.Server.Gateway.Components;
 [RegisterComponent, Access(typeof(GatewaySystem))]
 public sealed partial class GatewayComponent : Component
 {
+    /// <summary>
+    /// Whether this destination is shown in the gateway ui.
+    /// If you are making a gateway for an admeme set this once you are ready for players to select it.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Enabled;
+
+    /// <summary>
+    /// Name as it shows up on the ui of station gateways.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public FormattedMessage Name = new();
+
     /// <summary>
     /// Sound to play when opening the portal.
     /// </summary>

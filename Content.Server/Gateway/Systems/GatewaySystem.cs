@@ -32,13 +32,9 @@ public sealed class GatewaySystem : EntitySystem
         SubscribeLocalEvent<GatewayComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<GatewayComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GatewayComponent, GatewayOpenPortalMessage>(OnOpenPortal);
-
-        SubscribeLocalEvent<GatewayDestinationComponent, ComponentStartup>(OnDestinationStartup);
-        SubscribeLocalEvent<GatewayDestinationComponent, ComponentShutdown>(OnDestinationShutdown);
-        SubscribeLocalEvent<GatewayDestinationComponent, GetVerbsEvent<AlternativeVerb>>(OnDestinationGetVerbs);
     }
 
-    public void SetEnabled(EntityUid uid, bool value, GatewayDestinationComponent? component = null)
+    public void SetEnabled(EntityUid uid, bool value, GatewayComponent? component = null)
     {
         if (!Resolve(uid, ref component) || component.Enabled == value)
             return;
@@ -73,48 +69,58 @@ public sealed class GatewaySystem : EntitySystem
         }
     }
 
-    private void UpdateUserInterface(EntityUid uid, GatewayComponent comp, bool update = true)
+    private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)
     {
         var destinations = new List<GatewayDestinationData>();
-        var query = AllEntityQuery<GatewayDestinationComponent>();
-
-        while (query.MoveNext(out var destUid, out var dest))
-        {
-            if (!dest.Enabled)
-                continue;
-
-            destinations.Add(new GatewayDestinationData()
-            {
-                Entity = GetNetEntity(destUid),
-                Name = dest.Name,
-                Portal = HasComp<PortalComponent>(destUid),
-            });
-        }
+        var query = AllEntityQuery<GatewayComponent, TransformComponent>();
 
         var nextUnlock = TimeSpan.Zero;
         var unlockTime = TimeSpan.Zero;
+        var owningStation = _stations.GetOwningStation(uid);
 
+        // If gateway is attached to a generator then also send stats for that
         if (TryComp(_stations.GetOwningStation(uid), out GatewayGeneratorComponent? generatorComp))
         {
             nextUnlock = generatorComp.NextUnlock;
             unlockTime = generatorComp.UnlockCooldown;
         }
 
+        while (query.MoveNext(out var destUid, out var dest, out var xform))
+        {
+            if (!dest.Enabled)
+                continue;
+
+            // Show destination if either no destination comp on the map or it's ours.
+            if (TryComp<GatewayGeneratorDestinationComponent>(xform.MapUid, out var gatewayDestination) &&
+                gatewayDestination.Generator != owningStation)
+            {
+                continue;
+            }
+
+            destinations.Add(new GatewayDestinationData()
+            {
+                Entity = GetNetEntity(destUid),
+                Name = dest.Name,
+                Portal = HasComp<PortalComponent>(destUid),
+                // If NextUnlock < CurTime it's unlocked, however
+                // we'll always send the client if it's locked
+                // It can just infer unlock times locally and not have to worry about it here.
+                Locked = gatewayDestination != null && !gatewayDestination.Locked
+            });
+        }
+
         _linkedEntity.GetLink(uid, out var current);
 
-        if (update)
-        {
-            var state = new GatewayBoundUserInterfaceState(
-                destinations,
-                GetNetEntity(current),
-                comp.NextReady,
-                comp.Cooldown,
-                nextUnlock,
-                unlockTime
-            );
+        var state = new GatewayBoundUserInterfaceState(
+            destinations,
+            GetNetEntity(current),
+            comp.NextReady,
+            comp.Cooldown,
+            nextUnlock,
+            unlockTime
+        );
 
-            _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
-        }
+        _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
     private void UpdateAppearance(EntityUid uid)
