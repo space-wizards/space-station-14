@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatFloppa
+  name: шлёпафон
+  description: Шлёпашон
+  components:
+  - type: Sprite
+    sprite: SS220\Clothing\HoodF.rsi
+  - type: Clothing
+    sprite: SS220\Clothing\HoodF.rsi
+    tags:
+    - HidesHair
