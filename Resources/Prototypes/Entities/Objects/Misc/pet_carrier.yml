@@ -21,6 +21,7 @@
     state: icon
   - type: InteractionOutline
   - type: Physics
+  - type: MultiHandedItem
   - type: Fixtures
     fixtures:
       fix1:
