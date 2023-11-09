@@ -157,4 +157,9 @@ public abstract class SharedItemSystem : EntitySystem
     {
         return GetSizePrototype(size).Weight;
     }
+
+    public IReadOnlyList<Box2i> GetItemShape(Entity<ItemComponent> uid)
+    {
+        return uid.Comp.ShapeOverride ?? GetSizePrototype(uid.Comp.Size).DefaultShape;
+    }
 }
