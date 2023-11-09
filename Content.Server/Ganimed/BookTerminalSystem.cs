@@ -65,8 +65,10 @@ namespace Content.Server.Ganimed
             SubscribeLocalEvent<BookTerminalComponent, BookTerminalPrintBookMessage>(OnPrintBookMessage);
             SubscribeLocalEvent<BookTerminalComponent, BookTerminalCopyPasteMessage>(OnCopyPasteMessage);
 			SubscribeLocalEvent<BookTerminalComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<BookTerminalComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+            SubscribeLocalEvent<BookTerminalComponent, RefreshPartsEvent>(OnPartsRefresh);
             SubscribeLocalEvent<BookTerminalComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-			SubscribeLocalEvent<BookTerminalCartridgeComponent, ExaminedEvent>(OnExamined); // Мне попросту лень писать под это отдельную систему.
+			SubscribeLocalEvent<BookTerminalCartridgeComponent, ExaminedEvent>(OnExamined); // Мне лень писать под это отдельную систему.
         }
 		
 		public override void Update(float frameTime)
@@ -85,7 +87,7 @@ namespace Content.Server.Ganimed
 				
 				if (terminal.WorkType is not null && terminal.WorkTimeRemaining > 0.0f)
 				{
-					terminal.WorkTimeRemaining -= frameTime;
+					terminal.WorkTimeRemaining -= frameTime * terminal.TimeMultiplier;
 					if (terminal.WorkTimeRemaining <= 0.0f)
 						ProcessTask((uid, terminal));
 				}
@@ -95,6 +97,16 @@ namespace Content.Server.Ganimed
 		private void UpdateVisuals(Entity<BookTerminalComponent> ent)
 		{
 			var cartridge = _itemSlotsSystem.GetItemOrNull(ent, "cartridgeSlot");
+			
+			var workInProgress = (ent.Comp.WorkType is not null && ent.Comp.WorkTimeRemaining > 0.0f);
+			
+			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.Working, workInProgress);
+			
+			if (EntityManager.TryGetComponent<BookTerminalVisualsComponent>(ent, out BookTerminalVisualsComponent? visualsComp))
+			{
+				visualsComp.DoWorkAnimation = workInProgress;
+				Dirty(visualsComp);
+			}
 			
 			if (cartridge is not null && EntityManager.TryGetComponent<BookTerminalCartridgeComponent>(cartridge, out BookTerminalCartridgeComponent? cartridgeComp))
 			{
@@ -115,6 +127,18 @@ namespace Content.Server.Ganimed
 			_appearanceSystem.SetData(ent, BookTerminalVisualLayers.None, false);
 		}
 		
+        private void OnPartsRefresh(EntityUid uid, BookTerminalComponent component, RefreshPartsEvent args)
+        {
+            component.TimeMultiplier = 1 / MathF.Pow(0.65f, args.PartRatings["Manipulator"] - 1);
+            component.CartridgeUsage = component.BaseCartridgeUsage * MathF.Pow(0.75f, args.PartRatings["MatterBin"] - 1);
+        }
+		
+		private void OnUpgradeExamine(EntityUid uid, BookTerminalComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("lathe-component-upgrade-speed", component.TimeMultiplier);
+            args.AddPercentageUpgrade("lathe-component-upgrade-material-use", component.CartridgeUsage / component.BaseCartridgeUsage);
+        }
+		
 		private void SubscribeUpdateUiState<T>(Entity<BookTerminalComponent> ent, ref T ev)
         {
             UpdateUiState(ent);
@@ -129,18 +153,18 @@ namespace Content.Server.Ganimed
 			return bookContainer is not null && 
 				cartridgeContainer is not null && 
 				TryComp<BookTerminalCartridgeComponent>(cartridgeContainer, out var cartridgeComp) && 
-				cartridgeComp.CurrentCharge > 0.0f &&
-				cartridgeComp.FullCharge > 0.0f;
+				cartridgeComp.CurrentCharge > bookTerminal.Comp.CartridgeUsage &&
+				cartridgeComp.FullCharge > bookTerminal.Comp.CartridgeUsage;
 		}
 		
 		private void DecreaseCartridgeCharge(Entity<BookTerminalComponent> bookTerminal)
 		{
 			var cartridgeContainer = _itemSlotsSystem.GetItemOrNull(bookTerminal, "cartridgeSlot");
 			if (!TryComp<BookTerminalCartridgeComponent>(cartridgeContainer, out var cartridgeComp)
-				|| cartridgeComp.CurrentCharge < 1.0f)
+				|| cartridgeComp.CurrentCharge < bookTerminal.Comp.CartridgeUsage)
 				return;
 				
-			cartridgeComp.CurrentCharge -= 1.0f;
+			cartridgeComp.CurrentCharge -= bookTerminal.Comp.CartridgeUsage;
 			Dirty(cartridgeComp);
 		}
 		
@@ -158,7 +182,7 @@ namespace Content.Server.Ganimed
 		
 		private void OnExamined(EntityUid uid, BookTerminalCartridgeComponent component, ExaminedEvent args)
 		{
-			args.PushText(Loc.GetString("book-terminal-cartridge-component-examine", ("charge", component.CurrentCharge)));
+			args.PushText(Loc.GetString("book-terminal-cartridge-component-examine", ("charge", (int)(component.CurrentCharge / component.FullCharge * 100))));
 		}
 		
 		private void OnPowerChanged(EntityUid uid, BookTerminalComponent component, ref PowerChangedEvent args)
@@ -237,7 +261,8 @@ namespace Content.Server.Ganimed
 			{
 				var content = GetContent(bookContainer.Value);
 				if (content is not null)
-					UploadBookContent(content); // Иначе, асинхронное обновление просто не поспевает :\
+					UploadBookContent(content); // Иначе, асинхронное обновление просто не поспевает :|
+				SetupTask(bookTerminal, "Uploading");
 			}
 			
 			UpdateUiState(bookTerminal);
@@ -311,7 +336,7 @@ namespace Content.Server.Ganimed
 			FlushTask(bookTerminal);
 			UpdateUiState(bookTerminal);
 			
-            _audioSystem.PlayPvs(bookTerminal.Comp.ClickSound, bookTerminal, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(bookTerminal.Comp.ClickSound, bookTerminal, AudioParams.Default.WithVolume(5f));
 			
 		}
 		
@@ -321,7 +346,7 @@ namespace Content.Server.Ganimed
 			bookTerminal.Comp.WorkTimeRemaining = bookTerminal.Comp.WorkTime;
 			bookTerminal.Comp.WorkType = taskName;
 			
-			_audioSystem.PlayPvs(bookTerminal.Comp.WorkSound, bookTerminal, AudioParams.Default.WithVolume(-2f));
+			_audioSystem.PlayPvs(bookTerminal.Comp.WorkSound, bookTerminal, AudioParams.Default.WithVolume(5f));
             _ambientSoundSystem.SetAmbience(bookTerminal, true);
 			UpdateVisuals(bookTerminal);
 		}

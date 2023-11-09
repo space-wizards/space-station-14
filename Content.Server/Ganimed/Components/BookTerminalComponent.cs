@@ -11,10 +11,10 @@ namespace Content.Server.Ganimed.Components
     {
 
         [DataField("workSound")]
-        public SoundSpecifier WorkSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
+        public SoundSpecifier WorkSound = new SoundPathSpecifier("/Audio/Machines/tray_eject.ogg");
 		
 		[DataField("clickSound")]
-		public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+		public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/terminal_insert_disc.ogg");
 		
 		[DataField("workTimeRemaining")]
         public float WorkTimeRemaining = 0.0f;
@@ -36,5 +36,14 @@ namespace Content.Server.Ganimed.Components
 		
 		[DataField("workTime"), ViewVariables(VVAccess.ReadWrite)]
 		public float WorkTime = 8.0f;
+		
+		[DataField("timeMultiplier")]
+		public float TimeMultiplier = 1.0f;
+		
+		[DataField("cartridgeUsage"), ViewVariables(VVAccess.ReadWrite)]
+		public float CartridgeUsage = 1.0f;
+		
+		[DataField("baseCartridgeUsage")]
+		public float BaseCartridgeUsage = 1.0f;
     }
 }

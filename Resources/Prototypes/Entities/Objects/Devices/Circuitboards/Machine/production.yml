@@ -150,13 +150,9 @@
   - type: MachineBoard
     prototype: BookTerminal
     requirements:
-      MatterBin: 2
+      Capacitor: 2
       Manipulator: 2
-    tagRequirements:
-      GlassBeaker:
-        Amount: 2
-        DefaultPrototype: Beaker
-        ExamineName: Мензурка
+      MatterBin: 2
 
 - type: entity
   id: VaccinatorMachineCircuitboard

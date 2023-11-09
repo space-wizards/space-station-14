@@ -12,6 +12,11 @@ public class BookTerminalVisualizerSystem : VisualizerSystem<BookTerminalVisuals
     {
         if (args.Sprite == null || !EntityManager.TryGetComponent<ItemSlotsComponent>(uid, out var slotComp))
             return;
+		
+		if (args.Sprite.LayerMapTryGet(BookTerminalVisualLayers.Working, out var workLayer))
+		{
+			args.Sprite.LayerSetVisible(workLayer, component.DoWorkAnimation);
+		}
 
         if (args.Sprite.LayerMapTryGet(BookTerminalVisualLayers.Slotted, out var slotLayer))
         {

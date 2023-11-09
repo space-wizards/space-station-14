@@ -11,6 +11,9 @@
     layers:
     - state: icon
       map: ["enum.BookTerminalVisualLayers.Base"]
+    - state: working
+      map: ["enum.BookTerminalVisualLayers.Working"]
+      visible: false
     - state: slotted
       map: ["enum.BookTerminalVisualLayers.Slotted"]
       visible: false
@@ -104,10 +107,13 @@
     access: [["Library"]]
   - type: AmbientSound
     enabled: false
-    volume: -10
+    volume: 0
     range: 3
     sound:
-      path: /Audio/Ambience/Objects/server_fans.ogg
+      path: /Audio/Ambience/Objects/engine_hum.ogg
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.65
+    scaling: Exponential
 
 - type: entity
   id: BookTerminalFilled
