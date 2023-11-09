@@ -14,7 +14,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 5
+    maxModules: 6
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
