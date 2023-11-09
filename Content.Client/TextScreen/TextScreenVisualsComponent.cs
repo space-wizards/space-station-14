@@ -58,8 +58,8 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <summary>
     ///     The amount of characters this component can show per row.
     /// </summary>
-    [DataField("textLength")]
-    public int TextLength { get; set; } = 5;
+    [DataField("rowLength")]
+    public int RowLength { get; set; } = 5;
 
     /// <summary>
     ///     Text the screen should show when it's not counting.

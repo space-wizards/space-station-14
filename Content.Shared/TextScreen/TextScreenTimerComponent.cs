@@ -1,7 +1,6 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-
-namespace Content.Client.TextScreen;
+namespace Content.Shared.TextScreen.Components;
 
 /// <summary>
 /// This is an active component for tracking <see cref="TextScreenVisualsComponent"/>
@@ -12,4 +11,7 @@ public sealed partial class TextScreenTimerComponent : Component
     [DataField("targetTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan Target = TimeSpan.Zero;
     public int Row;
+    public string HourFormat = "D2";
+    public string MinuteFormat = "D2";
+    public string SecondFormat = "D2";
 }

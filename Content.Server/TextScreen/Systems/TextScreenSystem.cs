@@ -1,4 +1,5 @@
-using Content.Server.TextScreen.Components;
+// using Content.Server.TextScreen.Components;
+using Content.Shared.TextScreen.Components;
 using Content.Shared.TextScreen.Events;
 
 using Content.Shared.TextScreen;
@@ -45,9 +46,12 @@ public sealed class TextScreenSystem : EntitySystem
 
         if (appearance != null)
         {
-            component.Remaining = _gameTiming.CurTime + args.Duration;
+            // component.Remaining = _gameTiming.CurTime + args.Duration;
             // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.Remaining, appearance);
+            // _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + args.Duration[1].Value, appearance);
+            var timer = EnsureComp<TextScreenTimerComponent>(uid);
+            var duration = args.Duration;
+            timer.Target = _gameTiming.CurTime + duration;
         }
     }
 

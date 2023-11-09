@@ -1,5 +1,7 @@
 using System.Numerics;
 using Content.Shared.TextScreen;
+using Content.Shared.TextScreen.Components;
+using Content.Shared.TextScreen.Events;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -118,15 +120,20 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         if (!Resolve(uid, ref sprite))
             return;
 
+        int position = 0;
         for (var vert = 0; vert < component.Rows; vert++)
-            for (var horiz = 0; horiz < component.LayerStatesToDraw.Count; horiz++)
+        {
+            var rowLength = component.TextToDraw[vert].Length;
+            for (var horiz = 0; horiz < rowLength; horiz++)
             {
-                var offset = horiz - (component.LayerStatesToDraw.Count - 1) / 2.0f;
+                var offset = horiz - (rowLength - 1) / 2.0f;
                 sprite.LayerSetOffset(
-                    TextScreenLayerMapKey + horiz,
+                    TextScreenLayerMapKey + position,
                     new Vector2(offset * TextScreenVisualsComponent.PixelSize * 4f, vert * component.RowOffset) + component.TextOffset
                     );
+                position++;
             }
+        }
     }
 
     protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent component, ref AppearanceChangeEvent args)
@@ -180,7 +187,6 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             UpdateVisibility(uid, component, sprite);
         }
 
-        EntityUid? Timer;
         // if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.Mode, out TextScreenMode mode, appearance))
         // {
         //     component.CurrentMode = mode;
@@ -280,7 +286,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         while (query.MoveNext(out var uid, out var timer, out var comp))
         {
             var timeToShow = (_gameTiming.CurTime - timer.Target).Duration();
-            comp.TextToDraw[timer.Row] = TimeToString(timeToShow, false);
+            comp.TextToDraw[timer.Row] = TimeToString(timeToShow, false, minutes: timer.MinuteFormat);
             PrepareLayerStatesToDraw(uid, comp);
             UpdateLayersToDraw(uid, comp);
         }
