@@ -1,9 +1,8 @@
-using Content.Server.Damage.Systems;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Damage.Components;
+namespace Content.Shared.Damage.Components;
 
 /// <summary>
 /// Should the entity take damage / be stunned if colliding at a speed above MinimumSpeed?
