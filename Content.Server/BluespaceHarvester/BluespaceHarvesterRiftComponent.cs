@@ -39,9 +39,9 @@ public sealed partial class BluespaceHarvesterRiftComponent : Component
 [Serializable, DataDefinition]
 public partial struct EntitySpawn
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public EntProtoId? Id = null;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int Cost = 1;
 }

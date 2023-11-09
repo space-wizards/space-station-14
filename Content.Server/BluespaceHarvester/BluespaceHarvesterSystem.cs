@@ -110,37 +110,37 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         }
     }
 
-    private void OnDestruction(EntityUid uid, BluespaceHarvesterComponent component, DestructionEventArgs args)
+    private void OnDestruction(Entity<BluespaceHarvesterComponent> harvester, ref DestructionEventArgs args)
     {
-        SpawnRifts(uid, component);
+        SpawnRifts(harvester.Owner, harvester.Comp);
     }
 
-    private void OnTargetLevel(EntityUid uid, BluespaceHarvesterComponent component, BluespaceHarvesterTargetLevelMessage args)
+    private void OnTargetLevel(Entity<BluespaceHarvesterComponent> harvester, ref BluespaceHarvesterTargetLevelMessage args)
     {
         // If we switch off, we don't need to be switched on.
-        if (!component.Reseted && component.CurrentLevel != 0)
+        if (!harvester.Comp.Reseted && harvester.Comp.CurrentLevel != 0)
             return;
 
-        component.TargetLevel = args.TargetLevel;
-        component.Reseted = true; // We start only after manual switching on.
-        UpdateUI(uid, component);
+        harvester.Comp.TargetLevel = args.TargetLevel;
+        harvester.Comp.Reseted = true; // We start only after manual switching on.
+        UpdateUI(harvester.Owner, harvester.Comp);
     }
 
-    private void OnBuy(EntityUid uid, BluespaceHarvesterComponent component, BluespaceHarvesterBuyMessage args)
+    private void OnBuy(Entity<BluespaceHarvesterComponent> harvester, ref BluespaceHarvesterBuyMessage args)
     {
-        if (!component.Reseted)
+        if (!harvester.Comp.Reseted)
             return;
 
-        if (!TryGetCategory(uid, args.Category, out var info, component))
+        if (!TryGetCategory(harvester.Owner, args.Category, out var info, harvester.Comp))
             return;
 
         var category = (BluespaceHarvesterCategoryInfo) info;
 
-        if (component.Points < category.Cost)
+        if (harvester.Comp.Points < category.Cost)
             return;
 
-        component.Points -= category.Cost; // Damn capitalism.
-        SpawnLoot(uid, category.PrototypeId, component);
+        harvester.Comp.Points -= category.Cost; // Damn capitalism.
+        SpawnLoot(harvester.Owner, category.PrototypeId, harvester.Comp);
     }
 
     private void UpdateAppearance(EntityUid uid, BluespaceHarvesterComponent? harvester = null)

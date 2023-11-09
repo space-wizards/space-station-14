@@ -1,13 +1,11 @@
 using Content.Shared.Destructible;
 using Content.Shared.Storage.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Server.BluespaceHarvester;
 
 public sealed partial class BluespaceHarvesterBundleSystem : EntitySystem
 {
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
@@ -20,21 +18,21 @@ public sealed partial class BluespaceHarvesterBundleSystem : EntitySystem
 
     private void OnOpen(Entity<BluespaceHarvesterBundleComponent> bundle, ref StorageBeforeOpenEvent args)
     {
-        CreateLoot(bundle.Owner, bundle.Comp);
+        CreateLoot(bundle);
     }
 
-    private void OnDestruction(EntityUid uid, BluespaceHarvesterBundleComponent component, DestructionEventArgs args)
+    private void OnDestruction(Entity<BluespaceHarvesterBundleComponent> bundle, ref DestructionEventArgs args)
     {
-        CreateLoot(uid, component);
+        CreateLoot(bundle);
     }
 
-    private void CreateLoot(EntityUid uid, BluespaceHarvesterBundleComponent component)
+    private void CreateLoot(Entity<BluespaceHarvesterBundleComponent> bundle)
     {
-        if (component.Spawned)
+        if (bundle.Comp.Spawned)
             return;
 
-        var content = _random.Pick(component.Contents);
-        var xfrom = Transform(uid);
+        var content = _random.Pick(bundle.Comp.Contents);
+        var xfrom = Transform(bundle.Owner);
         var position = xfrom.Coordinates;
 
         for (var i = 0; i < content.Amount; i++)
@@ -42,6 +40,6 @@ public sealed partial class BluespaceHarvesterBundleSystem : EntitySystem
             Spawn(content.PrototypeId, position);
         }
 
-        component.Spawned = true;
+        bundle.Comp.Spawned = true;
     }
 }
