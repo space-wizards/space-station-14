@@ -1,38 +1,47 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radio;
 
-[Prototype("radioChannel")]
-public sealed partial class RadioChannelPrototype : IPrototype
+/// <summary>
+/// Data for a radio channel which be created dynamically or loaded from a <see cref="RadioChannelPrototype"/>
+/// </summary>
+[Virtual, DataDefinition]
+[Serializable, NetSerializable]
+public partial class RadioChannel
 {
     /// <summary>
     /// Human-readable name for the channel.
     /// </summary>
-    [DataField("name")]
-    public string Name { get; private set; } = string.Empty;
+    [DataField]
+    public LocId Name = string.Empty;
 
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     public string LocalizedName => Loc.GetString(Name);
 
     /// <summary>
     /// Single-character prefix to determine what channel a message should be sent to.
     /// </summary>
     [DataField("keycode")]
-    public char KeyCode { get; private set; } = '\0';
+    public char KeyCode = '\0';
 
-    [DataField("frequency")]
-    public int Frequency { get; private set; } = 0;
+    [DataField]
+    public int Frequency;
 
-    [DataField("color")]
-    public Color Color { get; private set; } = Color.Lime;
-
-    [IdDataField, ViewVariables]
-    public string ID { get; } = default!;
+    [DataField]
+    public Color Color = Color.Lime;
 
     /// <summary>
     /// If channel is long range it doesn't require telecommunication server
     /// and messages can be sent across different stations
     /// </summary>
-    [DataField("longRange"), ViewVariables]
-    public bool LongRange = false;
+    [DataField]
+    public bool LongRange;
+}
+
+[Prototype("radioChannel")]
+public sealed class RadioChannelPrototype : RadioChannel, IPrototype
+{
+    [IdDataField, ViewVariables]
+    public string ID { get; } = default!;
 }
