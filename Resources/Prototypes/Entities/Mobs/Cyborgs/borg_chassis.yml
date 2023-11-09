@@ -65,6 +65,11 @@
     - Science
   - type: AccessReader
     access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleMining
+      - BorgModuleFireExtinguisher
 
 - type: entity
   id: BorgChassisEngineer
@@ -106,6 +111,11 @@
     - Science
   - type: AccessReader
     access: [["Engineering"], ["Command"], ["Research"]]
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleCable
 
 - type: entity
   id: BorgChassisJanitor
@@ -147,6 +157,11 @@
     - Science
   - type: AccessReader
     access: [["Service"], ["Command"], ["Research"]]
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleCleaning
+      - BorgModuleTrashCollection
 
 - type: entity
   id: BorgChassisMedical
@@ -188,6 +203,10 @@
     - Science
   - type: AccessReader
     access: [["Medical"], ["Command"], ["Research"]]
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleTreatment
 
 - type: entity
   id: BorgChassisService
@@ -229,4 +248,7 @@
     - Science
   - type: AccessReader
     access: [["Service"], ["Command"], ["Research"]]
-
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleMusique
