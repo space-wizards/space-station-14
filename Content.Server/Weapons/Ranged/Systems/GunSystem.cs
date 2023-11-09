@@ -207,7 +207,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             if (!rayCastResults.Any())
                                 break;
 
-                            var result = rayCastResults[0];
+                            RayCastResults? nullResult = null;
                             foreach (var Hit in rayCastResults)
                             {
                                 var tHit = Hit.HitEntity;
@@ -217,9 +217,14 @@ public sealed partial class GunSystem : SharedGunSystem
                                     && !(TryComp(tHit, out BuckleComponent? buckleComponent) && buckleComponent.Buckled))
                                     continue;
 
-                                result = Hit;
+                                nullResult = Hit;
                                 break;
                             }
+
+                            if (nullResult is null)
+                                return;
+
+                            var result = nullResult.Value;
 
                             var hit = result.HitEntity;
                             lastHit = hit;
