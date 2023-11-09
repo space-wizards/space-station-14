@@ -279,7 +279,7 @@
 
 - type: entity
   parent: GeneratorRTG
-  id: GeneratorRTGDamaged1MW
+  id: GeneratorRTGDamaged100MW
   name: RTG
   description: A Radioisotope Thermoelectric Generator for long term power.
   suffix: 100MW, Debug
