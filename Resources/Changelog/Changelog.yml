@@ -1,24 +1,4 @@
 Entries:
-- author: Just_Art
-  changes:
-  - message: Now a mini gravity generator can be constructed using a machine board
-      and deconstructed.
-    type: Add
-  - message: The mini gravity generator can be improved by replacing capacitors, which
-      will increase the maximum charge of the generator.
-    type: Add
-  - message: The amount of damage required to destroy the mini gravity generator has
-      been changed, and now it is completely destroyed, but it can still be restored
-      by welding.
-    type: Tweak
-  id: 4595
-  time: '2023-08-15T00:23:40.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: There is now a delay when disconnecting someone else's internals.
-    type: Tweak
-  id: 4596
-  time: '2023-08-15T00:25:58.0000000+00:00'
 - author: kalane15
   changes:
   - message: Energy swords don't reflect in pockets anymore.
@@ -3524,3 +3504,18 @@ Entries:
     type: Add
   id: 5094
   time: '2023-11-09T15:30:09.0000000+00:00'
+- author: MrALPAKA
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043D\u043E\u0432\
+      \u044B\u0435 \u0432\u0435\u0449\u0438 \u0421\u0438\u043D\u0438\u0433\u043E \u0429\
+      \u0438\u0442\u0430"
+    type: Add
+  id: 5095
+  time: '2023-11-09T18:12:35.0000000+00:00'
+- author: Xenoksys
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u0441\u043F\u043E\
+      \u043D\u0441\u043E\u0440\u0441\u043A\u0438\u0435 \u043F\u043B\u0430\u0449\u0438"
+    type: Add
+  id: 5096
+  time: '2023-11-09T18:12:56.0000000+00:00'
