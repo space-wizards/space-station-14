@@ -79,6 +79,18 @@
     - state: cap_label
 
 - type: entity
+  id: EncryptionKeyStationSpy
+  parent: EncryptionKeyStationMaster
+  name: common encryption key
+  description: An encryption key used by anyone.
+  suffix: Spy
+  components:
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: common_label
+  
+- type: entity
   parent: EncryptionKey
   id: EncryptionKeyCommand
   name: command encryption key
