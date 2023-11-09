@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed diona always being tinted brown., type: Fix}
-  - {message: Diona can now customize their eye color and the color of their vines.,
-    type: Add}
-  id: 4642
-  time: '2023-08-21T01:02:12.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Slowed the speed at which kudzu spreads., type: Tweak}
@@ -2905,3 +2898,11 @@ Entries:
   - {message: cotton seeds are now available from the MegaSeed Servitor., type: Add}
   id: 5141
   time: '2023-11-09T01:54:07.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: LOOC messages will appear on top of your head to be more noticeable.,
+    type: Add}
+  - {message: 'For anyone who does not like LOOC messages appearing above people''s
+      heads, just disable it in settings!', type: Add}
+  id: 5142
+  time: '2023-11-09T09:18:59.0000000+00:00'
