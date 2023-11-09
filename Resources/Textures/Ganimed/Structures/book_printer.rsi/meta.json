@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "license": "See repo license.",
+  "copyright": "By temporaldarkness for Enterprise server exclusive use.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+	{
+      "name": "working",
+      "delays": [
+        [
+          0.2,
+          0.15,
+          0.2,
+          0.15
+        ]
+      ]
+    },
+	{
+      "name": "slotted",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+	{
+      "name": "none",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+	{
+      "name": "low",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+	{
+      "name": "medium",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+	{
+      "name": "high",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+	{
+      "name": "full",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+	{
+		"name": "cartridge"
+	},
+	{
+		"name": "inhand-left"
+	},
+	{
+		"name": "inhand-right"
+	}
+  ]
+}

@@ -125,6 +125,7 @@
         prob: 0.5
       - id: ClothingOuterCoatHOP # Corvax-Resprite
       - id: AccessConfigurator
+      - id: BookTerminalMachineCircuitboard # Плата принтера книг, у нас нет возможности её печатать.
 
 - type: entity
   id: LockerChiefEngineerFilledHardsuit

@@ -10,6 +10,7 @@ wires-board-name-smes = СМЭС
 wires-board-name-substation = Подстанция
 wires-board-name-apc = ЛКП
 wires-board-name-autolathe = Автолат
+wires-board-name-bookterminal = КнигПринтер
 wires-board-name-protolathe = Протолат
 wires-board-name-airalarm = ВоздСиг
 wires-board-name-firealarm = ПожСиг

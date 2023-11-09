@@ -28,3 +28,5 @@ ent-CrateTrashCart = корзина для мусора
     .desc = { ent-CrateBaseWeldable.desc }
 ent-CrateTrashCartJani = уборочная корзина для мусора
     .desc = { ent-CrateBaseSecure.desc }
+ent-CrateServicePrinterInkCartridge = { ent-BookTerminalInkCartridge }
+    .desc = { ent-BookTerminalInkCartridge.desc }

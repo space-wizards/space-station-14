@@ -1,0 +1,141 @@
+- type: entity
+  id: BookTerminal
+  parent: ConstructibleMachine
+  name: book printer
+  description: A piece of heavy machinery made for printing information in text with standart ink.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Ganimed/Structures/book_printer.rsi
+    layers:
+    - state: icon
+      map: ["enum.BookTerminalVisualLayers.Base"]
+    - state: working
+      map: ["enum.BookTerminalVisualLayers.Working"]
+      visible: false
+    - state: slotted
+      map: ["enum.BookTerminalVisualLayers.Slotted"]
+      visible: false
+    - state: full
+      map: ["enum.BookTerminalVisualLayers.Full"]
+      visible: false
+    - state: high
+      map: ["enum.BookTerminalVisualLayers.High"]
+      visible: false
+    - state: medium
+      map: ["enum.BookTerminalVisualLayers.Medium"]
+      visible: false
+    - state: low
+      map: ["enum.BookTerminalVisualLayers.Low"]
+      visible: false
+    - state: none
+      map: ["enum.BookTerminalVisualLayers.None"]
+      visible: false
+    snapCardinals: true
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: ActivatableUIRequiresPower
+  - type: Anchorable
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: ItemSlots
+    slots:
+       bookSlot:
+        whitelistFailPopup: book-terminal-component-cannot-put-entity-message
+        whitelist:
+          components:
+          - Paper
+       cartridgeSlot:
+        whitelistFailPopup: book-terminal-component-cannot-put-entity-message
+        whitelist:
+          components:
+          - BookTerminalCartridge
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      bookSlot: !type:ContainerSlot
+      cartridgeSlot: !type:ContainerSlot
+  - type: Machine
+    board: BookTerminalMachineCircuitboard
+  - type: StaticPrice
+    price: 1000
+  - type: Wires
+    boardName: wires-board-name-bookterminal
+    layoutId: BookTerminal
+  - type: WiresPanel
+  - type: BookTerminal
+  - type: BookTerminalVisuals
+  - type: UserInterface
+    interfaces:
+    - key: enum.BookTerminalUiKey.Key
+      type: BookTerminalBoundUserInterface
+  - type: ActivatableUI
+    key: enum.BookTerminalUiKey.Key
+  - type: Appearance
+  - type: AccessReader
+    access: [["Library"]]
+  - type: AmbientSound
+    enabled: false
+    volume: 0
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/engine_hum.ogg
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.65
+    scaling: Exponential
+
+- type: entity
+  id: BookTerminalFilled
+  parent: BookTerminal
+  prefix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      cartridgeSlot:
+      - BookTerminalInkCartridge
+
+- type: entity
+  id: BookTerminalInkCartridge
+  parent: BaseItem
+  name: printer cartridge
+  description: Black-box kind of thing that does all sorts of magic tricks to your office work.
+  components:
+  - type: BookTerminalCartridge
+  - type: StaticPrice
+    price: 150
+  - type: Sprite
+    sprite: Ganimed/Structures/book_printer.rsi
+    state: cartridge
+  - type: Item
+    size: 20
