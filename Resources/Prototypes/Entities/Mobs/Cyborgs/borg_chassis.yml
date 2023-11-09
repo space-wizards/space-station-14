@@ -251,4 +251,4 @@
   - type: ContainerFill
     containers:
       borg_module:
-      - BorgModuleMusique
+      - BorgModuleService

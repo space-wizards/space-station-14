@@ -397,9 +397,9 @@
 
 # service modules
 - type: entity
-  id: BorgModuleLiteracy
+  id: BorgModuleService
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: literacy cyborg module
+  name: service cyborg module
   components:
   - type: Sprite
     layers:
@@ -472,5 +472,4 @@
     items:
     - BikeHorn
     - ClownRecorder
-    - CrayonRainbow
     - BikeHornInstrument
