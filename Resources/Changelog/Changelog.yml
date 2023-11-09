@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added sound upon breaking rocks., type: Add}
-  id: 4640
-  time: '2023-08-20T21:05:43.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: All of the emergency medkit cargo crates now only give a single kit
@@ -2906,3 +2901,8 @@ Entries:
   - {message: Reduced clicks needed to dispense vending machine items, type: Tweak}
   id: 5139
   time: '2023-11-09T01:42:07.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed issue getting stuck while vaulting in space, type: Fix}
+  id: 5140
+  time: '2023-11-09T01:43:43.0000000+00:00'
