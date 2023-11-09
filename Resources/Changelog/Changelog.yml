@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Explosive banana peels now need to be armed before they can be used.,
-    type: Tweak}
-  id: 4639
-  time: '2023-08-20T20:58:22.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added sound upon breaking rocks., type: Add}
@@ -2907,3 +2901,8 @@ Entries:
   - {message: Nitrile gloves have got their own sprite., type: Add}
   id: 5138
   time: '2023-11-08T20:31:24.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Reduced clicks needed to dispense vending machine items, type: Tweak}
+  id: 5139
+  time: '2023-11-09T01:42:07.0000000+00:00'
