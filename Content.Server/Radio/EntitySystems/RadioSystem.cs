@@ -10,6 +10,7 @@ using Content.Shared.Radio.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
@@ -22,6 +23,7 @@ namespace Content.Server.Radio.EntitySystems;
 public sealed class RadioSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -33,8 +35,15 @@ public sealed class RadioSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<ActiveRadioComponent, MapInitEvent>(OnRadioInit);
         SubscribeLocalEvent<IntrinsicRadioReceiverComponent, RadioReceiveEvent>(OnIntrinsicReceive);
         SubscribeLocalEvent<IntrinsicRadioTransmitterComponent, EntitySpokeEvent>(OnIntrinsicSpeak);
+    }
+
+    private void OnRadioInit(Entity<ActiveRadioComponent> ent, ref MapInitEvent args)
+    {
+        if (ent.Comp.Channels.Count > 0)
+            SetChannels(ent, ent.Comp.Channels);
     }
 
     private void OnIntrinsicSpeak(EntityUid uid, IntrinsicRadioTransmitterComponent component, EntitySpokeEvent args)
@@ -57,7 +66,7 @@ public sealed class RadioSystem : EntitySystem
     /// </summary>
     /// <param name="messageSource">Entity that spoke the message</param>
     /// <param name="radioSource">Entity that picked up the message and will send it, e.g. headset</param>
-    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource)
+    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannel channel, EntityUid radioSource)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -96,14 +105,14 @@ public sealed class RadioSystem : EntitySystem
         var canSend = !sendAttemptEv.Cancelled;
 
         var sourceMapId = Transform(radioSource).MapID;
-        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
+        var hasActiveServer = HasActiveServer(sourceMapId, channel.Frequency);
         var hasMicro = HasComp<RadioMicrophoneComponent>(radioSource);
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
-            if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) && !intercom.SupportedChannels.Contains(channel.ID)))
+            if (!radio.Frequencies.Contains(channel.Frequency) || (TryComp<IntercomComponent>(receiver, out var intercom) && !intercom.SupportedFrequencies.Contains(channel.Frequency)))
                 continue;
 
             if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
@@ -134,15 +143,58 @@ public sealed class RadioSystem : EntitySystem
         _messages.Remove(message);
     }
 
+    /// <summary>
+    /// Set radio frequencies from channels or disable if there are none.
+    /// </summary>
+    public void SetChannels(EntityUid uid, ICollection<ProtoId<RadioChannelPrototype>> channels)
+    {
+        Log.Debug($"Setting channels of {uid} to {channels.Count}");
+        if (channels.Count == 0)
+        {
+            Disable(uid);
+            return;
+        }
+
+        var comp = EnsureComp<ActiveRadioComponent>(uid);
+        comp.Frequencies.Clear();
+        foreach (var id in channels)
+        {
+            var channel = _proto.Index<RadioChannelPrototype>(id);
+            comp.Frequencies.Add(channel.Frequency);
+        }
+    }
+
+    /// <summary>
+    /// Set radio frequencies or disable if there are none.
+    /// Must be cloned, use new(frequencies) if it is not owned.
+    /// </summary>
+    public void SetFrequencies(EntityUid uid, HashSet<int> frequencies)
+    {
+        Log.Debug($"Setting frequencies of {uid} to {frequencies.Count}");
+        if (frequencies.Count == 0)
+        {
+            Disable(uid);
+            return;
+        }
+
+        var comp = EnsureComp<ActiveRadioComponent>(uid);
+        comp.Frequencies = frequencies;
+    }
+
+    public void Disable(EntityUid uid)
+    {
+        RemCompDeferred<ActiveRadioComponent>(uid);
+    }
+
     /// <inheritdoc cref="TelecomServerComponent"/>
-    private bool HasActiveServer(MapId mapId, string channelId)
+    private bool HasActiveServer(MapId mapId, int frequency)
     {
         var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
         foreach (var (_, keys, power, transform) in servers)
         {
             if (transform.MapID == mapId &&
                 power.Powered &&
-                keys.Channels.Contains(channelId))
+                keys.Frequencies.Contains(frequency))
             {
                 return true;
             }

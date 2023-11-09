@@ -47,6 +47,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
         SubscribeLocalEvent<RadioSpeakerComponent, RadioReceiveEvent>(OnReceiveRadio);
 
+        SubscribeLocalEvent<IntercomComponent, MapInitEvent>(OnIntercomInit);
         SubscribeLocalEvent<IntercomComponent, BeforeActivatableUIOpenEvent>(OnBeforeIntercomUiOpen);
         SubscribeLocalEvent<IntercomComponent, ToggleIntercomMicMessage>(OnToggleIntercomMic);
         SubscribeLocalEvent<IntercomComponent, ToggleIntercomSpeakerMessage>(OnToggleIntercomSpeaker);
@@ -72,9 +73,9 @@ public sealed class RadioDeviceSystem : EntitySystem
     private void OnSpeakerInit(EntityUid uid, RadioSpeakerComponent component, ComponentInit args)
     {
         if (component.Enabled)
-            EnsureComp<ActiveRadioComponent>(uid).Channels.UnionWith(component.Channels);
+            _radio.SetChannels(uid, component.Channels);
         else
-            RemCompDeferred<ActiveRadioComponent>(uid);
+            _radio.Disable(uid);
     }
     #endregion
 
@@ -160,9 +161,9 @@ public sealed class RadioDeviceSystem : EntitySystem
 
         _appearance.SetData(uid, RadioDeviceVisuals.Speaker, component.Enabled);
         if (component.Enabled)
-            EnsureComp<ActiveRadioComponent>(uid).Channels.UnionWith(component.Channels);
+            _radio.SetChannels(uid, component.Channels);
         else
-            RemCompDeferred<ActiveRadioComponent>(uid);
+            _radio.Disable(uid);
     }
     #endregion
 
@@ -206,6 +207,15 @@ public sealed class RadioDeviceSystem : EntitySystem
         _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Whisper, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
     }
 
+    private void OnIntercomInit(Entity<IntercomComponent> ent, ref MapInitEvent args)
+    {
+        foreach (var id in ent.Comp.SupportedChannels)
+        {
+            var channel = _protoMan.Index<RadioChannelPrototype>(id);
+            ent.Comp.SupportedFrequencies.Add(channel.Frequency);
+        }
+    }
+
     private void OnBeforeIntercomUiOpen(EntityUid uid, IntercomComponent component, BeforeActivatableUIOpenEvent args)
     {
         UpdateIntercomUi(uid, component);
@@ -240,7 +250,12 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (TryComp<RadioMicrophoneComponent>(uid, out var mic))
             mic.BroadcastChannel = args.Channel;
         if (TryComp<RadioSpeakerComponent>(uid, out var speaker))
+        {
             speaker.Channels = new(){ args.Channel };
+            // update the active radio channels, user doesnt matter since its quiet
+            SetSpeakerEnabled(uid, user: uid, speaker.Enabled, true, speaker);
+        }
+
         UpdateIntercomUi(uid, component);
     }
 
