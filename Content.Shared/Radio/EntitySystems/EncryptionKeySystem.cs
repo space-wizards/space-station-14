@@ -73,6 +73,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             return;
 
         component.Channels.Clear();
+        component.Frequencies.Clear();
         component.DefaultChannel = null;
 
         foreach (var ent in component.KeyContainer.ContainedEntities)
@@ -81,6 +82,12 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             {
                 component.Channels.UnionWith(key.Channels);
                 component.DefaultChannel ??= key.DefaultChannel;
+
+                foreach (var id in key.Channels)
+                {
+                    var channel = _protoManager.Index<RadioChannelPrototype>(id);
+                    component.Frequencies.Add(channel.Frequency);
+                }
             }
         }
 
