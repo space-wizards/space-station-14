@@ -277,8 +277,17 @@
   - type: PowerSupplier
     supplyRate: 1000000
 
-# TODO: need radioactive fallout when destroyed
+- type: entity
+  parent: GeneratorRTG
+  id: GeneratorRTGDamaged1MW
+  name: RTG
+  description: A Radioisotope Thermoelectric Generator for long term power.
+  suffix: 100MW, Debug
+  components:
+  - type: PowerSupplier
+    supplyRate: 100000000
 
+# TODO: need radioactive fallout when destroyed
 - type: entity
   parent: GeneratorRTG
   id: GeneratorRTGDamaged

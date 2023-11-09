@@ -1,6 +1,4 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.BluespaceHarvester;
 
@@ -10,19 +8,25 @@ public sealed partial class BluespaceHarvesterRiftComponent : Component
     /// <summary>
     /// The current danger level of the portal with which he will buy things from the Spawn list.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int Danger = 0;
 
     /// <summary>
     /// The portal also periodically generates a random, weak mob from the PassiveSpawn list.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float PassiveSpawnCooldown = 30f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float PassiveSpawnAccumulator = 0f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public float SpawnCooldown = 5f;
+
+    [DataField]
+    public float SpawnAccumulator = 0f;
+
+    [DataField]
     public List<EntProtoId> PassiveSpawn = new();
 
     /// <summary>

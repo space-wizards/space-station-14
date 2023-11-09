@@ -18,7 +18,7 @@
   - type: BluespaceHarvesterBundle
     contents:
     - id: SingularityToy
-      amount: 3
+      amount: 1
 
 - type: entity
   id: CrateHarvesterPartsT3
@@ -199,7 +199,7 @@
   - type: BluespaceHarvesterBundle
     contents:
     - id: ReagentSlimeSpawner
-      amount: 20
+      amount: 16
 
 # Biological Loot
 - type: entity
@@ -274,7 +274,7 @@
   - type: BluespaceHarvesterBundle
     contents:
     - id: SpawnMobBehonker
-      amount: 4
+      amount: 6
 
 - type: entity
   id: CrateHarvesterWeaponElite

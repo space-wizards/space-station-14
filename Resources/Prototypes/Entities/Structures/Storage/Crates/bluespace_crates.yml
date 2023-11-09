@@ -3,6 +3,7 @@
   id: CrateIndustrialSecure
   name: bluespace industrial crate
   components:
+  - type: CargoSellBlacklist
   - type: Icon
     sprite: Structures/Storage/Crates/Bluespace/industrial_secure.rsi
   - type: Sprite
@@ -15,6 +16,7 @@
   id: CrateTechnologicalSecure
   name: bluespace technological crate
   components:
+  - type: CargoSellBlacklist
   - type: Icon
     sprite: Structures/Storage/Crates/Bluespace/technological_secure.rsi
   - type: Sprite
@@ -27,6 +29,7 @@
   id: CrateBiologicalSecure
   name: bluespace biological crate
   components:
+  - type: CargoSellBlacklist
   - type: Icon
     sprite: Structures/Storage/Crates/Bluespace/biological_secure.rsi
   - type: Sprite
@@ -39,6 +42,7 @@
   id: CrateDestructionSecure
   name: bluespace destruction crate
   components:
+  - type: CargoSellBlacklist
   - type: Icon
     sprite: Structures/Storage/Crates/Bluespace/destruction_secure.rsi
   - type: Sprite
@@ -51,6 +55,7 @@
   id: CrateLimitedSecure
   name: bluespace limited crate
   components:
+  - type: CargoSellBlacklist
   - type: Icon
     sprite: Structures/Storage/Crates/Bluespace/limited_secure.rsi
   - type: Sprite

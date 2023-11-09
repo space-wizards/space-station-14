@@ -18,9 +18,9 @@ public sealed partial class BluespaceHarvesterBundleSystem : EntitySystem
         SubscribeLocalEvent<BluespaceHarvesterBundleComponent, DestructionEventArgs>(OnDestruction);
     }
 
-    private void OnOpen(EntityUid uid, BluespaceHarvesterBundleComponent component, StorageBeforeOpenEvent args)
+    private void OnOpen(Entity<BluespaceHarvesterBundleComponent> bundle, ref StorageBeforeOpenEvent args)
     {
-        CreateLoot(uid, component);
+        CreateLoot(bundle.Owner, bundle.Comp);
     }
 
     private void OnDestruction(EntityUid uid, BluespaceHarvesterBundleComponent component, DestructionEventArgs args)

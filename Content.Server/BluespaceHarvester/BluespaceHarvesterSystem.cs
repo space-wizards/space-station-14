@@ -5,6 +5,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Shared.Audio;
 using Content.Shared.BluespaceHarvester;
+using Content.Shared.Destructible;
 using Content.Shared.Emag.Components;
 using Microsoft.CodeAnalysis;
 using Robust.Server.GameObjects;
@@ -44,6 +45,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
 
         SubscribeLocalEvent<BluespaceHarvesterComponent, BluespaceHarvesterTargetLevelMessage>(OnTargetLevel);
         SubscribeLocalEvent<BluespaceHarvesterComponent, BluespaceHarvesterBuyMessage>(OnBuy);
+        SubscribeLocalEvent<BluespaceHarvesterComponent, DestructionEventArgs>(OnDestruction);
     }
 
     public override void Update(float frameTime)
@@ -51,8 +53,10 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         base.Update(frameTime);
 
         _updateTimer += frameTime;
+
         if (_updateTimer < UpdateTime)
             return;
+
         _updateTimer -= UpdateTime;
 
         var query = EntityQueryEnumerator<BluespaceHarvesterComponent, PowerConsumerComponent>();
@@ -62,7 +66,6 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             // which is why it will not start.
             // So this is simply using the amount of free electricity in the network.
             var supplier = GetPowerSupplier(uid, harvester);
-
             if (supplier < GetUsagePower(harvester.CurrentLevel))
             {
                 // If there is insufficient production,
@@ -96,19 +99,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             // If the danger points exceeded the DangerLimit and we were lucky enough to create a portal, then they will be created.
             if (harvester.Danger > harvester.DangerLimit && _random.NextFloat(0.0f, 1.0f) <= GetRiftChance(uid, harvester))
             {
-                var count = _random.Next(3);
-                for (var i = 0; i < count; i++)
-                {
-                    // Haha loot!
-                    var entity = SpawnLoot(uid, harvester.Rift, harvester);
-                    if (entity == null)
-                        continue;
-
-                    EnsureComp<BluespaceHarvesterRiftComponent>((EntityUid) entity).Danger = harvester.Danger / 3;
-                }
-
-                // We gave all the danger to the rifts.
-                harvester.Danger = 0;
+                SpawnRifts(uid, harvester);
             }
 
             if (TryComp<AmbientSoundComponent>(uid, out var ambient))
@@ -119,6 +110,11 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         }
     }
 
+    private void OnDestruction(EntityUid uid, BluespaceHarvesterComponent component, DestructionEventArgs args)
+    {
+        SpawnRifts(uid, component);
+    }
+
     private void OnTargetLevel(EntityUid uid, BluespaceHarvesterComponent component, BluespaceHarvesterTargetLevelMessage args)
     {
         // If we switch off, we don't need to be switched on.
@@ -126,7 +122,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             return;
 
         component.TargetLevel = args.TargetLevel;
-        component.Reseted = true;
+        component.Reseted = true; // We start only after manual switching on.
         UpdateUI(uid, component);
     }
 
@@ -143,7 +139,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         if (component.Points < category.Cost)
             return;
 
-        component.Points -= category.Cost;
+        component.Points -= category.Cost; // Damn capitalism.
         SpawnLoot(uid, category.PrototypeId, component);
     }
 
@@ -272,8 +268,8 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
 
         var stable = GetStableLevel(uid, harvester);
 
-        if (harvester.CurrentLevel < stable)
-            return -4;
+        if (harvester.CurrentLevel < stable && harvester.CurrentLevel != 0)
+            return -1;
 
         if (harvester.CurrentLevel == stable)
             return 0;
@@ -314,11 +310,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         var totalSources = 0.0f;
         foreach (PowerSupplierComponent psc in netQ.Suppliers)
         {
-            var supply = psc.Enabled
-                ? psc.MaxSupply
-                : 0f;
-
-            totalSources += supply;
+            totalSources += psc.Enabled ? psc.MaxSupply : 0f;
         }
 
         foreach (BatteryDischargerComponent pcc in netQ.Dischargers)
@@ -326,15 +318,13 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
                 continue;
 
-            var rate = batteryComp.NetworkBattery.CurrentSupply;
-            totalSources += rate;
+            totalSources += batteryComp.NetworkBattery.CurrentSupply;
         }
 
         var totalConsumer = 0.0f;
         foreach (PowerConsumerComponent pcc in netQ.Consumers)
         {
-            var consume = pcc.DrawRate;
-            totalConsumer += consume;
+            totalConsumer += pcc.DrawRate;
         }
 
         foreach (BatteryChargerComponent pcc in netQ.Chargers)
@@ -342,8 +332,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
                 continue;
 
-            var rate = batteryComp.NetworkBattery.CurrentReceiving;
-            totalConsumer += rate;
+            totalConsumer += batteryComp.NetworkBattery.CurrentReceiving;
         }
 
         return totalSources - totalConsumer;
@@ -372,6 +361,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         if (!Resolve(uid, ref harvester))
             return;
 
+        harvester.Danger += harvester.DangerFromReset;
         harvester.Reseted = true;
         harvester.TargetLevel = 0;
     }
@@ -379,5 +369,27 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
     private bool Emagged(EntityUid uid)
     {
         return HasComp<EmagComponent>(uid);
+    }
+
+    private void SpawnRifts(EntityUid uid, BluespaceHarvesterComponent? harvester = null, int? danger = null)
+    {
+        if (!Resolve(uid, ref harvester))
+            return;
+
+        int currentDanger = danger ?? harvester.Danger;
+
+        var count = _random.Next(harvester.RiftCount);
+        for (var i = 0; i < count; i++)
+        {
+            // Haha loot!
+            var entity = SpawnLoot(uid, harvester.Rift, harvester);
+            if (entity == null)
+                continue;
+
+            EnsureComp<BluespaceHarvesterRiftComponent>((EntityUid) entity).Danger = currentDanger / count;
+        }
+
+        // We gave all the danger to the rifts.
+        harvester.Danger = 0;
     }
 }
