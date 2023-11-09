@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakAlisa
+  name: сердце Алисы
+  description: Огромное доброе сердце, запечатанное в куске ткани.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Cloaks.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodHeartFinaly
+    requiredSlot:
+    - neck
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
