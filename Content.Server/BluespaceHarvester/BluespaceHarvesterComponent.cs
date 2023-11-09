@@ -104,7 +104,7 @@ public sealed partial class BluespaceHarvesterComponent : Component
     /// Replaces RiftChance when hacked by Emag.
     /// </summary>
     [DataField]
-    public float EmaggedRiftChance = 0.02f;
+    public float EmaggedRiftChance = 0.03f;
 
     [DataField]
     public List<BluespaceHarvesterCategoryInfo> Categories = new()

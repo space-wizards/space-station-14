@@ -66,7 +66,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             // which is why it will not start.
             // So this is simply using the amount of free electricity in the network.
             var supplier = GetPowerSupplier(uid, harvester);
-            if (supplier < GetUsagePower(harvester.CurrentLevel) && !harvester.Reseted)
+            if (supplier < GetUsagePower(harvester.CurrentLevel))
             {
                 // If there is insufficient production,
                 // it will reset itself (turn off) and you will need to start it again,
@@ -361,6 +361,9 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
         if (!Resolve(uid, ref harvester))
             return;
 
+        if (!harvester.Reseted)
+            return;
+
         harvester.Danger += harvester.DangerFromReset;
         harvester.Reseted = true;
         harvester.TargetLevel = 0;
@@ -368,7 +371,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
 
     private bool Emagged(EntityUid uid)
     {
-        return HasComp<EmagComponent>(uid);
+        return HasComp<EmaggedComponent>(uid);
     }
 
     private void SpawnRifts(EntityUid uid, BluespaceHarvesterComponent? harvester = null, int? danger = null)
