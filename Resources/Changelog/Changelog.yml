@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed salvage and QM locker contents, type: Tweak}
-  id: 4645
-  time: '2023-08-21T01:04:43.0000000+00:00'
 - author: EnDecc
   changes:
   - {message: 'Three "plastic crates" in cargo have now been given appropriate labels,
@@ -2908,3 +2903,9 @@ Entries:
       specific ones start with applicable tools.', type: Tweak}
   id: 5144
   time: '2023-11-09T22:22:50.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Cyborgs are much more resilient and no longer crumble immediately upon
+      death., type: Tweak}
+  id: 5145
+  time: '2023-11-09T23:14:06.0000000+00:00'
