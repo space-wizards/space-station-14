@@ -1,11 +1,4 @@
 Entries:
-- author: mhamster
-  changes:
-  - message: Added plastic sheets recipe. Mix together 5u oil, 3u ash and 2u sulfuric
-      acid, heat it up to 374k and receive your homemade plastic sheet.
-    type: Add
-  id: 4594
-  time: '2023-08-14T23:40:48.0000000+00:00'
 - author: Just_Art
   changes:
   - message: Now a mini gravity generator can be constructed using a machine board
@@ -3524,3 +3517,10 @@ Entries:
     type: Fix
   id: 5093
   time: '2023-11-09T15:19:22.0000000+00:00'
+- author: OperatorXeno
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0428\u043B\u0451\u043F\
+      \u0430 \u041F\u043B\u0430\u0449"
+    type: Add
+  id: 5094
+  time: '2023-11-09T15:30:09.0000000+00:00'
