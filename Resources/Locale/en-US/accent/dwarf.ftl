@@ -201,6 +201,9 @@ accent-dwarf-words-replace-66 = grub
 accent-dwarf-words-67 = have
 accent-dwarf-words-replace-67 = hae
 
+accent-dwarf-words-68 = hey
+accent-dwarf-words-replace-68 = oi
+
 accent-dwarf-words-69 = what
 accent-dwarf-words-replace-69 = wot
 
