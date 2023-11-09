@@ -63,6 +63,8 @@
     - Binary
     - Common
     - Science
+  - type: AccessReader
+    access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
 
 - type: entity
   id: BorgChassisEngineer
@@ -102,6 +104,8 @@
     - Binary
     - Common
     - Science
+  - type: AccessReader
+    access: [["Engineering"], ["Command"], ["Research"]]
 
 - type: entity
   id: BorgChassisJanitor
@@ -141,6 +145,8 @@
     - Binary
     - Common
     - Science
+  - type: AccessReader
+    access: [["Service"], ["Command"], ["Research"]]
 
 - type: entity
   id: BorgChassisMedical
@@ -180,6 +186,8 @@
     - Binary
     - Common
     - Science
+  - type: AccessReader
+    access: [["Medical"], ["Command"], ["Research"]]
 
 - type: entity
   id: BorgChassisService
@@ -219,3 +227,6 @@
     - Binary
     - Common
     - Science
+  - type: AccessReader
+    access: [["Service"], ["Command"], ["Research"]]
+

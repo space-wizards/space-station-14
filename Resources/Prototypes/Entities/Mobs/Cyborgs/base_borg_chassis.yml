@@ -19,6 +19,7 @@
       path: /Audio/Effects/hit_kick.ogg
   - type: Clickable
   - type: CombatMode
+  - type: NoSlip
   - type: StaticPrice
     price: 1250
   - type: InteractionOutline
@@ -210,3 +211,7 @@
     enabled: false
     groups:
     - AllAccess
+  - type: Lock
+    locked: true
+  - type: AccessReader
+    access: [["Command"], ["Research"]]
