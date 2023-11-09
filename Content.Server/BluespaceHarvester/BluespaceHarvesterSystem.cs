@@ -70,7 +70,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             {
                 // If there is insufficient production,
                 // it will reset itself (turn off) and you will need to start it again,
-                // this will not allow you to set it to maximum and enjoy life
+                // this will not allow you to set it to maximum and enjoy life.
                 Reset(uid, harvester);
             }
 

@@ -1,42 +1,42 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       Title="{Loc 'bluespace-harvester-window-title'}"
-                      MinSize="800 360">
+                      MinSize="480 360">
     <BoxContainer Orientation="Vertical">
-        <Label Text="{Loc 'bluespace-harvester-window-lable-input'}"></Label>
-        <controls:HLine Color="#404040" Thickness="2" Margin="0 5 0 5"/>
+        <Label Text="{Loc 'bluespace-harvester-window-lable-input'}"/>
+        <controls:HLine Color="#404040" Thickness="2" Margin="0 5"/>
         <GridContainer Margin="2 0 0 0" Columns="2">
-            <Label Text="{Loc 'bluespace-harvester-window-level-input'}" StyleClasses="StatusFieldTitle"></Label>
+            <Label Text="{Loc 'bluespace-harvester-window-level-input'}" StyleClasses="StatusFieldTitle"/>
             <LineEdit Name="InputLevelBar" PlaceHolder="0" HorizontalExpand="True" Margin ="0 4"/>
-            <Label Text="{Loc 'bluespace-harvester-window-level-target'}" StyleClasses="StatusFieldTitle"></Label>
-            <Label Name="TargetLevel" Text="0"></Label>
-            <Label Text="{Loc 'bluespace-harvester-window-level-current'}" StyleClasses="StatusFieldTitle"></Label>
-            <Label Name="CurrentLevel" Text="0"></Label>
-            <Label Text="{Loc 'bluespace-harvester-window-level-desired'}" StyleClasses="StatusFieldTitle"></Label>
+            <Label Text="{Loc 'bluespace-harvester-window-level-target'}" StyleClasses="StatusFieldTitle"/>
+            <Label Name="TargetLevel" Text="0"/>
+            <Label Text="{Loc 'bluespace-harvester-window-level-current'}" StyleClasses="StatusFieldTitle"/>
+            <Label Name="CurrentLevel" Text="0"/>
+            <Label Text="{Loc 'bluespace-harvester-window-level-desired'}" StyleClasses="StatusFieldTitle"/>
             <ProgressBar Name="DesiredBar"
                                HorizontalExpand="True"
                                MinValue="0"
                                MaxValue="1"
                                SetHeight="25"/>
-            <Label Text="{Loc 'bluespace-harvester-window-power-usage'}" StyleClasses="StatusFieldTitle"></Label>
-            <Label Name="PowerUsageLabel" Text="0w"></Label>
-            <Label Text="{Loc 'bluespace-harvester-window-power-next'}" StyleClasses="StatusFieldTitle"></Label>
-            <Label Name="PowerUsageNextLabel" Text="0w"></Label>
-            <Label Text="{Loc 'bluespace-harvester-window-power-surplus'}" StyleClasses="StatusFieldTitle"></Label>
-            <Label Name="PowerSuppliertLabel" Text="0w"></Label>
+            <Label Text="{Loc 'bluespace-harvester-window-power-usage'}" StyleClasses="StatusFieldTitle"/>
+            <Label Name="PowerUsageLabel" Text="0w"/>
+            <Label Text="{Loc 'bluespace-harvester-window-power-next'}" StyleClasses="StatusFieldTitle"/>
+            <Label Name="PowerUsageNextLabel" Text="0w"/>
+            <Label Text="{Loc 'bluespace-harvester-window-power-surplus'}" StyleClasses="StatusFieldTitle"/>
+            <Label Name="PowerSuppliertLabel" Text="0w"/>
         </GridContainer>
         <Control/>
-        <Label Text="{Loc 'bluespace-harvester-window-lable-output'}"></Label>
-        <controls:HLine Color="#404040" Thickness="2" Margin="0 5 0 5"/>
+        <Label Text="{Loc 'bluespace-harvester-window-lable-output'}"/>
+        <controls:HLine Color="#404040" Thickness="2" Margin="0 5"/>
         <GridContainer Margin="2 0 10 0" Columns="2">
             <BoxContainer Orientation="Vertical">
                 <GridContainer Margin="2 0 0 0" Columns="2">
-                    <Label Text="{Loc 'bluespace-harvester-window-points-available'}" StyleClasses="StatusFieldTitle"></Label>
-                    <Label Name="AvailablePointsLabel" Text="0"></Label>
-                    <Label Text="{Loc 'bluespace-harvester-window-points-generation'}" StyleClasses="StatusFieldTitle"></Label>
-                    <Label Name="GenerationPointsLabel" Text="0"></Label>
-                    <Label Text="{Loc 'bluespace-harvester-window-points-total'}" StyleClasses="StatusFieldTitle"></Label>
-                    <Label Name="TotalPontsLabel" Text="0"></Label>
+                    <Label Text="{Loc 'bluespace-harvester-window-points-available'}" StyleClasses="StatusFieldTitle"/>
+                    <Label Name="AvailablePointsLabel" Text="0"/>
+                    <Label Text="{Loc 'bluespace-harvester-window-points-generation'}" StyleClasses="StatusFieldTitle"/>
+                    <Label Name="GenerationPointsLabel" Text="0"/>
+                    <Label Text="{Loc 'bluespace-harvester-window-points-total'}" StyleClasses="StatusFieldTitle"/>
+                    <Label Name="TotalPontsLabel" Text="0"/>
                 </GridContainer>
             </BoxContainer>
             <BoxContainer Name="Categories" Orientation="Vertical">
