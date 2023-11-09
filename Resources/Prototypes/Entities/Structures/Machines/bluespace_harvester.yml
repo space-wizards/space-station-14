@@ -47,10 +47,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500 # We don't need to break it
+        damage: 350 # We don't need to break it
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Breakage"]
+        acts: ["Destruction"]
   - type: ActivatableUI
     key: enum.BluespaceHarvesterUiKey.Key
   - type: UserInterface
