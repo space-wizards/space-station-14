@@ -1,11 +1,6 @@
 Entries:
 - author: Alekshhh
   changes:
-  - {message: Changed botany locker contents, type: Tweak}
-  id: 4644
-  time: '2023-08-21T01:04:11.0000000+00:00'
-- author: Alekshhh
-  changes:
   - {message: Changed salvage and QM locker contents, type: Tweak}
   id: 4645
   time: '2023-08-21T01:04:43.0000000+00:00'
@@ -2907,3 +2902,9 @@ Entries:
   - {message: Cats now deals piercing damage istead of blunt, type: Tweak}
   id: 5143
   time: '2023-11-09T12:24:00.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Borgs have had a QOL pass, they are access locked now and the department
+      specific ones start with applicable tools.', type: Tweak}
+  id: 5144
+  time: '2023-11-09T22:22:50.0000000+00:00'
