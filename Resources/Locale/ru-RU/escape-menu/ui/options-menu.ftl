@@ -28,6 +28,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ui-options-show-held-item = Показать удерживаемый элемент рядом с курсором?
 ui-options-show-combat-mode-indicators = Показать индикатор боевого режима рядом с курсором?
+ui-options-show-looc-on-head = Показать LOOC сообщения над головой персонажа?
 ui-options-vsync = Вертикальная синхронизация
 ui-options-fullscreen = Полный экран
 ui-options-lighting-label = Качество освещения:

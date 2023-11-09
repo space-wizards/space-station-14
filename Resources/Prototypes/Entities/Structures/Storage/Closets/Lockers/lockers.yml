@@ -444,7 +444,7 @@
   components:
   - type: Appearance
   - type: AccessReader
-    access: [["Command"]]
+    access: [["Centcom"]]
   - type: EntityStorageVisuals
     stateBaseClosed: hop
     stateDoorOpen: hop_open

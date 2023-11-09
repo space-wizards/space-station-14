@@ -98,3 +98,5 @@ ent-PeaSeeds = пакет семян гороха
     .desc = "Эти непримечательные стебли внесли большой вклад в развитие современной генетики."
 ent-PumpkinSeeds = пакет семян тыквы
     .desc = { ent-SeedBase.desc }
+ent-CottonSeeds = пакет семян хлопка
+    .desc = { ent-SeedBase.desc }

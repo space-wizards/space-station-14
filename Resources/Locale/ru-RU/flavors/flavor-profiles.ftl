@@ -113,6 +113,7 @@ flavor-complex-meatballs = как фрикадельки
 flavor-complex-nettles = как крапива
 flavor-complex-jungle = как джунгли
 flavor-complex-vegetables = как овощи
+flavor-complex-cotton = как хлопок
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
