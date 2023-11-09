@@ -107,7 +107,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
         SubscribeLocalEvent<ShuttleConsoleFTLTravelStartEvent>(OnShuttleConsoleFTLStart);
         SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnShuttleFTLAttempt);
-        SubscribeLocalEvent<NukeOperativeComponent, RoleChangeNotifyEvent>(OnRoleChangeNotify);
+        SubscribeLocalEvent<NukeOperativeComponent, MindRoleAddedEvent>(OnRoleAddNotify);
     }
 
     /// <summary>
@@ -1117,7 +1117,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// <summary>
     /// Notfifies player of being a nukie with message and sound
     /// </summary>
-    private void OnRoleChangeNotify(EntityUid uid, NukeOperativeComponent nukeop, ref RoleChangeNotifyEvent args)
+    private void OnRoleAddNotify(EntityUid uid, NukeOperativeComponent nukeop, ref MindRoleAddedEvent args)
     {
         if(!TryGetRuleFromOperative(uid, out var rulecomps))
             return;

@@ -53,7 +53,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
 
-        SubscribeLocalEvent<TraitorRuleComponent, RoleChangeNotifyEvent>(OnRoleChangeNotify);
+        SubscribeLocalEvent<TraitorRuleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
 
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
@@ -67,9 +67,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             DoTraitorStart(component);
     }
 
-    private void OnRoleChangeNotify(EntityUid uid, TraitorRuleComponent comp, ref RoleChangeNotifyEvent args)
+    private void OnRoleAddNotify(EntityUid mindId, TraitorRuleComponent comp, ref MindRoleAddedEvent args)
     {
-        if (!_mindSystem.TryGetSession(uid, out var session))
+        if (!_mindSystem.TryGetSession(mindId, out var session))
             return;
 
         _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
@@ -79,7 +79,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         // Doing this pda stuff a second time just to print the message is suboptimal
 
         // I think this takes the uid of the entity holding the PDA, need to test idk
-        var pda = _uplink.FindUplinkTarget(uid);
+        var pda = _uplink.FindUplinkTarget(mindId);
         if (pda == null)
             return;
         Note[]? code = null;

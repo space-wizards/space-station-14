@@ -88,8 +88,6 @@ public abstract class SharedRoleSystem : EntitySystem
         {
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
-        var ev = new RoleChangeNotifyEvent();
-        RaiseLocalEvent(ref ev);
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"'Role {typeof(T).Name}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
@@ -157,10 +155,3 @@ public abstract class SharedRoleSystem : EntitySystem
         return _antagTypes.Contains(typeof(T));
     }
 }
-
-/// <summary>
-/// Event for role systems to implement notification to the player,
-/// raised when a role is added to a mindId
-/// </summary>
-[ByRefEvent]
-public record struct RoleChangeNotifyEvent();
