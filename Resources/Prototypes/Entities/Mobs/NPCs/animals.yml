@@ -2770,12 +2770,12 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.2
-        density: 5
+          radius: 0.25
+        density: 40
         mask:
-        - SmallMobMask
+        - MobMask
         layer:
-        - SmallMobLayer
+        - MobLayer
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2799,6 +2799,7 @@
     bloodMaxVolume: 50
   - type: Tag
     tags:
+    - DoorBumpOpener
     - VimPilot
   - type: Armor # its got a shell, I guess.
     modifiers:
