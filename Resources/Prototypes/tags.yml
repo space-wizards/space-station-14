@@ -973,6 +973,9 @@
   id: SpeedLoaderRifle
 
 - type: Tag
+  id: SpiderCraft
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag

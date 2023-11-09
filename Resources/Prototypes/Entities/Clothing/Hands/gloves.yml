@@ -132,9 +132,9 @@
   description: Old version of the famous nitrile gloves. Still gets its use.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
