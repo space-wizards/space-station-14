@@ -157,6 +157,28 @@
   prototype: ClothingOuterCoatLabSeniorPhysician
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLabCoroner
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Coroner
+  prototype: ClothingOuterCoatLabCoroner
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLabCoolCoroner
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Coroner
+  prototype: ClothingOuterCoatLabCoolCoroner
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterCoatRnd
   category: loadout-category-outerClothing
   cost: 2

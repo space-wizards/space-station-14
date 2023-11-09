@@ -61,8 +61,23 @@
   components:
   - type: Sprite
     sprite: Ganimed/Clothing/OuterClothing/Coats/labcoat_coroner.rsi
+    heldPrefix: open
+    state: icon-open
   - type: Clothing
     sprite: Ganimed/Clothing/OuterClothing/Coats/labcoat_coroner.rsi
+    equippedPrefix: open
+
+
+- type: entity
+  parent: ClothingOuterCoatLabCoroner
+  id: ClothingOuterCoatLabCoolCoroner
+  name: cobalt coroner lab coat
+  description: A well-kept lab coat usually worn for special occasions and management meetings. Not as if management isn't aware of your shady business.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Coats/labcoat_coolcoroner.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Coats/labcoat_coolcoroner.rsi
 
 
 - type: entity
