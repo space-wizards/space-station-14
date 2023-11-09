@@ -53,7 +53,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
 
-        SubscribeLocalEvent<TraitorRuleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
+        SubscribeLocalEvent<TraitorRoleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
 
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
@@ -67,14 +67,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             DoTraitorStart(component);
     }
 
-    private void OnRoleAddNotify(EntityUid mindId, TraitorRuleComponent comp, ref MindRoleAddedEvent args)
+    private void OnRoleAddNotify(EntityUid mindId, TraitorRoleComponent comp, ref MindRoleAddedEvent args)
     {
         if (!_mindSystem.TryGetSession(mindId, out var session))
             return;
 
         _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
-        _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
-        _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
+        //_chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
+        //_audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
 
         // Doing this pda stuff a second time just to print the message is suboptimal
 
@@ -87,7 +87,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (code != null)
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
 
-        _audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

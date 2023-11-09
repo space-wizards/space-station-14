@@ -107,7 +107,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
         SubscribeLocalEvent<ShuttleConsoleFTLTravelStartEvent>(OnShuttleConsoleFTLStart);
         SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnShuttleFTLAttempt);
-        SubscribeLocalEvent<NukeOperativeComponent, MindRoleAddedEvent>(OnRoleAddNotify);
+        SubscribeLocalEvent<NukeopsRoleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
     }
 
     /// <summary>
@@ -1117,15 +1117,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// <summary>
     /// Notfifies player of being a nukie with message and sound
     /// </summary>
-    private void OnRoleAddNotify(EntityUid uid, NukeOperativeComponent nukeop, ref MindRoleAddedEvent args)
+    private void OnRoleAddNotify(EntityUid mindId, NukeopsRoleComponent comp, ref MindRoleAddedEvent args)
     {
-        if(!TryGetRuleFromOperative(uid, out var rulecomps))
+        if (!_mind.TryGetSession(mindId, out var session))
+            return;
+        _audio.PlayGlobal(comp.GreetSoundNotification, session);
+        if(!TryGetRuleFromOperative(mindId, out var rulecomps))
             return;
 
         var nukieRule = rulecomps.Value.Item1;
 
-        if (!_mind.TryGetSession(uid, out var session))
-            return;
 
         if(nukieRule.TargetStation is not { } station)
             return;
@@ -1133,7 +1134,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if(nukieRule.TargetStation != null && !string.IsNullOrEmpty(Name(nukieRule.TargetStation.Value)))
             _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
 
-        _audio.PlayGlobal(nukeop.GreetSoundNotification, session);
         return;
     }
 
