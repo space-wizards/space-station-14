@@ -32,11 +32,10 @@
         - SmallMobMask
         layer:
         - MachineLayer
-  - type: EntityStorage #to do: add ventilate when they add it.
+  - type: EntityStorage
     capacity: 1
-    #whitelist:
-    #  components:
-    #  - MobState
+    airtight: false
+    itemCanStoreMobs: true
   - type: Weldable
   - type: PlaceableSurface
     isPlaceable: false

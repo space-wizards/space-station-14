@@ -183,6 +183,7 @@
         - CableHVStack10
         - CableMVStack10
         - CableApcStack10
+        - PetCarrier
       chance: 0.6
       offset: 0.0
 
