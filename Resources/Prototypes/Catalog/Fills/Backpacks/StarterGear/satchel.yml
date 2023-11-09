@@ -225,6 +225,7 @@
       contents:
         - id: BoxSurvival
         - id: BookRandom
+        - id: BookTerminalMachineCircuitboard # Плата принтера книг, у нас нет возможности её печатать.
 
 - type: entity
   noSpawn: true
