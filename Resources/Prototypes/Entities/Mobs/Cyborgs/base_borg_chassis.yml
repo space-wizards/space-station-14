@@ -79,10 +79,13 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
+    - Common
+    - Science
   - type: ActiveRadio
     channels:
     - Binary
     - Common
+    - Science
   - type: ZombieImmune
   - type: Repairable
     doAfterDelay: 10
@@ -135,7 +138,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 75
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -144,7 +147,7 @@
             volume: 5
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
@@ -152,6 +155,7 @@
         containers:
         - borg_brain
         - borg_module
+        - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: HandheldLight
