@@ -1,12 +1,4 @@
 Entries:
-- author: EnDecc
-  changes:
-  - {message: 'Three "plastic crates" in cargo have now been given appropriate labels,
-      after Centcomm forgot to use tape on them. Disaster pizza crate, Softdrinks
-      crate, and Softdrinks bulk crate will now show up in orders appropriately.',
-    type: Fix}
-  id: 4646
-  time: '2023-08-21T18:16:21.0000000+00:00'
 - author: Errant-4
   changes:
   - {message: 'Crit/Dead people that somehow end up holding a gun can no longer fire
@@ -2909,3 +2901,8 @@ Entries:
       death., type: Tweak}
   id: 5145
   time: '2023-11-09T23:14:06.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Fixed the strip menu for Arachnids., type: Fix}
+  id: 5146
+  time: '2023-11-09T23:42:16.0000000+00:00'
