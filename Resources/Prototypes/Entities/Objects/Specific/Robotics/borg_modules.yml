@@ -411,7 +411,7 @@
     - BooksBag
     - HandLabeler
     - Lighter
-    - Shaker
+    - DrinkShaker
 
 - type: entity
   id: BorgModuleMusique
