@@ -323,8 +323,8 @@
   result: BorgModuleCable
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -333,8 +333,8 @@
   result: BorgModuleFireExtinguisher
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -343,8 +343,8 @@
   result: BorgModuleGPS
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -353,8 +353,8 @@
   result: BorgModuleRadiationDetection
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -363,8 +363,8 @@
   result: BorgModuleTool
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -373,8 +373,8 @@
   result: BorgModuleAppraisal
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -383,8 +383,8 @@
   result: BorgModuleMining
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -394,7 +394,7 @@
   completetime: 3
   materials:
     Steel: 500
-    Glass: 750
+    Glass: 500
     Plastic: 250
     Gold: 50
 
@@ -404,7 +404,7 @@
   completetime: 3
   materials:
     Steel: 500
-    Glass: 750
+    Glass: 500
     Plastic: 250
     Gold: 50
 
@@ -414,7 +414,7 @@
   completetime: 3
   materials:
     Steel: 500
-    Glass: 750
+    Glass: 500
     Plastic: 250
     Gold: 50
 
@@ -423,8 +423,8 @@
   result: BorgModuleGasAnalyzer
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -434,7 +434,7 @@
   completetime: 3
   materials:
     Steel: 500
-    Glass: 750
+    Glass: 500
     Plastic: 250
     Gold: 50
 
@@ -443,8 +443,8 @@
   result: BorgModuleLightReplacer
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -453,8 +453,8 @@
   result: BorgModuleCleaning
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -463,8 +463,8 @@
   result: BorgModuleTrashCollection
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -473,8 +473,8 @@
   result: BorgModuleDiagnosis
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -483,8 +483,8 @@
   result: BorgModuleTreatment
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -494,7 +494,7 @@
   completetime: 3
   materials:
     Steel: 500
-    Glass: 750
+    Glass: 500
     Plastic: 250
     Gold: 50
 
@@ -504,7 +504,7 @@
   completetime: 3
   materials:
     Steel: 500
-    Glass: 750
+    Glass: 500
     Plastic: 250
     Gold: 50
 
@@ -513,8 +513,8 @@
   result: BorgModuleArtifact
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -523,18 +523,18 @@
   result: BorgModuleAnomaly
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
 - type: latheRecipe
-  id: BorgModuleLiteracy
-  result: BorgModuleLiteracy
+  id: BorgModuleService
+  result: BorgModuleService
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -543,8 +543,8 @@
   result: BorgModuleMusique
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -553,8 +553,8 @@
   result: BorgModuleGardening
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -563,8 +563,8 @@
   result: BorgModuleHarvesting
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
 
@@ -573,7 +573,7 @@
   result: BorgModuleClowning
   completetime: 3
   materials:
-    Steel: 500
-    Glass: 750
+    Steel: 250
+    Glass: 250
     Plastic: 250
     Gold: 50
