@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingMaskGasExplorer
+  id: BlueShieldSWAT
+  name: синяя маска спецназа
+  description: Неоново-синяя маска, используемая для деморализации Грейтайда в дикой природе.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Mask/blue-shield-mask.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Mask/blue-shield-mask.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
