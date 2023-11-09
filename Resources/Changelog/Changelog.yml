@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: All of the emergency medkit cargo crates now only give a single kit
-      but are cheaper in return., type: Tweak}
-  id: 4641
-  time: '2023-08-20T21:05:58.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed diona always being tinted brown., type: Fix}
   - {message: Diona can now customize their eye color and the color of their vines.,
     type: Add}
@@ -2906,3 +2900,8 @@ Entries:
   - {message: Fixed issue getting stuck while vaulting in space, type: Fix}
   id: 5140
   time: '2023-11-09T01:43:43.0000000+00:00'
+- author: eddiedd
+  changes:
+  - {message: cotton seeds are now available from the MegaSeed Servitor., type: Add}
+  id: 5141
+  time: '2023-11-09T01:54:07.0000000+00:00'
