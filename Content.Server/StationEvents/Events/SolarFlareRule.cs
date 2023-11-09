@@ -1,17 +1,20 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Radio;
-using Robust.Shared.Random;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
     [Dependency] private readonly SharedDoorSystem _door = default!;
 
@@ -27,10 +30,17 @@ public sealed class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
     {
         base.Started(uid, comp, gameRule, args);
 
+        foreach (var id in comp.AffectedChannels)
+        {
+            var channel = _proto.Index<RadioChannelPrototype>(id);
+            comp.AffectedFrequencies.Add(channel.Frequency);
+        }
+
         for (var i = 0; i < comp.ExtraCount; i++)
         {
-            var channel = RobustRandom.Pick(comp.ExtraChannels);
-            comp.AffectedChannels.Add(channel);
+            var id = RobustRandom.Pick(comp.ExtraChannels);
+            var channel = _proto.Index<RadioChannelPrototype>(id);
+            comp.AffectedFrequencies.Add(channel.Frequency);
         }
     }
 
@@ -65,7 +75,7 @@ public sealed class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
 
-            if (!flare.AffectedChannels.Contains(args.Channel.ID))
+            if (!flare.AffectedFrequencies.Contains(args.Channel.Frequency))
                 continue;
 
             if (!flare.OnlyJamHeadsets || (HasComp<HeadsetComponent>(args.RadioReceiver) || HasComp<HeadsetComponent>(args.RadioSource)))

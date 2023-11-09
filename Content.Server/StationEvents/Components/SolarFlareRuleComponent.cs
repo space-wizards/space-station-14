@@ -18,7 +18,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     public bool OnlyJamHeadsets;
 
     /// <summary>
-    ///     Channels that will be disabled for a duration of event
+    ///     Channels that will always be disabled.
     /// </summary>
     [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> AffectedChannels = new();
@@ -40,6 +40,13 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// </remarks>
     [DataField("extraCount")]
     public uint ExtraCount;
+
+    /// <summary>
+    ///     Radio frequencies that will be disabled for the event duration.
+    ///     Built from <see cref"AffectedChannels"> and <see cref="ExtraChannels"/>.
+    /// </summary>
+    [DataField]
+    public HashSet<int> AffectedFrequencies = new();
 
     /// <summary>
     ///     Chance light bulb breaks per second during event
