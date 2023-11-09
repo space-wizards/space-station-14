@@ -4,3 +4,4 @@
   name: Ghost role
   description: Utility job for correct work job ban.
   canBeAntag: true
+  canBeZombie: true

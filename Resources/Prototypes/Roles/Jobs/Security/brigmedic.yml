@@ -14,6 +14,7 @@
   icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  canBeZombie: false
   access:
   - Medical
   - Security

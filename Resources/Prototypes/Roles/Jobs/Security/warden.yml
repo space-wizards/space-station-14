@@ -11,6 +11,7 @@
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  canBeZombie: false
   access:
   - Security
   - Armory
