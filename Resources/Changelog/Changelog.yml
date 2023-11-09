@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Slowed the speed at which kudzu spreads., type: Tweak}
-  id: 4643
-  time: '2023-08-21T01:03:50.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed botany locker contents, type: Tweak}
@@ -2906,3 +2901,9 @@ Entries:
       heads, just disable it in settings!', type: Add}
   id: 5142
   time: '2023-11-09T09:18:59.0000000+00:00'
+- author: ravage123321
+  changes:
+  - {message: Kitten was added, type: Add}
+  - {message: Cats now deals piercing damage istead of blunt, type: Tweak}
+  id: 5143
+  time: '2023-11-09T12:24:00.0000000+00:00'
