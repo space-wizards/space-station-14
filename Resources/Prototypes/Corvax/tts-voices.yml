@@ -188,6 +188,55 @@
   id: khajiit
 
 - type: ttsVoice
+  name: Эленвен
+  description: Голос персонажа Эленвен из игры TES 5 Skyrim
+  sex: Female
+  speaker: elenwen
+  id: elenwen
+
+- type: ttsVoice
+  name: Тит Мид II
+  description: Голос персонажа Тит Мид II из игры TES 5 Skyrim
+  sex: Male
+  speaker: emperor
+  id: emperor
+
+- type: ttsVoice
+  name: Стражник
+  description: Голос Стражников из игры TES 5 Skyrim
+  sex: Male
+  speaker: guard
+  id: guard
+
+- type: ttsVoice
+  name: Ворожея
+  description: Голос Ворожей из игры TES 5 Skyrim
+  sex: Male
+  speaker: hagraven
+  id: hagraven
+
+- type: ttsVoice
+  name: Хермеус Мора
+  description: Голос персонажа Хермеус Мора из игры TES 5 Skyrim
+  sex: Male
+  speaker: hermaeus_mora
+  id: hermaeus_mora
+
+- type: ttsVoice
+  name: Норд
+  description: Голос Нордов из игры TES 5 Skyrim
+  sex: Male
+  speaker: nord
+  id: nord
+
+- type: ttsVoice
+  name: Ульфрик Буревестник
+  description: Голос персонажа Ульфрик Буревестник из игры TES 5 Skyrim
+  sex: Male
+  speaker: ulfric
+  id: ulfric
+
+- type: ttsVoice
   name: GLaDOS
   description: Голос персонажа GLaDOS из игры Portal 2
   sex: Female
@@ -235,6 +284,13 @@
   sex: Female
   speaker: cirilla
   id: cirilla
+
+- type: ttsVoice
+  name: Керис ан Крайт
+  description: Голос персонажа Керис ан Крайт из игры The Witcher 3
+  sex: Female
+  speaker: cerys
+  id: cerys
 
 - type: ttsVoice
   name: Ламберт
@@ -426,6 +482,27 @@
   id: v_female
 
 - type: ttsVoice
+  name: Джуди Альварес
+  description: Голос персонажа Джуди Альварес из игры Cyberpunk 2077
+  sex: Female
+  speaker: judy
+  id: judy
+
+- type: ttsVoice
+  name: Митч Андерсон
+  description: Голос персонажа Митч Андерсон из игры Cyberpunk 2077
+  sex: Male
+  speaker: mitch
+  id: mitch
+
+- type: ttsVoice
+  name: Скиппи
+  description: Голос персонажа Скиппи из игры Cyberpunk 2077
+  sex: Male
+  speaker: skippy
+  id: skippy
+
+- type: ttsVoice
   name: Сержант Дорнан
   description: Голос персонажа Сержант Дорнан из игры Fallout 2
   sex: Male
@@ -445,4 +522,32 @@
   sex: Male
   speaker: richardson
   id: richardson
+
+- type: ttsVoice
+  name: Бутч Харрис
+  description: Голос персонажа Бутч Харрис из игры Fallout 2
+  sex: Male
+  speaker: butch
+  id: butch
+
+- type: ttsVoice
+  name: Маркус
+  description: Голос персонажа Маркус из игры Fallout 2
+  sex: Male
+  speaker: marcus
+  id: marcus
+
+- type: ttsVoice
+  name: Сулик
+  description: Голос персонажа Сулик из игры Fallout 2
+  sex: Male
+  speaker: sulik
+  id: sulik
+
+- type: ttsVoice
+  name: Добрая Талия
+  description: Голос персонажа Добрая Талияиз игры Dungeons 3
+  sex: Female
+  speaker: good_thalya
+  id: good_thalya
 
