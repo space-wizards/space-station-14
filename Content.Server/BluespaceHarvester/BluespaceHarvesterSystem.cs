@@ -66,7 +66,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
             // which is why it will not start.
             // So this is simply using the amount of free electricity in the network.
             var supplier = GetPowerSupplier(uid, harvester);
-            if (supplier < GetUsagePower(harvester.CurrentLevel))
+            if (supplier < GetUsagePower(harvester.CurrentLevel) && !harvester.Reseted)
             {
                 // If there is insufficient production,
                 // it will reset itself (turn off) and you will need to start it again,
