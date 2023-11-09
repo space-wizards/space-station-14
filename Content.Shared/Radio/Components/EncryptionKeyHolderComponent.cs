@@ -49,6 +49,12 @@ public sealed partial class EncryptionKeyHolderComponent : Component
     public HashSet<string> Channels = new();
 
     /// <summary>
+    ///     Combined set of radio frequencies provided by all contained keys.
+    /// </summary>
+    [ViewVariables]
+    public HashSet<int> Frequencies = new();
+
+    /// <summary>
     ///     This is the channel that will be used when using the default/department prefix (<see cref="SharedChatSystem.DefaultChannelKey"/>).
     /// </summary>
     [ViewVariables]
