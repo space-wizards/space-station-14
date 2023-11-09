@@ -73,6 +73,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             return;
 
         component.Channels.Clear();
+        component.SecretChannels.Clear();
         component.DefaultChannel = null;
 
         foreach (var ent in component.KeyContainer.ContainedEntities)
@@ -80,6 +81,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             if (TryComp<EncryptionKeyComponent>(ent, out var key))
             {
                 component.Channels.UnionWith(key.Channels);
+                component.SecretChannels.UnionWith(key.SecretChannels);
                 component.DefaultChannel ??= key.DefaultChannel;
             }
         }

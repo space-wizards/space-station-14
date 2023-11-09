@@ -49,6 +49,12 @@ public sealed partial class EncryptionKeyHolderComponent : Component
     public HashSet<string> Channels = new();
 
     /// <summary>
+    ///     These canals will not be shown on inspection
+    /// </summary>
+    [ViewVariables]
+    public HashSet<string> SecretChannels = new();
+
+    /// <summary>
     ///     This is the channel that will be used when using the default/department prefix (<see cref="SharedChatSystem.DefaultChannelKey"/>).
     /// </summary>
     [ViewVariables]

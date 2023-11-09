@@ -77,19 +77,7 @@
     layers:
     - state: crypt_gold
     - state: cap_label
-
-- type: entity
-  id: EncryptionKeyStationSpy
-  parent: EncryptionKeyStationMaster
-  name: common encryption key
-  description: An encryption key used by anyone.
-  suffix: Spy
-  components:
-  - type: Sprite
-    layers:
-    - state: crypt_gray
-    - state: common_label
-  
+    
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyCommand
@@ -256,3 +244,26 @@
         - state: crypt_rusted
         - state: pirate_label
 
+- type: entity
+  id: EncryptionKeyStationSpy
+  parent: EncryptionKey
+  name: common encryption key
+  description: An encryption key used by anyone.
+  suffix: Spy
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    secretChannels:
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    defaultChannel: Common  
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: common_label
