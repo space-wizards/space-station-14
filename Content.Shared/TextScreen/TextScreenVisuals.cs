@@ -14,10 +14,10 @@ public enum TextScreenVisuals : byte
     ///     Is this a timer or a text-screen? <br/>
     ///     Expects a <see cref="TextScreenMode"/>.
     /// </summary>
-    Mode,
+    // Mode,
     /// <summary>
     ///     What text to show? <br/>
-    ///     Expects a <see cref="string"/>.
+    ///     Expects a <see cref="string[]"/>.
     /// </summary>
     ScreenText,
     /// <summary>
@@ -27,9 +27,9 @@ public enum TextScreenVisuals : byte
     TargetTime
 }
 
-[Serializable, NetSerializable]
-public enum TextScreenMode : byte
-{
-    Text,
-    Timer
-}
+// [Serializable, NetSerializable]
+// public enum TextScreenMode : byte
+// {
+//     Text,
+//     Timer
+// }

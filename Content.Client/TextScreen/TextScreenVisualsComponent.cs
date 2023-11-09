@@ -1,8 +1,6 @@
 using System.Numerics;
 using Content.Shared.TextScreen;
 using Robust.Client.Graphics;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Client.TextScreen;
 
@@ -29,14 +27,14 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <summary>
     ///     The current mode of the screen - is it showing text, or currently counting?
     /// </summary>
-    [DataField("currentMode")]
-    public TextScreenMode CurrentMode = TextScreenMode.Text;
+    // [DataField("currentMode")]
+    // public TextScreenMode CurrentMode = TextScreenMode.Text;
 
     /// <summary>
     ///     The time it is counting to or from.
     /// </summary>
-    [DataField("targetTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan TargetTime = TimeSpan.Zero;
+    // [DataField("targetTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    // public TimeSpan TargetTime = TimeSpan.Zero;
 
     /// <summary>
     ///     Offset for drawing the text. <br/>
@@ -67,9 +65,9 @@ public sealed partial class TextScreenVisualsComponent : Component
     ///     Text the screen should show when it's not counting.
     /// </summary>
     [DataField("text"), ViewVariables(VVAccess.ReadWrite)]
-    public string Text = "";
+    public string[] Text = new string[] { "" };
 
-    public string TextToDraw = "";
+    public string[] TextToDraw = new string[] { "" };
 
     /// <summary>
     ///     The different layers for each character - this is the currently drawn states.

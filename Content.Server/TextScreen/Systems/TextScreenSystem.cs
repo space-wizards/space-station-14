@@ -1,5 +1,5 @@
 using Content.Server.TextScreen.Components;
-using Content.Server.TextScreen.Events;
+using Content.Shared.TextScreen.Events;
 
 using Content.Shared.TextScreen;
 
@@ -46,7 +46,7 @@ public sealed class TextScreenSystem : EntitySystem
         if (appearance != null)
         {
             component.Remaining = _gameTiming.CurTime + args.Duration;
-            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
+            // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
             _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.Remaining, appearance);
         }
     }
@@ -57,9 +57,9 @@ public sealed class TextScreenSystem : EntitySystem
     private void OnText(EntityUid uid, TextScreenComponent component, ref TextScreenTextEvent args)
     {
         component.Remaining = null;
-        component.Label = args.Label[..Math.Min(5, args.Label.Length)];
+        component.Label = [args.Label[..Math.Min(5, args.Label.Length)]];
 
-        _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
+        // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
     }
 
@@ -73,7 +73,7 @@ public sealed class TextScreenSystem : EntitySystem
                 continue;
 
             timer.Remaining = null;
-            _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
+            // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
 
             if (timer.DoneSound != null)
                 _audio.PlayPvs(timer.DoneSound, uid);
