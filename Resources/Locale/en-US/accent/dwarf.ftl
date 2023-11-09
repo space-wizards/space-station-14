@@ -195,17 +195,11 @@ accent-dwarf-words-replace-63 = be
 accent-dwarf-words-64 = am
 accent-dwarf-words-replace-64 = be
 
-accent-dwarf-words-65 = beer
-accent-dwarf-words-replace-65 = booze
-
 accent-dwarf-words-66 = food
 accent-dwarf-words-replace-66 = grub
 
 accent-dwarf-words-67 = have
 accent-dwarf-words-replace-67 = hae
-
-accent-dwarf-words-68 = hey
-accent-dwarf-words-replace-68 = oye
 
 accent-dwarf-words-69 = what
 accent-dwarf-words-replace-69 = wot
@@ -267,9 +261,6 @@ accent-dwarf-words-replace-87 = babee
 accent-dwarf-words-88 = after
 accent-dwarf-words-replace-88 = efter
 
-accent-dwarf-words-89 = for
-accent-dwarf-words-replace-89 = fer
-
 accent-dwarf-words-90 = gonna
 accent-dwarf-words-replace-90 = gaun'ae
 
@@ -330,9 +321,6 @@ accent-dwarf-words-replace-108 = hou'er
 accent-dwarf-words-109 = think
 accent-dwarf-words-replace-109 = reckon
 
-accent-dwarf-words-110 = thinking
-accent-dwarf-words-replace-110 = fer
-
 accent-dwarf-words-111 = hamlet
 accent-dwarf-words-replace-111 = hammy
 
@@ -351,18 +339,6 @@ accent-dwarf-words-replace-115 = reddie
 accent-dwarf-words-116 = nuclear agent
 accent-dwarf-words-replace-116 = reddie
 
-accent-dwarf-words-117 = antag
-accent-dwarf-words-replace-117 = baddie
-
-accent-dwarf-words-118 = syndicate
-accent-dwarf-words-replace-118 = baddie
-
-accent-dwarf-words-119 = syndi
-accent-dwarf-words-replace-119 = baddie
-
-accent-dwarf-words-120 = syndie
-accent-dwarf-words-replace-120 = baddie
-
 accent-dwarf-words-121 = more
 accent-dwarf-words-replace-121 = maer
 
@@ -371,9 +347,6 @@ accent-dwarf-words-replace-122 = maero'er
 
 accent-dwarf-words-123 = over
 accent-dwarf-words-replace-123 = o'er
-
-accent-dwarf-words-124 = shuttle
-accent-dwarf-words-replace-124 = molly
 
 accent-dwarf-words-125 = human
 accent-dwarf-words-replace-125 = humi
