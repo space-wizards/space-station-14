@@ -112,3 +112,8 @@
   license: "CC-BY-4.0"
   copyright: "Audio is recorded/created by Pfranzen 'FreeSound.org'. The original audio was trimmed and renamed"
   source: "https://freesound.org/people/pfranzen/sounds/322744/"
+
+- files: ["armadillo_scream.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Audio is recorded/created by youtube user 'Joe Furman'. The original audio was trimmed and converted from MP3 to OGG format"
+  source: "https://www.youtube.com/watch?v=nPuOQxJOqh0"

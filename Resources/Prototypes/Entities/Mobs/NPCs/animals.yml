@@ -2749,3 +2749,60 @@
     factions:
     - Passive
 
+- type: entity
+  name: armadillo
+  parent: SimpleMobBase
+  id: MobArmadillo
+  description: some sort of armored rat.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: armadillo
+      sprite: Mobs/Animals/armadillo.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: armadillo
+      Critical:
+        Base: ball
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-armadillo
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/armadillo_scream.ogg
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: Tag
+    tags:
+    - VimPilot
+  - type: Armor # its got a shell, I guess.
+    modifiers:
+      coefficients:
+        Slash: 0.90
+        Piercing: 0.90
+        Heat: 1.10

@@ -792,3 +792,17 @@
   - type: ConditionalSpawner
     prototypes:
     - MobLuminousEntity
+
+- type: entity
+  name: armadillo spawner
+  id: SpawnMobArmadillo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: armadillo
+      sprite: Mobs/Animals/armadillo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobArmadillo
