@@ -181,8 +181,32 @@
       - state: equipped-FEET
         offset: "0, -0.02"
   - type: Item
-    size: 10
+    size: Small
     sprite: Clothing/Shoes/Specific/large_clown.rsi
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.8
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesSkates
+  name: roller skates
+  description: "Get your skates on!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/skates.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/skates.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+        offset: "0, -0.04"
+  - type: Item
+    sprite: Clothing/Shoes/Specific/skates.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.2
+    sprintModifier: 1.2
+  - type: Skates
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSkates

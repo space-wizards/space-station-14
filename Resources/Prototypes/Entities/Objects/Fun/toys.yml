@@ -94,7 +94,11 @@
   description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
   components:
   - type: Sprite
+    sprite: Objects/Fun/toys.rsi
     state: plushie_h
+  - type: Item
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: bee
   - type: Extractable
     grindableSolutionName: bee
   - type: SolutionContainerManager
@@ -103,6 +107,12 @@
         reagents:
           - ReagentId: GroundBee
             Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: bee
+    slots:
+    - HEAD
 
 - type: entity
   parent: BasePlushie
@@ -168,6 +178,7 @@
     radius: 1.5
     energy: 2
     netsync: false
+
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!
@@ -554,7 +565,7 @@
   components:
   - type: Sprite
   - type: Item
-    size: 24
+    size: Normal
 
 - type: entity
   parent: FoamWeaponBase
@@ -566,7 +577,7 @@
     sprite: Objects/Fun/toys.rsi
     state: foamcrossbow
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamcrossbow
   - type: Gun
@@ -672,7 +683,7 @@
       types:
         Blunt: 0
   - type: Item
-    size: 20
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
   - type: ItemCooldown
@@ -692,7 +703,7 @@
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: bask
   - type: TileFrictionModifier
@@ -708,7 +719,7 @@
     sprite: Objects/Fun/toys.rsi
     state: football
   - type: Item
-    size: 12
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: footb
 
@@ -725,7 +736,7 @@
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: beachb
   - type: TileFrictionModifier
@@ -741,7 +752,7 @@
     sprite: Objects/Fun/toys.rsi
     state: synb
   - type: Item
-    size: 24
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: synb
   - type: Damageable
@@ -760,7 +771,7 @@
     sprite: Objects/Fun/toys.rsi
     state: corgib
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: corgib
   - type: Damageable
@@ -785,7 +796,7 @@
     intensity: 2000
     falloffPower: 2.6
   - type: Item
-    size: 12
+    size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: singularitytoy
 
@@ -803,7 +814,7 @@
     radius: 2
     color: "#00CCFF"
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/toys.rsi
     heldPrefix: orb
   - type: TileFrictionModifier
@@ -828,7 +839,7 @@
           shader: unshaded
           map: [ "blade" ]
     - type: Item
-      size: 5
+      size: Small
       sprite: Objects/Weapons/Melee/e_sword.rsi
     - type: UseDelay
       delay: 1.0
@@ -892,7 +903,7 @@
       types:
         Blunt: 0
   - type: Item
-    size: 15
+    size: Normal
     sprite: Objects/Weapons/Melee/cutlass.rsi
 
 - type: entity
@@ -934,7 +945,7 @@
     - type: StaminaDamageOnHit
       damage: 8
     - type: Item
-      size: 5
+      size: Small
       sprite: Objects/Fun/rubber_hammer.rsi
     - type: Appearance
     - type: DisarmMalus
@@ -1056,6 +1067,8 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: BasePlushie
@@ -1077,3 +1090,12 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePenguin
+  name: penguin plushie
+  description: I use arch btw!
+  components:
+  - type: Sprite
+    state: plushie_penguin

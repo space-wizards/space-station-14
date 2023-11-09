@@ -10,7 +10,7 @@ namespace Content.Shared.Cargo.Prototypes;
 /// to receive a monetary reward.
 /// </summary>
 [Prototype("cargoBounty"), Serializable, NetSerializable]
-public sealed class CargoBountyPrototype : IPrototype
+public sealed partial class CargoBountyPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

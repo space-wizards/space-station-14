@@ -4,13 +4,14 @@
   name: duffel bag
   description: A large duffel bag for holding extra things.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/duffel.rsi
-    - type: Storage
-      capacity: 120
-    - type: ClothingSpeedModifier
-      walkModifier: 1
-      sprintModifier: 0.9
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/duffel.rsi
+  - type: Storage
+    maxItemSize: Huge
+    maxTotalWeight: 40
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -18,8 +19,8 @@
   name: engineering duffel bag
   description: A large duffel bag for holding extra tools and supplies.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/engineering.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/engineering.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -27,8 +28,8 @@
   name: atmospherics duffel bag
   description: A large duffel bag made of fire resistant fibers. Smells like plasma.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/atmospherics.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/atmospherics.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -36,8 +37,8 @@
   name: medical duffel bag
   description: A large duffel bag for holding extra medical supplies.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/medical.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/medical.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -45,8 +46,8 @@
   name: captain's duffel bag
   description: A large duffel bag for holding extra captainly goods.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/captain.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/captain.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -54,11 +55,11 @@
   name: clown duffel bag
   description: A large duffel bag for holding extra honk goods.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/clown.rsi
-    - type: Storage
-      storageOpenSound:
-        collection: BikeHorn
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/clown.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: BikeHorn
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -66,8 +67,8 @@
   name: security duffel bag
   description: A large duffel bag for holding extra security related goods.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/security.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/security.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -75,8 +76,8 @@
   name: brigmedic duffel bag
   description: A large duffel bag for holding extra medical related goods.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/brigmedic.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/brigmedic.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -84,8 +85,8 @@
   name: chemistry duffel bag
   description: A large duffel bag for holding extra beakers and test tubes.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/chemistry.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/chemistry.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -93,8 +94,8 @@
   name: virology duffel bag
   description: A large duffel bag made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/virology.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/virology.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -102,8 +103,8 @@
   name: genetics duffel bag
   description: A large duffel bag for holding extra genetic mutations.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/genetics.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/genetics.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -111,12 +112,12 @@
   name: mime duffel bag
   description: A large duffel bag for holding... mime... stuff.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/mime.rsi
-      storageOpenSound:
-        collection: null
-      storageInsertSound:
-        collection: null
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/mime.rsi
+    storageOpenSound:
+      collection: null
+    storageInsertSound:
+      collection: null
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -124,8 +125,8 @@
   name: science duffel bag
   description: A large duffel bag for holding extra science related goods.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/science.rsi
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/science.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -160,31 +161,29 @@
   name: syndicate duffel bag
   description: A large duffel bag for holding various traitor goods.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/syndicate.rsi
-    - type: Storage
-      capacity: 131
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/syndicate.rsi
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateBundle
   abstract: true
   components:
-    - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateAmmo
   name: syndicate duffel bag
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/syndicate.rsi
-      state: icon-ammo
-    - type: Item
-      heldPrefix: ammo
-    - type: Clothing
-      equippedPrefix: ammo
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    state: icon-ammo
+  - type: Item
+    heldPrefix: ammo
+  - type: Clothing
+    equippedPrefix: ammo
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -199,13 +198,13 @@
   id: ClothingBackpackDuffelSyndicateMedical
   name: syndicate duffel bag
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/syndicate.rsi
-      state: icon-med
-    - type: Item
-      heldPrefix: med
-    - type: Clothing
-      equippedPrefix: med
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/syndicate.rsi
+    state: icon-med
+  - type: Item
+    heldPrefix: med
+  - type: Clothing
+    equippedPrefix: med
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedical
@@ -221,17 +220,20 @@
   name: duffelbag of holding
   description: A duffelbag that opens into a localized pocket of bluespace.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/holding.rsi
-      state: icon
-      layers:
-        - state: icon
-        - state: icon-unlit
-          shader: unshaded
-    - type: Storage
-      capacity: 9999
-    - type: ClothingSpeedModifier
-      sprintModifier: 1 # makes its stats identical to other variants of bag of holding
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/holding.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: icon-unlit
+      shader: unshaded
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Huge
+    maxTotalWeight: 200 #5 duffels worth of gear
+  - type: ClothingSpeedModifier
+    sprintModifier: 1 # makes its stats identical to other variants of bag of holding
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -239,8 +241,9 @@
   name: CBURN duffel bag
   description: A duffel bag containing a variety of biological containment equipment.
   components:
-    - type: Storage
-      capacity: 150
-    - type: ClothingSpeedModifier
-      walkModifier: 1
-      sprintModifier: 1
+  - type: Storage
+    maxItemSize: Huge
+    maxTotalWeight: 40
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
