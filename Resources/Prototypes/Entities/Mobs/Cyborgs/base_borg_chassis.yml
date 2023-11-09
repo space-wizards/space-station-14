@@ -1,4 +1,5 @@
 ﻿- type: entity
+  parent: BaseMob
   id: BaseBorgChassis
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
@@ -8,23 +9,16 @@
   - type: Reactive
     groups:
       Acidic: [Touch]
-  - type: Input
-    context: "human"
-  - type: InputMover
   - type: DamageOnHighSpeedImpact
     damage:
       types:
         Blunt: 5
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
-  - type: Clickable
   - type: CombatMode
   - type: NoSlip
   - type: StaticPrice
     price: 1250
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: KinematicController
   - type: Fixtures
     fixtures:
       fix1:
@@ -41,18 +35,24 @@
     baseSprintSpeed : 4.5
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
-    noRot: true
-    drawdepth: Mobs
+  - type: RotationVisuals
+    horizontalRotation: 90
   - type: MobState
     allowedStates:
     - Alive
+    - Critical
+    - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      100: Critical
+      200: Dead
     stateAlertDict:
       Alive: BorgHealth
+      Critical: BorgCrit
+      Dead: BorgDead
     showOverlays: false
+    allowRevives: true
   - type: HealthExaminable
     examinableTypes:
       - Blunt
@@ -113,15 +113,12 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-  - type: DoAfter
-  - type: Eye
   - type: Body
   - type: StatusEffects
     allowed:
     - Stun
     - KnockedDown
     - SlowedDown
-  - type: Actions
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -148,7 +145,7 @@
             volume: 5
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
@@ -190,10 +187,7 @@
   - type: Pullable
   - type: Puller
     needsHands: false
-  - type: Examiner
-  - type: Appearance
   - type: StandingState
-  - type: Alerts
   - type: Tag
     tags:
     - ShoesRequiredStepTriggerImmune
