@@ -54,3 +54,6 @@ ent-CrateNPCLizard = Lizard crate
 
 ent-CrateNPCKangaroo = Kangaroo crate
     .desc = A crate containing a kangaroo.
+
+ent-CrateNPCMothroach = Crate of mothroaches
+    .desc = A crate containing four mothroaches. You can hear faint chittering inside.
