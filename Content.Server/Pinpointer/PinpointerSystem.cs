@@ -5,17 +5,6 @@ using System.Numerics;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
 using Content.Shared.IdentityManagement;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Roles;
-using Content.Shared.Mind;
-using Content.Shared.Objectives.Systems;
-using Content.Shared.Mind.Components;
-using Content.Server.Objectives.Components;
-using Robust.Shared.Prototypes;
-using Content.Shared.Objectives;
-using Content.Server.Objectives.Components.Targets;
-using Robust.Shared.Random;
-using Content.Shared.Popups;
 
 namespace Content.Server.Pinpointer;
 
@@ -23,9 +12,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -62,18 +48,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         TogglePinpointer(uid, component);
 
         if (!component.CanRetarget)
-        {
-            if (TryComp<ThiefPinpointerComponent>(uid, out var thiefPinpointer))
-            {
-                ThiefLocateTarget(uid, component, thiefPinpointer, args.User);
-                return;
-            }
-            else
-            {
-                LocateTarget(uid, component);
-                return;
-            }
-        }
+            LocateTarget(uid, component);
     }
 
     private void OnLocateTarget(ref FTLCompletedEvent ev)
@@ -108,45 +83,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             var target = FindTargetFromComponent(uid, reg.Type);
             SetTarget(uid, target, component);
         }
-    }
-
-    private void ThiefLocateTarget(EntityUid uid, PinpointerComponent pinpointer, ThiefPinpointerComponent thiefPinpointer, EntityUid user)
-    {
-        if (!TryComp<MindContainerComponent>(user, out var mindContainer))
-            return;
-
-        var mindId = mindContainer.Mind;
-        if (mindId == null)
-            return;
-
-        if (!TryComp<MindComponent>(mindId, out var mind))
-            return;
-
-        var objectives = mind.Objectives;
-
-        if (objectives.Count == 0)
-            return;
-        //Нужно получить данные о целях игрока. Определить в них цели на кражу. Исключить выполненные цели. Составить список групп краж. Выбрать случайную группу.
-        //Оповестить о том, какая группа выбрана. Найти ближайший объект в этой группе.
-        List<ProtoId<StealTargetGroupPrototype>> groups = new();
-        foreach (var objective in objectives)
-        {
-            var info = _objectives.GetInfo(objective, mind.Owner, mind);
-            if (info == null)
-                continue;
-
-            if (info.Value.Progress > 0.99f)
-                continue;
-
-            if (!TryComp<StealConditionComponent>(objective, out var steal))
-                continue;
-
-            groups.Add(steal.StealGroup);
-        }
-        var selectedGroup = _random.Pick(groups);
-        pinpointer.TargetName = selectedGroup;
-        var target = FindTargetFromStealGroup(uid, selectedGroup);
-        SetTarget(uid, target, pinpointer);
     }
 
     public override void Update(float frameTime)
@@ -189,30 +125,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         // return uid with a smallest distance
         return l.Count > 0 ? l.First().Value : null;
-    }
-
-    private EntityUid? FindTargetFromStealGroup(EntityUid uid, string group, TransformComponent? transform = null)
-    {
-        _xformQuery.Resolve(uid, ref transform, false);
-
-        if (transform == null)
-            return null;
-
-        var mapId = transform.MapID;
-        var l = new SortedList<float, EntityUid>();
-
-        foreach (var target in _lookup.GetComponentsInRange<StealTargetComponent>(transform.Coordinates, 100))
-        {
-            if (target.StealGroup != group)
-                continue;
-
-            var distance = Vector2.Distance(Transform(uid).Coordinates.Position, Transform(target.Owner).Coordinates.Position);
-            if (distance < 1)
-                continue;
-
-            return target.Owner;
-        }
-        return null;
     }
 
     /// <summary>
