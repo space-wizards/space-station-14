@@ -65,9 +65,9 @@ public sealed partial class TextScreenVisualsComponent : Component
     ///     Text the screen should show when it's not counting.
     /// </summary>
     [DataField("text"), ViewVariables(VVAccess.ReadWrite)]
-    public string[] Text = new string[] { "" };
+    public string?[] Text = new string?[2];
 
-    public string[] TextToDraw = new string[] { "" };
+    public string?[] TextToDraw = new string?[2];
 
     /// <summary>
     ///     The different layers for each character - this is the currently drawn states.

@@ -50,8 +50,7 @@ public sealed class TextScreenSystem : EntitySystem
             // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
             // _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + args.Duration[1].Value, appearance);
             var timer = EnsureComp<TextScreenTimerComponent>(uid);
-            var duration = args.Duration;
-            timer.Target = _gameTiming.CurTime + duration;
+            timer.Target = _gameTiming.CurTime + args.Duration;
         }
     }
 
@@ -60,27 +59,30 @@ public sealed class TextScreenSystem : EntitySystem
     /// </summary>
     private void OnText(EntityUid uid, TextScreenComponent component, ref TextScreenTextEvent args)
     {
-        component.Remaining = null;
-        component.Label = [args.Label[..Math.Min(5, args.Label.Length)]];
+        // component.Remaining = null;
+        // component.Label = args.Label[..Math.Min(5, args.Label.Length)].ToArray();
 
-        // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
-        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+        // // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
+        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, args.Label);
+
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<TextScreenComponent>();
+        var query = EntityQueryEnumerator<TextScreenTimerComponent>();
         while (query.MoveNext(out var uid, out var timer))
         {
-            if (timer.Remaining != null && timer.Remaining > _gameTiming.CurTime)
+            if (timer.Target > _gameTiming.CurTime)
                 continue;
 
-            timer.Remaining = null;
-            // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
+            RemComp<TextScreenTimerComponent>(uid);
 
-            if (timer.DoneSound != null)
-                _audio.PlayPvs(timer.DoneSound, uid);
+            if (!TryComp<TextScreenComponent>(uid, out var screen))
+                continue;
+
+            if (screen.DoneSound != null)
+                _audio.PlayPvs(screen.DoneSound, uid);
         }
     }
 }

@@ -1,5 +1,5 @@
 using Content.Server.Shuttles.Components;
-using Content.Server.TextScreen.Events;
+using Content.Shared.TextScreen.Events;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -93,6 +93,7 @@ namespace Content.Server.Shuttles.Systems
                     !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value) ||
                     !TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var netComp))
                     return;
+
                 _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
                 return;
             }

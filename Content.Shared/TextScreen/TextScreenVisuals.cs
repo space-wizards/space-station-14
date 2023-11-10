@@ -17,7 +17,7 @@ public enum TextScreenVisuals : byte
     // Mode,
     /// <summary>
     ///     What text to show? <br/>
-    ///     Expects a <see cref="string[]"/>.
+    ///     Expects a <see cref="string?[]"/>.
     /// </summary>
     ScreenText,
     /// <summary>
@@ -33,3 +33,9 @@ public enum TextScreenVisuals : byte
 //     Text,
 //     Timer
 // }
+
+public enum TextScreenEnum
+{
+    TextScreenVisualsComponent,
+    TextScreenTimerComponent
+}

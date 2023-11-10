@@ -6,11 +6,12 @@ namespace Content.Shared.TextScreen.Components;
 [RegisterComponent]
 public sealed partial class TextScreenComponent : Component
 {
+    public const int Rows = 2;
     /// <summary>
     /// Text to display on the screen after a <see cref="TextScreenTextEvent"/>.
     /// </summary>
     [DataField("label"), ViewVariables]
-    public string Label { get; set; } = string.Empty;
+    public string?[] Label { get; set; } = new string[Rows];
 
     /// <summary>
     /// Sound to play after a timer zeroes.
