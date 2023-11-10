@@ -40,22 +40,17 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         if (!Resolve(uid, ref keyHolder))
             return;
 
-        if ((keyHolder.Channels.Count + keyHolder.SecretChannels.Count) == 0 )
+        if (keyHolder.Channels.Count == 0)
             RemComp<ActiveRadioComponent>(uid);
         else
-        {
-            HashSet<string>? radio = new();
-            radio.UnionWith(keyHolder.Channels);
-            radio.UnionWith(keyHolder.SecretChannels);
-            EnsureComp<ActiveRadioComponent>(uid).Channels = radio;
-        }
+            EnsureComp<ActiveRadioComponent>(uid).Channels = new(keyHolder.Channels);
     }
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
     {
         if (args.Channel != null
             && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
-            && (keys.Channels.Contains(args.Channel.ID) || keys.SecretChannels.Contains(args.Channel.ID)))
+            && keys.Channels.Contains(args.Channel.ID))
         {
             _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
             args.Channel = null; // prevent duplicate messages from other listeners.
