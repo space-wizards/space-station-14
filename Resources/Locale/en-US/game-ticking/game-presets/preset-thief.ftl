@@ -15,6 +15,6 @@ thief-role-greeting-equipment =
     Choose your starting equipment,
     and do your work stealthily.
 
-objective-issuer-thief = Thief
+objective-issuer-thief = [color=#746694]Criminal[/color]
 
-thief-round-end-agent-name = Thief
+thief-round-end-agent-name = thief

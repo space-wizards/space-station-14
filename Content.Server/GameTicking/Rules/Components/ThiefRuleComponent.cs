@@ -29,7 +29,7 @@ public sealed partial class ThiefRuleComponent : Component
     public Dictionary<ICommonSession, HumanoidCharacterProfile> StartCandidates = new();
 
     [DataField]
-    public float MaxObjectiveDifficulty = 3f;
+    public float MaxObjectiveDifficulty = 2f;
 
     [DataField]
     public int MaxStealObjectives = 10;
