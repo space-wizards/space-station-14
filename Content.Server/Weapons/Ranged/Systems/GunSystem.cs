@@ -213,8 +213,7 @@ public sealed partial class GunSystem : SharedGunSystem
                                 var tHit = Hit.HitEntity;
                                 if (hovered != tHit
                                     && TryComp(tHit, out MobStateComponent? targetState)
-                                    && targetState is { CurrentState: MobState.Critical or MobState.Dead }
-                                    && !(TryComp(tHit, out BuckleComponent? buckleComponent) && buckleComponent.Buckled))
+                                    && targetState is not { CurrentState: MobState.Alive })
                                     continue;
 
                                 nullResult = Hit;
