@@ -39,8 +39,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         var target = args.OtherEntity;
 
         if (component.CursorTarget != target
-            && TryComp(target, out MobStateComponent? targetState)
-            && targetState is not { CurrentState: MobState.Alive })
+            && TryComp(target, out MobStateComponent? targetState) // If the thing isn't a mob, hit anyway.
+            && targetState is not { CurrentState: MobState.Alive }) // If the thing is alive, hit anyway.
             return;
 
         // it's here so this check is only done once before possible hit
