@@ -2801,4 +2801,4 @@
     - VimPilot
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Cockroach
+    damageModifierSet: Rugged
