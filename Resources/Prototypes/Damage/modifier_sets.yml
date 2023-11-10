@@ -225,3 +225,16 @@
     Cellular: 0.0
     Heat: 2.5
     Caustic: 0.0
+
+- type: damageModifierSet
+  id: Rugged
+  coefficients:
+    Blunt: 1.0
+    Slash: 0.9
+    Piercing: 0.9
+    Cold: 1.0
+    Heat: 1.1
+    Poison: 1.0
+    Cellular: 1.0
+    Radiation: 1.0 
+    Caustic: 1.0

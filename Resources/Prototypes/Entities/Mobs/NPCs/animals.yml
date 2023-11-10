@@ -2753,18 +2753,16 @@
   name: armadillo
   parent: SimpleMobBase
   id: MobArmadillo
-  description: some sort of armored rat.
+  description: Some sort of armored rat.
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
     baseSprintSpeed: 6
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: armadillo
       sprite: Mobs/Animals/armadillo.rsi
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -2801,9 +2799,6 @@
     tags:
     - DoorBumpOpener
     - VimPilot
-  - type: Armor # its got a shell, I guess.
-    modifiers:
-      coefficients:
-        Slash: 0.90
-        Piercing: 0.90
-        Heat: 1.10
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Cockroach
