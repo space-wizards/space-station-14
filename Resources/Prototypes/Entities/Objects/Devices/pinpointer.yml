@@ -63,3 +63,45 @@
   - type: Pinpointer
     component: BecomesStation
     targetName: the station
+
+- type: entity
+  name: thief's pinpointer
+  description: A thief's device that tracks various items required by the thief.
+  suffix: Thief
+  parent: BaseItem
+  id: PinpointerThief
+  components:
+  - type: Transform
+    noRot: True
+  - type: Sprite
+    noRot: True
+    sprite: Objects/Devices/pinpointer.rsi
+    layers:
+    - state: pinpointer_thief
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Item
+    sprite: Objects/Devices/pinpointer.rsi  
+  - type: ThiefPinpointer
+  - type: Pinpointer 
+    updateTargetName: true
+    canRetarget: false
+    component: StealTarget
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PinpointerVisuals.IsActive:
+        enum.PinpointerLayers.Screen:
+          True: { visible: True }
+          False: { visible: False }
+      enum.PinpointerVisuals.TargetDistance:
+        enum.PinpointerLayers.Screen:
+          Unknown: { state: pinonnull }
+          Reached: { state: pinondirect }
+          Close: { state: pinonclose }
+          Medium: { state: pinonmedium }
+          Far: { state: pinonfar }
+  - type: AnimationPlayer
