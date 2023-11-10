@@ -13,7 +13,7 @@
       state: capsule
     - type: Item
       sprite: SS220/Objects/ReagentInjector/capsules.rsi
-      size: 5
+      size: Small
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -44,7 +44,7 @@
       solutions:
         beaker:
           maxVol: 30
-        
+
 - type: entity
   parent: BaseReagentsCapsule
   id: CombatCapsule

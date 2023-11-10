@@ -18,7 +18,7 @@
         Blunt: 10
         Structural: 60
   - type: Item
-    size: 20
+    size: Normal
     sprite: SS220/Objects/Weapons/Melee/combat_hammer.rsi
   - type: DisarmMalus
     malus: 0.225

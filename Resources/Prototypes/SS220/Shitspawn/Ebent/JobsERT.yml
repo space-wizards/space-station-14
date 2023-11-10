@@ -22,6 +22,8 @@
   name: рюкзак офицера безопасности ОБР
   description: Вместительный рюкзак с множеством карманов, который носят офицеры безопасности отряда быстрого реагирования.
   components:
+    - type: Storage
+      maxTotalWeight: 60
     - type: StorageFill
       contents:
       - id: Crowbar

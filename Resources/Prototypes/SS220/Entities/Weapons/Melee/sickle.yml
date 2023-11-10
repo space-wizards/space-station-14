@@ -18,7 +18,7 @@
       types:
         Slash: 30
   - type: Item
-    size: 20
+    size: Normal
     sprite: SS220/Objects/Weapons/Melee/combat_sickle.rsi
   - type: DisarmMalus
     malus: 0.225

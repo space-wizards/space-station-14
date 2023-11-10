@@ -115,7 +115,6 @@ public abstract class SharedDarkReaperSystem : EntitySystem
             NeedHand = false,
             BlockDuplicate = true,
             CancelDuplicate = true,
-            VisibleOnlyToUser = false,
             DuplicateCondition = DuplicateConditions.SameEvent
         };
 
@@ -178,8 +177,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
                 BreakOnUserMove = false,
                 NeedHand = false,
                 BlockDuplicate = true,
-                CancelDuplicate = false,
-                VisibleOnlyToUser = true
+                CancelDuplicate = false
             };
 
             var started = _doAfter.TryStartDoAfter(doafterArgs);
@@ -205,8 +203,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
                 BreakOnUserMove = false,
                 NeedHand = false,
                 BlockDuplicate = true,
-                CancelDuplicate = false,
-                VisibleOnlyToUser = true
+                CancelDuplicate = false
             };
 
             var started = _doAfter.TryStartDoAfter(doafterArgs);

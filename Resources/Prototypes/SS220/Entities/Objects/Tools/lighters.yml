@@ -27,7 +27,7 @@
       visible: false
     - state: zippo_icon_top
   - type: Item
-    size: 3
+    size: Small
     sprite: SS220/Objects/Tools/lighters.rsi
     heldPrefix: off
   - type: SolutionContainerManager

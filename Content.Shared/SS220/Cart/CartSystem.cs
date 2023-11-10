@@ -10,6 +10,7 @@ using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.SS220.Cart.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SS220.Cart;
 
@@ -18,6 +19,7 @@ public sealed class CartSystem : EntitySystem
     [Dependency] private readonly SharedPullingSystem _pulling = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly TileFrictionController _tileFriction = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -113,7 +115,12 @@ public sealed class CartSystem : EntitySystem
         var frictionModifierComp = EnsureComp<TileFrictionModifierComponent>(uid);
         float frictionModifier = .15f;
         if (TryComp<ItemComponent>(uid, out var itemComp))
-            frictionModifier = itemComp.Size / 166f;
+        {
+            if (_prototype.TryIndex(itemComp.Size, out var itemSize))
+            {
+                frictionModifier = itemSize.Weight / 26.6f;
+            }
+        }
         _tileFriction.SetModifier(uid, frictionModifier, frictionModifierComp);
 
         var ev = new CartAttachEvent(args.AttachTarget, uid);
@@ -121,7 +128,7 @@ public sealed class CartSystem : EntitySystem
 
         component.Puller = args.AttachTarget;
         component.IsAttached = true;
-        Dirty(component);
+        Dirty(uid, component);
         args.Handled = true;
     }
 
@@ -142,7 +149,7 @@ public sealed class CartSystem : EntitySystem
 
         component.Puller = null;
         component.IsAttached = false;
-        Dirty(component);
+        Dirty(uid, component);
         args.Handled = true;
     }
 

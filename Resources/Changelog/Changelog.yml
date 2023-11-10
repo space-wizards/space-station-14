@@ -3475,6 +3475,280 @@ Entries:
     type: Fix
   id: 5092
   time: '2023-11-04T20:59:31.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Fixed the issue where mice were cannibalizing fallen brethren., type: Fix}
+  id: 5081
+  time: '2023-10-31T01:49:05.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: 'Despite being just as effective as the head, you no longer hit people
+      with the handle of fire axes.', type: Fix}
+  id: 5082
+  time: '2023-10-31T03:30:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletal crewmates have arrived on the station for Halloween only.,
+    type: Add}
+  id: 5083
+  time: '2023-10-31T03:40:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Storage containers can now block large items from being inserted into
+      them, regardless of the space available.', type: Add}
+  - {message: Belts now function on a slot based storage system rather than a volume
+      based one., type: Add}
+  - {message: Standardized item sizes into regular categories., type: Tweak}
+  id: 5084
+  time: '2023-10-31T03:55:56.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Add pea plants., type: Add}
+  id: 5085
+  time: '2023-10-31T04:09:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Smoke now properly transfers reagents when inhaled., type: Fix}
+  id: 5086
+  time: '2023-10-31T12:43:18.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Slimes are fully immune to Nitrous Oxide again., type: Fix}
+  id: 5087
+  time: '2023-10-31T12:57:27.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Added cockroaches. Expect to see these mapped into maints soon., type: Add}
+  - {message: Added the glockroach admeme., type: Add}
+  id: 5088
+  time: '2023-10-31T20:28:43.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'Soap and water now makes soapy water which can clean dirt off of floors.
+      Also please don''t eat the soap, it''s not good for you.', type: Add}
+  id: 5089
+  time: '2023-10-31T20:39:12.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Arachnid and other Blue (hemocyanin) blooded creatures now require copper
+      to treat bloodloss instead of iron and brute medkits contain 2 copper pills
+      and 1 less iron pill., type: Add}
+  id: 5090
+  time: '2023-10-31T20:41:26.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'When the anomaly explodes, a very expensive core falls from it. Be
+      sure to sell it in 10 minutes before it becomes useless.', type: Add}
+  id: 5091
+  time: '2023-10-31T23:20:52.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Getting turned into a rev will now play the rev antag sound effect.,
+    type: Add}
+  id: 5092
+  time: '2023-11-01T03:11:09.0000000+00:00'
+- author: Titian3
+  changes:
+  - {message: No more skeletal crewmates., type: Remove}
+  id: 5093
+  time: '2023-11-01T21:47:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Many items have had their sizes adjusted., type: Tweak}
+  - {message: Survival boxes and medkits can no longer hold more items than their
+      size would suggest., type: Tweak}
+  - {message: Fixed missing max size text in storage UIs, type: Fix}
+  - {message: Fixed the ore bag being unable to collect items when there is still
+      room., type: Fix}
+  - {message: Fixed the food cart not being able to hold anything., type: Fix}
+  id: 5094
+  time: '2023-11-01T23:19:41.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed nukie medics not spawning with their hypospray., type: Fix}
+  id: 5095
+  time: '2023-11-02T19:35:56.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'Thieving gloves now hide the entire pickpocketing action from other
+      players, not just the popup.', type: Tweak}
+  id: 5096
+  time: '2023-11-03T02:10:59.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Tank pressure can no longer be set below zero, type: Fix}
+  id: 5097
+  time: '2023-11-03T02:14:57.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Increased the capacity of Bags of holding., type: Tweak}
+  id: 5098
+  time: '2023-11-03T11:31:03.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: Reptilians can now eat rat kebabs., type: Fix}
+  id: 5099
+  time: '2023-11-03T17:50:32.0000000+00:00'
+- author: photonicDog
+  changes:
+  - {message: 'Moth Head (Moonfly) marking texture is no longer rotated incorrectly,
+      causing it to appear offset from the player', type: Fix}
+  id: 5100
+  time: '2023-11-03T20:37:26.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Candles can now be found in PietyVend., type: Add}
+  id: 5101
+  time: '2023-11-04T05:53:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to sell the same bounty multiple times., type: Fix}
+  id: 5102
+  time: '2023-11-04T13:19:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed needing to manually deselect to switch between borg modules.,
+    type: Fix}
+  id: 5103
+  time: '2023-11-04T13:29:19.0000000+00:00'
+- author: TheEmber
+  changes:
+  - {message: Changed vomit probability for soap to 20% and soapy water to 10%., type: Tweak}
+  id: 5104
+  time: '2023-11-04T15:19:30.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The senior physician now spawns with a medical beret., type: Tweak}
+  id: 5105
+  time: '2023-11-04T15:20:09.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can now drag and drop to enter mechs., type: Tweak}
+  id: 5106
+  time: '2023-11-04T15:23:46.0000000+00:00'
+- author: daerSeebaer
+  changes:
+  - {message: Radiation Shutters (and some other things) are now better at keeping
+      out radiation., type: Tweak}
+  id: 5107
+  time: '2023-11-04T15:25:56.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Critical vaccinated crew no longer immune to zombie fists, type: Fix}
+  id: 5108
+  time: '2023-11-04T17:57:21.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed accidental crayon graffiti when writing on paper, type: Fix}
+  id: 5109
+  time: '2023-11-04T22:44:10.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Mice no longer eat soap., type: Fix}
+  id: 5110
+  time: '2023-11-05T23:47:19.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Chemistry bags had their storage rebalanced and can now hold beakers.,
+    type: Tweak}
+  id: 5111
+  time: '2023-11-05T23:49:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed hotplates and some other devices not working., type: Fix}
+  id: 5112
+  time: '2023-11-05T23:49:59.0000000+00:00'
+- author: RiceMar
+  changes:
+  - {message: Paper is now lathable from the sheet-meister 2000., type: Add}
+  - {message: Crates of paper can now be purchased from the cargo request computer.,
+    type: Add}
+  - {message: The sheet-meister 2000 research unlock has moved from the civilian services
+      tree to the industrial tree., type: Tweak}
+  id: 5113
+  time: '2023-11-06T02:14:03.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: 'Vomit, so much vomit. Now vomiting chems are less awful.', type: Remove}
+  id: 5114
+  time: '2023-11-06T02:16:56.0000000+00:00'
+- author: themias
+  changes:
+  - {message: 'Bicaridine, Dylovene and Crytobiolin now metabolize at the same rate
+      for all species.', type: Fix}
+  id: 5115
+  time: '2023-11-06T02:18:21.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: CentCom allocated funds for the purchase of notice boards for kitchens,
+    type: Add}
+  id: 5116
+  time: '2023-11-06T02:18:39.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The access configurator now has a proper sprite., type: Tweak}
+  id: 5117
+  time: '2023-11-06T02:21:41.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds three new mobs from the Living Light family, type: Add}
+  id: 5118
+  time: '2023-11-06T02:24:15.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Livestock crates are no longer airtight., type: Tweak}
+  id: 5119
+  time: '2023-11-06T02:27:48.0000000+00:00'
+- author: IntegerTempest
+  changes:
+  - {message: Added syndicate hud and syndicate visor for nuclear operatives, type: Add}
+  id: 5120
+  time: '2023-11-06T02:36:08.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Aspid station has had its cargo department expanded., type: Tweak}
+  id: 5121
+  time: '2023-11-06T02:36:46.0000000+00:00'
+- author: ChrisThirtle
+  changes:
+  - {message: Fixed certain objects not fitting into crates and lockers due to the
+      angle of space itself., type: Fix}
+  id: 5122
+  time: '2023-11-06T02:40:25.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Microreactor powercells can be researched under the Tier 3 Portable
+      Fission technology, they slowly recharge on their own.', type: Add}
+  id: 5123
+  time: '2023-11-06T03:00:12.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: IEDs can be crafted in desperate times to make a small explosion., type: Add}
+  id: 5124
+  time: '2023-11-06T03:04:48.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Blood when consumed metabolizes into uncooked proteins, and sates thirst
+      of non-humans', type: Add}
+  - {message: Non-humans will have a small amount of hunger sated when consuming uncooked
+      proteins., type: Add}
+  - {message: Humans will take poison damage with a chance to vomit when metabolizing
+      uncooked protein., type: Tweak}
+  - {message: Humans take less damage from uncooked proteins (2->1), type: Tweak}
+  - {message: Humans will "feel sick" when they metabolize uncooked proteins., type: Add}
+  id: 5125
+  time: '2023-11-06T03:51:33.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added anomaly synchronizer! It allows you to link anomaly activity to
+      triggers on different devices., type: Add}
+  id: 5126
+  time: '2023-11-06T04:02:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a few items with invalid sizes., type: Fix}
+  id: 5127
+  time: '2023-11-06T07:20:50.0000000+00:00'
 - author: Nonne46
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\

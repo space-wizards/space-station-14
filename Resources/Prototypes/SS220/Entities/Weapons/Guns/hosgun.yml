@@ -28,9 +28,10 @@
   parent: BaseStorageItem
   components:
   - type: Storage
-    capacity: 30
+    maxSlots: 4
+    maxItemSize: Small
   - type: Item
-    size: 30
+    size: Large
   - type: StorageFill
     contents:
       - id: WeaponRevolverMatebaSouvenir

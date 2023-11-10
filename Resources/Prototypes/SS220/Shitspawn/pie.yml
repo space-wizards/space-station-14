@@ -6,7 +6,7 @@
   description: Страшннйшее орудие возмездия
   components:
   - type: Item
-    size: 30
+    size: Large
   - type: Sprite
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
     layers:

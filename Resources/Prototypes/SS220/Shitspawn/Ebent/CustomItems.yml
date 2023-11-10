@@ -22,6 +22,9 @@
   parent: ClothingBackpackERTSecurity
   id: ClothingBackpackSupaSyndicate
   suffix: Shitspawn, Ebent
+  components:
+  - type: Storage
+    maxTotalWeight: 60
 
 - type: entity
   parent: ClothingHeadsetAltSyndicate

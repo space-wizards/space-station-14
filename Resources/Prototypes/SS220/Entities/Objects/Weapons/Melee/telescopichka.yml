@@ -22,8 +22,8 @@
       types:
         Blunt: 0
         Stamina: 0
-    sizeOpened: 15
-    sizeClosed: 5
+    sizeOpened: Large
+    sizeClosed: Small
   - type: StaminaDamageOnHit
     damage: 0
   - type: MeleeWeapon
@@ -33,7 +33,7 @@
       types:
         Blunt: 0
   - type: Item
-    size: 5
+    size: Small
     sprite: SS220/Objects/Weapons/Melee/telescopichka.rsi
   - type: UseDelay
     delay: 1.0

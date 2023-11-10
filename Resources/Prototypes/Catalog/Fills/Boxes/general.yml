@@ -16,7 +16,7 @@
     - type: StorageFill
       contents:
         - id: Mousetrap
-          amount: 6
+          amount: 4
     - type: Sprite
       layers:
         - state: box
@@ -37,7 +37,7 @@
       - state: box
       - state: light
   - type: Storage
-    capacity: 60
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -60,7 +60,7 @@
       - state: box
       - state: lighttube
   - type: Storage
-    capacity: 60
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -85,7 +85,7 @@
       - state: box
       - state: lightmixed
   - type: Storage
-    capacity: 60
+    maxTotalWeight: 24
     whitelist:
       components:
       - LightBulb
@@ -102,16 +102,11 @@
   - type: StorageFill
     contents:
       - id: PassengerPDA
-        amount: 6
+        amount: 4
   - type: Sprite
     layers:
       - state: box
       - state: pda
-  - type: Storage
-    capacity: 60
-    whitelist:
-      components:
-      - Pda
 
 - type: entity
   name: ID card box
@@ -122,16 +117,11 @@
   - type: StorageFill
     contents:
       - id: PassengerIDCard
-        amount: 6
+        amount: 4
   - type: Sprite
     layers:
       - state: box
       - state: id # Corvax-Resprite
-  - type: Storage
-    capacity: 60
-    whitelist:
-      components:
-      - IdCard
 
 - type: entity
   name: headset box
@@ -142,16 +132,11 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadsetGrey
-        amount: 6
+        amount: 4
   - type: Sprite
     layers:
       - state: box
       - state: headset
-  - type: Storage
-    capacity: 60
-    whitelist:
-      components:
-      - Headset
 
 - type: entity
   name: meson box
@@ -191,8 +176,6 @@
   id: BoxHugHealing
   description: A special box for sensitive people.
   components:
-  - type: Storage
-    capacity: 30
   - type: Sprite
     layers:
       - state: box_hug
@@ -229,8 +212,8 @@
 
 
 - type: entity
-  name: hatsune miku day box
-  parent: BoxCardboard
+  name: hatsune miku day bag
+  parent: ClothingBackpackDuffel
   id: BoxPerformer
   description: Happy Hatsune Miku Day!
   components:
@@ -267,7 +250,8 @@
       - id: TrashBag
         amount: 6
   - type: Storage
-    capacity: 800
+    maxTotalWeight: 24
+    maxItemSize: Normal
     whitelist:
       tags:
         - TrashBag
@@ -288,13 +272,12 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyCommon
-        amount: 6
+        amount: 4
   - type: Sprite
     layers:
       - state: box
       - state: encryptokey
   - type: Storage
-    capacity: 30
     whitelist:
       components:
       - EncryptionKey
@@ -307,7 +290,7 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyCargo
-        amount: 6
+        amount: 4
 
 - type: entity
   name: engineering encryption key box
@@ -317,7 +300,7 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyEngineering
-        amount: 6
+        amount: 4
 
 - type: entity
   name: med-sci encryption key box
@@ -327,7 +310,7 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyMedicalScience
-        amount: 6
+        amount: 4
 
 - type: entity
   name: medical encryption key box
@@ -337,7 +320,7 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyMedical
-        amount: 6
+        amount: 4
 
 - type: entity
   name: robotech encryption key box
@@ -347,7 +330,7 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyRobo
-        amount: 6
+        amount: 4
 
 - type: entity
   name: science encryption key box
@@ -357,7 +340,7 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyScience
-        amount: 6
+        amount: 4
 
 - type: entity
   name: security encryption key box
@@ -367,7 +350,7 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeySecurity
-        amount: 6
+        amount: 4
 
 - type: entity
   name: service encryption key box
@@ -377,7 +360,7 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyService
-        amount: 6
+        amount: 4
 
 - type: entity
   name: syndicate encryption key box
@@ -386,13 +369,12 @@
   description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
   components:
   - type: Item
-    size: 15
+    size: Normal
   - type: StorageFill
     contents:
       - id: EncryptionKeySyndie
         amount: 2
   - type: Storage
-    capacity: 15
 
 - type: entity
   name: deathrattle implant box
@@ -401,7 +383,7 @@
   description: Six deathrattle implants and handheld GPS devices for the whole squad.
   components:
   - type: Item
-    size: 60
+    size: Normal
   - type: StorageFill
     contents:
       - id: DeathRattleImplanter
@@ -409,7 +391,7 @@
       - id: HandheldGPSBasic
         amount: 6
   - type: Storage
-    capacity: 60
+    maxTotalWeight: 24
   - type: Sprite
     layers:
       - state: box
@@ -428,25 +410,73 @@
     resistance: 2
 
 - type: entity
+  name: candle box
+  parent: BoxCardboard
+  id: BoxCandle
+  components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: candle
+  - type: Storage
+    maxTotalWeight: 30
+  - type: StorageFill
+    contents:
+      - id: Candle
+        amount: 3
+      - id: CandleBlue
+        amount: 3
+      - id: CandleRed
+        amount: 3
+      - id: CandleGreen
+        amount: 3
+      - id: CandlePurple
+        amount: 3
+
+- type: entity
+  name: small candle box
+  parent: BoxCardboard
+  id: BoxCandleSmall
+  components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: candle
+  - type: Storage
+    maxTotalWeight: 30
+  - type: StorageFill
+    contents:
+      - id: CandleSmall
+        amount: 5
+      - id: CandleBlueSmall
+        amount: 5
+      - id: CandleRedSmall
+        amount: 5
+      - id: CandleGreenSmall
+        amount: 5
+      - id: CandlePurpleSmall
+        amount: 5
+
+- type: entity
   name: darts box
   parent: BoxCardboard
   id: BoxDarts
   description: This box filled with colorful darts.
   components:
   - type: Item
-    size: 40
+    size: Normal
   - type: StorageFill
     contents:
       - id: Dart
-        amount: 5
+        amount: 3
       - id: DartBlue
-        amount: 5
+        amount: 3
       - id: DartPurple
-        amount: 5
+        amount: 3
       - id: DartYellow
-        amount: 5
+        amount: 3
   - type: Storage
-    capacity: 40
+    maxTotalWeight: 24
   - type: Sprite
     layers:
       - state: box
