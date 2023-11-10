@@ -1,0 +1,194 @@
+- type: entity
+  id: CrateNPCBee
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobBee
+        amount: 8
+
+- type: entity
+  id: CrateNPCButterflies
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobButterfly
+        amount: 5
+
+- type: entity
+  id: CrateNPCCat
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCat
+        prob: 1
+        orGroup: MobCat
+      - id: MobCatCalico
+        prob: 1
+        orGroup: MobCat
+      - id: MobCatCaracal
+        prob: 0.5
+        orGroup: MobCat
+      - id: MobBingus
+        prob: 0.005
+        orGroup: MobCat
+
+- type: entity
+  id: CrateNPCChicken
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobChicken
+        amount: 4
+
+- type: entity
+  id: CrateNPCCrab
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCrab
+        amount: 3
+
+- type: entity
+  id: CrateNPCDuck
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobDuckMallard
+        amount: 2
+      - id: MobDuckWhite
+        amount: 2
+      - id: MobDuckBrown
+        amount: 2
+
+- type: entity
+  id: CrateNPCCorgi
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCorgi
+
+- type: entity
+  id: CrateNPCCow
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCow
+
+- type: entity
+  id: CrateNPCGoat
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobGoat
+
+- type: entity
+  id: CrateNPCGoose
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobGoose
+        amount: 2
+
+- type: entity
+  id: CrateNPCGorilla
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobGorilla
+
+- type: entity
+  id: CrateNPCMonkeyCube
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: MonkeyCubeBox
+
+- type: entity
+  id: CrateNPCMouse
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobMouse
+        amount: 5
+
+- type: entity
+  id: CrateNPCParrot
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobParrot
+        amount: 3
+
+- type: entity
+  id: CrateNPCPenguin
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobPenguin
+        amount: 2
+
+- type: entity
+  id: CrateNPCPig
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobPig
+
+- type: entity
+  id: CrateNPCSnake
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobSnake
+        amount: 3
+
+- type: entity
+  id: CrateNPCHamster
+  parent: CrateRodentCage
+  suffix: Filled
+  components:
+    - type: StorageFill
+      contents:
+        - id: MobHamster
+
+- type: entity
+  id: CrateNPCHamlet
+  parent: CrateRodentCage
+  suffix: Hamlet
+  components:
+    - type: StorageFill
+      contents:
+        - id: MobHamsterHamlet
+
+- type: entity
+  id: CrateNPCLizard
+  parent: CrateLivestock
+  components:
+    - type: StorageFill
+      contents:
+        - id: MobLizard
+
+- type: entity
+  id: CrateNPCKangaroo
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobKangaroo
