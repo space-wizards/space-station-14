@@ -1,10 +1,4 @@
 Entries:
-- author: Errant-4
-  changes:
-  - {message: 'Crit/Dead people that somehow end up holding a gun can no longer fire
-      them. The Gundead aren''t real, they can''t hurt you.', type: Fix}
-  id: 4647
-  time: '2023-08-21T18:27:08.0000000+00:00'
 - author: Verslebas
   changes:
   - {message: Changed admin ghost's hands order, type: Tweak}
@@ -2906,3 +2900,9 @@ Entries:
   - {message: Fixed the strip menu for Arachnids., type: Fix}
   id: 5146
   time: '2023-11-09T23:42:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Reduced material costs for cyborg limbs, MMIs, positronic brains, and
+      cyborg modules.', type: Tweak}
+  id: 5147
+  time: '2023-11-10T01:31:04.0000000+00:00'
