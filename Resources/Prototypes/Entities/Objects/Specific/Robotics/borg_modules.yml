@@ -288,8 +288,6 @@
     items:
     - MopItem
     - Bucket
-    - Holoprojector
-    - SprayBottleSpaceCleaner
 
 - type: entity
   id: BorgModuleTrashCollection
@@ -303,6 +301,21 @@
   - type: ItemBorgModule
     items:
     - TrashBagBlue
+
+- type: entity
+  id: BorgModuleAdvancedCleaning
+  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  name: advanced cleaning cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+    - state: icon-mop-adv
+  - type: ItemBorgModule
+    items:
+    - AdvMopItem
+    - Holoprojector
+    - SprayBottleSpaceCleaner
 
 # medical modules
 - type: entity
