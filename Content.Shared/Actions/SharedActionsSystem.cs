@@ -126,6 +126,27 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
+    public void SetCooldown(EntityUid? actionId, TimeSpan cooldown)
+    {
+        var start = GameTiming.CurTime;
+        SetCooldown(actionId, start, start + cooldown);
+    }
+
+    public void ClearCooldown(EntityUid? actionId)
+    {
+        if (actionId == null)
+            return;
+
+        if (!TryGetActionData(actionId, out var action))
+            return;
+
+        if (action.Cooldown is not { } cooldown)
+            return;
+
+        action.Cooldown = (cooldown.Start, GameTiming.CurTime);
+        Dirty(actionId.Value, action);
+    }
+
     public void StartUseDelay(EntityUid? actionId)
     {
         if (actionId == null)
