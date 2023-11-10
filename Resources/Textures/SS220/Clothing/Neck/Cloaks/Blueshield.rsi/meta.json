@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "taken from Paradise SS220 at https://github.com/ss220-space/Paradise/blob/f04540b212de5bf1919f7f1a52a7e20f0892a00e/icons/mob/clothing/neck.dmi, modified by gofinodzo (Discord) for SS220 SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+	{
+      "name": "equipped-NECK",
+      "directions": 4
+    },
+	{
+      "name": "inhand-left",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

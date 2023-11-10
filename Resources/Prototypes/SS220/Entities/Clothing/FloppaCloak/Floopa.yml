@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakFloppa
+  name: шкура Шлёпы
+  description: Это - не то, что вы думаете
+  suffix: Sponsor
+  components:
+  - type: Sprite
+    sprite: SS220\Clothing\CloakF.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatFloppa
+    requiredSlot:
+    - neck
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}

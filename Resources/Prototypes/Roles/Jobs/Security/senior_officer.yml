@@ -20,6 +20,7 @@
   icon: "JobIconSeniorOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  canBeZombie: false
   access:
   - Security
   - Brig

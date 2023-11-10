@@ -1,4 +1,216 @@
 Entries:
+- author: ElectroJr
+  changes:
+  - message: Fixed replay playback a bug that could cause the damage overlay to stay
+      permanently active.
+    type: Fix
+  id: 4598
+  time: '2023-08-15T05:10:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - message: The Syndicate has stopped requesting ID card computer boards.
+    type: Remove
+  id: 4599
+  time: '2023-08-15T14:07:56.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - message: Speech verbs will now change depending on the entity saying them and
+      from punctuation. Have fun chittering as a mothperson.
+    type: Add
+  - message: Ending a message with '!!' will now bold the message.
+    type: Add
+  - message: Mothpeople now have custom typing indicators.
+    type: Add
+  id: 4600
+  time: '2023-08-15T20:03:06.0000000+00:00'
+- author: Repo
+  changes:
+  - message: Nanotrasen no longer provides imitation head scrubs in the medical scrub
+      crate.
+    type: Fix
+  id: 4601
+  time: '2023-08-15T20:22:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Radios no longer display a popup when messages fail to send.
+    type: Remove
+  id: 4602
+  time: '2023-08-15T20:56:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - message: Portal sprites made less bad hopefully
+    type: Tweak
+  - message: Hand teleporter doafter reduced slightly
+    type: Tweak
+  - message: Portals can no longer teleport you to other maps
+    type: Fix
+  - message: Ghosts can now traverse linked portals silently using an altverb
+    type: Add
+  - message: Portals now snap to grid + show up properly in the entity menu
+    type: Fix
+  id: 4603
+  time: '2023-08-15T20:56:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Cyborgs can't get electrocuted anymore.
+    type: Fix
+  id: 4604
+  time: '2023-08-15T22:37:34.0000000+00:00'
+- author: Fahasor
+  changes:
+  - message: Nanotrasen Department of Economics has reduced glue expenses in jug production
+      lines. Now labels from jugs can be deleted.
+    type: Fix
+  id: 4605
+  time: '2023-08-15T22:41:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Artifacts once again fit in artifact containers.
+    type: Fix
+  - message: Brought crate capacity in line with other storage. (500 -> 30)
+    type: Fix
+  - message: Hamlet's cage is now hamlet-sized and can only fit a single item.
+    type: Fix
+  id: 4606
+  time: '2023-08-15T22:49:30.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - message: Added directional switches
+    type: Add
+  id: 4607
+  time: '2023-08-15T23:01:50.0000000+00:00'
+- author: Tollhouse
+  changes:
+  - message: Discount Dan has finalized a deal with NT chemistry and Shady Smokes
+      to bring you a new smoking sensation.
+    type: Add
+  id: 4608
+  time: '2023-08-16T00:27:18.0000000+00:00'
+- author: crazybrain
+  changes:
+  - message: Syndicate pAI's are now equipped with radio transmitters.
+    type: Tweak
+  id: 4609
+  time: '2023-08-16T06:59:42.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - message: Restructured cannabis!
+    type: Tweak
+  id: 4610
+  time: '2023-08-16T07:04:26.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - message: Admin ghosts are now able to interact with user interfaces from any range.
+    type: Fix
+  id: 4611
+  time: '2023-08-16T08:03:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Lockers and crates work again.
+    type: Fix
+  id: 4612
+  time: '2023-08-16T13:08:53.0000000+00:00'
+- author: Ilya246
+  changes:
+  - message: Taxibots, cleanbots, and similar now have binary radio.
+    type: Add
+  id: 4613
+  time: '2023-08-16T13:18:57.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - message: Reworked the loot table from salvage spawners, the stuff you can find
+      is more varied and valuable overall.
+    type: Add
+  id: 4614
+  time: '2023-08-16T19:11:02.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - message: Higher rating stock parts are now cheaper to make. Print a bunch of them
+      and upgrade stuff!
+    type: Tweak
+  id: 4615
+  time: '2023-08-16T22:12:09.0000000+00:00'
+- author: liltenhead
+  changes:
+  - message: Reduced freedom implanter cost from 8 -> 5 TC.
+    type: Tweak
+  id: 4616
+  time: '2023-08-17T04:08:47.0000000+00:00'
+- author: liltenhead
+  changes:
+  - message: Increased crafting costs of the advanced laser, and laser cannon.
+    type: Tweak
+  id: 4617
+  time: '2023-08-17T04:10:06.0000000+00:00'
+- author: Ubaser
+  changes:
+  - message: New machine frame sprites
+    type: Tweak
+  id: 4618
+  time: '2023-08-17T04:16:13.0000000+00:00'
+- author: hord-brayden
+  changes:
+  - message: Whoopsie - Dan's Soaked Cigs finally hired some Quality Control. They've
+      resolved a small reagent solution in some of their swisher sweets.
+    type: Fix
+  id: 4619
+  time: '2023-08-17T05:15:39.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - message: Origin station now features ID Card computer's in every Command member's
+      office, drastically reducing the amount of bureaucracy.
+    type: Add
+  id: 4620
+  time: '2023-08-17T10:08:51.0000000+00:00'
+- author: chromiumboy and PilgrimViis
+  changes:
+  - message: Lathes and fabricators can now eject unused material sheets.
+    type: Add
+  id: 4621
+  time: '2023-08-17T17:22:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix emote sounds.
+    type: Fix
+  id: 4622
+  time: '2023-08-17T20:40:10.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - message: You no longer yell uncontrollably when feeling joy.
+    type: Tweak
+  id: 4623
+  time: '2023-08-17T22:00:13.0000000+00:00'
+- author: Repo
+  changes:
+  - message: Janitors have remembered how to wring a mop, mops can transfer chemicals
+      back to buckets etc again.
+    type: Fix
+  id: 4624
+  time: '2023-08-17T22:00:46.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - message: Research point requirement has been reduced for a lot of techs.
+    type: Tweak
+  id: 4625
+  time: '2023-08-18T01:41:53.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - message: Added two reboot themes.
+    type: Add
+  id: 4626
+  time: '2023-08-18T13:58:44.0000000+00:00'
+- author: Partmedia
+  changes:
+  - message: Added fun!
+    type: Add
+  - message: Removed fun!
+    type: Remove
+  - message: Changed fun!
+    type: Tweak
+  - message: Fixed fun!
+    type: Fix
+  id: 4627
+  time: '2023-08-18T17:22:00.0000000+00:00'
 - author: crazybrain
   changes:
   - message: More shortcuts to guide entries on various items.
@@ -3537,3 +3749,72 @@ Entries:
   - {message: Fixed a few items with invalid sizes., type: Fix}
   id: 5127
   time: '2023-11-06T07:20:50.0000000+00:00'
+- author: Nonne46
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5093
+  time: '2023-11-09T15:19:22.0000000+00:00'
+- author: OperatorXeno
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0428\u043B\u0451\u043F\
+      \u0430 \u041F\u043B\u0430\u0449"
+    type: Add
+  id: 5094
+  time: '2023-11-09T15:30:09.0000000+00:00'
+- author: MrALPAKA
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043D\u043E\u0432\
+      \u044B\u0435 \u0432\u0435\u0449\u0438 \u0421\u0438\u043D\u0438\u0433\u043E \u0429\
+      \u0438\u0442\u0430"
+    type: Add
+  id: 5095
+  time: '2023-11-09T18:12:35.0000000+00:00'
+- author: Xenoksys
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u0441\u043F\u043E\
+      \u043D\u0441\u043E\u0440\u0441\u043A\u0438\u0435 \u043F\u043B\u0430\u0449\u0438"
+    type: Add
+  id: 5096
+  time: '2023-11-09T18:12:56.0000000+00:00'
+- author: SkaldetSkaeg
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u043D\u043E\u0432\u044B\
+      \u0439 \u0442\u0435\u0433 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438 \u0437\
+      \u0430\u043F\u0440\u0435\u0442\u0430 \u0441\u0442\u0430\u043D\u043E\u0432\u043B\
+      \u0435\u043D\u0438\u044F \u043D\u0443\u043B\u0435\u0432\u044B\u043C \u043F\u0430\
+      \u0446\u0438\u0435\u043D\u0442\u043E\u043C \u043D\u0430 \u0441\u043F\u0435\u0446\
+      \u0438\u0430\u043B\u044C\u043D\u043E\u0441\u0442\u044C"
+    type: Add
+  - message: "\u0422\u0435\u0433 \u0437\u0430\u043F\u0440\u0435\u0442\u0430 \u043D\
+      \u0430 \u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u043D\
+      \u0443\u043B\u0435\u0432\u044B\u043C \u043F\u0430\u0446\u0438\u0435\u043D\u0442\
+      \u043E\u043C \u043F\u0440\u0438\u043C\u0435\u043D\u0435\u043D \u043A \u0440\u043E\
+      \u043B\u044F\u043C: \u0413\u0421\u0411 (+\u0432\u0435\u0441\u044C \u0441\u043E\
+      \u0441\u0442\u0430\u0432 \u0421\u0411), \u041A\u0430\u043F\u0438\u0442\u0430\
+      \u043D, \u0425\u043E\u041F"
+    type: Add
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5097
+  time: '2023-11-09T19:44:54.0000000+00:00'
