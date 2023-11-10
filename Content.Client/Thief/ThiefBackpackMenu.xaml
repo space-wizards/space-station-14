@@ -1,0 +1,31 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+						xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+						xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+						Title="{Loc 'thief-backpack-window-title'}"
+						MinSize="480 360">
+	<BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+		<!-- First Informational panel -->
+			<Label Text="{Loc 'thief-backpack-window-description'}" Margin="5 5"/>
+			<controls:HLine Color="#404040" Thickness="2" Margin="0 5"/>
+			<Label Text="{Loc 'thief-backpack-window-selected'}" Margin="5 5"/>
+			<Label Name="SelectedSets" Text=" 0/2" Margin ="0 5"/>
+			
+		<!-- Second sets panel -->
+		<PanelContainer Margin="5 5">
+			<PanelContainer.PanelOverride>
+				<gfx:StyleBoxFlat BackgroundColor="#050505" />
+			</PanelContainer.PanelOverride>
+			<GridContainer Name="SetsGrid" Margin="5 10" Columns="2">
+				<!-- Sets is filled by code -->
+			</GridContainer>
+		</PanelContainer>
+		
+		<!-- Third approve button panel -->
+		<PanelContainer Margin="0 5">
+			<Button Name="ApproveButton"
+					Text="{Loc 'thief-backpack-window-approve-button'}"
+					Margin="0 50"
+					Access="Public"/>
+		</PanelContainer>
+	</BoxContainer>
+</controls:FancyWindow>

@@ -1,0 +1,14 @@
+- type: entity
+  id: ThiefBackpack
+  name: thief backpack
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Mobs/Pets/shiva.rsi
+    state: shiva
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.ThiefBackpackUIKey.Key
+        type: ThiefBackpackBoundUserInterface
