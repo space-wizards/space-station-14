@@ -441,9 +441,10 @@ public sealed class PlantHolderSystem : EntitySystem
             component.Health -= 6 * healthMod;
         }
 
+        // Prevents the plant from aging when lacking resources.
+        // Limits the effect on aging so that when resources are added, the plant starts growing in a reasonable amount of time.
         if (component.SkipAging < 10)
         {
-
             // Make sure the plant is not starving.
             if (component.NutritionLevel > 5)
             {
