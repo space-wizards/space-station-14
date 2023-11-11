@@ -6,6 +6,7 @@
 - files: ["pai.ogg", "pai_ask.ogg", "pai_exclaim.ogg"]
   license: "CC-BY-3.0"
   copyright: "hubismal on GitHub"
+  source: "https://github.com/hubismal"
 
 - files: [
     "speak_1_ask.ogg",
