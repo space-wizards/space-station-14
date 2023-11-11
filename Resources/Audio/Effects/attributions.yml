@@ -72,3 +72,18 @@
   license: "CC-BY-SA-3.0"
   copyright: "Recorded by deltanedas for SS14"
   source: "https://github.com/deltanedas"
+
+- files: ["drop.ogg"]
+  copyright: "Levan Nadashvili"
+  license: "LicenseRef-GameAudioGDC-Bundle"
+  source: "Levan Nadashvili - Soldier Footsteps - FS Concrete Soldier Crouch N02, mixed from stereo to mono. https://gdc.sonniss.com/"
+
+- files: ["wall_bonk.ogg"]
+  copyright: "344 Audio"
+  license: "LicenseRef-GameAudioGDC-Bundle"
+  source: "344 Audio - Nuts and Bolts. https://gdc.sonniss.com/"
+
+- files: ["pop.ogg"]
+  copyright: "mirrorcult"
+  license: "CC0-1.0"
+  source: "https://github.com/space-wizards/space-station-14/blob/9168fc629c555b8c395d695d291faea1eeda1db6/Resources/Audio/Effects/pop.ogg"

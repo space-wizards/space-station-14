@@ -40,19 +40,7 @@ The following sounds are taken from TGstation github (licensed under CC by 3.0):
 
     demon_dies.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
 
-pop.ogg licensed under CC0 1.0 by mirrorcult
-
 box_deploy.ogg and chime.ogg taken from Citadel Station at commit: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61
 
-
- - files:
-     - "drop.ogg"
-   license: "Royalty free"
-   copyright: "Sonniss.com - GDC 2016 - Game Audio Bundle - Levan Nadashvili - Soldier Footsteps - FS Concrete Soldier Crouch N02, mixed from stereo to mono"
-
-- files:
-      - "wall_bonk.ogg"
-  license: "Royalty free"
-  copyright: "Sonniss.com - GDC 2023 - Game Audio Bundle - 344 Audio - Nuts and Bolts"
 
 # Do not add to this list, I only did the above because yaml scheme validator doesn't like custom licenses.
