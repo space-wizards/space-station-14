@@ -81,17 +81,17 @@
   source: "https://freesound.org/people/thatkellytrna/sounds/425777/"
 
 - files: ["male_cough_1.ogg"]
-  license: "unknown"
+  license: ""
   copyright: "unknown"
   source: "https://freesound.org"
 
 - files: ["male_cough_2.ogg"]
-  license: "CC0-1.0"
+  license: "CC01.0"
   copyright: "Harris85 on freesound.org"
   source: "https://freesound.org/people/Harris85/sounds/208761/"
 
 - files: ["female_sneeze_1.ogg"]
-  license: "CC0-1.0"
+  license: "CC01.0"
   copyright: "sherby168 on freesound.org"
   source: "https://freesound.org/people/sherby168/sounds/540771/"
 
@@ -106,7 +106,7 @@
   source: "https://freesound.org/people/ckvoiceover/sounds/401338/"
 
 - files: ["female_yawn_1.ogg"]
-  license: "CC-0-1.0"
+  license: "CC0-1.0"
   copyright: "Reitanna on freesound.org"
   source: "https://freesound.org/people/Reitanna/sounds/252239/"
 
@@ -114,6 +114,6 @@
   - snore1.ogg
   - snore2.ogg
   - snore3.ogg
-  license: "CC-0-1.0"
+  license: "CC0-1.0"
   copyright: "mattyharm on freesound.org"
   source: "https://freesound.org/people/mattyharm/sounds/432995/"
