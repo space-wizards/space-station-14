@@ -22,7 +22,7 @@
     soundSwing:
       path: /Audio/Weapons/punchmiss.ogg
   - type: Item
-    size: 50
+    size: Normal
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

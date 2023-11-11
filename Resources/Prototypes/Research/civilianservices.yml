@@ -110,7 +110,7 @@
     - ComputerTelevisionCircuitboard
     - SynthesizerInstrument
     - BorgModuleMusique
-    - BorgModuleLiteracy
+    - BorgModuleService
     - BorgModuleClowning
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
@@ -157,7 +157,6 @@
   cost: 5000
   recipeUnlocks:
   - FatExtractorMachineCircuitboard
-  - SheetifierMachineCircuitboard
 
 - type: technology
   id: HONKMech
@@ -205,3 +204,15 @@
   cost: 15000
   recipeUnlocks:
   - CargoTelepadMachineCircuitboard
+
+- type: technology
+  id: QuantumFiberWeaving
+  name: research-technology-quantum-fiber-weaving
+  icon:
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - ClothingShoesBootsSpeed
