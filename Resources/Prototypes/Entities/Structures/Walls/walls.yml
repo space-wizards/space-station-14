@@ -382,6 +382,8 @@
   - type: IconSmooth
     key: walls
     base: plasma
+  - type: RadiationBlocker
+    resistance: 5
 
 - type: entity
   parent: BaseWall
@@ -889,6 +891,8 @@
   - type: IconSmooth
     key: walls
     base: uranium
+  - type: RadiationBlocker
+    resistance: 6
 
 - type: entity
   parent: BaseWall
@@ -962,6 +966,9 @@
           MaterialWebSilk:
             min: 1
             max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
   - type: IconSmooth
     key: walls
     base: wall
