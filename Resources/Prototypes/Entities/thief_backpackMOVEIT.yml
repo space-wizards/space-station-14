@@ -6,9 +6,45 @@
   - type: Sprite
     sprite: Mobs/Pets/shiva.rsi
     state: shiva
+  - type: ThiefUndeterminedBackpack
+    transformAfterSelect: AlwaysPoweredWallLight
+    possibleSets:
+    - ChameleonSet
+    - ToolsSet
+    - ChameleonSet
+    - ToolsSet
+    - ChameleonSet
+    - ToolsSet
+    - ToolsSet
+    - ToolsSet
+    - ToolsSet
+    - ChameleonSet
+    - ToolsSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface
     interfaces:
       - key: enum.ThiefBackpackUIKey.Key
         type: ThiefBackpackBoundUserInterface
+
+- type: thiefBackpackSet
+  id: ChameleonSet
+  name: thief-backpack-category-chameleon-name
+  description: thief-backpack-category-chameleon-description
+  sprite: 
+    sprite: Mobs/Pets/shiva.rsi
+    state: shiva
+  content:
+  - AlwaysPoweredWallLight
+  - AlwaysPoweredWallLight
+
+- type: thiefBackpackSet
+  id: ToolsSet
+  name: thief-backpack-category-tools-name
+  description: thief-backpack-category-tools-description
+  sprite: 
+    sprite: Mobs/Pets/shiva.rsi
+    state: shiva
+  content:
+  - AlwaysPoweredWallLight
+  - AlwaysPoweredWallLight

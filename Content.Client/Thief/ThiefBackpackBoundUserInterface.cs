@@ -1,5 +1,6 @@
 using Content.Shared.Thief;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Thief;
 
@@ -11,7 +12,6 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
     public ThiefBackpackBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
-
     protected override void Open()
     {
         base.Open();
@@ -39,15 +39,13 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
         _window?.UpdateState(current);
     }
 
-    //Sends
+    public void SendChangeSelected(int setNumber)
+    {
+        SendMessage(new ThiefBackpackChangeSetMessage(setNumber));
+    }
 
-    //public void SendTargetLevel(int level)
-    //{
-    //    SendMessage(new BluespaceHarvesterTargetLevelMessage(level));
-    //}
-    //
-    //public void SendBuy(Shared.BluespaceHarvester.BluespaceHarvesterCategory category)
-    //{
-    //    SendMessage(new BluespaceHarvesterBuyMessage(category));
-    //}
+    public void SendApprove()
+    {
+        SendMessage(new ThiefBackpackApproveMessage());
+    }
 }
