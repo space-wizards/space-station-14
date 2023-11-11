@@ -96,7 +96,9 @@ public abstract class SharedActionsSystem : EntitySystem
         if (result != null)
             return true;
 
-        Log.Error($"Failed to get action from action entity: {ToPrettyString(uid.Value)}");
+        if (logError)
+            Log.Error($"Failed to get action from action entity: {ToPrettyString(uid.Value)}");
+
         return false;
     }
 
