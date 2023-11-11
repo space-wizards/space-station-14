@@ -152,6 +152,8 @@
     - Wrench
     - Screwdriver
     - Wirecutter
+    - Multitool
+    - Welder
 
 # cargo modules
 - type: entity
@@ -179,7 +181,9 @@
   - type: ItemBorgModule
     items:
     - MiningDrill
+    - Shovel
     - OreBag
+    - Crowbar
 
 - type: entity
   id: BorgModuleGrapplingGun
@@ -193,6 +197,7 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGun
+    - WeaponCrusherDagger
 
 # engineering modules
 - type: entity
@@ -222,6 +227,9 @@
   - type: ItemBorgModule
     items:
     - GasAnalyzer
+    - trayScanner
+    - Crowbar
+    - Wrench
 
 - type: entity
   id: BorgModuleConstruction
@@ -264,6 +272,8 @@
   - type: ItemBorgModule
     items:
     - LightReplacer
+    - Crowbar
+    - Screwdriver
 
 - type: entity
   id: BorgModuleCleaning
@@ -279,6 +289,7 @@
     - MopItem
     - Bucket
     - Holoprojector
+    - SprayBottleSpaceCleaner
 
 - type: entity
   id: BorgModuleTrashCollection
@@ -291,7 +302,7 @@
     - state: icon-trash-bag
   - type: ItemBorgModule
     items:
-    - TrashBag
+    - TrashBagBlue
 
 # medical modules
 - type: entity
@@ -324,6 +335,7 @@
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
+    - Dropper
 
 - type: entity
   id: BorgModuleDefibrillator
@@ -385,9 +397,9 @@
 
 # service modules
 - type: entity
-  id: BorgModuleLiteracy
+  id: BorgModuleService
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: literacy cyborg module
+  name: service cyborg module
   components:
   - type: Sprite
     layers:
@@ -397,6 +409,9 @@
     items:
     - Pen
     - BooksBag
+    - HandLabeler
+    - Lighter
+    - DrinkShaker
 
 - type: entity
   id: BorgModuleMusique
@@ -410,6 +425,8 @@
   - type: ItemBorgModule
     items:
     - SynthesizerInstrument
+    - ElectricGuitarInstrument
+    - SaxophoneInstrument
 
 - type: entity
   id: BorgModuleGardening
@@ -455,3 +472,4 @@
     items:
     - BikeHorn
     - ClownRecorder
+    - BikeHornInstrument

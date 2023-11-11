@@ -204,8 +204,8 @@
   - type: Item
     sprite: Clothing/Shoes/Specific/skates.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 1.3
-    sprintModifier: 1.3
+    walkModifier: 1.2
+    sprintModifier: 1.2
   - type: Skates
   - type: FootstepModifier
     footstepSoundCollection:

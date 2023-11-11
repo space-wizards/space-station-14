@@ -369,7 +369,7 @@ public sealed class ChatUIController : UIController
         UpdateChannelPermissions();
     }
 
-    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
+    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType, string? prefixText = null, string? prefixEndText = null)
     {
         var ent = EntityManager.GetEntity(msg.SenderEntity);
 
@@ -379,8 +379,11 @@ public sealed class ChatUIController : UIController
             return;
         }
 
+        // Kind of shitty way to add prefixes but hey it works!
+        string Message = prefixText + msg.Message + prefixEndText;
+
         // msg.Message should be the string that a user sent over text, without any added markup.
-        var messages = SplitMessage(msg.Message);
+        var messages = SplitMessage(Message);
 
         foreach (var message in messages)
         {
@@ -842,6 +845,15 @@ public sealed class ChatUIController : UIController
 
             case ChatChannel.Emotes:
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
+                break;
+
+            case ChatChannel.LOOC:
+                if (_cfg.GetCVar(CCVars.LoocAboveHeadShow))
+                {
+                    const string prefixText = "(LOOC: ";
+                    const string prefixEndText = ")";
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc, prefixText, prefixEndText);
+                }
                 break;
         }
     }
