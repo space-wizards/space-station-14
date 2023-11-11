@@ -181,6 +181,17 @@
   - type: EyeProtection
     protectionTime: 5
 
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesAviator
+  name: aviator sunglasses
+  description: A set of glasses designed to be worn under headgear and other equipment.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/aviators.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/aviators.rsi
+
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
   parent: ClothingEyesBase
