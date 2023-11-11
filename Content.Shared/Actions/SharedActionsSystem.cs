@@ -233,6 +233,16 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
+    public void ResetRemainingUses(EntityUid? actionId)
+    {
+        if (!TryGetActionData(actionId, out var action))
+            return;
+
+        action.RemainingUses = action.UsesBeforeDelay;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
     public void ChangeName(EntityUid? actionId, string name)
     {
         if (!TryGetActionData(actionId, out var action) || !TryComp(actionId, out MetaDataComponent? metadata) || metadata.EntityName == name)
@@ -290,7 +300,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         if (action.RemainingUses < 1)
-            action.RemainingUses = action.UsesBeforeDelay;
+            ResetRemainingUses(actionEnt);
 
         BaseActionEvent? performEvent = null;
 

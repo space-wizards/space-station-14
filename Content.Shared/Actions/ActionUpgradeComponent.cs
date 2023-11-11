@@ -30,8 +30,8 @@ public sealed partial class ActionUpgradeComponent : Component
     // TODO: Exponential?
 
     // TODO: Name Modifier
-    //  Level 1 Fireball => Fireball I
-    //  Level 2 Fireball => Fireball II
-    //  Level 3 Fireball => Fireball III
+    //  Level 1 Fireball => Fireball 1
+    //  Level 2 Fireball => Fireball 2
+    //  Level 3 Fireball => Fireball 3
 
 }
