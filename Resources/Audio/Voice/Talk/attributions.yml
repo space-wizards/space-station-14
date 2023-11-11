@@ -6,7 +6,7 @@
 - files: ["pai.ogg", "pai_ask.ogg", "pai_exclaim.ogg"]
   license: "CC-BY-3.0"
   copyright: "hubismal on GitHub"
-  source: "https://github.com/hubismal"
+  source: "https://github.com/space-wizards/space-station-14/commit/3421e4f4de2613df1e92a4169a778335bc9faac4"
 
 - files: [
     "speak_1_ask.ogg",
