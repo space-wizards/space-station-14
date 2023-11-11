@@ -1,14 +1,4 @@
 Entries:
-- author: Verslebas
-  changes:
-  - {message: Changed admin ghost's hands order, type: Tweak}
-  id: 4648
-  time: '2023-08-21T18:35:30.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Vending machines have been polished. Again., type: Tweak}
-  id: 4649
-  time: '2023-08-21T18:45:54.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed medical locker contents, type: Tweak}
@@ -2906,3 +2896,18 @@ Entries:
       cyborg modules.', type: Tweak}
   id: 5147
   time: '2023-11-10T01:31:04.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'Made stasis beds actually buildable now. They require 2 steel, 3 wires,
+      a capacitor and manipulator (and of course the board).', type: Tweak}
+  - {message: Fixed a bug where the stasis bed getting deconstructed would delete
+      the player laying on it., type: Fix}
+  - {message: Microwave contents will be ejected on deconstruct., type: Fix}
+  id: 5148
+  time: '2023-11-11T06:42:59.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Entry-level cyborg modules for each chassis are now craftable by default.,
+    type: Tweak}
+  id: 5149
+  time: '2023-11-11T06:43:13.0000000+00:00'
