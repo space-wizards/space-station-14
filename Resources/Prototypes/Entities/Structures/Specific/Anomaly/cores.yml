@@ -3,7 +3,7 @@
   id: BaseAnomalyCore
   abstract: true
   name: anomaly core
-  description: The core of a detroyed incomprehensible object.
+  description: The core of a destroyed incomprehensible object.
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
@@ -19,7 +19,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: Item
-    size: 10
+    size: Normal
   - type: ItemCooldown
   - type: EmitSoundOnUse #placeholder for future unical mechanic
     sound:

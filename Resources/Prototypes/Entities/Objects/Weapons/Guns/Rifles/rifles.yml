@@ -7,7 +7,7 @@
   components:
   - type: Sprite
   - type: Item
-    size: Large
+    size: Huge
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     quickEquip: false

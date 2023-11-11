@@ -12,8 +12,6 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: ScrambledAccent
-    Alcohol:
-      effects:
       - !type:Drunk
         slurSpeech: false
         boozePower: 20
@@ -57,8 +55,6 @@
         - !type:ReagentThreshold
           min: 20
         probability: 0.02
-    Alcohol:
-      effects:
       - !type:Drunk
         conditions:
         - !type:ReagentThreshold
@@ -162,8 +158,6 @@
         conditions:
         - !type:ReagentThreshold
           min: 15
-    Alcohol:
-      effects:
       - !type:Drunk
 
 - type: reagent
@@ -407,6 +401,9 @@
     Medicine:
       effects:
       - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 4
         probability: 0.3
 
 - type: reagent
