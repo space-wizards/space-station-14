@@ -1,4 +1,5 @@
 using Content.Shared.Movement.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -25,7 +26,7 @@ public sealed partial class ReplaySpectatorSystem
         /// <summary>
         /// The player that was originally controlling <see cref="Entity"/>
         /// </summary>
-        public NetUserId? Controller;
+        public NetUserId Controller;
 
         public (EntityCoordinates Coords, Angle Rot)? Local;
         public (EntityCoordinates Coords, Angle Rot)? World;
@@ -35,27 +36,17 @@ public sealed partial class ReplaySpectatorSystem
     public SpectatorData GetSpectatorData()
     {
         var data = new SpectatorData();
-
-        if (_player.LocalPlayer?.ControlledEntity is not { } player)
+        if (_player.LocalEntity is not { } player)
             return data;
 
-        foreach (var session in _player.Sessions)
-        {
-            if (session.UserId == _player.LocalPlayer?.UserId)
-                continue;
-
-            if (session.AttachedEntity == player)
-            {
-                data.Controller = session.UserId;
-                break;
-            }
-        }
+        data.Controller = _player.LocalUser ?? DefaultUser;
 
         if (!TryComp(player, out TransformComponent? xform) || xform.MapUid == null)
             return data;
 
         data.Local = (xform.Coordinates, xform.LocalRotation);
-        data.World = (new(xform.MapUid.Value, xform.WorldPosition), xform.WorldRotation);
+        var (pos, rot) = _transform.GetWorldPositionRotation(player);
+        data.World = (new(xform.MapUid.Value, pos), rot);
 
         if (TryComp(player, out InputMoverComponent? mover))
             data.Eye = (mover.RelativeEntity, mover.TargetRelativeRotation);
@@ -77,18 +68,54 @@ public sealed partial class ReplaySpectatorSystem
         _spectatorData = null;
     }
 
+    private void OnBeforeApplyState((GameState Current, GameState? Next) args)
+    {
+        // Before applying the game state, we want to check to see if a recorded player session is about to
+        // get attached to the entity that we are currently spectating. If it is, then we switch out local session
+        // to the recorded session. I.e., we switch from spectating the entity to spectating the session.
+        // This is required because having multiple sessions attached to a single entity is not currently supported.
+
+        if (_player.LocalUser != DefaultUser)
+            return; // Already spectating some session.
+
+        if (_player.LocalEntity is not {} uid)
+            return;
+
+        var netEnt = GetNetEntity(uid);
+        if (netEnt.IsClientSide())
+            return;
+
+        foreach (var playerState in args.Current.PlayerStates.Value)
+        {
+            if (playerState.ControlledEntity != netEnt)
+                continue;
+
+            if (!_player.TryGetSessionById(playerState.UserId, out var session))
+                session = _player.CreateAndAddSession(playerState.UserId, playerState.Name);
+
+            _player.SetLocalSession(session);
+            break;
+        }
+    }
+
     public void SetSpectatorPosition(SpectatorData data)
     {
         if (_player.LocalSession == null)
             return;
 
-        if (data.Controller != null
-            && _player.SessionsDict.TryGetValue(data.Controller.Value, out var session)
-            && Exists(session.AttachedEntity)
-            && Transform(session.AttachedEntity.Value).MapID != MapId.Nullspace)
+        if (data.Controller != DefaultUser)
         {
-            _player.SetAttachedEntity(_player.LocalSession, session.AttachedEntity);
-            return;
+            // the "local player" is currently set to some recorded session. As long as that session has an entity, we
+            // do nothing here
+            if (_player.TryGetSessionById(data.Controller, out var session)
+                && Exists(session.AttachedEntity))
+            {
+                _player.SetLocalSession(session);
+                return;
+            }
+
+            // Spectated session is no longer valid - return to the client-side session
+            _player.SetLocalSession(_player.GetSessionById(DefaultUser));
         }
 
         if (Exists(data.Entity) && Transform(data.Entity).MapID != MapId.Nullspace)
@@ -114,7 +141,7 @@ public sealed partial class ReplaySpectatorSystem
         }
         else
         {
-            Logger.Error("Failed to find a suitable observer spawn point");
+            Log.Error("Failed to find a suitable observer spawn point");
             return;
         }
 
@@ -153,7 +180,7 @@ public sealed partial class ReplaySpectatorSystem
 
     private void OnTerminating(EntityUid uid, ReplaySpectatorComponent component, ref EntityTerminatingEvent args)
     {
-        if (uid != _player.LocalPlayer?.ControlledEntity)
+        if (uid != _player.LocalEntity)
             return;
 
         var xform = Transform(uid);
@@ -165,7 +192,7 @@ public sealed partial class ReplaySpectatorSystem
 
     private void OnParentChanged(EntityUid uid, ReplaySpectatorComponent component, ref EntParentChangedMessage args)
     {
-        if (uid != _player.LocalPlayer?.ControlledEntity)
+        if (uid != _player.LocalEntity)
             return;
 
         if (args.Transform.MapUid != null || args.OldMapId == MapId.Nullspace)

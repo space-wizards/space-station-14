@@ -647,7 +647,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (action.AttachedEntity != performer)
         {
-            DebugTools.Assert(!Resolve(performer, ref comp, false) || !comp.Actions.Contains(actionId.Value));
+            DebugTools.Assert(!Resolve(performer, ref comp, false)
+                              || comp.LifeStage >= ComponentLifeStage.Stopping
+                              || !comp.Actions.Contains(actionId.Value));
 
             if (!GameTiming.ApplyingState)
                 Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}");

@@ -1,11 +1,11 @@
 using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
-using Robust.Client;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Shared.Console;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Markdown.Mapping;
 
@@ -27,12 +27,16 @@ public sealed partial class ReplaySpectatorSystem : EntitySystem
     [Dependency] private readonly IStateManager _stateMan = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly SharedContentEyeSystem _eye = default!;
     [Dependency] private readonly IReplayPlaybackManager _replayPlayback = default!;
 
     private SpectatorData? _spectatorData;
     public const string SpectateCmd = "replay_spectate";
+
+    /// <summary>
+    /// User Id that corresponds to the local user in a single-player game.
+    /// </summary>
+    public static readonly NetUserId DefaultUser = default;
 
     public override void Initialize()
     {
@@ -49,6 +53,7 @@ public sealed partial class ReplaySpectatorSystem : EntitySystem
         _replayPlayback.AfterSetTick += OnAfterSetTick;
         _replayPlayback.ReplayPlaybackStarted += OnPlaybackStarted;
         _replayPlayback.ReplayPlaybackStopped += OnPlaybackStopped;
+        _replayPlayback.BeforeApplyState += OnBeforeApplyState;
     }
 
     public override void Shutdown()
@@ -58,6 +63,7 @@ public sealed partial class ReplaySpectatorSystem : EntitySystem
         _replayPlayback.AfterSetTick -= OnAfterSetTick;
         _replayPlayback.ReplayPlaybackStarted -= OnPlaybackStarted;
         _replayPlayback.ReplayPlaybackStopped -= OnPlaybackStopped;
+        _replayPlayback.BeforeApplyState -= OnBeforeApplyState;
     }
 
     private void OnPlaybackStarted(MappingDataNode yamlMappingNode, List<object> objects)
