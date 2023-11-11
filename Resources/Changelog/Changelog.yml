@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Air alarms now have output signal ports for each state., type: Tweak}
-  id: 4651
-  time: '2023-08-21T21:18:30.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Freshly spawned diona are no longer gray., type: Fix}
@@ -2912,3 +2907,8 @@ Entries:
       when they become a ghost., type: Fix}
   id: 5150
   time: '2023-11-11T06:45:47.0000000+00:00'
+- author: Brandon_H
+  changes:
+  - {message: Plants can no longer grow without sufficient water and nutrients., type: Fix}
+  id: 5151
+  time: '2023-11-11T19:12:13.0000000+00:00'
