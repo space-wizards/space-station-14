@@ -1,5 +1,6 @@
 
 using Content.Server.Physics.Controllers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Physics.Components;
@@ -56,8 +57,8 @@ public sealed partial class ChasingWalkComponent : Component
     /// <summary>
     /// The component that the entity is chasing
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
-    public string ChasingComponent = default!;
+    [DataField(required: true)]
+    public ComponentRegistry ChasingComponent = default!;
     /// <summary>
     /// The maximum radius in which the entity chooses the target component to follow
     /// </summary>

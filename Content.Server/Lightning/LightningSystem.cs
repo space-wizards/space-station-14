@@ -70,6 +70,7 @@ public sealed class LightningSystem : SharedLightningSystem
     public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0)
     {
         //To Do: add support to different priority target tablem for different lightning types
+        //To Do: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
         var targets = _lookup.GetComponentsInRange<LightningTargetComponent>(Transform(user).Coordinates, range).ToList(); //To Do: remove hardcode component
         _random.Shuffle(targets);
         targets.Sort((x, y) => y.Priority.CompareTo(x.Priority));

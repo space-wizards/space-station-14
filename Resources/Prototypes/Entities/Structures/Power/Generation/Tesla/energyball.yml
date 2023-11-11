@@ -11,7 +11,8 @@
   - type: ChasingWalk
     minSpeed: 1
     maxSpeed: 3
-    chasingComponent: LightningTarget
+    chasingComponent: 
+    - type: LightningTarget
   - type: AmbientSound
     volume: 3
     range: 15
@@ -94,7 +95,8 @@
   - type: ChasingWalk
     minSpeed: 2
     maxSpeed: 3
-    chasingComponent: TeslaEnergyBall
+    chasingComponent: 
+    - type: TeslaEnergyBall
   - type: Fixtures
     fixtures:
       TeslaCollider:

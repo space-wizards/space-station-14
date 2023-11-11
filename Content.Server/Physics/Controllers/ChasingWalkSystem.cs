@@ -46,7 +46,7 @@ public sealed class ChasingWalkSystem : EntitySystem
         //We find our coordinates and calculate the radius of the target search.
         var xform = Transform(uid);
         var range = component.MaxChaseRadius;
-        var compType = EntityManager.ComponentFactory.GetRegistration(component.ChasingComponent).Type;
+        var compType = _random.Pick(component.ChasingComponent.Values).Component.GetType();
         var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range).ToList();
 
         //If there are no required components in the radius, don't moving.
