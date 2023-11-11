@@ -56,8 +56,6 @@ public sealed class SignalTimerSystem : EntitySystem
 
         _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
-        _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
-
         if (_ui.TryGetUi(uid, SignalTimerUiKey.Key, out var bui))
         {
             _ui.SetUiState(bui, new SignalTimerBoundUserInterfaceState(signalTimer.Label,
@@ -114,7 +112,7 @@ public sealed class SignalTimerSystem : EntitySystem
             return;
 
         component.Label = args.Text[..Math.Min(5, args.Text.Length)];
-        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string?[] { component.Label });
     }
 
     private void OnDelayChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerDelayChangedMessage args)
@@ -139,9 +137,8 @@ public sealed class SignalTimerSystem : EntitySystem
 
             if (appearance != null)
             {
-                _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
                 _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, activeTimer.TriggerTime, appearance);
-                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label, appearance);
+                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string?[] { component.Label }, appearance);
             }
 
             _signalSystem.InvokePort(uid, component.StartPort);
@@ -152,8 +149,7 @@ public sealed class SignalTimerSystem : EntitySystem
 
             if (appearance != null)
             {
-                _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text, appearance);
-                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label, appearance);
+                _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string?[] { component.Label }, appearance);
             }
         }
     }
