@@ -50,7 +50,7 @@
         layer:
         - GlassLayer
   - type: TeslaEnergyBall
-    energyLoss: 3
+    energyLoss: 0 # Infinite tesla
     spawnProto: TeslaMiniEnergyBall 
     soundCollapse:
       path: /Audio/Effects/tesla_collapse.ogg
@@ -91,6 +91,10 @@
   name: mini ball lightning
   description: The cub of a destructive energy cage. Not as dangerous, but still not worth touching with bare hands.
   components: 
+  - type: ChasingWalk
+    minSpeed: 2
+    maxSpeed: 3
+    chasingComponent: TeslaEnergyBall
   - type: Fixtures
     fixtures:
       TeslaCollider:
@@ -99,11 +103,11 @@
             radius: 0.35
         hard: true
         restitution: 0.8
-        density: 99999 #to do: fix collider - the sphere pushes the entities apart. 9999 density is needed to avoid high velocities when colliding with a containment field. Collision is needed to collide with the containment field. TESLA raycast from miniballs!
+        density: 10
         mask:
-        - Opaque
+        - None
         layer:
-        - GlassLayer
+        - None
   - type: TimedDespawn
     lifetime: 120
   - type: Sprite
