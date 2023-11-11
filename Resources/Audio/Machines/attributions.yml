@@ -86,6 +86,7 @@
 - files: ["vending_jingle.ogg"]
   license: "CC-BY-3.0"
   copyright: "hubismal on GitHub"
+  source: "https://github.com/hubismal"
 
 - files: ["lightswitch.ogg"]
   license: "CC-BY-SA-3.0"
