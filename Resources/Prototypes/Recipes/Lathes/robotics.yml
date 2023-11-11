@@ -448,6 +448,16 @@
     Plastic: 250
 
 - type: latheRecipe
+  id: BorgModuleAdvancedCleaning
+  result: BorgModuleAdvancedCleaning
+  completetime: 3
+  materials:
+    Steel: 250
+    Glass: 250
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
   id: BorgModuleTrashCollection
   result: BorgModuleTrashCollection
   completetime: 3
