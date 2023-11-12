@@ -45,17 +45,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
-    // The destination maps get some kind of unlock
-    // Whether a gateway is unlocked depends if its host map is unlocked.
-
-    // Combine Gateway + GatewayDestination
-    // Gateway takes the spawning gateway as the unlock timer
-    // One-way portals
-
     // GATEWAY WINDOW
-    // Mark any locked ones as locked until unlocked
-    // If NextUnlock < curtime then undisable all locked ones (assuming NextReady is also up)
-    // After taken then disable them all again
 
     // Need non-binary portals
 
@@ -88,70 +78,77 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         ent.Comp.NextUnlock += args.PausedTime;
     }
 
-    private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent component, MapInitEvent args)
+    private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent generator, MapInitEvent args)
     {
-        var tiles = new List<(Vector2i Index, Tile Tile)>();
-        var tileDef = _tileDefManager["FloorSteel"];
-        const int MaxOffset = 256;
-
         for (var i = 0; i < 3; i++)
         {
-            tiles.Clear();
-            var seed = _random.Next();
-            var random = new Random(seed);
-            var mapId = _mapManager.CreateMap();
-            var mapUid = _mapManager.GetMapEntityId(mapId);
-            var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
-            var restriction = AddComp<RestrictedRangeComponent>(mapUid);
-            restriction.Origin = origin;
-            _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Continental"), seed);
-
-            var grid = Comp<MapGridComponent>(mapUid);
-
-            for (var x = -2; x <= 2; x++)
-            {
-                for (var y = -2; y <= 2; y++)
-                {
-                    tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: random.NextByte(tileDef.Variants))));
-                }
-            }
-
-            // Clear area nearby as a sort of landing pad.
-            _maps.SetTiles(mapUid, grid, tiles);
-
-            var gatewayName = SharedSalvageSystem.GetFTLName(_protoManager.Index<DatasetPrototype>(PlanetNames), seed);
-
-            _metadata.SetEntityName(mapUid, gatewayName);
-            var originCoords = new EntityCoordinates(mapUid, origin);
-
-            var gatewayUid = SpawnAtPosition("GatewayDestination", originCoords);
-            var gatewayComp = Comp<GatewayDestinationComponent>(gatewayUid);
-            _gateway.SetDestinationName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
-            _gateway.SetEnabled(gatewayUid, true, gatewayComp);
-            component.Generated.Add(mapUid);
-
-            var genDest = AddComp<GatewayGeneratorDestinationComponent>(mapUid);
-            genDest.Origin = origin;
-            genDest.Seed = seed;
-            genDest.Generator = uid;
-
-            // Enclose the area
-            var boundaryUid = Spawn(null, originCoords);
-            var boundaryPhysics = AddComp<PhysicsComponent>(boundaryUid);
-            var cShape = new ChainShape();
-            // Don't need it to be a perfect circle, just need it to be loosely accurate.
-            cShape.CreateLoop(Vector2.Zero, restriction.Range + 1f, false, count: 4);
-            _fixtures.TryCreateFixture(
-                boundaryUid,
-                cShape,
-                "boundary",
-                collisionLayer: (int) (CollisionGroup.HighImpassable | CollisionGroup.Impassable | CollisionGroup.LowImpassable),
-                body: boundaryPhysics);
-            _physics.WakeBody(boundaryUid, body: boundaryPhysics);
-            AddComp<BoundaryComponent>(boundaryUid);
+            GenerateDestination(uid, generator);
         }
 
-        Dirty(uid, component);
+        Dirty(uid, generator);
+    }
+
+    private void GenerateDestination(EntityUid uid, GatewayGeneratorComponent? generator = null)
+    {
+        if (!Resolve(uid, ref generator))
+            return;
+
+        var tileDef = _tileDefManager["FloorSteel"];
+        const int MaxOffset = 256;
+        var tiles = new List<(Vector2i Index, Tile Tile)>();
+        var seed = _random.Next();
+        var random = new Random(seed);
+        var mapId = _mapManager.CreateMap();
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
+        var restriction = AddComp<RestrictedRangeComponent>(mapUid);
+        restriction.Origin = origin;
+        _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Continental"), seed);
+
+        var grid = Comp<MapGridComponent>(mapUid);
+
+        for (var x = -2; x <= 2; x++)
+        {
+            for (var y = -2; y <= 2; y++)
+            {
+                tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: random.NextByte(tileDef.Variants))));
+            }
+        }
+
+        // Clear area nearby as a sort of landing pad.
+        _maps.SetTiles(mapUid, grid, tiles);
+
+        var gatewayName = SharedSalvageSystem.GetFTLName(_protoManager.Index<DatasetPrototype>(PlanetNames), seed);
+
+        _metadata.SetEntityName(mapUid, gatewayName);
+        var originCoords = new EntityCoordinates(mapUid, origin);
+
+        var genDest = AddComp<GatewayGeneratorDestinationComponent>(mapUid);
+        genDest.Origin = origin;
+        genDest.Seed = seed;
+        genDest.Generator = uid;
+
+        // Enclose the area
+        var boundaryUid = Spawn(null, originCoords);
+        var boundaryPhysics = AddComp<PhysicsComponent>(boundaryUid);
+        var cShape = new ChainShape();
+        // Don't need it to be a perfect circle, just need it to be loosely accurate.
+        cShape.CreateLoop(Vector2.Zero, restriction.Range + 1f, false, count: 4);
+        _fixtures.TryCreateFixture(
+            boundaryUid,
+            cShape,
+            "boundary",
+            collisionLayer: (int) (CollisionGroup.HighImpassable | CollisionGroup.Impassable | CollisionGroup.LowImpassable),
+            body: boundaryPhysics);
+        _physics.WakeBody(boundaryUid, body: boundaryPhysics);
+        AddComp<BoundaryComponent>(boundaryUid);
+
+        // Create the gateway.
+        var gatewayUid = SpawnAtPosition(generator.Proto, originCoords);
+        var gatewayComp = Comp<GatewayComponent>(gatewayUid);
+        _gateway.SetDestinationName(gatewayUid, FormattedMessage.FromMarkup($"[color=#D381C996]{gatewayName}[/color]"), gatewayComp);
+        _gateway.SetEnabled(gatewayUid, true, gatewayComp);
+        generator.Generated.Add(mapUid);
     }
 
     private void OnGeneratorAttemptOpen(Entity<GatewayGeneratorDestinationComponent> ent, ref AttemptGatewayOpenEvent args)
@@ -177,11 +174,14 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         {
             generatorComp.NextUnlock = _timing.CurTime + generatorComp.UnlockCooldown;
             _gateway.UpdateAllGateways();
+            // Generate another destination to keep them going.
+            GenerateDestination(ent.Comp.Generator);
         }
 
         if (!TryComp(args.MapUid, out MapGridComponent? grid))
             return;
 
+        ent.Comp.Locked = false;
         ent.Comp.Loaded = true;
         var seed = ent.Comp.Seed;
         var origin = ent.Comp.Origin;
@@ -201,6 +201,12 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 public sealed partial class GatewayGeneratorComponent : Component
 {
     /// <summary>
+    /// Prototype to spawn on the generated map if applicable.
+    /// </summary>
+    [DataField]
+    public EntProtoId? Proto = "Gateway";
+
+    /// <summary>
     /// Next time another seed unlocks.
     /// </summary>
     [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
@@ -210,7 +216,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// How long it takes to unlock another destination once one is taken.
     /// </summary>
     [DataField]
-    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(1);
+    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(45);
 
     /// <summary>
     /// Maps we've generated.
@@ -233,7 +239,7 @@ public sealed partial class GatewayGeneratorDestinationComponent : Component
     /// Used in conjunction with the attached generator's NextUnlock.
     /// </summary>
     [DataField]
-    public bool Locked;
+    public bool Locked = true;
 
     [DataField]
     public bool Loaded;

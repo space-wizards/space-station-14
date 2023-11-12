@@ -34,9 +34,14 @@ public sealed partial class GatewayWindow : FancyWindow,
     private GatewayBoundUserInterfaceState? _lastState;
 
     /// <summary>
-    /// Toggled if suddenly gateway has become ready.
+    /// Are we currently waiting on an unlock timer.
     /// </summary>
-    private bool _isReady = true;
+    private bool _isUnlockPending = true;
+
+    /// <summary>
+    /// Are we currently waiting on a cooldown timer.
+    /// </summary>
+    private bool _isCooldownPending = true;
 
     public GatewayWindow()
     {
@@ -49,13 +54,15 @@ public sealed partial class GatewayWindow : FancyWindow,
 
     public void UpdateState(GatewayBoundUserInterfaceState state)
     {
-        _isReady = true;
         _destinations = state.Destinations;
         _current = state.Current;
         _nextReady = state.NextReady;
         _cooldown = state.Cooldown;
         _unlockTime = state.UnlockTime;
         _nextUnlock = state.NextUnlock;
+
+        _isUnlockPending = _nextUnlock >= _timing.CurTime;
+        _isCooldownPending = _nextReady >= _timing.CurTime;
 
         Container.DisposeAllChildren();
 
@@ -78,15 +85,12 @@ public sealed partial class GatewayWindow : FancyWindow,
         }
 
         var now = _timing.CurTime;
-        var i = -1;
 
         foreach (var dest in _destinations)
         {
-            // TODO: REMOVE
-            i++;
             var ent = dest.Entity;
             var name = dest.Name;
-            var busy = dest.Portal;
+            var locked = dest.Locked && _nextUnlock > _timing.CurTime;
 
             var box = new BoxContainer()
             {
@@ -122,7 +126,7 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             var buttonStripe = new StripeBack()
             {
-                Visible = i == 0,
+                Visible = locked,
                 HorizontalExpand = true,
                 VerticalExpand = true,
                 Margin = new Thickness(10f, 0f, 0f, 0f),
@@ -145,7 +149,7 @@ public sealed partial class GatewayWindow : FancyWindow,
                 Disabled = now < _nextReady || ent == _current,
                 HorizontalAlignment = HAlignment.Right,
                 Margin = new Thickness(10f, 0f, 0f, 0f),
-                Visible = i != 0,
+                Visible = !locked,
                 SetHeight = 32f,
             };
 
@@ -190,11 +194,12 @@ public sealed partial class GatewayWindow : FancyWindow,
         base.FrameUpdate(args);
 
         var now = _timing.CurTime;
+        var dirtyState = false;
 
         // if its not going to close then show it as empty
         if (_nextUnlock == TimeSpan.Zero)
         {
-            NextUnlockBar.Value = 0f;
+            NextUnlockBar.Value = 1f;
             NextUnlockText.Text = "00:00";
         }
         else
@@ -202,6 +207,12 @@ public sealed partial class GatewayWindow : FancyWindow,
             var remaining = _nextUnlock - now;
             if (remaining < TimeSpan.Zero)
             {
+                if (_isUnlockPending)
+                {
+                    dirtyState = true;
+                    _isUnlockPending = false;
+                }
+
                 NextUnlockBar.Value = 1f;
                 NextUnlockText.Text = "00:00";
             }
@@ -215,7 +226,7 @@ public sealed partial class GatewayWindow : FancyWindow,
         // if its not going to close then show it as empty
         if (_current == null || _cooldown == TimeSpan.Zero)
         {
-            NextReadyBar.Value = 0f;
+            NextReadyBar.Value = 1f;
             NextCloseText.Text = "00:00";
         }
         else
@@ -223,10 +234,10 @@ public sealed partial class GatewayWindow : FancyWindow,
             var remaining = _nextReady - now;
             if (remaining < TimeSpan.Zero)
             {
-                if (!_isReady && _lastState != null)
+                if (_isCooldownPending)
                 {
-                    // Refresh UI buttons.
-                    UpdateState(_lastState);
+                    dirtyState = true;
+                    _isCooldownPending = false;
                 }
 
                 NextReadyBar.Value = 1f;
@@ -234,24 +245,15 @@ public sealed partial class GatewayWindow : FancyWindow,
             }
             else
             {
-                _isReady = false;
                 NextReadyBar.Value = 1f - (float) (remaining.TotalSeconds / _cooldown.TotalSeconds);
                 NextCloseText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
             }
         }
-    }
 
-    private string ReadyText(TimeSpan now, TimeSpan nextReady, bool busy)
-    {
-        if (busy)
-            return Loc.GetString("gateway-window-already-active");
-
-        if (now < nextReady)
+        if (dirtyState && _lastState != null)
         {
-            var time = nextReady - now;
-            return Loc.GetString("gateway-window-ready-in", ("time", $"{time.Minutes:00}:{time.Seconds:00}"));
+            // Refresh UI buttons.
+            UpdateState(_lastState);
         }
-
-        return Loc.GetString("gateway-window-ready");
     }
 }
