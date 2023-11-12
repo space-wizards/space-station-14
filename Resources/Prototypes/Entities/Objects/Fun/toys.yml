@@ -1067,6 +1067,8 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: BasePlushie
@@ -1088,3 +1090,12 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePenguin
+  name: penguin plushie
+  description: I use arch btw!
+  components:
+  - type: Sprite
+    state: plushie_penguin

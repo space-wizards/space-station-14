@@ -1,6 +1,7 @@
 using Content.Shared.Drunk;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 
 namespace Content.Client.Drunk;
 

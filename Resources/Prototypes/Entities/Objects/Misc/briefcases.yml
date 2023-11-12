@@ -5,10 +5,9 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: Large
+    size: Ginormous
   - type: Storage
-    maxSlots: 4
-    maxTotalWeight: 16
+    maxTotalWeight: 24
   - type: Tag
     tags:
     - Briefcase
@@ -33,7 +32,7 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: Large
+    size: Huge
   - type: Storage
     maxSlots: 6
     maxTotalWeight: 24

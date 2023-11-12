@@ -626,6 +626,19 @@
 
 - type: entity
   parent: IDCardStandard
+  id: PirateIDCard
+  name: pirate ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: pirate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+
+- type: entity
+  parent: IDCardStandard
   id: PsychologistIDCard
   name: psychologist ID card
   components:

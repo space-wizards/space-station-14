@@ -12,7 +12,7 @@
       map: [ "tank" ]
       visible: false
   - type: Item
-    size: Large
+    size: Huge
   - type: Clothing
     quickEquip: false
     slots:
@@ -124,10 +124,10 @@
   suffix: Admeme
   components:
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: Storage
     maxSlots: 100
-    maxItemSize: Huge
+    maxItemSize: Ginormous
     maxTotalWeight: 1600
     whitelist:
       tags: [] #dodging a test fail like the IRS

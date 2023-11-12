@@ -1357,3 +1357,27 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+
+- type: seed
+  id: cotton
+  name: seeds-cotton-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cotton-display-name
+  plantRsi: Objects/Specific/Hydroponics/cotton.rsi
+  packetPrototype: CottonSeeds
+  productPrototypes:
+    - CottonBol
+  lifespan: 25
+  maturation: 8
+  production: 3
+  yield: 3
+  potency: 5
+  idealLight: 8
+  growthStages: 3
+  waterConsumption: 0.60
+  chemicals:
+    Fiber:
+      Min: 5
+      Max: 10
+      PotencyDivisor: 20
+

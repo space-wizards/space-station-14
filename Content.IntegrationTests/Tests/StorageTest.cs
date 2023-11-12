@@ -26,6 +26,9 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
+            var entMan = server.ResolveDependency<IEntityManager>();
+
+            var itemSys = entMan.System<SharedItemSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -37,7 +40,9 @@ namespace Content.IntegrationTests.Tests
                         !proto.TryGetComponent<ItemComponent>("Item", out var item))
                         continue;
 
-                    Assert.That(storage.MaxItemSize.Value, Is.LessThanOrEqualTo(item.Size), $"Found storage arbitrage on {proto.ID}");
+                    Assert.That(itemSys.GetSizePrototype(storage.MaxItemSize.Value).Weight,
+                        Is.LessThanOrEqualTo(itemSys.GetSizePrototype(item.Size).Weight),
+                        $"Found storage arbitrage on {proto.ID}");
                 }
             });
             await pair.CleanReturnAsync();
@@ -77,9 +82,15 @@ namespace Content.IntegrationTests.Tests
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
+            var entMan = server.ResolveDependency<IEntityManager>();
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
             var id = compFact.GetComponentName(typeof(StorageFillComponent));
+
+            var itemSys = entMan.System<SharedItemSystem>();
+
+            var allSizes = protoMan.EnumeratePrototypes<ItemSizePrototype>().ToList();
+            allSizes.Sort();
 
             Assert.Multiple(() =>
             {
@@ -97,14 +108,29 @@ namespace Content.IntegrationTests.Tests
                     proto.TryGetComponent<ItemComponent>("Item", out var item);
 
                     var fill = (StorageFillComponent) proto.Components[id].Component;
-                    var size = GetFillSize(fill, false, protoMan);
-                    var maxSize = storage.MaxItemSize ??
-                                  (item?.Size == null
-                                      ? SharedStorageSystem.DefaultStorageMaxItemSize
-                                      : (ItemSize) Math.Max(0, (int) item.Size - 1));
+                    var size = GetFillSize(fill, false, protoMan, itemSys);
+
+                    var maxSize = storage.MaxItemSize;
+                    if (storage.MaxItemSize == null)
+                    {
+                        if (item?.Size == null)
+                        {
+                            maxSize = SharedStorageSystem.DefaultStorageMaxItemSize;
+                        }
+                        else
+                        {
+                            var curIndex = allSizes.IndexOf(protoMan.Index(item.Size));
+                            var index = Math.Max(0, curIndex - 1);
+                            maxSize = allSizes[index].ID;
+                        }
+                    }
+
+                    if (maxSize == null)
+                        continue;
+
                     if (storage.MaxSlots != null)
                     {
-                        Assert.That(GetFillSize(fill, true, protoMan), Is.LessThanOrEqualTo(storage.MaxSlots),
+                        Assert.That(GetFillSize(fill, true, protoMan, itemSys), Is.LessThanOrEqualTo(storage.MaxSlots),
                             $"{proto.ID} storage fill has too many items.");
                     }
                     else
@@ -123,14 +149,14 @@ namespace Content.IntegrationTests.Tests
                         if (!fillItem.TryGetComponent<ItemComponent>("Item", out var entryItem))
                             continue;
 
-                        Assert.That(entryItem.Size, Is.LessThanOrEqualTo(maxSize),
+                        Assert.That(protoMan.Index(entryItem.Size).Weight,
+                            Is.LessThanOrEqualTo(protoMan.Index(maxSize.Value).Weight),
                             $"Entity {proto.ID} has storage-fill item, {entry.PrototypeId}, that is too large");
                     }
                 }
             });
 
             await pair.CleanReturnAsync();
-
         }
 
         [Test]
@@ -139,9 +165,12 @@ namespace Content.IntegrationTests.Tests
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
+            var entMan = server.ResolveDependency<IEntityManager>();
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
             var id = compFact.GetComponentName(typeof(StorageFillComponent));
+
+            var itemSys = entMan.System<SharedItemSystem>();
 
             Assert.Multiple(() =>
             {
@@ -157,7 +186,7 @@ namespace Content.IntegrationTests.Tests
                     }
 
                     var fill = (StorageFillComponent) proto.Components[id].Component;
-                    var size = GetFillSize(fill, true, protoMan);
+                    var size = GetFillSize(fill, true, protoMan, itemSys);
                     Assert.That(size, Is.LessThanOrEqualTo(entStorage.Capacity),
                         $"{proto.ID} storage fill is too large.");
                 }
@@ -165,7 +194,7 @@ namespace Content.IntegrationTests.Tests
             await pair.CleanReturnAsync();
         }
 
-        private int GetEntrySize(EntitySpawnEntry entry, bool getCount, IPrototypeManager protoMan)
+        private int GetEntrySize(EntitySpawnEntry entry, bool getCount, IPrototypeManager protoMan, SharedItemSystem itemSystem)
         {
             if (entry.PrototypeId == null)
                 return 0;
@@ -179,20 +208,21 @@ namespace Content.IntegrationTests.Tests
             if (getCount)
                 return entry.Amount;
 
+
             if (proto.TryGetComponent<ItemComponent>("Item", out var item))
-                return SharedItemSystem.GetItemSizeWeight(item.Size) * entry.Amount;
+                return itemSystem.GetItemSizeWeight(item.Size) * entry.Amount;
 
             Assert.Fail($"Prototype is missing item comp: {entry.PrototypeId}");
             return 0;
         }
 
-        private int GetFillSize(StorageFillComponent fill, bool getCount, IPrototypeManager protoMan)
+        private int GetFillSize(StorageFillComponent fill, bool getCount, IPrototypeManager protoMan, SharedItemSystem itemSystem)
         {
             var totalSize = 0;
             var groups = new Dictionary<string, int>();
             foreach (var entry in fill.Contents)
             {
-                var size = GetEntrySize(entry, getCount, protoMan);
+                var size = GetEntrySize(entry, getCount, protoMan, itemSystem);
 
                 if (entry.GroupId == null)
                     totalSize += size;
