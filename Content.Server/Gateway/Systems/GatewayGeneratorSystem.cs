@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
@@ -6,8 +7,11 @@ using Content.Server.Salvage;
 using Content.Shared.Dataset;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Loot;
+using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -38,6 +42,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly GatewaySystem _gateway = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly RandomSystem _randomSystem = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
@@ -45,22 +50,13 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
-    // Need non-binary portals
-
     // Re-use salvage config stuff for the RNG
     // Also add weather coz it's funny.
 
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
-    // Add dungeon name to thing
-    // Add biome template to thing
-    // Add biome template options.
     // Copy most of salvage mission spawner
     // Add like a configs thing or the rng thing like salvage I guess.
     // Think of something for resources
-    // Add mob templates like lizards or aliens or w/e
-    // Probably need reduced ore spawn rate.
-    // Fix unlocks / locking
-    // Add an initial 15min lockout or something on roundstart
 
     public override void Initialize()
     {
@@ -181,6 +177,8 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
         ent.Comp.Locked = false;
         ent.Comp.Loaded = true;
+
+        // Do dungeon
         var seed = ent.Comp.Seed;
         var origin = ent.Comp.Origin;
         var random = new Random(seed);
@@ -189,6 +187,30 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var dungeonPosition = origin + dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance)).Floored();
 
         _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), args.MapUid, grid, dungeonPosition, seed);
+
+        // TODO: Dungeon mobs + loot.
+
+        // Do markers on the map.
+        if (TryComp(ent.Owner, out BiomeComponent? biomeComp) && generatorComp != null)
+        {
+            // - Loot
+            for (var i = 0; i < generatorComp.LootLayerCount; i++)
+            {
+                var layerIdx = random.Next(generatorComp.LootLayers.Count);
+                var layer = generatorComp.LootLayers[layerIdx];
+
+                _biome.AddMarkerLayer(biomeComp, layer.Id);
+            }
+
+            // - Mobs
+            for (var i = 0; i < generatorComp.MobLayerCount; i++)
+            {
+                var layerIdx = random.Next(generatorComp.MobLayers.Count);
+                var layer = generatorComp.MobLayers[layerIdx];
+
+                _biome.AddMarkerLayer(biomeComp, layer.Id);
+            }
+        }
     }
 }
 
@@ -221,6 +243,37 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// </summary>
     [DataField]
     public List<EntityUid> Generated = new();
+
+    [DataField]
+    public int MobLayerCount = 1;
+
+    /// <summary>
+    /// Mob layers to pick from.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<BiomeMarkerLayerPrototype>> MobLayers = new()
+    {
+        "Carps",
+        "Xenos",
+    };
+
+    [DataField]
+    public int LootLayerCount = 3;
+
+    /// <summary>
+    /// Loot layers to pick from.
+    /// </summary>
+    public List<ProtoId<BiomeMarkerLayerPrototype>> LootLayers = new()
+    {
+        "OreTin",
+        "OreQuartz",
+        "OreGold",
+        "OreSilver",
+        "OrePlasma",
+        "OreUranium",
+        "OreBananium",
+        "OreArtifactFragment",
+    };
 }
 
 [RegisterComponent]
