@@ -1,7 +1,7 @@
 - type: entity
   id: CleanerDispenser
   name: space cleaner dispenser
-  description: wallmount reagent dispenser
+  description: Wallmount reagent dispenser.
   components:
   - type: WallMount
   - type: Sprite
