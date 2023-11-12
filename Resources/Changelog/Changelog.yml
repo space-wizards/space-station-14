@@ -1,11 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: 'Mutes no longer make a sound when they die, and can''t fake their death
-      while in crit. They can still summon up their remaining strength to whisper
-      their first-last words.', type: Tweak}
-  id: 4657
-  time: '2023-08-22T06:05:16.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'To increase employee retention and new staff experience, we''ve installed
@@ -2910,3 +2903,12 @@ Entries:
       them first.', type: Tweak}
   id: 5156
   time: '2023-11-12T23:18:48.0000000+00:00'
+- author: VasilisThePikachu
+  changes:
+  - {message: 'Added a Puppy Ian, Awww.', type: Add}
+  - {message: Puppy Ian can be randomly chosen to be hop's pet along with the other
+      corgis., type: Add}
+  - {message: 'Added a puppy corgi crate, it contains a single puppy for hard times.
+      It can be order by cargo.', type: Add}
+  id: 5157
+  time: '2023-11-12T23:24:07.0000000+00:00'
