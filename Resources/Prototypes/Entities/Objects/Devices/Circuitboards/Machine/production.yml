@@ -235,6 +235,22 @@
 
 - type: entity
   parent: BaseMachineCircuitboard
+  id: AnomalySynchronizerCircuitboard
+  name: anomaly synchronizer machine board
+  description: A machine printed circuit board for an anomaly synchronizer.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAnomalySynchronizer
+      requirements:
+        Manipulator: 2
+        Capacitor: 5
+      materialRequirements:
+        PlasmaGlass: 25
+
+- type: entity
+  parent: BaseMachineCircuitboard
   id: APECircuitboard
   name: A.P.E. machine board
   description: A machine printed circuit board for an A.P.E.
@@ -739,17 +755,10 @@
       prototype: StasisBed
       requirements:
         Capacitor: 1
+        Manipulator: 1
       materialRequirements:
         Cable: 3
-      tagRequirements:
-        Pipe:
-          Amount: 1
-          DefaultPrototype: GasPipeStraight
-          ExamineName: Pipe
-        Cryobeaker:
-          Amount: 2
-          DefaultPrototype: CryostasisBeaker
-          ExamineName: Cryostasis Beaker
+        Steel: 2
 
 - type: entity
   id: MaterialReclaimerMachineCircuitboard
