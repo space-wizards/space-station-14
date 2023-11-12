@@ -1,4 +1,6 @@
+using Content.Server.Antag;
 using Content.Server.Thief.Components;
+using Content.Shared.Item;
 using Content.Shared.Thief;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -7,6 +9,7 @@ namespace Content.Server.Thief.Systems;
 public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     private const int MaxSelectedSets = 2;
@@ -28,7 +31,23 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
     {
         if (backpack.Comp.SelectedSets.Count != MaxSelectedSets)
             return;
+        if (!TryComp<UserInterfaceComponent>(backpack.Owner, out var ui))
+            return;
 
+        foreach (var i in backpack.Comp.SelectedSets)
+        {
+            var set = _proto.Index(backpack.Comp.PossibleSets[i]);
+            foreach (var item in set.Content)
+            {
+                var ent = Spawn(item);
+                _transform.DropNextTo(ent, backpack.Owner);
+            }
+        }
+        //TO DO: Close all UI before deleting entity
+        foreach (var i in ui.Interfaces)
+        {
+            _ui.CloseAll(i.Value); //<-- not work
+        }
         QueueDel(backpack); //hehe
     }
     private void OnChangeSet(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackChangeSetMessage args)

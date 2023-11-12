@@ -1,24 +1,21 @@
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
-using Content.Server.NPC.Systems;
 using Content.Server.Objectives;
 using Content.Server.Shuttles.Components;
 using Content.Server.Roles;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Content.Shared.CombatMode.Pacification;
 using System.Linq;
 using Content.Shared.Humanoid;
+using Content.Server.Antag;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -27,9 +24,10 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
@@ -173,7 +171,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         return results;
     }
 
-    public bool MakeThief(ICommonSession thief, bool addPacified = true)
+    public bool MakeThief(ICommonSession thief)
     {
         var thiefRule = EntityQuery<ThiefRuleComponent>().FirstOrDefault();
         if (thiefRule == null)
@@ -204,14 +202,6 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         {
             PrototypeId = thiefRule.ThiefPrototypeId
         });
-
-        // Add Pacific
-        //if (addPacified)
-        //{
-        //    if (!TryComp<PacifiedComponent>(mind.OwnedEntity, out var pacific))
-        //        AddComp<PacifiedComponent>(mind.OwnedEntity.Value);
-        //    //TO DO: Pacifism Implanter??
-        //}
 
         // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))
@@ -249,6 +239,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             _mindSystem.AddObjective(mindId, mind, escapeObjective.Value);
 
         // Give starting items
+        _antagSelection.GiveAntagBagGear(mind.OwnedEntity.Value, thiefRule.StarterItems);
 
         thiefRule.ThiefMinds.Add(mindId);
         return true;
@@ -272,10 +263,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             ? Loc.GetString("thief-role-greeting-human")
             : Loc.GetString("thief-role-greeting-animal");
 
-        if (HasComp<PacifiedComponent>(thief)) // TO DO - update to pacified implanter?
-            briefing = briefing + "\n" + Loc.GetString("thief-role-greeting-pacified");
-
-        //briefing += Loc.GetString("thief-role-greeting-equipment"); //TO DO - equipment setting
+        briefing += Loc.GetString("thief-role-greeting-equipment");
         return briefing;
     }
 

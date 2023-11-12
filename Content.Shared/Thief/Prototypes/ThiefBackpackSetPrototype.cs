@@ -27,5 +27,5 @@ public sealed partial class ThiefBackpackSetPrototype : IPrototype
 
     //Item in set
     [DataField]
-    public List<ProtoId<EntityPrototype>> Content = new();
+    public List<EntProtoId> Content = new();
 }

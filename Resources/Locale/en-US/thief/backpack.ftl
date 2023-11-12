@@ -1,14 +1,14 @@
-thief-backpack-window-title = Thief backpack
+thief-backpack-window-title = Thief toolbox
 
 thief-backpack-window-description = 
-    This backpack is filled with unspecified contents. 
+    This toolbox is filled with unspecified contents. 
     Now you need to remember what you put in it. 
     Choose up to two different sets from the list.
 
-thief-backpack-window-selected = Sets selected: 
+thief-backpack-window-selected = Kits selected: 
 
 thief-backpack-window-approve-button = Approve
-thief-backpack-button-select = Select [ ]
+thief-backpack-button-select = Select [  ]
 thief-backpack-button-deselect = Select [X]
 
 # Sets

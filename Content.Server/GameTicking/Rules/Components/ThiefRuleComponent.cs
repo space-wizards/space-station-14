@@ -29,10 +29,16 @@ public sealed partial class ThiefRuleComponent : Component
     public Dictionary<ICommonSession, HumanoidCharacterProfile> StartCandidates = new();
 
     [DataField]
-    public float MaxObjectiveDifficulty = 2f;
+    public float MaxObjectiveDifficulty = 2.5f;
 
     [DataField]
     public int MaxStealObjectives = 10;
+
+    /// <summary>
+    /// Things that will be given to thieves
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> StarterItems = new List<EntProtoId> { "ToolboxThief", "ThievingGloves" }; //TO DO - replace to chameleon thieving whem merg
 
     /// <summary>
     /// All Thiefes created by this rule
@@ -42,6 +48,7 @@ public sealed partial class ThiefRuleComponent : Component
     /// <summary>
     /// Max Thiefs created by rule on roundstart
     /// </summary>
+    [DataField]
     public int MaxAllowThief = 3;
 
     /// <summary>
