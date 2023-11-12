@@ -2184,3 +2184,19 @@
               Quantity: 30
     - type: Sprite
       sprite: Objects/Consumable/Drinks/the_martinez.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkBloodGlass
+  name: blood glass
+  description: Drink like a vampire!
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Blood
+              Quantity: 30
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/bloodglass.rsi
