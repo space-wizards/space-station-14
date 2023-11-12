@@ -74,14 +74,14 @@
   source: "https://github.com/space-wizards/space-station-14/commit/0a4c16ca21e266c24243119d944cbff8084829dd"
 
 - files: ["drop.ogg"]
-  copyright: '"FS Concrete Soldier Crouch N02" in "Soldier Footsteps" by Levan Nadashvili of SONNISS.com. Mixed from stereo to mono'
-  license: "LicenseRef-GameAudioGDC-Bundle"
-  source: "https://gdc.sonniss.com"
+  copyright: '"FS Concrete Soldier Crouch N02" in "Soldier Footsteps" by Levan Nadashvili of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license. Mixed from stereo to mono.'
+  license: Custom
+  source: https://gdc.sonniss.com
 
 - files: ["wall_bonk.ogg"]
-  copyright: '"Nuts and Bolts" by 344 Audio of SONNISS.com'
-  license: "LicenseRef-GameAudioGDC-Bundle"
-  source: "https://gdc.sonniss.com"
+  copyright: '"Nuts and Bolts" by 344 Audio of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license.'
+  license: Custom
+  source: https://gdc.sonniss.com
 
 - files: ["pop.ogg"]
   copyright: '"pop.ogg" by mirrorcult of GitHub.com'
@@ -153,8 +153,8 @@
   source: https://freesound.org/people/raremess/sounds/222557/
 
 - files: [hith_kick.ogg]
-  copyright: Taira Komori
-  license: LicenseRef-TK-FREE-SOUND-FX
+  copyright: Taira Komori. See https://taira-komori.jpn.org/freesounden.html for license.
+  license: Custom
   source: https://taira-komori.jpn.org/freesounden.html
 
 - files: [adminhelp.ogg]
