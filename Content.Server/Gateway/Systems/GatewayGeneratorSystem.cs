@@ -252,7 +252,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     };
 
     [DataField]
-    public int LootLayerCount = 3;
+    public int LootLayerCount = 5;
 
     /// <summary>
     /// Loot layers to pick from.
