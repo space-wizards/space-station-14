@@ -97,7 +97,14 @@ public abstract class SharedBiomeSystem : EntitySystem
         for (var i = layers.Count - 1; i >= 0; i--)
         {
             var layer = layers[i];
-            var adjustedSeed = layer.Noise.GetSeed() + seed;
+            var noiseCopy = GetNoise(layer.Noise, seed);
+
+            var invert = layer.Invert;
+            var value = noiseCopy.GetNoise(indices.X, indices.Y);
+            value = invert ? value * -1 : value;
+
+            if (value < layer.Threshold)
+                continue;
 
             // Check if the tile is from meta layer, otherwise fall back to default layers.
             if (layer is BiomeMetaLayer meta)
@@ -112,10 +119,6 @@ public abstract class SharedBiomeSystem : EntitySystem
 
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
-
-            // Need to get an updated seed as the layer seed is just the offset and not the true value.
-            // This just makes the method thread-safe.
-            var noiseCopy = GetNoise(layer.Noise, seed);
 
             if (TryGetTile(indices, noiseCopy, tileLayer.Invert, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
             {
@@ -178,7 +181,6 @@ public abstract class SharedBiomeSystem : EntitySystem
         {
             var layer = layers[i];
 
-            // Decals might block entity so need to check if there's one in front of us.
             switch (layer)
             {
                 case BiomeDummyLayer:
@@ -213,6 +215,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                 continue;
             }
 
+            // Decals might block entity so need to check if there's one in front of us.
             if (layer is not BiomeEntityLayer biomeLayer)
             {
                 entity = null;
@@ -263,6 +266,12 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
 
             var invert = layer.Invert;
+            var noiseCopy = GetNoise(layer.Noise, seed);
+            var value = noiseCopy.GetNoise(indices.X, indices.Y);
+            value = invert ? value * -1 : value;
+
+            if (value < layer.Threshold)
+                continue;
 
             if (layer is BiomeMetaLayer meta)
             {
@@ -274,17 +283,9 @@ public abstract class SharedBiomeSystem : EntitySystem
                 continue;
             }
 
-            var noiseCopy = GetNoise(layer.Noise, seed);
-
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
             {
-                var value = noiseCopy.GetNoise(indices.X, indices.Y);
-                value = invert ? value * -1 : value;
-
-                if (value < layer.Threshold)
-                    continue;
-
                 decals = null;
                 return false;
             }
