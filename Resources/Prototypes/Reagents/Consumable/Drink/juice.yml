@@ -125,5 +125,3 @@
   physicalDesc: reagent-physical-desc-sweet
   flavor: watermelon
   color: "#EF3520"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/watermelon.rsi
