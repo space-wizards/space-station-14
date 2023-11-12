@@ -63,15 +63,15 @@
 
 - type: entity
   parent: CleanerDispenser
-  id: OilDispenser
-  name: oil dispenser
+  id: FuelDispenser
+  name: fuel dispenser
   components:
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
-    state: oildispenser
+    state: fueldispenser
   - type: SolutionContainerManager
     solutions:
       tank:
         reagents:
-        - ReagentId: Oil
+        - ReagentId: WeldingFuel
           Quantity: 1000
