@@ -19,7 +19,7 @@ public sealed class ShowHungerIconsSystem : EquipmentHudSystem<ShowHungerIconsCo
 
     private void OnGetStatusIconsEvent(EntityUid uid, HungerComponent hungerComponent, ref GetStatusIconsEvent args)
     {
-        if (!IsActive || args.InContainer)
+        if (!IsActive || args.InContainer || args.HasStealthComponent)
             return;
 
         var healthIcons = DecideHungerIcon(uid, hungerComponent);

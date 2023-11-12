@@ -24,7 +24,7 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
 
     private void OnGetStatusIconsEvent(EntityUid uid, StatusIconComponent _, ref GetStatusIconsEvent @event)
     {
-        if (!IsActive || @event.InContainer)
+        if (!IsActive || @event.InContainer || @event.HasStealthComponent)
         {
             return;
         }

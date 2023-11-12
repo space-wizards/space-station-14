@@ -26,7 +26,8 @@ public sealed class SSDIndicatorSystem : EntitySystem
     {
         if (!component.IsSSD ||
             !_cfg.GetCVar(CCVars.ICShowSSDIndicator) ||
-            args.InContainer)
+            args.InContainer ||
+            args.HasStealthComponent)
             return;
 
         args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(component.Icon));
