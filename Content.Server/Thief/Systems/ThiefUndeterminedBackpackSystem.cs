@@ -26,7 +26,10 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
 
     private void OnApprove(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackApproveMessage args)
     {
-        Log.Debug("--- Really Approved");
+        if (backpack.Comp.SelectedSets.Count != MaxSelectedSets)
+            return;
+
+        QueueDel(backpack); //hehe
     }
     private void OnChangeSet(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackChangeSetMessage args)
     {

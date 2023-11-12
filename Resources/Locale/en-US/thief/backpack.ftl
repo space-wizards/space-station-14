@@ -25,7 +25,7 @@ thief-backpack-category-tools-description =
     and anything else that for whatever reason doesn't 
     want to let you in where you need to go. 
     Includes 2 C4s, multitool, jaws of life, 
-    advanced welder and welding mask.
+    advanced welder meson glasses and insulated gloves.
 
 thief-backpack-category-chemistry-name = Chemistry kit
 thief-backpack-category-chemistry-description = 
@@ -44,7 +44,7 @@ thief-backpack-category-sleeper-name = Sleepwalker's kit
 thief-backpack-category-sleeper-description = 
     A set for those who like to sleep in. 
     Or for everyone around you to sleep. 
-    Includes a set of nocturine vials, a hippo pen and 
+    Includes a set of nocturine vials, a hipopen and 
     a tank of sleeping gas.
 
 thief-backpack-category-communicator-name = Communicator's kit

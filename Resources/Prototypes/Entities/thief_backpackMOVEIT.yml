@@ -18,7 +18,6 @@
     - SyndieSet
     - SleeperSet
     - CommunicatorSet
-    - EnticementSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface
@@ -52,7 +51,8 @@
     state: jaws_pry
   content:
   - WelderIndustrialAdvanced
-  - ClothingHeadHatWeldingMaskFlameBlue
+  - ClothingEyesGlassesMeson
+  - ClothingHandsGlovesColorYellow
   - JawsOfLife
   - Multitool
   - C4
@@ -119,20 +119,3 @@
   - RadioJammer
   - HandheldCrewMonitor #change to SpyDevice after merge
   - BriefcaseSyndieLobbyingBundleFilled
-  - Cablecuffs
-  - Cablecuffs
-
-- type: thiefBackpackSet
-  id: EnticementSet
-  name: thief-backpack-category-enticement-name
-  description: thief-backpack-category-enticement-description
-  sprite: 
-    sprite: Clothing/Head/Hats/catears.rsi
-    state: icon
-  content:
-  - ClothingHeadHatCatEars
-  - ClothingUniformJumpskirtJanimaidmini
-  - DrinkSpaceLube
-  - DrinkSpaceGlue
-  - Handcuffs
-  - Handcuffs
