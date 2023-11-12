@@ -11,14 +11,17 @@ public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype { get; private set; } = string.Empty;
-
     /// <summary>
     /// Checks for the relevant entity for the tile before spawning. Useful for substituting walls with ore veins for example.
     /// </summary>
-    [DataField("entityMask", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? EntityMask { get; private set; }
+    [DataField]
+    public Dictionary<EntProtoId, EntProtoId> EntityMask { get; private set; } = new();
+
+    /// <summary>
+    /// Default prototype to spawn. If null will fall back to entity mask.
+    /// </summary>
+    [DataField]
+    public string? Prototype { get; }
 
     /// <summary>
     /// Minimum radius between 2 points

@@ -469,7 +469,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         // Check if mask matches.
                         TryGetEntity(node, component.Layers, noiseCopy, grid, out var proto);
 
-                        if (proto != layerProto.EntityMask)
+                        // If there's an existing entity OR it doesn't match the mask then skip
+                        if (proto != null && (layerProto.Prototype != null ||
+                            !layerProto.EntityMask.ContainsKey(proto)))
                         {
                             continue;
                         }
@@ -570,10 +572,22 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         grid.SetTile(node, tile.Value);
                     }
 
+                    string? prototype;
+
+                    if (TryGetEntity(node, component.Layers, component.Noise, grid, out var proto) &&
+                        layerProto.EntityMask.TryGetValue(proto, out var maskedProto))
+                    {
+                        prototype = maskedProto;
+                    }
+                    else
+                    {
+                        prototype = layerProto.Prototype;
+                    }
+
                     // If it is a ghost role then purge it
                     // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
                     // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
-                    var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, grid.GridTileToLocal(node));
+                    var uid = EntityManager.CreateEntityUninitialized(prototype, grid.GridTileToLocal(node));
                     RemComp<GhostTakeoverAvailableComponent>(uid);
                     RemComp<GhostRoleComponent>(uid);
                     EntityManager.InitializeAndStartEntity(uid);
