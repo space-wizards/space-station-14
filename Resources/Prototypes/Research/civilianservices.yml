@@ -110,7 +110,6 @@
     - ComputerTelevisionCircuitboard
     - SynthesizerInstrument
     - BorgModuleMusique
-    - BorgModuleLiteracy
     - BorgModuleClowning
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
@@ -128,7 +127,7 @@
   cost: 5000
   recipeUnlocks:
   - BorgModuleLightReplacer
-  - BorgModuleCleaning
+  - BorgModuleAdvancedCleaning
   - BorgModuleTrashCollection
 
 - type: technology

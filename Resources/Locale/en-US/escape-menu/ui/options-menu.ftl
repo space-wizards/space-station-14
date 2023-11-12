@@ -29,6 +29,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ui-options-show-held-item = Show held item next to cursor?
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor?
+ui-options-show-looc-on-head = Show LOOC chat above characters head?
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
