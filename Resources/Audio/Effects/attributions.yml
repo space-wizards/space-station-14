@@ -112,12 +112,52 @@
   license: "CC-BY-4.0"
   source: "https://freesound.org/people/InspectorJ/sounds/484344/"
 
-- files: ["smoke.ogg"]
+- files: [smoke.ogg]
   copyright: '"smoke.ogg" by /tg/station'
-  license: "CC-BY-SA-3.0"
-  source: "https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg"
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg
 
-- files: ["double_beep.ogg"]
+- files: [double_beep.ogg]
   copyright: '"Double Beep" by andersmmg of Freesound.org'
-  license: "CC-BY-4.0"
-  source: "https://freesound.org/people/andersmmg/sounds/511492/"
+  license: CC-BY-4.0
+  source: https://freesound.org/people/andersmmg/sounds/511492/
+
+- files: [saw.ogg]
+  copyright: '"01-1 Angle Grinder.wav" by domiscz of Freesound.org'
+  license: CC0-1.0
+  source: https://freesound.org/people/domiscz/sounds/461728/
+
+- files: [poster_being_set.ogg]
+  copyright: '"poster_being_created.ogg" by /tg/station'
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_being_created.ogg
+
+- files: [poster_broken.ogg]
+  copyright: '"poster_ripped.ogg" by /tg/station'
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
+
+- files: [internals.ogg]
+  copyright: '"internals.ogg" by CEV-Eris. Edited by metalgearsloth to amplify volume.'
+  license: CC-BY-SA-3.0
+  source: https://github.com/discordia-space/CEV-Eris/blob/f02a6e2c29b41c28b1cf4d8f897cb8f090f43552/sound/effects/internals.ogg
+
+- files: [holy.ogg]
+  copyright: '"AHHHH" by random_intruder of Freesound.org. Edited'
+  license: CC0-1.0
+  source: https://freesound.org/people/random_intruder/sounds/392172/
+
+- files: [fire.ogg]
+  copyright: '"Cardboard burning 2" by raremess of Freesound.org. Edited'
+  license: CC0-1.0
+  source: https://freesound.org/people/raremess/sounds/222557/
+
+- files: [hith_kick.ogg]
+  copyright: Taira Komori
+  license: LicenseRef-TK-FREE-SOUND-FX
+  source: https://taira-komori.jpn.org/freesounden.html
+
+- files: [adminhelp.ogg]
+  copyright: '"jumps from reason.3.Rev.wav" by martian of Freesound.org. Modified by reversing and altering volume.'
+  license: CC0-1.0
+  source: https://freesound.org/people/martian/sounds/19261/
