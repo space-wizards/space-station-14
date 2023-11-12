@@ -52,6 +52,15 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     // - Desert
     // - Continental
 
+    // Confirm markers fixed.
+    // Reset it back to 3 variants
+    // Show these in UI
+    // Use regular mobs for thingo.
+
+    // Use salvage mission params
+    // Add the funny song
+    // Put salvage params in the UI
+
     // Re-use salvage config stuff for the RNG
     // Have it in the UI like expeditions.
 
