@@ -1,0 +1,68 @@
+- type: construction
+  name: стол из уранового стекла
+  id: TableUraniumGlass
+  graph: Table
+  startNode: start
+  targetNode: TableUraniumGlass
+  category: construction-category-furniture
+  description: Стильный зелёный кусок стекла с примесью урана, установленный на каркас стола.
+  icon:
+    sprite: Imperial/GlassTables/uranium.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: стол из уранового бронестекла
+  id: TableRUraniumGlass
+  graph: Table
+  startNode: start
+  targetNode: TableRUraniumGlass
+  category: construction-category-furniture
+  description: "Стильный квадратный лист уранового стекла, установленный на укреплённый каркас стола"
+  icon:
+    sprite: Imperial/GlassTables/r_uranium.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: стол из плазменного бронестекла
+  id: TableRPlasmaGlass
+  graph: Table
+  startNode: start
+  targetNode: TableRPlasmaGlass
+  category: construction-category-furniture
+  description: Стильный квадратный лист плазменного стекла, установленный на укреплённый каркас стола
+  icon:
+    sprite: Imperial/GlassTables/r_plasma.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: золотой туалет
+  id: GoldToilet
+  graph: GoldToilet
+  startNode: start
+  targetNode: goldtoilet
+  category: construction-category-furniture
+  description: Только для богачей
+  icon:
+    sprite: Imperial/GlassTables/goldToilet.rsi
+    state: closed_toilet_seat_up
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+

@@ -1,0 +1,53 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomCommunityPoster
+  name: random community poster spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Imperial/Community/com_posters.rsi
+        state: community_poster_spawner
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - FrostyApple_1
+      - kamish_1
+      - kamish_2
+      - kamish_3
+      - kamish_4
+      - kamish_5
+      - kamish_6
+      - kamish_10
+      - KEEYN_3
+      - Swebit_2
+      - Willy_Bown_1
+      # - vvedite_imya_1
+      # - vvedite_imya_2
+    chance: 1
+
+- type: entity
+  parent: MarkerBase
+  id: RandomCommunityPainting
+  name: random community painting spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Imperial/Community/com_posters.rsi
+        state: community_painting_spawner
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - descente_1
+      - descente_2
+      - descente_3
+      - FrostyApple_2
+      - FrostyApple_3
+      - kamish_7
+      - kamish_8
+      - kamish_9
+      - KEEYN_1
+      - KEEYN_2
+      - KEEYN_4
+    chance: 1

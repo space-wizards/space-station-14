@@ -9,6 +9,8 @@
     size: 50
   - type: Clothing
     slots: [belt]
+    equipSound: #Imperia start
+      path: /Audio/Imperial/equip_sounds/toolbelt_equip.ogg #Imperia End
     quickEquip: false
   - type: PhysicalComposition
     materialComposition:

@@ -1,0 +1,211 @@
+#water
+- type: entity
+  id: WaterTank2Empty
+  parent: StorageTank
+  suffix: Empty
+  components:
+    - type: StaticPrice
+      price: 500
+    - type: Sprite
+      sprite: Imperial/WaterTanks/tanks_imperial.rsi
+      layers:
+        - state: tank_base
+        - state: content-1
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: false
+        - state: tank
+          color: '#82c2d8FF'
+        - state: logo-water
+        - state: line-normal
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 12
+      fillBaseName: content-
+    - type: ExaminableSolution
+      solution: tank
+
+- type: entity
+  id: WaterTank2Full
+  parent: WaterTank2Empty
+  suffix: Full
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 1500
+
+- type: entity
+  parent: WaterTank2Empty
+  id: WaterTank2HighCapacityFull
+  suffix: Full
+  components:
+  - type: StaticPrice
+    price: 3300
+  - type: Sprite
+    sprite: Imperial/WaterTanks/tanks_imperial.rsi
+    layers:
+      - state: tank_base
+      - state: content-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+      - state: tank
+        color: '#3f79c1FF'
+      - state: logo-water-high
+      - state: line-high
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 10000
+        maxVol: 10000
+  - type: ReagentTank
+    transferAmount: 100
+
+- type: entity
+  id: WaterTank2HighCapacityEmpty
+  parent: WaterTank2HighCapacityFull
+  suffix: Empty
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 10000
+
+#welding fuel
+- type: entity
+  id: WeldingFuelTank2Empty
+  parent: StorageTank
+  suffix: Empty
+  components:
+  - type: StaticPrice
+    price: 750
+  - type: Sprite
+    sprite: Imperial/WaterTanks/tanks_imperial.rsi
+    layers:
+      - state: tank_base
+      - state: content-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+      - state: tank
+        color: '#f1a344FF'
+      - state: logo-weldingfuel
+      - state: line-normal
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 12
+    fillBaseName: content-
+  - type: ExaminableSolution
+    solution: tank
+  - type: ReagentTank
+    tankType: Fuel
+  - type: DamageOnToolInteract
+    tools:
+    - Welding
+    weldingDamage:
+      types:
+        Heat: 10
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 120 # ~ 5 tile radius
+
+- type: entity
+  id: WeldingFuelTank2Full
+  parent: WeldingFuelTank2Empty
+  suffix: Full
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 1500
+
+- type: entity
+  parent: WeldingFuelTank2Empty
+  id: WeldingFuelTank2HighCapacityFull
+  suffix: Full
+  components:
+  - type: StaticPrice
+    price: 2500
+  - type: Sprite
+    sprite: Imperial/WaterTanks/tanks_imperial.rsi
+    layers:
+      - state: tank_base
+      - state: content-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+      - state: tank
+        color: '#e05f3fFF'
+      - state: logo-weldingfuel-high
+      - state: line-high
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 5000
+        maxVol: 5000
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 140
+
+- type: entity
+  id: WeldingFuelTank2HighCapacityEmpty
+  parent: WeldingFuelTank2HighCapacityFull
+  suffix: Empty
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 5000
+
+#Space Cleaner
+- type: entity
+  id: SpaceCleanerTankEmpty
+  name: space cleaner tank empty
+  desc: Tank of the space cleaner. It is used to store a large volume of purity.
+  parent: StorageTank
+  suffix: Empty
+  components:
+    - type: StaticPrice
+      price: 500
+    - type: Sprite
+      sprite: Imperial/WaterTanks/tanks_imperial.rsi
+      layers:
+        - state: tank_base
+        - state: content-1
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: false
+        - state: tank
+          color: '#7CB680FF'
+        - state: logo-spacecleaner
+        - state: line-green
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 12
+      fillBaseName: content-
+    - type: ExaminableSolution
+      solution: tank
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          maxVol: 1500
+    - type: ReagentTank
+      transferAmount: 100
+
+- type: entity
+  id: SpaceCleanerTankFull
+  parent: SpaceCleanerTankEmpty
+  suffix: Full
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 1500
+  - type: StaticPrice
+    price: 2500

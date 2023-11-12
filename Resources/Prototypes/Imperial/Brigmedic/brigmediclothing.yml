@@ -1,0 +1,123 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltMilitaryWebbingBrigmed
+  name: brigmedical chest rig
+  description: A set of tactical webbing worn by brigmedic.
+  components:
+  - type: Sprite
+    sprite: Imperial/brigmedic/Clothing/brigmedicwebbing.rsi
+  - type: Clothing
+    sprite: Imperial/brigmedic/Clothing/brigmedicwebbing.rsi
+  - type: Item
+    size: 60
+  - type: Storage
+    capacity: 60
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingBrigmedFilled
+  parent: ClothingBeltMilitaryWebbingBrigmed
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 2
+      - id: Ointment
+        amount: 1
+      - id: Bloodpack
+        amount: 1
+      - id: Gauze
+      - id: EmergencyMedipen
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudSecMedImperial
+  name: medsec visor #add components on private
+  description: Filler
+  components:
+  - type: Sprite
+    sprite: Imperial/brigmedic/Clothing/medsecvisor.rsi
+  - type: Clothing
+    sprite: Imperial/brigmedic/Clothing/medsecvisor.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetBrigmedic
+  name: SWAT helmet
+  description: An extremely robust helmet, commonly used by paramed forces. This one has the Nanotrasen logo emblazoned on the top.
+  components:
+  - type: Sprite
+    sprite: Imperial/brigmedic/Clothing/brigmedichelmet.rsi
+  - type: Clothing
+    sprite: Imperial/brigmedic/Clothing/brigmedichelmet.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85
+        Radiation: 0.85
+        Caustic: 0.65
+
+- type: entity
+  parent: ClothingMaskBreathMedical
+  id: ClothingMaskRebreatherBrigmedic
+  name: military-style medical mask
+  description: A medical mask with a small layer of protection against damage and viruses, similar to the one used in the medical units of the first corporate war.
+  components:
+  - type: Sprite
+    sprite: Imperial/brigmedic/Clothing/brigmedicrebreather.rsi
+  - type: Clothing
+    sprite: Imperial/brigmedic/Clothing/brigmedicrebreather.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Caustic: 0.85
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBrigmedic
+  name: red shoes
+  description: Stylish red shoes.
+  components:
+  - type: Sprite
+    sprite: Imperial/brigmedic/Clothing/brigmedicboots.rsi
+  - type: Clothing
+    sprite: Imperial/brigmedic/Clothing/brigmedicboots.rsi
+  - type: Storage
+    capacity: 10
+    whitelist:
+      tags:
+        - CigPack
+        - PillCanister
+      components:
+        - Hypospray
+        - Injector
+        - Pill
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBrigmedicNew
+  name: brigmedic jumpsuit
+  components:
+  - type: Sprite
+    sprite: Imperial/brigmedic/Clothing/brigmedicnewjumpsuit.rsi
+  - type: Clothing
+    sprite: Imperial/brigmedic/Clothing/brigmedicnewjumpsuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtBrigmedicNew
+  name: jumpskirt le brigmedic
+  components:
+  - type: Sprite
+    sprite: Imperial/brigmedic/Clothing/brigmedicnewjumpskirt.rsi
+  - type: Clothing
+    sprite: Imperial/brigmedic/Clothing/brigmedicnewjumpskirt.rsi
