@@ -113,7 +113,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// <summary>
     ///     Returns true when the player with UID opUid is a nuclear operative. Prevents random
     ///     people from using the war declarator outside of the game mode.
-    /// </summary>
+    /// </summarya
     public bool TryGetRuleFromOperative(EntityUid opUid, [NotNullWhen(true)] out (NukeopsRuleComponent, GameRuleComponent)? comps)
     {
         comps = null;
@@ -954,9 +954,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile, component);
                 var newMind = _mind.CreateMind(session.UserId, spawnDetails.Name);
                 _mind.SetUserId(newMind, session.UserId);
+                _mind.TransferTo(newMind, mob);
                 _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = spawnDetails.Role });
 
-                _mind.TransferTo(newMind, mob);
             }
             else if (addSpawnPoints)
             {
@@ -1001,8 +1001,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (!mind.OwnedEntity.HasValue)
             return;
 
-        //ok hardcoded value bad but so is everything else here
-        _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mind);
         if (mind.CurrentEntity != null)
         {
             foreach (var (nukeops, gameRule) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
@@ -1010,6 +1008,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 nukeops.OperativePlayers.Add(mind.CharacterName!, mind.CurrentEntity.GetValueOrDefault());
             }
         }
+        //ok hardcoded value bad but so is everything else here
+        _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mind);
 
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
     }
@@ -1117,22 +1117,26 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// <summary>
     /// Notfifies player of being a nukie with message and sound
     /// </summary>
-    private void OnRoleAddNotify(EntityUid mindId, NukeopsRoleComponent comp, ref MindRoleAddedEvent args)
+    private void OnRoleAddNotify(EntityUid mindId, NukeopsRoleComponent comp, ref MindRoleAddedEvent ev)
     {
-        if (!_mind.TryGetSession(mindId, out var session))
-            return;
-        _audio.PlayGlobal(comp.GreetSoundNotification, session);
-        if(!TryGetRuleFromOperative(mindId, out var rulecomps))
-            return;
+        Logger.DebugS("nukies", "RoleAddNotify called...");
+        var query = EntityQueryEnumerator<NukeopsRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var ruleUid, out var nukeops, out var gameRule))
+        {
+            Logger.DebugS("nukies", "GameRule was found!");
+            if (!GameTicker.IsGameRuleAdded(ruleUid, gameRule))
+                continue;
+            if (!_mind.TryGetSession(mindId, out var session))
+                return;
+            _audio.PlayGlobal(nukeops.GreetSoundNotification, session);
 
-        var nukieRule = rulecomps.Value.Item1;
 
+            if(nukeops.TargetStation is not { } station)
+                return;
 
-        if(nukieRule.TargetStation is not { } station)
-            return;
-
-        if(nukieRule.TargetStation != null && !string.IsNullOrEmpty(Name(nukieRule.TargetStation.Value)))
-            _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
+            if(nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
+                _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station)));
+        }
 
         return;
     }
