@@ -1,15 +1,14 @@
 - type: entity
-  parent: BaseItem
   id: BaseSubdermalImplant
   name: implant
   description: A microscopic chip that's injected under the skin.
   abstract: true
   components:
-    - type: SubdermalImplant
-    - type: Tag
-      tags:
-        - SubdermalImplant
-        - HideContextMenu
+  - type: SubdermalImplant
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
 
 #Fun implants
 
