@@ -569,10 +569,10 @@
     Nutriment:
       Min: 1
       Max: 10
-      PotencyDivisor: 10
+      PotencyDivisor: 20
     Cornmeal:
-      Min: 10
-      Max: 20
+      Min: 5
+      Max: 15
       PotencyDivisor: 10
 
 - type: seed
