@@ -1,14 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'To increase employee retention and new staff experience, we''ve installed
-      a short range teleporter on our Arrivals Shuttle. However we only had sufficient
-      budget to use it once per shift per staff member.', type: Add}
-  - {message: 'You might notice yourself adjusting as you step off the arrivals shuttle,
-      with our patented rotation acclimation system. It might make you dizzy, but
-      it helps the station make sense.', type: Tweak}
-  id: 4658
-  time: '2023-08-22T10:46:50.0000000+00:00'
 - author: onoira
   changes:
   - {message: Nanotrasen no longer uses disappearing ink for official books and documents.
@@ -2912,3 +2902,9 @@ Entries:
       It can be order by cargo.', type: Add}
   id: 5157
   time: '2023-11-12T23:24:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to re-add the storage implant action to the actions
+      bar once it has been removed., type: Fix}
+  id: 5158
+  time: '2023-11-12T23:29:46.0000000+00:00'
