@@ -45,8 +45,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
-    // GATEWAY WINDOW
-
     // Need non-binary portals
 
     // Re-use salvage config stuff for the RNG

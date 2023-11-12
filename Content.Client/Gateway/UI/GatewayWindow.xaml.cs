@@ -21,6 +21,9 @@ public sealed partial class GatewayWindow : FancyWindow,
 
     public event Action<NetEntity>? OpenPortal;
     private List<GatewayDestinationData> _destinations = new();
+
+    public readonly NetEntity Owner;
+
     private NetEntity? _current;
     private TimeSpan _nextReady;
     private TimeSpan _cooldown;
@@ -43,11 +46,12 @@ public sealed partial class GatewayWindow : FancyWindow,
     /// </summary>
     private bool _isCooldownPending = true;
 
-    public GatewayWindow()
+    public GatewayWindow(NetEntity netEntity)
     {
         RobustXamlLoader.Load(this);
         var dependencies = IoCManager.Instance!;
         _timing = dependencies.Resolve<IGameTiming>();
+        Owner = netEntity;
 
         NextUnlockBar.ForegroundStyleBoxOverride = new StyleBoxFlat(Color.FromHex("#C74EBD"));
     }
@@ -124,6 +128,8 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             box.AddChild(readyLabel);
 
+            bool Pressable() => ent == _current || ent == Owner;
+
             var buttonStripe = new StripeBack()
             {
                 Visible = locked,
@@ -144,9 +150,9 @@ public sealed partial class GatewayWindow : FancyWindow,
             var openButton = new Button()
             {
                 Text = Loc.GetString("gateway-window-open-portal"),
-                Pressed = ent == _current,
+                Pressed = Pressable(),
                 ToggleMode = true,
-                Disabled = now < _nextReady || ent == _current,
+                Disabled = now < _nextReady || Pressable(),
                 HorizontalAlignment = HAlignment.Right,
                 Margin = new Thickness(10f, 0f, 0f, 0f),
                 Visible = !locked,
@@ -158,7 +164,7 @@ public sealed partial class GatewayWindow : FancyWindow,
                 OpenPortal?.Invoke(ent);
             };
 
-            if (ent == _current)
+            if (Pressable())
             {
                 openButton.AddStyleClass(StyleBase.ButtonCaution);
             }

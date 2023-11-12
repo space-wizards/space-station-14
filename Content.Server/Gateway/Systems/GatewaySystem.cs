@@ -79,7 +79,6 @@ public sealed class GatewaySystem : EntitySystem
 
         var nextUnlock = TimeSpan.Zero;
         var unlockTime = TimeSpan.Zero;
-        var owningStation = _stations.GetOwningStation(uid);
 
         // Next unlock is based off of:
         // - Our station's unlock timer (if we have a station)
@@ -95,15 +94,11 @@ public sealed class GatewaySystem : EntitySystem
 
         while (query.MoveNext(out var destUid, out var dest, out var destXform))
         {
-            if (!dest.Enabled)
+            if (!dest.Enabled || destUid == uid)
                 continue;
 
             // Show destination if either no destination comp on the map or it's ours.
-            if (TryComp<GatewayGeneratorDestinationComponent>(destXform.MapUid, out var gatewayDestination) &&
-                gatewayDestination.Generator != owningStation)
-            {
-                continue;
-            }
+            TryComp<GatewayGeneratorDestinationComponent>(destXform.MapUid, out var gatewayDestination);
 
             destinations.Add(new GatewayDestinationData()
             {
@@ -138,7 +133,7 @@ public sealed class GatewaySystem : EntitySystem
 
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
-        if (args.Session.AttachedEntity == null)
+        if (args.Session.AttachedEntity == null || GetNetEntity(uid) == args.Destination)
             return;
 
         // if the gateway has an access reader check it before allowing opening
@@ -150,8 +145,7 @@ public sealed class GatewaySystem : EntitySystem
         var desto = GetEntity(args.Destination);
 
         // If it's already open / not enabled / we're not ready DENY.
-        if (HasComp<PortalComponent>(desto) ||
-            !TryComp<GatewayComponent>(desto, out var dest) ||
+        if (!TryComp<GatewayComponent>(desto, out var dest) ||
             !dest.Enabled ||
             _timing.CurTime < _metadata.GetPauseTime(uid) + comp.NextReady)
         {
@@ -174,9 +168,16 @@ public sealed class GatewaySystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        _linkedEntity.TryLink(uid, dest);
-        EnsureComp<PortalComponent>(uid).CanTeleportToOtherMaps = true;
-        EnsureComp<PortalComponent>(dest).CanTeleportToOtherMaps = true;
+        _linkedEntity.OneWayLink(uid, dest);
+
+        var sourcePortal = EnsureComp<PortalComponent>(uid);
+        var targetPortal = EnsureComp<PortalComponent>(dest);
+
+        sourcePortal.CanTeleportToOtherMaps = true;
+        targetPortal.CanTeleportToOtherMaps = true;
+
+        sourcePortal.RandomTeleport = false;
+        targetPortal.RandomTeleport = false;
 
         var openEv = new GatewayOpenEvent(destXform.MapUid.Value, dest);
         RaiseLocalEvent(destXform.MapUid.Value, ref openEv);

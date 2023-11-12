@@ -62,6 +62,22 @@ public sealed class LinkedEntitySystem : EntitySystem
     }
 
     /// <summary>
+    /// Does a one-way link from source to target.
+    /// </summary>
+    /// <param name="deleteOnEmptyLinks">Whether both entities should now delete once their links are removed</param>
+    public bool OneWayLink(EntityUid source, EntityUid target, bool deleteOnEmptyLinks=false)
+    {
+        var firstLink = EnsureComp<LinkedEntityComponent>(source);
+        firstLink.DeleteOnEmptyLinks = deleteOnEmptyLinks;
+
+        _appearance.SetData(source, LinkedEntityVisuals.HasAnyLinks, true);
+
+        Dirty(source, firstLink);
+
+        return firstLink.LinkedEntities.Add(target);
+    }
+
+    /// <summary>
     ///     Unlinks two entities. Deletes either entity if <see cref="LinkedEntityComponent.DeleteOnEmptyLinks"/>
     ///     was true and its links are now empty. Symmetrical, so order doesn't matter.
     /// </summary>
