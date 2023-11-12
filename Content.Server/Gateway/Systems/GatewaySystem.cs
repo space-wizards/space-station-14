@@ -103,7 +103,8 @@ public sealed class GatewaySystem : EntitySystem
             destinations.Add(new GatewayDestinationData()
             {
                 Entity = GetNetEntity(destUid),
-                Name = dest.Name,
+                // Fallback to grid's ID if applicable.
+                Name = dest.Name.IsEmpty && destXform.GridUid != null ? FormattedMessage.FromUnformatted(MetaData(destXform.GridUid.Value).EntityName) : dest.Name ,
                 Portal = HasComp<PortalComponent>(destUid),
                 // If NextUnlock < CurTime it's unlocked, however
                 // we'll always send the client if it's locked
