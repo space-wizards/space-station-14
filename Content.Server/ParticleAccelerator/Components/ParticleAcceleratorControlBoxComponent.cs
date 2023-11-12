@@ -171,13 +171,13 @@ public sealed partial class ParticleAcceleratorControlBoxComponent : Component
     /// <summary>
     /// Time at which the admin alarm sound effect can next be played.
     /// </summary>
-    [DataField("effectCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan EffectCooldown;
 
     /// <summary>
     /// Time between admin alarm sound effects. Prevents spam
     /// </summary>
-    [DataField("cooldownDuration")]
+    [DataField]
     public TimeSpan CooldownDuration = TimeSpan.FromSeconds(10f);
 
     /// <summary>
