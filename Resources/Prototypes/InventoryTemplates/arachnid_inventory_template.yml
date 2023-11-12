@@ -76,7 +76,7 @@
       slotGroup: SecondHotbar
       stripTime: 6
       uiWindowPos: 3,1
-      strippingWindowPos: 1,5
+      strippingWindowPos: 2,3
       displayName: Belt
     - name: back
       slotTexture: back
@@ -84,7 +84,7 @@
       slotGroup: SecondHotbar
       stripTime: 6
       uiWindowPos: 3,0
-      strippingWindowPos: 0,5
+      strippingWindowPos: 0,3
       displayName: Back
 
     - name: pocket4

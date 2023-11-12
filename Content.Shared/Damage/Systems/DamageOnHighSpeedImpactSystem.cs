@@ -1,6 +1,5 @@
-using Content.Server.Damage.Components;
-using Content.Server.Stunnable;
-using Content.Shared.Damage;
+using Content.Shared.Stunnable;
+using Content.Shared.Damage.Components;
 using Content.Shared.Effects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Events;
@@ -8,7 +7,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Damage.Systems;
+namespace Content.Shared.Damage.Systems;
 
 public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
 {
@@ -17,7 +16,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -54,7 +53,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         _color.RaiseEffect(Color.Red, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
     }
 
-    public void ChangeCollide(EntityUid uid, float minimumSpeed, float stunSeconds, float damageCooldown, DamageOnHighSpeedImpactComponent? collide = null)
+    public void ChangeCollide(EntityUid uid, float minimumSpeed, float stunSeconds, float damageCooldown, float speedDamage, DamageOnHighSpeedImpactComponent? collide = null)
     {
         if (!Resolve(uid, ref collide, false))
             return;
@@ -62,6 +61,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         collide.MinimumSpeed = minimumSpeed;
         collide.StunSeconds = stunSeconds;
         collide.DamageCooldown = damageCooldown;
+        collide.SpeedDamageFactor = speedDamage;
         Dirty(uid, collide);
     }
 }
