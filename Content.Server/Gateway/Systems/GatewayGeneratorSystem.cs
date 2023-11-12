@@ -1,19 +1,14 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
-using Content.Server.Salvage;
 using Content.Shared.Dataset;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Loot;
-using Content.Shared.Random;
 using Content.Shared.Salvage;
-using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -50,12 +45,12 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
     // TODO:
     // Re-use salvage config stuff for the RNG
+    // Have it in the UI like expeditions.
+
     // Also add weather coz it's funny.
 
     // Add songs (incl. the downloaded one) to the ambient music playlist for planet probably.
     // Copy most of salvage mission spawner
-    // Add like a configs thing or the rng thing like salvage I guess.
-    // Think of something for resources
 
     public override void Initialize()
     {
