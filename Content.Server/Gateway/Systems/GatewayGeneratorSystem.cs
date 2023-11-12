@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
@@ -188,22 +189,29 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         if (TryComp(ent.Owner, out BiomeComponent? biomeComp) && generatorComp != null)
         {
             // - Loot
+            var lootLayers = generatorComp.LootLayers.ToList();
+
             for (var i = 0; i < generatorComp.LootLayerCount; i++)
             {
-                var layerIdx = random.Next(generatorComp.LootLayers.Count);
-                var layer = generatorComp.LootLayers[layerIdx];
+                var layerIdx = random.Next(lootLayers.Count);
+                var layer = lootLayers[layerIdx];
+                lootLayers.RemoveSwap(layerIdx);
 
                 _biome.AddMarkerLayer(biomeComp, layer.Id);
             }
 
             // - Mobs
+            /*var mobLayers = generatorComp.MobLayers.ToList();
+
             for (var i = 0; i < generatorComp.MobLayerCount; i++)
             {
-                var layerIdx = random.Next(generatorComp.MobLayers.Count);
-                var layer = generatorComp.MobLayers[layerIdx];
+                var layerIdx = random.Next(mobLayers.Count);
+                var layer = mobLayers[layerIdx];
+                mobLayers.RemoveSwap(layerIdx);
 
                 _biome.AddMarkerLayer(biomeComp, layer.Id);
             }
+            */
         }
     }
 }
@@ -252,7 +260,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     };
 
     [DataField]
-    public int LootLayerCount = 5;
+    public int LootLayerCount = 1;
 
     /// <summary>
     /// Loot layers to pick from.
@@ -260,13 +268,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     public List<ProtoId<BiomeMarkerLayerPrototype>> LootLayers = new()
     {
         "OreTin",
-        "OreQuartz",
-        "OreGold",
-        "OreSilver",
-        "OrePlasma",
-        "OreUranium",
-        "OreBananium",
-        "OreArtifactFragment",
+
     };
 }
 

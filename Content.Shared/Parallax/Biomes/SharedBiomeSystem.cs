@@ -6,6 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Parallax.Biomes;
@@ -13,20 +14,10 @@ namespace Content.Shared.Parallax.Biomes;
 public abstract class SharedBiomeSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] protected readonly ITileDefinitionManager TileDefManager = default!;
 
     protected const byte ChunkSize = 8;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<BiomeComponent, AfterAutoHandleStateEvent>(OnBiomeAfterHandleState);
-    }
-
-    private void OnBiomeAfterHandleState(EntityUid uid, BiomeComponent component, ref AfterAutoHandleStateEvent args)
-    {
-        component.Noise.SetSeed(component.Seed);
-    }
 
     private T Pick<T>(List<T> collection, float value)
     {
@@ -89,13 +80,13 @@ public abstract class SharedBiomeSystem : EntitySystem
             return false;
         }
 
-        return TryGetBiomeTile(indices, biome.Layers, biome.Noise, grid, out tile);
+        return TryGetBiomeTile(indices, biome.Layers, biome.Seed, grid, out tile);
     }
 
     /// <summary>
     /// Tries to get the tile, real or otherwise, for the specified indices.
     /// </summary>
-    public bool TryGetBiomeTile(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(Vector2i indices, List<IBiomeLayer> layers, int seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
         {
@@ -103,23 +94,16 @@ public abstract class SharedBiomeSystem : EntitySystem
             return true;
         }
 
-        var oldSeed = noise.GetSeed();
-
         for (var i = layers.Count - 1; i >= 0; i--)
         {
             var layer = layers[i];
+            var adjustedSeed = layer.Noise.GetSeed() + seed;
 
             // Check if the tile is from meta layer, otherwise fall back to default layers.
             if (layer is BiomeMetaLayer meta)
             {
-                SetNoise(noise, oldSeed, layer.Noise);
-                var found = noise.GetNoise(indices.X, indices.Y);
-                found *= layer.Invert ? -1 : 1;
-
-                if (found > layer.Threshold && TryGetBiomeTile(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, noise,
-                        grid, out tile))
+                if (TryGetBiomeTile(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, seed, grid, out tile))
                 {
-                    noise.SetSeed(oldSeed);
                     return true;
                 }
 
@@ -129,16 +113,18 @@ public abstract class SharedBiomeSystem : EntitySystem
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
 
-            SetNoise(noise, oldSeed, layer.Noise);
+            // Need to get an updated seed as the layer seed is just the offset and not the true value.
+            // This just makes the method thread-safe.
+            var noiseCopy = new FastNoiseLite();
+            _serManager.CopyTo(layer.Noise, ref noiseCopy, notNullableOverride: true);
+            noiseCopy.SetSeed(adjustedSeed);
 
-            if (TryGetTile(indices, noise, tileLayer.Invert, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
+            if (TryGetTile(indices, noiseCopy, tileLayer.Invert, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
             {
-                noise.SetSeed(oldSeed);
                 return true;
             }
         }
 
-        noise.SetSeed(oldSeed);
         tile = null;
         return false;
     }
@@ -146,9 +132,9 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    private bool TryGetTile(Vector2i indices, FastNoiseLite seed, bool invert, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
+    private bool TryGetTile(Vector2i indices, FastNoiseLite noise, bool invert, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
     {
-        var found = seed.GetNoise(indices.X, indices.Y);
+        var found = noise.GetNoise(indices.X, indices.Y);
         found = invert ? found * -1 : found;
 
         if (found < threshold)
@@ -163,7 +149,7 @@ public abstract class SharedBiomeSystem : EntitySystem
         // Pick a variant tile if they're available as well
         if (variantCount > 1)
         {
-            var variantValue = (seed.GetNoise(indices.X * 8, indices.Y * 8, variantCount) + 1f) / 2f;
+            var variantValue = (noise.GetNoise(indices.X * 8, indices.Y * 8, variantCount) + 1f) / 2f;
             variant = (byte) Pick(variantCount, variantValue);
 
             if (variants != null)
@@ -179,17 +165,16 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant entity for this tile.
     /// </summary>
-    protected bool TryGetEntity(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent grid,
+    protected bool TryGetEntity(Vector2i indices, List<IBiomeLayer> layers, int seed, MapGridComponent grid,
         [NotNullWhen(true)] out string? entity)
     {
-        if (!TryGetBiomeTile(indices, layers, noise, grid, out var tileRef))
+        if (!TryGetBiomeTile(indices, layers, seed, grid, out var tileRef))
         {
             entity = null;
             return false;
         }
 
         var tileId = TileDefManager[tileRef.Value.TypeId].ID;
-        var oldSeed = noise.GetSeed();
 
         for (var i = layers.Count - 1; i >= 0; i--)
         {
@@ -211,9 +196,13 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
-            SetNoise(noise, oldSeed, layer.Noise);
+            var adjustedSeed = seed + layer.Noise.GetSeed();
+            var noiseCopy = new FastNoiseLite();
+            _serManager.CopyTo(layer.Noise, ref noiseCopy, notNullableOverride: true);
+            noiseCopy.SetSeed(adjustedSeed);
+
             var invert = layer.Invert;
-            var value = noise.GetNoise(indices.X, indices.Y);
+            var value = noiseCopy.GetNoise(indices.X, indices.Y);
             value = invert ? value * -1 : value;
 
             if (value < layer.Threshold)
@@ -221,9 +210,8 @@ public abstract class SharedBiomeSystem : EntitySystem
 
             if (layer is BiomeMetaLayer meta)
             {
-                if (TryGetEntity(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, noise, grid, out entity))
+                if (TryGetEntity(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, seed, grid, out entity))
                 {
-                    noise.SetSeed(oldSeed);
                     return true;
                 }
 
@@ -233,17 +221,14 @@ public abstract class SharedBiomeSystem : EntitySystem
             if (layer is not BiomeEntityLayer biomeLayer)
             {
                 entity = null;
-                noise.SetSeed(oldSeed);
                 return false;
             }
 
-            var noiseValue = noise.GetNoise(indices.X, indices.Y, i);
+            var noiseValue = noiseCopy.GetNoise(indices.X, indices.Y, i);
             entity = Pick(biomeLayer.Entities, (noiseValue + 1f) / 2f);
-            noise.SetSeed(oldSeed);
             return true;
         }
 
-        noise.SetSeed(oldSeed);
         entity = null;
         return false;
     }
@@ -251,17 +236,16 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant decals for this tile.
     /// </summary>
-    public bool TryGetDecals(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent grid,
+    public bool TryGetDecals(Vector2i indices, List<IBiomeLayer> layers, int seed, MapGridComponent grid,
         [NotNullWhen(true)] out List<(string ID, Vector2 Position)>? decals)
     {
-        if (!TryGetBiomeTile(indices, layers, noise, grid, out var tileRef))
+        if (!TryGetBiomeTile(indices, layers, seed, grid, out var tileRef))
         {
             decals = null;
             return false;
         }
 
         var tileId = TileDefManager[tileRef.Value.TypeId].ID;
-        var oldSeed = noise.GetSeed();
 
         for (var i = layers.Count - 1; i >= 0; i--)
         {
@@ -283,34 +267,33 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
-            SetNoise(noise, oldSeed, layer.Noise);
+            var adjustedSeed = layer.Noise.GetSeed() + seed;
             var invert = layer.Invert;
 
             if (layer is BiomeMetaLayer meta)
             {
-                var found = noise.GetNoise(indices.X, indices.Y);
-                found *= layer.Invert ? -1 : 1;
-
-                if (found > layer.Threshold && TryGetDecals(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, noise, grid, out decals))
+                if (TryGetDecals(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, seed, grid, out decals))
                 {
-                    noise.SetSeed(oldSeed);
                     return true;
                 }
 
                 continue;
             }
 
+            var noiseCopy = new FastNoiseLite();
+            _serManager.CopyTo(layer.Noise, ref noiseCopy, notNullableOverride: true);
+            noiseCopy.SetSeed(adjustedSeed);
+
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
             {
-                var value = noise.GetNoise(indices.X, indices.Y);
+                var value = noiseCopy.GetNoise(indices.X, indices.Y);
                 value = invert ? value * -1 : value;
 
                 if (value < layer.Threshold)
                     continue;
 
                 decals = null;
-                noise.SetSeed(oldSeed);
                 return false;
             }
 
@@ -321,13 +304,13 @@ public abstract class SharedBiomeSystem : EntitySystem
                 for (var y = 0; y < decalLayer.Divisions; y++)
                 {
                     var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions, indices.Y + y * 1f / decalLayer.Divisions);
-                    var decalValue = noise.GetNoise(index.X, index.Y);
+                    var decalValue = noiseCopy.GetNoise(index.X, index.Y);
                     decalValue = invert ? decalValue * -1 : decalValue;
 
                     if (decalValue < decalLayer.Threshold)
                         continue;
 
-                    decals.Add((Pick(decalLayer.Decals, (noise.GetNoise(indices.X, indices.Y, x + y * decalLayer.Divisions) + 1f) / 2f), index));
+                    decals.Add((Pick(decalLayer.Decals, (noiseCopy.GetNoise(indices.X, indices.Y, x + y * decalLayer.Divisions) + 1f) / 2f), index));
                 }
             }
 
@@ -335,34 +318,10 @@ public abstract class SharedBiomeSystem : EntitySystem
             if (decals.Count == 0)
                 continue;
 
-            noise.SetSeed(oldSeed);
             return true;
         }
 
-        noise.SetSeed(oldSeed);
         decals = null;
         return false;
-    }
-
-    private void SetNoise(FastNoiseLite noise, int oldSeed, FastNoiseLite data)
-    {
-        // General
-        noise.SetSeed(oldSeed + data.GetSeed());
-        noise.SetFrequency(data.GetFrequency());
-        noise.SetNoiseType(data.GetNoiseType());
-
-        noise.GetRotationType3D();
-
-        // Fractal
-        noise.SetFractalType(data.GetFractalType());
-        noise.SetFractalOctaves(data.GetFractalOctaves());
-        noise.SetFractalLacunarity(data.GetFractalLacunarity());
-
-        // Cellular
-        noise.SetCellularDistanceFunction(data.GetCellularDistanceFunction());
-        noise.SetCellularReturnType(data.GetCellularReturnType());
-        noise.SetCellularJitter(data.GetCellularJitter());
-
-        // Domain warps require separate noise
     }
 }

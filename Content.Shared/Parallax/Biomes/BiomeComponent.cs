@@ -11,8 +11,6 @@ namespace Content.Shared.Parallax.Biomes;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(SharedBiomeSystem))]
 public sealed partial class BiomeComponent : Component
 {
-    public FastNoiseLite Noise = new();
-
     [ViewVariables(VVAccess.ReadWrite), DataField("seed")]
     [AutoNetworkedField]
     public int Seed = -1;

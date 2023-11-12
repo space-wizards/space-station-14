@@ -67,7 +67,7 @@ public sealed partial class BiomeSystem
             return;
         }
 
-        if (!_proto.TryIndex<BiomeTemplatePrototype>(args[1], out var template))
+        if (!ProtoManager.TryIndex<BiomeTemplatePrototype>(args[1], out var template))
         {
             return;
         }
@@ -92,7 +92,7 @@ public sealed partial class BiomeSystem
         if (args.Length == 2)
         {
             return CompletionResult.FromHintOptions(
-                CompletionHelper.PrototypeIDs<BiomeTemplatePrototype>(proto: _proto), "Biome template");
+                CompletionHelper.PrototypeIDs<BiomeTemplatePrototype>(proto: ProtoManager), "Biome template");
         }
 
         if (args.Length == 3)
@@ -146,7 +146,7 @@ public sealed partial class BiomeSystem
             return;
         }
 
-        if (!_proto.HasIndex<BiomeMarkerLayerPrototype>(args[1]))
+        if (!ProtoManager.HasIndex<BiomeMarkerLayerPrototype>(args[1]))
         {
             return;
         }
@@ -164,7 +164,7 @@ public sealed partial class BiomeSystem
         if (args.Length == 2)
         {
             return CompletionResult.FromHintOptions(
-                CompletionHelper.PrototypeIDs<BiomeMarkerLayerPrototype>(proto: _proto), "Marker");
+                CompletionHelper.PrototypeIDs<BiomeMarkerLayerPrototype>(proto: ProtoManager), "Marker");
         }
 
         return CompletionResult.Empty;
