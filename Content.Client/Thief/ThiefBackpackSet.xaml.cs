@@ -15,8 +15,8 @@ public sealed partial class ThiefBackpackSet : Control
         RobustXamlLoader.Load(this);
 
         Icon.Texture = spriteSystem.Frame0(set.Sprite);
-        SetName.Text = set.Name;
-        SetDescription.Text = set.Description;
-        SetButton.Disabled = set.Selected;
+        SetName.Text = Loc.GetString(set.Name);
+        SetDescription.Text = Loc.GetString(set.Description);
+        SetButton.Text = Loc.GetString(set.Selected ? "thief-backpack-button-deselect" : "thief-backpack-button-select");
     }
 }

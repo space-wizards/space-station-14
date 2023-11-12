@@ -9,22 +9,35 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
+    private const int MaxSelectedSets = 2;
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ThiefUndeterminedBackpackComponent, BoundUIOpenedEvent>(OnUIOpened);
         SubscribeLocalEvent<ThiefUndeterminedBackpackComponent, ThiefBackpackApproveMessage>(OnApprove);
         SubscribeLocalEvent<ThiefUndeterminedBackpackComponent, ThiefBackpackChangeSetMessage>(OnChangeSet);
     }
 
-    private void OnApprove(Entity<ThiefUndeterminedBackpackComponent> ent, ref ThiefBackpackApproveMessage args)
+    private void OnUIOpened(Entity<ThiefUndeterminedBackpackComponent> backpack, ref BoundUIOpenedEvent args)
+    {
+        UpdateUI(backpack.Owner, backpack.Comp);
+    }
+
+    private void OnApprove(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackApproveMessage args)
     {
         Log.Debug("--- Really Approved");
-        UpdateUI(ent.Owner, ent.Comp);
     }
-    private void OnChangeSet(Entity<ThiefUndeterminedBackpackComponent> component, ref ThiefBackpackChangeSetMessage args)
+    private void OnChangeSet(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackChangeSetMessage args)
     {
-        Log.Debug("--- Really Changed" + args.SetNumber);
+        Log.Debug("--- Really Changed " + args.SetNumber);
+        //Swith selecting set
+        if (backpack.Comp.SelectedSets.Contains(args.SetNumber))
+            backpack.Comp.SelectedSets.Remove(args.SetNumber);
+        else
+            backpack.Comp.SelectedSets.Add(args.SetNumber);
+
+        UpdateUI(backpack.Owner, backpack.Comp);
     }
 
     private void UpdateUI(EntityUid uid, ThiefUndeterminedBackpackComponent? component = null)
@@ -32,20 +45,20 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        List<ThiefBackpackSetInfo> data = new();
+        Dictionary<int, ThiefBackpackSetInfo> data = new();
 
         for (int i = 0; i < component.PossibleSets.Count; i++)
         {
             var set = _proto.Index(component.PossibleSets[i]);
             var selected = component.SelectedSets.Contains(i);
             var info = new ThiefBackpackSetInfo(
-                Loc.GetString(set.Name),
-                Loc.GetString(set.Description),
+                set.Name,
+                set.Description,
                 set.Sprite,
                 selected);
-            data.Add(info);
+            data.Add(i, info);
         }
 
-        _ui.TrySetUiState(uid, ThiefBackpackUIKey.Key, new ThiefBackpackBoundUserInterfaceState(data));
+        _ui.TrySetUiState(uid, ThiefBackpackUIKey.Key, new ThiefBackpackBoundUserInterfaceState(data, MaxSelectedSets));
     }
 }

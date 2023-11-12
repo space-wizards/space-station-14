@@ -35,22 +35,22 @@ public sealed partial class ThiefBackpackMenu : FancyWindow
         int selectedNumber = 0;
         foreach (var set in state.Sets)
         {
-            var child = new ThiefBackpackSet(set, _spriteSystem);
+            var child = new ThiefBackpackSet(set.Value, _spriteSystem);
 
             child.SetButton.OnButtonDown += (args) =>
             {
-                _owner.SendChangeSelected(count);
+                _owner.SendChangeSelected(set.Key);
             };
 
             SetsGrid.AddChild(child);
 
             count++;
 
-            if (set.Selected)
+            if (set.Value.Selected)
                 selectedNumber++;
         }
 
-        SelectedSets.Text = selectedNumber + "/2";
-        ApproveButton.Disabled = selectedNumber == 2 ? true : false;
+        SelectedSets.Text = selectedNumber + "/" + state.MaxSelectedSets;
+        ApproveButton.Disabled = selectedNumber == state.MaxSelectedSets ? false : true;
     }
 }

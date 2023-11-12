@@ -6,11 +6,13 @@ namespace Content.Shared.Thief;
 [Serializable, NetSerializable]
 public sealed class ThiefBackpackBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public readonly List<ThiefBackpackSetInfo> Sets;
+    public readonly Dictionary<int, ThiefBackpackSetInfo> Sets;
+    public int MaxSelectedSets;
 
-    public ThiefBackpackBoundUserInterfaceState(List<ThiefBackpackSetInfo> sets)
+    public ThiefBackpackBoundUserInterfaceState(Dictionary<int, ThiefBackpackSetInfo> sets, int max)
     {
         Sets = sets;
+        MaxSelectedSets = max;
     }
 }
 

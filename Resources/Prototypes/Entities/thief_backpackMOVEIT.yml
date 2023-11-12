@@ -9,17 +9,16 @@
   - type: ThiefUndeterminedBackpack
     transformAfterSelect: AlwaysPoweredWallLight
     possibleSets:
-    - ChameleonSet
+    # - TO DO Thief pinpointer needed
+    # - TO DO Chameleon stump needed
+    # - TO DO Invisible box needed (waiting to merg)
+    - ChemistrySet
     - ToolsSet
     - ChameleonSet
-    - ToolsSet
-    - ChameleonSet
-    - ToolsSet
-    - ToolsSet
-    - ToolsSet
-    - ToolsSet
-    - ChameleonSet
-    - ToolsSet
+    - SyndieSet
+    - SleeperSet
+    - CommunicatorSet
+    - EnticementSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface
@@ -32,19 +31,108 @@
   name: thief-backpack-category-chameleon-name
   description: thief-backpack-category-chameleon-description
   sprite: 
-    sprite: Mobs/Pets/shiva.rsi
-    state: shiva
+    sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi
+    state: icon
   content:
-  - AlwaysPoweredWallLight
-  - AlwaysPoweredWallLight
+  - ClothingUniformJumpsuitChameleon
+  - ClothingOuterChameleon
+  - ClothingNeckChameleon
+  - ClothingMaskGasChameleon
+  - ClothingHeadHatChameleon
+  - ClothingEyesChameleon
+  - ClothingHeadsetChameleon
+  - ClothingShoesChameleon
 
 - type: thiefBackpackSet
   id: ToolsSet
   name: thief-backpack-category-tools-name
   description: thief-backpack-category-tools-description
   sprite: 
-    sprite: Mobs/Pets/shiva.rsi
-    state: shiva
+    sprite: Objects/Tools/jaws_of_life.rsi
+    state: jaws_pry
   content:
-  - AlwaysPoweredWallLight
-  - AlwaysPoweredWallLight
+  - WelderIndustrialAdvanced
+  - ClothingHeadHatWeldingMaskFlameBlue
+  - JawsOfLife
+  - Multitool
+  - C4
+  - C4
+  - ClothingMaskClownBase
+
+- type: thiefBackpackSet
+  id: ChemistrySet
+  name: thief-backpack-category-chemistry-name
+  description: thief-backpack-category-chemistry-description
+  sprite:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  content:
+  - StorageImplanter
+  - DnaScramblerImplanter
+  - EphedrineChemistryBottle
+  - OmnizineChemistryBottle
+  - Syringe
+  - DrinkVodkaBottleFull
+
+- type: thiefBackpackSet
+  id: SyndieSet
+  name: thief-backpack-category-syndie-name
+  description: thief-backpack-category-syndie-description
+  sprite:
+    sprite: Objects/Fun/toys.rsi
+    state: synb
+  content:
+  - AgentIDCard
+  - SyndicatePersonalAI
+  - ClothingHeadHatSyndieMAA
+  - CigPackSyndicate
+  - Telecrystal10 #The thief cannot use them, but it may induce communication with traitors
+
+- type: thiefBackpackSet
+  id: SleeperSet
+  name: thief-backpack-category-sleeper-name
+  description: thief-backpack-category-sleeper-description
+  sprite: 
+    sprite: Clothing/Head/Hats/pyjamasyndicateblack.rsi
+    state: icon
+  content:
+  - ClothingHeadPyjamaSyndicateBlack
+  - ClothingUniformJumpsuitPyjamaSyndicateBlack
+  - NocturineChemistryBottle
+  - NocturineChemistryBottle
+  - NocturineChemistryBottle
+  - HypopenBox
+  - NitrousOxideTankFilled
+  - BedsheetSyndie
+
+- type: thiefBackpackSet
+  id: CommunicatorSet
+  name: thief-backpack-category-communicator-name
+  description: thief-backpack-category-communicator-description
+  sprite: 
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: crypt_gold
+  content:
+  - EncryptionKeyStationMaster
+  - RadioHandheld
+  - RadioHandheld
+  - RadioJammer
+  - HandheldCrewMonitor #change to SpyDevice after merge
+  - BriefcaseSyndieLobbyingBundleFilled
+  - Cablecuffs
+  - Cablecuffs
+
+- type: thiefBackpackSet
+  id: EnticementSet
+  name: thief-backpack-category-enticement-name
+  description: thief-backpack-category-enticement-description
+  sprite: 
+    sprite: Clothing/Head/Hats/catears.rsi
+    state: icon
+  content:
+  - ClothingHeadHatCatEars
+  - ClothingUniformJumpskirtJanimaidmini
+  - DrinkSpaceLube
+  - DrinkSpaceGlue
+  - Handcuffs
+  - Handcuffs
