@@ -4,7 +4,6 @@
   mapPath: /Maps/atlas.yml
   minPlayers: 0
   maxPlayers: 35
-  fallback: true
   stations:
     Atlas:
       stationProto: StandardNanotrasenStation
