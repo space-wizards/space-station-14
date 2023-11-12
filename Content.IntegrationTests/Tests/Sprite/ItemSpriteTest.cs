@@ -9,7 +9,8 @@ namespace Content.IntegrationTests.Tests.Sprite;
 
 /// <summary>
 /// This test checks that all items have a visible sprite. The general rationale is that all items can be picked up
-/// by players, thus they need to be visible and have a sprite that can be rendered on screen and in their hand slot.
+/// by players, thus they need to be visible and have a sprite that can be rendered on screen and in their hands GUI.
+/// This has nothing to do with in-hand sprites.
 /// </summary>
 /// <remarks>
 /// If a prototype fails this test, its probably either because it:
