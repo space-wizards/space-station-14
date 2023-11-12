@@ -1,5 +1,3 @@
-
-
 using Content.Shared.Thief;
 using Robust.Shared.Prototypes;
 
@@ -7,8 +5,7 @@ namespace Content.Server.Thief.Components;
 
 /// <summary>
 /// This component stores the possible contents of the backpack,
-/// which can be selected via the interface. After selecting the contents,
-/// it is transformed into a certain other object
+/// which can be selected via the interface.
 /// </summary>
 [RegisterComponent]
 public sealed partial class ThiefUndeterminedBackpackComponent : Component
@@ -21,10 +18,4 @@ public sealed partial class ThiefUndeterminedBackpackComponent : Component
 
     [DataField]
     public List<int> SelectedSets = new();
-
-    /// <summary>
-    /// The backpack will try to turn into this object, and fill it with the selected gear.
-    /// </summary>
-    [DataField]
-    public ProtoId<EntityPrototype> TransformAfterSelect = default!;
 }

@@ -230,7 +230,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             ? Loc.GetString("thief-role-greeting-human")
             : Loc.GetString("thief-role-greeting-animal");
 
-        briefing += "/n" + Loc.GetString("thief-role-greeting-equipment");
+        briefing += "\n" + Loc.GetString("thief-role-greeting-equipment");
         return briefing;
     }
 
