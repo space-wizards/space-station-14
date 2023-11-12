@@ -7,9 +7,34 @@
   description: An ancient relic, once stolen from NanoTrasen. Any member of the board of directors is ready to make a deal with the devil in order to return this artifact to their secret altar.
   components:
   - type: Sprite
-    sprite: Imperial/SomeStuffCreative/Guns/golden_ak.rsi
+    sprite: Imperial/SomeStuffCreative/Weapons/golden_ak.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
+
+#Cane for buisness people
+- type: entity
+  id: PresentableCane
+  name: presentable cane
+  parent: WhiteCane
+  suffix: SSC
+  description: A black, decorated cane with a weighted tip. These are worn to maintain style.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Weapons/presentable_cane.rsi
+    state: icon
+  - type: Item
+    size: 17
+    sprite: Imperial/SomeStuffCreative/Weapons/presentable_cane.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 8
+        Structural: 2

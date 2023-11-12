@@ -104,15 +104,15 @@
 - type: entity
   id: CaseSpecial
   parent: BriefcaseBase
-  name: special secret NanoTrasen case
+  name: black suitcase NanoTrasen
   suffix: SSC
-  description: A suitcase worth as much as a station, with even more value inside.
+  description: While it is in your hands, everyone will respect you.
   components:
   - type: Sprite
-    sprite: Imperial/SomeStuffCreative/Containers/case_special.rsi
+    sprite: Imperial/SomeStuffCreative/Containers/suitcase.rsi
     state: icon
   - type: Item
-    sprite: Imperial/SomeStuffCreative/Containers/case_special.rsi
+    sprite: Imperial/SomeStuffCreative/Containers/suitcase.rsi
 
 #Filled special case for NanoTrasen representative
 - type: entity
@@ -127,6 +127,18 @@
       - id: RubberStampCentcom
       - id: EncryptionKeyCentCom
 
+#Filled special case for NanoTrasen representative (Lobbying)
+- type: entity
+  id: CaseSpecialFillMoney
+  parent: CaseSpecial
+  name: special secret NanoTrasen case
+  suffix: SSC, Fill, Money
+  components:
+  - type: StorageFill
+    contents:
+      - id: SpaceCash1000
+        amount: 20
+
 #NanoTrasen container for dragee
 - type: entity
   id: NTdrageeContainer
@@ -137,24 +149,23 @@
   components:
   - type: Sprite
     sprite: Imperial/SomeStuffCreative/Containers/medical.rsi
-    state: dragee_container
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
   - type: Item
-    size: 24
+    size: 14
     sprite: Imperial/SomeStuffCreative/Containers/medical.rsi
   - type: Tag
     tags:
       - PillCanister
-  - type: Storage
-    capacity: 24
-    quickInsert: true
-    areaInsert: true
-    areaInsertRadius: 1
-    storageInsertSound: /Audio/Effects/pill_insert.ogg
-    storageRemoveSound: /Audio/Effects/pill_remove.ogg
-    whitelist:
-      components:
-      - Pill
   - type: Dumpable
+  - type: Appearance
 
 #Bigger pill canister
 - type: entity
@@ -180,10 +191,13 @@
   name: Nano-Tak dragee
   suffix: SSC, Fill
   components:
-  - type: StorageFill
-    contents:
-      - id: NTdrageePill
-        amount: 24
+  - type: BallisticAmmoProvider
+    mayTransfer: false
+    whitelist:
+      tags:
+        - Pill
+    proto: NTdrageePill
+    capacity: 14
 
 #NanoTrasen special folder
 - type: entity
@@ -212,3 +226,20 @@
       - id: OxygenTankFilled
       - id: JetpackBlackFilled
       - id: FlashlightLantern
+
+#NanoTrasen case for extra-special things.
+- type: entity
+  id: BriefcaseSpecial
+  parent: BriefcaseBase
+  name: special secret NanoTrasen case
+  suffix: SSC
+  description: A suitcase worth as much as a station, with even more value inside.
+  components:
+  - type: Sprite
+    sprite: Imperial/SomeStuffCreative/Containers/case_special.rsi
+    state: icon
+  - type: Item
+    sprite: Imperial/SomeStuffCreative/Containers/case_special.rsi
+    size: 9999
+  - type: Storage
+    capacity: 110
