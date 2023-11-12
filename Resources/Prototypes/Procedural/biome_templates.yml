@@ -507,7 +507,7 @@
         fractalType: Ridged
         octaves: 1
         frequency: 0.1
-        gain: 0
+        gain: 0.5
       allowedTiles:
         - FloorAsteroidSand
       entities:
