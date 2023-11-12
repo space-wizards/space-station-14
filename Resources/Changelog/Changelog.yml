@@ -1,12 +1,4 @@
 Entries:
-- author: onoira
-  changes:
-  - {message: Nanotrasen no longer uses disappearing ink for official books and documents.
-      These can now be modified., type: Fix}
-  - {message: New pen technology enables stylish ways of writing. See the guidebook
-      for more info., type: Add}
-  id: 4659
-  time: '2023-08-22T11:50:04.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Smile the Slime now has unique ghost role text rather than standard
@@ -2908,3 +2900,8 @@ Entries:
       bar once it has been removed., type: Fix}
   id: 5158
   time: '2023-11-12T23:29:46.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: New Thief figurine! New void cloak!, type: Add}
+  id: 5159
+  time: '2023-11-12T23:41:45.0000000+00:00'
