@@ -75,7 +75,7 @@
         Slash: 12
         Structural: 30
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_halberd.rsi
     quickEquip: false
