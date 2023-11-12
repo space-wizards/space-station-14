@@ -115,9 +115,7 @@ public abstract class SharedBiomeSystem : EntitySystem
 
             // Need to get an updated seed as the layer seed is just the offset and not the true value.
             // This just makes the method thread-safe.
-            var noiseCopy = new FastNoiseLite();
-            _serManager.CopyTo(layer.Noise, ref noiseCopy, notNullableOverride: true);
-            noiseCopy.SetSeed(adjustedSeed);
+            var noiseCopy = GetNoise(layer.Noise, seed);
 
             if (TryGetTile(indices, noiseCopy, tileLayer.Invert, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
             {
@@ -196,10 +194,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
-            var adjustedSeed = seed + layer.Noise.GetSeed();
-            var noiseCopy = new FastNoiseLite();
-            _serManager.CopyTo(layer.Noise, ref noiseCopy, notNullableOverride: true);
-            noiseCopy.SetSeed(adjustedSeed);
+            var noiseCopy = GetNoise(layer.Noise, seed);
 
             var invert = layer.Invert;
             var value = noiseCopy.GetNoise(indices.X, indices.Y);
@@ -267,7 +262,6 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
-            var adjustedSeed = layer.Noise.GetSeed() + seed;
             var invert = layer.Invert;
 
             if (layer is BiomeMetaLayer meta)
@@ -280,9 +274,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                 continue;
             }
 
-            var noiseCopy = new FastNoiseLite();
-            _serManager.CopyTo(layer.Noise, ref noiseCopy, notNullableOverride: true);
-            noiseCopy.SetSeed(adjustedSeed);
+            var noiseCopy = GetNoise(layer.Noise, seed);
 
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
@@ -323,5 +315,15 @@ public abstract class SharedBiomeSystem : EntitySystem
 
         decals = null;
         return false;
+    }
+
+    private FastNoiseLite GetNoise(FastNoiseLite seedNoise, int seed)
+    {
+        var noiseCopy = new FastNoiseLite();
+        _serManager.CopyTo(seedNoise, ref noiseCopy, notNullableOverride: true);
+        noiseCopy.SetSeed(noiseCopy.GetSeed() + seed);
+        // Ensure re-calculate is run.
+        noiseCopy.SetFractalOctaves(noiseCopy.GetFractalOctaves());
+        return noiseCopy;
     }
 }

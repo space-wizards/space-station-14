@@ -45,6 +45,13 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
+    // Fix every fucking biome template layer for parity you fucking bitch, mainly need to check out gain I think.
+    // - Snow
+    // - Lava
+    // - Grasslands
+    // - Desert
+    // - Continental
+
     // Re-use salvage config stuff for the RNG
     // Have it in the UI like expeditions.
 
