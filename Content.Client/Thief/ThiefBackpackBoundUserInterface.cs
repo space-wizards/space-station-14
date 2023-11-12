@@ -9,9 +9,8 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
 {
     private ThiefBackpackMenu? _window;
 
-    public ThiefBackpackBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
+    public ThiefBackpackBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
+
     protected override void Open()
     {
         base.Open();
@@ -20,6 +19,7 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
         _window.OpenCentered();
     }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -29,6 +29,7 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
         _window?.Dispose();
         _window = null;
     }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);

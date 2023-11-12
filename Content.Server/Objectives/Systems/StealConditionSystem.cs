@@ -111,7 +111,7 @@ public sealed class StealConditionSystem : EntitySystem
         var count = 0;
 
         //check pulling object 
-        if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: prettify
+        if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
         {
             var pullid = pull.Pulling;
             if (pullid != null)

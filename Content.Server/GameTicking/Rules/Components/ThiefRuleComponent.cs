@@ -1,9 +1,5 @@
-using Content.Server.Thief.Systems;
-using Content.Shared.Communications;
-using Content.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Content.Server.StationEvents.Events;
 using Content.Shared.Roles;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Player;
@@ -38,7 +34,7 @@ public sealed partial class ThiefRuleComponent : Component
     /// Things that will be given to thieves
     /// </summary>
     [DataField]
-    public List<EntProtoId> StarterItems = new List<EntProtoId> { "ToolboxThief", "ThievingGloves" }; //TO DO - replace to chameleon thieving whem merg
+    public List<EntProtoId> StarterItems = new List<EntProtoId> { "ToolboxThief", "ThievingGloves" }; //TO DO - replace to chameleon thieving gloves whem merg
 
     /// <summary>
     /// All Thiefes created by this rule
@@ -55,5 +51,5 @@ public sealed partial class ThiefRuleComponent : Component
     /// Sound played when making the player a thief via antag control or ghost role
     /// </summary>
     [DataField]
-    public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/thief_greeting.ogg"); //TO DO COOL SOUND
+    public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/thief_greeting.ogg");
 }

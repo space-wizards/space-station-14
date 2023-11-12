@@ -5,7 +5,7 @@ thief-backpack-window-description =
     Now you need to remember what you put in it. 
     Choose up to two different sets from the list.
 
-thief-backpack-window-selected = Kits selected: 
+thief-backpack-window-selected = Kits selected: ({$selectedCount}/{$maxCount})
 
 thief-backpack-window-approve-button = Approve
 thief-backpack-button-select = Select [  ]

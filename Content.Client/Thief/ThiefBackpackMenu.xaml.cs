@@ -50,7 +50,7 @@ public sealed partial class ThiefBackpackMenu : FancyWindow
                 selectedNumber++;
         }
 
-        SelectedSets.Text = selectedNumber + "/" + state.MaxSelectedSets;
+        SelectedSets.Text = Loc.GetString("thief-backpack-window-selected", ("selectedCount", selectedNumber), ("maxCount", state.MaxSelectedSets));
         ApproveButton.Disabled = selectedNumber == state.MaxSelectedSets ? false : true;
     }
 }

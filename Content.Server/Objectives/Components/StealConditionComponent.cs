@@ -54,11 +54,11 @@ public sealed partial class StealConditionComponent : Component
 
     // All this need to be loc string
     [DataField(required: true)]
-    public string ObjectiveText;
+    public LocId ObjectiveText;
     [DataField(required: true)]
-    public string ObjectiveNoOwnerText;
+    public LocId ObjectiveNoOwnerText;
     [DataField(required: true)]
-    public string DescriptionText;
+    public LocId DescriptionText;
     [DataField(required: true)]
-    public string DescriptionMultiplyText;
+    public LocId DescriptionMultiplyText;
 }

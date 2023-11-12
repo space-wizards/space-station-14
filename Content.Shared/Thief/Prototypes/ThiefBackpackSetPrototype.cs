@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Thief;
 
 /// <summary>
-/// TODO
+/// A prototype that defines a set of items and visuals in a specific starter set for the antagonist thief
 /// </summary>
 [Prototype("thiefBackpackSet")]
 public sealed partial class ThiefBackpackSetPrototype : IPrototype

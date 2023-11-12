@@ -9,7 +9,6 @@ namespace Content.Client.Thief;
 [GenerateTypedNameReferences]
 public sealed partial class ThiefBackpackSet : Control
 {
-
     public ThiefBackpackSet(ThiefBackpackSetInfo set, SpriteSystem spriteSystem)
     {
         RobustXamlLoader.Load(this);

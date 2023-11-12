@@ -96,7 +96,7 @@
   components:
   - type: StealCondition
     stealGroup: Stamp
-    minCollectionSize: 6
+    minCollectionSize: 5
     maxCollectionSize: 15
   - type: Objective
     difficulty: 1.0

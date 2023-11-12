@@ -12,16 +12,12 @@ using Content.Shared.Roles.Jobs;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
-using Content.Shared.CombatMode.Pacification;
 using System.Linq;
 using Content.Shared.Humanoid;
 using Content.Server.Antag;
 
 namespace Content.Server.GameTicking.Rules;
 
-/// <summary>
-/// Event for spawning a Thief. Auto invoke on start round in Suitable game modes, or can be invoked in mid-game.
-/// </summary>
 public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -34,18 +30,18 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
+    private const float BigObjectiveChance = 0.7f;
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
-        SubscribeLocalEvent<ThiefRoleComponent, GetBriefingEvent>(OnGetBriefing);
 
+        SubscribeLocalEvent<ThiefRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<ThiefRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
     }
 
-    private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev) //Момент спавна игроков. Инициализация игрового правила.
+    private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
     {
         var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var thief, out var gameRule))
@@ -53,7 +49,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             //Chance to not lauch gamerule
             if (!_random.Prob(thief.RuleChance))
             {
-                RemComp<ThiefRuleComponent>(uid); //TO DO: NOT TESTED
+                RemComp<ThiefRuleComponent>(uid);
                 continue;
             }
 
@@ -89,36 +85,9 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         }
     }
 
-    //TO DO TEST IT!!!
-    /// <summary>
-    /// If there are not enough thieves in a round after the start of the game, we make the incoming connecting players thieves
-    /// </summary>
-    private void HandleLatejoin(PlayerSpawnCompleteEvent ev) //Это кстати сработало и при раундстарт подключении. До OnPlayerSpawned
-    {
-        var query = EntityQueryEnumerator<ThiefRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var thief, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-
-            if (thief.ThiefMinds.Count >= thief.MaxAllowThief)
-                continue;
-            if (!ev.LateJoin)
-                continue;
-            if (!ev.Profile.AntagPreferences.Contains(thief.ThiefPrototypeId))
-                continue;
-            if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
-                continue;
-            if (!job.CanBeAntag)
-                continue;
-
-            MakeThief(ev.Player);
-        }
-    }
-
     private List<ICommonSession> FindPotentialThiefs(in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, ThiefRuleComponent component)
     {
-        //TO DO: When voxels are added, increase their chance of becoming a thief by 4 times >:)
+        //TO DO: When voxes specifies are added, increase their chance of becoming a thief by 4 times >:)
         var list = new List<ICommonSession>();
         var pendingQuery = GetEntityQuery<PendingClockInComponent>();
 
@@ -213,7 +182,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         // Give thieves their objectives
         var difficulty = 0f;
 
-        if (_random.Prob(0.5f)) // 50% chance to 1 big objective (structure or animal)
+        if (_random.Prob(BigObjectiveChance)) // 70% chance to 1 big objective (structure or animal)
         {
             var objective = _objectives.GetRandomObjective(mindId, mind, "ThiefBigObjectiveGroups");
             if (objective != null)
@@ -245,9 +214,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         return true;
     }
 
-    /// <summary>
-    /// Add mind briefing
-    /// </summary>
+    //Add mind briefing
     private void OnGetBriefing(Entity<ThiefRoleComponent> thief, ref GetBriefingEvent args)
     {
         if (!TryComp<MindComponent>(thief.Owner, out var mind) || mind.OwnedEntity == null)
@@ -263,11 +230,11 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
             ? Loc.GetString("thief-role-greeting-human")
             : Loc.GetString("thief-role-greeting-animal");
 
-        briefing += Loc.GetString("thief-role-greeting-equipment");
+        briefing += "/n" + Loc.GetString("thief-role-greeting-equipment");
         return briefing;
     }
 
-    private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args) // TO DO - Fix traitor duplicating in manifest
+    private void OnObjectivesTextGetInfo(Entity<ThiefRuleComponent> thiefs, ref ObjectivesTextGetInfoEvent args)
     {
         args.Minds = thiefs.Comp.ThiefMinds;
         args.AgentName = Loc.GetString("thief-round-end-agent-name");
