@@ -10,7 +10,7 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 7200 #Imperial role timers
-  startingGear: BrigmedicGear
+  startingGear: NewBrigmedicGear
   icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos
   canBeAntag: false
@@ -21,19 +21,20 @@
   - Maintenance
   - External
 
-# - type: startingGear
-#   id: BrigmedicGear
-#   equipment:
-#     jumpsuit: ClothingUniformJumpsuitBrigmedic
-#     back: ClothingBackpackSecurityFilled
-#     shoes: ClothingShoesColorRed
-#     gloves: ClothingHandsGlovesNitrile
-#     eyes: ClothingEyesHudMedical
-#     head: ClothingHeadHatSurgcapBlue
-#     id: BrigmedicPDA
-#     ears: ClothingHeadsetSecurity
-#     mask: ClothingMaskSterile
-#     belt: ClothingBeltMedicalFilled
-#   innerclothingskirt: ClothingUniformJumpskirtBrigmedic
-#   satchel: ClothingBackpackSatchelSecurityFilled
-#   duffelbag: ClothingBackpackDuffelSecurityFilled
+- type: startingGear
+  id: NewBrigmedicGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBrigmedicNew
+    outerClothing: ClothingOuterCoatAMG
+    back: ClothingBackpackBrigmedicFilled
+    shoes: ClothingShoesBrigmedic
+    gloves: ClothingHandsGlovesLatex
+    eyes: ClothingEyesHudSecMedImperial
+    head: ClothingHeadHatBeretBrigmedic
+    id: BrigmedicPDA
+    ears: ClothingHeadsetBrigmedic
+    mask: ClothingMaskRebreatherBrigmedic
+    belt: ClothingBeltMilitaryWebbingBrigmedFilled
+  innerclothingskirt: ClothingUniformJumpskirtBrigmedicNew
+  satchel: ClothingBackpackSatchelBrigmedicFilled
+  duffelbag: ClothingBackpackDuffelBrigmedicFilled

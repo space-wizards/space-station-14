@@ -1,0 +1,16 @@
+ent-ClothingHeadHelmetBrigmedic = Шлем бригмедика
+    .desc = Шлем, пользующийся спросом в среде парамедиков.
+ent-ClothingEyesHudSecMedImperial = Медицино-охранный визор
+    .desc = Используется для сортировки людей в соответствии с их должностью во время врачевания. Вы зовёте это варварством, а мы - цивилизацией.
+ent-ClothingBeltMilitaryWebbingBrigmedFilled = РПС медицинского офицера
+    .desc = РПС для полевых врачей. Изготовлено компаний "Ксинергия" для объектов Нанотрайзен.
+ent-ClothingBeltMilitaryWebbingBrigmed = РПС медицинского офицера
+    .desc = { ent-ClothingBeltMilitaryWebbingBrigmedFilled.desc }
+ent-ClothingMaskRebreatherBrigmedic = Респиратор бригмедика
+    .desc = Респиратор, что используется самыми опытными врачами брига
+ent-ClothingShoesBrigmedic = Ботинки бригмедика
+    .desc = Слегка изменённые ботинки баскетболиста. Имеет хранилище под шприцы.
+ent-ClothingUniformJumpsuitBrigmedicNew = Униформа бригмедика
+    .desc = Униформа, изготовленная специально под бригмедика космической станции 14.
+ent-ClothingUniformJumpskirtBrigmedicNew = Юбка-униформа бригмедика
+    .desc = Юбка-Униформа, изготовленная специально под бригмедика космической станции 14.
