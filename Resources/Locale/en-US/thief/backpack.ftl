@@ -52,9 +52,3 @@ thief-backpack-category-communicator-description =
     A communications enthusiast's kit. Includes master key
     for all station channels, radio jammer, portable 
     crew monitor and lots of money for business deals.
-
-thief-backpack-category-enticement-name = Enticement kit
-thief-backpack-category-enticement-description = 
-    A kit for those who prefer to be given everything 
-    they need on their own. Includes cat ears, 
-    maid costume with miniskirt, space lube, glue and handcuffs.
