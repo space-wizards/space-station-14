@@ -1,10 +1,4 @@
 Entries:
-- author: astriloqua
-  changes:
-  - {message: NanoTransen has hired professionals to teach people how to use toilets.
-      Employees can now properly sit on toilets., type: Tweak}
-  id: 4654
-  time: '2023-08-22T04:21:51.0000000+00:00'
 - author: kalane15
   changes:
   - {message: Dropping item stops its examination, type: Fix}
@@ -2910,3 +2904,9 @@ Entries:
   - {message: Fixed radiation interrupting actions., type: Fix}
   id: 5153
   time: '2023-11-12T18:02:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed FOV & light rendering not being re-enabled when players stop spectating
+      as a ghost., type: Fix}
+  id: 5154
+  time: '2023-11-12T18:36:00.0000000+00:00'
