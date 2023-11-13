@@ -270,6 +270,7 @@
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
+      - id: ClothingShoesSkates
 
 - type: entity
   id: CrateFunBikeHornImplants

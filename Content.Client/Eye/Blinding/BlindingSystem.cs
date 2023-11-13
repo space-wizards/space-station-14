@@ -2,6 +2,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.GameTicking;
+using Robust.Shared.Player;
 
 namespace Content.Client.Eye.Blinding;
 
