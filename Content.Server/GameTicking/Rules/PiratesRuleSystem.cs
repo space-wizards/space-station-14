@@ -231,7 +231,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 _npcFaction.AddFaction(mob, "Syndicate");
 
                 pirates.Pirates.Add(newMind);
-                _roleSystem.MindAddRole(newMind, new PiratesRoleComponent { PrototypeId = pirates.TraitorPrototypeId });
+                _roleSystem.MindAddRole(newMind, new PiratesRoleComponent { PrototypeId = pirates.RolePrototype });
 
                 GameTicker.PlayerJoinGame(session);
             }
@@ -258,7 +258,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             GameTicker.StartGameRule("Pirates", out var ruleEntity);
             pirateRule = Comp<PiratesRuleComponent>(ruleEntity);
         }
-        _roleSystem.MindAddRole(mindId, new PiratesRoleComponent { PrototypeId = pirateRule.TraitorPrototypeId });
+        _roleSystem.MindAddRole(mindId, new PiratesRoleComponent { PrototypeId = pirateRule.RolePrototype });
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
 using Robust.Shared.GameStates;
