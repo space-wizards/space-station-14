@@ -569,11 +569,11 @@
     Nutriment:
       Min: 1
       Max: 10
+      PotencyDivisor: 20
+    Cornmeal:
+      Min: 5
+      Max: 15
       PotencyDivisor: 10
-    Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
 
 - type: seed
   id: onion
