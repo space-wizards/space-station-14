@@ -29,3 +29,5 @@
     - trigger:
         !type:DamageTrigger
         damage: 0
+  - type: GuideHelp
+    guides: [Cryosleep]

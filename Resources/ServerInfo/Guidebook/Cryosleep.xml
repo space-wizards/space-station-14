@@ -1,0 +1,19 @@
+<Document>
+## Why Should You Enter Cryosleep
+Cryosleep is an incredibly valuable tool for station crew, allowing them to leave the shift before the emergency shuttle arrives.
+
+## Entering Cryosleep
+While some stations come equipped with a Cryosleep Casket your most reliable way of finding them is by returning to Central Command via the Arrivals Shuttle.
+
+<Box>
+<GuideEntityEmbed Entity="MachineCryoSleepPod" Caption="Cryosleep Casket"/>
+</Box>
+
+Upon returning to Central Command, the cryosleep chambers can easily be found by following the signs labeled "Cryo". Once there, you can insert yourself into a Cryosleep Casket, safely storing your body until your next shift.
+
+[color=#FDDA0D]Important Notes:[/color]
+- The Cryosleep Chamber locks, safely securing [color=#ff0000]all[/color] personal belongings located on your body.
+- Irreplacable items to the shift will likely be returned to your station's Lost & Found.
+- Take care to put away your items related to your department where you found them before leaving to enter Cryosleep.
+- After five minutes, you will be allowed to respawn as a different character and return to the shift.
+</Document>
