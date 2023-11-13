@@ -425,7 +425,7 @@
     state: tortilladough-flat
   - type: Construction
     graph: Tortilla
-    node: flat
+    node: flat_dough
 
 - type: entity
   name: raw pastry base
@@ -462,18 +462,53 @@
   components:
   - type: Sprite
     state: dough-flat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+      sauce:
+        maxVol: 5
+  # pour ketchup onto the dough
+  - type: RefillableSolution
+    solution: sauce
+  - type: DrainableSolution
+    solution: sauce
   - type: Construction
     graph: Pizza
-    node: flat
+    node: flat_dough
+    defaultTarget: pizza
 
 - type: entity
-  name: pizza bread
   parent: FoodBakingBase
-  id: FoodDoughPizzaBaked
+  id: FoodDoughFlatPizza
+  name: pizza base
   description: Add ingredients to make a pizza.
   components:
   - type: Sprite
-    state: pizzabread
+    sprite: Objects/Consumable/Food/pizza.rsi
+    layers:
+    - sprite: Objects/Consumable/Food/ingredients.rsi
+      state: dough-flat
+    - state: sauce
+      color: red # TODO: make this depend on reagent used
+  - type: ContainerContainer
+    containers:
+      toppings: !type:Container
+  - type: AtmosExposed
+  - type: Temperature
+    currentTemperature: 290
+  - type: InternalTemperature
+    thickness: 0.01
+    # assuming radius of ~20cm
+    area: 0.125
+    conductivity: 0.46
+  - type: Construction
+    graph: Pizza
+    node: toppings
+    defaultTarget: pizza
 
 - type: entity
   name: cake batter
@@ -550,6 +585,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+  - type: Tag
+    tags:
+    - PizzaTopping
 
 - type: entity
   name: chèvre log

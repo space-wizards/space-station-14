@@ -8,6 +8,7 @@
     tags:
       - Cartridge
       - CartridgePistol
+      - PizzaTopping # arnold's pizza
   - type: CartridgeAmmo
     proto: BulletPistol
   - type: Sprite

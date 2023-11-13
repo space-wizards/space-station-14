@@ -291,6 +291,7 @@
         - ItemMask
   - type: Tag
     tags:
+    - PizzaTopping
     - Recyclable
     - Trash
   - type: SolutionContainerManager
@@ -920,6 +921,10 @@
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Produce
     seedId: chanterelle
+  - type: Tag
+    tags:
+    - Mushroom
+    - PizzaTopping
 
 # Slices
 
@@ -1135,6 +1140,10 @@
     seedId: lingzhi
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Mushroom
+    - PizzaTopping
 
 - type: entity
   name: ambrosia vulgaris
@@ -1174,6 +1183,7 @@
   - type: Tag
     tags:
     - Ambrosia
+    - PizzaTopping
 
 - type: entity
   name: ambrosia deus
@@ -1211,6 +1221,7 @@
   - type: Tag
     tags:
     - Ambrosia
+    - PizzaTopping
 
 - type: entity
   name: galaxythistle
@@ -1264,6 +1275,10 @@
   - type: Extractable
     grindableSolutionName: food
   - type: BadFood
+  - type: Tag
+    tags:
+    - Mushroom
+    - PizzaTopping
 
 - type: entity
   name: gatfruit
