@@ -4,6 +4,7 @@
   description: Wallmount reagent dispenser.
   components:
   - type: WallMount
+      arc: 180
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: cleanerdispenser
