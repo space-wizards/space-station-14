@@ -324,18 +324,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             var inCharacterName = MetaData(ownedEntity).EntityName;
             _action.AddAction(ownedEntity, ref pending.Action, ZombieRuleComponent.ZombifySelfActionPrototype, ownedEntity);
 
-            var message = Loc.GetString("zombie-patientzero-role-greeting");
-            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
 
             //gets the names now in case the players leave.
             //this gets unhappy if people with the same name get chosen. Probably shouldn't happen.
             component.InitialInfectedNames.Add(inCharacterName, zombie.Name);
 
-            // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
-            // You got a free T-shirt!?!?
-            _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
-               wrappedMessage, default, false, zombie.ConnectedClient, Color.Plum);
-            _audio.PlayGlobal(component.InitialInfectedSound, ownedEntity);
         }
     }
 
@@ -349,6 +342,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             if (!_mindSystem.TryGetSession(mindId, out var session))
                 return;
             // Notify the player of zombie stuff here
+            var message = Loc.GetString("zombie-patientzero-role-greeting");
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+            // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
+            // You got a free T-shirt!?!?
+            _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
+               wrappedMessage, default, false, session.ConnectedClient, Color.Plum);
+            _audio.PlayGlobal(zombieRule.InitialInfectedSound, session);
         }
     }
 }

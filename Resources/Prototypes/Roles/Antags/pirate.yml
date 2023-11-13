@@ -1,8 +1,8 @@
 - type: antag
   id: Pirate
-    #  name: roles-antag-syndicate-agent-name
-    #  antagonist: true
+  antagonist: true
     #  setPreference: true
+    #  name: roles-antag-syndicate-agent-name
     #  objective: roles-antag-syndicate-agent-objective
 
 - type: startingGear
