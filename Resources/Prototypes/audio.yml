@@ -203,14 +203,13 @@
   rules:
     - !type:AlwaysTrueRule
 
-# TODO: Need to make sure no grids nearby
 - type: rules
   id: InSpace
   rules:
     - !type:InSpaceRule
     - !type:GridInRangeRule
       inverted: true
-      range: 10
+      range: 1
 
 # TODO
 - type: rules
