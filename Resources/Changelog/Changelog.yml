@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Smile the Slime now has unique ghost role text rather than standard
-      slimes., type: Add}
-  id: 4660
-  time: '2023-08-22T12:00:20.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Changed various head locker contents., type: Tweak}
@@ -2905,3 +2899,9 @@ Entries:
   - {message: New Thief figurine! New void cloak!, type: Add}
   id: 5159
   time: '2023-11-12T23:41:45.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Added space sharkminnow from the carp family., type: Add}
+  - {message: Added Bloodsucker's animal organs to heal by drinking blood., type: Add}
+  id: 5160
+  time: '2023-11-13T00:42:48.0000000+00:00'
