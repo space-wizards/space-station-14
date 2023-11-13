@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Changed the contents of the snack vendor to better fit snacks., type: Tweak}
-  - {message: 'Added C&Ds, Bob''s sunflower seeds and Sweetie''s pistachios.', type: Add}
-  id: 4667
-  time: '2023-08-23T21:49:25.0000000+00:00'
 - author: Lank
   changes:
   - {message: 'The Syndicate EMAG now provides cyborgs with an updated lawset on use,
@@ -2905,3 +2899,9 @@ Entries:
       sweet ghost role CAK is created!', type: Add}
   id: 5166
   time: '2023-11-13T23:23:03.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Animal carriers can now be found in the maintenance or bought in cargo.
+      They are useful for carrying someone heavy in your arms., type: Add}
+  id: 5167
+  time: '2023-11-13T23:55:48.0000000+00:00'
