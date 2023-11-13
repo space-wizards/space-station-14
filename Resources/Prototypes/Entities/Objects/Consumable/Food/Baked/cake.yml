@@ -584,8 +584,7 @@
     allowMovement: true
     description: ghost-role-information-Cak-description
   - type: GhostTakeoverAvailable
-  - type: ReplacementAccent
-    accent: cat
+  - type: OwOAccent
 
 # Suppermatter
 # I can't figure out where to put this. It kind of acts like a cake I guess?

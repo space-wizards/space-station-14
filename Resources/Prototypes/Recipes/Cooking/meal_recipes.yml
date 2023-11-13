@@ -1265,8 +1265,8 @@
   result: MobCatCake
   time: 15
   reagents: 
-    Milk: 10
-    Cognizine: 10
+    Milk: 15
+    Cognizine: 5
   solids:
     FoodCakePlain: 1
     FoodSnackRaisins: 1
