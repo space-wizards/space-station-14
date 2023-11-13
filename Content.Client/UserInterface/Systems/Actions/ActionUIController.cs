@@ -767,11 +767,15 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private bool OnMenuBeginDrag()
     {
+        // TODO ACTIONS
+        // The dragging icon shuld be based on the entity's icon style. I.e. if the action has a large icon texture,
+        // and a small item/provider sprite, then the dragged icon should be the big texture, not the provider.
         if (_actionsSystem != null && _actionsSystem.TryGetActionData(_menuDragHelper.Dragged?.ActionId, out var action))
         {
-            if (EntityManager.TryGetComponent(action.EntityIcon, out SpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(action.EntityIcon, out SpriteComponent? sprite)
+                && sprite.Icon?.GetFrame(RsiDirection.South, 0) is {} frame)
             {
-                _dragShadow.Texture = sprite.Icon?.GetFrame(RsiDirection.South, 0);
+                _dragShadow.Texture = frame;
             }
             else if (action.Icon != null)
             {
