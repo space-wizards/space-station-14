@@ -323,6 +323,20 @@
     - MobCarpHolo
 
 - type: entity
+  name: Space Sharkminnow Spawner
+  id: SpawnMobShark
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobShark
+
+- type: entity
   name: Hamster Hamlet Spawner
   id: SpawnMobHamsterHamlet
   parent: MarkerBase

@@ -58,6 +58,9 @@ ghost-role-information-salvage-carp-description = Defend the loot inside the sal
 ghost-role-information-sentient-carp-name = Sentient Carp
 ghost-role-information-sentient-carp-description = Help the dragon flood the station with carps!
 
+ghost-role-information-salvage-shark-name = Space sharkminnow on salvage wreck
+ghost-role-information-salvage-shark-description = Help the younger fellow carp protect their prey. Smell the blood!
+
 ghost-role-information-willow-name = Willow the kangaroo
 ghost-role-information-willow-description = You're a kangaroo named willow! willow likes to box.
 
