@@ -5,7 +5,7 @@
   description: Огромное доброе сердце, запечатанное в куске ткани.
   components:
   - type: Sprite
-    sprite: SS220/Clothing/Cloaks.rsi
+    sprite: SS220/Clothing/Neck/Cloaks/AlisaCloak.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodHeartFinaly
     requiredSlot:

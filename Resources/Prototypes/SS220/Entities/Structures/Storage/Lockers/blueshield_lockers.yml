@@ -23,7 +23,7 @@
     - id: WeaponDisabler
     - id: MedkitAdvancedFilled
     - id: ClothingUniformJumpsuitBlueShield2 #SS220 new jumpsuit
-    - id: ClothingCloakBlueShield2 #SS220 new cloak
+    - id: ClothingCloakBlueShield #SS220 new cloak
     - id: ExpensiveLighterShield #SS220-Zippo
 
 - type: entity

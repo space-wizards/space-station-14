@@ -6,7 +6,7 @@
   suffix: Sponsor
   components:
   - type: Sprite
-    sprite: SS220\Clothing\CloakF.rsi
+    sprite: SS220/Clothing/Neck/Cloaks/FloppaCloak.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatFloppa
     requiredSlot:
