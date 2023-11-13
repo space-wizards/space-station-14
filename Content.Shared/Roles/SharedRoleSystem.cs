@@ -11,7 +11,7 @@ public abstract class SharedRoleSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly SharedAudioSystem _minds = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // TODO please lord make role entities
@@ -162,7 +162,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// </summary>
     public void MindPlaySound(EntityUid mindId, SoundSpecifier sound, MindComponent? mind = null)
     {
-        if (_minds.TryGetSession(mindId, out var session, mind))
-            _audio.PlayGlobal(sound, session);
+        if (Resolve(mindId, ref mind) && mind.Session != null)
+            _audio.PlayGlobal(sound, mind.Session);
     }
 }
