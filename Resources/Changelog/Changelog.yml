@@ -1,11 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: Zombies' eyes turn red the way they were supposed to., type: Fix}
-  - {message: 'When a zombie is cloned, the cloned person''s eyes are visible again.',
-    type: Fix}
-  id: 4662
-  time: '2023-08-23T04:52:00.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'R&D has developed the construction cyborg module for engineering cyborgs,
@@ -2906,3 +2899,9 @@ Entries:
       on the shuttle), type: Add}
   id: 5161
   time: '2023-11-13T10:04:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make space ambient music more likely to play by reducing the required
+      space range., type: Tweak}
+  id: 5162
+  time: '2023-11-13T11:10:56.0000000+00:00'
