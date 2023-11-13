@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed various head locker contents., type: Tweak}
-  id: 4661
-  time: '2023-08-22T14:49:53.0000000+00:00'
 - author: Doru991
   changes:
   - {message: Zombies' eyes turn red the way they were supposed to., type: Fix}
@@ -2905,3 +2900,9 @@ Entries:
   - {message: Added Bloodsucker's animal organs to heal by drinking blood., type: Add}
   id: 5160
   time: '2023-11-13T00:42:48.0000000+00:00'
+- author: themias
+  changes:
+  - {message: The round end summary screen now lists the syndies in custody. (Cuffed
+      on the shuttle), type: Add}
+  id: 5161
+  time: '2023-11-13T10:04:33.0000000+00:00'
