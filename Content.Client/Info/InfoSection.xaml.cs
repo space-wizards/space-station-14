@@ -8,17 +8,17 @@ namespace Content.Client.Info;
 [GenerateTypedNameReferences]
 public sealed partial class InfoSection : BoxContainer
 {
-    public InfoSection(string title, string text, bool markup = false)
+    public InfoSection(string title, FormattedMessage text, bool markup = false)
     {
         RobustXamlLoader.Load(this);
         SetText(title, text, markup);
     }
 
-    public void SetText(string title, string text, bool markup = false)
+    public void SetText(string title, FormattedMessage text, bool markup = false)
     {
         TitleLabel.Text = title;
         if (markup)
-            Content.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
+            Content.SetMessage(text);
         else
             Content.SetMessage(text);
     }
