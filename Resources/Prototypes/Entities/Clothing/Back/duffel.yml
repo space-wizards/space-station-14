@@ -161,6 +161,8 @@
   name: syndicate duffel bag
   description: A large duffel bag for holding various traitor goods.
   components:
+  - type: Storage
+    maxTotalWeight: 44
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
 
