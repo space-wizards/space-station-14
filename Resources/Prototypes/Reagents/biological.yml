@@ -22,6 +22,16 @@
         - !type:AdjustReagent
           reagent: UncookedAnimalProteins
           amount: 0.5
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -4
+            Burn: -2
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5

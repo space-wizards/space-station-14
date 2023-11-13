@@ -32,6 +32,8 @@
   - type: Tag
     tags:
       - DrinkSpaceGlue
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkBase
@@ -64,3 +66,5 @@
     maxFillLevels: 6
     fillBaseName: fill
   - type: Lube
+  - type: TrashOnSolutionEmpty
+    solution: drink

@@ -407,3 +407,45 @@
         actOnClose: false
         destroyAfterUses: 2
         destroyType: DeleteComponent
+
+# Clown
+- type: entity
+  id: LockerClown
+  name: clown locker
+  parent: LockerBaseSecure
+  components:
+  - type: Appearance
+  - type: AccessReader
+    access: [["Theatre"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: clown
+    stateDoorOpen: clown_open
+    stateDoorClosed: clown_door
+
+# Mime
+- type: entity
+  id: LockerMime
+  name: mime locker
+  parent: LockerBaseSecure
+  components:
+  - type: Appearance
+  - type: AccessReader
+    access: [["Theatre"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: mime
+    stateDoorOpen: mime_open
+    stateDoorClosed: mime_door
+
+# Representative
+- type: entity
+  id: LockerRepresentative
+  name: representative locker
+  parent: LockerBaseSecure
+  components:
+  - type: Appearance
+  - type: AccessReader
+    access: [["Command"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: hop
+    stateDoorOpen: hop_open
+    stateDoorClosed: representative_door

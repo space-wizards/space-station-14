@@ -84,6 +84,22 @@
       gender: female
 
 - type: entity
+  name: Puppy Ian
+  parent: MobCorgiPuppy
+  id: MobCorgiIanPup
+  description: Favourite puppy corgi. Awww.
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Butcherable # A puppy? You monster...
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
+    - id: MaterialHideCorgi
+
+- type: entity
   name: Runtime
   parent: MobCat
   id: MobCatRuntime

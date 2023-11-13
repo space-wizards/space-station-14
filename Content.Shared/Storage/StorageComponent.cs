@@ -16,6 +16,8 @@ namespace Content.Shared.Storage
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class StorageComponent : Component
     {
+        public static string ContainerId = "storagebase";
+
         // TODO: This fucking sucks
         [ViewVariables(VVAccess.ReadWrite), DataField("isOpen"), AutoNetworkedField]
         public bool IsUiOpen;
