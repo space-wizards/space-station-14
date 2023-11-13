@@ -24,6 +24,7 @@ using Content.Server.Voting.Managers;
 using Content.Server.Players;
 using Content.Shared.CCVar;
 using Content.Shared.Voting;
+using Content.Shared.Imperial.ICCVars;
 
 namespace Content.Server.GameTicking
 {
@@ -471,7 +472,7 @@ namespace Content.Server.GameTicking
                 UpdateInfoText();
 
                 // Imperial-start
-                if (_configurationManager.GetCVar(CCVars.VoteAutoStartInLobby))
+                if (_configurationManager.GetCVar(ICCVars.VoteAutoStartInLobby))
                 {
                     _voteManager.CreateStandardVote(null, StandardVoteType.Map);
                     _voteManager.CreateStandardVote(null, StandardVoteType.Preset);

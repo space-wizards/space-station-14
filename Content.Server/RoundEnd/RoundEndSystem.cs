@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Shared.Imperial.ICCVars;
 
 namespace Content.Server.RoundEnd
 {
@@ -58,7 +59,7 @@ namespace Content.Server.RoundEnd
             base.Initialize();
             SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => Reset());
             SetAutoCallTime();
-            var restartDuration = _cfg.GetCVar(CCVars.GameEndRoundDuration); //Imperial end round timer
+            var restartDuration = _cfg.GetCVar(ICCVars.GameEndRoundDuration); //Imperial end round timer
             DefaultRestartRoundDuration = TimeSpan.FromSeconds(restartDuration); //Imperial end round timer
         }
 
