@@ -1,0 +1,385 @@
+- type: constructionGraph #START
+  id: ModsuitConstructed
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: modsuitconstructed
+      steps:
+      - component: PowerCell
+        name: батарейку
+        doAfter: 1
+        store: battery-container
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+
+      - tag: ModsuitHelmet
+        name: шлем модсьюта
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 1
+
+      - tag: ModsuitChestplate
+        name: нагрудник модсьюта
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 2
+
+      - tag: ModsuitGauntlets
+        name: рукавицы модсьюта
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 3
+
+      - tag: ModsuitBoots
+        name: ботинки модсьюта
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
+
+      - tool: Anchoring
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
+
+      - tool: Screwing
+        doAfter: 2
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 4
+
+  - node: modsuitconstructed
+    actions:
+    - !type:BuildMech
+      mechPrototype: ControlModsuitConstructingEnd
+
+- type: constructionGraph
+  id: ModsuitAtmospheric
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitatmospheric
+          steps:
+            - tag: PlatingAtmosphericModsuit
+              name: покрытие модсьюта атмосферного техника
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: atmospheric-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreEngineerModsuit
+              name: Плазменное ядро модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core-plasma
+              doAfter: 2
+    - node: modsuitatmospheric
+      entity: ClothingControlModsuitAtmosphericsSealed
+
+- type: constructionGraph
+  id: ModsuitEngineer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitengineer
+          steps:
+            - tag: PlatingEngineerModsuit
+              name: покрытие инженерного модсьюта
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: engineering-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreEngineerModsuit
+              name: Плазменное ядро модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core-plasma
+              doAfter: 2
+    - node: modsuitengineer
+      entity: ClothingControlModsuitEngineerSealed
+
+- type: constructionGraph
+  id: ModsuitMedical
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitmedical
+          steps:
+            - tag: PlatingMedicalModsuit
+              name: покрытие медицинского модсьюта
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: medical-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreMedicalModsuit
+              name: Ядро медицинского модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core
+              doAfter: 2
+    - node: modsuitmedical
+      entity: ClothingControlModsuitMedicalSealed
+
+- type: constructionGraph
+  id: ModsuitRND
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitrnd
+          steps:
+            - tag: PlatingRNDModsuit
+              name: покрытие научного модсьюта
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: rnd-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreRNDModsuit
+              name: Ядро научного модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core
+              doAfter: 2
+    - node: modsuitrnd
+      entity: ClothingControlModsuitRNDSealed
+
+- type: constructionGraph
+  id: ModsuitSalvage
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitsalvage
+          steps:
+            - tag: PlatingAsteroidModsuit
+              name: покрытие модсьюта утилизатора
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: engineering-plating #same coлor paлette
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreEngineerModsuit
+              name: Плазменное ядро модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core-plasma
+              doAfter: 2
+    - node: modsuitsalvage
+      entity: ClothingControlModsuitSalvageSealed
+
+- type: constructionGraph
+  id: ModsuitCivillian
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitcivillian
+          steps:
+            - tag: PlatingCivillianModsuit
+              name: покрытие гражданского модсьюта
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: civillian-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreBasicModsuit
+              name: Ядро гражданского модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core
+              doAfter: 2
+    - node: modsuitcivillian
+      entity: ClothingControlModsuitCivillianSealed
+
+- type: constructionGraph
+  id: ModsuitSecurity
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitsecurity
+          steps:
+            - tag: PlatingSecurityModsuit
+              name: покрытие охранного модсьюта
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: security-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreEngineerModsuit
+              name: плазменное ядро модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core-plasma
+              doAfter: 2
+    - node: modsuitsecurity
+      entity: ClothingControlModsuitSecuritySealed
+
+- type: constructionGraph
+  id: ModsuitAdvanced
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitadvanced
+          steps:
+            - tag: PlatingCEModsuit
+              name: покрытие продвинутого модсьюта
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: ce-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreCEModsuit
+              name: Ядро продвинутого модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core-ce
+              doAfter: 2
+    - node: modsuitadvanced
+      entity: ClothingControlModsuitCESealed
+
+- type: constructionGraph
+  id: ModsuitRescue
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitrescue
+          steps:
+            - tag: PlatingCMOModsuit
+              name: покрытие модсьюта главного врача
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: cmo-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreCMOModsuit
+              name: Ядро модсьюта главного врача
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core-cmo
+              doAfter: 2
+    - node: modsuitrescue
+      entity: ClothingControlModsuitCMOSealed
+
+- type: constructionGraph
+  id: ModsuitMagnate
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitmagnate
+          steps:
+            - tag: PlatingMagnateModsuit
+              name: покрытие модсьюта капитана
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: magnate-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreMagnateModsuit
+              name: Ядро модсьюта капитана
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core-magnate
+              doAfter: 2
+    - node: modsuitmagnate
+      entity: ClothingControlModsuitMagnateSealed
+
+- type: constructionGraph
+  id: ModsuitHOS
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuithos
+          steps:
+            - tag: PlatingHOSModsuit
+              name: покрытие модсьюта главы службы безопасности
+              icon:
+                sprite: Imperial/Modsuits/plating.rsi
+                state: security-plating
+              doAfter: 2
+            - tag: ModsuitControlEnd
+              name: собранный каркас модсьюта
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: CORE-equip4
+              doAfter: 2
+            - tag: CoreHOSModsuit
+              name: Ядро модсьюта главы службы безопасности
+              icon:
+                sprite: Imperial/Modsuits/constructing_modsuit.rsi
+                state: mod-core-hos
+              doAfter: 2
+    - node: modsuithos
+      entity: ClothingControlModsuitHOSSealed

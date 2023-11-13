@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/master/icons/obj/clothing/modsuit/mod_modules.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "storagesyndie"
+    },
+    {
+      "name": "storagesyndiesmall"
+    },
+    {
+      "name": "storagesmall"
+    },
+    {
+      "name": "storage"
+    }
+  ]
+}

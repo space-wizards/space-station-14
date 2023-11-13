@@ -1,0 +1,80 @@
+- type: Tag
+  id: ModsuitHelmet
+
+- type: Tag
+  id: ModsuitBoots
+
+- type: Tag
+  id: ModsuitChestplate
+
+- type: Tag
+  id: ModsuitControlStart
+
+- type: Tag
+  id: ModsuitControlEnd
+
+- type: Tag
+  id: ModsuitGauntlets
+
+- type: Tag
+  id: ModsuitPaintKit
+
+- type: Tag
+  id: CoreEngineerModsuit
+
+- type: Tag
+  id: CoreSecurityModsuit
+
+- type: Tag
+  id: CoreMedicalModsuit
+
+- type: Tag
+  id: CoreRNDModsuit
+
+- type: Tag
+  id: CoreBasicModsuit
+
+- type: Tag
+  id: CoreHOSModsuit
+
+- type: Tag
+  id: CoreCMOModsuit
+
+- type: Tag
+  id: CoreCEModsuit
+
+- type: Tag
+  id: CoreMagnateModsuit
+
+- type: Tag
+  id: PlatingCivillianModsuit
+
+- type: Tag
+  id: PlatingMedicalModsuit
+
+- type: Tag
+  id: PlatingCMOModsuit
+
+- type: Tag
+  id: PlatingSecurityModsuit
+
+- type: Tag
+  id: PlatingHOSModsuit
+
+- type: Tag
+  id: PlatingMagnateModsuit
+
+- type: Tag
+  id: PlatingEngineerModsuit
+
+- type: Tag
+  id: PlatingAtmosphericModsuit
+
+- type: Tag
+  id: PlatingCEModsuit
+
+- type: Tag
+  id: PlatingRNDModsuit
+
+- type: Tag
+  id: PlatingAsteroidModsuit

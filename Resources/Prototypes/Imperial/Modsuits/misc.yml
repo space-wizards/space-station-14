@@ -1,0 +1,59 @@
+- type: listing
+  id: ModsuitOperativeSealed
+  name: uplink-modsuitoperative-name
+  description: uplink-modsuitoperative-desc
+  productEntity: ClothingControlModsuitOperativeSealed
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkArmor
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: ModsuitOperativeCMDSealed
+  name: uplink-modsuitoperativecmd-name
+  description: uplink-modsuitoperativecmd-desc
+  productEntity: ClothingControlModsuitOperativeCMDSealedFractionBoom
+  cost:
+    Telecrystal: 18
+  categories:
+    - UplinkArmor
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: ModsuitNukeOperativeSealed
+  name: uplink-modsuitoperative-name
+  description: uplink-modsuitoperative-desc
+  productEntity: ClothingControlModsuitOperativeSealedFractionBoom
+  cost:
+    Telecrystal: 30
+  categories:
+    - UplinkArmor
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: ModsuitNukeOperativeCMDSealed
+  name: uplink-modsuitoperativecmd-name
+  description: uplink-modsuitoperativecmd-desc
+  productEntity: ClothingControlModsuitOperativeCMDSealedFractionBoom
+  cost:
+    Telecrystal: 65
+  categories:
+    - UplinkArmor
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink

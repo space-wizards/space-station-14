@@ -1,0 +1,103 @@
+- type: entity
+  id: CrateModsuitsPlasma
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: CoreEngineerModsuitConstructing
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 700 #no tiding only teamwork
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: CrateModsuitsScience
+  parent: CrateScienceSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: CoreRNDModsuitConstructing
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 350 #no tiding only teamwork
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: CrateModsuitsBasic
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: CoreBasicModsuitConstructing
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250 #no tiding only teamwork
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: CrateModsuitsMedical
+  parent: CrateMedicalSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: CoreMedicalModsuitConstructing
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250 #no tiding only teamwork
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: cargoProduct
+  id: CargoModsuitsPlasma
+  icon:
+    sprite: Imperial/Modsuits/constructing_modsuit.rsi
+    state: mod-core-plasma
+  product: CrateModsuitsPlasma
+  cost: 2000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: CargoModsuitsBasic
+  icon:
+    sprite: Imperial/Modsuits/constructing_modsuit.rsi
+    state: mod-core
+  product: CrateModsuitsBasic
+  cost: 1000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: CargoModsuitsScience
+  icon:
+    sprite: Imperial/Modsuits/constructing_modsuit.rsi
+    state: mod-core
+  product: CrateModsuitsScience
+  cost: 2500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: CargoModsuitsMedical
+  icon:
+    sprite: Imperial/Modsuits/constructing_modsuit.rsi
+    state: mod-core
+  product: CrateModsuitsMedical
+  cost: 1500
+  category: Engineering
+  group: market

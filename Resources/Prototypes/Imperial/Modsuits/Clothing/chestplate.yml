@@ -1,0 +1,569 @@
+- type: entity #мосьюты
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitCESealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.002
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Shock: 0.65
+        Caustic: 0.35
+        Heat: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitCESealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitEngineerSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/engineer.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/engineer.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.8
+        Shock: 0.9
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitEngineerSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitRNDSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/rnd.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/rnd.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.6
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.8
+        Shock: 0.2
+        Caustic: 0.2
+        Heat: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitRNDSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitAtmosphericsSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/atmospheric.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/atmospheric.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Shock: 0.3
+        Caustic: 0.3
+        Heat: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitAtmosphericsSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitMedicalSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/medical.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/medical.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.7
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.65
+        Caustic: 0.65 
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitMedicalSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitCMOSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/cmo.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/cmo.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.6
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.5
+        Caustic: 0.5
+        Heat: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitCMOSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitCivillianSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/civillian.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/civillian.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.7
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitCivillianSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitMagnateSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/magnate.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/magnate.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.4
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.7
+        Piercing: 0.75
+        Shock: 0.3
+        Caustic: 0.2
+        Radiation: 0.4
+        Heat: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitMagnateSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitSecuritySealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/security.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/security.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.4
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.7
+        Piercing: 0.6
+        Shock: 0.65
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitSecuritySealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitHOSSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/hos.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/hos.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.4
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Shock: 0.65
+        Caustic: 0.6
+        Heat: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitHOSSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitSalvageSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/salvage.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/salvage.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Shock: 0.65
+        Caustic: 0.6
+        Heat: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitSalvageSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitMinerSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/miner.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/miner.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.3
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Shock: 0.65
+        Caustic: 0.6
+        Heat: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitMinerSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitOperativeSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeops.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeops.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.25
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.3
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Shock: 0.65
+        Caustic: 0.6
+        Heat: 0.5
+        Radiation: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitOperativeSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterChestplateModsuitOperativeSealed
+  id: ClothingOuterChestplateModsuitHonkOperativeSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopsclown.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopsclown.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitHonkOperativeSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitOperativeCMDSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopscmd.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopscmd.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.001
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.3
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Shock: 0.65
+        Caustic: 0.6
+        Heat: 0.4
+        Radiation: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitOperativeCMDSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterChestplateModsuitOperativeSealed
+  id: ClothingOuterChestplateModsuitCCSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/corporate.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/corporate.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitCCSealed
+    requiredSlot: outerClothing
+    slot: gloves
+
+- type: entity 
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterChestplateModsuitApocryphalSealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/apocryphal.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/apocryphal.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.4
+    lowPressureMultiplier: 200
+  - type: TemperatureProtection
+    coefficient: 0.000005
+  - type: ExplosionResistance
+    damageCoefficient: 0.0005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.2
+        Shock: 0.2
+        Caustic: 0.2
+        Heat: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: ToggleableClothing
+    clothingPrototype: ClothingGauntletsModsuitApocryphalSealed
+    requiredSlot: outerClothing
+    slot: gloves

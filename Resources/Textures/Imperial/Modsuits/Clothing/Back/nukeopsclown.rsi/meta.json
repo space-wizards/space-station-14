@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "taken from tgstation at https://github.com/tgstation/tgstation/blob/master/icons/obj/clothing/modsuit/mod_clothing.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon",
+      "delays": [
+        [
+          0.18625,
+          0.18625,
+          0.18625,
+          0.18625
+        ]
+      ]
+    },
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    }
+  ]
+}

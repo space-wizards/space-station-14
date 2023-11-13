@@ -1,0 +1,51 @@
+- type: entity
+  parent: Protolathe
+  id: ModsuitFab
+  name: modsuits fab
+  description: Creates parts for robotics and other mechanical needs
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Imperial/Modsuits/modsuit_fabricator.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: ExosuitFabricatorMachineCircuitboard
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticRecipes:
+      - ControlModsuitConstructingStart
+      - HelmetModsuitConstructing
+      - ChestplateModsuitConstructing
+      - GauntletsModsuitConstructing
+      - BootsModsuitConstructing
+      - PlatingCivillianModsuitConstructing
+      - PlatingMedicalModsuitConstructing
+      - PlatingEngineeringModsuitConstructing
+      - PlatingAtmosphericModsuitConstructing
+    dynamicRecipes:
+      - PlatingMagnateModsuitConstructing
+      - PlatingSecurityModsuitConstructing
+      - PlatingHOSModsuitConstructing
+      - PlatingCMOModsuitConstructing
+      - PlatingCEModsuitConstructing
+      - PlatingAsteroidModsuitConstructing
+      - PlatingRNDModsuitConstructing
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: GuideHelp
+    guides:
+    - Robotics

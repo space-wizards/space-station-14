@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7b38dd4ff76749da37c950eff3239078f6bd9cf2 & edited by @sentryprimies",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "atmospheric-plating"
+    },
+    {
+      "name": "ce-plating"
+    },
+    {
+      "name": "civillian-plating"
+    },
+    {
+      "name": "cmo-plating"
+    },
+    {
+      "name": "engineering-plating"
+    },
+    {
+      "name": "magnate-plating"
+    },
+    {
+      "name": "medical-plating"
+    },
+    {
+      "name": "rnd-plating"
+    },
+    {
+      "name": "security-plating"
+    }
+  ]
+}

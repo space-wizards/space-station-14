@@ -1,0 +1,126 @@
+- type: latheRecipe
+  id: ControlModsuitConstructingStart
+  result: ControlModsuitConstructingStart
+  completetime: 8
+  materials:
+    Steel: 200
+    Plasma: 500
+
+- type: latheRecipe
+  id: HelmetModsuitConstructing
+  result: HelmetModsuitConstructing
+  completetime: 8
+  materials:
+    Steel: 200
+    Glass: 300
+
+- type: latheRecipe
+  id: ChestplateModsuitConstructing
+  result: ChestplateModsuitConstructing
+  completetime: 8
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: GauntletsModsuitConstructing
+  result: GauntletsModsuitConstructing
+  completetime: 8
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: BootsModsuitConstructing
+  result: BootsModsuitConstructing
+  completetime: 8
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: PlatingCivillianModsuitConstructing
+  result: PlatingCivillianModsuitConstructing
+  completetime: 4
+  materials:
+    Steel: 1000
+
+- type: latheRecipe
+  id: PlatingMedicalModsuitConstructing
+  result: PlatingMedicalModsuitConstructing
+  completetime: 4
+  materials:
+    Plastic: 500
+    Steel: 200
+
+- type: latheRecipe
+  id: PlatingEngineeringModsuitConstructing
+  result: PlatingEngineeringModsuitConstructing
+  completetime: 12
+  materials:
+    Steel: 1500
+    Plasma: 500
+
+- type: latheRecipe
+  id: PlatingAtmosphericModsuitConstructing
+  result: PlatingAtmosphericModsuitConstructing
+  completetime: 12
+  materials:
+    Steel: 1000
+    Plasma: 1000
+
+- type: latheRecipe
+  id: PlatingAsteroidModsuitConstructing
+  result: PlatingAsteroidModsuitConstructing
+  completetime: 12
+  materials:
+    Steel: 1000
+    Uranium: 1000
+
+- type: latheRecipe
+  id: PlatingRNDModsuitConstructing
+  result: PlatingRNDModsuitConstructing
+  completetime: 12
+  materials:
+    Steel: 1500
+    Plasma: 500
+
+- type: latheRecipe
+  id: PlatingSecurityModsuitConstructing
+  result: PlatingSecurityModsuitConstructing
+  completetime: 12
+  materials:
+    Plasteel: 1000
+    Plasma: 500
+
+- type: latheRecipe
+  id: PlatingHOSModsuitConstructing
+  result: PlatingHOSModsuitConstructing
+  completetime: 20
+  materials:
+    Plasteel: 1500
+    Plasma: 1000
+
+- type: latheRecipe
+  id: PlatingCEModsuitConstructing
+  result: PlatingCEModsuitConstructing
+  completetime: 20
+  materials:
+    Plasteel: 1500
+    Plasma: 1000
+    Uranium: 1000
+
+- type: latheRecipe
+  id: PlatingCMOModsuitConstructing
+  result: PlatingCMOModsuitConstructing
+  completetime: 20
+  materials:
+    Plasteel: 800
+    Plasma: 1200
+
+- type: latheRecipe
+  id: PlatingMagnateModsuitConstructing
+  result: PlatingMagnateModsuitConstructing
+  completetime: 20
+  materials:
+    Plasteel: 1500
+    Plasma: 1200
+    Uranium: 1000
+    Gold: 1000

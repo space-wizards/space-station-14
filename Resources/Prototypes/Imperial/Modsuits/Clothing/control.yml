@@ -1,0 +1,588 @@
+- type: entity #Commented value in armor = overall defence
+  parent: ClothingBackpack
+  id: ClothingControlModsuitBase
+  abstract: true
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Modsuits/advanced.rsi
+  - type: Clothing
+    sprite: Clothing/Back/Modsuits/advanced.rsi
+    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.7
+        Caustic: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCESealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 30
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: UnpoweredFlashlight
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitCESealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/advanced.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/advanced.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 #melee ~ 0.45
+        Slash: 0.9
+        Piercing: 0.9 #piercing ~ 0.65
+        Shock: 0.7
+        Caustic: 0.7 #Heat ~ 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCESealed
+  - type: Storage
+    capacity: 30
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitAdvanced
+    node: modsuitadvanced
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitEngineerSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/engineer.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/engineer.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 #Heat ~ 0.8
+        Slash: 0.9 #Melee ~ 0.65 # Piercing ~ 0.75
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitEngineerSealed
+  - type: Storage
+    capacity: 20
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitEngineer
+    node: modsuitengineer
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitAtmosphericsSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/atmospheric.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/atmospheric.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 #Melee ~ 0.65 ~Heat ~0.1 Piericng = 0.9
+        Slash: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitAtmosphericsSealed
+  - type: Storage
+    capacity: 20
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitAtmospheric
+    node: modsuitatmospheric
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitRNDSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/rnd.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/rnd.rsi
+  - type: Armor
+    modifiers:
+      coefficients: #Slowdown = 40%
+        Blunt: 0.9 #Melee ~ 0.4, 3 carps + crowbar = 20% hp left
+        Slash: 0.9 #Piercing ~0.6
+        Piercing: 0.9 #Heat ~ 0.34
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitRNDSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 15
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitRND
+    node: modsuitrnd
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitMedicalSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/medical.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/medical.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 #Medical ~ 0.9
+        Heat: 0.9 #Heat ~0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitMedicalSealed
+  - type: Storage
+    capacity: 20
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitMedical
+    node: modsuitmedical
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitCMOSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/cmo.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/cmo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 #melee ~ 0.75
+        Slash: 0.9
+        Piercing: 0.9 #piercing ~ 0.6
+        Shock: 0.5 #heat ~ 0.45
+        Caustic: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCMOSealed
+  - type: Storage
+    capacity: 30
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitRescue
+    node: modsuitrescue
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitCivillianSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/civillian.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/civillian.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.8 #Eva  hardusit equivalent, 0.9 melee,0.8 heat
+        Caustic: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCivillianSealed
+  - type: Storage
+    capacity: 15
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitCivillian
+    node: modsuitcivillian
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitMagnateSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/magnate.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/magnate.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85 #melee 0.45
+        Slash: 0.85 #heat - 0.4
+        Piercing: 0.85 #piercing ~ 0.4
+        Shock: 0.7
+        Caustic: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitMagnateSealed
+  - type: Storage
+    capacity: 40
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitMagnate
+    node: modsuitmagnates
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitSecuritySealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/security.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95 #melee ~ 0.4
+        Shock: 0.7 #heat ~ 0.65
+        Caustic: 0.7 #piercing ~0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitSecuritySealed
+  - type: Storage
+    capacity: 20
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitSecurity
+    node: modsuitsecurity
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitHOSSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/hos.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/hos.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8 #melee ~0.36
+        Slash: 0.9
+        Piercing: 0.8 #piercing ~0.45
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.8 #heat ~ 0.3
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 200
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitHOSSealed
+  - type: Storage
+    capacity: 40
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitHOS
+    node: modsuithos
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitSalvageSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/salvage.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/salvage.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8 #melee 0.5
+        Slash: 0.9 #piercing #0.65
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.9 #Heat 0.65
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitSalvageSealed
+  - type: Storage
+    capacity: 50 #molly come here
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+  - type: Construction
+    graph: ModsuitSalvage
+    node: modsuitsalvage
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitMinerSealed #30% slowdown, salvage tank. Extra rare, 0.02 chance of salvage reward
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/miner.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/miner.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85 # 0.4 melee
+        Slash: 0.85 #0.6 piercing
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.7 #Heat - 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitMinerSealed
+  - type: Storage
+    capacity: 50 #molly come here
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitOperativeSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/nukeops.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/nukeops.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8 #melee - 0.3
+        Slash: 0.8
+        Piercing: 0.8 #piercing - 0.25
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.7 #Heat ~ 0.33
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitOperativeSealed
+  - type: Storage
+    capacity: 65
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingControlModsuitOperativeSealed
+  id: ClothingControlModsuitOperativeSealedFractionBoom #Not availabve to nuke ops, only traitors. 12 tc. 10% slowdown
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+    - type: Speech
+      speechSounds: Pai
+    - type: ClothingFactionExplosion
+
+- type: entity
+  parent: ClothingControlModsuitOperativeSealed
+  id: ClothingControlModsuitHonkOperativeSealed #same as nukeops
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/nukeopsclown.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/nukeopsclown.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitHonkOperativeSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 65
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingControlModsuitHonkOperativeSealed
+  id: ClothingControlModsuitHonkOperativeSealedFractionBoom #same as nukeops
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+    - type: Speech
+      speechSounds: Pai
+    - type: ClothingFactionExplosion
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitOperativeCMDSealed #20 tc dead squad almost
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/nukeopscmd.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/nukeopscmd.rsi
+  - type: Armor
+    modifiers:
+      coefficients: 
+        Blunt: 0.75 #melee ~ 0.2
+        Slash: 0.75
+        Piercing: 0.75 #piercing ~ 0.15
+        Shock: 0.7
+        Caustic: 0.7
+        Heat: 0.5 #heat = 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitOperativeCMDSealed
+  - type: Storage
+    capacity: 80
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingControlModsuitOperativeCMDSealed
+  id: ClothingControlModsuitOperativeCMDSealedFractionBoom #20 tc dead squad almost
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+    - type: Speech
+      speechSounds: Pai
+    - type: ClothingFactionExplosion
+
+- type: entity
+  parent: ClothingControlModsuitOperativeSealed #same as oper, only GM-s can spawn
+  id: ClothingControlModsuitCCSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/corporate.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/corporate.rsi
+    equipSound: /Audio/Items/Modsuits/ballin.ogg
+    unequipSound: /Audio/Items/Modsuits/ballout.ogg
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitCCSealed
+    requiredSlot: back
+    slot: outerClothing
+  - type: Storage
+    capacity: 65
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingControlModsuitBase
+  id: ClothingControlModsuitApocryphalSealed
+  name: CE modsuit helmet
+  description: Special hardsuit helmet, made for the CE of the station.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/Back/apocryphal.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/Back/apocryphal.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Shock: 0.25
+        Caustic: 0.25
+        Heat: 0.2 
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterChestplateModsuitApocryphalSealed
+  - type: Storage
+    capacity: 65
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
+    softness: 20
+    autoRot: true

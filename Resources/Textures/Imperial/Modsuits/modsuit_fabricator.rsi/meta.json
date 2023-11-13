@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "license": "AGPL3.0",
+  "copyright": "Taken from Tau Ceti at https://github.com/TauCetiStation/TauCetiClassic/pull/9991 and edited by @sentryprimies",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "unlit"
+    },
+    {
+      "name": "building",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "inserting",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}
