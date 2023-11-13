@@ -6,7 +6,8 @@
     WallRockBasalt: WallRockBasaltTin
     WallRockSnow: WallRockSnowTin
   maxCount: 30
-  groupCount: 10
+  minGroupSize: 10
+  maxGroupSize: 20
   radius: 4
 
 - type: biomeMarkerLayer
@@ -16,7 +17,8 @@
     WallRockBasalt: WallRockBasaltQuartz
     WallRockSnow: WallRockSnowQuartz
   maxCount: 30
-  groupCount: 10
+  minGroupSize: 10
+  maxGroupSize: 20
   radius: 4
 
 # Medium value
@@ -28,7 +30,8 @@
     WallRockBasalt: WallRockBasaltGold
     WallRockSnow: WallRockSnowGold
   maxCount: 30
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 # Silver
@@ -39,7 +42,8 @@
     WallRockBasalt: WallRockBasaltSilver
     WallRockSnow: WallRockSnowSilver
   maxCount: 30
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 # High value
@@ -51,7 +55,8 @@
     WallRockBasalt: WallRockBasaltPlasma
     WallRockSnow: WallRockSnowPlasma
   maxCount: 12
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 # Uranium
@@ -62,7 +67,8 @@
     WallRockBasalt: WallRockBasaltUranium
     WallRockSnow: WallRockSnowUranium
   maxCount: 12
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 - type: biomeMarkerLayer
@@ -72,7 +78,8 @@
     WallRockBasalt: WallRockBasaltBananium
     WallRockSnow: WallRockSnowBananium
   maxCount: 12
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 # Artifact Fragment
@@ -83,5 +90,6 @@
     WallRockBasalt: WallRockBasaltArtifactFragment
     WallRockSnow: WallRockSnowArtifactFragment
   maxCount: 6
-  groupCount: 1
+  minGroupSize: 1
+  maxGroupSize: 2
   radius: 4

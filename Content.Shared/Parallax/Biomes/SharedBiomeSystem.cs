@@ -166,16 +166,23 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant entity for this tile.
     /// </summary>
-    protected bool TryGetEntity(Vector2i indices, List<IBiomeLayer> layers, int seed, MapGridComponent grid,
+    public bool TryGetEntity(Vector2i indices, BiomeComponent component, MapGridComponent grid,
         [NotNullWhen(true)] out string? entity)
     {
-        if (!TryGetBiomeTile(indices, layers, seed, grid, out var tileRef))
+        if (!TryGetBiomeTile(indices, component.Layers, component.Seed, grid, out var tile))
         {
             entity = null;
             return false;
         }
 
-        var tileId = TileDefManager[tileRef.Value.TypeId].ID;
+        return TryGetEntity(indices, component.Layers, tile.Value, component.Seed, grid, out entity);
+    }
+
+
+    private bool TryGetEntity(Vector2i indices, List<IBiomeLayer> layers, Tile tileRef, int seed, MapGridComponent grid,
+        [NotNullWhen(true)] out string? entity)
+    {
+        var tileId = TileDefManager[tileRef.TypeId].ID;
 
         for (var i = layers.Count - 1; i >= 0; i--)
         {
@@ -207,7 +214,7 @@ public abstract class SharedBiomeSystem : EntitySystem
 
             if (layer is BiomeMetaLayer meta)
             {
-                if (TryGetEntity(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, seed, grid, out entity))
+                if (TryGetEntity(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, tileRef, seed, grid, out entity))
                 {
                     return true;
                 }

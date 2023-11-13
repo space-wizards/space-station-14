@@ -1,22 +1,26 @@
 - type: biomeMarkerLayer
   id: Lizards
   prototype: MobLizard
-  groupCount: 5
+  minGroupSize: 3
+  maxGroupSize: 5
 
 - type: biomeMarkerLayer
   id: WatchersLavaland
   prototype: MobWatcherLavaland
-  groupCount: 3
+  minGroupSize: 3
+  maxGroupSize: 3
 
 - type: biomeMarkerLayer
   id: WatchersIcewing
   prototype: MobWatcherIcewing
-  groupCount: 3
+  minGroupSize: 3
+  maxGroupSize: 3
 
 - type: biomeMarkerLayer
   id: WatchersMagmawing
   prototype: MobWatcherMagmawing
-  groupCount: 3
+  minGroupSize: 3
+  maxGroupSize: 3
 
 # TODO: Needs to be more robust
 - type: biomeMarkerLayer

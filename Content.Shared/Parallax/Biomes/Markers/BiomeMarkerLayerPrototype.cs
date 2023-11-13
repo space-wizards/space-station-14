@@ -36,10 +36,16 @@ public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
     public int MaxCount = int.MaxValue;
 
     /// <summary>
-    /// How many mobs to spawn in one group.
+    /// Minimum entities to spawn in one group.
     /// </summary>
-    [DataField("groupCount")]
-    public int GroupCount = 1;
+    [DataField]
+    public int MinGroupSize = 1;
+
+    /// <summary>
+    /// Maximum entities to spawn in one group.
+    /// </summary>
+    [DataField]
+    public int MaxGroupSize = 1;
 
     /// <inheritdoc />
     [DataField("size")]

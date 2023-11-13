@@ -396,7 +396,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
                 var buffer = layerProto.Radius / 2f;
-                var rand = new Random(seed + chunk.X * ChunkSize + chunk.Y + layerProto.GetHashCode());
+                var markerSeed = seed + chunk.X * ChunkSize + chunk.Y;
+                var rand = new Random(markerSeed);
 
                 // We treat a null entity mask as requiring nothing else on the tile
                 var lower = (int) Math.Floor(buffer);
@@ -412,15 +413,14 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // It will bias edge tiles significantly more but will make the CPU cry less.
                 for (var i = 0; i < count; i++)
                 {
-                    Log.Info("Start layer");
-                    var groupCount = layerProto.GroupCount;
+                    var groupSize = rand.Next(layerProto.MinGroupSize, layerProto.MaxGroupSize + 1);
                     var startNodeX = rand.Next(lower, upper + 1);
                     var startNodeY = rand.Next(lower, upper + 1);
                     var startNode = new Vector2i(startNodeX, startNodeY);
                     frontier.Clear();
                     frontier.Add(startNode + chunk);
 
-                    while (groupCount > 0 && frontier.Count > 0)
+                    while (groupSize >= 0 && frontier.Count > 0)
                     {
                         var frontierIndex = rand.Next(frontier.Count);
                         var node = frontier[frontierIndex];
@@ -449,7 +449,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                                 if (!spawnSet.Add(neighbor))
                                     continue;
 
-                                Log.Debug($"Added frontier node for {neighbor} / layer {layer}");
                                 frontier.Add(neighbor);
                             }
                         }
@@ -460,16 +459,24 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         if (enumerator.MoveNext(out _))
                             continue;
 
-                        // Check if mask matches.
-                        TryGetEntity(node, component.Layers, seed, grid, out var proto);
+                        // Check if mask matches // anything blocking.
+                        TryGetEntity(node, component, grid, out var proto);
 
-                        // If there's an existing entity OR it doesn't match the mask then skip
-                        if (proto != null && (layerProto.Prototype != null ||
+                        // If there's an existing entity and it doesn't match the mask then skip.
+                        if (layerProto.EntityMask.Count > 0 &&
+                            (proto == null ||
                             !layerProto.EntityMask.ContainsKey(proto)))
                         {
                             continue;
                         }
 
+                        // If it's just a flat spawn then just check for anything blocking.
+                        if (proto != null && layerProto.Prototype != null)
+                        {
+                            continue;
+                        }
+
+                        DebugTools.Assert(layerProto.EntityMask.Count == 0 || !string.IsNullOrEmpty(proto));
                         var chunkOrigin = SharedMapSystem.GetChunkIndices(node, ChunkSize) * ChunkSize;
 
                         if (!pending.TryGetValue(chunkOrigin, out var pendingMarkers))
@@ -484,18 +491,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                             pendingMarkers[layer] = layerMarkers;
                         }
 
-                        Log.Debug($"Added marker node at {node} for chunk {chunkOrigin} / layer {layer}");
                         layerMarkers.Add(node);
-                        groupCount--;
-                    }
-
-                    if (frontier.Count == 0)
-                    {
-                        Log.Error($"Empty frontier for this layer?");
-                    }
-                    else
-                    {
-                        Log.Info("Ended normally");
+                        groupSize--;
+                        spawnSet.Add(node);
                     }
                 }
 
@@ -577,7 +575,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                     string? prototype;
 
-                    if (TryGetEntity(node, component.Layers, seed, grid, out var proto) &&
+                    if (TryGetEntity(node, component, grid, out var proto) &&
                         layerProto.EntityMask.TryGetValue(proto, out var maskedProto))
                     {
                         prototype = maskedProto;
@@ -608,6 +606,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             {
                 var indices = new Vector2i(x + chunk.X, y + chunk.Y);
 
+                // Pass in null so we don't try to get the tileref.
                 if (modified.Contains(indices))
                     continue;
 
@@ -615,8 +614,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 if (_mapSystem.TryGetTileRef(gridUid, grid, indices, out var tileRef) && !tileRef.Tile.IsEmpty)
                     continue;
 
-                // Pass in null so we don't try to get the tileref.
-                if (!TryGetBiomeTile(indices, component.Layers, seed, null, out var biomeTile) || biomeTile.Value == tileRef.Tile)
+                if (!TryGetBiomeTile(indices, component.Layers, seed, grid, out var biomeTile) || biomeTile.Value == tileRef.Tile)
                     continue;
 
                 tiles.Add((indices, biomeTile.Value));
@@ -642,7 +640,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // Don't mess with anything that's potentially anchored.
                 var anchored = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, indices);
 
-                if (anchored.MoveNext(out _) || !TryGetEntity(indices, component.Layers, seed, grid, out var entPrototype))
+                if (anchored.MoveNext(out _) || !TryGetEntity(indices, component, grid, out var entPrototype))
                     continue;
 
                 // TODO: Fix non-anchored ents spawning.
