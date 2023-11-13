@@ -20,6 +20,7 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Polymorph.Systems
@@ -44,6 +45,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -183,6 +185,13 @@ namespace Content.Server.Polymorph.Systems
             if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(uid))
                 return null;
 
+            // If this polymorph has a cooldown, check if that amount of time has passed since the
+            // last polymorph ended.
+            if (TryComp<PolymorphableComponent>(uid, out var polymorphableComponent) &&
+                polymorphableComponent.LastPolymorphEnd != null &&
+                _gameTiming.CurTime <= polymorphableComponent.LastPolymorphEnd + proto.Cooldown)
+                return null;
+
             // mostly just for vehicles
             _buckle.TryUnbuckle(uid, uid, true);
 
@@ -320,6 +329,9 @@ namespace Content.Server.Polymorph.Systems
 
             if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
                 _mindSystem.TransferTo(mindId, parent, mind: mind);
+
+            if (TryComp<PolymorphableComponent>(parent, out var polymorphableComponent))
+                polymorphableComponent.LastPolymorphEnd = _gameTiming.CurTime;
 
             // if an item polymorph was picked up, put it back down after reverting
             Transform(parent).AttachToGridOrMap();
