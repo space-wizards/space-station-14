@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -69,24 +68,27 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     private void OnRoleAddNotify(EntityUid mindId, TraitorRoleComponent comp, ref MindRoleAddedEvent args)
     {
-        if (!_mindSystem.TryGetSession(mindId, out var session))
-            return;
+        var query = EntityQueryEnumerator<TraitorRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var traitor, out var gameRule))
+        {
+            if (!_mindSystem.TryGetSession(mindId, out var session))
+                return;
 
-        _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
-        //_chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", comp.Codewords))));
-        //_audioSystem.PlayGlobal(comp.GreetSoundNotification, session);
+            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
+            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", traitor.Codewords))));
+            _audioSystem.PlayGlobal(traitor.GreetSoundNotification, session);
 
-        // Doing this pda stuff a second time just to print the message is suboptimal
+            // Doing this pda stuff a second time just to print the message is suboptimal
 
-        // I think this takes the uid of the entity holding the PDA, need to test idk
-        var pda = _uplink.FindUplinkTarget(mindId);
-        if (pda == null)
-            return;
-        Note[]? code = null;
-        code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
-        if (code != null)
-            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
-
+            // I think this takes the uid of the entity holding the PDA, need to test idk
+            var pda = _uplink.FindUplinkTarget(mindId);
+            if (pda == null)
+                return;
+            Note[]? code = null;
+            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+            if (code != null)
+                _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
+        }
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
