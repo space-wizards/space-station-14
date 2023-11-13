@@ -155,7 +155,7 @@
     - SyndieSet
     - SleeperSet
     - CommunicatorSet
-    - InvisibilitySet
+    - SmugglerSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface

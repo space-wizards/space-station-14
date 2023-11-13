@@ -52,7 +52,7 @@
   id: ThiefBigObjectiveGroups
   weights:
     ThiefObjectiveGroupStructure: 1
-    ThiefObjectiveGroupAnimal: 1
+    ThiefObjectiveGroupAnimal: 2
 
 - type: weightedRandom
   id: ThiefEscapeObjectiveGroups

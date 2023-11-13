@@ -94,12 +94,14 @@
   - BriefcaseSyndieLobbyingBundleFilled
   
 - type: thiefBackpackSet
-  id: InvisibilitySet
-  name: thief-backpack-category-invisibility-name
-  description: thief-backpack-category-invisibility-description
+  id: SmugglerSet
+  name: thief-backpack-category-smuggler-name
+  description: thief-backpack-category-smuggler-description
   sprite: 
     sprite: Clothing/Neck/Cloaks/void.rsi
     state: icon
   content:
   - InvisibleCrate
   - ClothingNeckCloakVoid
+  - FultonBeacon
+  - Fulton

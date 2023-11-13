@@ -53,9 +53,10 @@ thief-backpack-category-communicator-description =
     for all station channels, radio jammer, portable 
     crew monitor and lots of money for business deals.
 
-thief-backpack-category-invisibility-name = Invisibility kit
-thief-backpack-category-invisibility-description = 
-    A kit for those who prefer stealth. 
-    Includes invisible crate. You can't move in them, 
+thief-backpack-category-smuggler-name = Smuggler's kit
+thief-backpack-category-smuggler-description = 
+    A kit for those who like to have big pockets. 
+    Includes a fulton beacon, 10 fultons 
+    and invisible crate. You can't move in them, 
     but you can quickly hide or carry valuable loot.
-    A cute void cloak to go along with it
+    A cool void cloak to go along with it.
