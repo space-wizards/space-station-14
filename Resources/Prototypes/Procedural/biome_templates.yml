@@ -498,7 +498,7 @@
         - ShadowBasaltFour
         - ShadowBasaltFive
     - !type:BiomeEntityLayer
-      threshold: 0.9
+      threshold: 0.97
       noise:
         frequency: 1
         seed: 2
@@ -507,7 +507,7 @@
       entities:
         - CrystalPink
     - !type:BiomeEntityLayer
-      threshold: 0.90
+      threshold: 0.97
       noise:
         seed: 1
         noiseType: OpenSimplex2
@@ -523,7 +523,7 @@
         - ShadowTree06
     # Rock formations
     - !type:BiomeEntityLayer
-      threshold: -0.5
+      threshold: -0.2
       invert: true
       noise:
         seed: 0
@@ -539,17 +539,17 @@
     # chasm time
     - !type:BiomeEntityLayer
       allowedTiles:
-        - FloorChromite
-      threshold: 0.5
+      - FloorChromite
+      threshold: 0.2
       noise:
         seed: 3
-        frequency: 0.02
+        frequency: 0.1
         fractalType: FBm
         octaves: 5
         lacunarity: 2
         gain: 0.4
       entities:
-        - FloorChromiteChasm
+      - FloorChromiteChasm
     - !type:BiomeDummyLayer
       id: Loot
     # Fill chromite
