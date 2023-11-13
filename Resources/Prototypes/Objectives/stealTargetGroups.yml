@@ -142,13 +142,6 @@
     sprite: Objects/Specific/Hydroponics/cannabis.rsi
     state: produce
 
-- type: stealTargetGroup
-  id: Heart
-  name: hearts (any race)
-  sprite:
-    sprite: Mobs/Species/Human/organs.rsi
-    state: heart-on
-
 # Thief single item
 
 - type: stealTargetGroup

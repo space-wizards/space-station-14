@@ -40,7 +40,10 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
             foreach (var item in set.Content)
             {
                 var ent = Spawn(item);
-                _transform.DropNextTo(ent, backpack.Owner);
+                if (TryComp<ItemComponent>(ent, out var itemComponent))
+                    _transform.DropNextTo(ent, backpack.Owner);
+                else
+                    _transform.SetCoordinates(ent, Transform(backpack.Owner).Coordinates);
                 //SpawnInContainerOrDrop(item, backpack,) TO DO change spawning after delete
             }
         }

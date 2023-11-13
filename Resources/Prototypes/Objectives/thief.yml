@@ -168,21 +168,6 @@
   - type: Objective
     difficulty: 0.5
 
-- type: entity
-  noSpawn: true
-  parent: BaseThiefStealCollectionObjective
-  id: HeartsStealCollectionObjective
-  components:
-  - type: NotJobRequirement
-    job: MedicalDoctor
-  - type: StealCondition
-    stealGroup: Heart
-    minCollectionSize: 1
-    maxCollectionSize: 5
-    verifyMapExistance: false
-  - type: Objective
-    difficulty: 1.5
-
 # steal item
 
 - type: entity                                      #Security subgroup

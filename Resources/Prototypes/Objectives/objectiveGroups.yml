@@ -73,7 +73,6 @@
     IDCardsStealCollectionObjective: 1
     EncryptionKeyStealCollectionObjective: 1
     CannabisStealCollectionObjective: 1
-    HeartsStealCollectionObjective: 0.1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
