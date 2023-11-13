@@ -3,7 +3,7 @@
   name: thief-backpack-category-chameleon-name
   description: thief-backpack-category-chameleon-description
   sprite: 
-    sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi
+    sprite: /Textures/Clothing/OuterClothing/Misc/black_hoodie.rsi
     state: icon
   content:
   - ClothingUniformJumpsuitChameleon
@@ -52,8 +52,8 @@
   name: thief-backpack-category-syndie-name
   description: thief-backpack-category-syndie-description
   sprite:
-    sprite: Objects/Fun/toys.rsi
-    state: synb
+    sprite: Objects/Specific/Syndicate/telecrystal.rsi
+    state: telecrystal
   content:
   - AgentIDCard
   - SyndicatePersonalAI
@@ -66,7 +66,7 @@
   name: thief-backpack-category-sleeper-name
   description: thief-backpack-category-sleeper-description
   sprite: 
-    sprite: Clothing/Head/Hats/pyjamasyndicateblack.rsi
+    sprite: Objects/Tanks/anesthetic.rsi
     state: icon
   content:
   - ClothingHeadPyjamaSyndicateBlack
@@ -83,12 +83,23 @@
   name: thief-backpack-category-communicator-name
   description: thief-backpack-category-communicator-description
   sprite: 
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: crypt_gold
+    sprite: Objects/Tools/spy_device.rsi
+    state: icon
   content:
   - EncryptionKeyStationMaster
   - RadioHandheld
   - RadioHandheld
   - RadioJammer
-  - HandheldCrewMonitor #change to SpyDevice after merge
+  - SpyCrewMonitor
   - BriefcaseSyndieLobbyingBundleFilled
+  
+- type: thiefBackpackSet
+  id: InvisibilitySet
+  name: thief-backpack-category-invisibility-name
+  description: thief-backpack-category-invisibility-description
+  sprite: 
+    sprite: Clothing/Neck/Cloaks/void.rsi
+    state: icon
+  content:
+  - InvisibleCrate
+  - ClothingNeckCloakVoid

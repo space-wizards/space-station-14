@@ -41,12 +41,8 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
             {
                 var ent = Spawn(item);
                 _transform.DropNextTo(ent, backpack.Owner);
+                //SpawnInContainerOrDrop(item, backpack,) TO DO change spawning after delete
             }
-        }
-        //TO DO: Close all UI before deleting entity
-        foreach (var i in ui.Interfaces)
-        {
-            _ui.CloseAll(i.Value); //<-- not work
         }
         QueueDel(backpack); //hehe
     }

@@ -149,14 +149,13 @@
     transformAfterSelect: AlwaysPoweredWallLight
     possibleSets:
     # - TO DO Thief pinpointer needed
-    # - TO DO Chameleon stump needed
-    # - TO DO Invisible box needed (waiting to merg)
     - ChemistrySet
     - ToolsSet
-    - ChameleonSet
+    - ChameleonSet # - TO DO Chameleon stump PR needed
     - SyndieSet
     - SleeperSet
     - CommunicatorSet
+    - InvisibilitySet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface

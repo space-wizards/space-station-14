@@ -52,3 +52,10 @@ thief-backpack-category-communicator-description =
     A communications enthusiast's kit. Includes master key
     for all station channels, radio jammer, portable 
     crew monitor and lots of money for business deals.
+
+thief-backpack-category-invisibility-name = Invisibility kit
+thief-backpack-category-invisibility-description = 
+    A kit for those who prefer stealth. 
+    Includes invisible crate. You can't move in them, 
+    but you can quickly hide or carry valuable loot.
+    A cute void cloak to go along with it
