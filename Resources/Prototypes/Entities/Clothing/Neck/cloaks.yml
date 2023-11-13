@@ -159,3 +159,14 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: TypingIndicatorClothing
     proto: moth
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakVoid
+  name: void cloak
+  description: A cloak of darkness. For those who have gone to the dark side of the force.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/void.rsi
+  - type: TypingIndicatorClothing
+    proto: alien

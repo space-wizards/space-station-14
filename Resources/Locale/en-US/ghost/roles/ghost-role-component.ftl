@@ -58,6 +58,9 @@ ghost-role-information-salvage-carp-description = Defend the loot inside the sal
 ghost-role-information-sentient-carp-name = Sentient Carp
 ghost-role-information-sentient-carp-description = Help the dragon flood the station with carps!
 
+ghost-role-information-salvage-shark-name = Space sharkminnow on salvage wreck
+ghost-role-information-salvage-shark-description = Help the younger fellow carp protect their prey. Smell the blood!
+
 ghost-role-information-willow-name = Willow the kangaroo
 ghost-role-information-willow-description = You're a kangaroo named willow! willow likes to box.
 
@@ -175,4 +178,4 @@ ghost-role-information-hellspawn-name = Hellspawn
 ghost-role-information-hellspawn-description = You are an antagonist, bring death to those who do not follow the great god Nar'Sie.
 
 ghost-role-information-Death-Squad-name = Death Squad Operative
-ghost-role-information-Death-Squad-description = Prepare for an all-out offensive on the station. As a heavily armed operative, your mission is to obliterate all life in your path. No witnesses.
+ghost-role-information-Death-Squad-description = One of Nanotrasen's top internal affairs agents. Await orders from CentComm or an official.

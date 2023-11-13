@@ -480,6 +480,85 @@
       entities:
       - FloorLiquidPlasmaEntity
 
+# Shadow -> Derived from lava
+- type: biomeTemplate
+  id: Shadow
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.70
+      noise:
+        frequency: 1
+        seed: 3
+      allowedTiles:
+        - FloorChromite
+      entities:
+        - ShadowBasaltOne
+        - ShadowBasaltTwo
+        - ShadowBasaltThree
+        - ShadowBasaltFour
+        - ShadowBasaltFive
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        frequency: 1
+        seed: 2
+      allowedTiles:
+        - FloorChromite
+      entities:
+        - CrystalPink
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      noise:
+        seed: 1
+        noiseType: OpenSimplex2
+        frequency: 1
+      allowedTiles:
+        - FloorChromite
+      entities:
+        - ShadowTree01
+        - ShadowTree02
+        - ShadowTree03
+        - ShadowTree04
+        - ShadowTree05
+        - ShadowTree06
+    # Rock formations
+    - !type:BiomeEntityLayer
+      threshold: -0.2
+      invert: true
+      noise:
+        seed: 0
+        noiseType: Perlin
+        fractalType: Ridged
+        octaves: 1
+        frequency: 0.1
+        gain: 0
+      allowedTiles:
+        - FloorChromite
+      entities:
+        - WallRockChromite
+    # chasm time
+    - !type:BiomeEntityLayer
+      allowedTiles:
+      - FloorChromite
+      threshold: 0.2
+      noise:
+        seed: 3
+        frequency: 0.1
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 0.4
+      entities:
+      - FloorChromiteChasm
+    - !type:BiomeDummyLayer
+      id: Loot
+    # Fill chromite
+    - !type:BiomeTileLayer
+      threshold: -1
+      variants:
+        - 0
+      tile: FloorChromite
+
 # Caves
 - type: biomeTemplate
   id: Caves

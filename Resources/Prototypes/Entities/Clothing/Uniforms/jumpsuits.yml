@@ -108,9 +108,9 @@
   description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
 
 - type: entity
   parent: ClothingUniformBase

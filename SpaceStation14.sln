@@ -63,8 +63,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A
 	ProjectSection(SolutionItems) = preProject
 		Tools\gen_build_info.py = Tools\gen_build_info.py
 		Tools\generate_hashes.ps1 = Tools\generate_hashes.ps1
-		Tools\package_client_build.py = Tools\package_client_build.py
-		Tools\package_server_build.py = Tools\package_server_build.py
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Shared.Scripting", "RobustToolbox\Robust.Shared.Scripting\Robust.Shared.Scripting.csproj", "{41B450C0-A361-4CD7-8121-7072B8995CFC}"

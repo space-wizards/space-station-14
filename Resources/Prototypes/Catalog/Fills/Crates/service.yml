@@ -74,6 +74,7 @@
     - id: ClothingMaskMime
     - id: ClothingShoesClown
     - id: ClothingUniformJumpskirtJanimaid
+    - id: ClothingNeckCloakVoid
     - id: RevolverCapGun
 
 - type: entity
