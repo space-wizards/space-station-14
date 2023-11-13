@@ -1,11 +1,6 @@
 Entries:
 - author: Potato1234_x
   changes:
-  - {message: Changed shape of short hair to be like the old one., type: Tweak}
-  id: 4666
-  time: '2023-08-23T21:42:33.0000000+00:00'
-- author: Potato1234_x
-  changes:
   - {message: Changed the contents of the snack vendor to better fit snacks., type: Tweak}
   - {message: 'Added C&Ds, Bob''s sunflower seeds and Sweetie''s pistachios.', type: Add}
   id: 4667
@@ -2903,3 +2898,10 @@ Entries:
       items., type: Tweak}
   id: 5165
   time: '2023-11-13T22:57:52.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'Now chefs can make a cake cat. You will need: 1 Cake plain, 1 raisin
+      snack, 1 animal heart, 5u cognizine, 15u milk, 15 second in microwave. And new
+      sweet ghost role CAK is created!', type: Add}
+  id: 5166
+  time: '2023-11-13T23:23:03.0000000+00:00'
