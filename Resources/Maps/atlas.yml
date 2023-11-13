@@ -1203,13 +1203,13 @@ entities:
             color: '#FFFFFFFF'
             id: LoadingArea
           decals:
-            563: -19,21
+            856: -23,21
         - node:
             angle: 3.141592653589793 rad
             color: '#FFFFFFFF'
             id: LoadingArea
           decals:
-            564: -23,21
+            858: -19,21
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale
@@ -1869,7 +1869,7 @@ entities:
           5,6:
             0: 65527
           5,7:
-            0: 3279
+            0: 3823
           6,4:
             0: 65535
           6,5:
@@ -29698,18 +29698,24 @@ entities:
       pos: -20.5,-21.5
       parent: 30
       type: Transform
+    - color: '#990000FF'
+      type: AtmosPipeColor
   - uid: 7546
     components:
     - rot: -1.5707963267948966 rad
       pos: -21.5,-21.5
       parent: 30
       type: Transform
+    - color: '#990000FF'
+      type: AtmosPipeColor
   - uid: 7547
     components:
     - rot: -1.5707963267948966 rad
       pos: -19.5,-21.5
       parent: 30
       type: Transform
+    - color: '#990000FF'
+      type: AtmosPipeColor
   - uid: 7554
     components:
     - rot: 3.141592653589793 rad
@@ -30249,6 +30255,8 @@ entities:
       pos: -22.5,-21.5
       parent: 30
       type: Transform
+    - color: '#990000FF'
+      type: AtmosPipeColor
   - uid: 3512
     components:
     - rot: 3.141592653589793 rad
@@ -32559,11 +32567,15 @@ entities:
       pos: -18.5,-21.5
       parent: 30
       type: Transform
+    - color: '#990000FF'
+      type: AtmosPipeColor
   - uid: 7542
     components:
     - pos: -22.5,-20.5
       parent: 30
       type: Transform
+    - color: '#990000FF'
+      type: AtmosPipeColor
   - uid: 7556
     components:
     - pos: -46.5,8.5
@@ -37142,6 +37154,24 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
+  - uid: 6183
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 16.5,26.5
+      parent: 30
+      type: Transform
+  - uid: 6184
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 21.5,26.5
+      parent: 30
+      type: Transform
+  - uid: 6186
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 19.5,17.5
+      parent: 30
+      type: Transform
   - uid: 6286
     components:
     - pos: -34.5,-9.5
@@ -37752,6 +37782,11 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
+  - uid: 6182
+    components:
+    - pos: -23.5,-16.5
+      parent: 30
+      type: Transform
   - uid: 6196
     components:
     - pos: -37.5,28.5
@@ -40646,6 +40681,26 @@ entities:
       pos: -18.5,2.5
       parent: 30
       type: Transform
+  - uid: 6558
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 23.5,-1.5
+      parent: 30
+      type: Transform
+  - uid: 6670
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -14.5,-0.5
+      parent: 30
+      type: Transform
+- proto: SinkStemlessWater
+  entities:
+  - uid: 6957
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -2.5,-8.5
+      parent: 30
+      type: Transform
 - proto: SMESBasic
   entities:
   - uid: 5511
@@ -41471,6 +41526,12 @@ entities:
   - uid: 6955
     components:
     - pos: 17.5,25.5
+      parent: 30
+      type: Transform
+  - uid: 6958
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -31.5,12.5
       parent: 30
       type: Transform
 - proto: Stool
@@ -48774,6 +48835,16 @@ entities:
       type: NavMapBeacon
     - location: library
       type: WarpPoint
+  - uid: 6181
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -6.5,14.5
+      parent: 30
+      type: Transform
+    - text: theatre
+      type: NavMapBeacon
+    missingComponents:
+    - WarpPoint
   - uid: 6858
     components:
     - pos: 24.5,14.5
