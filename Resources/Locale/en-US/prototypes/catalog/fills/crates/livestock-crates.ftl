@@ -19,6 +19,9 @@ ent-CrateNPCDuck = Duck crate
 ent-CrateNPCCorgi = Corgi crate
     .desc = A crate containing a single corgi.
 
+ent-CrateNPCPuppyCorgi = Puppy Corgi crate
+    .desc = A crate containing a single puppy corgi. Awww.
+
 ent-CrateNPCCow = Cow crate
     .desc = A crate containing a single cow.
 

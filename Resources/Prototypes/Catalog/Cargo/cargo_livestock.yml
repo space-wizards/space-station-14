@@ -69,6 +69,16 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockPupCorgi
+  icon:
+    sprite: Mobs/Pets/corgi.rsi
+    state: puppy
+  product: CrateNPCPuppyCorgi
+  cost: 1200
+  category: Livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockCow
   icon:
     sprite: Mobs/Animals/cow.rsi

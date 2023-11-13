@@ -69,3 +69,52 @@
     sprite: Clothing/Shoes/Misc/damedaneshoes.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Misc/damedaneshoes.rsi
+
+- type: entity
+  parent: [ClothingShoesBase, PowerCellSlotSmallItem]
+  id: ClothingShoesBootsSpeed
+  name: speed boots
+  description: High-tech boots woven with quantum fibers, able to convert electricity into pure speed!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+  - type: ToggleClothingSpeed
+    toggleAction: ActionToggleSpeedBoots
+  - type: ClothingSpeedModifier
+    walkModifier: 1.25
+    sprintModifier: 1.25
+    enabled: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon-on}
+          False: {state: icon}
+  - type: StaticPrice
+    price: 500
+  - type: PowerCellDraw
+    drawRate: 4
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+  - type: Tag
+    tags: []
+
+- type: entity
+  id: ActionToggleSpeedBoots
+  name: Toggle Speed Boots
+  description: Toggles the speed boots on and off.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    event: !type:ToggleClothingSpeedEvent
+    icon: { sprite: Clothing/Shoes/Boots/speedboots.rsi, state: icon }
+    iconOn: { sprite: Clothing/Shoes/Boots/speedboots.rsi, state: icon-on }

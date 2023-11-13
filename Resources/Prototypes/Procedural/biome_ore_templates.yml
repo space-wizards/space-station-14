@@ -143,6 +143,79 @@
   groupCount: 1
   radius: 4
 
+# Shadow basalt variant
+# Low value
+- type: biomeMarkerLayer
+  id: ChromiteOreTin
+  proto: WallRockChromiteTin
+  entityMask: WallRockChromite
+  maxCount: 30
+  groupCount: 10
+  radius: 4
+
+- type: biomeMarkerLayer
+  id: ChromiteOreQuartz
+  proto: WallRockChromiteQuartz
+  entityMask: WallRockChromite
+  maxCount: 30
+  groupCount: 10
+  radius: 4
+
+# Medium value
+# Gold
+- type: biomeMarkerLayer
+  id: ChromiteOreGold
+  proto: WallRockChromiteGold
+  entityMask: WallRockChromite
+  maxCount: 30
+  groupCount: 5
+  radius: 4
+
+# Silver
+- type: biomeMarkerLayer
+  id: ChromiteOreSilver
+  proto: WallRockChromiteSilver
+  entityMask: WallRockChromite
+  maxCount: 30
+  groupCount: 5
+  radius: 4
+
+# High value
+# Plasma
+- type: biomeMarkerLayer
+  id: ChromiteOrePlasma
+  proto: WallRockChromitePlasma
+  entityMask: WallRockChromite
+  maxCount: 12
+  groupCount: 5
+  radius: 4
+
+# Uranium
+- type: biomeMarkerLayer
+  id: ChromiteOreUranium
+  proto: WallRockChromiteUranium
+  entityMask: WallRockChromite
+  maxCount: 12
+  groupCount: 5
+  radius: 4
+
+- type: biomeMarkerLayer
+  id: ChromiteOreBananium
+  proto: WallRockChromiteBananium
+  entityMask: WallRockChromite
+  maxCount: 12
+  groupCount: 5
+  radius: 4
+
+# Artifact Fragment
+- type: biomeMarkerLayer
+  id: ChromiteOreArtifactFragment
+  proto: WallRockChromiteArtifactFragment
+  entityMask: WallRockChromite
+  maxCount: 6
+  groupCount: 1
+  radius: 4
+
 # Snow variant
 # Low value
 - type: biomeMarkerLayer

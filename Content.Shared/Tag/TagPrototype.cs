@@ -8,7 +8,7 @@ namespace Content.Shared.Tag
     ///     gets saved in TagComponent.
     /// </summary>
     [Prototype("Tag")]
-    public sealed class TagPrototype : IPrototype
+    public sealed partial class TagPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]

@@ -249,6 +249,16 @@
      Glass: 900
 
 - type: latheRecipe
+  id: AnomalySynchronizerCircuitboard
+  result: AnomalySynchronizerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 500
+     Glass: 700
+     Gold: 200
+     Silver: 100
+
+- type: latheRecipe
   id: APECircuitboard
   result: APECircuitboard
   completetime: 4
