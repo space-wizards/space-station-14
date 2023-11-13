@@ -14,3 +14,8 @@
   id: Writing
   name: guide-entry-writing
   text: "/ServerInfo/Guidebook/Writing.xml"
+
+- type: guideEntry
+  id: Rules
+  name: guide-entry-rules
+  text: "/ServerInfo/Guidebook/Rules.xml"

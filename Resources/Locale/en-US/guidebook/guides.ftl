@@ -1,3 +1,4 @@
+guide-entry-rules = Rules
 guide-entry-engineering = Engineering
 guide-entry-construction = Construction
 guide-entry-airlock-security = Airlock Upgrades

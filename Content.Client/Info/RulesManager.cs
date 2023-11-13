@@ -8,6 +8,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Info;
 
@@ -20,7 +21,7 @@ public sealed class RulesManager : SharedRulesManager
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
-    private InfoSection rulesSection = new InfoSection("", "", false);
+    private InfoSection rulesSection = new InfoSection("", new FormattedMessage(), false);
     private bool _shouldShowRules = false;
 
     private RulesPopup? _activePopup;
@@ -93,12 +94,16 @@ public sealed class RulesManager : SharedRulesManager
     public void UpdateRules()
     {
         var rules = _sysMan.GetEntitySystem<InfoSystem>().Rules;
-        rulesSection.SetText(rules.Title, rules.Text, true);
+        var text = rules.Text;
+        var entries = text.Split("\n");
+        entries = entries[1..^1];
+        text = string.Join("\n", entries);
+        rulesSection.SetText(rules.Title, FormattedMessage.FromMarkup(text), true);
     }
 
     public Control RulesSection()
     {
-        rulesSection = new InfoSection("", "", false);
+        rulesSection = new InfoSection("", new FormattedMessage(), false);
         UpdateRules();
         return rulesSection;
     }
