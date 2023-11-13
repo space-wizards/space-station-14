@@ -1,10 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: 'Added several new Arachnid markings, including appendage stripes, chest
-      designs, chelicerae and an overlay.', type: Add}
-  id: 4664
-  time: '2023-08-23T21:37:42.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: 'The dead body examine text is more accurate for dead, disconnected
@@ -2904,3 +2898,8 @@ Entries:
   - {message: Expedition timer bumped from 7 minutes to 11 minutes., type: Tweak}
   id: 5163
   time: '2023-11-13T22:39:34.0000000+00:00'
+- author: Simyon
+  changes:
+  - {message: Muting the station news notification on your PDA now works again., type: Fix}
+  id: 5164
+  time: '2023-11-13T22:43:09.0000000+00:00'
