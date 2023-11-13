@@ -447,7 +447,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <returns>true if it can be inserted, false otherwise</returns>
     public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, StorageComponent? storageComp = null, ItemComponent? item = null, bool ignoreStacks = false)
     {
-        if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item))
+        if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
             reason = null;
             return false;
