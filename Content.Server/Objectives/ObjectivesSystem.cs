@@ -83,7 +83,10 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             }
 
             var result = Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent));
-            result += "\n" + Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent));
+            if (agent == Loc.GetString("traitor-round-end-agent-name"))
+            {
+                result += "\n" + Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent));
+            }
             // next add all the players with its own prepended text
             foreach (var (prepend, minds) in summary)
             {
