@@ -619,6 +619,8 @@
     tags:
     - Raw
     - Meat
+    - Meatball
+    - PizzaIngredient
   - type: Sprite
     state: meatball
 
@@ -635,6 +637,7 @@
     tags:
     - Raw
     - Meat
+    - PizzaIngredient
   - type: Sprite
     state: slime
 
@@ -1038,9 +1041,10 @@
   components:
   - type: Tag
     tags:
-    - Raw
     - Cutlet
     - Meat
+    - PizzaIngredient
+    - Raw
   - type: Sprite
     state: cutlet
   - type: SolutionContainerManager
@@ -1054,149 +1058,68 @@
 
 - type: entity
   name: raw bear cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutlet
   id: FoodMeatBearCutlet
   description: A very manly cutlet of raw bear meat.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Cutlet
-    - Meat
   - type: Sprite
     layers:
     - state: cutlet
     - state: cutlet-alpha
       color: brown
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
-        - ReagentId: Fat
-          Quantity: 2
 
 - type: entity
   name: raw penguin cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutlet
   id: FoodMeatPenguinCutlet
   description: A cutlet of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Cutlet
-    - Meat
   - type: Sprite
-    state: cutlet
     color: white
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
-        - ReagentId: Fat
-          Quantity: 2
 
 - type: entity
   name: raw chicken cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutlet
   id: FoodMeatChickenCutlet
   description: A cutlet of raw chicken. Remember to wash your hands!
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Cutlet
-    - Meat
   - type: Sprite
-    state: cutlet
     color: white
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
-        - ReagentId: Fat
-          Quantity: 2
 
 - type: entity
   name: raw duck cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutlet
   id: FoodMeatDuckCutlet
   description: A cutlet of raw duck. Remember to wash your hands!
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Cutlet
-    - Meat
   - type: Sprite
-    state: cutlet
     color: white
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
-        - ReagentId: Fat
-          Quantity: 2
 
 - type: entity
   name: raw lizard cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutlet
   id: FoodMeatLizardCutlet
   description: Delicious dino cutlet.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Cutlet
-    - Meat
   - type: Sprite
     layers:
     - state: cutlet
       color: green
     - state: cutlet-alpha
       color: pink
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
-        - ReagentId: Fat
-          Quantity: 2
 
 - type: entity
   name: raw spider cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutlet
   id: FoodMeatSpiderCutlet
   description: A cutlet of raw spider meat. So Kafkaesque.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Cutlet
-    - Meat
   - type: Sprite
     state: spidercutlet
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
-        - ReagentId: Fat
-          Quantity: 2
 
 - type: entity
   name: raw xeno cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutlet
   id: FoodMeatXenoCutlet
   description: A slab of raw xeno meat, dripping with acid.
   components:
@@ -1204,11 +1127,6 @@
     flavors:
       - meaty
       - acid
-  - type: Tag
-    tags:
-    - Raw
-    - Cutlet
-    - Meat
   - type: Sprite
     state: xenocutlet
   - type: SolutionContainerManager
@@ -1220,14 +1138,10 @@
 
 - type: entity
   name: raw killer tomato cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutlet
   id: FoodMeatTomatoCutlet
   description: A cutlet from a slab of tomato.
   components:
-  - type: Tag
-    tags:
-    - Cutlet
-    - Meat
   - type: Sprite
     state: salami-slice
     color: red
@@ -1238,11 +1152,6 @@
   id: FoodMeatSalamiSlice
   description: A slice of cured salami.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Cutlet
-    - Meat
   - type: Sprite
     state: salami-slice
   - type: SolutionContainerManager
@@ -1267,6 +1176,7 @@
     - Cooked
     - Cutlet
     - Meat
+    - PizzaIngredient
   - type: Sprite
     state: cutlet-cooked
   - type: SolutionContainerManager
@@ -1280,162 +1190,63 @@
 
 - type: entity
   name: bear cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutletCooked
   id: FoodMeatBearCutletCooked
   description: A very manly cutlet of cooked bear meat.
   components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Cutlet
-    - Meat
   - type: Sprite
     layers:
     - state: cutlet-cooked
     - state: cutlet-alpha
       color: brown
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 2
 
 - type: entity
   name: penguin cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutletCooked
   id: FoodMeatPenguinCutletCooked
   description: A cutlet of cooked penguin meat.
   components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Cutlet
-    - Meat
   - type: Sprite
     state: cutlet-cooked
     color: white
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 2
 
 - type: entity
   name: chicken cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatPenguinCutletCooked
   id: FoodMeatChickenCutletCooked
   description: A cutlet of cooked chicken. Remember to wash your hands!
-  components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Cutlet
-    - Meat
-  - type: Sprite
-    state: cutlet-cooked
-    color: white
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 2
 
 - type: entity
   name: duck cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatPenguinCutletCooked
   id: FoodMeatDuckCutletCooked
   description: A cutlet of cooked duck. Remember to wash your hands!
-  components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Cutlet
-    - Meat
-  - type: Sprite
-    state: cutlet-cooked
-    color: white
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 2
 
 - type: entity
   name: lizard cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutletCooked
   id: FoodMeatLizardCutletCooked
   description: Delicious cooked dino cutlet.
   components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Cutlet
-    - Meat
   - type: Sprite
     layers:
     - state: cutlet-cooked
       color: green
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 2
 
 - type: entity
   name: spider cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutletCooked
   id: FoodMeatSpiderCutletCooked
   description: A cutlet of cooked spider meat. Finally edible.
   components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Cutlet
-    - Meat
   - type: Sprite
     state: spidercutlet-cooked
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 1
-        - ReagentId: Protein
-          Quantity: 1
 
 - type: entity
   name: xeno cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatCutletCooked
   id: FoodMeatXenoCutletCooked
   description: A cutlet of cooked xeno, dripping with... tastiness?
   components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Cutlet
-    - Meat
   - type: Sprite
     state: xenocutlet-cooked
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 1
-        - ReagentId: Protein
-          Quantity: 1
