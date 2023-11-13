@@ -20,7 +20,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Zombies;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -55,6 +54,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<ZombieRoleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -336,6 +336,19 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
                wrappedMessage, default, false, zombie.ConnectedClient, Color.Plum);
             _audio.PlayGlobal(component.InitialInfectedSound, ownedEntity);
+        }
+    }
+
+    private void OnRoleAddNotify(EntityUid mindId, ZombieRoleComponent comp, ref MindRoleAddedEvent args)
+    {
+        var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var zombieRule, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                return;
+            if (!_mindSystem.TryGetSession(mindId, out var session))
+                return;
+            // Notify the player of zombie stuff here
         }
     }
 }
