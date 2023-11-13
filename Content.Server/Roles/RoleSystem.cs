@@ -1,4 +1,4 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Roles;
 
 namespace Content.Server.Roles;
 
@@ -17,6 +17,7 @@ public sealed class RoleSystem : SharedRoleSystem
         SubscribeAntagEvents<SubvertedSiliconRoleComponent>();
         SubscribeAntagEvents<TraitorRoleComponent>();
         SubscribeAntagEvents<ZombieRoleComponent>();
+        SubscribeAntagEvents<ThiefRoleComponent>();
     }
 
     public string? MindGetBriefing(EntityUid? mindId)
