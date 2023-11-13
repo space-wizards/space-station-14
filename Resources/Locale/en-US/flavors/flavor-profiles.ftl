@@ -153,6 +153,7 @@ flavor-complex-plastic = like plastic
 flavor-complex-glue = like glue
 flavor-complex-spaceshroom-cooked = like space umami
 flavor-complex-lost-friendship = like lost friendship
+flavor-complex-mouse = like mouse
 
 # Drink-specific flavors.
 

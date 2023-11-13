@@ -434,6 +434,9 @@
 # Tastes like crust, tomato, cheese, pineapple, ham.
 
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
+#Try to add mushrooms and it mutes you
+#Try to add pineapple and it gibs you
+#If you eat it yourself it blows your arm off
 - type: entity
   name: Arnold's pizza
   parent: FoodPizzaBase
@@ -504,6 +507,42 @@
     - Meat
     - Pizza
 # Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
+
+- type: entity
+  parent: FoodPizzaBase
+  id: FoodPizzaMouse
+  name: mouse pizza
+  description: Piep!
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheesy
+    - mouse
+    - bread
+  - type: Sprite
+    layers:
+    - state: mouse
+  - type: SliceableFood
+    slice: FoodPizzaMouseSlice
+
+- type: entity
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMouseSlice
+  name: slice of mouse pizza
+  description: Chuu!
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheesy
+    - mouse
+    - bread
+  - type: Sprite
+    layers:
+    - state: mouse-slice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
 
 #TODO: Make this do poison damage and make cut pizza slices eventually rot into this.
 - type: entity

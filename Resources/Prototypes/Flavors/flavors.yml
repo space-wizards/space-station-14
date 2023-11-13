@@ -863,3 +863,8 @@
   id: punishment
   flavorType: Complex
   description: flavor-complex-punishment
+
+- type: flavor
+  id: mouse
+  flavorType: Complex
+  description: flavor-complex-mouse
