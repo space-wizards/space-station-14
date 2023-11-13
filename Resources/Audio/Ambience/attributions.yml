@@ -84,3 +84,7 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from BeeStation"
   source: "https://github.com/BeeStation/BeeStation-Hornet/commit/cf8c667dcca196c0e81af37ed0c27b9bdee9c888"
+
+- files: ["voyage_neverending.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Discord handle derflerp"

@@ -156,6 +156,7 @@
     - /Audio/Ambience/ambiruin5.ogg
     - /Audio/Ambience/ambiruin6.ogg
     - /Audio/Ambience/ambiruin7.ogg
+    - /Audio/Ambience/voyage_neverending.ogg
 
 - type: soundCollection
   id: AmbienceRuins
