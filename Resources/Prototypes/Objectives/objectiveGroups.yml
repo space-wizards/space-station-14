@@ -68,10 +68,12 @@
     HeadBedsheetStealCollectionObjective: 1
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
-    ResearchDiskStealCollectionObjective: 1        #rnd
+    TechnologyDiskStealCollectionObjective: 1        #rnd
     FigurineStealCollectionObjective: 0.3          #service
     IDCardsStealCollectionObjective: 1
+    EncryptionKeyStealCollectionObjective: 1
     CannabisStealCollectionObjective: 1
+    HeartsStealCollectionObjective: 0.1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
@@ -82,7 +84,6 @@
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
     ClothingHeadsetAltMedicalStealObjective: 1
-    RnDServerMachineCircuitboardStealObjective: 1       #rnd
     FireAxeStealObjective: 1                            #eng
     AmePartStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
@@ -105,6 +106,7 @@
     TegStealObjective: 1
     BoozeDispenserStealObjective: 1
     AltarNanotrasenStealObjective: 1
+    PlantRDStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupAnimal

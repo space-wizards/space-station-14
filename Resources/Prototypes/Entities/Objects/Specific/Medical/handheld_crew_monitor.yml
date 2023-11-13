@@ -52,7 +52,9 @@
   - type: Item
     sprite: Objects/Tools/spy_device.rsi
   - type: PowerCellDraw
-    useRate: 40 #Should be weaker than the original
+    useRate: 10
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   id: SpyCrewMonitorEmpty

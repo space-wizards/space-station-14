@@ -116,12 +116,12 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealCollectionObjective
-  id: ResearchDiskStealCollectionObjective
+  id: TechnologyDiskStealCollectionObjective
   components:
   - type: NotJobRequirement
     job: Scientist
   - type: StealCondition
-    stealGroup: ResearchDisk
+    stealGroup: TechnologyDisk
     minCollectionSize: 10
     maxCollectionSize: 20
     verifyMapExistance: false
@@ -144,6 +144,18 @@
 - type: entity
   noSpawn: true
   parent: BaseThiefStealCollectionObjective
+  id: EncryptionKeyStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: EncryptionKey
+    minCollectionSize: 5
+    maxCollectionSize: 25
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
   id: CannabisStealCollectionObjective
   components:
   - type: NotJobRequirement
@@ -155,6 +167,21 @@
     verifyMapExistance: false
   - type: Objective
     difficulty: 0.5
+
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: HeartsStealCollectionObjective
+  components:
+  - type: NotJobRequirement
+    job: MedicalDoctor
+  - type: StealCondition
+    stealGroup: Heart
+    minCollectionSize: 1
+    maxCollectionSize: 5
+    verifyMapExistance: false
+  - type: Objective
+    difficulty: 1.5
 
 # steal item
 
@@ -223,18 +250,6 @@
     job: ChiefMedicalOfficer
   - type: StealCondition
     stealGroup: ClothingHeadsetAltMedical
-  - type: Objective
-    difficulty: 1
-
-- type: entity                                      #Science subgroup
-  noSpawn: true
-  parent: BaseThiefStealObjective
-  id: RnDServerMachineCircuitboardStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Scientist
-  - type: StealCondition
-    stealGroup: ResearchAndDevelopmentServerMachineCircuitboard
   - type: Objective
     difficulty: 1
 
@@ -454,7 +469,19 @@
   - type: StealCondition
     stealGroup: AltarNanotrasen
   - type: Objective
-    difficulty: 0.5    
+    difficulty: 0.5
+    
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealStructureObjective
+  id: PlantRDStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: PlantRD
+  - type: Objective
+    difficulty: 0.8
 
 # Animal
 

@@ -134,8 +134,6 @@
     prototype: ResearchAndDevelopmentServer
     materialRequirements:
       Plasma: 5
-  - type: StealTarget
-    stealGroup: ResearchAndDevelopmentServerMachineCircuitboard
 
 - type: entity
   id: UniformPrinterMachineCircuitboard

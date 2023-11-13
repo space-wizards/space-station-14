@@ -115,11 +115,18 @@
     state: door_remotebase
     
 - type: stealTargetGroup
-  id: ResearchDisk
-  name: research disks
+  id: EncryptionKey
+  name: encryption keys (any)
   sprite:
-    sprite: Objects/Specific/Research/researchdisk.rsi
-    state: icon
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: crypt_gray
+    
+- type: stealTargetGroup
+  id: TechnologyDisk
+  name: technology disks
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: datadisk_base
 
 - type: stealTargetGroup
   id: IDCard
@@ -134,6 +141,13 @@
   sprite:
     sprite: Objects/Specific/Hydroponics/cannabis.rsi
     state: produce
+
+- type: stealTargetGroup
+  id: Heart
+  name: hearts (any race)
+  sprite:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
 
 # Thief single item
 
@@ -313,6 +327,13 @@
   sprite:
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: nanotrasen
+
+- type: stealTargetGroup
+  id: PlantRD
+  name: RD's potted plant
+  sprite:
+    sprite: Structures/Furniture/potted_plants.rsi
+    state: plant-25
 
 # Thief Animal
 

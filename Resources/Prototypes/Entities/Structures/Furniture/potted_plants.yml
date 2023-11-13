@@ -234,6 +234,8 @@
   components:
   - type: Sprite
     state: plant-25
+  - type: StealTarget
+    stealGroup: PlantRD
 
 #these are all the plastic plants. They inherit from the first one because they don't have
 #enough differences to warrant getting a unique abstract prototype. It's just the name and description.

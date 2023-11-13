@@ -139,6 +139,8 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
+  - type: StealTarget
+    stealGroup: Heart
 
 - type: entity
   id: OrganHumanStomach

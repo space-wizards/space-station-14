@@ -5,6 +5,8 @@
   components:
   - type: Metabolizer
     metabolizerTypes: [Dwarf]
+  - type: StealTarget
+    stealGroup: Heart
 
 - type: entity
   id: OrganDwarfLiver
