@@ -10,7 +10,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
-using Robust.Shared.GameStates;
+using Content.Shared.Roles;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 
@@ -53,6 +53,7 @@ public sealed partial class DragonSystem : EntitySystem
         SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
         SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<DragonComponent, GenericAntagCreatedEvent>(OnCreated);
+        SubscribeLocalEvent<DragonRoleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
     }
 
     public override void Update(float frameTime)
@@ -276,5 +277,24 @@ public sealed partial class DragonSystem : EntitySystem
         comp.WeakenedAccumulator = comp.WeakenedDuration;
         _movement.RefreshMovementSpeedModifiers(uid);
         _popup.PopupEntity(Loc.GetString("carp-rift-destroyed"), uid, uid);
+    }
+
+    private void OnRoleAddNotify(EntityUid mindId, DragonRoleComponent comp, ref MindRoleAddedEvent args)
+    {
+        // Do dragon role notification for the player here.
+        // Currently no message is printed or sound is played
+        // Anywhere in the code!
+
+    //    var query = EntityQueryEnumerator<DragonRuleComponent, GameRuleComponent>();
+    //    while (query.MoveNext(out var uid, out var dragonRule, out var gameRule))
+    //    {
+    //        if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+    //            return;
+    //        if (!_mindSystem.TryGetSession(mindId, out var session))
+    //            return;
+
+    //        _chatManager.DispatchServerMessage(session, Loc.GetString("dragon-greeting-whatever"));
+    //        _audioSystem.PlayGlobal(dragonRule.GreetSoundNotification, session);
+    //    }
     }
 }
