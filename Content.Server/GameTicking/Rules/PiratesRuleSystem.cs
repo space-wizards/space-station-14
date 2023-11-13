@@ -8,6 +8,7 @@ using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
@@ -43,6 +44,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -52,6 +54,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayerSpawningEvent);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextEvent);
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
+        SubscribeLocalEvent<PiratesRoleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
     }
 
     private void OnRoundEndTextEvent(RoundEndTextAppendEvent ev)
@@ -223,9 +226,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
 
                 pirates.Pirates.Add(newMind);
-
-                // Notificate every player about a pirate antagonist role with sound
-                _audioSystem.PlayGlobal(pirates.PirateAlertSound, session);
+                _roleSystem.MindAddRole(newMind, new PiratesRoleComponent { PrototypeId = pirates.TraitorPrototypeId });
 
                 GameTicker.PlayerJoinGame(session);
             }
@@ -252,12 +253,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             GameTicker.StartGameRule("Pirates", out var ruleEntity);
             pirateRule = Comp<PiratesRuleComponent>(ruleEntity);
         }
-
-        // Notificate every player about a pirate antagonist role with sound
-        if (mind.Session != null)
-        {
-            _audioSystem.PlayGlobal(pirateRule.PirateAlertSound, mind.Session);
-        }
+        _roleSystem.MindAddRole(mindId, new PiratesRoleComponent { PrototypeId = pirateRule.TraitorPrototypeId });
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -282,6 +278,21 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
                 ev.Cancel();
             }
+        }
+    }
+
+    private void OnRoleAddNotify(EntityUid mindId, PiratesRoleComponent comp, ref MindRoleAddedEvent args)
+    {
+        var query = EntityQueryEnumerator<PiratesRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var pirates, out var gameRule))
+        {
+            // Forgive me for copy-pasting nukies.
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                return;
+            if (!_mindSystem.TryGetSession(mindId, out var session))
+                return;
+            // Notificate every player about a pirate antagonist role with sound
+            _audioSystem.PlayGlobal(pirates.PirateAlertSound, session);
         }
     }
 }

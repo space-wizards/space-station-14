@@ -71,6 +71,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var query = EntityQueryEnumerator<TraitorRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var traitor, out var gameRule))
         {
+            // Forgive me for copy-pasting nukies.
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                return;
             if (!_mindSystem.TryGetSession(mindId, out var session))
                 return;
 

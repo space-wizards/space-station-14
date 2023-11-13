@@ -350,9 +350,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var query = EntityQueryEnumerator<NukeOperativeComponent, ActorComponent>();
         while (query.MoveNext(out _, out var nukeops, out var actor))
         {
-            // This is a point at which the nukies would have
-            // been notified with the old system
-            //NotifyNukie(actor.PlayerSession, nukeops, component);
             filter.AddPlayer(actor.PlayerSession);
         }
     }
@@ -792,13 +789,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             if (GameTicker.RunLevel != GameRunLevel.InRound)
                 return;
-
-           // Point at which old system would notify nukies,
-           // now moved to OnRoleChangeNotify()
-           // if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
-           // {
-           //     NotifyNukie(playerSession, component, nukeops);
-           // }
         }
     }
 
@@ -1119,11 +1109,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// </summary>
     private void OnRoleAddNotify(EntityUid mindId, NukeopsRoleComponent comp, ref MindRoleAddedEvent ev)
     {
-        Logger.DebugS("nukies", "RoleAddNotify called...");
         var query = EntityQueryEnumerator<NukeopsRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var ruleUid, out var nukeops, out var gameRule))
         {
-            Logger.DebugS("nukies", "GameRule was found!");
             if (!GameTicker.IsGameRuleAdded(ruleUid, gameRule))
                 continue;
             if (!_mind.TryGetSession(mindId, out var session))

@@ -1,10 +1,14 @@
-﻿using Robust.Shared.Audio;
+using Content.Shared.Roles;
+using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(PiratesRuleSystem))]
 public sealed partial class PiratesRuleComponent : Component
 {
+    [DataField("traitorPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    public string TraitorPrototypeId = "Pirate";
     [ViewVariables]
     public List<EntityUid> Pirates = new();
     [ViewVariables]
