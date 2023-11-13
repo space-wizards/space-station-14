@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: 'The dead body examine text is more accurate for dead, disconnected
-      players.', type: Tweak}
-  id: 4665
-  time: '2023-08-23T21:41:54.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Changed shape of short hair to be like the old one., type: Tweak}
@@ -2903,3 +2897,9 @@ Entries:
   - {message: Muting the station news notification on your PDA now works again., type: Fix}
   id: 5164
   time: '2023-11-13T22:43:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Explosions now damage items in containers like backpacks or equipped
+      items., type: Tweak}
+  id: 5165
+  time: '2023-11-13T22:57:52.0000000+00:00'
