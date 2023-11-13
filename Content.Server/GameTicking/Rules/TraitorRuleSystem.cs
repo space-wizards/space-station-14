@@ -274,10 +274,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
             Briefing = briefing
         }, mind);
-        _roleSystem.MindAddRole(mindId, new RoleSoundComponent
-        {
-            Sound = traitorRule.GreetSoundNotification
-        }, mind);
+        _roleSystem.MindPlaySound(mindId, traitorRule.GreetSoundNotification, mind);
         SendTraitorBriefing(mindId, traitorRule.Codewords, code);
         traitorRule.TraitorMinds.Add(mindId);
 

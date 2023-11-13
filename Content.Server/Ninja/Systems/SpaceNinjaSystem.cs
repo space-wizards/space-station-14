@@ -167,10 +167,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             PrototypeId = "SpaceNinja"
         };
         _role.MindAddRole(mindId, role, mind);
-        _role.MindAddRole(mindId, new RoleSoundComponent
-        {
-            Sound = config.GreetingSound
-        }, mind);
+        _role.MindPlaySound(mindId, config.GreetingSound, mind);
 
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
