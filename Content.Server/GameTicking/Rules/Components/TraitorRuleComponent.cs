@@ -1,4 +1,4 @@
-﻿using Content.Shared.Preferences;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -31,6 +31,5 @@ public sealed partial class TraitorRuleComponent : Component
     /// <summary>
     ///     Path to antagonist alert sound.
     /// </summary>
-    [DataField("greetSoundNotification")]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 }

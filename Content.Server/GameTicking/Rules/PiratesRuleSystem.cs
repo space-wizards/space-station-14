@@ -291,12 +291,10 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         var query = EntityQueryEnumerator<PiratesRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var pirates, out var gameRule))
         {
-            // Forgive me for copy-pasting nukies.
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 return;
             if (!_mindSystem.TryGetSession(mindId, out var session))
                 return;
-            // Notificate every player about a pirate antagonist role with sound
             _audioSystem.PlayGlobal(pirates.PirateAlertSound, session);
         }
     }
