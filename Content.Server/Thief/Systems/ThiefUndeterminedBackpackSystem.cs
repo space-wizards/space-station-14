@@ -31,8 +31,6 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
     {
         if (backpack.Comp.SelectedSets.Count != MaxSelectedSets)
             return;
-        if (!TryComp<UserInterfaceComponent>(backpack.Owner, out var ui))
-            return;
 
         foreach (var i in backpack.Comp.SelectedSets)
         {
@@ -51,11 +49,8 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
     }
     private void OnChangeSet(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackChangeSetMessage args)
     {
-        Log.Debug("--- Really Changed " + args.SetNumber);
         //Swith selecting set
-        if (backpack.Comp.SelectedSets.Contains(args.SetNumber))
-            backpack.Comp.SelectedSets.Remove(args.SetNumber);
-        else
+        if (!backpack.Comp.SelectedSets.Remove(args.SetNumber))
             backpack.Comp.SelectedSets.Add(args.SetNumber);
 
         UpdateUI(backpack.Owner, backpack.Comp);
