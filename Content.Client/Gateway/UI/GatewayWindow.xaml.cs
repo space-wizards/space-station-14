@@ -116,18 +116,7 @@ public sealed partial class GatewayWindow : FancyWindow,
             {
                 HorizontalExpand = true,
             });
-
-            var readyLabel = new Label
-            {
-                // TODO
-                Text = "Weh",
-                Margin = new Thickness(10f, 0f, 0f, 0f),
-                VerticalAlignment = VAlignment.Center,
-                HorizontalAlignment = HAlignment.Right,
-            };
-
-            box.AddChild(readyLabel);
-
+            
             bool Pressable() => ent == _current || ent == Owner;
 
             var buttonStripe = new StripeBack()

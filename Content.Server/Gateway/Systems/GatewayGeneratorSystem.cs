@@ -209,7 +209,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             }
 
             // - Mobs
-            /*var mobLayers = generatorComp.MobLayers.ToList();
+            var mobLayers = generatorComp.MobLayers.ToList();
 
             for (var i = 0; i < generatorComp.MobLayerCount; i++)
             {
@@ -219,7 +219,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
                 _biome.AddMarkerLayer(biomeComp, layer.Id);
             }
-            */
         }
     }
 }

@@ -19,6 +19,12 @@ public sealed partial class GatewayComponent : Component
     public bool Enabled;
 
     /// <summary>
+    /// Can the gateway be interacted with? If false then only settable via admins / mappers.
+    /// </summary>
+    [DataField]
+    public bool Interactable = true;
+
+    /// <summary>
     /// Name as it shows up on the ui of station gateways.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

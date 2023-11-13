@@ -1,5 +1,6 @@
 using Content.Server.Gateway.Components;
 using Content.Server.Station.Systems;
+using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.Gateway;
 using Content.Shared.Popups;
@@ -30,6 +31,7 @@ public sealed class GatewaySystem : EntitySystem
 
         SubscribeLocalEvent<GatewayComponent, EntityUnpausedEvent>(OnGatewayUnpaused);
         SubscribeLocalEvent<GatewayComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<GatewayComponent, ActivatableUIOpenAttemptEvent>(OnGatewayOpenAttempt);
         SubscribeLocalEvent<GatewayComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GatewayComponent, GatewayOpenPortalMessage>(OnOpenPortal);
     }
@@ -52,6 +54,12 @@ public sealed class GatewaySystem : EntitySystem
     {
         // no need to update ui since its just been created, just do portal
         UpdateAppearance(uid);
+    }
+
+    private void OnGatewayOpenAttempt(EntityUid uid, GatewayComponent component, ref ActivatableUIOpenAttemptEvent args)
+    {
+        if (!component.Enabled || !component.Interactable)
+            args.Cancel();
     }
 
     private void UpdateUserInterface<T>(EntityUid uid, GatewayComponent comp, T args)
@@ -134,7 +142,8 @@ public sealed class GatewaySystem : EntitySystem
 
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
-        if (args.Session.AttachedEntity == null || GetNetEntity(uid) == args.Destination)
+        if (args.Session.AttachedEntity == null || GetNetEntity(uid) == args.Destination ||
+            !comp.Enabled || !comp.Interactable)
             return;
 
         // if the gateway has an access reader check it before allowing opening
