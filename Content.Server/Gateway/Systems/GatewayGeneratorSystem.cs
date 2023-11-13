@@ -268,7 +268,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     };
 
     [DataField]
-    public int LootLayerCount = 1;
+    public int LootLayerCount = 3;
 
     /// <summary>
     /// Loot layers to pick from.
@@ -276,7 +276,13 @@ public sealed partial class GatewayGeneratorComponent : Component
     public List<ProtoId<BiomeMarkerLayerPrototype>> LootLayers = new()
     {
         "OreTin",
-
+        "OreQuartz",
+        "OreGold",
+        "OreSilver",
+        "OrePlasma",
+        "OreUranium",
+        "OreBananium",
+        "OreArtifactFragment",
     };
 }
 

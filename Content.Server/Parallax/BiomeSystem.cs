@@ -379,9 +379,14 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         var markers = _markerChunks[component];
         var loadedMarkers = component.LoadedMarkers;
+        var idx = 0;
 
         foreach (var (layer, chunks) in markers)
         {
+            // I know dictionary ordering isn't guaranteed but I just need something to differentiate seeds.
+            idx++;
+            var localIdx = idx;
+
             Parallel.ForEach(chunks, new ParallelOptions() { MaxDegreeOfParallelism = _parallel.ParallelProcessCount }, chunk =>
             {
                 if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
@@ -396,7 +401,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
                 var buffer = layerProto.Radius / 2f;
-                var markerSeed = seed + chunk.X * ChunkSize + chunk.Y;
+                var markerSeed = seed + chunk.X * ChunkSize + chunk.Y + localIdx;
                 var rand = new Random(markerSeed);
 
                 // We treat a null entity mask as requiring nothing else on the tile
