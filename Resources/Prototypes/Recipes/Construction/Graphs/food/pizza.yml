@@ -5,10 +5,64 @@
   - node: start
     entity: FoodDough
     edges:
-    - to: flat
+    - to: flat_dough
       steps:
       - tool: Rolling
         doAfter: 1
-  - node: flat
+  - node: flat_dough
     entity: FoodDoughFlat
-  # TODO: add stuff for adding ingredients then cooking the pizza, wsci
+    edges:
+    - to: toppings
+      conditions:
+      - !type:MinSolution
+        solution: sauce
+        reagent:
+          ReagentId: Ketchup
+        quantity: 5
+      steps:
+      # spreading the sauce on the dough idk
+      - tool: Rolling
+        doAfter: 1
+  - node: toppings
+    entity: FoodDoughFlatPizza
+    edges:
+    - to: added_topping
+      steps:
+      - tag: PizzaTopping
+        store: toppings
+        name: topping
+    - to: pizza
+      conditions:
+      - !type:ContainerNotEmpty
+        container: toppings
+        examineText: pizza-construction-examine-add-toppings
+      steps:
+      # apparently pizza internal temperature should be 94C to cook properly
+      - minTemperature: 367
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      - !type:FinishMeal
+        meal: Pizza
+        container: toppings
+        name: pizza-construction-name-fallback
+        description: pizza-construction-name-description-fallback
+      # TODO: combine all reagents into new pizza, adding bonus from the recipe
+      # TODO: change all sprite layers to cooked versions
+  # this only exists because it doesnt like a node with an edge going to itself
+  - node: added_topping
+    edges:
+    - to: toppings
+      steps:
+      - tool: Rolling
+        doAfter: 1
+  - node: pizza
+    edges:
+    - to: burned
+      steps:
+      - minTemperature: 380
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/burning.ogg
+  - node: burned
+    entity: FoodBadRecipe

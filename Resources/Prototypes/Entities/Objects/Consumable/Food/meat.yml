@@ -620,7 +620,7 @@
     - Raw
     - Meat
     - Meatball
-    - PizzaIngredient
+    - PizzaTopping
   - type: Sprite
     state: meatball
 
@@ -637,7 +637,7 @@
     tags:
     - Raw
     - Meat
-    - PizzaIngredient
+    - PizzaTopping
   - type: Sprite
     state: slime
 
@@ -1043,7 +1043,7 @@
     tags:
     - Cutlet
     - Meat
-    - PizzaIngredient
+    - PizzaTopping
     - Raw
   - type: Sprite
     state: cutlet
@@ -1176,7 +1176,7 @@
     - Cooked
     - Cutlet
     - Meat
-    - PizzaIngredient
+    - PizzaTopping
   - type: Sprite
     state: cutlet-cooked
   - type: SolutionContainerManager

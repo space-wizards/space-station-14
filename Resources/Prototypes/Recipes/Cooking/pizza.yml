@@ -1,0 +1,87 @@
+- type: constructedMeal
+  id: Pizza
+
+- type: constructedMealRecipe
+  id: RecipeMargheritaPizza
+  meal: Pizza
+  prototype: FoodPizzaMargherita
+  priority: -2
+  tags:
+    Cheese: 4
+
+- type: constructedMealRecipe
+  id: RecipeMushroomPizza
+  meal: Pizza
+  prototype: FoodPizzaMushroom
+  tags:
+    Cheese: 1
+    Mushroom: 4
+
+- type: constructedMealRecipe
+  id: RecipeMeatPizza
+  meal: Pizza
+  prototype: FoodPizzaMeat
+  priority: -1
+  tags:
+    Cheese: 1
+    Cutlet: 3
+
+- type: constructedMealRecipe
+  id: RecipeVegetablePizza
+  meal: Pizza
+  prototype: FoodPizzaVegetable
+  tags:
+    Carrot: 1
+    Corn: 1
+    Eggplant: 1
+
+- type: constructedMealRecipe
+  id: RecipeSassysagePizza
+  meal: Pizza
+  prototype: FoodPizzaSassysage
+  tags:
+    Cheese: 1
+    Meatball: 3
+
+- type: constructedMealRecipe
+  id: RecipePineapplePizza
+  meal: Pizza
+  prototype: FoodPizzaPineapple
+  tags:
+    Cheese: 1
+    Cutlet: 3
+    Pineapple: 3
+
+- type: constructedMealRecipe
+  id: RecipeDankPizza
+  meal: Pizza
+  prototype: FoodPizzaDank
+  tags:
+    Cheese: 1
+    Ambrosia: 3
+
+- type: constructedMealRecipe
+  id: RecipeDonkpocketPizza
+  meal: Pizza
+  prototype: FoodPizzaDonkpocket
+  tags:
+    Cheese: 1
+    DonkPocket: 3
+
+- type: constructedMealRecipe
+  id: RecipeArnoldPizza
+  meal: Pizza
+  prototype: FoodPizzaArnold
+  tags:
+    Cheese: 1
+    Cutlet: 3
+    CartridgePistol: 8
+  # TODO: add component to the pizza for arm/muting/gibbing behaviour
+
+- type: constructedMealRecipe
+  id: RecipeMousePizza
+  meal: Pizza
+  prototype: FoodPizzaMouse
+  tags:
+    Cheese: 2
+    Mouse: 1

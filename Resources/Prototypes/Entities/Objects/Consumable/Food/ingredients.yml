@@ -587,6 +587,7 @@
           Quantity: 5
   - type: Tag
     tags:
+    - Cheese
     - PizzaTopping
 
 - type: entity
