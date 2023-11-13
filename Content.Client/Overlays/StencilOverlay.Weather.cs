@@ -60,18 +60,6 @@ public sealed partial class StencilOverlay
 
         // Draw the rain
         worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
-
-        // TODO: This is very similar to parallax but we need stencil support but we can probably combine these somehow
-        // and not make it spaghetti, while getting the advantages of not-duped code?
-
-        // Okay I have spent like 5 hours on this at this point and afaict you have one of the following comprises:
-        // - No scrolling so the weather is always centered on the player
-        // - Crappy looking rotation but strafing looks okay and scrolls
-        // - Crappy looking strafing but rotation looks okay.
-        // - No rotation
-        // - Storing state across frames to do scrolling and just having it always do topdown.
-
-        // I have chosen no rotation.
         _parallax.DrawParallax(worldHandle, worldAABB, sprite, curTime, position, Vector2.Zero, modulate: (weatherProto.Color ?? Color.White).WithAlpha(alpha));
 
         worldHandle.SetTransform(Matrix3.Identity);
