@@ -19,6 +19,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.Rounding;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -59,6 +60,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
+        SubscribeLocalEvent<NinjaRoleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
     }
 
     public override void Update(float frameTime)
@@ -158,10 +160,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         if (mind.Session == null)
             return;
 
-        var config = NinjaRule(uid);
-        if (config == null)
-            return;
-
         var role = new NinjaRoleComponent
         {
             PrototypeId = "SpaceNinja"
@@ -178,10 +176,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         if (warps.Count > 0)
             role.SpiderChargeTarget = _random.Pick(warps);
-
-        var session = mind.Session;
-        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
-        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
     }
 
     // TODO: PowerCellDraw, modify when cloak enabled
@@ -238,6 +232,21 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         if (_mind.TryGetObjectiveComp<TerrorConditionComponent>(uid, out var obj))
         {
             obj.CalledInThreat = true;
+        }
+    }
+
+    private void OnRoleAddNotify(EntityUid mindId, NinjaRoleComponent comp, ref MindRoleAddedEvent args)
+    {
+        var query = EntityQueryEnumerator<NinjaRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var ninjaRule, out var gameRule))
+        {
+            if (!_gameTicker.IsGameRuleAdded(uid, gameRule))
+                return;
+            if (!_mind.TryGetSession(mindId, out var session))
+                return;
+
+            _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
+            _audio.PlayGlobal(ninjaRule.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         }
     }
 }
