@@ -1,11 +1,4 @@
 Entries:
-- author: Errant-4
-  changes:
-  - message: Crit/Dead people that somehow end up holding a gun can no longer fire
-      them. The Gundead aren't real, they can't hurt you.
-    type: Fix
-  id: 4647
-  time: '2023-08-21T18:27:08.0000000+00:00'
 - author: Verslebas
   changes:
   - message: Changed admin ghost's hands order
@@ -3540,3 +3533,11 @@ Entries:
     type: Add
   id: 5129
   time: '2023-11-10T19:19:32.0000000+00:00'
+- author: Meower
+  changes:
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0430 \u0432\u043C\u0435\u0441\
+      \u0442\u0438\u043C\u043E\u0441\u0442\u044C \u0432\u0435\u0449\u043C\u0435\u0448\
+      \u043A\u043E\u0432 \u0441\u0438\u043D\u0434\u0438\u043A\u0430\u0442\u0430"
+    type: Tweak
+  id: 5130
+  time: '2023-11-13T20:46:07.0000000+00:00'
