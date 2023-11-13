@@ -62,6 +62,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RevolutionaryRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
+        SubscribeLocalEvent<RevolutionaryRoleComponent, MindRoleAddedEvent>(OnRoleAddNotify);
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -213,13 +214,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
         }
-        if (mind?.Session != null)
-        {
-            var message = Loc.GetString("rev-role-greeting");
-            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
-            _audioSystem.PlayGlobal("/Audio/Ambience/Antag/headrev_start.ogg", ev.Target);
-        }
     }
 
     public void OnHeadRevAdmin(EntityUid mindId, MindComponent? mind = null)
@@ -313,6 +307,26 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         return false;
+    }
+
+    private void OnRoleAddNotify(EntityUid mindId, RevolutionaryRoleComponent comp, ref MindRoleAddedEvent args)
+    {
+        // I didn't see any notification for the head rev,
+        // maybe I need to check for that
+        var query = EntityQueryEnumerator<RevolutionaryRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var revRule, out var gameRule))
+        {
+            // Forgive me for copy-pasting nukies.
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                return;
+            if (!_mind.TryGetSession(mindId, out var session))
+                return;
+
+            var message = Loc.GetString("rev-role-greeting");
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, session.ConnectedClient, Color.Red);
+            _audioSystem.PlayGlobal(revRule.HeadRevStartSound, session);
+        }
     }
 
     private static readonly string[] Outcomes =
