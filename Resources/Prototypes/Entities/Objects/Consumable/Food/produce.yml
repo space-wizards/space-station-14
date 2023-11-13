@@ -964,6 +964,8 @@
   - type: Tag
     tags:
     - Fruit
+    - Pineapple
+    - PizzaIngredient
 
 - type: entity
   name: onion slice
