@@ -24,6 +24,7 @@
       - id: PlushieXeno
       - id: PlushieHampter
       - id: PlushieMoth
+      - id: PlushiePenguin
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -269,6 +270,7 @@
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
+      - id: ClothingShoesSkates
 
 - type: entity
   id: CrateFunBikeHornImplants
@@ -302,8 +304,8 @@
       - id: TargetDarts
         amount: 1
       - id: BoxDarts
-        amount: 1
+        amount: 2
       - id: BoxDarts
         amount: 1
         prob: 0.05
-  
+

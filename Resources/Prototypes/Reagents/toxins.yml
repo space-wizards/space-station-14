@@ -442,19 +442,34 @@
   flavor: bitter
   color: "#FFFFE5"
   metabolisms:
-    Poison:
+    Food:
       effects:
+      - !type:PopupMessage
+        conditions:
+          - !type:OrganType
+            type: Human
+        reagent: Protein
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-sick" ]
+        probability: 0.5
+      - !type:ChemVomit
+        probability: 0.1
+        conditions:
+          - !type:OrganType
+            type: Human
       - !type:HealthChange
         conditions:
         - !type:OrganType
           type: Human
         damage:
           types:
-            Poison: 2
+            Poison: 1
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
-          type: Animal
+          type: Human
+          shouldHave: false
         reagent: Protein
         amount: 0.5
 

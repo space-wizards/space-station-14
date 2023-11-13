@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems

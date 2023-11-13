@@ -87,19 +87,19 @@ namespace Content.Shared.Movement.Components
         /// <summary>
         /// The acceleration applied to mobs when moving.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
         public float Acceleration = DefaultAcceleration;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
         public float Friction = DefaultFriction;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
         public float? FrictionNoInput;
 
         [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]

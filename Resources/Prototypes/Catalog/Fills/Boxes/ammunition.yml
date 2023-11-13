@@ -20,7 +20,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolCaselessRifle
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .25 caseless (practice) magazines
@@ -31,7 +31,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolCaselessRiflePractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .25 caseless (rubber) magazines
@@ -42,7 +42,7 @@
   - type: StorageFill
     contents:
       - id: MagazineCaselessRifleRubber
-        amount: 6
+        amount: 4
 
 # LightRifle
 - type: entity
@@ -54,7 +54,7 @@
   - type: StorageFill
     contents:
       - id: MagazineLightRifle
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .30 rifle (practice) magazines
@@ -65,7 +65,7 @@
   - type: StorageFill
     contents:
       - id: MagazineLightRiflePractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .30 rifle (rubber) magazines
@@ -76,7 +76,7 @@
   - type: StorageFill
     contents:
       - id: MagazineLightRifleRubber
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of Vector magazines
@@ -132,7 +132,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistol
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of pistol .35 auto (practice) magazines
@@ -143,7 +143,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolPractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of pistol .35 auto (rubber) magazines
@@ -154,7 +154,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolRubber
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of machine pistol .35 auto magazines
@@ -165,7 +165,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolHighCapacity
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of machine pistol .35 auto (practice) magazines
@@ -176,7 +176,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolHighCapacityPractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of machine pistol .35 auto (rubber) magazines
@@ -187,7 +187,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolHighCapacityRubber
-        amount: 6
+        amount: 4
 
 
 - type: entity
@@ -233,7 +233,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgun
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of (.50 beanbag) ammo drums
@@ -244,7 +244,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunBeanbag
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of (.50 slug) ammo drums
@@ -255,7 +255,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunSlug
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of (.50 incendiary) ammo drums
@@ -266,7 +266,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunIncendiary
-        amount: 6
+        amount: 4
 
 # base BallisticAmmoProvider dispensers
 - type: entity
@@ -278,7 +278,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Item
-    size: 30
+    size: Normal
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
 
@@ -396,7 +396,7 @@
   - type: StorageFill
     contents:
       - id: MagazineRifle
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .20 rifle (practice) magazines
@@ -407,7 +407,7 @@
   - type: StorageFill
     contents:
       - id: MagazineRiflePractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .20 rifle (rubber) magazines
@@ -418,4 +418,4 @@
   - type: StorageFill
     contents:
       - id: MagazineRifleRubber
-        amount: 6
+        amount: 4

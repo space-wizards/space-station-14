@@ -7,7 +7,8 @@
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
   - type: Storage
-    capacity: 120
+    maxItemSize: Huge
+    maxTotalWeight: 40
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
@@ -162,8 +163,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
-  - type: Storage
-    capacity: 131
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -228,7 +227,23 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
+  - type: Item
+    size: Ginormous
   - type: Storage
-    capacity: 9999
+    maxItemSize: Huge
+    maxTotalWeight: 200 #5 duffels worth of gear
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCBURN
+  name: CBURN duffel bag
+  description: A duffel bag containing a variety of biological containment equipment.
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    maxTotalWeight: 40
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1

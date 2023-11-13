@@ -9,9 +9,9 @@ using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Content.Shared.PDA;
 using Content.Shared.StationRecords;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Mind.Commands;
 
