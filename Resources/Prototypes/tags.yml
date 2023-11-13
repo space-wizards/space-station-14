@@ -285,6 +285,9 @@
   id: Catwalk
 
 - type: Tag
+  id: Cheese
+
+- type: Tag
   id: Chicken
 
 - type: Tag
@@ -424,6 +427,9 @@
 
 - type: Tag
   id: Egg
+
+- type: Tag
+  id: Eggplant
 
 - type: Tag
   id: EmagImmune
@@ -792,6 +798,9 @@
   id: MonkeyWearable
 
 - type: Tag
+  id: Mushroom
+
+- type: Tag
   id: Pickaxe
 
 - type: Tag
@@ -807,10 +816,16 @@
   id: PillCanister
 
 - type: Tag
+  id: Pineapple
+
+- type: Tag
   id: Pipe
 
 - type: Tag
   id: Pizza
+
+- type: Tag
+  id: PizzaTopping
 
 - type: Tag
   id: PlantAnalyzer
