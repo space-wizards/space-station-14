@@ -6,7 +6,6 @@ using Content.Server.Procedural;
 using Content.Shared.Dataset;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
-using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
@@ -17,7 +16,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -221,98 +219,4 @@ public sealed class GatewayGeneratorSystem : EntitySystem
             }
         }
     }
-}
-
-/// <summary>
-/// Generates gateway destinations at a regular interval.
-/// </summary>
-[RegisterComponent]
-public sealed partial class GatewayGeneratorComponent : Component
-{
-    /// <summary>
-    /// Prototype to spawn on the generated map if applicable.
-    /// </summary>
-    [DataField]
-    public EntProtoId? Proto = "Gateway";
-
-    /// <summary>
-    /// Next time another seed unlocks.
-    /// </summary>
-    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextUnlock;
-
-    /// <summary>
-    /// How long it takes to unlock another destination once one is taken.
-    /// </summary>
-    [DataField]
-    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(45);
-
-    /// <summary>
-    /// Maps we've generated.
-    /// </summary>
-    [DataField]
-    public List<EntityUid> Generated = new();
-
-    [DataField]
-    public int MobLayerCount = 1;
-
-    /// <summary>
-    /// Mob layers to pick from.
-    /// </summary>
-    [DataField]
-    public List<ProtoId<BiomeMarkerLayerPrototype>> MobLayers = new()
-    {
-        "Carps",
-        "Xenos",
-    };
-
-    [DataField]
-    public int LootLayerCount = 3;
-
-    /// <summary>
-    /// Loot layers to pick from.
-    /// </summary>
-    public List<ProtoId<BiomeMarkerLayerPrototype>> LootLayers = new()
-    {
-        "OreTin",
-        "OreQuartz",
-        "OreGold",
-        "OreSilver",
-        "OrePlasma",
-        "OreUranium",
-        "OreBananium",
-        "OreArtifactFragment",
-    };
-}
-
-[RegisterComponent]
-public sealed partial class GatewayGeneratorDestinationComponent : Component
-{
-    /// <summary>
-    /// Generator that created this destination.
-    /// </summary>
-    [DataField]
-    public EntityUid Generator;
-
-    /// <summary>
-    /// Is the map locked from being used still or unlocked.
-    /// Used in conjunction with the attached generator's NextUnlock.
-    /// </summary>
-    [DataField]
-    public bool Locked = true;
-
-    [DataField]
-    public bool Loaded;
-
-    /// <summary>
-    /// Seed used for this destination.
-    /// </summary>
-    [DataField]
-    public int Seed;
-
-    /// <summary>
-    /// Origin of the gateway.
-    /// </summary>
-    [DataField]
-    public Vector2i Origin;
 }

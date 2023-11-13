@@ -116,7 +116,7 @@ public sealed partial class GatewayWindow : FancyWindow,
             {
                 HorizontalExpand = true,
             });
-            
+
             bool Pressable() => ent == _current || ent == Owner;
 
             var buttonStripe = new StripeBack()
@@ -129,7 +129,7 @@ public sealed partial class GatewayWindow : FancyWindow,
                 {
                     new Label()
                     {
-                        Text = "Locked",
+                        Text = Loc.GetString("gateway-window-locked"),
                         HorizontalAlignment = HAlignment.Center,
                         VerticalAlignment = VAlignment.Center,
                     }
