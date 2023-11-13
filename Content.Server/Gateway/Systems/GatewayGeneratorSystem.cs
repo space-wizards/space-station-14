@@ -43,7 +43,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     private const string PlanetNames = "names_borer";
 
     // TODO:
-    // Reset it back to 3 variants
+    // Fix shader some more
     // Show these in UI
     // Use regular mobs for thingo.
 
