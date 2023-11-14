@@ -1,7 +1,10 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 ﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
+using Content.Server.Shuttles.Systems;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Mind;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
@@ -18,6 +21,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
 
     public override void Initialize()
     {
@@ -71,12 +75,18 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         {
             // first get the total number of players that were in these game rules combined
             var total = 0;
+            var totalInCustody = 0;
             foreach (var (_, minds) in summary)
             {
                 total += minds.Count;
+                totalInCustody += minds.Where(m => IsInCustody(m)).Count();
             }
 
             var result = Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent));
+            if (agent == Loc.GetString("traitor-round-end-agent-name"))
+            {
+                result += "\n" + Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent));
+            }
             // next add all the players with its own prepended text
             foreach (var (prepend, minds) in summary)
             {
@@ -123,14 +133,16 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             result += "\n";
 
+            var custody = IsInCustody(mindId, mind) ? Loc.GetString("objectives-in-custody") + " " : "";
+
             var objectives = mind.AllObjectives.ToArray();
             if (objectives.Length == 0)
             {
-                result += Loc.GetString("objectives-no-objectives", ("title", title), ("agent", agent));
+                result += Loc.GetString("objectives-no-objectives", ("custody", custody), ("title", title), ("agent", agent));
                 continue;
             }
 
-            result += Loc.GetString("objectives-with-objectives", ("title", title), ("agent", agent));
+            result += Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent));
 
             foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
             {
@@ -196,6 +208,27 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Returns whether a target is considered 'in custody' (cuffed on the shuttle).
+    /// </summary>
+    private bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
+    {
+        if (!Resolve(mindId, ref mind))
+            return false;
+
+        // Ghosting will not save you
+        bool originalEntityInCustody = false;
+        EntityUid? originalEntity = GetEntity(mind.OriginalOwnedEntity);
+        if (originalEntity.HasValue && originalEntity != mind.OwnedEntity)
+        {
+            originalEntityInCustody = TryComp<CuffableComponent>(originalEntity, out var origCuffed) && origCuffed.CuffedHandCount > 0
+                   && _emergencyShuttle.IsTargetEscaping(originalEntity.Value);
+        }
+
+        return originalEntityInCustody || (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0
+               && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value));
     }
 }
 
