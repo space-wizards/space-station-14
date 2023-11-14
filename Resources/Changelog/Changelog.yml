@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Reduced both the damage and health of giant spiders., type: Tweak}
-  id: 4670
-  time: '2023-08-24T01:20:53.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: Heaters and freezers now work faster. TEGs now have their power output
@@ -2906,3 +2901,9 @@ Entries:
       how fires spread., type: Fix}
   id: 5169
   time: '2023-11-14T11:55:45.0000000+00:00'
+- author: Chubbygummibear
+  changes:
+  - {message: Fixed thrown entities physics being set to sleep if the throw was stopped
+      by colliding with something, type: Fix}
+  id: 5170
+  time: '2023-11-14T12:54:35.0000000+00:00'
