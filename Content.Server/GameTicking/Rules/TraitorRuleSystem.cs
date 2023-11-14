@@ -81,13 +81,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", traitor.Codewords))));
             _audioSystem.PlayGlobal(traitor.GreetSoundNotification, session);
 
-            // Doing this pda stuff a second time to print the message is suboptimal.
-            // This is data that could be cached in the TraitorRoleComponent
-            // after being fetched once?
             if (comp.UplinkPDA == null)
-            {
                 return;
-            }
             Note[]? code = null;
             code = Comp<RingerUplinkComponent>(comp.UplinkPDA.Value).Code;
             if (code != null)
