@@ -8,10 +8,6 @@ namespace Content.Shared.Ghost;
 [AutoGenerateComponentState(true)]
 public sealed partial class GhostComponent : Component
 {
-    // I have no idea what this means I just wanted to kill comp references.
-    [ViewVariables]
-    public bool IsAttached;
-
     // Actions
     [DataField]
     public EntProtoId ToggleLightingAction = "ActionToggleLighting";
