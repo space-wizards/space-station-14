@@ -1,12 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: 'The Syndicate EMAG now provides cyborgs with an updated lawset on use,
-      making typical laws only apply to the user and preventing your new "friend"
-      from outing your activities, in addition to stunning the cyborg for a short
-      time.', type: Tweak}
-  id: 4668
-  time: '2023-08-23T23:55:00.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Gardening cyborg module has been splitted into harvesting (scythe,
@@ -2905,3 +2897,13 @@ Entries:
       They are useful for carrying someone heavy in your arms., type: Add}
   id: 5167
   time: '2023-11-13T23:55:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The action bar now dynamically expands to the amount of actions present.,
+    type: Tweak}
+  - {message: The action bar is now positioned along the top of the screen in the
+      separated UI mode., type: Tweak}
+  - {message: Fixed the action bar not displaying the correct hotkeys for actions.,
+    type: Fix}
+  id: 5168
+  time: '2023-11-14T03:27:14.0000000+00:00'
