@@ -115,10 +115,8 @@
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
-      curve: !type:BoolCurve # they gotta be what we ordered
-
-
-    - !type:OrderedTargetCon
+      curve: !type:BoolCurve
+    - !type:OrderedTargetCon # they gotta be what we ordered
       curve: !type:BoolCurve
 
 - type: utilityQuery
@@ -177,23 +175,23 @@
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
+        #- type: utilityQuery
+        #  id: NearbyShoes
+        #  query:
+        #    - !type:ComponentQuery
+        #      components:
+        #        - type: Clothing
+        #    - !type:ClothingSlotFilter
+        #      slotFlags: Feet
+        #  considerations:
+        #    - !type:TargetDistanceCon
+        #      curve: !type:PresetCurve
+        #        preset: TargetDistance
+        #    - !type:TargetAccessibleCon
+        #      curve: !type:BoolCurve
 
-#- type: utilityQuery
-#  id: NearbyShoes
-#  query:
-#    - !type:ComponentQuery
-#      components:
-#        - type: Clothing
-#    - !type:ClothingSlotFilter
-#      slotFlags: Feet
-#  considerations:
-#    - !type:TargetDistanceCon
-#      curve: !type:PresetCurve
-#        preset: TargetDistance
-#    - !type:TargetAccessibleCon
-#      curve: !type:BoolCurve
+        # Presets
 
-# Presets
 
 - type: utilityCurvePreset
   id: TargetDistance
