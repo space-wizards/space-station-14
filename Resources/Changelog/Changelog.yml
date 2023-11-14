@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: All plates can now be made in the autolathe., type: Tweak}
-  id: 4673
-  time: '2023-08-24T18:01:14.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Added pinging a Discord role when the round ends., type: Add}
@@ -2905,3 +2900,9 @@ Entries:
   - {message: cloth can be crafted from cotton (made from cotton bols), type: Add}
   id: 5172
   time: '2023-11-14T23:27:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Added the disposal signal router which is controlled by signals instead
+      of tags., type: Add}
+  id: 5173
+  time: '2023-11-14T23:30:43.0000000+00:00'
