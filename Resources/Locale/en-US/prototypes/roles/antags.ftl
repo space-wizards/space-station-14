@@ -1,4 +1,4 @@
-﻿roles-antag-syndicate-agent-name = Syndicate agent
+roles-antag-syndicate-agent-name = Syndicate agent
 roles-antag-syndicate-agent-objective = Complete your objectives without being caught.
 
 roles-antag-initial-infected-name = Initial Infected
@@ -27,3 +27,6 @@ roles-antag-subverted-silicon-objective = Follow your new laws and do bad unto t
 
 roles-antag-space-ninja-name = Space Ninja
 roles-antag-space-ninja-objective = Use your stealth to sabotage the station, nom on electrical wires.
+
+roles-antag-pirate-name = Pirate
+roles-antag-pirate-objective = Plunder the booty, exhibit swarthiness.
