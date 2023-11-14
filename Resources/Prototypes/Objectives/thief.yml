@@ -178,11 +178,11 @@
     - Moth
   - type: StealCondition
     stealGroup: LAMP
-    minCollectionSize: 10
-    maxCollectionSize: 50
+    minCollectionSize: 1
+    maxCollectionSize: 30
     verifyMapExistance: false
   - type: Objective
-    difficulty: 0
+    difficulty: 0 # just for fun, collectings LAMP on Moth
 
 # steal item
 
