@@ -1,13 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'Gardening cyborg module has been splitted into harvesting (scythe,
-      hatchet, plant bag* (New!) ) and gardening modules (hoe, spade, clippers, bucket*
-      (New!)', type: Tweak}
-  - {message: Book bag has been added to cybord literacy module, type: Tweak}
-  - {message: Book bag content now can be dumped on, type: Tweak}
-  id: 4669
-  time: '2023-08-24T00:12:05.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Reduced both the damage and health of giant spiders., type: Tweak}
@@ -2907,3 +2898,11 @@ Entries:
     type: Fix}
   id: 5168
   time: '2023-11-14T03:27:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed candle in-hand sprites not updating when the candle is extinguished.,
+    type: Fix}
+  - {message: Fixed flammable object collisions being processed twice. This may affect
+      how fires spread., type: Fix}
+  id: 5169
+  time: '2023-11-14T11:55:45.0000000+00:00'
