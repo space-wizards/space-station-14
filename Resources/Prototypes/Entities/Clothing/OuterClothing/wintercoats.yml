@@ -225,8 +225,29 @@
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterArmoredHoS
+  name: head of security's armored winter coat
+  description: A sturdy, winter coat designed for the lonely and cold shifts.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatarmoredhos.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatarmoredhos.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.8 #slightly less bulletproof then warden's normal coat
+        Heat: 0.70
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterHOS
+
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHoS
-  name: head of security's winter coat
+  name: head of security's  winter coat
+  description: A sturdy, winter coat designed for the lonely and cold shifts.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
