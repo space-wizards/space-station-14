@@ -189,7 +189,7 @@ namespace Content.Server.Polymorph.Systems
             // last polymorph ended.
             if (TryComp<PolymorphableComponent>(uid, out var polymorphableComponent) &&
                 polymorphableComponent.LastPolymorphEnd != null &&
-                _gameTiming.CurTime <= polymorphableComponent.LastPolymorphEnd + proto.Cooldown)
+                _gameTiming.CurTime < polymorphableComponent.LastPolymorphEnd + proto.Cooldown)
                 return null;
 
             // mostly just for vehicles
