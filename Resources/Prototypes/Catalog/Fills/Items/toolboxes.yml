@@ -81,23 +81,20 @@
         prob: 0.5
 
 - type: entity
-  id: ToolboxSyndicateFilled
-  name: suspicious toolbox
-  suffix: Filled
   parent: ToolboxSyndicate
+  id: ToolboxSyndicateFilled
+  suffix: Filled
   components:
-  - type: Storage
-    maxSlots: 8
   - type: StorageFill
     contents:
-      - id: Crowbar
-      - id: Wrench
-      - id: Screwdriver
-      - id: Wirecutter
-      - id: Welder
-      - id: Multitool
-      - id: ClothingHandsGlovesCombat
-      - id: ClothingMaskGasSyndicate
+    - id: Crowbar
+    - id: Wrench
+    - id: Screwdriver
+    - id: Wirecutter
+    - id: Welder
+    - id: Multitool
+    - id: ClothingHandsGlovesCombat
+    - id: ClothingMaskGasSyndicate
 
 - type: entity
   id: ToolboxGoldFilled

@@ -7,10 +7,8 @@ using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Players;
-using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -21,10 +19,8 @@ namespace Content.Server.Mind;
 
 public sealed class MindSystem : SharedMindSystem
 {
-    [Dependency] private readonly ActorSystem _actor = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IMapManager _maps = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedGhostSystem _ghosts = default!;
@@ -176,7 +172,7 @@ public sealed class MindSystem : SharedMindSystem
         }
 
         if (GetSession(mind) is { } session)
-            _actor.Attach(entity, session);
+            _players.SetAttachedEntity(session, entity);
 
         mind.VisitingEntity = entity;
 
@@ -203,7 +199,7 @@ public sealed class MindSystem : SharedMindSystem
 
         var owned = mind.OwnedEntity;
         if (GetSession(mind) is { } session)
-            _actor.Attach(owned, session);
+            _players.SetAttachedEntity(session, owned);
 
         if (owned.HasValue)
         {
@@ -292,7 +288,7 @@ public sealed class MindSystem : SharedMindSystem
         var session = GetSession(mind);
         if (session != null && !alreadyAttached && mind.VisitingEntity == null)
         {
-            _actor.Attach(entity, session, true);
+            _players.SetAttachedEntity(session, entity, true);
             DebugTools.Assert(session.AttachedEntity == entity, $"Failed to attach entity.");
             Log.Info($"Session {session.Name} transferred to entity {entity}.");
         }
@@ -333,7 +329,7 @@ public sealed class MindSystem : SharedMindSystem
 
         if (mind.Session != null)
         {
-            _actor.Attach(null, GetSession(mind)!);
+            _players.SetAttachedEntity(GetSession(mind), null);
             mind.Session = null;
         }
 
@@ -367,7 +363,7 @@ public sealed class MindSystem : SharedMindSystem
         {
             mind.Session = ret;
             _pvsOverride.AddSessionOverride(mindId, ret);
-            _actor.Attach(mind.CurrentEntity, ret);
+            _players.SetAttachedEntity(ret, mind.CurrentEntity);
         }
 
         // session may be null, but user data may still exist for disconnected players.
