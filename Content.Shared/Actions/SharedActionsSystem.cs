@@ -170,6 +170,21 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
+    public void ReduceUseDelay(EntityUid? actionId, TimeSpan? lowerDelay)
+    {
+        if (!TryGetActionData(actionId, out var action))
+            return;
+
+        if (action.UseDelay != null && lowerDelay != null)
+            action.UseDelay = action.UseDelay - lowerDelay;
+
+        if (action.UseDelay < TimeSpan.Zero)
+            action.UseDelay = null;
+
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
     #region ComponentStateManagement
     protected virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
     {
@@ -223,12 +238,49 @@ public abstract class SharedActionsSystem : EntitySystem
         return action.Charges;
     }
 
+    public void AddCharges(EntityUid? actionId, int addCharges)
+    {
+        if (!TryGetActionData(actionId, out var action) || action.Charges == null || addCharges < 1)
+            return;
+
+        action.Charges += addCharges;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
+    public void RemoveCharges(EntityUid? actionId, int? removeCharges)
+    {
+        if (!TryGetActionData(actionId, out var action) || action.Charges == null)
+            return;
+
+        if (removeCharges == null)
+            action.Charges = removeCharges;
+        else
+            action.Charges -= removeCharges;
+
+        if (action.Charges is < 0)
+            action.Charges = null;
+
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
     public void SetUsesBeforeDelay(EntityUid? actionId, int usesBeforeDelay)
     {
         if (!TryGetActionData(actionId, out var action) || action.UsesBeforeDelay == usesBeforeDelay)
             return;
 
         action.UsesBeforeDelay = usesBeforeDelay;
+        UpdateAction(actionId, action);
+        Dirty(actionId.Value, action);
+    }
+
+    public void AddUsesBeforeDelay(EntityUid? actionId, int addUses)
+    {
+        if (!TryGetActionData(actionId, out var action) || addUses < 1)
+            return;
+
+        action.UsesBeforeDelay += addUses;
         UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
