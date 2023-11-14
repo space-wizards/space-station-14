@@ -80,11 +80,6 @@ namespace Content.Client.Input
                 common.AddFunction(boundKey);
             }
 
-            foreach (var boundKey in ContentKeyFunctions.GetLoadoutBoundKeys())
-            {
-                common.AddFunction(boundKey);
-            }
-
             var aghost = contexts.New("aghost", "common");
             aghost.AddFunction(EngineKeyFunctions.MoveUp);
             aghost.AddFunction(EngineKeyFunctions.MoveDown);

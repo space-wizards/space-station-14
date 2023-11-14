@@ -292,6 +292,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         // Assign traitor roles
         _roleSystem.MindAddRole(mindId, new TraitorRoleComponent
         {
+
             PrototypeId = traitorRule.TraitorPrototypeId,
             UplinkPDA   = pda,
         });

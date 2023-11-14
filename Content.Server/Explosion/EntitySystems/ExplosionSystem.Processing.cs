@@ -406,6 +406,19 @@ public sealed partial class ExplosionSystem
             _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
         }
 
+        // if it's a container, try to damage all its contents
+        if (_containersQuery.TryGetComponent(uid, out var containers))
+        {
+            foreach (var container in containers.Containers.Values)
+            {
+                foreach (var ent in container.ContainedEntities)
+                {
+                    // setting throw force to 0 to prevent offset items inside containers
+                    ProcessEntity(ent, epicenter, damage, 0f, id, _transformQuery.GetComponent(uid));
+                }
+            }
+        }
+
         // throw
         if (xform != null // null implies anchored
             && !xform.Anchored

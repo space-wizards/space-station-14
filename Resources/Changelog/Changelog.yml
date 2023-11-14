@@ -1,67 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed various head locker contents., type: Tweak}
-  id: 4661
-  time: '2023-08-22T14:49:53.0000000+00:00'
-- author: Doru991
-  changes:
-  - {message: Zombies' eyes turn red the way they were supposed to., type: Fix}
-  - {message: 'When a zombie is cloned, the cloned person''s eyes are visible again.',
-    type: Fix}
-  id: 4662
-  time: '2023-08-23T04:52:00.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'R&D has developed the construction cyborg module for engineering cyborgs,
-      now they can construct anything with steel glass or rods.', type: Add}
-  id: 4663
-  time: '2023-08-23T21:34:39.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: 'Added several new Arachnid markings, including appendage stripes, chest
-      designs, chelicerae and an overlay.', type: Add}
-  id: 4664
-  time: '2023-08-23T21:37:42.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: 'The dead body examine text is more accurate for dead, disconnected
-      players.', type: Tweak}
-  id: 4665
-  time: '2023-08-23T21:41:54.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Changed shape of short hair to be like the old one., type: Tweak}
-  id: 4666
-  time: '2023-08-23T21:42:33.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Changed the contents of the snack vendor to better fit snacks., type: Tweak}
-  - {message: 'Added C&Ds, Bob''s sunflower seeds and Sweetie''s pistachios.', type: Add}
-  id: 4667
-  time: '2023-08-23T21:49:25.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: 'The Syndicate EMAG now provides cyborgs with an updated lawset on use,
-      making typical laws only apply to the user and preventing your new "friend"
-      from outing your activities, in addition to stunning the cyborg for a short
-      time.', type: Tweak}
-  id: 4668
-  time: '2023-08-23T23:55:00.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: 'Gardening cyborg module has been splitted into harvesting (scythe,
-      hatchet, plant bag* (New!) ) and gardening modules (hoe, spade, clippers, bucket*
-      (New!)', type: Tweak}
-  - {message: Book bag has been added to cybord literacy module, type: Tweak}
-  - {message: Book bag content now can be dumped on, type: Tweak}
-  id: 4669
-  time: '2023-08-24T00:12:05.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Reduced both the damage and health of giant spiders., type: Tweak}
-  id: 4670
-  time: '2023-08-24T01:20:53.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: Heaters and freezers now work faster. TEGs now have their power output
@@ -2905,3 +2842,68 @@ Entries:
   - {message: Added Bloodsucker's animal organs to heal by drinking blood., type: Add}
   id: 5160
   time: '2023-11-13T00:42:48.0000000+00:00'
+- author: themias
+  changes:
+  - {message: The round end summary screen now lists the syndies in custody. (Cuffed
+      on the shuttle), type: Add}
+  id: 5161
+  time: '2023-11-13T10:04:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make space ambient music more likely to play by reducing the required
+      space range., type: Tweak}
+  id: 5162
+  time: '2023-11-13T11:10:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Expedition timer bumped from 7 minutes to 11 minutes., type: Tweak}
+  id: 5163
+  time: '2023-11-13T22:39:34.0000000+00:00'
+- author: Simyon
+  changes:
+  - {message: Muting the station news notification on your PDA now works again., type: Fix}
+  id: 5164
+  time: '2023-11-13T22:43:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Explosions now damage items in containers like backpacks or equipped
+      items., type: Tweak}
+  id: 5165
+  time: '2023-11-13T22:57:52.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'Now chefs can make a cake cat. You will need: 1 Cake plain, 1 raisin
+      snack, 1 animal heart, 5u cognizine, 15u milk, 15 second in microwave. And new
+      sweet ghost role CAK is created!', type: Add}
+  id: 5166
+  time: '2023-11-13T23:23:03.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Animal carriers can now be found in the maintenance or bought in cargo.
+      They are useful for carrying someone heavy in your arms., type: Add}
+  id: 5167
+  time: '2023-11-13T23:55:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The action bar now dynamically expands to the amount of actions present.,
+    type: Tweak}
+  - {message: The action bar is now positioned along the top of the screen in the
+      separated UI mode., type: Tweak}
+  - {message: Fixed the action bar not displaying the correct hotkeys for actions.,
+    type: Fix}
+  id: 5168
+  time: '2023-11-14T03:27:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed candle in-hand sprites not updating when the candle is extinguished.,
+    type: Fix}
+  - {message: Fixed flammable object collisions being processed twice. This may affect
+      how fires spread., type: Fix}
+  id: 5169
+  time: '2023-11-14T11:55:45.0000000+00:00'
+- author: Chubbygummibear
+  changes:
+  - {message: Fixed thrown entities physics being set to sleep if the throw was stopped
+      by colliding with something, type: Fix}
+  id: 5170
+  time: '2023-11-14T12:54:35.0000000+00:00'
