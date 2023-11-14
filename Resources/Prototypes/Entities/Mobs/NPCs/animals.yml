@@ -1910,7 +1910,7 @@
     - Passive
   - type: HTN
     rootTask:
-      task: PredatorHostileCompound
+      task: RuminantHostileCompound
   - type: EggLayer
     eggSpawn:
     - id: SpiderWeb

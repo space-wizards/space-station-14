@@ -46,27 +46,6 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
-  id: NearbyMeat
-  query:
-    - !type:ComponentWithTagsQuery
-      components:
-        - type: Food
-      tags:
-        - Meat
-  considerations:
-    - !type:TargetIsAliveCon
-      curve: !type:InverseBoolCurve
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
-    - !type:FoodValueCon
-      curve: !type:QuadraticCurve
-        slope: 1.0
-        exponent: 0.4
-    - !type:TargetAccessibleCon
-      curve: !type:BoolCurve
-
-- type: utilityQuery
   id: NearbyDrink
   query:
     - !type:ComponentQuery
@@ -198,23 +177,23 @@
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
-        #- type: utilityQuery
-        #  id: NearbyShoes
-        #  query:
-        #    - !type:ComponentQuery
-        #      components:
-        #        - type: Clothing
-        #    - !type:ClothingSlotFilter
-        #      slotFlags: Feet
-        #  considerations:
-        #    - !type:TargetDistanceCon
-        #      curve: !type:PresetCurve
-        #        preset: TargetDistance
-        #    - !type:TargetAccessibleCon
-        #      curve: !type:BoolCurve
 
-        # Presets
+#- type: utilityQuery
+#  id: NearbyShoes
+#  query:
+#    - !type:ComponentQuery
+#      components:
+#        - type: Clothing
+#    - !type:ClothingSlotFilter
+#      slotFlags: Feet
+#  considerations:
+#    - !type:TargetDistanceCon
+#      curve: !type:PresetCurve
+#        preset: TargetDistance
+#    - !type:TargetAccessibleCon
+#      curve: !type:BoolCurve
 
+# Presets
 
 - type: utilityCurvePreset
   id: TargetDistance

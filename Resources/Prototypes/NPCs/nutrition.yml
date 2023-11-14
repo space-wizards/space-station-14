@@ -9,16 +9,6 @@
           task: AllDrinkCompound
 
 - type: htnCompound
-  id: MeatCompound
-  branches:
-    - tasks:
-        - !type:HTNCompoundTask
-          task: AnyMeatCompound
-    - tasks:
-        - !type:HTNCompoundTask
-          task: AllDrinkCompound
-
-- type: htnCompound
   id: AllMealCompound
   branches:
     # Picks a nearby food, moves into range, then eats it and waits the idle time.
@@ -26,36 +16,6 @@
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyFood
-
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-            pathfindInPlanning: true
-            removeKeyOnFinish: false
-            targetKey: TargetCoordinates
-            pathfindKey: TargetPathfind
-            rangeKey: MeleeRange
-
-        - !type:HTNPrimitiveTask
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: Target
-          operator: !type:AltInteractOperator
-
-        - !type:HTNPrimitiveTask
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: IdleTime
-          operator: !type:WaitOperator
-            key: IdleTime
-
-- type: htnCompound
-  id: AnyMeatCompound
-  branches:
-    # Picks a nearby some meat(and fryed), moves into range, then eats it and waits the idle time.
-    - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:UtilityOperator
-            proto: NearbyMeat
 
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
