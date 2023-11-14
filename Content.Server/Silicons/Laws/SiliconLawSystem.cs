@@ -213,10 +213,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             return;
 
         _roles.MindAddRole(mindId, new SubvertedSiliconRoleComponent { PrototypeId = component.AntagonistRole });
-        if (_mind.TryGetSession(mindId, out var session))
-        {
-            _audioSystem.PlayGlobal(component.EmaggedSound, session);
-        }
+        _roles.MindPlaySound(mindId, component.EmaggedSound);
     }
 
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
