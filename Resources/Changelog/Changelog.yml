@@ -1,16 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: Heaters and freezers now work faster. TEGs now have their power output
-      adjusted., type: Tweak}
-  id: 4671
-  time: '2023-08-24T02:18:48.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Secret doors can be manually rotated again (at least until a dynamic
-      solution is found)., type: Fix}
-  id: 4672
-  time: '2023-08-24T16:23:11.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: All plates can now be made in the autolathe., type: Tweak}
@@ -2907,3 +2895,13 @@ Entries:
       by colliding with something, type: Fix}
   id: 5170
   time: '2023-11-14T12:54:35.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Science built cyborgs can now emote, type: Fix}
+  id: 5171
+  time: '2023-11-14T23:27:27.0000000+00:00'
+- author: Sirionaut
+  changes:
+  - {message: cloth can be crafted from cotton (made from cotton bols), type: Add}
+  id: 5172
+  time: '2023-11-14T23:27:56.0000000+00:00'
