@@ -73,6 +73,7 @@
     IDCardsStealCollectionObjective: 1
     EncryptionKeyStealCollectionObjective: 1
     CannabisStealCollectionObjective: 1
+    LAMPStealCollectionObjective: 5 #only for moth
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem

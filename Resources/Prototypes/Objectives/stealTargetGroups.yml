@@ -142,6 +142,13 @@
     sprite: Objects/Specific/Hydroponics/cannabis.rsi
     state: produce
 
+- type: stealTargetGroup
+  id: LAMP
+  name: LAMPS
+  sprite:
+    sprite: Objects/Tools/lantern.rsi
+    state: lantern
+
 # Thief single item
 
 - type: stealTargetGroup

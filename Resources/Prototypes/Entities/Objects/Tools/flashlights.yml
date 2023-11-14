@@ -66,6 +66,8 @@
   - type: Appearance
   - type: StaticPrice
     price: 40
+  - type: StealTarget
+    stealGroup: LAMP
 
 - type: entity
   name: seclite

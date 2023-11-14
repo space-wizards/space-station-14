@@ -168,6 +168,22 @@
   - type: Objective
     difficulty: 0.5
 
+- type: entity
+  noSpawn: true
+  parent: BaseThiefStealCollectionObjective
+  id: LAMPStealCollectionObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+    - Moth
+  - type: StealCondition
+    stealGroup: LAMP
+    minCollectionSize: 10
+    maxCollectionSize: 50
+    verifyMapExistance: false
+  - type: Objective
+    difficulty: 0
+
 # steal item
 
 - type: entity                                      #Security subgroup
