@@ -268,20 +268,15 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         _roleSystem.MindAddRole(mindId, new TraitorRoleComponent
         {
             PrototypeId = traitorRule.TraitorPrototypeId
-        });
-        // Assign briefing
+        }, mind);
+        // Assign briefing and greeting sound
         _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
         {
             Briefing = briefing
-        });
+        }, mind);
+        _roleSystem.MindPlaySound(mindId, traitorRule.GreetSoundNotification, mind);
         SendTraitorBriefing(mindId, traitorRule.Codewords, code);
         traitorRule.TraitorMinds.Add(mindId);
-
-        if (_mindSystem.TryGetSession(mindId, out var session))
-        {
-            // Notificate player about new role assignment
-            _audioSystem.PlayGlobal(traitorRule.GreetSoundNotification, session);
-        }
 
         // Change the faction
         _npcFaction.RemoveFaction(entity, "NanoTrasen", false);

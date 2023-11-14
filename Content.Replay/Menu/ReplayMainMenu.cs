@@ -47,7 +47,7 @@ public sealed class ReplayMainScreen : State
         _mainMenuControl.QuitButton.OnPressed += QuitButtonPressed;
         _mainMenuControl.OptionsButton.OnPressed += OptionsButtonPressed;
         _mainMenuControl.FolderButton.OnPressed += OnFolderPressed;
-        _mainMenuControl.LoadButton.OnPressed += OnLoadpressed;
+        _mainMenuControl.LoadButton.OnPressed += OnLoadPressed;
 
         _directory = new ResPath(_cfg.GetCVar(CVars.ReplayDirectory)).ToRootedPath();
         RefreshReplays();
@@ -205,7 +205,7 @@ public sealed class ReplayMainScreen : State
         _resMan.UserData.OpenOsWindow(_directory);
     }
 
-    private void OnLoadpressed(BaseButton.ButtonEventArgs obj)
+    private void OnLoadPressed(BaseButton.ButtonEventArgs obj)
     {
         if (_selected.HasValue)
         {
