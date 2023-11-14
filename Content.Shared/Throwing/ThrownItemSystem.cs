@@ -101,6 +101,7 @@ namespace Content.Shared.Throwing
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+                _broadphase.RegenerateContacts(uid, physics);
             }
 
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
