@@ -248,7 +248,7 @@
   id: DisposalSignalRouter
   graph: DisposalPipe
   startNode: start
-  targetNode: signalrouter
+  targetNode: signal_router
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -264,7 +264,7 @@
   id: DisposalSignalRouterFlipped
   graph: DisposalPipe
   startNode: start
-  targetNode: signalrouterflipped
+  targetNode: signal_router_flipped
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false

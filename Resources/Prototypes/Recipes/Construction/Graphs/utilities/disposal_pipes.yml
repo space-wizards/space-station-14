@@ -206,7 +206,7 @@
       - tool: Welding
         doAfter: 1
   # DisposalRouter
-  - node: signalrouter
+  - node: signal_router
     entity: DisposalSignalRouter
     edges:
     - to: start
@@ -220,7 +220,7 @@
       steps:
       - tool: Welding
         doAfter: 1
-  - node: signalrouterflipped
+  - node: signal_router_flipped
     entity: DisposalSignalRouterFlipped
     edges:
     - to: start
