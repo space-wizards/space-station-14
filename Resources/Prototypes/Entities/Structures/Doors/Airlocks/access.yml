@@ -207,7 +207,7 @@
   - type: AccessReader
     access: [["Command"]]
   - type: Wires
-    LayoutId: AirlockCommand
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -273,7 +273,7 @@
   - type: AccessReader
     access: [["Security"]]
   - type: Wires
-    LayoutId: AirlockSecurity
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -283,7 +283,7 @@
   - type: AccessReader
     access: [["Detective"]]
   - type: Wires
-    LayoutId: AirlockSecurity
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -293,7 +293,7 @@
   - type: AccessReader
     access: [["Brig"]]
   - type: Wires
-    LayoutId: AirlockSecurity
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -303,7 +303,7 @@
   - type: AccessReader
     access: [["Armory"]]
   - type: Wires
-    LayoutId: AirlockArmory
+    layoutId: AirlockArmory
 
 - type: entity
   parent: AirlockSecurity
@@ -805,7 +805,7 @@
     access: [["External"]]
 
 - type: entity
-  parent: AirlockShuttle
+  parent: AirlockShuttleSyndicate
   id: AirlockExternalShuttleSyndicateLocked
   suffix: External, Docking, Syndicate, Locked
   components:
@@ -813,7 +813,7 @@
     access: [["SyndicateAgent"]]
 
 - type: entity
-  parent: AirlockShuttle
+  parent: AirlockShuttleSyndicate
   id: AirlockExternalShuttleNukeopLocked
   suffix: External, Docking, Nukeop, Locked
   components:
@@ -827,6 +827,22 @@
   components:
   - type: AccessReader
     access: [["External"]]
+
+- type: entity
+  parent: AirlockGlassShuttleSyndicate
+  id: AirlockExternalGlassShuttleSyndicateLocked
+  suffix: Syndicate, Locked, Glass
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockGlassShuttleSyndicate
+  id: AirlockExternalGlassShuttleNukeopLocked
+  suffix: Nukeop, Locked, Glass
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 - type: entity
   parent: AirlockGlassShuttle

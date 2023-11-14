@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by nmajask (github) for ss14, based on sprites by Tokiko (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon-jumpsuit"
+    },
+    {
+      "name": "icon-jumpskirt"
+    },
+    {
+      "name": "icon-shirt"
+    },
+    {
+      "name": "equipped-INNERCLOTHING-jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-jumpskirt",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-shirt",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-jumpsuit-monkey",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-jumpskirt-monkey",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-shirt-monkey",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-jumpskirt",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-shirt",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-jumpskirt",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-shirt",
+      "directions": 4
+    }
+  ]
+}

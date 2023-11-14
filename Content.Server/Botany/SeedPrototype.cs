@@ -374,15 +374,15 @@ public partial class SeedData
         // Adding the new chemicals from the new species.
         foreach (var otherChem in other.Chemicals)
         {
-            Chemicals.TryAdd(otherChem.Key, otherChem.Value);
+            newSeed.Chemicals.TryAdd(otherChem.Key, otherChem.Value);
         }
 
         // Removing the inherent chemicals from the old species. Leaving mutated/crossbread ones intact.
-        foreach (var originalChem in Chemicals)
+        foreach (var originalChem in newSeed.Chemicals)
         {
             if (!other.Chemicals.ContainsKey(originalChem.Key) && originalChem.Value.Inherent)
             {
-                Chemicals.Remove(originalChem.Key);
+                newSeed.Chemicals.Remove(originalChem.Key);
             }
         }
 

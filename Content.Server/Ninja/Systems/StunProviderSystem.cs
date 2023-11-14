@@ -1,12 +1,15 @@
 using Content.Server.Ninja.Events;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Electrocution;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Stunnable;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ninja.Systems;
@@ -17,11 +20,13 @@ namespace Content.Server.Ninja.Systems;
 public sealed class StunProviderSystem : SharedStunProviderSystem
 {
     [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -55,8 +60,9 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
 
         _audio.PlayPvs(comp.Sound, target);
 
-        // not holding hands with target so insuls don't matter
-        _electrocution.TryDoElectrocution(target, uid, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
+        _damageable.TryChangeDamage(target, comp.StunDamage, false, true, null, origin: uid);
+        _stun.TryParalyze(target, comp.StunTime, refresh: false);
+
         // short cooldown to prevent instant stunlocking
         comp.NextStun = _timing.CurTime + comp.Cooldown;
 

@@ -1,10 +1,13 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Content.Server.GameTicking;
+using Content.Shared.Players;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
 
@@ -24,6 +27,9 @@ public sealed partial class TestPair
     public TestMapData? TestMap;
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; private set; } = default!;
     public RobustIntegrationTest.ClientIntegrationInstance Client { get;  private set; } = default!;
+
+    public ICommonSession? Player => Server.PlayerMan.Sessions.FirstOrDefault();
+    public ContentPlayerData? PlayerData => Player?.Data.ContentData();
 
     public PoolTestLogHandler ServerLogHandler { get;  private set; } = default!;
     public PoolTestLogHandler ClientLogHandler { get;  private set; } = default!;

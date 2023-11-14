@@ -17,7 +17,7 @@
         - ReagentId: Nutriment
           Quantity: 8
   - type: Item
-    size: 5
+    size: Small
 
 # Kebabs
 
@@ -64,6 +64,10 @@
         color: green
       - state: skewer-meat-alpha4
         color: brown
+  - type: Tag
+    tags:
+    - Meat
+    - Fruit
 
 - type: entity
   name: meat kebab
@@ -78,6 +82,9 @@
       - state: skewer-meat2
       - state: skewer-meat3
       - state: skewer-meat4
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: human kebab
@@ -98,7 +105,7 @@
 
 - type: entity
   name: rat kebab
-  parent: FoodSkewerBase
+  parent: FoodMeatKebab
   id: FoodMeatRatKebab
   description: Not so delicious rat meat, on a stick.
   components:
@@ -117,7 +124,7 @@
 
 - type: entity
   name: double rat kebab
-  parent: FoodSkewerBase
+  parent: FoodMeatKebab
   id: FoodMeatRatdoubleKebab
   description: A double serving of not so delicious rat meat, on a stick.
   components:

@@ -17,6 +17,7 @@
         - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
         - ClothingNeckCloakMoth
+        - ClothingNeckCloakVoid
         - ClothingNeckCloakGoliathCloak
         - ToySkeleton
         - Basketball
@@ -99,6 +100,9 @@
         - ClothingOuterCoatPirate
         - ClothingOuterHoodieBlack
         - ClothingOuterHoodieGrey
+        - ClothingOuterFlannelRed
+        - ClothingOuterFlannelBlue
+        - ClothingOuterFlannelGreen
         - ClothingOuterVestHazard
         - ClothingShoesBootsJack
         - ClothingShoesBootsLaceup
@@ -180,6 +184,7 @@
         - CableHVStack10
         - CableMVStack10
         - CableApcStack10
+        - PetCarrier
       chance: 0.6
       offset: 0.0
 

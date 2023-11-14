@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -8,13 +9,11 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Objectives;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
@@ -25,8 +24,9 @@ public abstract class SharedMindSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
-    // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
+    [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
 
     public override void Initialize()
@@ -37,12 +37,36 @@ public abstract class SharedMindSystem : EntitySystem
         SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnVisitingTerminating);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
+        SubscribeLocalEvent<MindComponent, ComponentStartup>(OnMindStartup);
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
         WipeAllMinds();
+    }
+
+    private void OnMindStartup(EntityUid uid, MindComponent component, ComponentStartup args)
+    {
+        if (component.UserId == null)
+            return;
+
+        if (UserMinds.TryAdd(component.UserId.Value, uid))
+            return;
+
+        var existing = UserMinds[component.UserId.Value];
+        if (existing == uid)
+            return;
+
+        if (!Exists(existing))
+        {
+            Log.Error($"Found deleted entity in mind dictionary while initializing mind {ToPrettyString(uid)}");
+            UserMinds[component.UserId.Value] = uid;
+            return;
+        }
+
+        Log.Error($"Encountered a user {component.UserId} that is already assigned to a mind while initializing mind {ToPrettyString(uid)}. Ignoring user field.");
+        component.UserId = null;
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
@@ -52,12 +76,22 @@ public abstract class SharedMindSystem : EntitySystem
 
     public virtual void WipeAllMinds()
     {
-        foreach (var mind in UserMinds.Values)
+        Log.Info($"Wiping all minds");
+        foreach (var mind in UserMinds.Values.ToArray())
         {
             WipeMind(mind);
         }
 
-        DebugTools.Assert(UserMinds.Count == 0);
+        if (UserMinds.Count == 0)
+            return;
+
+        foreach (var mind in UserMinds.Values)
+        {
+            if (Exists(mind))
+                Log.Error($"Failed to wipe mind: {ToPrettyString(mind)}");
+        }
+
+        UserMinds.Clear();
     }
 
     public EntityUid? GetMind(NetUserId user)
@@ -81,6 +115,26 @@ public abstract class SharedMindSystem : EntitySystem
         return false;
     }
 
+    public bool TryGetMind(NetUserId user, [NotNullWhen(true)] out Entity<MindComponent>? mind)
+    {
+        if (!TryGetMind(user, out var mindId, out var mindComp))
+        {
+            mind = null;
+            return false;
+        }
+
+        mind = (mindId.Value, mindComp);
+        return true;
+    }
+
+    public Entity<MindComponent> GetOrCreateMind(NetUserId user)
+    {
+        if (!TryGetMind(user, out var mind))
+            mind = CreateMind(user);
+
+        return mind.Value;
+    }
+
     private void OnVisitingTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
     {
         if (component.MindId != null)
@@ -93,15 +147,16 @@ public abstract class SharedMindSystem : EntitySystem
             return;
 
         var dead = _mobState.IsDead(uid);
+        var hasUserId = CompOrNull<MindComponent>(mindContainer.Mind)?.UserId;
         var hasSession = CompOrNull<MindComponent>(mindContainer.Mind)?.Session;
 
-        if (dead && !mindContainer.HasMind)
+        if (dead && hasUserId == null)
             args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
         else if (dead && hasSession == null)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
         else if (dead)
             args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
-        else if (!mindContainer.HasMind)
+        else if (hasUserId == null)
             args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
         else if (hasSession == null)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
@@ -129,16 +184,15 @@ public abstract class SharedMindSystem : EntitySystem
         return null;
     }
 
-    public EntityUid CreateMind(NetUserId? userId, string? name = null)
+    public Entity<MindComponent> CreateMind(NetUserId? userId, string? name = null)
     {
         var mindId = Spawn(null, MapCoordinates.Nullspace);
+        _metadata.SetEntityName(mindId, name == null ? "mind" : $"mind ({name})");
         var mind = EnsureComp<MindComponent>(mindId);
         mind.CharacterName = name;
         SetUserId(mindId, userId, mind);
 
-        Dirty(mindId, MetaData(mindId));
-
-        return mindId;
+        return (mindId, mind);
     }
 
     /// <summary>
@@ -197,7 +251,7 @@ public abstract class SharedMindSystem : EntitySystem
     /// Cleans up the VisitingEntity.
     /// </summary>
     /// <param name="mind"></param>
-    protected void RemoveVisitingEntity(MindComponent mind)
+    protected void RemoveVisitingEntity(EntityUid mindId, MindComponent mind)
     {
         if (mind.VisitingEntity == null)
             return;
@@ -212,6 +266,7 @@ public abstract class SharedMindSystem : EntitySystem
             RemCompDeferred(oldVisitingEnt, visitComp);
         }
 
+        Dirty(mindId, mind);
         RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage(), true);
     }
 
@@ -230,7 +285,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (mindId == null || !Resolve(mindId.Value, ref mind, false))
             return;
 
-        TransferTo(mindId.Value, null, mind: mind);
+        TransferTo(mindId.Value, null, createGhost:false, mind: mind);
         SetUserId(mindId.Value, null, mind: mind);
     }
 
@@ -294,6 +349,33 @@ public abstract class SharedMindSystem : EntitySystem
         return true;
     }
 
+    public bool TryGetObjectiveComp<T>(EntityUid uid, [NotNullWhen(true)] out T? objective) where T : IComponent
+    {
+        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComp(mindId, out objective, mind))
+        {
+            return true;
+        }
+        objective = default;
+        return false;
+    }
+
+    public bool TryGetObjectiveComp<T>(EntityUid mindId, [NotNullWhen(true)] out T? objective, MindComponent? mind = null) where T : IComponent
+    {
+        if (Resolve(mindId, ref mind))
+        {
+            var query = GetEntityQuery<T>();
+            foreach (var uid in mind.AllObjectives)
+            {
+                if (query.TryGetComponent(uid, out objective))
+                {
+                    return true;
+                }
+            }
+        }
+        objective = default;
+        return false;
+    }
+
     public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
     {
         session = null;
@@ -328,11 +410,11 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     public bool TryGetMind(
-        PlayerData player,
+        ContentPlayerData contentPlayer,
         out EntityUid mindId,
         [NotNullWhen(true)] out MindComponent? mind)
     {
-        mindId = player.Mind ?? default;
+        mindId = contentPlayer.Mind ?? default;
         return TryComp(mindId, out mind);
     }
 
@@ -343,35 +425,27 @@ public abstract class SharedMindSystem : EntitySystem
     {
         mindId = default;
         mind = null;
-        return _player.ContentData(player) is { } data && TryGetMind(data, out mindId, out mind);
+        if (_player.ContentData(player) is not { } data)
+            return false;
+
+        if (TryGetMind(data, out mindId, out mind))
+            return true;
+
+        DebugTools.AssertNull(data.Mind);
+        return false;
     }
 
     /// <summary>
     /// Gets a role component from a player's mind.
     /// </summary>
     /// <returns>Whether a role was found</returns>
-    public bool TryGetRole<T>(EntityUid user, [NotNullWhen(true)] out T? role) where T : Component
+    public bool TryGetRole<T>(EntityUid user, [NotNullWhen(true)] out T? role) where T : IComponent
     {
-        role = null;
+        role = default;
         if (!TryComp<MindContainerComponent>(user, out var mindContainer) || mindContainer.Mind == null)
             return false;
 
         return TryComp(mindContainer.Mind, out role);
-    }
-
-    /// <summary>
-    /// Sets the Mind's OwnedComponent and OwnedEntity
-    /// </summary>
-    /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>
-    /// <param name="uid">Entity owned by <paramref name="mind"/></param>
-    /// <param name="mindContainerComponent">MindContainerComponent owned by <paramref name="mind"/></param>
-    protected void SetOwnedEntity(MindComponent mind, EntityUid? uid, MindContainerComponent? mindContainerComponent)
-    {
-        if (uid != null)
-            Resolve(uid.Value, ref mindContainerComponent);
-
-        mind.OwnedEntity = uid;
-        mind.OwnedComponent = mindContainerComponent;
     }
 
     /// <summary>

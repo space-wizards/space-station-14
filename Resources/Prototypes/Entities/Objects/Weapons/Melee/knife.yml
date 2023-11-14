@@ -12,6 +12,7 @@
       - Knife
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Slash: 12
@@ -19,6 +20,7 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
   - type: Item
+    size: Small
   - type: Tool
     qualities:
       - Slicing
@@ -36,10 +38,8 @@
     - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
-    size: 2
     state: icon
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
   - type: GuideHelp
     guides:
@@ -56,15 +56,15 @@
     - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/cleaver.rsi
-    size: 4
     state: butch
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.5
     damage:
       types:
         Slash: 10
   - type: Item
-    size: 10
+    size: Normal
     sprite: Objects/Weapons/Melee/cleaver.rsi
   - type: GuideHelp
     guides:
@@ -82,15 +82,14 @@
     - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/combat_knife.rsi
-    size: 2
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.5
     damage:
       types:
         Slash: 10
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
   - type: DisarmMalus
     malus: 0.225
@@ -103,10 +102,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/survival_knife.rsi
-    size: 2
     state: icon
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Melee/survival_knife.rsi
 
 - type: entity
@@ -117,7 +114,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
-    size: 2
     state: icon
   - type: MeleeWeapon
     attackRate: 1.0
@@ -125,7 +121,6 @@
       types:
         Slash: 15
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
 
 - type: entity
@@ -144,7 +139,6 @@
     node: icon
   - type: Sprite
     sprite: Objects/Weapons/Melee/shiv.rsi
-    size: 2
     state: icon
   - type: MeleeWeapon
     attackRate: 1.5
@@ -152,7 +146,6 @@
       types:
         Slash: 5.5
   - type: Item
-    size: 4 #as much as a regular glass shard
     sprite: Objects/Weapons/Melee/shiv.rsi
   - type: DisarmMalus
     malus: 0.225
@@ -166,8 +159,6 @@
   - type: Construction
     graph: ReinforcedShiv
     node: icon
-    size: 2
-    state: icon
   - type: MeleeWeapon
     attackRate: 1.5
     damage:

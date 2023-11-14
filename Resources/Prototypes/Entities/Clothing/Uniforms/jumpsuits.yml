@@ -1,20 +1,13 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDeathSquad
-  name: Death squad uniform
+  name: death squad uniform
   description: Advanced armored jumpsuit used by special forces in special operations.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/deathsquad.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
-        Heat: 0.8
 
 - type: entity
   parent: ClothingUniformBase
@@ -115,9 +108,9 @@
   description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -769,6 +762,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCurator
+  name: sensible suit
+  description: It's sensible. Too sensible...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/curator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/curator.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerRed
   name: red lawyer suit
   description: A flashy red suit worn by lawyers and show-offs.
@@ -940,7 +944,7 @@
   parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpsuitNinja
   name: ninja jumpsuit
-  description: A nano-enhanced jumpsuit designed for maximum comfort and tacticality.
+  description: Comfortable ninja suit, for convenience when relaxing and when you need to practice.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
@@ -1056,10 +1060,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Radiation: 0.8
 
 - type: entity
   parent: ClothingUniformBase
@@ -1082,12 +1082,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
 
 - type: entity
   parent: ClothingUniformBase
@@ -1110,12 +1104,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
 
 - type: entity
   parent: ClothingUniformJumpsuitClown
@@ -1157,7 +1145,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCossack
-  name: Cossack suit
+  name: cossack suit
   description: the good old pants and brigantine.
   components:
   - type: Sprite
@@ -1327,3 +1315,93 @@
     sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCasualBlue
+  name: casual blue jumpsuit
+  description: A loose worn blue shirt with a grey pants, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpsuit
+    - state: icon-shirt
+      color: "#134fc1"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpsuit
+      - state: inhand-left-shirt
+        color: "#134fc1"
+      right:
+      - state: inhand-right-jumpsuit
+      - state: inhand-right-shirt
+        color: "#134fc1"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpsuit
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#134fc1"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCasualPurple
+  name: casual purple jumpsuit
+  description: A loose worn purple shirt with a grey pants, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpsuit
+    - state: icon-shirt
+      color: "#9c0dff"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpsuit
+      - state: inhand-left-shirt
+        color: "#9c0dff"
+      right:
+      - state: inhand-right-jumpsuit
+      - state: inhand-right-shirt
+        color: "#9c0dff"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpsuit
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#9c0dff"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCasualRed
+  name: casual red jumpsuit
+  description: A loose worn red shirt with a grey pants, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpsuit
+    - state: icon-shirt
+      color: "#b30000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpsuit
+      - state: inhand-left-shirt
+        color: "#b30000"
+      right:
+      - state: inhand-right-jumpsuit
+      - state: inhand-right-shirt
+        color: "#b30000"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpsuit
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#b30000"

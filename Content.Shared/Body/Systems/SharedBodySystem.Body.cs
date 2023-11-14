@@ -5,6 +5,8 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.DragDrop;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
@@ -18,6 +20,8 @@ public partial class SharedBodySystem
      * - On MapInit we spawn the root entity in the prototype and spawn all connections outwards from here
      * - Each "connection" is a body part (e.g. arm, hand, etc.) and each part can also contain organs.
      */
+
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     private void InitializeBody()
     {
@@ -55,7 +59,7 @@ public partial class SharedBodySystem
     private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
     {
         // TODO: lifestage shenanigans
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
             return;
 
         // Root body part?
@@ -263,7 +267,7 @@ public partial class SharedBodySystem
     }
 
     public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
-        BodyComponent? body = null, bool deleteItems = false)
+        BodyComponent? body = null, bool deleteItems = false, bool deleteBrain = false)
     {
         var gibs = new HashSet<EntityUid>();
 
@@ -287,7 +291,14 @@ public partial class SharedBodySystem
                 gibs.Add(organ.Id);
             }
         }
-
+        if(TryComp<InventoryComponent>(bodyId, out var inventory))
+        {
+            foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
+            {
+                SharedTransform.AttachToGridOrMap(item);
+                gibs.Add(item);
+            }
+        }
         return gibs;
     }
 }

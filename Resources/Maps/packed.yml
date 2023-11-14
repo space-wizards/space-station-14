@@ -67412,6 +67412,13 @@ entities:
     - pos: 25.484035,39.437214
       parent: 2
       type: Transform
+- proto: SignCourt
+  entities:
+  - uid: 13166
+    components:
+    - pos: 24.5,28.5
+      parent: 2
+      type: Transform
 - proto: SignCryogenicsMed
   entities:
   - uid: 11804
@@ -67781,6 +67788,13 @@ entities:
     - pos: 31.49329,27.493366
       parent: 2
       type: Transform
+- proto: SignJanitor
+  entities:
+  - uid: 13164
+    components:
+    - pos: 6.5,-2.5
+      parent: 2
+      type: Transform
 - proto: SignKiddiePlaque
   entities:
   - uid: 12282
@@ -67795,6 +67809,13 @@ entities:
     components:
     - rot: 1.5707963267948966 rad
       pos: 14.5,-43.5
+      parent: 2
+      type: Transform
+- proto: SignLawyer
+  entities:
+  - uid: 13165
+    components:
+    - pos: -4.5,-6.5
       parent: 2
       type: Transform
 - proto: SignLibrary

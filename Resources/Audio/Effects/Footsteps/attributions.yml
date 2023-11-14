@@ -32,3 +32,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken and modified from tgstation (clownstep 1 and 2) by brainfood1183 (github)"
   source: "https://github.com/tgstation/tgstation/tree/f8ee37afc00bce1ad421615eaa0e4cbddd5eea90/sound/effects"
+
+- files:
+  - bells1.ogg
+  - bells2.ogg
+  - bells3.ogg
+  - bells4.ogg
+  - bells5.ogg
+  license: "CC-BY-SA-4.0"
+  copyright: "Taken and modified from el1n freesound.org"
+  source: "https://freesound.org/people/el1n/sounds/442746/"

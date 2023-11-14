@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
@@ -22,6 +22,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -260,9 +261,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
 
         _joints.RecursiveClearJoints(toInsert);
+        if (!component.Contents.Insert(toInsert, EntityManager))
+            return false;
+
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
         inside.Storage = container;
-        return component.Contents.Insert(toInsert, EntityManager);
+        return true;
     }
 
     public bool Remove(EntityUid toRemove, EntityUid container, SharedEntityStorageComponent? component = null, TransformComponent? xform = null)
@@ -364,13 +368,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (toAdd == container)
             return false;
 
-        if (TryComp<PhysicsComponent>(toAdd, out var phys))
-        {
-            var aabb = _physics.GetWorldAABB(toAdd, body: phys);
-
-            if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
-                return false;
-        }
+        var aabb = _lookup.GetAABBNoContainer(toAdd, Vector2.Zero, 0);
+        if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
+            return false;
 
         return Insert(toAdd, container, component);
     }
@@ -413,6 +413,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 var storeEv = new StoreMobInItemContainerAttemptEvent();
                 RaiseLocalEvent(container, ref storeEv);
                 allowedToEat = storeEv is { Handled: true, Cancelled: false };
+
+                if (component.ItemCanStoreMobs)
+                    allowedToEat = true;
             }
         }
 

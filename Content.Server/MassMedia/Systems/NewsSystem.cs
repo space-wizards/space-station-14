@@ -1,25 +1,25 @@
+using System.Linq;
+using Content.Server.Administration.Logs;
+using Content.Server.CartridgeLoader;
+using Content.Server.CartridgeLoader.Cartridges;
+using Content.Server.GameTicking;
 using Content.Server.MassMedia.Components;
 using Content.Server.PDA.Ringer;
+using Content.Server.Popups;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.CartridgeLoader;
+using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.MassMedia.Components;
 using Content.Shared.MassMedia.Systems;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
-using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.CartridgeLoader.Cartridges;
-using Content.Shared.CartridgeLoader;
-using Content.Shared.CartridgeLoader.Cartridges;
-using Content.Server.CartridgeLoader;
-using Content.Server.GameTicking;
-using Robust.Shared.Timing;
-using Content.Server.Popups;
-using Content.Server.StationRecords.Systems;
-using Content.Shared.Database;
 using Robust.Shared.Containers;
-using Robust.Shared.Utility;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -207,11 +207,11 @@ public sealed class NewsSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp, out var ringer, out var cont))
         {
-            if (!_cartridgeLoaderSystem.HasProgram<NewsReadCartridgeComponent>(uid, false, comp, cont))
+            if (!_cartridgeLoaderSystem.TryGetProgram<NewsReadCartridgeComponent>(uid, out _, out var newsReadCartridgeComponent, false, comp, cont)
+                || !newsReadCartridgeComponent.NotificationOn)
                 continue;
 
             _ringer.RingerPlayRingtone(uid, ringer);
-            break;
         }
     }
 
@@ -222,7 +222,7 @@ public sealed class NewsSystem : EntitySystem
         while (query.MoveNext(out var owner, out var comp))
         {
             if (EntityManager.TryGetComponent<NewsReadCartridgeComponent>(comp.ActiveProgram, out var cartridge))
-                UpdateReadUi(cartridge.Owner, comp.Owner, cartridge);
+                UpdateReadUi(comp.ActiveProgram.Value, owner, cartridge);
         }
     }
 
@@ -267,14 +267,14 @@ public sealed class NewsSystem : EntitySystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<NewsWriteComponent>();
-        while (query.MoveNext(out var comp))
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.ShareAvalible || _timing.CurTime < comp.NextShare)
                 continue;
 
             comp.ShareAvalible = true;
 
-            UpdateWriteUi(comp.Owner, comp);
+            UpdateWriteUi(uid, comp);
         }
     }
 }
