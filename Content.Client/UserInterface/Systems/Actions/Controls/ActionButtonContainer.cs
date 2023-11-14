@@ -1,12 +1,19 @@
+using System.Linq;
 using Content.Client.Actions;
+using Content.Shared.Input;
+using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
 [Virtual]
 public class ActionButtonContainer : GridContainer
 {
+    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private readonly IInputManager _input = default!;
+
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
     public event Action<ActionButton>? ActionFocusExited;
@@ -14,7 +21,6 @@ public class ActionButtonContainer : GridContainer
     public ActionButtonContainer()
     {
         IoCManager.InjectDependencies(this);
-        UserInterfaceManager.GetUIController<ActionUIController>().RegisterActionContainer(this);
     }
 
     public ActionButton this[int index]
@@ -22,17 +28,42 @@ public class ActionButtonContainer : GridContainer
         get => (ActionButton) GetChild(index);
     }
 
+    private void BuildActionButtons(int count)
+    {
+        var keys = ContentKeyFunctions.GetHotbarBoundKeys();
+
+        Children.Clear();
+        for (var index = 0; index < count; index++)
+        {
+            Children.Add(MakeButton(index));
+        }
+
+        ActionButton MakeButton(int index)
+        {
+            var button = new ActionButton(_entity);
+
+            if (keys.TryGetValue(index, out var boundKey))
+            {
+                button.KeyBind = boundKey;
+
+                var binding = _input.GetKeyBinding(boundKey);
+                button.Label.Text = binding.GetKeyString();
+            }
+
+            return button;
+        }
+    }
+
     public void SetActionData(ActionsSystem system, params EntityUid?[] actionTypes)
     {
-        ClearActionData();
+        var uniqueCount = Math.Min(system.GetClientActions().Count(), actionTypes.Length + 1);
+        BuildActionButtons(uniqueCount);
 
-        for (var i = 0; i < actionTypes.Length; i++)
+        for (var i = 0; i < uniqueCount; i++)
         {
-            var action = actionTypes[i];
-            if (action == null)
-                continue;
-
-            ((ActionButton) GetChild(i)).UpdateData(action.Value, system);
+            if (!actionTypes.TryGetValue(i, out var action))
+                action = null;
+            ((ActionButton) GetChild(i)).UpdateData(action, system);
         }
     }
 
