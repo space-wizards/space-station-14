@@ -84,13 +84,16 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             // Doing this pda stuff a second time to print the message is suboptimal.
             // This is data that could be cached in the TraitorRoleComponent
             // after being fetched once?
-            var pda = _uplink.FindUplinkTarget(mindId);
-            if (pda == null)
+            if (comp.UplinkPDA == null)
+            {
                 return;
+            }
             Note[]? code = null;
-            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+            code = Comp<RingerUplinkComponent>(comp.UplinkPDA.Value).Code;
             if (code != null)
+            {
                 _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
+            }
         }
     }
 
@@ -272,11 +275,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         // Give traitors their codewords and uplink code to keep in their character info menu
         var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords)));
         Note[]? code = null;
+        EntityUid? pda = null;
         if (giveUplink)
         {
             // creadth: we need to create uplink for the antag.
             // PDA should be in place already
-            var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
+            pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
             if (pda == null || !_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
                 return false;
             code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
@@ -285,16 +289,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
                 Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
         }
 
-        // Prepare traitor role
-        var traitorRole = new TraitorRoleComponent
-        {
-            PrototypeId = traitorRule.TraitorPrototypeId,
-        };
-
         // Assign traitor roles
         _roleSystem.MindAddRole(mindId, new TraitorRoleComponent
         {
-            PrototypeId = traitorRule.TraitorPrototypeId
+            PrototypeId = traitorRule.TraitorPrototypeId,
+            UplinkPDA   = pda,
         });
         // Assign briefing
          _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
