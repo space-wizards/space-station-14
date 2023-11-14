@@ -84,7 +84,7 @@ public sealed class EggLayerSystem : EntitySystem
         foreach (var protoEntId in EntitySpawnCollection.GetSpawns(component.EggSpawn, _random))
         {
             // check for ability spawn many items for one tile
-            if (component.IsManySpawnsForbidden)
+            if (component.ManySpawnsForbidden)
             {
                 var entitiesInTile = _lookup.GetEntitiesIntersecting(uid, LookupFlags.All);
 

@@ -34,12 +34,7 @@
       ]
     },
     {
-      "name": "white_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "white_dead"
     }
   ]
 }
