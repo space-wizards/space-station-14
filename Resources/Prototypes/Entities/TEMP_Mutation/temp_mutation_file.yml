@@ -49,3 +49,14 @@
     quickEquip: false
     slots:
     - back
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadMutationHeadSnake
+  name: snake head
+  description: A fleshy head remotely resembling a predatory snake.
+  components:
+  - type: Sprite
+    sprite: Objects/Mutations/head_snake.rsi
+  - type: Clothing
+    sprite: Objects/Mutations/head_snake.rsi
