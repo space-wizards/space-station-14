@@ -29,11 +29,18 @@ namespace Content.Shared.Storage
         /// A limit for the cumulative ItemSize weights that can be inserted in this storage.
         /// If MaxSlots is not null, then this is ignored.
         /// </summary>
+        //todo kill
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public int MaxTotalWeight;
 
+        //todo more doc
+        //todo dear fuck serialization
+        //todo this could be a hashset instead of a dict
+        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
+
         //todo doc
-        [DataField, AutoNetworkedField]
+        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public List<Box2i> StorageGrid = new();
 
         /// <summary>

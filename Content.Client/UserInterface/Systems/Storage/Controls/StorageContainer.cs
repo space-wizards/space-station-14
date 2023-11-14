@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Numerics;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
@@ -100,21 +101,17 @@ public sealed class StorageContainer : BoxContainer
         if (!comp.StorageGrid.Any())
             return;
 
-        var minBottom = comp.StorageGrid.Min(x => x.Bottom);
-        var minLeft = comp.StorageGrid.Min(x => x.Left);
-        var maxTop = comp.StorageGrid.Max(x => x.Top);
-        var maxRight = comp.StorageGrid.Max(x => x.Right);
-        var overallGrid = new Box2i(new Vector2i(minLeft, minBottom), new Vector2i(maxRight, maxTop));
+        var boundingGrid = SharedStorageSystem.GetBoundingBox(comp.StorageGrid);
 
-        var totalWidth = overallGrid.Width + 1;
-        var totalHeight = overallGrid.Height + 1;
+        var totalWidth = boundingGrid.Width + 1;
+        var totalHeight = boundingGrid.Height + 1;
 
         _grid.Children.Clear();
         _grid.Rows = totalHeight;
         _grid.Columns = totalWidth;
-        for (var y = minBottom; y <= maxTop; y++)
+        for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
         {
-            for (var x = minLeft; x <= maxRight; x++)
+            for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
             {
                 var empty = comp.StorageGrid.Any(g => g.Contains(x, y));
 

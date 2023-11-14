@@ -1,14 +1,10 @@
+using Robust.Shared.Serialization;
+
 namespace Content.Shared.Storage;
 
-[DataDefinition]
-public partial record struct ItemStorageData
+[DataDefinition, Serializable, NetSerializable]
+public partial record struct ItemStorageLocation
 {
-    /// <summary>
-    /// The item being stored.
-    /// </summary>
-    [DataField]
-    public EntityUid ItemEntity;
-
     /// <summary>
     /// The rotation of the piece in storage.
     /// </summary>
@@ -21,9 +17,8 @@ public partial record struct ItemStorageData
     [DataField]
     public Vector2i Position;
 
-    public ItemStorageData(EntityUid itemEntity, Angle rotation, Vector2i position)
+    public ItemStorageLocation(Angle rotation, Vector2i position)
     {
-        ItemEntity = itemEntity;
         Rotation = rotation;
         Position = position;
     }

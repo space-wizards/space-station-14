@@ -1,10 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
@@ -71,7 +71,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
-        SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+        SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<StorageComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
 
@@ -361,6 +361,21 @@ public abstract class SharedStorageSystem : EntitySystem
         }
     }
 
+    private void OnEntInserted(Entity<StorageComponent> entity, ref EntInsertedIntoContainerMessage args)
+    {
+        if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
+        {
+            _containerSystem.Remove(args.Entity, args.Container, force: true);
+            return;
+        }
+
+        entity.Comp.StoredItems[GetNetEntity(args.Entity)] = location.Value;
+        Dirty(entity);
+
+        OnContainerModified(entity.Owner, entity.Comp, args);
+    }
+
+    //todo we gotta remove this at some point, too
     private void OnContainerModified(EntityUid uid, StorageComponent component, ContainerModifiedMessage args)
     {
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -490,6 +505,12 @@ public abstract class SharedStorageSystem : EntitySystem
             && _item.GetSizePrototype(GetMaxItemSize((insertEnt, insertStorage))) >= maxSize)
         {
             reason = "comp-storage-too-big";
+            return false;
+        }
+
+        if (!TryGetAvailableGridSpace((uid, storageComp), (insertEnt, item), out _))
+        {
+            reason = "comp-storage-insufficient-capacity";
             return false;
         }
 
@@ -647,6 +668,76 @@ public abstract class SharedStorageSystem : EntitySystem
         return true;
     }
 
+    public bool TryGetAvailableGridSpace(
+        Entity<StorageComponent?> storageEnt,
+        Entity<ItemComponent?> itemEnt,
+        [NotNullWhen(true)] out ItemStorageLocation? storageLocation)
+    {
+        storageLocation = null;
+
+        if (!Resolve(storageEnt, ref storageEnt.Comp) || !Resolve(itemEnt, ref itemEnt.Comp))
+            return false;
+
+        var baseItemShape = _item.GetItemShape(itemEnt);
+        var itemBounding = GetBoundingBox(baseItemShape);
+        var storageBounding = GetBoundingBox(storageEnt.Comp.StorageGrid);
+
+        //todo this is gonna need to support automatic rotation, theoretically.
+        for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
+        {
+            if (y + itemBounding.Height > storageBounding.Top)
+                break;
+
+            for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
+            {
+                if (x + itemBounding.Width > storageBounding.Right)
+                    break;
+
+                //todo this is only checking a single spot and it'll need to be smarter than this.
+                if (IsGridSpaceEmpty(storageEnt, (x, y)))
+                {
+                    storageLocation = new ItemStorageLocation(Angle.Zero, (x, y));
+                    return true;
+                }
+            }
+        }
+
+        return storageLocation != null;
+    }
+
+    public bool IsGridSpaceEmpty(Entity<StorageComponent?> entity, Vector2i location)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        var validGrid = false;
+        foreach (var grid in entity.Comp.StorageGrid)
+        {
+            if (grid.Contains(location))
+            {
+                validGrid = true;
+                break;
+            }
+        }
+
+        if (!validGrid)
+            return false;
+
+        foreach (var (ent, storedItem) in entity.Comp.StoredItems)
+        {
+
+            //todo add a fucking trycomp for itemcomponent you stingy bitch
+            var adjustedShape = _item.GetAdjustedItemShape((GetEntity(ent), null), storedItem);
+            foreach (var box in adjustedShape)
+            {
+                if (box.Contains(location))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// Returns true if there is enough space to theoretically fit another item.
     /// </summary>
@@ -736,20 +827,22 @@ public abstract class SharedStorageSystem : EntitySystem
         }
     }
 
-    public FixedPoint2 GetStorageFillPercentage(Entity<StorageComponent?> uid)
-    {
-        if (!Resolve(uid, ref uid.Comp))
-            return 0;
-
-        var slotPercent = FixedPoint2.New(uid.Comp.Container.ContainedEntities.Count) / uid.Comp.MaxSlots ?? FixedPoint2.Zero;
-        var weightPercent = FixedPoint2.New(GetCumulativeItemSizes(uid)) / uid.Comp.MaxTotalWeight;
-
-        return FixedPoint2.Max(slotPercent, weightPercent);
-    }
-
     /// <summary>
     /// Plays a clientside pickup animation for the specified uid.
     /// </summary>
     public abstract void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates,
         EntityCoordinates finalCoordinates, Angle initialRotation, EntityUid? user = null);
+
+    //todo make an engine pr you bitch
+    public static Box2i GetBoundingBox(IReadOnlyList<Box2i> boxes)
+    {
+        if (boxes.Count == 0)
+            return new Box2i();
+
+        var minBottom = boxes.Min(x => x.Bottom);
+        var minLeft = boxes.Min(x => x.Left);
+        var maxTop = boxes.Max(x => x.Top);
+        var maxRight = boxes.Max(x => x.Right);
+        return new Box2i(new Vector2i(minLeft, minBottom), new Vector2i(maxRight, maxTop));
+    }
 }

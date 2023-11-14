@@ -1,7 +1,11 @@
+using System.Linq;
+using System.Numerics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -151,8 +155,41 @@ public abstract class SharedItemSystem : EntitySystem
         return GetSizePrototype(size).Weight;
     }
 
-    public IReadOnlyList<Box2i> GetItemShape(Entity<ItemComponent> uid)
+    public IReadOnlyList<Box2i> GetItemShape(Entity<ItemComponent?> uid)
     {
+        if (!Resolve(uid, ref uid.Comp))
+            return new Box2i[] { };
+
         return uid.Comp.ShapeOverride ?? GetSizePrototype(uid.Comp.Size).DefaultShape;
+    }
+
+    public IReadOnlyList<Box2i> GetAdjustedItemShape(Entity<ItemComponent?> entity, ItemStorageLocation location)
+    {
+        return GetAdjustedItemShape(entity, location.Rotation, location.Position);
+    }
+
+    public IReadOnlyList<Box2i> GetAdjustedItemShape(Entity<ItemComponent?> entity, Angle rotation, Vector2i position)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return new Box2i[] { };
+
+        if (rotation == Angle.Zero && position == Vector2i.Zero)
+            return GetItemShape(entity);
+
+        var shapes = GetItemShape(entity);
+
+        var boundingShape = SharedStorageSystem.GetBoundingBox(shapes);
+
+        var adjustedShapes = new List<Box2i>();
+        foreach (var shape in shapes)
+        {
+            var matty = Matrix3.CreateTransform(boundingShape.Center, rotation);
+            var box = matty.TransformBox(shape);
+            var flooredBox = new Box2i(box.BottomLeft.Floored(), box.TopRight.Floored());
+
+            adjustedShapes.Add(flooredBox.Translated(position));
+        }
+
+        return adjustedShapes;
     }
 }
