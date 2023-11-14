@@ -84,7 +84,7 @@
   id: BookChefGaming
   parent: BaseItem
   name: chef gaming
-  description: A book about cooking written by a gamer chef. 
+  description: A book about cooking written by a gamer chef.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -156,7 +156,7 @@
   id: BookSecurity
   parent: BaseItem
   name: security 101
-  description: A book about security written by Nanotrasen. The book is stained with blood. It seems to have been used more as a weapon than reading material. 
+  description: A book about security written by Nanotrasen. The book is stained with blood. It seems to have been used more as a weapon than reading material.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -166,6 +166,7 @@
     tags:
     - Book
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 6

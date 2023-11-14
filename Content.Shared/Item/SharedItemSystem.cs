@@ -1,9 +1,8 @@
-using Content.Shared.CombatMode;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -15,7 +14,6 @@ public abstract class SharedItemSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
 
     public override void Initialize()
@@ -23,7 +21,6 @@ public abstract class SharedItemSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
         SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract, before: new []{typeof(SharedItemSystem)});
-        SubscribeLocalEvent<ItemComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
@@ -33,13 +30,13 @@ public abstract class SharedItemSystem : EntitySystem
 
     #region Public API
 
-    public void SetSize(EntityUid uid, int size, ItemComponent? component = null)
+    public void SetSize(EntityUid uid, ProtoId<ItemSizePrototype> size, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
 
         component.Size = size;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public void SetHeldPrefix(EntityUid uid, string? heldPrefix, ItemComponent? component = null)
@@ -51,7 +48,7 @@ public abstract class SharedItemSystem : EntitySystem
             return;
 
         component.HeldPrefix = heldPrefix;
-        Dirty(component);
+        Dirty(uid, component);
         VisualsChanged(uid);
     }
 
@@ -67,7 +64,7 @@ public abstract class SharedItemSystem : EntitySystem
         item.InhandVisuals = otherItem.InhandVisuals;
         item.HeldPrefix = otherItem.HeldPrefix;
 
-        Dirty(item);
+        Dirty(uid, item);
         VisualsChanged(uid);
     }
 
@@ -79,18 +76,6 @@ public abstract class SharedItemSystem : EntitySystem
             return;
 
         args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
-    }
-
-    protected virtual void OnStackCountChanged(EntityUid uid, ItemComponent component, StackCountChangedEvent args)
-    {
-        if (!TryComp<StackComponent>(uid, out var stack))
-            return;
-
-        if (!_prototype.TryIndex<StackPrototype>(stack.StackTypeId, out var stackProto) ||
-            stackProto.ItemSize is not { } size)
-            return;
-
-        SetSize(uid, args.NewCount * size, component);
     }
 
     private void OnHandleState(EntityUid uid, ItemComponent component, ref ComponentHandleState args)
@@ -135,7 +120,12 @@ public abstract class SharedItemSystem : EntitySystem
     private void OnExamine(EntityUid uid, ItemComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("item-component-on-examine-size",
-            ("size", component.Size)));
+            ("size", GetItemSizeLocale(component.Size))));
+    }
+
+    public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
+    {
+        return _prototype.Index(id);
     }
 
     /// <summary>
@@ -147,5 +137,17 @@ public abstract class SharedItemSystem : EntitySystem
     /// </remarks>
     public virtual void VisualsChanged(EntityUid owner)
     {
+    }
+
+    [PublicAPI]
+    public string GetItemSizeLocale(ProtoId<ItemSizePrototype> size)
+    {
+        return Loc.GetString(GetSizePrototype(size).Name);
+    }
+
+    [PublicAPI]
+    public int GetItemSizeWeight(ProtoId<ItemSizePrototype> size)
+    {
+        return GetSizePrototype(size).Weight;
     }
 }

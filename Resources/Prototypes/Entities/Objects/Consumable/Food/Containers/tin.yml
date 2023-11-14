@@ -37,7 +37,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    size: 3
+    size: Tiny
   - type: DamageOnLand
     damage:
       types:
@@ -63,7 +63,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    size: 3
+    size: Tiny
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
@@ -89,6 +89,9 @@
     - funny
   - type: Food
     trash: FoodTinPeachesTrash
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   parent: FoodTinBaseTrash
@@ -174,6 +177,9 @@
     - cheap
   - type: Food
     trash: FoodTinMRETrash
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   parent: FoodTinBaseTrash

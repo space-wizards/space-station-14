@@ -4,6 +4,7 @@ using Content.Shared.Shuttles.BUIStates;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 
@@ -42,6 +43,8 @@ public class DockingControl : Control
     /// Stored by GridID then by docks
     /// </summary>
     public Dictionary<NetEntity, List<DockingInterfaceState>> Docks = new();
+
+    private List<Entity<MapGridComponent>> _grids = new();
 
     public DockingControl()
     {
@@ -86,7 +89,7 @@ public class DockingControl : Control
         // Draw the fixtures around the dock before drawing it
         if (_entManager.TryGetComponent<FixturesComponent>(GridEntity, out var fixtures))
         {
-            foreach (var (_, fixture) in fixtures.Fixtures)
+            foreach (var fixture in fixtures.Fixtures.Values)
             {
                 var poly = (PolygonShape) fixture.Shape;
 
@@ -147,17 +150,19 @@ public class DockingControl : Control
         // TODO: Getting some overdraw so need to fix that.
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
-                     new Box2(worldPos - RangeVector, worldPos + RangeVector)))
+        _grids.Clear();
+        _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(worldPos - RangeVector, worldPos + RangeVector), ref _grids);
+
+        foreach (var grid in _grids)
         {
             if (grid.Owner == GridEntity)
                 continue;
 
             // Draw the fixtures before drawing any docks in range.
-            if (!_entManager.TryGetComponent<FixturesComponent>(grid.Owner, out var gridFixtures))
+            if (!_entManager.TryGetComponent<FixturesComponent>(grid, out var gridFixtures))
                 continue;
 
-            var gridMatrix = xformQuery.GetComponent(grid.Owner).WorldMatrix;
+            var gridMatrix = xformQuery.GetComponent(grid).WorldMatrix;
 
             Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
 
@@ -204,7 +209,7 @@ public class DockingControl : Control
             }
 
             // Draw any docks on that grid
-            if (Docks.TryGetValue(_entManager.GetNetEntity(grid.Owner), out var gridDocks))
+            if (Docks.TryGetValue(_entManager.GetNetEntity(grid), out var gridDocks))
             {
                 foreach (var dock in gridDocks)
                 {

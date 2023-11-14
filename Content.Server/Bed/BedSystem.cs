@@ -44,6 +44,7 @@ namespace Content.Server.Bed
                 AddComp<HealOnBuckleHealingComponent>(uid);
                 component.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(component.HealTime);
                 _actionsSystem.AddAction(args.BuckledEntity, ref component.SleepAction, SleepingSystem.SleepActionId, uid);
+                Dirty(uid, component);
                 return;
             }
 
@@ -56,14 +57,16 @@ namespace Content.Server.Bed
         {
             base.Update(frameTime);
 
-            foreach (var (_, bedComponent, strapComponent) in EntityQuery<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>())
+            var query = EntityQueryEnumerator<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>();
+            while (query.MoveNext(out var uid, out _, out var bedComponent, out var strapComponent))
             {
                 if (_timing.CurTime < bedComponent.NextHealTime)
                     continue;
 
                 bedComponent.NextHealTime += TimeSpan.FromSeconds(bedComponent.HealTime);
 
-                if (strapComponent.BuckledEntities.Count == 0) continue;
+                if (strapComponent.BuckledEntities.Count == 0)
+                    continue;
 
                 foreach (var healedEntity in strapComponent.BuckledEntities)
                 {
@@ -75,7 +78,7 @@ namespace Content.Server.Bed
                     if (HasComp<SleepingComponent>(healedEntity))
                         damage *= bedComponent.SleepMultiplier;
 
-                    _damageableSystem.TryChangeDamage(healedEntity, damage, true, origin: bedComponent.Owner);
+                    _damageableSystem.TryChangeDamage(healedEntity, damage, true, origin: uid);
                 }
             }
         }

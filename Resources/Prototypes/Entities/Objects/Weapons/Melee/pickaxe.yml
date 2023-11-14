@@ -12,6 +12,7 @@
     state: pickaxe
   - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       groups:
         Brute: 5
@@ -25,8 +26,10 @@
       types:
         Structural: 10
   - type: Item
-    size: 80
+    size: Normal
     sprite: Objects/Weapons/Melee/pickaxe.rsi
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   name: mining drill
