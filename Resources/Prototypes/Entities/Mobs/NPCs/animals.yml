@@ -2003,6 +2003,25 @@
     - VimPilot
 
 - type: entity
+  name: possum
+  parent: MobPossum
+  suffix: Old sprite
+  id: MobPossumOld
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/possum.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: possum_old
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: possum_old
+      Dead:
+        Base: possum_dead_old
+
+- type: entity
   name: raccoon
   parent: SimpleMobBase
   id: MobRaccoon
@@ -2013,7 +2032,7 @@
     sprite: Mobs/Animals/raccoon.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: raccoon
+      state: raccoon_darkgrey
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2038,9 +2057,9 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: raccoon
+        Base: raccoon_darkgrey
       Dead:
-        Base: raccoon_dead
+        Base: raccoon_darkgrey_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
