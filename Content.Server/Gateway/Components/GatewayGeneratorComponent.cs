@@ -20,13 +20,13 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// Next time another seed unlocks.
     /// </summary>
     [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextUnlock;
+    public TimeSpan NextUnlock = TimeSpan.FromMinutes(5);
 
     /// <summary>
     /// How long it takes to unlock another destination once one is taken.
     /// </summary>
     [DataField]
-    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(45);
+    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(75);
 
     /// <summary>
     /// Maps we've generated.
