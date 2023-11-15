@@ -78,6 +78,7 @@ public sealed class TextScreenSystem : EntitySystem
                 continue;
 
             RemComp<TextScreenTimerComponent>(uid);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, TimeSpan.Zero);
 
             if (!TryComp<TextScreenComponent>(uid, out var screen))
                 continue;

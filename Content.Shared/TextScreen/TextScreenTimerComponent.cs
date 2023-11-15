@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.TextScreen.Components;
 
 /// <summary>
-/// This is an active component for tracking <see cref="TextScreenVisualsComponent"/>
+/// Added to a <see cref="TextScreenVisualsComponent"/> entity to display frame-by-frame timer updates
 /// </summary>
 [RegisterComponent]
 public sealed partial class TextScreenTimerComponent : Component
