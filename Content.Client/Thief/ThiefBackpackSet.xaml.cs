@@ -17,5 +17,6 @@ public sealed partial class ThiefBackpackSet : Control
         SetName.Text = Loc.GetString(set.Name);
         SetDescription.Text = Loc.GetString(set.Description);
         SetButton.Text = Loc.GetString(set.Selected ? "thief-backpack-button-deselect" : "thief-backpack-button-select");
+        SetButton.ModulateSelfOverride = set.Selected ? new Color(40, 84, 35) : new Color(68, 75, 103);
     }
 }

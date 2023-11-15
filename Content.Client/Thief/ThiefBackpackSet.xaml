@@ -7,9 +7,9 @@
             <gfx:StyleBoxFlat BackgroundColor="#18211b" />
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-            <GridContainer Margin="5" Columns="2">
+            <GridContainer Margin="5" Columns="2" MinSize="600 0">
                 <Label Name="SetName" Text="Set" StyleClasses="StatusFieldTitle"></Label>
-                <Button Name="SetButton" Text="Select" StyleClasses="OpenRight" Access="Public" HorizontalAlignment="Right"/>
+                <Button Margin="0 10" Name="SetButton" Text="Select" StyleClasses="OpenRight" Access="Public" HorizontalAlignment="Right"/>
             </GridContainer>
             <controls:HLine Color="#404040" Thickness="1" Margin="0 5"/>
             <!-- Icon and Description -->

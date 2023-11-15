@@ -180,9 +180,9 @@
     stealGroup: LAMP
     minCollectionSize: 1
     maxCollectionSize: 30
-    verifyMapExistance: false
+    verifyMapExistance: true
   - type: Objective
-    difficulty: 0 # just for fun, collectings LAMP on Moth
+    difficulty: 0.5 # just for fun, collectings LAMP on Moth
 
 # steal item
 

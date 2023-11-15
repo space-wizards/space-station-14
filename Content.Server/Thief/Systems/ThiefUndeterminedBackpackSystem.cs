@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Thief.Systems;
 public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -37,14 +38,12 @@ public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
             var set = _proto.Index(backpack.Comp.PossibleSets[i]);
             foreach (var item in set.Content)
             {
-                var ent = Spawn(item);
+                var ent = Spawn(item, _transform.GetMapCoordinates(backpack.Owner));
                 if (TryComp<ItemComponent>(ent, out var itemComponent))
                     _transform.DropNextTo(ent, backpack.Owner);
-                else
-                    _transform.SetCoordinates(ent, Transform(backpack.Owner).Coordinates);
-                //SpawnInContainerOrDrop(item, backpack,) TO DO change spawning after delete
             }
         }
+        _audio.PlayPvs(backpack.Comp.ApproveSound, backpack.Owner);
         QueueDel(backpack); //hehe
     }
     private void OnChangeSet(Entity<ThiefUndeterminedBackpackComponent> backpack, ref ThiefBackpackChangeSetMessage args)

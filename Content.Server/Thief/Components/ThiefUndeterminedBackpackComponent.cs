@@ -1,4 +1,5 @@
 using Content.Shared.Thief;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Thief.Components;
@@ -18,4 +19,7 @@ public sealed partial class ThiefUndeterminedBackpackComponent : Component
 
     [DataField]
     public List<int> SelectedSets = new();
+
+    [DataField]
+    public SoundSpecifier ApproveSound = new SoundPathSpecifier("/Audio/Effects/rustle1.ogg");
 }

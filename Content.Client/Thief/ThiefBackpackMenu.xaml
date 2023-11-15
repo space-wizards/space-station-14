@@ -16,7 +16,7 @@
 			</PanelContainer.PanelOverride>
             <ScrollContainer
                     HScrollEnabled="False"
-                    MinSize="0 400"
+                    MinSize="0 600"
                     SizeFlagsStretchRatio="2"
                     VerticalExpand="True">
                 <BoxContainer Name="SetsGrid" Orientation="Vertical" MinSize="460 200">
@@ -27,11 +27,13 @@
         </PanelContainer>
 		
 		<!-- Third approve button panel -->
-		<PanelContainer Margin="0 5">
+		<PanelContainer Margin="10">
 			<Button Name="ApproveButton"
 					Text="{Loc 'thief-backpack-window-approve-button'}"
 					Margin="0 5"
-					Access="Public"/>
-		</PanelContainer>
+					Access="Public"
+                    HorizontalAlignment ="Right"
+                    StyleClasses="OpenRight"/>
+        </PanelContainer>
 	</BoxContainer>
 </controls:FancyWindow>
