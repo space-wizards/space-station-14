@@ -1262,6 +1262,7 @@
   - type: Puller
     needsHands: true
   - type: BadFood
+  - type: ZombieImmune
 
 - type: entity
   parent: MobMouse
