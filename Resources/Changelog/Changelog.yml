@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix some minor quirks around reflection chances and also fixed reflect
-      vest reflecting every projectile., type: Fix}
-  id: 4676
-  time: '2023-08-25T02:48:27.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Solid plasma now comes in special plasma containment crates., type: Tweak}
@@ -2909,3 +2903,10 @@ Entries:
       foam., type: Add}
   id: 5175
   time: '2023-11-15T01:34:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed actions sometimes gaining phantom cooldown graphics., type: Fix}
+  - {message: 'Fixed an issue where clicking an action would interrupt hovering, making
+      it awkward to click multiple times.', type: Fix}
+  id: 5176
+  time: '2023-11-15T01:35:43.0000000+00:00'
