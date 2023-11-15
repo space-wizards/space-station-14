@@ -1,9 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: 'Changed nutriment color, it is now green.', type: Tweak}
-  id: 4679
-  time: '2023-08-25T03:11:24.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'The nuclear operative medic has returned to using the standard Syndicate
@@ -2911,3 +2906,9 @@ Entries:
   - {message: Removed the ability to link IEDs to a remote signal., type: Remove}
   id: 5178
   time: '2023-11-15T10:02:37.0000000+00:00'
+- author: TsjipTsjip
+  changes:
+  - {message: 'Kettle''s exterior airlocks are now far less likely to end up bolted,
+      but must be configured manually now.', type: Tweak}
+  id: 5179
+  time: '2023-11-15T20:56:13.0000000+00:00'
