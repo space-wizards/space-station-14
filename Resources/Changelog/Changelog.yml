@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Fixed the chemical guidebook sometimes missing one of the conditions,
-      effects, or damage types for a chemical.', type: Fix}
-  id: 4675
-  time: '2023-08-25T02:14:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some minor quirks around reflection chances and also fixed reflect
@@ -2909,3 +2903,9 @@ Entries:
     type: Fix}
   id: 5174
   time: '2023-11-15T00:52:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts now have a chance to spit out both medicinal and poisonous
+      foam., type: Add}
+  id: 5175
+  time: '2023-11-15T01:34:43.0000000+00:00'
