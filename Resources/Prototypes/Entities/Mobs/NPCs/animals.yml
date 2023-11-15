@@ -2032,7 +2032,7 @@
     sprite: Mobs/Animals/raccoon.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: raccoon_darkgrey
+      state: raccoon
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2057,9 +2057,9 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: raccoon_darkgrey
+        Base: raccoon
       Dead:
-        Base: raccoon_darkgrey_dead
+        Base: raccoon_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
