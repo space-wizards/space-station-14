@@ -47,7 +47,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     ///     Number of rows of text to render.
     /// </summary>
     [DataField("rows")]
-    public int Rows;
+    public int Rows { get; set; } = 1;
 
     /// <summary>
     ///     Spacing between each text row

@@ -53,6 +53,7 @@
   - type: TextScreenVisuals
     textOffset: 0,8
     textLength: 5
+    rowOffset: 10
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/textscreen.rsi
@@ -92,6 +93,8 @@
   - type: TextScreenVisuals
     color: PowderBlue
     textOffset: 0,0
+    rowOffset: 10
+    rows: 2
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/frame.rsi

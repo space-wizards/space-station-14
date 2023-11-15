@@ -29,11 +29,11 @@ public sealed class TextScreenSystem : EntitySystem
     }
 
     /// <summary>
-    /// Enables component.Label to be displayed at roundstart without a <see cref="TextScreenTextEvent"/>.
+    /// Enables component.Text to be displayed at roundstart without a <see cref="TextScreenTextEvent"/>.
     /// </summary>
     private void OnInit(EntityUid uid, TextScreenComponent component, ComponentInit args)
     {
-        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Text);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public sealed class TextScreenSystem : EntitySystem
         // component.Label = args.Label[..Math.Min(5, args.Label.Length)].ToArray();
 
         // // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
-        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, args.Label);
+        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, args.Text);
 
     }
 

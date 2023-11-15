@@ -10,8 +10,8 @@ public sealed partial class TextScreenComponent : Component
     /// <summary>
     /// Text to display on the screen after a <see cref="TextScreenTextEvent"/>.
     /// </summary>
-    [DataField("label"), ViewVariables]
-    public string?[] Label { get; set; } = new string[Rows];
+    [DataField("text"), ViewVariables]
+    public string?[] Text { get; set; } = new string[Rows];
 
     /// <summary>
     /// Sound to play after a timer zeroes.

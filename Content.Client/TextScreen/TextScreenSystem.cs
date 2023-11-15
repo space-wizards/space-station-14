@@ -276,6 +276,19 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         }
     }
 
+    private void BuildTimerLayers(
+        EntityUid uid,
+        TextScreenTimerComponent component,
+        SpriteComponent? sprite = null
+    )
+    {
+        if (!Resolve(uid, ref sprite))
+            return;
+
+        int position = 0;
+
+    }
+
     /// <summary>
     ///     Iterates through <see cref="TextScreenVisualsComponent.LayerStatesToDraw"/>, setting sprite states to the appropriate layers.
     /// </summary>
