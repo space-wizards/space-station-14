@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Solid plasma now comes in special plasma containment crates., type: Tweak}
-  id: 4677
-  time: '2023-08-25T02:50:41.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: Cyborgs can now state individual laws with the push of a button, type: Add}
@@ -2910,3 +2905,9 @@ Entries:
       it awkward to click multiple times.', type: Fix}
   id: 5176
   time: '2023-11-15T01:35:43.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added 5 minute initial timer to gateway + bump new portal generation
+      from 45 minutes to 75 minutes., type: Tweak}
+  id: 5177
+  time: '2023-11-15T06:23:53.0000000+00:00'
