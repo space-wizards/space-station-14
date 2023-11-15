@@ -1,9 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Cyborgs can now state individual laws with the push of a button, type: Add}
-  id: 4678
-  time: '2023-08-25T02:56:02.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: 'Changed nutriment color, it is now green.', type: Tweak}
@@ -2911,3 +2906,8 @@ Entries:
       from 45 minutes to 75 minutes., type: Tweak}
   id: 5177
   time: '2023-11-15T06:23:53.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Removed the ability to link IEDs to a remote signal., type: Remove}
+  id: 5178
+  time: '2023-11-15T10:02:37.0000000+00:00'
