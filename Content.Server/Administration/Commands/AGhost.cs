@@ -1,6 +1,7 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mind;
@@ -34,6 +35,15 @@ namespace Content.Server.Administration.Commands
                 shell.WriteLine("You can't ghost here! Could not find 'mind'");
                 return;
             }
+
+            //SS220-lobby-ghost-bug begin
+            var gameTicker = _entities.System<GameTicker>();
+            if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) || status is not PlayerGameStatus.JoinedGame)
+            {
+                shell.WriteLine("You can't ghost right now. You're not in game!");
+                return;
+            }
+            //SS220-lobby-ghost-bug end
 
             var metaDataSystem = _entities.System<MetaDataSystem>();
 
