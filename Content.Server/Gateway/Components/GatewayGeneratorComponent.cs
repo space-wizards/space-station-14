@@ -20,7 +20,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// Next time another seed unlocks.
     /// </summary>
     [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextUnlock = TimeSpan.FromMinutes(5);
+    public TimeSpan NextUnlock;
 
     /// <summary>
     /// How long it takes to unlock another destination once one is taken.
