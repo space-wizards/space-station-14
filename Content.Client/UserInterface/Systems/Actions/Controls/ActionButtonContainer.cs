@@ -57,7 +57,8 @@ public class ActionButtonContainer : GridContainer
     public void SetActionData(ActionsSystem system, params EntityUid?[] actionTypes)
     {
         var uniqueCount = Math.Min(system.GetClientActions().Count(), actionTypes.Length + 1);
-        BuildActionButtons(uniqueCount);
+        if (ChildCount != uniqueCount)
+            BuildActionButtons(uniqueCount);
 
         for (var i = 0; i < uniqueCount; i++)
         {
