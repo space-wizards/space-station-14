@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - message: Vending machines have been polished. Again.
-    type: Tweak
-  id: 4649
-  time: '2023-08-21T18:45:54.0000000+00:00'
 - author: Alekshhh
   changes:
   - message: Changed medical locker contents
@@ -3545,3 +3539,11 @@ Entries:
     type: Fix
   id: 5131
   time: '2023-11-14T21:22:05.0000000+00:00'
+- author: Dexler
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043A\u043E\
+      \u043C\u0430\u043D\u0434\u044B ghost \u0438 aghost \u0432 \u043B\u043E\u0431\
+      \u0431\u0438."
+    type: Fix
+  id: 5132
+  time: '2023-11-15T05:21:03.0000000+00:00'
