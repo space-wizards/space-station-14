@@ -87,11 +87,15 @@
     state: icon
   content:
   - EncryptionKeyStationMaster
-  - RadioHandheld
-  - RadioHandheld
   - RadioJammer
   - SpyCrewMonitor
   - BriefcaseSyndieLobbyingBundleFilled
+  - RubberStampCE #Replace all Stamps after adding the chameleon stamp
+  - RubberStampCMO
+  - RubberStampHop
+  - RubberStampHos
+  - RubberStampQm
+  - RubberStampRd
   
 - type: thiefBackpackSet
   id: SmugglerSet
