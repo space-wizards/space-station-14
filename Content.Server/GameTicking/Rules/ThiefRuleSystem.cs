@@ -226,11 +226,12 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     private string MakeBriefing(EntityUid thief)
     {
         var isHuman = HasComp<HumanoidAppearanceComponent>(thief);
-        var briefing = isHuman
+        var briefing = "\n";
+        briefing = isHuman
             ? Loc.GetString("thief-role-greeting-human")
             : Loc.GetString("thief-role-greeting-animal");
 
-        briefing += "\n" + Loc.GetString("thief-role-greeting-equipment");
+        briefing += "\n \n" + Loc.GetString("thief-role-greeting-equipment") + "\n";
         return briefing;
     }
 
