@@ -57,6 +57,7 @@
     - toggledecals
     - nodevis
     - nodevisfilter
+    - showbiome
     - net_draw_interp
     - showmeleespread
     - showgunspread

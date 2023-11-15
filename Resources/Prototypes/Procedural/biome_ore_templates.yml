@@ -1,290 +1,103 @@
 # Low value
 - type: biomeMarkerLayer
   id: OreTin
-  proto: WallRockTin
-  entityMask: WallRock
+  entityMask:
+    WallRock: WallRockTin
+    WallRockBasalt: WallRockBasaltTin
+    WallRockChromite: WallRockChromiteTin
+    WallRockSnow: WallRockSnowTin
   maxCount: 30
-  groupCount: 10
+  minGroupSize: 10
+  maxGroupSize: 20
   radius: 4
 
 - type: biomeMarkerLayer
   id: OreQuartz
-  proto: WallRockQuartz
-  entityMask: WallRock
+  entityMask:
+    WallRock: WallRockQuartz
+    WallRockBasalt: WallRockBasaltQuartz
+    WallRockChromite: WallRockChromiteQuartz
+    WallRockSnow: WallRockSnowQuartz
   maxCount: 30
-  groupCount: 10
+  minGroupSize: 10
+  maxGroupSize: 20
   radius: 4
 
 # Medium value
 # Gold
 - type: biomeMarkerLayer
   id: OreGold
-  proto: WallRockGold
-  entityMask: WallRock
+  entityMask:
+    WallRock: WallRockGold
+    WallRockBasalt: WallRockBasaltGold
+    WallRockChromite: WallRockChromiteGold
+    WallRockSnow: WallRockSnowGold
   maxCount: 30
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 # Silver
 - type: biomeMarkerLayer
   id: OreSilver
-  proto: WallRockSilver
-  entityMask: WallRock
+  entityMask:
+    WallRock: WallRockSilver
+    WallRockBasalt: WallRockBasaltSilver
+    WallRockChromite: WallRockChromiteSilver
+    WallRockSnow: WallRockSnowSilver
   maxCount: 30
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 # High value
 # Plasma
 - type: biomeMarkerLayer
   id: OrePlasma
-  proto: WallRockPlasma
-  entityMask: WallRock
+  entityMask:
+    WallRock: WallRockPlasma
+    WallRockBasalt: WallRockBasaltPlasma
+    WallRockChromite: WallRockChromitePlasma
+    WallRockSnow: WallRockSnowPlasma
   maxCount: 12
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 # Uranium
 - type: biomeMarkerLayer
   id: OreUranium
-  proto: WallRockUranium
-  entityMask: WallRock
+  entityMask:
+    WallRock: WallRockUranium
+    WallRockBasalt: WallRockBasaltUranium
+    WallRockChromite: WallRockChromiteUranium
+    WallRockSnow: WallRockSnowUranium
   maxCount: 12
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 - type: biomeMarkerLayer
   id: OreBananium
-  proto: WallRockBananium
-  entityMask: WallRock
+  entityMask:
+    WallRock: WallRockBananium
+    WallRockBasalt: WallRockBasaltBananium
+    WallRockChromite: WallRockChromiteBananium
+    WallRockSnow: WallRockSnowBananium
   maxCount: 12
-  groupCount: 5
+  minGroupSize: 5
+  maxGroupSize: 10
   radius: 4
 
 # Artifact Fragment
 - type: biomeMarkerLayer
   id: OreArtifactFragment
-  proto: WallRockArtifactFragment
-  entityMask: WallRock
+  entityMask:
+    WallRock: WallRockArtifactFragment
+    WallRockBasalt: WallRockBasaltArtifactFragment
+    WallRockChromite: WallRockChromiteArtifactFragment
+    WallRockSnow: WallRockSnowArtifactFragment
   maxCount: 6
-  groupCount: 1
-  radius: 4
-
-# Basalt variant
-# Low value
-- type: biomeMarkerLayer
-  id: BasaltOreTin
-  proto: WallRockBasaltTin
-  entityMask: WallRockBasalt
-  maxCount: 30
-  groupCount: 10
-  radius: 4
-
-- type: biomeMarkerLayer
-  id: BasaltOreQuartz
-  proto: WallRockBasaltQuartz
-  entityMask: WallRockBasalt
-  maxCount: 30
-  groupCount: 10
-  radius: 4
-
-# Medium value
-# Gold
-- type: biomeMarkerLayer
-  id: BasaltOreGold
-  proto: WallRockBasaltGold
-  entityMask: WallRockBasalt
-  maxCount: 30
-  groupCount: 5
-  radius: 4
-
-# Silver
-- type: biomeMarkerLayer
-  id: BasaltOreSilver
-  proto: WallRockBasaltSilver
-  entityMask: WallRockBasalt
-  maxCount: 30
-  groupCount: 5
-  radius: 4
-
-# High value
-# Plasma
-- type: biomeMarkerLayer
-  id: BasaltOrePlasma
-  proto: WallRockBasaltPlasma
-  entityMask: WallRockBasalt
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-# Uranium
-- type: biomeMarkerLayer
-  id: BasaltOreUranium
-  proto: WallRockBasaltUranium
-  entityMask: WallRockBasalt
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-- type: biomeMarkerLayer
-  id: BasaltOreBananium
-  proto: WallRockBasaltBananium
-  entityMask: WallRockBasalt
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-# Artifact Fragment
-- type: biomeMarkerLayer
-  id: BasaltOreArtifactFragment
-  proto: WallRockBasaltArtifactFragment
-  entityMask: WallRockBasalt
-  maxCount: 6
-  groupCount: 1
-  radius: 4
-
-# Shadow basalt variant
-# Low value
-- type: biomeMarkerLayer
-  id: ChromiteOreTin
-  proto: WallRockChromiteTin
-  entityMask: WallRockChromite
-  maxCount: 30
-  groupCount: 10
-  radius: 4
-
-- type: biomeMarkerLayer
-  id: ChromiteOreQuartz
-  proto: WallRockChromiteQuartz
-  entityMask: WallRockChromite
-  maxCount: 30
-  groupCount: 10
-  radius: 4
-
-# Medium value
-# Gold
-- type: biomeMarkerLayer
-  id: ChromiteOreGold
-  proto: WallRockChromiteGold
-  entityMask: WallRockChromite
-  maxCount: 30
-  groupCount: 5
-  radius: 4
-
-# Silver
-- type: biomeMarkerLayer
-  id: ChromiteOreSilver
-  proto: WallRockChromiteSilver
-  entityMask: WallRockChromite
-  maxCount: 30
-  groupCount: 5
-  radius: 4
-
-# High value
-# Plasma
-- type: biomeMarkerLayer
-  id: ChromiteOrePlasma
-  proto: WallRockChromitePlasma
-  entityMask: WallRockChromite
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-# Uranium
-- type: biomeMarkerLayer
-  id: ChromiteOreUranium
-  proto: WallRockChromiteUranium
-  entityMask: WallRockChromite
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-- type: biomeMarkerLayer
-  id: ChromiteOreBananium
-  proto: WallRockChromiteBananium
-  entityMask: WallRockChromite
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-# Artifact Fragment
-- type: biomeMarkerLayer
-  id: ChromiteOreArtifactFragment
-  proto: WallRockChromiteArtifactFragment
-  entityMask: WallRockChromite
-  maxCount: 6
-  groupCount: 1
-  radius: 4
-
-# Snow variant
-# Low value
-- type: biomeMarkerLayer
-  id: SnowOreTin
-  proto: WallRockSnowTin
-  entityMask: WallRockSnow
-  maxCount: 30
-  groupCount: 10
-  radius: 4
-
-- type: biomeMarkerLayer
-  id: SnowOreQuartz
-  proto: WallRockSnowQuartz
-  entityMask: WallRockSnow
-  maxCount: 30
-  groupCount: 10
-  radius: 4
-
-# Medium value
-# Gold
-- type: biomeMarkerLayer
-  id: SnowOreGold
-  proto: WallRockSnowGold
-  entityMask: WallRockSnow
-  maxCount: 30
-  groupCount: 5
-  radius: 4
-
-# Silver
-- type: biomeMarkerLayer
-  id: SnowOreSilver
-  proto: WallRockSnowSilver
-  entityMask: WallRockSnow
-  maxCount: 30
-  groupCount: 5
-  radius: 4
-
-# High value
-# Plasma
-- type: biomeMarkerLayer
-  id: SnowOrePlasma
-  proto: WallRockSnowPlasma
-  entityMask: WallRockSnow
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-# Uranium
-- type: biomeMarkerLayer
-  id: SnowOreUranium
-  proto: WallRockSnowUranium
-  entityMask: WallRockSnow
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-- type: biomeMarkerLayer
-  id: SnowOreBananium
-  proto: WallRockSnowBananium
-  entityMask: WallRockSnow
-  maxCount: 12
-  groupCount: 5
-  radius: 4
-
-# Artifact Fragment
-- type: biomeMarkerLayer
-  id: SnowOreArtifactFragment
-  proto: WallRockSnowArtifactFragment
-  entityMask: WallRockSnow
-  maxCount: 6
-  groupCount: 1
+  minGroupSize: 1
+  maxGroupSize: 2
   radius: 4

@@ -192,6 +192,7 @@
     tags:
     - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
+  - type: Emoting
 
 - type: entity
   id: BaseBorgChassisNT

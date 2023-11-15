@@ -1,0 +1,66 @@
+- type: entity
+  id: PetCarrier
+  name: big pet carrier
+  description: Allows large animals to be carried comfortably.
+  parent: BaseStructureDynamic
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Objects
+    sprite: Objects/Storage/petcarrier.rsi
+    layers:
+    - state: pet_carrier_base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: pet_carrier_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Objects/Storage/petcarrier.rsi
+    state: icon
+  - type: InteractionOutline
+  - type: Physics
+  - type: MultiHandedItem
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 25
+        mask:
+        - SmallMobMask
+        layer:
+        - MachineLayer
+  - type: EntityStorage
+    capacity: 1
+    airtight: false
+    itemCanStoreMobs: true
+  - type: Weldable
+  - type: ResistLocker
+  - type: PlaceableSurface
+    isPlaceable: false
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: pet_carrier_open
+    stateDoorClosed: pet_carrier_door
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: ItemSlots
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Storage/petcarrier.rsi
