@@ -49,6 +49,7 @@ public sealed class TextScreenSystem : EntitySystem
             // component.Remaining = _gameTiming.CurTime + args.Duration;
             // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
             // _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + args.Duration[1].Value, appearance);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + args.Duration, appearance);
             var timer = EnsureComp<TextScreenTimerComponent>(uid);
             timer.Target = _gameTiming.CurTime + args.Duration;
         }

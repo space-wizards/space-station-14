@@ -5,8 +5,10 @@ using Content.Shared.TextScreen.Components;
 using Content.Shared.TextScreen.Events;
 using FastAccessors;
 using Robust.Client.GameObjects;
+using Robust.Client.State;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Client.TextScreen;
 
@@ -44,17 +46,33 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnTextInit);
+        SubscribeLocalEvent<TextScreenTimerComponent, ComponentInit>(OnTimerInit);
     }
 
-    private void OnInit(EntityUid uid, TextScreenVisualsComponent component, ComponentInit args)
+    private void OnTextInit(EntityUid uid, TextScreenVisualsComponent component, ComponentInit args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
         component.TextOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, component.TextOffset);
         ResetTextLength(uid, component, sprite);
-        PrepareLayerStatesToDraw(uid, component, sprite);
+        BuildTextLayerStates(uid, component, sprite);
+    }
+
+    private void OnTimerInit(EntityUid uid, TextScreenTimerComponent component, ComponentInit args)
+    {
+        if (!TryComp(uid, out SpriteComponent? sprite) || !TryComp<TextScreenVisualsComponent>(uid, out var screen))
+            return;
+
+        for (var i = 0; i < screen.RowLength; i++)
+        {
+            sprite.LayerMapReserveBlank(TimerMapKey + i);
+            component.LayerStatesToDraw.Add(TimerMapKey + i, null);
+            sprite.LayerSetRSI(TimerMapKey + i, new ResPath("Effects/text.rsi"));
+            sprite.LayerSetColor(TimerMapKey + i, screen.Color);
+            sprite.LayerSetState(TimerMapKey + i, DefaultState);
+        }
     }
 
     protected override void OnAppearanceChange(EntityUid uid, TextScreenVisualsComponent component, ref AppearanceChangeEvent args)
@@ -71,18 +89,21 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             UpdateVisibility(uid, component, sprite);
         }
 
-        if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.TargetTime, out TimeSpan time, appearance))
-        {
-            var timer = EnsureComp<TextScreenTimerComponent>(uid);
-            timer.Target = time;
-        }
-
         if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.ScreenText, out string?[] text, appearance))
         {
             component.TextToDraw = text;
         }
 
-        PrepareLayerStatesToDraw(uid, component, sprite);
+        if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.TargetTime, out TimeSpan time, appearance))
+        {
+            var timer = EnsureComp<TextScreenTimerComponent>(uid);
+            timer.Target = time;
+            BuildTimerLayerStates(uid, timer, timer.Row * component.RowOffset);
+            DrawLayerStates(uid, timer.LayerStatesToDraw);
+        }
+
+        BuildTextLayerStates(uid, component, sprite);
+        DrawLayerStates(uid, component.LayerStatesToDraw);
         // UpdateLayersToDraw(uid, component, sprite);
     }
 
@@ -206,7 +227,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     /// <remarks>
     ///     Remember to set <see cref="TextScreenVisualsComponent.TextToDraw"/> to a string first.
     /// </remarks>
-    public void PrepareLayerStatesToDraw(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
+    public void BuildTextLayerStates(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
@@ -226,7 +247,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
                 // }
                 component.LayerStatesToDraw[TextMapKey + position] = GetStateFromChar(row[chr]);
                 sprite.LayerSetOffset(
-                    TimerMapKey + position,
+                    TextMapKey + position,
                     Vector2.Multiply(new Vector2((chr - (row.Length - 1)) * 2, rowIdx), TextScreenVisualsComponent.PixelSize)
                 );
                 position++;
@@ -255,39 +276,50 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     //     }
     // }
 
-    public void BuildTimerLayerStates(
-        EntityUid uid,
-        TextScreenTimerComponent component,
-        string chars,
-        SpriteComponent? sprite = null,
-        float vertOffset = 0
-        )
+    public void BuildTimerLayerStates(EntityUid uid, TextScreenTimerComponent component, float vertOffset, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
 
-        for (int i = 0; i < chars.Length; i++)
+        string time = TimeToString(
+            (_gameTiming.CurTime - component.Target).Duration(),
+            false,
+            component.HourFormat, component.MinuteFormat, component.SecondFormat
+            );
+
+        for (int i = 0; i < time.Length; i++)
         {
-            component.LayerStatesToDraw[TimerMapKey + i] = GetStateFromChar(chars[i]);
+            component.LayerStatesToDraw[TimerMapKey + i] = GetStateFromChar(time[i]);
             sprite.LayerSetOffset(
                 TimerMapKey + i,
-                Vector2.Multiply(new Vector2((i - (chars.Length - 1)) * 2, vertOffset), TextScreenVisualsComponent.PixelSize)
+                Vector2.Multiply(new Vector2((i - (time.Length - 1)) * 2, vertOffset), TextScreenVisualsComponent.PixelSize)
             );
         }
     }
 
-    private void BuildTimerLayers(
-        EntityUid uid,
-        TextScreenTimerComponent component,
-        SpriteComponent? sprite = null
-    )
+    private void DrawLayerStates(EntityUid uid, Dictionary<string, string?> layerStates, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
             return;
 
-        int position = 0;
-
+        foreach (var (key, state) in layerStates.Where(pairs => pairs.Value != null))
+            sprite.LayerSetState(key, state);
     }
+
+    // private void BuildTimerLayers(
+    //     EntityUid uid,
+    //     TextScreenTimerComponent timer,
+    //     SpriteComponent? sprite = null
+    // )
+    // {
+    //     if (!Resolve(uid, ref sprite) || !TryComp<TextScreenVisualsComponent>(uid, out var screen))
+    //         return;
+
+    //     int position = timer.Row * screen.RowLength;
+    //     for (int i = position; i < position + screen.RowLength; i++)
+
+
+    // }
 
     /// <summary>
     ///     Iterates through <see cref="TextScreenVisualsComponent.LayerStatesToDraw"/>, setting sprite states to the appropriate layers.
@@ -312,16 +344,11 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         var query = EntityQueryEnumerator<TextScreenTimerComponent, TextScreenVisualsComponent>();
         while (query.MoveNext(out var uid, out var timer, out var comp))
         {
-            string time = TimeToString(
-                (_gameTiming.CurTime - timer.Target).Duration(),
-                false,
-                hours: timer.HourFormat, minutes: timer.MinuteFormat, seconds: timer.SecondFormat
-                );
-
             // comp.TextToDraw[timer.Row] = TimeToString(timeToShow, false, minutes: timer.MinuteFormat);
-            // PrepareLayerStatesToDraw(uid, comp);
+            // BuildTextLayerStates(uid, comp);
             // UpdateLayersToDraw(uid, comp);
-            BuildTimerLayerStates(uid, timer, time, null, vertOffset: 10);
+            BuildTimerLayerStates(uid, timer, timer.Row * comp.RowOffset);
+            DrawLayerStates(uid, timer.LayerStatesToDraw);
         }
     }
 
