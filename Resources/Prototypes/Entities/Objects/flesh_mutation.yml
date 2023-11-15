@@ -1,0 +1,31 @@
+﻿- type: entity
+  name: spiked bone shield
+  parent: BaseShield
+  id: MutationSpikedBoneShield
+  description: A sturdy spiked bone shield, with thin veins of flesh between the bones.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/spiked_bone_shield.rsi
+      state: spiked-icon
+    - type: Item
+      sprite: Objects/Weapons/Melee/spiked_bone_shield.rsi
+      size: Ginormous
+      heldPrefix: spiked
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.85
+          Heat: 0.8
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.7
+          Heat: 0.5
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
+          Heat: 1
