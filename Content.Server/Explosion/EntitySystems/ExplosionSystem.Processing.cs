@@ -439,48 +439,10 @@ public sealed partial class ExplosionSystem
                 throwForce);
         }
 
-        //If damageble object inside storage
-        if (_entityManager.TryGetComponent<ContainerManagerComponent>(uid, out var container))
-        {
-            InStorageDamage(uid, container, damage);
-        }
-
-
         // TODO EXPLOSION puddle / flammable ignite?
 
         // TODO EXPLOSION deaf/ear damage? other explosion effects?
     }
-
-    // SS220 In-Container-Explosions begin
-    /// <summary>
-    ///     This function allows you to damage an object in storage.
-    /// </summary>
-    private void InStorageDamage(EntityUid uid, ContainerManagerComponent container, DamageSpecifier? damage)
-    {
-        if (container.TryGetContainer("storagebase", out var storage))
-        {
-            foreach (EntityUid storagedEntity in storage.ContainedEntities)
-            {
-                if (damage != null &&
-                    _damageQuery.TryGetComponent(storagedEntity, out var damageableInStorage) &&
-                    _explosiveQuery.TryGetComponent(storagedEntity, out var explosiveComponent))
-                {
-
-                    //    TO DO add damage decreasing coefficient depending on deepness inside storages and maybe even material of storage
-                    _damageableSystem.TryChangeDamage(storagedEntity, damage, ignoreResistances: true, damageable: damageableInStorage);
-                    var damageStr = string.Join(", ", damage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
-                    _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                        $"Explosion caused [{damageStr}] to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
-                }
-                //if we met another storage inside this storage
-                if (_entityManager.TryGetComponent<ContainerManagerComponent>(storagedEntity, out var innerContainer))
-                {
-                    InStorageDamage(storagedEntity, innerContainer, damage);
-                }
-            }
-        }
-    }
-    // SS220 In-Container-Explosions end
 
     /// <summary>
     ///     Tries to damage floor tiles. Not to be confused with the function that damages entities intersecting the
