@@ -326,6 +326,7 @@ public sealed class ActionButton : Control, IEntityControl
     {
         base.FrameUpdate(args);
 
+        Cooldown.Visible = _action != null && _action.Cooldown != null;
         if (_action == null)
             return;
 
