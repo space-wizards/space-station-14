@@ -426,3 +426,63 @@
   - type: Construction
     graph: DisposalPipe
     node: bend
+
+- type: entity
+  parent: DisposalJunction
+  id: DisposalSignalRouter
+  name: disposal signal router
+  description: A signal-controlled three-way router.
+  components:
+  - type: Sprite
+    drawdepth: ThickPipe
+    layers:
+    - map: [ "pipe" ]
+      state: signal-router-free
+  - type: DisposalTube
+    containerId: DisposalSignalRouter
+  - type: DisposalSignalRouter
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: ContainerContainer
+    containers:
+      DisposalSignalRouter: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: signal-router-free }
+          Anchored: { state: signal-router }
+  - type: Flippable
+    mirrorEntity: DisposalSignalRouterFlipped
+  - type: Construction
+    graph: DisposalPipe
+    node: signal_router
+
+- type: entity
+  parent: DisposalSignalRouter
+  id: DisposalSignalRouterFlipped
+  suffix: flipped
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "pipe" ]
+      state: signal-router-flipped-free
+  - type: DisposalJunction
+    degrees:
+    - 0
+    - 90
+    - 180
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: signal-router-flipped-free }
+          Anchored: { state: signal-router-flipped }

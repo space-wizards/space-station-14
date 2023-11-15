@@ -71,6 +71,7 @@ flavor-complex-bread = like bread
 flavor-complex-batter = like batter
 flavor-complex-butter = like butter
 flavor-complex-egg = like egg
+flavor-complex-raw-egg = like raw egg
 flavor-complex-bacon = like bacon
 flavor-complex-chicken = like chicken
 flavor-complex-duck = like duck

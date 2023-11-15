@@ -2,3 +2,32 @@
   license: "CC-BY-4.0"
   copyright: "Recorded by https://github.com/PixelTheKermit"
   source: "https://github.com/space-wizards/space-station-14/pull/13945"
+
+- files: ["pai.ogg", "pai_ask.ogg", "pai_exclaim.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "hubismal on GitHub"
+  source: "https://github.com/space-wizards/space-station-14/commit/3421e4f4de2613df1e92a4169a778335bc9faac4"
+
+- files: [
+    "speak_1_ask.ogg",
+    "speak_1_exclaim.ogg",
+    "speak_1.ogg",
+    "speak_2_ask.ogg",
+    "speak_2_exclaim.ogg",
+    "speak_2.ogg",
+    "speak_3_ask.ogg",
+    "speak_3_exclaim.ogg",
+    "speak_3.ogg",
+    "speak_4_ask.ogg",
+    "speak_4_exclaim.ogg",
+    "speak_4.ogg",
+    "lizard.ogg",
+    "lizard_ask.ogg",
+    "lizard_exclaim.ogg",
+    "slime.ogg",
+    "slime_ask.ogg",
+    "slime_exclaim.ogg",
+  ]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Goonstation"
+  source: "https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk"

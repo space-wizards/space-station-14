@@ -4,6 +4,7 @@
   entityMask:
     WallRock: WallRockTin
     WallRockBasalt: WallRockBasaltTin
+    WallRockChromite: WallRockChromiteTin
     WallRockSnow: WallRockSnowTin
   maxCount: 30
   minGroupSize: 10
@@ -15,6 +16,7 @@
   entityMask:
     WallRock: WallRockQuartz
     WallRockBasalt: WallRockBasaltQuartz
+    WallRockChromite: WallRockChromiteQuartz
     WallRockSnow: WallRockSnowQuartz
   maxCount: 30
   minGroupSize: 10
@@ -28,6 +30,7 @@
   entityMask:
     WallRock: WallRockGold
     WallRockBasalt: WallRockBasaltGold
+    WallRockChromite: WallRockChromiteGold
     WallRockSnow: WallRockSnowGold
   maxCount: 30
   minGroupSize: 5
@@ -40,6 +43,7 @@
   entityMask:
     WallRock: WallRockSilver
     WallRockBasalt: WallRockBasaltSilver
+    WallRockChromite: WallRockChromiteSilver
     WallRockSnow: WallRockSnowSilver
   maxCount: 30
   minGroupSize: 5
@@ -53,6 +57,7 @@
   entityMask:
     WallRock: WallRockPlasma
     WallRockBasalt: WallRockBasaltPlasma
+    WallRockChromite: WallRockChromitePlasma
     WallRockSnow: WallRockSnowPlasma
   maxCount: 12
   minGroupSize: 5
@@ -65,6 +70,7 @@
   entityMask:
     WallRock: WallRockUranium
     WallRockBasalt: WallRockBasaltUranium
+    WallRockChromite: WallRockChromiteUranium
     WallRockSnow: WallRockSnowUranium
   maxCount: 12
   minGroupSize: 5
@@ -76,6 +82,7 @@
   entityMask:
     WallRock: WallRockBananium
     WallRockBasalt: WallRockBasaltBananium
+    WallRockChromite: WallRockChromiteBananium
     WallRockSnow: WallRockSnowBananium
   maxCount: 12
   minGroupSize: 5
@@ -88,6 +95,7 @@
   entityMask:
     WallRock: WallRockArtifactFragment
     WallRockBasalt: WallRockBasaltArtifactFragment
+    WallRockChromite: WallRockChromiteArtifactFragment
     WallRockSnow: WallRockSnowArtifactFragment
   maxCount: 6
   minGroupSize: 1
