@@ -160,15 +160,6 @@
     {
       "name": "ce_open"
     },
-	{
-      "name": "clown_sec"
-    },
-    {
-      "name": "clown_door"
-    },
-    {
-      "name": "clown_open"
-    },
     {
       "name": "chemical_door"
     },
@@ -401,15 +392,6 @@
     {
       "name": "mining_open"
     },
-	{
-      "name": "mime_sec"
-    },
-    {
-      "name": "mime_door"
-    },
-    {
-      "name": "mime_open"
-    },
     {
       "name": "mixed_door"
     },
@@ -564,6 +546,27 @@
     },
     {
       "name": "ussp_open"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "clown_door"
+    },
+    {
+      "name": "clown_open"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "mime_door"
+    },
+    {
+      "name": "mime_open"
+    },
+    {
+      "name": "representative_door"
     }
   ]
 }

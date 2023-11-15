@@ -21,10 +21,6 @@
     initialBeepDelay: 0
     beepSound: /Audio/Effects/lightburn.ogg
   # TODO: random timer when crafted
-  - type: TriggerOnSignal
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
   - type: Explosive # Weak explosion in a very small radius. Doesn't break underplating.
     explosionType: Default
     totalIntensity: 50

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
@@ -413,6 +413,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 var storeEv = new StoreMobInItemContainerAttemptEvent();
                 RaiseLocalEvent(container, ref storeEv);
                 allowedToEat = storeEv is { Handled: true, Cancelled: false };
+
+                if (component.ItemCanStoreMobs)
+                    allowedToEat = true;
             }
         }
 
