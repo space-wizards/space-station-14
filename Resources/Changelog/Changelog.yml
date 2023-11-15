@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Added pinging a Discord role when the round ends., type: Add}
-  id: 4674
-  time: '2023-08-24T21:50:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Fixed the chemical guidebook sometimes missing one of the conditions,
@@ -2906,3 +2901,11 @@ Entries:
       of tags., type: Add}
   id: 5173
   time: '2023-11-14T23:30:43.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Traversing through disposal system now deals some blunt damage on every
+      turn. Be advised!, type: Tweak}
+  - {message: Fixed clang sound not playing when traversing through disposal system.,
+    type: Fix}
+  id: 5174
+  time: '2023-11-15T00:52:43.0000000+00:00'
