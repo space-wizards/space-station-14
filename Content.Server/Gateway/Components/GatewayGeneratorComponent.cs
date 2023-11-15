@@ -26,7 +26,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// How long it takes to unlock another destination once one is taken.
     /// </summary>
     [DataField]
-    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(45);
+    public TimeSpan UnlockCooldown = TimeSpan.FromMinutes(75);
 
     /// <summary>
     /// Maps we've generated.

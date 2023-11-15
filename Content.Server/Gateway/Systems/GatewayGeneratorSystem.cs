@@ -87,6 +87,8 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent generator, MapInitEvent args)
     {
+        generator.NextUnlock = TimeSpan.FromMinutes(5);
+
         for (var i = 0; i < 3; i++)
         {
             GenerateDestination(uid, generator);
