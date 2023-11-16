@@ -1,0 +1,27 @@
+- type: entity
+  name: captain clothingbox
+  parent: BoxCardboard
+  id: BoxCaptainAdditionalClothing
+  description: Filler
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingUniformJumpskirtWhiteCaptain
+        - id: ClothingUniformJumpsuitWhiteCaptain
+        - id: ClothingBeltWhiteSheath
+        - id: ClothingHeadHatBeretCaptainWhite
+        - id: ClothingHeadHatCapcapWhite
+        - id: ClothingHandsGlovesCaptainWhite
+        - id: ClothingUniformJumpsuitSheriffCaptain
+        - id: ClothingBeltSheriffSheath
+        - id: ClothingHeadHatBeretCaptainSheriff
+        - id: ClothingHeadHatCapcapSheriff
+        - id: ClothingHandsGlovesCaptainSheriff
+    - type: Sprite
+      layers:
+        - state: box
+    - type: Storage
+      capacity: 145
+      whitelist:
+        components:
+          - Clothing
