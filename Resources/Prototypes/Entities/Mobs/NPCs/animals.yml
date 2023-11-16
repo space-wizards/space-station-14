@@ -763,6 +763,8 @@
         - MobLayer
   - type: Tag
     tags:
+    # let moths eat wool directly
+    - ClothMade
     - DoorBumpOpener
     - Goat
   - type: Reproductive
@@ -788,11 +790,19 @@
         reagents:
         - ReagentId: MilkGoat
           Quantity: 30
+      wool:
+        maxVol: 250
   - type: Udder
     reagentId: MilkGoat
     targetSolution: udder
     quantity: 25
     updateRate: 20
+  - type: Wooly
+  - type: Food
+    solution: wool
+    requiresSpecialDigestion: true
+    # Wooly prevents eating wool deleting the goat so its fine
+    requireDead: false
   - type: Butcherable
     spawned:
     - id: FoodMeat
