@@ -1,0 +1,136 @@
+- type: entity
+  parent: ClothingUniformJumpskirtCaptain
+  id: ClothingUniformJumpskirtWhiteCaptain
+  name: captain's white jumpskirt
+  description: It's a white jumpskirt with some gold markings denoting the rank of "Captain".
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/white/captainwhiteskirt.rsi
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/white/captainwhiteskirt.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitCaptain
+  id: ClothingUniformJumpsuitWhiteCaptain
+  name: captain's white jumpsuit
+  description: It's a white jumpsuit with some gold markings denoting the rank of "Captain".
+  components:
+    - type: Sprite
+      sprite: Imperial/CaptainExtraDrip/white/captainwhite.rsi
+    - type: Clothing
+      sprite: Imperial/CaptainExtraDrip/white/captainwhite.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitCaptain
+  id: ClothingUniformJumpsuitSheriffCaptain
+  name: captain's sheriff jumpsuit
+  description: It's a shite jumpsuit with some gold markings denoting the rank of "Captain".
+  components:
+    - type: Sprite
+      sprite: Imperial/CaptainExtraDrip/sheriff/captainsheriff.rsi
+    - type: Clothing
+      sprite: Imperial/CaptainExtraDrip/sheriff/captainsheriff.rsi
+
+- type: entity
+  parent: ClothingBeltSheath
+  id: ClothingBeltWhiteSheath
+  name: sabre sheath
+  description: An ornate sheath designed to hold an officer's blade.
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/white/sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/white/sheath.rsi
+
+- type: entity
+  parent: ClothingBeltSheath
+  id: ClothingBeltSheriffSheath
+  name: sabre sheath
+  description: An ornate sheath designed to hold an officer's blade.
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/sheriff/sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/sheriff/sheath.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCaptainWhite
+  name: beret
+  description: A beret, an artists favorite headwear.
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/white/beret.rsi
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/white/beret.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCaptainSheriff
+  name: beret
+  description: A beret, an artists favorite headwear.
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/sheriff/beret.rsi
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/sheriff/beret.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapcapWhite
+  name: cap cap
+  description: A grand, stylish captain cap.
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/white/capcap.rsi
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/white/capcap.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapcapSheriff
+  name: cap cap
+  description: A grand, stylish captain cap.
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/sheriff/capcap.rsi
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/sheriff/capcap.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HamsterWearable
+
+- type: entity
+  parent: ClothingHandsGlovesCaptain
+  id: ClothingHandsGlovesCaptainWhite
+  name: captain gloves
+  description: Regal white gloves, with a nice gold trim. Swanky.
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/white/gloves.rsi
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/white/gloves.rsi
+
+- type: entity
+  parent: ClothingHandsGlovesCaptain
+  id: ClothingHandsGlovesCaptainSheriff
+  name: captain gloves
+  description: Regal white gloves, with a nice gold trim. Swanky.
+  components:
+  - type: Sprite
+    sprite: Imperial/CaptainExtraDrip/sheriff/gloves.rsi
+  - type: Clothing
+    sprite: Imperial/CaptainExtraDrip/sheriff/gloves.rsi

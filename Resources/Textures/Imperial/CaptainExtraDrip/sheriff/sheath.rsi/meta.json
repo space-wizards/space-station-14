@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from shiptest (https://github.com/shiptest-ss13/Shiptest)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "equipped-BELT",
+        "directions": 4
+    },
+    {
+        "name": "sheath-sabre-equipped-BELT",
+        "directions": 4
+    },
+    {
+        "name": "sheath-sabre"
+    },
+    {
+        "name": "sheath"
+    }
+  ]
+}
