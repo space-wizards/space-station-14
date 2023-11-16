@@ -177,11 +177,11 @@
 
 - type: entity
   parent: WindoorSecureSecurityLocked
-  id: WindoorSecureLawyerLocked
-  suffix: Lawyer, Locked
+  id: WindoorSecureSecurityLawyerLocked
+  suffix: Security/Lawyer, Locked
   components:
   - type: AccessReader
-    access: [["Lawyer"]]
+    access: [["Security"], ["Lawyer"]]
 
 - type: entity
   parent: WindoorSecure
