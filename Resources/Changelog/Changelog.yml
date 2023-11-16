@@ -1,67 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'Gardening cyborg module has been splitted into harvesting (scythe,
-      hatchet, plant bag* (New!) ) and gardening modules (hoe, spade, clippers, bucket*
-      (New!)', type: Tweak}
-  - {message: Book bag has been added to cybord literacy module, type: Tweak}
-  - {message: Book bag content now can be dumped on, type: Tweak}
-  id: 4669
-  time: '2023-08-24T00:12:05.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Reduced both the damage and health of giant spiders., type: Tweak}
-  id: 4670
-  time: '2023-08-24T01:20:53.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Heaters and freezers now work faster. TEGs now have their power output
-      adjusted., type: Tweak}
-  id: 4671
-  time: '2023-08-24T02:18:48.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Secret doors can be manually rotated again (at least until a dynamic
-      solution is found)., type: Fix}
-  id: 4672
-  time: '2023-08-24T16:23:11.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: All plates can now be made in the autolathe., type: Tweak}
-  id: 4673
-  time: '2023-08-24T18:01:14.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Added pinging a Discord role when the round ends., type: Add}
-  id: 4674
-  time: '2023-08-24T21:50:08.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Fixed the chemical guidebook sometimes missing one of the conditions,
-      effects, or damage types for a chemical.', type: Fix}
-  id: 4675
-  time: '2023-08-25T02:14:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some minor quirks around reflection chances and also fixed reflect
-      vest reflecting every projectile., type: Fix}
-  id: 4676
-  time: '2023-08-25T02:48:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Solid plasma now comes in special plasma containment crates., type: Tweak}
-  id: 4677
-  time: '2023-08-25T02:50:41.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Cyborgs can now state individual laws with the push of a button, type: Add}
-  id: 4678
-  time: '2023-08-25T02:56:02.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: 'Changed nutriment color, it is now green.', type: Tweak}
-  id: 4679
-  time: '2023-08-25T03:11:24.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'The nuclear operative medic has returned to using the standard Syndicate
@@ -2907,3 +2844,71 @@ Entries:
     type: Fix}
   id: 5168
   time: '2023-11-14T03:27:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed candle in-hand sprites not updating when the candle is extinguished.,
+    type: Fix}
+  - {message: Fixed flammable object collisions being processed twice. This may affect
+      how fires spread., type: Fix}
+  id: 5169
+  time: '2023-11-14T11:55:45.0000000+00:00'
+- author: Chubbygummibear
+  changes:
+  - {message: Fixed thrown entities physics being set to sleep if the throw was stopped
+      by colliding with something, type: Fix}
+  id: 5170
+  time: '2023-11-14T12:54:35.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Science built cyborgs can now emote, type: Fix}
+  id: 5171
+  time: '2023-11-14T23:27:27.0000000+00:00'
+- author: Sirionaut
+  changes:
+  - {message: cloth can be crafted from cotton (made from cotton bols), type: Add}
+  id: 5172
+  time: '2023-11-14T23:27:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Added the disposal signal router which is controlled by signals instead
+      of tags., type: Add}
+  id: 5173
+  time: '2023-11-14T23:30:43.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Traversing through disposal system now deals some blunt damage on every
+      turn. Be advised!, type: Tweak}
+  - {message: Fixed clang sound not playing when traversing through disposal system.,
+    type: Fix}
+  id: 5174
+  time: '2023-11-15T00:52:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts now have a chance to spit out both medicinal and poisonous
+      foam., type: Add}
+  id: 5175
+  time: '2023-11-15T01:34:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed actions sometimes gaining phantom cooldown graphics., type: Fix}
+  - {message: 'Fixed an issue where clicking an action would interrupt hovering, making
+      it awkward to click multiple times.', type: Fix}
+  id: 5176
+  time: '2023-11-15T01:35:43.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added 5 minute initial timer to gateway + bump new portal generation
+      from 45 minutes to 75 minutes., type: Tweak}
+  id: 5177
+  time: '2023-11-15T06:23:53.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Removed the ability to link IEDs to a remote signal., type: Remove}
+  id: 5178
+  time: '2023-11-15T10:02:37.0000000+00:00'
+- author: TsjipTsjip
+  changes:
+  - {message: 'Kettle''s exterior airlocks are now far less likely to end up bolted,
+      but must be configured manually now.', type: Tweak}
+  id: 5179
+  time: '2023-11-15T20:56:13.0000000+00:00'

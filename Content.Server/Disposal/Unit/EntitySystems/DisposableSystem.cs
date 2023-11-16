@@ -4,11 +4,12 @@ using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Disposal.Components;
+using Content.Shared.Damage;
 using Content.Shared.Item;
-using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -16,13 +17,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 {
     public sealed class DisposableSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
-        [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+        [Dependency] private readonly DisposalUnitSystem _disposalUnit = default!;
+        [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly MapSystem _map = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -33,7 +36,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void OnComponentStartup(EntityUid uid, DisposalHolderComponent holder, ComponentStartup args)
         {
-            holder.Container = _containerSystem.EnsureContainer<Container>(uid, nameof(DisposalHolderComponent));
+            holder.Container = _container.EnsureContainer<Container>(uid, nameof(DisposalHolderComponent));
         }
 
         public bool TryInsert(EntityUid uid, EntityUid toInsert, DisposalHolderComponent? holder = null)
@@ -47,7 +50,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
 
             if (TryComp<PhysicsComponent>(toInsert, out var physBody))
-                _physicsSystem.SetCanCollide(toInsert, false, body: physBody);
+                _physics.SetCanCollide(toInsert, false, body: physBody);
 
             return true;
         }
@@ -57,7 +60,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!Resolve(uid, ref holder))
                 return false;
 
-            if (!_containerSystem.CanInsert(toInsert, holder.Container))
+            if (!_container.CanInsert(toInsert, holder.Container))
             {
                 return false;
             }
@@ -86,11 +89,13 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             EntityUid? disposalId = null;
             DisposalUnitComponent? duc = null;
-            if (_mapManager.TryGetGrid(holderTransform.GridUid, out var grid))
+            var gridUid = holderTransform.GridUid;
+            if (TryComp<MapGridComponent>(gridUid, out var grid))
             {
-                foreach (var contentUid in grid.GetLocal(holderTransform.Coordinates))
+                var ducQuery = GetEntityQuery<DisposalUnitComponent>();
+                foreach (var contentUid in _map.GetLocal(gridUid.Value, grid, holderTransform.Coordinates))
                 {
-                    if (EntityManager.TryGetComponent(contentUid, out duc))
+                    if (ducQuery.TryGetComponent(contentUid, out duc))
                     {
                         disposalId = contentUid;
                         break;
@@ -98,36 +103,39 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
+            var physQuery = GetEntityQuery<PhysicsComponent>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            var transformQuery = GetEntityQuery<TransformComponent>();
             foreach (var entity in holder.Container.ContainedEntities.ToArray())
             {
                 RemComp<BeingDisposedComponent>(entity);
 
-                var meta = MetaData(entity);
+                var meta = metaQuery.GetComponent(entity);
                 holder.Container.Remove(entity, EntityManager, meta: meta, reparent: false, force: true);
 
-                var xform = Transform(entity);
+                var xform = transformQuery.GetComponent(entity);
                 if (xform.ParentUid != uid)
                     continue;
 
                 if (duc != null)
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
-                    _xformSystem.AttachToGridOrMap(entity, xform);
+                    _transform.AttachToGridOrMap(entity, xform);
 
-                if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
+                if (physQuery.TryGetComponent(entity, out var physics))
                 {
-                    _physicsSystem.WakeBody(entity, body: physics);
+                    _physics.WakeBody(entity, body: physics);
                 }
             }
 
             if (disposalId != null && duc != null)
             {
-                _disposalUnitSystem.TryEjectContents(disposalId.Value, duc);
+                _disposalUnit.TryEjectContents(disposalId.Value, duc);
             }
 
-            if (_atmosphereSystem.GetContainingMixture(uid, false, true) is { } environment)
+            if (_atmosphere.GetContainingMixture(uid, false, true) is { } environment)
             {
-                _atmosphereSystem.Merge(environment, holder.Air);
+                _atmosphere.Merge(environment, holder.Air);
                 holder.Air.Clear();
             }
 
@@ -182,6 +190,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;
             }
+
+            // damage entities on turns and play sound
+            if (holder.CurrentDirection != holder.PreviousDirection)
+            {
+                foreach (var ent in holder.Container.ContainedEntities)
+                {
+                    _damageable.TryChangeDamage(ent, to.DamageOnTurn);
+                }
+                _audio.PlayPvs(to.ClangSound, toUid, AudioParams.Default.WithVolume(-5f));
+            }
+
             return true;
         }
 
@@ -222,7 +241,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     var newPosition = destination * progress;
 
                     // This is some supreme shit code.
-                    _xformSystem.SetCoordinates(uid, origin.Offset(newPosition).WithEntityId(currentTube));
+                    _transform.SetCoordinates(uid, origin.Offset(newPosition).WithEntityId(currentTube));
                     continue;
                 }
 
@@ -231,7 +250,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 Comp<DisposalTubeComponent>(currentTube).Contents.Remove(uid, reparent: false, force: true);
 
                 // Find next tube
-                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube, holder.CurrentDirection);
+                var nextTube = _disposalTube.NextTubeFor(currentTube, holder.CurrentDirection);
                 if (!EntityManager.EntityExists(nextTube))
                 {
                     ExitDisposals(uid, holder);
