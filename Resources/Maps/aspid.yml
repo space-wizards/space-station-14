@@ -10615,28 +10615,6 @@ entities:
     - pos: -24.5,53.5
       parent: 1
       type: Transform
-- proto: AirlockEVAGlassLocked
-  entities:
-  - uid: 6930
-    components:
-    - pos: 28.5,33.5
-      parent: 1
-      type: Transform
-  - uid: 6931
-    components:
-    - pos: 28.5,32.5
-      parent: 1
-      type: Transform
-  - uid: 6932
-    components:
-    - pos: 25.5,35.5
-      parent: 1
-      type: Transform
-  - uid: 6933
-    components:
-    - pos: 26.5,35.5
-      parent: 1
-      type: Transform
 - proto: AirlockExternalAtmosphericsLocked
   entities:
   - uid: 4167
@@ -10998,18 +10976,6 @@ entities:
       pos: -53.5,38.5
       parent: 1
       type: Transform
-  - uid: 1766
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -47.5,2.5
-      parent: 1
-      type: Transform
-  - uid: 2070
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -47.5,4.5
-      parent: 1
-      type: Transform
   - uid: 2145
     components:
     - rot: 1.5707963267948966 rad
@@ -11366,6 +11332,18 @@ entities:
     - dockJointId: docking21482
       dockedWith: 8864
       type: Docking
+  - uid: 6932
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -47.5,4.5
+      parent: 1
+      type: Transform
+  - uid: 6933
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -47.5,2.5
+      parent: 1
+      type: Transform
   - uid: 8864
     components:
     - rot: -1.5707963267948966 rad
@@ -11398,6 +11376,26 @@ entities:
       type: Transform
 - proto: AirlockHeadOfPersonnelGlassLocked
   entities:
+  - uid: 1766
+    components:
+    - pos: 25.5,35.5
+      parent: 1
+      type: Transform
+  - uid: 2070
+    components:
+    - pos: 26.5,35.5
+      parent: 1
+      type: Transform
+  - uid: 6930
+    components:
+    - pos: 28.5,32.5
+      parent: 1
+      type: Transform
+  - uid: 6931
+    components:
+    - pos: 28.5,33.5
+      parent: 1
+      type: Transform
   - uid: 9276
     components:
     - pos: 23.5,8.5
