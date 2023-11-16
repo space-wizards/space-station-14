@@ -51,7 +51,7 @@ thief-backpack-category-communicator-name = Communicator's kit
 thief-backpack-category-communicator-description = 
     A communications enthusiast's kit. Includes master key
     for all station channels, radio jammer, portable 
-    crew monitor, head seals and lots of money for business deals.
+    crew monitor and lots of money for business deals.
 
 thief-backpack-category-smuggler-name = Smuggler's kit
 thief-backpack-category-smuggler-description = 
