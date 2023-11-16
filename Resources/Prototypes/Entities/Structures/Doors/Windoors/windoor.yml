@@ -71,14 +71,6 @@
 
 - type: entity
   parent: Windoor
-  id: WindoorLibraryLocked
-  suffix: Library, Locked
-  components:
-  - type: AccessReader
-    access: [["Library"]]
-
-- type: entity
-  parent: Windoor
   id: WindoorKitchenHydroponicsLocked
   suffix: Kitchen&Hydroponics, Locked
   components:
@@ -110,6 +102,14 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
+
+- type: entity
+  parent: WindoorSecureSecurityLocked
+  id: WindoorSecureBrigLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
 
 - type: entity
   parent: WindoorSecure

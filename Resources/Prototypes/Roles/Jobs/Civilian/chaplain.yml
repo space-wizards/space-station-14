@@ -7,7 +7,6 @@
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop
   access:
-  - Service
   - Chapel
   - Maintenance
   special:

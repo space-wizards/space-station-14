@@ -24,6 +24,7 @@ id-card-access-level-cargo = Cargo
 id-card-access-level-salvage = Salvage
 
 id-card-access-level-bar = Bar
+id-card-access-level-bar = Brig
 id-card-access-level-kitchen = Kitchen
 id-card-access-level-hydroponics = Hydroponics
 id-card-access-level-service = Service
@@ -31,9 +32,6 @@ id-card-access-level-janitor = Janitor
 id-card-access-level-theatre = Theatre
 id-card-access-level-chapel = Chapel
 id-card-access-level-lawyer = Lawyer
-id-card-access-level-reporter = Reporter
-id-card-access-level-library = Library
-id-card-access-level-zookeeper = Zookeeper
 
 id-card-access-level-maintenance = Maintenance
 

@@ -43,13 +43,11 @@
   - Detective
   - Salvage
   - Security
+  - Brig
   - Lawyer
   - Cargo
   - Atmospherics
   - Medical
-  - Reporter
-  - Library
-  - Zookeeper
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

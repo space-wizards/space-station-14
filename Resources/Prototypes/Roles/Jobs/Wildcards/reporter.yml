@@ -8,8 +8,6 @@
   supervisors: job-supervisors-hop
   access:
   - Service
-  - Reporter
-  - Theatre
   - Maintenance
 
 - type: startingGear

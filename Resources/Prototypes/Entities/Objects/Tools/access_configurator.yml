@@ -22,6 +22,7 @@
       - Armory
       - Atmospherics
       - Bar
+      - Brig
       - Detective
       - Captain
       - Cargo
@@ -47,9 +48,6 @@
       - Security
       - Service
       - Theatre
-      - Reporter
-      - Library
-      - Zookeeper
       privilegedIdSlot:
         name: id-card-console-privileged-id
         ejectSound: /Audio/Machines/id_swipe.ogg

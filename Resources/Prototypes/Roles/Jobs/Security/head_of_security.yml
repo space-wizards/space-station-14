@@ -24,6 +24,7 @@
   access:
   - HeadOfSecurity
   - Command
+  - Brig
   - Security
   - Armory
   - Maintenance

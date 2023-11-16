@@ -13,6 +13,7 @@
   canBeAntag: false
   access:
   - Security
+  - Brig
   - Armory
   - Maintenance
   - Service
