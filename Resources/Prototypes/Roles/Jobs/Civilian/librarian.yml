@@ -8,6 +8,7 @@
   supervisors: job-supervisors-hop
   access:
   - Service
+  - Library
   - Maintenance
 
 - type: startingGear

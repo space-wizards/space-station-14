@@ -10,6 +10,7 @@
   icon: "JobIconMime"
   supervisors: job-supervisors-hop
   access:
+  - Service
   - Theatre
   - Maintenance
   special:

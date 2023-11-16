@@ -16,7 +16,6 @@
   canBeAntag: false
   access:
   - Security
-  - Brig
   - Maintenance
   special:
   - !type:AddImplantSpecial

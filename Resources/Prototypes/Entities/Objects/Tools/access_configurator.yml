@@ -22,7 +22,6 @@
       - Armory
       - Atmospherics
       - Bar
-      - Brig
       - Detective
       - Captain
       - Cargo
@@ -38,6 +37,7 @@
       - Hydroponics
       - Janitor
       - Kitchen
+      - Lawyer
       - Maintenance
       - Medical
       - Quartermaster
@@ -47,6 +47,9 @@
       - Security
       - Service
       - Theatre
+      - Reporter
+      - Library
+      - Zookeeper
       privilegedIdSlot:
         name: id-card-console-privileged-id
         ejectSound: /Audio/Machines/id_swipe.ogg

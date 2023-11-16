@@ -12,7 +12,7 @@
   - Security
   - Detective
   - Armory
-  - Brig
+  - Lawyer
   - Engineering
   - Medical
   - Quartermaster
@@ -30,3 +30,6 @@
   - Chapel
   - Hydroponics
   - Atmospherics
+  - Reporter
+  - Library
+  - Zookeeper

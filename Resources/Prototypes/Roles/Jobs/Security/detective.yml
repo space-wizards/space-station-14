@@ -13,7 +13,6 @@
   canBeAntag: false
   access:
   - Security
-  - Brig
   - Maintenance
   - Service
   - Detective
