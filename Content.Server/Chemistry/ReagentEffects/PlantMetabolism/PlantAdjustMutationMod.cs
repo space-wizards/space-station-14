@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
-    public sealed class PlantAdjustMutationMod : PlantAdjustAttribute
+    public sealed partial class PlantAdjustMutationMod : PlantAdjustAttribute
     {
         public override void Effect(ReagentEffectArgs args)
         {

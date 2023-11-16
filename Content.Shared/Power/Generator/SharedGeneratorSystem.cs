@@ -3,6 +3,7 @@
 /// <summary>
 /// This handles small, portable generators that run off a material fuel.
 /// </summary>
+/// <seealso cref="FuelGeneratorComponent"/>
 public abstract class SharedGeneratorSystem : EntitySystem
 {
     /// <summary>

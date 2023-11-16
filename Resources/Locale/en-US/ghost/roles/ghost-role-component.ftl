@@ -6,6 +6,9 @@ ghost-role-component-default-rules = You don't remember any of your previous lif
 ghost-role-information-mouse-name = Mouse
 ghost-role-information-mouse-description = A hungry and mischievous mouse.
 
+ghost-role-information-mothroach-name = Mothroach
+ghost-role-information-mothroach-description = A cute but mischievous mothroach.
+
 ghost-role-information-giant-spider-name = Giant spider
 ghost-role-information-giant-spider-description = Wreak havoc on the station's inhabitants!
 
@@ -20,6 +23,9 @@ ghost-role-information-hamlet-description = Lives in the station bridge, has a b
 ghost-role-information-slimes-name = Slime
 ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. He just lives.
 ghost-role-information-angry-slimes-description = Everything around you irritates your instincts, destroy them!
+
+ghost-role-information-smile-name = Smile the Slime
+ghost-role-information-smile-description = The sweetest creature in the world. Smile Slime!
 
 ghost-role-information-punpun-name = Pun Pun
 ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.
@@ -52,6 +58,9 @@ ghost-role-information-salvage-carp-description = Defend the loot inside the sal
 ghost-role-information-sentient-carp-name = Sentient Carp
 ghost-role-information-sentient-carp-description = Help the dragon flood the station with carps!
 
+ghost-role-information-salvage-shark-name = Space sharkminnow on salvage wreck
+ghost-role-information-salvage-shark-description = Help the younger fellow carp protect their prey. Smell the blood!
+
 ghost-role-information-willow-name = Willow the kangaroo
 ghost-role-information-willow-description = You're a kangaroo named willow! willow likes to box.
 
@@ -69,6 +78,12 @@ ghost-role-information-jonkbot-description = An artificial being of pure evil.
 
 ghost-role-information-mimebot-name = Mimebot
 ghost-role-information-mimebot-description = A Mimebot, act like a mime but dont act like a greytider.
+
+ghost-role-information-taxibot-name = TaxiBot
+ghost-role-information-taxibot-description = Drive the station crew to their destination.
+
+ghost-role-information-supplybot-name = SupplyBot
+ghost-role-information-supplybot-description = Deliver goods around the station.
 
 ghost-role-information-space-bear-name = Space bear
 ghost-role-information-space-bear-description = You're a bear! Do bear things.
@@ -113,6 +128,9 @@ ghost-role-information-skeleton-pirate-description = Cause chaos and loot the st
 ghost-role-information-skeleton-biker-name = Skeleton Biker
 ghost-role-information-skeleton-biker-description = Ride around on your sweet ride.
 
+ghost-role-information-closet-skeleton-name = Closet Skeleton
+ghost-role-information-closet-skeleton-description = Wreak havoc! You are a primordial force with no allegiance. Live happily with the crew or wage sweet skeletal war.
+
 ghost-role-information-onestar-mecha-name = Onestar Mecha
 ghost-role-information-onestar-mecha-description = You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
 ghost-role-information-onestar-mecha-rules = Use your weapons to cause havoc. You are an antagonist.
@@ -138,16 +156,26 @@ ghost-role-information-ert-security-name = ERT Security
 ghost-role-information-ert-security-description = Assist with security efforts to resolve the stations issues.
 
 ghost-role-information-ert-medical-name = ERT Medical
-ghost-role-information-ert-medical-description = Assist with medicaling efforts to resolve the stations issues.
+ghost-role-information-ert-medical-description = Assist with medical efforts to resolve the stations issues.
 
 ghost-role-information-cburn-agent-name = CBURN Agent
 ghost-role-information-cburn-agent-description = A highly trained CentCom agent, capable of dealing with various threats.
 
-ghost-role-information-centcom-official-name = CentCom official
-ghost-role-information-centcom-official-description = Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
+ghost-role-information-centcom-official-name = CentComm official
+ghost-role-information-centcom-official-description = Perform CentComm related duties such as inspect the station, jotting down performance reviews for heads of staff, and managing the fax machine.
+
+ghost-role-information-nukeop-rules = You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+
+ghost-role-information-loneop-name = Lone Operative
+ghost-role-information-loneop-description = You are a lone nuclear operative. Destroy the station!
+ghost-role-information-loneop-rules = You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
 
-ghost-role-information-taxibot-name = TaxiBot
-ghost-role-information-taxibot-description = Drive the station crew to their destination.
+ghost-role-information-Death-Squad-name = Death Squad Operative
+ghost-role-information-Death-Squad-description = One of Nanotrasen's top internal affairs agents. Await orders from CentComm or an official.
+
+ghost-role-information-Cak-name = Cak
+ghost-role-information-Cak-description = You are the chef's favorite child. You're a living cake cat.  
+ghost-role-information-Cak-rules = You are a living edible sweet cat. Your task is to find your place in this world where everything wants to eat you.

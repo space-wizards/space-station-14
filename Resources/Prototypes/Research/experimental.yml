@@ -22,10 +22,11 @@
     state: icon
   discipline: Experimental
   tier: 1
-  cost: 7500
+  cost: 5000
   recipeUnlocks:
   - AnomalyScanner
   - AnomalyLocator
+  - AnomalyLocatorWide
   - BorgModuleAnomaly
   - APECircuitboard
   - AnomalyVesselCircuitboard
@@ -38,7 +39,7 @@
     state: display
   discipline: Experimental
   tier: 1
-  cost: 10000
+  cost: 5000
   recipeUnlocks:
   - NodeScanner
   - BorgModuleArtifact
@@ -65,7 +66,7 @@
     state: icon
   discipline: Experimental
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - ClothingShoesBootsMag
 
@@ -79,7 +80,7 @@
     state: advanced_matter_bin
   discipline: Experimental
   tier: 2
-  cost: 15000
+  cost: 10000
   recipeUnlocks:
   - AdvancedCapacitorStockPart
   - AdvancedMatterBinStockPart
@@ -98,19 +99,17 @@
   - TraversalDistorterMachineCircuitboard
 
 - type: technology
-  id: MobileAnomalyTech
-  name: research-technology-mobile-anomaly-tech
+  id: AdvancedAnomalyResearch
+  name: research-technology-advanced-anomaly-research
   icon:
-    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+    sprite: Structures/Machines/anomaly_sync.rsi
     state: base
   discipline: Experimental
   tier: 2
   cost: 10000
   recipeUnlocks:
   - WeaponPistolCHIMP
-  - CartridgeAnomalousParticleDelta
-  - CartridgeAnomalousParticleEpsilon
-  - CartridgeAnomalousParticleZeta
+  - AnomalySynchronizerCircuitboard
   technologyPrerequisites:
   - BasicAnomalousResearch
 

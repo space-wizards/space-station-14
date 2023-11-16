@@ -1,12 +1,13 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Roles;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(ZombieRuleSystem))]
-public sealed class ZombieRuleComponent : Component
+public sealed partial class ZombieRuleComponent : Component
 {
     [DataField("initialInfectedNames")]
     public Dictionary<string, string> InitialInfectedNames = new();
@@ -93,5 +94,6 @@ public sealed class ZombieRuleComponent : Component
     [DataField("shuttleCalled")]
     public bool ShuttleCalled;
 
-    public const string ZombifySelfActionPrototype = "TurnUndead";
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string ZombifySelfActionPrototype = "ActionTurnUndead";
 }

@@ -6,6 +6,9 @@
     mode: SnapgridCenter
   components:
     - type: AtmosDevice
+    - type: Tag
+      tags:
+        - Unstackable
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
@@ -53,6 +56,7 @@
     - type: Tag
       tags:
         - GasVent
+        - Unstackable
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -83,6 +87,7 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
+    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -142,6 +147,7 @@
     - type: Tag
       tags:
         - GasScrubber
+        - Unstackable
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
@@ -173,6 +179,7 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
+    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -239,8 +246,8 @@
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: Wires
-      BoardName: "Thermomachine"
-      LayoutId: Thermomachine
+      boardName: wires-board-name-thermomachine
+      layoutId: Thermomachine
     - type: WiresVisuals
     - type: NodeContainer
       nodes:
@@ -284,7 +291,7 @@
             True: { state: freezerOn }
             False: { state: freezerOff }
     - type: GasThermoMachine
-      mode: Freezer
+      coefficientOfPerformance: -64
     - type: ApcPowerReceiver
       powerDisabled: true #starts off
     - type: Machine
@@ -327,7 +334,7 @@
             True: { state: heaterOn }
             False: { state: heaterOff }
     - type: GasThermoMachine
-      mode: Heater
+      coefficientOfPerformance: 32
     - type: ApcPowerReceiver
       powerDisabled: true #starts off
     - type: Machine

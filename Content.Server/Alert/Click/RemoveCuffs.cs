@@ -9,7 +9,7 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class RemoveCuffs : IAlertClick
+    public sealed partial class RemoveCuffs : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {

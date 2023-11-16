@@ -1,7 +1,7 @@
 [ NOTE: This is not a guide for making tiles "look good" or a general spriting guide for all floor tiles, this is just for anything based off of steel tiles!]
 
 You might be looking at these tiles and going: "What the fuck? How on earth did they get anything salvagable out of the supernorn tiles!"
-Well, believe it or not - they've actually been resprited! Gone are the days of 80+ color potentially-jpeged-but-that's-just-a-theory-but-they-are-definitely-nearly-uneditable tiles. They now use a color palette around the size of 9, give or take a few colors from color errors.
+Well, believe it or not - they've actually been resprited! Gone are the days of 80+ color potentially-jpeged-but-that's-just-a-theory-but-they-are-definitely-nearly-uneditable tiles. They now use a color palette around the size of 10, give or take a few colors from color errors.
 
 The process to make something like them is now dead-simple, and should be doable by even non-spriters if need be.
 1. Lay out the base of the tile you're trying to make (look at tile-reference-sheet.png)

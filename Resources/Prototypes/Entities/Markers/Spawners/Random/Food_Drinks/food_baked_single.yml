@@ -68,6 +68,7 @@
       - FoodPieFrostySlice
       - FoodTartGrape
       - FoodTartCoco
+      - FoodBakedBrownie
     chance: 0.8
     offset: 0.0
     #rare
@@ -80,4 +81,5 @@
       - FoodTartGapple
       - FoodBreadMeatXenoSlice
       - FoodPieXenoSlice
+      - FoodBakedCannabisBrownie
     rareChance: 0.05

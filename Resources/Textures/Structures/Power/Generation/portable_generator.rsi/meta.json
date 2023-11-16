@@ -1,100 +1,98 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/99ed48ce8d3ba7e2d26d68519e05eae277c94685, animations modified by Peptide90",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "portgen0_0"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/Baystation12/Baystation12/blob/caa635edb97c58301ccdc64757eba323b6673cf3/icons/obj/structures/portgen.dmi. Adapted to SS14 and portgen3 sprites made by PJB3005.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "portgen1_0"
-    },
-    {
-      "name": "portgen2_0"
-    },
-    {
-      "name": "portgen0_1",
-      "delays": [
-        [
-          0.05,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.05
-        ]
-      ]
-    },
-    {
-      "name": "portgen1_1",
-      "delays": [
-        [
-          0.05,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.05
-        ]
-      ]
-    },
-    {
-      "name": "portgen2_1",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    }
-  ]
+    "states": [
+        {
+            "name": "portgen0"
+        },
+        {
+            "name": "portgen0on",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "portgen1"
+        },
+        {
+            "name": "portgen1on",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "portgen1rad",
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "portgen2"
+        },
+        {
+            "name": "portgen2on",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "portgen3"
+        },
+        {
+            "name": "portgen3on",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "portgen3on_unlit",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "portgen_on_unlit",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
 }

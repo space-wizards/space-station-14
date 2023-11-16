@@ -1,6 +1,7 @@
 using System;
 using Robust.Client.Graphics;
 using Content.Client.Parallax.Data;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.Parallax;
 

@@ -52,28 +52,61 @@ chat-manager-admin-channel-name = ADMIN
 chat-speech-verb-suffix-exclamation = !
 chat-speech-verb-suffix-exclamation-strong = !!
 chat-speech-verb-suffix-question = ?
+chat-speech-verb-suffix-stutter = -
+chat-speech-verb-suffix-mumble = ..
 
 chat-speech-verb-default = says
-chat-speech-verb-exclamation = shouts
+chat-speech-verb-exclamation = exclaims
 chat-speech-verb-exclamation-strong = yells
 chat-speech-verb-question = asks
+chat-speech-verb-stutter = stutters
+chat-speech-verb-mumble = mumbles
 
 chat-speech-verb-insect-1 = chitters
-chat-speech-verb-insect-2 = flutters
+chat-speech-verb-insect-2 = chirps
+chat-speech-verb-insect-3 = clicks
 
-chat-speech-verb-slime = chirps
+chat-speech-verb-winged-1 = flutters
+chat-speech-verb-winged-2 = flaps
+chat-speech-verb-winged-3 = buzzes
 
-chat-speech-verb-robotic = states
-chat-speech-verb-reptilian = hisses
+chat-speech-verb-slime-1 = sloshes
+chat-speech-verb-slime-2 = burbles
+chat-speech-verb-slime-3 = oozes
 
-chat-speech-verb-skeleton = rattles
+chat-speech-verb-plant-1 = rustles
+chat-speech-verb-plant-2 = sways
+chat-speech-verb-plant-3 = creaks
 
-chat-speech-verb-small-mob = squeaks
+chat-speech-verb-robotic-1 = states
+chat-speech-verb-robotic-2 = beeps
 
-chat-speech-verb-large-mob = roars
+chat-speech-verb-reptilian-1 = hisses
+chat-speech-verb-reptilian-2 = snorts
+chat-speech-verb-reptilian-3 = huffs
 
-chat-speech-verb-monkey = chimpers
+chat-speech-verb-skeleton-1 = rattles
+chat-speech-verb-skeleton-2 = clacks
+chat-speech-verb-skeleton-3 = gnashes
+
+chat-speech-verb-canine-1 = barks
+chat-speech-verb-canine-2 = woofs
+chat-speech-verb-canine-3 = howls
+
+chat-speech-verb-small-mob-1 = squeaks
+chat-speech-verb-small-mob-2 = pieps
+
+chat-speech-verb-large-mob-1 = roars
+chat-speech-verb-large-mob-2 = growls
+
+chat-speech-verb-monkey-1 = chimpers
+chat-speech-verb-monkey-2 = screeches
 
 chat-speech-verb-cluwne-1 = giggles
 chat-speech-verb-cluwne-2 = guffaws
 chat-speech-verb-cluwne-3 = laughs
+
+chat-speech-verb-ghost-1 = complains
+chat-speech-verb-ghost-2 = breathes
+chat-speech-verb-ghost-3 = hums
+chat-speech-verb-ghost-4 = mutters

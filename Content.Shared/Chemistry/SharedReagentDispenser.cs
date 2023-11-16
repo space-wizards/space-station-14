@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
@@ -24,9 +25,9 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ReagentDispenserDispenseReagentMessage : BoundUserInterfaceMessage
     {
-        public readonly string ReagentId;
+        public readonly ReagentId ReagentId;
 
-        public ReagentDispenserDispenseReagentMessage(string reagentId)
+        public ReagentDispenserDispenseReagentMessage(ReagentId reagentId)
         {
             ReagentId = reagentId;
         }
@@ -58,11 +59,11 @@ namespace Content.Shared.Chemistry
         /// <summary>
         /// A list of the reagents which this dispenser can dispense.
         /// </summary>
-        public readonly List<string> Inventory;
+        public readonly List<ReagentId> Inventory;
 
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
-        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, List<string> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
+        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, List<ReagentId> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
         {
             OutputContainer = outputContainer;
             Inventory = inventory;

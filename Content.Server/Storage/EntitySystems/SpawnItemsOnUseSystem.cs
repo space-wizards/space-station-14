@@ -4,7 +4,6 @@ using Content.Server.Storage.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -65,6 +64,10 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Handled)
                 return;
 
+            // If starting with zero or less uses, this component is a no-op
+            if (component.Uses <= 0)
+                return;
+
             var coords = Transform(args.User).Coordinates;
             var spawnEntities = GetSpawns(component.Items, _random);
             EntityUid? entityToPlaceInHands = null;
@@ -72,14 +75,16 @@ namespace Content.Server.Storage.EntitySystems
             foreach (var proto in spawnEntities)
             {
                 entityToPlaceInHands = Spawn(proto, coords);
-                _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(component.Owner)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
+                _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
             }
 
             if (component.Sound != null)
                 SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid), uid);
 
             component.Uses--;
-            if (component.Uses == 0)
+
+            // Delete entity only if component was successfully used
+            if (component.Uses <= 0)
             {
                 args.Handled = true;
                 EntityManager.DeleteEntity(uid);

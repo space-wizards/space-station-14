@@ -7,7 +7,7 @@ namespace Content.Server.Worldgen.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(WorldControllerSystem))]
-public sealed class LoadedChunkComponent : Component
+public sealed partial class LoadedChunkComponent : Component
 {
     /// <summary>
     ///     The current list of entities loading this chunk.

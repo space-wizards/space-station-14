@@ -2,7 +2,7 @@ using Content.Shared.Tag;
 
 namespace Content.Shared.Construction.Steps
 {
-    public sealed class MultipleTagsConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed partial class MultipleTagsConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("allTags")]
         private List<string>? _allTags;

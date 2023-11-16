@@ -8,7 +8,7 @@ namespace Content.Shared.Alert
     /// An alert popup with associated icon, tooltip, and other data.
     /// </summary>
     [Prototype("alert")]
-    public sealed class AlertPrototype : IPrototype, ISerializationHooks
+    public sealed partial class AlertPrototype : IPrototype, ISerializationHooks
     {
         [ViewVariables]
         string IPrototype.ID => AlertType.ToString();
@@ -24,7 +24,7 @@ namespace Content.Shared.Alert
         /// minimum and incrementing upwards. If severities are not supported, the first entry is used.
         /// </summary>
         [DataField("icons", required: true)]
-        public readonly List<SpriteSpecifier> Icons = new();
+        public List<SpriteSpecifier> Icons = new();
 
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.

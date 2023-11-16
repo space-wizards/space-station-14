@@ -12,7 +12,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// Designates this entity as holding a salvage expedition.
 /// </summary>
 [RegisterComponent]
-public sealed class SalvageExpeditionComponent : SharedSalvageExpeditionComponent
+public sealed partial class SalvageExpeditionComponent : SharedSalvageExpeditionComponent
 {
     public SalvageMissionParams MissionParams = default!;
 
@@ -49,16 +49,4 @@ public sealed class SalvageExpeditionComponent : SharedSalvageExpeditionComponen
     {
         Params = AudioParams.Default.WithVolume(-5),
     };
-
-    /// <summary>
-    /// The difficulty this mission had or, in the future, was selected.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("difficulty")]
-    public DifficultyRating Difficulty;
-
-    /// <summary>
-    /// List of items to order on mission completion
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("rewards", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Rewards = default!;
 }

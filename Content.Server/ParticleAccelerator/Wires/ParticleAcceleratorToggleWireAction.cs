@@ -3,11 +3,11 @@ using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Wires;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Wires;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.ParticleAccelerator.Wires;
 
-public sealed class ParticleAcceleratorPowerWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
+public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
 {
     public override string Name { get; set; } = "wire-name-pa-power";
     public override Color Color { get; set; } = Color.Yellow;

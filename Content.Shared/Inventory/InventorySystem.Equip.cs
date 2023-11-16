@@ -14,6 +14,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Inventory;
@@ -23,10 +24,15 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+    [ValidatePrototypeId<ItemSizePrototype>]
+    private const string PocketableItemSize = "Small";
 
     private void InitializeEquip()
     {
@@ -263,7 +269,9 @@ public abstract partial class InventorySystem
         if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
             return false;
 
-        var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) && item is { Size: <= (int) ReferenceSizes.Pocket };
+        var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
+                              item != null &&
+                              _item.GetSizePrototype(item.Size) <= _item.GetSizePrototype(PocketableItemSize);
         if (clothing == null && !fittingInPocket
             || clothing != null && !clothing.Slots.HasFlag(slotDefinition.SlotFlags) && !fittingInPocket)
         {
@@ -360,7 +368,7 @@ public abstract partial class InventorySystem
         }
 
         //we need to do this to make sure we are 100% removing this entity, since we are now dropping dependant slots
-        if (!force && !slotContainer.CanRemove(removedItem.Value))
+        if (!force && !_containerSystem.CanRemove(removedItem.Value, slotContainer))
             return false;
 
         foreach (var slotDef in GetSlots(target, inventory))
@@ -372,20 +380,10 @@ public abstract partial class InventorySystem
             }
         }
 
-        if (force)
-        {
-            slotContainer.ForceRemove(removedItem.Value);
-        }
-        else
-        {
-            if (!slotContainer.Remove(removedItem.Value))
-            {
-                //should never happen bc of the canremove lets just keep in just in case
-                return false;
-            }
-        }
+        if (!slotContainer.Remove(removedItem.Value, force: force))
+            return false;
 
-        Transform(removedItem.Value).Coordinates = Transform(target).Coordinates;
+        _transform.DropNextTo(removedItem.Value, target);
 
         if (!silent && Resolve(removedItem.Value, ref clothing, false) && clothing.UnequipSound != null && _gameTiming.IsFirstTimePredicted)
         {
@@ -405,8 +403,7 @@ public abstract partial class InventorySystem
             SoundSystem.Play(clothing.UnequipSound.GetSound(), filter, target, clothing.UnequipSound.Params.WithVolume(-2f));
         }
 
-        inventory.Dirty();
-
+        Dirty(target, inventory);
         _movementSpeed.RefreshMovementSpeedModifiers(target);
 
         return true;
@@ -426,13 +423,11 @@ public abstract partial class InventorySystem
         if ((containerSlot == null || slotDefinition == null) && !TryGetSlotContainer(target, slot, out containerSlot, out slotDefinition, inventory))
             return false;
 
-        if (containerSlot.ContainedEntity == null)
+        if (containerSlot.ContainedEntity is not {} itemUid)
             return false;
 
-        if (!containerSlot.ContainedEntity.HasValue || !containerSlot.CanRemove(containerSlot.ContainedEntity.Value))
+        if (!_containerSystem.CanRemove(itemUid, containerSlot))
             return false;
-
-        var itemUid = containerSlot.ContainedEntity.Value;
 
         // make sure the user can actually reach the target
         if (!CanAccess(actor, target, itemUid))

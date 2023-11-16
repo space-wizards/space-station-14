@@ -114,16 +114,24 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    /// Plays a clientside pickup animation by copying the specified entity.
+    /// </summary>
     [Serializable, NetSerializable]
     public sealed class PickupAnimationEvent : EntityEventArgs
     {
-        public EntityUid ItemUid { get; }
-        public EntityCoordinates InitialPosition { get; }
-        public Vector2 FinalPosition { get; }
-        public Angle InitialAngle { get; }
+        /// <summary>
+        /// Entity to be copied for the clientside animation.
+        /// </summary>
+        public readonly NetEntity ItemUid;
+        public readonly NetCoordinates InitialPosition;
+        public readonly NetCoordinates FinalPosition;
+        public readonly Angle InitialAngle;
 
-        public PickupAnimationEvent(EntityUid itemUid, EntityCoordinates initialPosition,
-            Vector2 finalPosition, Angle initialAngle)
+        public PickupAnimationEvent(NetEntity itemUid,
+            NetCoordinates initialPosition,
+            NetCoordinates finalPosition,
+            Angle initialAngle)
         {
             ItemUid = itemUid;
             FinalPosition = finalPosition;
@@ -206,21 +214,33 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    /// Raised directed on an entity when it is equipped into hands.
+    /// </summary>
     public sealed class GotEquippedHandEvent : EquippedHandEvent
     {
         public GotEquippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on an entity when it is unequipped from hands.
+    /// </summary>
     public sealed class GotUnequippedHandEvent : UnequippedHandEvent
     {
         public GotUnequippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on a user when it picks something up.
+    /// </summary>
     public sealed class DidEquipHandEvent : EquippedHandEvent
     {
         public DidEquipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on a user when something leaves its hands.
+    /// </summary>
     public sealed class DidUnequipHandEvent : UnequippedHandEvent
     {
         public DidUnequipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }

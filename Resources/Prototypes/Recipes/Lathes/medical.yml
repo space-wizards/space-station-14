@@ -202,4 +202,37 @@
   result: Jug
   completetime: 4
   materials:
-    Plastic: 700
+    Plastic: 400
+
+- type: latheRecipe
+  id: VehicleWheelchairFolded
+  result: VehicleWheelchairFolded
+  completetime: 1
+  materials:
+    Steel: 500
+    Plastic: 300
+    
+- type: latheRecipe
+  id: RollerBedSpawnFolded
+  result: RollerBedSpawnFolded
+  completetime: 1
+  materials:
+    Steel: 600
+    Plastic: 300
+
+- type: latheRecipe
+  id: CheapRollerBedSpawnFolded
+  result: CheapRollerBedSpawnFolded
+  completetime: 1
+  materials:
+    Steel: 600
+    Plastic: 300
+
+- type: latheRecipe
+  id: EmergencyRollerBedSpawnFolded
+  result: EmergencyRollerBedSpawnFolded
+  completetime: 1
+  materials:
+    Steel: 600
+    Plastic: 300
+

@@ -1,20 +1,18 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
+using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
-using Content.Server.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Radio;
-using Robust.Server.GameObjects;
+using Content.Shared.Radio.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using Content.Shared.Popups;
-using Robust.Shared.Map;
-using Content.Shared.Radio.Components;
-using Content.Server.Power.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -27,7 +25,6 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
 
     // set used to prevent radio feedback loops.
@@ -88,7 +85,8 @@ public sealed class RadioSystem : EntitySystem
             ChatChannel.Radio,
             message,
             wrappedMessage,
-            EntityUid.Invalid);
+            NetEntity.Invalid,
+            null);
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
 

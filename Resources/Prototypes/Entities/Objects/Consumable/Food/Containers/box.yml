@@ -38,13 +38,13 @@
       map: ["pink-box6"]
       visible: false
   - type: Storage
-    capacity: 6
+    maxSlots: 6
     whitelist:
       tags:
       - Donut
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    size: 6
+    size: Small
     heldPrefix: box
   - type: StorageFill
     contents:
@@ -118,13 +118,13 @@
       map: ["box12"]
       visible: false
   - type: Storage
-    capacity: 12
+    maxSlots: 12
     whitelist:
       tags:
       - Egg
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
-    size: 12
+    size: Small
   - type: StorageFill
     contents:
     - id: FoodEgg
@@ -206,7 +206,8 @@
       map: ["enum.StorageVisualLayers.Door"]
   # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
-    capacity: 8
+    maxSlots: 1
+    maxItemSize: Normal
     whitelist:
       tags:
       - Pizza
@@ -296,10 +297,10 @@
       map: ["box6"]
       visible: false
   - type: Storage
-    capacity: 6
+    maxSlots: 6
   - type: Item
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
-    size: 6
+    size: Small
     heldPrefix: box
   - type: StorageFill
     contents:
@@ -330,13 +331,13 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     state: box
   - type: Storage
+    maxTotalWeight: 12
     whitelist:
       tags:
       - DonkPocket
-    capacity: 6
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    size: 6
+    size: Small
   - type: StorageFill
     contents:
     - id: FoodDonkpocket
@@ -458,8 +459,6 @@
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
-  - type: Storage
-    capacity: 30
   - type: Tag
     tags:
     - Trash
@@ -576,6 +575,55 @@
         orGroup: GiftPool
       - id: PlushieNuke
         orGroup: GiftPool
+
+- type: entity
+  parent: HappyHonkNukie
+  id: HappyHonkNukieSnacks
+  suffix: Toy Unsafe, Snacks
+  name: syndicate snack box
+  components:
+  - type: Storage
+    maxSlots: 9
+  - type: StorageFill
+    contents:
+    # toy
+    - id: C4
+      prob: 0.02
+      orGroup: GiftPool
+    - id: ToyMarauder
+      orGroup: GiftPool
+    - id: ToyMauler
+      orGroup: GiftPool
+    - id: ToyNuke
+      orGroup: GiftPool
+    - id: ToySword
+      orGroup: GiftPool
+    - id: BalloonSyn
+      prob: 0.6
+      orGroup: GiftPool
+    - id: PlushieNuke
+      orGroup: GiftPool
+    # drinks - 4 cans, up to 2 blood-red brews
+    - id: DrinkNukieCan
+      prob: 0.2
+      orGroup: Drink1Pool
+    - id: DrinkColaCan
+      orGroup: Drink1Pool
+    - id: DrinkNukieCan
+      prob: 0.2
+      orGroup: Drink2Pool
+    - id: DrinkColaCan
+      orGroup: Drink2Pool
+    - id: DrinkColaCan
+      amount: 2
+    # food
+    - id: FoodSaladValid
+      prob: 0.05
+      amount: 4
+      orGroup: FoodPool
+    - id: FoodSnackSyndi
+      amount: 4
+      orGroup: FoodPool
 
 - type: entity
   id: HappyHonkCluwne

@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -29,6 +27,7 @@ public sealed partial class BlockingSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -53,11 +52,19 @@ public sealed partial class BlockingSystem : EntitySystem
         SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<BlockingComponent, GetVerbsEvent<ExamineVerb>>(OnVerbExamine);
+        SubscribeLocalEvent<BlockingComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, BlockingComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.BlockingToggleActionEntity, component.BlockingToggleAction);
+        Dirty(uid, component);
     }
 
     private void OnEquip(EntityUid uid, BlockingComponent component, GotEquippedHandEvent args)
     {
         component.User = args.User;
+        Dirty(uid, component);
 
         //To make sure that this bodytype doesn't get set as anything but the original
         if (TryComp<PhysicsComponent>(args.User, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static && !HasComp<BlockingUserComponent>(args.User))
@@ -80,11 +87,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, BlockingComponent component, GetItemActionsEvent args)
     {
-        if (component.BlockingToggleAction == null && _proto.TryIndex(component.BlockingToggleActionId, out InstantActionPrototype? act))
-            component.BlockingToggleAction = new(act);
-
-        if (component.BlockingToggleAction != null)
-            args.Actions.Add(component.BlockingToggleAction);
+        args.AddAction(ref component.BlockingToggleActionEntity, component.BlockingToggleAction);
     }
 
     private void OnToggleAction(EntityUid uid, BlockingComponent component, ToggleActionEvent args)
@@ -191,7 +194,7 @@ public sealed partial class BlockingSystem : EntitySystem
                 CantBlockError(user);
                 return false;
             }
-            _actionsSystem.SetToggled(component.BlockingToggleAction, true);
+            _actionsSystem.SetToggled(component.BlockingToggleActionEntity, true);
             _popupSystem.PopupEntity(msgUser, user, user);
             _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
         }
@@ -207,6 +210,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         component.IsBlocking = true;
+        Dirty(item, component);
 
         return true;
     }
@@ -252,7 +256,7 @@ public sealed partial class BlockingSystem : EntitySystem
             if (xform.Anchored)
                 _transformSystem.Unanchor(user, xform);
 
-            _actionsSystem.SetToggled(component.BlockingToggleAction, false);
+            _actionsSystem.SetToggled(component.BlockingToggleActionEntity, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
             _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
             _popupSystem.PopupEntity(msgUser, user, user);
@@ -260,6 +264,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         component.IsBlocking = false;
+        Dirty(item, component);
 
         return true;
     }

@@ -44,7 +44,6 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTubeComponent, ComponentRemove>(OnComponentRemove);
 
             SubscribeLocalEvent<DisposalTubeComponent, AnchorStateChangedEvent>(OnAnchorChange);
-            SubscribeLocalEvent<DisposalTubeComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<DisposalTubeComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<DisposalTubeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DisposalTubeComponent, ConstructionBeforeDeleteEvent>(OnDeconstruct);
@@ -278,17 +277,6 @@ namespace Content.Server.Disposal.Tube
             UpdateAnchored(uid, component, Transform(uid).Anchored);
         }
 
-        private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, ref ContainerRelayMovementEntityEvent args)
-        {
-            if (_gameTiming.CurTime < component.LastClang + DisposalTubeComponent.ClangDelay)
-            {
-                return;
-            }
-
-            component.LastClang = _gameTiming.CurTime;
-            _audioSystem.PlayPvs(component.ClangSound, uid);
-        }
-
         private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)
         {
             DisconnectTube(uid, component);
@@ -325,8 +313,9 @@ namespace Content.Server.Disposal.Tube
                 args.Cancel();
             }
 
-            if (_uiSystem.TryGetUi(uid, SharedDisposalTaggerComponent.DisposalTaggerUiKey.Key, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(tagger.Tag));
+            if (_uiSystem.TryGetUi(uid, DisposalTaggerUiKey.Key, out var bui))
+                _uiSystem.SetUiState(bui,
+                    new DisposalTaggerUserInterfaceState(tagger.Tag));
         }
 
         /// <summary>
@@ -335,11 +324,11 @@ namespace Content.Server.Disposal.Tube
         /// <returns>Returns a <see cref="SharedDisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
         private void UpdateRouterUserInterface(EntityUid uid, DisposalRouterComponent router)
         {
-            var bui = _uiSystem.GetUiOrNull(uid, SharedDisposalTaggerComponent.DisposalTaggerUiKey.Key);
+            var bui = _uiSystem.GetUiOrNull(uid, DisposalTaggerUiKey.Key);
             if (router.Tags.Count <= 0)
             {
                 if (bui is not null)
-                    UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(""));
+                    _uiSystem.SetUiState(bui, new DisposalTaggerUserInterfaceState(""));
                 return;
             }
 
@@ -354,7 +343,7 @@ namespace Content.Server.Disposal.Tube
             taglist.Remove(taglist.Length - 2, 2);
 
             if (bui is not null)
-                UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(taglist.ToString()));
+                _uiSystem.SetUiState(bui, new DisposalTaggerUserInterfaceState(taglist.ToString()));
         }
 
         private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)

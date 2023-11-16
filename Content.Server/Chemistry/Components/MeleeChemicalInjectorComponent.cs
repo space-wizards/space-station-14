@@ -3,7 +3,7 @@
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed class MeleeChemicalInjectorComponent : Component
+    public sealed partial class MeleeChemicalInjectorComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]

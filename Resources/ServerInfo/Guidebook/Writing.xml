@@ -1,0 +1,22 @@
+<Document>
+# Writing
+
+Using a pen, you can write on paper or in books. Nanotrasen provides everyone with a spare pen in their PDA.
+
+## Formatting
+
+You can use the following sigils:
+
+- [color=tan]\[color=color\]\[\/color\][/color] — to change the color of the text
+- [color=tan]\[head=n\]\[\/head\][/color] — where [italic]n[/italic] is the heading level (1 – 3)
+- [color=tan]\[bullet\/\][/color] — to insert a bullet point (useful for lists)
+- [color=tan][bold]\[bold\]\[\/bold\][/bold][/color], [color=tan][italic]\[italic\]\[\/italic\][/italic][/color] — for emphasis
+
+You can combine [bold][italic]bold and italic[/italic][/bold] tags, or use the shortcut [color=tan][bolditalic]\[bolditalic\][/bolditalic][/color].
+
+Color supports either hexadecimal or most HTML color names. For example:
+
+- [color=#ff0000]\[color=#ff0000\]\[\/color\][/color]
+- [color=red]\[color=red\]\[\/color\][/color]
+
+</Document>

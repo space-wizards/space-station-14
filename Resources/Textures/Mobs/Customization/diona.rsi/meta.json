@@ -76,6 +76,10 @@
       "directions": 4
     },
     {
+      "name": "overlay",
+      "directions": 4
+    },
+    {
       "name": "palm",
       "directions": 4
     },

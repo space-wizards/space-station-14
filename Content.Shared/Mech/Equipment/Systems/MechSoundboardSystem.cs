@@ -31,7 +31,7 @@ public sealed class MechSoundboardSystem : EntitySystem
         {
             Sounds = sounds.ToList()
         };
-        args.States.Add(uid, state);
+        args.States.Add(GetNetEntity(uid), state);
     }
 
     private void OnSoundboardMessage(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiMessageRelayEvent args)

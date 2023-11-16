@@ -17,6 +17,7 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -192,7 +193,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!TryComp(target, out AccessReaderComponent? reader) || user == null)
             return true;
 
-        if (_accessSystem.IsAllowed(user.Value, reader))
+        if (_accessSystem.IsAllowed(user.Value, target, reader))
             return true;
 
         _audioSystem.PlayPvs(component.SoundNoAccess, user.Value, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
@@ -473,7 +474,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
 
         if (_uiSystem.OpenUi(bui, actor.PlayerSession))
-            UserInterfaceSystem.SetUiState(bui, new DeviceListUserInterfaceState(
+            _uiSystem.SetUiState(bui, new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(configurator.ActiveDeviceList.Value)
                     .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()
             ));
@@ -505,7 +506,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         }
 
         if (_uiSystem.TryGetUi(uid, NetworkConfiguratorUiKey.List, out var bui))
-            UserInterfaceSystem.SetUiState(bui, new NetworkConfiguratorUserInterfaceState(devices));
+            _uiSystem.SetUiState(bui, new NetworkConfiguratorUserInterfaceState(devices));
     }
 
     /// <summary>

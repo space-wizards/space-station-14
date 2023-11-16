@@ -3,7 +3,7 @@
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed class VaporComponent : Component
+    public sealed partial class VaporComponent : Component
     {
         public const string SolutionName = "vapor";
 

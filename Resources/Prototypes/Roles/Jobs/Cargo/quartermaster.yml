@@ -14,7 +14,7 @@
       department: Cargo
       time: 36000 #10 hours
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs            
+      time: 144000 #40 hrs
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
@@ -25,8 +25,13 @@
   - Salvage
   - Quartermaster
   - Maintenance
-  - External
   - Command
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: QuartermasterGear
@@ -37,7 +42,8 @@
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
     ears: ClothingHeadsetQM
+    belt: BoxFolderClipboard
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtQM
+  innerClothingSkirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelQuartermasterFilled
   duffelbag: ClothingBackpackDuffelQuartermasterFilled

@@ -8,21 +8,21 @@ namespace Content.Shared.Construction.Prototypes;
 /// different types of machine parts.
 /// </summary>
 [Prototype("machinePart")]
-public sealed class MachinePartPrototype : IPrototype
+public sealed partial class MachinePartPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// A human-readable name for the machine part type.
     /// </summary>
     [DataField("name")]
-    public readonly string Name = string.Empty;
+    public string Name = string.Empty;
 
     /// <summary>
     /// A stock part entity based on the machine part.
     /// </summary>
     [DataField("stockPartPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public readonly string StockPartPrototype = string.Empty;
+    public string StockPartPrototype = string.Empty;
 }

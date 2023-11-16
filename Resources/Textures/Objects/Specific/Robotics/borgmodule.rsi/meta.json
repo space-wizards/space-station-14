@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage404 (github) for Space Station 14.",
+  "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github).",
   "size": {
     "x": 32,
     "y": 32
@@ -29,7 +29,13 @@
       "name": "icon-cables"
     },
     {
+      "name": "icon-chemist"
+    },
+    {
       "name": "icon-clown"
+    },
+    {
+      "name": "icon-construction"
     },
     {
       "name": "icon-defib"
@@ -53,6 +59,9 @@
       "name": "icon-grappling-gun"
     },
     {
+      "name": "icon-harvesting"
+    },
+    {
       "name": "icon-light-replacer"
     },
     {
@@ -60,6 +69,9 @@
     },
     {
       "name": "icon-mop"
+    },
+    {
+      "name": "icon-mop-adv"
     },
     {
       "name": "icon-musique"

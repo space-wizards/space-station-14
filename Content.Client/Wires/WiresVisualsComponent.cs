@@ -1,7 +1,7 @@
 namespace Content.Client.Wires
 {
     [RegisterComponent]
-    public sealed class WiresVisualsComponent : Component
+    public sealed partial class WiresVisualsComponent : Component
     {
     }
 }

@@ -1,7 +1,7 @@
 namespace Content.Server.CrewManifest;
 
 [RegisterComponent]
-public sealed class CrewManifestViewerComponent : Component
+public sealed partial class CrewManifestViewerComponent : Component
 {
     /// <summary>
     ///     If this manifest viewer is unsecure or not. If it is,

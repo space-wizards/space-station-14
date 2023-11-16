@@ -37,7 +37,7 @@
         components:
         - IdCard
   - type: Item
-    size: 10
+    size: Small
   - type: ContainerContainer
     containers:
       PDA-id: !type:ContainerSlot {}
@@ -51,12 +51,6 @@
     - idcard
     - Belt
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -149,7 +143,7 @@
   - type: Icon
     state: pda-internmed
   - type: HealthAnalyzer
-    scanDelay: 1.4
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: GuideHelp
@@ -516,7 +510,7 @@
   - type: Icon
     state: pda-medical
   - type: HealthAnalyzer
-    scanDelay: 1.2
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: GuideHelp
@@ -538,7 +532,7 @@
   - type: Icon
     state: pda-paramedic
   - type: HealthAnalyzer
-    scanDelay: 0.5
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
 
@@ -666,7 +660,7 @@
 - type: entity
   parent: CentcomPDA
   id: DeathsquadPDA
-  suffix: Deathsquad
+  suffix: Death Squad
   components:
   - type: Pda
     id: CentcomIDCardDeathsquad
@@ -955,3 +949,15 @@
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-seniorofficer
+
+- type: entity
+  parent: SyndiPDA
+  id: PiratePDA
+  name: pirate PDA
+  description: Yargh!
+  components:
+  - type: Pda
+    id: PirateIDCard
+    state: pda-pirate
+  - type: Icon
+    state: pda-pirate

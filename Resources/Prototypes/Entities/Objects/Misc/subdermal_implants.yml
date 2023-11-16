@@ -1,15 +1,14 @@
 - type: entity
-  parent: BaseItem
   id: BaseSubdermalImplant
   name: implant
   description: A microscopic chip that's injected under the skin.
   abstract: true
   components:
-    - type: SubdermalImplant
-    - type: Tag
-      tags:
-        - SubdermalImplant
-        - HideContextMenu
+  - type: SubdermalImplant
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
 
 #Fun implants
 
@@ -21,6 +20,9 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with trombone implant needs to give the chair mobstate so it can die first
     - type: TriggerOnMobstateChange
       mobState:
       - Dead
@@ -38,7 +40,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ToggleLight
+      implantAction: ActionToggleLight
     - type: PointLight
       enabled: false
       radius: 2.5
@@ -51,12 +53,6 @@
         - HideContextMenu
         - Flashlight
     - type: UnpoweredFlashlight
-      toggleAction:
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        event: !type:ToggleActionEvent
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -66,7 +62,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateHonkImplant
+      implantAction: ActionActivateHonkImplant
     - type: TriggerImplantAction
     - type: EmitSoundOnTrigger
       sound:
@@ -87,6 +83,9 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with tracking implant needs to give the chair mobstate so it can die first
     - type: SuitSensor
       randomMode: false
       controlsLocked: true
@@ -114,11 +113,15 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: OpenStorageImplant
+      implantAction: ActionOpenStorageImplant
+      whitelist:
+        components:
+        - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Item
-      size: 9999
+      size: Ginormous
     - type: Storage
-      capacity: 20 #10-20 should be more than enough for this
+      maxSlots: 4
+      maxItemSize: Small
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -136,7 +139,10 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateFreedomImplant
+      implantAction: ActionActivateFreedomImplant
+      whitelist:
+        components:
+        - Cuffable # useless if you cant be cuffed
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -146,7 +152,10 @@
   noSpawn: true
   components:
   - type: SubdermalImplant
-    implantAction: OpenUplinkImplant
+    implantAction: ActionOpenUplinkImplant
+    whitelist:
+      components:
+      - Hands # prevent mouse buying grenade penguin since its not telepathic
   - type: Store
     preset: StorePresetUplink
     balance:
@@ -164,7 +173,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateEmpImplant
+      implantAction: ActionActivateEmpImplant
     - type: TriggerImplantAction
     - type: EmpOnTrigger
       range: 1.75
@@ -179,7 +188,10 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateDnaScramblerImplant
+      implantAction: ActionActivateDnaScramblerImplant
+      whitelist:
+        components:
+        - HumanoidAppearance # syndies cant turn hamlet into a human
 
 #Nuclear Operative/Special Exclusive implants
 
@@ -192,7 +204,7 @@
   components:
     - type: SubdermalImplant
       permanent: true
-      implantAction: ActivateMicroBomb
+      implantAction: ActionActivateMicroBomb
     - type: TriggerOnMobstateChange
       mobState:
       - Dead
@@ -256,9 +268,26 @@
   components:
     - type: SubdermalImplant
       permanent: true
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with rattle implant needs to give the chair mobstate so it can die first
     - type: TriggerOnMobstateChange
       mobState:
       - Critical
       - Dead
     - type: Rattle
 
+# Sec and Command implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MindShieldImplant
+  name: mind-shield implant
+  description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
+  noSpawn: true
+  components:
+   - type: SubdermalImplant
+     permanent: true
+   - type: Tag
+     tags:
+       - MindShield

@@ -1,22 +1,35 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
+using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Tools;
+namespace Content.Shared.Tools.Systems;
 
 public abstract partial class SharedToolSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private   readonly IMapManager _mapManager = default!;
+    [Dependency] private   readonly INetManager _netManager = default!;
+    [Dependency] private   readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] protected readonly SharedInteractionSystem InteractionSystem = default!;
+    [Dependency] private   readonly SharedMapSystem _maps = default!;
+    [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private   readonly TileSystem _tiles = default!;
+    [Dependency] private   readonly TurfSystem _turfs = default!;
 
     public override void Initialize()
     {
         InitializeMultipleTool();
+        InitializeTilePrying();
         SubscribeLocalEvent<ToolComponent, ToolDoAfterEvent>(OnDoAfter);
     }
 
@@ -29,7 +42,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         ev.DoAfter = args.DoAfter;
 
         if (args.OriginalTarget != null)
-            RaiseLocalEvent(args.OriginalTarget.Value, (object) ev);
+            RaiseLocalEvent(GetEntity(args.OriginalTarget.Value), (object) ev);
         else
             RaiseLocalEvent((object) ev);
     }
@@ -108,8 +121,8 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!CanStartToolUse(tool, user, target, toolQualitiesNeeded, toolComponent))
             return false;
 
-        var toolEvent = new ToolDoAfterEvent(doAfterEv, target);
-        var doAfterArgs = new DoAfterArgs(user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
+        var toolEvent = new ToolDoAfterEvent(doAfterEv, GetNetEntity(target));
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
@@ -180,16 +193,27 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!Resolve(tool, ref toolComponent))
             return false;
 
+        // check if the tool can do what's required
+        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+            return false;
+
+        // check if the user allows using the tool
         var ev = new ToolUserAttemptUseEvent(target);
         RaiseLocalEvent(user, ref ev);
         if (ev.Cancelled)
             return false;
 
-        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+        // check if the tool allows being used
+        var beforeAttempt = new ToolUseAttemptEvent(user);
+        RaiseLocalEvent(tool, beforeAttempt);
+        if (beforeAttempt.Cancelled)
             return false;
 
-        var beforeAttempt = new ToolUseAttemptEvent(user);
-        RaiseLocalEvent(tool, beforeAttempt, false);
+        // check if the target allows using the tool
+        if (target != null && target != tool)
+        {
+            RaiseLocalEvent(target.Value, beforeAttempt);
+        }
 
         return !beforeAttempt.Cancelled;
     }
@@ -197,22 +221,22 @@ public abstract partial class SharedToolSystem : EntitySystem
     #region DoAfterEvents
 
     [Serializable, NetSerializable]
-    protected sealed class ToolDoAfterEvent : DoAfterEvent
+    protected sealed partial class ToolDoAfterEvent : DoAfterEvent
     {
         /// <summary>
         ///     Entity that the wrapped do after event will get directed at. If null, event will be broadcast.
         /// </summary>
         [DataField("target")]
-        public readonly EntityUid? OriginalTarget;
+        public NetEntity? OriginalTarget;
 
         [DataField("wrappedEvent")]
-        public readonly DoAfterEvent WrappedEvent = default!;
+        public DoAfterEvent WrappedEvent = default!;
 
         private ToolDoAfterEvent()
         {
         }
 
-        public ToolDoAfterEvent(DoAfterEvent wrappedEvent, EntityUid? originalTarget)
+        public ToolDoAfterEvent(DoAfterEvent wrappedEvent, NetEntity? originalTarget)
         {
             DebugTools.Assert(wrappedEvent.GetType().HasCustomAttribute<NetSerializableAttribute>(), "Tool event is not serializable");
 
@@ -233,16 +257,16 @@ public abstract partial class SharedToolSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class LatticeCuttingCompleteEvent : DoAfterEvent
+    protected sealed partial class LatticeCuttingCompleteEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
-        public readonly EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
         private LatticeCuttingCompleteEvent()
         {
         }
 
-        public LatticeCuttingCompleteEvent(EntityCoordinates coordinates)
+        public LatticeCuttingCompleteEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }
@@ -251,16 +275,16 @@ public abstract partial class SharedToolSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class TilePryingDoAfterEvent : DoAfterEvent
+    protected sealed partial class TilePryingDoAfterEvent : DoAfterEvent
     {
-        [DataField("coordinates", required:true)]
-        public readonly EntityCoordinates Coordinates;
+        [DataField("coordinates", required: true)]
+        public NetCoordinates Coordinates;
 
         private TilePryingDoAfterEvent()
         {
         }
 
-        public TilePryingDoAfterEvent(EntityCoordinates coordinates)
+        public TilePryingDoAfterEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }
@@ -270,7 +294,7 @@ public abstract partial class SharedToolSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class CableCuttingFinishedEvent : SimpleDoAfterEvent
+public sealed partial class CableCuttingFinishedEvent : SimpleDoAfterEvent
 {
 }
 

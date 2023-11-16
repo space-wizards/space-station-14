@@ -12,7 +12,8 @@ entities:
   entities:
   - uid: 29
     components:
-    - type: MetaData
+    - name: NT Escape Pod
+      type: MetaData
     - parent: invalid
       type: Transform
     - type: ProtectedGrid

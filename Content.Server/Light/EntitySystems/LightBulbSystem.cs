@@ -1,6 +1,6 @@
 using Content.Server.Light.Components;
 using Content.Shared.Destructible;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

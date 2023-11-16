@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public sealed class AirtightComponent : Component
+    public sealed partial class AirtightComponent : Component
     {
         public (EntityUid Grid, Vector2i Tile) LastPosition { get; set; }
 

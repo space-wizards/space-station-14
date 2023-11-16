@@ -1,6 +1,6 @@
 namespace Content.Server.Explosion.Components;
 
 [RegisterComponent]
-public sealed class TriggerOnSlipComponent : Component
+public sealed partial class TriggerOnSlipComponent : Component
 {
 }

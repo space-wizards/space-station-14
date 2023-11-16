@@ -188,7 +188,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return true;
 
         var privilegedId = component.PrivilegedIdSlot.Item;
-        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, reader);
+        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, reader);
     }
 
     private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string newFullName, string newJobTitle, JobPrototype? newJobProto)

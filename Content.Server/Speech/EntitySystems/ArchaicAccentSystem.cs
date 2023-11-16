@@ -6,7 +6,6 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class ArchaicAccentSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     public override void Initialize()

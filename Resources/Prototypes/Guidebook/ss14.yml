@@ -8,3 +8,9 @@
   - Survival
   - Chemicals
   - Antagonists
+  - Writing
+
+- type: guideEntry
+  id: Writing
+  name: guide-entry-writing
+  text: "/ServerInfo/Guidebook/Writing.xml"

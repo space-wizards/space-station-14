@@ -20,6 +20,8 @@
         amount: 2
       - id: PineappleSeeds
         amount: 2
+      - id: BungoSeeds
+        amount: 2
 
 - type: entity
   id: CrateHydroponicsSeedsMedicinal
@@ -80,3 +82,4 @@
       - id: SoybeanSeeds
       - id: GrapeSeeds
       - id: WatermelonSeeds
+      - id: PeaSeeds

@@ -46,7 +46,7 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
             return; // Redundant logic, prolly needs it's own handler for your custom system.
 
         var placer = Comp<DebrisFeaturePlacerControllerComponent>(component.OwningController);
-        var xform = Transform(uid);
+        var xform = args.Component;
         var ownerXform = Transform(component.OwningController);
         if (xform.MapUid is null || ownerXform.MapUid is null)
             return; // not our problem

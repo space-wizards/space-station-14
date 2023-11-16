@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// to an entity in the user's clothing slot.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGunSystem))]
-public sealed class ClothingSlotAmmoProviderComponent : AmmoProviderComponent
+public sealed partial class ClothingSlotAmmoProviderComponent : AmmoProviderComponent
 {
     /// <summary>
     /// The slot that the ammo provider should be located in.

@@ -6,7 +6,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// Gamerule that ends the round after a period of inactivity.
 /// </summary>
 [RegisterComponent, Access(typeof(InactivityTimeRestartRuleSystem))]
-public sealed class InactivityRuleComponent : Component
+public sealed partial class InactivityRuleComponent : Component
 {
     /// <summary>
     /// How long the round must be inactive to restart

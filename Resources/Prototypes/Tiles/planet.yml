@@ -62,6 +62,7 @@
   - 1.0
   - 1.0
   - 1.0
+  edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
     NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
@@ -97,32 +98,67 @@
 # Snow
 - type: tile
   id: FloorSnow
-  name: tiles-snow-floor
+  name: tiles-snow
   sprite: /Textures/Tiles/Planet/Snow/snow.png
   variants: 13
   placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  #cornerSprites:
-  #  - /Textures/Tiles/Planet/Snow/single_edge.png
-  #cardinalSprites:
-  #  - /Textures/Tiles/Planet/Snow/double_edge.png
+  - 0.8
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0116
+  - 0.0116
+  edgeSpritePriority: 2
+  edgeSprites:
+    South: /Textures/Tiles/Planet/Snow/snow_double_edge_south.png
+    East: /Textures/Tiles/Planet/Snow/snow_double_edge_east.png
+    North: /Textures/Tiles/Planet/Snow/snow_double_edge_north.png
+    West: /Textures/Tiles/Planet/Snow/snow_double_edge_west.png
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepSnow
-  friction: 0.20
+  heatCapacity: 10000
+  weather: true
+  indestructible: true
+
+# Ice
+- type: tile
+  id: FloorIce
+  name: tiles-ice
+  sprite: /Textures/Tiles/Planet/Snow/ice.png
+  isSubfloor: true
+  canCrowbar: false
+  friction: 0.05
+  heatCapacity: 10000
+  weather: true
+  mobFriction: 0.5
+  mobFrictionNoInput: 0.05
+  mobAcceleration: 2
+  indestructible: true
+
+# Dug snow
+- type: tile
+  id: FloorSnowDug
+  name: tiles-snow-dug
+  sprite: /Textures/Tiles/Planet/Snow/snow_dug.png
+  edgeSpritePriority: 1
+  edgeSprites:
+    South: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_south.png
+    East: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_east.png
+    North: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_north.png
+    West: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_west.png
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepSnow
   heatCapacity: 10000
   weather: true
   indestructible: true

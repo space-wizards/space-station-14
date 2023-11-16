@@ -1,6 +1,6 @@
 namespace Content.Server.Bed.Components
 {
     [RegisterComponent]
-    public sealed class HealOnBuckleHealingComponent : Component
+    public sealed partial class HealOnBuckleHealingComponent : Component
     {}
 }

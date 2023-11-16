@@ -7,16 +7,16 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Configurable
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class ConfigurationComponent : Component
+    public sealed partial class ConfigurationComponent : Component
     {
         [DataField("config")]
-        public readonly Dictionary<string, string?> Config = new();
+        public Dictionary<string, string?> Config = new();
 
         [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string QualityNeeded = "Pulsing";
 
         [DataField("validation")]
-        public readonly Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+        public Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]
         public sealed class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState

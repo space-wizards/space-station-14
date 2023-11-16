@@ -59,8 +59,11 @@
     - dm
   name: death-match-title
   description: death-match-description
+  maxPlayers: 15
+  showInVote: true
+  supportedMaps: DeathMatchMapPool
   rules:
-    - DeathMatch
+    - DeathMatch31
 
 - type: gamePreset
   id: Nukeops
@@ -71,6 +74,19 @@
   showInVote: false
   rules:
     - Nukeops
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Revolutionary
+  alias:
+    - rev
+    - revs
+    - revolutionaries
+  name: rev-title
+  description: rev-description
+  showInVote: false
+  rules:
+    - Revolutionary
     - BasicStationEventScheduler
 
 - type: gamePreset

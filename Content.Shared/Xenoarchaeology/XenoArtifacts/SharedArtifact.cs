@@ -13,6 +13,6 @@ public enum SharedArtifactsVisuals : byte
 /// <summary>
 ///     Raised as an instant action event when a sentient artifact activates itself using an action.
 /// </summary>
-public sealed class ArtifactSelfActivateEvent : InstantActionEvent
+public sealed partial class ArtifactSelfActivateEvent : InstantActionEvent
 {
 }

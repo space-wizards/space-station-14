@@ -3,26 +3,11 @@
   parent: BaseMobSkeletonPerson
   id: MobSkeletonPerson
   components:
-    - type: InteractionPopup
-      successChance: 1
-      interactSuccessString: hugging-success-generic
-      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-      messagePerceivedByOthers: hugging-success-generic-others
-    - type: MindContainer
-      showExamineInfo: true
-    - type: Input
-      context: "human"
-    - type: MobMover
-    - type: InputMover
-    - type: Alerts
-    - type: Actions
-    - type: Eye
-    - type: CameraRecoil
-    - type: Examiner
-    - type: CanHostGuardian
-    - type: NpcFactionMember
-      factions:
-        - NanoTrasen
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
 
 - type: entity
   name: Skeleton Pirate
@@ -49,4 +34,17 @@
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SkeletonBiker]
+  - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobSkeletonPerson
+  id: MobSkeletonCloset
+  name: Closet Skeleton
+  components:
+  - type: GhostRole
+    name: ghost-role-information-closet-skeleton-name
+    description: ghost-role-information-closet-skeleton-description
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [LimitedPassengerGear]
   - type: RandomHumanoidAppearance

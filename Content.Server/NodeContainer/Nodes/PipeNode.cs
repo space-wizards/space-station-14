@@ -14,7 +14,7 @@ namespace Content.Server.NodeContainer.Nodes
     /// </summary>
     [DataDefinition]
     [Virtual]
-    public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
+    public partial class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
         /// <summary>
         ///     The directions in which this pipe can connect to other pipes around it.

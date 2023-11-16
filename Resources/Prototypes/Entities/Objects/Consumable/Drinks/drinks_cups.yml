@@ -26,7 +26,6 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Drink
-    isOpen: true
   - type: Sprite
     state: icon
   - type: Spillable
@@ -204,7 +203,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
@@ -222,7 +221,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
   - type: Appearance
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
@@ -247,7 +246,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
@@ -272,7 +271,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: icon-
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
@@ -292,7 +291,7 @@
     state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
 
 - type: entity
@@ -318,5 +317,5 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: icon-
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink

@@ -8,7 +8,7 @@ namespace Content.Server.Ame.Components;
 /// Packaged AME machinery that can be deployed to construct an AME.
 /// </summary>
 [RegisterComponent]
-public sealed class AmePartComponent : Component
+public sealed partial class AmePartComponent : Component
 {
     /// <summary>
     /// The sound played when the AME shielding is unpacked.

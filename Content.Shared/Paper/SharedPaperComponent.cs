@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Paper;
 
-public abstract class SharedPaperComponent : Component
+public abstract partial class SharedPaperComponent : Component
 {
     [Serializable, NetSerializable]
     public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState

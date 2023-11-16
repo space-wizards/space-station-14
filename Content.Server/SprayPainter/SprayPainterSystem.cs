@@ -11,6 +11,7 @@ using Content.Shared.SprayPainter;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.SprayPainter;
 
@@ -108,7 +109,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             }
             component.IsSpraying = true;
 
-            var doAfterEventArgs = new DoAfterArgs(args.User, component.AirlockSprayTime, new SprayPainterDoAfterEvent(sprite, null), uid, target: target, used: uid)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.AirlockSprayTime, new SprayPainterDoAfterEvent(sprite, null), uid, target: target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -129,7 +130,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             if(!component.ColorPalette.TryGetValue(component.PickedColor, out var color))
                 return;
 
-            var doAfterEventArgs = new DoAfterArgs(args.User, component.PipeSprayTime, new SprayPainterDoAfterEvent(null, color), uid, target, uid)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.PipeSprayTime, new SprayPainterDoAfterEvent(null, color), uid, target, uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

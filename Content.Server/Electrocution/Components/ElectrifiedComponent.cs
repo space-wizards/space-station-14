@@ -6,7 +6,7 @@ namespace Content.Server.Electrocution;
 ///     Component for things that shock users on touch.
 /// </summary>
 [RegisterComponent]
-public sealed class ElectrifiedComponent : Component
+public sealed partial class ElectrifiedComponent : Component
 {
     [DataField("enabled")]
     public bool Enabled = true;
@@ -40,18 +40,6 @@ public sealed class ElectrifiedComponent : Component
 
     [DataField("lowVoltageNode")]
     public string? LowVoltageNode;
-
-    [DataField("highVoltageDamageMultiplier")]
-    public float HighVoltageDamageMultiplier = 3f;
-
-    [DataField("highVoltageTimeMultiplier")]
-    public float HighVoltageTimeMultiplier = 1.5f;
-
-    [DataField("mediumVoltageDamageMultiplier")]
-    public float MediumVoltageDamageMultiplier = 2f;
-
-    [DataField("mediumVoltageTimeMultiplier")]
-    public float MediumVoltageTimeMultiplier = 1.25f;
 
     [DataField("shockDamage")]
     public int ShockDamage = 20;

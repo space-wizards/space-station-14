@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseBorgModule
   parent: BaseItem
   name: borg module
@@ -22,6 +22,17 @@
   - type: ContainerContainer
     containers:
       provided_container: !type:Container { }
+
+- type: entity
+  id: ActionBorgSwapModule
+  name: Swap Module
+  description: Select this module, enabling you to use the tools it provides.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    useDelay: 0.5
+    event: !type:BorgModuleActionSelectedEvent
 
 - type: entity
   id: BaseBorgModuleCargo
@@ -141,6 +152,8 @@
     - Wrench
     - Screwdriver
     - Wirecutter
+    - Multitool
+    - Welder
 
 # cargo modules
 - type: entity
@@ -168,7 +181,9 @@
   - type: ItemBorgModule
     items:
     - MiningDrill
+    - Shovel
     - OreBag
+    - Crowbar
 
 - type: entity
   id: BorgModuleGrapplingGun
@@ -182,6 +197,7 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGun
+    - WeaponCrusherDagger
 
 # engineering modules
 - type: entity
@@ -211,6 +227,24 @@
   - type: ItemBorgModule
     items:
     - GasAnalyzer
+    - trayScanner
+    - Crowbar
+    - Wrench
+
+- type: entity
+  id: BorgModuleConstruction
+  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  name: construction cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: engineering
+    - state: icon-construction
+  - type: ItemBorgModule
+    items:
+    - SheetSteelLingering0
+    - SheetGlassLingering0
+    - PartRodMetalLingering0
 
 - type: entity
   id: BorgModuleRCD
@@ -238,6 +272,8 @@
   - type: ItemBorgModule
     items:
     - LightReplacer
+    - Crowbar
+    - Screwdriver
 
 - type: entity
   id: BorgModuleCleaning
@@ -252,20 +288,22 @@
     items:
     - MopItem
     - Bucket
-    - Holoprojector
+    - TrashBag
 
 - type: entity
-  id: BorgModuleTrashCollection
+  id: BorgModuleAdvancedCleaning
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
-  name: trash collection cyborg module
+  name: advanced cleaning cyborg module
   components:
   - type: Sprite
     layers:
     - state: janitor
-    - state: icon-trash-bag
+    - state: icon-mop-adv
   - type: ItemBorgModule
     items:
-    - TrashBag
+    - AdvMopItem
+    - Holoprojector
+    - SprayBottleSpaceCleaner
 
 # medical modules
 - type: entity
@@ -298,6 +336,7 @@
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
+    - Dropper
 
 - type: entity
   id: BorgModuleDefibrillator
@@ -311,6 +350,22 @@
   - type: ItemBorgModule
     items:
     - DefibrillatorOneHandedUnpowered
+
+- type: entity
+  id: BorgModuleAdvancedTreatment
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: advanced treatment cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-chemist
+  - type: ItemBorgModule
+    items:
+    - Beaker
+    - Beaker
+    - BorgDropper
+    - BorgHypo
 
 # science modules
 # todo: if science ever gets their own custom robot, add more "sci" modules.
@@ -343,9 +398,9 @@
 
 # service modules
 - type: entity
-  id: BorgModuleLiteracy
+  id: BorgModuleService
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: literacy cyborg module
+  name: service cyborg module
   components:
   - type: Sprite
     layers:
@@ -354,6 +409,10 @@
   - type: ItemBorgModule
     items:
     - Pen
+    - BooksBag
+    - HandLabeler
+    - Lighter
+    - DrinkShaker
 
 - type: entity
   id: BorgModuleMusique
@@ -367,6 +426,8 @@
   - type: ItemBorgModule
     items:
     - SynthesizerInstrument
+    - ElectricGuitarInstrument
+    - SaxophoneInstrument
 
 - type: entity
   id: BorgModuleGardening
@@ -381,9 +442,23 @@
     items:
     - HydroponicsToolMiniHoe
     - HydroponicsToolSpade
-    - HydroponicsToolScythe
     - HydroponicsToolClippers
+    - Bucket
+
+- type: entity
+  id: BorgModuleHarvesting
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: harvesting cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-harvesting
+  - type: ItemBorgModule
+    items:
+    - HydroponicsToolScythe
     - HydroponicsToolHatchet
+    - PlantBag
 
 - type: entity
   id: BorgModuleClowning
@@ -398,3 +473,4 @@
     items:
     - BikeHorn
     - ClownRecorder
+    - BikeHornInstrument

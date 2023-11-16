@@ -6,7 +6,7 @@ namespace Content.Shared.Movement.Components;
 /// Automatically rotates eye upon grid traversals.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class AutoOrientComponent : Component
+public sealed partial class AutoOrientComponent : Component
 {
 
 }

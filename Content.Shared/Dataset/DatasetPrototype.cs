@@ -3,12 +3,12 @@
 namespace Content.Shared.Dataset
 {
     [Prototype("dataset")]
-    public sealed class DatasetPrototype : IPrototype
+    public sealed partial class DatasetPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
-        [DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
+        [DataField("values")] public IReadOnlyList<string> Values { get; private set; } = new List<string>();
     }
 }

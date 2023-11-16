@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: SalvageEquipment
@@ -34,7 +34,7 @@
     state: panel
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - WallmountSubstationElectronics
   - WallmountGeneratorElectronics
@@ -48,25 +48,27 @@
     state: icon
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - ProtolatheMachineCircuitboard
   - AutolatheMachineCircuitboard
   - CircuitImprinterMachineCircuitboard
   - MaterialReclaimerMachineCircuitboard
+  - SheetifierMachineCircuitboard
 
 - type: technology
   id: PowerGeneration
   name: research-technology-power-generation
   icon:
     sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen0_1
+    state: portgen0
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
-  - GeneratorPlasmaMachineCircuitboard
-  - GeneratorUraniumMachineCircuitboard
+  - PortableGeneratorPacmanMachineCircuitboard
+  - PortableGeneratorSuperPacmanMachineCircuitboard
+  - PortableGeneratorJrPacmanMachineCircuitboard
   - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
@@ -139,7 +141,7 @@
     state: ripley
   discipline: Industrial
   tier: 2
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - RipleyHarness
   - RipleyLArm
@@ -207,3 +209,17 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
+
+- type: technology
+  id: PortableFission
+  name: research-technology-portable-fission
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: microreactor
+  discipline: Industrial
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - PowerCellMicroreactor
+  technologyPrerequisites:
+  - SuperPowercells

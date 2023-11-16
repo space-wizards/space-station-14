@@ -47,7 +47,7 @@ public partial class SharedGunSystem
         args.State = new RevolverAmmoProviderComponentState
         {
             CurrentIndex = component.CurrentIndex,
-            AmmoSlots = component.AmmoSlots,
+            AmmoSlots = GetNetEntityList(component.AmmoSlots),
             Chambers = component.Chambers,
         };
     }
@@ -64,7 +64,7 @@ public partial class SharedGunSystem
         // Need to copy across the state rather than the ref.
         for (var i = 0; i < component.AmmoSlots.Count; i++)
         {
-            component.AmmoSlots[i] = state.AmmoSlots[i];
+            component.AmmoSlots[i] = EnsureEntity<RevolverAmmoProviderComponent>(state.AmmoSlots[i], uid);
             component.Chambers[i] = state.Chambers[i];
         }
 
@@ -342,13 +342,13 @@ public partial class SharedGunSystem
                         component.Chambers[index] = false;
                         SetCartridgeSpent(ent, cartridge, true);
                         var spawned = Spawn(cartridge.Prototype, args.Coordinates);
-                        args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
+                        args.Ammo.Add((spawned, EnsureShootable(spawned)));
                         Del(ent);
                         continue;
                     }
 
                     component.Chambers[i] = null;
-                    args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
+                    args.Ammo.Add((ent, EnsureShootable(ent)));
                 }
             }
             else if (component.AmmoSlots[index] != null)
@@ -362,13 +362,13 @@ public partial class SharedGunSystem
 
                     SetCartridgeSpent(ent.Value, cartridge, true);
                     var spawned = Spawn(cartridge.Prototype, args.Coordinates);
-                    args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
+                    args.Ammo.Add((spawned, EnsureShootable(spawned)));
                     continue;
                 }
 
                 component.AmmoContainer.Remove(ent.Value);
                 component.AmmoSlots[index] = null;
-                args.Ammo.Add((ent.Value, EnsureComp<AmmoComponent>(ent.Value)));
+                args.Ammo.Add((ent.Value, EnsureShootable(ent.Value)));
                 TransformSystem.SetCoordinates(ent.Value, args.Coordinates);
             }
         }
@@ -416,7 +416,7 @@ public partial class SharedGunSystem
     protected sealed class RevolverAmmoProviderComponentState : ComponentState
     {
         public int CurrentIndex;
-        public List<EntityUid?> AmmoSlots = default!;
+        public List<NetEntity?> AmmoSlots = default!;
         public bool?[] Chambers = default!;
     }
 

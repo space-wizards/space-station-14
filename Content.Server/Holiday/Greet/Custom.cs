@@ -5,7 +5,7 @@ namespace Content.Server.Holiday.Greet
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class Custom : IHolidayGreet
+    public sealed partial class Custom : IHolidayGreet
     {
         [DataField("text")] private string _greet = string.Empty;
 

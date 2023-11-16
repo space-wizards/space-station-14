@@ -1,4 +1,5 @@
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -7,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
-    public sealed class MicrowaveComponent : Component
+    public sealed partial class MicrowaveComponent : Component
     {
         [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float CookTimeMultiplier = 1;
@@ -36,6 +37,9 @@ namespace Content.Server.Kitchen.Components
 
         [ViewVariables]
         public bool Broken;
+
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public ProtoId<SinkPortPrototype> OnPort = "On";
 
         /// <summary>
         /// This is a fixed offset of 5.

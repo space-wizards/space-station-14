@@ -64,8 +64,8 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: "Vending Machine"
-    LayoutId: Vending
+    boardName: wires-board-name-vendingmachine
+    layoutId: Vending
   - type: Anchorable
   - type: TypingIndicator
     proto: robot
@@ -115,6 +115,17 @@
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190
   - type: Advertise
     pack: CondimentVendAds
   - type: Speech
@@ -211,7 +222,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChefvend
-  name: Chefvend
+  name: ChefVend
   description: An ingredient vendor for all your cheffin needs.
   components:
   - type: VendingMachine
@@ -770,6 +781,9 @@
     radius: 1.5
     energy: 1.6
     color: "#9dc5c9"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: VendingMachine
@@ -834,6 +848,9 @@
     radius: 1
     energy: 1.2
     color: "#78645c"
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   parent: VendingMachine
@@ -1182,6 +1199,9 @@
     radius: 1.5
     energy: 1.6
     color: "#B0ADA9"
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   parent: VendingMachine
@@ -1303,6 +1323,9 @@
     color: "#9dc5c9"
   - type: AccessReader
     access: [["Salvage"]]
+  - type: GuideHelp
+    guides:
+    - Salvage
 
 - type: entity
   parent: VendingMachine
@@ -1375,6 +1398,9 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+  - type: GuideHelp
+    guides:
+    - Medical
 
 # job clothing
 
@@ -1590,6 +1616,32 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineCuraDrobe
+  name: CuraDrobe
+  description: A lowstock vendor only capable of vending clothing for curators and librarians.
+  components:
+  - type: VendingMachine
+    pack: CuraDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: Advertise
+    pack: CuraDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/curadrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineAtmosDrobe
   name: AtmosDrobe
   description: This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job.
@@ -1768,7 +1820,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["NuclearOperative"]]
+    access: [["NuclearOperative"], ["SyndicateAgent"]]
 
 - type: entity
   parent: VendingMachine
@@ -1951,7 +2003,7 @@
     brokenState: broken
     normalState: normal
     denyState: deny
-    ejectDelay: 3
+    ejectDelay: 2
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chemvend.rsi
     layers:
@@ -1963,3 +2015,23 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Chemistry"]]
+  - type: GuideHelp
+    guides:
+    - Chemicals
+
+- type: entity
+  parent: VendingMachineChemicals
+  id: VendingMachineChemicalsSyndicate
+  name: SyndieJuice
+  description: Not made with freshly squeezed syndies I hope.
+  components:
+  - type: VendingMachine
+    pack: ChemVendInventorySyndicate
+    offState: off
+    brokenState: broken
+    normalState: normal
+    denyState: deny
+    ejectDelay: 2
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+  

@@ -1,35 +1,135 @@
 - type: constructionGraph
-  id: WallWeb
+  id: WebStructures
   start: start
   graph:
-    - node: start
-      edges:
-        - to: wall
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          steps:
-            - material: WebSilk
-              amount: 4
-              doAfter: 3
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: wall
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 4
+        doAfter: 3
 
-    - node: wall
-      entity: WallWeb
+    - to: table
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 4
+        doAfter: 3
 
-- type: constructionGraph
-  id: TableWeb
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: table
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          steps:
-            - material: WebSilk
-              amount: 4
-              doAfter: 3
+    - to: bed
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 6
+        doAfter: 3
 
-    - node: table
-      entity: TableWeb
+    - to: chair
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 3
+        doAfter: 3
+
+    - to: crate
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 10
+        doAfter: 6
+
+    - to: door
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 8
+        doAfter: 6
+
+
+  # Deconstruction is down here
+  - node: wall
+    entity: WallWeb
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 4
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+  - node: table
+    entity: TableWeb
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 4
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+  - node: bed
+    entity: WebBed
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 5 # One silk loss, cry
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+  - node: chair
+    entity: ChairWeb
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 3
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+  - node: crate
+    entity: CrateWeb
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 7
+      steps:
+      - tool: Cutting
+        doAfter: 3
+
+  - node: door
+    entity: WebDoor
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 6
+      steps:
+      - tool: Cutting
+        doAfter: 3

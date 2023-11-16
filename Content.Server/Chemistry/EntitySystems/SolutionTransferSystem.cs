@@ -1,14 +1,15 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Verbs;
-using Content.Server.Chemistry.Components.SolutionManager;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -48,7 +49,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount || args.Hands == null)
                 return;
 
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             // Custom transfer verb

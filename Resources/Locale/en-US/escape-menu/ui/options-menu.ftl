@@ -29,6 +29,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ui-options-show-held-item = Show held item next to cursor?
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor?
+ui-options-show-looc-on-head = Show LOOC chat above characters head?
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -82,6 +83,7 @@ ui-options-header-dev = Development
 ui-options-header-general = General
 
 ui-options-hotkey-keymap = Use US QWERTY Keys
+ui-options-hotkey-toggle-walk = Toggle Walk
 
 ui-options-function-move-up = Move Up
 ui-options-function-move-left = Move Left
@@ -147,6 +149,7 @@ ui-options-function-escape-context = Close recent window or toggle game menu
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
+ui-options-function-toggle-fullscreen = Toggle fullscreen
 
 ui-options-function-editor-place-object = Place object
 ui-options-function-editor-cancel-place = Cancel placement
@@ -159,6 +162,7 @@ ui-options-function-editor-copy-object = Copy
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-show-debug-console = Open Console
 ui-options-function-show-debug-monitors = Show Debug Monitors
+ui-options-function-inspect-entity = Inspect Entity
 ui-options-function-hide-ui = Hide UI
 
 ui-options-function-hotbar1 = Hotbar slot 1

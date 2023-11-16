@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Popups;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -140,12 +141,7 @@ public sealed class LogicGateSystem : EntitySystem
         {
             comp.LastOutput = output;
 
-            var data = new NetworkPayload
-            {
-                [DeviceNetworkConstants.LogicState] = output ? SignalState.High : SignalState.Low
-            };
-
-            _deviceLink.InvokePort(uid, comp.OutputPort, data);
+            _deviceLink.SendSignal(uid, comp.OutputPort, output);
         }
     }
 }

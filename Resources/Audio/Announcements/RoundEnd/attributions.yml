@@ -1,0 +1,14 @@
+- files: ["apc_destroyed.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://github.com/tgstation/tgstation/commit/9693fb456a3f8f63e73e6e504fe75de1d148d271n"
+  source: "https://github.com/tgstation/tgstation/blob/ea4870f6d1c0d6b553bb0540d3f4d6efd6f4a3a3/config/reboot_themes/apcdestroyed.ogg"
+
+- files: ["disappointed.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://github.com/tgstation/tgstation/commit/9693fb456a3f8f63e73e6e504fe75de1d148d271"
+  source: "https://github.com/tgstation/tgstation/blob/ea4870f6d1c0d6b553bb0540d3f4d6efd6f4a3a3/config/reboot_themes/disappointed.ogg"
+
+- files: ["notevenpaidforthis.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://github.com/tgstation/tgstation/commit/95731342b97167d7883ff091d389f79c36442ee6"
+  source: "https://github.com/tgstation/tgstation/blob/ea4870f6d1c0d6b553bb0540d3f4d6efd6f4a3a3/sound/ai/intern/alerts/9.ogg"

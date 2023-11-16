@@ -1,4 +1,6 @@
 using Content.Shared.Examine;
+using Content.Shared.Tools.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wires;
 
@@ -7,6 +9,7 @@ public abstract class SharedWiresSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<WiresPanelComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -20,9 +23,10 @@ public abstract class SharedWiresSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-open"));
 
-            if (component?.WiresPanelSecurityExamination != null)
+            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                wiresPanelSecurity.Examine != null)
             {
-                args.PushMarkup(Loc.GetString(component.WiresPanelSecurityExamination));
+                args.PushMarkup(Loc.GetString(wiresPanelSecurity.Examine));
             }
         }
     }

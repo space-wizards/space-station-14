@@ -4,6 +4,6 @@ namespace Content.Server.Bible.Components
     /// EntityQuery Tracking Component for Summonables that are counting up a respawn.
     /// </summary>
     [RegisterComponent]
-    public sealed class SummonableRespawningComponent : Component
+    public sealed partial class SummonableRespawningComponent : Component
     {}
 }

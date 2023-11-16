@@ -6,7 +6,7 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on something you want to use to ensnare an entity with
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class EnsnaringComponent : Component
+public sealed partial class EnsnaringComponent : Component
 {
     /// <summary>
     /// How long it should take to free someone else.
@@ -35,6 +35,13 @@ public sealed class EnsnaringComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprintSpeed")]
     public float SprintSpeed = 0.9f;
+
+    /// <summary>
+    /// How much stamina does the ensnare sap
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("staminaDamage")]
+    public float StaminaDamage = 55f;
 
     /// <summary>
     /// Should this ensnare someone when thrown?

@@ -9,7 +9,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 /// <summary>
 /// Swaps to any free hand.
 /// </summary>
-public sealed class SwapToFreeHandOperator : HTNOperator
+public sealed partial class SwapToFreeHandOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 

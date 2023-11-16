@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Default metabolism for medicine reagents.
     /// </summary>
     [UsedImplicitly]
-    public sealed class HealthChange : ReagentEffect
+    public sealed partial class HealthChange : ReagentEffect
     {
         /// <summary>
         /// Damage to apply every metabolism cycle. Damage Ignores resistances.

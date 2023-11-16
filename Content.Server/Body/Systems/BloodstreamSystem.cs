@@ -1,5 +1,4 @@
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
@@ -7,22 +6,20 @@ using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Drunk;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Popups;
-using Content.Shared.Drunk;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
@@ -117,7 +114,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 // bloodloss damage is based on the base value, and modified by how low your blood level is.
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
-                _damageableSystem.TryChangeDamage(uid, amt, true, false);
+                _damageableSystem.TryChangeDamage(uid, amt, false, false);
 
                 // Apply dizziness as a symptom of bloodloss.
                 // The effect is applied in a way that it will never be cleared without being healthy.
@@ -274,9 +271,9 @@ public sealed class BloodstreamSystem : EntitySystem
         for (var i = component.ChemicalSolution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = component.ChemicalSolution.Contents[i];
-            if (reagentId != excludedReagentID)
+            if (reagentId.Prototype != excludedReagentID)
             {
-                _solutionContainerSystem.TryRemoveReagent(uid, component.ChemicalSolution, reagentId, quantity);
+                _solutionContainerSystem.RemoveReagent(uid, component.ChemicalSolution, reagentId, quantity);
             }
         }
 

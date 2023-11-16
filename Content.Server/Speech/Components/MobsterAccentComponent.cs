@@ -5,7 +5,7 @@
 ///     Etc etc.
 /// </summary>
 [RegisterComponent]
-public sealed class MobsterAccentComponent : Component
+public sealed partial class MobsterAccentComponent : Component
 {
     /// <summary>
     ///     Do you make all the rules?

@@ -31,8 +31,8 @@ public sealed class MachineBoardTest
     [Test]
     public async Task TestMachineBoardHasValidMachine()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -40,7 +40,7 @@ public sealed class MachineBoardTest
         {
             foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>()
                          .Where(p => !p.Abstract)
-                         .Where(p => !pairTracker.Pair.IsTestPrototype(p))
+                         .Where(p => !pair.IsTestPrototype(p))
                          .Where(p => !_ignoredPrototypes.Contains(p.ID)))
             {
                 if (!p.TryGetComponent<MachineBoardComponent>(out var mbc))
@@ -60,7 +60,7 @@ public sealed class MachineBoardTest
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -70,8 +70,8 @@ public sealed class MachineBoardTest
     [Test]
     public async Task TestComputerBoardHasValidComputer()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -79,7 +79,7 @@ public sealed class MachineBoardTest
         {
             foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>()
                          .Where(p => !p.Abstract)
-                         .Where(p => !pairTracker.Pair.IsTestPrototype(p))
+                         .Where(p => !pair.IsTestPrototype(p))
                          .Where(p => !_ignoredPrototypes.Contains(p.ID)))
             {
                 if (!p.TryGetComponent<ComputerBoardComponent>(out var cbc))
@@ -99,6 +99,6 @@ public sealed class MachineBoardTest
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

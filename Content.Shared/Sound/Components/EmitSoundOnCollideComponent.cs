@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Sound.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class EmitSoundOnCollideComponent : BaseEmitSoundComponent
+public sealed partial class EmitSoundOnCollideComponent : BaseEmitSoundComponent
 {
     public static readonly TimeSpan CollideCooldown = TimeSpan.FromSeconds(0.2);
 

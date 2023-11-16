@@ -9,7 +9,7 @@
     sprite: Objects/Fun/Instruments/glockenspiel.rsi
     state: icon
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/Instruments/glockenspiel.rsi
   - type: Tag
     tags:
@@ -58,7 +58,7 @@
     sprite: Objects/Fun/Instruments/microphone.rsi
     state: icon
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Fun/Instruments/microphone.rsi
 
 - type: entity
@@ -76,7 +76,7 @@
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
   - type: Tag
     tags:
@@ -135,5 +135,5 @@
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
   - type: Item
-    size: 24
+    size: Normal
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
