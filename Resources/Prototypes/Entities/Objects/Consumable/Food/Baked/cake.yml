@@ -586,6 +586,29 @@
     rules: ghost-role-information-Cak-rules
   - type: GhostTakeoverAvailable
   - type: OwOAccent
+  - type: Speech
+    speechSounds: Cat
+    speechVerb: SmallMob
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 3
+  - type: Tag
+    tags:
+    - VimPilot
+    - DoorBumpOpener
+  - type: CanEscapeInventory
+    baseResistTime: 2
+  - type: Puller
+    needsHands: false
+  - type: Examiner
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Animals/cat_hiss.ogg
+    hidden: true
+    damage:
+      groups:
+        Brute: 1
 
 # Suppermatter
 # I can't figure out where to put this. It kind of acts like a cake I guess?
