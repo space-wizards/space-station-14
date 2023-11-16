@@ -51,10 +51,10 @@
   copyright: "arcadered renamed from eightiesred, arcadeblue by Peptide90 modified from arcadered.png, tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49"
   source: "https://github.com/tgstation/tgstation/"
 
-- files: ["hull", "hull_reinforced.png"]
+- files: ["hull", "hull_reinforced.png", "steel_damaged.png", "steel_burnt.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae"
-  source: "https://github.com/space-wizards/space-station-14/pull/18676"
+  source: "https://github.com/tgstation/tgstation/"
 
 - files: ["shuttleblue.png", "shuttleorange.png", "shuttlepurple.png", "shuttlered.png", "shuttlewhite.png"]
   license: "CC-BY-SA-3.0"
