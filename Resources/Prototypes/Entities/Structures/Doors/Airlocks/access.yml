@@ -805,7 +805,7 @@
     access: [["External"]]
 
 - type: entity
-  parent: AirlockShuttle
+  parent: AirlockShuttleSyndicate
   id: AirlockExternalShuttleSyndicateLocked
   suffix: External, Docking, Syndicate, Locked
   components:
@@ -813,7 +813,7 @@
     access: [["SyndicateAgent"]]
 
 - type: entity
-  parent: AirlockShuttle
+  parent: AirlockShuttleSyndicate
   id: AirlockExternalShuttleNukeopLocked
   suffix: External, Docking, Nukeop, Locked
   components:
@@ -827,6 +827,22 @@
   components:
   - type: AccessReader
     access: [["External"]]
+
+- type: entity
+  parent: AirlockGlassShuttleSyndicate
+  id: AirlockExternalGlassShuttleSyndicateLocked
+  suffix: Syndicate, Locked, Glass
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockGlassShuttleSyndicate
+  id: AirlockExternalGlassShuttleNukeopLocked
+  suffix: Nukeop, Locked, Glass
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 - type: entity
   parent: AirlockGlassShuttle

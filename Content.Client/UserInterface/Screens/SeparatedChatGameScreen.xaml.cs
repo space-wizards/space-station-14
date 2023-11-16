@@ -19,7 +19,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorPreset(MainViewport, LayoutPreset.Wide);
         SetAnchorAndMarginPreset(VoteMenu, LayoutPreset.TopLeft, margin: 10);
-        SetAnchorAndMarginPreset(Actions, LayoutPreset.BottomLeft, margin: 10);
+        SetAnchorAndMarginPreset(Actions, LayoutPreset.TopLeft, margin: 10);
         SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
         SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5);
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.CenterRight, margin: 10);

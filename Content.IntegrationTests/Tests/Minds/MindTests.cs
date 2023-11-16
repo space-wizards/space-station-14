@@ -11,6 +11,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Players;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Console;
@@ -345,7 +346,7 @@ public sealed partial class MindTests
         EntityUid entity = default!;
         EntityUid mindId = default!;
         MindComponent mind = default!;
-        var player = playerMan.ServerSessions.Single();
+        var player = playerMan.Sessions.Single();
 
         await server.WaitAssertion(() =>
         {
@@ -406,12 +407,6 @@ public sealed partial class MindTests
         await pair.CleanReturnAsync();
     }
 
-    // TODO Implement
-    /*[Test]
-    public async Task TestPlayerCanReturnFromGhostWhenDead()
-    {
-    }*/
-
     [Test]
     public async Task TestGhostDoesNotInfiniteLoop()
     {
@@ -432,7 +427,7 @@ public sealed partial class MindTests
         EntityUid ghost = default!;
         EntityUid mindId = default!;
         MindComponent mind = default!;
-        var player = playerMan.ServerSessions.Single();
+        var player = playerMan.Sessions.Single();
 
         await server.WaitAssertion(() =>
         {

@@ -373,22 +373,4 @@ namespace Content.Server.Cloning
             ClonesWaitingForMind.Clear();
         }
     }
-
-    /// <summary>
-    /// Raised after a new mob got spawned when cloning a humanoid
-    /// </summary>
-    [ByRefEvent]
-    public struct CloningEvent
-    {
-        public bool NameHandled = false;
-
-        public readonly EntityUid Source;
-        public readonly EntityUid Target;
-
-        public CloningEvent(EntityUid source, EntityUid target)
-        {
-            Source = source;
-            Target = target;
-        }
-    }
 }

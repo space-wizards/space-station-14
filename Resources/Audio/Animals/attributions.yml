@@ -1,0 +1,114 @@
+- files: ["monkey_scream.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from goonstation"
+  source: "https://github.com/goonstation/goonstation/blob/4059e4be90832b02b1228b1bee3db342094e4f1e/sound/voice/screams/monkey_scream.ogg"
+
+- files: ["cat_meow.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Modified from 'Meow 4.wav' by freesound user 'TRNGLE. The original audio was trimmed, split to mono, and converted from WAV to OGG format"
+  source: "https://freesound.org/people/TRNGLE/sounds/368006/"
+
+- files: ["cat_hiss.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Meow 4.wav' by freesound user 'TRNGLE'. The original audio was trimmed, split to mono, and converted from WAV to OGG format"
+  source: "https://freesound.org/people/Zabuhailo/sounds/146963/"
+
+- files: ["small_dog_bark_happy.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'catHisses1.wav' by freesound user 'Zabuhailo. ' The original audio was trimmed and converted from WAV to OGG format"
+  source: "https://freesound.org/people/MisterTood/sounds/9032/"
+
+- files: ["duck_quack_happy.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Duck Quack - Sound Effect (HD).mp3' by freesound user 'Tabby+Gus.' The original audio was trimmed, looped, split to mono, and converted from MP3 to OGG format"
+  source: "https://freesound.org/people/Tabby+Gus./sounds/515408/"
+
+- files: ["chicken_cluck_happy.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Chicken Single Alarm Call' by freesound user 'Rudmer_Rotteveel'. The original audio was trimmed and converted from WAV to OGG format"
+  source: "https://freesound.org/people/Rudmer_Rotteveel/sounds/316920/"
+
+- files: ["ferret_happy.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Modified from 'Ferret' by freesound user 'J.Zazvurek'. The original audio was trimmed and converted from WAV to OGG format"
+  source: "https://freesound.org/people/J.Zazvurek/sounds/155115/"
+
+- files: ["mouse_squeak.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Cartoon - Bat / Mouse Squeak' by freesound user 'Breviceps'. The original audio was converted from WAV to OGG format"
+  source: "https://freesound.org/people/Breviceps/sounds/445958/"
+
+- files: ["sloth_squeak.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'squeakfinal.wav' by freesound user 'Higgs01'. The original audio was converted from WAV to OFF format AND converted from stereo to mono"
+  source: "https://freesound.org/people/Higgs01/sounds/428114/"
+
+- files: ["parrot_raught.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Modified and used from 'Parrot 1 raught 2.wav' by freesound user 'Coral_Island_Studios'. The original audio was converted from WAV to OGG format"
+  source: "https://freesound.org/people/Coral_Island_Studios/sounds/432588/"
+
+- files: ["fox_squeak.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Video Game Squeak' by freesound user 'Breviceps'. The original audio was converted from WAV to OGG format"
+  source: "https://freesound.org/people/Breviceps/sounds/468442/"
+
+- files: ["frog_ribbit.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Video Game Squeak' by freesound user 'Breviceps'. The original audio was converted from WAV to OGG format"
+  source: "https://freesound.org/people/egomassive/sounds/536759/"
+
+- files: ["goose_honk.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from ' Bird Honk - 1'  by freesound user 'SpaceJoe'. The originial audio was converted from WAV to OGG format"
+  source: "https://freesound.org/people/SpaceJoe/sounds/510940/"
+
+- files: ["snake_his.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Modified from 'hissing snake sound effect' by freesound user 'Garuda1982'. The original audio was convertred from WAV to OGG format"
+  source: "https://freesound.org/people/Garuda1982/sounds/541656/"
+
+- files: ["pig_oink.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Pig Oink.wav' by freesound user 'qubodup'. The original audio was converted from WAV to OGG format"
+  source: "https://freesound.org/people/qubodup/sounds/442906/"
+
+- files: ["cerberus.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'DogBARKING.wav' by freesound user 'ahill86'. The original audio was converted from WAV to OGG format, echoed, amplified and pitched down"
+  source: "https://freesound.org/people/ahill86/sounds/207124/"
+
+- files: ["space_dragon_roar.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["penguin_squawk.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Audio is recorded/created by youtube user 'ProSounds. The original audio was trimmed and converted from MP3 to OGG format"
+  source: "https://youtu.be/Anr35RbBL3Y"
+
+- files: ["raccoon_squeak.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Audio is recorded by youtube user 'jnargus'"
+  source: "https://youtu.be/BGjFP1CP7E0"
+
+- files: ["goat_bah.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Audio is created by youtube user 'Winry Marini'"
+  source: "https://youtu.be/QIhwzsk5bww"
+
+- files: ["lizard_happy.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Audio created by youtube user 'Nagaty Studio'"
+  source: "https://youtu.be/I7CX0AS8RNI"
+
+- files: ["bear.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Audio is recorded by 'Nagaty Studio'. The original audio was reverbed"
+  source: "https://www.youtube.com/watch?v=pz6eZbESlU8"
+
+- files: ["kangaroo_grunt.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Audio is recorded/created by Pfranzen 'FreeSound.org'. The original audio was trimmed and renamed"
+  source: "https://freesound.org/people/pfranzen/sounds/322744/"
