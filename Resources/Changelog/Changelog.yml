@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: CentCom official costume no longer has AA., type: Fix}
-  - {message: CentCom official costume items are more CentCom themed., type: Tweak}
-  id: 4681
-  time: '2023-08-25T03:20:57.0000000+00:00'
 - author: Whisper
   changes:
   - {message: The Detective's gun has been moved to their holster from their cabinet.
@@ -2913,3 +2907,12 @@ Entries:
   - {message: You can no longer unbuckle yourself while you are incapacitated., type: Fix}
   id: 5180
   time: '2023-11-16T02:39:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Clicking actions in the HUD no longer triggers them multiple times.,
+    type: Fix}
+  - {message: Fixed action bar overlapping vote box in separated HUD., type: Fix}
+  - {message: Dragging actions to the action bar now shows an empty slot where they
+      can be added., type: Tweak}
+  id: 5181
+  time: '2023-11-16T05:12:47.0000000+00:00'
