@@ -52,6 +52,9 @@ namespace Content.Server.Communications
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleAnnounceMessage>(OnAnnounceMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleCallEmergencyShuttleMessage>(OnCallShuttleMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>(OnRecallShuttleMessage);
+
+            // On console init, set cooldown
+            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentStartup>((uid, comp, _) => OnCommunicationsConsoleInit(comp));
         }
 
         public override void Update(float frameTime)
@@ -77,6 +80,11 @@ namespace Content.Server.Communications
             }
 
             base.Update(frameTime);
+        }
+
+        public static void OnCommunicationsConsoleInit(CommunicationsConsoleComponent comp)
+        {
+            comp.AnnouncementCooldownRemaining = comp.InitialDelay;
         }
 
         /// <summary>
