@@ -1,0 +1,82 @@
+- type: entity
+  id: ThrusterMedium
+  name: thrusterMedium
+  parent: BaseThruster
+  components:
+  - type: Thruster
+    burnShape: ["-1.3,1.5","-0.8,2.8","-0.2,2.8","0.3,1.5"]
+    baseThrust: 300
+    thrust: 300
+    damage:
+      types:
+        Heat: 90
+  - type: ApcPowerReceiver
+    powerLoad: 4500
+  - type: Fixtures
+    fixtures:
+      thruster1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.4,-0.4,0.4,1.4"
+        density: 1750
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Sprite
+    sprite: Structures/Shuttles/thruster.rsi
+    scale: 2,2
+    offset: -0.5, 0.5
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+      offset: 0, 1
+
+- type: entity
+  id: ThrusterLarge
+  name: thrusterLarge
+  parent: BaseThruster
+  components:
+  - type: Thruster
+    burnShape: ["-1.3,1.5","-0.4,3.9","0.4,3.9","1.3,1.5"]
+    baseThrust: 600
+    thrust: 600
+    damage:
+      types:
+        Heat: 150
+  - type: ApcPowerReceiver
+    powerLoad: 9000
+  - type: Fixtures
+    fixtures:
+      thruster2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.4,-1.4,1.4,1.4"
+        density: 3500
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: Sprite
+    sprite: Structures/Shuttles/thruster.rsi
+    scale: 3,3
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+      offset: 0, 1
