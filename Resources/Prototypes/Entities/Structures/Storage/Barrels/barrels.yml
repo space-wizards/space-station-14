@@ -20,27 +20,28 @@
       damageModifierSet: Wood
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-        - !type:SpillBehavior
-          solution: tank
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/woodhit.ogg
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            MaterialWoodPlank:
-              min: 2
-              max: 5
+        - trigger: !type:DamageTrigger
+            damage: 10
+          behaviors:
+            - !type:SpillBehavior
+              solution: tank
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/woodhit.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                MaterialWoodPlank:
+                  min: 2
+                  max: 5
     - type: ExaminableSolution
       solution: tank
     - type: Drink
       solution: tank
     - type: DrawableSolution
+      solution: tank
+    - type: RefillableSolution
       solution: tank
 
 - type: entity
@@ -52,11 +53,38 @@
       solution: tank
       generated:
         reagents:
-        - ReagentId: Water
-          Quantity: 0.5
+          - ReagentId: Water
+            Quantity: 0.5
     - type: SolutionContainerManager
       solutions:
         tank:
           reagents:
             - ReagentId: Water
               Quantity: 1000
+
+- type: entity
+  id: WoodenBarrelWithLid
+  parent: WoodenOpenBarrel
+  suffix: Empty
+  components:
+    - type: Sprite
+      sprite: Structures/Storage/barrels.rsi
+      layers:
+        - state: wooden_barrel
+        - state: wooden_barrel-1
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: false
+        - state: wooden_barrel_lid_closed
+          map: ["enum.OpenableVisuals.Layer"]
+    - type: GenericVisualizer
+      visuals:
+        enum.OpenableVisuals.Opened:
+          enum.OpenableVisuals.Layer:
+            True: { state: "wooden_barrel_lid_opened" }
+            False: { state: "wooden_barrel_lid_closed" }
+    - type: Openable
+      opened: false
+      canReopened: true
+      canOpenWithoutHolding: true
+      sound:
+        path: /Audio/Effects/woodenclosetclose.ogg

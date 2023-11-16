@@ -43,4 +43,18 @@ public sealed partial class OpenableComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("canOpenSounds");
+
+    /// <summary>
+    /// Can to open and to close many times
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool CanReopened = false;
+
+    /// <summary>
+    /// you can open it without holding it in your hands
+    /// this behavior conflict with taking so
+    /// it use for some big containers and tanks
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool CanOpenWithoutHolding = false;
 }

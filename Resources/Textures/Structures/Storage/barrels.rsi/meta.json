@@ -21,6 +21,12 @@
     },
     {
       "name": "wooden_barrel-4"
+    },
+    {
+      "name": "wooden_barrel_lid_closed"
+    },
+    {
+      "name": "wooden_barrel_lid_opened"
     }
   ]
 }

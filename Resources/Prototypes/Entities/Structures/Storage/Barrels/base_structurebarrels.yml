@@ -13,7 +13,7 @@
       fixtures:
         fix1:
           shape: !type:PhysShapeAabb
-            bounds: "-0.3,-0.6,0.3,0.6"
+            bounds: "-0.4,-0.4,0.4,0.4"
           density: 1000
           mask:
             - MachineMask

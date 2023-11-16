@@ -7,7 +7,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -26,6 +25,8 @@ public sealed class OpenableSystem : EntitySystem
 
         SubscribeLocalEvent<OpenableComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
+        SubscribeLocalEvent<OpenableComponent, InteractHandEvent>(OnInteractHandUse);
+        SubscribeLocalEvent<OpenableComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<OpenableComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(PuddleSystem) });
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
@@ -37,6 +38,7 @@ public sealed class OpenableSystem : EntitySystem
         UpdateAppearance(uid, comp);
     }
 
+    // open containers when it is in hand
     private void OnUse(EntityUid uid, OpenableComponent comp, UseInHandEvent args)
     {
         if (args.Handled || !comp.OpenableByHand)
@@ -45,6 +47,34 @@ public sealed class OpenableSystem : EntitySystem
         args.Handled = TryOpen(uid, comp);
     }
 
+    private void OnInteractHandUse(EntityUid uid, OpenableComponent comp, InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (OnInteractRangedHandUse(uid, comp))
+            args.Handled = true;
+    }
+
+    private void OnActivateInWorld(EntityUid uid, OpenableComponent comp, ActivateInWorldEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (OnInteractRangedHandUse(uid, comp))
+            args.Handled = true;
+    }
+
+    // open the container when it is out hands
+    private bool OnInteractRangedHandUse(EntityUid uid, OpenableComponent comp)
+    {
+        if (!comp.OpenableByHand || !comp.CanOpenWithoutHolding)
+            return false;
+
+        return TryOpen(uid, comp);
+    }
+
+    // show title what this container is opened
     private void OnExamined(EntityUid uid, OpenableComponent comp, ExaminedEvent args)
     {
         if (!comp.Opened || !args.IsInDetailsRange)
@@ -126,14 +156,16 @@ public sealed class OpenableSystem : EntitySystem
 
     /// <summary>
     /// If closed, opens it and plays the sound.
+    /// with CanReopened can to open/close
     /// </summary>
-    /// <returns>Whether it got opened</returns>
+    /// <returns>Whether it got opened/closed</returns>
     public bool TryOpen(EntityUid uid, OpenableComponent? comp = null)
     {
-        if (!Resolve(uid, ref comp) || comp.Opened)
+        if (!Resolve(uid, ref comp) || comp.Opened && !comp.CanReopened)
             return false;
 
-        SetOpen(uid, true, comp);
+        SetOpen(uid, !comp.Opened, comp);
+
         _audio.PlayPvs(comp.Sound, uid);
         return true;
     }
