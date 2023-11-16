@@ -107,6 +107,12 @@ public sealed partial class EmergencyShuttleSystem
 
     private void OnEmagged(EntityUid uid, EmergencyShuttleConsoleComponent component, ref GotEmaggedEvent args)
     {
+        if (!_configManager.GetCVar(CCVars.EmergencyEmagAllowed))
+        {
+            _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-emag-disabled"), uid, args.UserUid);
+            return;
+        }
+
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"{ToPrettyString(args.UserUid):player} emagged shuttle console for early launch");
         EarlyLaunch();
     }

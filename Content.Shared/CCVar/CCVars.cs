@@ -1290,6 +1290,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.emergency_early_launch_allowed", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// Is the emergency shuttle allowed to be emagged for early launch.
+        /// </summary>
+        public static readonly CVarDef<bool> EmergencyEmagAllowed =
+            CVarDef.Create("shuttle.emergency_emag_allowed", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// How long the emergency shuttle remains docked with the station, in seconds.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleDockTime =
