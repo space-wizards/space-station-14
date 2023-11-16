@@ -1,10 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: The particle accelerator now uses an MV power wire instead of HV. You
-      might need to manually connect it up before the maps get fixed., type: Tweak}
-  id: 4684
-  time: '2023-08-25T03:42:23.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix eye zoom not lerping properly so it looks like it's 30fps., type: Fix}
@@ -2909,3 +2903,9 @@ Entries:
   - {message: Reduced IED's damage from 90 -> 45, type: Tweak}
   id: 5183
   time: '2023-11-16T16:13:23.0000000+00:00'
+- author: RaiIsNotYourGuy
+  changes:
+  - {message: Shuttle Call Time reduced to 3 minutes from 10 minutes for NukeOps gamerule,
+    type: Tweak}
+  id: 5184
+  time: '2023-11-16T21:01:06.0000000+00:00'
