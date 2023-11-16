@@ -1,23 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Portable generators have been reworked., type: Tweak}
-  - {message: Portable generators now use a better sprite from Baystation12., type: Tweak}
-  - {message: 'Portable generators have been renamed to P.A.C.M.A.N. & friends, to
-      match the classic SS13 names.', type: Tweak}
-  - {message: 'Added the J.R.P.A.C.M.A.N.: it runs off welding fuel, will be easy
-      to find in maintenance, and can directly power rooms (connecting to LV cables).',
-    type: Add}
-  - {message: Portable generators now need a bit of *effort* to start., type: Add}
-  - {message: You can now eject fuel from portable generators., type: Add}
-  - {message: The (S.U.P.E.R.)P.A.C.M.A.N. can now have its output switched between
-      HV and MV output., type: Tweak}
-  - {message: Rebalanced power values and efficiency curves for portable generators.,
-    type: Tweak}
-  - {message: The (J.R.)P.A.C.M.A.N. now exhausts hot CO2 gas. Use in a properly ventilated
-      room!, type: Tweak}
-  id: 4686
-  time: '2023-08-25T18:40:42.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed NPCs not working., type: Fix}
@@ -2910,3 +2891,9 @@ Entries:
     type: Add}
   id: 5185
   time: '2023-11-16T21:04:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tweak biome generation on planets to make floors more varied and add
+      stalagmites to caves., type: Tweak}
+  id: 5186
+  time: '2023-11-16T21:22:06.0000000+00:00'
