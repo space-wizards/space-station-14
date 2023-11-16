@@ -87,8 +87,3 @@ GeneratorPlasma: PortableGeneratorPacman
 GeneratorUranium: PortableGeneratorSuperPacman
 GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
 GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard
-
-# 2023-11-16
-AirlockBrigLocked: AirlockSecurityLawyerLocked
-AirlockBrigGlassLocked: AirlockSecurityLawyerGlassLocked
-WindoorSecureBrigLocked: WindoorSecureSecurityLawyerLocked
