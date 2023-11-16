@@ -96,7 +96,7 @@ public sealed class FoodSystem : EntitySystem
     public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
         //Suppresses eating yourself and alive mobs
-        if (food == user || _mobState.IsAlive(food))
+        if (food == user || (_mobState.IsAlive(food) && foodComp.RequireDead))
             return (false, false);
 
         // Target can't be fed or they're already eating
@@ -347,7 +347,7 @@ public sealed class FoodSystem : EntitySystem
             return;
 
         // have to kill mouse before eating it
-        if (_mobState.IsAlive(uid))
+        if (_mobState.IsAlive(uid) && component.RequireDead)
             return;
 
         // only give moths eat verb for clothes since it would just fail otherwise
