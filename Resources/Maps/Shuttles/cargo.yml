@@ -415,14 +415,6 @@ entities:
     - links:
       - 57
       type: DeviceLinkSink
-  - uid: 2
-    components:
-    - pos: -5.5,4.5
-      parent: 173
-      type: Transform
-    - links:
-      - 56
-      type: DeviceLinkSink
   - uid: 3
     components:
     - pos: -5.5,0.5
@@ -438,6 +430,14 @@ entities:
       type: Transform
     - links:
       - 58
+      type: DeviceLinkSink
+  - uid: 56
+    components:
+    - pos: -5.5,4.5
+      parent: 173
+      type: Transform
+    - links:
+      - 2
       type: DeviceLinkSink
 - proto: CableApcExtension
   entities:
@@ -1066,6 +1066,15 @@ entities:
       type: Transform
 - proto: SignalButton
   entities:
+  - uid: 2
+    components:
+    - pos: -5.5,5.5
+      parent: 173
+      type: Transform
+    - linkedPorts:
+        56:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 55
     components:
     - pos: -5.5,-0.5
@@ -1073,17 +1082,6 @@ entities:
       type: Transform
     - linkedPorts:
         3:
-        - Pressed: Toggle
-      type: DeviceLinkSource
-  - uid: 56
-    components:
-    - pos: -5.5,5.5
-      parent: 173
-      type: Transform
-    - linkedPorts:
-        invalid:
-        - Pressed: Toggle
-        2:
         - Pressed: Toggle
       type: DeviceLinkSource
   - uid: 57
