@@ -38,6 +38,13 @@ namespace Content.Server.Communications
         public int Delay = 90;
 
         /// <summary>
+        /// Time in seconds of announcement cooldown when a new console is created on a per-console basis
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public int InitialDelay = 30;
+
+        /// <summary>
         /// Can call or recall the shuttle
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
