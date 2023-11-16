@@ -304,22 +304,27 @@ public sealed class FoodSystem : EntitySystem
             return;
         }
 
-        var ev = new BeforeFullyEatenEvent
-        {
-            User = args.User
-        };
-        RaiseLocalEvent(uid, ev);
-        if (ev.Cancelled)
-            return;
-
-        if (string.IsNullOrEmpty(component.Trash))
-            QueueDel(uid);
-        else
-            DeleteAndSpawnTrash(component, uid, args.User);
+        // don't try to repeat if its being deleted
+        args.Repeat = false;
+        DeleteAndSpawnTrash(component, uid, args.User);
     }
 
     public void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid? user = null)
     {
+        var ev = new BeforeFullyEatenEvent
+        {
+            User = user
+        };
+        RaiseLocalEvent(food, ev);
+        if (ev.Cancelled)
+            return;
+
+        if (string.IsNullOrEmpty(component.Trash))
+        {
+            QueueDel(food);
+            return;
+        }
+
         //We're empty. Become trash.
         var position = Transform(food).MapPosition;
         var finisher = Spawn(component.Trash, position);
