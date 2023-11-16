@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: 'The nuclear operative medic has returned to using the standard Syndicate
-      gas mask, which offers flash immunity.', type: Tweak}
-  id: 4680
-  time: '2023-08-25T03:15:40.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: CentCom official costume no longer has AA., type: Fix}
@@ -2912,3 +2906,10 @@ Entries:
       but must be configured manually now.', type: Tweak}
   id: 5179
   time: '2023-11-15T20:56:13.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Made it so you can unbuckle players from Vehicles IF they are in incapacitated
+      (crit or dead)., type: Tweak}
+  - {message: You can no longer unbuckle yourself while you are incapacitated., type: Fix}
+  id: 5180
+  time: '2023-11-16T02:39:04.0000000+00:00'
