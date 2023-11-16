@@ -309,7 +309,7 @@ public sealed class FoodSystem : EntitySystem
         DeleteAndSpawnTrash(component, uid, args.User);
     }
 
-    public void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid? user = null)
+    public void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid user)
     {
         var ev = new BeforeFullyEatenEvent
         {
@@ -330,12 +330,12 @@ public sealed class FoodSystem : EntitySystem
         var finisher = Spawn(component.Trash, position);
 
         // If the user is holding the item
-        if (user != null && _hands.IsHolding(user.Value, food, out var hand))
+        if (_hands.IsHolding(user, food, out var hand))
         {
             Del(food);
 
             // Put the trash in the user's hand
-            _hands.TryPickup(user.Value, finisher, hand);
+            _hands.TryPickup(user, finisher, hand);
             return;
         }
 
