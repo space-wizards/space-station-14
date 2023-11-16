@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix eye zoom not lerping properly so it looks like it's 30fps., type: Fix}
-  id: 4685
-  time: '2023-08-25T04:41:04.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Portable generators have been reworked., type: Tweak}
@@ -2909,3 +2904,9 @@ Entries:
     type: Tweak}
   id: 5184
   time: '2023-11-16T21:01:06.0000000+00:00'
+- author: 2013HORSEMEATSCANDAL
+  changes:
+  - {message: Cybersun has begun naming their operations to make them easier to remember.,
+    type: Add}
+  id: 5185
+  time: '2023-11-16T21:04:50.0000000+00:00'
