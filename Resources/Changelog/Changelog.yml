@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed NPCs not working., type: Fix}
-  id: 4687
-  time: '2023-08-25T21:52:23.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Ore bags can now pick up artifact fragments., type: Tweak}
@@ -2897,3 +2892,8 @@ Entries:
       stalagmites to caves., type: Tweak}
   id: 5186
   time: '2023-11-16T21:22:06.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Atlas Station is back for lowpop rounds!, type: Add}
+  id: 5187
+  time: '2023-11-16T22:35:33.0000000+00:00'
