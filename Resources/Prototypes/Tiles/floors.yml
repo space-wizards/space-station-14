@@ -787,6 +787,42 @@
   itemDrop: FloorTileItemLaundry
   heatCapacity: 10000
 
+- type: tile
+  id: FloorSteelDamaged
+  name: tiles-steel-floor
+  sprite: /Textures/Tiles/steel_damaged.png
+  variants: 5
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteel #This should probably be made null when it becomes possible to make it such.
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorSteelBurnt
+  name: tiles-steel-floor
+  sprite: /Textures/Tiles/steel_burnt.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteel #Same case as FloorSteelDamaged, make it null when possible
+  heatCapacity: 10000
+
+
 # Concrete
 - type: tile
   id: FloorConcrete
