@@ -1,14 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: The Detective's gun has been moved to their holster from their cabinet.
-      It comes with one speedloader each of the standard rubber and lethal bullets
-      of officers., type: Tweak}
-  - {message: The Detective's scanner and pad were moved to their backpack from their
-      pockets., type: Tweak}
-  - {message: Detective no longer spawns with a pistol magazine., type: Remove}
-  id: 4682
-  time: '2023-08-25T03:36:44.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Asteroid floor, snow, and snow tiles are now varied in a more organic
@@ -2916,3 +2906,8 @@ Entries:
       can be added., type: Tweak}
   id: 5181
   time: '2023-11-16T05:12:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Added another mining song by Derflerp, Voyage Neverending.', type: Add}
+  id: 5182
+  time: '2023-11-16T13:28:07.0000000+00:00'
