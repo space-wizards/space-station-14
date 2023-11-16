@@ -43,7 +43,7 @@
     base: swindow
   - type: Construction
     graph: Window
-    node: shuttleWindow 
+    node: shuttleWindow
   - type: Appearance
   - type: DamageVisuals
     thresholds: [4, 8, 12]
@@ -52,7 +52,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 75
+    price: 100
 
 - type: entity
   parent: ShuttleWindow
