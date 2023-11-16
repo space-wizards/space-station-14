@@ -91,4 +91,4 @@ GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitb
 # 2023-11-16
 AirlockBrigLocked: AirlockSecurityLawyerLocked
 AirlockBrigGlassLocked: AirlockSecurityLawyerGlassLocked
-WindoorSecureBrigLocked: WindoorSecureLawyerLocked
+WindoorSecureBrigLocked: WindoorSecureSecurityLawyerLocked

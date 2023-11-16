@@ -47,7 +47,6 @@ public sealed partial class IdCardConsoleComponent : Component
         "Armory",
         "Atmospherics",
         "Bar",
-        "Brig",
         "Detective",
         "Captain",
         "Cargo",
@@ -63,15 +62,19 @@ public sealed partial class IdCardConsoleComponent : Component
         "Hydroponics",
         "Janitor",
         "Kitchen",
+        "Lawyer",
+        "Library",
         "Maintenance",
         "Medical",
         "Quartermaster",
+        "Reporter",
         "Research",
         "ResearchDirector",
         "Salvage",
         "Security",
         "Service",
         "Theatre",
+        "Zookeeper",
     };
 
     [Serializable, NetSerializable]
