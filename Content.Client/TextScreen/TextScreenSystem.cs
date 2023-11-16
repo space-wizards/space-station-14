@@ -43,6 +43,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     private const string TextMapKey = "textMapKey";
     private const string TimerMapKey = "timerMapKey";
     private const string TextPath = "Effects/text.rsi";
+    private const int CharWidth = 4;
 
     public override void Initialize()
     {
@@ -60,6 +61,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             return;
 
         component.TextOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, component.TextOffset);
+        component.TimerOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, component.TimerOffset);
         ResetText(uid, component, sprite);
         BuildTextLayerStates(uid, component, sprite);
     }
@@ -102,7 +104,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         {
             var timer = EnsureComp<TextScreenTimerComponent>(uid);
             timer.Target = time;
-            BuildTimerLayerStates(uid, timer, timer.Row * component.RowOffset);
+            BuildTimerLayerStates(uid, timer, component);
             DrawLayerStates(uid, timer.LayerStatesToDraw);
         }
 
@@ -221,29 +223,31 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
                 component.LayerStatesToDraw[TextMapKey + rowIdx + chr] = GetStateFromChar(row[chr]);
                 sprite.LayerSetOffset(
                     TextMapKey + rowIdx + chr,
-                    Vector2.Multiply(new Vector2((chr - (row.Length - 1)) * 4, rowIdx), TextScreenVisualsComponent.PixelSize)
+                    Vector2.Multiply(new Vector2((chr - (row.Length - 1)) * CharWidth, rowIdx), TextScreenVisualsComponent.PixelSize)
                 );
             }
         }
     }
 
-    public void BuildTimerLayerStates(EntityUid uid, TextScreenTimerComponent component, float vertOffset, SpriteComponent? sprite = null)
+    public void BuildTimerLayerStates(EntityUid uid, TextScreenTimerComponent timer, TextScreenVisualsComponent screen)
     {
-        if (!Resolve(uid, ref sprite))
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
         string time = TimeToString(
-            (_gameTiming.CurTime - component.Target).Duration(),
+            (_gameTiming.CurTime - timer.Target).Duration(),
             false,
-            component.HourFormat, component.MinuteFormat, component.SecondFormat
+            screen.HourFormat, screen.MinuteFormat, screen.SecondFormat
             );
 
-        for (int i = 0; i < time.Length; i++)
+        int length = Math.Min(time.Length, screen.RowLength);
+
+        for (int i = 0; i < length; i++)
         {
-            component.LayerStatesToDraw[TimerMapKey + i] = GetStateFromChar(time[i]);
+            timer.LayerStatesToDraw[TimerMapKey + i] = GetStateFromChar(time[i]);
             sprite.LayerSetOffset(
                 TimerMapKey + i,
-                Vector2.Multiply(new Vector2((i - (time.Length - 1)) * 4, vertOffset), TextScreenVisualsComponent.PixelSize)
+                Vector2.Multiply(new Vector2((i - (length - 1)) * CharWidth, 0f), TextScreenVisualsComponent.PixelSize) + screen.TextOffset + screen.TimerOffset
             );
         }
     }
@@ -280,7 +284,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         var query = EntityQueryEnumerator<TextScreenTimerComponent, TextScreenVisualsComponent>();
         while (query.MoveNext(out var uid, out var timer, out var screen))
         {
-            BuildTimerLayerStates(uid, timer, timer.Row * screen.RowOffset);
+            BuildTimerLayerStates(uid, timer, screen);
             DrawLayerStates(uid, timer.LayerStatesToDraw);
         }
     }
@@ -290,7 +294,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     /// </summary>
     /// <param name="timeSpan">TimeSpan to convert into string.</param>
     /// <param name="getMilliseconds">Should the string be ss:ms if minutes are less than 1?</param>
-    public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true, string hours = "D2", string minutes = "D2", string seconds = "D2")
+    public static string TimeToString(TimeSpan timeSpan, bool getMilliseconds = true, string hours = "D2", string minutes = "D2", string seconds = "D2", string cs = "D2")
     {
         string firstString;
         string lastString;
@@ -309,7 +313,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         {
             firstString = timeSpan.Seconds.ToString(seconds);
             var centiseconds = timeSpan.Milliseconds / 10;
-            lastString = centiseconds.ToString("D2");
+            lastString = centiseconds.ToString(cs);
         }
 
         return firstString + ':' + lastString;

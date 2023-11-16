@@ -25,23 +25,14 @@ public sealed partial class TextScreenVisualsComponent : Component
     public bool Activated;
 
     /// <summary>
-    ///     The current mode of the screen - is it showing text, or currently counting?
-    /// </summary>
-    // [DataField("currentMode")]
-    // public TextScreenMode CurrentMode = TextScreenMode.Text;
-
-    /// <summary>
-    ///     The time it is counting to or from.
-    /// </summary>
-    // [DataField("targetTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    // public TimeSpan TargetTime = TimeSpan.Zero;
-
-    /// <summary>
     ///     Offset for drawing the text. <br/>
     ///     (0, 8) pixels is the default for the Structures\Wallmounts\textscreen.rsi
     /// </summary>
     [DataField("textOffset"), ViewVariables(VVAccess.ReadWrite)]
     public Vector2 TextOffset { get; set; } = Vector2.Zero;
+
+    [DataField("timerOffset"), ViewVariables(VVAccess.ReadWrite)]
+    public Vector2 TimerOffset { get; set; } = Vector2.Zero;
 
     /// <summary>
     ///     Number of rows of text to render.
@@ -74,4 +65,11 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// </summary>
     [DataField("layerStatesToDraw")]
     public Dictionary<string, string?> LayerStatesToDraw = new();
+
+    [DataField("hourFormat")]
+    public string HourFormat { get; set; } = "D2";
+    [DataField("minuteFormat")]
+    public string MinuteFormat { get; set; } = "D2";
+    [DataField("secondFormat")]
+    public string SecondFormat { get; set; } = "D2";
 }

@@ -33,9 +33,3 @@ public enum TextScreenVisuals : byte
 //     Text,
 //     Timer
 // }
-
-public enum TextScreenEnum
-{
-    TextScreenVisualsComponent,
-    TextScreenTimerComponent
-}

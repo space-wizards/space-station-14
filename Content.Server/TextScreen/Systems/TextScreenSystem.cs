@@ -5,6 +5,7 @@ using Content.Shared.TextScreen.Events;
 using Content.Shared.TextScreen;
 
 using Robust.Shared.Timing;
+using System.Numerics;
 
 
 namespace Content.Server.TextScreen;

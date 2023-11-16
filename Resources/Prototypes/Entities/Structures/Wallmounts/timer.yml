@@ -92,9 +92,8 @@
   - type: TextScreen
   - type: TextScreenVisuals
     color: PowderBlue
-    textOffset: 0,8
-    rowLength: 4
-    rowOffset: 10
+    textOffset: 6,0
+    rowOffset: 12
     rows: 2
   - type: Sprite
     drawdepth: WallMountedItems
@@ -120,6 +119,14 @@
   - type: ShuttleTimer
   - type: DeviceNetwork
     receiveFrequencyId: ShuttleTimer
+  - type: TextScreenVisuals
+    color: PowderBlue
+    textOffset: 6,0
+    timerOffset: 0,-4
+    rowOffset: 12
+    rows: 2
+    rowLength: 4
+    minuteFormat: D1
 
 - type: entity
   id: EvacShuttleTimer
