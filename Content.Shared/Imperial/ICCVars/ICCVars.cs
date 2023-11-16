@@ -1,6 +1,6 @@
 using Robust.Shared.Configuration;
 
-namespace Content.Shared.Imperial.ICCVars;
+namespace Content.Shared.Imperial.ICCVar;
 
 [CVarDefs]
 // ReSharper disable once InconsistentNaming

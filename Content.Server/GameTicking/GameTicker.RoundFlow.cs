@@ -24,7 +24,7 @@ using Content.Server.Voting.Managers;
 using Content.Server.Players;
 using Content.Shared.CCVar;
 using Content.Shared.Voting;
-using Content.Shared.Imperial.ICCVars;
+using Content.Shared.Imperial.ICCVar;
 
 namespace Content.Server.GameTicking
 {

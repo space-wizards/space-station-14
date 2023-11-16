@@ -16,7 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
-using Content.Shared.Imperial.ICCVars;
+using Content.Shared.Imperial.ICCVar;
 
 namespace Content.Server.RoundEnd
 {
