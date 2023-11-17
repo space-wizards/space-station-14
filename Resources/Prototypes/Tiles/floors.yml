@@ -803,7 +803,7 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteel #This should probably be made null when it becomes possible to make it such.
+  itemDrop: FloorTileItemSteel #This should probably be made null when it becomes possible to make it such, in SS13 prying destroyed tiles wouldn't give you anything.
   heatCapacity: 10000
 
 - type: tile
