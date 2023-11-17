@@ -22,7 +22,7 @@
 
 - type: entity
   id: ShadowBasaltTwo
-  parent: BasaltOne
+  parent: ShadowBasaltOne
   placement:
     mode: SnapgridCenter
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: ShadowBasaltThree
-  parent: BasaltOne
+  parent: ShadowBasaltOne
   placement:
     mode: SnapgridCenter
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   id: ShadowBasaltFour
-  parent: BasaltOne
+  parent: ShadowBasaltOne
   placement:
     mode: SnapgridCenter
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   id: ShadowBasaltFive
-  parent: BasaltOne
+  parent: ShadowBasaltOne
   placement:
     mode: SnapgridCenter
   components:
