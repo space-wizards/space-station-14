@@ -28,7 +28,7 @@ jobs:
       # MAKE SURE YOU ENABLED "Allow GitHub Actions to create and approve pull requests" IN YOUR ACTIONS, OTHERWISE IT WILL MOST LIKELY FAIL
 
 
-      # For this you can use a pat token of an account with direct push access to the repo. 
+      # For this you can use a pat token of an account with direct push access to the repo if you have protected branches. 
       # Uncomment this and comment the other line if you do this.
       # https://github.com/stefanzweifel/git-auto-commit-action#push-to-protected-branches
       
