@@ -74,7 +74,6 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnInjectorHandSelected(EntityUid uid, HyposprayComponent component, HandSelectedEvent args)
         {
-            // ???? why ?????
             // update ui info when you take the item
             Dirty(uid, component);
         }

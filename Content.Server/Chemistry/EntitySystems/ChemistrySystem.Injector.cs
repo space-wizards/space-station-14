@@ -168,7 +168,6 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorHandSelected(EntityUid uid, InjectorComponent component, HandSelectedEvent args)
     {
-        // ???? why ?????
         // update ui info when you take the item
         Dirty(uid, component);
     }
