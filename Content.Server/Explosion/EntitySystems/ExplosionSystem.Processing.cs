@@ -409,8 +409,12 @@ public sealed partial class ExplosionSystem
         // if it's a container, try to damage all its contents
         if (_containersQuery.TryGetComponent(uid, out var containers))
         {
-            foreach (var container in containers.Containers.Values)
+            _blacklistQuery.TryGetComponent(uid, out var blacklist);
+            foreach (var (name, container) in containers.Containers)
             {
+                if (blacklist?.Blacklist.Contains(name) == true)
+                    continue;
+
                 foreach (var ent in container.ContainedEntities)
                 {
                     // setting throw force to 0 to prevent offset items inside containers

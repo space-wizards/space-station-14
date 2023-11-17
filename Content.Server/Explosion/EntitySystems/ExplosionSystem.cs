@@ -54,6 +54,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     private EntityQuery<TransformComponent> _transformQuery;
     private EntityQuery<ContainerManagerComponent> _containersQuery;
     private EntityQuery<DamageableComponent> _damageQuery;
+    private EntityQuery<ExplosionBlacklistComponent> _blacklistQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<ProjectileComponent> _projectileQuery;
     private EntityQuery<MindComponent> _mindQuery;
@@ -108,6 +109,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         _transformQuery = GetEntityQuery<TransformComponent>();
         _containersQuery = GetEntityQuery<ContainerManagerComponent>();
         _damageQuery = GetEntityQuery<DamageableComponent>();
+        _blacklistQuery = GetEntityQuery<ExplosionBlacklistComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
         _mindQuery = GetEntityQuery<MindComponent>();
