@@ -4,10 +4,8 @@ using System.Reflection;
 using Content.Server.Explosion.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Maps;
-using Content.Shared.Mind.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Robust.Shared.Spawners;
@@ -374,53 +372,11 @@ public sealed partial class ExplosionSystem
         string id,
         TransformComponent? xform)
     {
-        // damage
-        if (damage != null && _damageQuery.TryGetComponent(uid, out var damageable))
+        var ev = new ExplodedEvent(damage, throwForce, id, xform);
+        RaiseLocalEvent(uid, ref ev);
+        foreach (var ent in ev.Contents)
         {
-            // TODO Explosion Performance
-            // Cache this? I.e., instead of raising an event, check for a component?
-            var ev = new GetExplosionResistanceEvent(id);
-            RaiseLocalEvent(uid, ref ev);
-
-            ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
-
-            // TODO explosion entity
-            // Move explosion data into the existing explosion visuals entity
-            // Give each explosion a unique name, include in admin logs.
-
-            // TODO Explosion Performance
-            // This creates a new dictionary. Maybe we should just re-use a private local damage specifier and update it.
-            // Though most entities shouldn't have explosion resistance, so maybe its fine.
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (ev.DamageCoefficient != 1)
-                damage *= ev.DamageCoefficient;
-
-            // Log damage to players. Damage is logged before dealing damage so that the position can be logged before
-            // the entity gets deleted.
-            if (_mindQuery.HasComponent(uid))
-            {
-                _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                    $"Explosion caused [{damage.Total}] damage to {ToPrettyString(uid):target} at {xform?.Coordinates}");
-            }
-
-            _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
-        }
-
-        // if it's a container, try to damage all its contents
-        if (_containersQuery.TryGetComponent(uid, out var containers))
-        {
-            _blacklistQuery.TryGetComponent(uid, out var blacklist);
-            foreach (var (name, container) in containers.Containers)
-            {
-                if (blacklist?.Blacklist.Contains(name) == true)
-                    continue;
-
-                foreach (var ent in container.ContainedEntities)
-                {
-                    // setting throw force to 0 to prevent offset items inside containers
-                    ProcessEntity(ent, epicenter, damage, 0f, id, _transformQuery.GetComponent(uid));
-                }
-            }
+            ProcessEntity(ent, epicenter, damage, 0f, id, _transformQuery.GetComponent(uid));
         }
 
         // throw
@@ -843,4 +799,3 @@ sealed class Explosion
         _tileUpdateDict.Clear();
     }
 }
-
