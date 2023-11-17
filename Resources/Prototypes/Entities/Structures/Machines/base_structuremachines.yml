@@ -60,10 +60,6 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: ExplosionBlacklist
-    blacklist:
-    - machine_board
-    - machine_parts
   - type: Construction
     graph: Machine
     node: machine
