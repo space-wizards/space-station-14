@@ -110,6 +110,9 @@
   - type: Appearance
   - type: Food
     requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+    - fiber
   - type: SolutionContainerManager
     solutions:
       food:

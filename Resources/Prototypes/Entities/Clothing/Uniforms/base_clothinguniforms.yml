@@ -16,6 +16,9 @@
       amount: 3
   - type: Food
     requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+    - fiber
   - type: SolutionContainerManager
     solutions:
       food:
