@@ -4,6 +4,7 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Explosion;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
@@ -46,6 +47,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
+        SubscribeLocalEvent<EntityStorageComponent, ExplodedEvent>(OnExploded);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
@@ -96,6 +98,13 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
             Popup.PopupEntity(msg, args.User, args.User);
             args.Cancel();
         }
+    }
+
+    private void OnExploded(Entity<EntityStorageComponent> ent, ref ExplodedEvent args)
+    {
+        // if the expanding gases cant get inside, they cant explode the contents
+        if (!ent.Comp.Airtight)
+            args.Contents.AddRange(ent.Comp.Contents.ContainedEntities);
     }
 
     protected override void TakeGas(EntityUid uid, SharedEntityStorageComponent component)

@@ -1,9 +1,11 @@
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
+using System.Linq;
 
 namespace Content.Server.Inventory
 {
@@ -15,9 +17,24 @@ namespace Content.Server.Inventory
         {
             base.Initialize();
 
+            SubscribeLocalEvent<InventoryComponent, ExplodedEvent>(OnExploded);
+
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
+        }
+
+        private void OnExploded(Entity<InventoryComponent> ent, ref ExplodedEvent args)
+        {
+            if (!TryGetContainerSlotEnumerator(ent, out var slots, ent.Comp))
+                return;
+
+            // explode each item in their inventory too
+            while (slots.MoveNext(out var slot))
+            {
+                if (slot.ContainedEntity != null)
+                    args.Contents.Add(slot.ContainedEntity.Value);
+            }
         }
 
         private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
