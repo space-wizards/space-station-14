@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Ore bags can now pick up artifact fragments., type: Tweak}
-  id: 4688
-  time: '2023-08-26T11:33:55.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Made bananas peelable., type: Tweak}
@@ -2897,3 +2892,8 @@ Entries:
   - {message: Atlas Station is back for lowpop rounds!, type: Add}
   id: 5187
   time: '2023-11-16T22:35:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Goats now grow wool which moths can eat., type: Add}
+  id: 5188
+  time: '2023-11-17T08:51:51.0000000+00:00'
