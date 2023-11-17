@@ -14,7 +14,7 @@
 - files: ["plating_damaged.png", "plating_burnt.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified by github user @Flareguy from plating.png, using damaged plating sprites from /tg/station at commit https://github.com/tgstation/tgstation/blob/6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae/icons/turf/floors.dmi"
-  source: "PLACEHOLDER PUT PR HERE, https://github.com/discordia-space/CEV-Eris/, https://github.com/tgstation/tgstation/"
+  source: "https://github.com/space-wizards/space-station-14/pull/21711, https://github.com/discordia-space/CEV-Eris/, https://github.com/tgstation/tgstation/"
 
 - files: [ "asteroid_red.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
   license: "CC-BY-SA-3.0"
