@@ -121,6 +121,6 @@ ghost-role-information-taxibot-name = Таксибот
 ghost-role-information-taxibot-description = Доставляйте членов экипажа в места назначения.
 ghost-role-information-Death-Squad-name = Оперативник Эскадрона смерти
 ghost-role-information-Death-Squad-description = Приготовьтесь к массированному наступлению на станцию. Ваша задача как тяжеловооружённого оперативника - уничтожить всё живое на своём пути. И никаких свидетелей.
-ghost-role-information-Cak-name = Тот
+ghost-role-information-Cak-name = Корт
 ghost-role-information-Cak-description = Вы - любимое дитя шеф-повара. Вы - живой торт-кот.
 ghost-role-information-Cak-rules = Вы - живой съедобный сладкий кот. Ваша задача - найти своё место в этом мире, где всё хочет вас съесть.
