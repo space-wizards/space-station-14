@@ -43,6 +43,13 @@
   - type: MovementSpeedModifier
   - type: Polymorphable
   - type: StatusIcon
+  # don't want explosions to damage organs implants etc that are inside the mob, or waste time on immaterial things
+  - type: ExplosionBlacklist
+    blacklist:
+    - actions
+    - body_root_part
+    - identity
+    - implant
 
 # Used for mobs that have health and can take damage.
 - type: entity
