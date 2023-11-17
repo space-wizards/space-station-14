@@ -25,6 +25,8 @@ jobs:
       #- name: Get this week's Patreons
       #  run: Tools/script2dumppatreons > Resources/Credits/Patrons.yml        
       
+      # MAKE SURE YOU ENABLED "Allow GitHub Actions to create and approve pull requests" IN YOUR ACTIONS, OTHERWISE IT WILL MOST LIKELY FAIL
+
 
       # For this you can use a pat token of an account with direct push access to the repo. 
       # Uncomment this and comment the other line if you do this.
@@ -37,9 +39,14 @@ jobs:
       #    commit_author: PJBot <pieterjan.briers+bot@gmail.com>
       
       # This will make a PR
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+        
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: Update Credits
           title: Update Credits
           body: This is an automated Pull Request. This PR updates the github contributors in the credits section.
+          author: PJBot <pieterjan.briers+bot@gmail.com>
+          branch: automated/credits-${{env.NOW}}
