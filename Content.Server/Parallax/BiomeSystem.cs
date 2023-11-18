@@ -569,54 +569,57 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         Vector2i chunk,
         int seed)
     {
+        // Load any pending marker tiles first.
+        if (!component.PendingMarkers.TryGetValue(chunk, out var layers))
+            return;
+
         // This needs to be done separately in case we try to add a marker layer and want to force it on existing
         // loaded chunks.
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= _tilePool.Get();
 
-        // Load any pending marker tiles first.
-        if (component.PendingMarkers.TryGetValue(chunk, out var layers))
+        foreach (var (layer, nodes) in layers)
         {
-            foreach (var (layer, nodes) in layers)
+            var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
+
+            foreach (var node in nodes)
             {
-                var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
+                if (modified.Contains(node))
+                    continue;
 
-                foreach (var node in nodes)
+                // Need to ensure the tile under it has loaded for anchoring.
+                if (TryGetBiomeTile(node, component.Layers, seed, grid, out var tile))
                 {
-                    if (modified.Contains(node))
-                        continue;
-
-                    // Need to ensure the tile under it has loaded for anchoring.
-                    if (TryGetBiomeTile(node, component.Layers, seed, grid, out var tile))
-                    {
-                        _mapSystem.SetTile(gridUid, grid, node, tile.Value);
-                    }
-
-                    string? prototype;
-
-                    if (TryGetEntity(node, component, grid, out var proto) &&
-                        layerProto.EntityMask.TryGetValue(proto, out var maskedProto))
-                    {
-                        prototype = maskedProto;
-                    }
-                    else
-                    {
-                        prototype = layerProto.Prototype;
-                    }
-
-                    // If it is a ghost role then purge it
-                    // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
-                    // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
-                    var uid = EntityManager.CreateEntityUninitialized(prototype, _mapSystem.GridTileToLocal(gridUid, grid, node));
-                    RemComp<GhostTakeoverAvailableComponent>(uid);
-                    RemComp<GhostRoleComponent>(uid);
-                    EntityManager.InitializeAndStartEntity(uid);
-                    modified.Add(node);
+                    _mapSystem.SetTile(gridUid, grid, node, tile.Value);
                 }
-            }
 
-            component.PendingMarkers.Remove(chunk);
+                string? prototype;
+
+                if (TryGetEntity(node, component, grid, out var proto) &&
+                    layerProto.EntityMask.TryGetValue(proto, out var maskedProto))
+                {
+                    prototype = maskedProto;
+                }
+                else
+                {
+                    prototype = layerProto.Prototype;
+                }
+
+                // If it is a ghost role then purge it
+                // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
+                // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
+                var uid = EntityManager.CreateEntityUninitialized(prototype, _mapSystem.GridTileToLocal(gridUid, grid, node));
+                RemComp<GhostTakeoverAvailableComponent>(uid);
+                RemComp<GhostRoleComponent>(uid);
+                EntityManager.InitializeAndStartEntity(uid);
+                modified.Add(node);
+            }
         }
+
+        if (modified.Count == 0)
+            _tilePool.Return(modified);
+
+        component.PendingMarkers.Remove(chunk);
     }
 
     /// <summary>
