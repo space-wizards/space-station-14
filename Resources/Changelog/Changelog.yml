@@ -1,10 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - message: Changed medical locker contents
-    type: Tweak
-  id: 4650
-  time: '2023-08-21T18:49:22.0000000+00:00'
 - author: deltanedas
   changes:
   - message: Air alarms now have output signal ports for each state.
@@ -3547,3 +3541,10 @@ Entries:
     type: Fix
   id: 5132
   time: '2023-11-15T05:21:03.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 Frankenstein."
+    type: Tweak
+  id: 5133
+  time: '2023-11-18T23:16:45.0000000+00:00'
