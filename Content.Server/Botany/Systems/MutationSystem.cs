@@ -1,5 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Chemistry.Reagent;
 using System.Linq;
 using Content.Shared.Atmos;
@@ -37,7 +39,7 @@ public sealed class MutationSystem : EntitySystem
         }
 
         // Add up everything in the bits column and put the number here.
-        const int totalbits = 270;
+        const int totalbits = 275;
 
         // Tolerances (55)
         MutateFloat(ref seed.NutrientConsumption  , 0.05f, 1.2f, 5, totalbits, severity);
@@ -81,10 +83,10 @@ public sealed class MutationSystem : EntitySystem
         MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 1, totalbits, severity);
 
         // Chems (20)
-        MutateChemicals(ref seed.Chemicals, 5, 20, totalbits, severity);
+        MutateChemicals(ref seed.Chemicals, "RandomPickBotanyReagent", 20, totalbits, severity);
 
-        // Species (5)
-        MutateSpecies(ref seed, 5, totalbits, severity);
+        // Species (10)
+        MutateSpecies(ref seed, 10, totalbits, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -246,7 +248,7 @@ public sealed class MutationSystem : EntitySystem
         }
     }
 
-    private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, int max, int bits, int totalbits, float mult)
+    private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, string proto, int bits, int totalbits, float mult)
     {
         float probModify = mult * bits / totalbits;
         probModify = Math.Clamp(probModify, 0, 1);
@@ -255,10 +257,12 @@ public sealed class MutationSystem : EntitySystem
 
         // Add a random amount of a random chemical to this set of chemicals
         ReagentPrototype selectedChemical = _robustRandom.Pick(_allChemicals);
-        if (selectedChemical != null)
+        var randomChems = _prototypeManager.Index<WeightedRandomFillSolutionPrototype>(proto);
+        if (randomChems != null)
         {
-            string chemicalId = selectedChemical.ID;
-            int amount = _robustRandom.Next(1, max);
+            var pick = randomChems.Pick(_robustRandom);
+            string chemicalId = pick.reagent;
+            int amount = _robustRandom.Next(1, ((int)pick.quantity));
             SeedChemQuantity seedChemQuantity = new SeedChemQuantity();
             if (chemicals.ContainsKey(chemicalId))
             {

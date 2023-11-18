@@ -1,0 +1,43 @@
+- type: weightedRandomFillSolution
+  id: RandomPickBotanyReagent
+  fills:
+  - quantity: 20
+    weight: 1
+    reagents:
+    - Aluminium
+    - Carbon
+    - Chlorine
+    - Copper
+    - Fluorine
+    - Hydrogen
+    - Iodine
+    - Lithium
+    - Mercury
+    - Potassium
+    - Phosphorus
+    - Radium
+    - Silicon
+    - Sulfur
+    - Sodium
+  - quantity: 20
+    weight: 2
+    reagents:
+    - Omnizine
+  - quantity: 20
+    weight: 3
+    reagents:
+    - ChloralHydrate
+    - Desoxyephedrine
+    - Ephedrine
+    - Ipecac
+    - Mold
+    - MuteToxin
+    - Nocturine
+    - NorepinephricAcid
+    - Pax
+    - Tricordrazine
+  - quantity: 20
+    weight: 5
+    reagents:
+    - SpaceDrugs
+    - Toxin
