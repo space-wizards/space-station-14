@@ -165,14 +165,11 @@ public sealed partial class BiomeSystem
     {
         if (args.Length == 1)
         {
-            var allQuery = AllEntityQuery<MapComponent>();
+            var allQuery = AllEntityQuery<MapComponent, BiomeComponent>();
             var options = new List<CompletionOption>();
 
-            while (allQuery.MoveNext(out var mapUid, out var mapComp))
+            while (allQuery.MoveNext(out var mapComp, out _))
             {
-                if (!HasComp<BiomeComponent>(mapUid))
-                    continue;
-
                 options.Add(new CompletionOption(mapComp.MapId.ToString()));
             }
 

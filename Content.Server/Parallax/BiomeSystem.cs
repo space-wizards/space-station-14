@@ -71,7 +71,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         base.Initialize();
         Log.Level = LogLevel.Debug;
         _xformQuery = GetEntityQuery<TransformComponent>();
-        SubscribeLocalEvent<BiomeComponent, ComponentStartup>(OnBiomeStartup);
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         SubscribeLocalEvent<ShuttleFlattenEvent>(OnShuttleFlatten);
@@ -398,8 +397,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 // Get the set of spawned nodes to avoid overlap.
                 var forced = component.ForcedMarkerLayers.Contains(layer);
-                var noiseCopy = new FastNoiseLite();
-                _serManager.CopyTo(component.Noise, ref noiseCopy, notNullableOverride: true);
                 var spawnSet = _tilePool.Get();
                 var frontier = new ValueList<Vector2i>(32);
 
@@ -469,7 +466,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, node);
                         enumerator.MoveNext(out var existing);
 
-                        if (!forced && enumerator.MoveNext)
+                        if (!forced && existing != null)
                             continue;
 
                         // Check if mask matches // anything blocking.
@@ -507,7 +504,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         layerMarkers.Add(node);
                         groupSize--;
                         spawnSet.Add(node);
-      
+
                         if (forced && existing != null)
                         {
                             // Just lock anything so we can dump this
@@ -554,7 +551,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var chunk in active)
         {
-            LoadMarkerChunk(component, grid, chunk);
+            LoadMarkerChunk(component, gridUid, grid, chunk, seed);
 
             if (!component.LoadedChunks.Add(chunk))
                 continue;
@@ -565,60 +562,15 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    /// <summary>
-    /// Loads pending markers for a particular chunk.
-    /// </summary>
     private void LoadMarkerChunk(
-        BiomeComponent component,
-        MapGridComponent grid,
-        Vector2i chunk)
-    {
-        component.ModifiedTiles.TryGetValue(chunk, out var modified);
-        modified ??= _tilePool.Get();
-
-        if (!component.PendingMarkers.TryGetValue(chunk, out var layers))
-            return;
-
-        foreach (var (layer, nodes) in layers)
-        {
-            var layerProto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
-
-            foreach (var node in nodes)
-            {
-                if (modified.Contains(node))
-                    continue;
-
-                // Need to ensure the tile under it has loaded for anchoring.
-                if (TryGetBiomeTile(node, component.Layers, component.Noise, grid, out var tile))
-                {
-                    grid.SetTile(node, tile.Value);
-                }
-
-                // If it is a ghost role then purge it
-                // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
-                // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
-                var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, grid.GridTileToLocal(node));
-                RemComp<GhostTakeoverAvailableComponent>(uid);
-                RemComp<GhostRoleComponent>(uid);
-                EntityManager.InitializeAndStartEntity(uid);
-                modified.Add(node);
-            }
-        }
-
-        component.PendingMarkers.Remove(chunk);
-    }
-
-    /// <summary>
-    /// Loads a particular queued chunk for a biome.
-    /// </summary>
-    private void LoadChunk(
         BiomeComponent component,
         EntityUid gridUid,
         MapGridComponent grid,
         Vector2i chunk,
-        int seed,
-        List<(Vector2i, Tile)> tiles)
+        int seed)
     {
+        // This needs to be done separately in case we try to add a marker layer and want to force it on existing
+        // loaded chunks.
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= _tilePool.Get();
 
@@ -665,6 +617,21 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
             component.PendingMarkers.Remove(chunk);
         }
+    }
+
+    /// <summary>
+    /// Loads a particular queued chunk for a biome.
+    /// </summary>
+    private void LoadChunk(
+        BiomeComponent component,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Vector2i chunk,
+        int seed,
+        List<(Vector2i, Tile)> tiles)
+    {
+        component.ModifiedTiles.TryGetValue(chunk, out var modified);
+        modified ??= _tilePool.Get();
 
         // Set tiles first
         for (var x = 0; x < ChunkSize; x++)
