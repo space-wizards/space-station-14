@@ -23,7 +23,7 @@ public sealed partial class StealthComponent : Component
     /// The creature will continue invisible at death.
     /// </summary>
     [DataField("enabledOnDeath")]
-    public bool EnabledOnDeath = false;
+    public bool EnabledOnDeath = true;
 
     /// <summary>
     /// Whether or not the entity previously had an interaction outline prior to cloaking.

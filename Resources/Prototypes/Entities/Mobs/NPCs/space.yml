@@ -382,9 +382,10 @@
       name: ghost-role-information-space-cobra-name
       description: ghost-role-information-space-cobra-description
     - type: Stealth
+      enabledOnDeath: false
     - type: StealthOnMove
-      passiveVisibilityRate: -0.30
-      movementVisibilityRate: 0.15
+      passiveVisibilityRate: -0.25
+      movementVisibilityRate: 0.25
 
 - type: entity
   id: MobCobraSpaceSalvage
