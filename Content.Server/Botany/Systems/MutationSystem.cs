@@ -301,6 +301,7 @@ public sealed class MutationSystem : EntitySystem
             Log.Error($"Seed prototype could not be found: {targetProto}!");
             return;
         }
+
         _popup.PopupEntity(Loc.GetString("botany-species-mutate-message",
             ("origPlant", Loc.GetString(seed.DisplayName)), ("newPlant", Loc.GetString(protoSeed.DisplayName))),
                 trayUid, PopupType.Medium);
