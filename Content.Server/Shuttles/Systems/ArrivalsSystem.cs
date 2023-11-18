@@ -240,7 +240,9 @@ public sealed class ArrivalsSystem : EntitySystem
                 ["SourceMap"] = args.MapUid,
 
                 ["LocalTimer"] = dockTime,
-                ["SourceTimer"] = dockTime
+                ["SourceTimer"] = dockTime,
+
+                ["Docked"] = true
             };
             _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
         }

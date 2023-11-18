@@ -4,6 +4,9 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.RoundEnd;
+using Content.Shared.Shuttles.Systems;
+using Content.Shared.TextScreen.Components;
+using System.Linq;
 
 // TODO:
 // - emergency shuttle recall inverts timer?
@@ -37,8 +40,8 @@ namespace Content.Server.Shuttles.Systems
             // and pass the frequency to systems, this gets simpler and faster
             if (args.Data.TryGetValue("BroadcastTime", out TimeSpan broadcast))
             {
-                var text = new TextScreenTimerEvent(broadcast);
-                RaiseLocalEvent(uid, ref text);
+                var timer = new TextScreenTimerEvent(broadcast);
+                RaiseLocalEvent(uid, ref timer);
                 return;
             }
 
@@ -49,6 +52,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
 
             string key;
+            string text;
             args.Data.TryGetValue("ShuttleMap", out EntityUid? shuttleMap);
             args.Data.TryGetValue("SourceMap", out EntityUid? source);
             args.Data.TryGetValue("DestMap", out EntityUid? dest);
@@ -57,12 +61,17 @@ namespace Content.Server.Shuttles.Systems
             {
                 case var local when local == shuttleMap:
                     key = "LocalTimer";
+                    args.Data.TryGetValue("Docked", out bool docked);
+                    text = docked ? "ETD" : "ETA";
                     break;
                 case var origin when origin == source:
                     key = "SourceTimer";
+                    text = "ETA";
                     break;
                 case var remote when remote == dest:
                     key = "DestTimer";
+                    args.Data.TryGetValue("Docked", out bool docked_);
+                    text = docked_ ? "ETD" : "ETA";
                     break;
                 default:
                     return;
@@ -71,8 +80,11 @@ namespace Content.Server.Shuttles.Systems
             if (!args.Data.TryGetValue(key, out TimeSpan duration))
                 return;
 
-            var ev = new TextScreenTimerEvent(duration);
-            RaiseLocalEvent(uid, ref ev);
+            var time = new TextScreenTimerEvent(duration);
+            RaiseLocalEvent(uid, ref time);
+
+            var label = new TextScreenTextEvent(new string[] { text });
+            RaiseLocalEvent(uid, ref label);
         }
 
         /// <summary>
@@ -86,8 +98,8 @@ namespace Content.Server.Shuttles.Systems
                 ["BroadcastTime"] = duration
             };
 
-            var query = AllEntityQuery<StationEmergencyShuttleComponent>();
-            while (query.MoveNext(out var uid, out var comp))
+            var query = EntityQuery<StationEmergencyShuttleComponent>(true);
+            foreach (var comp in query)
             {
                 if (comp.EmergencyShuttle == null ||
                     !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value) ||

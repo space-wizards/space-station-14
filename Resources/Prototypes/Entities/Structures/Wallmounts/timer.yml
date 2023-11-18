@@ -121,8 +121,8 @@
     receiveFrequencyId: ShuttleTimer
   - type: TextScreenVisuals
     color: PowderBlue
-    textOffset: 6,0
-    timerOffset: 0,-4
+    textOffset: 4,3
+    timerOffset: 6,-4
     rowOffset: 12
     rows: 2
     rowLength: 4

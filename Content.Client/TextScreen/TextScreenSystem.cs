@@ -223,7 +223,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
                 component.LayerStatesToDraw[TextMapKey + rowIdx + chr] = GetStateFromChar(row[chr]);
                 sprite.LayerSetOffset(
                     TextMapKey + rowIdx + chr,
-                    Vector2.Multiply(new Vector2((chr - (row.Length - 1)) * CharWidth, rowIdx), TextScreenVisualsComponent.PixelSize)
+                    Vector2.Multiply(new Vector2((chr - (row.Length - 1)) * CharWidth, rowIdx), TextScreenVisualsComponent.PixelSize) + component.TextOffset
                 );
             }
         }
@@ -247,7 +247,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             timer.LayerStatesToDraw[TimerMapKey + i] = GetStateFromChar(time[i]);
             sprite.LayerSetOffset(
                 TimerMapKey + i,
-                Vector2.Multiply(new Vector2((i - (length - 1)) * CharWidth, 0f), TextScreenVisualsComponent.PixelSize) + screen.TextOffset + screen.TimerOffset
+                Vector2.Multiply(new Vector2((i - (length - 1)) * CharWidth, 0f), TextScreenVisualsComponent.PixelSize) + screen.TimerOffset
             );
         }
     }
