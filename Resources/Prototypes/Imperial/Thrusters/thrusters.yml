@@ -4,7 +4,7 @@
   parent: BaseThruster
   components:
   - type: Thruster
-    burnShape: ["-1.3,1.5","-0.8,2.8","-0.2,2.8","0.3,1.5"]
+    burnShape: ["-1.2,1.4","-0.7,2.7","-0.3,2.7","0.2,1.4"]
     baseThrust: 300
     thrust: 300
     damage:
@@ -17,15 +17,14 @@
       thruster1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-1.4,-0.4,0.4,1.4"
+          bounds: "-1.4,-0.4,0.4,1.35"
         density: 1750
         mask:
         - LargeMobMask
         layer:
         - WallLayer
   - type: Sprite
-    sprite: Structures/Shuttles/thruster.rsi
-    scale: 2,2
+    sprite: Imperial/Thrusters/medium.rsi
     offset: -0.5, 0.5
     layers:
     - state: base
@@ -38,7 +37,7 @@
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
       visible: false
-      offset: 0, 1
+      offset: 0, 1.875
 
 - type: entity
   id: ThrusterLarge
@@ -46,7 +45,7 @@
   parent: BaseThruster
   components:
   - type: Thruster
-    burnShape: ["-1.3,1.5","-0.4,3.9","0.4,3.9","1.3,1.5"]
+    burnShape: ["-1.1,1.2","-0.3,3.5","0.3,3.5","1.1,1.2"]
     baseThrust: 600
     thrust: 600
     damage:
@@ -59,15 +58,14 @@
       thruster2:
         shape:
           !type:PhysShapeAabb
-          bounds: "-1.4,-1.4,1.4,1.4"
+          bounds: "-1.4,-1.4,1.4,1.15"
         density: 3500
         mask:
         - LargeMobMask
         layer:
         - WallLayer
   - type: Sprite
-    sprite: Structures/Shuttles/thruster.rsi
-    scale: 3,3
+    sprite: Imperial/Thrusters/large.rsi
     layers:
     - state: base
       map: ["enum.ThrusterVisualLayers.Base"]
@@ -79,4 +77,4 @@
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
       visible: false
-      offset: 0, 1
+      offset: 0, 2.65625
