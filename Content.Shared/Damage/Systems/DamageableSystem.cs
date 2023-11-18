@@ -1,8 +1,6 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Database;
-using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
@@ -36,7 +34,6 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
             SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
-            SubscribeLocalEvent<DamageableComponent, ExplodedEvent>(OnExploded);
 
             _appearanceQuery = GetEntityQuery<AppearanceComponent>();
             _damageableQuery = GetEntityQuery<DamageableComponent>();
@@ -262,47 +259,6 @@ namespace Content.Shared.Damage
             _mobThreshold.SetAllowRevives(uid, true, thresholds); // do this so that the state changes when we set the damage
             SetAllDamage(uid, component, 0);
             _mobThreshold.SetAllowRevives(uid, false, thresholds);
-        }
-
-        private void OnExploded(Entity<DamageableComponent> ent, ref ExplodedEvent args)
-        {
-            if (args.Damage == null)
-                return;
-
-            // TODO Explosion Performance
-            // Cache this? I.e., instead of raising an event, check for a component?
-            var ev = new GetExplosionResistanceEvent(args.Id);
-            RaiseLocalEvent(ent, ref ev);
-
-            ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
-
-            // TODO explosion entity
-            // Move explosion data into the existing explosion visuals entity
-            // Give each explosion a unique name, include in admin logs.
-
-            // TODO Explosion Performance
-            // This creates a new dictionary. Maybe we should just re-use a private local damage specifier and update it.
-            // Though most entities shouldn't have explosion resistance, so maybe its fine.
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            var damage = args.Damage;
-            if (ev.DamageCoefficient != 1)
-            {
-                // intentionally not using *= to avoid modifying the exploded event's damage
-                // if that is wanted in the future do it in ProcessExplosion not here so that event handler order doesn't affect anything
-                damage = damage * ev.DamageCoefficient;
-            }
-
-            // Log damage to players/mobs. Damage is logged before dealing damage so that the position can be logged before
-            // the entity gets deleted.
-            // There is explicitly no HasMind check since it should still log disconnected players being bombed.
-            if (_mindContainerQuery.HasComponent(ent))
-            {
-                _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                    $"Explosion caused [{damage.Total}] damage to {ToPrettyString(ent):target} at {args.Xform?.Coordinates}");
-            }
-
-            // ignore resistances on the explosion damage since explosion resistance is separate from punches/knives/lasers
-            TryChangeDamage(ent, damage, ignoreResistances: true, damageable: ent.Comp);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)

@@ -55,7 +55,7 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
-            SubscribeLocalEvent<HandsComponent, ExplodedEvent>(OnExploded);
+            SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -76,9 +76,13 @@ namespace Content.Server.Hands.Systems
             args.State = new HandsComponentState(hands);
         }
 
-        private void OnExploded(Entity<HandsComponent> ent, ref ExplodedEvent args)
+        private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
         {
-            args.Contents.AddRange(EnumerateHeld(ent, ent.Comp));
+            foreach (var hand in ent.Comp.Hands.Values)
+            {
+                if (hand.HeldEntity is {} uid)
+                    args.Contents.Add(uid);
+            }
         }
 
         private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)

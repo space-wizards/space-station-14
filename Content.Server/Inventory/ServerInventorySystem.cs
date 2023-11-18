@@ -5,7 +5,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
-using System.Linq;
 
 namespace Content.Server.Inventory
 {
@@ -17,14 +16,14 @@ namespace Content.Server.Inventory
         {
             base.Initialize();
 
-            SubscribeLocalEvent<InventoryComponent, ExplodedEvent>(OnExploded);
+            SubscribeLocalEvent<InventoryComponent, BeforeExplodeEvent>(OnExploded);
 
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
         }
 
-        private void OnExploded(Entity<InventoryComponent> ent, ref ExplodedEvent args)
+        private void OnExploded(Entity<InventoryComponent> ent, ref BeforeExplodeEvent args)
         {
             if (!TryGetContainerSlotEnumerator(ent, out var slots, ent.Comp))
                 return;

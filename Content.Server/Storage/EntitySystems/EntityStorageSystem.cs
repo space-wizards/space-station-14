@@ -47,7 +47,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
-        SubscribeLocalEvent<EntityStorageComponent, ExplodedEvent>(OnExploded);
+        SubscribeLocalEvent<EntityStorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
@@ -100,11 +100,13 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         }
     }
 
-    private void OnExploded(Entity<EntityStorageComponent> ent, ref ExplodedEvent args)
+    private void OnExploded(Entity<EntityStorageComponent> ent, ref BeforeExplodeEvent args)
     {
-        // if the expanding gases cant get inside, they cant explode the contents
-        if (!ent.Comp.Airtight)
-            args.Contents.AddRange(ent.Comp.Contents.ContainedEntities);
+        if (ent.Comp.ExplosionDamageCoefficient <= 0)
+            return;
+
+        args.Contents.AddRange(ent.Comp.Contents.ContainedEntities);
+        args.DamageCoefficient *= ent.Comp.ExplosionDamageCoefficient;
     }
 
     protected override void TakeGas(EntityUid uid, SharedEntityStorageComponent component)
