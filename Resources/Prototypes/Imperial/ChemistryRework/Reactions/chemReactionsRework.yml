@@ -17,13 +17,11 @@
   minTemp: 314
   reactants:
     Hydrogen:
-      amount: 3
+      amount: 1
     Dermaline:
-      amount: 1
+      amount: 2
     Phenol:
-      amount: 1
-    Oxygen:
-      amount: 1
+      amount: 3
   products:
     SynclotidicAcid: 3
     Water: 0.25
@@ -38,7 +36,7 @@
     Potassium:
       amount: 1
   products:
-    Alosethasone: 2.5
+    Alosethasone: 3
 
 - type: reaction
   id: Formaldehyde
@@ -71,7 +69,7 @@
 - type: reaction
   id: Flexitaine
   reactants:
-    Phenol:
+    Iron:
       amount: 1 
     Nitrogen:
       amount: 1
@@ -147,7 +145,7 @@
       catalyst: true
     Acetone:
       amount: 3
-    Bicaridine:
+    Retropine:
       amount: 4
     Copper:
       amount: 2

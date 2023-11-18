@@ -48,7 +48,7 @@
     AdenosineTriPhosphate:
       amount: 1
   products:
-    Thrivenin: 2
+    Thrivenin: 3
 
 - type: reaction
   id: Spaceacillin
