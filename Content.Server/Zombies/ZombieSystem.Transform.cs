@@ -104,6 +104,7 @@ namespace Content.Server.Zombies
             var accentType = Prototype(target)!.ID switch
             {
                 "MobMoth" => "zombieMoth",
+                "MobMothroach" => "zombieMoth",
                 _ => "zombie"
             };
 
