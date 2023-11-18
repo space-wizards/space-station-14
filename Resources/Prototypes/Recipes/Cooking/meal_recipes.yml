@@ -1614,9 +1614,9 @@
     Dermaline: 50
 
 - type: microwaveMealRecipe
-  id: RecipeTrashBackedBananaPeel
-  name: backed banana peel recipe
-  result: TrashBackedBananaPeel
+  id: RecipeTrashBakedBananaPeel
+  name: baked banana peel recipe
+  result: TrashBakedBananaPeel
   time: 6
   solids:
     TrashBananaPeel: 1

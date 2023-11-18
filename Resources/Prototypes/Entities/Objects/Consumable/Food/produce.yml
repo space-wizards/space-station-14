@@ -305,16 +305,22 @@
   - type: SpaceGarbage
 
 - type: entity
-  name: backed banana peel
+  name: baked banana peel
   parent: TrashBananaPeel
-  id: TrashBackedBananaPeel
+  id: TrashBakedBananaPeel
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: baked-peel
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    heldPrefix: baked-peel
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: PulpedBananaPeel
-          Quantity: 4
+          Quantity: 3
         - ReagentId: Bananadine
           Quantity: 1
 
