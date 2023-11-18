@@ -63,7 +63,6 @@
   - type: Tag
     tags:
     - VimPilot
-  - type: NonSpreaderZombie
 
 - type: entity
   name: bee
