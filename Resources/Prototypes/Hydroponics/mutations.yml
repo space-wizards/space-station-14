@@ -1,7 +1,7 @@
 - type: weightedRandomFillSolution
   id: RandomPickBotanyReagent
   fills:
-  - quantity: 20
+  - quantity: 5
     weight: 1
     reagents:
     - Aluminium
@@ -19,11 +19,11 @@
     - Silicon
     - Sulfur
     - Sodium
-  - quantity: 20
+  - quantity: 5
     weight: 2
     reagents:
     - Omnizine
-  - quantity: 20
+  - quantity: 5
     weight: 3
     reagents:
     - ChloralHydrate
@@ -36,7 +36,7 @@
     - NorepinephricAcid
     - Pax
     - Tricordrazine
-  - quantity: 20
+  - quantity: 5
     weight: 5
     reagents:
     - SpaceDrugs

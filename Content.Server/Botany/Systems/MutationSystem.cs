@@ -13,11 +13,12 @@ public sealed class MutationSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    private List<ReagentPrototype> _allChemicals = default!;
+    private WeightedRandomFillSolutionPrototype _randomChems = default!;
+
 
     public override void Initialize()
     {
-        _allChemicals = _prototypeManager.EnumeratePrototypes<ReagentPrototype>().ToList();
+        _randomChems = _prototypeManager.Index<WeightedRandomFillSolutionPrototype>("RandomPickBotanyReagent");
     }
 
     /// <summary>
@@ -30,7 +31,7 @@ public sealed class MutationSystem : EntitySystem
     ///
     /// You MUST clone() seed before mutating it!
     /// </summary>
-    public void MutateSeed(ref SeedData seed, float severity)
+    public void MutateSeed(EntityUid trayUid, ref SeedData seed, float severity)
     {
         if (!seed.Unique)
         {
@@ -83,10 +84,10 @@ public sealed class MutationSystem : EntitySystem
         MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 1, totalbits, severity);
 
         // Chems (20)
-        MutateChemicals(ref seed.Chemicals, "RandomPickBotanyReagent", 20, totalbits, severity);
+        MutateChemicals(ref seed.Chemicals, 20, totalbits, severity);
 
         // Species (10)
-        MutateSpecies(ref seed, 10, totalbits, severity);
+        MutateSpecies(ref seed, trayUid, 10, totalbits, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -248,7 +249,7 @@ public sealed class MutationSystem : EntitySystem
         }
     }
 
-    private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, string proto, int bits, int totalbits, float mult)
+    private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, int bits, int totalbits, float mult)
     {
         float probModify = mult * bits / totalbits;
         probModify = Math.Clamp(probModify, 0, 1);
@@ -256,11 +257,9 @@ public sealed class MutationSystem : EntitySystem
             return;
 
         // Add a random amount of a random chemical to this set of chemicals
-        ReagentPrototype selectedChemical = _robustRandom.Pick(_allChemicals);
-        var randomChems = _prototypeManager.Index<WeightedRandomFillSolutionPrototype>(proto);
-        if (randomChems != null)
+        if (_randomChems != null)
         {
-            var pick = randomChems.Pick(_robustRandom);
+            var pick = _randomChems.Pick(_robustRandom);
             string chemicalId = pick.reagent;
             int amount = _robustRandom.Next(1, ((int)pick.quantity));
             SeedChemQuantity seedChemQuantity = new SeedChemQuantity();
@@ -281,7 +280,7 @@ public sealed class MutationSystem : EntitySystem
         }
     }
 
-    private void MutateSpecies(ref SeedData seed, int bits, int totalbits, float mult)
+    private void MutateSpecies(ref SeedData seed, EntityUid trayUid, int bits, int totalbits, float mult)
     {
         float p = mult * bits / totalbits;
         p = Math.Clamp(p, 0, 1);
