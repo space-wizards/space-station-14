@@ -12,6 +12,7 @@
   access:
   - Service
   - Lawyer
+  - Brig
   - Maintenance
 
 - type: startingGear
