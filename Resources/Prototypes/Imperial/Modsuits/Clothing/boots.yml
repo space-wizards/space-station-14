@@ -1,534 +1,534 @@
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitCESealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/advanced.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/advanced.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Shock: 0.8
-        Heat: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitCESealed
-    slot: head
-    requiredSlot: feet
-  - type: Magboots
-    toggleAction: ActionToggleMagbootsModsuitAdvanced
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
-    enabled: false
-  - type: NoSlip
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitCESealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/advanced.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/advanced.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Shock: 0.8
+#         Heat: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitCESealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: Magboots
+#     toggleAction: ActionToggleMagbootsModsuitAdvanced
+#   - type: ClothingSpeedModifier
+#     walkModifier: 0.9
+#     sprintModifier: 0.9
+#     enabled: false
+#   - type: NoSlip
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon
 
-- type: entity
-  id: ActionToggleMagbootsModsuitAdvanced
-  parent: ActionBaseToggleMagboots
-  noSpawn: true
-  components:
-  - type: InstantAction
-    icon: { sprite: Imperial/Modsuits/Clothing/Shoes/advanced.rsi, state: icon }
-    iconOn: Imperial/Modsuits/Clothing/Shoes/advanced.rsi/icon-on.png
+# - type: entity
+#   id: ActionToggleMagbootsModsuitAdvanced
+#   parent: ActionBaseToggleMagboots
+#   noSpawn: true
+#   components:
+#   - type: InstantAction
+#     icon: { sprite: Imperial/Modsuits/Clothing/Shoes/advanced.rsi, state: icon }
+#     iconOn: Imperial/Modsuits/Clothing/Shoes/advanced.rsi/icon-on.png
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitEngineerSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/engineer.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/engineer.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Shock: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitEngineerSealed
-    slot: head
-    requiredSlot: feet
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitEngineerSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/engineer.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/engineer.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.95
+#         Slash: 0.95
+#         Piercing: 0.95
+#         Shock: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitEngineerSealed
+#     slot: head
+#     requiredSlot: feet
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitRNDSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/rnd.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/rnd.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Shock: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitRNDSealed
-    slot: head
-    requiredSlot: feet
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitRNDSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/rnd.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/rnd.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.9
+#         Slash: 0.9
+#         Shock: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitRNDSealed
+#     slot: head
+#     requiredSlot: feet
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitAtmosphericsSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/atmospheric.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/atmospheric.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Shock: 0.8
-        Heat: 0.85
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitAtmosphericsSealed
-    slot: head
-    requiredSlot: feet
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitAtmosphericsSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/atmospheric.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/atmospheric.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.9
+#         Slash: 0.9
+#         Shock: 0.8
+#         Heat: 0.85
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitAtmosphericsSealed
+#     slot: head
+#     requiredSlot: feet
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitMedicalSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/medical.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/medical.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Shock: 0.8
-        Heat: 0.85
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitMedicalSealed
-    slot: head
-    requiredSlot: feet
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitMedicalSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/medical.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/medical.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.95
+#         Slash: 0.95
+#         Piercing: 0.95
+#         Shock: 0.8
+#         Heat: 0.85
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitMedicalSealed
+#     slot: head
+#     requiredSlot: feet
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitCMOSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/cmo.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/cmo.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Shock: 0.8
-        Heat: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitCMOSealed
-    slot: head
-    requiredSlot: feet
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitCMOSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/cmo.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/cmo.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.9
+#         Slash: 0.9
+#         Piercing: 0.9
+#         Shock: 0.8
+#         Heat: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitCMOSealed
+#     slot: head
+#     requiredSlot: feet
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitCivillianSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/civillian.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/civillian.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitCivillianSealed
-    slot: head
-    requiredSlot: feet
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitCivillianSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/civillian.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/civillian.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitCivillianSealed
+#     slot: head
+#     requiredSlot: feet
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitMagnateSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/magnate.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/magnate.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Shock: 0.8
-        Heat: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitMagnateSealed
-    slot: head
-    requiredSlot: feet
-  - type: NoSlip
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitMagnateSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/magnate.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/magnate.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.95
+#         Slash: 0.95
+#         Piercing: 0.95
+#         Shock: 0.8
+#         Heat: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitMagnateSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: NoSlip
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitSecuritySealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/security.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/security.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Shock: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitSecuritySealed
-    slot: head
-    requiredSlot: feet
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitSecuritySealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/security.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/security.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.95
+#         Slash: 0.95
+#         Piercing: 0.95
+#         Shock: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitSecuritySealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitHOSSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/hos.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/hos.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Shock: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitHOSSealed
-    slot: head
-    requiredSlot: feet
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitHOSSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/hos.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/hos.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.95
+#         Slash: 0.95
+#         Piercing: 0.95
+#         Shock: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitHOSSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitSalvageSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/salvage.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/salvage.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Shock: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitSalvageSealed
-    slot: head
-    requiredSlot: feet
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitSalvageSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/salvage.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/salvage.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.95
+#         Slash: 0.95
+#         Piercing: 0.95
+#         Shock: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitSalvageSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitMinerSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/miner.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/miner.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Shock: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitMinerSealed
-    slot: head
-    requiredSlot: feet
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitMinerSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/miner.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/miner.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.9
+#         Slash: 0.9
+#         Piercing: 0.9
+#         Shock: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitMinerSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitOperativeSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/nukeops.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/nukeops.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Shock: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitOperativeSealed
-    slot: head
-    requiredSlot: feet
-  - type: GasTank
-    outputPressure: 42.6
-    air:
-      # 2 minutes of thrust
-      volume: 0.75
-      temperature: 293.15
-      moles:
-        - 0.153853429 # oxygen
-        - 0.153853429 # nitrogen
-  - type: ActivatableUI
-    key: enum.SharedGasTankUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.SharedGasTankUiKey.Key
-        type: GasTankBoundUserInterface
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 20
-  - type: Jetpack
-    moleUsage: 0.00085
-  - type: CanMoveInAir
-  - type: InputMover
-    toParent: true
-  - type: MovementSpeedModifier
-    weightlessAcceleration: 1
-    weightlessFriction: 0.3
-    weightlessModifier: 1.2
-  - type: Tag
-    tags:
-      - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitOperativeSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/nukeops.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/nukeops.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.95
+#         Slash: 0.95
+#         Piercing: 0.95
+#         Shock: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitOperativeSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: GasTank
+#     outputPressure: 42.6
+#     air:
+#       # 2 minutes of thrust
+#       volume: 0.75
+#       temperature: 293.15
+#       moles:
+#         - 0.153853429 # oxygen
+#         - 0.153853429 # nitrogen
+#   - type: ActivatableUI
+#     key: enum.SharedGasTankUiKey.Key
+#   - type: UserInterface
+#     interfaces:
+#       - key: enum.SharedGasTankUiKey.Key
+#         type: GasTankBoundUserInterface
+#   - type: Explosive
+#     explosionType: Default
+#     maxIntensity: 20
+#   - type: Jetpack
+#     moleUsage: 0.00085
+#   - type: CanMoveInAir
+#   - type: InputMover
+#     toParent: true
+#   - type: MovementSpeedModifier
+#     weightlessAcceleration: 1
+#     weightlessFriction: 0.3
+#     weightlessModifier: 1.2
+#   - type: Tag
+#     tags:
+#       - WhitelistChameleon
 
-- type: entity
-  parent: ClothingBootsModsuitOperativeSealed
-  id: ClothingBootsModsuitOperativeCMDSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/nukeopscmd.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/nukeopscmd.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Shock: 0.8
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitOperativeCMDSealed
-    slot: head
-    requiredSlot: feet
-  - type: InputMover
-    toParent: true
-  - type: MovementSpeedModifier
-    weightlessAcceleration: 1.5
-    weightlessFriction: 0.3
-    weightlessModifier: 1.5
+# - type: entity
+#   parent: ClothingBootsModsuitOperativeSealed
+#   id: ClothingBootsModsuitOperativeCMDSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/nukeopscmd.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/nukeopscmd.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.9
+#         Slash: 0.9
+#         Piercing: 0.9
+#         Shock: 0.8
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitOperativeCMDSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: InputMover
+#     toParent: true
+#   - type: MovementSpeedModifier
+#     weightlessAcceleration: 1.5
+#     weightlessFriction: 0.3
+#     weightlessModifier: 1.5
 
-- type: entity
-  parent: ClothingBootsModsuitOperativeSealed
-  id: ClothingBootsModsuitCCSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/corporate.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/corporate.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitCCSealed
-    slot: head
-    requiredSlot: feet
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingBootsModsuitOperativeSealed
+#   id: ClothingBootsModsuitCCSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/corporate.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/corporate.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitCCSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitHonkOperativeSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/nukeopsclown.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/nukeopsclown.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Shock: 0.8
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitHonkOperativeSealed
-    slot: head
-    requiredSlot: feet
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitHonkOperativeSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/nukeopsclown.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/nukeopsclown.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Blunt: 0.95
+#         Slash: 0.95
+#         Piercing: 0.95
+#         Shock: 0.8
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitHonkOperativeSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon
 
-- type: entity
-  parent: ClothingShoesBase
-  id: ClothingBootsModsuitApocryphalSealed
-  noSpawn: true
-  name: salvage modsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Imperial/Modsuits/Clothing/Shoes/apocryphal.rsi
-  - type: Clothing
-    sprite: Imperial/Modsuits/Clothing/Shoes/apocryphal.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
-  - type: Armor
-    modifiers:
-      coefficients:
-        Shock: 0.1
-        Heat: 0.1
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 200
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetModsuitApocryphalSealed
-    slot: head
-    requiredSlot: feet
-  - type: NoSlip
-  - type: Tag
-    tags:
-    - WhitelistChameleon
+# - type: entity
+#   parent: ClothingShoesBase
+#   id: ClothingBootsModsuitApocryphalSealed
+#   noSpawn: true
+#   name: salvage modsuit helmet
+#   description: Special hardsuit helmet, made for the captain of the station.
+#   components:
+#   - type: Sprite
+#     sprite: Imperial/Modsuits/Clothing/Shoes/apocryphal.rsi
+#   - type: Clothing
+#     sprite: Imperial/Modsuits/Clothing/Shoes/apocryphal.rsi
+#     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
+#     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+#   - type: Armor
+#     modifiers:
+#       coefficients:
+#         Shock: 0.1
+#         Heat: 0.1
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.05
+#     lowPressureMultiplier: 200
+#   - type: ToggleableClothing
+#     clothingPrototype: ClothingHeadHelmetModsuitApocryphalSealed
+#     slot: head
+#     requiredSlot: feet
+#   - type: NoSlip
+#   - type: Tag
+#     tags:
+#     - WhitelistChameleon

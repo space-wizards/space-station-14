@@ -171,5 +171,7 @@ ent-ClothingHeadHelmetModsuitCCSealed = { ent-ClothingHeadHelmetModsuitCESealed 
     .desc = { ent-ClothingHeadHelmetModsuitCESealed.desc }
 ent-ClothingHeadHelmetModsuitHonkOperativeSealed = { ent-ClothingHeadHelmetModsuitCESealed }
     .desc = { ent-ClothingHeadHelmetModsuitCESealed.desc }
+ent-ClothingHeadHelmetModsuitMagnateSealed = { ent-ClothingHeadHelmetModsuitCESealed }
+    .desc = { ent-ClothingHeadHelmetModsuitCESealed.desc }
 ent-ClothingHeadHelmetModsuitApocryphalSealed = { ent-ClothingHeadHelmetModsuitCESealed }
     .desc = . . .
