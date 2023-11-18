@@ -63,7 +63,7 @@ public sealed class DrinkSystem : EntitySystem
         SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
         // run before inventory so for bucket it always tries to drink before equipping (when empty)
         // run after openable so its always open -> drink
-        SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse, before: new[] { typeof(ServerInventorySystem) }, after: new[] { typeof(OpenableSystem) });
+        SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse, before: new[] { typeof(ServerInventorySystem) }, after: new[] { typeof(SolutionTransferSystem) });
         SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
         // put drink amount after opened

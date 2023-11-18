@@ -10,6 +10,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Hands;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
@@ -40,7 +41,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<SolutionTransferComponent, ComponentGetState>(OnSolutionTransferGetState);
             SubscribeLocalEvent<SolutionTransferComponent, HandSelectedEvent>(OnSolutionTransferHandSelected);
             SubscribeLocalEvent<SolutionTransferComponent, SolutionChangedEvent>(OnSolutionChange);
-            SubscribeLocalEvent<SolutionTransferComponent, UseInHandEvent>(OnSolutionContainerUse);
+            SubscribeLocalEvent<SolutionTransferComponent, UseInHandEvent>(OnSolutionContainerUse, after: new[] { typeof(OpenableSystem) });
             SubscribeLocalEvent<SolutionTransferComponent, ComponentStartup>(OnSolutionTransferStartup);
         }
 
