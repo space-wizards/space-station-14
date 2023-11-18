@@ -5,6 +5,8 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Chemistry.Reagent;
 using System.Linq;
 using Content.Shared.Atmos;
+using Content.Server.Popups;
+using Content.Shared.Popups;
 using FastAccessors;
 
 namespace Content.Server.Botany;
@@ -13,6 +15,7 @@ public sealed class MutationSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     private WeightedRandomFillSolutionPrototype _randomChems = default!;
 
 
@@ -298,7 +301,9 @@ public sealed class MutationSystem : EntitySystem
             Log.Error($"Seed prototype could not be found: {targetProto}!");
             return;
         }
-
+        _popup.PopupEntity(Loc.GetString("botany-species-mutate-message",
+            ("origPlant", Loc.GetString(seed.DisplayName)), ("newPlant", Loc.GetString(protoSeed.DisplayName))),
+                trayUid, PopupType.Medium);
         seed = seed.SpeciesChange(protoSeed);
     }
 
