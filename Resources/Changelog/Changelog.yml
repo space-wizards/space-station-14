@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - message: Air alarms now have output signal ports for each state.
-    type: Tweak
-  id: 4651
-  time: '2023-08-21T21:18:30.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: Freshly spawned diona are no longer gray.
@@ -3548,3 +3542,10 @@ Entries:
     type: Tweak
   id: 5133
   time: '2023-11-18T23:16:45.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 NSS Nox."
+    type: Tweak
+  id: 5134
+  time: '2023-11-18T23:18:02.0000000+00:00'
