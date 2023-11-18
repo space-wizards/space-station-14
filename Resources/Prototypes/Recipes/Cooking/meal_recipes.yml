@@ -1617,7 +1617,7 @@
   id: RecipeTrashBakedBananaPeel
   name: baked banana peel recipe
   result: TrashBakedBananaPeel
-  time: 6
+  time: 5
   solids:
     TrashBananaPeel: 1
 
