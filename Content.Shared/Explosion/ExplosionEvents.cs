@@ -27,7 +27,7 @@ public record struct GetExplosionResistanceEvent(string ExplosionPrototype) : II
 /// will also receive this event.
 /// </summary>
 [ByRefEvent]
-public record struct RecursiveExplodeEvent(DamageSpecifier Damage, string Id, List<EntityUid> Contents)
+public record struct BeforeExplodeEvent(DamageSpecifier Damage, string Id, List<EntityUid> Contents)
 {
     /// <summary>
     /// The damage that will be received by this entity. Note that the entity's explosion resistance has already been

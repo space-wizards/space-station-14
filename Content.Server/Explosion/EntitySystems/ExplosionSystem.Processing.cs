@@ -51,7 +51,7 @@ public sealed partial class ExplosionSystem
     private int _previousTileIteration;
 
     /// <summary>
-    /// This list is used when raising <see cref="RecursiveExplodeEvent"/> to avoid allocating a new list per event.
+    /// This list is used when raising <see cref="BeforeExplodeEvent"/> to avoid allocating a new list per event.
     /// </summary>
     private readonly List<EntityUid> _containedEntities = new();
 
@@ -390,7 +390,7 @@ public sealed partial class ExplosionSystem
 
             _containedEntities.Clear();
 
-            var ev = new RecursiveExplodeEvent(damage, prototype, _containedEntities);
+            var ev = new BeforeExplodeEvent(damage, prototype, _containedEntities);
             RaiseLocalEvent(ent, ref ev);
 
             if (_containedEntities.Count == 0)

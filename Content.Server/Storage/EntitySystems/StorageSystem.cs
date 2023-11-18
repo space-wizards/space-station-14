@@ -28,7 +28,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
         base.Initialize();
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
         SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
-        SubscribeLocalEvent<StorageComponent, RecursiveExplodeEvent>(OnExploded);
+        SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
@@ -99,7 +99,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
         }
     }
 
-    private void OnExploded(Entity<StorageComponent> ent, ref RecursiveExplodeEvent args)
+    private void OnExploded(Entity<StorageComponent> ent, ref BeforeExplodeEvent args)
     {
         args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
     }

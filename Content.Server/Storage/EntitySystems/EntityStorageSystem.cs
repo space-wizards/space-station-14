@@ -47,7 +47,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
-        SubscribeLocalEvent<EntityStorageComponent, RecursiveExplodeEvent>(OnExploded);
+        SubscribeLocalEvent<EntityStorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
@@ -100,7 +100,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         }
     }
 
-    private void OnExploded(Entity<EntityStorageComponent> ent, ref RecursiveExplodeEvent args)
+    private void OnExploded(Entity<EntityStorageComponent> ent, ref BeforeExplodeEvent args)
     {
         if (ent.Comp.ExplosionDamageCoefficient <= 0)
             return;
