@@ -1,14 +1,11 @@
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
-using Content.Server.Explosion.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Robust.Shared.Spawners;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -53,6 +50,13 @@ public sealed partial class ExplosionSystem
     /// </summary>
     private int _previousTileIteration;
 
+    /// <summary>
+    /// This list is used when raising <see cref="RecursiveExplodeEvent"/> to avoid allocating a new list per event.
+    /// </summary>
+    private readonly List<EntityUid> _containedEntities = new();
+
+    private readonly List<(EntityUid, DamageSpecifier)> _toDamage = new();
+
     private void OnMapChanged(MapChangedEvent ev)
     {
         // If a map was deleted, check the explosion currently being processed belongs to that map.
@@ -79,8 +83,6 @@ public sealed partial class ExplosionSystem
 
         Stopwatch.Restart();
         var x = Stopwatch.Elapsed.TotalMilliseconds;
-
-        var availableTime = MaxProcessingTime;
 
         var tilesRemaining = TilesPerTick;
         while (tilesRemaining > 0 && MaxProcessingTime > Stopwatch.Elapsed.TotalMilliseconds)
@@ -361,26 +363,75 @@ public sealed partial class ExplosionSystem
         return SpaceQueryCallback(ref state, in uid);
     }
 
+    private DamageSpecifier GetDamage(EntityUid uid,
+        string id, DamageSpecifier damage)
+    {
+        // TODO Explosion Performance
+        // Cache this? I.e., instead of raising an event, check for a component?
+        var resistanceEv = new GetExplosionResistanceEvent(id);
+        RaiseLocalEvent(uid, ref resistanceEv);
+        resistanceEv.DamageCoefficient = Math.Max(0, resistanceEv.DamageCoefficient);
+
+        // ReSharper disable once CompareOfFloatsByEqualityOperator
+        if (resistanceEv.DamageCoefficient != 1)
+            damage *= resistanceEv.DamageCoefficient;
+
+        return damage;
+    }
+
+    private void GetEntitiesToDamage(EntityUid uid, DamageSpecifier originalDamage, string prototype)
+    {
+        _toDamage.Clear();
+        _toDamage.Add((uid, GetDamage(uid, prototype, originalDamage)));
+
+        for (var i = 0; i < _toDamage.Count; i++)
+        {
+            var (ent, damage) = _toDamage[i];
+
+            _containedEntities.Clear();
+
+            var ev = new RecursiveExplodeEvent(damage, prototype, _containedEntities);
+            RaiseLocalEvent(ent, ref ev);
+
+            if (_containedEntities.Count == 0)
+                continue;
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (ev.DamageCoefficient != 1)
+                damage *= ev.DamageCoefficient;
+
+            _toDamage.EnsureCapacity(_toDamage.Count + _containedEntities.Count);
+            foreach (var contained in _containedEntities)
+            {
+                var newDamage = GetDamage(contained, prototype, damage);
+                _toDamage.Add((contained, newDamage));
+            }
+        }
+    }
+
     /// <summary>
     ///     This function actually applies the explosion affects to an entity.
     /// </summary>
     private void ProcessEntity(
         EntityUid uid,
         MapCoordinates epicenter,
-        DamageSpecifier? damage,
+        DamageSpecifier? originalDamage,
         float throwForce,
         string id,
         TransformComponent? xform)
     {
-        var ev = new ExplodedEvent(damage, throwForce, id, xform);
-        RaiseLocalEvent(uid, ref ev);
-        foreach (var ent in ev.Contents)
+        if (originalDamage != null)
         {
-            ProcessEntity(ent, epicenter, damage, 0f, id, _transformQuery.GetComponent(uid));
+            GetEntitiesToDamage(uid, originalDamage, id);
+            foreach (var (entity, damage) in _toDamage)
+            {
+                // TODO EXPLOSIONS turn explosions into entities, and add the origin entity.
+                _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: true);
+            }
         }
 
         // throw
-        if (xform != null // null implies anchored
+        if (xform != null // null implies anchored or in a container
             && !xform.Anchored
             && throwForce > 0
             && !EntityManager.IsQueuedForDeletion(uid)
@@ -396,10 +447,6 @@ public sealed partial class ExplosionSystem
                 _projectileQuery,
                 throwForce);
         }
-
-        // TODO EXPLOSION puddle / flammable ignite?
-
-        // TODO EXPLOSION deaf/ear damage? other explosion effects?
     }
 
     /// <summary>
