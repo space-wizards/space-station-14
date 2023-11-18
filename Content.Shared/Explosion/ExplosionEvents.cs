@@ -36,14 +36,14 @@ public record struct BeforeExplodeEvent(DamageSpecifier Damage, string Id, List<
     public readonly DamageSpecifier Damage = Damage;
 
     /// <summary>
-    /// Damage multiplier for modifying the damage that will get dealt to contained entities.
-    /// </summary>
-    public float DamageCoefficient = 1;
-
-    /// <summary>
     /// ID of the explosion prototype.
     /// </summary>
     public readonly string Id = Id;
+
+    /// <summary>
+    /// Damage multiplier for modifying the damage that will get dealt to contained entities.
+    /// </summary>
+    public float DamageCoefficient = 1;
 
     /// <summary>
     /// Contained/child entities that should receive recursive explosion damage.

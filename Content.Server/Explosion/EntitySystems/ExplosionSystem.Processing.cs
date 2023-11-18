@@ -387,9 +387,7 @@ public sealed partial class ExplosionSystem
         for (var i = 0; i < _toDamage.Count; i++)
         {
             var (ent, damage) = _toDamage[i];
-
             _containedEntities.Clear();
-
             var ev = new BeforeExplodeEvent(damage, prototype, _containedEntities);
             RaiseLocalEvent(ent, ref ev);
 
@@ -425,7 +423,7 @@ public sealed partial class ExplosionSystem
             GetEntitiesToDamage(uid, originalDamage, id);
             foreach (var (entity, damage) in _toDamage)
             {
-                // TODO EXPLOSIONS turn explosions into entities, and add the origin entity.
+                // TODO EXPLOSIONS turn explosions into entities, and pass the the entity in as the damage origin.
                 _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: true);
             }
         }
