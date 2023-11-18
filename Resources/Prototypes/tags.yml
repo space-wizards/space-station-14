@@ -408,6 +408,9 @@
   id: Donut
 
 - type: Tag
+  id: DrinkCan
+
+- type: Tag
   id: DrinkSpaceGlue
 
 - type: Tag
@@ -970,6 +973,9 @@
   id: SpeedLoaderRifle
 
 - type: Tag
+  id: SpiderCraft
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag
@@ -1019,6 +1025,9 @@
 
 - type: Tag
   id: Toolbox
+
+- type: Tag
+  id: Torch
 
 - type: Tag
   id: Trash

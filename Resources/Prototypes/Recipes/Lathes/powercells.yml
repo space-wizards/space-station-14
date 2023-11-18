@@ -25,3 +25,13 @@
     Glass: 400
     Plastic: 200
     Gold: 50
+
+- type: latheRecipe
+  id: PowerCellMicroreactor
+  result: PowerCellMicroreactorPrinted
+  completetime: 10
+  materials:
+    Steel: 500
+    Glass: 400
+    Uranium: 200
+    Gold: 100

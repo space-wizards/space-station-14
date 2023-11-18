@@ -1,0 +1,75 @@
+- type: entity
+  id: MachineAnomalySynchronizer
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: anomaly synchronizer
+  description: A sophisticated device that reads changes in anomalous waves, and converts them into energy signals.
+  components:
+  - type: AnomalySynchronizer
+  - type: Machine
+    board: AnomalySynchronizerCircuitboard
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 300
+  - type: DeviceNetworkRequiresPower
+  - type: DeviceLinkSource
+    ports:
+      - Decaying
+      - Stabilize
+      - Growing
+      - Pulse
+      - Supercritical
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/anomaly_sync.rsi
+    layers:
+    - state: base
+    - state: energy
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: AmbientSound
+    enabled: false
+    sound:
+      path: /Audio/Machines/scan_loop.ogg
+    range: 5
+    volume: -8
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        hard: False
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: ApcPowerReceiver
+    powerLoad: 15000
+    needsPower: true 
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.80
+    scaling: Exponential
+  - type: ItemPlacer
+    whitelist:
+      components:
+      - Anomaly
+  - type: DeviceList
+  - type: PointLight
+    radius: 1.8
+    energy: 1.6
+    color: "#b53ca1"
+  - type: LitOnPowered
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }

@@ -24,6 +24,7 @@ using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Content.Shared.Stunnable;
 using Content.Shared.Zombies;
+using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
@@ -44,6 +45,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
 
     [ValidatePrototypeId<NpcFactionPrototype>]
     public const string RevolutionaryNpcFaction = "Revolutionary";
@@ -216,6 +218,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var message = Loc.GetString("rev-role-greeting");
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
             _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
+            _audioSystem.PlayGlobal("/Audio/Ambience/Antag/headrev_start.ogg", ev.Target);
         }
     }
 

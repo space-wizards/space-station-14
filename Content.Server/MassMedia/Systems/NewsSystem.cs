@@ -18,6 +18,7 @@ using Content.Shared.MassMedia.Systems;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.MassMedia.Systems;
@@ -206,11 +207,11 @@ public sealed class NewsSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp, out var ringer, out var cont))
         {
-            if (!_cartridgeLoaderSystem.HasProgram<NewsReadCartridgeComponent>(uid, false, comp, cont))
+            if (!_cartridgeLoaderSystem.TryGetProgram<NewsReadCartridgeComponent>(uid, out _, out var newsReadCartridgeComponent, false, comp, cont)
+                || !newsReadCartridgeComponent.NotificationOn)
                 continue;
 
             _ringer.RingerPlayRingtone(uid, ringer);
-            break;
         }
     }
 

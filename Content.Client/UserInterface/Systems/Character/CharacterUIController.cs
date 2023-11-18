@@ -8,6 +8,7 @@ using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
@@ -21,6 +22,7 @@ namespace Content.Client.UserInterface.Systems.Character;
 [UsedImplicitly]
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
+    [Dependency] private readonly IPlayerManager _player = default!;
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
@@ -56,13 +58,13 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     public void OnSystemLoaded(CharacterInfoSystem system)
     {
         system.OnCharacterUpdate += CharacterUpdated;
-        system.OnCharacterDetached += CharacterDetached;
+        _player.LocalPlayerDetached += CharacterDetached;
     }
 
     public void OnSystemUnloaded(CharacterInfoSystem system)
     {
         system.OnCharacterUpdate -= CharacterUpdated;
-        system.OnCharacterDetached -= CharacterDetached;
+        _player.LocalPlayerDetached -= CharacterDetached;
     }
 
     public void UnloadButton()
@@ -160,7 +162,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
     }
 
-    private void CharacterDetached()
+    private void CharacterDetached(EntityUid uid)
     {
         CloseWindow();
     }

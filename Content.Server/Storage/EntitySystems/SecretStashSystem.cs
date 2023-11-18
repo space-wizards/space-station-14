@@ -13,6 +13,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
 
         public override void Initialize()
         {
@@ -66,7 +67,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             // check if item is too big to fit into secret stash
-            if (item.Size > component.MaxItemSize)
+            if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(component.MaxItemSize))
             {
                 var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
                     ("item", itemToHideUid), ("stash", GetSecretPartName(uid, component)));

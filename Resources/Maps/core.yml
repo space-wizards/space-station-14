@@ -102471,8 +102471,6 @@ entities:
       type: Transform
     - count: 15
       type: Stack
-    - size: 15
-      type: Item
 - proto: SheetPlasma
   entities:
   - uid: 12944
@@ -102564,8 +102562,6 @@ entities:
       type: Transform
     - count: 20
       type: Stack
-    - size: 20
-      type: Item
 - proto: Shovel
   entities:
   - uid: 12955

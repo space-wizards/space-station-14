@@ -162,7 +162,8 @@ public sealed class ChatUIController : UIController
         _sawmill = Logger.GetSawmill("chat");
         _sawmill.Level = LogLevel.Info;
         _admin.AdminStatusUpdated += UpdateChannelPermissions;
-        _player.LocalPlayerChanged += OnLocalPlayerChanged;
+        _player.LocalPlayerAttached += OnAttachedChanged;
+        _player.LocalPlayerDetached += OnAttachedChanged;
         _state.OnStateChanged += StateChanged;
         _net.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
         _net.RegisterNetMessage<MsgDeleteChatMessagesBy>(OnDeleteChatMessagesBy);
@@ -170,7 +171,7 @@ public sealed class ChatUIController : UIController
 
         _speechBubbleRoot = new LayoutContainer();
 
-        OnLocalPlayerChanged(new LocalPlayerChangedEventArgs(null, _player.LocalPlayer));
+        UpdateChannelPermissions();
 
         _input.SetInputCommand(ContentKeyFunctions.FocusChat,
             InputCmdHandler.FromDelegate(_ => FocusChat()));
@@ -363,34 +364,12 @@ public sealed class ChatUIController : UIController
         _speechBubbleRoot.SetPositionLast();
     }
 
-    private void OnLocalPlayerChanged(LocalPlayerChangedEventArgs obj)
-    {
-        if (obj.OldPlayer != null)
-        {
-            obj.OldPlayer.EntityAttached -= OnLocalPlayerEntityAttached;
-            obj.OldPlayer.EntityDetached -= OnLocalPlayerEntityDetached;
-        }
-
-        if (obj.NewPlayer != null)
-        {
-            obj.NewPlayer.EntityAttached += OnLocalPlayerEntityAttached;
-            obj.NewPlayer.EntityDetached += OnLocalPlayerEntityDetached;
-        }
-
-        UpdateChannelPermissions();
-    }
-
-    private void OnLocalPlayerEntityAttached(EntityAttachedEventArgs obj)
+    private void OnAttachedChanged(EntityUid uid)
     {
         UpdateChannelPermissions();
     }
 
-    private void OnLocalPlayerEntityDetached(EntityDetachedEventArgs obj)
-    {
-        UpdateChannelPermissions();
-    }
-
-    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
+    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType, string? prefixText = null, string? prefixEndText = null)
     {
         var ent = EntityManager.GetEntity(msg.SenderEntity);
 
@@ -400,8 +379,11 @@ public sealed class ChatUIController : UIController
             return;
         }
 
+        // Kind of shitty way to add prefixes but hey it works!
+        string Message = prefixText + msg.Message + prefixEndText;
+
         // msg.Message should be the string that a user sent over text, without any added markup.
-        var messages = SplitMessage(msg.Message);
+        var messages = SplitMessage(Message);
 
         foreach (var message in messages)
         {
@@ -863,6 +845,15 @@ public sealed class ChatUIController : UIController
 
             case ChatChannel.Emotes:
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
+                break;
+
+            case ChatChannel.LOOC:
+                if (_cfg.GetCVar(CCVars.LoocAboveHeadShow))
+                {
+                    const string prefixText = "(LOOC: ";
+                    const string prefixEndText = ")";
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc, prefixText, prefixEndText);
+                }
                 break;
         }
     }
