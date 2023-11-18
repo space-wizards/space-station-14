@@ -830,12 +830,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         var invMatrix = TransformSystem.GetInvWorldMatrix(userXform);
-        var localPos = invMatrix.Transform(coordinates.Position);
+        var localPos = coordinates.Position - TransformSystem.GetWorldPosition(userXform);
 
         if (localPos.LengthSquared() <= 0f)
             return;
-
-        localPos = userXform.LocalRotation.RotateVec(localPos);
 
         // We'll play the effect just short visually so it doesn't look like we should be hitting but actually aren't.
         const float bufferLength = 0.2f;
