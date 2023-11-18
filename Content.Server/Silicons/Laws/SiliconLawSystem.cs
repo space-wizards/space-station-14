@@ -188,6 +188,12 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         EnsureEmaggedRole(uid, component);
 
         _stunSystem.TryParalyze(uid, component.StunTime, true);
+
+        if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
+            return;
+        if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
+            return;
+        _roles.MindPlaySound(mindId, component.EmaggedSound);
     }
 
     private void OnEmagMindAdded(EntityUid uid, EmagSiliconLawComponent component, MindAddedMessage args)
@@ -213,7 +219,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             return;
 
         _roles.MindAddRole(mindId, new SubvertedSiliconRoleComponent { PrototypeId = component.AntagonistRole });
-        _roles.MindPlaySound(mindId, component.EmaggedSound);
     }
 
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
