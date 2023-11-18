@@ -383,6 +383,7 @@
       description: ghost-role-information-space-cobra-description
     - type: Stealth
       enabledOnDeath: false
+      maxVisibility: 1.2
     - type: StealthOnMove
       passiveVisibilityRate: -0.25
       movementVisibilityRate: 0.25
