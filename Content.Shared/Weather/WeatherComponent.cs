@@ -38,7 +38,7 @@ public sealed partial class WeatherData
     [ViewVariables(VVAccess.ReadWrite), DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? EndTime;
 
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan Duration => EndTime == null ? TimeSpan.MaxValue : EndTime.Value - StartTime;
 
     [DataField("state")]
