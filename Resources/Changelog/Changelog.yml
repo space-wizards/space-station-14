@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The recycler now recycles items off conveyor belts properly., type: Fix}
-  id: 4694
-  time: '2023-08-27T23:01:54.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Fixed Sec HUD icons overlapping with speech indicators., type: Fix}
@@ -2896,3 +2891,8 @@ Entries:
   - {message: Disposal traversal damage is disabled for now., type: Tweak}
   id: 5193
   time: '2023-11-19T10:25:02.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosions deleting bodyparts and organs inside of people., type: Fix}
+  id: 5194
+  time: '2023-11-19T17:44:42.0000000+00:00'
