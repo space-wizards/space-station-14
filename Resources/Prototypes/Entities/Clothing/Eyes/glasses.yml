@@ -147,6 +147,7 @@
   - type: GuideHelp
     guides:
     - Security
+  - type: ShowSecurityIcons
 
 - type: entity
   parent: ClothingEyesBase

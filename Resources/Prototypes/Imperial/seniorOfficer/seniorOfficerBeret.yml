@@ -1,0 +1,20 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSeniorOfficerBeret
+  name: senior officer beret
+  description: A stylish clothing option for security officers.
+  components:
+  - type: Sprite
+    sprite: Imperial/seniorOfficer/Clothing/seniorofficerberet.rsi
+  - type: Clothing
+    sprite: Imperial/seniorOfficer/Clothing/seniorofficerberet.rsi
+  - type: Armor #Values seem to let the user survive one extra hit if attacked consistently.
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags:
+    - WhitelistChameleon
