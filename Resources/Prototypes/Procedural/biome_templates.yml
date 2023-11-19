@@ -64,7 +64,7 @@
       allowedTiles:
         - FloorLowDesert
       entities:
-        - AsteroidRock
+        - WallRockSand
     - !type:BiomeDummyLayer
       id: Loot
     # Fill layer
