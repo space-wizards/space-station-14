@@ -274,7 +274,7 @@
   name: reagent-name-nocturine
   group: Narcotics
   desc: reagent-desc-nocturine
-  physicalDesc: reagent-physical-desc-pulpy
+  physicalDesc: reagent-physical-desc-powdery
   color: "#128e80"
   boilingPoint: 444.0
   meltingPoint: 128.0
