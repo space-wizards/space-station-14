@@ -390,6 +390,10 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(uid, ref storage, ref appearance, false))
             return;
 
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (storage.Container == null)
+            return; // component hasn't yet been initialized.
+
         int capacity;
         int used;
         if (storage.MaxSlots == null)
