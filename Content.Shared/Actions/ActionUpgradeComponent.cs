@@ -19,23 +19,13 @@ public sealed partial class ActionUpgradeComponent : Component
     public int Level = 1;
 
     // TODO: Can probably get rid of max level
+    // can check the dict for keys?
     /// <summary>
     ///     What is the maximum level the action can achieve, if any?
     ///     There won't be any changes to the ability if there aren't any more parameters to modify
     /// </summary>
     [DataField("maxLevel")]
     public int? MaxLevel = 4;
-
-    // TODO: Can probably get rid of
-    // TODO: see if these can just be set in the event?
-    [DataField, ViewVariables]
-    public int UsesBeforeDelayChangeAmount;
-
-    [DataField, ViewVariables]
-    public int? ChargeChangeAmount;
-
-    [DataField, ViewVariables]
-    public TimeSpan DelayChangeAmount;
 
     // TODO: Change this to go by protos instead
     // TODO: Have Fireball 2 inherit from fireball 1 and only change the params you need
@@ -48,21 +38,8 @@ public sealed partial class ActionUpgradeComponent : Component
     ///     What level(s) effect this action?
     ///     You can skip levels, so you can have this entity change at level 2 but then won't change again until level 5.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, EntityPrototype>))]
-    public Dictionary<int, EntityPrototype> EffectedLevels;
+    [DataField("effectedLevels", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, EntityPrototype>))]
+    public Dictionary<int, string> EffectedLevels = new();
 
     // TODO: Branching level upgrades
-
-    // TODO: Add list of applicable events?
-
-    // TODO: Add support for changing events
-    // TODO: To use for overriding events?
-    /*public override BaseActionEvent? BaseEvent => Event;
-
-    /// <summary>
-    ///     The local-event to raise when this action is performed.
-    /// </summary>
-    [DataField("event")]
-    [NonSerialized]
-    public WorldTargetActionEvent? Event;*/
 }

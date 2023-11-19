@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Actions.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions;
@@ -7,30 +9,98 @@ namespace Content.Shared.Actions;
 public sealed class ActionUpgradeSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ActionUpgradeComponent, ActionUpgradeIncreaseEvent>(OnActionUpgradeIncreaseEvent);
-        SubscribeLocalEvent<ActionUpgradeComponent, ActionUpgradeDecreaseEvent>(OnActionUpgradeDecreaseEvent);
+        SubscribeLocalEvent<ActionUpgradeComponent, ActionUpgradeEvent>(OnActionUpgradeEvent);
     }
 
-    // TODO: Method that calls level up, which fires off the level up event
-    // When level event is called, make sure other events can fire
-    public void UpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null)
+    private void OnActionUpgradeEvent(EntityUid uid, ActionUpgradeComponent component, ActionUpgradeEvent args)
     {
-        if (actionUpgradeComponent == null)
-        {
-            if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
-                return;
+        // TODO: Add level (check if able first)
+        if (!CanLevelUp(args.NewLevel, component.EffectedLevels, out var newActionProto))
+            return;
 
-            actionUpgradeComponent = actionUpgradeComp;
+        component.Level = args.NewLevel;
+        // TODO: Replace current action with new one
+
+        // TODO: Preserve ordering of actions
+    }
+
+    private bool CanLevelUp
+        (int newLevel,
+         Dictionary<int, string> levelDict,
+        [NotNullWhen(true)]out string? newLevelProto)
+    {
+        newLevelProto = null;
+
+        if (levelDict.Count < 1)
+            return false;
+
+        var canLevel = false;
+        var finalLevel = levelDict.Keys.ToList()[levelDict.Keys.Count - 1];
+
+        foreach (var (level, proto) in levelDict)
+        {
+            if (newLevel != level || newLevel > finalLevel)
+                continue;
+
+            canLevel = true;
+            newLevelProto = proto;
+            DebugTools.AssertNotNull(newLevelProto);
+            break;
         }
 
-        /*var ev = new ActionUpgradeEvent();
-        RaiseLocalEvent(uid.Value, ref ev);
-        result = ev.Action;*/
+        return canLevel;
+    }
+
+    /// <summary>
+    ///     Raises a level by one
+    /// </summary>
+    /// <param name="actionId"></param>
+    /// <param name="actionUpgradeComponent"></param>
+    public void UpgradeAction(EntityUid? actionId, ActionUpgradeComponent? actionUpgradeComponent = null)
+    {
+        if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
+            return;
+
+        if (actionUpgradeComponent == null)
+            actionUpgradeComponent = actionUpgradeComp;
+
+        DebugTools.AssertNotNull(actionUpgradeComponent);
+        DebugTools.AssertNotNull(actionId);
+
+        var newLevel = actionUpgradeComponent.Level++;
+        RaiseActionUpgradeEvent(newLevel, actionId.Value);
+    }
+
+    /// <summary>
+    ///     Sets an upgrade to the specified level
+    /// </summary>
+    /// <param name="actionId"></param>
+    /// <param name="newLevel"></param>
+    /// <param name="actionUpgradeComponent"></param>
+    private void UpgradeAction(EntityUid? actionId, int newLevel, ActionUpgradeComponent? actionUpgradeComponent = null)
+    {
+        if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
+            return;
+
+        if (actionUpgradeComponent == null)
+            actionUpgradeComponent = actionUpgradeComp;
+
+        DebugTools.AssertNotNull(actionUpgradeComponent);
+        DebugTools.AssertNotNull(actionId);
+
+        RaiseActionUpgradeEvent(newLevel, actionId.Value);
+    }
+
+    private void RaiseActionUpgradeEvent(int level, EntityUid actionId)
+    {
+        var ev = new ActionUpgradeEvent(level, actionId);
+        RaiseLocalEvent(actionId, ev);
     }
 
     public bool TryGetActionUpgrade(
@@ -52,33 +122,4 @@ public sealed class ActionUpgradeSystem : EntitySystem
         DebugTools.AssertOwner(uid, result);
         return true;
     }
-
-    private void OnActionUpgradeIncreaseEvent(EntityUid uid, ActionUpgradeComponent component, ActionUpgradeIncreaseEvent args)
-    {
-        if (!_actions.TryGetActionData(uid, out var action))
-            return;
-
-        if (action.Charges != null && component.ChargeChangeAmount is > 0)
-            _actions.AddCharges(uid, component.ChargeChangeAmount.Value);
-
-        if (component.UsesBeforeDelayChangeAmount > 0)
-            _actions.AddUsesBeforeDelay(uid, component.UsesBeforeDelayChangeAmount);
-    }
-
-    private void OnActionUpgradeDecreaseEvent(EntityUid uid, ActionUpgradeComponent component, ActionUpgradeDecreaseEvent args)
-    {
-        if (!_actions.TryGetActionData(uid, out var action))
-            return;
-
-        if (action.Charges != null)
-            _actions.RemoveCharges(uid, component.ChargeChangeAmount);
-
-        if (action.UseDelay != null)
-            _actions.ReduceUseDelay(uid, component.DelayChangeAmount);
-    }
-
-    //   TODO: Event change?
-
-    // TODO: ALT IDEA - Just change prototypes instead?
-    //   Which one would be faster?
 }
