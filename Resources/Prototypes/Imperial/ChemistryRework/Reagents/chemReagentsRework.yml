@@ -161,7 +161,7 @@
           min: 22
         damage:
           types:
-            Brute: 2.25
+            Blunt: 2.25
             Piercing: 1.75
       - !type:Jitter
         conditions:
