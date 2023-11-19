@@ -131,7 +131,7 @@
     - cell_slot
   - type: Flashable
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: Silicon
   - type: Destructible
     thresholds:
     - trigger:

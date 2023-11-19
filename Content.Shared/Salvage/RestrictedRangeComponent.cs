@@ -9,9 +9,9 @@ namespace Content.Shared.Salvage;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RestrictedRangeComponent : Component
 {
-    [DataField(required: true), AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float Range = 78f;
 
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public Vector2 Origin;
 }
