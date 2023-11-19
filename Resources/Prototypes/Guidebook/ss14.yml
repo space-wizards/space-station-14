@@ -18,4 +18,17 @@
 - type: guideEntry
   id: Rules
   name: guide-entry-rules
-  text: "/ServerInfo/Guidebook/Rules.xml"
+  text: "/ServerInfo/Guidebook/Rules/Rules.xml"
+  children:
+  - SiliconRules
+  - SecurityCommandRules
+
+- type: guideEntry
+  id: SiliconRules
+  name: guide-entry-silicon-rules
+  text: "/ServerInfo/Guidebook/Rules/SiliconRules.xml"
+
+- type: guideEntry
+  id: SecurityCommandRules
+  name: guide-entry-security-command-rules
+  text: "/ServerInfo/Guidebook/Rules/SecurityCommandRules.xml"

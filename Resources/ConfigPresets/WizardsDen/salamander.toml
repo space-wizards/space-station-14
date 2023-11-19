@@ -6,7 +6,7 @@ hostname = "[EN] Wizard's Den Salamander [US West RP]"
 artifact_round_end_timer = 0.0
 
 [server]
-rules_file = "RP_Rules.txt"
+rules_file = "Guidebook/Rules/RP_Rules.xml"
 rules_header = "ui-rules-header-rp"
 
 [whitelist]
