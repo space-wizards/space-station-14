@@ -196,8 +196,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 foreach (var ent in holder.Container.ContainedEntities)
                 {
-                    // TODO: disabled because of "deathloops"
-                    // _damageable.TryChangeDamage(ent, to.DamageOnTurn);
+                    _damageable.TryChangeDamage(ent, to.DamageOnTurn);
                 }
                 _audio.PlayPvs(to.ClangSound, toUid, AudioParams.Default.WithVolume(-5f));
             }
