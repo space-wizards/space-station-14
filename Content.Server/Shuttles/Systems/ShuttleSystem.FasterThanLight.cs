@@ -210,7 +210,7 @@ public sealed partial class ShuttleSystem
 
         if (HasComp<FTLComponent>(uid))
         {
-            _sawmill.Warning($"Tried queuing {ToPrettyString(uid)} which already has HyperspaceComponent?");
+            Log.Warning($"Tried queuing {ToPrettyString(uid)} which already has HyperspaceComponent?");
             return false;
         }
 
@@ -401,7 +401,7 @@ public sealed partial class ShuttleSystem
                     _console.RefreshShuttleConsoles(uid);
                     break;
                 default:
-                    _sawmill.Error($"Found invalid FTL state {comp.State} for {uid}");
+                    Log.Error($"Found invalid FTL state {comp.State} for {uid}");
                     RemComp<FTLComponent>(uid);
                     break;
             }
@@ -450,7 +450,8 @@ public sealed partial class ShuttleSystem
             return;
 
         _hyperSpaceMap = _mapManager.CreateMap();
-        _sawmill.Info($"Setup hyperspace map at {_hyperSpaceMap.Value}");
+        _metadata.SetEntityName(_mapManager.GetMapEntityId(_hyperSpaceMap.Value), "FTL");
+        Log.Debug($"Setup hyperspace map at {_hyperSpaceMap.Value}");
         DebugTools.Assert(!_mapManager.IsMapPaused(_hyperSpaceMap.Value));
         var parallax = EnsureComp<ParallaxComponent>(_mapManager.GetMapEntityId(_hyperSpaceMap.Value));
         parallax.Parallax = "FastSpace";
