@@ -270,7 +270,7 @@ public sealed partial class ShuttleSystem
                     if (TryComp(uid, out body))
                     {
                         if (shuttle != null)
-                            Enable(uid, body, shuttle);
+                            Enable(uid, component: body, shuttle: shuttle);
                         _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, 0f);
@@ -361,11 +361,11 @@ public sealed partial class ShuttleSystem
                         // to event ordering and awake body shenanigans (at least for now).
                         if (HasComp<MapGridComponent>(xform.MapUid))
                         {
-                            Disable(uid, body);
+                            Disable(uid, component: body);
                         }
                         else if (shuttle != null)
                         {
-                            Enable(uid, body, shuttle);
+                            Enable(uid, component: body, shuttle: shuttle);
                         }
                     }
 

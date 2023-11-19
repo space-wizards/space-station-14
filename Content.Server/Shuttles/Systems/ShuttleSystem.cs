@@ -115,7 +115,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         if (component.Enabled)
         {
-            Enable(uid, physicsComponent, component);
+            Enable(uid, component: physicsComponent, shuttle: component);
         }
     }
 
@@ -128,17 +128,18 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         if (component.Enabled)
         {
-            Enable(uid, physicsComponent, component);
+            Enable(uid, component: physicsComponent, shuttle: component);
         }
         else
         {
-            Disable(uid, physicsComponent);
+            Disable(uid, component: physicsComponent);
         }
     }
 
-    private void Enable(EntityUid uid, PhysicsComponent component, ShuttleComponent shuttle)
+    public void Enable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null, ShuttleComponent? shuttle = null)
     {
-        FixturesComponent? manager = null;
+        if (!Resolve(uid, ref manager, ref component, ref shuttle, false))
+            return;
 
         _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
         _physics.SetBodyStatus(component, BodyStatus.InAir);
@@ -147,9 +148,10 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         _physics.SetAngularDamping(component, shuttle.AngularDamping);
     }
 
-    private void Disable(EntityUid uid, PhysicsComponent component)
+    public void Disable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null)
     {
-        FixturesComponent? manager = null;
+        if (!Resolve(uid, ref manager, ref component, false))
+            return;
 
         _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
         _physics.SetBodyStatus(component, BodyStatus.OnGround);
@@ -162,11 +164,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
-        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
-        {
-            return;
-        }
-
-        Disable(uid, physicsComponent);
+        Disable(uid);
     }
 }

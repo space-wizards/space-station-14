@@ -217,7 +217,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 var layer = lootLayers[layerIdx];
                 lootLayers.RemoveSwap(layerIdx);
 
-                _biome.AddMarkerLayer(biomeComp, layer.Id);
+                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
             }
 
             // - Mobs
@@ -229,7 +229,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 var layer = mobLayers[layerIdx];
                 mobLayers.RemoveSwap(layerIdx);
 
-                _biome.AddMarkerLayer(biomeComp, layer.Id);
+                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
             }
         }
     }
