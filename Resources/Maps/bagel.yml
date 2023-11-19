@@ -56036,6 +56036,13 @@ entities:
     - pos: -42.5,-10.5
       parent: 60
       type: Transform
+- proto: CleanerDispenser
+  entities:
+  - uid: 18691
+    components:
+    - pos: -5.5,-25.5
+      parent: 60
+      type: Transform
 - proto: ClosetBase
   entities:
   - uid: 3502
@@ -106073,6 +106080,18 @@ entities:
     - pos: 5.43841,-38.31682
       parent: 60
       type: Transform
+- proto: KitchenElectricGrill
+  entities:
+  - uid: 7908
+    components:
+    - pos: 24.5,-34.5
+      parent: 60
+      type: Transform
+  - uid: 8389
+    components:
+    - pos: 25.5,-34.5
+      parent: 60
+      type: Transform
 - proto: KitchenMicrowave
   entities:
   - uid: 1530
@@ -106090,9 +106109,9 @@ entities:
     - pos: 25.5,-30.5
       parent: 60
       type: Transform
-  - uid: 8389
+  - uid: 5880
     components:
-    - pos: 25.5,-34.5
+    - pos: 24.5,-35.5
       parent: 60
       type: Transform
   - uid: 13214
@@ -106112,11 +106131,6 @@ entities:
       type: Transform
 - proto: KitchenReagentGrinder
   entities:
-  - uid: 2075
-    components:
-    - pos: 24.5,-34.5
-      parent: 60
-      type: Transform
   - uid: 2534
     components:
     - pos: 37.5,-31.5
@@ -106130,6 +106144,11 @@ entities:
   - uid: 11257
     components:
     - pos: 24.5,-30.5
+      parent: 60
+      type: Transform
+  - uid: 18694
+    components:
+    - pos: 25.5,-33.5
       parent: 60
       type: Transform
   - uid: 24085
@@ -110038,14 +110057,14 @@ entities:
       type: Transform
 - proto: PosterContrabandEAT
   entities:
+  - uid: 3586
+    components:
+    - pos: 24.5,-29.5
+      parent: 60
+      type: Transform
   - uid: 3977
     components:
     - pos: -8.5,-39.5
-      parent: 60
-      type: Transform
-  - uid: 7908
-    components:
-    - pos: 22.5,-35.5
       parent: 60
       type: Transform
 - proto: PosterContrabandEnergySwords
@@ -121830,7 +121849,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2313
+      - 2625
       type: DeviceLinkSink
   - uid: 6773
     components:
@@ -121839,7 +121858,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2313
+      - 2625
       type: DeviceLinkSink
   - uid: 6774
     components:
@@ -121848,7 +121867,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2313
+      - 2625
       type: DeviceLinkSink
   - uid: 6775
     components:
@@ -121857,7 +121876,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2313
+      - 2625
       type: DeviceLinkSink
   - uid: 6796
     components:
@@ -122305,7 +122324,7 @@ entities:
       parent: 60
       type: Transform
     - links:
-      - 2313
+      - 2625
       type: DeviceLinkSink
   - uid: 14547
     components:
@@ -122446,23 +122465,6 @@ entities:
       type: Transform
 - proto: SignalButton
   entities:
-  - uid: 2313
-    components:
-    - pos: 24.5,-29.5
-      parent: 60
-      type: Transform
-    - linkedPorts:
-        6773:
-        - Pressed: Toggle
-        6774:
-        - Pressed: Toggle
-        6771:
-        - Pressed: Toggle
-        6772:
-        - Pressed: Toggle
-        6775:
-        - Pressed: Toggle
-      type: DeviceLinkSource
   - uid: 2881
     components:
     - pos: 12.5,-33.5
@@ -122865,6 +122867,24 @@ entities:
     - linkedPorts:
         14521:
         - Pressed: DoorBolt
+      type: DeviceLinkSource
+  - uid: 2625
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 22.5,-35.5
+      parent: 60
+      type: Transform
+    - linkedPorts:
+        6775:
+        - Pressed: Toggle
+        6772:
+        - Pressed: Toggle
+        6771:
+        - Pressed: Toggle
+        6774:
+        - Pressed: Toggle
+        6773:
+        - Pressed: Toggle
       type: DeviceLinkSource
   - uid: 4522
     components:
@@ -127013,9 +127033,9 @@ entities:
       type: Transform
 - proto: SpawnMobAlexander
   entities:
-  - uid: 18691
+  - uid: 24247
     components:
-    - pos: 25.5,-31.5
+    - pos: 25.5,-36.5
       parent: 60
       type: Transform
 - proto: SpawnMobBandito
@@ -127281,14 +127301,14 @@ entities:
       type: Transform
 - proto: SpawnPointChef
   entities:
-  - uid: 2625
+  - uid: 2075
     components:
     - pos: 25.5,-32.5
       parent: 60
       type: Transform
-  - uid: 3586
+  - uid: 2313
     components:
-    - pos: 26.5,-36.5
+    - pos: 24.5,-31.5
       parent: 60
       type: Transform
 - proto: SpawnPointChemist
@@ -130527,11 +130547,6 @@ entities:
     - pos: 27.5,-11.5
       parent: 60
       type: Transform
-  - uid: 5880
-    components:
-    - pos: 24.5,-31.5
-      parent: 60
-      type: Transform
   - uid: 5927
     components:
     - pos: 17.5,-45.5
@@ -131279,6 +131294,16 @@ entities:
   - uid: 24167
     components:
     - pos: -36.5,12.5
+      parent: 60
+      type: Transform
+  - uid: 24231
+    components:
+    - pos: 24.5,-33.5
+      parent: 60
+      type: Transform
+  - uid: 24243
+    components:
+    - pos: 25.5,-33.5
       parent: 60
       type: Transform
   - uid: 24244
@@ -149774,13 +149799,6 @@ entities:
       type: Transform
     - location: Bar
       type: WarpPoint
-  - uid: 18694
-    components:
-    - pos: 25.5,-33.5
-      parent: 60
-      type: Transform
-    - location: Kitchen
-      type: WarpPoint
   - uid: 23423
     components:
     - pos: -25.5,16.5
@@ -149794,6 +149812,13 @@ entities:
       parent: 60
       type: Transform
     - location: Library
+      type: WarpPoint
+  - uid: 24248
+    components:
+    - pos: 23.5,-33.5
+      parent: 60
+      type: Transform
+    - location: Kitchen
       type: WarpPoint
 - proto: WarpPointBombing
   entities:

@@ -1260,6 +1260,19 @@
     FoodCakePlain: 1
 
 - type: microwaveMealRecipe
+  id: RecipeCatCake
+  name: cat cake recipe
+  result: MobCatCake
+  time: 15
+  reagents: 
+    Milk: 15
+    Cognizine: 5
+  solids:
+    FoodCakePlain: 1
+    FoodSnackRaisins: 1
+    OrganAnimalHeart: 1
+
+- type: microwaveMealRecipe
   id: RecipeGrapeTart
   name: grape tart recipe
   result: FoodTartGrape

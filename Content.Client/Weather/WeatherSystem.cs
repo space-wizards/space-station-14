@@ -15,7 +15,6 @@ namespace Content.Client.Weather;
 
 public sealed class WeatherSystem : SharedWeatherSystem
 {
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
@@ -28,14 +27,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
     public override void Initialize()
     {
         base.Initialize();
-        _overlayManager.AddOverlay(new WeatherOverlay(_transform, EntityManager.System<SpriteSystem>(), this));
         SubscribeLocalEvent<WeatherComponent, ComponentHandleState>(OnWeatherHandleState);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _overlayManager.RemoveOverlay<WeatherOverlay>();
     }
 
     protected override void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime)
