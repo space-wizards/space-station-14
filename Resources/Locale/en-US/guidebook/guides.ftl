@@ -1,4 +1,9 @@
 guide-entry-rules = Rules
+guide-entry-silicon-rules = Silicon rules
+guide-entry-security-command-rules = Security & Command rules
+guide-entry-space-law = Space law (MRP only)
+guide-entry-standard-operating-procedure = Standard Operating Procedure (MRP only)
+guide-entry-alert-procedure = Alert procedure (MRP only)
 guide-entry-engineering = Engineering
 guide-entry-construction = Construction
 guide-entry-airlock-security = Airlock Upgrades

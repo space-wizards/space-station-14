@@ -22,6 +22,9 @@
   children:
   - SiliconRules
   - SecurityCommandRules
+  - SpaceLaw
+  - StandardOperatingProcedure
+  - AlertProcedure
 
 - type: guideEntry
   id: SiliconRules
@@ -32,3 +35,18 @@
   id: SecurityCommandRules
   name: guide-entry-security-command-rules
   text: "/ServerInfo/Guidebook/Rules/SecurityCommandRules.xml"
+
+- type: guideEntry
+  id: SpaceLaw
+  name: guide-entry-space-law
+  text: "/ServerInfo/Guidebook/Rules/SpaceLaw.xml"
+
+- type: guideEntry
+  id: StandardOperatingProcedure
+  name: guide-entry-standard-operating-procedure
+  text: "/ServerInfo/Guidebook/Rules/StandardOperatingProcedure.xml"
+
+- type: guideEntry
+  id: AlertProcedure
+  name: guide-entry-alert-procedure
+  text: "/ServerInfo/Guidebook/Rules/AlertProcedure.xml"
