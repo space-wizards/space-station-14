@@ -199,15 +199,6 @@ namespace Content.Server.GameTicking
             if (!Resolve(mindId, ref mind))
                 return false;
 
-            //SS220-lobby-ghost-bug begin
-            var player = mind.Session;
-            if (player is null)
-                return false;
-
-            if (!PlayerGameStatuses.TryGetValue(player.UserId, out var status) || status is not PlayerGameStatus.JoinedGame)
-                return false;
-            //SS220-lobby-ghost-bug end
-
             var playerEntity = mind.CurrentEntity;
 
             if (playerEntity != null && viaCommand)

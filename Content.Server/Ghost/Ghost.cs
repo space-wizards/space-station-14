@@ -1,5 +1,6 @@
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.Console;
 
@@ -22,6 +23,15 @@ namespace Content.Server.Ghost
                 shell.WriteLine("You have no session, you can't ghost.");
                 return;
             }
+
+            //SS220-lobby-ghost-bug begin
+            var gameTicker = _entities.System<GameTicker>();
+            if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) || status is not PlayerGameStatus.JoinedGame)
+            {
+                shell.WriteLine("You can't ghost right now. You are not in the game!");
+                return;
+            }
+            //SS220-lobby-ghost-bug end
 
             var minds = _entities.System<SharedMindSystem>();
             if (!minds.TryGetMind(player, out var mindId, out var mind))
