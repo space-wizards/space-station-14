@@ -1,15 +1,4 @@
 Entries:
-- author: qwerltaz
-  changes:
-  - {message: Fixed wallmount devices being unable to be deconstructed., type: Fix}
-  id: 4691
-  time: '2023-08-26T22:25:23.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: 'Objects with interfaces now correctly respect interaction range, so
-      green outline really means you can open them.', type: Fix}
-  id: 4692
-  time: '2023-08-27T08:27:43.0000000+00:00'
 - author: HerCoyote23
   changes:
   - {message: Northstar gloves have been tuned down a bit., type: Tweak}
@@ -2897,3 +2886,13 @@ Entries:
   - {message: Moths can no longer eat welding masks., type: Fix}
   id: 5190
   time: '2023-11-18T04:32:17.0000000+00:00'
+- author: Jrpl
+  changes:
+  - {message: Borgs no longer take structural damage., type: Tweak}
+  id: 5191
+  time: '2023-11-19T06:44:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Align windoor collision bounds with thindow collision bounds., type: Fix}
+  id: 5192
+  time: '2023-11-19T06:44:36.0000000+00:00'
