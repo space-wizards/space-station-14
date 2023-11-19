@@ -15,7 +15,6 @@
   - HotplateMachineCircuitboard
   - ChemicalPayload
   - ClothingEyesGlassesChemical
-  - Jug
 
 - type: technology
   id: SurgicalTools
