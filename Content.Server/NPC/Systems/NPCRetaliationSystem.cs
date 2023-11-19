@@ -66,24 +66,24 @@ public sealed class NPCRetaliationSystem : EntitySystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<NPCRetaliationComponent, FactionExceptionComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var factionException, out var metaData))
+        while (query.MoveNext(out var uid, out var retaliationComponent, out var factionException, out var metaData))
         {
             _deAggroQueue.Clear();
 
-            foreach (var ent in new ValueList<EntityUid>(comp.AttackMemories.Keys))
+            foreach (var entity in new ValueList<EntityUid>(retaliationComponent.AttackMemories.Keys))
             {
-                if (_timing.CurTime < comp.AttackMemories[ent])
+                if (_timing.CurTime < retaliationComponent.AttackMemories[entity])
                     continue;
 
-                if (TerminatingOrDeleted(ent, metaData))
-                    _deAggroQueue.Add(ent);
+                if (TerminatingOrDeleted(entity, metaData))
+                    _deAggroQueue.Add(entity);
 
-                _deAggroQueue.Add(ent);
+                _deAggroQueue.Add(entity);
             }
 
-            foreach (var ent in _deAggroQueue)
+            foreach (var entityToDeAggro in _deAggroQueue)
             {
-                _npcFaction.DeAggroEntity(uid, ent, factionException);
+                _npcFaction.DeAggroEntity(uid, entityToDeAggro, factionException);
             }
         }
     }
