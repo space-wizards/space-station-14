@@ -149,25 +149,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     {
                         var aabb = fixture.Shape.ComputeAABB(pTransform, i);
 
-                        foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(uid, mapGrid, aabb, ignoreEmpty: false))
-                        {
-                            if (!TryGetBiomeTile(tileRef.GridIndices, component.Layers, component.Seed, mapGrid,
-                                    out var tile))
-                            {
-                                continue;
-                            }
-
-                            var chunkOrigin = SharedMapSystem.GetChunkIndices(tileRef.GridIndices, ChunkSize) * ChunkSize;
-                            var modified = component.ModifiedTiles.GetOrNew(chunkOrigin);
-                            modified.Add(tileRef.GridIndices);
-
-                            setTiles.Add((tileRef.GridIndices, tile.Value));
-                        }
+                        setTiles.Clear();
+                        ReserveTiles(uid, aabb, setTiles);
                     }
                 }
             }
-
-            _mapSystem.SetTiles(uid, mapGrid, setTiles);
         }
     }
 
@@ -955,5 +941,41 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         };
 
         _atmos.SetMapAtmosphere(mapUid, false, mixture, atmos);
+    }
+
+    /// <summary>
+    /// Sets the specified tiles as relevant and marks them as modified.
+    /// </summary>
+    public void ReserveTiles(EntityUid mapUid, Box2 bounds, List<(Vector2i Index, Tile Tile)> tiles, BiomeComponent? biome = null, MapGridComponent? mapGrid = null)
+    {
+        if (!Resolve(mapUid, ref biome, ref mapGrid, false))
+            return;
+
+        foreach (var tileSet in _mapSystem.GetLocalTilesIntersecting(mapUid, mapGrid, bounds, false))
+        {
+            Vector2i chunkOrigin;
+            HashSet<Vector2i> modified;
+
+            // Existing, ignore
+            if (_mapSystem.TryGetTileRef(mapUid, mapGrid, tileSet.GridIndices, out var existingRef) && !existingRef.Tile.IsEmpty)
+            {
+                chunkOrigin = SharedMapSystem.GetChunkIndices(tileSet.GridIndices, ChunkSize) * ChunkSize;
+                modified = biome.ModifiedTiles.GetOrNew(chunkOrigin);
+                modified.Add(tileSet.GridIndices);
+                continue;
+            }
+
+            if (!TryGetBiomeTile(tileSet.GridIndices, biome.Layers, biome.Seed, mapGrid, out var tile))
+            {
+                continue;
+            }
+
+            chunkOrigin = SharedMapSystem.GetChunkIndices(tileSet.GridIndices, ChunkSize) * ChunkSize;
+            modified = biome.ModifiedTiles.GetOrNew(chunkOrigin);
+            modified.Add(tileSet.GridIndices);
+            tiles.Add((tileSet.GridIndices, tile.Value));
+        }
+
+        _mapSystem.SetTiles(mapUid, mapGrid, tiles);
     }
 }
