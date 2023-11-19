@@ -18,6 +18,6 @@ public sealed partial class SubstationComponent : Component
     public SubstationIntegrityState State = SubstationIntegrityState.Healthy;
 
     //9.231205828 is the amount of moles in a 5L container (the default fuse) at 1000Kpa 20C°
-    public float initialFuseMoles = 2.051379050f; 
+    public float initialFuseMoles = 2.051379050f;
 
 }

@@ -3,6 +3,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Containers;
 using Content.Server.Power.Components;
+using Content.Server.Construction;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos;
 using Content.Shared.Power.Substation;
@@ -37,6 +38,7 @@ public sealed class SubstationSystem : EntitySystem
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<SubstationComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SubstationComponent, UpgradeExamineEvent>(OnFuseLifetimeUpgradeExamine);
         SubscribeLocalEvent<SubstationComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SubstationComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<SubstationFuseSlotComponent, GasAnalyzerScanEvent>(OnAnalyzed);
@@ -104,6 +106,18 @@ public sealed class SubstationSystem : EntitySystem
         }
     }
 
+    private void OnFuseLifetimeUpgradeExamine(EntityUid uid, SubstationComponent component, UpgradeExamineEvent args)
+    {
+        TryComp<UpgradePowerSupplyRampingComponent>(uid, out var upgrade);
+        if(upgrade == null)
+            return;
+        
+        if(upgrade.ActualScalar < 3)
+            args.AddPercentageUpgrade("upgrade-fuse-lifetime", upgrade.ActualScalar);
+        else
+            args.AddMaxUpgrade("upgrade-fuse-lifetime");
+    }
+
     public override void Update(float deltaTime)
     {
 
@@ -142,16 +156,16 @@ public sealed class SubstationSystem : EntitySystem
             return;
         }
 
-        var query = EntityQueryEnumerator<SubstationComponent, PowerNetworkBatteryComponent>();
-        while (query.MoveNext(out var uid, out var subs, out var battery))
+        var query = EntityQueryEnumerator<SubstationComponent, PowerNetworkBatteryComponent, UpgradePowerSupplyRampingComponent>();
+        while (query.MoveNext(out var uid, out var subs, out var battery, out var upgrade))
         {
             
             if(!GetFuseMixture(uid, out var fuse))
                 continue;
 
-            if(subs.DecayEnabled && subs.LastIntegrity >= 0.0f)
+            if(subs.DecayEnabled && subs.LastIntegrity >= 0.0f && upgrade.ActualScalar < 3f)
             {
-                ConsumeFuseGas(deltaTime, subs, battery, fuse);
+                ConsumeFuseGas(deltaTime, upgrade.ActualScalar, subs, battery, fuse);
                 var fuseIntegrity = CheckFuseIntegrity(subs, fuse);
 
                 if(fuseIntegrity <= 0.0f)
@@ -178,12 +192,12 @@ public sealed class SubstationSystem : EntitySystem
         }
     }
 
-    private void ConsumeFuseGas(float deltaTime, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
+    private void ConsumeFuseGas(float deltaTime, float scalar, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
     {
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
         var initialPlasma = mixture.GetMoles(Gas.Plasma);
 
-        var molesConsumed = subs.initialFuseMoles * battery.CurrentSupply * deltaTime / _substationDecayCoeficient;
+        var molesConsumed = (subs.initialFuseMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
         
         var minimumReaction = Math.Min(initialN2, initialPlasma) * molesConsumed / 2;
 

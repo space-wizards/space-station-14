@@ -225,4 +225,10 @@ public sealed class UpgradeExamineEvent : EntityEventArgs
         var upgraded = Loc.GetString(upgradedLocId);
         this.Message.AddMarkup(Loc.GetString(locId, ("upgraded", upgraded), ("difference", difference)) + '\n');
     }
+
+    public void AddMaxUpgrade(string upgradedLocId)
+    {
+        var upgraded = Loc.GetString(upgradedLocId);
+        this.Message.AddMarkup(Loc.GetString("machine-upgrade-max-upgrade", ("upgraded", upgraded)) + '\n');
+    }
 }
