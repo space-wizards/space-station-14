@@ -15,7 +15,7 @@
           state: small
 
       - tag: ModsuitHelmet
-        name: шлем модсьюта
+        name: шлем РИГ-а
         doAfter: 2
         completed:
         - !type:VisualizerDataInt
@@ -23,7 +23,7 @@
           data: 1
 
       - tag: ModsuitChestplate
-        name: нагрудник модсьюта
+        name: нагрудник РИГ-а
         doAfter: 2
         completed:
         - !type:VisualizerDataInt
@@ -31,7 +31,7 @@
           data: 2
 
       - tag: ModsuitGauntlets
-        name: рукавицы модсьюта
+        name: рукавицы РИГ-а
         doAfter: 2
         completed:
         - !type:VisualizerDataInt
@@ -39,7 +39,7 @@
           data: 3
 
       - tag: ModsuitBoots
-        name: ботинки модсьюта
+        name: ботинки РИГ-а
         doAfter: 2
         completed:
         - !type:VisualizerDataInt
@@ -74,19 +74,19 @@
         - to: modsuitatmospheric
           steps:
             - tag: PlatingAtmosphericModsuit
-              name: покрытие модсьюта атмосферного техника
+              name: покрытие РИГ-а атмосферного техника
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: atmospheric-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreEngineerModsuit
-              name: Плазменное ядро модсьюта
+              name: Плазменное ядро РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core-plasma
@@ -103,19 +103,19 @@
         - to: modsuitengineer
           steps:
             - tag: PlatingEngineerModsuit
-              name: покрытие инженерного модсьюта
+              name: покрытие инженерного РИГ-а
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: engineering-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreEngineerModsuit
-              name: Плазменное ядро модсьюта
+              name: Плазменное ядро РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core-plasma
@@ -132,19 +132,19 @@
         - to: modsuitmedical
           steps:
             - tag: PlatingMedicalModsuit
-              name: покрытие медицинского модсьюта
+              name: покрытие медицинского РИГ-а
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: medical-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreMedicalModsuit
-              name: Ядро медицинского модсьюта
+              name: Ядро медицинского РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core
@@ -161,19 +161,19 @@
         - to: modsuitrnd
           steps:
             - tag: PlatingRNDModsuit
-              name: покрытие научного модсьюта
+              name: покрытие научного РИГ-а
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: rnd-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreRNDModsuit
-              name: Ядро научного модсьюта
+              name: Ядро научного РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core
@@ -190,19 +190,19 @@
         - to: modsuitsalvage
           steps:
             - tag: PlatingAsteroidModsuit
-              name: покрытие модсьюта утилизатора
+              name: покрытие РИГ-а утилизатора
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: engineering-plating #same coлor paлette
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreEngineerModsuit
-              name: Плазменное ядро модсьюта
+              name: Плазменное ядро РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core-plasma
@@ -219,19 +219,19 @@
         - to: modsuitcivillian
           steps:
             - tag: PlatingCivillianModsuit
-              name: покрытие гражданского модсьюта
+              name: покрытие гражданского РИГ-а
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: civillian-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreBasicModsuit
-              name: Ядро гражданского модсьюта
+              name: Ядро гражданского РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core
@@ -248,19 +248,19 @@
         - to: modsuitsecurity
           steps:
             - tag: PlatingSecurityModsuit
-              name: покрытие охранного модсьюта
+              name: покрытие охранного РИГ-а
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: security-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreEngineerModsuit
-              name: плазменное ядро модсьюта
+              name: плазменное ядро РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core-plasma
@@ -277,19 +277,19 @@
         - to: modsuitadvanced
           steps:
             - tag: PlatingCEModsuit
-              name: покрытие продвинутого модсьюта
+              name: покрытие продвинутого РИГ-а
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: ce-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreCEModsuit
-              name: Ядро продвинутого модсьюта
+              name: Ядро продвинутого РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core-ce
@@ -306,19 +306,19 @@
         - to: modsuitrescue
           steps:
             - tag: PlatingCMOModsuit
-              name: покрытие модсьюта главного врача
+              name: покрытие РИГ-а главного врача
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: cmo-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreCMOModsuit
-              name: Ядро модсьюта главного врача
+              name: Ядро РИГ-а главного врача
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core-cmo
@@ -335,19 +335,19 @@
         - to: modsuitmagnate
           steps:
             - tag: PlatingMagnateModsuit
-              name: покрытие модсьюта капитана
+              name: покрытие РИГ-а капитана
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: magnate-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreMagnateModsuit
-              name: Ядро модсьюта капитана
+              name: Ядро РИГ-а капитана
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core-magnate
@@ -364,19 +364,19 @@
         - to: modsuithos
           steps:
             - tag: PlatingHOSModsuit
-              name: покрытие модсьюта главы службы безопасности
+              name: покрытие РИГ-а главы службы безопасности
               icon:
                 sprite: Imperial/Modsuits/plating.rsi
                 state: security-plating
               doAfter: 2
             - tag: ModsuitControlEnd
-              name: собранный каркас модсьюта
+              name: собранный каркас РИГ-а
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: CORE-equip4
               doAfter: 2
             - tag: CoreHOSModsuit
-              name: Ядро модсьюта главы службы безопасности
+              name: Ядро РИГ-а главы службы безопасности
               icon:
                 sprite: Imperial/Modsuits/constructing_modsuit.rsi
                 state: mod-core-hos
