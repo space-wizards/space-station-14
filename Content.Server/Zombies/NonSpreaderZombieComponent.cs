@@ -1,7 +1,7 @@
 namespace Content.Server.Zombies;
 
 /// <summary>
-/// This is used for Zombies that cannot infect by biting
+/// Zombified entities with this component cannot infect other entities by attacking.
 /// </summary>
 [RegisterComponent]
 public sealed partial class NonSpreaderZombieComponent: Component
