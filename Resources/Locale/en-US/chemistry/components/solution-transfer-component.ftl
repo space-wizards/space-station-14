@@ -13,6 +13,10 @@ comp-solution-transfer-transfer-solution = You transfer {$amount}u to {THE($targ
 comp-solution-transfer-is-empty = {THE($target)} is empty!
 comp-solution-transfer-is-full = {THE($target)} is full!
 
+## Displayed in change transfer mode in verb's name
+comp-solution-transfer-verb-draw = Pour into {THE($target)}
+comp-solution-transfer-verb-inject = Pour from {THE($target)}
+
 ## Displayed in change transfer amount verb's name
 comp-solution-transfer-verb-custom-amount = Custom
 comp-solution-transfer-verb-amount = {$amount}u

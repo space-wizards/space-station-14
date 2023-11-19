@@ -14,6 +14,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -35,7 +36,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SolutionTransferComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
+            SubscribeLocalEvent<SolutionTransferComponent, GetVerbsEvent<Verb>>(AddSetTransferVerbs);
             SubscribeLocalEvent<SolutionTransferComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<SolutionTransferComponent, TransferAmountSetValueMessage>(OnTransferAmountSetValueMessage);
             SubscribeLocalEvent<SolutionTransferComponent, ComponentGetState>(OnSolutionTransferGetState);
@@ -64,8 +65,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount",
                     ("amount", newTransferAmount)), uid, user);
         }
-
-        private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<AlternativeVerb> args)
+        private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<Verb> args)
         {
             if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount || args.Hands == null)
                 return;
@@ -73,8 +73,33 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
+            if (TryGetAvailableNextMode(uid, component, out var nextMode))
+            {
+                var titleVerb = "comp-solution-transfer-verb-draw";
+                var path = new ResPath("/Textures/Interface/VerbIcons/close.svg.192dpi.png");
+                if (nextMode == SharedTransferToggleMode.Inject)
+                {
+                    titleVerb = "comp-solution-transfer-verb-inject";
+                    path = new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png");
+                }
+
+                Verb changeTransferVerb = new()
+                {
+                    Text = Loc.GetString(titleVerb, ("target", args.Target)),
+                    Icon = new SpriteSpecifier.Texture(path),
+                    Priority = 1,
+                    Act = () =>
+                    {
+                        var msg = ChangeTransferMode(uid, component, nextMode);
+                        _popupSystem.PopupEntity(msg, uid, args.User);
+                    }
+                };
+
+                args.Verbs.Add(changeTransferVerb);
+            }
+
             // Custom transfer verb
-            AlternativeVerb custom = new();
+            Verb custom = new();
             custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
             custom.Category = VerbCategory.SetTransferAmount;
             custom.Act = () => _userInterfaceSystem.TryOpen(args.Target, TransferAmountUiKey.Key, actor.PlayerSession);
@@ -88,7 +113,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 if (amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
                     continue;
 
-                AlternativeVerb verb = new();
+                Verb verb = new();
                 verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
                 verb.Category = VerbCategory.SetTransferAmount;
                 verb.Act = () =>
@@ -290,23 +315,32 @@ namespace Content.Server.Chemistry.EntitySystems
             if (args.Handled)
                 return;
 
+            TryGetAvailableNextMode(uid, component, out var nextMode);
+
+            var msg = ChangeTransferMode(uid, component, nextMode);
+            _popupSystem.PopupEntity(msg, uid, args.User);
+
+            args.Handled = true;
+        }
+
+        private string ChangeTransferMode(EntityUid uid, SolutionTransferComponent component, SharedTransferToggleMode? nextMode)
+        {
             string msg;
-            if (TryGetAvailableNextMode(uid, component, out var nextMode))
+            if (nextMode is SharedTransferToggleMode toggleMode)
             {
                 var mode = "comp-solution-transfer-set-toggle-mode-draw";
-                if (nextMode == SharedTransferToggleMode.Inject)
+                if (toggleMode == SharedTransferToggleMode.Inject)
                     mode = "comp-solution-transfer-set-toggle-mode-inject";
 
                 msg = Loc.GetString(mode, ("fromIn", uid));
 
-                component.ToggleMode = nextMode;
+                component.ToggleMode = toggleMode;
                 Dirty(uid, component);
             }
             else
                 msg = Loc.GetString("comp-solution-transfer-cant-change-mode");
 
-            _popupSystem.PopupEntity(msg, uid, args.User);
-            args.Handled = true;
+            return msg;
         }
 
         /// <summary>
