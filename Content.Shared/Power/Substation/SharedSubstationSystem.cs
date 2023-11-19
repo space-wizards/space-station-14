@@ -8,7 +8,7 @@ namespace Content.Shared.Power.Substation;
 public sealed partial class SharedSubstationSystem : EntitySystem
 {
 
-    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -52,10 +52,10 @@ public sealed partial class SharedSubstationSystem : EntitySystem
 
     private void OnFuseRemoveAttempt(EntityUid uid, SubstationFuseSlotComponent component, ContainerIsRemovingAttemptEvent args)
     {
-        if (!component.Initialized)
+        if(!component.Initialized)
             return;
 
-        if (args.Container.ID != component.FuseSlotId)
+        if(args.Container.ID != component.FuseSlotId)
             return;
 
         if(!TryComp<WiresPanelComponent>(uid, out var panel))
@@ -70,10 +70,10 @@ public sealed partial class SharedSubstationSystem : EntitySystem
 
     private void OnFuseInserted(EntityUid uid, SubstationFuseSlotComponent component, EntInsertedIntoContainerMessage args)
     {
-        if (!component.Initialized)
+        if(!component.Initialized)
             return;
 
-        if (args.Container.ID != component.FuseSlotId)
+        if(args.Container.ID != component.FuseSlotId)
             return;
         
         RaiseLocalEvent(uid, new SubstationFuseChangedEvent(), false);
@@ -81,7 +81,7 @@ public sealed partial class SharedSubstationSystem : EntitySystem
 
     private void OnFuseRemoved(EntityUid uid, SubstationFuseSlotComponent component, EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != component.FuseSlotId)
+        if(args.Container.ID != component.FuseSlotId)
             return;
         
         RaiseLocalEvent(uid, new SubstationFuseChangedEvent(), false);

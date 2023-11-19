@@ -19,8 +19,7 @@ public sealed class SubstationSystem : EntitySystem
     
     [Dependency] private readonly PointLightSystem _lightSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _sharedLightSystem = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-
+    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
 
     private bool _substationDecayEnabled = true;
     private const int _defaultSubstationDecayTimeout = 300; //5 minute
@@ -72,13 +71,12 @@ public sealed class SubstationSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, SubstationComponent component, ExaminedEvent args) 
     {
-        if (args.IsInDetailsRange)
+        if(args.IsInDetailsRange)
         {
             if(!GetFuseMixture(uid, out var mix))
             {
                 args.PushMarkup(
-                    Loc.GetString("substation-component-examine-no-fuse")
-                );
+                    Loc.GetString("substation-component-examine-no-fuse"));
                 return;
             }
             else
@@ -86,23 +84,20 @@ public sealed class SubstationSystem : EntitySystem
                 var integrity = CheckFuseIntegrity(component, mix);
                 if(integrity > 0.0f)
                 {
-                    var integrityPercentRounded = (int) (integrity);
+                    var integrityPercentRounded = (int)integrity;
                     args.PushMarkup(
                         Loc.GetString(
                             "substation-component-examine-integrity",
                             ("percent", integrityPercentRounded),
                             ("markupPercentColor", "green")
-                        )
-                    );
+                        ));
                 }
-            else
-            {
-                args.PushMarkup(
-                    Loc.GetString("substation-component-examine-malfunction")
-                );
+                else
+                {
+                    args.PushMarkup(
+                        Loc.GetString("substation-component-examine-malfunction"));
+                }
             }
-            }
-            
         }
     }
 
@@ -130,7 +125,7 @@ public sealed class SubstationSystem : EntitySystem
             _substationLightBlinkState = !_substationLightBlinkState;
 
             var lightquery = EntityQueryEnumerator<SubstationComponent>();
-              while (lightquery.MoveNext(out var uid, out var subs))
+              while(lightquery.MoveNext(out var uid, out var subs))
             {
                 if(subs.State == SubstationIntegrityState.Healthy)
                     continue;
@@ -157,7 +152,7 @@ public sealed class SubstationSystem : EntitySystem
         }
 
         var query = EntityQueryEnumerator<SubstationComponent, PowerNetworkBatteryComponent, UpgradePowerSupplyRampingComponent>();
-        while (query.MoveNext(out var uid, out var subs, out var battery, out var upgrade))
+        while(query.MoveNext(out var uid, out var subs, out var battery, out var upgrade))
         {
             
             if(!GetFuseMixture(uid, out var fuse))
@@ -197,7 +192,7 @@ public sealed class SubstationSystem : EntitySystem
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
         var initialPlasma = mixture.GetMoles(Gas.Plasma);
 
-        var molesConsumed = (subs.initialFuseMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
+        var molesConsumed = (subs.InitialFuseMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
         
         var minimumReaction = Math.Min(initialN2, initialPlasma) * molesConsumed / 2;
 
@@ -209,7 +204,7 @@ public sealed class SubstationSystem : EntitySystem
     private float CheckFuseIntegrity(SubstationComponent subs, GasMixture mixture)
     {
 
-        if(subs.initialFuseMoles <= 0f)
+        if(subs.InitialFuseMoles <= 0f)
             return 0f;
 
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
@@ -217,7 +212,7 @@ public sealed class SubstationSystem : EntitySystem
 
         var usableMoles = Math.Min(initialN2, initialPlasma);
         //return in percentage points;
-        return 100 * usableMoles / (subs.initialFuseMoles / 2);
+        return 100 * usableMoles / (subs.InitialFuseMoles / 2);
     }
 
     private void OnFuseChanged(EntityUid uid, SubstationComponent subs, SubstationFuseChangedEvent args)
@@ -235,7 +230,7 @@ public sealed class SubstationSystem : EntitySystem
             initialFuseMoles += mix.GetMoles(i);
         }
 
-        subs.initialFuseMoles = initialFuseMoles;
+        subs.InitialFuseMoles = initialFuseMoles;
 
         var fuseIntegrity = CheckFuseIntegrity(subs, mix);
 
@@ -309,7 +304,7 @@ public sealed class SubstationSystem : EntitySystem
         if(!_lightSystem.TryGetLight(uid, out var light))
             return;
 
-        if (!Resolve(uid, ref subs, ref light, false))
+        if(!Resolve(uid, ref subs, ref light, false))
             return;
 
         if(subs.State == state)
@@ -344,7 +339,7 @@ public sealed class SubstationSystem : EntitySystem
     {
         if(!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
-        _appearance.SetData(uid, SubstationVisuals.Screen, subsState, appearance);
+        _appearanceSystem.SetData(uid, SubstationVisuals.Screen, subsState, appearance);
     }
 
     private void OnAnalyzed(EntityUid uid, SubstationFuseSlotComponent slot, GasAnalyzerScanEvent args)
@@ -352,10 +347,10 @@ public sealed class SubstationSystem : EntitySystem
         if(!TryComp<ContainerManagerComponent>(uid, out var containers))
             return;
 
-        if (!containers.TryGetContainer(slot.FuseSlotId, out var container))
+        if(!containers.TryGetContainer(slot.FuseSlotId, out var container))
             return;
 
-        if (container.ContainedEntities.Count > 0)
+        if(container.ContainedEntities.Count > 0)
         {
             args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), Comp<GasTankComponent>(container.ContainedEntities[0]).Air} };
         }
@@ -368,10 +363,10 @@ public sealed class SubstationSystem : EntitySystem
         if(!TryComp<SubstationFuseSlotComponent>(uid, out var slot) || !TryComp<ContainerManagerComponent>(uid, out var containers))
             return false;
 
-        if (!containers.TryGetContainer(slot.FuseSlotId, out var container))
+        if(!containers.TryGetContainer(slot.FuseSlotId, out var container))
             return false;
         
-        if (container.ContainedEntities.Count > 0)
+        if(container.ContainedEntities.Count > 0)
         {
             var gasTank = Comp<GasTankComponent>(container.ContainedEntities[0]);
             mix = gasTank.Air;
