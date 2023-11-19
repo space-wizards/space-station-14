@@ -35876,6 +35876,13 @@ entities:
     - pos: 9.5,-5.5
       parent: 30
       type: Transform
+- proto: MedicalTechFab
+  entities:
+  - uid: 7713
+    components:
+    - pos: 3.5,-9.5
+      parent: 30
+      type: Transform
 - proto: MedkitBruteFilled
   entities:
   - uid: 2336
