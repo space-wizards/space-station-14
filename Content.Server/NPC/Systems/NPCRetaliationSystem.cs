@@ -15,8 +15,6 @@ public sealed class NPCRetaliationSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
 
-    private readonly HashSet<EntityUid> _deAggroQueue = new();
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -68,8 +66,6 @@ public sealed class NPCRetaliationSystem : EntitySystem
         var query = EntityQueryEnumerator<NPCRetaliationComponent, FactionExceptionComponent>();
         while (query.MoveNext(out var uid, out var retaliationComponent, out var factionException))
         {
-            _deAggroQueue.Clear();
-
             foreach (var entity in new ValueList<EntityUid>(retaliationComponent.AttackMemories.Keys))
             {
                 if (_timing.CurTime < retaliationComponent.AttackMemories[entity])
