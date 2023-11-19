@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Parallax.Biomes;
@@ -5,6 +6,7 @@ using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Parallax;
 
@@ -151,14 +153,27 @@ public sealed partial class BiomeSystem
             return;
         }
 
-        biome.MarkerLayers.Add(args[1]);
+        if (!biome.MarkerLayers.Add(args[1]))
+        {
+            return;
+        }
+
+        biome.ForcedMarkerLayers.Add(args[1]);
     }
 
     private CompletionResult AddMarkerLayerCallbackHelper(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHintOptions(CompletionHelper.Components<BiomeComponent>(args[0], EntityManager), "Biome");
+            var allQuery = AllEntityQuery<MapComponent, BiomeComponent>();
+            var options = new List<CompletionOption>();
+
+            while (allQuery.MoveNext(out var mapComp, out _))
+            {
+                options.Add(new CompletionOption(mapComp.MapId.ToString()));
+            }
+
+            return CompletionResult.FromHintOptions(options, "Biome");
         }
 
         if (args.Length == 2)
