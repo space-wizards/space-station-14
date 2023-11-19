@@ -140,7 +140,7 @@
     sprite: Objects/Specific/Mech/mecha.rsi
     state: ripley
   discipline: Industrial
-  tier: 2
+  tier: 1
   cost: 7500
   recipeUnlocks:
   - RipleyHarness
