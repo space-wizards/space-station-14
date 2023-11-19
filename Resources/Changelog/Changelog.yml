@@ -1,9 +1,4 @@
 Entries:
-- author: HerCoyote23
-  changes:
-  - {message: Northstar gloves have been tuned down a bit., type: Tweak}
-  id: 4693
-  time: '2023-08-27T14:01:44.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The recycler now recycles items off conveyor belts properly., type: Fix}
@@ -2896,3 +2891,8 @@ Entries:
   - {message: Align windoor collision bounds with thindow collision bounds., type: Fix}
   id: 5192
   time: '2023-11-19T06:44:36.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Disposal traversal damage is disabled for now., type: Tweak}
+  id: 5193
+  time: '2023-11-19T10:25:02.0000000+00:00'
