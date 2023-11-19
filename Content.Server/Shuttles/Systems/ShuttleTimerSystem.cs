@@ -7,6 +7,9 @@ using Content.Server.RoundEnd;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.TextScreen.Components;
 using System.Linq;
+using Content.Shared.DeviceNetwork;
+using Robust.Shared.GameObjects;
+using Content.Shared.TextScreen;
 
 // TODO:
 // - emergency shuttle recall inverts timer?
@@ -20,7 +23,9 @@ namespace Content.Server.Shuttles.Systems
     /// </summary>
     public sealed class ShuttleTimerSystem : EntitySystem
     {
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+        // [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
 
         public override void Initialize()
         {
@@ -35,15 +40,8 @@ namespace Content.Server.Shuttles.Systems
         private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
             // currently, all packets are broadcast, and subnetting is implemented by filtering events per-map
-            // a payload with "BroadcastTime" skips any filtering
             // if i can find a way to *neatly* subnet the timers per-grid, without having the prototypes filter,
             // and pass the frequency to systems, this gets simpler and faster
-            if (args.Data.TryGetValue("BroadcastTime", out TimeSpan broadcast))
-            {
-                var timer = new TextScreenTimerEvent(broadcast);
-                RaiseLocalEvent(uid, ref timer);
-                return;
-            }
 
             var timerXform = Transform(uid);
 
@@ -87,28 +85,39 @@ namespace Content.Server.Shuttles.Systems
             RaiseLocalEvent(uid, ref label);
         }
 
+        public void KillAll(string? freq)
+        {
+            var timerQuery = AllEntityQuery<ShuttleTimerComponent, DeviceNetworkComponent>();
+            while (timerQuery.MoveNext(out var uid, out var _, out var net))
+            {
+                if (net.TransmitFrequencyId == freq)
+                {
+                    RemComp<TextScreenTimerComponent>(uid);
+                    _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, string.Empty);
+                }
+            }
+        }
+
         /// <summary>
         /// Helper method for <see cref="EmergencyShuttleSystem"/> and <see cref="RoundEndSystem"/>
         /// </summary>
         /// <param name="duration">Displayed on each evac shuttle timer, in seconds.</param>
-        public void FloodEvacPacket(TimeSpan duration)
-        {
-            var payload = new NetworkPayload
-            {
-                ["BroadcastTime"] = duration
-            };
+        // public void FloodEvacPacket(EntityUid? shuttleMap, EntityUid? sourceMap, EntityUid? destMap,
+        //     TimeSpan? localTimer, TimeSpan? sourceTimer, TimeSpan? destTimer)
+        // {
+        //     var payload = new NetworkPayload
+        //     {
+        //         ["BroadcastTime"] = duration
+        //     };
 
-            var query = EntityQuery<StationEmergencyShuttleComponent>(true);
-            foreach (var comp in query)
-            {
-                if (comp.EmergencyShuttle == null ||
-                    !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value) ||
-                    !TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var netComp))
-                    return;
+        //     AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var comp);
+        //     if (comp == null || comp.EmergencyShuttle == null ||
+        //         !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value) ||
+        //         !TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var netComp))
+        //         return;
 
-                _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
-                return;
-            }
-        }
+        //     _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
+        //     return;
+        // }
     }
 }

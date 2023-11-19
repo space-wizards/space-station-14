@@ -122,11 +122,10 @@
   - type: TextScreenVisuals
     color: PowderBlue
     textOffset: 4,3
-    timerOffset: 6,-4
+    timerOffset: 8,-4
     rowOffset: 12
     rows: 2
-    rowLength: 4
-    minuteFormat: D1
+    rowLength: 5
 
 - type: entity
   id: EvacShuttleTimer

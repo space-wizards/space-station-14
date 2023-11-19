@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
 using Content.Shared.CCVar;
@@ -13,6 +14,7 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
+using FastAccessors;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Timer = Robust.Shared.Timing.Timer;
@@ -399,7 +401,23 @@ public sealed partial class EmergencyShuttleSystem
         AnnounceLaunch();
         UpdateAllEmergencyConsoles();
 
-        _shuttleTimerSystem.FloodEvacPacket(TimeSpan.FromSeconds(_authorizeTime));
+        AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var shuttle);
+        var stationGrid = _station.GetLargestGrid(Comp<StationDataComponent>(station));
+        if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle.EmergencyShuttle, out var net))
+        {
+            AllEntityQuery<StationCentcommComponent>().MoveNext(out _, out var centcomm);
+            var payload = new NetworkPayload
+            {
+                ["ShuttleMap"] = stationGrid == null ? null : Transform(stationGrid.Value).MapUid,
+                ["SourceMap"] = shuttle.EmergencyShuttle,
+                ["DestMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
+                ["LocalTimer"] = TimeSpan.FromSeconds(_authorizeTime),
+                ["SourceTimer"] = TimeSpan.FromSeconds(_authorizeTime + 600 +),
+                ["DestTimer"] = TimeSpan.FromSeconds(_authorizeTime),
+                ["Docked"] = true
+            };
+            _deviceNetworkSystem.QueuePacket(shuttle.EmergencyShuttle.Value, null, payload, net.TransmitFrequency);
+        }
 
         return true;
     }
