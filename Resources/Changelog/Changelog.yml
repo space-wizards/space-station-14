@@ -1,9 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Fixed Sec HUD icons overlapping with speech indicators., type: Fix}
-  id: 4695
-  time: '2023-08-28T06:19:59.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Cables now require less steel to print., type: Tweak}
@@ -2896,3 +2891,9 @@ Entries:
   - {message: Fixed explosions deleting bodyparts and organs inside of people., type: Fix}
   id: 5194
   time: '2023-11-19T17:44:42.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Zombified mice and other small animals no longer spread zombification.,
+    type: Tweak}
+  id: 5195
+  time: '2023-11-19T22:28:05.0000000+00:00'
