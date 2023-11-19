@@ -44,6 +44,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    private EntityQuery<TransformComponent> _xformQuery;
+
     private readonly HashSet<EntityUid> _handledEntities = new();
     private const float DefaultLoadRange = 16f;
     private float _loadRange = DefaultLoadRange;
@@ -68,6 +70,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         base.Initialize();
         Log.Level = LogLevel.Debug;
+        _xformQuery = GetEntityQuery<TransformComponent>();
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         SubscribeLocalEvent<ShuttleFlattenEvent>(OnShuttleFlatten);
@@ -393,6 +396,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     return;
 
                 // Get the set of spawned nodes to avoid overlap.
+                var forced = component.ForcedMarkerLayers.Contains(layer);
                 var spawnSet = _tilePool.Get();
                 var frontier = new ValueList<Vector2i>(32);
 
@@ -460,8 +464,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                         // Check if it's a valid spawn, if so then use it.
                         var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, node);
+                        enumerator.MoveNext(out var existing);
 
-                        if (enumerator.MoveNext(out _))
+                        if (!forced && existing != null)
                             continue;
 
                         // Check if mask matches // anything blocking.
@@ -499,6 +504,15 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         layerMarkers.Add(node);
                         groupSize--;
                         spawnSet.Add(node);
+
+                        if (forced && existing != null)
+                        {
+                            // Just lock anything so we can dump this
+                            lock (component.PendingMarkers)
+                            {
+                                Del(existing.Value);
+                            }
+                        }
                     }
                 }
 
@@ -531,18 +545,81 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             });
         }
 
+        component.ForcedMarkerLayers.Clear();
         var active = _activeChunks[component];
         List<(Vector2i, Tile)>? tiles = null;
 
         foreach (var chunk in active)
         {
+            LoadMarkerChunk(component, gridUid, grid, chunk, seed);
+
             if (!component.LoadedChunks.Add(chunk))
                 continue;
 
             tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
             // Load NOW!
-            LoadChunk(component, gridUid, grid, chunk, seed, tiles, xformQuery);
+            LoadChunk(component, gridUid, grid, chunk, seed, tiles);
         }
+    }
+
+    private void LoadMarkerChunk(
+        BiomeComponent component,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Vector2i chunk,
+        int seed)
+    {
+        // Load any pending marker tiles first.
+        if (!component.PendingMarkers.TryGetValue(chunk, out var layers))
+            return;
+
+        // This needs to be done separately in case we try to add a marker layer and want to force it on existing
+        // loaded chunks.
+        component.ModifiedTiles.TryGetValue(chunk, out var modified);
+        modified ??= _tilePool.Get();
+
+        foreach (var (layer, nodes) in layers)
+        {
+            var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
+
+            foreach (var node in nodes)
+            {
+                if (modified.Contains(node))
+                    continue;
+
+                // Need to ensure the tile under it has loaded for anchoring.
+                if (TryGetBiomeTile(node, component.Layers, seed, grid, out var tile))
+                {
+                    _mapSystem.SetTile(gridUid, grid, node, tile.Value);
+                }
+
+                string? prototype;
+
+                if (TryGetEntity(node, component, grid, out var proto) &&
+                    layerProto.EntityMask.TryGetValue(proto, out var maskedProto))
+                {
+                    prototype = maskedProto;
+                }
+                else
+                {
+                    prototype = layerProto.Prototype;
+                }
+
+                // If it is a ghost role then purge it
+                // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
+                // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
+                var uid = EntityManager.CreateEntityUninitialized(prototype, _mapSystem.GridTileToLocal(gridUid, grid, node));
+                RemComp<GhostTakeoverAvailableComponent>(uid);
+                RemComp<GhostRoleComponent>(uid);
+                EntityManager.InitializeAndStartEntity(uid);
+                modified.Add(node);
+            }
+        }
+
+        if (modified.Count == 0)
+            _tilePool.Return(modified);
+
+        component.PendingMarkers.Remove(chunk);
     }
 
     /// <summary>
@@ -554,55 +631,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         MapGridComponent grid,
         Vector2i chunk,
         int seed,
-        List<(Vector2i, Tile)> tiles,
-        EntityQuery<TransformComponent> xformQuery)
+        List<(Vector2i, Tile)> tiles)
     {
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= _tilePool.Get();
-
-        // Load any pending marker tiles first.
-        if (component.PendingMarkers.TryGetValue(chunk, out var layers))
-        {
-            foreach (var (layer, nodes) in layers)
-            {
-                var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
-
-                foreach (var node in nodes)
-                {
-                    if (modified.Contains(node))
-                        continue;
-
-                    // Need to ensure the tile under it has loaded for anchoring.
-                    if (TryGetBiomeTile(node, component.Layers, seed, grid, out var tile))
-                    {
-                        _mapSystem.SetTile(gridUid, grid, node, tile.Value);
-                    }
-
-                    string? prototype;
-
-                    if (TryGetEntity(node, component, grid, out var proto) &&
-                        layerProto.EntityMask.TryGetValue(proto, out var maskedProto))
-                    {
-                        prototype = maskedProto;
-                    }
-                    else
-                    {
-                        prototype = layerProto.Prototype;
-                    }
-
-                    // If it is a ghost role then purge it
-                    // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
-                    // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
-                    var uid = EntityManager.CreateEntityUninitialized(prototype, _mapSystem.GridTileToLocal(gridUid, grid, node));
-                    RemComp<GhostTakeoverAvailableComponent>(uid);
-                    RemComp<GhostRoleComponent>(uid);
-                    EntityManager.InitializeAndStartEntity(uid);
-                    modified.Add(node);
-                }
-            }
-
-            component.PendingMarkers.Remove(chunk);
-        }
 
         // Set tiles first
         for (var x = 0; x < ChunkSize; x++)
@@ -653,7 +685,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 var ent = Spawn(entPrototype, _mapSystem.GridTileToLocal(gridUid, grid, indices));
 
                 // At least for now unless we do lookups or smth, only work with anchoring.
-                if (xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
+                if (_xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
                 {
                     _transform.AnchorEntity(ent, xform, gridUid, grid, indices);
                 }

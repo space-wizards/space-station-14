@@ -2,7 +2,8 @@
   id: DefaultMapPool
   maps:
   - Aspid
-#  - Bagel
+  - Atlas
+  - Bagel
   - Barratry
   - CorvaxDelta
   - Box

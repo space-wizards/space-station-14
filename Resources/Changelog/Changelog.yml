@@ -1,124 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - message: The nuclear operative medic has returned to using the standard Syndicate
-      gas mask, which offers flash immunity.
-    type: Tweak
-  id: 4680
-  time: '2023-08-25T03:15:40.0000000+00:00'
-- author: crazybrain
-  changes:
-  - message: CentCom official costume no longer has AA.
-    type: Fix
-  - message: CentCom official costume items are more CentCom themed.
-    type: Tweak
-  id: 4681
-  time: '2023-08-25T03:20:57.0000000+00:00'
-- author: Whisper
-  changes:
-  - message: The Detective's gun has been moved to their holster from their cabinet.
-      It comes with one speedloader each of the standard rubber and lethal bullets
-      of officers.
-    type: Tweak
-  - message: The Detective's scanner and pad were moved to their backpack from their
-      pockets.
-    type: Tweak
-  - message: Detective no longer spawns with a pistol magazine.
-    type: Remove
-  id: 4682
-  time: '2023-08-25T03:36:44.0000000+00:00'
-- author: Flareguy
-  changes:
-  - message: Asteroid floor, snow, and snow tiles are now varied in a more organic
-      way.
-    type: Tweak
-  - message: Removed asteroid coarse sand.
-    type: Remove
-  id: 4683
-  time: '2023-08-25T03:40:04.0000000+00:00'
-- author: PJB3005
-  changes:
-  - message: The particle accelerator now uses an MV power wire instead of HV. You
-      might need to manually connect it up before the maps get fixed.
-    type: Tweak
-  id: 4684
-  time: '2023-08-25T03:42:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix eye zoom not lerping properly so it looks like it's 30fps.
-    type: Fix
-  id: 4685
-  time: '2023-08-25T04:41:04.0000000+00:00'
-- author: PJB3005
-  changes:
-  - message: Portable generators have been reworked.
-    type: Tweak
-  - message: Portable generators now use a better sprite from Baystation12.
-    type: Tweak
-  - message: Portable generators have been renamed to P.A.C.M.A.N. & friends, to match
-      the classic SS13 names.
-    type: Tweak
-  - message: 'Added the J.R.P.A.C.M.A.N.: it runs off welding fuel, will be easy to
-      find in maintenance, and can directly power rooms (connecting to LV cables).'
-    type: Add
-  - message: Portable generators now need a bit of *effort* to start.
-    type: Add
-  - message: You can now eject fuel from portable generators.
-    type: Add
-  - message: The (S.U.P.E.R.)P.A.C.M.A.N. can now have its output switched between
-      HV and MV output.
-    type: Tweak
-  - message: Rebalanced power values and efficiency curves for portable generators.
-    type: Tweak
-  - message: The (J.R.)P.A.C.M.A.N. now exhausts hot CO2 gas. Use in a properly ventilated
-      room!
-    type: Tweak
-  id: 4686
-  time: '2023-08-25T18:40:42.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Fixed NPCs not working.
-    type: Fix
-  id: 4687
-  time: '2023-08-25T21:52:23.0000000+00:00'
-- author: liltenhead
-  changes:
-  - message: Ore bags can now pick up artifact fragments.
-    type: Tweak
-  id: 4688
-  time: '2023-08-26T11:33:55.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - message: Made bananas peelable.
-    type: Tweak
-  id: 4689
-  time: '2023-08-26T16:31:14.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - message: The Syndicate's Holoparasite have taken to yelling catchphrases as they
-      fight.
-    type: Add
-  id: 4690
-  time: '2023-08-26T21:26:28.0000000+00:00'
-- author: qwerltaz
-  changes:
-  - message: Fixed wallmount devices being unable to be deconstructed.
-    type: Fix
-  id: 4691
-  time: '2023-08-26T22:25:23.0000000+00:00'
-- author: PJB3005
-  changes:
-  - message: Objects with interfaces now correctly respect interaction range, so green
-      outline really means you can open them.
-    type: Fix
-  id: 4692
-  time: '2023-08-27T08:27:43.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - message: Northstar gloves have been tuned down a bit.
-    type: Tweak
-  id: 4693
-  time: '2023-08-27T14:01:44.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: The recycler now recycles items off conveyor belts properly.
@@ -3661,3 +3541,83 @@ Entries:
     type: Tweak
   id: 5134
   time: '2023-11-18T23:18:02.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Made it so you can unbuckle players from Vehicles IF they are in incapacitated
+      (crit or dead)., type: Tweak}
+  - {message: You can no longer unbuckle yourself while you are incapacitated., type: Fix}
+  id: 5180
+  time: '2023-11-16T02:39:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Clicking actions in the HUD no longer triggers them multiple times.,
+    type: Fix}
+  - {message: Fixed action bar overlapping vote box in separated HUD., type: Fix}
+  - {message: Dragging actions to the action bar now shows an empty slot where they
+      can be added., type: Tweak}
+  id: 5181
+  time: '2023-11-16T05:12:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Added another mining song by Derflerp, Voyage Neverending.', type: Add}
+  id: 5182
+  time: '2023-11-16T13:28:07.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced IED's damage from 90 -> 45, type: Tweak}
+  id: 5183
+  time: '2023-11-16T16:13:23.0000000+00:00'
+- author: RaiIsNotYourGuy
+  changes:
+  - {message: Shuttle Call Time reduced to 3 minutes from 10 minutes for NukeOps gamerule,
+    type: Tweak}
+  id: 5184
+  time: '2023-11-16T21:01:06.0000000+00:00'
+- author: 2013HORSEMEATSCANDAL
+  changes:
+  - {message: Cybersun has begun naming their operations to make them easier to remember.,
+    type: Add}
+  id: 5185
+  time: '2023-11-16T21:04:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tweak biome generation on planets to make floors more varied and add
+      stalagmites to caves., type: Tweak}
+  id: 5186
+  time: '2023-11-16T21:22:06.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Atlas Station is back for lowpop rounds!, type: Add}
+  id: 5187
+  time: '2023-11-16T22:35:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Goats now grow wool which moths can eat., type: Add}
+  id: 5188
+  time: '2023-11-17T08:51:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed artifact crafting requiring separate stacks and wasting fragments.,
+    type: Fix}
+  id: 5189
+  time: '2023-11-18T04:31:50.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Moths can no longer eat welding masks., type: Fix}
+  id: 5190
+  time: '2023-11-18T04:32:17.0000000+00:00'
+- author: Jrpl
+  changes:
+  - {message: Borgs no longer take structural damage., type: Tweak}
+  id: 5191
+  time: '2023-11-19T06:44:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Align windoor collision bounds with thindow collision bounds., type: Fix}
+  id: 5192
+  time: '2023-11-19T06:44:36.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Disposal traversal damage is disabled for now., type: Tweak}
+  id: 5193
+  time: '2023-11-19T10:25:02.0000000+00:00'
