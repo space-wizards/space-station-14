@@ -13,6 +13,7 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Inventory;
 
@@ -49,15 +50,14 @@ public partial class InventorySystem
 
     protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent
     {
-        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this, args.TargetSlots);
+        var containerEnumerator = new InventorySlotEnumerator(component, args.TargetSlots);
 
         // this copies the by-ref event
         var ev = new InventoryRelayedEvent<T>(args);
 
-        while (containerEnumerator.MoveNext(out var container))
+        while (containerEnumerator.NextItem(out var item))
         {
-            if (!container.ContainedEntity.HasValue) continue;
-            RaiseLocalEvent(container.ContainedEntity.Value, ev);
+            RaiseLocalEvent(item, ev);
         }
 
         // and now we copy it back
@@ -66,15 +66,11 @@ public partial class InventorySystem
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : IInventoryRelayEvent
     {
-        if (args.TargetSlots == SlotFlags.NONE)
-            return;
-
-        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this, args.TargetSlots);
+        var containerEnumerator = new InventorySlotEnumerator(component, args.TargetSlots);
         var ev = new InventoryRelayedEvent<T>(args);
-        while (containerEnumerator.MoveNext(out var container))
+        while (containerEnumerator.NextItem(out var item))
         {
-            if (!container.ContainedEntity.HasValue) continue;
-            RaiseLocalEvent(container.ContainedEntity.Value, ev);
+            RaiseLocalEvent(item, ev);
         }
     }
 
@@ -82,14 +78,11 @@ public partial class InventorySystem
     {
         // Automatically relay stripping related verbs to all equipped clothing.
 
-        if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? proto))
-            return;
-
         if (!TryComp(uid, out ContainerManagerComponent? containers))
             return;
 
         var ev = new InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>(args);
-        foreach (var slotDef in proto.Slots)
+        foreach (var slotDef in component.Slots)
         {
             if (slotDef.StripHidden && args.User != uid)
                 continue;

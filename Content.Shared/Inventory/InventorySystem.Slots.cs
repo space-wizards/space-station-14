@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Inventory;
 
@@ -28,9 +29,14 @@ public partial class InventorySystem : EntitySystem
         if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
             return;
 
-        foreach (var slot in invTemplate.Slots)
+        component.Slots = invTemplate.Slots;
+        component.Containers = new ContainerSlot[component.Slots.Length];
+        for (var i = 0; i < component.Containers.Length; i++)
         {
-            _containerSystem.EnsureContainer<ContainerSlot>(uid, slot.Name).OccludesLight = false;
+            var slot = component.Slots[i];
+            var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, slot.Name);
+            container.OccludesLight = false;
+            component.Containers[i] = container;
         }
     }
 
@@ -52,7 +58,8 @@ public partial class InventorySystem : EntitySystem
             return false;
         }
 
-        if (container is not ContainerSlot containerSlotChecked) return false;
+        if (container is not ContainerSlot containerSlotChecked)
+            return false;
 
         containerSlot = containerSlotChecked;
         return true;
@@ -67,12 +74,10 @@ public partial class InventorySystem : EntitySystem
         if (!Resolve(uid, ref inventory, false))
             return false;
 
-        if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype))
-            return false;
-
-        foreach (var slotDef in templatePrototype.Slots)
+        foreach (var slotDef in inventory.Slots)
         {
-            if (!slotDef.Name.Equals(slot)) continue;
+            if (!slotDef.Name.Equals(slot))
+                continue;
             slotDefinition = slotDef;
             return true;
         }
@@ -80,33 +85,36 @@ public partial class InventorySystem : EntitySystem
         return false;
     }
 
-    public bool TryGetContainerSlotEnumerator(EntityUid uid, out ContainerSlotEnumerator containerSlotEnumerator, InventoryComponent? component = null)
+    public bool TryGetContainerSlotEnumerator(Entity<InventoryComponent?> entity, out InventorySlotEnumerator containerSlotEnumerator, SlotFlags flags = SlotFlags.All)
     {
-        containerSlotEnumerator = default;
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(entity.Owner, ref entity.Comp))
+        {
+            containerSlotEnumerator = default;
             return false;
+        }
 
-        containerSlotEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this);
+        containerSlotEnumerator = new InventorySlotEnumerator(entity.Comp, flags);
         return true;
     }
 
-    public bool TryGetSlots(EntityUid uid, [NotNullWhen(true)] out SlotDefinition[]? slotDefinitions, InventoryComponent? inventoryComponent = null)
+    public InventorySlotEnumerator GetSlotEnumerator(Entity<InventoryComponent?> entity, SlotFlags flags = SlotFlags.All)
     {
-        slotDefinitions = null;
-        if (!Resolve(uid, ref inventoryComponent, false))
-            return false;
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return InventorySlotEnumerator.Empty;
 
-        if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventoryComponent.TemplateId, out var templatePrototype))
-            return false;
-
-        slotDefinitions = templatePrototype.Slots;
-        return true;
+        return new InventorySlotEnumerator(entity.Comp, flags);
     }
 
-    public SlotDefinition[] GetSlots(EntityUid uid, InventoryComponent? inventoryComponent = null)
+    public bool TryGetSlots(EntityUid uid, [NotNullWhen(true)] out SlotDefinition[]? slotDefinitions)
     {
-        if (!Resolve(uid, ref inventoryComponent)) throw new InvalidOperationException();
-        return _prototypeManager.Index<InventoryTemplatePrototype>(inventoryComponent.TemplateId).Slots;
+        if (!TryComp(uid, out InventoryComponent? inv))
+        {
+            slotDefinitions = null;
+            return false;
+        }
+
+        slotDefinitions = inv.Slots;
+        return true;
     }
 
     private ViewVariablesPath? HandleViewVariablesSlots(EntityUid uid, InventoryComponent comp, string relativePath)
@@ -118,48 +126,98 @@ public partial class InventorySystem : EntitySystem
 
     private IEnumerable<string> ListViewVariablesSlots(EntityUid uid, InventoryComponent comp)
     {
-        foreach (var slotDef in GetSlots(uid, comp))
+        foreach (var slotDef in comp.Slots)
         {
             yield return slotDef.Name;
         }
     }
 
-    public struct ContainerSlotEnumerator
+    /// <summary>
+    /// Enumerator for iterating over an inventory's slot containers. Also has methods that skip empty containers.
+    /// It should be safe to add or remove items while enumerating.
+    /// </summary>
+    public struct InventorySlotEnumerator
     {
-        private readonly InventorySystem _inventorySystem;
-        private readonly EntityUid _uid;
         private readonly SlotDefinition[] _slots;
+        private readonly ContainerSlot[] _containers;
         private readonly SlotFlags _flags;
         private int _nextIdx = 0;
+        public static InventorySlotEnumerator Empty = new(Array.Empty<SlotDefinition>(), Array.Empty<ContainerSlot>());
 
-        public ContainerSlotEnumerator(EntityUid uid, string prototypeId, IPrototypeManager prototypeManager, InventorySystem inventorySystem, SlotFlags flags = SlotFlags.All)
+        public InventorySlotEnumerator(InventoryComponent inventory,  SlotFlags flags = SlotFlags.All)
+            : this(inventory.Slots, inventory.Containers, flags)
         {
-            _uid = uid;
-            _inventorySystem = inventorySystem;
-            _flags = flags;
+        }
 
-            if (prototypeManager.TryIndex<InventoryTemplatePrototype>(prototypeId, out var prototype))
-                _slots = prototype.Slots;
-            else
-                _slots = Array.Empty<SlotDefinition>();
+        public InventorySlotEnumerator(SlotDefinition[] slots, ContainerSlot[] containers,  SlotFlags flags = SlotFlags.All)
+        {
+            DebugTools.Assert(flags != SlotFlags.NONE);
+            DebugTools.AssertEqual(slots.Length, containers.Length);
+            _flags = flags;
+            _slots = slots;
+            _containers = containers;
         }
 
         public bool MoveNext([NotNullWhen(true)] out ContainerSlot? container)
         {
-            container = null;
-
             while (_nextIdx < _slots.Length)
             {
-                var slot = _slots[_nextIdx];
-                _nextIdx++;
+                var i = _nextIdx++;
+                var slot = _slots[i];
 
                 if ((slot.SlotFlags & _flags) == 0)
                     continue;
 
-                if (_inventorySystem.TryGetSlotContainer(_uid, slot.Name, out container, out _))
-                    return true;
+                container = _containers[i];
+                return true;
             }
 
+            container = null;
+            return false;
+        }
+
+        public bool NextItem(out EntityUid item)
+        {
+            while (_nextIdx < _slots.Length)
+            {
+                var i = _nextIdx++;
+                var slot = _slots[i];
+
+                if ((slot.SlotFlags & _flags) == 0)
+                    continue;
+
+                var container = _containers[i];
+                if (container.ContainedEntity is { } uid)
+                {
+                    item = uid;
+                    return true;
+                }
+            }
+
+            item = default;
+            return false;
+        }
+
+        public bool NextItem(out EntityUid item, [NotNullWhen(true)] out SlotDefinition? slot)
+        {
+            while (_nextIdx < _slots.Length)
+            {
+                var i = _nextIdx++;
+                slot = _slots[i];
+
+                if ((slot.SlotFlags & _flags) == 0)
+                    continue;
+
+                var container = _containers[i];
+                if (container.ContainedEntity is { } uid)
+                {
+                    item = uid;
+                    return true;
+                }
+            }
+
+            item = default;
+            slot = null;
             return false;
         }
     }
