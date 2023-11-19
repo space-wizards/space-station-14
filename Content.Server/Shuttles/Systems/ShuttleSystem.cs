@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.Parallax;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
@@ -26,6 +27,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly BiomeSystem _biomes = default!;
     [Dependency] private readonly BodySystem _bobby = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
     [Dependency] private readonly DoorSystem _doors = default!;
@@ -34,6 +36,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;

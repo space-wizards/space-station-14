@@ -700,6 +700,7 @@ public sealed partial class ShuttleSystem
         var transform = _physics.GetPhysicsTransform(uid, xform, _xformQuery);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
         var immune = new HashSet<EntityUid>();
+        var tileSet = new List<(Vector2i, Tile)>();
 
         foreach (var fixture in manager.Fixtures.Values)
         {
@@ -710,6 +711,10 @@ public sealed partial class ShuttleSystem
             // Create a small border around it.
             aabb = aabb.Enlarged(0.2f);
             aabbs.Add(aabb);
+
+            // Handle clearing biome stuff as relevant.
+            tileSet.Clear();
+            _biomes.ReserveTiles(xform.MapUid.Value, aabb, tileSet);
 
             foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))
             {
