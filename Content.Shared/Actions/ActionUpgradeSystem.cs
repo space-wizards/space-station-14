@@ -32,8 +32,8 @@ public sealed class ActionUpgradeSystem : EntitySystem
 
     private bool CanLevelUp
         (int newLevel,
-         Dictionary<int, string> levelDict,
-        [NotNullWhen(true)]out string? newLevelProto)
+         Dictionary<int, EntProtoId> levelDict,
+        [NotNullWhen(true)]out EntProtoId? newLevelProto)
     {
         newLevelProto = null;
 
