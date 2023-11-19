@@ -75,12 +75,7 @@ public sealed class NPCRetaliationSystem : EntitySystem
                 if (_timing.CurTime < retaliationComponent.AttackMemories[entity])
                     continue;
 
-                _deAggroQueue.Add(entity);
-            }
-
-            foreach (var entityToDeAggro in _deAggroQueue)
-            {
-                _npcFaction.DeAggroEntity(uid, entityToDeAggro, factionException);
+                _npcFaction.DeAggroEntity(uid, entity, factionException);
             }
         }
     }
