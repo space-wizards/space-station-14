@@ -684,6 +684,7 @@
       - MedkitAdvanced
       - MedkitRadiation
       - MedkitCombat
+      - Jug
     dynamicRecipes:
       - HandheldCrewMonitor
       - ClothingHandsGlovesNitrile
