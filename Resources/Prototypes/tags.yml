@@ -483,6 +483,9 @@
   id: Fruit
 
 - type: Tag
+  id: Fuse
+
+- type: Tag
   id: Galaxythistle
 
 - type: Tag

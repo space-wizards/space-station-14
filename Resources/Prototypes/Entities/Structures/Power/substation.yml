@@ -21,6 +21,20 @@
       map: ["substationBattery"]
       shader: unshaded
   - type: Substation
+  - type: SubstationFuseSlot
+    fuseSlotId: fuse_slot
+  - type: ContainerContainer
+    containers:
+      fuse_slot: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      fuse_slot:
+        ejectOnInteract: true
+        name: HV Fuse
+        startingItem: GasFuseFilled
+        whitelist:
+          tags:
+          - Fuse
   - type: SubstationVisuals
     screenLayer: "substationScreen"
     integrityStates:
@@ -150,6 +164,22 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
+      fuse_slot: !type:ContainerSlot
+  - type: SubstationFuseSlot
+    fuseSlotId: fuse_slot
+  - type: ItemSlots
+    slots:
+      fuse_slot:
+        ejectOnInteract: true
+        name: HV Fuse
+        startingItem: GasFuseFilled
+        whitelist:
+          tags:
+          - Fuse
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-substation
+    layoutId: Substation
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
@@ -246,6 +276,14 @@
   components:
   - type: Battery
     startingCharge: 0
+  - type: ItemSlots
+    slots:
+      fuse_slot:
+        ejectOnInteract: true
+        name: HV Fuse
+        startingItem:
+  - type: Substation
+    state: Bad
 
 - type: entity
   parent: BaseSubstationWall
@@ -255,6 +293,23 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 2000000
+
+- type: entity
+  parent: BaseSubstationWall
+  id: SubstationWallBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    maxCharge: 2000000
+    startingCharge: 0
+  - type: ItemSlots
+    slots:
+      fuse_slot:
+        ejectOnInteract: true
+        name: HV Fuse
+        startingItem:
+  - type: Substation
+    state: Bad
 
 # Construction Frame
 - type: entity

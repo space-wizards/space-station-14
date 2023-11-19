@@ -561,6 +561,11 @@
       materialRequirements:
         CableMV: 5
         CableHV: 5
+#      tagRequirements:
+#        Fuse:
+#          Amount: 1
+#          DefaultPrototype: GasFuse
+#          ExamineName: HV Fuse
     - type: PhysicalComposition
       materialComposition:
         Glass: 200

@@ -159,3 +159,20 @@
         - 0           # CO2
         - 2.051379050 # plasma
       temperature: 293.15
+
+- type: entity
+  id: GasFuseFilled
+  parent: GasFuse
+  name: HV Fuse
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      volume: 5
+      moles:
+        - 0           # oxygen
+        - 1.025689525 # nitrogen
+        - 0           # CO2
+        - 1.025689525 # plasma
+      temperature: 293.15

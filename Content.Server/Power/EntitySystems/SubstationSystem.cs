@@ -1,18 +1,21 @@
+using System.Diagnostics.CodeAnalysis;
 using Robust.Server.GameObjects;
-using Robust.Shared.Timing; 
+using Robust.Shared.Timing;
+using Robust.Shared.Containers;
 using Content.Server.Power.Components;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos;
 using Content.Shared.Power.Substation;
 using Content.Shared.Access.Systems;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Examine;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Power.EntitySystems;
 
 public sealed class SubstationSystem : EntitySystem 
 {
-
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    
     [Dependency] private readonly PointLightSystem _lightSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _sharedLightSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
@@ -33,62 +36,100 @@ public sealed class SubstationSystem : EntitySystem
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
-        SubscribeLocalEvent<SubstationComponent, MapInitEvent>(OnSubstationInit);
+        SubscribeLocalEvent<SubstationComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SubstationComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SubstationComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<SubstationFuseSlotComponent, GasAnalyzerScanEvent>(OnAnalyzed);
+        SubscribeLocalEvent<SubstationComponent, SubstationFuseChangedEvent>(OnFuseChanged);
+
     }
 
-    private void OnSubstationInit(EntityUid uid, SubstationComponent component, MapInitEvent args) 
-    {}
+    private void OnComponentInit(EntityUid uid, SubstationComponent component, ComponentInit args) 
+    {
+        if(component.State == SubstationIntegrityState.Bad)
+        {
+            TryComp<PowerNetworkBatteryComponent>(uid, out var battery);
+            if(battery == null)
+                return;
+    
+            component.LastIntegrity = 0.0f;
+            battery.Enabled = false;
+            battery.CanCharge = false;
+            battery.CanDischarge = false;
+            if(HasComp<ExaminableBatteryComponent>(uid))
+                RemComp<ExaminableBatteryComponent>(uid);
+
+            _lightSystem.TryGetLight(uid, out var light);
+            if(light == null)
+                return;
+            
+            _lightSystem.SetColor(uid, Color.Red, light);
+            UpdateAppearance(uid, component.State);
+        }
+    }
 
     private void OnExamine(EntityUid uid, SubstationComponent component, ExaminedEvent args) 
     {
         if (args.IsInDetailsRange)
         {
-            if(component.Integrity > 0.0f)
+            if(!GetFuseMixture(uid, out var mix))
             {
-                var integrityPercentRounded = (int) (component.Integrity);
                 args.PushMarkup(
-                    Loc.GetString(
-                        "substation-component-examine-integrity",
-                        ("percent", integrityPercentRounded),
-                        ("markupPercentColor", "green")
-                    )
+                    Loc.GetString("substation-component-examine-no-fuse")
                 );
+                return;
             }
             else
             {
+                var integrity = CheckFuseIntegrity(component, mix);
+                if(integrity > 0.0f)
+                {
+                    var integrityPercentRounded = (int) (integrity);
+                    args.PushMarkup(
+                        Loc.GetString(
+                            "substation-component-examine-integrity",
+                            ("percent", integrityPercentRounded),
+                            ("markupPercentColor", "green")
+                        )
+                    );
+                }
+            else
+            {
                 args.PushMarkup(
-                Loc.GetString(
-                    "substation-component-examine-malfunction"
-                    )
+                    Loc.GetString("substation-component-examine-malfunction")
                 );
             }
+            }
+            
         }
     }
 
     public override void Update(float deltaTime)
     {
 
+        base.Update(deltaTime);
+
         _substationLightBlinkTimer -= deltaTime;
-		if(_substationLightBlinkTimer <= 0f)
-		{
-			_substationLightBlinkTimer = _substationLightBlinkInterval;
-			_substationLightBlinkState = !_substationLightBlinkState;
-;
-            var lightquery = EntityQueryEnumerator<SubstationComponent, PointLightComponent>();
-	      	while (lightquery.MoveNext(out var uid, out var subs, out var light))
-			{
+        if(_substationLightBlinkTimer <= 0f)
+        {
+            _substationLightBlinkTimer = _substationLightBlinkInterval;
+            _substationLightBlinkState = !_substationLightBlinkState;
+
+            var lightquery = EntityQueryEnumerator<SubstationComponent>();
+              while (lightquery.MoveNext(out var uid, out var subs))
+            {
                 if(subs.State == SubstationIntegrityState.Healthy)
                     continue;
                 
-				_lightSystem.TryGetLight(uid, out var shlight);
+                if(!_lightSystem.TryGetLight(uid, out var shlight))
+                    return;
+
                 if(_substationLightBlinkState)
-				    _sharedLightSystem.SetEnergy(uid, 1.6f, shlight);
+                    _sharedLightSystem.SetEnergy(uid, 1.6f, shlight);
                 else
-				    _sharedLightSystem.SetEnergy(uid, 1f, shlight);
-			}
-		}
+                    _sharedLightSystem.SetEnergy(uid, 1f, shlight);
+            }
+        }
 
         if(!_substationDecayEnabled)
         {
@@ -104,57 +145,139 @@ public sealed class SubstationSystem : EntitySystem
         var query = EntityQueryEnumerator<SubstationComponent, PowerNetworkBatteryComponent>();
         while (query.MoveNext(out var uid, out var subs, out var battery))
         {
+            
+            if(!GetFuseMixture(uid, out var fuse))
+                continue;
 
-            if(subs.DecayEnabled && subs.Integrity >= 0.0f)
+            if(subs.DecayEnabled && subs.LastIntegrity >= 0.0f)
             {
-                var lastIntegrity = subs.Integrity;
-                var decay = battery.CurrentSupply * deltaTime / _substationDecayCoeficient;
-                subs.Integrity -= decay;
+                ConsumeFuseGas(deltaTime, subs, battery, fuse);
+                var fuseIntegrity = CheckFuseIntegrity(subs, fuse);
 
-                if(subs.Integrity <= 0.0f) 
+                if(fuseIntegrity <= 0.0f)
                 {
-                    ShutdownSubstation(uid, subs, battery);
+                    ShutdownSubstation(uid, subs);
                     _substationDecayTimer = _defaultSubstationDecayTimeout;
                     _substationDecayEnabled = false;
-                }
 
-                if(subs.Integrity < 30f && lastIntegrity >= 30f)
-                {
-                    subs.State = SubstationIntegrityState.Bad;
-				    _lightSystem.TryGetLight(uid, out var shlight);
-                    ChangeLightColor(uid, subs, shlight);
+                    subs.LastIntegrity = fuseIntegrity;
                     continue;
                 }
-                if(subs.Integrity < 70f && lastIntegrity >= 70f)
+
+                if(fuseIntegrity < 30f && subs.LastIntegrity >= 30f)
                 {
-                    subs.State = SubstationIntegrityState.Unhealthy;
-				    _lightSystem.TryGetLight(uid, out var shlight);
-                    ChangeLightColor(uid, subs, shlight);
+                    ChangeState(uid, SubstationIntegrityState.Bad, subs);
                 }
+                else if(fuseIntegrity < 70f && subs.LastIntegrity >= 70f)
+                {
+                    ChangeState(uid, SubstationIntegrityState.Unhealthy, subs);
+                }
+
+                subs.LastIntegrity = fuseIntegrity;
             }
         }
     }
 
-    private void ShutdownSubstation(EntityUid uid, SubstationComponent? subs=null, PowerNetworkBatteryComponent? battery=null)
+    private void ConsumeFuseGas(float deltaTime, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
     {
-        if (!Resolve(uid, ref subs, ref battery, false))
+        var initialN2 = mixture.GetMoles(Gas.Nitrogen);
+        var initialPlasma = mixture.GetMoles(Gas.Plasma);
+
+        var molesConsumed = subs.initialFuseMoles * battery.CurrentSupply * deltaTime / _substationDecayCoeficient;
+        
+        var minimumReaction = Math.Min(initialN2, initialPlasma) * molesConsumed / 2;
+
+        mixture.AdjustMoles(Gas.Nitrogen, -minimumReaction);
+        mixture.AdjustMoles(Gas.Plasma, -minimumReaction);
+        mixture.AdjustMoles(Gas.NitrousOxide, minimumReaction*2);
+    }
+
+    private float CheckFuseIntegrity(SubstationComponent subs, GasMixture mixture)
+    {
+
+        if(subs.initialFuseMoles <= 0f)
+            return 0f;
+
+        var initialN2 = mixture.GetMoles(Gas.Nitrogen);
+        var initialPlasma = mixture.GetMoles(Gas.Plasma);
+
+        var usableMoles = Math.Min(initialN2, initialPlasma);
+        //return in percentage points;
+        return 100 * usableMoles / (subs.initialFuseMoles / 2);
+    }
+
+    private void OnFuseChanged(EntityUid uid, SubstationComponent subs, SubstationFuseChangedEvent args)
+    {
+        if(!GetFuseMixture(uid, out var mix))
+        {
+            ShutdownSubstation(uid, subs);
+            subs.LastIntegrity = 0f;
             return;
-        subs.Integrity = 0.0f;
+        }
+        
+        var initialFuseMoles = 0f;
+        for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+        {
+            initialFuseMoles += mix.GetMoles(i);
+        }
+
+        subs.initialFuseMoles = initialFuseMoles;
+
+        var fuseIntegrity = CheckFuseIntegrity(subs, mix);
+
+        if(fuseIntegrity <= 0.0f)
+        {
+            ShutdownSubstation(uid, subs);
+            subs.LastIntegrity = fuseIntegrity;
+            return;
+        }
+        if(fuseIntegrity < 30f)
+        {
+            ChangeState(uid, SubstationIntegrityState.Bad, subs);
+        }
+        else if(fuseIntegrity < 70f)
+        {
+            ChangeState(uid, SubstationIntegrityState.Unhealthy, subs);
+        }
+        else
+        {
+            ChangeState(uid, SubstationIntegrityState.Healthy, subs);
+        }
+        subs.LastIntegrity = fuseIntegrity;
+    }
+
+    private void ShutdownSubstation(EntityUid uid, SubstationComponent subs)
+    {
+        TryComp<PowerNetworkBatteryComponent>(uid, out var battery);
+        if(battery == null)
+            return;
+
+        subs.LastIntegrity = 0.0f;
         battery.Enabled = false;
         battery.CanCharge = false;
         battery.CanDischarge = false;
-        RemComp<ExaminableBatteryComponent>(uid);
+        if(HasComp<ExaminableBatteryComponent>(uid))
+            RemComp<ExaminableBatteryComponent>(uid);
+
+        ChangeState(uid, SubstationIntegrityState.Bad, subs);
     }
 
     private void OnRejuvenate(EntityUid uid, SubstationComponent subs, RejuvenateEvent args)
     {
 
-        subs.Integrity = 100.0f;
-        subs.State = SubstationIntegrityState.Healthy;
+        subs.LastIntegrity = 100.0f;
 
-        TryComp<PointLightComponent>(uid, out var light);
-        ChangeLightColor(uid, subs, light);
+        ChangeState(uid, SubstationIntegrityState.Healthy, subs);
 
+        if(GetFuseMixture(uid, out var mix))
+        {
+            mix.SetMoles(Gas.Nitrogen, 1.025689525f);
+            mix.SetMoles(Gas.Plasma, 1.025689525f);
+        }
+    }
+
+    private void RestoreSubstation(EntityUid uid, SubstationComponent subs)
+    {
         TryComp<PowerNetworkBatteryComponent>(uid, out var battery);
         if(battery == null)
             return;
@@ -166,26 +289,42 @@ public sealed class SubstationSystem : EntitySystem
             AddComp<ExaminableBatteryComponent>(uid);
     }
 
-    private void ChangeLightColor(EntityUid uid, SubstationComponent? subs=null, SharedPointLightComponent? light= null)
-	{
-		if (!Resolve(uid, ref subs, ref light, false))
+    private void ChangeState(EntityUid uid, SubstationIntegrityState state, SubstationComponent? subs=null)
+    {
+
+        if(!_lightSystem.TryGetLight(uid, out var light))
             return;
-		
-		if(subs.State == SubstationIntegrityState.Healthy)
+
+        if (!Resolve(uid, ref subs, ref light, false))
+            return;
+
+        if(subs.State == state)
+            return;
+
+        if(state == SubstationIntegrityState.Healthy)
         {
-			_lightSystem.SetColor(uid, new Color(0x3d, 0xb8, 0x3b), light);
+            if(subs.State == SubstationIntegrityState.Bad)
+            {
+                RestoreSubstation(uid, subs);
+            }
+            _lightSystem.SetColor(uid, new Color(0x3d, 0xb8, 0x3b), light);
         }
         else if(subs.State == SubstationIntegrityState.Unhealthy)
         {
-			_lightSystem.SetColor(uid, Color.Yellow, light);
+            if(subs.State == SubstationIntegrityState.Bad)
+            {
+                RestoreSubstation(uid, subs);
+            }
+            _lightSystem.SetColor(uid, Color.Yellow, light);
         }
         else
         {
-        _lightSystem.SetColor(uid, Color.Red, light);
+            _lightSystem.SetColor(uid, Color.Red, light);
         }
 
+        subs.State = state;
         UpdateAppearance(uid, subs.State);
-	}
+    }
 
     private void UpdateAppearance(EntityUid uid, SubstationIntegrityState subsState)
     {
@@ -193,4 +332,39 @@ public sealed class SubstationSystem : EntitySystem
             return;
         _appearance.SetData(uid, SubstationVisuals.Screen, subsState, appearance);
     }
+
+    private void OnAnalyzed(EntityUid uid, SubstationFuseSlotComponent slot, GasAnalyzerScanEvent args)
+    {
+        if(!TryComp<ContainerManagerComponent>(uid, out var containers))
+            return;
+
+        if (!containers.TryGetContainer(slot.FuseSlotId, out var container))
+            return;
+
+        if (container.ContainedEntities.Count > 0)
+        {
+            args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), Comp<GasTankComponent>(container.ContainedEntities[0]).Air} };
+        }
+    }
+
+    private bool GetFuseMixture(EntityUid uid, [NotNullWhen(true)] out GasMixture? mix)
+    {
+        mix = null;
+
+        if(!TryComp<SubstationFuseSlotComponent>(uid, out var slot) || !TryComp<ContainerManagerComponent>(uid, out var containers))
+            return false;
+
+        if (!containers.TryGetContainer(slot.FuseSlotId, out var container))
+            return false;
+        
+        if (container.ContainedEntities.Count > 0)
+        {
+            var gasTank = Comp<GasTankComponent>(container.ContainedEntities[0]);
+            mix = gasTank.Air;
+            return true;
+        }
+        
+        return false;
+    }
+
 }

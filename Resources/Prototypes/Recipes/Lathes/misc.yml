@@ -92,3 +92,11 @@
   materials:
     Steel: 750
     Plastic: 100
+
+- type: latheRecipe
+  id: GasFuse
+  result: GasFuse
+  completetime: 2
+  materials:
+    Steel: 100
+    Glass: 100
