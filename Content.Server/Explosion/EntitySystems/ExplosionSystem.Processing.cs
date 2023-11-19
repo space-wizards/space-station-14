@@ -55,6 +55,8 @@ public sealed partial class ExplosionSystem
     /// </summary>
     private int _previousTileIteration;
 
+    private List<EntityUid> _anchored = new();
+
     private void OnMapChanged(MapChangedEvent ev)
     {
         // If a map was deleted, check the explosion currently being processed belongs to that map.
@@ -194,7 +196,7 @@ public sealed partial class ExplosionSystem
     /// </summary>
     /// <returns>True if the underlying tile can be uprooted, false if the tile is blocked by a dense entity</returns>
     internal bool ExplodeTile(BroadphaseComponent lookup,
-        MapGridComponent grid,
+        Entity<MapGridComponent> grid,
         Vector2i tile,
         float throwForce,
         DamageSpecifier damage,
@@ -202,7 +204,8 @@ public sealed partial class ExplosionSystem
         HashSet<EntityUid> processed,
         string id)
     {
-        var gridBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
+        var size = grid.Comp.TileSize;
+        var gridBox = new Box2(tile * size, (tile + 1) * size);
 
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
@@ -223,8 +226,9 @@ public sealed partial class ExplosionSystem
 
         // process anchored entities
         var tileBlocked = false;
-        var anchoredList = grid.GetAnchoredEntities(tile).ToList();
-        foreach (var entity in anchoredList)
+        _anchored.Clear();
+        _map.GetAnchoredEntities(grid, tile, _anchored);
+        foreach (var entity in _anchored)
         {
             processed.Add(entity);
             ProcessEntity(entity, epicenter, damage, throwForce, id, null);
@@ -234,9 +238,11 @@ public sealed partial class ExplosionSystem
         // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
         // information about the entities that were spawned as a result, but without that information we just have to
         // re-check for new anchored entities. Compared to entity spawning & deleting, this should still be relatively minor.
-        if (anchoredList.Count > 0)
+        if (_anchored.Count > 0)
         {
-            foreach (var entity in grid.GetAnchoredEntities(tile))
+            _anchored.Clear();
+            _map.GetAnchoredEntities(grid, tile, _anchored);
+            foreach (var entity in _anchored)
             {
                 tileBlocked |= IsBlockingTurf(entity);
             }
@@ -786,7 +792,7 @@ sealed class Explosion
                 // damage entities on the tile. Also figures out whether there are any solid entities blocking the floor
                 // from being destroyed.
                 var canDamageFloor = _system.ExplodeTile(_currentLookup,
-                    _currentGrid,
+                    (_currentGrid.Owner, _currentGrid),
                     _currentEnumerator.Current,
                     _currentThrowForce,
                     _currentDamage,
