@@ -200,7 +200,7 @@
 
 - type: cargoProduct
   id: LivestockMothroach
-  icon: mothroach.rsi
+  icon:
     sprite: Mobs/Animals/mothroach.rsi
     state: mothroach
   product: CrateNPCMothroach
