@@ -24,8 +24,8 @@ thief-backpack-category-tools-description =
     A set of tools for roughing up doors, walls, windows, 
     and anything else that for whatever reason doesn't 
     want to let you in where you need to go. 
-    Includes 2 C4s, multitool, jaws of life, 
-    advanced welder meson glasses and insulated gloves.
+    Includes two C4s, a multitool, jaws of life, 
+    a pair of advanced welder meson glasses and some insulated gloves.
 
 thief-backpack-category-chemistry-name = Chemistry kit
 thief-backpack-category-chemistry-description = 
