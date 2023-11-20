@@ -38,7 +38,10 @@ public sealed class ChunkingSystem : EntitySystem
         _configurationManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnPvsRangeChanged);
     }
 
-    private void OnPvsRangeChanged(float value) => _baseViewBounds = Box2.UnitCentered.Scale(value);
+    private void OnPvsRangeChanged(float value)
+    {
+        _baseViewBounds = Box2.UnitCentered.Scale(value);
+    }
 
     public Dictionary<NetEntity, HashSet<Vector2i>> GetChunksForSession(
         ICommonSession session,
@@ -47,70 +50,59 @@ public sealed class ChunkingSystem : EntitySystem
         ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> viewerPool,
         float? viewEnlargement = null)
     {
-        var viewers = GetSessionViewers(session);
-        var chunks = GetChunksForViewers(viewers, chunkSize, indexPool, viewerPool, viewEnlargement ?? chunkSize);
-        return chunks;
-    }
-
-    private HashSet<EntityUid> GetSessionViewers(ICommonSession session)
-    {
-        var viewers = new HashSet<EntityUid>();
-        if (session.Status != SessionStatus.InGame || session.AttachedEntity is null)
-            return viewers;
-
-        viewers.Add(session.AttachedEntity.Value);
-
-        foreach (var uid in session.ViewSubscriptions)
-        {
-            viewers.Add(uid);
-        }
-
-        return viewers;
-    }
-
-    private Dictionary<NetEntity, HashSet<Vector2i>> GetChunksForViewers(
-        HashSet<EntityUid> viewers,
-        int chunkSize,
-        ObjectPool<HashSet<Vector2i>> indexPool,
-        ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> viewerPool,
-        float viewEnlargement)
-    {
         var chunks = viewerPool.Get();
         DebugTools.Assert(chunks.Count == 0);
 
-        foreach (var viewerUid in viewers)
+        if (session.Status != SessionStatus.InGame || session.AttachedEntity is not {} player)
+            return chunks;
+
+        var enlargement = viewEnlargement ?? chunkSize;
+        AddViewerChunks(player, chunks, indexPool, chunkSize, enlargement);
+        foreach (var uid in session.ViewSubscriptions)
         {
-            if (!_xformQuery.TryGetComponent(viewerUid, out var xform))
-            {
-                Log.Error($"Player has deleted viewer entities? Viewers: {string.Join(", ", viewers.Select(ToPrettyString))}");
-                continue;
-            }
-
-            var pos = _transform.GetWorldPosition(xform);
-            var bounds = _baseViewBounds.Translated(pos).Enlarged(viewEnlargement);
-            var grids = new List<Entity<MapGridComponent>>();
-            _mapManager.FindGridsIntersecting(xform.MapID, bounds, ref grids, true);
-
-            foreach (var grid in grids)
-            {
-                var netGrid = GetNetEntity(grid);
-
-                if (!chunks.TryGetValue(netGrid, out var set))
-                {
-                    chunks[netGrid] = set = indexPool.Get();
-                    DebugTools.Assert(set.Count == 0);
-                }
-
-                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid).TransformBox(bounds), chunkSize);
-
-                while (enumerator.MoveNext(out var indices))
-                {
-                    set.Add(indices.Value);
-                }
-            }
+            AddViewerChunks(uid, chunks, indexPool, chunkSize, enlargement);
         }
 
         return chunks;
+    }
+
+    private void AddViewerChunks(EntityUid viewer,
+        Dictionary<NetEntity, HashSet<Vector2i>> chunks,
+        ObjectPool<HashSet<Vector2i>> indexPool,
+        int chunkSize,
+        float viewEnlargement)
+    {
+        if (!_xformQuery.TryGetComponent(viewer, out var xform))
+            return;
+
+        var pos = _transform.GetWorldPosition(xform);
+        var bounds = _baseViewBounds.Translated(pos).Enlarged(viewEnlargement);
+
+        var state = (chunks, indexPool, chunkSize, bounds);
+        _mapManager.FindGridsIntersecting(xform.MapID, bounds, ref state, AddGridChunks, true);
+    }
+
+    private bool AddGridChunks(
+        EntityUid uid,
+        MapGridComponent grid,
+        ref (Dictionary<NetEntity, HashSet<Vector2i>>, ObjectPool<HashSet<Vector2i>>, int, Box2) state)
+    {
+        var netGrid = GetNetEntity(uid);
+
+        var (chunks, pool, size, bounds) = state;
+        if (!chunks.TryGetValue(netGrid, out var set))
+        {
+            chunks[netGrid] = set = pool.Get();
+            DebugTools.Assert(set.Count == 0);
+        }
+
+        var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(uid).TransformBox(bounds), size);
+        while (enumerator.MoveNext(out var indices))
+        {
+            set.Add(indices.Value);
+        }
+
+        return true;
     }
 }
 
