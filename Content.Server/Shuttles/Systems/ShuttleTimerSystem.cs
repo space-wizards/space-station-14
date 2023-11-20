@@ -39,9 +39,7 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
-            // currently, all packets are broadcast, and subnetting is implemented by filtering events per-map
-            // if i can find a way to *neatly* subnet the timers per-grid, without having the prototypes filter,
-            // and pass the frequency to systems, this gets simpler and faster
+            // currently, all shuttle timer packets are broadcast, and subnetting is implemented by filtering events per-map
 
             var timerXform = Transform(uid);
 
@@ -50,26 +48,23 @@ namespace Content.Server.Shuttles.Systems
                 return;
 
             string key;
-            string text;
             args.Data.TryGetValue("ShuttleMap", out EntityUid? shuttleMap);
             args.Data.TryGetValue("SourceMap", out EntityUid? source);
             args.Data.TryGetValue("DestMap", out EntityUid? dest);
+            args.Data.TryGetValue("Docked", out bool docked);
+            string text = docked ? "ETD" : "ETA";
 
             switch (timerXform.MapUid)
             {
-                case var local when local == shuttleMap:
+                // sometimes the timer transforms on FTL shuttles have the hyperspace mapuid, so matching by grid works as a fallback.
+                case var local when local == shuttleMap || timerXform.GridUid == shuttleMap:
                     key = "LocalTimer";
-                    args.Data.TryGetValue("Docked", out bool docked);
-                    text = docked ? "ETD" : "ETA";
                     break;
                 case var origin when origin == source:
                     key = "SourceTimer";
-                    text = "ETA";
                     break;
                 case var remote when remote == dest:
                     key = "DestTimer";
-                    args.Data.TryGetValue("Docked", out bool docked_);
-                    text = docked_ ? "ETD" : "ETA";
                     break;
                 default:
                     return;
@@ -97,27 +92,5 @@ namespace Content.Server.Shuttles.Systems
                 }
             }
         }
-
-        /// <summary>
-        /// Helper method for <see cref="EmergencyShuttleSystem"/> and <see cref="RoundEndSystem"/>
-        /// </summary>
-        /// <param name="duration">Displayed on each evac shuttle timer, in seconds.</param>
-        // public void FloodEvacPacket(EntityUid? shuttleMap, EntityUid? sourceMap, EntityUid? destMap,
-        //     TimeSpan? localTimer, TimeSpan? sourceTimer, TimeSpan? destTimer)
-        // {
-        //     var payload = new NetworkPayload
-        //     {
-        //         ["BroadcastTime"] = duration
-        //     };
-
-        //     AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var comp);
-        //     if (comp == null || comp.EmergencyShuttle == null ||
-        //         !HasComp<ShuttleTimerComponent>(comp.EmergencyShuttle.Value) ||
-        //         !TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var netComp))
-        //         return;
-
-        //     _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
-        //     return;
-        // }
     }
 }

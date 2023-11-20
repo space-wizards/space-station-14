@@ -260,25 +260,6 @@ namespace Content.Server.RoundEnd
                     ("time", time),
                     ("units", Loc.GetString(unitsLocString))));
             Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
-
-            // shuttle timers
-            AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var shuttle);
-            if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle.EmergencyShuttle, out var net))
-            {
-                var stationGrid = _stationSystem.GetLargestGrid(Comp<StationDataComponent>(station));
-                AllEntityQuery<StationCentcommComponent>().MoveNext(out _, out var centcomm);
-                var payload = new NetworkPayload
-                {
-                    ["ShuttleMap"] = shuttle.EmergencyShuttle,
-                    ["SourceMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
-                    ["DestMap"] = stationGrid == null ? null : Transform(stationGrid.Value).MapUid,
-                    ["LocalTimer"] = countdownTime,
-                    ["SourceTimer"] = countdownTime,
-                    ["DestTimer"] = countdownTime,
-                };
-
-                _deviceNetworkSystem.QueuePacket(shuttle.EmergencyShuttle.Value, null, payload, net.TransmitFrequency);
-            }
         }
 
         /// <summary>

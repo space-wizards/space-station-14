@@ -165,9 +165,6 @@ public sealed class ArrivalsSystem : EntitySystem
         if (!TryGetArrivals(out EntityUid arrivals))
             return;
 
-        var arrivalsMapUid = Transform(arrivals).MapUid;
-        var shuttleMapUid = Transform(shuttleUid).MapUid;
-
         TimeSpan ftlTime = TimeSpan.FromSeconds
         (
             TryComp<FTLComponent>(shuttleUid, out var ftlComp) ?
@@ -178,7 +175,7 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = shuttleMapUid,
+                ["ShuttleMap"] = shuttleUid,
                 ["SourceMap"] = args.FromMapUid,
                 ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
                 ["LocalTimer"] = ftlTime,
@@ -189,6 +186,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
 
         // Don't do anything here when leaving arrivals.
+        var arrivalsMapUid = Transform(arrivals).MapUid;
         if (args.FromMapUid == arrivalsMapUid)
             return;
 

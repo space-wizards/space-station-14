@@ -206,7 +206,24 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
     {
-        Console.WriteLine("abcabcabcabc");
+        AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var shuttle);
+        if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle.EmergencyShuttle, out var net))
+        {
+            var stationGrid = _station.GetLargestGrid(Comp<StationDataComponent>(station));
+            var countdownTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
+            // AllEntityQuery<StationCentcommComponent>().MoveNext(out _, out var centcomm);
+            var payload = new NetworkPayload
+            {
+                ["ShuttleMap"] = shuttle.EmergencyShuttle,
+                ["SourceMap"] = args.MapUid, //centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
+                ["DestMap"] = stationGrid == null ? null : Transform(stationGrid.Value).MapUid,
+                ["LocalTimer"] = countdownTime,
+                ["SourceTimer"] = countdownTime,
+                ["DestTimer"] = countdownTime,
+            };
+
+            _deviceNetworkSystem.QueuePacket(shuttle.EmergencyShuttle.Value, null, payload, net.TransmitFrequency);
+        }
     }
 
     /// <summary>
@@ -341,13 +358,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         var query = AllEntityQuery<StationEmergencyShuttleComponent>();
 
         while (query.MoveNext(out var uid, out var comp))
-        {
             AddEmergencyShuttle(uid, comp);
-
-            if (comp.EmergencyShuttle == null)
-                continue;
-            EnsureComp<EmergencyShuttleComponent>(comp.EmergencyShuttle.Value);
-        }
     }
 
     private void AddCentcomm(StationCentcommComponent component)
@@ -436,6 +447,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         component.EmergencyShuttle = shuttle;
         EnsureComp<ProtectedGridComponent>(shuttle.Value);
         EnsureComp<PreventPilotComponent>(shuttle.Value);
+        EnsureComp<EmergencyShuttleComponent>(shuttle.Value);
     }
 
     private void OnEscapeUnpaused(EntityUid uid, EscapePodComponent component, ref EntityUnpausedEvent args)
