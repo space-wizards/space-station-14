@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
@@ -101,6 +101,9 @@ namespace Content.Shared.Chemistry.Reagent
         /// </summary>
         [DataField("viscosity")]
         public float Viscosity = 0;
+
+        [DataField("metaboliseWhileDead")]
+        public bool MetaboliseWhileDead = false;
 
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;

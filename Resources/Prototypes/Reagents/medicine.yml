@@ -210,6 +210,31 @@
              Cellular: -2
 
 - type: reagent
+  id: Cordrazine
+  #Just a funny placeholder chem to test. I hear this chem in startreck all the time
+  name: reagent-name-cryoxadone
+  group: Medicine
+  desc: reagent-desc-cryoxadone
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: medicine
+  color: "#9991ff"
+  metaboliseWhileDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:ReduceRotting
+          conditions:
+          #Patient must be dead and in a cryo tube (or something cold)
+          - !type:Temperature
+            max: 150.0
+          - !type:MobStateCondition
+            mobstate: Dead
+          
+
+
+
+
+- type: reagent
   id: Dermaline
   name: reagent-name-dermaline
   group: Medicine
@@ -561,7 +586,7 @@
             Radiation: 1
       - !type:ChemVomit
         probability: 0.05
-
+        
 - type: reagent
   id: Ambuzol
   name: reagent-name-ambuzol

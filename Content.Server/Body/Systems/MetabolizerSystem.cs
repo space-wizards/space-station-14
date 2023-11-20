@@ -168,13 +168,17 @@ namespace Content.Server.Body.Systems
                     float scale = (float) mostToRemove / (float) rate;
 
                     // if it's possible for them to be dead, and they are,
-                    // then we shouldn't process any effects, but should probably
-                    // still remove reagents
+                    // then we shouldn't process any effects (unless stated otherwise by the reagent),
+                    // but should probably still remove reagents.
+
                     if (EntityManager.TryGetComponent<MobStateComponent>(solutionEntityUid.Value, out var state))
                     {
-                        if (_mobStateSystem.IsDead(solutionEntityUid.Value, state))
+                        if (_mobStateSystem.IsDead(solutionEntityUid.Value, state) && !proto.MetaboliseWhileDead)
+                        {
                             continue;
+                        }
                     }
+
 
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, uid, solution, proto, mostToRemove,
