@@ -52,13 +52,31 @@ public partial class AtmosphereSystem
         return Atmospherics.CellVolume * mapGrid.TileSize * tiles;
     }
 
-    private (AtmosDirection Blocked, bool NoAir, bool FixVacuum) GetAirtightData(Entity<MapGridComponent> grid, Vector2i indices)
+    public readonly record struct AirtightData(AtmosDirection BlockedDirections, bool NoAirWhenBlocked,
+        bool FixVacuum);
+
+    private void UpdateAirtightData(EntityUid uid, GridAtmosphereComponent atmos, MapGridComponent grid, TileAtmosphere tile)
     {
-        var directions = AtmosDirection.Invalid;
-        var noAir = false;
+        if (!tile.AirtightDirty)
+            return;
+
+        var oldBlocked = tile.AirtightData.BlockedDirections;
+        tile.AirtightDirty = false;
+        tile.AirtightData = GetAirtightData(uid, atmos, grid, tile.GridIndices);
+
+        if (blockedDirs != oldBlocked && tile.ExcitedGroup != null)
+        {
+            ExcitedGroupDispose(atmos, tile.ExcitedGroup);
+        }
+    }
+
+    private AirtightData GetAirtightData(EntityUid uid, GridAtmosphereComponent atmos, MapGridComponent grid, Vector2i tile)
+    {
+        var blockedDirs = AtmosDirection.Invalid;
+        var noAirWhenBlocked = false;
         var fixVacuum = false;
 
-        foreach (var ent in _map.GetAnchoredEntities(grid.Owner, grid.Comp, indices))
+        foreach (var ent in _map.GetAnchoredEntities(uid, grid, tile))
         {
             if (!_airtightQuery.TryGetComponent(ent, out var airtight))
                 continue;
@@ -66,15 +84,15 @@ public partial class AtmosphereSystem
             if(!airtight.AirBlocked)
                 continue;
 
-            directions |= airtight.AirBlockedDirection;
-            noAir |= airtight.NoAirWhenFullyAirBlocked;
+            blockedDirs |= airtight.AirBlockedDirection;
+            noAirWhenBlocked |= airtight.NoAirWhenFullyAirBlocked;
             fixVacuum |= airtight.FixVacuum;
 
-            if (directions == AtmosDirection.All && noAir && fixVacuum)
+            if (blockedDirs == AtmosDirection.All && noAirWhenBlocked && fixVacuum)
                 break;
         }
 
-        return (directions, noAir, fixVacuum);
+        return new AirtightData(blockedDirs, noAirWhenBlocked, fixVacuum);
     }
 
     /// <summary>

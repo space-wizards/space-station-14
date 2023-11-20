@@ -7,6 +7,7 @@ using Content.Shared.Maps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -41,6 +42,20 @@ namespace Content.Server.Atmos.EntitySystems
             return ProcessRevalidate((ent, ent, overlay, mapGridComp, Transform(ent)));
         }
 
+        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index, float volume)
+        {
+            var tile = atmosphere.Tiles.GetOrNew(index, out var existing);
+            if (!existing)
+            {
+                tile.GridIndex = owner;
+                tile.GridIndices = index;
+                tile.Air = new GasMixture(volume) { Temperature = Atmospherics.T20C };
+                tile.MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
+            }
+
+            return tile;
+        }
+
         /// <summary>
         ///     Revalidates all invalid coordinates in a grid atmosphere.
         /// </summary>
@@ -48,37 +63,36 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
         private bool ProcessRevalidate(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
-            var (owner, atmosphere, visuals, grid, xform) = ent;
+            var (uid, atmosphere, visuals, grid, xform) = ent;
+            var volume = GetVolumeForTiles(grid);
+
             if (!atmosphere.ProcessingPaused)
             {
-                atmosphere.CurrentRunInvalidatedCoordinates.Clear();
-                atmosphere.CurrentRunInvalidatedCoordinates.EnsureCapacity(atmosphere.InvalidatedCoords.Count);
-                foreach (var tile in atmosphere.InvalidatedCoords)
+                atmosphere.CurrentRunInvalidatedTiles.Clear();
+                atmosphere.CurrentRunInvalidatedTiles.EnsureCapacity(atmosphere.InvalidatedCoords.Count);
+                foreach (var indices in atmosphere.InvalidatedCoords)
                 {
-                    atmosphere.CurrentRunInvalidatedCoordinates.Enqueue(tile);
+                    var tile = GetOrNewTile(uid, atmosphere, indices, volume);
+                    tile.AirtightDirty = true;
+                    atmosphere.CurrentRunInvalidatedTiles.Enqueue(tile);
                 }
                 atmosphere.InvalidatedCoords.Clear();
             }
 
             var mapUid = xform.MapUid;
-            var volume = GetVolumeForTiles(grid);
 
             var number = 0;
-            while (atmosphere.CurrentRunInvalidatedCoordinates.TryDequeue(out var indices))
+            while (atmosphere.CurrentRunInvalidatedTiles.TryDequeue(out var tile))
             {
-                if (!atmosphere.Tiles.TryGetValue(indices, out var tile))
-                {
-                    tile = new TileAtmosphere(owner, indices,
-                        new GasMixture(volume) { Temperature = Atmospherics.T20C });
-                    atmosphere.Tiles[indices] = tile;
-                }
+                var indices = tile.GridIndices;
+                DebugTools.Assert(atmosphere.Tiles.GetValueOrDefault(indices) == tile);
 
                 var oldBlocked = tile.BlockedAirflow;
-                var (blocked, noAir, fixVacuum) = GetAirtightData((ent.Owner, ent.Comp3), indices);
+                var (blocked, noAir, fixVacuum) = UpdateAirtightData(ent.Owner, ent.Comp3, tile);
                 var isAirBlocked = blocked == AtmosDirection.All;
                 tile.BlockedAirflow = blocked;
 
-                GridUpdateAdjacent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), indices);
+                GridUpdateAdjacent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), tile);
 
                 // Blocked airflow changed, rebuild excited groups!
                 // blockers might have already been previously changed while processing one of our (old?) adjacent
@@ -110,8 +124,8 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     if (tile.Air == null && fixVacuum)
                     {
-                        var vacuumEv = new FixTileVacuumMethodEvent(owner, indices);
-                        GridFixTileVacuum(owner, atmosphere, ref vacuumEv);
+                        var vacuumEv = new FixTileVacuumMethodEvent(uid, indices);
+                        GridFixTileVacuum(uid, atmosphere, ref vacuumEv);
                     }
 
                     // Tile used to be space, but isn't anymore.
@@ -138,7 +152,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
                 tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
-                InvalidateVisuals(owner, indices, visuals);
+                InvalidateVisuals(uid, indices, visuals);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {

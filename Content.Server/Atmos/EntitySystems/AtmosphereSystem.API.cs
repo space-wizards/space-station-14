@@ -167,11 +167,14 @@ public partial class AtmosphereSystem
 
     public bool IsTileAirBlocked(EntityUid gridUid, Vector2i tile, AtmosDirection directions = AtmosDirection.All, MapGridComponent? mapGridComp = null)
     {
-        var ev = new IsTileAirBlockedMethodEvent(gridUid, tile, directions, mapGridComp);
-        RaiseLocalEvent(gridUid, ref ev);
+        if (!Resolve(gridUid, ref mapGridComp))
+            return false;
 
-        // If nothing handled the event, it'll default to true.
-        return ev.Result;
+        if (!TryComp(gridUid, out GridAtmosphereComponent? atmos))
+            return false;
+
+        var data = GetAirtightData(gridUid, atmos, mapGridComp, tile);
+        return data.BlockedDirections.IsFlagSet(directions);
     }
 
     public bool IsTileSpace(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, MapGridComponent? mapGridComp = null)
@@ -303,16 +306,6 @@ public partial class AtmosphereSystem
 
     [ByRefEvent] private record struct ReactTileMethodEvent
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
-
-    [ByRefEvent] private record struct IsTileAirBlockedMethodEvent
-        (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, MapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false)
-    {
-        /// <summary>
-        ///     True if one of the enabled blockers has <see cref="AirtightComponent.NoAirWhenFullyAirBlocked"/>. Note
-        ///     that this does not actually check if all directions are blocked.
-        /// </summary>
-        public bool NoAir = false;
-    }
 
     [ByRefEvent] private record struct IsTileSpaceMethodEvent
         (EntityUid? Grid, EntityUid? Map, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);

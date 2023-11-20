@@ -51,6 +51,10 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public readonly TileAtmosphere?[] AdjacentTiles = new TileAtmosphere[Atmospherics.Directions];
 
+        /// <summary>
+        /// Neighbouring tiles to which air can flow. This is a combination of this tile's unblocked direction, and the
+        /// unblocked directions on adjacent tiles.
+        /// </summary>
         [ViewVariables]
         public AtmosDirection AdjacentBits = AtmosDirection.Invalid;
 
@@ -75,7 +79,7 @@ namespace Content.Server.Atmos
         public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
 
         [ViewVariables]
-        public Vector2i GridIndices { get; }
+        public Vector2i GridIndices;
 
         [ViewVariables]
         public ExcitedGroup? ExcitedGroup { get; set; }
@@ -103,8 +107,12 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public float MaxFireTemperatureSustained { get; set; }
 
-        [ViewVariables]
-        public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
+        /// <summary>
+        /// If true, the cached airtight data is invalid and needs to be recomputed.
+        /// </summary>
+        public bool AirtightDirty = true;
+
+        public AtmosphereSystem.AirtightData AirtightData;
 
         public TileAtmosphere(EntityUid gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false, bool space = false)
         {
@@ -116,6 +124,10 @@ namespace Content.Server.Atmos
 
             if(immutable)
                 Air?.MarkImmutable();
+        }
+
+        public TileAtmosphere()
+        {
         }
     }
 }

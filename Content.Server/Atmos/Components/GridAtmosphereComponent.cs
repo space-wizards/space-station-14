@@ -80,7 +80,7 @@ namespace Content.Server.Atmos.Components
         public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
 
         [ViewVariables]
-        public readonly Queue<Vector2i> CurrentRunInvalidatedCoordinates = new();
+        public readonly Queue<TileAtmosphere> CurrentRunInvalidatedTiles = new();
 
         [ViewVariables]
         public int InvalidatedCoordsCount => InvalidatedCoords.Count;

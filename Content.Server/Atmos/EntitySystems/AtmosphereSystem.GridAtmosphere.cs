@@ -23,7 +23,6 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixtureMethodEvent>(GridGetTileMixture);
         SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixturesMethodEvent>(GridGetTileMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
-        SubscribeLocalEvent<GridAtmosphereComponent, IsTileAirBlockedMethodEvent>(GridIsTileAirBlocked);
         SubscribeLocalEvent<GridAtmosphereComponent, IsTileSpaceMethodEvent>(GridIsTileSpace);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTilesMethodEvent>(GridGetAdjacentTiles);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTileMixturesMethodEvent>(GridGetAdjacentTileMixtures);
@@ -207,23 +206,6 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridIsTileAirBlocked(EntityUid uid, GridAtmosphereComponent component,
-        ref IsTileAirBlockedMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        var mapGridComp = args.MapGridComponent;
-
-        if (!Resolve(uid, ref mapGridComp))
-            return;
-
-        var data = GetAirtightData((uid, mapGridComp), args.Tile);
-        args.NoAir = data.NoAir;
-        args.Result = data.Blocked.IsFlagSet(args.Direction);
-        args.Handled = true;
-    }
-
     private void GridIsTileSpace(EntityUid uid, GridAtmosphereComponent component, ref IsTileSpaceMethodEvent args)
     {
         if (args.Handled)
@@ -289,11 +271,8 @@ public sealed partial class AtmosphereSystem
         Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> entity,
         Vector2i index)
     {
-        if (!entity.Comp1.Tiles.TryGetValue(index, out var tile))
-            return;
-
-        tile.BlockedAirflow = GetAirtightData((entity, entity), tile.GridIndices).Blocked;
-        GridUpdateAdjacent(entity, tile);
+        if (entity.Comp1.Tiles.TryGetValue(index, out var tile))
+            GridUpdateAdjacent(entity, tile);
     }
 
     private void GridUpdateAdjacent(
@@ -304,6 +283,7 @@ public sealed partial class AtmosphereSystem
         var mapUid = xform.MapUid;
 
         tile.AdjacentBits = AtmosDirection.Invalid;
+        var tileData = UpdateAirtightData(uid, atmos, grid, tile);
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
@@ -319,10 +299,9 @@ public sealed partial class AtmosphereSystem
             }
 
             var oppositeDirection = direction.GetOpposite();
+            var adjData = UpdateAirtightData(uid, atmos, grid, adjacent);
 
-            adjacent.BlockedAirflow = GetAirtightData((uid, grid), adjacent.GridIndices).Blocked;
-
-            if (!adjacent.BlockedAirflow.IsFlagSet(oppositeDirection) && !tile.BlockedAirflow.IsFlagSet(direction))
+            if (!adjData.BlockedDirections.IsFlagSet(oppositeDirection) && tileData.BlockedDirections.IsFlagSet(direction))
             {
                 adjacent.AdjacentBits |= oppositeDirection;
                 tile.AdjacentBits |= direction;
