@@ -37,7 +37,7 @@
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHatSeniorOfficerBeret
+    head: ClothingHeadHatSeniorOfficerBeret #Imperial_edit Beret lives matter @keeyn
     outerClothing: ClothingOuterArmorBasic
     id: SeniorOfficerPDA
     ears: ClothingHeadsetSecurity
