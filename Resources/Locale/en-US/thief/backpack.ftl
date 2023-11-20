@@ -56,7 +56,7 @@ thief-backpack-category-communicator-description =
 thief-backpack-category-smuggler-name = Smuggler's kit
 thief-backpack-category-smuggler-description = 
     A kit for those who like to have big pockets. 
-    Includes a fulton beacon, 10 fultons 
-    and invisible crate. You can't move in them, 
+    Includes a fulton beacon, ten fultons 
+    and an invisible crate. You can't move in them, 
     but you can quickly hide or carry valuable loot.
-    A cool void cloak to go along with it.
+    This kit also has a cool void cloak to go along with it.
