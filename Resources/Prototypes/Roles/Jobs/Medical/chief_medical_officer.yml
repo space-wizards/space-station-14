@@ -9,12 +9,9 @@
     - !type:RoleTimeRequirement
       role: JobChemist
       time: 10800 #3 hrs
-    - !type:RoleTimeRequirement
-      role: JobMedicalDoctor
-      time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 #10 hrs
+      time: 68400 #19 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
   weight: 10
