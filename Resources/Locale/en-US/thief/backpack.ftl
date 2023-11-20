@@ -49,9 +49,9 @@ thief-backpack-category-sleeper-description =
 
 thief-backpack-category-communicator-name = Communicator's kit
 thief-backpack-category-communicator-description = 
-    A communications enthusiast's kit. Includes master key
-    for all station channels, radio jammer, portable 
-    crew monitor, voice chameleon mask and lots of money for business deals.
+    A communication enthusiast's kit. Includes a master key
+    for all station channels, a radio jammer, a portable 
+    crew monitor, a voice chameleon mask and lots of money for business deals.
 
 thief-backpack-category-smuggler-name = Smuggler's kit
 thief-backpack-category-smuggler-description = 
