@@ -8,7 +8,7 @@
     sprite: Imperial/seniorOfficer/Clothing/seniorofficerberet.rsi
   - type: Clothing
     sprite: Imperial/seniorOfficer/Clothing/seniorofficerberet.rsi
-  - type: Armor #Values seem to let the user survive one extra hit if attacked consistently.
+  - type: Armor #Imperial_edit Beret lives matter @keeyn
     modifiers:
       coefficients:
         Blunt: 0.9
