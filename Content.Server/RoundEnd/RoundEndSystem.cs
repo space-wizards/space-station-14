@@ -60,7 +60,7 @@ namespace Content.Server.RoundEnd
         public TimeSpan? ShuttleTimeLeft => ExpectedCountdownEnd - _gameTiming.CurTime;
 
         public TimeSpan AutoCallStartTime;
-        private bool AutoCalledBefore = false;
+        private bool _autoCalledBefore = false;
 
         public override void Initialize()
         {
@@ -91,7 +91,7 @@ namespace Content.Server.RoundEnd
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             SetAutoCallTime();
-            AutoCalledBefore = false;
+            _autoCalledBefore = false;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
         }
 
@@ -152,8 +152,8 @@ namespace Content.Server.RoundEnd
             }
             else
             {
-               time = countdownTime.Minutes;
-               units = "eta-units-minutes";
+                time = countdownTime.Minutes;
+                units = "eta-units-minutes";
             }
 
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(text,
@@ -258,6 +258,7 @@ namespace Content.Server.RoundEnd
                     ("units", Loc.GetString(unitsLocString))));
             Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
 
+            // shuttle timers
             AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var shuttle);
             if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle.EmergencyShuttle, out var net))
             {
@@ -335,14 +336,14 @@ namespace Content.Server.RoundEnd
         public override void Update(float frameTime)
         {
             // Check if we should auto-call.
-            int mins = AutoCalledBefore ? _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallExtensionTime)
+            int mins = _autoCalledBefore ? _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallExtensionTime)
                                         : _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallTime);
             if (mins != 0 && _gameTiming.CurTime - AutoCallStartTime > TimeSpan.FromMinutes(mins))
             {
                 if (!_shuttle.EmergencyShuttleArrived && ExpectedCountdownEnd is null)
                 {
                     RequestRoundEnd(null, false, "round-end-system-shuttle-auto-called-announcement");
-                    AutoCalledBefore = true;
+                    _autoCalledBefore = true;
                 }
 
                 // Always reset auto-call in case of a recall.

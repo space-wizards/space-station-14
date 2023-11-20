@@ -192,20 +192,6 @@ public sealed partial class EmergencyShuttleSystem
                     _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                         centcomm.Entity, _consoleAccumulator, TransitTime, true);
                 }
-
-                // shuttle timer stuff
-                if (TryComp<DeviceNetworkComponent>(comp.EmergencyShuttle.Value, out var netComp))
-                {
-                    var payload = new NetworkPayload
-                    {
-                        ["BroadcastTime"] = TimeSpan.FromSeconds(TransitTime)
-                    };
-                    // can't think of a way to pass this to a shuttle ftl event handler without giving the emergency shuttle a unique component
-                    Timer.Spawn(
-                        (int) (ShuttleSystem.DefaultStartupTime * 1000),
-                        () => { _deviceNetworkSystem.QueuePacket(comp.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency); }
-                        );
-                }
             }
 
             var podQuery = AllEntityQuery<EscapePodComponent>();
@@ -412,7 +398,9 @@ public sealed partial class EmergencyShuttleSystem
                 ["SourceMap"] = shuttle.EmergencyShuttle,
                 ["DestMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
                 ["LocalTimer"] = TimeSpan.FromSeconds(_authorizeTime),
-                ["SourceTimer"] = TimeSpan.FromSeconds(_authorizeTime + 600 +),
+                // i'm too tired to refactor the shuttle system to calc escape transit time before entering ftl
+                // so the centcomm shuttle timers will just mirror the stations' until takeoff
+                ["SourceTimer"] = TimeSpan.FromSeconds(_authorizeTime),
                 ["DestTimer"] = TimeSpan.FromSeconds(_authorizeTime),
                 ["Docked"] = true
             };

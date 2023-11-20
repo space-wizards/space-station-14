@@ -12,6 +12,7 @@ using Content.Server.GameTicking.Events;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -50,6 +51,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly DockingSystem _dock = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly IdCardSystem _idSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -75,10 +77,14 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
         // Don't immediately invoke as roundstart will just handle it.
         _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
+
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<StationEmergencyShuttleComponent, ComponentStartup>(OnStationStartup);
         SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcommShutdown);
         SubscribeLocalEvent<StationCentcommComponent, ComponentInit>(OnCentcommInit);
+
+        SubscribeLocalEvent<EmergencyShuttleComponent, FTLStartedEvent>(OnEmergencyFTL);
+        SubscribeLocalEvent<EmergencyShuttleComponent, FTLCompletedEvent>(OnEmergencyFTLComplete);
         SubscribeNetworkEvent<EmergencyShuttleRequestPositionMessage>(OnShuttleRequestPosition);
         InitializeEmergencyConsole();
     }
@@ -173,6 +179,34 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             StationUid = GetNetEntity(targetGrid),
             Position = config.Area,
         });
+    }
+
+    private void OnEmergencyFTL(EntityUid uid, EmergencyShuttleComponent component, ref FTLStartedEvent args)
+    {
+        TimeSpan ftlTime = TimeSpan.FromSeconds
+        (
+            TryComp<FTLComponent>(uid, out var ftlComp) ?
+            ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime
+        );
+
+        if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
+        {
+            var payload = new NetworkPayload
+            {
+                ["ShuttleMap"] = uid,
+                ["SourceMap"] = args.FromMapUid,
+                ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
+                ["LocalTimer"] = ftlTime,
+                ["SourceTimer"] = ftlTime,
+                ["DestTimer"] = ftlTime
+            };
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
+        }
+    }
+
+    private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
+    {
+        Console.WriteLine("abcabcabcabc");
     }
 
     /// <summary>
@@ -309,6 +343,10 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         while (query.MoveNext(out var uid, out var comp))
         {
             AddEmergencyShuttle(uid, comp);
+
+            if (comp.EmergencyShuttle == null)
+                continue;
+            EnsureComp<EmergencyShuttleComponent>(comp.EmergencyShuttle.Value);
         }
     }
 
