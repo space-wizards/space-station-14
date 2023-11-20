@@ -337,8 +337,7 @@ namespace Content.Server.Cloning
             clonePod.CloningProgress = 0f;
             UpdateStatus(uid, CloningPodStatus.Idle, clonePod);
             var transform = Transform(uid);
-            var indices = _transformSystem.GetGridOrMapTilePosition(uid);
-
+            var indices = _transformSystem.GetGridTilePositionOrDefault((uid, transform));
             var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
 
             if (HasComp<EmaggedComponent>(uid))
