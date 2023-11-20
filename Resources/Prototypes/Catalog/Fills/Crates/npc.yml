@@ -78,6 +78,14 @@
       - id: MobCorgi
 
 - type: entity
+  id: CrateNPCPuppyCorgi
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobCorgiPuppy
+
+- type: entity
   id: CrateNPCCow
   parent: CrateLivestock
   components:
