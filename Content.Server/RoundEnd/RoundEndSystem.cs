@@ -2,7 +2,6 @@ using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Shared.CCVar;
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.DeviceNetwork;
@@ -14,7 +13,6 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
-using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -164,7 +162,8 @@ namespace Content.Server.RoundEnd
                 null,
                 Color.Gold);
 
-            SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
+            // SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
+            _audio.PlayGlobal("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast(), true);
 
             LastCountdownStart = _gameTiming.CurTime;
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
@@ -215,17 +214,21 @@ namespace Content.Server.RoundEnd
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
-            SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
+            // SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
+            _audio.PlayGlobal("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast(), true);
 
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
-            AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out _, out var shuttleComponent);
-            if (shuttleComponent == null || !TryComp<DeviceNetworkComponent>(shuttleComponent.EmergencyShuttle, out var net))
-                return;
-            _shuttleTimerSystem.KillAll(net?.TransmitFrequencyId);
+            AllEntityQuery<EmergencyShuttleComponent>().MoveNext(out var shuttle, out _);
+            if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
+                _shuttleTimerSystem.KillAll(net?.TransmitFrequencyId);
+
+            // AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out _, out var shuttleComponent);
+            // if (shuttleComponent == null || !TryComp<DeviceNetworkComponent>(shuttleComponent.EmergencyShuttle, out var net))
+            //     return;
         }
 
         public void EndRound(TimeSpan? countdownTime = null)
