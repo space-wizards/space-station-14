@@ -42,9 +42,9 @@ thief-backpack-category-syndie-description =
 
 thief-backpack-category-sleeper-name = Sleepwalker's kit
 thief-backpack-category-sleeper-description = 
-    A set for those who like to sleep in. 
-    Or for everyone around you to sleep. 
-    Includes a set of nocturine vials, a hipopen and 
+    A set for those who like to sleep in,
+    or for everyone around you to sleep. 
+    Includes a set of nocturine vials, a hypopen and 
     a tank of sleeping gas.
 
 thief-backpack-category-communicator-name = Communicator's kit
