@@ -51,7 +51,7 @@
     Inaprovaline:
       amount: 1 
     Flexitaine: #imperial chemistryRework
-      amount: 0.66 #imperial chemistryRework
+      amount: 1 #imperial Chemistry Fix
     Carbon:
       amount: 1
   products:
