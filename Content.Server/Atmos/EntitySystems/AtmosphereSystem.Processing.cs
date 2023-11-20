@@ -50,7 +50,6 @@ namespace Content.Server.Atmos.EntitySystems
                 tile.GridIndex = owner;
                 tile.GridIndices = index;
                 tile.Air = new GasMixture(volume) { Temperature = Atmospherics.T20C };
-                tile.MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
             }
 
             return tile;
@@ -79,68 +78,16 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.InvalidatedCoords.Clear();
             }
 
-            var mapUid = xform.MapUid;
-
             var number = 0;
             while (atmosphere.CurrentRunInvalidatedTiles.TryDequeue(out var tile))
             {
                 var indices = tile.GridIndices;
                 DebugTools.Assert(atmosphere.Tiles.GetValueOrDefault(indices) == tile);
 
-                var oldBlocked = tile.BlockedAirflow;
-                var (blocked, noAir, fixVacuum) = UpdateAirtightData(ent.Owner, ent.Comp3, tile);
-                var isAirBlocked = blocked == AtmosDirection.All;
-                tile.BlockedAirflow = blocked;
-
+                DebugTools.Assert(tile.AirtightDirty);
                 GridUpdateAdjacent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), tile);
 
-                // Blocked airflow changed, rebuild excited groups!
-                // blockers might have already been previously changed while processing one of our (old?) adjacent
-                // tiles. However, that should have already disposed the old excited group and unexcited this tile.
-                if (tile.Excited && tile.BlockedAirflow != oldBlocked)
-                {
-                    RemoveActiveTile(atmosphere, tile);
-                }
-
-                // Call this instead of the grid method as the map has a say on whether the tile is space or not.
-                if ((!grid.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager)) && !isAirBlocked)
-                {
-                    tile.Air = GetTileMixture(null, mapUid, indices);
-                    tile.MolesArchived = tile.Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
-                    tile.Space = IsTileSpace(null, mapUid, indices, grid);
-                }
-                else if (isAirBlocked)
-                {
-                    if (noAir)
-                    {
-                        tile.Air = null;
-                        tile.MolesArchived = null;
-                        tile.ArchivedCycle = 0;
-                        tile.LastShare = 0f;
-                        tile.Hotspot = new Hotspot();
-                    }
-                }
-                else
-                {
-                    if (tile.Air == null && fixVacuum)
-                    {
-                        var vacuumEv = new FixTileVacuumMethodEvent(uid, indices);
-                        GridFixTileVacuum(uid, atmosphere, ref vacuumEv);
-                    }
-
-                    // Tile used to be space, but isn't anymore.
-                    if (tile.Space || (tile.Air?.Immutable ?? false))
-                    {
-                        tile.Air = null;
-                        tile.MolesArchived = null;
-                        tile.ArchivedCycle = 0;
-                        tile.LastShare = 0f;
-                        tile.Space = false;
-                    }
-
-                    tile.Air ??= new GasMixture(volume){Temperature = Atmospherics.T20C};
-                    tile.MolesArchived ??= new float[Atmospherics.AdjustedNumberOfGases];
-                }
+                UpdateTileAir(ent, tile, volume);
 
                 // We activate the tile.
                 AddActiveTile(atmosphere, tile);
@@ -175,6 +122,55 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return true;
+        }
+
+        private void UpdateTileAir(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            TileAtmosphere tile, float volume)
+        {
+            var mapUid = ent.Comp4.MapUid;
+            var indices = tile.GridIndices;
+
+            DebugTools.Assert(!tile.AirtightDirty);
+            var data = tile.AirtightData;
+            var fullyBlocked = data.BlockedDirections == AtmosDirection.All;
+
+            if (fullyBlocked && data.NoAirWhenBlocked)
+            {
+                tile.Air = null;
+                tile.ArchivedCycle = 0;
+                tile.LastShare = 0f;
+                tile.Hotspot = new Hotspot();
+                return;
+            }
+
+            if (!ent.Comp3.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager))
+            {
+                tile.Air = GetTileMixture(null, mapUid, indices);
+                tile.Space = IsTileSpace(null, mapUid, indices, ent.Comp3);
+                return;
+            }
+
+            if (tile.Air == null && data.FixVacuum)
+            {
+                var vacuumEv = new FixTileVacuumMethodEvent(ent.Owner, indices);
+                GridFixTileVacuum(ent.Owner, ent.Comp1, ref vacuumEv);
+            }
+
+            // Tile used to be space, but isn't anymore.
+            if (tile.Air?.Immutable == true)
+            {
+                tile.Air = null;
+                tile.ArchivedCycle = 0;
+                tile.LastShare = 0f;
+                tile.Space = false;
+            }
+
+            if (tile.Air == null)
+            {
+                Array.Clear(tile.MolesArchived!);
+                tile.Air = new GasMixture(volume){Temperature = Atmospherics.T20C};
+            }
         }
 
         private void QueueRunTiles(

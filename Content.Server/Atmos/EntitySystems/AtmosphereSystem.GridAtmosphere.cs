@@ -87,7 +87,6 @@ public sealed partial class AtmosphereSystem
 
                 // Copy a bunch of data over... Not great, maybe put this in TileAtmosphere?
                 newTileAtmosphere.Air = tileAtmosphere.Air?.Clone() ?? null;
-                newTileAtmosphere.MolesArchived = newTileAtmosphere.Air == null ? null : new float[Atmospherics.AdjustedNumberOfGases];
                 newTileAtmosphere.Hotspot = tileAtmosphere.Hotspot;
                 newTileAtmosphere.HeatCapacity = tileAtmosphere.HeatCapacity;
                 newTileAtmosphere.Temperature = tileAtmosphere.Temperature;
@@ -395,7 +394,7 @@ public sealed partial class AtmosphereSystem
             Temperature = Atmospherics.T20C
         };
 
-        tile.MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
+        Array.Clear(tile.MolesArchived);
         tile.ArchivedCycle = 0;
 
         var ratio = 1f / adjacent.Length;

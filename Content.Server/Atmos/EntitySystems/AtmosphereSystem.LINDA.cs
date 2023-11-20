@@ -186,7 +186,6 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Air == null)
                 return tile.HeatCapacity;
 
-            // Moles archived is not null if air is not null.
             return GetHeatCapacityCalculation(tile.MolesArchived!, tile.Space);
         }
 

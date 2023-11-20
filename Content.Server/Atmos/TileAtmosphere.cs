@@ -96,7 +96,7 @@ namespace Content.Server.Atmos
         public float LastShare;
 
         [ViewVariables]
-        public float[]? MolesArchived;
+        public readonly float[] MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
 
         GasMixture IGasMixtureHolder.Air
         {
@@ -120,7 +120,6 @@ namespace Content.Server.Atmos
             GridIndices = gridIndices;
             Air = mixture;
             Space = space;
-            MolesArchived = Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
 
             if(immutable)
                 Air?.MarkImmutable();

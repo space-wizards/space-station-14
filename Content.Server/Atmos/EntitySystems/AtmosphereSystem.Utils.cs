@@ -64,10 +64,8 @@ public partial class AtmosphereSystem
         tile.AirtightDirty = false;
         tile.AirtightData = GetAirtightData(uid, atmos, grid, tile.GridIndices);
 
-        if (blockedDirs != oldBlocked && tile.ExcitedGroup != null)
-        {
+        if (tile.AirtightData.BlockedDirections != oldBlocked && tile.ExcitedGroup != null)
             ExcitedGroupDispose(atmos, tile.ExcitedGroup);
-        }
     }
 
     private AirtightData GetAirtightData(EntityUid uid, GridAtmosphereComponent atmos, MapGridComponent grid, Vector2i tile)
