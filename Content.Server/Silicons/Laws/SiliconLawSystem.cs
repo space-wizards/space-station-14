@@ -189,9 +189,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         _stunSystem.TryParalyze(uid, component.StunTime, true);
 
-        if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
-            return;
-        if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
+        if (!_mind.TryGetMind(uid, out var mindId, out _))
             return;
         _roles.MindPlaySound(mindId, component.EmaggedSound);
     }
