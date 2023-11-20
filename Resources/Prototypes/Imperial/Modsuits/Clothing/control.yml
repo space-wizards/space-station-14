@@ -30,6 +30,9 @@
     softness: 20
     autoRot: true
   - type: UnpoweredFlashlight
+  # - type: QualityOfItem
+  #   maxSpawnQuality: 3
+  #   minSpawnQuality: 
 
 - type: entity
   parent: ClothingControlModsuitBase

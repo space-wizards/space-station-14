@@ -1,7 +1,8 @@
 - type: entity #мосьюты
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterChestplateModsuitCESealed
+  id: ClothingOuterChestplateModsuitSealedBase
   name: marine modsuit
+  abstract: true
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
@@ -10,6 +11,27 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
     equipSound: /Audio/Imperial/Modsuits/ballin.ogg
     unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.002
+    lowPressureMultiplier: 500
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitCESealed
+    requiredSlot: outerClothing
+    slot: head
+  # - type: QualityOfItem
+  #    maxSpawnQuality: 3
+  #    minSpawnQuality: 
+
+- type: entity #мосьюты
+  parent: ClothingOuterChestplateModsuitSealedBase
+  id: ClothingOuterChestplateModsuitCESealed
+  name: marine modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
+  - type: Clothing
+    sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.002
     lowPressureMultiplier: 500
@@ -36,7 +58,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitEngineerSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -45,8 +67,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/engineer.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/engineer.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 500
@@ -72,7 +92,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitRNDSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -81,8 +101,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/rnd.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/rnd.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 500
@@ -108,7 +126,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitAtmosphericsSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -117,8 +135,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/atmospheric.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/atmospheric.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 500
@@ -143,7 +159,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitMedicalSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -152,8 +168,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/medical.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/medical.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.7
     lowPressureMultiplier: 500
@@ -174,7 +188,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitCMOSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -183,8 +197,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/cmo.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/cmo.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 500
@@ -204,7 +216,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitCivillianSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -213,8 +225,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/civillian.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/civillian.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.7
     lowPressureMultiplier: 500
@@ -238,7 +248,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitMagnateSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -247,8 +257,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/magnate.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/magnate.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.4
     lowPressureMultiplier: 500
@@ -274,7 +282,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitSecuritySealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -283,8 +291,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/security.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/security.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.4
     lowPressureMultiplier: 500
@@ -310,7 +316,7 @@
 
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitHOSSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -319,8 +325,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/hos.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/hos.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.4
     lowPressureMultiplier: 500
@@ -344,7 +348,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitSalvageSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -353,8 +357,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/salvage.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/salvage.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 500
@@ -379,7 +381,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitMinerSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -388,8 +390,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/miner.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/miner.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 500
@@ -415,7 +415,7 @@
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitOperativeSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -424,8 +424,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeops.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeops.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.25
     lowPressureMultiplier: 500
@@ -460,15 +458,13 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopsclown.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopsclown.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitHonkOperativeSealed
     requiredSlot: outerClothing
     slot: head
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitOperativeCMDSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -477,8 +473,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopscmd.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/nukeopscmd.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.001
     lowPressureMultiplier: 500
@@ -513,8 +507,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/corporate.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/corporate.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 500
@@ -533,7 +525,7 @@
         Radiation: 0.7
 
 - type: entity 
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterChestplateModsuitSealedBase
   id: ClothingOuterChestplateModsuitApocryphalSealed
   name: marine modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
@@ -542,8 +534,6 @@
     sprite: Imperial/Modsuits/Clothing/OuterClothing/apocryphal.rsi
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/apocryphal.rsi
-    equipSound: /Audio/Imperial/Modsuits/ballin.ogg
-    unequipSound: /Audio/Imperial/Modsuits/ballout.ogg
   - type: PressureProtection
     highPressureMultiplier: 0.4
     lowPressureMultiplier: 500
