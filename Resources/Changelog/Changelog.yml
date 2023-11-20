@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Cables now require less steel to print., type: Tweak}
-  id: 4696
-  time: '2023-08-28T18:53:02.0000000+00:00'
 - author: ItsMeThom
   changes:
   - {message: Changed Lathe UI to two column layout to improve readability of materials
@@ -2897,3 +2892,8 @@ Entries:
     type: Tweak}
   id: 5195
   time: '2023-11-19T22:28:05.0000000+00:00'
+- author: Kadeo64
+  changes:
+  - {message: The Ripley APLU is now Tier 1 Industrial., type: Tweak}
+  id: 5196
+  time: '2023-11-20T00:58:07.0000000+00:00'
