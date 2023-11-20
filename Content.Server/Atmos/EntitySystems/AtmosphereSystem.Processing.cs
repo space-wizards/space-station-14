@@ -32,16 +32,6 @@ namespace Content.Server.Atmos.EntitySystems
 
         private readonly List<Entity<GridAtmosphereComponent>> _currentRunAtmosphere = new();
 
-        [Obsolete]
-        private bool ProcessRevalidate(Entity<GridAtmosphereComponent> ent, GasTileOverlayComponent? visuals)
-        {
-            if (!TryComp(ent, out MapGridComponent? mapGridComp))
-                return true;
-            if (!TryComp(ent, out GasTileOverlayComponent? overlay))
-                return true;
-            return ProcessRevalidate((ent, ent, overlay, mapGridComp, Transform(ent)));
-        }
-
         private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index, float volume)
         {
             var tile = atmosphere.Tiles.GetOrNew(index, out var existing);
@@ -62,7 +52,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
         private bool ProcessRevalidate(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
-            var (uid, atmosphere, visuals, grid, xform) = ent;
+            var (uid, atmosphere, visuals, grid, _) = ent;
             var volume = GetVolumeForTiles(grid);
 
             if (!atmosphere.ProcessingPaused)
@@ -87,18 +77,11 @@ namespace Content.Server.Atmos.EntitySystems
                 DebugTools.Assert(tile.AirtightDirty);
                 GridUpdateAdjacent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), tile);
 
-                UpdateTileAir(ent, tile, volume);
+                UpdateTile(ent, tile, volume);
 
                 // We activate the tile.
                 AddActiveTile(atmosphere, tile);
 
-                // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity and heat capacity
-                var tileDef = grid.TryGetTileRef(indices, out var tileRef)
-                    ? tileRef.GetContentTileDefinition(_tileDefinitionManager)
-                    : null;
-
-                tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
-                tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
                 InvalidateVisuals(uid, indices, visuals);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
@@ -124,16 +107,31 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private void UpdateTileAir(
+        private void UpdateTile(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
-            TileAtmosphere tile, float volume)
+            TileAtmosphere tile,
+            float volume)
         {
-            var mapUid = ent.Comp4.MapUid;
-            var indices = tile.GridIndices;
+            var idx = tile.GridIndices;
 
             DebugTools.Assert(!tile.AirtightDirty);
             var data = tile.AirtightData;
             var fullyBlocked = data.BlockedDirections == AtmosDirection.All;
+
+            bool isSpace;
+            if (_map.TryGetTileDef(ent.Owner, ent.Comp3, idx, out var tileDef))
+            {
+                var contentDef = (ContentTileDefinition) tileDef;
+                isSpace = contentDef.IsSpace;
+                tile.ThermalConductivity = contentDef.ThermalConductivity;
+                tile.HeatCapacity = contentDef.HeatCapacity;
+            }
+            else
+            {
+                isSpace = true;
+                tile.ThermalConductivity =  0.5f;
+                tile.HeatCapacity = float.PositiveInfinity;
+            }
 
             if (fullyBlocked && data.NoAirWhenBlocked)
             {
@@ -145,16 +143,17 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            if (!ent.Comp3.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager))
+            if (isSpace)
             {
-                tile.Air = GetTileMixture(null, mapUid, indices);
-                tile.Space = IsTileSpace(null, mapUid, indices, ent.Comp3);
+                var mapUid = ent.Comp4.MapUid;
+                tile.Air = GetTileMixture(null, mapUid, idx);
+                tile.Space = IsTileSpace(null, mapUid, idx, ent.Comp3);
                 return;
             }
 
             if (tile.Air == null && data.FixVacuum)
             {
-                var vacuumEv = new FixTileVacuumMethodEvent(ent.Owner, indices);
+                var vacuumEv = new FixTileVacuumMethodEvent(ent.Owner, idx);
                 GridFixTileVacuum(ent.Owner, ent.Comp1, ref vacuumEv);
             }
 
@@ -478,7 +477,7 @@ namespace Content.Server.Atmos.EntitySystems
                 switch (atmosphere.State)
                 {
                     case AtmosphereProcessingState.Revalidate:
-                        if (!ProcessRevalidate(ent, visuals))
+                        if (!ProcessRevalidate((ent, ent, visuals!, Comp<MapGridComponent>(ent), Transform(ent))))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
