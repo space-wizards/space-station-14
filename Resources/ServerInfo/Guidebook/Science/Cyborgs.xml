@@ -7,7 +7,7 @@
     <GuideEntityEmbed Entity="CyborgEndoskeleton" Caption="Cyborg Endoskeleton"/>
     <GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator"/>
   </Box>
-  All cyborgs are built on a endoskeleton, which can be crafted at a [color=#a4885c]Exosuit Fabricator[/color]. Further assembly steps can be followed by [color=#a4885c]examining[/color] it. Once built, further upgrades, such as additional tools, and longer battery life can be done with [color=#a4885c]modules[/color] and a [color=#a4885c]better power cell.[/color]
+  All cyborgs are built on a endoskeleton, which can be crafted at a [color=#a4885c]Exosuit Fabricator[/color]. Further assembly steps can be followed by [color=#a4885c]examining[/color] it. Once built, further upgrades, such as additional tools, and longer battery life can be done with [color=#a4885c]modules[/color] and a [color=#a4885c]better power cell[/color] respectively.
 
   In addition, newly built cyborgs need a [color=#a4885c]brain[/color]. there are two main types of such, both of which are able to speak independently, should the chassis be decommissioned, exchanged, or otherwise [color=red]suffer a unscheduled dissassembly[/color];
   - The [color=#a4885c]Man-Machine Interface[/color] or MMI for short, is an apparatus able to faciliate communication between a biological brain and electronic components, enabling those suffering from major workplace accidents to continue serving their crew, long after their body is gone.
