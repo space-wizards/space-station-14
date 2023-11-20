@@ -1,0 +1,22 @@
+<Document>
+  # Cyborgs
+  Cyborgs are man-machine hybrids, purpose-built by the robotics sub-department of science for a variety of duties across the station. Bound by [color=#a4885c]silicon laws[/color], they serve the crew unconditionally.
+  ## Basic Components
+<Box>
+    <GuideEntityEmbed Entity="CyborgEndoskeleton" Caption="Cyborg Endoskeleton"/>
+    <GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator">/>
+</Box>
+  All cyborgs are built on a endoskeleton, which can be crafted at a [color=#a4885c]Exosuit Fabricator[color/]. From there, the associated limbs, power cell, wiring, flashes, and "brain" is installed to it. Once built, further upgrades, such as additional tools, and longer battery life can be done with [color=#a4885c]modules[/color] and a [color=#a4885c]better power cell.[/color] Cyborgs may ask, and will be very appreciative of any upgrades the roboticist (which might be you) grants them.
+<Box>
+<GuideEntityEmbed Entity="PowerCellMedium" Caption="Power Cell"/>
+<GuideEntityEmbed Entity="CableAPCStack" Caption="Low-Voltage Wiring"/>
+<GuideEntityEmbed Entity="SciFlash" Caption="Flash"/>
+</Box>
+  Speaking of a "brain" there are two main types of such, both of which are able to speak independently, should the chassis be decommissioned, changed, or otherwise suffer a unscheduled dissassembly;
+  - The [color=#a4885c]Man-Machine Interface[/color] or MMI for short, is an apparatus able to faciliate communication between a biological brain and electronic components, enabling those suffering from major workplace accidents to continue serving their crew, long after their body is gone.
+  - The [color=#a4885c]Positronic Brain[/color] or PB for short, is an entirely artificial brain, capable of spotaneous neural activity. The time for the synthetic neurons to descramble can wildly vary, but they allow for the creation of cyborgs without having to extract a brain from someone.
+<Box>
+    <GuideEntityEmbed Entity="MMIFilled" Caption="Man-Machine Interface"/>
+    <GuideEntityEmbed Entity="Positronic Brain" Caption="Positronic Brain"/>
+</Box>
+</Document>
