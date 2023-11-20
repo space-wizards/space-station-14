@@ -122,17 +122,16 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             airtight.LastPosition = (xform.GridUid.Value, grid.TileIndicesFor(xform.Coordinates));
-            InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum && !airtight.AirBlocked);
+            InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2);
         }
 
-        public void InvalidatePosition(EntityUid gridId, Vector2i pos, bool fixVacuum = false)
+        public void InvalidatePosition(EntityUid gridId, Vector2i pos)
         {
             if (!TryComp(gridId, out MapGridComponent? grid))
                 return;
 
             var query = EntityManager.GetEntityQuery<AirtightComponent>();
             _explosionSystem.UpdateAirtightMap(gridId, pos, grid, query);
-            // TODO make atmos system use query
             _atmosphereSystem.InvalidateTile(gridId, pos);
         }
 

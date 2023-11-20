@@ -17,12 +17,9 @@ public sealed partial class AtmosphereSystem
 
         #region Atmos API Subscriptions
 
-        SubscribeLocalEvent<UpdateAdjacentMethodEvent>(GridUpdateAdjacent);
-
         SubscribeLocalEvent<GridAtmosphereComponent, HasAtmosphereMethodEvent>(GridHasAtmosphere);
         SubscribeLocalEvent<GridAtmosphereComponent, IsSimulatedGridMethodEvent>(GridIsSimulated);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
-        SubscribeLocalEvent<GridAtmosphereComponent, InvalidateTileMethodEvent>(GridInvalidateTile);
         SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixtureMethodEvent>(GridGetTileMixture);
         SubscribeLocalEvent<GridAtmosphereComponent, GetTileMixturesMethodEvent>(GridGetTileMixtures);
         SubscribeLocalEvent<GridAtmosphereComponent, ReactTileMethodEvent>(GridReactTile);
@@ -153,15 +150,6 @@ public sealed partial class AtmosphereSystem
 
         // Return the enumeration over all the tiles in the atmosphere.
         args.Mixtures = EnumerateMixtures(uid, component, args.Excite);
-        args.Handled = true;
-    }
-
-    private void GridInvalidateTile(EntityUid uid, GridAtmosphereComponent component, ref InvalidateTileMethodEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        component.InvalidatedCoords.Add(args.Tile);
         args.Handled = true;
     }
 
@@ -297,26 +285,22 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridUpdateAdjacent(ref UpdateAdjacentMethodEvent args)
+    private void GridUpdateAdjacent(
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> entity,
+        Vector2i index)
     {
-        if (args.Handled)
+        if (!entity.Comp1.Tiles.TryGetValue(index, out var tile))
             return;
 
-        args.Handled = true;
-
-        if (!args.Grid.Comp1.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
-
-        tile.BlockedAirflow = GetAirtightData((args.Grid, args.Grid), tile.GridIndices).Blocked;
-        GridUpdateAdjacent(tile, ref args);
+        tile.BlockedAirflow = GetAirtightData((entity, entity), tile.GridIndices).Blocked;
+        GridUpdateAdjacent(entity, tile);
     }
 
     private void GridUpdateAdjacent(
-        TileAtmosphere tile,
-        ref UpdateAdjacentMethodEvent args)
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> entity,
+        TileAtmosphere tile)
     {
-        DebugTools.AssertEqual(args.Grid.Comp1.Tiles[args.Tile], tile);
-        var (uid, component, mapGridComp, xform) = args.Grid;
+        var (uid, atmos, grid, xform) = entity;
         var mapUid = xform.MapUid;
 
         tile.AdjacentBits = AtmosDirection.Invalid;
@@ -327,16 +311,16 @@ public sealed partial class AtmosphereSystem
 
             var otherIndices = tile.GridIndices.Offset(direction);
 
-            if (!component.Tiles.TryGetValue(otherIndices, out var adjacent))
+            if (!atmos.Tiles.TryGetValue(otherIndices, out var adjacent))
             {
                 adjacent = new TileAtmosphere(tile.GridIndex, otherIndices,
                     GetTileMixture(null, mapUid, otherIndices),
-                    space: IsTileSpace(null, mapUid, otherIndices, mapGridComp));
+                    space: IsTileSpace(null, mapUid, otherIndices, grid));
             }
 
             var oppositeDirection = direction.GetOpposite();
 
-            adjacent.BlockedAirflow = GetAirtightData((uid, mapGridComp), adjacent.GridIndices).Blocked;
+            adjacent.BlockedAirflow = GetAirtightData((uid, grid), adjacent.GridIndices).Blocked;
 
             if (!adjacent.BlockedAirflow.IsFlagSet(oppositeDirection) && !tile.BlockedAirflow.IsFlagSet(direction))
             {
@@ -525,8 +509,7 @@ public sealed partial class AtmosphereSystem
         // Gotta do this afterwards so we can properly update adjacent tiles.
         foreach (var (position, _) in gridAtmosphere.Tiles.ToArray())
         {
-            var ev = new UpdateAdjacentMethodEvent((uid, gridAtmosphere, mapGrid, xform), position);
-            GridUpdateAdjacent(ref ev);
+            GridUpdateAdjacent((uid, gridAtmosphere, mapGrid, xform), position);
             InvalidateVisuals(uid, position, overlay);
         }
     }

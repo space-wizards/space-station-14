@@ -78,8 +78,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var isAirBlocked = blocked == AtmosDirection.All;
                 tile.BlockedAirflow = blocked;
 
-                var updateAdjacentEv = new UpdateAdjacentMethodEvent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), indices);
-                GridUpdateAdjacent(tile, ref updateAdjacentEv);
+                GridUpdateAdjacent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), indices);
 
                 // Blocked airflow changed, rebuild excited groups!
                 // blockers might have already been previously changed while processing one of our (old?) adjacent

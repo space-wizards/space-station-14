@@ -34,6 +34,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
     private EntityQuery<AirtightComponent> _airtightQuery;
+    private EntityQuery<GridAtmosphereComponent> _atmosQuery;
 
     public override void Initialize()
     {
@@ -49,6 +50,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeMap();
 
         _airtightQuery = GetEntityQuery<AirtightComponent>();
+        _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 

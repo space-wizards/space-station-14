@@ -85,10 +85,10 @@ public partial class AtmosphereSystem
         return ev.Mixtures!;
     }
 
-    public void InvalidateTile(EntityUid gridUid, Vector2i tile)
+    public void InvalidateTile(Entity<GridAtmosphereComponent?> entity, Vector2i tile)
     {
-        var ev = new InvalidateTileMethodEvent(gridUid, tile);
-        RaiseLocalEvent(gridUid, ref ev);
+        if (_atmosQuery.Resolve(entity.Owner, ref entity.Comp, false))
+            entity.Comp.InvalidatedCoords.Add(tile);
     }
 
     public GasMixture?[]? GetTileMixtures(EntityUid? gridUid, EntityUid? mapUid, List<Vector2i> tiles, bool excite = false)
@@ -323,9 +323,6 @@ public partial class AtmosphereSystem
     [ByRefEvent] private record struct GetAdjacentTileMixturesMethodEvent
         (EntityUid Grid, Vector2i Tile, bool IncludeBlocked, bool Excite,
             IEnumerable<GasMixture>? Result = null, bool Handled = false);
-
-    [ByRefEvent] private record struct UpdateAdjacentMethodEvent
-        (Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> Grid, Vector2i Tile, bool Handled = false);
 
     [ByRefEvent] private record struct HotspotExposeMethodEvent
         (EntityUid Grid, EntityUid? SparkSourceUid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);
