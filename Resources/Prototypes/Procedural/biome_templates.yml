@@ -13,7 +13,6 @@
         fractalType: FBm
         octaves: 2
         lacunarity: 2
-        gain: 0.5
     - !type:BiomeMetaLayer
       template: Grasslands
       threshold: 0
@@ -23,7 +22,6 @@
         fractalType: FBm
         octaves: 2
         lacunarity: 2
-        gain: 0.5
     - !type:BiomeMetaLayer
       template: Snow
       threshold: 0.5
@@ -33,7 +31,6 @@
         fractalType: FBm
         octaves: 2
         lacunarity: 2
-        gain: 0.5
 
 # Desert
 # TODO: Water in desert
@@ -62,7 +59,6 @@
         fractalType: FBm
         octaves: 5
         lacunarity: 2
-        gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
       allowedTiles:
@@ -78,12 +74,12 @@
         - 0
       tile: FloorLowDesert
     - !type:BiomeTileLayer
-      threshold: 0.6
-      tile: FloorLowDesert
+      threshold: 0.25
       noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 0.1
+        seed: 1
+        noiseType: OpenSimplex2
+        frequency: 2
+      tile: FloorLowDesert
 
 # Grass
 - type: biomeTemplate
@@ -129,7 +125,6 @@
         fractalType: FBm
         octaves: 5
         lacunarity: 2
-        gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
       decals:
@@ -174,7 +169,6 @@
         lacunarity: 2
         fractalType: FBm
         octaves: 5
-        gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
       entities:
@@ -229,7 +223,6 @@
         lacunarity: 2
         fractalType: FBm
         octaves: 5
-        gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
 
@@ -305,7 +298,6 @@
         lacunarity: 2
         fractalType: FBm
         octaves: 5
-        gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
       entities:
@@ -370,7 +362,6 @@
         fractalType: FBm
         octaves: 5
         lacunarity: 2
-        gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
       decals:
@@ -436,7 +427,6 @@
         lacunarity: 2
         fractalType: FBm
         octaves: 5
-        gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
       entities:
@@ -452,18 +442,8 @@
         lacunarity: 2
         fractalType: FBm
         octaves: 5
-        gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
-    - !type:BiomeDummyLayer
-      id: Loot
-    - !type:BiomeTileLayer
-      threshold: -0.7
-      tile: FloorSnow
-      noise:
-        seed: 0
-        frequency: 0.02
-        fractalType: None
     # Liquid plasma rivers. Ice moon baby
     - !type:BiomeEntityLayer
       allowedTiles:
@@ -479,6 +459,15 @@
         octaves: 1
       entities:
       - FloorLiquidPlasmaEntity
+    - !type:BiomeDummyLayer
+      id: Loot
+    - !type:BiomeTileLayer
+      threshold: -0.7
+      tile: FloorSnow
+      noise:
+        seed: 0
+        frequency: 0.02
+        fractalType: None
 
 # Shadow -> Derived from lava
 - type: biomeTemplate
@@ -558,15 +547,22 @@
       variants:
         - 0
       tile: FloorChromite
+    - !type:BiomeTileLayer
+      threshold: 0.25
+      noise:
+        seed: 1
+        noiseType: OpenSimplex2
+        frequency: 2
+      tile: FloorChromite
 
 # Caves
 - type: biomeTemplate
   id: Caves
   layers:
     - !type:BiomeEntityLayer
-      threshold: 0.8
+      threshold: 0.85
       noise:
-        seed: 0
+        seed: 2
         noiseType: OpenSimplex2
         fractalType: PingPong
       allowedTiles:
@@ -578,6 +574,21 @@
         - CrystalBlue
         - CrystalCyan
     - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        seed: 1
+        noiseType: OpenSimplex2
+        frequency: 1
+      allowedTiles:
+      - FloorAsteroidSand
+      entities:
+      - FloraStalagmite1
+      - FloraStalagmite2
+      - FloraStalagmite3
+      - FloraStalagmite4
+      - FloraStalagmite5
+      - FloraStalagmite6
+    - !type:BiomeEntityLayer
       threshold: -0.5
       invert: true
       noise:
@@ -586,7 +597,7 @@
         fractalType: Ridged
         octaves: 1
         frequency: 0.1
-        gain: 0
+        gain: 0.5
       allowedTiles:
         - FloorAsteroidSand
       entities:
@@ -595,4 +606,13 @@
       id: Loot
     - !type:BiomeTileLayer
       threshold: -1.0
+      tile: FloorAsteroidSand
+      variants:
+      - 0
+    - !type:BiomeTileLayer
+      threshold: 0.5
+      noise:
+        seed: 1
+        noiseType: OpenSimplex2
+        frequency: 2
       tile: FloorAsteroidSand

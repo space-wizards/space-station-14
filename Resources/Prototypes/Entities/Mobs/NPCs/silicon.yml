@@ -166,6 +166,9 @@
   - type: Storage
     maxItemSize: Huge
     maxTotalWeight: 40
+  - type: Access
+    groups:
+    - Cargo
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
