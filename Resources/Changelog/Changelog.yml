@@ -1,19 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The recycler now recycles items off conveyor belts properly., type: Fix}
-  id: 4694
-  time: '2023-08-27T23:01:54.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Fixed Sec HUD icons overlapping with speech indicators., type: Fix}
-  id: 4695
-  time: '2023-08-28T06:19:59.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Cables now require less steel to print., type: Tweak}
-  id: 4696
-  time: '2023-08-28T18:53:02.0000000+00:00'
 - author: ItsMeThom
   changes:
   - {message: Changed Lathe UI to two column layout to improve readability of materials
@@ -2896,3 +2881,19 @@ Entries:
   - {message: Disposal traversal damage is disabled for now., type: Tweak}
   id: 5193
   time: '2023-11-19T10:25:02.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed explosions deleting bodyparts and organs inside of people., type: Fix}
+  id: 5194
+  time: '2023-11-19T17:44:42.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Zombified mice and other small animals no longer spread zombification.,
+    type: Tweak}
+  id: 5195
+  time: '2023-11-19T22:28:05.0000000+00:00'
+- author: Kadeo64
+  changes:
+  - {message: The Ripley APLU is now Tier 1 Industrial., type: Tweak}
+  id: 5196
+  time: '2023-11-20T00:58:07.0000000+00:00'
