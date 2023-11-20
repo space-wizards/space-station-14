@@ -9,6 +9,7 @@ using Content.Shared.Alert;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Lock;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
@@ -209,6 +210,12 @@ public sealed partial class BorgSystem : SharedBorgSystem
         // borgs can't view their own ui
         if (args.User == uid)
             args.Cancel();
+
+        if (TryComp(uid, out LockComponent? lockComp) && lockComp.Locked)
+        {
+            Popup.PopupEntity(Loc.GetString("borg-panel-locked"), uid, args.User);
+            args.Cancel();
+        }
     }
 
     private void OnGetDeadIC(EntityUid uid, BorgChassisComponent component, ref GetCharactedDeadIcEvent args)

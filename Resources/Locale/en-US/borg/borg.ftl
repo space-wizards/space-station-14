@@ -2,6 +2,7 @@
 borg-player-not-allowed-eject = The brain was expelled from the chassis!
 
 borg-panel-not-open = The cyborg's panel isn't open...
+borg-panel-locked = The cyborg's panel is locked!
 
 borg-mind-added = {CAPITALIZE($name)} powered on!
 borg-mind-removed = {CAPITALIZE($name)} shut off!
