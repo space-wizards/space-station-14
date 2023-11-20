@@ -138,6 +138,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (fullyBlocked && data.NoAirWhenBlocked)
             {
                 tile.Air = null;
+                Array.Clear(tile.MolesArchived);
                 tile.ArchivedCycle = 0;
                 tile.LastShare = 0f;
                 tile.Hotspot = new Hotspot();
@@ -161,16 +162,13 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Air?.Immutable == true)
             {
                 tile.Air = null;
+                Array.Clear(tile.MolesArchived);
                 tile.ArchivedCycle = 0;
                 tile.LastShare = 0f;
                 tile.Space = false;
             }
 
-            if (tile.Air == null)
-            {
-                Array.Clear(tile.MolesArchived!);
-                tile.Air = new GasMixture(volume){Temperature = Atmospherics.T20C};
-            }
+            tile.Air ??= new GasMixture(volume){Temperature = Atmospherics.T20C};
         }
 
         private void QueueRunTiles(

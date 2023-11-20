@@ -281,9 +281,10 @@ public sealed partial class AtmosphereSystem
         var (uid, atmos, grid, xform) = entity;
         var mapUid = xform.MapUid;
 
-        tile.AdjacentBits = AtmosDirection.Invalid;
-        var tileData = UpdateAirtightData(uid, atmos, grid, tile);
+        UpdateAirtightData(uid, atmos, grid, tile);
+        var tileData = tile.AirtightData;
 
+        tile.AdjacentBits = AtmosDirection.Invalid;
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var direction = (AtmosDirection) (1 << i);
@@ -297,9 +298,10 @@ public sealed partial class AtmosphereSystem
                     space: IsTileSpace(null, mapUid, otherIndices, grid));
             }
 
-            var oppositeDirection = direction.GetOpposite();
-            var adjData = UpdateAirtightData(uid, atmos, grid, adjacent);
+            UpdateAirtightData(uid, atmos, grid, adjacent);
+            var adjData = adjacent.AirtightData;
 
+            var oppositeDirection = direction.GetOpposite();
             if (!adjData.BlockedDirections.IsFlagSet(oppositeDirection) && tileData.BlockedDirections.IsFlagSet(direction))
             {
                 adjacent.AdjacentBits |= oppositeDirection;

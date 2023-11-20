@@ -125,6 +125,15 @@ namespace Content.Server.Atmos
                 Air?.MarkImmutable();
         }
 
+        public TileAtmosphere(TileAtmosphere other)
+        {
+            GridIndex = other.GridIndex;
+            GridIndices = other.GridIndices;
+            Space = other.Space;
+            Air = other.Air?.Clone();
+            Array.Copy(other.MolesArchived, MolesArchived, MolesArchived.Length);
+        }
+
         public TileAtmosphere()
         {
         }
