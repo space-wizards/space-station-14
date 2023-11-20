@@ -11,14 +11,14 @@ namespace Content.Shared.Access.Components
     [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
     public sealed partial class IdCardComponent : Component
     {
-        [DataField("fullName")]
+        [DataField("fullName"), ViewVariables(VVAccess.ReadWrite)]
         [AutoNetworkedField]
         // FIXME Friends
         public string? FullName;
 
         [DataField("jobTitle")]
         [AutoNetworkedField]
-        [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
+        [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite), ViewVariables(VVAccess.ReadWrite)]
         public string? JobTitle;
 
         /// <summary>

@@ -21,7 +21,6 @@ using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -53,11 +52,9 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
-    private EntityQuery<ContainerManagerComponent> _containersQuery;
     private EntityQuery<DamageableComponent> _damageQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<ProjectileComponent> _projectileQuery;
-    private EntityQuery<MindComponent> _mindQuery;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -107,11 +104,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         InitVisuals();
 
         _transformQuery = GetEntityQuery<TransformComponent>();
-        _containersQuery = GetEntityQuery<ContainerManagerComponent>();
         _damageQuery = GetEntityQuery<DamageableComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
-        _mindQuery = GetEntityQuery<MindComponent>();
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
