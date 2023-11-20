@@ -78,31 +78,56 @@ public sealed class ChunkingSystem : EntitySystem
         var pos = _transform.GetWorldPosition(xform);
         var bounds = _baseViewBounds.Translated(pos).Enlarged(viewEnlargement);
 
-        var state = (chunks, indexPool, chunkSize, bounds);
+        var state = new QueryState(chunks, indexPool, chunkSize, bounds, _transform, EntityManager);
         _mapManager.FindGridsIntersecting(xform.MapID, bounds, ref state, AddGridChunks, true);
     }
 
-    private bool AddGridChunks(
+    private static bool AddGridChunks(
         EntityUid uid,
         MapGridComponent grid,
-        ref (Dictionary<NetEntity, HashSet<Vector2i>>, ObjectPool<HashSet<Vector2i>>, int, Box2) state)
+        ref QueryState state)
     {
-        var netGrid = GetNetEntity(uid);
-
-        var (chunks, pool, size, bounds) = state;
-        if (!chunks.TryGetValue(netGrid, out var set))
+        var netGrid = state.EntityManager.GetNetEntity(uid);
+        if (!state.Chunks.TryGetValue(netGrid, out var set))
         {
-            chunks[netGrid] = set = pool.Get();
+            state.Chunks[netGrid] = set = state.Pool.Get();
             DebugTools.Assert(set.Count == 0);
         }
 
-        var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(uid).TransformBox(bounds), size);
+        var aabb = state.Transform.GetInvWorldMatrix(uid).TransformBox(state.Bounds);
+        var enumerator = new ChunkIndicesEnumerator(aabb, state.ChunkSize);
         while (enumerator.MoveNext(out var indices))
         {
             set.Add(indices.Value);
         }
 
         return true;
+    }
+
+    private readonly struct QueryState
+    {
+        public readonly Dictionary<NetEntity, HashSet<Vector2i>> Chunks;
+        public readonly ObjectPool<HashSet<Vector2i>> Pool;
+        public readonly int ChunkSize;
+        public readonly Box2 Bounds;
+        public readonly SharedTransformSystem Transform;
+        public readonly EntityManager EntityManager;
+
+        public QueryState(
+            Dictionary<NetEntity, HashSet<Vector2i>> chunks,
+            ObjectPool<HashSet<Vector2i>> pool,
+            int chunkSize,
+            Box2 bounds,
+            SharedTransformSystem transform,
+            EntityManager entityManager)
+        {
+            Chunks = chunks;
+            Pool = pool;
+            ChunkSize = chunkSize;
+            Bounds = bounds;
+            Transform = transform;
+            EntityManager = entityManager;
+        }
     }
 }
 
