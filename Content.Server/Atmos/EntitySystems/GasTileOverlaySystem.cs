@@ -155,7 +155,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var id = VisibleGasId[i];
                 var gas = _atmosphereSystem.GetGas(id);
-                var moles = mixture?.Moles[id] ?? 0f;
+                var moles = mixture?[id] ?? 0f;
                 ref var opacity = ref data.Opacity[i];
 
                 if (moles < gas.GasMolesVisible)
@@ -206,7 +206,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var id = VisibleGasId[i];
                     var gas = _atmosphereSystem.GetGas(id);
-                    var moles = tile.Air.Moles[id];
+                    var moles = tile.Air[id];
                     ref var oldOpacity = ref oldData.Opacity[i];
 
                     if (moles < gas.GasMolesVisible)

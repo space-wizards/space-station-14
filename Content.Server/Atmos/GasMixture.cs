@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos
@@ -16,10 +17,12 @@ namespace Content.Server.Atmos
     {
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
-        // This must always have a length that is a multiple of 4 for SIMD acceleration.
-        [DataField("moles")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        // No access, to ensure immutable mixtures are never accidentally mutated.
+        [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), Other = AccessPermissions.None)]
+        [DataField]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
+
+        public float this[int gas] => Moles[gas];
 
         [DataField("temperature")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -75,6 +78,19 @@ namespace Content.Server.Atmos
         {
             if (volume < 0)
                 volume = 0;
+            Volume = volume;
+        }
+
+        public GasMixture(float[] moles, float temp, float volume = Atmospherics.CellVolume)
+        {
+            if (moles.Length != Atmospherics.AdjustedNumberOfGases)
+                throw new InvalidOperationException($"Invalid mole array length");
+
+            if (volume < 0)
+                volume = 0;
+
+            _temperature = temp;
+            Moles = moles;
             Volume = volume;
         }
 
@@ -164,7 +180,8 @@ namespace Content.Server.Atmos
             {
                 var moles = Moles[i];
                 var otherMoles = removed.Moles[i];
-                if (moles < Atmospherics.GasMinMoles || float.IsNaN(moles))
+
+                if ((moles < Atmospherics.GasMinMoles || float.IsNaN(moles)) && !Immutable)
                     Moles[i] = 0;
 
                 if (otherMoles < Atmospherics.GasMinMoles || float.IsNaN(otherMoles))
@@ -203,6 +220,9 @@ namespace Content.Server.Atmos
 
         void ISerializationHooks.AfterDeserialization()
         {
+            // ISerializationHooks is obsolete.
+            // TODO add fixed-length-array serializer
+
             // The arrays MUST have a specific length.
             Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
         }
@@ -230,8 +250,12 @@ namespace Content.Server.Atmos
 
         public bool Equals(GasMixture? other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(this, other))
+                return true;
+
+            if (ReferenceEquals(null, other))
+                return false;
+
             return Moles.SequenceEqual(other.Moles)
                    && _temperature.Equals(other._temperature)
                    && ReactionResults.SequenceEqual(other.ReactionResults)
@@ -259,11 +283,13 @@ namespace Content.Server.Atmos
 
         public GasMixture Clone()
         {
+            if (Immutable)
+                return this;
+
             var newMixture = new GasMixture()
             {
                 Moles = (float[])Moles.Clone(),
                 _temperature = _temperature,
-                Immutable = Immutable,
                 Volume = Volume,
             };
             return newMixture;

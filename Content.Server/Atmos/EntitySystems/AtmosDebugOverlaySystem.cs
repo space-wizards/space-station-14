@@ -105,12 +105,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (tile?.Air == null)
             {
-                return new AtmosDebugOverlayData(Atmospherics.TCMB, gases, AtmosDirection.Invalid, tile?.LastPressureDirection ?? AtmosDirection.Invalid, 0, tile?.BlockedAirflow ?? AtmosDirection.Invalid, tile?.Space ?? mapIsSpace);
+                return new AtmosDebugOverlayData(Atmospherics.TCMB, gases, AtmosDirection.Invalid, tile?.LastPressureDirection ?? AtmosDirection.Invalid, 0, tile?.AirtightData.BlockedDirections ?? AtmosDirection.Invalid, tile?.Space ?? mapIsSpace);
             }
             else
             {
                 NumericsHelpers.Add(gases, tile.Air.Moles);
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.LastPressureDirection, tile.ExcitedGroup?.GetHashCode() ?? 0, tile.BlockedAirflow, tile.Space);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirection, tile.LastPressureDirection, tile.ExcitedGroup?.GetHashCode() ?? 0, tile.AirtightData.BlockedDirections, tile.Space);
             }
         }
 

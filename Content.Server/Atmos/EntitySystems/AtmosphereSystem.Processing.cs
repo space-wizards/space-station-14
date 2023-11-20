@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
@@ -32,16 +33,16 @@ namespace Content.Server.Atmos.EntitySystems
 
         private readonly List<Entity<GridAtmosphereComponent>> _currentRunAtmosphere = new();
 
-        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index, float volume)
+        private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere,
+            MapAtmosphereComponent? mapAtmos, Vector2i index)
         {
             var tile = atmosphere.Tiles.GetOrNew(index, out var existing);
-            if (!existing)
-            {
-                tile.GridIndex = owner;
-                tile.GridIndices = index;
-                tile.Air = new GasMixture(volume) { Temperature = Atmospherics.T20C };
-            }
+            if (existing)
+                return tile;
 
+            tile.GridIndex = owner;
+            tile.GridIndices = index;
+            (tile.Air, tile.Space) = GetDefaultMapAtmosphere(mapAtmos);
             return tile;
         }
 
@@ -52,8 +53,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
         private bool ProcessRevalidate(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
-            var (uid, atmosphere, visuals, grid, _) = ent;
+            var (uid, atmosphere, visuals, grid, xform) = ent;
             var volume = GetVolumeForTiles(grid);
+            TryComp(xform.MapUid, out MapAtmosphereComponent? mapAtmos);
 
             if (!atmosphere.ProcessingPaused)
             {
@@ -61,7 +63,7 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunInvalidatedTiles.EnsureCapacity(atmosphere.InvalidatedCoords.Count);
                 foreach (var indices in atmosphere.InvalidatedCoords)
                 {
-                    var tile = GetOrNewTile(uid, atmosphere, indices, volume);
+                    var tile = GetOrNewTile(uid, atmosphere, mapAtmos, indices, volume);
                     tile.AirtightDirty = true;
                     atmosphere.CurrentRunInvalidatedTiles.Enqueue(tile);
                 }
@@ -75,9 +77,9 @@ namespace Content.Server.Atmos.EntitySystems
                 DebugTools.Assert(atmosphere.Tiles.GetValueOrDefault(indices) == tile);
 
                 DebugTools.Assert(tile.AirtightDirty);
-                GridUpdateAdjacent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), tile);
+                GridUpdateAdjacent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), tile, mapAtmos);
 
-                UpdateTile(ent, tile, volume);
+                UpdateTile(ent, mapAtmos, tile, volume);
 
                 // We activate the tile.
                 AddActiveTile(atmosphere, tile);
@@ -109,6 +111,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void UpdateTile(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            MapAtmosphereComponent? mapAtmos,
             TileAtmosphere tile,
             float volume)
         {
@@ -145,9 +148,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (isSpace)
             {
-                var mapUid = ent.Comp4.MapUid;
-                tile.Air = GetTileMixture(null, mapUid, idx);
-                tile.Space = IsTileSpace(null, mapUid, idx, ent.Comp3);
+                (tile.Air, tile.Space) = GetDefaultMapAtmosphere(mapAtmos);
                 return;
             }
 

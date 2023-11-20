@@ -254,13 +254,13 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var gas = _atmo.GetGas(i);
 
-                if (mixture?.Moles[i] <= Atmospherics.GasMinMoles)
+                if (mixture?[i] <= Atmospherics.GasMinMoles)
                     continue;
 
                 if (mixture != null)
                 {
                     var gasName = Loc.GetString(gas.Name);
-                    gases.Add(new GasEntry(gasName, mixture.Moles[i], gas.Color));
+                    gases.Add(new GasEntry(gasName, mixture[i], gas.Color));
                 }
             }
 

@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
@@ -108,10 +109,15 @@ namespace Content.Server.Atmos
         public float MaxFireTemperatureSustained { get; set; }
 
         /// <summary>
-        /// If true, the cached airtight data is invalid and needs to be recomputed.
+        /// If true, the cached airtight data is invalid and needs to be recomputed. See <see cref="AirtightData"/>.
         /// </summary>
         public bool AirtightDirty = true;
 
+        /// <summary>
+        /// Cached information about airtight entities on this tile. This is only up to date if
+        /// <see cref="AirtightDirty"/> is false and the tile is not queued for processing (i.e., not in
+        /// <see cref="GridAtmosphereComponent.InvalidatedCoords"/>).
+        /// </summary>
         public AtmosphereSystem.AirtightData AirtightData;
 
         public TileAtmosphere(EntityUid gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false, bool space = false)

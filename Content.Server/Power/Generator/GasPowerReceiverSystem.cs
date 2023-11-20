@@ -37,7 +37,7 @@ public sealed class GasPowerReceiverSystem : EntitySystem
         if (pipe.Air.Temperature <= component.MaxTemperature)
         {
             // we have enough gas, so we consume it and are powered
-            if (pipe.Air.Moles[(int) component.TargetGas] > component.MolesConsumedSec * timeDelta)
+            if (pipe.Air[(int) component.TargetGas] > component.MolesConsumedSec * timeDelta)
             {
                 pipe.Air.AdjustMoles(component.TargetGas, -component.MolesConsumedSec * timeDelta);
                 SetPowered(uid, component, true);

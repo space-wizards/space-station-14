@@ -896,11 +896,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 
-        var mixture = new GasMixture(2500)
-        {
-            Temperature = 293.15f,
-            Moles = moles,
-        };
+        var mixture = new GasMixture(moles, Atmospherics.T20C);
 
         _atmos.SetMapAtmosphere(mapUid, false, mixture, atmos);
 

@@ -86,7 +86,7 @@ public sealed partial class AtmosphereSystem
                     continue;
 
                 // Copy a bunch of data over... Not great, maybe put this in TileAtmosphere?
-                newTileAtmosphere.Air = tileAtmosphere.Air?.Clone() ?? null;
+                newTileAtmosphere.Air = tileAtmosphere.Air?.Clone();
                 newTileAtmosphere.Hotspot = tileAtmosphere.Hotspot;
                 newTileAtmosphere.HeatCapacity = tileAtmosphere.HeatCapacity;
                 newTileAtmosphere.Temperature = tileAtmosphere.Temperature;
@@ -274,12 +274,10 @@ public sealed partial class AtmosphereSystem
             GridUpdateAdjacent(entity, tile);
     }
 
-    private void GridUpdateAdjacent(
-        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> entity,
-        TileAtmosphere tile)
+    private void GridUpdateAdjacent(Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> entity,
+        TileAtmosphere tile, MapAtmosphereComponent? mapAtmos)
     {
-        var (uid, atmos, grid, xform) = entity;
-        var mapUid = xform.MapUid;
+        var (uid, atmos, grid, _) = entity;
 
         UpdateAirtightData(uid, atmos, grid, tile);
         var tileData = tile.AirtightData;
@@ -289,14 +287,8 @@ public sealed partial class AtmosphereSystem
         {
             var direction = (AtmosDirection) (1 << i);
 
-            var otherIndices = tile.GridIndices.Offset(direction);
-
-            if (!atmos.Tiles.TryGetValue(otherIndices, out var adjacent))
-            {
-                adjacent = new TileAtmosphere(tile.GridIndex, otherIndices,
-                    GetTileMixture(null, mapUid, otherIndices),
-                    space: IsTileSpace(null, mapUid, otherIndices, grid));
-            }
+            var adjacentIndices = tile.GridIndices.Offset(direction);
+            var adjacent = GetOrNewTile(uid, atmos, mapAtmos, adjacentIndices);
 
             UpdateAirtightData(uid, atmos, grid, adjacent);
             var adjData = adjacent.AirtightData;
@@ -326,6 +318,22 @@ public sealed partial class AtmosphereSystem
 
         if (!tile.AdjacentBits.IsFlagSet(tile.MonstermosInfo.CurrentTransferDirection))
             tile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
+    }
+
+    public (GasMixture Air, bool IsSpace) GetDefaultMapAtmosphere(Entity<MapAtmosphereComponent?> map)
+    {
+        Resolve(map.Owner, ref map.Comp, false);
+        return GetDefaultMapAtmosphere(map.Comp);
+    }
+
+    private (GasMixture Air, bool IsSpace) GetDefaultMapAtmosphere(MapAtmosphereComponent? map)
+    {
+        if (map == null)
+            return (GasMixture.SpaceGas, true);
+
+        var air = map.Mixture;
+        DebugTools.Assert(air.Immutable);
+        return (air, map.Space);
     }
 
     private void GridHotspotExpose(EntityUid uid, GridAtmosphereComponent component, ref HotspotExposeMethodEvent args)
