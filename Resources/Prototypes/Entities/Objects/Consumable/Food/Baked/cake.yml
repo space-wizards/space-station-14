@@ -578,11 +578,7 @@
     horizontalRotation: 0
   - type: Item
     size: Ginormous
-    inhandVisuals:
-      left:
-      - state: cak-inhand-left
-      right:
-      - state: cak-inhand-right
+    heldPrefix: cak
   - type: Clothing
     quickEquip: false
     sprite: Mobs/Pets/cat.rsi
