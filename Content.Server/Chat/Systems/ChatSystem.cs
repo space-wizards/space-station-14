@@ -19,7 +19,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Radio;
-using Content.Shared.Silicons.Borgs.Components;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -193,12 +192,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!CanSendInGame(message, shell, player))
             return;
 
-        if (HasComp<BorgChassisComponent>(source))
-        {
-            //Allows borgs in a critical state to speak
-            ignoreActionBlocker = true;
-        }
-
         // this method is a disaster
         // every second i have to spend working with this code is fucking agony
         // scientists have to wonder how any of this was merged
@@ -242,7 +235,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
             {
-                SendEntityWhisper(source, modMessage, range, channel, nameOverride, hideLog, ignoreActionBlocker);
+                SendEntityWhisper(source, modMessage, range, channel, nameOverride, ignoreActionBlocker);
                 return;
             }
         }
