@@ -266,14 +266,6 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridUpdateAdjacent(
-        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> entity,
-        Vector2i index)
-    {
-        if (entity.Comp1.Tiles.TryGetValue(index, out var tile))
-            GridUpdateAdjacent(entity, tile);
-    }
-
     private void GridUpdateAdjacent(Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> entity,
         TileAtmosphere tile, MapAtmosphereComponent? mapAtmos)
     {
@@ -493,12 +485,14 @@ public sealed partial class AtmosphereSystem
         TryComp(uid, out GasTileOverlayComponent? overlay);
 
         var xform = Transform(grid.Owner);
+        TryComp(xform.MapUid, out MapAtmosphereComponent? mapAtmos);
 
         // Gotta do this afterwards so we can properly update adjacent tiles.
-        foreach (var (position, _) in gridAtmosphere.Tiles.ToArray())
+        var tiles = gridAtmosphere.Tiles.Values.ToArray();
+        foreach (var tile in tiles)
         {
-            GridUpdateAdjacent((uid, gridAtmosphere, mapGrid, xform), position);
-            InvalidateVisuals(uid, position, overlay);
+            GridUpdateAdjacent((uid, gridAtmosphere, mapGrid, xform), tile, mapAtmos);
+            InvalidateVisuals(uid, tile.GridIndices, overlay);
         }
     }
 }

@@ -1,7 +1,5 @@
-using System.Security.Cryptography;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
@@ -63,7 +61,7 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunInvalidatedTiles.EnsureCapacity(atmosphere.InvalidatedCoords.Count);
                 foreach (var indices in atmosphere.InvalidatedCoords)
                 {
-                    var tile = GetOrNewTile(uid, atmosphere, mapAtmos, indices, volume);
+                    var tile = GetOrNewTile(uid, atmosphere, mapAtmos, indices);
                     tile.AirtightDirty = true;
                     atmosphere.CurrentRunInvalidatedTiles.Enqueue(tile);
                 }
@@ -122,7 +120,7 @@ namespace Content.Server.Atmos.EntitySystems
             var fullyBlocked = data.BlockedDirections == AtmosDirection.All;
 
             bool isSpace;
-            if (_map.TryGetTileDef(ent.Owner, ent.Comp3, idx, out var tileDef))
+            if (_map.TryGetTileDef(ent.Comp3, idx, out var tileDef))
             {
                 var contentDef = (ContentTileDefinition) tileDef;
                 isSpace = contentDef.IsSpace;

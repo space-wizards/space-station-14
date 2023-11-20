@@ -535,7 +535,7 @@ namespace Content.Server.Atmos.EntitySystems
                 _physics.ApplyAngularImpulse(owner, Vector2Helpers.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
             }
 
-            if(tileCount > 10 && (totalMolesRemoved / tileCount) > 10)
+            if (tileCount > 10 && (totalMolesRemoved / tileCount) > 10)
                 _adminLog.Add(LogType.ExplosiveDepressurization, LogImpact.High,
                     $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
@@ -548,28 +548,26 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var reconsiderAdjacent = false;
 
-            foreach (var entity in mapGrid.GetAnchoredEntities(tile.GridIndices))
+            foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, tile.GridIndices))
             {
-                if (!TryComp(entity, out FirelockComponent? firelock))
-                    continue;
-
-                reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
+                if (_firelockQuery.TryGetComponent(entity, out var firelock))
+                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
 
-            foreach (var entity in mapGrid.GetAnchoredEntities(other.GridIndices))
+            foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
             {
-                if (!TryComp(entity, out FirelockComponent? firelock))
-                    continue;
-
-                reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
+                if (_firelockQuery.TryGetComponent(entity, out var firelock))
+                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
             }
 
             if (!reconsiderAdjacent)
                 return;
 
-            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent2 = (ent.Owner, ent.Comp, mapGrid, Transform(ent.Owner));
-            GridUpdateAdjacent(ent2, tile.GridIndices);
-            GridUpdateAdjacent(ent2, other.GridIndices);
+            var xform = Transform(ent.Owner);
+            TryComp(xform.MapUid, out MapAtmosphereComponent? mapAtmos);
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent2 = new(ent.Owner, ent.Comp, mapGrid, xform);
+            GridUpdateAdjacent(ent2, tile, mapAtmos);
+            GridUpdateAdjacent(ent2, other, mapAtmos);
             InvalidateVisuals(tile.GridIndex, tile.GridIndices, visuals);
             InvalidateVisuals(other.GridIndex, other.GridIndices, visuals);
         }
