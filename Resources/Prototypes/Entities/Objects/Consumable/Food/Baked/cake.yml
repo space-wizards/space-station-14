@@ -558,7 +558,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    sprite: Mobs/Pets/cakecat.rsi
+    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cak
@@ -578,10 +578,15 @@
     horizontalRotation: 0
   - type: Item
     size: Ginormous
+    inhandVisuals:
+      left:
+      - state: cak-inhand-left
+      right:
+      - state: cak-inhand-right
   - type: Clothing
     quickEquip: false
-    sprite: Mobs/Pets/cakecat.rsi
-    equippedPrefix: 0
+    sprite: Mobs/Pets/cat.rsi
+    equippedPrefix: cak
     slots:
     - HEAD
   - type: GhostRole
