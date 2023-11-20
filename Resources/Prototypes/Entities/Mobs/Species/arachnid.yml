@@ -38,6 +38,13 @@
   # Damage (Self)
   - type: Bloodstream
     bloodReagent: CopperBlood
+  - type: SlowdownOnBloodloss
+    thresholds:
+      290: 1
+      280: 0.9
+      270: 0.8
+      250: 0.7
+      200: 0.5
   # Damage (Others)
   - type: MeleeWeapon
     animation: WeaponArcClaw
