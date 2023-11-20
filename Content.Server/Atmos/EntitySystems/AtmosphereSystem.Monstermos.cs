@@ -567,11 +567,11 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
-            var (owner, gridAtmosphere) = ent;
-            var tileEv = new UpdateAdjacentMethodEvent(owner, tile.GridIndices);
-            var otherEv = new UpdateAdjacentMethodEvent(owner, other.GridIndices);
-            GridUpdateAdjacent(owner, gridAtmosphere, ref tileEv);
-            GridUpdateAdjacent(owner, gridAtmosphere, ref otherEv);
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent2 = (ent.Owner, ent.Comp, mapGrid, Transform(ent.Owner));
+            var tileEv = new UpdateAdjacentMethodEvent(ent2, tile.GridIndices);
+            var otherEv = new UpdateAdjacentMethodEvent(ent2, other.GridIndices);
+            GridUpdateAdjacent(ref tileEv);
+            GridUpdateAdjacent(ref otherEv);
             InvalidateVisuals(tile.GridIndex, tile.GridIndices, visuals);
             InvalidateVisuals(other.GridIndex, other.GridIndices, visuals);
         }

@@ -17,6 +17,8 @@ public sealed partial class AtmosphereSystem
 
         #region Atmos API Subscriptions
 
+        SubscribeLocalEvent<UpdateAdjacentMethodEvent>(GridUpdateAdjacent);
+
         SubscribeLocalEvent<GridAtmosphereComponent, HasAtmosphereMethodEvent>(GridHasAtmosphere);
         SubscribeLocalEvent<GridAtmosphereComponent, IsSimulatedGridMethodEvent>(GridIsSimulated);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAllMixturesMethodEvent>(GridGetAllMixtures);
@@ -28,7 +30,6 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<GridAtmosphereComponent, IsTileSpaceMethodEvent>(GridIsTileSpace);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTilesMethodEvent>(GridGetAdjacentTiles);
         SubscribeLocalEvent<GridAtmosphereComponent, GetAdjacentTileMixturesMethodEvent>(GridGetAdjacentTileMixtures);
-        SubscribeLocalEvent<GridAtmosphereComponent, UpdateAdjacentMethodEvent>(GridUpdateAdjacent);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExposeMethodEvent>(GridHotspotExpose);
         SubscribeLocalEvent<GridAtmosphereComponent, HotspotExtinguishMethodEvent>(GridHotspotExtinguish);
         SubscribeLocalEvent<GridAtmosphereComponent, IsHotspotActiveMethodEvent>(GridIsHotspotActive);
@@ -229,29 +230,9 @@ public sealed partial class AtmosphereSystem
         if (!Resolve(uid, ref mapGridComp))
             return;
 
-        var directions = AtmosDirection.Invalid;
-
-        var enumerator = GetObstructingComponentsEnumerator(mapGridComp, args.Tile);
-
-        while (enumerator.MoveNext(out var obstructingComponent))
-        {
-            if (!obstructingComponent.AirBlocked)
-                continue;
-
-            // We set the directions that are air-blocked so far,
-            // as you could have a full obstruction with only 4 directional air blockers.
-            directions |= obstructingComponent.AirBlockedDirection;
-            args.NoAir |= obstructingComponent.NoAirWhenFullyAirBlocked;
-
-            if (directions.IsFlagSet(args.Direction))
-            {
-                args.Result = true;
-                args.Handled = true;
-                return;
-            }
-        }
-
-        args.Result = false;
+        var data = GetAirtightData((uid, mapGridComp), args.Tile);
+        args.NoAir = data.NoAir;
+        args.Result = data.Blocked.IsFlagSet(args.Direction);
         args.Handled = true;
     }
 
@@ -316,25 +297,29 @@ public sealed partial class AtmosphereSystem
         args.Handled = true;
     }
 
-    private void GridUpdateAdjacent(EntityUid uid, GridAtmosphereComponent component,
-        ref UpdateAdjacentMethodEvent args)
+    private void GridUpdateAdjacent(ref UpdateAdjacentMethodEvent args)
     {
         if (args.Handled)
             return;
 
-        var mapGridComp = args.MapGridComponent;
+        args.Handled = true;
 
-        if (!Resolve(uid, ref mapGridComp))
+        if (!args.Grid.Comp1.Tiles.TryGetValue(args.Tile, out var tile))
             return;
 
-        var xform = Transform(uid);
-        EntityUid? mapUid = _mapManager.MapExists(xform.MapID) ? _mapManager.GetMapEntityId(xform.MapID) : null;
+        tile.BlockedAirflow = GetAirtightData((args.Grid, args.Grid), tile.GridIndices).Blocked;
+        GridUpdateAdjacent(tile, ref args);
+    }
 
-        if (!component.Tiles.TryGetValue(args.Tile, out var tile))
-            return;
+    private void GridUpdateAdjacent(
+        TileAtmosphere tile,
+        ref UpdateAdjacentMethodEvent args)
+    {
+        DebugTools.AssertEqual(args.Grid.Comp1.Tiles[args.Tile], tile);
+        var (uid, component, mapGridComp, xform) = args.Grid;
+        var mapUid = xform.MapUid;
 
         tile.AdjacentBits = AtmosDirection.Invalid;
-        tile.BlockedAirflow = GetBlockedDirections(mapGridComp, tile.GridIndices);
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
@@ -351,36 +336,21 @@ public sealed partial class AtmosphereSystem
 
             var oppositeDirection = direction.GetOpposite();
 
-            adjacent.BlockedAirflow = GetBlockedDirections(mapGridComp, adjacent.GridIndices);
+            adjacent.BlockedAirflow = GetAirtightData((uid, mapGridComp), adjacent.GridIndices).Blocked;
 
-            // Pass in MapGridComponent so we don't have to resolve it for every adjacent direction.
-            var tileBlockedEv = new IsTileAirBlockedMethodEvent(uid, tile.GridIndices, direction, mapGridComp);
-            GridIsTileAirBlocked(uid, component, ref tileBlockedEv);
-
-            var adjacentBlockedEv =
-                new IsTileAirBlockedMethodEvent(uid, adjacent.GridIndices, oppositeDirection, mapGridComp);
-            GridIsTileAirBlocked(uid, component, ref adjacentBlockedEv);
-
-            if (!adjacent.BlockedAirflow.IsFlagSet(oppositeDirection) && !tileBlockedEv.Result)
+            if (!adjacent.BlockedAirflow.IsFlagSet(oppositeDirection) && !tile.BlockedAirflow.IsFlagSet(direction))
             {
                 adjacent.AdjacentBits |= oppositeDirection;
+                tile.AdjacentBits |= direction;
                 adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = tile;
+                tile.AdjacentTiles[i] = adjacent;
             }
             else
             {
                 adjacent.AdjacentBits &= ~oppositeDirection;
-                adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = null;
-            }
-
-            if (!tile.BlockedAirflow.IsFlagSet(direction) && !adjacentBlockedEv.Result)
-            {
-                tile.AdjacentBits |= direction;
-                tile.AdjacentTiles[direction.ToIndex()] = adjacent;
-            }
-            else
-            {
                 tile.AdjacentBits &= ~direction;
-                tile.AdjacentTiles[direction.ToIndex()] = null;
+                adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = null;
+                tile.AdjacentTiles[i] = null;
             }
 
             DebugTools.Assert(!(tile.AdjacentBits.IsFlagSet(direction) ^
@@ -550,11 +520,13 @@ public sealed partial class AtmosphereSystem
 
         TryComp(uid, out GasTileOverlayComponent? overlay);
 
+        var xform = Transform(grid.Owner);
+
         // Gotta do this afterwards so we can properly update adjacent tiles.
         foreach (var (position, _) in gridAtmosphere.Tiles.ToArray())
         {
-            var ev = new UpdateAdjacentMethodEvent(uid, position);
-            GridUpdateAdjacent(uid, gridAtmosphere, ref ev);
+            var ev = new UpdateAdjacentMethodEvent((uid, gridAtmosphere, mapGrid, xform), position);
+            GridUpdateAdjacent(ref ev);
             InvalidateVisuals(uid, position, overlay);
         }
     }

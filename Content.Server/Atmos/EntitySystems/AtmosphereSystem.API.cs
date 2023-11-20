@@ -222,12 +222,6 @@ public partial class AtmosphereSystem
         return ev.Result ?? Enumerable.Empty<GasMixture>();
     }
 
-    public void UpdateAdjacent(EntityUid gridUid, Vector2i tile, MapGridComponent? mapGridComp = null)
-    {
-        var ev = new UpdateAdjacentMethodEvent(gridUid, tile, mapGridComp);
-        RaiseLocalEvent(gridUid, ref ev);
-    }
-
     public void HotspotExpose(EntityUid gridUid, Vector2i tile, float exposedTemperature, float exposedVolume,
         EntityUid? sparkSourceUid = null, bool soh = false)
     {
@@ -331,7 +325,7 @@ public partial class AtmosphereSystem
             IEnumerable<GasMixture>? Result = null, bool Handled = false);
 
     [ByRefEvent] private record struct UpdateAdjacentMethodEvent
-        (EntityUid Grid, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Handled = false);
+        (Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> Grid, Vector2i Tile, bool Handled = false);
 
     [ByRefEvent] private record struct HotspotExposeMethodEvent
         (EntityUid Grid, EntityUid? SparkSourceUid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);

@@ -31,14 +31,24 @@ namespace Content.Server.Atmos.EntitySystems
 
         private readonly List<Entity<GridAtmosphereComponent>> _currentRunAtmosphere = new();
 
+        [Obsolete]
+        private bool ProcessRevalidate(Entity<GridAtmosphereComponent> ent, GasTileOverlayComponent? visuals)
+        {
+            if (!TryComp(ent, out MapGridComponent? mapGridComp))
+                return true;
+            if (!TryComp(ent, out GasTileOverlayComponent? overlay))
+                return true;
+            return ProcessRevalidate((ent, ent, overlay, mapGridComp, Transform(ent)));
+        }
+
         /// <summary>
         ///     Revalidates all invalid coordinates in a grid atmosphere.
         /// </summary>
         /// <param name="ent">The grid atmosphere in question.</param>
         /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
-        private bool ProcessRevalidate(Entity<GridAtmosphereComponent> ent, GasTileOverlayComponent? visuals)
+        private bool ProcessRevalidate(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
-            var (owner, atmosphere) = ent;
+            var (owner, atmosphere, visuals, grid, xform) = ent;
             if (!atmosphere.ProcessingPaused)
             {
                 atmosphere.CurrentRunInvalidatedCoordinates.Clear();
@@ -50,12 +60,8 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.InvalidatedCoords.Clear();
             }
 
-            if (!TryComp(owner, out MapGridComponent? mapGridComp))
-                return true;
-
-            var mapUid = _mapManager.GetMapEntityIdOrThrow(Transform(owner).MapID);
-
-            var volume = GetVolumeForTiles(mapGridComp);
+            var mapUid = xform.MapUid;
+            var volume = GetVolumeForTiles(grid);
 
             var number = 0;
             while (atmosphere.CurrentRunInvalidatedCoordinates.TryDequeue(out var indices))
@@ -67,30 +73,32 @@ namespace Content.Server.Atmos.EntitySystems
                     atmosphere.Tiles[indices] = tile;
                 }
 
-                var airBlockedEv = new IsTileAirBlockedMethodEvent(owner, indices, MapGridComponent:mapGridComp);
-                GridIsTileAirBlocked(owner, atmosphere, ref airBlockedEv);
-                var isAirBlocked = airBlockedEv.Result;
-
                 var oldBlocked = tile.BlockedAirflow;
-                var updateAdjacentEv = new UpdateAdjacentMethodEvent(owner, indices, mapGridComp);
-                GridUpdateAdjacent(owner, atmosphere, ref updateAdjacentEv);
+                var (blocked, noAir, fixVacuum) = GetAirtightData((ent.Owner, ent.Comp3), indices);
+                var isAirBlocked = blocked == AtmosDirection.All;
+                tile.BlockedAirflow = blocked;
+
+                var updateAdjacentEv = new UpdateAdjacentMethodEvent((ent.Owner, ent.Comp1, ent.Comp3, ent.Comp4), indices);
+                GridUpdateAdjacent(tile, ref updateAdjacentEv);
 
                 // Blocked airflow changed, rebuild excited groups!
+                // blockers might have already been previously changed while processing one of our (old?) adjacent
+                // tiles. However, that should have already disposed the old excited group and unexcited this tile.
                 if (tile.Excited && tile.BlockedAirflow != oldBlocked)
                 {
                     RemoveActiveTile(atmosphere, tile);
                 }
 
                 // Call this instead of the grid method as the map has a say on whether the tile is space or not.
-                if ((!mapGridComp.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager)) && !isAirBlocked)
+                if ((!grid.TryGetTileRef(indices, out var t) || t.IsSpace(_tileDefinitionManager)) && !isAirBlocked)
                 {
                     tile.Air = GetTileMixture(null, mapUid, indices);
                     tile.MolesArchived = tile.Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
-                    tile.Space = IsTileSpace(null, mapUid, indices, mapGridComp);
+                    tile.Space = IsTileSpace(null, mapUid, indices, grid);
                 }
                 else if (isAirBlocked)
                 {
-                    if (airBlockedEv.NoAir)
+                    if (noAir)
                     {
                         tile.Air = null;
                         tile.MolesArchived = null;
@@ -101,7 +109,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
                 else
                 {
-                    if (tile.Air == null && NeedsVacuumFixing(mapGridComp, indices))
+                    if (tile.Air == null && fixVacuum)
                     {
                         var vacuumEv = new FixTileVacuumMethodEvent(owner, indices);
                         GridFixTileVacuum(owner, atmosphere, ref vacuumEv);
@@ -125,7 +133,7 @@ namespace Content.Server.Atmos.EntitySystems
                 AddActiveTile(atmosphere, tile);
 
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity and heat capacity
-                var tileDef = mapGridComp.TryGetTileRef(indices, out var tileRef)
+                var tileDef = grid.TryGetTileRef(indices, out var tileRef)
                     ? tileRef.GetContentTileDefinition(_tileDefinitionManager)
                     : null;
 
