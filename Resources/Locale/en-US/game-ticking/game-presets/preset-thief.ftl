@@ -6,7 +6,7 @@ thief-role-greeting-human =
     You are forbidden to kill.
 
 thief-role-greeting-animal = 
-    You are an kleptomaniс animal. 
+    You are a kleptomaniaс animal.
     Steal things you like.
 
 thief-role-greeting-equipment = 
