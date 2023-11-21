@@ -1393,9 +1393,9 @@
       effects:
         - !type:SatiateThirst
           factor: 1
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.15
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
 
 - type: reagent
   id: WhiteRussian
