@@ -38,11 +38,10 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     public PowerMonitoringWindow(PowerMonitoringConsoleBoundUserInterface userInterface, EntityUid? owner)
     {
         RobustXamlLoader.Load(this);
-        var cache = IoCManager.Resolve<IResourceCache>();
         _entManager = IoCManager.Resolve<IEntityManager>();
         _gameTiming = IoCManager.Resolve<IGameTiming>();
-        _spriteSystem = _entManager.System<SpriteSystem>();
 
+        _spriteSystem = _entManager.System<SpriteSystem>();
         _owner = owner;
 
         if (_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(owner, out var powerMonitoringConsole))
@@ -102,9 +101,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     private void OnShowCableToggled(NavMapLineGroup lineGroup)
     {
-        if (NavMap.HiddenLineGroups.Contains(lineGroup))
-            NavMap.HiddenLineGroups.Remove(lineGroup);
-        else
+        if (!NavMap.HiddenLineGroups.Remove(lineGroup))
             NavMap.HiddenLineGroups.Add(lineGroup);
     }
 
@@ -170,7 +167,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
 
         // Show monitor location
-        if (_owner != null && monitorCoords != null &&
+        if (monitorCoords != null &&
             _entManager.TryGetComponent<NavMapTrackableComponent>(_owner, out var monitorTrackable))
         {
             AddTrackedEntityToNavMap(_owner.Value, monitorCoords.Value, monitorTrackable);

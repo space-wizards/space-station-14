@@ -10,7 +10,7 @@ namespace Content.Server.Power.EntitySystems;
 internal sealed partial class PowerMonitoringConsoleSystem
 {
     // Groups an entity based on its prototype
-    private void AssignEntityToExemplarGroup(EntityUid uid)
+    private void AssignEntityToMasterGroup(EntityUid uid)
     {
         var protoId = MetaData(uid).EntityPrototype?.ID;
 
@@ -25,14 +25,14 @@ internal sealed partial class PowerMonitoringConsoleSystem
         _groupableEntityCoords[entProtoId].Add(uid, Transform(uid).Coordinates);
     }
 
-    // Remove an entity from consideration for exemplar assignment
-    private void RemoveEntityFromExemplarGroup(EntityUid uid)
+    // Remove an entity from consideration for master assignment
+    private void RemoveEntityFromMasterGroup(EntityUid uid)
     {
-        _exemplarDevices.Remove(uid);
+        _masterDevices.Remove(uid);
 
         if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device))
         {
-            device.ExemplarUid = new EntityUid();
+            device.MasterUid = new EntityUid();
             device.ChildEntities.Clear();
         }
 
@@ -42,19 +42,19 @@ internal sealed partial class PowerMonitoringConsoleSystem
         _groupableEntityCoords[entProtoId.Value].Remove(uid);
     }
 
-    // Designates entities as 'exemplars' on a per prototype and per load network basis
+    // Designates entities as 'masters' on a per prototype and per load network basis
     // Entities which share this prototype and sit on the same load network are assigned
-    // to the exemplar that represents this device for this network. In this way you
+    // to the master that represents this device for this network. In this way you
     // can have one device represent multiple identical, connected devices
-    private void AssignExemplarsToEntities(EntProtoId entProtoId)
+    private void AssignMastersToEntities(EntProtoId entProtoId)
     {
         // Retrieve all devices of the specified prototype
         if (!_groupableEntityCoords.TryGetValue(entProtoId, out var devices) || !devices.Any())
             return;
 
-        var currentExemplar = devices.Last().Key;
+        var currentMaster = devices.Last().Key;
 
-        // Note: the first device found on a given network is dubbed its exemplar
+        // Note: the first device found on a given network is dubbed its master
         foreach ((var ent, var coords) in devices)
         {
             if (!TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
@@ -74,22 +74,22 @@ internal sealed partial class PowerMonitoringConsoleSystem
                 !container.Nodes.TryGetValue(device.LoadNode, out var loadNode) ||
                 !loadNode.ReachableNodes.Any())
             {
-                device.ExemplarUid = ent;
-                _exemplarDevices.TryAdd(ent, device);
+                device.MasterUid = ent;
+                _masterDevices.TryAdd(ent, device);
 
                 continue;
             }
 
-            // If the device has been assigned to the current exemplar, continue on
-            if (device.ExemplarUid == currentExemplar)
+            // If the device has been assigned to the current master, continue on
+            if (device.MasterUid == currentMaster)
                 continue;
 
-            // Dub this device an exemplar
-            currentExemplar = ent;
-            device.ExemplarUid = ent;
-            _exemplarDevices.TryAdd(ent, device);
+            // Dub this device an master
+            currentMaster = ent;
+            device.MasterUid = ent;
+            _masterDevices.TryAdd(ent, device);
 
-            // Check all other devices to see if this exemplar should represent them
+            // Check all other devices to see if this master should represent them
             foreach ((var otherEnt, var otherCoords) in devices)
             {
                 if (ent == otherEnt)
@@ -103,15 +103,15 @@ internal sealed partial class PowerMonitoringConsoleSystem
                     !otherLoadNode.ReachableNodes.Any())
                     continue;
 
-                // Matching netIds - this device should be represented by the exemplar
+                // Matching netIds - this device should be represented by the master
                 if ((loadNode.NodeGroup as BaseNodeGroup)?.NetId == (otherLoadNode.NodeGroup as BaseNodeGroup)?.NetId)
                 {
-                    _exemplarDevices.Remove(otherEnt);
+                    _masterDevices.Remove(otherEnt);
 
                     device.ChildEntities.Add(otherEnt);
-                    otherDevice.ExemplarUid = ent;
+                    otherDevice.MasterUid = ent;
 
-                    // Update the exemplar and device NavMapTrackableComponent
+                    // Update the master and device NavMapTrackableComponent
                     if (trackable != null)
                     {
                         trackable.ParentUid = null;

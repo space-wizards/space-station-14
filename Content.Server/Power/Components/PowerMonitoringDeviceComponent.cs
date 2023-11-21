@@ -35,22 +35,22 @@ public sealed partial class PowerMonitoringDeviceComponent : SharedPowerMonitori
     public bool JoinAlikeEntities = false;
 
     /// <summary>
-    ///     Specifies the uid of the exemplar that represents this entity
+    ///     Specifies the uid of the master that represents this entity
     /// </summary>
     /// <remarks>
     ///     Used when grouping multiple entities into a single power monitoring console entry
     /// </remarks>
     [ViewVariables]
-    public EntityUid ExemplarUid;
+    public EntityUid MasterUid;
 
     /// <summary>
-    ///     Indicates if this entity is an exemplar that represents a group of entities
+    ///     Indicates if this entity represents a group of entities
     /// </summary>
     /// <remarks>
     ///     Used when grouping multiple entities into a single power monitoring console entry
     /// </remarks>
     [ViewVariables]
-    public bool IsExemplar { get { return Owner == ExemplarUid; } }
+    public bool IsMaster { get { return Owner == MasterUid; } }
 
     /// <summary>
     ///     A list of other entities that are to be represented by this entity

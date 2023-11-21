@@ -6,18 +6,28 @@ using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Server.GameStates;
 using Robust.Shared.Map.Components;
+using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
 internal sealed partial class PowerMonitoringConsoleSystem
 {
+    private Dictionary<EntityUid, Dictionary<Vector2i, PowerCableChunk>> _gridPowerCableChunks = new();
+
     private void OnComponentStartup(EntityUid uid, PowerMonitoringConsoleComponent component, ComponentStartup args)
     {
         var xform = Transform(uid);
         if (xform.GridUid == null)
             return;
 
-        RefreshGrid(uid, component, xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
+        if (!_gridPowerCableChunks.ContainsKey(xform.GridUid.Value))
+            RefreshPowerCableGrid(xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
+
+        if (!_gridPowerCableChunks.TryGetValue(xform.GridUid.Value, out var allChunks))
+            return;
+
+        component.AllChunks = allChunks;
+        Dirty(uid, component);
     }
 
     private void OnDeviceAnchoringChanged(EntityUid uid, PowerMonitoringDeviceComponent component, AnchorStateChangedEvent args)
@@ -39,8 +49,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             if (component.JoinAlikeEntities)
             {
-                AssignEntityToExemplarGroup(uid);
-                AssignExemplarsToEntities(entProtoId.Value);
+                AssignEntityToMasterGroup(uid);
+                AssignMastersToEntities(entProtoId.Value);
             }
         }
 
@@ -50,8 +60,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             if (component.JoinAlikeEntities)
             {
-                RemoveEntityFromExemplarGroup(uid);
-                AssignExemplarsToEntities(entProtoId.Value);
+                RemoveEntityFromMasterGroup(uid);
+                AssignMastersToEntities(entProtoId.Value);
             }
         }
     }
@@ -63,8 +73,25 @@ internal sealed partial class PowerMonitoringConsoleSystem
         if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
+        if (!_gridPowerCableChunks.TryGetValue(xform.GridUid.Value, out var allChunks))
+            return;
+
         var tile = _sharedMapSystem.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, SharedNavMapSystem.ChunkSize);
+
+        if (!allChunks.TryGetValue(chunkOrigin, out var chunk))
+        {
+            chunk = new PowerCableChunk(chunkOrigin);
+            allChunks[chunkOrigin] = chunk;
+        }
+
+        if (args.Anchored)
+            AddPowerCableToTile(chunk, tile, component);
+
+        else
+            RemovePowerCableFromTile(chunk, tile, component);
+
+        //RefreshTile(xform.GridUid.Value, grid, chunk, tile);
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var console, out var entXform))
@@ -72,20 +99,15 @@ internal sealed partial class PowerMonitoringConsoleSystem
             if (entXform.GridUid != xform.GridUid)
                 continue;
 
-            if (!console.AllChunks.TryGetValue(chunkOrigin, out var chunk))
-            {
-                chunk = new PowerCableChunk(chunkOrigin);
-                console.AllChunks[chunkOrigin] = chunk;
-            }
-
-            RefreshTile(ent, console, xform.GridUid.Value, grid, chunk, tile);
+            console.AllChunks = allChunks;
+            Dirty(ent, console);
         }
     }
 
     public void OnNodeGroupRebuilt(EntityUid uid, PowerMonitoringDeviceComponent component, NodeGroupsRebuilt args)
     {
         if (component.JoinAlikeEntities && TryGetEntProtoId(uid, out var entProtoId))
-            AssignExemplarsToEntities(entProtoId.Value);
+            AssignMastersToEntities(entProtoId.Value);
 
         if (_rebuildingNetwork)
             return;
@@ -122,7 +144,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
         {
             if (xform.GridUid == grid)
             {
-                RefreshGrid(uid, component, xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
+                RefreshPowerCableGrid(xform.GridUid.Value, Comp<MapGridComponent>(xform.GridUid.Value));
                 break;
             }
         }
@@ -151,9 +173,9 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
                 foreach ((var gridEnt, var device) in gridDevices)
                 {
-                    // Skip entities which are represented by an exemplar
+                    // Skip entities which are represented by a master
                     // This will cut down the number of entities that need to be added
-                    if (device.JoinAlikeEntities && !device.IsExemplar)
+                    if (device.JoinAlikeEntities && !device.IsMaster)
                         continue;
 
                     ev.Entities.Add(gridEnt);

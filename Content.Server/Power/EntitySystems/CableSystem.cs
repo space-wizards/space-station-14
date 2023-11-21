@@ -48,8 +48,8 @@ public sealed partial class CableSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        var ev = new CableAnchorStateChangedEvent();
-        RaiseLocalEvent(uid, ev);
+        var ev = new CableAnchorStateChangedEvent(false);
+        RaiseLocalEvent(uid, ref ev);
 
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
@@ -62,8 +62,8 @@ public sealed partial class CableSystem : EntitySystem
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
     {
-        var ev = new CableAnchorStateChangedEvent();
-        RaiseLocalEvent(uid, ev);
+        var ev = new CableAnchorStateChangedEvent(args.Anchored);
+        RaiseLocalEvent(uid, ref ev);
 
         if (args.Anchored)
             return; // huh? it wasn't anchored?

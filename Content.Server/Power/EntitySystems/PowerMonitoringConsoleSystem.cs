@@ -28,7 +28,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     private Dictionary<EntityUid, List<(EntityUid, PowerMonitoringDeviceComponent)>> _trackedDevices = new();
     private Dictionary<EntProtoId, Dictionary<EntityUid, EntityCoordinates>> _groupableEntityCoords = new();
-    private Dictionary<EntityUid, PowerMonitoringDeviceComponent> _exemplarDevices = new();
+    private Dictionary<EntityUid, PowerMonitoringDeviceComponent> _masterDevices = new();
 
     private bool _powerNetAbnormalities = false;
     private const float RoguePowerConsumerThreshold = 100000;
@@ -111,8 +111,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Loop over all tracked devices
         foreach ((var ent, var device) in gridDevices)
         {
-            // Ignore joint, non-exemplar entities
-            if (device.JoinAlikeEntities && !device.IsExemplar)
+            // Ignore joint, non-master entities
+            if (device.JoinAlikeEntities && !device.IsMaster)
                 continue;
 
             // Ignore unachored devices or those on another grid to the console
@@ -251,8 +251,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             }
         }
 
-        // Exemplar devices add the power values from all entities they represent (if applicable)
-        if (device.JoinAlikeEntities && device.IsExemplar)
+        // Master devices add the power values from all entities they represent (if applicable)
+        if (device.JoinAlikeEntities && device.IsMaster)
         {
             foreach (var child in device.ChildEntities)
             {
@@ -261,7 +261,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
                 // Safeguard to prevent infinite loops
                 if (!TryComp<PowerMonitoringDeviceComponent>(child, out var childDevice) ||
-                    (childDevice.IsExemplar && childDevice.ChildEntities.Contains(uid)))
+                    (childDevice.IsMaster && childDevice.ChildEntities.Contains(uid)))
                     continue;
 
                 var childPowerValue = GetPrimaryPowerValues(child, childDevice, out var childPowerSupplied, out var childPowerUsage, out var childBatteryUsage);
@@ -298,9 +298,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
-                // Combine entities represented by an exemplar into a single entry
-                if (entDevice.JoinAlikeEntities && !entDevice.IsExemplar)
-                    ent = entDevice.ExemplarUid;
+                // Combine entities represented by an master into a single entry
+                if (entDevice.JoinAlikeEntities && !entDevice.IsMaster)
+                    ent = entDevice.MasterUid;
 
                 if (indexedSources.TryGetValue(ent, out var entry))
                 {
@@ -328,9 +328,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
-                // Combine entities represented by an exemplar into a single entry
-                if (entDevice.JoinAlikeEntities && !entDevice.IsExemplar)
-                    ent = entDevice.ExemplarUid;
+                // Combine entities represented by an master into a single entry
+                if (entDevice.JoinAlikeEntities && !entDevice.IsMaster)
+                    ent = entDevice.MasterUid;
 
                 if (indexedSources.TryGetValue(ent, out var entry))
                 {
@@ -372,7 +372,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         var powerUsage = battery.CurrentReceiving;
 
-        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsExemplar)
+        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsMaster)
         {
             foreach (var child in device.ChildEntities)
             {
@@ -409,9 +409,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
-                // Combine entities represented by an exemplar into a single entry
-                if (entDevice.JoinAlikeEntities && !entDevice.IsExemplar)
-                    ent = entDevice.ExemplarUid;
+                // Combine entities represented by an master into a single entry
+                if (entDevice.JoinAlikeEntities && !entDevice.IsMaster)
+                    ent = entDevice.MasterUid;
 
                 if (indexedLoads.TryGetValue(ent, out var entry))
                 {
@@ -439,9 +439,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
-                // Combine entities represented by an exemplar into a single entry
-                if (entDevice.JoinAlikeEntities && !entDevice.IsExemplar)
-                    ent = entDevice.ExemplarUid;
+                // Combine entities represented by an master into a single entry
+                if (entDevice.JoinAlikeEntities && !entDevice.IsMaster)
+                    ent = entDevice.MasterUid;
 
                 if (indexedLoads.TryGetValue(ent, out var entry))
                 {
@@ -470,7 +470,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         else if (TryComp<PowerSupplierComponent>(uid, out var entSupplier))
             supplying = entSupplier.CurrentSupply;
 
-        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsExemplar)
+        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device) && device.IsMaster)
         {
             foreach (var child in device.ChildEntities)
             {

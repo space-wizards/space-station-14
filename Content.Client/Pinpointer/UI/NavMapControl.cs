@@ -168,6 +168,9 @@ public sealed partial class NavMapControl : MapGridControl
     {
         base.KeyBindUp(args);
 
+        if (TrackableEntitySelectedAction == null)
+            return;
+
         if (args.Function == EngineKeyFunctions.Use)
         {
             _draggin = false;
@@ -184,17 +187,25 @@ public sealed partial class NavMapControl : MapGridControl
             var worldPosition = _transformSystem.GetWorldMatrix(_xform).Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset);
 
             // Find closest tracked entity in range
-            var coords = TrackedEntities.Keys.ToList();
-            var orderedCoords = coords.OrderBy(x => (x.ToMapPos(_entManager, _transformSystem) - worldPosition).Length());
-            var closestEntity = TrackedEntities[orderedCoords.First()];
+            var allCoords = TrackedEntities.Keys.ToList();
+            var closestCoords = new EntityCoordinates();
+            var closestDistance = float.PositiveInfinity;
 
-            // Try to select it
-            var closestDistance = (orderedCoords.First().ToMapPos(_entManager, _transformSystem) - worldPosition).Length();
-            if (closestDistance * MinimapScale > MaxSelectableDistance)
+            foreach (var currentCoords in allCoords)
+            {
+                var currentDistance = (currentCoords.ToMapPos(_entManager, _transformSystem) - worldPosition).Length();
+
+                if (closestDistance < currentDistance || closestDistance * MinimapScale > MaxSelectableDistance)
+                    continue;
+
+                closestCoords = currentCoords;
+                closestDistance = currentDistance;
+            }
+
+            if (closestDistance > MaxSelectableDistance)
                 return;
 
-            if (TrackableEntitySelectedAction != null)
-                TrackableEntitySelectedAction.Invoke(orderedCoords.First(), closestEntity);
+            TrackableEntitySelectedAction.Invoke(closestCoords, TrackedEntities[closestCoords]);
         }
 
         else if (args.Function == EngineKeyFunctions.UIRightClick)
@@ -226,6 +237,14 @@ public sealed partial class NavMapControl : MapGridControl
     {
         base.Draw(handle);
 
+        // Get the components necessary for drawing the navmap 
+        _entManager.TryGetComponent(MapUid, out _navMap);
+        _entManager.TryGetComponent(MapUid, out _grid);
+        _entManager.TryGetComponent(MapUid, out _xform);
+        _entManager.TryGetComponent(MapUid, out _physics);
+        _entManager.TryGetComponent(MapUid, out _fixtures);
+
+        // Map re-centering
         if (_recentering)
         {
             var frameTime = Timing.FrameTime;
@@ -467,14 +486,6 @@ public sealed partial class NavMapControl : MapGridControl
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
-        // Get the components necessary for drawing the navmap 
-        // Let's do that here so they only get checked once per frame
-        _entManager.TryGetComponent(MapUid, out _navMap);
-        _entManager.TryGetComponent(MapUid, out _grid);
-        _entManager.TryGetComponent(MapUid, out _xform);
-        _entManager.TryGetComponent(MapUid, out _physics);
-        _entManager.TryGetComponent(MapUid, out _fixtures);
-
         // Update the timer
         _updateTimer += args.DeltaSeconds;
 

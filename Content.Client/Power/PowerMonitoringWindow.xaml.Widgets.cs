@@ -184,7 +184,7 @@ public sealed partial class PowerMonitoringWindow
             _focusEntity = null;
 
             // Request an update from the power monitoring system
-            RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_focusEntity), GetCurrentPowerMonitoringConsoleGroup());
+            RequestPowerMonitoringUpdateAction?.Invoke(null, null);
             _updateTimer = 0f;
 
             return;

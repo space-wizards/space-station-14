@@ -31,4 +31,8 @@ public sealed partial class CableComponent : Component
     public float CuttingDelay = 1f;
 }
 
-public readonly record struct CableAnchorStateChangedEvent;
+/// <summary>
+///     Event to be raised when a cable is anchored / unanchored
+/// </summary>
+[ByRefEvent]
+public readonly record struct CableAnchorStateChangedEvent(bool Anchored = false);

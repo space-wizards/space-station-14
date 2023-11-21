@@ -10,35 +10,53 @@ namespace Content.Server.Power.EntitySystems;
 
 internal sealed partial class PowerMonitoringConsoleSystem
 {
-    private void RefreshGrid(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid)
+    private void RefreshPowerCableGrid(EntityUid gridUid, MapGridComponent grid)
     {
-        component.AllChunks.Clear();
+        // Clears all chunks for the associated grid
+        var allChunks = new Dictionary<Vector2i, PowerCableChunk>();
+        _gridPowerCableChunks[gridUid] = allChunks;
 
-        var tiles = _sharedMapSystem.GetAllTilesEnumerator(gridUid, grid);
-        while (tiles.MoveNext(out var tile))
+        // Adds all power cables to the grid
+        var query = AllEntityQuery<CableComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var cable, out var entXform))
         {
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.Value.GridIndices, SharedNavMapSystem.ChunkSize);
+            if (entXform.GridUid != gridUid)
+                continue;
 
-            if (!component.AllChunks.TryGetValue(chunkOrigin, out var chunk))
+            var tile = _sharedMapSystem.GetTileRef(gridUid, grid, entXform.Coordinates);
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, SharedNavMapSystem.ChunkSize);
+
+            if (!allChunks.TryGetValue(chunkOrigin, out var chunk))
             {
                 chunk = new PowerCableChunk(chunkOrigin);
-                component.AllChunks[chunkOrigin] = chunk;
+                allChunks[chunkOrigin] = chunk;
             }
 
-            RefreshTile(uid, component, gridUid, grid, chunk, tile.Value.GridIndices);
+            AddPowerCableToTile(chunk, tile.GridIndices, cable);
         }
     }
 
-    private void RefreshTile
-        (EntityUid uid,
-        PowerMonitoringConsoleComponent component,
-        EntityUid gridUid,
-        MapGridComponent grid,
-        PowerCableChunk chunk,
-        Vector2i tile)
+    private void AddPowerCableToTile(PowerCableChunk chunk, Vector2i tile, CableComponent cable)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
-        var existing = chunk.PowerCableData.ShallowClone();
+        var flag = SharedNavMapSystem.GetFlag(relative);
+
+        chunk.PowerCableData.TryAdd(cable.CableType, 0);
+        chunk.PowerCableData[cable.CableType] |= flag;
+    }
+
+    private void RemovePowerCableFromTile(PowerCableChunk chunk, Vector2i tile, CableComponent cable)
+    {
+        var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
+        var flag = SharedNavMapSystem.GetFlag(relative);
+
+        chunk.PowerCableData.TryAdd(cable.CableType, 0);
+        chunk.PowerCableData[cable.CableType] &= ~flag;
+    }
+
+    private void RefreshTile(EntityUid gridUid, MapGridComponent grid, PowerCableChunk chunk, Vector2i tile)
+    {
+        var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
         var flag = SharedNavMapSystem.GetFlag(relative);
 
         foreach (var datum in chunk.PowerCableData)
@@ -49,22 +67,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
         {
             if (TryComp<CableComponent>(ent, out var cable))
             {
-                if (!chunk.PowerCableData.ContainsKey(cable.CableType))
-                    chunk.PowerCableData.Add(cable.CableType, 0);
-
+                chunk.PowerCableData.TryAdd(cable.CableType, 0);
                 chunk.PowerCableData[cable.CableType] |= flag;
-            }
-        }
-
-        if (chunk.PowerCableData.All(x => x.Value == 0))
-            component.AllChunks.Remove(chunk.Origin);
-
-        foreach (var datum in chunk.PowerCableData)
-        {
-            if (!existing.ContainsKey(datum.Key) || existing[datum.Key] != datum.Value)
-            {
-                Dirty(uid, component);
-                return;
             }
         }
     }
