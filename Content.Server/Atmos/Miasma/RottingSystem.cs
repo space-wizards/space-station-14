@@ -159,6 +159,31 @@ public sealed class RottingSystem : EntitySystem
         args.Handled = component.CurrentTemperature > Atmospherics.T0C + 0.85f;
     }
 
+    public void ReduceRotting(EntityUid uid, TimeSpan time)
+    {
+        if (!TryComp<PerishableComponent>(uid, out var perishable))
+            return;
+
+        if (TryComp<RottingComponent>(uid, out var rotting))
+        {
+            TimeSpan total = rotting.TotalRotTime + perishable.RotAccumulator;
+            total -= time;
+            if (total < perishable.RotAfter)
+            {
+                RemCompDeferred(uid, rotting);
+                perishable.RotAccumulator = total;
+            }
+
+            else
+                rotting.TotalRotTime = total - perishable.RotAfter;
+        }
+
+        else
+            perishable.RotAccumulator -= time;
+    }
+
+
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

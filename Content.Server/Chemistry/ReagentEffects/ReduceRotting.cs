@@ -12,19 +12,17 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// </summary>
     [UsedImplicitly]
     public sealed partial class ReduceRotting : ReagentEffect
-        //Just a place holder at the moment until I figure out how to do this.
+    //Just a place holder at the moment until I figure out how to do this.
     {
-        [DataField("rottingAmount")]
-        public float RottingAmount = 1;
-        /// How many units of thirst to add each time we vomit
-        [DataField("thirstAmount")]
-        public float ThirstAmount = -8f;
-        /// How many units of hunger to add each time we vomit
-        [DataField("hungerAmount")]
-        public float HungerAmount = -8f;
+        //How much time are we taking off the accumulator
+        [DataField("rottingAmount"), ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan RottingAmount = TimeSpan.FromSeconds(5);
 
 
-        //Should probably change this when I find out how to work it.
+        //Main Plan:
+        //Add method to the rotting system that enables it to be reduced
+        //Use Entity manager to get the system "RottingSystem" and store it to the variable rottingSys.
+        //All  I'll then need to do is put: rottingSys.reduceRotting(arguments) - putting the system in here will feel like hard coding
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
             => Loc.GetString("reagent-effect-guidebook-chem-vomit", ("chance", Probability));
         public override void Effect(ReagentEffectArgs args)
@@ -32,10 +30,9 @@ namespace Content.Server.Chemistry.ReagentEffects
             if (args.Scale != 1f)
                 return;
 
-            var vomitSys = args.EntityManager.EntitySysManager.GetEntitySystem<VomitSystem>();
+            var rottingSys = args.EntityManager.EntitySysManager.GetEntitySystem<RottingSystem>();
 
-            vomitSys.Vomit(args.SolutionEntity, ThirstAmount, HungerAmount);
+            rottingSys.ReduceRotting(args.SolutionEntity, RottingAmount);
         }
     }
-}
 }
