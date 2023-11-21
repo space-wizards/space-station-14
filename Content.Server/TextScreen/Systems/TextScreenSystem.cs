@@ -1,11 +1,7 @@
-// using Content.Server.TextScreen.Components;
+using Content.Shared.TextScreen;
 using Content.Shared.TextScreen.Components;
 using Content.Shared.TextScreen.Events;
-
-using Content.Shared.TextScreen;
-
 using Robust.Shared.Timing;
-using System.Numerics;
 
 
 namespace Content.Server.TextScreen;
@@ -69,23 +65,23 @@ public sealed class TextScreenSystem : EntitySystem
 
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<TextScreenTimerComponent>();
-        while (query.MoveNext(out var uid, out var timer))
-        {
-            if (timer.Target > _gameTiming.CurTime)
-                continue;
+    // public override void Update(float frameTime)
+    // {
+    //     base.Update(frameTime);
+    //     var query = EntityQueryEnumerator<TextScreenTimerComponent>();
+    //     while (query.MoveNext(out var uid, out var timer))
+    //     {
+    //         if (timer.Target > _gameTiming.CurTime)
+    //             continue;
 
-            RemComp<TextScreenTimerComponent>(uid);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, TimeSpan.Zero);
+    //         RemComp<TextScreenTimerComponent>(uid);
+    //         _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, TimeSpan.Zero);
 
-            if (!TryComp<TextScreenComponent>(uid, out var screen))
-                continue;
+    //         if (!TryComp<TextScreenComponent>(uid, out var screen))
+    //             continue;
 
-            if (screen.DoneSound != null)
-                _audio.PlayPvs(screen.DoneSound, uid);
-        }
-    }
+    //         if (screen.DoneSound != null)
+    //             _audio.PlayPvs(screen.DoneSound, uid);
+    //     }
+    // }
 }

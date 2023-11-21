@@ -73,11 +73,13 @@ namespace Content.Server.Shuttles.Systems
             if (!args.Data.TryGetValue(key, out TimeSpan duration))
                 return;
 
-            var time = new TextScreenTimerEvent(duration);
-            RaiseLocalEvent(uid, ref time);
+            // var time = new TextScreenTimerEvent(duration);
+            // RaiseLocalEvent(uid, ref time);
 
-            var label = new TextScreenTextEvent(new string[] { text });
-            RaiseLocalEvent(uid, ref label);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, duration);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string[] { text });
+            //     var label = new TextScreenTextEvent(new string[] { text });
+            //     RaiseLocalEvent(uid, ref label);
         }
 
         public void KillAll(string? freq)

@@ -1,7 +1,7 @@
 namespace Content.Shared.TextScreen.Events;
 
 /// <summary>
-/// Sets the Text on a TextScreen, and sets its display mode to Text.
+/// Sets the Text on a TextScreen.
 /// </summary>
 [ByRefEvent]
 public readonly record struct TextScreenTextEvent(string?[] Text)

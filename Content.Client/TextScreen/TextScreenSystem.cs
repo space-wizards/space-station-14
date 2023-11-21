@@ -41,6 +41,9 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     ///     A string prefix for all text layers.
     /// </summary>
     private const string TextMapKey = "textMapKey";
+    /// <summary>
+    ///     A string prefix for all timer layers.
+    /// </summary>
     private const string TimerMapKey = "timerMapKey";
     private const string TextPath = "Effects/text.rsi";
     private const int CharWidth = 4;
@@ -60,8 +63,10 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
+        // awkward to specify a textoffset of e.g. 0.1875 in the prototype
         component.TextOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, component.TextOffset);
         component.TimerOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, component.TimerOffset);
+
         ResetText(uid, component, sprite);
         BuildTextLayerStates(uid, component, sprite);
     }
