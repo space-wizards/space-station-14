@@ -7,6 +7,16 @@ namespace Content.Server.Power.Pow3r
 {
     public sealed class BatteryRampPegSolver : IPowerSolver
     {
+        private UpdateNetworkJob _networkJob;
+
+        public BatteryRampPegSolver()
+        {
+            _networkJob = new()
+            {
+                Solver = this,
+            };
+        }
+
         private sealed class HeightComparer : Comparer<Network>
         {
             public static HeightComparer Instance { get; } = new();
@@ -25,12 +35,8 @@ namespace Content.Server.Power.Pow3r
 
             state.GroupedNets ??= GroupByNetworkDepth(state);
             DebugTools.Assert(state.GroupedNets.Select(x => x.Count).Sum() == state.Networks.Count);
-            var job = new UpdateNetworkJob()
-            {
-                Solver = this,
-                State = state,
-                FrameTime = frameTime,
-            };
+            _networkJob.State = state;
+            _networkJob.FrameTime = frameTime;
 
             // Each network height layer can be run in parallel without issues.
             foreach (var group in state.GroupedNets)
@@ -47,8 +53,8 @@ namespace Content.Server.Power.Pow3r
                 // TODO make GroupByNetworkDepth evaluate the TOTAL size of each layer (i.e. loads + chargers +
                 // suppliers + discharger) Then decide based on total layer size whether its worth parallelizing that
                 // layer?
-                job.Networks = group;
-                parallel.ProcessNow(job, group.Count);
+                _networkJob.Networks = group;
+                parallel.ProcessNow(_networkJob, group.Count);
             }
 
             ClearBatteries(state);
