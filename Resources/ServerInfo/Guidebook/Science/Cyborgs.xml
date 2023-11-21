@@ -1,25 +1,25 @@
 <Document>
   # Cyborgs
-  Cyborgs are man-machine hybrids, purpose-built by the robotics sub-department of science for a variety of duties across the station. Bound by [color=cyan]silicon laws[/color], they serve the crew unconditionally.
+  Cyborgs are man-machine hybrids, purpose-built by the [textlink="robotics"  link="Robotics"] division of science for a variety of duties across the station. Bound by [color=cyan]silicon laws[/color] which they follow strictly, and religiously, they serve the crew unconditionally, most of the time.
 
   ## Basic Components
   <Box>
     <GuideEntityEmbed Entity="CyborgEndoskeleton" Caption="Cyborg Endoskeleton"/>
     <GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator"/>
   </Box>
-  All cyborgs are built on a endoskeleton, which can be crafted at a [color=#a4885c]Exosuit Fabricator[/color]. Further assembly steps can be followed by [color=#a4885c]examining[/color] it. Once built, further upgrades, such as additional tools, and longer battery life can be done with [color=#a4885c]modules[/color] and a [color=#a4885c]better power cell[/color] respectively.
+  All cyborgs are built on a endoskeleton, which can be crafted at a [color=#a4885c]Exosuit Fabricator[/color]. Further assembly steps can be followed by [color=#a4885c]examining[/color] it. Once built, further upgrades, such as additional tools, and longer battery life can be done with modules and a better power cell, respectively.
 
-  In addition, newly built cyborgs need a [color=#a4885c]brain[/color]. there are two main types of such, both of which are able to speak independently, should the chassis be decommissioned, exchanged, or otherwise [color=red]suffer a unscheduled dissassembly[/color];
+  In addition, newly built cyborgs need a [color=#a4885c]brain[/color] able to interface with the body. There are two main types of such, both of which are able to speak independently, should the chassis be decommissioned, exchanged, or otherwise [color=red]suffer a unscheduled dissassembly[/color];
   - The [color=#a4885c]Man-Machine Interface[/color] or MMI for short, is an apparatus able to faciliate communication between a biological brain and electronic components, enabling those suffering from major workplace accidents to continue serving their crew, long after their body is gone.
   - The [color=#a4885c]Positronic Brain[/color] or PB for short, is an entirely artificial brain, capable of spotaneous neural activity. The time for the synthetic neurons to descramble can wildly vary, but they allow for the creation of cyborgs without having to extract a brain from someone.
   <Box>
     <GuideEntityEmbed Entity="MMIFilled" Caption="Man-Machine Interface"/>
     <GuideEntityEmbed Entity="PositronicBrain" Caption="Positronic Brain"/>
   </Box>
-  Both brains can be constructed at the [color=#a4885c]Exosuit Fabricator[/color] without requiring any additional research.
+  Both brains can be fabricated without requiring any additional research.
 
   ## Chassis
-  While all cyborgs share the same endoskeleton, not all share the same [color=#a4885c]chassis[/color]. The [color=#a4885c]chassis[/color] determines what [color=#a4885c]modules[/color] the cyborg can have, along with the [color=#a4885c]departmental radio channel[/color] they correspond to. By default, they will always have access to [color=violet]Science[/color] and [color=green]station-wide[/color] frequencies, along with having [color=#a4885c]all-access[/color].
+  While all cyborgs share the same endoskeleton, not all share the same [color=#a4885c]chassis[/color]. The chassis determines what [color=#a4885c]modules[/color] the cyborg can have, along with the [color=#a4885c]departmental radio channel[/color] they correspond to. By default, they will always have access to [color=violet]Science[/color] and [color=green]station-wide[/color] frequencies, along with having [color=#a4885c]all-access[/color].
   <Box>
     <GuideEntityEmbed Entity="BorgChassisGeneric" Caption="Generic"/>
     <GuideEntityEmbed Entity="BorgChassisEngineer" Caption="Engineering"/>
@@ -28,13 +28,13 @@
     <GuideEntityEmbed Entity="BorgChassisService" Caption="Service"/>
     <GuideEntityEmbed Entity="BorgChassisMedical" Caption="Medical"/>
   </Box>
-  If you wish to change the chassis of an already existing cyborg, you have to construct a whole new one, frame included.
+  If you wish to change the chassis of an already existing cyborg, you have to construct a whole new one, limbs and frame included. The brain, power cell, and modules [italic](if it can fit in the new chassis, that is,)[/italic] can be carried over from the old chassis, if desired.
 
   ## Modules
   <Box>
     <GuideEntityEmbed Entity="BorgModuleTool" Caption="Tool Cyborg Module"/>
   </Box>
-  A cyborg isn't able to do much without [color=#a4885c]modules[/color]. These printed circuit boards specific to cyborgs are crafted at the [color=#a4885c]Exosuit Fabricator[/color], and grant additonal functionality to the synthetic creatures. As stated before, some modules are specific to a [color=#a4885c]chassis[/color] with only exception being [color=violet]science[/color] modules, and cannot be fitted elsewhere. These exclusive modules are usually marked with their corresponding department's colors.
+  A cyborg isn't able to do much without [color=#a4885c]modules[/color]. These printed circuit boards are specific to cyborgs and grant additonal functionality to the synthetic creatures. As stated before, some modules are specific to a [color=#a4885c]chassis[/color] with only exception being [color=violet]science[/color] modules, and cannot be fitted elsewhere. These exclusive modules are usually marked with their corresponding department's colors.
   <Box>
     <GuideEntityEmbed Entity="BorgModuleAnomaly" Caption="Anomaly"/>
     <GuideEntityEmbed Entity="BorgModuleRCD" Caption="RCD"/>
@@ -43,5 +43,5 @@
     <GuideEntityEmbed Entity="BorgModuleService" Caption="Service"/>
     <GuideEntityEmbed Entity="BorgModuleTreatment" Caption="Treatment"/>
   </Box>
-  Additonal modules with advanced, or novel capabilities can be acquired through hard-earned [color=#a4885c]research[/color] from your peers.
+  Additional modules with advanced, or novel capabilities can be acquired through new [textlink="technologies"  link="Technologies"] from your scientists.
 </Document>
