@@ -47,7 +47,6 @@
         reagents:
         - ReagentId: JuiceLime
           Quantity: 50
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
@@ -63,7 +62,6 @@
         reagents:
         - ReagentId: JuiceOrange
           Quantity: 50
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
@@ -79,7 +77,6 @@
         reagents:
         - ReagentId: JuiceTomato
           Quantity: 50
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
@@ -95,7 +92,6 @@
         reagents:
         - ReagentId: Cream
           Quantity: 50
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
 
@@ -128,6 +124,5 @@
         reagents:
         - ReagentId: MilkSoy
           Quantity: 100
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/soymilk.rsi
