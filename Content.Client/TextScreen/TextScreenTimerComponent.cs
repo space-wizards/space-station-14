@@ -1,7 +1,6 @@
-using System.Numerics;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.TextScreen.Components;
+namespace Content.Client.TextScreen;
 
 /// <summary>
 /// Added to a <see cref="TextScreenVisualsComponent"/> entity to display frame-by-frame timer updates

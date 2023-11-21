@@ -51,9 +51,9 @@
   - type: SignalTimer
     canEditLabel: true
   - type: TextScreenVisuals
+    color: FloralWhite
     textOffset: 0,8
     textLength: 5
-    rowOffset: 10
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/textscreen.rsi
@@ -91,9 +91,8 @@
   - type: Rotatable
   - type: TextScreen
   - type: TextScreenVisuals
-    color: PowderBlue
-    textOffset: 6,0
-    rowOffset: 12
+    textOffset: 2,3
+    timerOffset: 2,-4
     rows: 2
   - type: Sprite
     drawdepth: WallMountedItems
@@ -120,10 +119,8 @@
   - type: DeviceNetwork
     receiveFrequencyId: ShuttleTimer
   - type: TextScreenVisuals
-    color: PowderBlue
     textOffset: 2,3
     timerOffset: 2,-4
-    rowOffset: 12
     rows: 2
     rowLength: 5
 
