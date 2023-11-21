@@ -94,7 +94,7 @@ namespace Content.IntegrationTests.Tests
 
             Assert.Multiple(() =>
             {
-                foreach (var proto in PoolManager.GetPrototypesWithComponent<StorageFillComponent>(server))
+                foreach (var proto in pair.GetPrototypesWithComponent<StorageFillComponent>())
                 {
                     if (proto.HasComponent<EntityStorageComponent>(compFact))
                         continue;
@@ -174,7 +174,7 @@ namespace Content.IntegrationTests.Tests
 
             Assert.Multiple(() =>
             {
-                foreach (var proto in PoolManager.GetPrototypesWithComponent<StorageFillComponent>(server))
+                foreach (var proto in pair.GetPrototypesWithComponent<StorageFillComponent>())
                 {
                     if (proto.HasComponent<StorageComponent>(compFact))
                         continue;

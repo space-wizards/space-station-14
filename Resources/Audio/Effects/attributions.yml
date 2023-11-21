@@ -1,12 +1,12 @@
 - files: ["balloon-pop"]
   license: "CC-BY-4.0"
-  copyright: "Taken from Aesterial-Arts on freesound.org and converted to mono by EmoGarbage404 (github)"
+  copyright: '"Balloon Pop" by Aesterial-Arts on Freesound.org. Cconverted to mono by EmoGarbage404 on GitHub.com'
   source: "https://freesound.org/people/Aesterial-Arts/sounds/633835/"
 
 - files: ["pill_insert.ogg", "pill_remove.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Amateur foley and audio editing by Bright0."
-  source: "https://github.com/Bright0"
+  source: "https://github.com/space-wizards/space-station-14/commit/26624f22f6329b1c8d3c122ddafff01da7277508"
 
 - files: ["teleport_arrival.ogg", "teleport_departure.ogg"]
   license: "CC-BY-SA-3.0"
@@ -15,60 +15,149 @@
 
 - files: ["sadtrombone.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "sadtrombone.ogg taken from Citadel Station."
+  copyright: "sadtrombone.ogg by Citadel Station 13"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5"
 
 - files: ["box_deploy.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "box_deploy.ogg taken from Citadel Station."
+  copyright: "box_deploy.ogg by Citadel Station 13"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61"
 
 - files: ["chime.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "chime.ogg taken from Citadel Station."
+  copyright: "chime.ogg by Citadel Station 13"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61"
 
 - files: ["tree_fell.ogg"]
   license: "CC0-1.0"
-  copyright: "Taken from felix.blume via freesound.org and cropped + mixed from stereo to mono."
+  copyright: '"Tree falls in a forest." by felix.blume of Freesound.org. Cropped and mixed from stereo to mono.'
   source: "https://freesound.org/people/felix.blume/sounds/414093/"
 
 - files: ["beep1.ogg"]
   license: "CC0-1.0"
-  copyright: "Taken from thisusernameis via freesound.org + mixed from stereo to mono."
+  copyright: '"beep1.wav" by thisusernameis of Freesound.org. Mixed from stereo to mono.'
   source: "https://freesound.org/people/thisusernameis/sounds/426891/"
 
 - files: ["hallelujah.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Composer: Georg Friedrich Händel; Performed by: MIT Concert Choir; Directed by William C. Cutter; + cropped and mixed from stereo to mono"
+  copyright: "Composer: Georg Friedrich Händel; Performed by: MIT Concert Choir; Directed by William C. Cutter; Cropped and mixed from stereo to mono."
   source: "https://en.wikipedia.org/wiki/File:Handel_-_messiah_-_44_hallelujah.ogg"
 
 - files: ["fence_rattle1.ogg", "fence_rattle2.ogg", "fence_rattle3.ogg"]
   license: "CC0-1.0"
-  copyright: "Taken from MWsfx via freesound.org and cropped + mixed from stereo to mono."
+  copyright: '"Chain Link Fence - Impacts.wav" by MWsfx of Freesound.org. Cropped and mixed from stereo to mono.'
   source: "https://freesound.org/people/MWsfx/sounds/575388/"
 
 - files: ["falling.ogg"]
   license: "CC0-1.0"
-  copyright: "Taken from MATRIXXX_ via freesound.org and mixed from stereo to mono."
+  copyright: '"Retro, Drop 02.wav" by MATRIXXX_ of Freesound.org. Mixed from stereo to mono.'
   source: "https://freesound.org/people/MATRIXXX_/sounds/415990/"
 
 - files: ["break_stone.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Taken from tgstation"
+  copyright: "tgstation"
   source: "https://github.com/tgstation/tgstation/blob/e3a835b96043fad1269ee7b0c3a6cb340a466f3a/sound/effects/break_stone.ogg"
 
 - files: ["waterswirl.ogg"]
   license: "CC-BY-4.0"
-  copyright: "Taken from InspectorJ via freesound.org and mixed from stereo to mono."
+  copyright: '"Water Swirl, Small, 16.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org. Mixed from stereo to mono.'
   source: "https://freesound.org/people/InspectorJ/sounds/398703/"
 
 - files: ["pop_high.ogg"]
   license: "CC-BY-4.0"
-  copyright: "Taken from InspectorJ via freesound.org and mixed from stereo to mono."
+  copyright: '"Pop, High, A (H1).wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org. Mixed from stereo to mono.'
   source: "https://freesound.org/people/InspectorJ/sounds/411642/"
 
 - files: ["sizzle.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Recorded by deltanedas for SS14"
-  source: "https://github.com/deltanedas"
+  source: "https://github.com/space-wizards/space-station-14/commit/0a4c16ca21e266c24243119d944cbff8084829dd"
+
+- files: ["drop.ogg"]
+  copyright: '"FS Concrete Soldier Crouch N02" in "Soldier Footsteps" by Levan Nadashvili of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license. Mixed from stereo to mono.'
+  license: Custom
+  source: https://gdc.sonniss.com
+
+- files: ["wall_bonk.ogg"]
+  copyright: '"Nuts and Bolts" by 344 Audio of SONNISS.com. See https://sonniss.com/gdc-bundle-license/ for license.'
+  license: Custom
+  source: https://gdc.sonniss.com
+
+- files: ["pop.ogg"]
+  copyright: '"pop.ogg" by mirrorcult of GitHub.com'
+  license: "CC0-1.0"
+  source: "https://github.com/space-wizards/space-station-14/blob/9168fc629c555b8c395d695d291faea1eeda1db6/Resources/Audio/Effects/pop.ogg"
+
+- files:
+  - demon_attack1.ogg
+  - demon_consume.ogg
+  - demon_dies.ogg
+  - bite.ogg
+  copyright: '"demon_attack1.ogg", "demon_consume.ogg", "demon_dies.ogg", and "bite.ogg" by /tg/station'
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["bone_rattle.ogg"]
+  copyright: '"Rattling Bones.wav" by spookymodem of Freesound.org'
+  license: "CC0-1.0"
+  source: "https://freesound.org/people/spookymodem/sounds/202102/"
+
+- files: ["minibombcountdown.ogg"]
+  copyright: '"10 Second Countdown.wav" by Thomas Evdokimoff of Freesound.org'
+  license: "CC-BY-4.0"
+  source: "https://freesound.org/people/thomas_evdokimoff/sounds/202193/"
+
+- files: ["voteding.ogg"]
+  copyright: '"Bike, Bell Ding, Single, 01-01.wav" byInspectorJ (www.jshaw.co.uk) of Freesound.org; The volume has been reduced.'
+  license: "CC-BY-4.0"
+  source: "https://freesound.org/people/InspectorJ/sounds/484344/"
+
+- files: [smoke.ogg]
+  copyright: '"smoke.ogg" by /tg/station'
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg
+
+- files: [double_beep.ogg]
+  copyright: '"Double Beep" by andersmmg of Freesound.org'
+  license: CC-BY-4.0
+  source: https://freesound.org/people/andersmmg/sounds/511492/
+
+- files: [saw.ogg]
+  copyright: '"01-1 Angle Grinder.wav" by domiscz of Freesound.org'
+  license: CC0-1.0
+  source: https://freesound.org/people/domiscz/sounds/461728/
+
+- files: [poster_being_set.ogg]
+  copyright: '"poster_being_created.ogg" by /tg/station'
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_being_created.ogg
+
+- files: [poster_broken.ogg]
+  copyright: '"poster_ripped.ogg" by /tg/station'
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
+
+- files: [internals.ogg]
+  copyright: '"internals.ogg" by CEV-Eris. Edited by metalgearsloth to amplify volume.'
+  license: CC-BY-SA-3.0
+  source: https://github.com/discordia-space/CEV-Eris/blob/f02a6e2c29b41c28b1cf4d8f897cb8f090f43552/sound/effects/internals.ogg
+
+- files: [holy.ogg]
+  copyright: '"AHHHH" by random_intruder of Freesound.org. Edited'
+  license: CC0-1.0
+  source: https://freesound.org/people/random_intruder/sounds/392172/
+
+- files: [fire.ogg]
+  copyright: '"Cardboard burning 2" by raremess of Freesound.org. Edited'
+  license: CC0-1.0
+  source: https://freesound.org/people/raremess/sounds/222557/
+
+- files: [hith_kick.ogg]
+  copyright: Taira Komori. See https://taira-komori.jpn.org/freesounden.html for license.
+  license: Custom
+  source: https://taira-komori.jpn.org/freesounden.html
+
+- files: [adminhelp.ogg]
+  copyright: '"jumps from reason.3.Rev.wav" by martian of Freesound.org. Modified by reversing and altering volume.'
+  license: CC0-1.0
+  source: https://freesound.org/people/martian/sounds/19261/

@@ -101,3 +101,5 @@ seeds-pea-name = pea
 seeds-pea-display-name = pea vines
 seeds-pumpkin-name = pumpkin
 seeds-pumpkin-display-name = pumpkins
+seeds-cotton-name = cotton
+seeds-cotton-display-name = cotton plant
