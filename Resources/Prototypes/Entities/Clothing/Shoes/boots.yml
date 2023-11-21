@@ -120,6 +120,19 @@
     sprite: Clothing/Shoes/Boots/winterbootsatmos.rsi
   - type: TemperatureProtection
     coefficient: 0.05
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsWinterBar
+  name: Winter Boots
+  description: Fluffy boots to help survive even the coldest of winters.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootsbar.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootsbar.rsi
+  - type: TemperatureProtection
+    coefficient: 0.05
     
 - type: entity
   parent: ClothingShoesBaseButcherable
