@@ -37,7 +37,7 @@ public sealed partial class NavMapControl : MapGridControl
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<EntityCoordinates, NavMapTrackableComponent> TrackedEntities = new();
-    public Dictionary<Vector2i, List<NavMapLine>> PowerCableNetwork = default!;
+    public Dictionary<Vector2i, List<NavMapLine>>? PowerCableNetwork;
     public Dictionary<Vector2i, List<NavMapLine>>? FocusCableNetwork;
     public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
 
@@ -145,6 +145,14 @@ public sealed partial class NavMapControl : MapGridControl
     public void ForceRecenter()
     {
         _recentering = true;
+    }
+
+    public void ForceNavMapUpdate()
+    {
+        _entManager.TryGetComponent(MapUid, out _navMap);
+        _entManager.TryGetComponent(MapUid, out _grid);
+
+        UpdateNavMap();
     }
 
     public void CenterToCoordinates(EntityCoordinates coordinates)
@@ -492,21 +500,18 @@ public sealed partial class NavMapControl : MapGridControl
         {
             _updateTimer -= UpdateTime;
 
-            if (_navMap == null || _grid == null)
-                return;
-
-            TileGrid = GetDecodedTileChunks(_navMap.Chunks, _grid);
-            UpdatePowerCableChunks();
+            UpdateNavMap();
         }
     }
 
-    public void UpdatePowerCableChunks()
+    private void UpdateNavMap()
     {
-        if (PowerMonitoringConsole != null && _grid != null)
-        {
-            FocusCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.FocusChunks, _grid);
-            PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.AllChunks, _grid, PowerMonitoringConsole.FocusChunks.Any());
-        }
+        if (_navMap == null || _grid == null)
+            return;
+
+        TileGrid = GetDecodedTileChunks(_navMap.Chunks, _grid);
+        FocusCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole?.FocusChunks, _grid);
+        PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole?.AllChunks, _grid, PowerMonitoringConsole?.FocusChunks.Any() == true);
     }
 
     private Vector2 Scale(Vector2 position)

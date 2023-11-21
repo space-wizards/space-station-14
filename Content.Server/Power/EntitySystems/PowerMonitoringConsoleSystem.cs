@@ -26,9 +26,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
 
-    private Dictionary<EntityUid, List<(EntityUid, PowerMonitoringDeviceComponent)>> _trackedDevices = new();
+    private Dictionary<EntityUid, List<(EntityUid, PowerMonitoringDeviceComponent)>> _gridDevices = new();
     private Dictionary<EntProtoId, Dictionary<EntityUid, EntityCoordinates>> _groupableEntityCoords = new();
     private Dictionary<EntityUid, PowerMonitoringDeviceComponent> _masterDevices = new();
+    private Dictionary<EntityUid, Dictionary<Vector2i, PowerCableChunk>> _gridPowerCableChunks = new();
 
     private bool _powerNetAbnormalities = false;
     private const float RoguePowerConsumerThreshold = 100000;
@@ -46,7 +47,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         SubscribeLocalEvent<GameRuleEndedEvent>(OnPowerGridCheckEnded);
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
 
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, GridSplitEvent>(OnGridSplit);
+        SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
         SubscribeLocalEvent<CableComponent, CableAnchorStateChangedEvent>(OnCableAnchorStateChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchoringChanged);
         SubscribeLocalEvent<PowerMonitoringDeviceComponent, NodeGroupsRebuilt>(OnNodeGroupRebuilt);
@@ -72,7 +73,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
 
-        if (!_trackedDevices.TryGetValue(gridUid, out var gridDevices))
+        if (!_gridDevices.TryGetValue(gridUid, out var gridDevices))
             return;
 
         // The grid must have a NavMapComponent to visualize the map in the UI

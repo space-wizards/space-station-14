@@ -47,7 +47,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(owner, out var powerMonitoringConsole))
             NavMap.PowerMonitoringConsole = powerMonitoringConsole;
 
-        // Get grid uid
+        // Set nva map grid uid
         if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
         {
             NavMap.MapUid = xform.GridUid;
@@ -69,6 +69,13 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             NavMap.Visible = false;
         }
 
+        // Set colors
+        NavMap.TileColor = _tileColor;
+        NavMap.WallColor = _wallColor;
+
+        // Update nav map
+        NavMap.ForceNavMapUpdate();
+
         // Set UI tab titles
         MasterTabContainer.SetTabTitle(0, Loc.GetString("power-monitoring-window-label-sources"));
         MasterTabContainer.SetTabTitle(1, Loc.GetString("power-monitoring-window-label-smes"));
@@ -82,10 +89,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         ShowHVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.HighVoltage);
         ShowMVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.MediumVoltage);
         ShowLVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.Apc);
-
-        // Set colors
-        NavMap.TileColor = _tileColor;
-        NavMap.WallColor = _wallColor;
 
         // Set power monitoring update request action
         RequestPowerMonitoringUpdateAction += userInterface.RequestPowerMonitoringUpdate;
@@ -200,9 +203,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         // Update system warnings
         UpdateWarningLabel(flags);
-
-        // Update power cable overlay
-        NavMap.UpdatePowerCableChunks();
     }
 
     private void AddTrackedEntityToNavMap(EntityUid uid, EntityCoordinates coords, NavMapTrackableComponent component, bool useDarkColors = false)

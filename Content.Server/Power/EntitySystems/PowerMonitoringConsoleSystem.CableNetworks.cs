@@ -3,8 +3,6 @@ using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 

@@ -23,11 +23,14 @@ public sealed partial class NavMapControl
         [CableType.Apc] = new Vector2(0.2f, 0.2f),
     };
 
-    public Dictionary<Vector2i, List<NavMapLine>> GetDecodedPowerCableChunks
-        (Dictionary<Vector2i, PowerCableChunk> chunks,
-        MapGridComponent grid,
+    public Dictionary<Vector2i, List<NavMapLine>>? GetDecodedPowerCableChunks
+        (Dictionary<Vector2i, PowerCableChunk>? chunks,
+        MapGridComponent? grid,
         bool useDarkColors = false)
     {
+        if (chunks == null || grid == null)
+            return null;
+
         var decodedOutput = new Dictionary<Vector2i, List<NavMapLine>>();
 
         foreach ((var chunkOrigin, var chunk) in chunks)

@@ -31,7 +31,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationInit);
         SubscribeLocalEvent<NavMapComponent, ComponentStartup>(OnNavMapStartup);
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<NavMapComponent, GridSplitEvent>(OnNavMapSplit);
+        SubscribeLocalEvent<GridSplitEvent>(OnNavMapSplit);
 
         SubscribeLocalEvent<NavMapBeaconComponent, ComponentStartup>(OnNavMapBeaconStartup);
         SubscribeLocalEvent<NavMapBeaconComponent, AnchorStateChangedEvent>(OnNavMapBeaconAnchor);
@@ -83,7 +83,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
         RefreshGrid(component, grid);
     }
 
-    private void OnNavMapSplit(EntityUid uid, NavMapComponent component, ref GridSplitEvent args)
+    private void OnNavMapSplit(ref GridSplitEvent args)
     {
         var gridQuery = GetEntityQuery<MapGridComponent>();
 
@@ -93,7 +93,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             RefreshGrid(newComp, gridQuery.GetComponent(grid));
         }
 
-        RefreshGrid(component, gridQuery.GetComponent(uid));
+        RefreshGrid(Comp<NavMapComponent>(args.Grid), gridQuery.GetComponent(args.Grid));
     }
 
     private void RefreshGrid(NavMapComponent component, MapGridComponent grid)
