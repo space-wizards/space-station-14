@@ -54,25 +54,6 @@ internal sealed partial class PowerMonitoringConsoleSystem
         chunk.PowerCableData[cable.CableType] &= ~flag;
     }
 
-    private void RefreshTile(EntityUid gridUid, MapGridComponent grid, PowerCableChunk chunk, Vector2i tile)
-    {
-        var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
-        var flag = SharedNavMapSystem.GetFlag(relative);
-
-        foreach (var datum in chunk.PowerCableData)
-            chunk.PowerCableData[datum.Key] &= ~flag;
-
-        var enumerator = _sharedMapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
-        while (enumerator.MoveNext(out var ent))
-        {
-            if (TryComp<CableComponent>(ent, out var cable))
-            {
-                chunk.PowerCableData.TryAdd(cable.CableType, 0);
-                chunk.PowerCableData[cable.CableType] |= flag;
-            }
-        }
-    }
-
     private void UpdateFocusNetwork(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid, IEnumerable<EntityUid> nodeList)
     {
         component.FocusChunks.Clear();

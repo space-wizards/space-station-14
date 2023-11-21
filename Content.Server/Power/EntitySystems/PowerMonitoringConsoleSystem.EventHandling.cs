@@ -91,8 +91,6 @@ internal sealed partial class PowerMonitoringConsoleSystem
         else
             RemovePowerCableFromTile(chunk, tile, component);
 
-        //RefreshTile(xform.GridUid.Value, grid, chunk, tile);
-
         var query = AllEntityQuery<PowerMonitoringConsoleComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var console, out var entXform))
         {

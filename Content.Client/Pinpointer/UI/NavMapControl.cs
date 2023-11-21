@@ -1,6 +1,8 @@
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
+using Content.Shared.Power;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -11,13 +13,10 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Timing;
 using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
-using Robust.Shared.Timing;
-using Robust.Client.GameObjects;
-using Content.Shared.Power;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -195,7 +194,7 @@ public sealed partial class NavMapControl : MapGridControl
             {
                 var currentDistance = (currentCoords.ToMapPos(_entManager, _transformSystem) - worldPosition).Length();
 
-                if (closestDistance < currentDistance || closestDistance * MinimapScale > MaxSelectableDistance)
+                if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
 
                 closestCoords = currentCoords;
