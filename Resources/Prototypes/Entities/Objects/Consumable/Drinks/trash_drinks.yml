@@ -109,7 +109,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 5
+        damage: 20
       behaviors:
       - !type:SpillBehavior { }
         transferForensics: true
