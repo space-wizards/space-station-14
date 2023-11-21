@@ -308,7 +308,7 @@
   id: DrinkCartonTomato
   components:
   - type: Sprite
-    sprite: Objects/Consumable/tomatojuice.rsi
+    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
 
 - type: entity
