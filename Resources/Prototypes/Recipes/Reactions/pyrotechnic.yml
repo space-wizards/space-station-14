@@ -2,22 +2,30 @@
   id: Napalm
   reactants:
     Oil:
+      type: Reagent
       amount: 1
     WeldingFuel:
+      type: Reagent
       amount: 1
     Ethanol:
+      type: Reagent
       amount: 1
   products:
-    Napalm: 3
+    Napalm:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Phlogiston
   reactants:
     Phosphorus:
+      type: Reagent
       amount: 1
     SulfuricAcid:
+      type: Reagent
       amount: 1
     Plasma:
+      type: Reagent
       amount: 1
   effects:
   - !type:CreateGas
@@ -27,15 +35,19 @@
     messages: [ "phlogiston-plasma-created" ]
     type: Pvs
   products:
-    Phlogiston: 3
+    Phlogiston:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: ChlorineTrifluoride
   priority: 20
   reactants:
     Chlorine:
+      type: Reagent
       amount: 1
     Fluorine:
+      type: Reagent
       amount: 3
   effects:
   # TODO solution temperature!!
@@ -50,4 +62,6 @@
     type: Pvs
     visualType: LargeCaution
   products:
-    ChlorineTrifluoride: 4
+    ChlorineTrifluoride:
+      type: Reagent
+      amount: 4

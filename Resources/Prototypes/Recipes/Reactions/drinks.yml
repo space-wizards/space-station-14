@@ -2,91 +2,128 @@
   id: AcidSpit
   reactants:
     Wine:
+      type: Reagent
       amount: 2
     SulfuricAcid:
+      type: Reagent
       amount: 1
   products:
-    AcidSpit: 3
+    AcidSpit:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: AlliesCocktail
   reactants:
     Martini:
+      type: Reagent
       amount: 2
     Vodka:
+      type: Reagent
       amount: 1
   products:
-    AlliesCocktail: 3
+    AlliesCocktail:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Amasec
   reactants:
     Wine:
+      type: Reagent
       amount: 2
     Vodka:
+      type: Reagent
       amount: 2
     Iron:
+      type: Reagent
       amount: 1
   products:
-    Amasec: 5
+    Amasec:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: Andalusia
   reactants:
     Rum:
+      type: Reagent
       amount: 1
     Whiskey:
+      type: Reagent
       amount: 1
     JuiceLemon:
+      type: Reagent
       amount: 1
   products:
-    Andalusia: 3
+    Andalusia:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Antifreeze
   reactants:
     Cream:
+      type: Reagent
       amount: 1
     Ice:
+      type: Reagent
       amount: 1
     Vodka:
+      type: Reagent
       amount: 2
   products:
-    Antifreeze: 4
+    Antifreeze:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: AtomicBomb
   reactants:
     B52:
+      type: Reagent
       amount: 10
     Uranium:
+      type: Reagent
       amount: 1
   products:
-    AtomicBomb: 11
+    AtomicBomb:
+      type: Reagent
+      amount: 11
 
 - type: reaction
   id: B52
   reactants:
     Cognac:
+      type: Reagent
       amount: 1
     IrishCarBomb:
+      type: Reagent
       amount: 1
     CoffeeLiqueur:
+      type: Reagent
       amount: 1
   products:
-    B52: 3
+    B52:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: CogChamp
   reactants:
     Cognac:
+      type: Reagent
       amount: 1
     ScrewdriverCocktail:
+      type: Reagent
       amount: 1
     WeldingFuel:
+      type: Reagent
       amount: 1
   products:
-    CogChamp: 3
+    CogChamp:
+      type: Reagent
+      amount: 3
   sound:
     path: /Audio/Magic/Cults/ClockCult/steam_whoosh.ogg
 
@@ -94,501 +131,706 @@
   id: Barefoot
   reactants:
     Cream:
+      type: Reagent
       amount: 1
     Vermouth:
+      type: Reagent
       amount: 1
     JuiceBerry:
+      type: Reagent
       amount: 1
   products:
-    Barefoot: 3
+    Barefoot:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: BananaHonk
   reactants:
     Cream:
+      type: Reagent
       amount: 1
     JuiceBanana:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    BananaHonk: 3
+    BananaHonk:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: BeepskySmash
   reactants:
     Iron:
+      type: Reagent
       amount: 1
     JuiceLime:
+      type: Reagent
       amount: 1
     Whiskey:
+      type: Reagent
       amount: 1
   products:
-    BeepskySmash: 2
+    BeepskySmash:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: BlackRussian
   reactants:
     CoffeeLiqueur:
+      type: Reagent
       amount: 1
     Vodka:
+      type: Reagent
       amount: 2
   products:
-    BlackRussian: 3
+    BlackRussian:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: BloodyMary
   reactants:
     JuiceLime:
+      type: Reagent
       amount: 1
     JuiceTomato:
+      type: Reagent
       amount: 3
     Vodka:
+      type: Reagent
       amount: 2
   products:
-    BloodyMary: 6
+    BloodyMary:
+      type: Reagent
+      amount: 6
 
 - type: reaction
   id: Booger
   reactants:
     Cream:
+      type: Reagent
       amount: 2
     JuiceBanana:
+      type: Reagent
       amount: 1
     JuiceWatermelon:
+      type: Reagent
       amount: 1
     Rum:
+      type: Reagent
       amount: 1
   products:
-    Booger: 5
+    Booger:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: BraveBull
   reactants:
     CoffeeLiqueur:
+      type: Reagent
       amount: 1
     Tequila:
+      type: Reagent
       amount: 2
   products:
-    BraveBull: 3
+    BraveBull:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: CafeLatte
   reactants:
     Coffee:
+      type: Reagent
       amount: 1
     Milk:
+      type: Reagent
       amount: 1
   products:
-    CafeLatte: 2
+    CafeLatte:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: CubaLibre
   reactants:
     Cola:
+      type: Reagent
       amount: 2
     Rum:
+      type: Reagent
       amount: 1
   products:
-    CubaLibre: 3
+    CubaLibre:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: DemonsBlood
   reactants:
     Rum:
+      type: Reagent
       amount: 1
     Blood:
+      type: Reagent
       amount: 1
     DrGibb:
+      type: Reagent
       amount: 1
     SpaceMountainWind:
+      type: Reagent
       amount: 1
   products:
-    DemonsBlood: 4
+    DemonsBlood:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: DevilsKiss
   reactants:
     Rum:
+      type: Reagent
       amount: 1
     Blood:
+      type: Reagent
       amount: 1
     CoffeeLiqueur:
+      type: Reagent
       amount: 1
   products:
-    DevilsKiss: 3
+    DevilsKiss:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: DoctorsDelight
   reactants:
     Cream:
+      type: Reagent
       amount: 2
     JuiceLime:
+      type: Reagent
       amount: 1
     JuiceOrange:
+      type: Reagent
       amount: 1
     JuiceTomato:
+      type: Reagent
       amount: 1
     Tricordrazine:
+      type: Reagent
       amount: 1
   products:
-    DoctorsDelight: 6
+    DoctorsDelight:
+      type: Reagent
+      amount: 6
 
 - type: reaction
   id: DriestMartini
   reactants:
     Gin:
+      type: Reagent
       amount: 1
     Nothing:
+      type: Reagent
       amount: 1
   products:
-    DriestMartini: 2
+    DriestMartini:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: ErikaSurprise
   reactants:
     Ale:
+      type: Reagent
       amount: 2
     Ice:
+      type: Reagent
       amount: 1
     JuiceBanana:
+      type: Reagent
       amount: 1
     JuiceLime:
+      type: Reagent
       amount: 1
     Whiskey:
+      type: Reagent
       amount: 1
   products:
-    ErikaSurprise: 6
+    ErikaSurprise:
+      type: Reagent
+      amount: 6
 
 - type: reaction
   id: FourteenLoko
   reactants:
     Coffee:
+      type: Reagent
       amount: 1
     JuiceLime:
+      type: Reagent
       amount: 1
     Vodka:
+      type: Reagent
       amount: 1
   products:
-    FourteenLoko: 3
+    FourteenLoko:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: GargleBlaster
   reactants:
     Cognac:
+      type: Reagent
       amount: 1
     Gin:
+      type: Reagent
       amount: 1
     JuiceLime:
+      type: Reagent
       amount: 1
     Vodka:
+      type: Reagent
       amount: 1
     Whiskey:
+      type: Reagent
       amount: 1
   products:
-    GargleBlaster: 5
+    GargleBlaster:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: GinFizz
   reactants:
     Gin:
+      type: Reagent
       amount: 1
     JuiceLime:
+      type: Reagent
       amount: 1
     SodaWater:
+      type: Reagent
       amount: 1
   products:
-    GinFizz: 3
+    GinFizz:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: GinTonic
   reactants:
     Gin:
+      type: Reagent
       amount: 1
     TonicWater:
+      type: Reagent
       amount: 2
   products:
-    GinTonic: 3
+    GinTonic:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Goldschlager
   reactants:
     Gold:
+      type: Reagent
       amount: 1
     Vodka:
+      type: Reagent
       amount: 10
   products:
-    Goldschlager: 10
+    Goldschlager:
+      type: Reagent
+      amount: 10
 
 - type: reaction
   id: Grog
   reactants:
     Rum:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 2
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    Grog: 4
+    Grog:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: HippiesDelight
   reactants:
     GargleBlaster:
+      type: Reagent
       amount: 1
     THC:
+      type: Reagent
       amount: 1
   products:
-    HippiesDelight: 2
+    HippiesDelight:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Hooch
   reactants:
     Ethanol:
+      type: Reagent
       amount: 2
     WeldingFuel:
+      type: Reagent
       amount: 1
     Enzyme:
+      type: Reagent
       amount: 1
   products:
-    Hooch: 3
+    Hooch:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: IceCream
   reactants:
     Cream:
+      type: Reagent
       amount: 1
     Ice:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    IceCream: 3
+    IceCream:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: IcedBeer
   reactants:
     Beer:
+      type: Reagent
       amount: 5
     Ice:
+      type: Reagent
       amount: 1
   products:
-    IcedBeer: 5
+    IcedBeer:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: IcedBeerAlt
   reactants:
     Beer:
+      type: Reagent
       amount: 10
     Frostoil:
+      type: Reagent
       amount: 1
   products:
-    IcedBeer: 10
+    IcedBeer:
+      type: Reagent
+      amount: 10
 
 - type: reaction
   id: IcedCoffee
   reactants:
     Coffee:
+      type: Reagent
       amount: 2
     Ice:
+      type: Reagent
       amount: 1
   products:
-    IcedCoffee: 3
+    IcedCoffee:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: IcedGreenTea
   reactants:
     GreenTea:
+      type: Reagent
       amount: 2
     Ice:
+      type: Reagent
       amount: 1
   products:
-    IcedGreenTea: 3
+    IcedGreenTea:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: IcedTea
   reactants:
     Ice:
+      type: Reagent
       amount: 1
     Tea:
+      type: Reagent
       amount: 2
   products:
-    IcedTea: 3
+    IcedTea:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: IrishCarBomb
   reactants:
     Ale:
+      type: Reagent
       amount: 1
     IrishCream:
+      type: Reagent
       amount: 1
   products:
-    IrishCarBomb: 2
+    IrishCarBomb:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: IrishCoffee
   reactants:
     Coffee:
+      type: Reagent
       amount: 2
     IrishCream:
+      type: Reagent
       amount: 2
   products:
-    IrishCoffee: 4
+    IrishCoffee:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: IrishCream
   reactants:
     Cream:
+      type: Reagent
       amount: 1
     Whiskey:
+      type: Reagent
       amount: 2
   products:
-    IrishCream: 3
+    IrishCream:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: KiraSpecial
   reactants:
     JuiceLime:
+      type: Reagent
       amount: 1
     JuiceOrange:
+      type: Reagent
       amount: 1
     SodaWater:
+      type: Reagent
       amount: 1
   products:
-    KiraSpecial: 3
+    KiraSpecial:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Lemonade
   reactants:
     JuiceLemon:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
   products:
-    Lemonade: 3
+    Lemonade:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: LemonLime
   reactants:
     JuiceLemon:
+      type: Reagent
       amount: 1
     JuiceLime:
+      type: Reagent
       amount: 1
     SodaWater:
+      type: Reagent
       amount: 1
   products:
-    LemonLime: 3
+    LemonLime:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: LongIslandIcedTea
   reactants:
     CubaLibre:
+      type: Reagent
       amount: 3
     Gin:
+      type: Reagent
       amount: 1
     Tequila:
+      type: Reagent
       amount: 1
     Vodka:
+      type: Reagent
       amount: 1
   products:
-    LongIslandIcedTea: 6
+    LongIslandIcedTea:
+      type: Reagent
+      amount: 6
 
 - type: reaction
   id: Manhattan
   reactants:
     Whiskey:
+      type: Reagent
       amount: 2
     Vermouth:
+      type: Reagent
       amount: 1
   products:
-    Manhattan: 3
+    Manhattan:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: ManhattanProject
   reactants:
     Whiskey:
+      type: Reagent
       amount: 10
     Uranium:
+      type: Reagent
       amount: 1
   products:
-    ManhattanProject: 10
+    ManhattanProject:
+      type: Reagent
+      amount: 10
 
 - type: reaction
   id: ManlyDorf
   reactants:
     Ale:
+      type: Reagent
       amount: 2
     Beer:
+      type: Reagent
       amount: 1
   products:
-    ManlyDorf: 3
+    ManlyDorf:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Margarita
   reactants:
     Tequila:
+      type: Reagent
       amount: 2
     JuiceLime:
+      type: Reagent
       amount: 1
   products:
-    Margarita: 3
+    Margarita:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Martini
   reactants:
     Gin:
+      type: Reagent
       amount: 2
     Vermouth:
+      type: Reagent
       amount: 1
   products:
-    Martini: 3
+    Martini:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Mead
   reactants:
     Sugar:
+      type: Reagent
       amount: 1
       # TODO replace Sugar with Honey once added
     Enzyme:
+      type: Reagent
       amount: 1
   products:
-    Mead: 2
+    Mead:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Mojito
   reactants:
     JuiceLime:
+      type: Reagent
       amount: 1
     Rum:
+      type: Reagent
       amount: 1
     SodaWater:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    Mojito: 4
+    Mojito:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: Moonshine
   reactants:
     Tequila:
+      type: Reagent
       amount: 1
     Vodka:
+      type: Reagent
       amount: 1
     Whiskey:
+      type: Reagent
       amount: 1
   products:
-    Moonshine: 3
+    Moonshine:
+      type: Reagent
+      amount: 3
 
 # - type: reaction
 #   id: Neurotoxin
 #   reactants:
 #     GargleBlaster:
+#       type: Reagent
 #       amount: 1
 #     Morphine:
+#       type: Reagent
 #       amount: 1
 #   products:
 #     Neurotoxin: 2
@@ -598,104 +840,145 @@
   id: NuclearCola
   reactants:
     Cola:
+      type: Reagent
       amount: 5
     Uranium:
+      type: Reagent
       amount: 1
   products:
-    NuclearCola: 5
+    NuclearCola:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: Patron
   reactants:
     Tequila:
+      type: Reagent
       amount: 10
     Silver:
+      type: Reagent
       amount: 1
   products:
-    Patron: 10
+    Patron:
+      type: Reagent
+      amount: 10
 
 - type: reaction
   id: Posca
   reactants:
     TableSalt:
+      type: Reagent
       amount: 1
     Vinegar:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
   products:
-    Posca: 3
+    Posca:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: RedMead
   reactants:
     Mead:
+      type: Reagent
       amount: 1
     Blood:
+      type: Reagent
       amount: 1
   products:
-    RedMead: 2
+    RedMead:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Rewriter
   reactants:
     Coffee:
+      type: Reagent
       amount: 1
     SpaceMountainWind:
+      type: Reagent
       amount: 1
   products:
-    Rewriter: 2
+    Rewriter:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: RootBeerFloat
   reactants:
     RootBeer:
+      type: Reagent
       amount: 2
     IceCream:
+      type: Reagent
       amount: 1
   products:
-    RootBeerFloat: 3
+    RootBeerFloat:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Sbiten
   reactants:
     Vodka:
+      type: Reagent
       amount: 1
     CapsaicinOil:
+      type: Reagent
       amount: 1
   products:
-    Sbiten: 2
+    Sbiten:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: ScrewdriverCocktail
   reactants:
     JuiceOrange:
+      type: Reagent
       amount: 2
     Vodka:
+      type: Reagent
       amount: 1
   products:
-    ScrewdriverCocktail: 3
+    ScrewdriverCocktail:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Silencer
   reactants:
     Nothing:
+      type: Reagent
       amount: 1
     Cream:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    Silencer: 3
+    Silencer:
+      type: Reagent
+      amount: 3
 
 # - type: reaction
 #   id: Singulo
 #   reactants:
 #     Vodka:
+#       type: Reagent
 #       amount: 5
 #     Wine:
+#       type: Reagent
 #       amount: 5
 #     LiquidDarkMatter:
+#       type: Reagent
 #       amount: 1
 #   products:
 #     Singulo: 10
@@ -705,191 +988,269 @@
   id: SnowWhite
   reactants:
     Beer:
+      type: Reagent
       amount: 1
     LemonLime:
+      type: Reagent
       amount: 1
   products:
-    SnowWhite: 3
+    SnowWhite:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: SoyLatte
   reactants:
     Coffee:
+      type: Reagent
       amount: 1
     MilkSoy:
+      type: Reagent
       amount: 1
   products:
-    SoyLatte: 2
+    SoyLatte:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Starkist
   reactants:
     Cola:
+      type: Reagent
       amount: 1
     JuiceOrange:
+      type: Reagent
       amount: 2
   products:
-    Starkist: 3
+    Starkist:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: SuiDream
   reactants:
     SpaceUp:
+      type: Reagent
       amount: 1
     BlueCuracao:
+      type: Reagent
       amount: 1
     MelonLiquor:
+      type: Reagent
       amount: 1
   products:
-    SuiDream: 3
+    SuiDream:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: SyndicateBomb
   reactants:
     Beer:
+      type: Reagent
       amount: 1
     WhiskeyCola:
+      type: Reagent
       amount: 1
   products:
-    SyndicateBomb: 2
+    SyndicateBomb:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: TequilaSunrise
   reactants:
     JuiceOrange:
+      type: Reagent
       amount: 1
     Tequila:
+      type: Reagent
       amount: 2
   products:
-    TequilaSunrise: 3
+    TequilaSunrise:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: ThreeMileIsland
   reactants:
     LongIslandIcedTea:
+      type: Reagent
       amount: 10
     Uranium:
+      type: Reagent
       amount: 1
   products:
-    ThreeMileIsland: 10
+    ThreeMileIsland:
+      type: Reagent
+      amount: 10
 
 - type: reaction
   id: ToxinsSpecial
   reactants:
     Rum:
+      type: Reagent
       amount: 2
     Vermouth:
+      type: Reagent
       amount: 1
     Plasma:
+      type: Reagent
       amount: 2
   products:
-    ToxinsSpecial: 5
+    ToxinsSpecial:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: VodkaMartini
   reactants:
     Vermouth:
+      type: Reagent
       amount: 1
     Vodka:
+      type: Reagent
       amount: 2
   products:
-    VodkaMartini: 3
+    VodkaMartini:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: VodkaTonic
   reactants:
     Vodka:
+      type: Reagent
       amount: 1
     TonicWater:
+      type: Reagent
       amount: 2
   products:
-    VodkaTonic: 3
+    VodkaTonic:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: WhiskeyCola
   reactants:
     Cola:
+      type: Reagent
       amount: 2
     Whiskey:
+      type: Reagent
       amount: 1
   products:
-    WhiskeyCola: 3
+    WhiskeyCola:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: WhiteRussian
   reactants:
     BlackRussian:
+      type: Reagent
       amount: 2
     Cream:
+      type: Reagent
       amount: 1
   products:
-    WhiteRussian: 3
+    WhiteRussian:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: WhiskeySoda
   reactants:
     SodaWater:
+      type: Reagent
       amount: 2
     Whiskey:
+      type: Reagent
       amount: 1
   products:
-    WhiskeySoda: 3
+    WhiskeySoda:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: HotRamen
   minTemp: 323.15
   reactants:
     DryRamen:
+      type: Reagent
       amount: 3
     Water:
+      type: Reagent
       amount: 1
   products:
-    HotRamen: 3
+    HotRamen:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Pilk
   reactants:
     Cola:
+      type: Reagent
       amount: 1
     Milk:
+      type: Reagent
       amount: 1
   products:
-    Pilk: 2
+    Pilk:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: TheMartinez
   reactants:
     Cola:
+      type: Reagent
       amount: 2
     Vodka:
+      type: Reagent
       amount: 2
     Ice:
+      type: Reagent
       amount: 1
     JuiceLemon:
+      type: Reagent
       amount: 1
   products:
-    TheMartinez: 6
+    TheMartinez:
+      type: Reagent
+      amount: 6
 
 - type: reaction
   id: WhiteGilgamesh
   reactants:
     Beer:
+      type: Reagent
       amount: 2
     Milk:
+      type: Reagent
       amount: 1
   products:
-    WhiteGilgamesh: 3
+    WhiteGilgamesh:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Cola
   reactants:
     Ipecac:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    Cola: 4
+    Cola:
+      type: Reagent
+      amount: 4

@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -54,10 +55,9 @@ public record struct SolutionOverflowEvent(EntityUid SolutionEnt, Solution Solut
 [UsedImplicitly]
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
-    [Dependency] private readonly ChemicalReactionSystem _chemistrySystem = default!;
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
 
@@ -280,7 +280,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         // Process reactions
         if (needsReactionsProcessing && solutionHolder.CanReact)
         {
-            _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume, mixerComponent);
+            var ev = new ReactSolutionEvent(solutionHolder, solutionHolder.MaxVolume, uid, null, mixerComponent);
+            _entityManager.EventBus.RaiseEvent<ReactSolutionEvent>(EventSource.Network, ev);
         }
 
         var overflowVol = solutionHolder.Volume - solutionHolder.MaxVolume;
@@ -834,8 +835,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (thermalEnergy == 0.0f)
             return;
 
-        var heatCap = solution.GetHeatCapacity(_prototypeManager);
-        solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
+        solution.AdjustTemperature(_prototypeManager, thermalEnergy);
         UpdateChemicals(owner, solution, true);
     }
 

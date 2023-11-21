@@ -2,93 +2,131 @@
   id: Ammonia
   reactants:
     Hydrogen:
+      type: Reagent
       amount: 3
     Nitrogen:
+      type: Reagent
       amount: 1
   products:
-    Ammonia: 4
+    Ammonia:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: Diethylamine
   reactants:
     Ammonia:
+      type: Reagent
       amount: 1
     Ethanol:
+      type: Reagent
       amount: 1
   products:
-    Diethylamine: 2
+    Diethylamine:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Phenol
   reactants:
     Oxygen:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
   products:
-    Phenol: 3
+    Phenol:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Acetone
   reactants:
     Oil:
+      type: Reagent
       amount: 1
     WeldingFuel:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
   products:
-    Acetone: 2
+    Acetone:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: FoamingAgent
   reactants:
     Lithium:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
   products:
-    FoamingAgent: 2
+    FoamingAgent:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: PolytrinicAcid
   reactants:
     SulfuricAcid:
+      type: Reagent
       amount: 1
     Plasma:
+      type: Reagent
       amount: 1
     Potassium:
+      type: Reagent
       amount: 1
   products:
-    PolytrinicAcid: 3
+    PolytrinicAcid:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: SulfuricAcid
   reactants:
     Hydrogen:
+      type: Reagent
       amount: 1
     Sulfur:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 2
   products:
-    SulfuricAcid: 3
+    SulfuricAcid:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: FluorosulfuricAcid
   reactants:
     Fluorine:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
     Potassium:
+      type: Reagent
       amount: 1
     SulfuricAcid:
+      type: Reagent
       amount: 1
   products:
-    FluorosulfuricAcid: 4
+    FluorosulfuricAcid:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: PotassiumExplosion
@@ -96,8 +134,10 @@
   priority: 20
   reactants:
     Water:
+      type: Reagent
       amount: 1
     Potassium:
+      type: Reagent
       amount: 1
   effects:
     - !type:ExplosionReactionEffect
@@ -113,10 +153,13 @@
   impact: High
   reactants:
     Phosphorus:
+      type: Reagent
       amount: 1
     Potassium:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   effects:
     - !type:AreaReactionEffect
@@ -131,8 +174,10 @@
   impact: High
   reactants:
     Fluorosurfactant:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
   effects:
     - !type:AreaReactionEffect
@@ -147,10 +192,13 @@
   priority: 10
   reactants:
     Iron:
+      type: Reagent
       amount: 3
     FoamingAgent:
+      type: Reagent
       amount: 1
     FluorosulfuricAcid:
+      type: Reagent
       amount: 1
   effects:
     - !type:AreaReactionEffect
@@ -165,10 +213,13 @@
   priority: 10
   reactants:
     Aluminium:
+      type: Reagent
       amount: 3
     FoamingAgent:
+      type: Reagent
       amount: 1
     FluorosulfuricAcid:
+      type: Reagent
       amount: 1
   effects:
     - !type:AreaReactionEffect
@@ -183,10 +234,13 @@
   priority: 20
   reactants:
     Iron:
+      type: Reagent
       amount: 1
     Uranium:
+      type: Reagent
       amount: 1
     Aluminium:
+      type: Reagent
       amount: 1
   effects:
     - !type:EmpReactionEffect
@@ -199,61 +253,85 @@
   id: TableSalt
   reactants:
     Chlorine:
+      type: Reagent
       amount: 1
     Sodium:
+      type: Reagent
       amount: 1
   products:
-    TableSalt: 2
+    TableSalt:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Thermite
   impact: Medium
   reactants:
     Iron:
+      type: Reagent
       amount: 1
     Aluminium:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
   products:
-    Thermite: 3
+    Thermite:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: UnstableMutagen
   reactants:
     Radium:
+      type: Reagent
       amount: 1
     Phosphorus:
+      type: Reagent
       amount: 1
     Chlorine:
+      type: Reagent
       amount: 1
   products:
-    UnstableMutagen: 3
+    UnstableMutagen:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Oil
   reactants:
     WeldingFuel:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
   products:
-    Oil: 3
+    Oil:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Fluorosurfactant
   impact: Medium
   reactants:
     Carbon:
+      type: Reagent
       amount: 2
     Fluorine:
+      type: Reagent
       amount: 2
     SulfuricAcid:
+      type: Reagent
       amount: 1
   products:
-    Fluorosurfactant: 5
+    Fluorosurfactant:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: Desoxyephedrine
@@ -261,128 +339,181 @@
   minTemp: 370
   reactants:
     Ephedrine:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
     Iodine:
+      type: Reagent
       amount: 1
     Phosphorus:
-     amount: 1
+     type: Reagent
+      amount: 1
   products:
-    Desoxyephedrine: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
+    Desoxyephedrine: #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
+      type: Reagent
+      amount: 4 
 
 - type: reaction
   id: Ephedrine
   impact: Medium
   reactants:
     Oil:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
     Diethylamine:
-     amount: 1
+     type: Reagent
+      amount: 1
   products:
-    Ephedrine: 4
+    Ephedrine:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: MuteToxin
   impact: Medium
   reactants:
     Uranium:
+      type: Reagent
       amount: 2
     Water:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
   products:
-    MuteToxin: 2
+    MuteToxin:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: ChloralHydrate
   impact: Medium
   reactants:
     Chlorine:
+      type: Reagent
       amount: 3
     Ethanol:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
   products:
-    ChloralHydrate: 1
+    ChloralHydrate:
+      type: Reagent
+      amount: 1
 
 - type: reaction
   id: Pax
   impact: Medium
   reactants:
     MindbreakerToxin:
+      type: Reagent
       amount: 1
     Synaptizine:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
   products:
-    Pax: 3
+    Pax:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Charcoal
   reactants:
     Carbon:
+      type: Reagent
       amount: 1
     Ash:
+      type: Reagent
       amount: 1
   products:
-    Charcoal: 1
+    Charcoal:
+      type: Reagent
+      amount: 1
 
 - type: reaction
   id: NorepinephricAcid
   impact: Medium
   reactants:
     Uranium:
+      type: Reagent
       amount: 2
     Hydrogen:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
   products:
-    NorepinephricAcid: 2
+    NorepinephricAcid:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Ethyloxyephedrine
   impact: Medium
   reactants:
     Desoxyephedrine:
+      type: Reagent
       amount: 1
     Stellibinin:
+      type: Reagent
       amount: 1
   products:
-    Ethyloxyephedrine: 2
+    Ethyloxyephedrine:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Diphenylmethylamine
   impact: Medium
   reactants:
     Ethyloxyephedrine:
+      type: Reagent
       amount: 1
     SodiumCarbonate:
+      type: Reagent
       amount: 1
     Coffee:
+      type: Reagent
       amount: 1
   products:
-    Diphenylmethylamine: 3
+    Diphenylmethylamine:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: SodiumCarbonate
   impact: Medium
   reactants:
     Ammonia:
+      type: Reagent
       amount: 1
     TableSalt:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
   products:
-    SodiumCarbonate: 4
+    SodiumCarbonate:
+      type: Reagent
+      amount: 4
+
+

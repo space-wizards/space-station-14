@@ -307,13 +307,15 @@
   flavor: water
   color: "#75b1f0"
   recognizable: true
-  boilingPoint: 100.0
-  meltingPoint: 0.0
+  boilingPoint: 373.15
+  meltingPoint: 273.15
   metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
         factor: 4
+  molarMass: 18
+  density: 1
 
 - type: reagent
   id: Ice

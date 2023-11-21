@@ -5,8 +5,10 @@
   conserveEnergy: false
   reactants:
     Milk:
+      type: Reagent
       amount: 40
     Enzyme:
+      type: Reagent
       amount: 5
       catalyst: true
   effects:
@@ -20,8 +22,10 @@
   conserveEnergy: false
   reactants:
     MilkGoat:
+      type: Reagent
       amount: 10 #Batches of chevre are traditionally made in far lower quantities than that of milk
     Enzyme:
+      type: Reagent
       amount: 5
       catalyst: true
   effects:
@@ -35,8 +39,10 @@
   conserveEnergy: false
   reactants:
     Flour:
+      type: Reagent
       amount: 15
     Water:
+      type: Reagent
       amount: 10
   effects:
     - !type:CreateEntityReactionEffect
@@ -49,10 +55,13 @@
   conserveEnergy: false
   reactants:
     Cornmeal:
+      type: Reagent
       amount: 15
     Milk: #replace with yoghurt when added
+      type: Reagent
       amount: 10
     Egg:
+      type: Reagent
       amount: 6
   effects:
     - !type:CreateEntityReactionEffect
@@ -65,8 +74,10 @@
   conserveEnergy: false
   reactants:
     Cornmeal:
+      type: Reagent
       amount: 15
     Water:
+      type: Reagent
       amount: 10
   effects:
     - !type:CreateEntityReactionEffect
@@ -79,10 +90,13 @@
   conserveEnergy: false
   reactants:
     Flour:
+      type: Reagent
       amount: 15
     Egg:
+      type: Reagent
       amount: 12
     Sugar:
+      type: Reagent
       amount: 5
   effects:
     - !type:CreateEntityReactionEffect
@@ -95,8 +109,10 @@
   conserveEnergy: false
   reactants:
     Milk:
+      type: Reagent
       amount: 30
     TableSalt:
+      type: Reagent
       amount: 5
       catalyst: true
   effects:
@@ -110,10 +126,13 @@
   conserveEnergy: false
   reactants:
     Flour:
+      type: Reagent
       amount: 15
     Egg:
+      type: Reagent
       amount: 12
     TableSalt:
+      type: Reagent
       amount: 5
   effects:
     - !type:CreateEntityReactionEffect
@@ -129,10 +148,13 @@
   conserveEnergy: false
   reactants:
     Flour:
+      type: Reagent
       amount: 15
     MilkSoy:
+      type: Reagent
       amount: 15
     Sugar:
+      type: Reagent
       amount: 5
   effects:
     - !type:CreateEntityReactionEffect
@@ -145,8 +167,10 @@
   conserveEnergy: false
   reactants:
     MilkSoy:
+      type: Reagent
       amount: 30
     Enzyme:
+      type: Reagent
       amount: 5
       catalyst: true
   effects:
@@ -159,112 +183,157 @@
   id: CookingKetchup
   reactants:
     JuiceTomato:
+      type: Reagent
       amount: 2
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    Ketchup: 3
+    Ketchup:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: CookingMayoVinegar
   reactants:
     Vinegar:
+      type: Reagent
       amount: 5
     Oil:
+      type: Reagent
       amount: 5
     Egg:
+      type: Reagent
       amount: 6
   products:
-    Mayo: 15
+    Mayo:
+      type: Reagent
+      amount: 15
 
 - type: reaction
   id: CookingMayoLemon
   reactants:
     JuiceLemon:
+      type: Reagent
       amount: 5
     Oil:
+      type: Reagent
       amount: 5
     Egg:
+      type: Reagent
       amount: 6
   products:
-    Mayo: 15
+    Mayo:
+      type: Reagent
+      amount: 15
 
 # Gas not included
 - type: reaction
   id: CookingMustard
   reactants:
     Bleach:
+      type: Reagent
       amount: 1
     Ammonia:
+      type: Reagent
       amount: 1
   products:
-    Mustard: 2
+    Mustard:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: CookingKetchunaise
   reactants:
     Ketchup:
+      type: Reagent
       amount: 1
     Mayo:
+      type: Reagent
       amount: 1
   products:
-    Ketchunaise: 2
+    Ketchunaise:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: CookingBbqSauce
   reactants:
     Ketchup:
+      type: Reagent
       amount: 1
     Vinegar:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    BbqSauce: 3
+    BbqSauce:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: CookingHotsauce
   reactants:
     JuiceTomato:
+      type: Reagent
       amount: 1
     TableSalt:
+      type: Reagent
       amount: 1
     CapsaicinOil:
+      type: Reagent
       amount: 1
   products:
-    Hotsauce: 3
+    Hotsauce:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: CookingVinegar
   reactants:
     Ethanol:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
   products:
-    Vinegar: 2
+    Vinegar:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: CookingSoysauce
   reactants:
     MilkSoy:
+      type: Reagent
       amount: 2
     SulfuricAcid:
+      type: Reagent
       amount: 1
   products:
-    Soysauce: 3
+    Soysauce:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: CookingVinaigrette
   reactants:
     Vinegar:
+      type: Reagent
       amount: 1
     OilOlive:
+      type: Reagent
       amount: 1
     Blackpepper:
+      type: Reagent
       amount: 1
   products:
-    Vinaigrette: 3
+    Vinaigrette:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: CreateMeatball
@@ -273,10 +342,13 @@
   conserveEnergy: false
   reactants:
     UncookedAnimalProteins:
+      type: Reagent
       amount: 5
     Flour:
+      type: Reagent
       amount: 5
     Egg:
+      type: Reagent
       amount: 6
   effects:
     - !type:CreateEntityReactionEffect
@@ -289,10 +361,13 @@
   conserveEnergy: false
   reactants:
     CocoaPowder:
+      type: Reagent
       amount: 4
     Milk:
+      type: Reagent
       amount: 2
     Sugar:
+      type: Reagent
       amount: 2
   effects:
     - !type:CreateEntityReactionEffect

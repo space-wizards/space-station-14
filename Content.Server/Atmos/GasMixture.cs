@@ -97,6 +97,49 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float GetMoles(string gas)
+        {
+            return GetMoles(GetGasId(gas));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetGasId(string gasName)
+        {
+            int gas = -1;   //crash the game if you give a wrong gasName
+            switch(gasName)
+            {
+                case "Oxygen":
+                    gas = 0;
+                    break;
+                case "Nitrogen":
+                    gas = 1;
+                    break;
+                case "CarbonDioxide":
+                    gas = 2;
+                    break;
+                case "Plasma":
+                    gas = 3;
+                    break;
+                case "Tritium":
+                    gas = 4;
+                    break;
+                case "WaterVapor":
+                    gas = 5;
+                    break;
+                case "Miasma":
+                    gas = 6;
+                    break;
+                case "NitrousOxide":
+                    gas = 7;
+                    break;
+                case "Frezon":
+                    gas = 8;
+                    break;
+            }
+            return gas;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMoles(int gasId, float quantity)
         {
             if (!float.IsFinite(quantity) || float.IsNegative(quantity))
@@ -133,6 +176,12 @@ namespace Content.Server.Atmos
         public void AdjustMoles(Gas gas, float moles)
         {
             AdjustMoles((int)gas, moles);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AdjustMoles(string gas, float moles)
+        {
+            AdjustMoles(GetGasId(gas), moles);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

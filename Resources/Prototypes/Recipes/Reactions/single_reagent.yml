@@ -4,9 +4,12 @@
   minTemp: 347
   reactants:
     UncookedAnimalProteins:
+      type: Reagent
       amount: 0.5
   products:
-    Protein: 0.5
+    Protein:
+      type: Reagent
+      amount: 0.5
 
 - type: reaction
   id: BloodToWine
@@ -15,6 +18,9 @@
   - Holy
   reactants:
     Blood:
+      type: Reagent
       amount: 1
   products:
-    Wine: 1
+    Wine:
+      type: Reagent
+      amount: 1

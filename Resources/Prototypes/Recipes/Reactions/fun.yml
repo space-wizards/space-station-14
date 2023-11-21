@@ -2,27 +2,38 @@
   id: Carpetium
   reactants:
     SpaceDrugs:
+      type: Reagent
       amount: 1
     Fiber:
+      type: Reagent
       amount: 2
   products:
-    Carpetium: 3
+    Carpetium:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: BuzzochloricBees
   reactants:
     Saxoite: # do you like jazz (not sorry)
+      type: Reagent
       amount: 1
     Fiber: # bees are fuzzy
+      type: Reagent
       amount: 1
     GroundBee: # you need bee for the bees
+      type: Reagent
       amount: 1
     Chlorine: # the chloric part of buzzochloric
+      type: Reagent
       amount: 1
     UnstableMutagen: # to bring the buzz to life
+      type: Reagent
       amount: 1
   products:
-    BuzzochloricBees: 3
+    BuzzochloricBees:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: CreateSoap
@@ -30,10 +41,13 @@
   quantized: true
   reactants:
     Fat:
+      type: Reagent
       amount: 15
     TableSalt:
+      type: Reagent
       amount: 10
     Water:
+      type: Reagent
       amount: 10
   effects:
     - !type:CreateEntityReactionEffect
@@ -45,10 +59,13 @@
   quantized: true
   reactants:
     Fat:
+      type: Reagent
       amount: 15
     TableSalt:
+      type: Reagent
       amount: 10
     Blood:
+      type: Reagent
       amount: 10
   effects:
     - !type:CreateEntityReactionEffect
@@ -60,12 +77,16 @@
   quantized: true
   reactants:
     Fat:
+      type: Reagent
       amount: 25
     Nutriment:
+      type: Reagent
       amount: 5
     Blood:
+      type: Reagent
       amount: 10
     Carbon:
+      type: Reagent
       amount: 10
   effects:
     - !type:CreateEntityReactionEffect
@@ -76,21 +97,29 @@
   minTemp: 370
   reactants:
     SpaceLube:
+      type: Reagent
       amount: 1
     Slime:
+      type: Reagent
       amount: 1
   products:
-    SpaceGlue: 2
+    SpaceGlue:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Licoxide
   reactants:
     Lead:
+      type: Reagent
       amount: 1
     Zinc:
+      type: Reagent
       amount: 1
   products:
-    Licoxide: 1
+    Licoxide:
+      type: Reagent
+      amount: 1
 
 - type: reaction
   id: PlasticSheet # It's here because "haha look you can get smooth beautiful sheets of plastic from small cylindric beaker" (jokes aside: i dont know where should i put it)
@@ -99,10 +128,13 @@
   minTemp: 374
   reactants:
     Oil:
+      type: Reagent
       amount: 5
     Ash:
+      type: Reagent
       amount: 3
     SulfuricAcid:
+      type: Reagent
       amount: 2
   effects:
     - !type:CreateEntityReactionEffect

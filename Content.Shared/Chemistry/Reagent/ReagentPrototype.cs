@@ -75,16 +75,36 @@ namespace Content.Shared.Chemistry.Reagent
 
         /// <summary>
         ///     The specific heat of the reagent.
-        ///     How much energy it takes to heat one unit of this reagent by one Kelvin.
+        ///     How much energy it takes to heat 1u of this reagent by one Kelvin.
         /// </summary>
         [DataField("specificHeat")]
         public float SpecificHeat { get; private set; } = 1.0f;
 
         [DataField("boilingPoint")]
-        public float? BoilingPoint { get; private set; }
+        public float BoilingPoint { get; private set; } = float.PositiveInfinity;
 
         [DataField("meltingPoint")]
-        public float? MeltingPoint { get; private set; }
+        public float MeltingPoint { get; private set; } = float.NegativeInfinity;
+
+        [DataField]
+        public float BoilingLatentHeat { get; private set; } = float.PositiveInfinity;
+
+        [DataField]
+        public float MeltingLatentHeat { get; private set; } = float.NegativeInfinity;
+
+        /// <summary>
+        ///     Molar mass of the reagent, used in vaporization and boiling reactions.
+        ///     By default every reagent has the molar mass of water.
+        /// </summary>
+        [DataField]
+        public float MolarMass { get; private set; } = 18;
+
+        /// <summary>
+        ///     Desntity of the reagent, used in vaporization and boiling reactions.
+        ///     By default every reagent has the density of water.
+        /// </summary>
+        [DataField]
+        public float Density { get; private set; } = 1;
 
         [DataField("metamorphicSprite")]
         public SpriteSpecifier? MetamorphicSprite { get; private set; } = null;

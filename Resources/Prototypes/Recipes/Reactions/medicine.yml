@@ -2,374 +2,527 @@
   id: Dylovene
   reactants:
     Silicon:
+      type: Reagent
       amount: 1
     Nitrogen:
+      type: Reagent
       amount: 1
     Potassium:
+      type: Reagent
       amount: 1
   products:
-    Dylovene: 3
+    Dylovene:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Ethylredoxrazine
   reactants:
     Oxygen:
+      type: Reagent
       amount: 1
     Dylovene:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
   products:
-    Ethylredoxrazine: 3
+    Ethylredoxrazine:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Cryptobiolin
   reactants:
     Potassium:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    Cryptobiolin: 3
+    Cryptobiolin:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Arithrazine
   reactants:
     Hyronalin:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
   products:
-    Arithrazine: 2
+    Arithrazine:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Bicaridine
   reactants:
     Inaprovaline:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
   products:
-    Bicaridine: 2
+    Bicaridine:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Cryoxadone
   reactants:
     Dexalin:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
   products:
-    Cryoxadone: 3
+    Cryoxadone:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Doxarubixadone
   reactants:
     Cryoxadone:
+      type: Reagent
       amount: 1
     UnstableMutagen:
+      type: Reagent
       amount: 1
   products:
-    Doxarubixadone: 2
+    Doxarubixadone:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Epinephrine
   reactants:
     Phenol:
+      type: Reagent
       amount: 1
     Acetone:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
     Chlorine:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
   products:
-    Epinephrine: 5
+    Epinephrine:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: Dermaline
   reactants:
     Kelotane:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
     Phosphorus:
+      type: Reagent
       amount: 1
   products:
-    Dermaline: 3
+    Dermaline:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Dexalin
   reactants:
     Oxygen:
+      type: Reagent
       amount: 2
     Plasma:
+      type: Reagent
       amount: 1
       catalyst: true
   products:
-    Dexalin: 3
+    Dexalin:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: DexalinPlus
   reactants:
     Dexalin:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
     Iron:
+      type: Reagent
       amount: 1
   products:
-    DexalinPlus: 3
+    DexalinPlus:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Hyronalin
   reactants:
     Radium:
+      type: Reagent
       amount: 1
     Dylovene:
+      type: Reagent
       amount: 1
   products:
-    Hyronalin: 2
+    Hyronalin:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Inaprovaline
   reactants:
     Oxygen:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    Inaprovaline: 3
+    Inaprovaline:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Ipecac
   reactants:
     Potassium:
+      type: Reagent
       amount: 1
     Nitrogen:
+      type: Reagent
       amount: 1
     Ammonia:
+      type: Reagent
       amount: 1
   products:
-    Ipecac: 2
+    Ipecac:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: TranexamicAcid
   reactants:
     Inaprovaline:
+      type: Reagent
       amount: 1
     SulfuricAcid:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    TranexamicAcid: 3
+    TranexamicAcid:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Kelotane
   reactants:
     Silicon:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
   products:
-    Kelotane: 2
+    Kelotane:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Leporazine
   reactants:
     Silicon:
+      type: Reagent
       amount: 1
     Copper:
+      type: Reagent
       amount: 1
     Plasma:
+      type: Reagent
       amount: 1
       catalyst: true
   products:
-    Leporazine: 2
+    Leporazine:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Phalanximine
   reactants:
     Hyronalin:
+      type: Reagent
       amount: 1
     Ethanol:
+      type: Reagent
       amount: 1
     UnstableMutagen:
+      type: Reagent
       amount: 1
   products:
-    Phalanximine: 3
+    Phalanximine:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Ambuzol
   reactants:
     Dylovene:
+      type: Reagent
       amount: 1
     Ammonia:
+      type: Reagent
       amount: 1
     Blood:
+      type: Reagent
       amount: 2
   products:
-    Ambuzol: 4
+    Ambuzol:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: AmbuzolPlus
   reactants:
     Ambuzol:
+      type: Reagent
       amount: 5
     ZombieBlood:
+      type: Reagent
       amount: 15
   products:
-    Blood: 15
-    AmbuzolPlus: 5
+    Blood:
+      type: Reagent
+      amount: 15
+    AmbuzolPlus:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: Synaptizine
   reactants:
     Lithium:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
   products:
-    Synaptizine: 3
+    Synaptizine:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Tricordrazine
   reactants:
     Inaprovaline:
+      type: Reagent
       amount: 1
     Dylovene:
+      type: Reagent
       amount: 1
   products:
-    Tricordrazine: 2
+    Tricordrazine:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: HeartbreakerToxin
   reactants:
     DexalinPlus:
+      type: Reagent
       amount: 1
     MindbreakerToxin:
+      type: Reagent
       amount: 1
   products:
-    HeartbreakerToxin: 2
+    HeartbreakerToxin:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Impedrezene
   minTemp: 370
   reactants:
     Mercury:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
   products:
-    Impedrezene: 1
+    Impedrezene:
+      type: Reagent
+      amount: 1
 
 - type: reaction
   id: Lexorin
   impact: High
   reactants:
     HeartbreakerToxin:
+      type: Reagent
       amount: 1
     Plasma:
+      type: Reagent
       amount: 1
   products:
-    Lexorin: 2
+    Lexorin:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Lipozine
   reactants:
     TableSalt:
+      type: Reagent
       amount: 1
     Ethanol:
+      type: Reagent
       amount: 1
     Radium:
+      type: Reagent
       amount: 1
   products:
-    Lipozine: 3
+    Lipozine:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: MindbreakerToxin
   minTemp: 370
   reactants:
     Silicon:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
     Dylovene:
+      type: Reagent
       amount: 1
   products:
-    MindbreakerToxin: 3
+    MindbreakerToxin:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: SpaceDrugs
   reactants:
     Mercury:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
     Lithium:
+      type: Reagent
       amount: 1
   products:
-    SpaceDrugs: 3
+    SpaceDrugs:
+      type: Reagent
+      amount: 3
 
 - type: reaction
   id: Ultravasculine
   reactants:
     Histamine:
+      type: Reagent
       amount: 2
     Plasma:
+      type: Reagent
       amount: 1
       catalyst: true
   products:
-    Ultravasculine: 2
+    Ultravasculine:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Oculine
   reactants:
     TableSalt:
+      type: Reagent
       amount: 1
     Blood:
+      type: Reagent
       amount: 1
     Carbon:
+      type: Reagent
       amount: 1
     Hydrogen:
+      type: Reagent
       amount: 1
   products:
-    Oculine: 4
+    Oculine:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: Siderlac
   reactants:
     Aloe:
+      type: Reagent
       amount: 1
     Stellibinin:
+      type: Reagent
       amount: 1
   products:
-    Siderlac: 2
+    Siderlac:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: Cognizine
   reactants:
     CarpoToxin:
+      type: Reagent
       amount: 1
     Siderlac:
+      type: Reagent
       amount: 1
     Acetone:
+      type: Reagent
       amount: 1
   products:
-    Cognizine: 1
+    Cognizine:
+      type: Reagent
+      amount: 1
 
 - type: reaction
   id: Sigynate
@@ -377,22 +530,78 @@
   minTemp: 370
   reactants:
     SodiumCarbonate:
+      type: Reagent
       amount: 1
     Kelotane:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
     Sugar:
+      type: Reagent
       amount: 1
   products:
-    Sigynate: 4
+    Sigynate:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: Saline
   reactants:
     Water:
+      type: Reagent
       amount: 4
     TableSalt:
+      type: Reagent
       amount: 1
   products:
-    Saline: 5
+    Saline:
+      type: Reagent
+      amount: 5
+
+- type: reaction
+  id: TestPlasma
+  reactants:
+    Plasma:
+      type: Reagent
+      amount: 1
+    Hydrogen:
+      type: Reagent
+      amount: 1
+  products:
+    Plasma:
+      type: Gas
+      amount: 3
+  requiresGas: true
+
+- type: reaction
+  id: WaterBoil
+  reactionType: PhaseTransition
+  reactants:
+    Water:
+      type: Reagent
+      amount: 1
+  products:
+    WaterVapor:
+      type: Gas
+      amount: 1
+  requiresGas: true
+  enthalpy: 2230
+
+- type: reaction
+  id: GasDexalin
+  reactants:
+    Oxygen:
+      type: Reagent
+      amount: 1
+    Plasma:
+      type: Gas
+      amount: 1
+      catalyst: true
+  products:
+    Dexalin:
+      type: Reagent
+      amount: 1
+  requiresGas: true
+

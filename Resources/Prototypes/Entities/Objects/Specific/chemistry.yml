@@ -238,6 +238,25 @@
         canMix: true
 
 - type: entity
+  name: two-neck flask
+  parent: BaseBeaker
+  description: Flask with a gas tank input for gas-liquid reactions.
+  id: GasBeaker
+  components:
+    - type: GasBeaker
+      tankSlotId: tank_slot
+    - type: ContainerContainer
+      tank_slot: !ContainerSlot
+    - type: ItemSlots
+      slots:
+        tank_slot:
+          ejectOnInteract: false
+          name: tank slot
+          whitelist:
+            components:
+            - GasTank
+
+- type: entity
   name: dropper
   parent: BaseItem
   description: Used to transfer small amounts of chemical solution between containers.

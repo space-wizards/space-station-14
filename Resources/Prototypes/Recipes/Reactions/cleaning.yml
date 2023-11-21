@@ -2,43 +2,61 @@
   id: Bleach
   reactants:
     TableSalt:
+      type: Reagent
       amount: 2
     SpaceCleaner:
+      type: Reagent
       amount: 2
     Oxygen:
+      type: Reagent
       amount: 1
   products:
-    Bleach: 5
+    Bleach:
+      type: Reagent
+      amount: 5
 
 - type: reaction
   id: SpaceCleaner
   reactants:
     Ammonia:
+      type: Reagent
       amount: 1
     Water:
+      type: Reagent
       amount: 1
   products:
-    SpaceCleaner: 2
+    SpaceCleaner:
+      type: Reagent
+      amount: 2
 
 - type: reaction
   id: SoapyWater
   reactants:
     Water:
+      type: Reagent
       amount: 3
     SoapReagent:
+      type: Reagent
       amount: 1
   products:
-    SoapyWater: 4
+    SoapyWater:
+      type: Reagent
+      amount: 4
 
 - type: reaction
   id: SpaceLube
   impact: Medium
   reactants:
     Water:
+      type: Reagent
       amount: 1
     Silicon:
+      type: Reagent
       amount: 1
     Oxygen:
+      type: Reagent
       amount: 1
   products:
-    SpaceLube: 5
+    SpaceLube:
+      type: Reagent
+      amount: 5

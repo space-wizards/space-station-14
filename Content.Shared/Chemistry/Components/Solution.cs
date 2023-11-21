@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 using System.Collections;
 using System.Linq;
 
@@ -68,6 +69,12 @@ namespace Content.Shared.Chemistry.Components
         [DataField("temperature")]
         public float Temperature { get; set; } = 293.15f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float LatentHeat { get; set; } = 0f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool IsBoiling = false;
+
         /// <summary>
         ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
         /// </summary>
@@ -114,6 +121,66 @@ namespace Content.Shared.Chemistry.Components
         public float GetThermalEnergy(IPrototypeManager? protoMan)
         {
             return GetHeatCapacity(protoMan) * Temperature;
+        }
+
+        /// <summary>
+        ///     Ajusts the the temperature of the solution according to absorbed heat.
+        ///     Remaining heat after reaching the boiling or freezing point of one of the reagents is stored as LatentHeat.
+        /// </summary>
+        public void AdjustTemperature(IPrototypeManager? protoMan, float heatEnergy)
+        {
+            var heatCapacity = GetHeatCapacity(protoMan);
+            if(heatCapacity == 0f)
+            {
+                Temperature = 0f;
+                return;
+            }
+            //If the solution can boil...
+            if(heatEnergy > 0f && TryGetLowestBoilingPointReagent(protoMan, out var reagentPrototype))
+            {
+
+                if(Temperature == reagentPrototype.BoilingPoint)
+                {
+                    LatentHeat += heatEnergy;
+                    IsBoiling = true;
+                    return;
+                }
+
+                var tempToBoilingPoint = reagentPrototype.BoilingPoint - Temperature;
+                var energyToBoilingPoint = tempToBoilingPoint * heatCapacity;
+                var latentHeat = heatEnergy - energyToBoilingPoint;
+
+                Temperature += energyToBoilingPoint * heatCapacity;
+                LatentHeat += latentHeat;
+
+                if(LatentHeat > 0f)
+                {
+                    Temperature = reagentPrototype.BoilingPoint;
+                    IsBoiling = true;
+                }
+            }
+        }
+
+        public bool TryGetLowestBoilingPointReagent(IPrototypeManager? protoMan, [NotNullWhen(true)]out ReagentPrototype? reagentPrototype)
+        {
+            IoCManager.Resolve(ref protoMan);
+
+            reagentPrototype = null;
+            var output = false;
+            var lowestBoilingPoint = float.PositiveInfinity;
+            foreach(var (reagent, quantity) in Contents)
+            {
+                var reagentProto = protoMan.Index<ReagentPrototype>(reagent.Prototype);
+                var temp = reagentProto.BoilingPoint;
+                if(temp < lowestBoilingPoint)
+                {
+                    lowestBoilingPoint = temp;
+                    reagentPrototype = reagentProto;
+                    output = true;
+                }
+            }
+
+            return output;
         }
 
         /// <summary>
