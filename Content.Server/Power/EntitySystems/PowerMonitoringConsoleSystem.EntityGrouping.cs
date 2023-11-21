@@ -10,8 +10,11 @@ namespace Content.Server.Power.EntitySystems;
 internal sealed partial class PowerMonitoringConsoleSystem
 {
     // Groups an entity based on its prototype
-    private void AssignEntityToMasterGroup(EntityUid uid)
+    private void AssignEntityToMasterGroup(EntityUid uid, PowerMonitoringDeviceComponent component)
     {
+        if (!component.JoinAlikeEntities)
+            return;
+
         var protoId = MetaData(uid).EntityPrototype?.ID;
 
         if (protoId == null)
@@ -26,14 +29,20 @@ internal sealed partial class PowerMonitoringConsoleSystem
     }
 
     // Remove an entity from consideration for master assignment
-    private void RemoveEntityFromMasterGroup(EntityUid uid)
+    private void RemoveEntityFromMasterGroup(EntityUid uid, PowerMonitoringDeviceComponent component)
     {
+        if (!component.JoinAlikeEntities)
+            return;
+
         _masterDevices.Remove(uid);
 
-        if (TryComp<PowerMonitoringDeviceComponent>(uid, out var device))
+        component.MasterUid = new EntityUid();
+        component.ChildEntities.Clear();
+
+        if (TryComp<NavMapTrackableComponent>(uid, out var trackable))
         {
-            device.MasterUid = new EntityUid();
-            device.ChildEntities.Clear();
+            trackable.ChildOffsets.Clear();
+            Dirty(uid, trackable);
         }
 
         if (!TryGetEntProtoId(uid, out var entProtoId) || !_groupableEntityCoords.ContainsKey(entProtoId.Value))

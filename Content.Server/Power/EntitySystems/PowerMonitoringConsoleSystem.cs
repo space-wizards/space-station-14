@@ -34,7 +34,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     private bool _powerNetAbnormalities = false;
     private const float RoguePowerConsumerThreshold = 100000;
 
-    private bool _rebuildingNetwork = false;
+    private bool _rebuildingFocusNetwork = false;
+    private bool _focusNetworkToBeRebuilt = false;
 
     public override void Initialize()
     {
@@ -169,9 +170,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                     GetLoadsForNode(focus.Value, loadNode, out loadsForFocus);
 
                 // If the UI focus changed, update the highlighted power network
-                if (powerMonitoringConsole.Focus != focus)
+                if (powerMonitoringConsole.Focus != focus || _focusNetworkToBeRebuilt)
                 {
-                    _rebuildingNetwork = true;
+                    _rebuildingFocusNetwork = true;
 
                     List<Node> reachableSourceNodes = sourceNode != null ? FloodFillNode(sourceNode) : new();
                     List<Node> reachableLoadNodes = loadNode != null ? FloodFillNode(loadNode) : new();
@@ -179,7 +180,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                     var reachableNodes = reachableSourceNodes.Concat(reachableLoadNodes).Select(x => x.Owner).ToList();
                     UpdateFocusNetwork(uid, powerMonitoringConsole, gridUid, mapGrid, reachableNodes);
 
-                    _rebuildingNetwork = false;
+                    _rebuildingFocusNetwork = false;
+                    _focusNetworkToBeRebuilt = false;
                 }
             }
         }

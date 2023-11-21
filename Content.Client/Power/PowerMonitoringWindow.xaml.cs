@@ -118,7 +118,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         var query = _entManager.AllEntityQueryEnumerator<PowerMonitoringDeviceComponent, NavMapTrackableComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var _, out var trackable, out var xform))
         {
-            if (NavMap.MapUid == xform.GridUid)
+            if (NavMap.MapUid == xform.GridUid && xform.Anchored)
                 _trackedEntities.Add(ent, (xform.Coordinates, trackable));
         }
     }
@@ -141,7 +141,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         // Reset nav map values
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
-        NavMap.FocusCableNetwork = null;
 
         // Draw all entities on the map
         foreach ((var ent, (var coords, var trackable)) in _trackedEntities)

@@ -510,8 +510,13 @@ public sealed partial class NavMapControl : MapGridControl
             return;
 
         TileGrid = GetDecodedTileChunks(_navMap.Chunks, _grid);
-        FocusCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole?.FocusChunks, _grid);
-        PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole?.AllChunks, _grid, PowerMonitoringConsole?.FocusChunks.Any() == true);
+
+        if (PowerMonitoringConsole == null)
+            return;
+        Logger.Debug("any true: " + PowerMonitoringConsole.FocusChunks.Any());
+
+        FocusCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.FocusChunks, _grid);
+        PowerCableNetwork = GetDecodedPowerCableChunks(PowerMonitoringConsole.AllChunks, _grid, PowerMonitoringConsole.FocusChunks.Any());
     }
 
     private Vector2 Scale(Vector2 position)

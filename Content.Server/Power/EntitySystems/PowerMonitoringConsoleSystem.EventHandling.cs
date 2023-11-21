@@ -47,7 +47,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             if (component.JoinAlikeEntities)
             {
-                AssignEntityToMasterGroup(uid);
+                AssignEntityToMasterGroup(uid, component);
                 AssignMastersToEntities(entProtoId.Value);
             }
         }
@@ -58,7 +58,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             if (component.JoinAlikeEntities)
             {
-                RemoveEntityFromMasterGroup(uid);
+                RemoveEntityFromMasterGroup(uid, component);
                 AssignMastersToEntities(entProtoId.Value);
             }
         }
@@ -105,7 +105,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
         if (component.JoinAlikeEntities && TryGetEntProtoId(uid, out var entProtoId))
             AssignMastersToEntities(entProtoId.Value);
 
-        if (_rebuildingNetwork)
+        if (_rebuildingFocusNetwork)
             return;
 
         var query = AllEntityQuery<PowerMonitoringConsoleComponent>();

@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Shared.Map.Components;
+using System.Linq;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -41,6 +42,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
         chunk.PowerCableData.TryAdd(cable.CableType, 0);
         chunk.PowerCableData[cable.CableType] |= flag;
+
+        _focusNetworkToBeRebuilt = true;
     }
 
     private void RemovePowerCableFromTile(PowerCableChunk chunk, Vector2i tile, CableComponent cable)
@@ -50,6 +53,8 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
         chunk.PowerCableData.TryAdd(cable.CableType, 0);
         chunk.PowerCableData[cable.CableType] &= ~flag;
+
+        _focusNetworkToBeRebuilt = true;
     }
 
     private void UpdateFocusNetwork(EntityUid uid, PowerMonitoringConsoleComponent component, EntityUid gridUid, MapGridComponent grid, IEnumerable<EntityUid> nodeList)
@@ -86,25 +91,26 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
     private List<Node> FloodFillNode(Node rootNode)
     {
-        rootNode.FloodGen += 1;
-        var allNodes = new List<Node>();
+        Logger.Debug("flooding nodes");
+
+        // Slower than the normal node flood fill, but re-using the FloodGen field was causing issues
+        var allNodes = new HashSet<Node>();
         var stack = new Stack<Node>();
+
+        allNodes.Add(rootNode);
         stack.Push(rootNode);
 
         while (stack.TryPop(out var node))
         {
-            allNodes.Add(node);
-
             foreach (var reachable in node.ReachableNodes)
             {
-                if (reachable.FloodGen == rootNode.FloodGen)
+                if (!allNodes.Add(reachable))
                     continue;
 
-                reachable.FloodGen = rootNode.FloodGen;
                 stack.Push(reachable);
             }
         }
-
-        return allNodes;
+        Logger.Debug("got nodes: " + allNodes.Count);
+        return allNodes.ToList();
     }
 }
