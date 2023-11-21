@@ -112,7 +112,6 @@
         damage: 20
       behaviors:
       - !type:SpillBehavior { }
-        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Tag
