@@ -62,21 +62,6 @@ namespace Content.Server.Power.Pow3r
             PowerSolverShared.UpdateRampPositions(frameTime, state);
         }
 
-        private record struct UpdateNetworkJob : IParallelRobustJob
-        {
-            public int BatchSize => 4;
-
-            public BatteryRampPegSolver Solver;
-            public PowerState State;
-            public float FrameTime;
-            public List<Network> Networks;
-
-            public void Execute(int index)
-            {
-                Solver.UpdateNetwork(Networks[index], State, FrameTime);
-            }
-        }
-
         private void ClearLoadsAndSupplies(PowerState state)
         {
             foreach (var load in state.Loads.Values)
@@ -369,5 +354,24 @@ namespace Content.Server.Power.Pow3r
             else
                 groupedNetworks[network.Height].Add(network);
         }
+
+        #region Jobs
+
+        private record struct UpdateNetworkJob : IParallelRobustJob
+        {
+            public int BatchSize => 4;
+
+            public BatteryRampPegSolver Solver;
+            public PowerState State;
+            public float FrameTime;
+            public List<Network> Networks;
+
+            public void Execute(int index)
+            {
+                Solver.UpdateNetwork(Networks[index], State, FrameTime);
+            }
+        }
+
+        #endregion
     }
 }
