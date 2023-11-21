@@ -106,6 +106,6 @@
     tags:
     - SpiderCraft
   icon:
-    sprite: Clothing\Shoes\Boots\winterbootsweb.rsi
+    sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
     state: icon
   objectType: Item
