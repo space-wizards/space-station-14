@@ -43,6 +43,9 @@ ent-CrateNPCParrot = Parrot crate
 ent-CrateNPCPenguin = Penguin crate
     .desc = A crate containing two penguins.
 
+ent-CrateNPCMothroach = Crate of mothroaches
+    .desc = A crate containing four mothroaches. You can hear faint chittering inside.
+
 ent-CrateNPCPig = Pig crate
     .desc = A crate containing a single pig.
 
@@ -54,6 +57,3 @@ ent-CrateNPCLizard = Lizard crate
 
 ent-CrateNPCKangaroo = Kangaroo crate
     .desc = A crate containing a kangaroo.
-
-ent-CrateNPCMothroach = Crate of mothroaches
-    .desc = A crate containing four mothroaches. You can hear faint chittering inside.
