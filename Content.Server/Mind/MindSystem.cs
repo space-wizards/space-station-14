@@ -40,7 +40,7 @@ public sealed class MindSystem : SharedMindSystem
         if (mind.UserId is {} user)
         {
             UserMinds.Remove(user);
-            if (_players.GetPlayerData(user).ContentData() is { } oldData)
+            if (_players.TryGetPlayerData(user, out var data) && data.ContentData() is { } oldData)
                 oldData.Mind = null;
             mind.UserId = null;
         }
