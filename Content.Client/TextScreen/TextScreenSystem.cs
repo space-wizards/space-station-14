@@ -3,7 +3,7 @@ using System.Numerics;
 using Content.Client.Info;
 using Content.Shared.TextScreen;
 using Content.Shared.TextScreen.Components;
-using Content.Shared.TextScreen.Events;
+// using Content.Shared.TextScreen.Events;
 using FastAccessors;
 using Robust.Client.GameObjects;
 using Robust.Client.State;
@@ -52,13 +52,13 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnTextInit);
+        SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<TextScreenTimerComponent, ComponentInit>(OnTimerInit);
 
         SubscribeLocalEvent<TextScreenTimerComponent, ComponentRemove>(OnTimerFinish);
     }
 
-    private void OnTextInit(EntityUid uid, TextScreenVisualsComponent component, ComponentInit args)
+    private void OnInit(EntityUid uid, TextScreenVisualsComponent component, ComponentInit args)
     {
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
@@ -113,6 +113,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             DrawLayerStates(uid, timer.LayerStatesToDraw);
         }
 
+        ResetText(uid, component);
         BuildTextLayerStates(uid, component, sprite);
         DrawLayerStates(uid, component.LayerStatesToDraw);
     }
@@ -142,7 +143,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     // }
 
     /// <summary>
-    ///     Resets all TextScreenComponent sprite layers, through removing them and then creating new ones.
+    ///     Removes all <see cref="TextScreenVisualsComponent"/> sprite layers, and instantiates new defaults.
     /// </summary>
     public void ResetText(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
     {
@@ -218,7 +219,8 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             var row = component.TextToDraw[rowIdx];
             if (row == null)
                 continue;
-            for (var chr = 0; chr < Math.Min(row.Length, component.RowLength); chr++)
+            var min = Math.Min(row.Length, component.RowLength);
+            for (var chr = 0; chr < min; chr++)
             {
                 // if (i >= component.TextToDraw.Length)
                 // {
@@ -228,7 +230,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
                 component.LayerStatesToDraw[TextMapKey + rowIdx + chr] = GetStateFromChar(row[chr]);
                 sprite.LayerSetOffset(
                     TextMapKey + rowIdx + chr,
-                    Vector2.Multiply(new Vector2((chr - (row.Length - 1)) * CharWidth, rowIdx), TextScreenVisualsComponent.PixelSize) + component.TextOffset
+                    Vector2.Multiply(new Vector2((chr - min / 2f) * CharWidth, rowIdx), TextScreenVisualsComponent.PixelSize) + component.TextOffset
                 );
             }
         }
@@ -245,14 +247,14 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             screen.HourFormat, screen.MinuteFormat, screen.SecondFormat
             );
 
-        int length = Math.Min(time.Length, screen.RowLength);
+        int min = Math.Min(time.Length, screen.RowLength);
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < min; i++)
         {
             timer.LayerStatesToDraw[TimerMapKey + i] = GetStateFromChar(time[i]);
             sprite.LayerSetOffset(
                 TimerMapKey + i,
-                Vector2.Multiply(new Vector2((i - (length - 1)) * CharWidth, 0f), TextScreenVisualsComponent.PixelSize) + screen.TimerOffset
+                Vector2.Multiply(new Vector2((i - min / 2f) * CharWidth, 0f), TextScreenVisualsComponent.PixelSize) + screen.TimerOffset
             );
         }
     }

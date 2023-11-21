@@ -1,5 +1,5 @@
 using Content.Server.Shuttles.Components;
-using Content.Shared.TextScreen.Events;
+// using Content.Shared.TextScreen.Events;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -9,6 +9,8 @@ using Content.Shared.TextScreen.Components;
 using System.Linq;
 using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Timing;
+
 using Content.Shared.TextScreen;
 
 // TODO:
@@ -23,9 +25,8 @@ namespace Content.Server.Shuttles.Systems
     /// </summary>
     public sealed class ShuttleTimerSystem : EntitySystem
     {
-        // [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-
 
         public override void Initialize()
         {
@@ -36,11 +37,10 @@ namespace Content.Server.Shuttles.Systems
 
         /// <summary>
         /// Determines if/how a broadcast packet affects this timer.
+        /// All shuttle timer packets are broadcast, and subnetting is implemented by filtering timer MapUid.
         /// </summary>
         private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
-            // currently, all shuttle timer packets are broadcast, and subnetting is implemented by filtering events per-map
-
             var timerXform = Transform(uid);
 
             // no false positives.
@@ -53,6 +53,8 @@ namespace Content.Server.Shuttles.Systems
             args.Data.TryGetValue("DestMap", out EntityUid? dest);
             args.Data.TryGetValue("Docked", out bool docked);
             string text = docked ? "ETD" : "ETA";
+            if (args.Data.TryGetValue("Text", out string? label))
+                text = label;
 
             switch (timerXform.MapUid)
             {
@@ -73,13 +75,9 @@ namespace Content.Server.Shuttles.Systems
             if (!args.Data.TryGetValue(key, out TimeSpan duration))
                 return;
 
-            // var time = new TextScreenTimerEvent(duration);
-            // RaiseLocalEvent(uid, ref time);
-
-            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, duration);
+            RemComp<TextScreenTimerComponent>(uid);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + duration);
             _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string[] { text });
-            //     var label = new TextScreenTextEvent(new string[] { text });
-            //     RaiseLocalEvent(uid, ref label);
         }
 
         public void KillAll(string? freq)

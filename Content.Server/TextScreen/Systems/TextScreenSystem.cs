@@ -1,6 +1,6 @@
 using Content.Shared.TextScreen;
 using Content.Shared.TextScreen.Components;
-using Content.Shared.TextScreen.Events;
+// using Content.Shared.TextScreen.Events;
 using Robust.Shared.Timing;
 
 
@@ -13,7 +13,6 @@ public sealed class TextScreenSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -21,8 +20,8 @@ public sealed class TextScreenSystem : EntitySystem
 
         SubscribeLocalEvent<TextScreenComponent, ComponentInit>(OnInit);
 
-        SubscribeLocalEvent<TextScreenComponent, TextScreenTimerEvent>(OnTimer);
-        SubscribeLocalEvent<TextScreenComponent, TextScreenTextEvent>(OnText);
+        // SubscribeLocalEvent<TextScreenComponent, TextScreenTimerEvent>(OnTimer);
+        // SubscribeLocalEvent<TextScreenComponent, TextScreenTextEvent>(OnText);
     }
 
     /// <summary>
@@ -36,34 +35,34 @@ public sealed class TextScreenSystem : EntitySystem
     /// <summary>
     /// Overrides the screen display with a <see cref="TextScreenTimerEvent"/>.
     /// </summary>
-    private void OnTimer(EntityUid uid, TextScreenComponent component, ref TextScreenTimerEvent args)
-    {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
+    // private void OnTimer(EntityUid uid, TextScreenComponent component, ref TextScreenTimerEvent args)
+    // {
+    //     if (!TryComp<AppearanceComponent>(uid, out var appearance))
+    //         return;
 
-        if (appearance != null)
-        {
-            // component.Remaining = _gameTiming.CurTime + args.Duration;
-            // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
-            // _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + args.Duration[1].Value, appearance);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + args.Duration, appearance);
-            var timer = EnsureComp<TextScreenTimerComponent>(uid);
-            timer.Target = _gameTiming.CurTime + args.Duration;
-        }
-    }
+    //     if (appearance != null)
+    //     {
+    //         // component.Remaining = _gameTiming.CurTime + args.Duration;
+    //         // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Timer, appearance);
+    //         // _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + args.Duration[1].Value, appearance);
+    //         _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + args.Duration, appearance);
+    //         var timer = EnsureComp<TextScreenTimerComponent>(uid);
+    //         timer.Target = _gameTiming.CurTime + args.Duration;
+    //     }
+    // }
 
-    /// <summary>
-    /// Overrides the screen display with a <see cref="TextScreenTextEvent"/>.
-    /// </summary>
-    private void OnText(EntityUid uid, TextScreenComponent component, ref TextScreenTextEvent args)
-    {
-        // component.Remaining = null;
-        // component.Label = args.Label[..Math.Min(5, args.Label.Length)].ToArray();
+    // /// <summary>
+    // /// Overrides the screen display with a <see cref="TextScreenTextEvent"/>.
+    // /// </summary>
+    // private void OnText(EntityUid uid, TextScreenComponent component, ref TextScreenTextEvent args)
+    // {
+    //     // component.Remaining = null;
+    //     // component.Label = args.Label[..Math.Min(5, args.Label.Length)].ToArray();
 
-        // // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
-        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, args.Text);
+    //     // // _appearanceSystem.SetData(uid, TextScreenVisuals.Mode, TextScreenMode.Text);
+    //     _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, args.Text);
 
-    }
+    // }
 
     // public override void Update(float frameTime)
     // {
