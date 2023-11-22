@@ -295,31 +295,31 @@
             tags:
               - Mop
           insertOnInteract: false # or it conflicts with bucket logic
-          priority: 12 # Higher than bucket slot
+          priority: 9 # Higher than bucket slot
         plunger_slot:
           name: Plunger
           whitelist:
             tags:
               - Plunger
-          priority: 11
+          priority: 8
         wetfloorsign_slot4:
           name: WetFloorSign
           whitelist:
             tags:
               - WetFloorSign
-          priority: 10
+          priority: 7
         wetfloorsign_slot3:
           name: WetFloorSign
           whitelist:
             tags:
               - WetFloorSign
-          priority: 9
+          priority: 7
         wetfloorsign_slot2:
           name: WetFloorSign
           whitelist:
             tags:
               - WetFloorSign
-          priority: 8
+          priority: 7
         wetfloorsign_slot1:
           name: WetFloorSign
           whitelist:
@@ -471,6 +471,13 @@
         mop_slot: !type:ContainerSlot {}
         trashbag_slot: !type:ContainerSlot {}
         bucket_slot: !type:ContainerSlot {}
+        plunger_slot: !type:ContainerSlot {}
+        wetfloorsign_slot4: !type:ContainerSlot {}
+        wetfloorsign_slot3: !type:ContainerSlot {}
+        wetfloorsign_slot2: !type:ContainerSlot {}
+        wetfloorsign_slot1: !type:ContainerSlot {}
+        lightreplacer_slot: !type:ContainerSlot {}
+        spraybottle_slot:  !type:ContainerSlot {}
     - type: GuideHelp
       guides:
       - Janitorial
