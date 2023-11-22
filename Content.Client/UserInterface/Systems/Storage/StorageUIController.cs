@@ -5,6 +5,9 @@ using Content.Client.UserInterface.Systems.Storage.Controls;
 using Content.Shared.Storage;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
 
 namespace Content.Client.UserInterface.Systems.Storage;
 
@@ -20,7 +23,13 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
     public override void Initialize()
     {
         base.Initialize();
+
         //EntityManager.EventBus.SubscribeLocalEvent<StorageComponent, ComponentShutdown>(OnStorageShutdown);
+    }
+
+    private void OnClick(ICommonSession? session)
+    {
+
     }
 
     private void OnStorageShutdown(EntityUid uid, StorageComponent component, ComponentShutdown args)
@@ -42,7 +51,9 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
 
     public void OnStateEntered(GameplayState state)
     {
-
+        CommandBinds.Builder
+            .Bind(EngineKeyFunctions.UIClick, InputCmdHandler.FromDelegate(OnClick))
+            .Register<StorageUIController>();
     }
 
     private void OnStorageOpened(EntityUid uid, StorageComponent component)

@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Numerics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
@@ -177,17 +175,19 @@ public abstract class SharedItemSystem : EntitySystem
             return GetItemShape(entity);
 
         var shapes = GetItemShape(entity);
-
         var boundingShape = SharedStorageSystem.GetBoundingBox(shapes);
 
         var adjustedShapes = new List<Box2i>();
         foreach (var shape in shapes)
         {
+            //todo: implement rotation... fuck.
+            /*
             var matty = Matrix3.CreateTransform(boundingShape.Center, rotation);
             var box = matty.TransformBox(shape);
             var flooredBox = new Box2i(box.BottomLeft.Floored(), box.TopRight.Floored());
 
-            adjustedShapes.Add(flooredBox.Translated(position));
+            adjustedShapes.Add(flooredBox.Translated(position));*/
+            adjustedShapes.Add(shape.Translated(position));
         }
 
         return adjustedShapes;

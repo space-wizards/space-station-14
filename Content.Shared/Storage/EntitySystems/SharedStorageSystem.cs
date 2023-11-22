@@ -19,6 +19,7 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -26,6 +27,7 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedStorageSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
@@ -72,7 +74,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
-        SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnContainerModified);
+        SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<StorageComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
 
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
@@ -130,7 +132,7 @@ public abstract class SharedStorageSystem : EntitySystem
         PlayerInsertHeldEntity(uid, args.User, storageComp);
         // Always handle it, even if insertion fails.
         // We don't want to trigger any AfterInteract logic here.
-        // Example bug: placing wires if item doesn't fit in backpack.
+        // Example issue would be placing wires if item doesn't fit in backpack.
         args.Handled = true;
     }
 
@@ -363,14 +365,28 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnEntInserted(Entity<StorageComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
-        if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
+        if (_net.IsServer)
         {
-            _containerSystem.Remove(args.Entity, args.Container, force: true);
-            return;
+            if (!entity.Comp.StoredItems.ContainsKey(GetNetEntity(entity.Owner)))
+            {
+                if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
+                {
+                    _containerSystem.Remove(args.Entity, args.Container, force: true);
+                    return;
+                }
+
+                entity.Comp.StoredItems[GetNetEntity(args.Entity)] = location.Value;
+                Dirty(entity, entity.Comp);
+            }
         }
 
-        entity.Comp.StoredItems[GetNetEntity(args.Entity)] = location.Value;
-        Dirty(entity);
+        OnContainerModified(entity.Owner, entity.Comp, args);
+    }
+
+    private void OnEntRemoved(Entity<StorageComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        entity.Comp.StoredItems.Remove(GetNetEntity(args.Entity));
+        Dirty(entity, entity.Comp);
 
         OnContainerModified(entity.Owner, entity.Comp, args);
     }
@@ -693,8 +709,32 @@ public abstract class SharedStorageSystem : EntitySystem
                 if (x + itemBounding.Width > storageBounding.Right)
                     break;
 
-                //todo this is only checking a single spot and it'll need to be smarter than this.
-                if (IsGridSpaceEmpty(storageEnt, (x, y)))
+                var validPosition = true;
+
+                foreach (var box in baseItemShape)
+                {
+                    if (!validPosition)
+                        break;
+
+                    for (var offsetY = box.Bottom; offsetY <= box.Top; offsetY++)
+                    {
+                        if (!validPosition)
+                            break;
+
+                        for (var offsetX = box.Left; offsetX <= box.Right; offsetX++)
+                        {
+                            var position = (x + offsetX, y + offsetY);
+
+                            if (IsGridSpaceEmpty(storageEnt, position))
+                                continue;
+
+                            validPosition = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (validPosition)
                 {
                     storageLocation = new ItemStorageLocation(Angle.Zero, (x, y));
                     return true;
@@ -725,7 +765,6 @@ public abstract class SharedStorageSystem : EntitySystem
 
         foreach (var (ent, storedItem) in entity.Comp.StoredItems)
         {
-
             //todo add a fucking trycomp for itemcomponent you stingy bitch
             var adjustedShape = _item.GetAdjustedItemShape((GetEntity(ent), null), storedItem);
             foreach (var box in adjustedShape)

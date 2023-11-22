@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Numerics;
+using Content.Client.Items.Systems;
+using Content.Client.Storage.Systems;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Graphics;
@@ -10,10 +12,14 @@ namespace Content.Client.UserInterface.Systems.Storage.Controls;
 public sealed class StorageContainer : BoxContainer
 {
     [Dependency] private readonly IEntityManager _entity = default!;
+    private ItemSystem? _itemSystem;
+    private StorageSystem? _storageSystem;
 
     private readonly GridContainer _grid;
     private readonly GridContainer _sidebar;
     private readonly Label _nameLabel;
+
+    private readonly BoxContainer _tempContainer = new();
 
     //todo support reloading
     private Texture? _emptyTexture;
@@ -58,8 +64,7 @@ public sealed class StorageContainer : BoxContainer
         _grid = new GridContainer
         {
             HSeparationOverride = 0,
-            VSeparationOverride = 0,
-            ExpandBackwards = true
+            VSeparationOverride = 0
         };
 
         var container = new BoxContainer
@@ -74,7 +79,8 @@ public sealed class StorageContainer : BoxContainer
                     Children =
                     {
                         _sidebar,
-                        _grid
+                        _grid,
+                        _tempContainer
                     }
                 }
             }
@@ -96,44 +102,42 @@ public sealed class StorageContainer : BoxContainer
 
     private void BuildGridRepresentation(Entity<StorageComponent> entity)
     {
-        var comp = entity.Comp;
+        _itemSystem ??= _entity.System<ItemSystem>();
+        _storageSystem = _entity.System<StorageSystem>();
 
+        var comp = entity.Comp;
         if (!comp.StorageGrid.Any())
             return;
 
         var boundingGrid = SharedStorageSystem.GetBoundingBox(comp.StorageGrid);
-
         var totalWidth = boundingGrid.Width + 1;
-        var totalHeight = boundingGrid.Height + 1;
 
         _grid.Children.Clear();
-        _grid.Rows = totalHeight;
+        _grid.Rows = boundingGrid.Height;
         _grid.Columns = totalWidth;
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
         {
             for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
             {
-                var empty = comp.StorageGrid.Any(g => g.Contains(x, y));
-
-                var texture = empty
+                var texture = comp.StorageGrid.Any(g => g.Contains(x, y))
                     ? _emptyTexture
                     : _blockedTexture;
-
                 _grid.AddChild(new TextureRect
                 {
                     Texture = texture,
-                    TextureScale = new Vector2(UIScale, UIScale)
+                    TextureScale = new Vector2(2, 2)
                 });
             }
         }
 
+        #region Sidebar
         _sidebar.Children.Clear();
-        _sidebar.Rows = totalHeight;
+        _sidebar.Rows = boundingGrid.Height + 1;
         //todo this should change when there is a parent container to return to.
         var exitButton = new TextureButton
         {
             TextureNormal = _exitTexture,
-            Scale= new Vector2(UIScale, UIScale),
+            Scale = new Vector2(2, 2),
         };
         exitButton.OnPressed += _ =>
         {
@@ -147,7 +151,7 @@ public sealed class StorageContainer : BoxContainer
                 new TextureRect
                 {
                     Texture = _sidebarTopTexture,
-                    TextureScale = new Vector2(UIScale, UIScale),
+                    TextureScale = new Vector2(2, 2),
                     Children =
                     {
                         exitButton
@@ -156,18 +160,19 @@ public sealed class StorageContainer : BoxContainer
             }
         };
         _sidebar.AddChild(exitContainer);
-        for (var i = 0; i < totalHeight - 2; i++)
+        for (var i = 0; i < boundingGrid.Height - 1; i++)
         {
             _sidebar.AddChild(new TextureRect
             {
                 Texture = _sidebarMiddleTexture,
-                TextureScale = new Vector2(UIScale, UIScale)
+                TextureScale = new Vector2(2, 2),
             });
         }
         _sidebar.AddChild(new TextureRect
         {
             Texture = _sidebarBottomTexture,
-            TextureScale = new Vector2(UIScale, UIScale)
+            TextureScale = new Vector2(2, 2),
         });
+        #endregion
     }
 }
