@@ -16,8 +16,8 @@
     bodyType: Static
   - type: MaterialStorage
   - type: Appearance
-  - type: Climbable
   - type: CryoSleep
+  - type: Climbable
   - type: Transform
     noRot: false
   - type: ContainerContainer
