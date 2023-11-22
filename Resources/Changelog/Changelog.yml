@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added fultons for salvagers., type: Add}
-  id: 4700
-  time: '2023-08-29T06:34:06.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed not tracking job playtime., type: Fix}
@@ -2895,3 +2890,8 @@ Entries:
       banana peels, which can be obtained by microwaving banana peels.', type: Add}
   id: 5199
   time: '2023-11-22T01:08:53.0000000+00:00'
+- author: Gotimanga
+  changes:
+  - {message: The reagent "egg" is now known as "cooked egg", type: Tweak}
+  id: 5200
+  time: '2023-11-22T04:32:35.0000000+00:00'
