@@ -210,10 +210,10 @@
              Cellular: -2
 
 - type: reagent
-  id: Opporozine #In startreck this drug is actually used for burns, but the name sounded cool
-  name: reagent-name-opporozine
+  id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
+  name: reagent-name-opporozidone
   group: Medicine
-  desc: reagent-desc-opporozine
+  desc: reagent-desc-opporozidone
   physicalDesc: reagent-physical-desc-sickly
   flavor: acid
   color: "#b5e36d"
