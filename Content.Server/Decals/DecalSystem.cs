@@ -41,11 +41,8 @@ namespace Content.Server.Decals
         private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
         private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
 
-        /// <summary>
-        /// Per-tick cache of sessions.
-        /// </summary>
-        private List<ICommonSession> _sessions = new();
         private UpdatePlayerJob _updateJob;
+        private List<ICommonSession> _sessions = new();
 
         // If this ever gets parallelised then you'll want to increase the pooled count.
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
@@ -457,6 +454,88 @@ namespace Content.Server.Decals
             _dirtyChunks.Clear();
         }
 
+        public void UpdatePlayer(ICommonSession player)
+        {
+            var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, _chunkIndexPool, _chunkViewerPool);
+            var staleChunks = _chunkViewerPool.Get();
+            var previouslySent = _previousSentChunks[player];
+
+            // Get any chunks not in range anymore
+            // Then, remove them from previousSentChunks (for stuff like grids out of range)
+            // and also mark them as stale for networking.
+
+            foreach (var (netGrid, oldIndices) in previouslySent)
+            {
+                // Mark the whole grid as stale and flag for removal.
+                if (!chunksInRange.TryGetValue(netGrid, out var chunks))
+                {
+                    previouslySent.Remove(netGrid);
+
+                    // Was the grid deleted?
+                    if (!TryGetEntity(netGrid, out var gridId) || !MapManager.IsGrid(gridId.Value))
+                        staleChunks[netGrid] = oldIndices;
+                    else
+                    {
+                        // If grid was deleted then don't worry about telling the client to delete the chunk.
+                        oldIndices.Clear();
+                        _chunkIndexPool.Return(oldIndices);
+                    }
+
+                    continue;
+                }
+
+                var elmo = _chunkIndexPool.Get();
+
+                // Get individual stale chunks.
+                foreach (var chunk in oldIndices)
+                {
+                    if (chunks.Contains(chunk))
+                        continue;
+
+                    elmo.Add(chunk);
+                }
+
+                if (elmo.Count == 0)
+                {
+                    _chunkIndexPool.Return(elmo);
+                    continue;
+                }
+
+                staleChunks.Add(netGrid, elmo);
+            }
+
+            var updatedChunks = _chunkViewerPool.Get();
+            foreach (var (netGrid, gridChunks) in chunksInRange)
+            {
+                var newChunks = _chunkIndexPool.Get();
+                _dirtyChunks.TryGetValue(netGrid, out var dirtyChunks);
+
+                if (!previouslySent.TryGetValue(netGrid, out var previousChunks))
+                    newChunks.UnionWith(gridChunks);
+                else
+                {
+                    foreach (var index in gridChunks)
+                    {
+                        if (!previousChunks.Contains(index) || dirtyChunks != null && dirtyChunks.Contains(index))
+                            newChunks.Add(index);
+                    }
+
+                    previousChunks.Clear();
+                    _chunkIndexPool.Return(previousChunks);
+                }
+
+                previouslySent[netGrid] = gridChunks;
+
+                if (newChunks.Count == 0)
+                    _chunkIndexPool.Return(newChunks);
+                else
+                    updatedChunks[netGrid] = newChunks;
+            }
+
+            //send all gridChunks to client
+            SendChunkUpdates(player, updatedChunks, staleChunks);
+        }
+
         private void ReturnToPool(Dictionary<NetEntity, HashSet<Vector2i>> chunks)
         {
             foreach (var (_, previous) in chunks)
@@ -516,85 +595,7 @@ namespace Content.Server.Decals
 
             public void Execute(int index)
             {
-                var player = Sessions[index];
-                var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, _chunkIndexPool, _chunkViewerPool);
-                var staleChunks = _chunkViewerPool.Get();
-                var previouslySent = _previousSentChunks[player];
-
-                // Get any chunks not in range anymore
-                // Then, remove them from previousSentChunks (for stuff like grids out of range)
-                // and also mark them as stale for networking.
-
-                foreach (var (netGrid, oldIndices) in previouslySent)
-                {
-                    // Mark the whole grid as stale and flag for removal.
-                    if (!chunksInRange.TryGetValue(netGrid, out var chunks))
-                    {
-                        previouslySent.Remove(netGrid);
-
-                        // Was the grid deleted?
-                        if (!TryGetEntity(netGrid, out var gridId) || !MapManager.IsGrid(gridId.Value))
-                            staleChunks[netGrid] = oldIndices;
-                        else
-                        {
-                            // If grid was deleted then don't worry about telling the client to delete the chunk.
-                            oldIndices.Clear();
-                            _chunkIndexPool.Return(oldIndices);
-                        }
-
-                        continue;
-                    }
-
-                    var elmo = _chunkIndexPool.Get();
-
-                    // Get individual stale chunks.
-                    foreach (var chunk in oldIndices)
-                    {
-                        if (chunks.Contains(chunk))
-                            continue;
-
-                        elmo.Add(chunk);
-                    }
-
-                    if (elmo.Count == 0)
-                    {
-                        _chunkIndexPool.Return(elmo);
-                        continue;
-                    }
-
-                    staleChunks.Add(netGrid, elmo);
-                }
-
-                var updatedChunks = _chunkViewerPool.Get();
-                foreach (var (netGrid, gridChunks) in chunksInRange)
-                {
-                    var newChunks = _chunkIndexPool.Get();
-                    _dirtyChunks.TryGetValue(netGrid, out var dirtyChunks);
-
-                    if (!previouslySent.TryGetValue(netGrid, out var previousChunks))
-                        newChunks.UnionWith(gridChunks);
-                    else
-                    {
-                        foreach (var gIndex in gridChunks)
-                        {
-                            if (!previousChunks.Contains(gIndex) || dirtyChunks != null && dirtyChunks.Contains(gIndex))
-                                newChunks.Add(gIndex);
-                        }
-
-                        previousChunks.Clear();
-                        _chunkIndexPool.Return(previousChunks);
-                    }
-
-                    previouslySent[netGrid] = gridChunks;
-
-                    if (newChunks.Count == 0)
-                        _chunkIndexPool.Return(newChunks);
-                    else
-                        updatedChunks[netGrid] = newChunks;
-                }
-
-                //send all gridChunks to client
-                System.SendChunkUpdates(player, updatedChunks, staleChunks);
+                System.UpdatePlayer(Sessions[index]);
             }
         }
 
