@@ -25,6 +25,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;

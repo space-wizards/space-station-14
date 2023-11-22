@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Damage;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Blocking;

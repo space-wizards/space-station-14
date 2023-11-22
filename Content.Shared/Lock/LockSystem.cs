@@ -10,6 +10,7 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -105,7 +106,7 @@ public sealed class LockSystem : EntitySystem
 
         lockComp.Locked = true;
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, true);
-        Dirty(lockComp);
+        Dirty(uid, lockComp);
 
         var ev = new LockToggledEvent(true);
         RaiseLocalEvent(uid, ref ev, true);
@@ -133,7 +134,7 @@ public sealed class LockSystem : EntitySystem
 
         lockComp.Locked = false;
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
-        Dirty(lockComp);
+        Dirty(uid, lockComp);
 
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
