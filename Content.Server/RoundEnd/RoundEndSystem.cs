@@ -163,7 +163,6 @@ namespace Content.Server.RoundEnd
                 null,
                 Color.Gold);
 
-            // SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
             _audio.PlayGlobal("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast(), true);
 
             LastCountdownStart = _gameTiming.CurTime;
@@ -210,7 +209,6 @@ namespace Content.Server.RoundEnd
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
-            // SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
             _audio.PlayGlobal("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast(), true);
 
             LastCountdownStart = null;
@@ -219,6 +217,7 @@ namespace Content.Server.RoundEnd
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
             // remove all active shuttle timers
+            var zero = TimeSpan.Zero;
             var maps = _shuttleTimerSystem.GetEscapeMaps();
             if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
@@ -227,9 +226,9 @@ namespace Content.Server.RoundEnd
                     ["ShuttleMap"] = shuttle,
                     ["SourceMap"] = maps["centcomm"],
                     ["DestMap"] = maps["station"],
-                    ["LocalTimer"] = TimeSpan.FromMilliseconds(30),
-                    ["SourceTimer"] = TimeSpan.FromMilliseconds(30),
-                    ["DestTimer"] = TimeSpan.FromMilliseconds(30),
+                    ["LocalTimer"] = zero,
+                    ["SourceTimer"] = zero,
+                    ["DestTimer"] = zero,
                 };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }

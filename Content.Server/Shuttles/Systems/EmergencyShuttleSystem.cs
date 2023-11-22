@@ -265,6 +265,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             }
 
             // shuttle timers
+            var time = TimeSpan.FromSeconds(_consoleAccumulator);
             if (TryComp<DeviceNetworkComponent>(stationShuttle.EmergencyShuttle.Value, out var netComp))
             {
                 AllEntityQuery<StationCentcommComponent>().MoveNext(out var centcomm);
@@ -273,12 +274,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                     ["ShuttleMap"] = stationShuttle.EmergencyShuttle.Value,
                     ["SourceMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
                     ["DestMap"] = targetXform?.MapUid,
-                    ["LocalTimer"] = TimeSpan.FromSeconds(_consoleAccumulator),
-                    ["SourceTimer"] = TimeSpan.FromSeconds(_consoleAccumulator),
-                    ["DestTimer"] = TimeSpan.FromSeconds(_consoleAccumulator),
+                    ["LocalTimer"] = time,
+                    ["SourceTimer"] = time,
+                    ["DestTimer"] = time,
                     ["Docked"] = true
                 };
-
                 _deviceNetworkSystem.QueuePacket(stationShuttle.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
             }
 

@@ -125,6 +125,10 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             BuildTimerLayers(uid, timer, component);
             DrawLayers(uid, timer.LayerStatesToDraw);
         }
+        else
+        {
+            RemComp<TextScreenTimerComponent>(uid);
+        }
 
         ResetText(uid, component);
         BuildTextLayers(uid, component, sprite);
