@@ -1,10 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - {message: 'Nanotrasen has decided to purchase their blood packs from a different
-      company, so they now contain real blood.', type: Tweak}
-  id: 4698
-  time: '2023-08-29T04:30:10.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed not showing the name of the fellow traitor that you have to keep
@@ -2896,3 +2890,8 @@ Entries:
   - {message: Shuttle walls and windows can now be constructed., type: Tweak}
   id: 5197
   time: '2023-11-21T01:20:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix being unable to FTL dock to planets., type: Fix}
+  id: 5198
+  time: '2023-11-22T01:02:02.0000000+00:00'
