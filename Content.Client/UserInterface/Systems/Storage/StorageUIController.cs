@@ -27,11 +27,6 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
         //EntityManager.EventBus.SubscribeLocalEvent<StorageComponent, ComponentShutdown>(OnStorageShutdown);
     }
 
-    private void OnClick(ICommonSession? session)
-    {
-
-    }
-
     private void OnStorageShutdown(EntityUid uid, StorageComponent component, ComponentShutdown args)
     {
         //todo: close the storage window nerd
@@ -41,19 +36,19 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
     {
         system.StorageOpened += OnStorageOpened;
         system.StorageClosed += OnStorageClosed;
+        system.StorageUpdated += OnStorageUpdated;
     }
 
     public void OnSystemUnloaded(StorageSystem system)
     {
         system.StorageOpened -= OnStorageOpened;
         system.StorageClosed -= OnStorageClosed;
+        system.StorageUpdated -= OnStorageUpdated;
     }
 
     public void OnStateEntered(GameplayState state)
     {
-        CommandBinds.Builder
-            .Bind(EngineKeyFunctions.UIClick, InputCmdHandler.FromDelegate(OnClick))
-            .Register<StorageUIController>();
+
     }
 
     private void OnStorageOpened(EntityUid uid, StorageComponent component)
@@ -71,6 +66,17 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
             return;
 
         _container.Visible = false;
+    }
+
+    private void OnStorageUpdated(EntityUid uid, StorageComponent component)
+    {
+        if (_container == null)
+            return;
+
+        if (_container.StorageEntity != uid)
+            return;
+
+        _container.BuildItemPieces((uid, component));
     }
 
     public void RegisterStorageContainer(StorageContainer container)

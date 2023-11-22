@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Clickable;
-using Content.Client.Guidebook.Richtext;
 using Content.Client.Items.Systems;
 using Content.Shared.Item;
+using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -23,6 +23,7 @@ public sealed class ItemGridPiece : Control
     private SpriteSystem _spriteSystem;
 
     private EntityUid _uid;
+    private ItemStorageLocation _location;
 
     public bool Hovered;
     private List<(Texture, Vector2)> _textures = new();
@@ -50,7 +51,7 @@ public sealed class ItemGridPiece : Control
     private readonly string _bottomRightTexturePath = "Storage/piece_bottomRight";
     #endregion
 
-    public ItemGridPiece(Entity<ItemComponent> entity, IEntityManager entityManager)
+    public ItemGridPiece(Entity<ItemComponent> entity, ItemStorageLocation location,  IEntityManager entityManager)
     {
         IoCManager.InjectDependencies(this);
 
@@ -59,6 +60,7 @@ public sealed class ItemGridPiece : Control
         _spriteSystem = entityManager.System<SpriteSystem>();
 
         _uid = entity.Owner;
+        _location = location;
 
         _centerTexture = Theme.ResolveTextureOrNull(_centerTexturePath)?.Texture;
         _topTexture = Theme.ResolveTextureOrNull(_topTexturePath)?.Texture;
@@ -75,9 +77,12 @@ public sealed class ItemGridPiece : Control
     {
         base.Draw(handle);
 
-        var adjustedShape = _itemSystem.GetItemShape((_uid, null));
+        var adjustedShape = _itemSystem.GetAdjustedItemShape((_uid, null), _location.Rotation, Vector2i.Zero);
         var boundingGrid = SharedStorageSystem.GetBoundingBox(adjustedShape);
         var size = _centerTexture!.Size * 2 * UIScale;
+
+        //todo recolor the sprites so that this works
+        Color? colorModulate = Hovered ? Color.Red: null;
 
         _textures.Clear();
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
@@ -87,55 +92,44 @@ public sealed class ItemGridPiece : Control
                 if (!adjustedShape.Any(p => p.Contains(x, y)))
                     continue;
 
-                var offset = size * new Vector2(x - boundingGrid.Left, y - boundingGrid.Bottom);
+                var offset = size * 2 * new Vector2(x - boundingGrid.Left, y - boundingGrid.Bottom);
                 var topLeft = PixelPosition + offset.Floored();
 
-                if (GetTexture(adjustedShape, new Vector2i(x, y)) is not {} texture)
-                    continue;
-
-                _textures.Add((texture, GlobalPixelPosition + offset));
-                handle.DrawTextureRect(texture, new UIBox2(topLeft, topLeft + size));
+                if (GetTexture(adjustedShape, new Vector2i(x, y), Direction.NorthEast) is {} neTexture)
+                {
+                    var neOffset = new Vector2(size.X, 0);
+                    _textures.Add((neTexture, GlobalPixelPosition + offset + neOffset));
+                    handle.DrawTextureRect(neTexture, new UIBox2(topLeft + neOffset, topLeft + neOffset + size), colorModulate);
+                }
+                if (GetTexture(adjustedShape, new Vector2i(x, y), Direction.NorthWest) is {} nwTexture)
+                {
+                    _textures.Add((nwTexture, GlobalPixelPosition + offset));
+                    handle.DrawTextureRect(nwTexture, new UIBox2(topLeft, topLeft + size), colorModulate);
+                }
+                if (GetTexture(adjustedShape, new Vector2i(x, y), Direction.SouthEast) is {} seTexture)
+                {
+                    var seOffset = size;
+                    _textures.Add((seTexture, GlobalPixelPosition + offset + seOffset));
+                    handle.DrawTextureRect(seTexture, new UIBox2(topLeft + seOffset, topLeft + seOffset + size), colorModulate);
+                }
+                if (GetTexture(adjustedShape, new Vector2i(x, y), Direction.SouthWest) is {} swTexture)
+                {
+                    var swOffset = new Vector2(0, size.Y);
+                    _textures.Add((swTexture, GlobalPixelPosition + offset + swOffset));
+                    handle.DrawTextureRect(swTexture, new UIBox2(topLeft + swOffset, topLeft + swOffset + size), colorModulate);
+                }
             }
         }
 
-        var iconOffset = new Vector2(((boundingGrid.Width + 1) / 2f) * size.X ,
-            ((boundingGrid.Height + 1) / 2f) * size.Y);
+        // typically you'd divide by two, but since the textures are half a tile, this is done implicitly
+        var iconOffset = new Vector2((boundingGrid.Width + 1) * size.X ,
+            (boundingGrid.Height + 1) * size.Y);
 
         handle.DrawEntity(_uid,
             PixelPosition + iconOffset,
             Vector2.One * 2 * UIScale,
             Angle.Zero,
             overrideDirection: Direction.South);
-    }
-
-    //todo you braindead idiot none of this shit works at all
-    //cut all the textures in half and then do this shit again, possibly with an enum.
-    private Texture? GetTexture(IReadOnlyList<Box2i> boxes, Vector2i position)
-    {
-        var top = !boxes.Any(b => b.Contains(position - Vector2i.Up));
-        var bottom = !boxes.Any(b => b.Contains(position - Vector2i.Down));
-        var left = !boxes.Any(b => b.Contains(position + Vector2i.Left));
-        var right = !boxes.Any(b => b.Contains(position + Vector2i.Right));
-
-        if (top && left)
-            return _topLeftTexture;
-        if (top && right)
-            return _topRightTexture;
-        if (bottom && left)
-            return _bottomLeftTexture;
-        if (bottom && right)
-            return _bottomRightTexture;
-
-        if (top)
-            return _topTexture;
-        if (bottom)
-            return _bottomTexture;
-        if (left)
-            return _leftTexture;
-        if (right)
-            return _rightTexture;
-
-        return _centerTexture;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -153,7 +147,7 @@ public sealed class ItemGridPiece : Control
         foreach (var (texture, position) in _textures)
         {
             var origin = position;
-            if (!new Box2(origin, origin + (texture.Size * UIScale * 2)).Contains(pos))
+            if (!new Box2(origin, origin + texture.Size * UIScale * 2).Contains(pos))
                 continue;
 
             Hovered = true;
@@ -161,5 +155,53 @@ public sealed class ItemGridPiece : Control
         }
 
         Hovered = false;
+    }
+
+    //todo you braindead idiot none of this shit works at all
+    //cut all the textures in half and then do this shit again, possibly with an enum.
+    private Texture? GetTexture(IReadOnlyList<Box2i> boxes, Vector2i position, Direction corner)
+    {
+        var top = !boxes.Any(b => b.Contains(position - Vector2i.Up));
+        var bottom = !boxes.Any(b => b.Contains(position - Vector2i.Down));
+        var left = !boxes.Any(b => b.Contains(position + Vector2i.Left));
+        var right = !boxes.Any(b => b.Contains(position + Vector2i.Right));
+
+        switch (corner)
+        {
+            case Direction.NorthEast:
+                if (top && right)
+                    return _topRightTexture;
+                if (top)
+                    return _topTexture;
+                if (right)
+                    return _rightTexture;
+                return _centerTexture;
+            case Direction.NorthWest:
+                if (top && left)
+                    return _topLeftTexture;
+                if (top)
+                    return _topTexture;
+                if (left)
+                    return _leftTexture;
+                return _centerTexture;
+            case Direction.SouthEast:
+                if (bottom && right)
+                    return _bottomRightTexture;
+                if (bottom)
+                    return _bottomTexture;
+                if (right)
+                    return _rightTexture;
+                return _centerTexture;
+            case Direction.SouthWest:
+                if (bottom && left)
+                    return _bottomLeftTexture;
+                if (bottom)
+                    return _bottomTexture;
+                if (left)
+                    return _leftTexture;
+                return _centerTexture;
+            default:
+                return null;
+        }
     }
 }

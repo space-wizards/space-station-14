@@ -2,10 +2,13 @@
 using System.Numerics;
 using Content.Client.Items.Systems;
 using Content.Client.Storage.Systems;
+using Content.Shared.Item;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
@@ -15,11 +18,12 @@ public sealed class StorageContainer : BoxContainer
     private ItemSystem? _itemSystem;
     private StorageSystem? _storageSystem;
 
-    private readonly GridContainer _grid;
+    public EntityUid? StorageEntity;
+
+    private readonly GridContainer _pieceGrid;
+    private readonly GridContainer _backgroundGrid;
     private readonly GridContainer _sidebar;
     private readonly Label _nameLabel;
-
-    private readonly BoxContainer _tempContainer = new();
 
     //todo support reloading
     private Texture? _emptyTexture;
@@ -61,7 +65,13 @@ public sealed class StorageContainer : BoxContainer
             Columns = 1
         };
 
-        _grid = new GridContainer
+        _pieceGrid = new GridContainer
+        {
+            HSeparationOverride = 0,
+            VSeparationOverride = 0
+        };
+
+        _backgroundGrid = new GridContainer
         {
             HSeparationOverride = 0,
             VSeparationOverride = 0
@@ -72,17 +82,23 @@ public sealed class StorageContainer : BoxContainer
             Orientation = LayoutOrientation.Vertical,
             Children =
             {
-                _nameLabel,
                 new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         _sidebar,
-                        _grid,
-                        _tempContainer
+                        new Control
+                        {
+                            Children =
+                            {
+                                _backgroundGrid,
+                                _pieceGrid
+                            }
+                        }
                     }
-                }
+                },
+                _nameLabel
             }
         };
 
@@ -92,6 +108,7 @@ public sealed class StorageContainer : BoxContainer
     public void UpdateContainer(Entity<StorageComponent>? entity)
     {
         Visible = entity != null;
+        StorageEntity = entity;
         if (entity == null)
             return;
 
@@ -102,9 +119,6 @@ public sealed class StorageContainer : BoxContainer
 
     private void BuildGridRepresentation(Entity<StorageComponent> entity)
     {
-        _itemSystem ??= _entity.System<ItemSystem>();
-        _storageSystem = _entity.System<StorageSystem>();
-
         var comp = entity.Comp;
         if (!comp.StorageGrid.Any())
             return;
@@ -112,9 +126,9 @@ public sealed class StorageContainer : BoxContainer
         var boundingGrid = SharedStorageSystem.GetBoundingBox(comp.StorageGrid);
         var totalWidth = boundingGrid.Width + 1;
 
-        _grid.Children.Clear();
-        _grid.Rows = boundingGrid.Height;
-        _grid.Columns = totalWidth;
+        _backgroundGrid.Children.Clear();
+        _backgroundGrid.Rows = boundingGrid.Height;
+        _backgroundGrid.Columns = totalWidth;
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
         {
             for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
@@ -122,7 +136,8 @@ public sealed class StorageContainer : BoxContainer
                 var texture = comp.StorageGrid.Any(g => g.Contains(x, y))
                     ? _emptyTexture
                     : _blockedTexture;
-                _grid.AddChild(new TextureRect
+
+                _backgroundGrid.AddChild(new TextureRect
                 {
                     Texture = texture,
                     TextureScale = new Vector2(2, 2)
@@ -174,5 +189,50 @@ public sealed class StorageContainer : BoxContainer
             TextureScale = new Vector2(2, 2),
         });
         #endregion
+
+        BuildItemPieces(entity);
+    }
+
+    public void BuildItemPieces(Entity<StorageComponent> entity)
+    {
+        if (!entity.Comp.StorageGrid.Any())
+            return;
+
+        var boundingGrid = SharedStorageSystem.GetBoundingBox(entity.Comp.StorageGrid);
+        var size = _emptyTexture!.Size * 2;
+
+        _pieceGrid.Children.Clear();
+        _pieceGrid.Rows = boundingGrid.Height;
+        _pieceGrid.Columns = boundingGrid.Width + 1;
+        for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
+        {
+            for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
+            {
+                var currentPosition = new Vector2i(x, y);
+                var item = entity.Comp.StoredItems
+                    .Where(pair => pair.Value.Position == currentPosition)
+                    .FirstOrNull();
+
+                var control = new Control
+                {
+                    MinSize = size
+                };
+
+                if (item != null)
+                {
+                    var itemEnt = _entity.GetEntity(item.Value.Key);
+
+                    if (_entity.TryGetComponent<ItemComponent>(itemEnt, out var itemEntComponent))
+                    {
+                        control.AddChild(new ItemGridPiece((itemEnt, itemEntComponent), item.Value.Value, _entity)
+                        {
+                            MinSize = size
+                        });
+                    }
+                }
+
+                _pieceGrid.AddChild(control);
+            }
+        }
     }
 }

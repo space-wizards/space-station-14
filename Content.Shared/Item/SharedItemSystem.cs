@@ -1,3 +1,5 @@
+using System.Collections.Specialized;
+using System.Numerics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
@@ -180,13 +182,12 @@ public abstract class SharedItemSystem : EntitySystem
         var adjustedShapes = new List<Box2i>();
         foreach (var shape in shapes)
         {
-            //todo: implement rotation... fuck.
+            //todo rotation is omegagigafucked. SHIT!
             /*
             var matty = Matrix3.CreateTransform(boundingShape.Center, rotation);
             var box = matty.TransformBox(shape);
-            var flooredBox = new Box2i(box.BottomLeft.Floored(), box.TopRight.Floored());
-
-            adjustedShapes.Add(flooredBox.Translated(position));*/
+            var flooredBox = new Box2i(box.BottomLeft.Ceiled(), box.TopRight.Ceiled());
+            */
             adjustedShapes.Add(shape.Translated(position));
         }
 

@@ -537,12 +537,12 @@ public abstract class SharedStorageSystem : EntitySystem
                 reason = "comp-storage-insufficient-capacity";
                 return false;
             }
-        }
+        }/*
         else if (_item.GetItemSizeWeight(item.Size) + GetCumulativeItemSizes(uid, storageComp) > storageComp.MaxTotalWeight)
         {
             reason = "comp-storage-insufficient-capacity";
             return false;
-        }
+        }*/
 
         reason = null;
         return true;
