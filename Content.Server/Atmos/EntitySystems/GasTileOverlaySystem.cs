@@ -36,7 +36,12 @@ namespace Content.Server.Atmos.EntitySystems
         [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
-        private readonly List<ICommonSession> _playerUpdates = new();
+        /// <summary>
+        /// Per-tick cache of sessions.
+        /// </summary>
+        private readonly List<ICommonSession> _sessions = new();
+        private UpdatePlayerJob _updateJob;
+
         private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _lastSentChunks = new();
 
         // Oh look its more duplicated decal system code!
@@ -57,6 +62,19 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
+            _updateJob = new UpdatePlayerJob()
+            {
+                EntManager = EntityManager,
+                System = this,
+                ChunkIndexPool = _chunkIndexPool,
+                Sessions = _sessions,
+                ChunkingSys = _chunkingSys,
+                MapManager = _mapManager,
+                ChunkViewerPool = _chunkViewerPool,
+                LastSentChunks = _lastSentChunks,
+            };
+
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _confMan.OnValueChanged(CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
             _confMan.OnValueChanged(CCVars.GasOverlayThresholds, UpdateThresholds, true);
@@ -70,7 +88,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             // This **shouldn't** be required, but just in case we ever get entity prototypes that have gas overlays, we
             // need to ensure that we send an initial full state to players.
-            Dirty(component);
+            Dirty(uid, component);
         }
 
         public override void Shutdown()
@@ -288,30 +306,21 @@ namespace Content.Server.Atmos.EntitySystems
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.
-            _playerUpdates.Clear();
+            _sessions.Clear();
 
             foreach (var player in _playerManager.Sessions)
             {
                 if (player.Status != SessionStatus.InGame)
                     continue;
 
-                _playerUpdates.Add(player);
+                _sessions.Add(player);
             }
 
-            var job = new UpdatePlayerJob()
+            if (_sessions.Count > 0)
             {
-                EntManager = EntityManager,
-                MapManager = _mapManager,
-                ChunkingSys = _chunkingSys,
-                System = this,
-                ChunkIndexPool = _chunkIndexPool,
-                ChunkViewerPool = _chunkViewerPool,
-                CurrentTick = curTick,
-                LastSentChunks = _lastSentChunks,
-                Sessions = _playerUpdates,
-            };
-
-            _parMan.ProcessNow(job, _playerUpdates.Count);
+                _updateJob.CurrentTick = curTick;
+                _parMan.ProcessNow(_updateJob, _sessions.Count);
+            }
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -330,9 +339,12 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Jobs
 
+        /// <summary>
+        /// Updates per player gas overlay data.
+        /// </summary>
         private record struct UpdatePlayerJob : IParallelRobustJob
         {
-            public int BatchSize => 4;
+            public int BatchSize => 2;
 
             public IEntityManager EntManager;
             public IMapManager MapManager;
