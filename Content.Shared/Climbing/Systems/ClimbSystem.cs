@@ -154,7 +154,7 @@ public sealed partial class ClimbSystem : VirtualController
     {
         if (component.NextTransition != null)
         {
-            StopClimb(uid, component);
+            FinishTransition(uid, component);
         }
     }
 

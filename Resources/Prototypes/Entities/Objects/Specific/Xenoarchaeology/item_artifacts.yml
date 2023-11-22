@@ -55,7 +55,7 @@
       type: IntercomBoundUserInterface
   - type: Appearance
   - type: Item
-    size: 40
+    size: Normal
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     heldPrefix: ano01
   - type: Actions
@@ -177,6 +177,8 @@
     - enum.ArtifactsVisualLayers.Base:
         wizardball6: ""
   - type: Appearance
+  - type: Item
+    size: Normal
   - type: Tag
     tags:
     - ArtifactFragment
@@ -186,7 +188,17 @@
       - ReagentId: Artifexium
         Quantity: 10
   - type: StaticPrice
-    price: 250
+    price: 0
+  - type: Stack
+    stackType: ArtifactFragment
   - type: GuideHelp
     guides:
     - Xenoarchaeology
+
+- type: entity
+  parent: ArtifactFragment
+  id: ArtifactFragment1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

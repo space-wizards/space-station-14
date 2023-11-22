@@ -1,8 +1,11 @@
+using Content.Shared.Item;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage
@@ -13,12 +16,34 @@ namespace Content.Shared.Storage
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class StorageComponent : Component
     {
+        public static string ContainerId = "storagebase";
+
         // TODO: This fucking sucks
         [ViewVariables(VVAccess.ReadWrite), DataField("isOpen"), AutoNetworkedField]
         public bool IsUiOpen;
 
         [ViewVariables]
         public Container Container = default!;
+
+        /// <summary>
+        /// A limit for the cumulative ItemSize weights that can be inserted in this storage.
+        /// If MaxSlots is not null, then this is ignored.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        public int MaxTotalWeight;
+
+        /// <summary>
+        /// The maximum size item that can be inserted into this storage,
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [Access(typeof(SharedStorageSystem))]
+        public ProtoId<ItemSizePrototype>? MaxItemSize;
+
+        /// <summary>
+        /// The max number of entities that can be inserted into this storage.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        public int? MaxSlots;
 
         // TODO: Make area insert its own component.
         [DataField("quickInsert")]
@@ -44,18 +69,6 @@ namespace Content.Shared.Storage
         /// </summary>
         [DataField("blacklist")]
         public EntityWhitelist? Blacklist;
-
-        /// <summary>
-        /// How much storage is currently being used by contained entities.
-        /// </summary>
-        [ViewVariables, DataField("storageUsed"), AutoNetworkedField]
-        public int StorageUsed;
-
-        /// <summary>
-        /// Maximum capacity for storage.
-        /// </summary>
-        [DataField("capacity"), AutoNetworkedField]
-        public int StorageCapacityMax = 10000;
 
         /// <summary>
         /// Sound played whenever an entity is inserted into storage.

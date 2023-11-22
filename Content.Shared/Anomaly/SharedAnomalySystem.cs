@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -111,9 +111,9 @@ public abstract class SharedAnomalySystem : EntitySystem
         var pulse = EnsureComp<AnomalyPulsingComponent>(uid);
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
         Appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
-
-        var ev = new AnomalyPulseEvent(component.Stability, component.Severity);
-        RaiseLocalEvent(uid, ref ev);
+        
+        var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity);
+        RaiseLocalEvent(uid, ref ev, true);
     }
 
     /// <summary>
@@ -156,8 +156,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (_net.IsServer)
             _sawmill.Info($"Raising supercritical event. Entity: {ToPrettyString(uid)}");
 
-        var ev = new AnomalySupercriticalEvent();
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new AnomalySupercriticalEvent(uid);
+        RaiseLocalEvent(uid, ref ev, true);
 
         EndAnomaly(uid, component, true);
     }
@@ -183,6 +183,9 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (Terminating(uid) || _net.IsClient)
             return;
+
+        Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
+
         QueueDel(uid);
     }
 

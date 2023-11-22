@@ -13,5 +13,5 @@
       types:
         Blunt: 3 #You'd be better off punching people
   - type: Item
-    size: 12
+    size: Small
     sprite: Objects/Weapons/Melee/gohei.rsi

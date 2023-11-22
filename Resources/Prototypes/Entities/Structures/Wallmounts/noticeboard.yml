@@ -1,0 +1,54 @@
+﻿- type: entity
+  id: NoticeBoard
+  name: notice board
+  description: Is there a job for a witcher?
+  components:
+  - type: WallMount
+  - type: Sprite
+    sprite: Structures/Wallmounts/noticeboard.rsi
+    layers:
+      - state: noticeboard
+      - state: notice-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: StorageFillVisualizer
+    maxFillLevels: 6
+    fillBaseName: notice
+  - type: Appearance
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Storage
+    maxSlots: 10
+    maxItemSize: Small
+    whitelist:
+      tags:
+        - Folder
+        - Document
+        - Write
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container

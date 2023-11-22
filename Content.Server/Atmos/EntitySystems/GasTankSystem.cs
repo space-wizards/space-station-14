@@ -65,7 +65,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGasTankSetPressure(Entity<GasTankComponent> ent, ref GasTankSetPressureMessage args)
         {
-            var pressure = Math.Min(args.Pressure, ent.Comp.MaxOutputPressure);
+            var pressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxOutputPressure);
 
             ent.Comp.OutputPressure = pressure;
 
@@ -137,7 +137,7 @@ namespace Content.Server.Atmos.EntitySystems
             while (query.MoveNext(out var uid, out var comp))
             {
                 var gasTank = (uid, comp);
-                if (comp.IsValveOpen && !comp.IsLowPressure)
+                if (comp.IsValveOpen && !comp.IsLowPressure && comp.OutputPressure > 0)
                 {
                     ReleaseGas(gasTank);
                 }

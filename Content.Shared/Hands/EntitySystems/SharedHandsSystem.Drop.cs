@@ -28,6 +28,20 @@ public abstract partial class SharedHandsSystem
     }
 
     /// <summary>
+    ///     Checks whether an entity can drop a given entity. Will return false if they are not holding the entity.
+    /// </summary>
+    public bool CanDrop(EntityUid uid, EntityUid entity, HandsComponent? handsComp = null, bool checkActionBlocker = true)
+    {
+        if (!Resolve(uid, ref handsComp))
+            return false;
+
+        if (!IsHolding(uid, entity, out var hand, handsComp))
+            return false;
+
+        return CanDropHeld(uid, hand, checkActionBlocker);
+    }
+
+    /// <summary>
     ///     Checks if the contents of a hand is able to be removed from its container.
     /// </summary>
     public bool CanDropHeld(EntityUid uid, Hand hand, bool checkActionBlocker = true)

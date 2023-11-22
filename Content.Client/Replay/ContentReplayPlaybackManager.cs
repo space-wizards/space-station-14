@@ -40,6 +40,7 @@ public sealed class ContentReplayPlaybackManager
     [Dependency] private readonly IClientConGroupController _conGrp = default!;
     [Dependency] private readonly IClientAdminManager _adminMan = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IBaseClient _client = default!;
 
     /// <summary>
     /// UI state to return to when stopping a replay or loading fails.
@@ -87,6 +88,9 @@ public sealed class ContentReplayPlaybackManager
             _stateMan.RequestStateChange<LauncherConnecting>().SetDisconnected();
         else
             _stateMan.RequestStateChange<MainScreen>();
+
+        if (_client.RunLevel == ClientRunLevel.SinglePlayerGame)
+            _client.StopSinglePlayer();
     }
 
     private void OnCheckpointReset()
