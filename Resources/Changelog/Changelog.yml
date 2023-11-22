@@ -1,11 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Fixed not tracking job playtime., type: Fix}
-  id: 4701
-  time: '2023-08-29T20:39:18.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Fixed players not getting their round start message telling them their
       supervisors., type: Add}
   id: 4702
@@ -2895,3 +2890,8 @@ Entries:
   - {message: The reagent "egg" is now known as "cooked egg", type: Tweak}
   id: 5200
   time: '2023-11-22T04:32:35.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You must now unlock a cyborg's panel to access it, type: Fix}
+  id: 5201
+  time: '2023-11-22T17:16:03.0000000+00:00'
