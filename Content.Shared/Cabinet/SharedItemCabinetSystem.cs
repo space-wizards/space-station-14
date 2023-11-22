@@ -3,7 +3,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
