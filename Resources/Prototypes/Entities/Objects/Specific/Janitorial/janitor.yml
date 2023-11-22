@@ -295,31 +295,31 @@
             tags:
               - Mop
           insertOnInteract: false # or it conflicts with bucket logic
-          priority: 9 # Higher than bucket slot
+          priority: 12 # Higher than bucket slot
         plunger_slot:
           name: Plunger
           whitelist:
             tags:
               - Plunger
-          priority: 8
+          priority: 11
         wetfloorsign_slot4:
           name: WetFloorSign
           whitelist:
             tags:
               - WetFloorSign
-          priority: 7
+          priority: 10
         wetfloorsign_slot3:
           name: WetFloorSign
           whitelist:
             tags:
               - WetFloorSign
-          priority: 7
+          priority: 9
         wetfloorsign_slot2:
           name: WetFloorSign
           whitelist:
             tags:
               - WetFloorSign
-          priority: 7
+          priority: 8
         wetfloorsign_slot1:
           name: WetFloorSign
           whitelist:
