@@ -159,7 +159,7 @@ public sealed class RottingSystem : EntitySystem
         args.Handled = component.CurrentTemperature > Atmospherics.T0C + 0.85f;
     }
 
-    public void ReduceRotting(EntityUid uid, TimeSpan time)
+    public void ReduceAccumulator(EntityUid uid, TimeSpan time)
     {
         if (!TryComp<PerishableComponent>(uid, out var perishable))
             return;

@@ -210,14 +210,13 @@
              Cellular: -2
 
 - type: reagent
-  id: Cordrazine
-  #Just a funny placeholder chem to test. I hear this chem in startreck all the time
-  name: reagent-name-cryoxadone
+  id: Opporozine #In startreck this drug is actually used for burns, but the name sounded cool
+  name: reagent-name-opporozine
   group: Medicine
-  desc: reagent-desc-cryoxadone
-  physicalDesc: reagent-physical-desc-fizzy
-  flavor: medicine
-  color: "#9991ff"
+  desc: reagent-desc-opporozine
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: acid
+  color: "#b5e36d"
   metaboliseWhileDead: true
   metabolisms:
     Medicine:
@@ -230,10 +229,6 @@
           - !type:MobStateCondition
             mobstate: Dead
           
-
-
-
-
 - type: reagent
   id: Dermaline
   name: reagent-name-dermaline

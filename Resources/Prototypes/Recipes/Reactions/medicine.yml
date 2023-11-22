@@ -396,3 +396,19 @@
       amount: 1
   products:
     Saline: 5
+
+- type: reaction
+  id: Opporozine
+  minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
+  reactants:
+    Siderlac: 
+      amount: 2
+    Plasma:
+      amount: 2
+    Doxarubixadone:
+      amount: 1
+    Ephedrine:
+      amount: 1
+  products:
+    Opporozine: 3
+      

@@ -8,23 +8,18 @@ using Content.Server.Atmos.Miasma;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
-    /// Rejuvinates the patient, reducing the rotting effect on them.
+    /// Reduces the rotting accumulator on the patient, making them revivable.
     /// </summary>
     [UsedImplicitly]
     public sealed partial class ReduceRotting : ReagentEffect
-    //Just a place holder at the moment until I figure out how to do this.
     {
-        //How much time are we taking off the accumulator
-        [DataField("rottingAmount"), ViewVariables(VVAccess.ReadWrite)]
-        public TimeSpan RottingAmount = TimeSpan.FromSeconds(5);
+        [DataField("rottingAmount")]
+        public double RottingAmount = 10;
 
-
-        //Main Plan:
-        //Add method to the rotting system that enables it to be reduced
-        //Use Entity manager to get the system "RottingSystem" and store it to the variable rottingSys.
-        //All  I'll then need to do is put: rottingSys.reduceRotting(arguments) - putting the system in here will feel like hard coding
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-            => Loc.GetString("reagent-effect-guidebook-chem-vomit", ("chance", Probability));
+            => Loc.GetString("reagent-effect-guidebook-reduce-rotting",
+                ("chance", Probability),
+                ("time", RottingAmount));
         public override void Effect(ReagentEffectArgs args)
         {
             if (args.Scale != 1f)
@@ -32,7 +27,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
             var rottingSys = args.EntityManager.EntitySysManager.GetEntitySystem<RottingSystem>();
 
-            rottingSys.ReduceRotting(args.SolutionEntity, RottingAmount);
+            rottingSys.ReduceAccumulator(args.SolutionEntity, TimeSpan.FromSeconds(RottingAmount));
         }
     }
 }
