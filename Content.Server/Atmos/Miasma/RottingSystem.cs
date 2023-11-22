@@ -164,22 +164,21 @@ public sealed class RottingSystem : EntitySystem
         if (!TryComp<PerishableComponent>(uid, out var perishable))
             return;
 
-        if (TryComp<RottingComponent>(uid, out var rotting))
+        if (!TryComp<RottingComponent>(uid, out var rotting))
         {
-            TimeSpan total = rotting.TotalRotTime + perishable.RotAccumulator;
-            total -= time;
-            if (total < perishable.RotAfter)
-            {
-                RemCompDeferred(uid, rotting);
-                perishable.RotAccumulator = total;
-            }
+            perishable.RotAccumulator -= time;
+            return;
+        }
+        var total = (rotting.TotalRotTime + perishable.RotAccumulator) - time;
 
-            else
-                rotting.TotalRotTime = total - perishable.RotAfter;
+        if (total < perishable.RotAfter)
+        {
+            RemCompDeferred(uid, rotting);
+            perishable.RotAccumulator = total;
         }
 
         else
-            perishable.RotAccumulator -= time;
+            rotting.TotalRotTime = total - perishable.RotAfter;
     }
 
 

@@ -176,7 +176,6 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, uid, solution, proto, mostToRemove,
                         EntityManager, null, scale);
