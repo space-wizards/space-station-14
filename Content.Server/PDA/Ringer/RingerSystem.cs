@@ -13,8 +13,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
-using Robust.Server.Audio;
 
 namespace Content.Server.PDA.Ringer
 {
@@ -205,7 +203,7 @@ namespace Content.Server.PDA.Ringer
                 ringer.TimeElapsed -= NoteDelay;
                 var ringerXform = Transform(uid);
 
-                _audio.PlayEntity(
+                _audio.Play(
                     GetSound(ringer.Ringtone[ringer.NoteCount]),
                     Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
                     uid,

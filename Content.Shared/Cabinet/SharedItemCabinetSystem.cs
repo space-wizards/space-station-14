@@ -117,7 +117,7 @@ public abstract class SharedItemCabinetSystem : EntitySystem
             return;
 
         cabinet.Opened = !cabinet.Opened;
-        Dirty(uid, cabinet);
+        Dirty(cabinet);
         _itemSlots.SetLock(uid, cabinet.CabinetSlot, !cabinet.Opened);
 
         if (_timing.IsFirstTimePredicted)

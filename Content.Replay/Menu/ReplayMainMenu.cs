@@ -27,7 +27,7 @@ public sealed class ReplayMainScreen : State
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IReplayLoadManager _loadMan = default!;
-    [Dependency] private readonly IClientResourceCache _resourceCache = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IGameController _controllerProxy = default!;
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;

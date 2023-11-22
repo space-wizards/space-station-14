@@ -10,8 +10,6 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage.Components;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Nutrition.EntitySystems;
@@ -92,7 +90,7 @@ public sealed class FatExtractorSystem : EntitySystem
 
         component.Processing = true;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, true);
-        component.Stream = _audio.PlayPvs(component.ProcessSound, uid)?.Entity;
+        component.Stream = _audio.PlayPvs(component.ProcessSound, uid);
         component.NextUpdate = _timing.CurTime + component.UpdateTime;
     }
 
@@ -106,7 +104,7 @@ public sealed class FatExtractorSystem : EntitySystem
 
         component.Processing = false;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, false);
-        component.Stream = _audio.Stop(component.Stream);
+        component.Stream?.Stop();
     }
 
     public bool TryGetValidOccupant(EntityUid uid, [NotNullWhen(true)] out EntityUid? occupant, FatExtractorComponent? component = null, EntityStorageComponent? storage = null)

@@ -5,8 +5,6 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Singularity.Events;
 using Robust.Server.GameStates;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -206,9 +204,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.PlayPvs(comp.FormationSound, uid);
+            _audio.Play(comp.FormationSound, Filter.Pvs(uid), uid, true);
 
-        comp.AmbientSoundStream = _audio.PlayPvs(comp.AmbientSound, uid)?.Entity;
+        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(uid), uid, true);
         UpdateSingularityLevel(uid, comp);
     }
 
@@ -221,7 +219,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)
     {
-        _pvs.AddGlobalOverride(GetNetEntity(uid));
+        _pvs.AddGlobalOverride(uid);
     }
 
     /// <summary>
@@ -234,18 +232,11 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnSingularityShutdown(EntityUid uid, SingularityComponent comp, ComponentShutdown args)
     {
-        comp.AmbientSoundStream = _audio.Stop(comp.AmbientSoundStream);
+        comp.AmbientSoundStream?.Stop();
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
-        {
-            var xform = Transform(uid);
-            var coordinates = xform.Coordinates;
-
-            // I feel like IsValid should be checking this or something idk.
-            if (!TerminatingOrDeleted(coordinates.EntityId))
-                _audio.PlayPvs(comp.DissipationSound, coordinates);
-        }
+            _audio.Play(comp.DissipationSound, Filter.Pvs(uid), uid, true);
     }
 
     /// <summary>

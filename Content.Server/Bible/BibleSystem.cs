@@ -15,7 +15,6 @@ using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -30,7 +29,6 @@ namespace Content.Server.Bible
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
 
         public override void Initialize()
@@ -82,8 +80,8 @@ namespace Content.Server.Bible
                     summonableComp.Summon = null;
                 }
                 summonableComp.AlreadySummoned = false;
-                _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner, PopupType.Medium);
-                _audio.PlayPvs("/Audio/Effects/radpulse9.ogg", summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", uid)), uid, PopupType.Medium);
+                SoundSystem.Play("/Audio/Effects/radpulse9.ogg", Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-4f));
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
                 _remQueue.Enqueue(uid);
@@ -109,7 +107,7 @@ namespace Content.Server.Bible
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, args.User);
 
-                _audio.PlayPvs(component.SizzleSoundPath, args.User);
+                SoundSystem.Play(component.SizzleSoundPath.GetSound(), Filter.Pvs(args.User), args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true, origin: uid);
                 _delay.BeginDelay(uid, delay);
 
@@ -127,7 +125,7 @@ namespace Content.Server.Bible
                     var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                     _popupSystem.PopupEntity(selfFailMessage, args.User, args.User, PopupType.MediumCaution);
 
-                    _audio.PlayPvs("/Audio/Effects/hit_kick.ogg", args.User);
+                    SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true, origin: uid);
                     _delay.BeginDelay(uid, delay);
                     return;
@@ -151,7 +149,7 @@ namespace Content.Server.Bible
 
                 var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                 _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
-                _audio.PlayPvs(component.HealSoundPath, args.User);
+                SoundSystem.Play(component.HealSoundPath.GetSound(), Filter.Pvs(args.Target.Value), args.User);
                 _delay.BeginDelay(uid, delay);
             }
         }

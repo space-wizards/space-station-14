@@ -85,7 +85,8 @@ namespace Content.Server.Atmos.EntitySystems
                 // A few details on the audio parameters for fire.
                 // The greater the fire state, the lesser the pitch variation.
                 // The greater the fire state, the greater the volume.
-                _audio.PlayPvs(HotspotSound, coordinates, AudioParams.Default.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
+                SoundSystem.Play(HotspotSound, Filter.Pvs(coordinates),
+                    coordinates, AudioHelpers.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
             }
 
             if (_hotspotSoundCooldown > HotspotSoundCooldownCycles)

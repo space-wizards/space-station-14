@@ -4,7 +4,7 @@ namespace Content.Shared.Audio;
 
 public abstract class SharedContentAudioSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     /// <summary>
     /// Standard variation to use for sounds.
@@ -14,6 +14,6 @@ public abstract class SharedContentAudioSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        Audio.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
+        _audio.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
     }
 }

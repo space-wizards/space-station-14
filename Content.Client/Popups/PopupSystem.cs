@@ -23,7 +23,7 @@ namespace Content.Client.Popups
         [Dependency] private readonly IOverlayManager _overlay = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly IClientResourceCache _resource = default!;
+        [Dependency] private readonly IResourceCache _resource = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;

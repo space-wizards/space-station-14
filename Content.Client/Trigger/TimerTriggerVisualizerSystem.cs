@@ -1,8 +1,6 @@
 using Content.Shared.Trigger;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.Trigger;

@@ -234,8 +234,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (_netManager.IsServer && component.Stream == null)
             component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null);
 
-        Dirty(target, tethered);
-        Dirty(gunUid, component);
+        Dirty(tethered);
+        Dirty(component);
     }
 
     protected virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
@@ -269,7 +269,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         if (!transfer)
         {
-            _audio.Stop(component.Stream);
+            component.Stream?.Stop();
             component.Stream = null;
         }
 

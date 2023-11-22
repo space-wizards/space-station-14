@@ -43,5 +43,5 @@ public sealed partial class ParacusiaComponent : Component
     [DataField("timeBetweenIncidents", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextIncidentTime;
 
-    public EntityUid? Stream;
+    public IPlayingAudioStream? Stream;
 }

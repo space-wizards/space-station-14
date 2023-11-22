@@ -8,7 +8,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -73,8 +72,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             var smoke = args.EntityManager.System<SmokeSystem>();
             smoke.StartSmoke(ent, splitSolution, _duration, spreadAmount);
 
-            var audio = args.EntityManager.System<SharedAudioSystem>();
-            audio.PlayPvs(_sound, args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
+            args.EntityManager.System<SharedAudioSystem>().PlayPvs(_sound, args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

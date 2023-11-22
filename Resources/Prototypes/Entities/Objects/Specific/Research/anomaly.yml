@@ -50,7 +50,7 @@
     beepSound:
       path: "/Audio/Items/locator_beep.ogg"
       params:
-        maxDistance: 1
+        maxdistance: 1
         volume: -8
 
 - type: entity

@@ -16,7 +16,7 @@ public sealed class AccessOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public AccessOverlay(IEntityManager entManager, IClientResourceCache cache, EntityLookupSystem lookup, SharedTransformSystem xform)
+    public AccessOverlay(IEntityManager entManager, IResourceCache cache, EntityLookupSystem lookup, SharedTransformSystem xform)
     {
         _entityManager = entManager;
         _lookup = lookup;

@@ -23,7 +23,7 @@ public sealed class RadiationDebugOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _radiation = _entityManager.System<RadiationSystem>();
 
-        var cache = IoCManager.Resolve<IClientResourceCache>();
+        var cache = IoCManager.Resolve<IResourceCache>();
         _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
     }
 

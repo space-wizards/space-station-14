@@ -50,11 +50,11 @@ public sealed partial class ExplosionSystem : EntitySystem
         comp.Intensity = iterationIntensity;
         comp.SpaceMatrix = spaceMatrix;
         comp.SpaceTileSize = spaceData?.TileSize ?? DefaultTileSize;
-        Dirty(explosionEntity, comp);
+        Dirty(comp);
 
         // Light, sound & visuals may extend well beyond normal PVS range. In principle, this should probably still be
         // restricted to something like the same map, but whatever.
-        _pvsSys.AddGlobalOverride(GetNetEntity(explosionEntity));
+        _pvsSys.AddGlobalOverride(explosionEntity);
 
         var appearance = AddComp<AppearanceComponent>(explosionEntity);
         _appearance.SetData(explosionEntity, ExplosionAppearanceData.Progress, 1, appearance);

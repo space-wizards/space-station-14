@@ -69,8 +69,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AmbienceVolume =
             CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
-        public const float MasterMultiplier = 2f;
-
         // Midi is on engine so deal
         public const float MidiMultiplier = 3f;
 

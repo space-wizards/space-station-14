@@ -7,8 +7,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nutrition.EntitySystems;

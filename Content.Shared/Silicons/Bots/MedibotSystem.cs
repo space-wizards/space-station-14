@@ -21,7 +21,7 @@ public sealed class MedibotSystem : EntitySystem
         if (!TryComp<MedibotComponent>(uid, out var medibot))
             return;
 
-        _audio.PlayPredicted(comp.SparkSound, uid, args.UserUid);
+        _audio.PlayPredicted(comp.SparkSound, uid, args.UserUid, AudioParams.Default.WithVolume(8));
 
         medibot.StandardMed = comp.StandardMed;
         medibot.StandardMedAmount = comp.StandardMedAmount;

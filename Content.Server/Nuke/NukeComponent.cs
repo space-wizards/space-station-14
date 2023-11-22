@@ -174,7 +174,7 @@ namespace Content.Server.Nuke
         /// </summary>
         public bool PlayedAlertSound = false;
 
-        public EntityUid? AlertAudioStream = default;
+        public IPlayingAudioStream? AlertAudioStream = default;
 
         /// <summary>
         ///     The radius from the nuke for which there must be floor tiles for it to be anchorable.

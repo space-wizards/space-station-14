@@ -142,11 +142,8 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / MaxVolumeVelocity);
         var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
         component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
-        var sound = component.Sound;
 
-        if (_netMan.IsServer && sound != null)
-        {
-            _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
-        }
+        if (_netMan.IsServer)
+            _audioSystem.PlayPvs(component.Sound, uid, AudioParams.Default.WithVolume(volume));
     }
 }

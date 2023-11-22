@@ -38,7 +38,7 @@ namespace Content.Client.NodeContainer
             EntityLookupSystem lookup,
             IMapManager mapManager,
             IInputManager inputManager,
-            IClientResourceCache cache,
+            IResourceCache cache,
             IEntityManager entityManager)
         {
             _system = system;

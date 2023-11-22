@@ -174,6 +174,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
         // TODO: Need audio refactor maybe, just some way to null it when the stream is over.
         // For now better to just not loop to keep the code much cleaner.
+        vehicle.HonkPlayingStream?.Stop();
         vehicle.HonkPlayingStream = _audioSystem.PlayPredicted(vehicle.HornSound, uid, uid);
         args.Handled = true;
     }
