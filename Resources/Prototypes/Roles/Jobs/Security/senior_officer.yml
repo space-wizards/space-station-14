@@ -34,15 +34,16 @@
   id: SeniorOfficerGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorOfficer
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackSecurityFilledSeniorOfficer # Imperial @keeyn
     shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeret
     outerClothing: ClothingOuterArmorBasic
     id: SeniorOfficerPDA
+    gloves: ClothingHandsGlovesCombat # Imperial @keeyn
     ears: ClothingHeadsetSecurity
-    belt: ClothingBeltSecurityFilled
+    belt: ClothingBeltMilitaryWebbingSeniorOfficerFilled # Imperial @keeyn
     pocket1: WeaponPistolMk58Nonlethal
   innerClothingSkirt: ClothingUniformJumpskirtSeniorOfficer
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  satchel: ClothingBackpackSecurityFilledSeniorOfficer # Imperial @keeyn
+  duffelbag: ClothingBackpackDuffelSecurityFilledSeniorOfficer # Imperial @keeyn
