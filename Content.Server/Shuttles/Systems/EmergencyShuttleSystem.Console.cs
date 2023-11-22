@@ -387,24 +387,21 @@ public sealed partial class EmergencyShuttleSystem
         AnnounceLaunch();
         UpdateAllEmergencyConsoles();
 
-        AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var shuttle);
-        var stationGrid = _station.GetLargestGrid(Comp<StationDataComponent>(station));
-        if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle.EmergencyShuttle, out var net))
+        var time = TimeSpan.FromSeconds(_authorizeTime);
+        var maps = _shuttleTimerSystem.GetEscapeMaps();
+        if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
-            AllEntityQuery<StationCentcommComponent>().MoveNext(out _, out var centcomm);
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = stationGrid == null ? null : Transform(stationGrid.Value).MapUid,
-                ["SourceMap"] = shuttle.EmergencyShuttle,
-                ["DestMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
-                ["LocalTimer"] = TimeSpan.FromSeconds(_authorizeTime),
-                // i'm too tired to refactor the shuttle system to calc escape transit time before entering ftl
-                // so the centcomm shuttle timers will just mirror the stations' until takeoff
-                ["SourceTimer"] = TimeSpan.FromSeconds(_authorizeTime),
-                ["DestTimer"] = TimeSpan.FromSeconds(_authorizeTime),
+                ["ShuttleMap"] = shuttle,
+                ["SourceMap"] = maps["centcomm"],
+                ["DestMap"] = maps["station"],
+                ["LocalTimer"] = time,
+                ["SourceTimer"] = time,
+                ["DestTimer"] = time,
                 ["Docked"] = true
             };
-            _deviceNetworkSystem.QueuePacket(shuttle.EmergencyShuttle.Value, null, payload, net.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
         }
 
         return true;

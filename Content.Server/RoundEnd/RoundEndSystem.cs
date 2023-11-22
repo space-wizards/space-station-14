@@ -20,6 +20,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Server.Shuttles.Components;
+using FastAccessors;
 
 namespace Content.Server.RoundEnd
 {
@@ -172,24 +173,19 @@ namespace Content.Server.RoundEnd
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
-            AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var shuttle);
-            if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle.EmergencyShuttle, out var net))
+            var maps = _shuttleTimerSystem.GetEscapeMaps();
+            if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
-                var targetGrid = _stationSystem.GetLargestGrid(Comp<StationDataComponent>(station));
-                if (targetGrid == null)
-                    return;
-
-                AllEntityQuery<StationCentcommComponent>().MoveNext(out var centcomm);
                 var payload = new NetworkPayload
                 {
-                    ["ShuttleMap"] = shuttle.EmergencyShuttle,
-                    ["SourceMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
-                    ["DestMap"] = Transform(targetGrid.Value).MapUid,
+                    ["ShuttleMap"] = shuttle,
+                    ["SourceMap"] = maps["centcomm"],
+                    ["DestMap"] = maps["station"],
                     ["LocalTimer"] = countdownTime,
-                    ["SourceTimer"] = countdownTime + countdownTime,
+                    ["SourceTimer"] = countdownTime,
                     ["DestTimer"] = countdownTime,
                 };
-                _deviceNetworkSystem.QueuePacket(shuttle.EmergencyShuttle.Value, null, payload, net.TransmitFrequency);
+                _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }
         }
 
@@ -222,13 +218,21 @@ namespace Content.Server.RoundEnd
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
-            AllEntityQuery<EmergencyShuttleComponent>().MoveNext(out var shuttle, out _);
-            if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
-                _shuttleTimerSystem.KillAll(net?.TransmitFrequencyId);
-
-            // AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out _, out var shuttleComponent);
-            // if (shuttleComponent == null || !TryComp<DeviceNetworkComponent>(shuttleComponent.EmergencyShuttle, out var net))
-            //     return;
+            // remove all active shuttle timers
+            var maps = _shuttleTimerSystem.GetEscapeMaps();
+            if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
+            {
+                var payload = new NetworkPayload
+                {
+                    ["ShuttleMap"] = shuttle,
+                    ["SourceMap"] = maps["centcomm"],
+                    ["DestMap"] = maps["station"],
+                    ["LocalTimer"] = TimeSpan.FromMilliseconds(30),
+                    ["SourceTimer"] = TimeSpan.FromMilliseconds(30),
+                    ["DestTimer"] = TimeSpan.FromMilliseconds(30),
+                };
+                _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
+            }
         }
 
         public void EndRound(TimeSpan? countdownTime = null)

@@ -89,7 +89,6 @@
   - type: InteractionOutline
   - type: Appearance
   - type: Rotatable
-  - type: TextScreen
   - type: TextScreenVisuals
     textOffset: 2,3
     timerOffset: 2,-4

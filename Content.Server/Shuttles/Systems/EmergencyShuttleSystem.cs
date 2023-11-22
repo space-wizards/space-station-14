@@ -181,6 +181,9 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         });
     }
 
+    /// <summary>
+    ///     Escape shuttle FTL event handler. The only escape shuttle FTL should be from station to centcomm
+    /// </summary>
     private void OnEmergencyFTL(EntityUid uid, EmergencyShuttleComponent component, ref FTLStartedEvent args)
     {
         TimeSpan ftlTime = TimeSpan.FromSeconds
@@ -204,25 +207,26 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     When the escape shuttle finishes FTL (docks at centcomm), have the timers display the round end countdown
+    /// </summary>
     private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
     {
-        AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var shuttle);
-        if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle.EmergencyShuttle, out var net))
+        var countdownTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
+        var maps = _shuttleTimerSystem.GetEscapeMaps();
+        if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
-            var stationGrid = _station.GetLargestGrid(Comp<StationDataComponent>(station));
-            var countdownTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
-            // AllEntityQuery<StationCentcommComponent>().MoveNext(out _, out var centcomm);
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = shuttle.EmergencyShuttle,
-                ["SourceMap"] = args.MapUid, //centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
-                ["DestMap"] = stationGrid == null ? null : Transform(stationGrid.Value).MapUid,
+                ["ShuttleMap"] = shuttle,
+                ["SourceMap"] = maps["centcomm"],
+                ["DestMap"] = maps["station"],
                 ["LocalTimer"] = countdownTime,
                 ["SourceTimer"] = countdownTime,
                 ["DestTimer"] = countdownTime,
+                ["Text"] = "BYE!"
             };
-
-            _deviceNetworkSystem.QueuePacket(shuttle.EmergencyShuttle.Value, null, payload, net.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
         }
     }
 
