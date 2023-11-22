@@ -1,10 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not showing the name of the fellow traitor that you have to keep
-      alive., type: Fix}
-  id: 4699
-  time: '2023-08-29T06:23:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added fultons for salvagers., type: Add}
@@ -2895,3 +2889,9 @@ Entries:
   - {message: Fix being unable to FTL dock to planets., type: Fix}
   id: 5198
   time: '2023-11-22T01:02:02.0000000+00:00'
+- author: Feluk6174
+  changes:
+  - {message: 'Bananadine is now a psychedelic that can be obtained by grinding baked
+      banana peels, which can be obtained by microwaving banana peels.', type: Add}
+  id: 5199
+  time: '2023-11-22T01:08:53.0000000+00:00'
