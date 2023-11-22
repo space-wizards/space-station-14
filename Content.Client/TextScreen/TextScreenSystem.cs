@@ -117,17 +117,20 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.ScreenText, out string?[] text, appearance))
             component.TextToDraw = text;
 
-        if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.TargetTime, out TimeSpan time, appearance) &&
-            time > _gameTiming.CurTime)
+        if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.TargetTime, out TimeSpan time, appearance))
         {
             var timer = EnsureComp<TextScreenTimerComponent>(uid);
-            timer.Target = time;
-            BuildTimerLayers(uid, timer, component);
-            DrawLayers(uid, timer.LayerStatesToDraw);
-        }
-        else
-        {
-            RemComp<TextScreenTimerComponent>(uid);
+            if (time > _gameTiming.CurTime)
+            {
+                timer.Target = time;
+                BuildTimerLayers(uid, timer, component);
+                DrawLayers(uid, timer.LayerStatesToDraw);
+            }
+            // else
+            // {
+            //     OnTimerFinish(uid, timer, component);
+            //     return;
+            // }
         }
 
         ResetText(uid, component);
@@ -273,7 +276,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         var query = EntityQueryEnumerator<TextScreenTimerComponent, TextScreenVisualsComponent>();
         while (query.MoveNext(out var uid, out var timer, out var screen))
         {
-            if (timer.Target <= _gameTiming.CurTime)
+            if (timer.Target < _gameTiming.CurTime)
             {
                 OnTimerFinish(uid, timer, screen);
                 continue;

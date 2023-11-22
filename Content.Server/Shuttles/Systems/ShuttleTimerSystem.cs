@@ -85,8 +85,8 @@ namespace Content.Server.Shuttles.Systems
         }
 
         /// <summary>
-        /// Helper method for <see cref="RoundEndSystem"/> and <see cref="EmergencyShuttleSystem"/>
-        /// to get the MapUids of the `eshuttle`, `centcomm`, and the best-guess `station` (using getlargestgrid).
+        /// Helper method for <see cref="RoundEndSystem"/> and <see cref="EmergencyShuttleSystem"/> to get the MapUids of
+        /// the `eshuttle`, `centcomm`, and the best-guess `station` (using <see cref="StationSystem.GetLargestGrid(StationDataComponent)"/>)
         /// </summary>
         /// <returns>{"eshuttle":uid?, "centcomm":uid?, "station":uid?}</returns>
         public Dictionary<string, EntityUid?> GetEscapeMaps()
@@ -102,49 +102,49 @@ namespace Content.Server.Shuttles.Systems
 
             return new Dictionary<string, EntityUid?>
             {
-                {"eshuttle", stationMap}, {"centcomm", centcommMap}, {"station", eshuttleMap}
+                {"eshuttle", eshuttleMap}, {"centcomm", centcommMap}, {"station", stationMap}
             };
         }
 
-        public void EscapeTimers(TimeSpan shuttleTime, TimeSpan centcommTime, TimeSpan stationTime, bool stationSource)
-        {
-            AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var eshuttleComp);
-            var targetGrid = _stationSystem.GetLargestGrid(Comp<StationDataComponent>(station));
-            var stationMap = targetGrid == null ? null : Transform(targetGrid.Value).MapUid;
+        // public void EscapeTimers(TimeSpan shuttleTime, TimeSpan centcommTime, TimeSpan stationTime, bool stationSource)
+        // {
+        //     AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var eshuttleComp);
+        //     var targetGrid = _stationSystem.GetLargestGrid(Comp<StationDataComponent>(station));
+        //     var stationMap = targetGrid == null ? null : Transform(targetGrid.Value).MapUid;
 
-            var eshuttleMap = eshuttleComp?.EmergencyShuttle;
-            if (eshuttleMap == null || !TryComp<DeviceNetworkComponent>(eshuttleMap, out var net))
-                return;
+        //     var eshuttleMap = eshuttleComp?.EmergencyShuttle;
+        //     if (eshuttleMap == null || !TryComp<DeviceNetworkComponent>(eshuttleMap, out var net))
+        //         return;
 
-            AllEntityQuery<StationCentcommComponent>().MoveNext(out var centcomm);
-            EntityUid? centcommMap = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId);
+        //     AllEntityQuery<StationCentcommComponent>().MoveNext(out var centcomm);
+        //     EntityUid? centcommMap = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId);
 
-            NetworkPayload payload;
-            if (stationSource)
-            {
-                payload = new NetworkPayload
-                {
-                    ["ShuttleMap"] = eshuttleMap,
-                    ["SourceMap"] = stationMap,
-                    ["DestMap"] = centcommMap,
-                    ["LocalTimer"] = shuttleTime,
-                    ["SourceTimer"] = stationTime,
-                    ["DestTimer"] = centcommTime
-                };
-            }
-            else
-            {
-                payload = new NetworkPayload
-                {
-                    ["ShuttleMap"] = eshuttleMap,
-                    ["SourceMap"] = centcommMap,
-                    ["DestMap"] = stationMap,
-                    ["LocalTimer"] = shuttleTime,
-                    ["SourceTimer"] = centcommTime,
-                    ["DestTimer"] = stationTime
-                };
-            }
-            _deviceNetworkSystem.QueuePacket(eshuttleMap.Value, null, payload, net.TransmitFrequency);
-        }
+        //     NetworkPayload payload;
+        //     if (stationSource)
+        //     {
+        //         payload = new NetworkPayload
+        //         {
+        //             ["ShuttleMap"] = eshuttleMap,
+        //             ["SourceMap"] = stationMap,
+        //             ["DestMap"] = centcommMap,
+        //             ["LocalTimer"] = shuttleTime,
+        //             ["SourceTimer"] = stationTime,
+        //             ["DestTimer"] = centcommTime
+        //         };
+        //     }
+        //     else
+        //     {
+        //         payload = new NetworkPayload
+        //         {
+        //             ["ShuttleMap"] = eshuttleMap,
+        //             ["SourceMap"] = centcommMap,
+        //             ["DestMap"] = stationMap,
+        //             ["LocalTimer"] = shuttleTime,
+        //             ["SourceTimer"] = centcommTime,
+        //             ["DestTimer"] = stationTime
+        //         };
+        //     }
+        //     _deviceNetworkSystem.QueuePacket(eshuttleMap.Value, null, payload, net.TransmitFrequency);
+        // }
     }
 }
