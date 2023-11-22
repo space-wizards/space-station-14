@@ -3,12 +3,14 @@ using System.Numerics;
 using Content.Server.Gateway.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
+using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -26,6 +28,7 @@ namespace Content.Server.Gateway.Systems;
 /// </summary>
 public sealed class GatewayGeneratorSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
@@ -87,6 +90,9 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
     private void OnGeneratorMapInit(EntityUid uid, GatewayGeneratorComponent generator, MapInitEvent args)
     {
+        if (!_cfgManager.GetCVar(CCVars.GatewayGeneratorEnabled))
+            return;
+
         generator.NextUnlock = TimeSpan.FromMinutes(5);
 
         for (var i = 0; i < 3; i++)
@@ -109,6 +115,10 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var random = new Random(seed);
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
+
+        var gatewayName = SharedSalvageSystem.GetFTLName(_protoManager.Index<DatasetPrototype>(PlanetNames), seed);
+        _metadata.SetEntityName(mapUid, gatewayName);
+
         var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
         var restriction = AddComp<RestrictedRangeComponent>(mapUid);
         restriction.Origin = origin;
@@ -126,8 +136,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
         // Clear area nearby as a sort of landing pad.
         _maps.SetTiles(mapUid, grid, tiles);
-
-        var gatewayName = SharedSalvageSystem.GetFTLName(_protoManager.Index<DatasetPrototype>(PlanetNames), seed);
 
         _metadata.SetEntityName(mapUid, gatewayName);
         var originCoords = new EntityCoordinates(mapUid, origin);

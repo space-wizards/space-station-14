@@ -44,7 +44,7 @@
         frequency: 2
         noiseType: OpenSimplex2
       allowedTiles:
-        - FloorLowDesert
+        - FloorAsteroidSand
       entities:
         - FloraRockSolid01
         - FloraRockSolid02
@@ -62,9 +62,9 @@
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
       allowedTiles:
-        - FloorLowDesert
+        - FloorAsteroidSand
       entities:
-        - AsteroidRock
+        - WallRockSand
     - !type:BiomeDummyLayer
       id: Loot
     # Fill layer
@@ -72,14 +72,14 @@
       threshold: -1
       variants:
         - 0
-      tile: FloorLowDesert
+      tile: FloorAsteroidSand
     - !type:BiomeTileLayer
-      threshold: 0.25
+      threshold: 0.80
       noise:
         seed: 1
         noiseType: OpenSimplex2
         frequency: 2
-      tile: FloorLowDesert
+      tile: FloorAsteroidSand
 
 # Grass
 - type: biomeTemplate
