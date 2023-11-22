@@ -1,6 +1,6 @@
 <Document>
   # Cyborgs
-  Cyborgs are man-machine hybrids, purpose-built by the [textlink="robotics"  link="Robotics"] division of science for a variety of duties across the station. Bound by [color=cyan]silicon laws[/color] which they follow strictly, and religiously, they serve the crew unconditionally, most of the time.
+  Cyborgs are man-machine hybrids, purpose-built by the [textlink="robotics"  link="Robotics"] division of science for various duties across the station. Bound by [color=cyan]silicon laws[/color] which they follow strictly, and religiously, they serve the crew unconditionally. [italic](Most of the time.)[italic]
 
   ## Basic Components
   <Box>
@@ -9,9 +9,9 @@
   </Box>
   All cyborgs are built on a endoskeleton, which can be crafted at an [color=#a4885c]Exosuit Fabricator[/color]. Further assembly steps can be followed by [color=#a4885c]examining[/color] it. Once built, further upgrades, such as additional tools, and longer battery life can be done with modules and a better power cell, respectively.
 
-  In addition, newly built cyborgs need a [color=#a4885c]brain[/color] able to interface with the body. There are two main types of such, both of which are able to speak independently, should the chassis be decommissioned, exchanged, or otherwise [color=red]suffer an unscheduled dissassembly[/color];
+  In addition, newly built cyborgs need a [color=#a4885c]brain[/color] able to interface with the electronic body. There are two main types of such, both of which are able to speak independently, should the chassis be decommissioned, exchanged, or otherwise [color=red]suffer an unscheduled dissassembly[/color];
   - The [color=#a4885c]Man-Machine Interface[/color] or MMI for short, is an apparatus able to faciliate communication between a biological brain and electronic components, enabling those suffering from major workplace accidents to continue serving their crew, long after their body is gone.
-  - The [color=#a4885c]Positronic Brain[/color] or PB for short, is an entirely artificial brain, capable of spotaneous neural activity. The time for the synthetic neurons to descramble can wildly vary, but they allow for the creation of cyborgs without having to extract a brain from someone.
+  - The [color=#a4885c]Positronic Brain[/color] or PB for short, is an entirely artificial brain, capable of spotaneous neural activity. The time for the synthetic neurons to descramble can wildly vary, but they allow for the creation of cyborgs without having to extract a brain from a crewmember.
   <Box>
     <GuideEntityEmbed Entity="MMIFilled" Caption="Man-Machine Interface"/>
     <GuideEntityEmbed Entity="PositronicBrain" Caption="Positronic Brain"/>
@@ -28,13 +28,28 @@
     <GuideEntityEmbed Entity="BorgChassisService" Caption="Service"/>
     <GuideEntityEmbed Entity="BorgChassisMedical" Caption="Medical"/>
   </Box>
-  If you wish to change the chassis of an already existing cyborg, you have to construct a whole new one, limbs and frame included. The brain, power cell, and modules [italic](if it can fit in the new chassis, that is,)[/italic] can be carried over from the old chassis, if desired.
+  <Box>
+    [italic]Examples of various cyborg chassis.[/italic]
+  </Box>
+  If you wish to change the chassis of an already existing cyborg, you have to construct a whole new one, limbs and frame included. The brain, power cell and modules [italic](if it can fit in the new chassis,)[/italic] can be carried over from the old chassis, if desired.
 
   ## Modules
   <Box>
     <GuideEntityEmbed Entity="BorgModuleTool" Caption="Tool Cyborg Module"/>
   </Box>
-  A cyborg isn't able to do much without [color=#a4885c]modules[/color]. These printed circuit boards are specific to cyborgs and grant additonal functionality to the synthetic creatures. As stated before, some modules are specific to a [color=#a4885c]chassis[/color] with only exception being [color=violet]science[/color] modules, and cannot be fitted elsewhere. These exclusive modules are usually marked with their corresponding department's colors.
+  A cyborg isn't able to do much without [color=#a4885c]modules[/color]. These printed circuit boards are specific to cyborgs and grant additional functionality to the synthetic creatures. They are printed at the [color=#a4885c]Exosuit Fabricator[/color].
+
+  [color=#a4885c]Generic[/color] modules add versatility. They can be fitted into any chassis, granting useful tools such as crowbars, GPS, and the ability to interact with cables. [bold]The generic borg chassis can fit up to 6 modules in total.[/bold]
+  <Box>
+    <GuideEntityEmbed Entity="BorgModuleCable" Caption="Cable"/>
+    <GuideEntityEmbed Entity="BorgModuleGPS" Caption="GPS"/>
+    <GuideEntityEmbed Entity="BorgModuleFireExtinguisher" Caption="Fire Extinguisher"/>
+  </Box>
+  <Box>
+    [italic]Examples of generic modules.[/italic]
+  </Box>
+
+  For more specific needs, [color=#a4885c]specialized[/color] modules are available, granting capabilities like scanning anomalies, constructing walls, reviving crewmates, or cleaning a space lube spill. These modules are typically [color=#a4885c]colored[/color] with the same pallette as the department [italic](or occupation)[/italic] they relate to. These modules [italic](with exception to [color=violet]science[/color] modules, which can fit any chassis,)[/italic] can only be fitted in their associated borg chassis. [bold]The specialized borg chassis, being the engineering, janitorial, service, medical, and mining chassis, can fit up to 4 modules.[/bold]
   <Box>
     <GuideEntityEmbed Entity="BorgModuleAnomaly" Caption="Anomaly"/>
     <GuideEntityEmbed Entity="BorgModuleRCD" Caption="RCD"/>
@@ -43,5 +58,9 @@
     <GuideEntityEmbed Entity="BorgModuleService" Caption="Service"/>
     <GuideEntityEmbed Entity="BorgModuleTreatment" Caption="Treatment"/>
   </Box>
+  <Box>
+    [italic]Examples of specialized modules. Note the housing and circuit board colors.
+  </Box>
   Additional modules with advanced, or novel capabilities can be acquired through new [textlink="technologies"  link="Technologies"] from your scientists.
 </Document>
+
