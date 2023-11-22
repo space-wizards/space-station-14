@@ -1,0 +1,15 @@
+- type: entity
+  parent: LockerBaseSecure
+  id: LockerLostAndFound
+  name: lost and found locker
+  components:
+  - type: LostAndFound
+  - type: EntityStorage
+    capacity: 999 # Supposed to fit a lot.
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: lostandfound
+    stateDoorOpen: lostandfound_open
+    stateDoorClosed: lostandfound_door
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
