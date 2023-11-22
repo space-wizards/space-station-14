@@ -454,9 +454,14 @@ namespace Content.Server.Decals
                     previouslySent.Remove(netGrid);
 
                     // Was the grid deleted?
-                    if (TryGetEntity(netGrid, out var gridId) && !MapManager.IsGrid(gridId.Value))
+                    if (TryGetEntity(netGrid, out var gridId) && HasComp<MapGridComponent>(gridId.Value))
                     {
-                        // If grid was deleted then don't worry about telling the client to delete the chunk.
+                        // no -> add it to the list of stale chunks
+                        staleChunks[netGrid] = oldIndices;
+                    }
+                    else
+                    {
+                        // If the grid was deleted then don't worry about telling the client to delete the chunk.
                         oldIndices.Clear();
                         _chunkIndexPool.Return(oldIndices);
                     }
