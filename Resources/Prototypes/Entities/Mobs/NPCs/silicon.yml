@@ -320,7 +320,7 @@
         minDamage: 0
         maxDamage: 50
       Critical:
-        reagent: DexalinPlus
+        reagent: Inaprovaline
         quantity: 15
   - type: EmaggableMedibot
     replacements:
