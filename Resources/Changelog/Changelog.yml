@@ -1,18 +1,4 @@
 Entries:
-- author: func_kenobi
-  changes:
-  - message: "CentComm allowed the station architectors to place Schr\xF6dinger's\
-      \ grilles."
-    type: Add
-  id: 4653
-  time: '2023-08-22T02:21:45.0000000+00:00'
-- author: astriloqua
-  changes:
-  - message: NanoTransen has hired professionals to teach people how to use toilets.
-      Employees can now properly sit on toilets.
-    type: Tweak
-  id: 4654
-  time: '2023-08-22T04:21:51.0000000+00:00'
 - author: kalane15
   changes:
   - message: Dropping item stops its examination
@@ -3551,3 +3537,26 @@ Entries:
     type: Fix
   id: 5135
   time: '2023-11-23T18:37:56.0000000+00:00'
+- author: Meower
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0437\u0430\u0449\
+      \u0438\u0442\u0430 \u043E\u0442 Stamina \u0443\u0440\u043E\u043D\u0430 \u0441\
+      \u043A\u0430\u0444\u0430\u043D\u0434\u0440\u0443 \u041E\u0421\u0429"
+    type: Add
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u043E\u0442\
+      \u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0448\u043B\u0435\u043C\u0430\
+      \ \u0443 \u043A\u043E\u0441\u0442\u044E\u043C\u0430 \u0434\u0436\u0430\u0433\
+      \u0433\u0435\u0440\u043D\u0430\u0443\u0442\u0430 Cybersun"
+    type: Fix
+  id: 5136
+  time: '2023-11-23T18:50:15.0000000+00:00'
+- author: ZoNeSRuS
+  changes:
+  - message: "\u0411\u0430\u0444\u043D\u0443\u0442\u044B \u0437\u043E\u043C\u0431\u0438\
+      ."
+    type: Tweak
+  - message: "\u0418\u0437\u043C\u0435\u043D\u044B \u0441\u0442\u0430\u0442\u044B\
+      \ \u043A\u043E\u0441\u0442\u044E\u043C\u0430 \u0420\u0425\u0411\u0417\u0417"
+    type: Tweak
+  id: 5137
+  time: '2023-11-23T18:51:04.0000000+00:00'
