@@ -389,11 +389,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      25: Critical
-      50: Dead
+      15: Critical
+      30: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 2.5
     weightlessAcceleration: 1.5
     weightlessFriction: 1
     weightlessModifier: 1
@@ -423,7 +423,7 @@
       Unsexed: UnisexMoth
     wilhelmProbability: 0.001
   - type: MobPrice
-    price: 60
+    price: 150
   - type: Tag
     tags:
     - Trash
