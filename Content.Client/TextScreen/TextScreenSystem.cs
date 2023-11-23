@@ -81,6 +81,9 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         BuildTextLayers(uid, component, sprite);
     }
 
+    /// <summary>
+    ///     Instantiates <see cref="SpriteComponent.Layers"/> with {<see cref="TimerMapKey"/> + int : <see cref="DefaultState"/>} pairs.
+    /// </summary>
     private void OnTimerInit(EntityUid uid, TextScreenTimerComponent timer, ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp<TextScreenVisualsComponent>(uid, out var screen))
@@ -106,71 +109,51 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             return;
 
         var appearance = args.Component;
-        var sprite = args.Sprite;
-
-        // if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.On, out bool on, appearance))
-        // {
-        //     component.Activated = on;
-        //     UpdateVisibility(uid, component, sprite);
-        // }
-
-        if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.ScreenText, out string?[] text, appearance))
-            component.TextToDraw = text;
 
         if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.TargetTime, out TimeSpan time, appearance))
         {
-            var timer = EnsureComp<TextScreenTimerComponent>(uid);
             if (time > _gameTiming.CurTime)
             {
+                var timer = EnsureComp<TextScreenTimerComponent>(uid);
                 timer.Target = time;
                 BuildTimerLayers(uid, timer, component);
                 DrawLayers(uid, timer.LayerStatesToDraw);
             }
-            // else
-            // {
-            //     OnTimerFinish(uid, timer, component);
-            //     return;
-            // }
+            else
+            {
+                OnTimerFinish(uid, component);
+            }
         }
 
-        ResetText(uid, component);
-        BuildTextLayers(uid, component, sprite);
-        DrawLayers(uid, component.LayerStatesToDraw);
+        if (AppearanceSystem.TryGetData(uid, TextScreenVisuals.ScreenText, out string?[] text, appearance))
+        {
+            component.TextToDraw = text;
+            ResetText(uid, component);
+            BuildTextLayers(uid, component, args.Sprite);
+            DrawLayers(uid, component.LayerStatesToDraw);
+        }
     }
 
     /// <summary>
     ///     Removes the timer component, clears the sprite layer dict,
     ///     and draws <see cref="TextScreenVisualsComponent.Text"/>
     /// </summary>
-    private void OnTimerFinish(EntityUid uid, TextScreenTimerComponent timer, TextScreenVisualsComponent screen)
+    private void OnTimerFinish(EntityUid uid, TextScreenVisualsComponent screen)
     {
-        RemComp<TextScreenTimerComponent>(uid);
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        screen.TextToDraw = screen.Text;
+
+        if (!TryComp<TextScreenTimerComponent>(uid, out var timer) || !TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
         foreach (var key in timer.LayerStatesToDraw.Keys)
             sprite.RemoveLayer(key);
 
-        screen.TextToDraw = screen.Text;
+        RemComp<TextScreenTimerComponent>(uid);
+
         ResetText(uid, screen);
         BuildTextLayers(uid, screen, sprite);
         DrawLayers(uid, screen.LayerStatesToDraw);
     }
-
-    /// <summary>
-    ///     Sets visibility of text to <see cref="TextScreenVisualsComponent.Activated"/>.
-    /// </summary>
-    // public void UpdateVisibility(EntityUid uid, TextScreenVisualsComponent component, SpriteComponent? sprite = null)
-    // {
-    //     if (!Resolve(uid, ref sprite))
-    //         return;
-
-    //     var dict = TryComp<TextScreenTimerComponent>(uid, out var timer) ?
-    //         component.LayerStatesToDraw.Concat(timer.LayerStatesToDraw) : component.LayerStatesToDraw;
-
-    //     foreach (var (key, _) in dict)
-    //         sprite.LayerSetVisible(key, component.Activated);
-    // }
 
     /// <summary>
     ///     Clears <see cref="TextScreenVisualsComponent.LayerStatesToDraw"/>, and instantiates new blank defaults.
@@ -214,13 +197,14 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             if (row == null)
                 continue;
             var min = Math.Min(row.Length, component.RowLength);
+
             for (var chr = 0; chr < min; chr++)
             {
                 component.LayerStatesToDraw[TextMapKey + rowIdx + chr] = GetStateFromChar(row[chr]);
                 sprite.LayerSetOffset(
                     TextMapKey + rowIdx + chr,
                     Vector2.Multiply(
-                        new Vector2((chr - min / 2f) * CharWidth, rowIdx * component.RowOffset),
+                        new Vector2((chr - min / 2f + 0.5f) * CharWidth, -rowIdx * component.RowOffset),
                         TextScreenVisualsComponent.PixelSize
                         ) + component.TextOffset
                 );
@@ -229,7 +213,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     }
 
     /// <summary>
-    ///     Populates timer.LayerStatesToDraw & the sprite component's layer dict with calculated offsets
+    ///     Populates timer.LayerStatesToDraw & the sprite component's layer dict with calculated offsets.
     /// </summary>
     public void BuildTimerLayers(EntityUid uid, TextScreenTimerComponent timer, TextScreenVisualsComponent screen)
     {
@@ -250,7 +234,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             sprite.LayerSetOffset(
                 TimerMapKey + i,
                 Vector2.Multiply(
-                    new Vector2((i - min / 2f) * CharWidth, 0f),
+                    new Vector2((i - min / 2f + 0.5f) * CharWidth, 0f),
                     TextScreenVisualsComponent.PixelSize
                     ) + screen.TimerOffset
             );
@@ -258,7 +242,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     }
 
     /// <summary>
-    /// Draws the contents of a LayerStatesToDraw dict by setting the states in the sprite component.
+    ///     Draws a LayerStates dict by setting the sprite states individually.
     /// </summary>
     private void DrawLayers(EntityUid uid, Dictionary<string, string?> layerStates, SpriteComponent? sprite = null)
     {
@@ -278,7 +262,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         {
             if (timer.Target < _gameTiming.CurTime)
             {
-                OnTimerFinish(uid, timer, screen);
+                OnTimerFinish(uid, screen);
                 continue;
             }
 

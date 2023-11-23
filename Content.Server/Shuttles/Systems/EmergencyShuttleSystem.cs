@@ -214,7 +214,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     {
         var countdownTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
         var maps = _shuttleTimerSystem.GetEscapeMaps();
-        if (maps.TryGetValue("eshuttle", out var shuttle) && TryComp<DeviceNetworkComponent>(shuttle, out var net))
+        var shuttle = args.Entity;
+        if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
             var payload = new NetworkPayload
             {
@@ -226,7 +227,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 ["DestTimer"] = countdownTime,
                 ["Text"] = "BYE!"
             };
-            _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }
     }
 

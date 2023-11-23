@@ -25,26 +25,19 @@ public sealed partial class TextScreenVisualsComponent : Component
     public bool Activated;
 
     /// <summary>
-    ///     Prevent text updates while a timer is running?
-    /// </summary>
-    [DataField("locked")]
-    public bool Locked;
-
-    /// <summary>
-    ///     Offset for drawing the text.
-    ///     (0, 8) pixels is the default for the Structures\Wallmounts\textscreen.rsi
+    ///     Offset for centering the text.
     /// </summary>
     [DataField("textOffset"), ViewVariables(VVAccess.ReadWrite)]
     public Vector2 TextOffset { get; set; } = Vector2.Zero;
 
     /// <summary>
-    ///    Offset for drawing the timer.
+    ///    Offset for centering the timer.
     /// </summary>
     [DataField("timerOffset"), ViewVariables(VVAccess.ReadWrite)]
     public Vector2 TimerOffset { get; set; } = Vector2.Zero;
 
     /// <summary>
-    ///     Number of rows of text to render.
+    ///     Number of rows of text this screen can render.
     /// </summary>
     [DataField("rows")]
     public int Rows { get; set; } = 1;

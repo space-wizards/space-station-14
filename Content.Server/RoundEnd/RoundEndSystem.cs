@@ -34,7 +34,6 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;

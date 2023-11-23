@@ -57,7 +57,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawn, before: new []{typeof(SpawnPointSystem)});
+        SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawn, before: new[] { typeof(SpawnPointSystem) });
         SubscribeLocalEvent<StationArrivalsComponent, ComponentStartup>(OnArrivalsStartup);
 
         SubscribeLocalEvent<ArrivalsShuttleComponent, ComponentStartup>(OnShuttleStartup);
@@ -236,10 +236,8 @@ public sealed class ArrivalsSystem : EntitySystem
             {
                 ["ShuttleMap"] = shuttleXform.MapUid,
                 ["SourceMap"] = args.MapUid,
-
                 ["LocalTimer"] = dockTime,
                 ["SourceTimer"] = dockTime,
-
                 ["Docked"] = true
             };
             _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);

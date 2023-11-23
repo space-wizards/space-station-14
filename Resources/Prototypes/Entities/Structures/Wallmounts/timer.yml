@@ -53,6 +53,7 @@
   - type: TextScreenVisuals
     color: FloralWhite
     textOffset: 0,8
+    timerOffset: 0,8
     textLength: 5
   - type: Sprite
     drawdepth: WallMountedItems
@@ -90,8 +91,8 @@
   - type: Appearance
   - type: Rotatable
   - type: TextScreenVisuals
-    textOffset: 2,3
-    timerOffset: 2,-4
+    textOffset: 0,3
+    timerOffset: 0,-4
     rows: 2
   - type: Sprite
     drawdepth: WallMountedItems
@@ -117,11 +118,6 @@
   - type: ShuttleTimer
   - type: DeviceNetwork
     receiveFrequencyId: ShuttleTimer
-  - type: TextScreenVisuals
-    textOffset: 2,3
-    timerOffset: 2,-4
-    rows: 2
-    rowLength: 5
 
 - type: entity
   id: EvacShuttleTimer

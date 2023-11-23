@@ -14,6 +14,7 @@ using Robust.Shared.Timing;
 using Content.Shared.TextScreen;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Robust.Shared.Graphics;
 
 // TODO:
 // - emergency shuttle recall inverts timer?
@@ -27,7 +28,6 @@ namespace Content.Server.Shuttles.Systems
     /// </summary>
     public sealed class ShuttleTimerSystem : EntitySystem
     {
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -105,46 +105,5 @@ namespace Content.Server.Shuttles.Systems
                 {"eshuttle", eshuttleMap}, {"centcomm", centcommMap}, {"station", stationMap}
             };
         }
-
-        // public void EscapeTimers(TimeSpan shuttleTime, TimeSpan centcommTime, TimeSpan stationTime, bool stationSource)
-        // {
-        //     AllEntityQuery<StationEmergencyShuttleComponent>().MoveNext(out var station, out var eshuttleComp);
-        //     var targetGrid = _stationSystem.GetLargestGrid(Comp<StationDataComponent>(station));
-        //     var stationMap = targetGrid == null ? null : Transform(targetGrid.Value).MapUid;
-
-        //     var eshuttleMap = eshuttleComp?.EmergencyShuttle;
-        //     if (eshuttleMap == null || !TryComp<DeviceNetworkComponent>(eshuttleMap, out var net))
-        //         return;
-
-        //     AllEntityQuery<StationCentcommComponent>().MoveNext(out var centcomm);
-        //     EntityUid? centcommMap = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId);
-
-        //     NetworkPayload payload;
-        //     if (stationSource)
-        //     {
-        //         payload = new NetworkPayload
-        //         {
-        //             ["ShuttleMap"] = eshuttleMap,
-        //             ["SourceMap"] = stationMap,
-        //             ["DestMap"] = centcommMap,
-        //             ["LocalTimer"] = shuttleTime,
-        //             ["SourceTimer"] = stationTime,
-        //             ["DestTimer"] = centcommTime
-        //         };
-        //     }
-        //     else
-        //     {
-        //         payload = new NetworkPayload
-        //         {
-        //             ["ShuttleMap"] = eshuttleMap,
-        //             ["SourceMap"] = centcommMap,
-        //             ["DestMap"] = stationMap,
-        //             ["LocalTimer"] = shuttleTime,
-        //             ["SourceTimer"] = centcommTime,
-        //             ["DestTimer"] = stationTime
-        //         };
-        //     }
-        //     _deviceNetworkSystem.QueuePacket(eshuttleMap.Value, null, payload, net.TransmitFrequency);
-        // }
     }
 }
