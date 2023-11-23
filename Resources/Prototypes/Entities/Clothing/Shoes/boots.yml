@@ -54,7 +54,7 @@
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsCombat
   name: combat boots
-  description: Robust combat Boots for combat scenarios or combat situations. All combat, all the time.
+  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/combatboots.rsi
