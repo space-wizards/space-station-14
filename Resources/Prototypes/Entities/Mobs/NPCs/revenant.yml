@@ -67,6 +67,8 @@
       # troll medical to help get kills
       - StasisBed
       - EmaggableMedibot
+      # borg become killer
+      - EmagSiliconLaw
   - type: PointLight
     color: MediumPurple
     radius: 2
