@@ -54,7 +54,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingShoesBase
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesBaseWinterBoots
   components:
   - type: Butcherable
