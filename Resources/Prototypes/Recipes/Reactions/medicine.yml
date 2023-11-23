@@ -401,8 +401,8 @@
   id: Opporozidone
   minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:
-    Siderlac: 
-      amount: 2
+    Cognizine: 
+      amount: 1
     Plasma:
       amount: 2
     Doxarubixadone:

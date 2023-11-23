@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public sealed partial class ReduceRotting : ReagentEffect
     {
-        [DataField("rottingAmount")]
+        [DataField("seconds")]
         public double RottingAmount = 10;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
