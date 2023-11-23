@@ -1,7 +1,6 @@
-- files:
-  - [rumble.ogg]
-  license: "CC-BY-4.0"
+- files: [rumble.ogg]
   copyright: "Made by Uzbazur freesound.org, modified by brainfood1183 (github)"
+  license: "CC-BY-4.0"
   source: "https://freesound.org/people/Uzbazur/sounds/221872/"
 
 - files: [fireball.ogg]
