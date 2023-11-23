@@ -2,7 +2,7 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsWork
   name: workboots
-  description: Engineering lace-up work Boots for the especially blue-collar.
+  description: Engineering lace-up work boots for the especially blue-collar.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/workboots.rsi
@@ -14,7 +14,7 @@
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsJack
   name: jackboots
-  description: Nanotrasen-issue Security combat Boots for combat scenarios or combat situations. All combat, all the time.
+  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/jackboots.rsi
@@ -30,8 +30,8 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage
-  name: salvage Boots
-  description: Steel-toed salvage Boots for salvaging in hazardous environments.
+  name: salvage boots
+  description: Steel-toed salvage boots for salvaging in hazardous environments.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/explorer.rsi
@@ -43,7 +43,7 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsPerformer
   name: performer's Boots
-  description: These Boots provide great traction for when you're up on stage.
+  description: These boots provide great traction for when you're up on stage.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/performer.rsi
@@ -53,8 +53,8 @@
 - type: entity
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsCombat
-  name: combat Boots
-  description: Robust combat Boots for combat scenarios or combat situations. All combat, all the time.
+  name: combat boots
+  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/combatboots.rsi
@@ -70,7 +70,7 @@
 - type: entity
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsMerc
-  name: mercenary Boots
+  name: mercenary boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.
   components:
   - type: Sprite
@@ -438,4 +438,4 @@
           Quantity: 10
   - type: Construction
     graph: WebObjects
-    node: Boots
+    node: boots
