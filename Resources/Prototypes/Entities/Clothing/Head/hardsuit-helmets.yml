@@ -462,7 +462,7 @@
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: ClothingHeadHardsuitWithLightBase #SS220-syndifix
   id: ClothingHeadHelmetHardsuitCybersun
   noSpawn: true
   name: cybersun juggernaut helmet

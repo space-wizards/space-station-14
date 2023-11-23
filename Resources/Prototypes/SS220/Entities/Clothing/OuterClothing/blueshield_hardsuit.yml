@@ -23,6 +23,7 @@
         Heat: 0.8
         Radiation: 0.25
         Caustic: 0.6
+        Stamina: 0.35 #SS220-syndifix
   - type: ExplosionResistance
     damageCoefficient: 0.6
   - type: ToggleableClothing
