@@ -5,7 +5,7 @@ armor-examine = It provides the following protection:
 armor-coefficient-value = - [color=yellow]{$type}[/color] damage reduced by [color=lightblue]{$value}%[/color].
 armor-reduction-value = - [color=yellow]{$type}[/color] damage reduced by [color=lightblue]{$value}[/color].
 armor-damage-type-blunt = Blunt
-armor-damage-type-slash = Slashing
+armor-damage-type-slash = Slash
 armor-damage-type-piercing = Piercing
 armor-damage-type-heat = Heat
 armor-damage-type-radiation = Radiation
