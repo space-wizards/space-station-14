@@ -52,7 +52,7 @@ public sealed class RandomHumanoidSystem : EntitySystem
             {
                 var comp = (Component) _serialization.CreateCopy(entry.Component, notNullableOverride: true);
                 comp.Owner = humanoid; // This .owner must survive for now.
-                EntityManager.AddComponent(humanoid, comp, true);
+                EntityManager.AddComponent(humanoid, comp);
             }
         }
 

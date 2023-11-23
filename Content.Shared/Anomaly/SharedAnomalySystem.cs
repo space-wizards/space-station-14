@@ -109,7 +109,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var pulse = EnsureComp<AnomalyPulsingComponent>(uid);
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
         Appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
-        
+
         var ev = new AnomalyPulseEvent(uid, component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev, true);
     }
