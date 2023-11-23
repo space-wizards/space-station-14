@@ -447,6 +447,36 @@
     clothingPrototype: ClothingHeadHelmetModsuitOperativeSealed
     requiredSlot: outerClothing
     slot: head
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: CanMoveInAir
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.1
+    weightlessFriction: 0.3
+    weightlessModifier: 1.1
+  - type: Tag
+    tags:
+      - WhitelistChameleon
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitOperativeSealed
@@ -496,6 +526,36 @@
     clothingPrototype: ClothingHeadHelmetModsuitOperativeCMDSealed
     requiredSlot: outerClothing
     slot: head
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: CanMoveInAir
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.5
+    weightlessFriction: 0.3
+    weightlessModifier: 1.5
+  - type: Tag
+    tags:
+      - WhitelistChameleon
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitOperativeSealed
@@ -558,3 +618,33 @@
     clothingPrototype: ClothingHeadHelmetModsuitApocryphalSealed
     requiredSlot: outerClothing
     slot: head
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: CanMoveInAir
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.5
+    weightlessFriction: 0.3
+    weightlessModifier: 1.5
+  - type: Tag
+    tags:
+      - WhitelistChameleon

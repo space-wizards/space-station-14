@@ -77,9 +77,15 @@
   - type: Tag
     tags:
     - ModsuitControlEnd
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
   - type: ContainerContainer
     containers:
-      battery-container: !type:Container
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
 
 - type: entity
   parent: BaseItem
