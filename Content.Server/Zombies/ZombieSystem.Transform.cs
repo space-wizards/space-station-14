@@ -101,12 +101,9 @@ namespace Content.Server.Zombies
             RemComp<ThirstComponent>(target);
 
             //funny voice
-            var accentType = Prototype(target)!.ID switch
-            {
-                "MobMoth" => "zombieMoth",
-                "MobMothroach" => "zombieMoth",
-                _ => "zombie"
-            };
+            var accentType = "zombie";
+            if (TryComp<ZombieAccentOverrideComponent>(target, out var accent))
+                accentType = accent.Accent;
 
             EnsureComp<ReplacementAccentComponent>(target).Accent = accentType;
 
