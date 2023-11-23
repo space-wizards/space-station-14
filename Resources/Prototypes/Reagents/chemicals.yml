@@ -96,5 +96,5 @@
       - !type:PopupMessage
         visualType: MediumCaution
         type: Local
-        messages: generic-reagent-effect-parched
+        messages: [ "generic-reagent-effect-parched" ]
         probability: 0.1
