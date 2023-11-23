@@ -2,7 +2,7 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsWork
   name: workboots
-  description: Engineering lace-up work boots for the especially blue-collar.
+  description: Engineering lace-up work Boots for the especially blue-collar.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/workboots.rsi
@@ -14,7 +14,7 @@
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsJack
   name: jackboots
-  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  description: Nanotrasen-issue Security combat Boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/jackboots.rsi
@@ -30,8 +30,8 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage
-  name: salvage boots
-  description: Steel-toed salvage boots for salvaging in hazardous environments.
+  name: salvage Boots
+  description: Steel-toed salvage Boots for salvaging in hazardous environments.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/explorer.rsi
@@ -42,8 +42,8 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsPerformer
-  name: performer's boots
-  description: These boots provide great traction for when you're up on stage.
+  name: performer's Boots
+  description: These Boots provide great traction for when you're up on stage.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/performer.rsi
@@ -53,8 +53,8 @@
 - type: entity
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsCombat
-  name: combat boots
-  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+  name: combat Boots
+  description: Robust combat Boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/combatboots.rsi
@@ -70,7 +70,7 @@
 - type: entity
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsMerc
-  name: mercenary boots
+  name: mercenary Boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.
   components:
   - type: Sprite
@@ -96,394 +96,334 @@
     sprite: Clothing/Shoes/Boots/laceups.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinter
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterboots.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterAtmos
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsatmos.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsatmos.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterBar
   name: Winter Boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsbar.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsbar.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
     
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCap
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootscap.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootscap.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCargo
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootscargo.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootscargo.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCe
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsce.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsce.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCentCom
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootscentcom.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootscentcom.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterChef
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootschef.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootschef.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterChem
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootschem.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootschem.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterClown
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsclown.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsclown.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCmo
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootscmo.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootscmo.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterEngi
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsengi.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsengi.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterGen
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsgen.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsgen.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterHop
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootshop.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootshop.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterHos
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootshos.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootshos.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterHydro
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootshydro.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootshydro.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterJani
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsjani.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsjani.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterMed
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsmed.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsmed.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterMime
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsmime.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsmime.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterMiner
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsminer.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsminer.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterParamed
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsparamed.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsparamed.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterQm
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsqm.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsqm.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterRd
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsrd.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsrd.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterRobo
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsrobo.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsrobo.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
     
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterSci
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootssci.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootssci.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterSec
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterSyndicate
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterViro
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsviro.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsviro.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterWarden
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootswarden.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootswarden.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterWeb
-  name: winter boots
-  description: Fluffy boots to help survive even the coldest of winters.
+  name: Winter Boots
+  description: Fluffy Boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
-  - type: TemperatureProtection
-    coefficient: 0.05
   - type: FlavorProfile
     flavors:
       - cobwebs
@@ -498,4 +438,4 @@
           Quantity: 10
   - type: Construction
     graph: WebObjects
-    node: boots
+    node: Boots
