@@ -21,7 +21,7 @@
         - ReagentId: Vitamin
           Quantity: 5
   - type: Item
-    size: 25
+    size: Normal
 
 - type: entity
   parent: FoodCakeBase
@@ -43,7 +43,7 @@
         - ReagentId: Vitamin
           Quantity: 1
   - type: Item
-    size: 5
+    size: Tiny
 
 # Custom Cake Example
 
@@ -549,6 +549,73 @@
           Quantity: 3
 # Tastes like sweetness, cake, jam.
 
+- type: entity
+  name: cak
+  id: MobCatCake
+  parent: FoodCakeBase
+  description: It's a cake. It's a cat. It's a cak.
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cak
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
+  - type: Item
+    size: Ginormous
+    heldPrefix: cak
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Pets/cat.rsi
+    equippedPrefix: cak
+    slots:
+    - HEAD
+  - type: GhostRole
+    prob: 1
+    name: ghost-role-information-Cak-name
+    allowMovement: true
+    description: ghost-role-information-Cak-description
+    rules: ghost-role-information-Cak-rules
+  - type: GhostTakeoverAvailable
+  - type: OwOAccent
+  - type: Speech
+    speechSounds: Cat
+    speechVerb: SmallMob
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 3
+  - type: Tag
+    tags:
+    - VimPilot
+    - DoorBumpOpener
+  - type: CanEscapeInventory
+    baseResistTime: 2
+  - type: Puller
+    needsHands: false
+  - type: Examiner
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Animals/cat_hiss.ogg
+    hidden: true
+    damage:
+      groups:
+        Brute: 1
 
 # Suppermatter
 # I can't figure out where to put this. It kind of acts like a cake I guess?
@@ -574,7 +641,7 @@
   - type: Food
     transferAmount: 12
   - type: Item
-    size: 40
+    size: Normal
   - type: PointLight
     color: "#FFFF00"
     radius: 2

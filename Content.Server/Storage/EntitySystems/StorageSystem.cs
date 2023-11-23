@@ -1,5 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Explosion;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Lock;
@@ -27,6 +28,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
         base.Initialize();
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
         SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+        SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
@@ -90,11 +92,16 @@ public sealed partial class StorageSystem : SharedStorageSystem
         if (!_uiSystem.IsUiOpen(uid, args.UiKey))
         {
             storageComp.IsUiOpen = false;
-            UpdateStorageVisualization(uid, storageComp);
+            UpdateAppearance((uid, storageComp, null));
 
             if (storageComp.StorageCloseSound is not null)
                 Audio.Play(storageComp.StorageCloseSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, storageComp.StorageCloseSound.Params);
         }
+    }
+
+    private void OnExploded(Entity<StorageComponent> ent, ref BeforeExplodeEvent args)
+    {
+        args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
     }
 
     /// <summary>

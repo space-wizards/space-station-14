@@ -4,6 +4,7 @@ using Content.Shared.Pulling.Components;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Physics.Controllers

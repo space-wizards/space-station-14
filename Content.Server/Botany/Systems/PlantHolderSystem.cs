@@ -441,12 +441,14 @@ public sealed class PlantHolderSystem : EntitySystem
             component.Health -= 6 * healthMod;
         }
 
-        // Make sure the plant is not starving.
-        if (_random.Prob(0.35f))
+        // Prevents the plant from aging when lacking resources.
+        // Limits the effect on aging so that when resources are added, the plant starts growing in a reasonable amount of time.
+        if (component.SkipAging < 10)
         {
+            // Make sure the plant is not starving.
             if (component.NutritionLevel > 5)
             {
-                component.Health += healthMod;
+                component.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
             }
             else
             {
@@ -454,16 +456,10 @@ public sealed class PlantHolderSystem : EntitySystem
                 component.Health -= healthMod;
             }
 
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        // Make sure the plant is not thirsty.
-        if (_random.Prob(0.35f))
-        {
+            // Make sure the plant is not thirsty.
             if (component.WaterLevel > 10)
             {
-                component.Health += healthMod;
+                component.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
             }
             else
             {

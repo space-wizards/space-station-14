@@ -1,15 +1,14 @@
 - type: entity
-  parent: BaseItem
   id: BaseSubdermalImplant
   name: implant
   description: A microscopic chip that's injected under the skin.
   abstract: true
   components:
-    - type: SubdermalImplant
-    - type: Tag
-      tags:
-        - SubdermalImplant
-        - HideContextMenu
+  - type: SubdermalImplant
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
 
 #Fun implants
 
@@ -118,10 +117,9 @@
       whitelist:
         components:
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
-    - type: Item
-      size: 9999
     - type: Storage
-      capacity: 20 #10-20 should be more than enough for this
+      maxSlots: 4
+      maxItemSize: Small
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
