@@ -1176,6 +1176,15 @@
     FoodCheeseSlice: 3
 
 - type: microwaveMealRecipe
+  id: RecipePumpkinCake
+  name: pumpkin cake recipe
+  result: FoodCakePumpkin
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodPumpkin: 1
+
+- type: microwaveMealRecipe
   id: RecipeClownCake
   name: clown cake recipe
   result: FoodCakeClown
@@ -1249,6 +1258,19 @@
     Slime: 15
   solids:
     FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCatCake
+  name: cat cake recipe
+  result: MobCatCake
+  time: 15
+  reagents: 
+    Milk: 15
+    Cognizine: 5
+  solids:
+    FoodCakePlain: 1
+    FoodSnackRaisins: 1
+    OrganAnimalHeart: 1
 
 - type: microwaveMealRecipe
   id: RecipeGrapeTart
@@ -1591,6 +1613,14 @@
     Sigynate: 50
     Dermaline: 50
 
+- type: microwaveMealRecipe
+  id: RecipeTrashBakedBananaPeel
+  name: baked banana peel recipe
+  result: TrashBakedBananaPeel
+  time: 5
+  solids:
+    TrashBananaPeel: 1
+
 # Suppermatter
 - type: microwaveMealRecipe
   id: RecipeSuppermatter
@@ -1733,6 +1763,17 @@
     FoodCorn: 1
     FoodPlate: 1
     FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipePeaSoup
+  name: pea soup recipe
+  result: FoodSoupPea
+  time: 10
+  solids:
+    FoodPeaPod: 2
+    FoodBowlBig: 1
+  reagents:
+    Water: 10
 
 - type: microwaveMealRecipe
   id: RecipeTacoShell

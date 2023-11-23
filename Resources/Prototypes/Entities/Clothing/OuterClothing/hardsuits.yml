@@ -350,7 +350,7 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: Item
-    size: 50
+    size: Normal
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -430,6 +430,8 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: Item
+    size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
@@ -649,6 +651,8 @@
     sprintModifier: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
+  - type: StaticPrice
+    price: 0
 
 #Pirate Captain Hardsuit
 - type: entity
@@ -679,7 +683,8 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
-
+  - type: StaticPrice
+    price: 0
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit

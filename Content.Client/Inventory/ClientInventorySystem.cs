@@ -14,6 +14,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Inventory

@@ -10,16 +10,16 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Drunk;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Popups;
-using Content.Shared.Drunk;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
@@ -114,7 +114,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 // bloodloss damage is based on the base value, and modified by how low your blood level is.
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
-                _damageableSystem.TryChangeDamage(uid, amt, true, false);
+                _damageableSystem.TryChangeDamage(uid, amt, false, false);
 
                 // Apply dizziness as a symptom of bloodloss.
                 // The effect is applied in a way that it will never be cleared without being healthy.

@@ -7,6 +7,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
+using Content.Shared.Ghost;
 using Content.Shared.Maps;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Components;
@@ -77,6 +78,7 @@ public sealed partial class ShuttleSystem
 
     private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<BuckleComponent> _buckleQuery;
+    private EntityQuery<GhostComponent> _ghostQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<StatusEffectsComponent> _statusQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -85,6 +87,7 @@ public sealed partial class ShuttleSystem
     {
         _bodyQuery = GetEntityQuery<BodyComponent>();
         _buckleQuery = GetEntityQuery<BuckleComponent>();
+        _ghostQuery = GetEntityQuery<GhostComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _statusQuery = GetEntityQuery<StatusEffectsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
@@ -210,7 +213,7 @@ public sealed partial class ShuttleSystem
 
         if (HasComp<FTLComponent>(uid))
         {
-            _sawmill.Warning($"Tried queuing {ToPrettyString(uid)} which already has HyperspaceComponent?");
+            Log.Warning($"Tried queuing {ToPrettyString(uid)} which already has HyperspaceComponent?");
             return false;
         }
 
@@ -401,7 +404,7 @@ public sealed partial class ShuttleSystem
                     _console.RefreshShuttleConsoles(uid);
                     break;
                 default:
-                    _sawmill.Error($"Found invalid FTL state {comp.State} for {uid}");
+                    Log.Error($"Found invalid FTL state {comp.State} for {uid}");
                     RemComp<FTLComponent>(uid);
                     break;
             }
@@ -450,7 +453,8 @@ public sealed partial class ShuttleSystem
             return;
 
         _hyperSpaceMap = _mapManager.CreateMap();
-        _sawmill.Info($"Setup hyperspace map at {_hyperSpaceMap.Value}");
+        _metadata.SetEntityName(_mapManager.GetMapEntityId(_hyperSpaceMap.Value), "FTL");
+        Log.Debug($"Setup hyperspace map at {_hyperSpaceMap.Value}");
         DebugTools.Assert(!_mapManager.IsMapPaused(_hyperSpaceMap.Value));
         var parallax = EnsureComp<ParallaxComponent>(_mapManager.GetMapEntityId(_hyperSpaceMap.Value));
         parallax.Parallax = "FastSpace";
@@ -714,6 +718,11 @@ public sealed partial class ShuttleSystem
             foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))
             {
                 if (ent == uid || immune.Contains(ent))
+                {
+                    continue;
+                }
+
+                if (_ghostQuery.HasComponent(ent))
                 {
                     continue;
                 }

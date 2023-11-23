@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.NodeContainer;
@@ -16,6 +17,7 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ame.EntitySystems;
@@ -23,6 +25,7 @@ namespace Content.Server.Ame.EntitySystems;
 public sealed class AmeControllerSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
@@ -233,7 +236,15 @@ public sealed class AmeControllerSystem : EntitySystem
             safeLimit = group.CoreCount * 2;
 
         if (oldValue <= safeLimit && value > safeLimit)
-            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
+        {
+            if (_gameTiming.CurTime > controller.EffectCooldown)
+            {
+                _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
+                _audioSystem.PlayGlobal("/Audio/Misc/adminlarm.ogg",
+                    Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
+                controller.EffectCooldown = _gameTiming.CurTime + controller.CooldownDuration;
+            }
+        }
     }
 
     public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)

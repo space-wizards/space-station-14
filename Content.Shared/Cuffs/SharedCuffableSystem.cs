@@ -3,7 +3,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage;
@@ -617,6 +616,9 @@ namespace Content.Shared.Cuffs
         public void Uncuff(EntityUid target, EntityUid? user, EntityUid cuffsToRemove, CuffableComponent? cuffable = null, HandcuffComponent? cuff = null)
         {
             if (!Resolve(target, ref cuffable) || !Resolve(cuffsToRemove, ref cuff))
+                return;
+
+            if (TerminatingOrDeleted(cuffsToRemove) || TerminatingOrDeleted(target))
                 return;
 
             if (user != null)

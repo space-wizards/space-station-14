@@ -25,7 +25,6 @@
   - Salvage
   - Quartermaster
   - Maintenance
-  - External
   - Command
   special:
   - !type:AddImplantSpecial
