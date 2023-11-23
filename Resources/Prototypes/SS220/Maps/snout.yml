@@ -1,0 +1,18 @@
+﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+- type: gameMap
+  id: Snout
+  mapName: 'Snout shipyard (Event)'
+  mapPath: /Maps/EventMaps/snout.yml
+  minPlayers: 0
+  stations:
+    Snout:
+      stationProto: StandardSnoutStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Снаут'
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            #civilian
+            Passenger: [ -1, -1 ]

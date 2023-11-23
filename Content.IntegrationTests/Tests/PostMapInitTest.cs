@@ -71,7 +71,8 @@ namespace Content.IntegrationTests.Tests
             "220Fland",
             "220Ishimura",
             "220Gate",
-            "Nox"
+            "Nox",
+            "Snout"
         };
 
         /// <summary>

@@ -1,0 +1,13 @@
+﻿- type: entity
+  id: StandardSnoutStation
+  parent:
+    - BaseStation
+    - BaseStationCargo
+    - BaseStationJobsSpawning
+    - BaseStationRecords
+    - BaseStationAlertLevels
+    - BaseStationSiliconLawCrewsimov
+    - BaseStationNanotrasen
+  noSpawn: true
+  components:
+    - type: Transform
