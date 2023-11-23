@@ -152,6 +152,7 @@
     Heat: 1.5
     Poison: 0.0
     Radiation: 0.0
+    Stamina: 0.5
 
 # immune to everything except physical and heat damage
 - type: damageModifierSet

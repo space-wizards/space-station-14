@@ -175,32 +175,28 @@ namespace Content.Server.Zombies
             if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
                 return baseChance;
 
-            var enumerator =
-                new InventorySystem.ContainerSlotEnumerator(uid, inventoryComponent.TemplateId, _protoManager, _inv,
-                    SlotFlags.FEET |
-                    SlotFlags.HEAD |
-                    SlotFlags.EYES |
-                    SlotFlags.GLOVES |
-                    SlotFlags.MASK |
-                    SlotFlags.NECK |
-                    SlotFlags.INNERCLOTHING |
-                    SlotFlags.OUTERCLOTHING);
-
-            var items = 0f;
-            var total = 0f;
-            while (enumerator.MoveNext(out var con))
+            //SS220-zomb_reb
+            DamageSpecifier ratingArmor = new()
             {
-                total++;
+                DamageDict = new()
+                {
+                    { "Slash", 100 }
+                }
+            };
 
-                if (con.ContainedEntity != null)
-                    items++;
-            }
+            var ev = new DamageModifyEvent(ratingArmor, null);
+            RaiseLocalEvent(uid, ev);
+            ratingArmor = ev.Damage;
+            ratingArmor.DamageDict.TryGetValue("Slash", out var armorBonus);
 
             var max = component.MaxZombieInfectionChance;
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
-            var chance = (max-min) * ((total - items)/total) + min;
+            var chance = max * (armorBonus.Float() / 100);
+            if(chance < min)
+                return min;
             return chance;
+            //SS220-zomb_reb
         }
 
         private void OnMeleeHit(EntityUid uid, ZombieComponent component, MeleeHitEvent args)
