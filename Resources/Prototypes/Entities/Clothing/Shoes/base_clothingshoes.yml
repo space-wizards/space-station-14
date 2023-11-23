@@ -51,3 +51,16 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+
+- type: entity
+  abstract: true
+  parent: ClothingShoesBase
+  id: ClothingShoesBaseWinterBoots
+  components:
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1
+  - type: TemperatureProtection
+    coefficient: 0.05
