@@ -2,7 +2,7 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsWork
   name: workboots
-  description: Engineering lace-up work boots for the especially blue-collar.
+  description: Engineering lace-up work Boots for the especially blue-collar.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/workboots.rsi
@@ -42,7 +42,7 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsPerformer
-  name: performer's Boots
+  name: performer's boots
   description: These boots provide great traction for when you're up on stage.
   components:
   - type: Sprite
@@ -54,7 +54,7 @@
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsCombat
   name: combat boots
-  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+  description: Robust combat Boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/combatboots.rsi
@@ -98,8 +98,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinter
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterboots.rsi
@@ -109,8 +109,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterAtmos
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: atmospherics winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsatmos.rsi
@@ -120,8 +120,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterBar
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: bartender winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsbar.rsi
@@ -131,8 +131,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCap
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: captain's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootscap.rsi
@@ -142,8 +142,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCargo
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: cargo winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootscargo.rsi
@@ -153,8 +153,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCe
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: chief engineer's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsce.rsi
@@ -164,8 +164,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCentCom
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: CentCom winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootscentcom.rsi
@@ -175,8 +175,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterChef
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: chef's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootschef.rsi
@@ -186,8 +186,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterChem
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: chemistry winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootschem.rsi
@@ -197,8 +197,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterClown
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: clown winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsclown.rsi
@@ -208,8 +208,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCmo
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: chief medical officer's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootscmo.rsi
@@ -219,8 +219,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterEngi
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: engineering winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsengi.rsi
@@ -230,8 +230,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterGen
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: genetics winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsgen.rsi
@@ -241,8 +241,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterHop
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: head of personnel's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootshop.rsi
@@ -252,8 +252,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterHos
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: head of security's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootshos.rsi
@@ -263,8 +263,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterHydro
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: hydroponics winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootshydro.rsi
@@ -274,8 +274,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterJani
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: janitorial winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsjani.rsi
@@ -285,8 +285,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterMed
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: medical winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsmed.rsi
@@ -296,8 +296,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterMime
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: mime winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsmime.rsi
@@ -307,8 +307,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterMiner
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: mining winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsminer.rsi
@@ -318,8 +318,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterParamed
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: paramedic winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsparamed.rsi
@@ -329,8 +329,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterQm
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: quartermaster's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsqm.rsi
@@ -340,8 +340,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterRd
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: research director's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsrd.rsi
@@ -351,8 +351,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterRobo
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: robotics winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsrobo.rsi
@@ -362,8 +362,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterSci
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: science winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootssci.rsi
@@ -373,8 +373,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterSec
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: security winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
@@ -384,8 +384,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterSyndicate
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: syndicate's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
@@ -395,8 +395,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterViro
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: virology winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsviro.rsi
@@ -406,8 +406,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterWarden
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: warden's winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootswarden.rsi
@@ -417,8 +417,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterWeb
-  name: Winter Boots
-  description: Fluffy Boots to help survive even the coldest of winters.
+  name: web winter boots
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
