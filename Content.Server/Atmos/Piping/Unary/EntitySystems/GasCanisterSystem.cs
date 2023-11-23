@@ -9,6 +9,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Database;
@@ -23,6 +24,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
 public sealed class GasCanisterSystem : EntitySystem
 {
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -225,7 +227,7 @@ public sealed class GasCanisterSystem : EntitySystem
 
     private void OnCanisterActivate(EntityUid uid, GasCanisterComponent component, ActivateInWorldEvent args)
     {
-        if (!TryComp<ActorComponent>(args.User, out var actor))
+        if (!TryComp<ActorComponent>(args.User, out var actor) || !_actionBlocker.CanInteract(args.User, uid))
             return;
 
         if (CheckLocked(uid, component, args.User))
