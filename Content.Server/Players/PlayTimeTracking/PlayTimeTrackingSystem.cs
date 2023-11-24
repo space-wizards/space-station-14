@@ -34,7 +34,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
 
-    private string AdminTrackerTime => "AdminTime";
+    private const string AGhostPrototypeID = "AdminObserver"; //SS220-aghost-playtime
 
     public override void Initialize()
     {
@@ -74,19 +74,28 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     private void CalcTrackers(ICommonSession player, HashSet<string> trackers)
     {
-        if (_afk.IsAfk(player))
+        //SS220-aghost-playtime begin
+        // Checking for attached entity to prevent tracking for players in lobby
+        if (_afk.IsAfk(player) || player.AttachedEntity == null)
             return;
 
         if (_adminManager.IsAdmin(player, includeDeAdmin: false))
         {
-            trackers.Add(AdminTrackerTime);
+            trackers.Add(PlayTimeTrackingShared.TrackerAdmin);
+            if (player.AttachedEntity is { Valid: true } attachedEntity &&
+                Comp<MetaDataComponent>(attachedEntity).EntityPrototype?.ID == AGhostPrototypeID)
+                trackers.Add(PlayTimeTrackingShared.TrackerAGhost);
         }
 
         if (!IsPlayerAlive(player))
+        {
+            trackers.Add(PlayTimeTrackingShared.TrackerObserver);
             return;
+        }
+        //SS220-aghost-playtime end
 
-        trackers.Add(PlayTimeTrackingShared.TrackerOverall);
         trackers.UnionWith(GetTimedRoles(player));
+        trackers.Add(PlayTimeTrackingShared.TrackerOverall);
     }
 
     private bool IsPlayerAlive(ICommonSession session)

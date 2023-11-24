@@ -32,7 +32,8 @@ cmd-playtime_getrole-role = Роль: { $role }, игровое время: { $t
 cmd-playtime_getrole-overall = Общее игровое время { $time }
 cmd-playtime_getrole-succeed = Игровое время { $username } составляет: { TOSTRING($time, "dddd\\:hh\\:mm") }.
 cmd-playtime_getrole-arg-user = <user name>
-cmd-playtime_getrole-arg-role = <role|'Overall'>
+#SS220-aghost-playtime
+cmd-playtime_getrole-arg-role = <role|'Overall'|'AdminTime'|'AGhostTime'|'ObserverTime'>
 cmd-playtime_getrole-error-args = Ожидается ровно один или два аргумента
 # - playtime_save
 cmd-playtime_save-desc = Сохранение игрового времени игрока в БД

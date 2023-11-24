@@ -1,2 +1,11 @@
 - type: playTimeTracker
   id: JobGhostRole
+  
+- type: playTimeTracker
+  id: AdminTime
+  
+- type: playTimeTracker
+  id: AGhostTime
+  
+- type: playTimeTracker
+  id: ObserverTime
