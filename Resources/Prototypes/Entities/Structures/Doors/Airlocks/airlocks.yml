@@ -182,6 +182,16 @@
 
 - type: entity
   parent: AirlockGlass
+  id: AirlockChemistryGlass
+  suffix: Chemistry
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+  - type: PaintableAirlock
+    group: Glass
+
+- type: entity
+  parent: AirlockGlass
   id: AirlockMedicalGlass
   suffix: Medical
   components:

@@ -230,6 +230,11 @@
   description: flavor-complex-egg
 
 - type: flavor
+  id: raw-egg
+  flavorType: Complex
+  description: flavor-complex-raw-egg
+
+- type: flavor
   id: bacon
   flavorType: Complex
   description: flavor-complex-bacon

@@ -426,25 +426,6 @@ we are just going to end this here to save a lot of time. This is the exception 
     }
 
     /// <summary>
-    ///     Helper method that retrieves all entity prototypes that have some component.
-    /// </summary>
-    public static List<EntityPrototype> GetPrototypesWithComponent<T>(RobustIntegrationTest.IntegrationInstance instance) where T : IComponent
-    {
-        var protoMan = instance.ResolveDependency<IPrototypeManager>();
-        var compFact = instance.ResolveDependency<IComponentFactory>();
-
-        var id = compFact.GetComponentName(typeof(T));
-        var list = new List<EntityPrototype>();
-        foreach (var ent in protoMan.EnumeratePrototypes<EntityPrototype>())
-        {
-            if (ent.Components.ContainsKey(id))
-                list.Add(ent);
-        }
-
-        return list;
-    }
-
-    /// <summary>
     /// Initialize the pool manager.
     /// </summary>
     /// <param name="assembly">Assembly to search for to discover extra test prototypes.</param>
