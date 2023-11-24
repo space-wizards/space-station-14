@@ -1,25 +1,12 @@
-using Content.Server.Shuttles.Components;
-// using Content.Shared.TextScreen.Events;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Station;
-using Content.Server.RoundEnd;
-using Content.Shared.Shuttles.Systems;
-using System.Linq;
-using Content.Shared.DeviceNetwork;
-using Robust.Shared.Map;
-using Robust.Shared.Timing;
-
 using Content.Shared.TextScreen;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Robust.Shared.Graphics;
+using Content.Server.Shuttles.Components;
+using Content.Server.DeviceNetwork.Systems;
+using Content.Server.RoundEnd;
+using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
-// TODO:
-// - emergency shuttle recall inverts timer?
-// - deduplicate signaltimer with a maintainer's blessing
-// - scan UI?
 
 namespace Content.Server.Shuttles.Systems
 {
@@ -42,7 +29,7 @@ namespace Content.Server.Shuttles.Systems
 
         /// <summary>
         /// Determines if/how a broadcast packet affects this timer.
-        /// All shuttle timer packets are broadcast, and subnetting is implemented by filtering timer MapUid.
+        /// All shuttle timer packets are broadcast in their network, and subnetting is implemented by filtering timer MapUid.
         /// </summary>
         private void OnPacketReceived(EntityUid uid, ShuttleTimerComponent component, DeviceNetworkPacketEvent args)
         {
@@ -57,9 +44,7 @@ namespace Content.Server.Shuttles.Systems
             args.Data.TryGetValue("SourceMap", out EntityUid? source);
             args.Data.TryGetValue("DestMap", out EntityUid? dest);
             args.Data.TryGetValue("Docked", out bool docked);
-            string text = docked ? "ETD" : "ETA";
-            if (args.Data.TryGetValue("Text", out string? label))
-                text = label;
+            string?[] text = new string?[] { docked ? "ETD" : "ETA" };
 
             switch (timerXform.MapUid)
             {
@@ -72,6 +57,7 @@ namespace Content.Server.Shuttles.Systems
                     break;
                 case var remote when remote == dest:
                     key = "DestTimer";
+                    text = new string?[] { "ETA" };
                     break;
                 default:
                     return;
@@ -80,8 +66,11 @@ namespace Content.Server.Shuttles.Systems
             if (!args.Data.TryGetValue(key, out TimeSpan duration))
                 return;
 
+            if (args.Data.TryGetValue("Text", out string?[]? label))
+                text = label;
+
             _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, _gameTiming.CurTime + duration);
-            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string[] { text });
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, text);
         }
 
         /// <summary>

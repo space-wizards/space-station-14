@@ -386,11 +386,11 @@ public sealed partial class EmergencyShuttleSystem
             var payload = new NetworkPayload
             {
                 ["ShuttleMap"] = shuttle,
-                ["SourceMap"] = maps["centcomm"],
-                ["DestMap"] = maps["station"],
+                ["SourceMap"] = maps["station"],
+                ["DestMap"] = maps["centcomm"],
                 ["LocalTimer"] = time,
                 ["SourceTimer"] = time,
-                ["DestTimer"] = time,
+                ["DestTimer"] = time + TimeSpan.FromSeconds(TransitTime),
                 ["Docked"] = true
             };
             _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);

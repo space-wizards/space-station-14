@@ -180,7 +180,7 @@ namespace Content.Server.RoundEnd
                     ["SourceMap"] = maps["centcomm"],
                     ["DestMap"] = maps["station"],
                     ["LocalTimer"] = countdownTime,
-                    ["SourceTimer"] = countdownTime,
+                    ["SourceTimer"] = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
                     ["DestTimer"] = countdownTime,
                 };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
@@ -228,6 +228,7 @@ namespace Content.Server.RoundEnd
                     ["LocalTimer"] = zero,
                     ["SourceTimer"] = zero,
                     ["DestTimer"] = zero,
+                    ["Text"] = new string?[] { string.Empty, string.Empty }
                 };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }

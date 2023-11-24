@@ -60,6 +60,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly ShuttleTimerSystem _shuttleTimerSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     private ISawmill _sawmill = default!;
@@ -147,7 +148,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     }
 
     /// <summary>
-    /// If the client is requesting debug info on where an emergency shuttle would dock.
+    ///     If the client is requesting debug info on where an emergency shuttle would dock.
     /// </summary>
     private void OnShuttleRequestPosition(EmergencyShuttleRequestPositionMessage msg, EntitySessionEventArgs args)
     {
@@ -225,14 +226,14 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 ["LocalTimer"] = countdownTime,
                 ["SourceTimer"] = countdownTime,
                 ["DestTimer"] = countdownTime,
-                ["Text"] = "BYE!"
+                ["Text"] = new string?[] { "BYE!" }
             };
             _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }
     }
 
     /// <summary>
-    /// Calls the emergency shuttle for the station.
+    ///     Attempts to dock the emergency shuttle to the station.
     /// </summary>
     public void CallEmergencyShuttle(EntityUid stationUid, StationEmergencyShuttleComponent? stationShuttle = null)
     {
@@ -273,11 +274,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 var payload = new NetworkPayload
                 {
                     ["ShuttleMap"] = stationShuttle.EmergencyShuttle.Value,
-                    ["SourceMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
-                    ["DestMap"] = targetXform?.MapUid,
+                    ["SourceMap"] = targetXform?.MapUid,
+                    ["DestMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
                     ["LocalTimer"] = time,
                     ["SourceTimer"] = time,
-                    ["DestTimer"] = time,
+                    ["DestTimer"] = time + TimeSpan.FromSeconds(TransitTime),
                     ["Docked"] = true
                 };
                 _deviceNetworkSystem.QueuePacket(stationShuttle.EmergencyShuttle.Value, null, payload, netComp.TransmitFrequency);
@@ -322,7 +323,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Spawns the emergency shuttle for each station and starts the countdown until controls unlock.
+    ///     Spawns the emergency shuttle for each station and starts the countdown until controls unlock.
     /// </summary>
     public void CallEmergencyShuttle()
     {
@@ -493,6 +494,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         if (!Resolve(shuttle, ref grid, ref shuttleXform))
             return false;
 
-        return shuttleXform.WorldMatrix.TransformBox(grid.LocalAABB).Contains(xform.WorldPosition);
+        return _transformSystem.GetWorldMatrix(shuttleXform).TransformBox(grid.LocalAABB).Contains(_transformSystem.GetWorldPosition(xform));
     }
 }
