@@ -732,11 +732,12 @@ public sealed partial class ChatSystem : SharedChatSystem
  
     public bool CheckIgnoreSpeechBlocker(EntityUid sender, bool ignoreBlocker)
     {
+        if (ignoreBlocker)
+            return ignoreBlocker;
+
         var ev = new CheckIgnoreSpeechBlockerEvent(sender, ignoreBlocker);
-        Log.Debug("Raising IgnoreSpeechBlockerEvent with initial state being {0}", ev.IgnoreBlocker);
         RaiseLocalEvent(sender, ev, true);
 
-        Log.Debug("Answer is {0}", ev.IgnoreBlocker);
         return ev.IgnoreBlocker;
     }
 
