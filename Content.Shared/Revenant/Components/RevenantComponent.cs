@@ -190,6 +190,12 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? MalfunctionWhitelist;
+
+    /// <summary>
+    /// Whitelist for entities that can never be emagged by malfunction.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? MalfunctionBlacklist;
     #endregion
 
     #region Visualizer

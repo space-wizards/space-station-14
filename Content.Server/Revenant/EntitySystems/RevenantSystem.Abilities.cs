@@ -324,6 +324,9 @@ public sealed partial class RevenantSystem
             if (component.MalfunctionWhitelist?.IsValid(ent, EntityManager) == false)
                 continue;
 
+            if (component.MalfunctionBlacklist?.IsValid(ent, EntityManager) == true)
+                continue;
+
             _emag.DoEmagEffect(uid, ent); //it does not emag itself. adorable.
         }
     }
