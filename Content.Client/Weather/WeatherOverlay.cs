@@ -24,7 +24,7 @@ public sealed class WeatherOverlay : Overlay
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly IClientResourceCache _cache = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
     private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;

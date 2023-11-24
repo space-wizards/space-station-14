@@ -21,7 +21,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         private readonly Control _contentContainer;
 
 
-        private readonly IClientResourceCache _resourceCache = default!;
+        private readonly IResourceCache _resourceCache = default!;
         private readonly RichTextLabel _lblPressure;
         private readonly FloatSpinBox _spbPressure;
         private readonly RichTextLabel _lblInternals;
@@ -30,7 +30,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         public GasTankWindow(GasTankBoundUserInterface owner)
         {
             TextureButton btnClose;
-            _resourceCache = IoCManager.Resolve<IClientResourceCache>();
+            _resourceCache = IoCManager.Resolve<IResourceCache>();
             _owner = owner;
             var rootContainer = new LayoutContainer {Name = "GasTankRoot"};
             AddChild(rootContainer);

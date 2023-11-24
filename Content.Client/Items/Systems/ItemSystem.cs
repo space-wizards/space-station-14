@@ -12,7 +12,7 @@ namespace Content.Client.Items.Systems;
 
 public sealed class ItemSystem : SharedItemSystem
 {
-    [Dependency] private readonly IClientResourceCache _resCache = default!;
+    [Dependency] private readonly IResourceCache _resCache = default!;
 
     public override void Initialize()
     {

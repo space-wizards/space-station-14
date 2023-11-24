@@ -14,7 +14,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.ResourceManagement.ResourceTypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -26,7 +25,7 @@ public sealed partial class ContentAudioSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IClientResourceCache _resource = default!;
+    [Dependency] private readonly IResourceCache _resource = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly RulesSystem _rules = default!;

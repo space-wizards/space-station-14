@@ -11,7 +11,7 @@ namespace Content.Replay.Menu;
 [GenerateTypedNameReferences]
 public sealed partial class ReplayMainMenuControl : Control
 {
-    public ReplayMainMenuControl(IClientResourceCache resCache)
+    public ReplayMainMenuControl(IResourceCache resCache)
     {
         RobustXamlLoader.Load(this);
 

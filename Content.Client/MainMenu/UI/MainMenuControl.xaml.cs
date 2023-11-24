@@ -11,7 +11,7 @@ namespace Content.Client.MainMenu.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MainMenuControl : Control
 {
-    public MainMenuControl(IClientResourceCache resCache, IConfigurationManager configMan)
+    public MainMenuControl(IResourceCache resCache, IConfigurationManager configMan)
     {
         RobustXamlLoader.Load(this);
 

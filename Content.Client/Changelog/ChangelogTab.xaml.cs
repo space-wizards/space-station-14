@@ -18,7 +18,7 @@ namespace Content.Client.Changelog;
 public sealed partial class ChangelogTab : Control
 {
     [Dependency] private readonly ChangelogManager _changelog = default!;
-    [Dependency] private readonly IClientResourceCache _resourceCache = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     public bool AdminOnly;
 
