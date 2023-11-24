@@ -192,11 +192,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!CanSendInGame(message, shell, player))
             return;
 
-        if (HasComp<UnblockableSpeechComponent>(source))
-        {
-            //Always allows speech from entities that can't have their speech disabled, such as Cyborgs
-            ignoreActionBlocker = true;
-        }
+        ignoreActionBlocker = CheckIgnoreSpeechBlocker(source, ignoreActionBlocker);
 
         // this method is a disaster
         // every second i have to spend working with this code is fucking agony
@@ -733,6 +729,16 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         return ev.Message;
     }
+ 
+    public bool CheckIgnoreSpeechBlocker(EntityUid sender, bool ignoreBlocker)
+    {
+        var ev = new CheckIgnoreSpeechBlockerEvent(sender, ignoreBlocker);
+        Log.Debug("Raising IgnoreSpeechBlockerEvent with initial state being {0}", ev.IgnoreBlocker);
+        RaiseLocalEvent(sender, ev, true);
+
+        Log.Debug("Answer is {0}", ev.IgnoreBlocker);
+        return ev.IgnoreBlocker;
+    }
 
     private IEnumerable<INetChannel> GetDeadChatClients()
     {
@@ -868,6 +874,18 @@ public sealed class TransformSpeechEvent : EntityEventArgs
     {
         Sender = sender;
         Message = message;
+    }
+}
+
+public sealed class CheckIgnoreSpeechBlockerEvent : EntityEventArgs
+{
+    public EntityUid Sender;
+    public bool IgnoreBlocker;
+
+    public CheckIgnoreSpeechBlockerEvent(EntityUid sender, bool ignoreBlocker)
+    {
+        Sender = sender;
+        IgnoreBlocker = ignoreBlocker;
     }
 }
 
