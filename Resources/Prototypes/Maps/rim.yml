@@ -1,6 +1,6 @@
 - type: gameMap
   id: rim
-  mapName: 'detroit2'
+  mapName: 'rim'
   mapPath: /Maps/rim.yml
   minPlayers: 0
   maxPlayers: 60
@@ -10,7 +10,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} detroit2 {1}'
+          mapNameTemplate: '{0} rim {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
