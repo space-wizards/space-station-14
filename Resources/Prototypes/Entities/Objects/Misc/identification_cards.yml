@@ -3,7 +3,7 @@
   id: IDCardStandard
   name: identification card
   description: A card necessary to access various areas aboard the station.
-  noSpawn: true
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi

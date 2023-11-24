@@ -1613,6 +1613,14 @@
     Sigynate: 50
     Dermaline: 50
 
+- type: microwaveMealRecipe
+  id: RecipeTrashBakedBananaPeel
+  name: baked banana peel recipe
+  result: TrashBakedBananaPeel
+  time: 5
+  solids:
+    TrashBananaPeel: 1
+
 # Suppermatter
 - type: microwaveMealRecipe
   id: RecipeSuppermatter
