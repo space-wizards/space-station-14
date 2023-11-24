@@ -9,8 +9,6 @@ namespace Content.Server.Verbs.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class InvokeVerbCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-
         public string Command => "invokeverb";
         public string Description => Loc.GetString("invoke-verb-command-description");
         public string Help => Loc.GetString("invoke-verb-command-help");
@@ -23,7 +21,8 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var verbSystem = _entManager.System<SharedVerbSystem>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var verbSystem = entityManager.System<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
             EntityUid? playerEntity = null;
@@ -39,6 +38,10 @@ namespace Content.Server.Verbs.Commands
                     return;
                 }
             }
+            else
+            {
+                entityManager.EntityExists(new EntityUid(intPlayerUid));
+            }
 
             // gets the target entity
             if (!int.TryParse(args[1], out var intUid))
@@ -53,16 +56,16 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var targetNet = new NetEntity(intUid);
-
-            if (!_entManager.TryGetEntity(targetNet, out var target))
+            var target = new EntityUid(intUid);
+            if (!entityManager.EntityExists(target))
             {
                 shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-entity"));
                 return;
             }
 
             var verbName = args[2].ToLowerInvariant();
-            var verbs = verbSystem.GetLocalVerbs(target.Value, playerEntity.Value, Verb.VerbTypes, true);
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes, true);
+
 
             // if the "verb name" is actually a verb-type, try run any verb of that type.
             var verbType = Verb.VerbTypes.FirstOrDefault(x => x.Name == verbName);
@@ -71,7 +74,7 @@ namespace Content.Server.Verbs.Commands
                 var verb = verbs.FirstOrDefault(v => v.GetType() == verbType);
                 if (verb != null)
                 {
-                    verbSystem.ExecuteVerb(verb, playerEntity.Value, target.Value, forced: true);
+                    verbSystem.ExecuteVerb(verb, playerEntity.Value, target, forced: true);
                     shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
                     return;
                 }
@@ -81,7 +84,7 @@ namespace Content.Server.Verbs.Commands
             {
                 if (verb.Text.ToLowerInvariant() == verbName)
                 {
-                    verbSystem.ExecuteVerb(verb, playerEntity.Value, target.Value, forced: true);
+                    verbSystem.ExecuteVerb(verb, playerEntity.Value, target, forced: true);
                     shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
                     return;
                 }
