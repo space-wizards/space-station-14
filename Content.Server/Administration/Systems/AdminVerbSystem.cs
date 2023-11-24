@@ -158,8 +158,6 @@ namespace Content.Server.Administration.Systems
                     });
 
                 // Respawn
-                if (HasComp<ActorComponent>(args.Target))
-                {
                     args.Verbs.Add(new Verb()
                     {
                         Text = Loc.GetString("admin-player-actions-respawn"),
@@ -171,7 +169,6 @@ namespace Content.Server.Administration.Systems
                         ConfirmationPopup = true,
                         // No logimpact as the command does it internally.
                     });
-                }
                 }
 
                 // Admin Logs
