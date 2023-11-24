@@ -1,0 +1,55 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltMilitaryWebbingSeniorOfficer
+  name: brigmedical chest rig
+  description: A set of tactical webbing worn by brigmedic.
+  components:
+  - type: Sprite
+    sprite: Imperial/seniorOfficer/Clothing/seniorofficerwebbing.rsi
+  - type: Clothing
+    sprite: Imperial/seniorOfficer/Clothing/seniorofficerwebbing.rsi
+  - type: Item
+    size: 60
+  - type: Storage
+    capacity: 60
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingSeniorOfficerFilled
+  parent: ClothingBeltMilitaryWebbingSeniorOfficer
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: GrenadeFlashBang
+      - id: Flash
+      - id: Zipties
+      - id: Zipties
+      - id: Handcuffs
+      - id: Handcuffs
+      - id: Stunbaton
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSecurity
+  id: ClothingBackpackSecurityFilledSeniorOfficer
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
+      - id: MagazinePistol
+      - id: MagazineBoxPistolPractice
+      - id: MagazinePistolPractice
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelSecurity
+  id: ClothingBackpackDuffelSecurityFilledSeniorOfficer
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
+      - id: MagazinePistol
+      - id: MagazineBoxPistolPractice
+      - id: MagazinePistolPractice
