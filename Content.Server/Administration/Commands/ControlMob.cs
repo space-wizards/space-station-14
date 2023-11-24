@@ -33,15 +33,15 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var targetNet = new NetEntity(targetId);
+            var target = new EntityUid(targetId);
 
-            if (!_entities.TryGetEntity(targetNet, out var target))
+            if (!target.IsValid() || !_entities.EntityExists(target))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            _entities.System<MindSystem>().ControlMob(player.UserId, target.Value);
+            _entities.System<MindSystem>().ControlMob(player.UserId, target);
         }
     }
 }
