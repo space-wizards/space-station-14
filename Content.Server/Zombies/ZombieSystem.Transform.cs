@@ -26,6 +26,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Tools.Components;
@@ -95,11 +96,13 @@ namespace Content.Server.Zombies
             var zombiecomp = AddComp<ZombieComponent>(target);
 
             //we need to basically remove all of these because zombies shouldn't
-            //get diseases, breath, be thirst, be hungry, or die in space
+            //get diseases, breath, be thirst, be hungry, die in space or have offspring
             RemComp<RespiratorComponent>(target);
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
+            RemComp<ReproductiveComponent>(target); 
+            RemComp<ReproductivePartnerComponent>(target);
 
             //funny voice
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";

@@ -2,6 +2,7 @@ using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
@@ -18,6 +19,7 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -64,6 +66,9 @@ public sealed class EggLayerSystem : EntitySystem
     public bool TryLayEgg(EntityUid uid, EggLayerComponent? component)
     {
         if (!Resolve(uid, ref component))
+            return false;
+
+        if (_mobState.IsDead(uid))
             return false;
 
         // Allow infinitely laying eggs if they can't get hungry

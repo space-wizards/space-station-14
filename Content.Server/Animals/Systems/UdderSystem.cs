@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
@@ -21,6 +22,7 @@ namespace Content.Server.Animals.Systems
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         public override void Initialize()
         {
@@ -53,6 +55,8 @@ namespace Content.Server.Animals.Systems
                             out var solution))
                         continue;
 
+                    if (_mobState.IsDead(uid))
+                        continue;
                     //TODO: toxins from bloodstream !?
                     _solutionContainerSystem.TryAddReagent(uid, solution, udder.ReagentId,
                         udder.QuantityPerUpdate, out var accepted);
