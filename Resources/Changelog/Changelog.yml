@@ -1,12 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - message: Mutes no longer make a sound when they die, and can't fake their death
-      while in crit. They can still summon up their remaining strength to whisper
-      their first-last words.
-    type: Tweak
-  id: 4657
-  time: '2023-08-22T06:05:16.0000000+00:00'
 - author: tom-leys
   changes:
   - message: To increase employee retention and new staff experience, we've installed
@@ -3566,3 +3558,10 @@ Entries:
     type: Add
   id: 5139
   time: '2023-11-24T10:20:41.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 NSS Nox."
+    type: Tweak
+  id: 5140
+  time: '2023-11-24T16:30:07.0000000+00:00'
