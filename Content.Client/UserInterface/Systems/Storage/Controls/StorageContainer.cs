@@ -25,6 +25,9 @@ public sealed class StorageContainer : BoxContainer
     private readonly GridContainer _sidebar;
     private readonly Label _nameLabel;
 
+    public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPiecePressed;
+    public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPieceUnpressed;
+
     //todo support reloading
     private Texture? _emptyTexture;
     private Texture? _blockedTexture;
@@ -224,10 +227,14 @@ public sealed class StorageContainer : BoxContainer
 
                     if (_entity.TryGetComponent<ItemComponent>(itemEnt, out var itemEntComponent))
                     {
-                        control.AddChild(new ItemGridPiece((itemEnt, itemEntComponent), item.Value.Value, _entity)
+                        var gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), item.Value.Value, _entity)
                         {
-                            MinSize = size
-                        });
+                            MinSize = size,
+                        };
+                        gridPiece.OnPiecePressed += OnPiecePressed;
+                        gridPiece.OnPieceUnpressed += OnPieceUnpressed;
+
+                        control.AddChild(gridPiece);
                     }
                 }
 
