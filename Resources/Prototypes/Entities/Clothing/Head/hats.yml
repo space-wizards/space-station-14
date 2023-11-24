@@ -94,6 +94,13 @@
     sprite: Clothing/Head/Hats/beret_hos.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_hos.rsi
+  - type: Armor #Imperial_edit Beret lives matter @keeyn
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags:
     - ClothMade
@@ -110,6 +117,13 @@
     sprite: Clothing/Head/Hats/beret_warden.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_warden.rsi
+  - type: Armor #Imperial_edit Beret lives matter @keeyn
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 - type: entity
   parent: ClothingHeadBase
@@ -154,6 +168,13 @@
     sprite: Clothing/Head/Hats/captain.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/captain.rsi
+  - type: Armor #Imperial_edit Beret lives matter @keeyn
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags:
     - ClothMade
@@ -275,6 +296,13 @@
     sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hoshat.rsi
+  - type: Armor #Imperial_edit Beret lives matter @keeyn
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags:
     - ClothMade
@@ -459,6 +487,13 @@
     sprite: Clothing/Head/Hats/warden.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/warden.rsi
+  - type: Armor #Imperial_edit Beret lives matter @keeyn
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 - type: entity
   parent: ClothingHeadBase
@@ -709,6 +744,13 @@
     sprite: Clothing/Head/Hats/syndiecap_maa.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/syndiecap_maa.rsi
+  - type: Armor #Imperial_edit Beret lives matter @keeyn
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 - type: entity
   parent: ClothingHeadBase
@@ -774,6 +816,13 @@
     sprite: Clothing/Head/Hats/capcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/capcap.rsi
+  - type: Armor #Imperial_edit Beret lives matter @keeyn
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags:
     - ClothMade
