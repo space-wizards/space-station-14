@@ -89,6 +89,8 @@
   - type: Construction
     graph: ModsuitAdvanced
     node: modsuitadvanced
+  - type: StaticPrice
+    price: 12000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -114,6 +116,8 @@
   - type: Construction
     graph: ModsuitEngineer
     node: modsuitengineer
+  - type: StaticPrice
+    price: 3150
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -139,6 +143,8 @@
   - type: Construction
     graph: ModsuitAtmospheric
     node: modsuitatmospheric
+  - type: StaticPrice
+    price: 3750
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -166,6 +172,8 @@
   - type: Construction
     graph: ModsuitRND
     node: modsuitrnd
+  - type: StaticPrice
+    price: 3500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -191,6 +199,8 @@
   - type: Construction
     graph: ModsuitMedical
     node: modsuitmedical
+  - type: StaticPrice
+    price: 2250
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -216,6 +226,8 @@
   - type: Construction
     graph: ModsuitRescue
     node: modsuitrescue
+  - type: StaticPrice
+    price: 6000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -241,6 +253,8 @@
   - type: Construction
     graph: ModsuitCivillian
     node: modsuitcivillian
+  - type: StaticPrice
+    price: 1875
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -266,6 +280,8 @@
   - type: Construction
     graph: ModsuitMagnate
     node: modsuitmagnates
+  - type: StaticPrice
+    price: 25000 # magnate = роскошный
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -291,6 +307,8 @@
   - type: Construction
     graph: ModsuitSecurity
     node: modsuitsecurity
+  - type: StaticPrice
+    price: 3500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -316,6 +334,8 @@
   - type: Construction
     graph: ModsuitHOS
     node: modsuithos
+  - type: StaticPrice
+    price: 8000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -341,6 +361,8 @@
   - type: Construction
     graph: ModsuitSalvage
     node: modsuitsalvage
+  - type: StaticPrice
+    price: 3250
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -363,6 +385,8 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: StaticPrice
+    price: 6500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -415,6 +439,8 @@
   - type: Tag
     tags:
       - WhitelistChameleon
+  - type: StaticPrice
+    price: 5000
 
 - type: entity
   parent: ClothingControlModsuitOperativeSealed
@@ -449,6 +475,8 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: StaticPrice
+    price: 6500
 
 - type: entity
   parent: ClothingControlModsuitHonkOperativeSealed
@@ -481,6 +509,8 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: StaticPrice
+    price: 15000
 
 - type: entity
   parent: ClothingControlModsuitOperativeCMDSealed
@@ -517,6 +547,8 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: StaticPrice
+    price: 8000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -539,3 +571,5 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: StaticPrice
+    price: 35000
