@@ -33,5 +33,5 @@
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
   innerClothingSkirt: ClothingUniformJumpskirtSec
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  satchel: ClothingBackpackSatchelSecurityPilotFilled
+  duffelbag: ClothingBackpackDuffelSecurityPilotFilled

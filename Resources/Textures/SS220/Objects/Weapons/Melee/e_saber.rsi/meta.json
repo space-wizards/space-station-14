@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by VladIsLove and SuBL for SS220 ",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "e_saber"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "e_saber_blade",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left-blade",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-right-blade",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

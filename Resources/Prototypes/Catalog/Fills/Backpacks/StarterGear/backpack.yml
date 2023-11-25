@@ -144,6 +144,7 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
+      - id: FlashlightSeclite
       - id: MagazinePistolRubber
       - id: MagazinePistolRubber
       - id: DrinkRelaxingPeachCan

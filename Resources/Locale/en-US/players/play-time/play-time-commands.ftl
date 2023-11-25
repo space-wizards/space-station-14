@@ -35,7 +35,8 @@ cmd-playtime_getrole-role = Role: {$role}, Playtime: {$time}
 cmd-playtime_getrole-overall = Overall playtime is {$time}
 cmd-playtime_getrole-succeed = Playtime for {$username} is: {TOSTRING($time, "dddd\\:hh\\:mm")}.
 cmd-playtime_getrole-arg-user = <user name>
-cmd-playtime_getrole-arg-role = <role|'Overall'>
+#SS220-aghost-playtime
+cmd-playtime_getrole-arg-role = <role|'Overall'|'AdminTime'|'AGhostTime'|'ObserverTime'>
 cmd-playtime_getrole-error-args = Expected exactly one or two arguments
 
 # - playtime_save

@@ -333,7 +333,11 @@ namespace Content.Server.Administration.Systems
             var admins = _panicBunker.CountDeadminnedAdmins
                 ? _adminManager.AllAdmins
                 : _adminManager.ActiveAdmins;
-            var hasAdmins = admins.Any();
+
+            var hasAdmins = admins
+                .Select(x => _adminManager.GetAdminData(_playerManager.GetSessionById(x.UserId)))
+                .Where(x => x is not null && x.HasFlag(AdminFlags.Ban) && x.Title != Loc.GetString("admin-manager-admin-data-host-title"))
+                .Any();
 
             if (hasAdmins && _panicBunker.DisableWithAdmins)
             {

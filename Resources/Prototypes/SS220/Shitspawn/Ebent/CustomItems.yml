@@ -80,3 +80,60 @@
   components:
   - type: Sprite
     sprite: SS220/Clothing/Shoes/Boots/magboots-ussp.rsi
+    
+- type: entity
+  name: энергетическая сабля 
+  parent: BaseItem
+  id: EnergySaberNT
+  description: Передовое оружие NanoTrasen для ведения ближнего боя. 
+  suffix: Ebent
+  components:
+  - type: EnergySword
+    litDamageBonus:
+      types:
+        Slash: 25
+        Blunt: -4.5
+        Structural: 15
+    litDisarmMalus: 0.6
+    colorOptions:
+    - "#ffcc00"
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Melee/e_saber.rsi
+    layers:
+    - state: e_saber
+    - state: e_saber_blade
+      color: "#FFFF00"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: MeleeWeapon
+    attackRate: 1
+    soundHit:
+      path: /Audio/Weapons/eblade1.ogg
+    damage:
+      types:
+        Blunt: 4.5
+  - type: Item
+    sprite: SS220/Objects/Weapons/Melee/e_saber.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 2
+    color: white
+    netsync: false
+  - type: Appearance
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
+  - type: DisarmMalus
+    malus: 0
+  - type: Reflect
+    enabled: false

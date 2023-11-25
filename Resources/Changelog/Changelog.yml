@@ -1,4 +1,256 @@
 Entries:
+- author: Alekshhh
+  changes:
+  - message: Changed various head locker contents.
+    type: Tweak
+  id: 4661
+  time: '2023-08-22T14:49:53.0000000+00:00'
+- author: Doru991
+  changes:
+  - message: Zombies' eyes turn red the way they were supposed to.
+    type: Fix
+  - message: When a zombie is cloned, the cloned person's eyes are visible again.
+    type: Fix
+  id: 4662
+  time: '2023-08-23T04:52:00.0000000+00:00'
+- author: deltanedas
+  changes:
+  - message: R&D has developed the construction cyborg module for engineering cyborgs,
+      now they can construct anything with steel glass or rods.
+    type: Add
+  id: 4663
+  time: '2023-08-23T21:34:39.0000000+00:00'
+- author: Nairodian
+  changes:
+  - message: Added several new Arachnid markings, including appendage stripes, chest
+      designs, chelicerae and an overlay.
+    type: Add
+  id: 4664
+  time: '2023-08-23T21:37:42.0000000+00:00'
+- author: crazybrain
+  changes:
+  - message: The dead body examine text is more accurate for dead, disconnected players.
+    type: Tweak
+  id: 4665
+  time: '2023-08-23T21:41:54.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - message: Changed shape of short hair to be like the old one.
+    type: Tweak
+  id: 4666
+  time: '2023-08-23T21:42:33.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - message: Changed the contents of the snack vendor to better fit snacks.
+    type: Tweak
+  - message: Added C&Ds, Bob's sunflower seeds and Sweetie's pistachios.
+    type: Add
+  id: 4667
+  time: '2023-08-23T21:49:25.0000000+00:00'
+- author: Lank
+  changes:
+  - message: The Syndicate EMAG now provides cyborgs with an updated lawset on use,
+      making typical laws only apply to the user and preventing your new "friend"
+      from outing your activities, in addition to stunning the cyborg for a short
+      time.
+    type: Tweak
+  id: 4668
+  time: '2023-08-23T23:55:00.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: Gardening cyborg module has been splitted into harvesting (scythe, hatchet,
+      plant bag* (New!) ) and gardening modules (hoe, spade, clippers, bucket* (New!)
+    type: Tweak
+  - message: Book bag has been added to cybord literacy module
+    type: Tweak
+  - message: Book bag content now can be dumped on
+    type: Tweak
+  id: 4669
+  time: '2023-08-24T00:12:05.0000000+00:00'
+- author: liltenhead
+  changes:
+  - message: Reduced both the damage and health of giant spiders.
+    type: Tweak
+  id: 4670
+  time: '2023-08-24T01:20:53.0000000+00:00'
+- author: Ilya246
+  changes:
+  - message: Heaters and freezers now work faster. TEGs now have their power output
+      adjusted.
+    type: Tweak
+  id: 4671
+  time: '2023-08-24T02:18:48.0000000+00:00'
+- author: crazybrain
+  changes:
+  - message: Secret doors can be manually rotated again (at least until a dynamic
+      solution is found).
+    type: Fix
+  id: 4672
+  time: '2023-08-24T16:23:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - message: All plates can now be made in the autolathe.
+    type: Tweak
+  id: 4673
+  time: '2023-08-24T18:01:14.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - message: Added pinging a Discord role when the round ends.
+    type: Add
+  id: 4674
+  time: '2023-08-24T21:50:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Fixed the chemical guidebook sometimes missing one of the conditions,
+      effects, or damage types for a chemical.
+    type: Fix
+  id: 4675
+  time: '2023-08-25T02:14:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix some minor quirks around reflection chances and also fixed reflect
+      vest reflecting every projectile.
+    type: Fix
+  id: 4676
+  time: '2023-08-25T02:48:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - message: Solid plasma now comes in special plasma containment crates.
+    type: Tweak
+  id: 4677
+  time: '2023-08-25T02:50:41.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - message: Cyborgs can now state individual laws with the push of a button
+    type: Add
+  id: 4678
+  time: '2023-08-25T02:56:02.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - message: Changed nutriment color, it is now green.
+    type: Tweak
+  id: 4679
+  time: '2023-08-25T03:11:24.0000000+00:00'
+- author: Whisper
+  changes:
+  - message: The nuclear operative medic has returned to using the standard Syndicate
+      gas mask, which offers flash immunity.
+    type: Tweak
+  id: 4680
+  time: '2023-08-25T03:15:40.0000000+00:00'
+- author: crazybrain
+  changes:
+  - message: CentCom official costume no longer has AA.
+    type: Fix
+  - message: CentCom official costume items are more CentCom themed.
+    type: Tweak
+  id: 4681
+  time: '2023-08-25T03:20:57.0000000+00:00'
+- author: Whisper
+  changes:
+  - message: The Detective's gun has been moved to their holster from their cabinet.
+      It comes with one speedloader each of the standard rubber and lethal bullets
+      of officers.
+    type: Tweak
+  - message: The Detective's scanner and pad were moved to their backpack from their
+      pockets.
+    type: Tweak
+  - message: Detective no longer spawns with a pistol magazine.
+    type: Remove
+  id: 4682
+  time: '2023-08-25T03:36:44.0000000+00:00'
+- author: Flareguy
+  changes:
+  - message: Asteroid floor, snow, and snow tiles are now varied in a more organic
+      way.
+    type: Tweak
+  - message: Removed asteroid coarse sand.
+    type: Remove
+  id: 4683
+  time: '2023-08-25T03:40:04.0000000+00:00'
+- author: PJB3005
+  changes:
+  - message: The particle accelerator now uses an MV power wire instead of HV. You
+      might need to manually connect it up before the maps get fixed.
+    type: Tweak
+  id: 4684
+  time: '2023-08-25T03:42:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix eye zoom not lerping properly so it looks like it's 30fps.
+    type: Fix
+  id: 4685
+  time: '2023-08-25T04:41:04.0000000+00:00'
+- author: PJB3005
+  changes:
+  - message: Portable generators have been reworked.
+    type: Tweak
+  - message: Portable generators now use a better sprite from Baystation12.
+    type: Tweak
+  - message: Portable generators have been renamed to P.A.C.M.A.N. & friends, to match
+      the classic SS13 names.
+    type: Tweak
+  - message: 'Added the J.R.P.A.C.M.A.N.: it runs off welding fuel, will be easy to
+      find in maintenance, and can directly power rooms (connecting to LV cables).'
+    type: Add
+  - message: Portable generators now need a bit of *effort* to start.
+    type: Add
+  - message: You can now eject fuel from portable generators.
+    type: Add
+  - message: The (S.U.P.E.R.)P.A.C.M.A.N. can now have its output switched between
+      HV and MV output.
+    type: Tweak
+  - message: Rebalanced power values and efficiency curves for portable generators.
+    type: Tweak
+  - message: The (J.R.)P.A.C.M.A.N. now exhausts hot CO2 gas. Use in a properly ventilated
+      room!
+    type: Tweak
+  id: 4686
+  time: '2023-08-25T18:40:42.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - message: Fixed NPCs not working.
+    type: Fix
+  id: 4687
+  time: '2023-08-25T21:52:23.0000000+00:00'
+- author: liltenhead
+  changes:
+  - message: Ore bags can now pick up artifact fragments.
+    type: Tweak
+  id: 4688
+  time: '2023-08-26T11:33:55.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - message: Made bananas peelable.
+    type: Tweak
+  id: 4689
+  time: '2023-08-26T16:31:14.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - message: The Syndicate's Holoparasite have taken to yelling catchphrases as they
+      fight.
+    type: Add
+  id: 4690
+  time: '2023-08-26T21:26:28.0000000+00:00'
+- author: qwerltaz
+  changes:
+  - message: Fixed wallmount devices being unable to be deconstructed.
+    type: Fix
+  id: 4691
+  time: '2023-08-26T22:25:23.0000000+00:00'
+- author: PJB3005
+  changes:
+  - message: Objects with interfaces now correctly respect interaction range, so green
+      outline really means you can open them.
+    type: Fix
+  id: 4692
+  time: '2023-08-27T08:27:43.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - message: Northstar gloves have been tuned down a bit.
+    type: Tweak
+  id: 4693
+  time: '2023-08-27T14:01:44.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - message: The recycler now recycles items off conveyor belts properly.
@@ -3621,3 +3873,104 @@ Entries:
   - {message: Disposal traversal damage is disabled for now., type: Tweak}
   id: 5193
   time: '2023-11-19T10:25:02.0000000+00:00'
+- author: Meower
+  changes:
+  - message: "\u041E\u0431\u044A\u0451\u043C \u043D\u0435\u043A\u043E\u0442\u043E\u0440\
+      \u044B\u0445 \u0441\u0443\u043C\u043E\u043A \u043F\u0435\u0440\u0435\u043D\u0435\
+      \u0441\u0435\u043D \u043D\u0430 \u043D\u043E\u0432\u0443\u044E \u0441\u0438\u0441\
+      \u0442\u0435\u043C\u0443 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u043F\
+      \u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432."
+    type: Fix
+  id: 5135
+  time: '2023-11-23T18:37:56.0000000+00:00'
+- author: Meower
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0437\u0430\u0449\
+      \u0438\u0442\u0430 \u043E\u0442 Stamina \u0443\u0440\u043E\u043D\u0430 \u0441\
+      \u043A\u0430\u0444\u0430\u043D\u0434\u0440\u0443 \u041E\u0421\u0429"
+    type: Add
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u043E\u0442\
+      \u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0448\u043B\u0435\u043C\u0430\
+      \ \u0443 \u043A\u043E\u0441\u0442\u044E\u043C\u0430 \u0434\u0436\u0430\u0433\
+      \u0433\u0435\u0440\u043D\u0430\u0443\u0442\u0430 Cybersun"
+    type: Fix
+  id: 5136
+  time: '2023-11-23T18:50:15.0000000+00:00'
+- author: ZoNeSRuS
+  changes:
+  - message: "\u0411\u0430\u0444\u043D\u0443\u0442\u044B \u0437\u043E\u043C\u0431\u0438\
+      ."
+    type: Tweak
+  - message: "\u0418\u0437\u043C\u0435\u043D\u044B \u0441\u0442\u0430\u0442\u044B\
+      \ \u043A\u043E\u0441\u0442\u044E\u043C\u0430 \u0420\u0425\u0411\u0417\u0417"
+    type: Tweak
+  id: 5137
+  time: '2023-11-23T18:51:04.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 Frankenstein."
+    type: Tweak
+  id: 5138
+  time: '2023-11-23T18:55:36.0000000+00:00'
+- author: Dexler
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u0441\u0447\u0435\
+      \u0442\u0447\u0438\u043A\u0438 \u0432\u0440\u0435\u043C\u0435\u043D\u0438 AdminTime,\
+      \ AGhostTime, ObserverTime \u0438 JobGhostRole. \u041D\u0435\u043A\u043E\u0442\
+      \u043E\u0440\u044B\u0435 \u0438\u0437 \u043D\u0438\u0445 \u0443\u0436\u0435\
+      \ \u0431\u044B\u043B\u0438 \u0440\u0430\u043D\u0435\u0435, \u043E\u0434\u043D\
+      \u0430\u043A\u043E \u043E\u043D\u0438 \u043D\u0435 \u0441\u0447\u0438\u0442\u0430\
+      \u043B\u0438\u0441\u044C \u0432 \u0411\u0414."
+    type: Add
+  id: 5139
+  time: '2023-11-24T10:20:41.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 NSS Nox."
+    type: Tweak
+  id: 5140
+  time: '2023-11-24T16:30:07.0000000+00:00'
+- author: Werzet
+  changes:
+  - message: "\u041A\u0440\u0438\u0442\u0435\u0440\u0438\u0438 \u043F\u0440\u0430\u0432\
+      \ \u0430\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440\
+      \u0430 \u0434\u043B\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\
+      \u0435\u0441\u043A\u043E\u0433\u043E \u0441\u043D\u044F\u0442\u0438\u044F \u0431\
+      \u0443\u043D\u043A\u0435\u0440\u0430"
+    type: Tweak
+  id: 5141
+  time: '2023-11-25T10:54:48.0000000+00:00'
+- author: VladIsLove-e
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5142
+  time: '2023-11-25T11:19:01.0000000+00:00'
+- author: VladIsLove-e
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5143
+  time: '2023-11-25T13:52:51.0000000+00:00'

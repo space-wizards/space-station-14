@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: Corvax/Back/Duffels/military.rsi
   - type: Storage
-    maxTotalWeight: 200
+    maxTotalWeight: 44   # SS220 backpack-fix
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -18,4 +18,4 @@
   - type: Sprite
     sprite: Corvax/Back/Duffels/ce.rsi
   - type: Storage
-    maxTotalWeight: 120
+    maxTotalWeight: 40   # SS220 backpack-fix
