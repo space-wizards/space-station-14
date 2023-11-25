@@ -458,15 +458,6 @@
     Gold: 50
 
 - type: latheRecipe
-  id: BorgModuleTrashCollection
-  result: BorgModuleTrashCollection
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
-
-- type: latheRecipe
   id: BorgModuleDiagnosis
   result: BorgModuleDiagnosis
   completetime: 3

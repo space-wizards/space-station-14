@@ -12144,18 +12144,6 @@ entities:
     - pos: 11.5,-43.5
       parent: 82
       type: Transform
-- proto: AirlockEVAGlassLocked
-  entities:
-  - uid: 10939
-    components:
-    - pos: -40.5,28.5
-      parent: 82
-      type: Transform
-  - uid: 10970
-    components:
-    - pos: -39.5,28.5
-      parent: 82
-      type: Transform
 - proto: AirlockExternalGlass
   entities:
   - uid: 105
@@ -12556,18 +12544,6 @@ entities:
       type: Transform
 - proto: AirlockExternalGlassShuttleLocked
   entities:
-  - uid: 30
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 49.5,23.5
-      parent: 82
-      type: Transform
-  - uid: 31
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 49.5,21.5
-      parent: 82
-      type: Transform
   - uid: 7706
     components:
     - rot: 3.141592653589793 rad
@@ -13187,8 +13163,32 @@ entities:
     - pos: 73.5,1.5
       parent: 82
       type: Transform
+- proto: AirlockGlassShuttle
+  entities:
+  - uid: 8843
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 49.5,21.5
+      parent: 82
+      type: Transform
+  - uid: 10939
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 49.5,23.5
+      parent: 82
+      type: Transform
 - proto: AirlockHeadOfPersonnelGlassLocked
   entities:
+  - uid: 30
+    components:
+    - pos: -39.5,28.5
+      parent: 82
+      type: Transform
+  - uid: 31
+    components:
+    - pos: -40.5,28.5
+      parent: 82
+      type: Transform
   - uid: 10830
     components:
     - pos: -9.5,1.5
@@ -13408,11 +13408,6 @@ entities:
       pos: 0.5,-15.5
       parent: 82
       type: Transform
-  - uid: 8843
-    components:
-    - pos: -44.5,26.5
-      parent: 82
-      type: Transform
   - uid: 9028
     components:
     - pos: 14.5,-22.5
@@ -13457,6 +13452,11 @@ entities:
   - uid: 10405
     components:
     - pos: -7.5,3.5
+      parent: 82
+      type: Transform
+  - uid: 10970
+    components:
+    - pos: -44.5,26.5
       parent: 82
       type: Transform
 - proto: AirlockMaintJanitorLocked

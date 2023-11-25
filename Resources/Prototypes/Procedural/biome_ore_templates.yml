@@ -5,6 +5,7 @@
     WallRock: WallRockTin
     WallRockBasalt: WallRockBasaltTin
     WallRockChromite: WallRockChromiteTin
+    WallRockSand: WallRockSandTin
     WallRockSnow: WallRockSnowTin
   maxCount: 30
   minGroupSize: 10
@@ -31,6 +32,7 @@
     WallRock: WallRockGold
     WallRockBasalt: WallRockBasaltGold
     WallRockChromite: WallRockChromiteGold
+    WallRockSand: WallRockSandGold
     WallRockSnow: WallRockSnowGold
   maxCount: 30
   minGroupSize: 5
@@ -44,6 +46,7 @@
     WallRock: WallRockSilver
     WallRockBasalt: WallRockBasaltSilver
     WallRockChromite: WallRockChromiteSilver
+    WallRockSand: WallRockSandSilver
     WallRockSnow: WallRockSnowSilver
   maxCount: 30
   minGroupSize: 5
@@ -58,6 +61,7 @@
     WallRock: WallRockPlasma
     WallRockBasalt: WallRockBasaltPlasma
     WallRockChromite: WallRockChromitePlasma
+    WallRockSand: WallRockSandPlasma
     WallRockSnow: WallRockSnowPlasma
   maxCount: 12
   minGroupSize: 5
@@ -71,6 +75,7 @@
     WallRock: WallRockUranium
     WallRockBasalt: WallRockBasaltUranium
     WallRockChromite: WallRockChromiteUranium
+    WallRockSand: WallRockSandUranium
     WallRockSnow: WallRockSnowUranium
   maxCount: 12
   minGroupSize: 5
@@ -83,6 +88,7 @@
     WallRock: WallRockBananium
     WallRockBasalt: WallRockBasaltBananium
     WallRockChromite: WallRockChromiteBananium
+    WallRockSand: WallRockSandBananium
     WallRockSnow: WallRockSnowBananium
   maxCount: 12
   minGroupSize: 5
@@ -96,6 +102,7 @@
     WallRock: WallRockArtifactFragment
     WallRockBasalt: WallRockBasaltArtifactFragment
     WallRockChromite: WallRockChromiteArtifactFragment
+    WallRockSand: WallRockSandArtifactFragment
     WallRockSnow: WallRockSnowArtifactFragment
   maxCount: 6
   minGroupSize: 1
