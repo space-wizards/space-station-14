@@ -13,6 +13,7 @@
   supervisors: job-supervisors-hop
   access:
   - Service
+  - Lawyer
   - Brig
   - Maintenance
 

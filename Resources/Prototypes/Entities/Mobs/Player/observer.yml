@@ -52,6 +52,7 @@
     - Supply
     - Syndicate
     - USSPChannel
+    - Freelance
     globalReceive: true
   - type: Physics
     bodyType: KinematicController

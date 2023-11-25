@@ -95,9 +95,9 @@
   id: Web # Very flammable, can be easily hacked and slashed, but shooting or hitting it is another story.
   coefficients:
     Blunt: 0.7
-    Slash: 2.0
+    Slash: 1.4
     Piercing: 0.7
-    Heat: 3.0
+    Heat: 2.0
 
 - type: damageModifierSet
   id: Slime

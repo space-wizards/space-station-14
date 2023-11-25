@@ -5,6 +5,7 @@ using Content.Shared.Revenant.Components;
 using Content.Shared.SS220.DarkReaper;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 
 namespace Content.Client.SS220.DarkReaper;
 

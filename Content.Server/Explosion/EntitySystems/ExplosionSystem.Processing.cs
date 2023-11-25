@@ -1,16 +1,11 @@
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
-using Content.Server.Explosion.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Maps;
-using Content.Shared.Mind.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Robust.Shared.Spawners;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -57,6 +52,15 @@ public sealed partial class ExplosionSystem
     /// </summary>
     private int _previousTileIteration;
 
+    /// <summary>
+    /// This list is used when raising <see cref="BeforeExplodeEvent"/> to avoid allocating a new list per event.
+    /// </summary>
+    private readonly List<EntityUid> _containedEntities = new();
+
+    private readonly List<(EntityUid, DamageSpecifier)> _toDamage = new();
+
+    private List<EntityUid> _anchored = new();
+
     private void OnMapChanged(MapChangedEvent ev)
     {
         // If a map was deleted, check the explosion currently being processed belongs to that map.
@@ -83,8 +87,6 @@ public sealed partial class ExplosionSystem
 
         Stopwatch.Restart();
         var x = Stopwatch.Elapsed.TotalMilliseconds;
-
-        var availableTime = MaxProcessingTime;
 
         var tilesRemaining = TilesPerTick;
         while (tilesRemaining > 0 && MaxProcessingTime > Stopwatch.Elapsed.TotalMilliseconds)
@@ -196,7 +198,7 @@ public sealed partial class ExplosionSystem
     /// </summary>
     /// <returns>True if the underlying tile can be uprooted, false if the tile is blocked by a dense entity</returns>
     internal bool ExplodeTile(BroadphaseComponent lookup,
-        MapGridComponent grid,
+        Entity<MapGridComponent> grid,
         Vector2i tile,
         float throwForce,
         DamageSpecifier damage,
@@ -204,7 +206,8 @@ public sealed partial class ExplosionSystem
         HashSet<EntityUid> processed,
         string id)
     {
-        var gridBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
+        var size = grid.Comp.TileSize;
+        var gridBox = new Box2(tile * size, (tile + 1) * size);
 
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
@@ -225,8 +228,9 @@ public sealed partial class ExplosionSystem
 
         // process anchored entities
         var tileBlocked = false;
-        var anchoredList = grid.GetAnchoredEntities(tile).ToList();
-        foreach (var entity in anchoredList)
+        _anchored.Clear();
+        _map.GetAnchoredEntities(grid, tile, _anchored);
+        foreach (var entity in _anchored)
         {
             processed.Add(entity);
             ProcessEntity(entity, epicenter, damage, throwForce, id, null);
@@ -236,9 +240,11 @@ public sealed partial class ExplosionSystem
         // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
         // information about the entities that were spawned as a result, but without that information we just have to
         // re-check for new anchored entities. Compared to entity spawning & deleting, this should still be relatively minor.
-        if (anchoredList.Count > 0)
+        if (_anchored.Count > 0)
         {
-            foreach (var entity in grid.GetAnchoredEntities(tile))
+            _anchored.Clear();
+            _map.GetAnchoredEntities(grid, tile, _anchored);
+            foreach (var entity in _anchored)
             {
                 tileBlocked |= IsBlockingTurf(entity);
             }
@@ -365,51 +371,73 @@ public sealed partial class ExplosionSystem
         return SpaceQueryCallback(ref state, in uid);
     }
 
+    private DamageSpecifier GetDamage(EntityUid uid,
+        string id, DamageSpecifier damage)
+    {
+        // TODO Explosion Performance
+        // Cache this? I.e., instead of raising an event, check for a component?
+        var resistanceEv = new GetExplosionResistanceEvent(id);
+        RaiseLocalEvent(uid, ref resistanceEv);
+        resistanceEv.DamageCoefficient = Math.Max(0, resistanceEv.DamageCoefficient);
+
+        // ReSharper disable once CompareOfFloatsByEqualityOperator
+        if (resistanceEv.DamageCoefficient != 1)
+            damage *= resistanceEv.DamageCoefficient;
+
+        return damage;
+    }
+
+    private void GetEntitiesToDamage(EntityUid uid, DamageSpecifier originalDamage, string prototype)
+    {
+        _toDamage.Clear();
+        _toDamage.Add((uid, GetDamage(uid, prototype, originalDamage)));
+
+        for (var i = 0; i < _toDamage.Count; i++)
+        {
+            var (ent, damage) = _toDamage[i];
+            _containedEntities.Clear();
+            var ev = new BeforeExplodeEvent(damage, prototype, _containedEntities);
+            RaiseLocalEvent(ent, ref ev);
+
+            if (_containedEntities.Count == 0)
+                continue;
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (ev.DamageCoefficient != 1)
+                damage *= ev.DamageCoefficient;
+
+            _toDamage.EnsureCapacity(_toDamage.Count + _containedEntities.Count);
+            foreach (var contained in _containedEntities)
+            {
+                var newDamage = GetDamage(contained, prototype, damage);
+                _toDamage.Add((contained, newDamage));
+            }
+        }
+    }
+
     /// <summary>
     ///     This function actually applies the explosion affects to an entity.
     /// </summary>
     private void ProcessEntity(
         EntityUid uid,
         MapCoordinates epicenter,
-        DamageSpecifier? damage,
+        DamageSpecifier? originalDamage,
         float throwForce,
         string id,
         TransformComponent? xform)
     {
-        // damage
-        if (damage != null && _damageQuery.TryGetComponent(uid, out var damageable))
+        if (originalDamage != null)
         {
-            // TODO Explosion Performance
-            // Cache this? I.e., instead of raising an event, check for a component?
-            var ev = new GetExplosionResistanceEvent(id);
-            RaiseLocalEvent(uid, ref ev);
-
-            ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
-
-            // TODO explosion entity
-            // Move explosion data into the existing explosion visuals entity
-            // Give each explosion a unique name, include in admin logs.
-
-            // TODO Explosion Performance
-            // This creates a new dictionary. Maybe we should just re-use a private local damage specifier and update it.
-            // Though most entities shouldn't have explosion resistance, so maybe its fine.
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (ev.DamageCoefficient != 1)
-                damage *= ev.DamageCoefficient;
-
-            // Log damage to players. Damage is logged before dealing damage so that the position can be logged before
-            // the entity gets deleted.
-            if (_mindQuery.HasComponent(uid))
+            GetEntitiesToDamage(uid, originalDamage, id);
+            foreach (var (entity, damage) in _toDamage)
             {
-                _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                    $"Explosion caused [{damage.Total}] damage to {ToPrettyString(uid):target} at {xform?.Coordinates}");
+                // TODO EXPLOSIONS turn explosions into entities, and pass the the entity in as the damage origin.
+                _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: true);
             }
-
-            _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
         }
 
         // throw
-        if (xform != null // null implies anchored
+        if (xform != null // null implies anchored or in a container
             && !xform.Anchored
             && throwForce > 0
             && !EntityManager.IsQueuedForDeletion(uid)
@@ -425,49 +453,7 @@ public sealed partial class ExplosionSystem
                 _projectileQuery,
                 throwForce);
         }
-
-        //If damageble object inside storage
-        if (_entityManager.TryGetComponent<ContainerManagerComponent>(uid, out var container))
-        {
-            InStorageDamage(uid, container, damage);
-        }
-
-
-        // TODO EXPLOSION puddle / flammable ignite?
-
-        // TODO EXPLOSION deaf/ear damage? other explosion effects?
     }
-
-    // SS220 In-Container-Explosions begin
-    /// <summary>
-    ///     This function allows you to damage an object in storage.
-    /// </summary>
-    private void InStorageDamage(EntityUid uid, ContainerManagerComponent container, DamageSpecifier? damage)
-    {
-        if (container.TryGetContainer("storagebase", out var storage))
-        {
-            foreach (EntityUid storagedEntity in storage.ContainedEntities)
-            {
-                if (damage != null &&
-                    _damageQuery.TryGetComponent(storagedEntity, out var damageableInStorage) &&
-                    _explosiveQuery.TryGetComponent(storagedEntity, out var explosiveComponent))
-                {
-
-                    //    TO DO add damage decreasing coefficient depending on deepness inside storages and maybe even material of storage
-                    _damageableSystem.TryChangeDamage(storagedEntity, damage, ignoreResistances: true, damageable: damageableInStorage);
-                    var damageStr = string.Join(", ", damage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
-                    _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                        $"Explosion caused [{damageStr}] to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
-                }
-                //if we met another storage inside this storage
-                if (_entityManager.TryGetComponent<ContainerManagerComponent>(storagedEntity, out var innerContainer))
-                {
-                    InStorageDamage(storagedEntity, innerContainer, damage);
-                }
-            }
-        }
-    }
-    // SS220 In-Container-Explosions end
 
     /// <summary>
     ///     Tries to damage floor tiles. Not to be confused with the function that damages entities intersecting the
@@ -813,7 +799,7 @@ sealed class Explosion
                 // damage entities on the tile. Also figures out whether there are any solid entities blocking the floor
                 // from being destroyed.
                 var canDamageFloor = _system.ExplodeTile(_currentLookup,
-                    _currentGrid,
+                    (_currentGrid.Owner, _currentGrid),
                     _currentEnumerator.Current,
                     _currentThrowForce,
                     _currentDamage,

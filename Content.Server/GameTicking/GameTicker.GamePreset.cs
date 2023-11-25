@@ -199,15 +199,6 @@ namespace Content.Server.GameTicking
             if (!Resolve(mindId, ref mind))
                 return false;
 
-            //SS220-lobby-ghost-bug begin
-            var player = mind.Session;
-            if (player is null)
-                return false;
-
-            if (!PlayerGameStatuses.TryGetValue(player.UserId, out var status) || status is not PlayerGameStatus.JoinedGame)
-                return false;
-            //SS220-lobby-ghost-bug end
-
             var playerEntity = mind.CurrentEntity;
 
             if (playerEntity != null && viaCommand)
@@ -272,7 +263,7 @@ namespace Content.Server.GameTicking
             var xformQuery = GetEntityQuery<TransformComponent>();
             var coords = _transform.GetMoverCoordinates(position, xformQuery);
 
-            var ghost = Spawn("MobObserver", coords);
+            var ghost = Spawn(ObserverPrototypeName, coords);
 
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".

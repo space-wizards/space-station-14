@@ -1066,6 +1066,8 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: BasePlushie

@@ -4,13 +4,19 @@ using Content.Shared.Database;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Utility;
 using System.Diagnostics;
+using Content.Server.Administration.Managers;
 using Content.Shared.CCVar;
+using Robust.Shared.Audio;
+using Robust.Shared.Timing;
 using Robust.Shared.Player;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
 public sealed partial class ParticleAcceleratorSystem
 {
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     private void InitializeControlBoxSystem()
     {
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ComponentStartup>(OnComponentStartup);
@@ -165,10 +171,17 @@ public sealed partial class ParticleAcceleratorSystem
             if (strength >= alertMinPowerState)
             {
                 var pos = Transform(uid);
-                _chat.SendAdminAlert(player, Loc.GetString("particle-accelerator-admin-power-strength-warning",
-                    ("machine", ToPrettyString(uid)),
-                    ("powerState", strength),
-                    ("coordinates", pos.Coordinates)));
+                if (_timing.CurTime > comp.EffectCooldown)
+                {
+                    _chat.SendAdminAlert(player, Loc.GetString("particle-accelerator-admin-power-strength-warning",
+                        ("machine", ToPrettyString(uid)),
+                        ("powerState", strength),
+                        ("coordinates", pos.Coordinates)));
+                    _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
+                        Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false,
+                        AudioParams.Default.WithVolume(-8f));
+                    comp.EffectCooldown = _timing.CurTime + comp.CooldownDuration;
+                }
             }
         }
 

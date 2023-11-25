@@ -619,6 +619,9 @@ namespace Content.Shared.Cuffs
             if (!Resolve(target, ref cuffable) || !Resolve(cuffsToRemove, ref cuff))
                 return;
 
+            if (TerminatingOrDeleted(cuffsToRemove) || TerminatingOrDeleted(target))
+                return;
+
             if (user != null)
             {
                 var attempt = new UncuffAttemptEvent(user.Value, target);

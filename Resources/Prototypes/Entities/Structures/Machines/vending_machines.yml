@@ -1475,7 +1475,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Command"]] # Corvax-IAA
+    access: [["Command"], ["Lawyer"]] # Corvax-IAA
 
 - type: entity
   parent: VendingMachine
@@ -2055,4 +2055,4 @@
     ejectDelay: 2
   - type: AccessReader
     access: [["SyndicateAgent"]]
-  
+
