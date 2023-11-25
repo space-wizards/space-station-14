@@ -1,0 +1,29 @@
+- type: entity
+  id: SuitStorageEVASyndicateImperial
+  parent: SuitStorageEVASyndicate
+  suffix: Syndicate EVA
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitSyndicate
+        - id: ClothingHeadHelmetSyndicate
+        - id: ClothingMaskGasSyndicate
+  - type: Sprite
+    sprite: Imperial/SyndieLocks/storage.rsi
+
+- type: entity
+  id: SuitStorageSyndieImperial
+  parent: SuitStorageSyndie
+  suffix: Syndicate Hardsuit
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitSyndie
+        - id: ClothingShoesBootsMagSyndie
+        - id: ClothingMaskGasSyndicate
+  - type: Sprite
+    sprite: Imperial/SyndieLocks/storage.rsi
