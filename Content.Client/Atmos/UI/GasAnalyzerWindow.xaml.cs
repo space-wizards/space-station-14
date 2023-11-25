@@ -285,13 +285,13 @@ namespace Content.Client.Atmos.UI
                     Text = Loc.GetString(gas.Name)
                 });
 
-                var gasAmountRough = $"{gas.Amount:00.00000}"[..5];
+                var gasAmountRounded = $"{float.Round(gas.Amount, 2, MidpointRounding.ToZero):00.00}";
                 var gasAmountPrecisionDigits = $"{gas.Amount - Math.Truncate(gas.Amount):00.00000}"[5..];
 
                 var valMsg = new FormattedMessage();
                 valMsg.PushColor(Color.White);
                 valMsg.AddMarkup(Loc.GetString("gas-analyzer-window-molarity-text",
-                    ("mol", $"{gasAmountRough}"),
+                    ("mol", $"{gasAmountRounded}"),
                     ("mol-continued-decimals", $"{gasAmountPrecisionDigits}"),
                     ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")));
                 valMsg.Pop();
