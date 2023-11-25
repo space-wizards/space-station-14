@@ -1,16 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - message: To increase employee retention and new staff experience, we've installed
-      a short range teleporter on our Arrivals Shuttle. However we only had sufficient
-      budget to use it once per shift per staff member.
-    type: Add
-  - message: You might notice yourself adjusting as you step off the arrivals shuttle,
-      with our patented rotation acclimation system. It might make you dizzy, but
-      it helps the station make sense.
-    type: Tweak
-  id: 4658
-  time: '2023-08-22T10:46:50.0000000+00:00'
 - author: onoira
   changes:
   - message: Nanotrasen no longer uses disappearing ink for official books and documents.
@@ -3565,3 +3553,13 @@ Entries:
     type: Tweak
   id: 5140
   time: '2023-11-24T16:30:07.0000000+00:00'
+- author: Werzet
+  changes:
+  - message: "\u041A\u0440\u0438\u0442\u0435\u0440\u0438\u0438 \u043F\u0440\u0430\u0432\
+      \ \u0430\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440\
+      \u0430 \u0434\u043B\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\
+      \u0435\u0441\u043A\u043E\u0433\u043E \u0441\u043D\u044F\u0442\u0438\u044F \u0431\
+      \u0443\u043D\u043A\u0435\u0440\u0430"
+    type: Tweak
+  id: 5141
+  time: '2023-11-25T10:54:48.0000000+00:00'
