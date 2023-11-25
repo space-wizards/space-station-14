@@ -38,10 +38,19 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
-        var activated = !HasComp<ActiveRadioJammerComponent>(uid) && 
-            _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
+        var active = HasComp<ActiveRadioJammerComponent>(uid);
+        var charged = _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
             battery.CurrentCharge > comp.Wattage;
-        if (activated)
+
+        var state = Loc.GetString(!active ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
+        var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
+
+        if(!charged)
+        {
+          message = Loc.GetString("radio-jammer-component-no-charge");
+        }
+
+        if (!active && charged)
         {
             EnsureComp<ActiveRadioJammerComponent>(uid);
         }
@@ -49,8 +58,7 @@ public sealed class JammerSystem : EntitySystem
         {
             RemComp<ActiveRadioJammerComponent>(uid);
         }
-        var state = Loc.GetString(activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
-        var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
+
         _popup.PopupEntity(message, args.User, args.User);
         args.Handled = true;
     }
