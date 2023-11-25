@@ -46,3 +46,6 @@
 - files: ["core.yml"]
   authors: Ubaser
 
+- files: ["rim.yml"]
+  authors: darkdan, special thanks to Emisse for debuging help
+

@@ -1,16 +1,15 @@
 - type: gameMap
-  id: rim
-  mapName: 'rim'
+  id: Rim
+  mapName: 'Rim'
   mapPath: /Maps/rim.yml
   minPlayers: 0
   maxPlayers: 60
-  fallback: true
   stations:
     rim:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} rim {1}'
+          mapNameTemplate: '{0} Rim {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
@@ -39,18 +38,22 @@
             Chemist: [ 3, 3 ]
             MedicalDoctor: [ 4, 4 ]
             MedicalIntern: [ 4, 4 ]
+            Paramedic: [ 3, 3 ]
             #science
             ResearchDirector: [ 1, 1 ]
             SeniorResearcher: [1, 1 ]
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
-            Borg: [ 2, 2 ]
+            Borg: [ 3, 3 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
             SeniorOfficer: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
             SecurityCadet: [ 4, 4 ]
+            Lawyer: [ 2, 2 ]
+            Detective: [ 1, 1 ]
+            BrigMedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 1, 3 ]

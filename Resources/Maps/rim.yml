@@ -2294,7 +2294,7 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: RadiationGridResistance
-    - id: detroit2
+    - id: rim
       type: BecomesStation
   - uid: 12727
     components:
