@@ -1,5 +1,5 @@
 - type: entity
-  parent: Clothing
+  parent: [Clothing, PowerCellSlotSmallItem]
   id: ClothingNeckBodyCamera
   name: bodycamera
   description: Wearable camera to ensure accountability and responsibility.
@@ -27,7 +27,7 @@
         - SurveillanceCameraMonitor
         - RadioSpeaker
   - type: ActiveListener
-    range: 10
+    range: 5
   - type: Eye
   - type: UserInterface
     interfaces:
@@ -39,3 +39,12 @@
   - type: UseDelay
   - type: Tag
     tags: []
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
