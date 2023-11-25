@@ -1,10 +1,13 @@
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: Clothing
   id: ClothingNeckBodyCamera
   name: bodycamera
   description: Wearable camera to ensure accountability and responsibility.
   components:
+  - type: Item
+    size: Small
   - type: Sprite
+    state: icon
     sprite: Clothing/Neck/Misc/bodycamera.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/bodycamera.rsi

@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Bodycamera
 {
     [RegisterComponent]
+    [Access(typeof(BodyCameraSystem))]
     public sealed partial class BodyCameraComponent : Component
     {
         [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
