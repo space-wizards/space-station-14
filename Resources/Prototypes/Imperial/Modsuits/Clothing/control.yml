@@ -56,8 +56,14 @@
         maxValue: 2.0
         isLooped: true
   # - type: QualityOfItem
-  #   maxSpawnQuality: 3
-  #   minSpawnQuality: 
+  #   qualityWeights:
+  #     0: 0
+  #     1: 0
+  #     2: 0
+  #     3: 80
+  #     4: 20
+  #     5: 0
+  #     6: 0
 
 - type: entity
   parent: ClothingControlModsuitBase
