@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - message: Smile the Slime now has unique ghost role text rather than standard slimes.
-    type: Add
-  id: 4660
-  time: '2023-08-22T12:00:20.0000000+00:00'
 - author: Alekshhh
   changes:
   - message: Changed various head locker contents.
@@ -3569,3 +3563,19 @@ Entries:
     type: Fix
   id: 5142
   time: '2023-11-25T11:19:01.0000000+00:00'
+- author: VladIsLove-e
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5143
+  time: '2023-11-25T13:52:51.0000000+00:00'
