@@ -16,7 +16,7 @@ gas-analyzer-window-pressure-text = Pressure:
 gas-analyzer-window-pressure-val-text = {$pressure} kPa
 gas-analyzer-window-temperature-text = Temperature:
 gas-analyzer-window-temperature-val-text = {$tempK}K ({$tempC}°C)
-gas-analyzer-window-molarity-text = {$mol} mol ({$percentage}%)
+gas-analyzer-window-molarity-text = {$mol}[color=gray]{$mol-continued-decimals}[/color] mol ({$percentage}%)
 gas-analyzer-window-molarity-percentage-text = {$gasName}: {$amount} mol ({$percentage}%)
 
 # Used for GasEntry.ToString()
