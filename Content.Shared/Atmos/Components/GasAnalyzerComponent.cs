@@ -19,6 +19,12 @@ public sealed partial class GasAnalyzerComponent : Component
     [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled;
 
+    /// <summary>
+    /// Minimum moles a gas must have to be sent to the gas analyzer UI.
+    /// </summary>
+    [DataField("UIMinMoles"), ViewVariables(VVAccess.ReadWrite)]
+    public float UIMinMoles = 0.00001f;
+
     [Serializable, NetSerializable]
     public enum GasAnalyzerUiKey
     {

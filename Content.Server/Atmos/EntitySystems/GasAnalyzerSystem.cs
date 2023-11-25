@@ -177,7 +177,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (tileMixture != null)
             {
                 gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileMixture.Pressure, tileMixture.Temperature,
-                    GenerateGasEntryArray(tileMixture)));
+                    GenerateGasEntryArray(tileMixture, component)));
             }
             else
             {
@@ -204,7 +204,7 @@ namespace Content.Server.Atmos.EntitySystems
                     foreach (var mixes in ev.GasMixtures)
                     {
                         if(mixes.Value != null)
-                            gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value)));
+                            gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value, component)));
                     }
 
                     deviceFlipped = ev.DeviceFlipped;
@@ -217,7 +217,7 @@ namespace Content.Server.Atmos.EntitySystems
                         foreach (var pair in node.Nodes)
                         {
                             if (pair.Value is PipeNode pipeNode)
-                                gasMixList.Add(new GasMixEntry(pair.Key, pipeNode.Air.Pressure, pipeNode.Air.Temperature, GenerateGasEntryArray(pipeNode.Air)));
+                                gasMixList.Add(new GasMixEntry(pair.Key, pipeNode.Air.Pressure, pipeNode.Air.Temperature, GenerateGasEntryArray(pipeNode.Air, component)));
                         }
                     }
                 }
@@ -246,7 +246,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Generates a GasEntry array for a given GasMixture
         /// </summary>
-        private GasEntry[] GenerateGasEntryArray(GasMixture? mixture)
+        private GasEntry[] GenerateGasEntryArray(GasMixture? mixture, GasAnalyzerComponent component)
         {
             var gases = new List<GasEntry>();
 
@@ -254,7 +254,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var gas = _atmo.GetGas(i);
 
-                if (mixture?.Moles[i] <= Atmospherics.GasMinMoles)
+                if (mixture?.Moles[i] <= component.UIMinMoles)
                     continue;
 
                 if (mixture != null)
