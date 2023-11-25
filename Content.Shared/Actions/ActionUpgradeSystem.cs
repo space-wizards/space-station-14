@@ -10,6 +10,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -21,18 +22,30 @@ public sealed class ActionUpgradeSystem : EntitySystem
     private void OnActionUpgradeEvent(EntityUid uid, ActionUpgradeComponent component, ActionUpgradeEvent args)
     {
         // TODO: Add level (check if able first)
-        if (!CanLevelUp(args.NewLevel, component.EffectedLevels, out var newActionProto))
+        if (!CanLevelUp(args.NewLevel, component.EffectedLevels, out var newActionProto)
+            || !_actions.TryGetActionData(uid, out var actionComp)
+            || actionComp.Container is null
+            || !TryComp<ActionsContainerComponent>(actionComp.Container.Value, out var actionContainerComp))
             return;
 
         component.Level = args.NewLevel;
         // TODO: Replace current action with new one
-
+        // 1 - check original action container (either by system or getting it)
+        // 2 - if container, remove provided action, else remove action
+        _actionContainer.RemoveAction(uid, actionComp);
+        // 4 - add this to container
+        // 5 - grant actions if externally granted
+        _actionContainer.AddAction(actionComp.Container.Value, newActionProto, actionContainerComp);
         // TODO: Preserve ordering of actions
+        //      Step through removing an action to see how that works on UI side
+
+        // TODO: Delete old action so it's not just lingering in nullspace?
+        // _entityManager.DeleteEntity(uid);
     }
 
-    private bool CanLevelUp
-        (int newLevel,
-         Dictionary<int, EntProtoId> levelDict,
+    private bool CanLevelUp(
+        int newLevel,
+        Dictionary<int, EntProtoId> levelDict,
         [NotNullWhen(true)]out EntProtoId? newLevelProto)
     {
         newLevelProto = null;
