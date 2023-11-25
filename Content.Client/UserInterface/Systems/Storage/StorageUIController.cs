@@ -4,18 +4,22 @@ using Content.Client.Interaction;
 using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Storage.Controls;
+using Content.Shared.Item;
 using Content.Shared.Storage;
+using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Storage;
 
 public sealed class StorageUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<StorageSystem>
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
@@ -105,8 +109,6 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
     {
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            Logger.Debug("we workin???");
-            _draggedPiece = control;
             _menuDragHelper.MouseDown(control);
 
             args.Handle();
@@ -118,7 +120,7 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
-        if (UIManager.CurrentlyHovered == control)
+        if (_menuDragHelper.Dragged != null)
         {
             _menuDragHelper.EndDrag();
         }
@@ -127,20 +129,42 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
 
     private bool OnMenuBeginDrag()
     {
-        if (_draggedPiece != null)
-            LayoutContainer.SetPosition(_draggedPiece, UIManager.MousePositionScaled.Position - new Vector2(32, 32));
+        if (_menuDragHelper.Dragged is not { } dragged)
+            return false;
+
+        _draggedPiece = new ItemGridPiece((dragged.Entity, _entity.GetComponent<ItemComponent>(dragged.Entity)),
+            dragged.Location,
+            _entity);
+        _draggedPiece.MouseFilter = Control.MouseFilterMode.Ignore;
+        _draggedPiece.Visible = true;
+        _draggedPiece.Orphan();
+
+        UIManager.PopupRoot.AddChild(_draggedPiece);
+        LayoutContainer.SetPosition(_draggedPiece, (UIManager.MousePositionScaled.Position / 2) - _draggedPiece.GetCenterOffset());
         return true;
     }
 
     private bool OnMenuContinueDrag(float frametime)
     {
-        if (_draggedPiece != null)
-            LayoutContainer.SetPosition(_draggedPiece, UIManager.MousePositionScaled.Position - new Vector2(32, 32));
+        if (_draggedPiece == null)
+            return false;
+
+        LayoutContainer.SetPosition(_draggedPiece, (UIManager.MousePositionScaled.Position / 2) - _draggedPiece.GetCenterOffset());
         return true;
     }
 
     private void OnMenuEndDrag()
     {
+        if (_draggedPiece == null)
+            return;
+        _draggedPiece.Visible = false;
         _draggedPiece = null;
+    }
+
+    public override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        _menuDragHelper.Update(args.DeltaSeconds);
     }
 }

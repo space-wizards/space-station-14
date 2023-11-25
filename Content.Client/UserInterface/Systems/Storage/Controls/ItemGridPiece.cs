@@ -85,6 +85,7 @@ public sealed class ItemGridPiece : Control
         //todo recolor the sprites so that this works
         Color? colorModulate = Hovered ? Color.Red: null;
 
+        _texturesPositions.Clear();
         _texturesPixelPositions.Clear();
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
         {
@@ -135,6 +136,12 @@ public sealed class ItemGridPiece : Control
     {
         base.FrameUpdate(args);
 
+        if (MouseFilter == MouseFilterMode.Ignore)
+        {
+            Hovered = false;
+            return;
+        }
+
         if (_texturesPixelPositions.Count == 0)
             return;
 
@@ -181,6 +188,13 @@ public sealed class ItemGridPiece : Control
         base.KeyBindUp(args);
 
         OnPieceUnpressed?.Invoke(args, this);
+    }
+
+    public Vector2 GetCenterOffset()
+    {
+        var boxSize = SharedStorageSystem.GetBoundingBox(_itemSystem.GetItemShape((Entity, null))).Size;
+        var actualSize = new Vector2(boxSize.X + 1, boxSize.Y + 1);
+        return actualSize * _centerTexture!.Size * UIScale / 2f;
     }
 
     private Texture? GetTexture(IReadOnlyList<Box2i> boxes, Vector2i position, Direction corner)
