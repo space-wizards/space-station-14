@@ -547,6 +547,7 @@
       - TargetHuman
       - TargetSyndicate
       - TargetClown
+      - ClothingNeckBodyCamera
     dynamicRecipes:
       - CartridgeLightRifleIncendiary
       - CartridgeMagnumIncendiary

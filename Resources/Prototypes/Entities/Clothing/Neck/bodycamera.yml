@@ -1,0 +1,38 @@
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckBodyCamera
+  name: bodycamera
+  description: Wearable camera to ensure accountability and responsibility.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/bodycamera.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/bodycamera.rsi
+    quickEquip: false
+    slots:
+    - neck
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+        - SurveillanceCamera
+        - SurveillanceCameraMonitor
+        - RadioSpeaker
+  - type: ActiveListener
+    range: 10
+  - type: Eye
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraSetupUiKey.Camera
+        type: SurveillanceCameraSetupBoundUi
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: BodyCamera
+  - type: UseDelay
+  - type: Tag
+    tags: []

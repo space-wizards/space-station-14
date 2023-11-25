@@ -465,3 +465,12 @@
     Steel: 500
     Glass: 100
     Plastic: 200
+
+- type: latheRecipe
+  id: ClothingNeckBodyCamera
+  result: ClothingNeckBodyCamera
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 100
+    Plastic: 200
