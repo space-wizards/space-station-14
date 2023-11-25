@@ -2,6 +2,7 @@
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Roles;
@@ -10,6 +11,7 @@ public abstract class SharedRoleSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // TODO please lord make role entities
@@ -152,5 +154,15 @@ public abstract class SharedRoleSystem : EntitySystem
     public bool IsAntagonistRole<T>()
     {
         return _antagTypes.Contains(typeof(T));
+    }
+
+    /// <summary>
+    /// Play a sound for the mind, if it has a session attached.
+    /// Use this for role greeting sounds.
+    /// </summary>
+    public void MindPlaySound(EntityUid mindId, SoundSpecifier? sound, MindComponent? mind = null)
+    {
+        if (Resolve(mindId, ref mind) && mind.Session != null)
+            _audio.PlayGlobal(sound, mind.Session);
     }
 }

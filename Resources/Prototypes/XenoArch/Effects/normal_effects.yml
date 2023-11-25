@@ -357,20 +357,20 @@
   components:
   - type: RandomTeleportArtifact
 
-#- type: artifactEffect
-#  id: EffectFoamGood
-#  targetDepth: 2
-#  effectHint: artifact-effect-hint-biochemical
-#  components:
-#  - type: FoamArtifact
-#    reagents:
-#    - Dermaline
-#    - Arithrazine
-#    - Bicaridine
-#    - Inaprovaline
-#    - Kelotane
-#    - Dexalin
-#    - Omnizine
+- type: artifactEffect
+  id: EffectFoamGood
+  targetDepth: 2
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifact
+    reagents:
+    - Dermaline
+    - Arithrazine
+    - Bicaridine
+    - Inaprovaline
+    - Kelotane
+    - Dexalin
+    - Omnizine
 
 - type: artifactEffect
   id: EffectChemicalPuddleRare
@@ -496,26 +496,26 @@
       prob: 0.5
       maxAmount: 3
 
-#- type: artifactEffect
-#  id: EffectFoamDangerous
-#  targetDepth: 3
-#  effectHint: artifact-effect-hint-biochemical
-#  components:
-#  - type: FoamArtifact
-#    minFoamAmount: 20
-#    maxFoamAmount: 30
-#    reagents:
-#    - Tritium
-#    - Plasma
-#    - SulfuricAcid
-#    - SpaceDrugs
-#    - Nocturine
-#    - MuteToxin
-#    - Napalm
-#    - CarpoToxin
-#    - ChloralHydrate
-#    - Mold
-#    - Amatoxin
+- type: artifactEffect
+  id: EffectFoamDangerous
+  targetDepth: 3
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifact
+    minFoamAmount: 20
+    maxFoamAmount: 30
+    reagents:
+    - Tritium
+    - Plasma
+    - SulfuricAcid
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - Napalm
+    - CarpoToxin
+    - ChloralHydrate
+    - Mold
+    - Amatoxin
 
 - type: artifactEffect
   id: EffectIgnite
