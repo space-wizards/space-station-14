@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
@@ -44,12 +45,15 @@ public class EntityQueryBenchmark
 
         _clothingQuery = _entMan.GetEntityQuery<ClothingComponent>();
 
+        // Apparently ~40% of entities are items, and 1 in 6 of those are clothing.
+        /*
         var entCount = _entMan.EntityCount;
         var itemCount = _entMan.Count<ItemComponent>();
         var clothingCount = _entMan.Count<ClothingComponent>();
         var itemRatio = (float) itemCount / entCount;
         var clothingRatio = (float) clothingCount / entCount;
         Console.WriteLine($"Entities: {entCount}. Items: {itemRatio:P2}. Clothing: {clothingRatio:P2}.");
+        */
     }
 
     [GlobalCleanup]
@@ -59,11 +63,22 @@ public class EntityQueryBenchmark
         PoolManager.Shutdown();
     }
 
-    /// <summary>
-    /// Enumerate all items and check if they have a clothing component.
-    /// </summary>
     [Benchmark]
     public int HasComponent()
+    {
+        var hashCode = 0;
+        var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
+        while (enumerator.MoveNext(out var uid, out var _))
+        {
+            if (_entMan.HasComponent<ClothingComponent>(uid))
+                hashCode = HashCode.Combine(hashCode, uid.Id);
+        }
+
+        return hashCode;
+    }
+
+    [Benchmark]
+    public int HasComponentQuery()
     {
         var hashCode = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
@@ -76,11 +91,22 @@ public class EntityQueryBenchmark
         return hashCode;
     }
 
-    /// <summary>
-    /// Enumerate all items and get their clothing component.
-    /// </summary>
     [Benchmark]
     public int TryGetComponent()
+    {
+        var hashCode = 0;
+        var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
+        while (enumerator.MoveNext(out var uid, out var _))
+        {
+            if (_entMan.TryGetComponent(uid, out ClothingComponent? clothing))
+                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
+        }
+
+        return hashCode;
+    }
+
+    [Benchmark]
+    public int TryGetComponentQuery()
     {
         var hashCode = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
