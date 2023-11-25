@@ -93,19 +93,19 @@ namespace Content.Server.Administration.Commands
         {
             if (canReturn)
             {
-                return _entities.SpawnEntity("AdminObserver", coordinates);
+                return _entities.SpawnEntity(GameTicker.AdminObserverPrototypeName, coordinates);
             }
 
             //check if current player is aghost
             var playerAttachedEntity = player.AttachedEntity;
             if (playerAttachedEntity is { Valid: true } playerEntity &&
-                _entities.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID == "AdminObserver")
+                _entities.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID == GameTicker.AdminObserverPrototypeName)
             {
                 EmptyHands(playerAttachedEntity);
-                return _entities.SpawnEntity("MobObserver", coordinates);
+                return _entities.SpawnEntity(GameTicker.ObserverPrototypeName, coordinates);
             }
 
-            return _entities.SpawnEntity("AdminObserver", coordinates);
+            return _entities.SpawnEntity(GameTicker.AdminObserverPrototypeName, coordinates);
         }
 
         private void EmptyHands(EntityUid? playerAttachedEntity)
