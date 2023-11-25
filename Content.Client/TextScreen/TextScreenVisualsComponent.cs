@@ -15,14 +15,11 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <summary>
     ///     The color of the text drawn.
     /// </summary>
-    [DataField("color")]
-    public Color Color { get; set; } = Color.Cyan;
-
-    /// <summary>
-    ///     Whether the screen is on.
-    /// </summary>
-    [DataField("activated")]
-    public bool Activated;
+    /// <remarks>
+    ///     This is the old ss13 color, from tg
+    /// </remarks>
+    [DataField("color"), ViewVariables(VVAccess.ReadWrite)]
+    public Color Color { get; set; } = new Color(15, 151, 251);
 
     /// <summary>
     ///     Offset for centering the text.

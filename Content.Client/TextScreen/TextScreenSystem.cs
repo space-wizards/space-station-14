@@ -1,13 +1,9 @@
 using System.Linq;
 using System.Numerics;
-using Content.Client.Info;
 using Content.Shared.TextScreen;
-using FastAccessors;
 using Robust.Client.GameObjects;
-using Robust.Client.State;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Client.TextScreen;
 
