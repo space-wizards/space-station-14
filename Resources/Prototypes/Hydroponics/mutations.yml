@@ -27,8 +27,11 @@
     - Radium
     - Gold
     - Uranium
+    - Phosphorus
     - AtomicBomb
-    - B52
+    - Neurotoxin
+    - Neurotoxin
+    - ChangelingSting
     - CogChamp
   - quantity: 5
     weight: 2
@@ -55,6 +58,7 @@
     - IceCream
     - Cola
     - Diphenhydramine
+    - Iron
   - quantity: 10
     weight: 3
     reagents:
@@ -85,6 +89,9 @@
     - LemonLime
     - Enzyme
     - Vinegar
+    - Potassium
+    - Fluorine
+    - Aluminium
   - quantity: 10
     weight: 3.5
     reagents:

@@ -5,8 +5,6 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Chemistry.Reagent;
 using System.Linq;
 using Content.Shared.Atmos;
-using Content.Server.Popups;
-using Content.Shared.Popups;
 using FastAccessors;
 
 namespace Content.Server.Botany;
@@ -15,7 +13,6 @@ public sealed class MutationSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     private WeightedRandomFillSolutionPrototype _randomChems = default!;
 
 
@@ -34,7 +31,7 @@ public sealed class MutationSystem : EntitySystem
     ///
     /// You MUST clone() seed before mutating it!
     /// </summary>
-    public void MutateSeed(EntityUid trayUid, ref SeedData seed, float severity)
+    public void MutateSeed(ref SeedData seed, float severity)
     {
         if (!seed.Unique)
         {
@@ -90,7 +87,7 @@ public sealed class MutationSystem : EntitySystem
         MutateChemicals(ref seed.Chemicals, 20, totalbits, severity);
 
         // Species (10)
-        MutateSpecies(ref seed, trayUid, 10, totalbits, severity);
+        MutateSpecies(ref seed, 10, totalbits, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -283,7 +280,7 @@ public sealed class MutationSystem : EntitySystem
         }
     }
 
-    private void MutateSpecies(ref SeedData seed, EntityUid trayUid, int bits, int totalbits, float mult)
+    private void MutateSpecies(ref SeedData seed, int bits, int totalbits, float mult)
     {
         float p = mult * bits / totalbits;
         p = Math.Clamp(p, 0, 1);
@@ -302,9 +299,6 @@ public sealed class MutationSystem : EntitySystem
             return;
         }
 
-        _popup.PopupEntity(Loc.GetString("botany-species-mutate-message",
-            ("origPlant", Loc.GetString(seed.DisplayName)), ("newPlant", Loc.GetString(protoSeed.DisplayName))),
-                trayUid, PopupType.Medium);
         seed = seed.SpeciesChange(protoSeed);
     }
 

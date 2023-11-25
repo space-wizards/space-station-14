@@ -842,7 +842,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null)
         {
             EnsureUniqueSeed(uid, component);
-            _mutation.MutateSeed(uid, ref component.Seed, severity);
+            _mutation.MutateSeed(ref component.Seed, severity);
         }
     }
 
