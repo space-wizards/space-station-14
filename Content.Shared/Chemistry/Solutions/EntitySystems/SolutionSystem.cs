@@ -14,7 +14,7 @@ public sealed partial class SolutionSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChemicalReactionSystem _chemicalReactionSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public void UpdateAppearance(EntityUid uid, Solution solution,
         AppearanceComponent? appearanceComponent = null)

@@ -17,17 +17,16 @@ namespace Content.Shared.Chemistry.Containers.EntitySystems;
 /// Part of Chemistry system deal with SolutionContainers
 /// </summary>
 [UsedImplicitly]
-public sealed partial class SolutionContainerSystem : EntitySystem
+public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
+    [Dependency] protected readonly SolutionSystem SolutionSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(InitSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
     }
@@ -64,74 +63,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
-    /// </summary>
-    /// <param name="uid">EntityUid to which to add solution</param>
-    /// <param name="name">name for the solution</param>
-    /// <param name="solutionsMgr">solution components used in resolves</param>
-    /// <param name="existed">true if the solution already existed</param>
-    /// <returns>solution</returns>
-    public Solution EnsureSolution(EntityUid uid, string name, out bool existed,
-        SolutionContainerManagerComponent? solutionsMgr = null)
-    {
-        if (!Resolve(uid, ref solutionsMgr, false))
-        {
-            solutionsMgr = EntityManager.EnsureComponent<SolutionContainerManagerComponent>(uid);
-        }
-
-        if (!solutionsMgr.Solutions.TryGetValue(name, out var existing))
-        {
-            var newSolution = new Solution() { Name = name };
-            solutionsMgr.Solutions.Add(name, newSolution);
-            existed = false;
-            return newSolution;
-        }
-
-        existed = true;
-        return existing;
-    }
-
-    /// <summary>
-    /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
-    /// </summary>
-    /// <param name="uid">EntityUid to which to add solution</param>
-    /// <param name="name">name for the solution</param>
-    /// <param name="solutionsMgr">solution components used in resolves</param>
-    /// <returns>solution</returns>
-    public Solution EnsureSolution(EntityUid uid, string name, SolutionContainerManagerComponent? solutionsMgr = null)
-        => EnsureSolution(uid, name, out _, solutionsMgr);
-
-    /// <summary>
-    /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
-    /// </summary>
-    /// <param name="uid">EntityUid to which to add solution</param>
-    /// <param name="name">name for the solution</param>
-    /// <param name="minVol">Ensures that the solution's maximum volume is larger than this value.</param>
-    /// <param name="solutionsMgr">solution components used in resolves</param>
-    /// <returns>solution</returns>
-    public Solution EnsureSolution(EntityUid uid, string name, FixedPoint2 minVol, out bool existed,
-        SolutionContainerManagerComponent? solutionsMgr = null)
-    {
-        if (!Resolve(uid, ref solutionsMgr, false))
-        {
-            solutionsMgr = EntityManager.EnsureComponent<SolutionContainerManagerComponent>(uid);
-        }
-
-        if (!solutionsMgr.Solutions.TryGetValue(name, out var existing))
-        {
-            var newSolution = new Solution() { Name = name };
-            solutionsMgr.Solutions.Add(name, newSolution);
-            existed = false;
-            newSolution.MaxVolume = minVol;
-            return newSolution;
-        }
-
-        existed = true;
-        existing.MaxVolume = FixedPoint2.Max(existing.MaxVolume, minVol);
-        return existing;
-    }
-
     public FixedPoint2 GetTotalPrototypeQuantity(EntityUid owner, string reagentId)
     {
         var reagentQuantity = FixedPoint2.New(0);
@@ -148,16 +79,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     }
 
     #region Event Handlers
-
-    private void InitSolution(EntityUid uid, SolutionContainerManagerComponent component, ComponentInit args)
-    {
-        foreach (var (name, solutionHolder) in component.Solutions)
-        {
-            solutionHolder.Name = name;
-            solutionHolder.ValidateSolution();
-            _solutionSystem.UpdateAppearance(uid, solutionHolder);
-        }
-    }
 
     private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent,
         ExaminedEvent args)
@@ -177,13 +98,13 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
         }
 
-        if (!_prototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
+        if (!PrototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
         {
             Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
             return;
         }
 
-        var colorHex = solution.GetColor(_prototypeManager)
+        var colorHex = solution.GetColor(PrototypeManager)
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
@@ -196,7 +117,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         // Add descriptions of immediately recognizable reagents, like water or beer
         var recognized = new List<ReagentPrototype>();
-        foreach (var proto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        foreach (var proto in solution.GetReagentPrototypes(PrototypeManager).Keys)
         {
             if (!proto.Recognizable)
             {
@@ -260,7 +181,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             Act = () =>
             {
                 var markup = GetSolutionExamine(solutionHolder);
-                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
+                ExamineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
             },
             Text = Loc.GetString("scannable-solution-verb-text"),
             Message = Loc.GetString("scannable-solution-verb-message"),
@@ -283,7 +204,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
 
-        foreach (var (proto, quantity) in solution.GetReagentPrototypes(_prototypeManager))
+        foreach (var (proto, quantity) in solution.GetReagentPrototypes(PrototypeManager))
         {
             msg.PushNewline();
             msg.AddMarkup(Loc.GetString("scannable-solution-chemical"

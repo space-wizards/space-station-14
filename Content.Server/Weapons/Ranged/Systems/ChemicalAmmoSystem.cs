@@ -1,9 +1,9 @@
-using System.Linq;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Weapons.Ranged.Components;
-using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Weapons.Ranged.Events;
+using System.Linq;
 
 namespace Content.Server.Weapons.Ranged.Systems
 {
