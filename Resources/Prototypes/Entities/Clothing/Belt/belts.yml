@@ -417,12 +417,15 @@
     sprite: Clothing/Belt/bandolier.rsi
   - type: Item
     size: Huge
-- type: BallisticAmmoProvider
+  - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
       tags:
         - CartridgeShotgun
     capacity: 14
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
     
 - type: entity
   parent: ClothingBeltBase
