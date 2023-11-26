@@ -34,9 +34,21 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
 
         var actionUpgrade = _entMan.EntitySysManager.GetEntitySystem<ActionUpgradeSystem>();
 
-        // TODO: Check if the entity is valid first before assigning
+        var id = args[0];
+
+        if (!EntityUid.TryParse(id, out var euid))
+        {
+            shell.WriteLine(Loc.GetString("upgradeaction-command-incorrect-entityuid-format"));
+            return;
+        }
+
+        if (!_entMan.EntityExists(euid))
+        {
+            shell.WriteLine(Loc.GetString("upgradeaction-command-entityuid-does-not-exist"));
+            return;
+        }
+
         // TODO: Also check if it has the action upgrade component
-        var entityUid = args[0];
 
         // TODO: If only one arg, increment level
 
@@ -50,17 +62,14 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
                 shell.WriteLine(Loc.GetString("upgradeaction-command-second-argument-not-number"));
                 return;
             }
+
+            if (level <= 0)
+            {
+                shell.WriteLine(Loc.GetString("upgradeaction-command-less-than-required-level"));
+                return;
+            }
+
+            actionUpgrade.UpgradeAction(new EntityUid(123), level);
         }
     }
-
-    /*public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
-    {
-        if (args.Length == 1)
-        {
-
-        }
-
-        return CompletionResult.Empty;
-    }*/
-
 }

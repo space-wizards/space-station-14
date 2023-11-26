@@ -96,7 +96,7 @@ public sealed class ActionUpgradeSystem : EntitySystem
     /// <param name="actionId"></param>
     /// <param name="newLevel"></param>
     /// <param name="actionUpgradeComponent"></param>
-    private void UpgradeAction(EntityUid? actionId, int newLevel, ActionUpgradeComponent? actionUpgradeComponent = null)
+    public void UpgradeAction(EntityUid? actionId, int newLevel, ActionUpgradeComponent? actionUpgradeComponent = null)
     {
         if (!TryGetActionUpgrade(actionId, out var actionUpgradeComp))
             return;
