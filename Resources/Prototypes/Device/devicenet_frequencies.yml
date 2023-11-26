@@ -4,14 +4,9 @@
   frequency: 2450
 
 - type: deviceFrequency
-  id: EvacShuttleTimer
-  name: device-frequency-prototype-name-evac-shuttle-timer
-  frequency: 2451
-
-- type: deviceFrequency
   id: ArrivalsShuttleTimer
   name: device-frequency-prototype-name-arrivals-shuttle-timer
-  frequency: 2452
+  frequency: 2451
 
 - type: deviceFrequency
   id: SurveillanceCamera

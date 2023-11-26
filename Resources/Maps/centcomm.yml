@@ -21891,18 +21891,6 @@ entities:
     - pos: -6.1462703,-39.246223
       parent: 1668
       type: Transform
-- proto: EvacShuttleTimer
-  entities:
-  - uid: 6978
-    components:
-    - pos: 33.5,3.5
-      parent: 1668
-      type: Transform
-  - uid: 6979
-    components:
-    - pos: 33.5,-4.5
-      parent: 1668
-      type: Transform
 - proto: ExtinguisherCabinetFilled
   entities:
   - uid: 628
@@ -33983,6 +33971,18 @@ entities:
   - uid: 2233
     components:
     - pos: -12.532179,11.55442
+      parent: 1668
+      type: Transform
+- proto: Screen
+  entities:
+  - uid: 6978
+    components:
+    - pos: 33.5,3.5
+      parent: 1668
+      type: Transform
+  - uid: 6979
+    components:
+    - pos: 33.5,-4.5
       parent: 1668
       type: Transform
 - proto: SecurityTechFab

@@ -57,8 +57,8 @@
     textLength: 5
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
     noRot: true
   - type: Construction
     graph: Timer
@@ -96,8 +96,8 @@
     rows: 2
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/frame.rsi
-    state: frame
+    sprite: Structures/Wallmounts/screen.rsi
+    state: screen
     noRot: true
   - type: Construction
     graph: Timer
@@ -108,29 +108,14 @@
     enabled: false
     usesApcPower: true
   - type: ExtensionCableReceiver
-
-- type: entity
-  id: ShuttleTimer
-  parent: Screen
-  name: shuttle timer
-  description: Displays shuttle timing information.
-  components:
   - type: ShuttleTimer
   - type: DeviceNetwork
     receiveFrequencyId: ShuttleTimer
 
 - type: entity
-  id: EvacShuttleTimer
-  parent: ShuttleTimer
-  name: evac timer
-  components:
-  - type: DeviceNetwork
-    receiveFrequencyId: EvacShuttleTimer
-
-- type: entity
   id: ArrivalsShuttleTimer
-  parent: ShuttleTimer
-  name: arrivals timer
+  parent: Screen
+  name: arrivals screen
   components:
   - type: DeviceNetwork
     receiveFrequencyId: ArrivalsShuttleTimer
@@ -151,8 +136,8 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   - type: Construction
     graph: Timer
     node: frame

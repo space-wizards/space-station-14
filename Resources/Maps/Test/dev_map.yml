@@ -3309,13 +3309,6 @@ entities:
     - pos: -10.505015,6.711994
       parent: 179
       type: Transform
-- proto: EvacShuttleTimer
-  entities:
-  - uid: 1192
-    components:
-    - pos: 4.5,-14.5
-      parent: 179
-      type: Transform
 - proto: ExGrenade
   entities:
   - uid: 433
@@ -4827,6 +4820,13 @@ entities:
   - uid: 431
     components:
     - pos: -1.235331,4.739151
+      parent: 179
+      type: Transform
+- proto: Screen
+  entities:
+  - uid: 1192
+    components:
+    - pos: 4.5,-14.5
       parent: 179
       type: Transform
 - proto: SeedExtractor
