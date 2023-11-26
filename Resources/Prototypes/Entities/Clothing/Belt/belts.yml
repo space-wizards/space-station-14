@@ -422,6 +422,11 @@
     whitelist:
       tags:
         - ShellShotgun
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - ShellShotgun
 
 - type: entity
   parent: ClothingBeltBase
