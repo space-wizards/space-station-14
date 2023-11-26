@@ -175,7 +175,7 @@ namespace Content.Server.RoundEnd
                     ["ShuttleMap"] = shuttle,
                     ["SourceMap"] = maps["centcomm"],
                     ["DestMap"] = maps["station"],
-                    ["LocalTimer"] = countdownTime,
+                    ["ShuttleTimer"] = countdownTime,
                     ["SourceTimer"] = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
                     ["DestTimer"] = countdownTime,
                 };
@@ -221,7 +221,7 @@ namespace Content.Server.RoundEnd
                     ["ShuttleMap"] = shuttle,
                     ["SourceMap"] = maps["centcomm"],
                     ["DestMap"] = maps["station"],
-                    ["LocalTimer"] = zero,
+                    ["ShuttleTimer"] = zero,
                     ["SourceTimer"] = zero,
                     ["DestTimer"] = zero,
                     ["Text"] = new string?[] { string.Empty, string.Empty }

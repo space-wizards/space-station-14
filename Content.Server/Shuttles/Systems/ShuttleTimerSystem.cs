@@ -50,7 +50,7 @@ namespace Content.Server.Shuttles.Systems
             {
                 // sometimes the timer transforms on FTL shuttles have a hyperspace mapuid, so matching by grid works as a fallback.
                 case var local when local == shuttleMap || timerXform.GridUid == shuttleMap:
-                    key = "LocalTimer";
+                    key = "ShuttleTimer";
                     break;
                 case var origin when origin == source:
                     key = "SourceTimer";

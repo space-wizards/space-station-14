@@ -53,6 +53,11 @@ public sealed class ArrivalsSystem : EntitySystem
     /// </summary>
     public bool Enabled { get; private set; }
 
+    /// <summary>
+    ///     The first arrival is a little early, to save everyone 10s
+    /// </summary>
+    private const float RoundStartFTLDuration = 10f;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -160,28 +165,44 @@ public sealed class ArrivalsSystem : EntitySystem
         _cfgManager.UnsubValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
     }
 
+    /// <summary>
+    ///     First sends shuttle timer data, then kicks people off the shuttle if it isn't leaving the arrivals terminal
+    /// </summary>
     private void OnArrivalsFTL(EntityUid shuttleUid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
     {
         if (!TryGetArrivals(out EntityUid arrivals))
             return;
 
-        TimeSpan ftlTime = TimeSpan.FromSeconds
-        (
-            TryComp<FTLComponent>(shuttleUid, out var ftlComp) ?
-            ftlComp.TravelTime : ShuttleSystem.DefaultTravelTime
-        );
-
         if (TryComp<DeviceNetworkComponent>(shuttleUid, out var netComp))
         {
+            TryComp<FTLComponent>(shuttleUid, out var ftlComp);
+            var ftlTime = TimeSpan.FromSeconds(ftlComp?.TravelTime ?? ShuttleSystem.DefaultTravelTime);
+
             var payload = new NetworkPayload
             {
                 ["ShuttleMap"] = shuttleUid,
-                ["SourceMap"] = args.FromMapUid,
-                ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
-                ["LocalTimer"] = ftlTime,
-                ["SourceTimer"] = ftlTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown)),
-                ["DestTimer"] = ftlTime
+                ["ShuttleTimer"] = ftlTime
             };
+
+            // unfortunate levels of spaghetti due to roundstart arrivals ftl behavior
+            EntityUid? sourceMap;
+            var arrivalsDelay = _cfgManager.GetCVar(CCVars.ArrivalsCooldown);
+
+            if (component.FirstRun)
+            {
+                var station = _station.GetLargestGrid(Comp<StationDataComponent>(component.Station));
+                sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
+                arrivalsDelay += RoundStartFTLDuration;
+                component.FirstRun = false;
+                payload.Add("DestMap", args.TargetCoordinates.GetMapUid(_entityManager));
+                payload.Add("DestTimer", ftlTime);
+            }
+            else
+                sourceMap = args.FromMapUid;
+
+            payload.Add("SourceMap", sourceMap);
+            payload.Add("SourceTimer", ftlTime + TimeSpan.FromSeconds(arrivalsDelay));
+
             _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, netComp.TransmitFrequency);
         }
 
@@ -227,16 +248,15 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnArrivalsDocked(EntityUid uid, ArrivalsShuttleComponent component, ref FTLCompletedEvent args)
     {
-        var shuttleXform = Transform(uid);
         TimeSpan dockTime = component.NextTransfer - _timing.CurTime + TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime);
 
         if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
         {
             var payload = new NetworkPayload
             {
-                ["ShuttleMap"] = shuttleXform.MapUid,
+                ["ShuttleMap"] = uid,
                 ["SourceMap"] = args.MapUid,
-                ["LocalTimer"] = dockTime,
+                ["ShuttleTimer"] = dockTime,
                 ["SourceTimer"] = dockTime,
                 ["Docked"] = true
             };
@@ -519,7 +539,7 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
-            _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
+            _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: RoundStartFTLDuration, dock: true);
             arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
         }
 

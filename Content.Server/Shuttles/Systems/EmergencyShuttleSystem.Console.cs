@@ -385,7 +385,7 @@ public sealed partial class EmergencyShuttleSystem
                 ["ShuttleMap"] = shuttle,
                 ["SourceMap"] = maps["station"],
                 ["DestMap"] = maps["centcomm"],
-                ["LocalTimer"] = time,
+                ["ShuttleTimer"] = time,
                 ["SourceTimer"] = time,
                 ["DestTimer"] = time + TimeSpan.FromSeconds(TransitTime),
                 ["Docked"] = true

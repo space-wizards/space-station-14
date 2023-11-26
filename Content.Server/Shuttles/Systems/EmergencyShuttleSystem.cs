@@ -199,7 +199,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 ["ShuttleMap"] = uid,
                 ["SourceMap"] = args.FromMapUid,
                 ["DestMap"] = args.TargetCoordinates.GetMapUid(_entityManager),
-                ["LocalTimer"] = ftlTime,
+                ["ShuttleTimer"] = ftlTime,
                 ["SourceTimer"] = ftlTime,
                 ["DestTimer"] = ftlTime
             };
@@ -222,7 +222,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                 ["ShuttleMap"] = shuttle,
                 ["SourceMap"] = maps["centcomm"],
                 ["DestMap"] = maps["station"],
-                ["LocalTimer"] = countdownTime,
+                ["ShuttleTimer"] = countdownTime,
                 ["SourceTimer"] = countdownTime,
                 ["DestTimer"] = countdownTime,
                 ["Text"] = new string?[] { "BYE!" }
@@ -275,7 +275,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
                     ["ShuttleMap"] = stationShuttle.EmergencyShuttle.Value,
                     ["SourceMap"] = targetXform?.MapUid,
                     ["DestMap"] = centcomm == null ? null : _mapManager.GetMapEntityId(centcomm.MapId),
-                    ["LocalTimer"] = time,
+                    ["ShuttleTimer"] = time,
                     ["SourceTimer"] = time,
                     ["DestTimer"] = time + TimeSpan.FromSeconds(TransitTime),
                     ["Docked"] = true
