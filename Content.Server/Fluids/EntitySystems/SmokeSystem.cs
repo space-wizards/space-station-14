@@ -10,6 +10,7 @@ using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
@@ -43,7 +44,8 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private EntityQuery<SmokeComponent> _smokeQuery;
@@ -129,7 +131,7 @@ public sealed class SmokeSystem : EntitySystem
 
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
-        if (component.SpreadAmount == 0 || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
+        if (component.SpreadAmount == 0 || !_solutionContainerSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
         {
             RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
@@ -246,7 +248,7 @@ public sealed class SmokeSystem : EntitySystem
         if (!Resolve(smokeUid, ref component))
             return;
 
-        if (!_solutionSystem.TryGetSolution(smokeUid, SmokeComponent.SolutionName, out var solution) ||
+        if (!_solutionContainerSystem.TryGetSolution(smokeUid, SmokeComponent.SolutionName, out var solution) ||
             solution.Contents.Count == 0)
         {
             return;
@@ -297,7 +299,7 @@ public sealed class SmokeSystem : EntitySystem
         if (!Resolve(uid, ref component, ref xform))
             return;
 
-        if (!_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution) || !solution.Any())
+        if (!_solutionContainerSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution) || !solution.Any())
             return;
 
         if (!_mapManager.TryGetGrid(xform.GridUid, out var mapGrid))
@@ -323,7 +325,7 @@ public sealed class SmokeSystem : EntitySystem
         if (solution.Volume == FixedPoint2.Zero)
             return;
 
-        if (!_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solutionArea))
+        if (!_solutionContainerSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solutionArea))
             return;
 
         var addSolution =
@@ -337,7 +339,7 @@ public sealed class SmokeSystem : EntitySystem
     private void UpdateVisuals(EntityUid uid)
     {
         if (!TryComp(uid, out AppearanceComponent? appearance) ||
-            !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
+            !_solutionContainerSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
             return;
 
         var color = solution.GetColor(_prototype);

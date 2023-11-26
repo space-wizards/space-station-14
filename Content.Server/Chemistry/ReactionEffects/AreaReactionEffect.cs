@@ -1,7 +1,7 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -55,7 +55,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                 return;
 
             var spreadAmount = (int) Math.Max(0, Math.Ceiling((args.Quantity / OverflowThreshold).Float()));
-            var splitSolution = args.EntityManager.System<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.Volume);
+            var splitSolution = args.EntityManager.System<SolutionSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.Volume);
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
             var mapManager = IoCManager.Resolve<IMapManager>();
 

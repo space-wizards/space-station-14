@@ -12,8 +12,8 @@ using Content.Server.Temperature.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
@@ -44,7 +44,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private readonly SolutionSystem _solution = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly TemperatureSystem _temperature = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
@@ -115,7 +115,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     if (solution.Temperature > component.TemperatureUpperThreshold)
                         continue;
 
-                    _solutionContainer.AddThermalEnergy(entity, solution, heatToAdd);
+                    _solution.AddThermalEnergy(entity, solution, heatToAdd);
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             totalReagentsToRemove[reagent] -= quant;
                         }
 
-                        _solutionContainer.RemoveReagent(item, solution, reagent, quant);
+                        _solution.RemoveReagent(item, solution, reagent, quant);
                     }
                 }
             }

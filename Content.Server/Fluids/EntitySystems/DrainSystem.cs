@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -22,7 +23,8 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed class DrainSystem : SharedDrainSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -66,7 +68,7 @@ public sealed class DrainSystem : SharedDrainSystem
     private void Empty(EntityUid container, SpillableComponent spillable, EntityUid target, DrainComponent drain)
     {
         // Find the solution in the container that is emptied
-        if (!_solutionSystem.TryGetDrainableSolution(container, out var containerSolution) ||
+        if (!_solutionContainerSystem.TryGetDrainableSolution(container, out var containerSolution) ||
             containerSolution.Volume == FixedPoint2.Zero)
         {
             _popupSystem.PopupEntity(
@@ -76,7 +78,7 @@ public sealed class DrainSystem : SharedDrainSystem
         }
 
         // try to find the drain's solution
-        if (!_solutionSystem.TryGetSolution(target, DrainComponent.SolutionName, out var drainSolution))
+        if (!_solutionContainerSystem.TryGetSolution(target, DrainComponent.SolutionName, out var drainSolution))
         {
             return;
         }
@@ -131,7 +133,7 @@ public sealed class DrainSystem : SharedDrainSystem
                 continue;
 
             // Best to do this one every second rather than once every tick...
-            _solutionSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution, manager);
+            _solutionContainerSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution, manager);
 
             if (drainSolution is null)
                 continue;
@@ -177,7 +179,7 @@ public sealed class DrainSystem : SharedDrainSystem
             {
                 // Queue the solution deletion if it's empty. EvaporationSystem might also do this
                 // but queuedelete should be pretty safe.
-                if (!_solutionSystem.TryGetSolution(puddle, solution, out var puddleSolution))
+                if (!_solutionContainerSystem.TryGetSolution(puddle, solution, out var puddleSolution))
                 {
                     EntityManager.QueueDeleteEntity(puddle);
                     continue;
@@ -204,7 +206,7 @@ public sealed class DrainSystem : SharedDrainSystem
     {
         if (!args.IsInDetailsRange ||
             !HasComp<SolutionContainerManagerComponent>(uid) ||
-            !_solutionSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution))
+            !_solutionContainerSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution))
         {
             return;
         }
@@ -219,7 +221,7 @@ public sealed class DrainSystem : SharedDrainSystem
     {
         if (!args.CanReach || args.Target == null ||
             !_tagSystem.HasTag(args.Used, DrainComponent.PlungerTag) ||
-            !_solutionSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution))
+            !_solutionContainerSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution))
         {
             return;
         }
@@ -256,7 +258,7 @@ public sealed class DrainSystem : SharedDrainSystem
         }
 
 
-        if (!_solutionSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName,
+        if (!_solutionContainerSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName,
                 out var drainSolution))
         {
             return;

@@ -3,6 +3,7 @@ using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 
 namespace Content.Server.Anomaly.Effects;
 /// <summary>
@@ -16,6 +17,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
 
     private EntityQuery<InjectableSolutionComponent> _injectableQuery;
 
@@ -56,7 +58,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
             if (_injectableQuery.TryGetComponent(ent, out var injEnt))
             {
                 var buffer = sol;
-                _solutionContainer.TryTransferSolution(ent, injectable, buffer, maxInject);
+                _solution.TryTransferSolution(ent, injectable, buffer, maxInject);
                 //Spawn Effect
                 var uidXform = Transform(ent);
                 Spawn(component.VisualEffectPrototype, uidXform.Coordinates);

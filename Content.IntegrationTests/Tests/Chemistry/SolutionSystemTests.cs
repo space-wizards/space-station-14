@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -51,7 +52,8 @@ public sealed class SolutionSystemTests
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+        var containerSystem = entityManager.System<SolutionContainerSystem>();
+        var solutionSystem = entityManager.System<SolutionSystem>();
         var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
@@ -70,7 +72,7 @@ public sealed class SolutionSystemTests
                 .TryGetSolution(beaker, "beaker", out var solution));
 
             solution.AddSolution(originalWater, protoMan);
-            Assert.That(containerSystem
+            Assert.That(solutionSystem
                 .TryAddSolution(beaker, solution, oilAdded));
 
             var water = solution.GetTotalPrototypeQuantity("Water");
@@ -97,7 +99,8 @@ public sealed class SolutionSystemTests
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+        var containerSystem = entityManager.System<SolutionContainerSystem>();
+        var solutionSystem = entityManager.System<SolutionSystem>();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -115,7 +118,7 @@ public sealed class SolutionSystemTests
                 .TryGetSolution(beaker, "beaker", out var solution));
 
             solution.AddSolution(originalWater, protoMan);
-            Assert.That(containerSystem
+            Assert.That(solutionSystem
                 .TryAddSolution(beaker, solution, oilAdded), Is.False);
 
             var water = solution.GetTotalPrototypeQuantity("Water");
@@ -141,7 +144,8 @@ public sealed class SolutionSystemTests
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var testMap = await pair.CreateTestMap();
-        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+        var containerSystem = entityManager.System<SolutionContainerSystem>();
+        var solutionSystem = entityManager.System<SolutionSystem>();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -161,7 +165,7 @@ public sealed class SolutionSystemTests
                 .TryGetSolution(beaker, "beaker", out var solution));
 
             solution.AddSolution(originalWater, protoMan);
-            Assert.That(containerSystem
+            Assert.That(solutionSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out var overflowingSolution));
 
             Assert.Multiple(() =>
@@ -194,7 +198,8 @@ public sealed class SolutionSystemTests
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+        var containerSystem = entityManager.System<SolutionContainerSystem>();
+        var solutionSystem = entityManager.System<SolutionSystem>();
         var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
@@ -215,7 +220,7 @@ public sealed class SolutionSystemTests
                 .TryGetSolution(beaker, "beaker", out var solution));
 
             solution.AddSolution(originalWater, protoMan);
-            Assert.That(containerSystem
+            Assert.That(solutionSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out _),
                 Is.False);
         });

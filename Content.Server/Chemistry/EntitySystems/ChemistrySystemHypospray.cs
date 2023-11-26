@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
@@ -33,7 +34,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnHypoGetState(EntityUid uid, HyposprayComponent component, ref ComponentGetState args)
         {
-            args.State = _solutions.TryGetSolution(uid, component.SolutionName, out var solution)
+            args.State = _solutionContainers.TryGetSolution(uid, component.SolutionName, out var solution)
                 ? new HyposprayComponentState(solution.Volume, solution.MaxVolume)
                 : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }
@@ -92,7 +93,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 target = user;
             }
 
-            _solutions.TryGetSolution(uid, component.SolutionName, out var hypoSpraySolution);
+            _solutionContainers.TryGetSolution(uid, component.SolutionName, out var hypoSpraySolution);
 
             if (hypoSpraySolution == null || hypoSpraySolution.Volume == 0)
             {
@@ -100,7 +101,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return true;
             }
 
-            if (!_solutions.TryGetInjectableSolution(target.Value, out var targetSolution))
+            if (!_solutionContainers.TryGetInjectableSolution(target.Value, out var targetSolution))
             {
                 _popup.PopupCursor(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target.Value, _entMan))), user);
                 return false;

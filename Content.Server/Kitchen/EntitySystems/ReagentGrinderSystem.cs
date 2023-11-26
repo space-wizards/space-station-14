@@ -7,6 +7,7 @@ using Content.Server.Stack;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -26,7 +27,8 @@ namespace Content.Server.Kitchen.EntitySystems
     internal sealed class ReagentGrinderSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainersSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionsSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
@@ -70,7 +72,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
                 var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, SharedReagentGrinder.BeakerSlotId);
-                if (outputContainer is null || !_solutionsSystem.TryGetFitsInDispenser(outputContainer.Value, out var containerSolution))
+                if (outputContainer is null || !_solutionContainersSystem.TryGetFitsInDispenser(outputContainer.Value, out var containerSolution))
                     continue;
 
                 foreach (var item in inputContainer.ContainedEntities.ToList())
@@ -193,7 +195,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var canGrind = false;
 
             if (outputContainer is not null
-                && _solutionsSystem.TryGetFitsInDispenser(outputContainer.Value, out containerSolution)
+                && _solutionContainersSystem.TryGetFitsInDispenser(outputContainer.Value, out containerSolution)
                 && inputContainer.ContainedEntities.Count > 0)
             {
                 canGrind = inputContainer.ContainedEntities.All(CanGrind);
@@ -299,7 +301,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (TryComp<ExtractableComponent>(uid, out var extractable)
                 && extractable.GrindableSolution is not null
-                && _solutionsSystem.TryGetSolution(uid, extractable.GrindableSolution, out var solution))
+                && _solutionContainersSystem.TryGetSolution(uid, extractable.GrindableSolution, out var solution))
             {
                 return solution;
             }
@@ -311,7 +313,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             var solutionName = CompOrNull<ExtractableComponent>(uid)?.GrindableSolution;
 
-            return solutionName is not null && _solutionsSystem.TryGetSolution(uid, solutionName, out _);
+            return solutionName is not null && _solutionContainersSystem.TryGetSolution(uid, solutionName, out _);
         }
 
         private bool CanJuice(EntityUid uid)

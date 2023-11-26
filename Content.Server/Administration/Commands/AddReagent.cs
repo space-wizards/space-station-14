@@ -1,7 +1,7 @@
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -63,9 +63,9 @@ namespace Content.Server.Administration.Commands
             var quantity = FixedPoint2.New(MathF.Abs(quantityFloat));
 
             if (quantityFloat > 0)
-                _entManager.System<SolutionContainerSystem>().TryAddReagent(uid.Value, solution, args[2], quantity, out _);
+                _entManager.System<SolutionSystem>().TryAddReagent(uid.Value, solution, args[2], quantity, out _);
             else
-                _entManager.System<SolutionContainerSystem>().RemoveReagent(uid.Value, solution, args[2], quantity);
+                _entManager.System<SolutionSystem>().RemoveReagent(uid.Value, solution, args[2], quantity);
         }
     }
 }

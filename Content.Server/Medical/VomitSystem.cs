@@ -6,6 +6,7 @@ using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -25,6 +26,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private readonly SolutionSystem _solution = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
 
@@ -62,7 +64,7 @@ namespace Content.Server.Medical
                 {
                     solution.AddSolution(sol, _proto);
                     sol.RemoveAllSolution();
-                    _solutionContainer.UpdateChemicals(stomach.Comp.Owner, sol);
+                    _solution.UpdateChemicals(stomach.Comp.Owner, sol);
                 }
             }
             // Adds a tiny amount of the chem stream from earlier along with vomit
@@ -75,9 +77,9 @@ namespace Content.Server.Medical
                 var vomitAmount = new Solution("Vomit", solutionSize * vomitMultiplier);
 
                 // Takes 10% of the chemicals removed from the chem stream
-                var vomitChemstreamAmount = _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * chemMultiplier);
+                var vomitChemstreamAmount = _solution.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * chemMultiplier);
 
-                _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * vomitMultiplier);
+                _solution.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * vomitMultiplier);
                 solution.AddSolution(vomitAmount, _proto);
                 solution.AddSolution(vomitChemstreamAmount, _proto);
             }

@@ -1,6 +1,7 @@
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -8,6 +9,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class SolutionPurgeSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -30,7 +32,7 @@ public sealed class SolutionPurgeSystem : EntitySystem
             // timer ignores if it's empty, it's just a fixed cycle
             purge.NextPurgeTime += purge.Duration;
             if (_solutionContainer.TryGetSolution(uid, purge.Solution, out var solution, manager))
-                _solutionContainer.SplitSolutionWithout(uid, solution, purge.Quantity, purge.Preserve.ToArray());
+                _solution.SplitSolutionWithout(uid, solution, purge.Quantity, purge.Preserve.ToArray());
         }
     }
 

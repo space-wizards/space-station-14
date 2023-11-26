@@ -2,6 +2,7 @@ using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Vapor;
 using Content.Shared.Weapons.Ranged;
@@ -13,6 +14,7 @@ namespace Content.Server.Weapons.Ranged.Systems;
 public sealed partial class GunSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
 
     protected override void InitializeSolution()
     {
@@ -62,7 +64,7 @@ public sealed partial class GunSystem
         if (!_solutionContainer.TryGetSolution(uid, component.SolutionId, out var solution))
             return (ent, shootable);
 
-        var newSolution = _solutionContainer.SplitSolution(uid, solution, component.FireCost);
+        var newSolution = _solution.SplitSolution(uid, solution, component.FireCost);
 
         if (newSolution.Volume <= FixedPoint2.Zero)
             return (ent, shootable);
@@ -76,7 +78,7 @@ public sealed partial class GunSystem
         // Add the solution to the vapor and actually send the thing
         if (_solutionContainer.TryGetSolution(ent, VaporComponent.SolutionName, out var vaporSolution))
         {
-            _solutionContainer.TryAddSolution(ent, vaporSolution, newSolution);
+            _solution.TryAddSolution(ent, vaporSolution, newSolution);
         }
         return (ent, shootable);
     }

@@ -250,7 +250,7 @@ namespace Content.Server.Tools
                 if (trans > 0)
                 {
                     var drained = _solutionContainerSystem.Drain(target, targetSolution,  trans);
-                    _solutionContainerSystem.TryAddSolution(uid, welderSolution, drained);
+                    _solutionSystem.TryAddSolution(uid, welderSolution, drained);
                     _audioSystem.PlayPvs(welder.WelderRefill, uid);
                     _popupSystem.PopupEntity(Loc.GetString("welder-component-after-interact-refueled-message"), uid, args.User);
                 }

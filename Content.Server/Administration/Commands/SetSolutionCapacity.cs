@@ -1,6 +1,6 @@
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 
@@ -56,7 +56,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var quantity = FixedPoint2.New(quantityFloat);
-            _entManager.System<SolutionContainerSystem>().SetCapacity(uid.Value, solution, quantity);
+            _entManager.System<SolutionSystem>().SetCapacity(uid.Value, solution, quantity);
         }
     }
 }

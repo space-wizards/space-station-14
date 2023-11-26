@@ -4,7 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Placeable;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -13,7 +13,7 @@ public sealed class SolutionHeaterSystem : EntitySystem
 {
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

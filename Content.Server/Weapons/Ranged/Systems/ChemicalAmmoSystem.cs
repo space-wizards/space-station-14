@@ -2,13 +2,15 @@ using System.Linq;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Server.Weapons.Ranged.Systems
 {
     public sealed class ChemicalAmmoSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
         public override void Initialize()
         {
@@ -17,7 +19,7 @@ namespace Content.Server.Weapons.Ranged.Systems
 
         private void OnFire(EntityUid uid, ChemicalAmmoComponent component, AmmoShotEvent args)
         {
-            if (!_solutionSystem.TryGetSolution(uid, component.SolutionName, out var ammoSolution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var ammoSolution))
                 return;
 
             var projectiles = args.FiredProjectiles;
@@ -25,7 +27,7 @@ namespace Content.Server.Weapons.Ranged.Systems
             var projectileSolutionContainers = new List<(EntityUid, Solution)>();
             foreach (var projectile in projectiles)
             {
-                if (_solutionSystem
+                if (_solutionContainerSystem
                     .TryGetSolution(projectile, component.SolutionName, out var projectileSolutionContainer))
                 {
                     projectileSolutionContainers.Add((uid, projectileSolutionContainer));

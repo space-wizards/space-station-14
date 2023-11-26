@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Payload.Components;
@@ -16,7 +17,8 @@ namespace Content.Server.Payload.EntitySystems;
 public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
@@ -143,8 +145,8 @@ public sealed class PayloadSystem : EntitySystem
             || component.BeakerSlotB.Item is not EntityUid beakerB
             || !TryComp(beakerA, out FitsInDispenserComponent? compA)
             || !TryComp(beakerB, out FitsInDispenserComponent? compB)
-            || !_solutionSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA)
-            || !_solutionSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB)
+            || !_solutionContainerSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA)
+            || !_solutionContainerSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB)
             || solutionA.Volume == 0
             || solutionB.Volume == 0)
         {

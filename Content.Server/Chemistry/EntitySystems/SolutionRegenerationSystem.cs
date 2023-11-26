@@ -2,6 +2,7 @@ using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
@@ -10,6 +11,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class SolutionRegenerationSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -48,7 +50,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                     generated = regen.Generated.Clone().SplitSolution(amount);
                 }
 
-                _solutionContainer.TryAddSolution(uid, solution, generated);
+                _solution.TryAddSolution(uid, solution, generated);
             }
         }
     }

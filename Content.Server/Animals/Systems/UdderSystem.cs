@@ -2,6 +2,7 @@ using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
@@ -18,6 +19,7 @@ namespace Content.Server.Animals.Systems
     internal sealed class UdderSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -54,7 +56,7 @@ namespace Content.Server.Animals.Systems
                         continue;
 
                     //TODO: toxins from bloodstream !?
-                    _solutionContainerSystem.TryAddReagent(uid, solution, udder.ReagentId,
+                    _solutionSystem.TryAddReagent(uid, solution, udder.ReagentId,
                         udder.QuantityPerUpdate, out var accepted);
                 }
             }
@@ -98,8 +100,8 @@ namespace Content.Server.Animals.Systems
             if (quantity > targetSolution.AvailableVolume)
                 quantity = targetSolution.AvailableVolume;
 
-            var split = _solutionContainerSystem.SplitSolution(uid, solution, quantity);
-            _solutionContainerSystem.TryAddSolution(args.Args.Used.Value, targetSolution, split);
+            var split = _solutionSystem.SplitSolution(uid, solution, quantity);
+            _solutionSystem.TryAddSolution(args.Args.Used.Value, targetSolution, split);
 
             _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), uid,
                 args.Args.User, PopupType.Medium);

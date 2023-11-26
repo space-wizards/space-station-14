@@ -3,6 +3,7 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
@@ -10,6 +11,7 @@ namespace Content.Server.Body.Systems
     public sealed class StomachSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
 
@@ -51,7 +53,7 @@ namespace Content.Server.Body.Systems
                             if (reagent.Quantity > delta.ReagentQuantity.Quantity)
                                 reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
 
-                            _solutionContainerSystem.RemoveReagent(uid, stomachSolution, reagent);
+                            _solutionSystem.RemoveReagent(uid, stomachSolution, reagent);
                             transferSolution.AddReagent(reagent);
                         }
 
@@ -65,7 +67,7 @@ namespace Content.Server.Body.Systems
                 }
 
                 // Transfer everything to the body solution!
-                _solutionContainerSystem.TryAddSolution(body, bodySolution, transferSolution);
+                _solutionSystem.TryAddSolution(body, bodySolution, transferSolution);
             }
         }
 
@@ -112,7 +114,7 @@ namespace Content.Server.Body.Systems
                 || !CanTransferSolution(uid, solution, solutions))
                 return false;
 
-            _solutionContainerSystem.TryAddSolution(uid, stomachSolution, solution);
+            _solutionSystem.TryAddSolution(uid, stomachSolution, solution);
             // Add each reagent to ReagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {

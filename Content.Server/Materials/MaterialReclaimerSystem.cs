@@ -12,6 +12,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -32,6 +33,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
@@ -250,7 +252,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             }
         }
 
-        _solutionContainer.TryTransferSolution(reclaimer, reclaimerComponent.OutputSolution, totalChemicals, totalChemicals.Volume);
+        _solution.TryTransferSolution(reclaimer, reclaimerComponent.OutputSolution, totalChemicals, totalChemicals.Volume);
         if (totalChemicals.Volume > 0)
         {
             _puddle.TrySpillAt(reclaimer, totalChemicals, out _, sound, transformComponent: xform);

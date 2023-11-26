@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Body.Systems;
@@ -11,6 +12,7 @@ public sealed class LungSystem : EntitySystem
 {
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
     public static string LungSolutionName = "Lung";
@@ -60,7 +62,7 @@ public sealed class LungSystem : EntitySystem
             if (reagent == null) continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
-            _solutionContainerSystem.TryAddReagent(uid, lung.LungSolution, reagent, amount, out _);
+            _solutionSystem.TryAddReagent(uid, lung.LungSolution, reagent, amount, out _);
 
             // We don't remove the gas from the lung mix,
             // that's the responsibility of whatever gas is being metabolized.

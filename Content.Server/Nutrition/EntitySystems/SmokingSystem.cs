@@ -5,6 +5,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -22,6 +23,7 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -118,7 +120,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     }
                 }
 
-                var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
+                var inhaledSolution = _solutionSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
 
                 if (solution.Volume == FixedPoint2.Zero)
                 {

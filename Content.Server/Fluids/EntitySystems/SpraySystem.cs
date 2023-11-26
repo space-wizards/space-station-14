@@ -7,6 +7,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Gravity;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Cooldown;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -27,6 +28,7 @@ public sealed class SpraySystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
     [Dependency] private readonly VaporSystem _vapor = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -110,7 +112,7 @@ public sealed class SpraySystem : EntitySystem
                 target = userMapPos.Offset(diffNorm * component.SprayDistance);
 
             var adjustedSolutionAmount = component.TransferAmount / component.VaporAmount;
-            var newSolution = _solutionContainer.SplitSolution(uid, solution, adjustedSolutionAmount);
+            var newSolution = _solution.SplitSolution(uid, solution, adjustedSolutionAmount);
 
             if (newSolution.Volume <= FixedPoint2.Zero)
                 break;

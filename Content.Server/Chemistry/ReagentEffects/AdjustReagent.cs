@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Body.Prototypes;
-using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -32,7 +32,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (args.Source != null)
             {
-                var solutionSys = args.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+                var solutionSys = args.EntityManager.EntitySysManager.GetEntitySystem<SolutionSystem>();
                 var amount = Amount;
 
                 amount *= args.Scale;

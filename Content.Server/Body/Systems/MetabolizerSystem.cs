@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
@@ -22,6 +23,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
         private EntityQuery<OrganComponent> _organQuery;
         private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
@@ -138,7 +140,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (meta.RemoveEmpty)
                     {
-                        _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent,
+                        _solutionSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent,
                             FixedPoint2.New(1));
                     }
 
@@ -199,7 +201,7 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
-                    _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent, mostToRemove);
+                    _solutionSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent, mostToRemove);
 
                     // We have processed a reagant, so count it towards the cap
                     reagents += 1;

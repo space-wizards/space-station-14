@@ -1,6 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.NPC.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -15,7 +16,8 @@ public sealed partial class MedibotInjectOperator : HTNOperator
     private ChatSystem _chat = default!;
     private SharedInteractionSystem _interaction = default!;
     private SharedPopupSystem _popup = default!;
-    private SolutionContainerSystem _solution = default!;
+    private SolutionContainerSystem _solutionContainer = default!;
+    private SolutionSystem _solution = default!;
 
     /// <summary>
     /// Target entity to inject.
@@ -30,7 +32,8 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         _chat = sysManager.GetEntitySystem<ChatSystem>();
         _interaction = sysManager.GetEntitySystem<SharedInteractionSystem>();
         _popup = sysManager.GetEntitySystem<SharedPopupSystem>();
-        _solution = sysManager.GetEntitySystem<SolutionContainerSystem>();
+        _solutionContainer = sysManager.GetEntitySystem<SolutionContainerSystem>();
+        _solution = sysManager.GetEntitySystem<SolutionSystem>();
     }
 
     public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
@@ -54,7 +57,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         if (!_entMan.TryGetComponent<DamageableComponent>(target, out var damage))
             return HTNOperatorStatus.Failed;
 
-        if (!_solution.TryGetInjectableSolution(target, out var injectable))
+        if (!_solutionContainer.TryGetInjectableSolution(target, out var injectable))
             return HTNOperatorStatus.Failed;
 
         if (!_interaction.InRangeUnobstructed(owner, target))

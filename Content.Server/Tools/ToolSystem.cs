@@ -2,8 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Tools.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
-using Content.Shared.Maps;
-using Content.Shared.Tools;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
@@ -21,6 +20,7 @@ namespace Content.Server.Tools
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedPointLightSystem _light = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()

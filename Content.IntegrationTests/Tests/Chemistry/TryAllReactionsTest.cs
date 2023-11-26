@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -34,8 +35,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
-            var solutionSystem = server.ResolveDependency<IEntitySystemManager>()
-                .GetEntitySystem<SolutionContainerSystem>();
+            var solutionContainerSystem = entityManager.System<SolutionContainerSystem>();
+            var solutionSystem = server.System<SolutionSystem>();
 
             foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
@@ -48,7 +49,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                 await server.WaitAssertion(() =>
                 {
                     beaker = entityManager.SpawnEntity("TestSolutionContainer", coordinates);
-                    Assert.That(solutionSystem
+                    Assert.That(solutionContainerSystem
                         .TryGetSolution(beaker, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {

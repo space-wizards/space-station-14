@@ -2,6 +2,7 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -15,6 +16,7 @@ namespace Content.Server.Nutrition.EntitySystems
     internal sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
@@ -57,7 +59,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var sliceUid = Spawn(component.Slice, transform.Coordinates);
 
-            var lostSolution = _solutionContainerSystem.SplitSolution(uid, solution,
+            var lostSolution = _solutionSystem.SplitSolution(uid, solution,
                 solution.Volume / FixedPoint2.New(component.Count));
 
             // Fill new slice
@@ -136,10 +138,10 @@ namespace Content.Server.Nutrition.EntitySystems
             if (TryComp<FoodComponent>(sliceUid, out var sliceFoodComp) &&
                 _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSolution))
             {
-                _solutionContainerSystem.RemoveAllSolution(sliceUid, itsSolution);
+                _solutionSystem.RemoveAllSolution(sliceUid, itsSolution);
 
                 var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
-                _solutionContainerSystem.TryAddSolution(sliceUid, itsSolution, lostSolutionPart);
+                _solutionSystem.TryAddSolution(sliceUid, itsSolution, lostSolutionPart);
             }
         }
 

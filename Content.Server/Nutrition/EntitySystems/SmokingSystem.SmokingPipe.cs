@@ -1,6 +1,7 @@
 using Content.Server.Nutrition.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
@@ -87,7 +88,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             foreach (var reagentSolution in reagents.Solutions)
             {
-                _solutionContainerSystem.TryAddSolution(smokable.Owner, pipeSolution, reagentSolution.Value);
+                _solutionSystem.TryAddSolution(smokable.Owner, pipeSolution, reagentSolution.Value);
             }
 
             EntityManager.DeleteEntity(contents);

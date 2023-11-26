@@ -1,6 +1,6 @@
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -62,7 +62,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            _entManager.System<SolutionContainerSystem>().SetThermalEnergy(uid.Value, solution, quantity);
+            _entManager.System<SolutionSystem>().SetThermalEnergy(uid.Value, solution, quantity);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
@@ -32,13 +33,13 @@ public sealed partial class PuddleSystem
             bool success = true;
             if (dump.Unlimited)
             {
-                var split = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume);
+                var split = _solutionSystem.SplitSolution(uid, solution, solution.Volume);
                 dumpableSolution.AddSolution(split, _prototypeManager);
             }
             else
             {
-                var split = _solutionContainerSystem.SplitSolution(uid, solution, dumpableSolution.AvailableVolume);
-                success = _solutionContainerSystem.TryAddSolution(args.Target, dumpableSolution, split);
+                var split = _solutionSystem.SplitSolution(uid, solution, dumpableSolution.AvailableVolume);
+                success = _solutionSystem.TryAddSolution(args.Target, dumpableSolution, split);
             }
 
             if (success)
@@ -63,9 +64,9 @@ public sealed partial class PuddleSystem
             if (drainableSolution == null || solution == null)
                 return;
 
-            var split = _solutionContainerSystem.SplitSolution(args.Target, drainableSolution, solution.AvailableVolume);
+            var split = _solutionSystem.SplitSolution(args.Target, drainableSolution, solution.AvailableVolume);
 
-            if (_solutionContainerSystem.TryAddSolution(uid, solution, split))
+            if (_solutionSystem.TryAddSolution(uid, solution, split))
             {
                 _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, uid);
             }

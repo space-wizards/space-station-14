@@ -14,7 +14,7 @@ public sealed partial class SolutionContainerSystem
         if (!Resolve(targetUid, ref refillableSolution, false))
             return;
 
-        TryAddSolution(targetUid, targetSolution, addedSolution);
+        _solutionSystem.TryAddSolution(targetUid, targetSolution, addedSolution);
     }
 
     public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
@@ -23,7 +23,7 @@ public sealed partial class SolutionContainerSystem
         if (!Resolve(targetUid, ref injectableSolution, false))
             return;
 
-        TryAddSolution(targetUid, targetSolution, addedSolution);
+        _solutionSystem.TryAddSolution(targetUid, targetSolution, addedSolution);
     }
 
     public Solution Draw(EntityUid targetUid, Solution solution, FixedPoint2 amount,
@@ -32,7 +32,7 @@ public sealed partial class SolutionContainerSystem
         if (!Resolve(targetUid, ref drawableSolution, false))
             return new Solution();
 
-        return SplitSolution(targetUid, solution, amount);
+        return _solutionSystem.SplitSolution(targetUid, solution, amount);
     }
 
     public Solution Drain(EntityUid targetUid, Solution targetSolution, FixedPoint2 amount,
@@ -41,7 +41,7 @@ public sealed partial class SolutionContainerSystem
         if (!Resolve(targetUid, ref drainableSolution, false))
             return new Solution();
 
-        return SplitSolution(targetUid, targetSolution, amount);
+        return _solutionSystem.SplitSolution(targetUid, targetSolution, amount);
     }
 
     public bool TryGetInjectableSolution(EntityUid targetUid,

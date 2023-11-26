@@ -8,6 +8,7 @@ using Content.Server.Popups;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -37,7 +38,8 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -202,8 +204,8 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_solutionSystem.TryGetDrainableSolution(args.Used, out var solution)
-            && _solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var targetSolution)
+        if (_solutionContainerSystem.TryGetDrainableSolution(args.Used, out var solution)
+            && _solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var targetSolution)
             && TryComp(args.Used, out SprayComponent? spray))
         {
             var amount = FixedPoint2.New(1);
@@ -213,7 +215,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
             _audio.PlayPvs(spray.SpraySound, args.Used, AudioParams.Default.WithVariation(0.125f));
 
-            var split = _solutionSystem.Drain(solutionEntity, solution, amount);
+            var split = _solutionContainerSystem.Drain(solutionEntity, solution, amount);
 
             if (split.Volume == 0)
             {
@@ -289,9 +291,9 @@ public sealed class PlantHolderSystem : EntitySystem
                 ("usingItem", args.Used),
                 ("owner", uid)), uid, Filter.PvsExcept(args.User), true);
 
-            if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
+            if (_solutionContainerSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
             {
-                if (_solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution1))
+                if (_solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution1))
                 {
                     // We try to fit as much of the composted plant's contained solution into the hydroponics tray as we can,
                     // since the plant will be consumed anyway.
@@ -818,7 +820,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!_solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution))
             return;
 
         if (solution.Volume > 0 && component.MutationLevel < 25)

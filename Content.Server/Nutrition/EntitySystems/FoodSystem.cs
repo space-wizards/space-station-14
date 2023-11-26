@@ -11,6 +11,7 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
@@ -50,6 +51,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
@@ -223,7 +225,7 @@ public sealed class FoodSystem : EntitySystem
         args.Handled = true;
         var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.Volume) : solution.Volume;
 
-        var split = _solutionContainer.SplitSolution(uid, solution, transferAmount);
+        var split = _solution.SplitSolution(uid, solution, transferAmount);
 
         //TODO: Get the stomach UID somehow without nabbing owner
         // Get the stomach with the highest available solution volume
@@ -249,7 +251,7 @@ public sealed class FoodSystem : EntitySystem
         // No stomach so just popup a message that they can't eat.
         if (stomachToUse == null)
         {
-            _solutionContainer.TryAddSolution(uid, solution, split);
+            _solution.TryAddSolution(uid, solution, split);
             _popup.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target.Value, args.User);
             return;
         }
@@ -295,7 +297,7 @@ public sealed class FoodSystem : EntitySystem
             if (stack.Count > 1)
             {
                 _stack.SetCount(uid, stack.Count - 1);
-                _solutionContainer.TryAddSolution(uid, solution, split);
+                _solution.TryAddSolution(uid, solution, split);
                 return;
             }
         }

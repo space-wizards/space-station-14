@@ -1,6 +1,7 @@
 using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 
 namespace Content.Server.Anomaly.Effects;
@@ -12,6 +13,7 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
 {
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
 
     public override void Initialize()
     {
@@ -25,7 +27,7 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var puddleSol = _solutionContainer.SplitSolution(uid, sol, component.MaxPuddleSize * args.Severity);
+        var puddleSol = _solution.SplitSolution(uid, sol, component.MaxPuddleSize * args.Severity);
         _puddle.TrySplashSpillAt(uid, xform.Coordinates, puddleSol, out _);
     }
     private void OnSupercritical(EntityUid uid, PuddleCreateAnomalyComponent component, ref AnomalySupercriticalEvent args)

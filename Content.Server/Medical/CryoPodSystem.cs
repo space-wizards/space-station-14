@@ -17,6 +17,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
@@ -41,6 +42,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     [Dependency] private readonly ClimbSystem _climbSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -110,7 +112,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
                     continue;
                 }
 
-                var solutionToInject = _solutionContainerSystem.SplitSolution(container.Value, containerSolution, cryoPod.BeakerTransferAmount);
+                var solutionToInject = _solutionSystem.SplitSolution(container.Value, containerSolution, cryoPod.BeakerTransferAmount);
                 _bloodstreamSystem.TryAddToChemicals(patient.Value, solutionToInject, bloodstream);
                 _reactiveSystem.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
             }
