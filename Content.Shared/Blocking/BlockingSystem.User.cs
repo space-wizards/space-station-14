@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 

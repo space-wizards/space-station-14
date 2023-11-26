@@ -180,7 +180,9 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             component.AnalyzerEntity = null;
         }
 
-        UpdateUserInterface(uid, component);
+        // TODO: Yeah this comp relies upon event ordering so we get this for now.
+        if (!TerminatingOrDeleted(uid))
+            UpdateUserInterface(uid, component);
     }
 
     private void UpdateUserInterface(EntityUid uid, AnalysisConsoleComponent? component = null)
