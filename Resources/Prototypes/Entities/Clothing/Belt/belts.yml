@@ -420,7 +420,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeShotgun
+        - ShellShotgun
     capacity: 14
 
 - type: entity
