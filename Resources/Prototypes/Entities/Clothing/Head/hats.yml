@@ -29,7 +29,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretFrench
   name: french beret
-  description: A french beret, viva la france.
+  description: A french beret, viva la France.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_french.rsi
