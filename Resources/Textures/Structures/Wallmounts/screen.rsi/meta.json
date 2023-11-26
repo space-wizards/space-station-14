@@ -1,5 +1,7 @@
 {
     "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "From vgstation: https://github.com/vgstation-coders/vgstation13/blame/Bleeding-Edge/icons/obj/status_display.dmi",
     "size": {
       "x": 32,
       "y": 32
