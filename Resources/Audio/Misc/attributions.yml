@@ -7,3 +7,23 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/b02b93ce2ab891164511a973493cdf951b4120f7/sound/effects/ninja_greeting.ogg"
+
+- files: ["epsilon.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by dj-34 (https://github.com/dj-34)"
+  source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg"
+
+- files: ["siren.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Parsdise SS13"
+  source: "https://github.com/ParadiseSS13/Paradise/blob/master/sound/effects/new_siren.ogg"
+
+- files: ["redalert.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station 13"
+  source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
+
+- files: ["bluealert.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station 13"
+  source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"

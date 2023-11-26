@@ -9,6 +9,11 @@
   path: "/Textures/Shaders/gradient_circle_mask.swsl"
 
 - type: shader
+  id: WorldGradientCircle
+  kind: source
+  path: "/Textures/Shaders/world_gradient_circle.swsl"
+
+- type: shader
   id: ColoredScreenBorder
   kind: source
   path: "/Textures/Shaders/colored_screen_border.swsl"
@@ -76,7 +81,7 @@
   id: PaperStamp
   kind: source
   path: "/Textures/Shaders/paperstamp.swsl"
-  
+
 # Simple horizontal cut
 - type: shader
   id: HorizontalCut

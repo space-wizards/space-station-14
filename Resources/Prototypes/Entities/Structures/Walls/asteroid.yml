@@ -7,6 +7,8 @@
   suffix: Low Ore Yield
   description: A rocky asteroid.
   components:
+  - type: PlacementReplacement
+    key: walls
   - type: SoundOnGather
   - type: Gatherable
     whitelist:

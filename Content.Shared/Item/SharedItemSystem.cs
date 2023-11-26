@@ -1,17 +1,18 @@
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
 public abstract class SharedItemSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
 
@@ -20,7 +21,6 @@ public abstract class SharedItemSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
         SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract, before: new []{typeof(SharedItemSystem)});
-        SubscribeLocalEvent<ItemComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
@@ -30,7 +30,7 @@ public abstract class SharedItemSystem : EntitySystem
 
     #region Public API
 
-    public void SetSize(EntityUid uid, ItemSize size, ItemComponent? component = null)
+    public void SetSize(EntityUid uid, ProtoId<ItemSizePrototype> size, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
@@ -78,11 +78,6 @@ public abstract class SharedItemSystem : EntitySystem
         args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
     }
 
-    protected virtual void OnStackCountChanged(EntityUid uid, ItemComponent component, StackCountChangedEvent args)
-    {
-
-    }
-
     private void OnHandleState(EntityUid uid, ItemComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not ItemComponentState state)
@@ -128,6 +123,11 @@ public abstract class SharedItemSystem : EntitySystem
             ("size", GetItemSizeLocale(component.Size))));
     }
 
+    public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
+    {
+        return _prototype.Index(id);
+    }
+
     /// <summary>
     ///     Notifies any entity that is holding or wearing this item that they may need to update their sprite.
     /// </summary>
@@ -140,14 +140,14 @@ public abstract class SharedItemSystem : EntitySystem
     }
 
     [PublicAPI]
-    public static string GetItemSizeLocale(ItemSize size)
+    public string GetItemSizeLocale(ProtoId<ItemSizePrototype> size)
     {
-        return Robust.Shared.Localization.Loc.GetString($"item-component-size-{size.ToString()}");
+        return Loc.GetString(GetSizePrototype(size).Name);
     }
 
     [PublicAPI]
-    public static int GetItemSizeWeight(ItemSize size)
+    public int GetItemSizeWeight(ProtoId<ItemSizePrototype> size)
     {
-        return (int) size;
+        return GetSizePrototype(size).Weight;
     }
 }
