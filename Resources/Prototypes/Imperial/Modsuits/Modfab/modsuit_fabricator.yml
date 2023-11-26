@@ -18,7 +18,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: ExosuitFabricatorMachineCircuitboard
+    board: ModsuitFabricatorMachineCircuitboard
   - type: Lathe
     idleState: icon
     runningState: building

@@ -30,9 +30,40 @@
     softness: 20
     autoRot: true
   - type: UnpoweredFlashlight
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
   # - type: QualityOfItem
-  #   maxSpawnQuality: 3
-  #   minSpawnQuality: 
+  #   qualityWeights:
+  #     0: 0
+  #     1: 0
+  #     2: 0
+  #     3: 80
+  #     4: 20
+  #     5: 0
+  #     6: 0
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -58,6 +89,8 @@
   - type: Construction
     graph: ModsuitAdvanced
     node: modsuitadvanced
+  - type: StaticPrice
+    price: 12000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -83,6 +116,8 @@
   - type: Construction
     graph: ModsuitEngineer
     node: modsuitengineer
+  - type: StaticPrice
+    price: 3150
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -108,6 +143,8 @@
   - type: Construction
     graph: ModsuitAtmospheric
     node: modsuitatmospheric
+  - type: StaticPrice
+    price: 3750
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -135,6 +172,8 @@
   - type: Construction
     graph: ModsuitRND
     node: modsuitrnd
+  - type: StaticPrice
+    price: 3500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -160,6 +199,8 @@
   - type: Construction
     graph: ModsuitMedical
     node: modsuitmedical
+  - type: StaticPrice
+    price: 2250
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -185,6 +226,8 @@
   - type: Construction
     graph: ModsuitRescue
     node: modsuitrescue
+  - type: StaticPrice
+    price: 6000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -210,6 +253,8 @@
   - type: Construction
     graph: ModsuitCivillian
     node: modsuitcivillian
+  - type: StaticPrice
+    price: 1875
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -235,6 +280,8 @@
   - type: Construction
     graph: ModsuitMagnate
     node: modsuitmagnates
+  - type: StaticPrice
+    price: 25000 # magnate = роскошный
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -260,6 +307,8 @@
   - type: Construction
     graph: ModsuitSecurity
     node: modsuitsecurity
+  - type: StaticPrice
+    price: 3500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -285,6 +334,8 @@
   - type: Construction
     graph: ModsuitHOS
     node: modsuithos
+  - type: StaticPrice
+    price: 8000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -310,6 +361,8 @@
   - type: Construction
     graph: ModsuitSalvage
     node: modsuitsalvage
+  - type: StaticPrice
+    price: 3250
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -332,6 +385,8 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: StaticPrice
+    price: 6500
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -384,6 +439,8 @@
   - type: Tag
     tags:
       - WhitelistChameleon
+  - type: StaticPrice
+    price: 5000
 
 - type: entity
   parent: ClothingControlModsuitOperativeSealed
@@ -418,36 +475,8 @@
     radius: 12
     softness: 20
     autoRot: true
-  - type: GasTank
-    outputPressure: 42.6
-    air:
-      # 2 minutes of thrust
-      volume: 0.75
-      temperature: 293.15
-      moles:
-        - 0.153853429 # oxygen
-        - 0.153853429 # nitrogen
-  - type: ActivatableUI
-    key: enum.SharedGasTankUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.SharedGasTankUiKey.Key
-        type: GasTankBoundUserInterface
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 20
-  - type: Jetpack
-    moleUsage: 0.00085
-  - type: CanMoveInAir
-  - type: InputMover
-    toParent: true
-  - type: MovementSpeedModifier
-    weightlessAcceleration: 1
-    weightlessFriction: 0.3
-    weightlessModifier: 1.2
-  - type: Tag
-    tags:
-      - WhitelistChameleon
+  - type: StaticPrice
+    price: 6500
 
 - type: entity
   parent: ClothingControlModsuitHonkOperativeSealed
@@ -480,36 +509,8 @@
     radius: 12
     softness: 20
     autoRot: true
-  - type: GasTank
-    outputPressure: 42.6
-    air:
-      # 2 minutes of thrust
-      volume: 0.75
-      temperature: 293.15
-      moles:
-        - 0.153853429 # oxygen
-        - 0.153853429 # nitrogen
-  - type: ActivatableUI
-    key: enum.SharedGasTankUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.SharedGasTankUiKey.Key
-        type: GasTankBoundUserInterface
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 20
-  - type: Jetpack
-    moleUsage: 0.00085
-  - type: CanMoveInAir
-  - type: InputMover
-    toParent: true
-  - type: MovementSpeedModifier
-    weightlessAcceleration: 1.5
-    weightlessFriction: 0.3
-    weightlessModifier: 1.5
-  - type: Tag
-    tags:
-      - WhitelistChameleon
+  - type: StaticPrice
+    price: 15000
 
 - type: entity
   parent: ClothingControlModsuitOperativeCMDSealed
@@ -546,6 +547,8 @@
     radius: 12
     softness: 20
     autoRot: true
+  - type: StaticPrice
+    price: 8000
 
 - type: entity
   parent: ClothingControlModsuitBase
@@ -568,33 +571,5 @@
     radius: 12
     softness: 20
     autoRot: true
-  - type: GasTank
-    outputPressure: 42.6
-    air:
-      # 2 minutes of thrust
-      volume: 0.75
-      temperature: 293.15
-      moles:
-        - 0.153853429 # oxygen
-        - 0.153853429 # nitrogen
-  - type: ActivatableUI
-    key: enum.SharedGasTankUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.SharedGasTankUiKey.Key
-        type: GasTankBoundUserInterface
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 20
-  - type: Jetpack
-    moleUsage: 0.00085
-  - type: CanMoveInAir
-  - type: InputMover
-    toParent: true
-  - type: MovementSpeedModifier
-    weightlessAcceleration: 1.8
-    weightlessFriction: 0.3
-    weightlessModifier: 1.8
-  - type: Tag
-    tags:
-      - WhitelistChameleon
+  - type: StaticPrice
+    price: 35000

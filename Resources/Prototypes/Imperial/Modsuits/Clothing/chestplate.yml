@@ -19,8 +19,14 @@
     requiredSlot: outerClothing
     slot: head
   # - type: QualityOfItem
-  #    maxSpawnQuality: 3
-  #    minSpawnQuality: 
+  #   qualityWeights:
+  #     0: 0
+  #     1: 0
+  #     2: 0
+  #     3: 80
+  #     4: 20
+  #     5: 0
+  #     6: 0
 
 - type: entity #мосьюты
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -33,21 +39,21 @@
   - type: Clothing
     sprite: Imperial/Modsuits/Clothing/OuterClothing/advanced.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.002
+    highPressureMultiplier: 0.0002
     lowPressureMultiplier: 500
   - type: TemperatureProtection
-    coefficient: 0.001
+    coefficient: 0.000001
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.15
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
+        Blunt: 0.65
         Slash: 0.75
         Piercing: 0.75
         Shock: 0.65
         Caustic: 0.35
-        Heat: 0.45
+        Heat: 0.35
         Radiation: 0
   - type: ClothingSpeedModifier
     walkModifier: 0.9
@@ -139,20 +145,20 @@
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 500
   - type: TemperatureProtection
-    coefficient: 0.1
+    coefficient: 0.00001
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.75
+        Blunt: 0.8
         Slash: 0.9
-        Piercing: 0.8
+        Piercing: 0.9
         Caustic: 0.3
         Heat: 0.1
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitAtmosphericsSealed
     requiredSlot: outerClothing
@@ -172,13 +178,14 @@
     highPressureMultiplier: 0.7
     lowPressureMultiplier: 500
   - type: TemperatureProtection
-    coefficient: 0.9
+    coefficient: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Armor
     modifiers:
       coefficients:
         Caustic: 0.7
+        Heat: 0.9
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95
@@ -201,19 +208,24 @@
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 500
   - type: TemperatureProtection
-    coefficient: 0.6
+    coefficient: 0.15
   - type: ExplosionResistance
-    damageCoefficient: 0.8
+    damageCoefficient: 0.6
   - type: Armor
     modifiers:
       coefficients:
-        Shock: 0.5
+        Shock: 0.3
         Caustic: 0.1
+        Blunt: 0.85
+        Slash: 0.85
         Heat: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitCMOSealed
     requiredSlot: outerClothing
     slot: head
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitSealedBase
@@ -261,9 +273,9 @@
     highPressureMultiplier: 0.4
     lowPressureMultiplier: 500
   - type: TemperatureProtection
-    coefficient: 0.1
+    coefficient: 0.02
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.4
   - type: Armor
     modifiers:
       coefficients:
@@ -447,6 +459,36 @@
     clothingPrototype: ClothingHeadHelmetModsuitOperativeSealed
     requiredSlot: outerClothing
     slot: head
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: CanMoveInAir
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.1
+    weightlessFriction: 0.3
+    weightlessModifier: 1.1
+  - type: Tag
+    tags:
+      - WhitelistChameleon
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitOperativeSealed
@@ -496,6 +538,36 @@
     clothingPrototype: ClothingHeadHelmetModsuitOperativeCMDSealed
     requiredSlot: outerClothing
     slot: head
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: CanMoveInAir
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.5
+    weightlessFriction: 0.3
+    weightlessModifier: 1.5
+  - type: Tag
+    tags:
+      - WhitelistChameleon
 
 - type: entity 
   parent: ClothingOuterChestplateModsuitOperativeSealed
@@ -558,3 +630,33 @@
     clothingPrototype: ClothingHeadHelmetModsuitApocryphalSealed
     requiredSlot: outerClothing
     slot: head
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: CanMoveInAir
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.5
+    weightlessFriction: 0.3
+    weightlessModifier: 1.5
+  - type: Tag
+    tags:
+      - WhitelistChameleon

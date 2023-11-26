@@ -41,7 +41,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 250 #no tiding only teamwork
+        damage: 500 #no tiding only teamwork
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -57,7 +57,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 250 #no tiding only teamwork
+        damage: 500 #no tiding only teamwork
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]

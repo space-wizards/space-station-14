@@ -124,3 +124,21 @@
     Plasma: 1200
     Uranium: 1000
     Gold: 1000
+
+- type: entity
+  id: ModsuitFabricatorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: mod fabricator machine board
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: ModsuitFab
+    requirements:
+      MatterBin: 1
+      Manipulator: 3
+    materialRequirements:
+      Glass: 5
+  - type: GuideHelp
+    guides:
+    - Robotics
