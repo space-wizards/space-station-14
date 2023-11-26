@@ -418,6 +418,7 @@
   - type: Item
     size: Huge
   - type: Storage
+    maxSlots: 14
     whitelist:
       tags:
         - ShellShotgun
