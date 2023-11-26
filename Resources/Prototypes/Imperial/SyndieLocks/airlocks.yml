@@ -1,0 +1,17 @@
+- type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateImperial
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Imperial/SyndieLocks/airlock/normal.rsi
+
+- type: entity
+  parent: AirlockSyndicateGlass
+  id: AirlockSyndicateGlassImperial
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Imperial/SyndieLocks/airlock/glass.rsi
+  - type: PaintableAirlock
+    group: Glass
