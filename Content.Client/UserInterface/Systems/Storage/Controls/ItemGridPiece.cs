@@ -88,7 +88,7 @@ public sealed class ItemGridPiece : Control
         var boundingGrid = SharedStorageSystem.GetBoundingBox(adjustedShape);
         var size = _centerTexture!.Size * 2 * UIScale;
 
-        var hovering = MouseFilter != MouseFilterMode.Ignore && UserInterfaceManager.CurrentlyHovered == this;
+        var hovering = !_storageController.IsDragging && UserInterfaceManager.CurrentlyHovered == this;
         //yeah, this coloring is kinda hardcoded. deal with it. B)
         Color? colorModulate = hovering  ? null : Color.FromHex("#a8a8a8");
 

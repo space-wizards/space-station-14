@@ -256,24 +256,64 @@ public sealed class StorageContainer : BoxContainer
     {
         base.FrameUpdate(args);
 
-        if (!_storageController.IsDragging || _storageController.CurrentlyDragging is not { } dragging)
+        Vector2i? draggingOrigin = null;
+
+        foreach (var control in _backgroundGrid.Children)
+        {
+            if (control is not StorageBackgroundCell cell)
+                continue;
+
+            cell.ModulateSelfOverride = Color.Black;
+
+            if (_storageController.CurrentlyDragging is not { } dragging)
+                continue;
+
+            if (cell.SizeBox.Contains(UserInterfaceManager.MousePositionScaled.Position
+                    - cell.GlobalPosition - dragging.GetCenterOffset() * 2f + _emptyTexture!.Size * UIScale / 2))
+            {
+                draggingOrigin = cell.Location;
+            }
+        }
+
+        if (draggingOrigin is not {} origin)
             return;
 
-        //todo: make this sophisticated....
-        foreach (var backgroundCell in _backgroundGrid.Children)
-        {
-            if (backgroundCell.)
-        }
+        _itemSystem ??= _entity.System<ItemSystem>();
+        _storageSystem ??= _entity.System<StorageSystem>();
 
-        if (UserInterfaceManager.CurrentlyHovered is StorageBackgroundCell)
+        var itemShape = _itemSystem.GetAdjustedItemShape(
+            (_storageController.CurrentlyDragging!.Entity, null),
+            _storageController.CurrentlyDragging.Location.Rotation,
+            origin);
+        var itemBounding = SharedStorageSystem.GetBoundingBox(itemShape);
+
+        if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComponent))
+            return;
+
+        var storageBounding = (Box2) SharedStorageSystem.GetBoundingBox(storageComponent.StorageGrid);
+        if (!storageBounding.Contains(itemBounding))
+            return;
+
+        var validLocation = _storageSystem.ItemFitsInGridLocation(
+            (_storageController.CurrentlyDragging!.Entity, null),
+            (StorageEntity.Value, storageComponent),
+            origin);
+
+        for (var y = itemBounding.Bottom; y <= itemBounding.Top; y++)
         {
-            Logger.Debug("YIPPEE");
+            for (var x = itemBounding.Left; x <= itemBounding.Right; x++)
+            {
+                if (GetBackgroundCell(x, y) is { } cell && itemShape.Any(b => b.Contains(x, y)))
+                {
+                    cell.ModulateSelfOverride = validLocation ? Color.Green : Color.Red;
+                }
+            }
         }
-        else
-        {
-            Logger.Debug("ech");
-        }
-        dragging.GetCenterOffset();
+    }
+
+    public StorageBackgroundCell? GetBackgroundCell(int x, int y)
+    {
+        return (StorageBackgroundCell) _backgroundGrid.GetChild(y * _backgroundGrid.Columns + x);
     }
 
     public sealed class StorageBackgroundCell : TextureRect
@@ -284,6 +324,7 @@ public sealed class StorageContainer : BoxContainer
         {
             Location = location;
             MouseFilter = MouseFilterMode.Pass;
+            ReservesSpace = true;
         }
     }
 }

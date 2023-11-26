@@ -702,6 +702,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(storageEnt, ref storageEnt.Comp) || !Resolve(itemEnt, ref itemEnt.Comp))
             return false;
 
+        //todo adjusted shape at some point?
         var baseItemShape = _item.GetItemShape(itemEnt);
         var itemBounding = GetBoundingBox(baseItemShape);
         var storageBounding = GetBoundingBox(storageEnt.Comp.StorageGrid);
@@ -717,32 +718,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 if (x + itemBounding.Width > storageBounding.Right)
                     break;
 
-                var validPosition = true;
-
-                foreach (var box in baseItemShape)
-                {
-                    if (!validPosition)
-                        break;
-
-                    for (var offsetY = box.Bottom; offsetY <= box.Top; offsetY++)
-                    {
-                        if (!validPosition)
-                            break;
-
-                        for (var offsetX = box.Left; offsetX <= box.Right; offsetX++)
-                        {
-                            var position = (x + offsetX, y + offsetY);
-
-                            if (IsGridSpaceEmpty(storageEnt, position))
-                                continue;
-
-                            validPosition = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (validPosition)
+                if (ItemFitsInGridLocation(itemEnt, storageEnt, new Vector2i(x, y)))
                 {
                     storageLocation = new ItemStorageLocation(Angle.Zero, (x, y));
                     return true;
@@ -750,16 +726,44 @@ public abstract class SharedStorageSystem : EntitySystem
             }
         }
 
-        return storageLocation != null;
+        return false;
     }
 
-    public bool IsGridSpaceEmpty(Entity<StorageComponent?> entity, Vector2i location)
+    public bool ItemFitsInGridLocation(
+        Entity<ItemComponent?> itemEnt,
+        Entity<StorageComponent?> storageEnt,
+        Vector2i position)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(itemEnt, ref itemEnt.Comp))
+            return false;
+
+        //todo: euuuuasdghghghghg. This doesn't support the rotation bs.
+        var itemShape = _item.GetItemShape(itemEnt);
+
+        foreach (var box in itemShape)
+        {
+            for (var offsetY = box.Bottom; offsetY <= box.Top; offsetY++)
+            {
+                for (var offsetX = box.Left; offsetX <= box.Right; offsetX++)
+                {
+                    var pos = (position.X + offsetX, position.Y + offsetY);
+
+                    if (!IsGridSpaceEmpty(itemEnt, storageEnt, pos))
+                        return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public bool IsGridSpaceEmpty(Entity<ItemComponent?> itemEnt, Entity<StorageComponent?> storageEnt, Vector2i location)
+    {
+        if (!Resolve(storageEnt, ref storageEnt.Comp))
             return false;
 
         var validGrid = false;
-        foreach (var grid in entity.Comp.StorageGrid)
+        foreach (var grid in storageEnt.Comp.StorageGrid)
         {
             if (grid.Contains(location))
             {
@@ -771,11 +775,11 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!validGrid)
             return false;
 
-        foreach (var (netEnt, storedItem) in entity.Comp.StoredItems)
+        foreach (var (netEnt, storedItem) in storageEnt.Comp.StoredItems)
         {
             var ent = GetEntity(netEnt);
 
-            if (ent == entity.Owner)
+            if (ent == itemEnt.Owner)
                 continue;
 
             //todo add a fucking trycomp for itemcomponent you stingy bitch

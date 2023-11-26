@@ -307,7 +307,7 @@
   components:
   - type: Storage
     storageGrid:
-    - 0,0,19,9
+    - 0,0,39,24
 
 - type: entity
   parent: ClothingBackpack

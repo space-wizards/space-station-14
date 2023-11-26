@@ -36,7 +36,7 @@
   weight: 16
   name: item-component-size-Huge
   defaultShape:
-  - 0,0,3,3
+  - 0,0,5,5
 
 # Picture furry gf
 - type: itemSize
