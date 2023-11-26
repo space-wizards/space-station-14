@@ -406,7 +406,7 @@
 # Belts without visualizers
 
 - type: entity
-  parent: BaseItem
+  parent: ClothingBeltAmmoProviderBase
   id: ClothingBeltBandolier
   name: bandolier
   description: A bandolier for holding shotgun ammunition.
@@ -418,15 +418,11 @@
   - type: Item
     size: Huge
   - type: BallisticAmmoProvider
-    mayTransfer: true
     whitelist:
       tags:
         - CartridgeShotgun
     capacity: 14
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-    
+
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltChampion
