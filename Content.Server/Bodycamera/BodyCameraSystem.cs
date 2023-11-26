@@ -36,7 +36,8 @@ public sealed class BodyCameraSystem : EntitySystem
     /// </summary>
     private void OnComponentStartup(EntityUid uid, BodyCameraComponent component, ComponentStartup args)
     {
-        _camera.SetActive(uid, false);
+        if (HasComp<SurveillanceCameraComponent>(uid))
+            _camera.SetActive(uid, false);
     }
 
     /// <summary>

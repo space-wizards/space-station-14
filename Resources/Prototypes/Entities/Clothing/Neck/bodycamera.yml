@@ -29,6 +29,7 @@
         - SurveillanceCameraMonitor
         - RadioSpeaker
   - type: ActiveListener
+    range: 3
   - type: Eye
   - type: WirelessNetworkConnection
     range: 200
