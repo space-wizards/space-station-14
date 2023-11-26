@@ -1,0 +1,41 @@
+- type: entity
+  id: Screen
+  name: screen
+  description: Displays text or time.
+  components:
+  - type: Transform
+    anchored: true
+  - type: WallMount
+    arc: 360
+  - type: InteractionOutline
+  - type: Appearance
+  - type: Rotatable
+  - type: TextScreenVisuals
+    textOffset: 0,3
+    timerOffset: 0,-4
+    rows: 2
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/screen.rsi
+    state: screen
+    noRot: true
+  - type: Construction
+    graph: Timer
+    node: screen
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: ExtensionCableReceiver
+  - type: ShuttleTimer
+  - type: DeviceNetwork
+    receiveFrequencyId: ShuttleTimer
+
+- type: entity
+  id: ArrivalsShuttleTimer
+  parent: Screen
+  name: arrivals screen
+  components:
+  - type: DeviceNetwork
+    receiveFrequencyId: ArrivalsShuttleTimer
