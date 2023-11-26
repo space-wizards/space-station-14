@@ -1,0 +1,58 @@
+{
+    "version": 1,
+    "license": "СС BY-SA 3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/telegraphing/telegraph.dmi, safe by KianaBat(GitLab)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "target_circle",
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "hoarder_circle",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "bite",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "skull",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "safe"
+        }
+    ]
+}

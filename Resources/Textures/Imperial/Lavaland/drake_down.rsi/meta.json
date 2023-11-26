@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "СС BY-SA 3.0",
+    "copyright": "By KianaBat(GitLab)",
+    "size": {
+        "x": 96,
+        "y": 96
+    },
+    "states": [
+        {
+            "name": "drake_down"
+        }
+    ]
+}

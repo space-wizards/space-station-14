@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "license": "СС BY-SA 3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/simple/lavaland/96x96megafauna.dmi",
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "bubblegum",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mega_legion",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "eva",
+      "directions": 4,
+      "delays": [
+        [
+          1,
+          0.5,
+          0.5
+        ],
+        [
+          1,
+          0.5,
+          0.5
+        ],
+        [
+          1,
+          0.5,
+          0.5
+        ],
+        [
+          1,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "eva_attack",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "dragon",
+      "directions": 4
+    },
+    {
+      "name": "dragon_shadow"
+    },
+    {
+      "name": "dragon_dead"
+    },
+    {
+      "name": "dragon_swoop"
+    }
+  ]
+}
