@@ -41,7 +41,7 @@
   id: ClothingBeltAmmoProviderBase
   components: 
   - type: BallisticAmmoProvider
-    mayTransfer:  true
+    mayTransfer: true
   - type: Item
     size: Ginormous
   - type: ContainerContainer
