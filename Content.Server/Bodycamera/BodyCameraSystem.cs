@@ -73,6 +73,8 @@ public sealed class BodyCameraSystem : EntitySystem
             return;
         }
 
+        comp.Equipped = true;
+
         if (!TryEnable(uid, comp))
             return;
 
@@ -95,8 +97,6 @@ public sealed class BodyCameraSystem : EntitySystem
         var state = Loc.GetString("bodycamera-component-on-state");
         var message = Loc.GetString("bodycamera-component-on-use", ("state", state));
         _popup.PopupEntity(message, args.Equipee);
-
-        comp.Equipped = true;
     }
 
     /// <summary>
@@ -104,15 +104,13 @@ public sealed class BodyCameraSystem : EntitySystem
     /// </summary>
     private void OnUnequipped(EntityUid uid, BodyCameraComponent comp, GotUnequippedEvent args)
     {
-        
+        comp.Equipped = false;
         if (!TryDisable(uid, comp))
             return;
 
         var state = Loc.GetString("bodycamera-component-off-state");
         var message = Loc.GetString("bodycamera-component-on-use", ("state", state));
         _popup.PopupEntity(message, args.Equipee);
-
-        comp.Equipped = false;
     }
 
     /// <summary>
