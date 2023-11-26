@@ -121,11 +121,8 @@ public sealed class SignalTimerSystem : EntitySystem
 
     /// <summary>
     ///     Called by <see cref="SignalTimerDelayChangedMessage"/> to change the <see cref="SignalTimerComponent"/>
-    ///     delay, but NOT propagate that change to a textscreen.
+    ///     delay, and propagate that change to a textscreen.
     /// </summary>
-    /// <remarks>
-    ///     ...why not propagate?
-    /// </remarks>
     private void OnDelayChangedMessage(EntityUid uid, SignalTimerComponent component, SignalTimerDelayChangedMessage args)
     {
         if (!IsMessageValid(uid, args))
