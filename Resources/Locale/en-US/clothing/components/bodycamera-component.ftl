@@ -4,3 +4,6 @@ bodycamera-component-off-state = off
 
 bodycamera-component-examine-on-state = The light is currently [color=darkgreen]on[/color].
 bodycamera-component-examine-off-state = The light is currently [color=darkred]off[/color].
+
+bodycamera-component-unknown-name = Unknown
+bodycamera-component-unknown-job = No job

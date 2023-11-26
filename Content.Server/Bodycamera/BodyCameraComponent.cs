@@ -9,6 +9,9 @@ namespace Content.Server.Bodycamera
         [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled;
 
+        [DataField("equipped"), ViewVariables(VVAccess.ReadWrite)]
+        public bool Equipped;
+
         /// <summary>
         /// Power usage per second when enabled
         /// </summary>

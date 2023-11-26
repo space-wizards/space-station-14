@@ -1,10 +1,14 @@
+using Content.Server.Access.Systems;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Server.SurveillanceCamera;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
-using Content.Shared.PowerCell.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
+using Content.Shared.PowerCell;
 using Content.Shared.Timing;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Bodycamera
 {
@@ -15,28 +19,75 @@ namespace Content.Server.Bodycamera
         [Dependency] private readonly SurveillanceCameraSystem _camera = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<BodyCameraComponent, ComponentStartup>(OnComponentStartup);
-            SubscribeLocalEvent<BodyCameraComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<BodyCameraComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+            SubscribeLocalEvent<BodyCameraComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
             SubscribeLocalEvent<BodyCameraComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<BodyCameraComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<BodyCameraComponent, GotUnequippedEvent>(OnUnequipped);
         }
 
         private void OnComponentStartup(EntityUid uid, BodyCameraComponent component, ComponentStartup args)
         {
-            if (TryComp<SurveillanceCameraComponent>(uid, out SurveillanceCameraComponent? comp))
+            //Cameras start enabled, this disables the camera to match the BodyCamera's initial state
+            if (TryComp<SurveillanceCameraComponent>(uid, out var comp))
             {
                 _camera.SetActive(uid, false, comp);
             }
         }
-        private void OnPowerCellChanged(EntityUid uid, BodyCameraComponent comp, PowerCellChangedEvent args)
+
+        private void OnPowerCellSlotEmpty(EntityUid uid, BodyCameraComponent component, ref PowerCellSlotEmptyEvent args)
         {
-            if (args.Ejected)
-                TryDisable(uid, comp);
+            if (component.Enabled)
+                TryDisable(uid, component);
+        }
+
+        private void OnEquipped(EntityUid uid, BodyCameraComponent component, GotEquippedEvent args)
+        {
+            //Disable the camera if placed in a pocket
+            if (TryComp<ClothingComponent>(uid, out var clothingComp) && (clothingComp.Slots & args.SlotFlags) != args.SlotFlags)
+            {
+                return;
+            }
+
+            if (!TryEnable(uid, component))
+                return;
+
+            component.Equipped = true;
+            if (TryComp<SurveillanceCameraComponent>(uid, out var camera)
+                && _idCardSystem.TryFindIdCard(args.Equipee, out var card))
+            {
+                var userName = Loc.GetString("bodycamera-component-unknown-name");
+                var userJob = Loc.GetString("bodycamera-component-unknown-job");
+
+                if (card.Comp.FullName != null)
+                    userName = card.Comp.FullName;
+                if (card.Comp.JobTitle != null)
+                    userJob = card.Comp.JobTitle;
+
+                string cameraName = $"{userJob} - {userName}";
+                _camera.SetName(uid, cameraName, camera);
+            }
+
+            var state = Loc.GetString(component.Enabled ? "bodycamera-component-on-state" : "bodycamera-component-off-state");
+            var message = Loc.GetString("bodycamera-component-on-use", ("state", state));
+            _popup.PopupEntity(message, args.Equipee);
+        }
+
+        private void OnUnequipped(EntityUid uid, BodyCameraComponent component, GotUnequippedEvent args)
+        {
+            if (!TryDisable(uid, component))
+                return;
+
+            component.Equipped = false;
+            var state = Loc.GetString(component.Enabled ? "bodycamera-component-on-state" : "bodycamera-component-off-state");
+            var message = Loc.GetString("bodycamera-component-on-use", ("state", state));
+            _popup.PopupEntity(message, args.Equipee);
         }
 
         public override void Update(float frameTime)
@@ -44,38 +95,19 @@ namespace Content.Server.Bodycamera
             var query = EntityQueryEnumerator<BodyCameraComponent>();
             while (query.MoveNext(out var uid, out var cam))
             {
-                if (cam.Enabled && !_powerCell.TryUseCharge(uid, cam.Wattage * frameTime))
+                if (cam.Enabled)
                 {
-                    TryDisable(uid, cam);
+                    if (!_powerCell.TryUseCharge(uid, cam.Wattage * frameTime)) TryDisable(uid, cam);
                 }
             }
         }
 
-        private void OnActivate(EntityUid uid, BodyCameraComponent component, ActivateInWorldEvent args)
-        {
-            if (args.Handled || _useDelay.ActiveDelay(uid))
-                return;
-
-            if (!TryToggle(uid, component, args.User))
-                return;
-
-            args.Handled = true;
-            _useDelay.BeginDelay(uid);
-            var state = Loc.GetString(component.Enabled ? "bodycamera-component-on-state" : "bodycamera-component-off-state");
-            var message = Loc.GetString("bodycamera-component-on-use", ("state", state));
-            _popup.PopupEntity(message, args.User, args.User);
-            args.Handled = true;
-        }
-
         private void OnExamine(EntityUid uid, BodyCameraComponent comp, ExaminedEvent args)
         {
-            if (args.IsInDetailsRange)
-            {
-                var msg = comp.Enabled
-                    ? Loc.GetString("bodycamera-component-examine-on-state")
-                    : Loc.GetString("bodycamera-component-examine-off-state");
-                args.PushMarkup(msg);
-            }
+            var msg = comp.Enabled
+                ? Loc.GetString("bodycamera-component-examine-on-state")
+                : Loc.GetString("bodycamera-component-examine-off-state");
+            args.PushMarkup(msg);
         }
 
         private bool TryToggle(EntityUid uid, BodyCameraComponent? component = null, EntityUid? user = null)

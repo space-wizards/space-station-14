@@ -1,5 +1,5 @@
 - type: entity
-  parent: [Clothing, PowerCellSlotSmallItem]
+  parent: Clothing
   id: ClothingNeckBodyCamera
   name: bodycamera
   description: Wearable camera to ensure accountability and responsibility.
@@ -11,7 +11,7 @@
     sprite: Clothing/Neck/Misc/bodycamera.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/bodycamera.rsi
-    quickEquip: false
+    quickEquip: true
     slots:
     - neck
   - type: DeviceNetwork
@@ -20,6 +20,7 @@
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
+    nameSet: true
   - type: SurveillanceCameraMicrophone
     blacklist:
       components:
@@ -27,12 +28,8 @@
         - SurveillanceCameraMonitor
         - RadioSpeaker
   - type: ActiveListener
-    range: 5
+    range: 3
   - type: Eye
-  - type: UserInterface
-    interfaces:
-      - key: enum.SurveillanceCameraSetupUiKey.Camera
-        type: SurveillanceCameraSetupBoundUi
   - type: WirelessNetworkConnection
     range: 200
   - type: BodyCamera
