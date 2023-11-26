@@ -417,12 +417,13 @@
     sprite: Clothing/Belt/bandolier.rsi
   - type: Item
     size: Huge
-  - type: Storage
-    maxSlots: 14
+- type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
-        - ShellShotgun
-
+        - CartridgeShotgun
+    capacity: 14
+    
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltChampion
