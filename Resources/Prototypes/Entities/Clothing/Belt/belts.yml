@@ -406,7 +406,7 @@
 # Belts without visualizers
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: BaseItem
   id: ClothingBeltBandolier
   name: bandolier
   description: A bandolier for holding shotgun ammunition.
