@@ -116,7 +116,9 @@ public sealed class SignalTimerSystem : EntitySystem
             return;
 
         component.Label = args.Text[..Math.Min(5, args.Text.Length)];
-        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string?[] { component.Label });
+
+        if (!HasComp<ActiveSignalTimerComponent>(uid))
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, new string?[] { component.Label });
     }
 
     /// <summary>
