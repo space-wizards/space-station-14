@@ -62,8 +62,6 @@
   id: Zipties
   parent: Handcuffs
   components:
-  - type: Item
-    size: Tiny
   - type: Handcuff
     breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
@@ -90,7 +88,7 @@
   abstract: true
   components:
   - type: Item
-    size: Tiny
+    size: Small
   - type: Tag
     tags:
     - Trash

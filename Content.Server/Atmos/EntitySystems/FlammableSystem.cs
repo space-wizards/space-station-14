@@ -1,24 +1,30 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
+using Content.Shared.Timing;
+using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -36,6 +42,9 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public const float MinimumFireStacks = -10f;
         public const float MaximumFireStacks = 20f;
@@ -47,6 +56,7 @@ namespace Content.Server.Atmos.EntitySystems
         private float _timer;
 
         private readonly Dictionary<Entity<FlammableComponent>, float> _fireEvents = new();
+        private readonly List<EntityUid> _toRemove = new();
 
         public override void Initialize()
         {
@@ -63,6 +73,8 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<IgniteOnCollideComponent, LandEvent>(OnIgniteLand);
 
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
+
+            SubscribeLocalEvent<ExtinguishOnInteractComponent, ActivateInWorldEvent>(OnExtinguishActivateInWorld);
         }
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
@@ -128,56 +140,86 @@ namespace Content.Server.Atmos.EntitySystems
             args.Handled = true;
         }
 
+        private void OnExtinguishActivateInWorld(EntityUid uid, ExtinguishOnInteractComponent component, ActivateInWorldEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (!TryComp(uid, out FlammableComponent? flammable))
+                return;
+
+            if (!flammable.OnFire)
+                return;
+
+            args.Handled = true;
+
+            if (!_useDelay.BeginDelay(uid))
+                return;
+
+            _audio.PlayPvs(component.ExtinguishAttemptSound, uid);
+            if (_random.Prob(component.Probability))
+            {
+                AdjustFireStacks(uid, component.StackDelta, flammable);
+            }
+            else
+            {
+                _popup.PopupEntity(Loc.GetString(component.ExtinguishFailed), uid);
+            }
+        }
         private void OnCollide(EntityUid uid, FlammableComponent flammable, ref StartCollideEvent args)
         {
             var otherUid = args.OtherEntity;
+
+            // Collisions cause events to get raised directed at both entities. We only want to handle this collision
+            // once, hence the uid check.
+            if (otherUid.Id < uid.Id)
+                return;
 
             // Normal hard collisions, though this isn't generally possible since most flammable things are mobs
             // which don't collide with one another, shouldn't work here.
             if (args.OtherFixtureId != FlammableFixtureID && args.OurFixtureId != FlammableFixtureID)
                 return;
 
-            if (!EntityManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))
+            if (!flammable.FireSpread)
                 return;
 
-            if (!flammable.FireSpread || !otherFlammable.FireSpread)
+            if (!TryComp(otherUid, out FlammableComponent? otherFlammable) || !otherFlammable.FireSpread)
                 return;
 
+            if (!flammable.OnFire && !otherFlammable.OnFire)
+                return; // Neither are on fire
+
+            if (flammable.OnFire && otherFlammable.OnFire)
+            {
+                // Both are on fire -> equalize fire stacks.
+                var avg = (flammable.FireStacks + otherFlammable.FireStacks) / 2;
+                flammable.FireStacks = flammable.CanExtinguish ? avg : Math.Max(flammable.FireStacks, avg);
+                otherFlammable.FireStacks = otherFlammable.CanExtinguish ? avg : Math.Max(otherFlammable.FireStacks, avg);
+                UpdateAppearance(uid, flammable);
+                UpdateAppearance(otherUid, otherFlammable);
+                return;
+            }
+
+            // Only one is on fire -> attempt to spread the fire.
             if (flammable.OnFire)
             {
-                if (otherFlammable.OnFire)
+                otherFlammable.FireStacks += flammable.FireStacks / 2;
+                Ignite(otherUid, uid, otherFlammable);
+                if (flammable.CanExtinguish)
                 {
-                    if (flammable.CanExtinguish)
-                    {
-                        var fireSplit = (flammable.FireStacks + otherFlammable.FireStacks) / 2;
-                        flammable.FireStacks = fireSplit;
-                        otherFlammable.FireStacks = fireSplit;
-                    }
-                    else
-                    {
-                        otherFlammable.FireStacks = flammable.FireStacks / 2;
-                    }
-                }
-                else
-                {
-                    if (!flammable.CanExtinguish)
-                    {
-                        otherFlammable.FireStacks += flammable.FireStacks / 2;
-                        Ignite(otherUid, uid, otherFlammable);
-                    }
-                    else
-                    {
-                        flammable.FireStacks /= 2;
-                        otherFlammable.FireStacks += flammable.FireStacks;
-                        Ignite(otherUid, uid, otherFlammable);
-                    }
+                    flammable.FireStacks /= 2;
+                    UpdateAppearance(uid, flammable);
                 }
             }
-            else if (otherFlammable.OnFire)
+            else
             {
-                otherFlammable.FireStacks /= 2;
-                flammable.FireStacks += otherFlammable.FireStacks;
+                flammable.FireStacks += otherFlammable.FireStacks / 2;
                 Ignite(uid, otherUid, flammable);
+                if (otherFlammable.CanExtinguish)
+                {
+                    otherFlammable.FireStacks /= 2;
+                    UpdateAppearance(otherUid, otherFlammable);
+                }
             }
         }
 
@@ -208,6 +250,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             _appearance.SetData(uid, FireVisuals.OnFire, flammable.OnFire, appearance);
             _appearance.SetData(uid, FireVisuals.FireStacks, flammable.FireStacks, appearance);
+
+            // Also enable toggleable-light visuals
+            // This is intended so that matches & candles can re-use code for un-shaded layers on in-hand sprites.
+            // However, this could cause conflicts if something is ACTUALLY both a toggleable light and flammable.
+            // if that ever happens, then fire visuals will need to implement their own in-hand sprite management.
+            _appearance.SetData(uid, ToggleableLightVisuals.Enabled, flammable.OnFire, appearance);
         }
 
         public void AdjustFireStacks(EntityUid uid, float relativeFireStacks, FlammableComponent? flammable = null)
@@ -219,8 +267,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.OnFire && flammable.FireStacks <= 0)
                 Extinguish(uid, flammable);
-
-            UpdateAppearance(uid, flammable);
+            else
+                UpdateAppearance(uid, flammable);
         }
 
         public void Extinguish(EntityUid uid, FlammableComponent? flammable = null)
@@ -234,8 +282,6 @@ namespace Content.Server.Atmos.EntitySystems
             _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):entity} stopped being on fire damage");
             flammable.OnFire = false;
             flammable.FireStacks = 0;
-
-            flammable.Collided.Clear();
 
             UpdateAppearance(uid, flammable);
         }
@@ -338,7 +384,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
 
-                    AdjustFireStacks(uid, -0.1f * (flammable.Resisting ? 10f : 1f), flammable);
+                    AdjustFireStacks(uid, flammable.FirestackFade * (flammable.Resisting ? 10f : 1f), flammable);
                 }
                 else
                 {
@@ -361,24 +407,6 @@ namespace Content.Server.Atmos.EntitySystems
                         _transformSystem.GetGridOrMapTilePosition(uid, transform),
                         700f, 50f, uid, true);
 
-                }
-
-                for (var i = flammable.Collided.Count - 1; i >= 0; i--)
-                {
-                    var otherUid = flammable.Collided[i];
-
-                    if (!otherUid.IsValid() || !EntityManager.EntityExists(otherUid))
-                    {
-                        flammable.Collided.RemoveAt(i);
-                        continue;
-                    }
-
-                    // TODO: Sloth, please save our souls!
-                    // no
-                    if (!_lookup.GetWorldAABB(uid, transform).Intersects(_lookup.GetWorldAABB(otherUid)))
-                    {
-                        flammable.Collided.RemoveAt(i);
-                    }
                 }
             }
         }

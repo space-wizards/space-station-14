@@ -7,9 +7,10 @@
     sprite: Objects/Storage/boxes.rsi
   - type: Item
     sprite: Objects/Storage/boxes.rsi
-    size: Normal
+    size: Large
   - type: Storage
-    maxTotalWeight: 12
+    maxTotalWeight: 8
+    maxItemSize: Small
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

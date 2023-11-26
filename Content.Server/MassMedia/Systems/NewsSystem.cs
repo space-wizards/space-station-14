@@ -207,7 +207,8 @@ public sealed class NewsSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp, out var ringer, out var cont))
         {
-            if (!_cartridgeLoaderSystem.HasProgram<NewsReadCartridgeComponent>(uid, false, comp, cont))
+            if (!_cartridgeLoaderSystem.TryGetProgram<NewsReadCartridgeComponent>(uid, out _, out var newsReadCartridgeComponent, false, comp, cont)
+                || !newsReadCartridgeComponent.NotificationOn)
                 continue;
 
             _ringer.RingerPlayRingtone(uid, ringer);

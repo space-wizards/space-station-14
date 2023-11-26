@@ -5,6 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage
@@ -15,6 +16,8 @@ namespace Content.Shared.Storage
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class StorageComponent : Component
     {
+        public static string ContainerId = "storagebase";
+
         // TODO: This fucking sucks
         [ViewVariables(VVAccess.ReadWrite), DataField("isOpen"), AutoNetworkedField]
         public bool IsUiOpen;
@@ -34,7 +37,7 @@ namespace Content.Shared.Storage
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         [Access(typeof(SharedStorageSystem))]
-        public ItemSize? MaxItemSize;
+        public ProtoId<ItemSizePrototype>? MaxItemSize;
 
         /// <summary>
         /// The max number of entities that can be inserted into this storage.

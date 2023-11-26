@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -65,6 +65,12 @@ public abstract partial class SharedEntityStorageComponent : Component
     public float EnteringRange = 0.18f;
 
     /// <summary>
+    /// If true, there may be mobs inside the container, even if the container is an Item
+    /// </summary>
+    [DataField]
+    public bool ItemCanStoreMobs = false;
+
+    /// <summary>
     /// Whether or not to show the contents when the storage is closed
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -118,6 +124,12 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
+
+    /// <summary>
+    /// Multiplier for explosion damage that gets applied to contained entities.
+    /// </summary>
+    [DataField]
+    public float ExplosionDamageCoefficient = 1;
 }
 
 [Serializable, NetSerializable]

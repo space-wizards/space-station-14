@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
@@ -368,13 +368,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (toAdd == container)
             return false;
 
-        if (TryComp<PhysicsComponent>(toAdd, out var phys))
-        {
-            var aabb = _physics.GetWorldAABB(toAdd, body: phys);
-
-            if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
-                return false;
-        }
+        var aabb = _lookup.GetAABBNoContainer(toAdd, Vector2.Zero, 0);
+        if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
+            return false;
 
         return Insert(toAdd, container, component);
     }
@@ -417,6 +413,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 var storeEv = new StoreMobInItemContainerAttemptEvent();
                 RaiseLocalEvent(container, ref storeEv);
                 allowedToEat = storeEv is { Handled: true, Cancelled: false };
+
+                if (component.ItemCanStoreMobs)
+                    allowedToEat = true;
             }
         }
 

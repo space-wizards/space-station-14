@@ -58,7 +58,6 @@
   cost: 7500
   recipeUnlocks:
   - BorgModuleDiagnosis
-  - BorgModuleTreatment
   - BorgModuleDefibrillator
 
 - type: technology

@@ -317,6 +317,8 @@
   name: death squad backpack
   description: Holds the kit of CentComm's most feared agents.
   components:
+    - type: Storage
+      maxTotalWeight: 56
     - type: StorageFill
       contents:
         - id: BoxSurvivalEngineering
