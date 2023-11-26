@@ -1,10 +1,9 @@
-﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
+﻿namespace Content.Shared.Chemistry.Containers.Components;
 
 /// <summary>
 ///     Denotes the solution that can removed  be with syringes.
 /// </summary>
 [RegisterComponent]
-[Obsolete]
 public sealed partial class DrawableSolutionComponent : Component
 {
     /// <summary>

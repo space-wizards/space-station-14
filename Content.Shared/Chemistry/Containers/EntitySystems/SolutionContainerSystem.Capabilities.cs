@@ -5,11 +5,10 @@ using Content.Shared.FixedPoint;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace Content.Shared.Chemistry.EntitySystems;
+namespace Content.Shared.Chemistry.Containers.EntitySystems;
 
 public sealed partial class SolutionContainerSystem
 {
-    [Obsolete]
     public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
         RefillableSolutionComponent? refillableSolution = null)
     {
@@ -19,7 +18,6 @@ public sealed partial class SolutionContainerSystem
         TryAddSolution(targetUid, targetSolution, addedSolution);
     }
 
-    [Obsolete]
     public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
         InjectableSolutionComponent? injectableSolution = null)
     {
@@ -29,7 +27,6 @@ public sealed partial class SolutionContainerSystem
         TryAddSolution(targetUid, targetSolution, addedSolution);
     }
 
-    [Obsolete]
     public Solution Draw(EntityUid targetUid, Solution solution, FixedPoint2 amount,
         DrawableSolutionComponent? drawableSolution = null)
     {
@@ -39,7 +36,6 @@ public sealed partial class SolutionContainerSystem
         return SplitSolution(targetUid, solution, amount);
     }
 
-    [Obsolete]
     public Solution Drain(EntityUid targetUid, Solution targetSolution, FixedPoint2 amount,
         DrainableSolutionComponent? drainableSolution = null)
     {
@@ -49,7 +45,6 @@ public sealed partial class SolutionContainerSystem
         return SplitSolution(targetUid, targetSolution, amount);
     }
 
-    [Obsolete]
     public bool TryGetInjectableSolution(EntityUid targetUid,
         [NotNullWhen(true)] out Solution? solution,
         InjectableSolutionComponent? injectable = null,
@@ -66,7 +61,6 @@ public sealed partial class SolutionContainerSystem
         return true;
     }
 
-    [Obsolete]
     public bool TryGetRefillableSolution(EntityUid targetUid,
         [NotNullWhen(true)] out Solution? solution,
         SolutionContainerManagerComponent? solutionManager = null,
@@ -83,7 +77,6 @@ public sealed partial class SolutionContainerSystem
         return true;
     }
 
-    [Obsolete]
     public bool TryGetDrainableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
         DrainableSolutionComponent? drainable = null,
@@ -99,7 +92,6 @@ public sealed partial class SolutionContainerSystem
         return true;
     }
 
-    [Obsolete]
     public bool TryGetDumpableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
         DumpableSolutionComponent? dumpable = null,
@@ -115,7 +107,6 @@ public sealed partial class SolutionContainerSystem
         return true;
     }
 
-    [Obsolete]
     public bool TryGetDrawableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
         DrawableSolutionComponent? drawable = null,
@@ -131,7 +122,6 @@ public sealed partial class SolutionContainerSystem
         return true;
     }
 
-    [Obsolete]
     public FixedPoint2 DrainAvailable(EntityUid uid)
     {
         return !TryGetDrainableSolution(uid, out var solution)
@@ -139,7 +129,6 @@ public sealed partial class SolutionContainerSystem
             : solution.Volume;
     }
 
-    [Obsolete]
     public float PercentFull(EntityUid uid)
     {
         if (!TryGetDrainableSolution(uid, out var solution) || solution.MaxVolume.Equals(FixedPoint2.Zero))
@@ -148,7 +137,6 @@ public sealed partial class SolutionContainerSystem
         return solution.FillFraction * 100;
     }
 
-    [Obsolete]
     public bool TryGetFitsInDispenser(EntityUid owner,
         [NotNullWhen(true)] out Solution? solution,
         FitsInDispenserComponent? dispenserFits = null,
@@ -164,7 +152,6 @@ public sealed partial class SolutionContainerSystem
         return true;
     }
 
-    [Obsolete]
     public static string ToPrettyString(Solution solution)
     {
         var sb = new StringBuilder();

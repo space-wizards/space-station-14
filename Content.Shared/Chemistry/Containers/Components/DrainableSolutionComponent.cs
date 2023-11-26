@@ -1,13 +1,12 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry.Containers.Components;
 
 /// <summary>
 ///     Denotes the solution that can be easily removed through any reagent container.
 ///     Think pouring this or draining from a water tank.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Obsolete]
 public sealed partial class DrainableSolutionComponent : Component
 {
     /// <summary>

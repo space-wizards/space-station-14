@@ -1,10 +1,9 @@
-﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
+﻿namespace Content.Shared.Chemistry.Containers.Components;
 
 /// <summary>
 ///     Denotes a solution which can be added with syringes.
 /// </summary>
 [RegisterComponent]
-[Obsolete]
 public sealed partial class InjectableSolutionComponent : Component
 {
 

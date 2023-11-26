@@ -1,13 +1,12 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry.Containers.Components;
 
 /// <summary>
 ///     Denotes the solution that can be easily dumped into (completely removed from the dumping container into this one)
 ///     Think pouring a container fully into this.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Obsolete]
 public sealed partial class DumpableSolutionComponent : Component
 {
     /// <summary>

@@ -1,7 +1,7 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry.Containers.Components;
 
 /// <summary>
 ///     Reagents that can be added easily. For example like
@@ -9,7 +9,6 @@ namespace Content.Shared.Chemistry.Components;
 ///     tank of a car.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Obsolete]
 public sealed partial class RefillableSolutionComponent : Component
 {
     /// <summary>

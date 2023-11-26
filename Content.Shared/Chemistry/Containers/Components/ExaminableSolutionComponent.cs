@@ -1,7 +1,6 @@
-﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
+﻿namespace Content.Shared.Chemistry.Containers.Components;
 
 [RegisterComponent]
-[Obsolete]
 public sealed partial class ExaminableSolutionComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]

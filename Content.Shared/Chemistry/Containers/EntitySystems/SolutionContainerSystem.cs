@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions;
@@ -13,48 +14,12 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Chemistry.EntitySystems;
-
-/// <summary>
-/// This event alerts system that the solution was changed
-/// </summary>
-[Obsolete]
-public sealed class SolutionChangedEvent : EntityEventArgs
-{
-    public readonly Solution Solution;
-    public readonly string SolutionId;
-
-    public SolutionChangedEvent(Solution solution, string solutionId)
-    {
-        SolutionId = solutionId;
-        Solution = solution;
-    }
-}
-
-/// <summary>
-/// An event raised when more reagents are added to a (managed) solution than it can hold.
-/// </summary>
-[ByRefEvent]
-[Obsolete]
-public record struct SolutionOverflowEvent(EntityUid SolutionEnt, Solution SolutionHolder, Solution Overflow)
-{
-    /// <summary>The entity which contains the solution that has overflowed.</summary>
-    public readonly EntityUid SolutionEnt = SolutionEnt;
-    /// <summary>The solution that has overflowed.</summary>
-    public readonly Solution SolutionHolder = SolutionHolder;
-    /// <summary>The reagents that have overflowed the solution.</summary>
-    public readonly Solution Overflow = Overflow;
-    /// <summary>The volume by which the solution has overflowed.</summary>
-    public readonly FixedPoint2 OverflowVol = Overflow.Volume;
-    /// <summary>Whether some subscriber has taken care of the effects of the overflow.</summary>
-    public bool Handled = false;
-}
+namespace Content.Shared.Chemistry.Containers.EntitySystems;
 
 /// <summary>
 /// Part of Chemistry system deal with SolutionContainers
 /// </summary>
 [UsedImplicitly]
-[Obsolete]
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
     [Dependency] private readonly ChemicalReactionSystem _chemistrySystem = default!;
@@ -219,7 +184,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals", ("recognizedString", msg.ToString())));
     }
 
-    [Obsolete]
     public void UpdateAppearance(EntityUid uid, Solution solution,
         AppearanceComponent? appearanceComponent = null)
     {
@@ -251,7 +215,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="solutionHolder"></param>
     /// <param name="quantity">the volume of solution to remove.</param>
     /// <returns>The solution that was removed.</returns>
-    [Obsolete]
     public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity)
     {
         var splitSol = solutionHolder.SplitSolution(quantity);
@@ -259,7 +222,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return splitSol;
     }
 
-    [Obsolete]
     public Solution SplitStackSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity, int stackCount)
     {
         var splitSol = solutionHolder.SplitSolution(quantity / stackCount);
@@ -271,7 +233,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <summary>
     /// Splits a solution without the specified reagent(s).
     /// </summary>
-    [Obsolete]
     public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
         params string[] reagents)
     {
@@ -280,7 +241,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return splitSol;
     }
 
-    [Obsolete]
     public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false, ReactionMixerComponent? mixerComponent = null)
     {
         DebugTools.Assert(solutionHolder.Name != null && TryGetSolution(uid, solutionHolder.Name, out var tmp) && tmp == solutionHolder);
@@ -303,7 +263,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         RaiseLocalEvent(uid, new SolutionChangedEvent(solutionHolder, solutionHolder.Name));
     }
 
-    [Obsolete]
     public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)
     {
         if (solutionHolder.Volume == 0)
@@ -313,7 +272,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         UpdateChemicals(uid, solutionHolder);
     }
 
-    [Obsolete]
     public void RemoveAllSolution(EntityUid uid, SolutionContainerManagerComponent? solutionContainerManager = null)
     {
         if (!Resolve(uid, ref solutionContainerManager))
@@ -331,7 +289,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="targetUid">The entity containing the solution.</param>
     /// <param name="targetSolution">The solution to set the capacity of.</param>
     /// <param name="capacity">The value to set the capacity of the solution to.</param>
-    [Obsolete]
     public void SetCapacity(EntityUid targetUid, Solution targetSolution, FixedPoint2 capacity)
     {
         if (targetSolution.MaxVolume == capacity)
@@ -352,7 +309,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="reagentQuantity">The reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    [Obsolete]
     public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentQuantity reagentQuantity,
         out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
@@ -386,7 +342,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    [Obsolete]
     public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,
         out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentData? data = null)
     {
@@ -403,7 +358,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    [Obsolete]
     public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentId reagentId, FixedPoint2 quantity,
         out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
@@ -418,7 +372,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="container">Solution container from which we are removing reagent</param>
     /// <param name="reagentQuantity">The reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    [Obsolete]
     public bool RemoveReagent(EntityUid targetUid, Solution? container, ReagentQuantity reagentQuantity)
     {
         if (container == null)
@@ -440,7 +393,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="prototype">The Id of the reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    [Obsolete]
     public bool RemoveReagent(EntityUid targetUid, Solution? container, string prototype, FixedPoint2 quantity, ReagentData? data = null)
     {
         return RemoveReagent(targetUid, container, new ReagentQuantity(prototype, quantity, data));
@@ -454,7 +406,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="reagentId">The reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    [Obsolete]
     public bool RemoveReagent(EntityUid targetUid, Solution? container, ReagentId reagentId, FixedPoint2 quantity)
     {
         return RemoveReagent(targetUid, container, new ReagentQuantity(reagentId, quantity));
@@ -468,7 +419,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="source">source solution</param>
     /// <param name="target">target solution</param>
     /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
-    [Obsolete]
     public bool TryTransferSolution(EntityUid sourceUid, EntityUid targetUid, Solution source, Solution target, FixedPoint2 quantity)
     {
         if (!TryTransferSolution(targetUid, target, source, quantity))
@@ -486,7 +436,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="source">source solution</param>
     /// <param name="target">target solution</param>
     /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
-    [Obsolete]
     public bool TryTransferSolution(EntityUid targetUid, Solution target, Solution source, FixedPoint2 quantity)
     {
         if (quantity < 0)
@@ -512,7 +461,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="source">source solution</param>
     /// <param name="target">target solution</param>
     /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
-    [Obsolete]
     public bool TryTransferSolution(EntityUid sourceUid, EntityUid targetUid, string source, string target, FixedPoint2 quantity)
     {
         if (!TryGetSolution(sourceUid, source, out var sourceSoln))
@@ -531,7 +479,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     ///  <param name="targetSolution">entity holding targetSolution</param>
     /// <param name="toAdd">solution being added</param>
     /// <returns>If the solution could be added.</returns>
-    [Obsolete]
     public bool TryAddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
     {
         if (toAdd.Volume == FixedPoint2.Zero)
@@ -550,7 +497,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="targetSolution">The solution being added to.</param>
     /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
     /// <returns>The quantity of the solution actually added.</returns>
-    [Obsolete]
     public FixedPoint2 AddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
     {
         if (toAdd.Volume == FixedPoint2.Zero)
@@ -572,7 +518,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="targetSolution">The solution being added to.</param>
     /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
     /// <returns>Whether any reagents were added to the solution.</returns>
-    [Obsolete]
     public bool ForceAddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
     {
         if (toAdd.Volume == FixedPoint2.Zero)
@@ -594,7 +539,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// If the combined volume is below this an empty solution is returned.</param>
     /// <param name="overflowingSolution">Solution that exceeded overflowThreshold</param>
     /// <returns>Whether any reagents were added to <paramref cref="targetSolution"/>.</returns>
-    [Obsolete]
     public bool TryMixAndOverflow(EntityUid targetUid, Solution targetSolution,
         Solution toAdd,
         FixedPoint2 overflowThreshold,
@@ -612,7 +556,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return true;
     }
 
-    [Obsolete]
     public bool TryGetSolution([NotNullWhen(true)] EntityUid? uid, string name,
         [NotNullWhen(true)] out Solution? solution,
         SolutionContainerManagerComponent? solutionsMgr = null)
@@ -635,7 +578,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="solutionsMgr">solution components used in resolves</param>
     /// <param name="existed">true if the solution already existed</param>
     /// <returns>solution</returns>
-    [Obsolete]
     public Solution EnsureSolution(EntityUid uid, string name, out bool existed,
         SolutionContainerManagerComponent? solutionsMgr = null)
     {
@@ -663,7 +605,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="name">name for the solution</param>
     /// <param name="solutionsMgr">solution components used in resolves</param>
     /// <returns>solution</returns>
-    [Obsolete]
     public Solution EnsureSolution(EntityUid uid, string name, SolutionContainerManagerComponent? solutionsMgr = null)
         => EnsureSolution(uid, name, out _, solutionsMgr);
 
@@ -675,7 +616,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="minVol">Ensures that the solution's maximum volume is larger than this value.</param>
     /// <param name="solutionsMgr">solution components used in resolves</param>
     /// <returns>solution</returns>
-    [Obsolete]
     public Solution EnsureSolution(EntityUid uid, string name, FixedPoint2 minVol, out bool existed,
         SolutionContainerManagerComponent? solutionsMgr = null)
     {
@@ -698,7 +638,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return existing;
     }
 
-    [Obsolete]
     public Solution EnsureSolution(EntityUid uid, string name,
         IEnumerable<ReagentQuantity> reagents,
         bool setMaxVol = true,
@@ -724,7 +663,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="solution">The solution to remove reagents from.</param>
     /// <param name="quantity">The amount to remove from every reagent in the solution.</param>
     /// <returns>A new solution containing every removed reagent from the original solution.</returns>
-    [Obsolete]
     public Solution RemoveEachReagent(EntityUid uid, Solution solution, FixedPoint2 quantity)
     {
         if (quantity <= 0)
@@ -744,7 +682,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return removedSolution;
     }
 
-    [Obsolete]
     public FixedPoint2 GetTotalPrototypeQuantity(EntityUid owner, string reagentId)
     {
         var reagentQuantity = FixedPoint2.New(0);
@@ -760,7 +697,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return reagentQuantity;
     }
 
-    [Obsolete]
     public bool TryGetMixableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
         SolutionContainerManagerComponent? solutionsMgr = null)
@@ -795,7 +731,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// Gets the most common reagent across all solutions by volume.
     /// </summary>
     /// <param name="component"></param>
-    [Obsolete]
     public ReagentPrototype? GetMaxReagent(SolutionContainerManagerComponent component)
     {
         if (component.Solutions.Count == 0)
@@ -818,7 +753,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return _prototypeManager.Index<ReagentPrototype>(max.Key.Prototype);
     }
 
-    [Obsolete]
     public SoundSpecifier? GetSound(SolutionContainerManagerComponent component)
     {
         var max = GetMaxReagent(component);
@@ -835,7 +769,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="owner">The entity in which the solution is located.</param>
     /// <param name="solution">The solution to set the temperature of.</param>
     /// <param name="temperature">The new value to set the temperature to.</param>
-    [Obsolete]
     public void SetTemperature(EntityUid owner, Solution solution, float temperature)
     {
         if (temperature == solution.Temperature)
@@ -851,7 +784,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="owner">The entity in which the solution is located.</param>
     /// <param name="solution">The solution to set the thermal energy of.</param>
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
-    [Obsolete]
     public void SetThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
         var heatCap = solution.GetHeatCapacity(_prototypeManager);
@@ -865,7 +797,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="owner">The entity in which the solution is located.</param>
     /// <param name="solution">The solution to set the thermal energy of.</param>
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
-    [Obsolete]
     public void AddThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
         if (thermalEnergy == 0.0f)
