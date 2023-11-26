@@ -279,7 +279,7 @@ namespace Content.Server.Database
 
         #region Discord
 
-        Task<(bool, DiscordPlayer?)> IsValidateDiscord(Guid playerId);
+        Task<DiscordPlayer?> GetAccountDiscordLink(Guid playerId);
         Task InsertDiscord(DiscordPlayer player);
 
         #endregion
@@ -901,10 +901,10 @@ namespace Content.Server.Database
             return enumerable;
         }
 
-        public Task<(bool, DiscordPlayer?)> IsValidateDiscord(Guid playerId)
+        public Task<DiscordPlayer?> GetAccountDiscordLink(Guid playerId)
         {
             DbReadOpsMetric.Inc();
-            return _db.IsValidateDiscord(playerId);
+            return _db.GetAccountDiscordLink(playerId);
         }
 
         public Task InsertDiscord(DiscordPlayer player)

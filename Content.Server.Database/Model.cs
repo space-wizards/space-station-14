@@ -288,7 +288,7 @@ namespace Content.Server.Database
                 entity.HasIndex(p => p.Id).IsUnique();
                 entity.HasAlternateKey(p => p.SS14Id);
                 entity.Property(p => p.SS14Id).IsUnicode();
-                entity.HasIndex(p => new { p.CKey, p.DiscordId });
+                entity.HasIndex(p => p.DiscordId).IsUnique();
                 entity.Property(p => p.Id).ValueGeneratedOnAdd();
             });
         }
@@ -985,9 +985,7 @@ namespace Content.Server.Database
     {
         public Guid Id { get; set; }
         public Guid SS14Id { get; set; }
-        public string HashKey { get; set; } = null!;
-        public string CKey { get; set; } = null!;
-        public string? DiscordId { get; set; }
-        public string? DiscordName { get; set; }
+        public string HashKey { get; set; } = string.Empty;
+        public ulong? DiscordId { get; set; }
     }
 }

@@ -1,0 +1,16 @@
+<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+<ui:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="Привязка аккаунта"
+    Resizable="False"
+    MinWidth="400"
+    MinHeight="150">
+    <BoxContainer Name="LinkPanel" Visible="True" Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" StyleClasses="BackgroundDark" Margin="8">
+        <Label Text="Ваша командя для привязки аккаунта Discrod:" />
+        <LineEdit Name="LinkText" Editable="False" />
+    </BoxContainer>
+    <BoxContainer Name="LinkAlreadyExistPanel" Visible="False" Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" StyleClasses="BackgroundDark" Margin="8">
+        <Label Text="Ваш аккаунт уже привяза к учётной записи Discord" />
+    </BoxContainer>
+</ui:FancyWindow>
