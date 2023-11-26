@@ -22,13 +22,13 @@
     networkSet: true
     nameSet: true
   - type: SurveillanceCameraMicrophone
+    range: 3
     blacklist:
       components:
         - SurveillanceCamera
         - SurveillanceCameraMonitor
         - RadioSpeaker
   - type: ActiveListener
-    range: 3
   - type: Eye
   - type: WirelessNetworkConnection
     range: 200
