@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;

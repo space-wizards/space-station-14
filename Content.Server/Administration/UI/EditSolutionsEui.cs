@@ -1,7 +1,7 @@
 using Content.Server.Administration.Systems;
 using Content.Server.EUI;
 using Content.Shared.Administration;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 

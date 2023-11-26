@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;

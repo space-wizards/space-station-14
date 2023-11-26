@@ -3,7 +3,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
@@ -11,7 +11,6 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 

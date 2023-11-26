@@ -1,9 +1,8 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Interaction;
 
 namespace Content.Server.Chemistry.EntitySystems;

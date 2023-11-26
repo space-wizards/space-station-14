@@ -3,7 +3,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Events;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -12,8 +12,6 @@ using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Toggleable;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 
 namespace Content.Server.Stunnable.Systems
 {

@@ -2,7 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Database;
 using Content.Shared.Rejuvenate;
 
@@ -13,7 +13,6 @@ namespace Content.Server.Power.EntitySystems;
 /// </summary>
 public sealed class RiggableSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 

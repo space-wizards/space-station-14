@@ -1,6 +1,6 @@
 using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 
 namespace Content.Server.Anomaly.Effects;

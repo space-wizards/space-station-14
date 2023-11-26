@@ -9,7 +9,7 @@ using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Stack;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Destructible;

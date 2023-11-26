@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Payload.Components;

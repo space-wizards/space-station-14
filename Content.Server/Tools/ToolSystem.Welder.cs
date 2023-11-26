@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Tools.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;

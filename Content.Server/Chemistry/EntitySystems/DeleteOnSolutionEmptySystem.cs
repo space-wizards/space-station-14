@@ -1,6 +1,7 @@
 using Content.Server.Chemistry.Components.DeleteOnSolutionEmptyComponent;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Containers.Events;
 
 namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
 {

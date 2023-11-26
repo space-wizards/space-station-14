@@ -7,7 +7,7 @@ using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
@@ -20,7 +20,6 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Containers;
-using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 

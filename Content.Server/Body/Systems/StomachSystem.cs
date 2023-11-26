@@ -1,7 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Shared.Body.Organ;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
 using Robust.Shared.Utility;
 
