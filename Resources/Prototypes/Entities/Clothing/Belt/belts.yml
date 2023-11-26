@@ -406,6 +406,7 @@
 # Belts without visualizers
 
 - type: entity
+  abstract: true
   parent: BaseItem
   id: ClothingBeltBandolier
   name: bandolier
