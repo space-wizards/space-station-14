@@ -40,7 +40,7 @@ public sealed class MindSystem : SharedMindSystem
         if (mind.UserId is {} user)
         {
             UserMinds.Remove(user);
-            if (_players.GetPlayerData(user).ContentData() is { } oldData)
+            if (_players.TryGetPlayerData(user, out var data) && data.ContentData() is { } oldData)
                 oldData.Mind = null;
             mind.UserId = null;
         }
@@ -250,7 +250,7 @@ public sealed class MindSystem : SharedMindSystem
                 ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
                 : Transform(mind.OwnedEntity.Value).MapPosition;
 
-            entity = Spawn("MobObserver", position);
+            entity = Spawn(GameTicker.ObserverPrototypeName, position);
             component = EnsureComp<MindContainerComponent>(entity.Value);
             var ghostComponent = Comp<GhostComponent>(entity.Value);
             _ghosts.SetCanReturnToBody(ghostComponent, false);
