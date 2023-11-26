@@ -9,6 +9,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -22,10 +23,11 @@ namespace Content.Client.UserInterface.Systems.Storage;
 public sealed class StorageUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<StorageSystem>
 {
     [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    public readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
+    private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
     private ItemGridPiece? _draggedPiece;
     private StorageContainer? _container;
 
@@ -95,7 +97,7 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
         if (_container.StorageEntity != uid)
             return;
 
-        _container.BuildItemPieces((uid, component));
+        _container.BuildItemPieces();
     }
 
     public void RegisterStorageContainer(StorageContainer container)
@@ -156,7 +158,16 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
 
         if (_menuDragHelper.Dragged != null)
         {
+            if (_container?.StorageEntity != null && _container?.TryGetDraggedPieceLocation(out var location) == true)
+            {
+                _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
+                    _entity.GetNetEntity(control.Entity),
+                    _entity.GetNetEntity(_container.StorageEntity.Value),
+                    new ItemStorageLocation(Angle.Zero, location.Value)));
+            }
+
             _menuDragHelper.EndDrag();
+            _container?.BuildItemPieces();
         }
         args.Handle();
     }

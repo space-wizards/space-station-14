@@ -101,7 +101,7 @@ public sealed class StorageSystem : SharedStorageSystem
             var entity = GetEntity(msg.StoredEntities[i]);
 
             var initialPosition = msg.EntityPositions[i];
-            if (EntityManager.EntityExists(entity) && transformComp != null)
+            if (Exists(entity) && transformComp != null)
             {
                 _entityPickupAnimation.AnimateEntityPickup(entity, GetCoordinates(initialPosition), transformComp.LocalPosition, msg.EntityAngles[i]);
             }

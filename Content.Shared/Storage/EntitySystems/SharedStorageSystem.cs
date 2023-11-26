@@ -80,6 +80,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
 
         SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
+        SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -88,6 +89,7 @@ public abstract class SharedStorageSystem : EntitySystem
         UpdateAppearance((uid, storageComp, null));
     }
 
+    //todo: this shit doesn't work for multiple clients. FUCK!
     public virtual void UpdateUI(Entity<StorageComponent?> entity) {}
 
     public virtual void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false) { }
@@ -348,6 +350,29 @@ public abstract class SharedStorageSystem : EntitySystem
 
         // Else, interact using the held item
         _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, entity, Transform(entity).Coordinates, checkCanInteract: false);
+    }
+
+    private void OnSetItemLocation(StorageSetItemLocationEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession?.AttachedEntity is not { } player)
+            return;
+
+        var storageEnt = GetEntity(msg.StorageEnt);
+        var itemEnt = GetEntity(msg.ItemEnt);
+
+        if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
+            return;
+
+        if (!Exists(itemEnt))
+        {
+            Log.Error($"Player {args.SenderSession} set location of non-existent item {msg.ItemEnt} stored in {ToPrettyString(storageEnt)}");
+            return;
+        }
+
+        if (!_actionBlockerSystem.CanInteract(player, itemEnt))
+            return;
+
+        TrySetItemStorageLocation((itemEnt, null), (storageEnt, storageComp), msg.Location);
     }
 
     private void OnInsertItemMessage(EntityUid uid, StorageComponent storageComp, StorageComponent.StorageInsertItemMessage args)
@@ -692,6 +717,22 @@ public abstract class SharedStorageSystem : EntitySystem
         return true;
     }
 
+    public bool TrySetItemStorageLocation(Entity<ItemComponent?> itemEnt, Entity<StorageComponent?> storageEnt, ItemStorageLocation location)
+    {
+        if (!Resolve(itemEnt, ref itemEnt.Comp) || !Resolve(storageEnt, ref storageEnt.Comp))
+            return false;
+
+        if (!storageEnt.Comp.Container.ContainedEntities.Contains(itemEnt))
+            return false;
+
+        if (!ItemFitsInGridLocation(itemEnt, storageEnt, location.Position, location.Rotation))
+            return false;
+
+        storageEnt.Comp.StoredItems[GetNetEntity(itemEnt)] = location;
+        Dirty(storageEnt, storageEnt.Comp);
+        return true;
+    }
+
     public bool TryGetAvailableGridSpace(
         Entity<StorageComponent?> storageEnt,
         Entity<ItemComponent?> itemEnt,
@@ -702,26 +743,28 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(storageEnt, ref storageEnt.Comp) || !Resolve(itemEnt, ref itemEnt.Comp))
             return false;
 
-        //todo adjusted shape at some point?
-        var baseItemShape = _item.GetItemShape(itemEnt);
-        var itemBounding = GetBoundingBox(baseItemShape);
         var storageBounding = GetBoundingBox(storageEnt.Comp.StorageGrid);
 
-        //todo this is gonna need to support automatic rotation, theoretically.
-        for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
+        for (var angle = Angle.Zero; angle <= Angle.FromDegrees(360); angle += Angle.FromDegrees(90))
         {
-            if (y + itemBounding.Height > storageBounding.Top)
-                break;
+            var baseItemShape = _item.GetAdjustedItemShape(itemEnt, angle, Vector2i.Zero);
+            var itemBounding = GetBoundingBox(baseItemShape);
 
-            for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
+            for (var y = storageBounding.Bottom; y <= storageBounding.Top; y++)
             {
-                if (x + itemBounding.Width > storageBounding.Right)
+                if (y + itemBounding.Height > storageBounding.Top)
                     break;
 
-                if (ItemFitsInGridLocation(itemEnt, storageEnt, new Vector2i(x, y)))
+                for (var x = storageBounding.Left; x <= storageBounding.Right; x++)
                 {
-                    storageLocation = new ItemStorageLocation(Angle.Zero, (x, y));
-                    return true;
+                    if (x + itemBounding.Width > storageBounding.Right)
+                        break;
+
+                    if (ItemFitsInGridLocation(itemEnt, storageEnt, new Vector2i(x, y), angle))
+                    {
+                        storageLocation = new ItemStorageLocation(angle, (x, y));
+                        return true;
+                    }
                 }
             }
         }
@@ -732,13 +775,13 @@ public abstract class SharedStorageSystem : EntitySystem
     public bool ItemFitsInGridLocation(
         Entity<ItemComponent?> itemEnt,
         Entity<StorageComponent?> storageEnt,
-        Vector2i position)
+        Vector2i position,
+        Angle rotation)
     {
         if (!Resolve(itemEnt, ref itemEnt.Comp))
             return false;
 
-        //todo: euuuuasdghghghghg. This doesn't support the rotation bs.
-        var itemShape = _item.GetItemShape(itemEnt);
+        var itemShape = _item.GetAdjustedItemShape(itemEnt, rotation, position);
 
         foreach (var box in itemShape)
         {
@@ -746,7 +789,7 @@ public abstract class SharedStorageSystem : EntitySystem
             {
                 for (var offsetX = box.Left; offsetX <= box.Right; offsetX++)
                 {
-                    var pos = (position.X + offsetX, position.Y + offsetY);
+                    var pos = (offsetX, offsetY);
 
                     if (!IsGridSpaceEmpty(itemEnt, storageEnt, pos))
                         return false;

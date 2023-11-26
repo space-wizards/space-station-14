@@ -182,13 +182,13 @@ public abstract class SharedItemSystem : EntitySystem
         var adjustedShapes = new List<Box2i>();
         foreach (var shape in shapes)
         {
-            //todo rotation is omegagigafucked. SHIT!
-            /*
-            var matty = Matrix3.CreateTransform(boundingShape.Center, rotation);
-            var box = matty.TransformBox(shape);
-            var flooredBox = new Box2i(box.BottomLeft.Ceiled(), box.TopRight.Ceiled());
-            */
-            adjustedShapes.Add(shape.Translated(position));
+            var rotatedBox = new Box2Rotated(shape, rotation, boundingShape.Center);
+            var box = rotatedBox.CalcBoundingBox();
+            var flooredBox = new Box2i(box.BottomLeft.Floored(), box.TopRight.Floored());
+            var translated = flooredBox.Translated(position);
+
+            var drift = shape.BottomLeft - flooredBox.BottomLeft;
+            adjustedShapes.Add(translated.Translated(drift));
         }
 
         return adjustedShapes;

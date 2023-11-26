@@ -35,7 +35,6 @@ namespace Content.Shared.Storage
         public int MaxTotalWeight;
 
         //todo more doc
-        //todo dear fuck serialization
         //todo this could be a hashset instead of a dict
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public Dictionary<NetEntity, ItemStorageLocation> StoredItems = new();
@@ -131,6 +130,24 @@ namespace Content.Shared.Storage
             StorageUid = storageUid;
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class StorageSetItemLocationEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        public readonly NetEntity StorageEnt;
+
+        public readonly ItemStorageLocation Location;
+
+        public StorageSetItemLocationEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
+            Location = location;
+        }
+    }
+
 
     /// <summary>
     /// Network event for displaying an animation of entities flying into a storage entity

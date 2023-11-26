@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Items.Systems;
 using Content.Client.Storage.Systems;
@@ -202,15 +203,18 @@ public sealed class StorageContainer : BoxContainer
         });
         #endregion
 
-        BuildItemPieces(entity);
+        BuildItemPieces();
     }
 
-    public void BuildItemPieces(Entity<StorageComponent> entity)
+    public void BuildItemPieces()
     {
-        if (!entity.Comp.StorageGrid.Any())
+        if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComp))
             return;
 
-        var boundingGrid = SharedStorageSystem.GetBoundingBox(entity.Comp.StorageGrid);
+        if (!storageComp.StorageGrid.Any())
+            return;
+
+        var boundingGrid = SharedStorageSystem.GetBoundingBox(storageComp.StorageGrid);
         var size = _emptyTexture!.Size * 2;
 
         _pieceGrid.Children.Clear();
@@ -221,7 +225,7 @@ public sealed class StorageContainer : BoxContainer
             for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
             {
                 var currentPosition = new Vector2i(x, y);
-                var item = entity.Comp.StoredItems
+                var item = storageComp.StoredItems
                     .Where(pair => pair.Value.Position == currentPosition)
                     .FirstOrNull();
 
@@ -256,26 +260,12 @@ public sealed class StorageContainer : BoxContainer
     {
         base.FrameUpdate(args);
 
-        Vector2i? draggingOrigin = null;
-
-        foreach (var control in _backgroundGrid.Children)
+        foreach (var child in _backgroundGrid.Children)
         {
-            if (control is not StorageBackgroundCell cell)
-                continue;
-
-            cell.ModulateSelfOverride = Color.Black;
-
-            if (_storageController.CurrentlyDragging is not { } dragging)
-                continue;
-
-            if (cell.SizeBox.Contains(UserInterfaceManager.MousePositionScaled.Position
-                    - cell.GlobalPosition - dragging.GetCenterOffset() * 2f + _emptyTexture!.Size * UIScale / 2))
-            {
-                draggingOrigin = cell.Location;
-            }
+            child.ModulateSelfOverride = Color.FromHex("#222222");
         }
 
-        if (draggingOrigin is not {} origin)
+        if (!TryGetDraggedPieceLocation(out var origin))
             return;
 
         _itemSystem ??= _entity.System<ItemSystem>();
@@ -284,7 +274,7 @@ public sealed class StorageContainer : BoxContainer
         var itemShape = _itemSystem.GetAdjustedItemShape(
             (_storageController.CurrentlyDragging!.Entity, null),
             _storageController.CurrentlyDragging.Location.Rotation,
-            origin);
+            origin.Value);
         var itemBounding = SharedStorageSystem.GetBoundingBox(itemShape);
 
         if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComponent))
@@ -297,7 +287,8 @@ public sealed class StorageContainer : BoxContainer
         var validLocation = _storageSystem.ItemFitsInGridLocation(
             (_storageController.CurrentlyDragging!.Entity, null),
             (StorageEntity.Value, storageComponent),
-            origin);
+            origin.Value,
+            _storageController.CurrentlyDragging!.Location.Rotation);
 
         for (var y = itemBounding.Bottom; y <= itemBounding.Top; y++)
         {
@@ -309,6 +300,28 @@ public sealed class StorageContainer : BoxContainer
                 }
             }
         }
+    }
+
+    public bool TryGetDraggedPieceLocation([NotNullWhen(true)] out Vector2i? location)
+    {
+        foreach (var control in _backgroundGrid.Children)
+        {
+            if (control is not StorageBackgroundCell cell)
+                continue;
+
+            if (_storageController.CurrentlyDragging is not { } dragging)
+                continue;
+
+            if (cell.SizeBox.Contains(UserInterfaceManager.MousePositionScaled.Position
+                    - cell.GlobalPosition - dragging.GetCenterOffset() * 2f + _emptyTexture!.Size * UIScale / 2))
+            {
+                location = cell.Location;
+                return true;
+            }
+        }
+
+        location = null;
+        return false;
     }
 
     public StorageBackgroundCell? GetBackgroundCell(int x, int y)
