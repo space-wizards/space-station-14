@@ -1,5 +1,5 @@
 using Content.Server.Body.Systems;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Solutions;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.Humanoid;

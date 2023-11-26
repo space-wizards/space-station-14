@@ -13,7 +13,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Traits.Assorted;
 using Content.Shared.Atmos;
 using Content.Shared.CCVar;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Solutions;
 using Content.Shared.Cloning;
 using Content.Shared.Damage;
 using Content.Shared.DeviceLinking.Events;

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using Content.Shared.Chemistry.Solutions;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;

@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DragDrop;
-using Content.Shared.Fluids.Components;
 
 namespace Content.Shared.Fluids;
 

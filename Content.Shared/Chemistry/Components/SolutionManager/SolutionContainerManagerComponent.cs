@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Solutions;
 
 namespace Content.Shared.Chemistry.Components.SolutionManager;
 

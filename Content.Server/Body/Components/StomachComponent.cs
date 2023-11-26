@@ -1,8 +1,6 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Body.Components

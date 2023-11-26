@@ -1,6 +1,6 @@
-﻿using Content.Shared.DoAfter;
+﻿using Content.Shared.Chemistry.Solutions;
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
-using Content.Shared.Chemistry.Components;
 
 namespace Content.Shared.Nutrition;
 

@@ -1,7 +1,7 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Solutions;
 
 namespace Content.Server.Body.Components;
 
