@@ -21,7 +21,7 @@
       collection: ToyFall
   - type: ItemCooldown
   - type: UseDelay
-    delay: 1.0
+    delay: 0.75
   - type: MeleeWeapon
     soundHit:
       collection: ToySqueak
