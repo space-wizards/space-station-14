@@ -1,6 +1,8 @@
 using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Solutions;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
@@ -8,42 +10,6 @@ namespace Content.Shared.Chemistry.Containers.EntitySystems;
 
 public sealed partial class SolutionContainerSystem
 {
-    public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
-        RefillableSolutionComponent? refillableSolution = null)
-    {
-        if (!Resolve(targetUid, ref refillableSolution, false))
-            return;
-
-        _solutionSystem.TryAddSolution(targetUid, targetSolution, addedSolution);
-    }
-
-    public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
-        InjectableSolutionComponent? injectableSolution = null)
-    {
-        if (!Resolve(targetUid, ref injectableSolution, false))
-            return;
-
-        _solutionSystem.TryAddSolution(targetUid, targetSolution, addedSolution);
-    }
-
-    public Solution Draw(EntityUid targetUid, Solution solution, FixedPoint2 amount,
-        DrawableSolutionComponent? drawableSolution = null)
-    {
-        if (!Resolve(targetUid, ref drawableSolution, false))
-            return new Solution();
-
-        return _solutionSystem.SplitSolution(targetUid, solution, amount);
-    }
-
-    public Solution Drain(EntityUid targetUid, Solution targetSolution, FixedPoint2 amount,
-        DrainableSolutionComponent? drainableSolution = null)
-    {
-        if (!Resolve(targetUid, ref drainableSolution, false))
-            return new Solution();
-
-        return _solutionSystem.SplitSolution(targetUid, targetSolution, amount);
-    }
-
     public bool TryGetInjectableSolution(EntityUid targetUid,
         [NotNullWhen(true)] out Solution? solution,
         InjectableSolutionComponent? injectable = null,
@@ -121,6 +87,89 @@ public sealed partial class SolutionContainerSystem
         return true;
     }
 
+    public bool TryGetFitsInDispenser(EntityUid owner,
+        [NotNullWhen(true)] out Solution? solution,
+        FitsInDispenserComponent? dispenserFits = null,
+        SolutionContainerManagerComponent? solutionManager = null)
+    {
+        if (!Resolve(owner, ref dispenserFits, ref solutionManager, false)
+            || !TryGetSolution(owner, dispenserFits.Solution, out solution, solutionManager))
+        {
+            solution = null;
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool TryGetMixableSolution(EntityUid uid,
+        [NotNullWhen(true)] out Solution? solution,
+        SolutionContainerManagerComponent? solutionsMgr = null)
+    {
+
+        if (!Resolve(uid, ref solutionsMgr, false))
+        {
+            solution = null;
+            return false;
+        }
+
+        var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(uid);
+        RaiseLocalEvent(uid, ref getMixableSolutionAttempt);
+        if (getMixableSolutionAttempt.MixedSolution != null)
+        {
+            solution = getMixableSolutionAttempt.MixedSolution;
+            return true;
+        }
+
+        var tryGetSolution = EnumerateSolutions((uid, solutionsMgr)).FirstOrNull(x => x.Solution.CanMix);
+        if (tryGetSolution.HasValue)
+        {
+            solution = tryGetSolution.Value.Solution;
+            return true;
+        }
+
+        solution = null;
+        return false;
+    }
+
+
+    public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
+        RefillableSolutionComponent? refillableSolution = null)
+    {
+        if (!Resolve(targetUid, ref refillableSolution, false))
+            return;
+
+        _solutionSystem.TryAddSolution(targetUid, targetSolution, addedSolution);
+    }
+
+    public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
+        InjectableSolutionComponent? injectableSolution = null)
+    {
+        if (!Resolve(targetUid, ref injectableSolution, false))
+            return;
+
+        _solutionSystem.TryAddSolution(targetUid, targetSolution, addedSolution);
+    }
+
+    public Solution Draw(EntityUid targetUid, Solution solution, FixedPoint2 amount,
+        DrawableSolutionComponent? drawableSolution = null)
+    {
+        if (!Resolve(targetUid, ref drawableSolution, false))
+            return new Solution();
+
+        return _solutionSystem.SplitSolution(targetUid, solution, amount);
+    }
+
+    public Solution Drain(EntityUid targetUid, Solution targetSolution, FixedPoint2 amount,
+        DrainableSolutionComponent? drainableSolution = null)
+    {
+        if (!Resolve(targetUid, ref drainableSolution, false))
+            return new Solution();
+
+        return _solutionSystem.SplitSolution(targetUid, targetSolution, amount);
+    }
+
+
     public FixedPoint2 DrainAvailable(EntityUid uid)
     {
         return !TryGetDrainableSolution(uid, out var solution)
@@ -136,20 +185,6 @@ public sealed partial class SolutionContainerSystem
         return solution.FillFraction * 100;
     }
 
-    public bool TryGetFitsInDispenser(EntityUid owner,
-        [NotNullWhen(true)] out Solution? solution,
-        FitsInDispenserComponent? dispenserFits = null,
-        SolutionContainerManagerComponent? solutionManager = null)
-    {
-        if (!Resolve(owner, ref dispenserFits, ref solutionManager, false)
-            || !TryGetSolution(owner, dispenserFits.Solution, out solution, solutionManager))
-        {
-            solution = null;
-            return false;
-        }
-
-        return true;
-    }
 
     public static string ToPrettyString(Solution solution)
     {

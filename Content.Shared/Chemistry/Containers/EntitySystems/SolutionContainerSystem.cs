@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
@@ -20,10 +19,6 @@ namespace Content.Shared.Chemistry.Containers.EntitySystems;
 [UsedImplicitly]
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
-    [Dependency] private readonly ChemicalReactionSystem _chemistrySystem = default!;
-
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SolutionSystem _solutionSystem = default!;
@@ -150,36 +145,6 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         return reagentQuantity;
-    }
-
-    public bool TryGetMixableSolution(EntityUid uid,
-        [NotNullWhen(true)] out Solution? solution,
-        SolutionContainerManagerComponent? solutionsMgr = null)
-    {
-
-        if (!Resolve(uid, ref solutionsMgr, false))
-        {
-            solution = null;
-            return false;
-        }
-
-        var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(uid);
-        RaiseLocalEvent(uid, ref getMixableSolutionAttempt);
-        if (getMixableSolutionAttempt.MixedSolution != null)
-        {
-            solution = getMixableSolutionAttempt.MixedSolution;
-            return true;
-        }
-
-        var tryGetSolution = EnumerateSolutions((uid, solutionsMgr)).FirstOrNull(x => x.Solution.CanMix);
-        if (tryGetSolution.HasValue)
-        {
-            solution = tryGetSolution.Value.Solution;
-            return true;
-        }
-
-        solution = null;
-        return false;
     }
 
     #region Event Handlers
