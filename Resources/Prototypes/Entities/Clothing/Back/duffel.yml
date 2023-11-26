@@ -9,6 +9,8 @@
   - type: Storage
     maxItemSize: Huge
     maxTotalWeight: 40
+    storageGrid:
+    - 0,0,9,4
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
@@ -231,7 +233,8 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 200 #5 duffels worth of gear
+    storageGrid:
+    - 0,0,19,9
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
 

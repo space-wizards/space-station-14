@@ -5,6 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -118,12 +119,16 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageInteractWithItemEvent : BoundUserInterfaceMessage
+    public sealed class StorageInteractWithItemEvent : EntityEventArgs
     {
-        public readonly NetEntity InteractedItemUID;
-        public StorageInteractWithItemEvent(NetEntity interactedItemUID)
+        public readonly NetEntity InteractedItemUid;
+
+        public readonly NetEntity StorageUid;
+
+        public StorageInteractWithItemEvent(NetEntity interactedItemUid, NetEntity storageUid)
         {
-            InteractedItemUID = interactedItemUID;
+            InteractedItemUid = interactedItemUid;
+            StorageUid = storageUid;
         }
     }
 

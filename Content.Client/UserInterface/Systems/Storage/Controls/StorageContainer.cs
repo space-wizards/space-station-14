@@ -8,6 +8,7 @@ using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
@@ -15,6 +16,7 @@ namespace Content.Client.UserInterface.Systems.Storage.Controls;
 public sealed class StorageContainer : BoxContainer
 {
     [Dependency] private readonly IEntityManager _entity = default!;
+    private readonly StorageUIController _storageController;
     private ItemSystem? _itemSystem;
     private StorageSystem? _storageSystem;
 
@@ -28,31 +30,26 @@ public sealed class StorageContainer : BoxContainer
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPiecePressed;
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPieceUnpressed;
 
-    //todo support reloading
-    private Texture? _emptyTexture;
-    private Texture? _blockedTexture;
-    private Texture? _exitTexture;
-    private Texture? _sidebarTopTexture;
-    private Texture? _sidebarMiddleTexture;
-    private Texture? _sidebarBottomTexture;
-
     private readonly string _emptyTexturePath = "Storage/tile_empty";
+    private Texture? _emptyTexture;
     private readonly string _blockedTexturePath = "Storage/tile_blocked";
+    private Texture? _blockedTexture;
     private readonly string _exitTexturePath = "Storage/exit";
+    private Texture? _exitTexture;
     private readonly string _sidebarTopTexturePath = "Storage/sidebar_top";
+    private Texture? _sidebarTopTexture;
     private readonly string _sidebarMiddleTexturePath = "Storage/sidebar_mid";
+    private Texture? _sidebarMiddleTexture;
     private readonly string _sidebarBottomTexturePath = "Storage/sidebar_bottom";
+    private Texture? _sidebarBottomTexture;
 
     public StorageContainer()
     {
         IoCManager.InjectDependencies(this);
 
-        _emptyTexture = Theme.ResolveTextureOrNull(_emptyTexturePath)?.Texture;
-        _blockedTexture = Theme.ResolveTextureOrNull(_blockedTexturePath)?.Texture;
-        _exitTexture = Theme.ResolveTextureOrNull(_exitTexturePath)?.Texture;
-        _sidebarTopTexture = Theme.ResolveTextureOrNull(_sidebarTopTexturePath)?.Texture;
-        _sidebarMiddleTexture = Theme.ResolveTextureOrNull(_sidebarMiddleTexturePath)?.Texture;
-        _sidebarBottomTexture = Theme.ResolveTextureOrNull(_sidebarBottomTexturePath)?.Texture;
+        _storageController = UserInterfaceManager.GetUIController<StorageUIController>();
+
+        OnThemeUpdated();
 
         _nameLabel = new Label
         {
@@ -108,6 +105,18 @@ public sealed class StorageContainer : BoxContainer
         AddChild(container);
     }
 
+    protected override void OnThemeUpdated()
+    {
+        base.OnThemeUpdated();
+
+        _emptyTexture = Theme.ResolveTextureOrNull(_emptyTexturePath)?.Texture;
+        _blockedTexture = Theme.ResolveTextureOrNull(_blockedTexturePath)?.Texture;
+        _exitTexture = Theme.ResolveTextureOrNull(_exitTexturePath)?.Texture;
+        _sidebarTopTexture = Theme.ResolveTextureOrNull(_sidebarTopTexturePath)?.Texture;
+        _sidebarMiddleTexture = Theme.ResolveTextureOrNull(_sidebarMiddleTexturePath)?.Texture;
+        _sidebarBottomTexture = Theme.ResolveTextureOrNull(_sidebarBottomTexturePath)?.Texture;
+    }
+
     public void UpdateContainer(Entity<StorageComponent>? entity)
     {
         Visible = entity != null;
@@ -140,7 +149,7 @@ public sealed class StorageContainer : BoxContainer
                     ? _emptyTexture
                     : _blockedTexture;
 
-                _backgroundGrid.AddChild(new TextureRect
+                _backgroundGrid.AddChild(new StorageBackgroundCell(new Vector2i(x, y))
                 {
                     Texture = texture,
                     TextureScale = new Vector2(2, 2)
@@ -240,6 +249,41 @@ public sealed class StorageContainer : BoxContainer
 
                 _pieceGrid.AddChild(control);
             }
+        }
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        if (!_storageController.IsDragging || _storageController.CurrentlyDragging is not { } dragging)
+            return;
+
+        //todo: make this sophisticated....
+        foreach (var backgroundCell in _backgroundGrid.Children)
+        {
+            if (backgroundCell.)
+        }
+
+        if (UserInterfaceManager.CurrentlyHovered is StorageBackgroundCell)
+        {
+            Logger.Debug("YIPPEE");
+        }
+        else
+        {
+            Logger.Debug("ech");
+        }
+        dragging.GetCenterOffset();
+    }
+
+    public sealed class StorageBackgroundCell : TextureRect
+    {
+        public readonly Vector2i Location;
+
+        public StorageBackgroundCell(Vector2i location)
+        {
+            Location = location;
+            MouseFilter = MouseFilterMode.Pass;
         }
     }
 }

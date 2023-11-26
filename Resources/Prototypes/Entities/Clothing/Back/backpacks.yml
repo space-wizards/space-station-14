@@ -266,7 +266,8 @@
     size: Ginormous
   - type: Storage
     maxItemSize: Huge
-    maxTotalWeight: 200 #5 duffels worth of gear
+    storageGrid:
+    - 0,0,19,9
 
 - type: entity
   parent: ClothingBackpackClown

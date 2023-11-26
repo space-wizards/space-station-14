@@ -50,7 +50,7 @@ namespace Content.Client.Storage
 
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                SendPredictedMessage(new StorageInteractWithItemEvent(_entManager.GetNetEntity(entity)));
+                //SendPredictedMessage(new StorageInteractWithItemEvent(_entManager.GetNetEntity(entity)));
             }
             else if (EntMan.EntityExists(entity))
             {

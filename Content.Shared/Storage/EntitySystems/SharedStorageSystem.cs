@@ -79,7 +79,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
 
-        SubscribeLocalEvent<StorageComponent, StorageInteractWithItemEvent>(OnInteractWithItem);
+        SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -311,16 +311,20 @@ public abstract class SharedStorageSystem : EntitySystem
     ///     item in the user's hand if it is currently empty, or interact with the item using the user's currently
     ///     held item.
     /// </summary>
-    private void OnInteractWithItem(EntityUid uid, StorageComponent storageComp, StorageInteractWithItemEvent args)
+    private void OnInteractWithItem(StorageInteractWithItemEvent msg, EntitySessionEventArgs args)
     {
-        if (args.Session.AttachedEntity is not { } player)
+        if (args.SenderSession?.AttachedEntity is not { } player)
             return;
 
-        var entity = GetEntity(args.InteractedItemUID);
+        var uid = GetEntity(msg.StorageUid);
+        var entity = GetEntity(msg.InteractedItemUid);
+
+        if (!TryComp<StorageComponent>(uid, out var storageComp))
+            return;
 
         if (!Exists(entity))
         {
-            Log.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
+            Log.Error($"Player {args.SenderSession} interacted with non-existent item {msg.InteractedItemUid} stored in {ToPrettyString(uid)}");
             return;
         }
 
@@ -767,10 +771,15 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!validGrid)
             return false;
 
-        foreach (var (ent, storedItem) in entity.Comp.StoredItems)
+        foreach (var (netEnt, storedItem) in entity.Comp.StoredItems)
         {
+            var ent = GetEntity(netEnt);
+
+            if (ent == entity.Owner)
+                continue;
+
             //todo add a fucking trycomp for itemcomponent you stingy bitch
-            var adjustedShape = _item.GetAdjustedItemShape((GetEntity(ent), null), storedItem);
+            var adjustedShape = _item.GetAdjustedItemShape((ent, null), storedItem);
             foreach (var box in adjustedShape)
             {
                 if (box.Contains(location))

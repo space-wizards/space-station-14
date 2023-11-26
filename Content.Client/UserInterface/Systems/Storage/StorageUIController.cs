@@ -1,9 +1,12 @@
-using System.Numerics;
+using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Interaction;
 using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Storage.Controls;
+using Content.Client.Verbs.UI;
+using Content.Shared.Input;
+using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Storage;
 using Robust.Client.Input;
@@ -22,11 +25,14 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
+    public readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
     private ItemGridPiece? _draggedPiece;
     private StorageContainer? _container;
 
     private HotbarGui? Hotbar => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
+
+    public bool IsDragging => _menuDragHelper.IsDragging;
+    public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
 
     public StorageUIController()
     {
@@ -110,8 +116,36 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
         if (args.Function == EngineKeyFunctions.UIClick)
         {
             _menuDragHelper.MouseDown(control);
+            _menuDragHelper.Update(0f);
 
             args.Handle();
+        }
+        else if (args.Function == EngineKeyFunctions.UIRightClick &&
+                 _container?.StorageEntity != null &&
+                 _player.LocalEntity.HasValue)
+        {
+            _entity.RaisePredictiveEvent(new StorageInteractWithItemEvent(
+                _entity.GetNetEntity(control.Entity),
+                _entity.GetNetEntity(_container.StorageEntity.Value)));
+            args.Handle();
+        }
+        else if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
+            _entity.System<ExamineSystem>()
+                .DoExamine(control.Entity);
+        }
+        else if (args.Function == EngineKeyFunctions.UseSecondary)
+        {
+            UIManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(control.Entity);
+        }
+        else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
+        {
+            _entity.EntityNetManager?.SendSystemNetworkMessage(
+                new InteractInventorySlotEvent(_entity.GetNetEntity(control.Entity), altInteract: false));
+        }
+        else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+        {
+            _entity.RaisePredictiveEvent(new InteractInventorySlotEvent(_entity.GetNetEntity(control.Entity), altInteract: true));
         }
     }
 
@@ -140,16 +174,17 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
         _draggedPiece.Orphan();
 
         UIManager.PopupRoot.AddChild(_draggedPiece);
-        LayoutContainer.SetPosition(_draggedPiece, (UIManager.MousePositionScaled.Position / 2) - _draggedPiece.GetCenterOffset());
+        LayoutContainer.SetPosition(_draggedPiece, UIManager.MousePositionScaled.Position / 2 - _draggedPiece.GetCenterOffset());
         return true;
     }
 
-    private bool OnMenuContinueDrag(float frametime)
+    private bool OnMenuContinueDrag(float frameTime)
     {
         if (_draggedPiece == null)
             return false;
 
-        LayoutContainer.SetPosition(_draggedPiece, (UIManager.MousePositionScaled.Position / 2) - _draggedPiece.GetCenterOffset());
+        // I don't know why it divides the position by 2. Hope this helps! -emo
+        LayoutContainer.SetPosition(_draggedPiece, UIManager.MousePositionScaled.Position / 2 - _draggedPiece.GetCenterOffset());
         return true;
     }
 
