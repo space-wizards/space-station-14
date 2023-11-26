@@ -49,7 +49,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
         if (!Resolve(source, ref spikableSource, ref managerSource, false)
             || !Resolve(target, ref spikableTarget, ref managerTarget, false)
             || !_solutionContainerSystem.TryGetRefillableSolution(target, out var targetSolution, managerTarget, spikableTarget)
-            || !managerSource.Solutions.TryGetValue(spikableSource.SourceSolution, out var sourceSolution))
+            || !_solutionContainerSystem.TryGetSolution(source, spikableSource.SourceSolution, out var sourceSolution, managerSource))
         {
             return;
         }

@@ -6,6 +6,7 @@ using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
@@ -61,6 +62,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {
@@ -249,12 +251,18 @@ namespace Content.Server.Explosion.EntitySystems
                     TryComp(container.ContainedEntities[0], out ChemicalPayloadComponent? chemicalPayloadComponent))
                 {
                     // If a beaker is missing, the entity won't explode, so no reason to log it
-                    if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||
-                        !TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
+                    if (chemicalPayloadComponent?.BeakerSlotA.Item is not { } beakerA ||
+                        chemicalPayloadComponent?.BeakerSlotB.Item is not { } beakerB ||
+                        !TryComp(beakerA, out SolutionContainerManagerComponent? containerA) ||
+                        !TryComp(beakerB, out SolutionContainerManagerComponent? containerB) ||
+                        !TryComp(beakerA, out FitsInDispenserComponent? fitsA) ||
+                        !TryComp(beakerB, out FitsInDispenserComponent? fitsB) ||
+                        !_solutionContainerSystem.TryGetSolution(beakerA, fitsA.Solution, out var solutionA, containerA) ||
+                        !_solutionContainerSystem.TryGetSolution(beakerB, fitsB.Solution, out var solutionB, containerB))
                         return;
 
                     _adminLogger.Add(LogType.Trigger,
-                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains {SolutionContainerSystem.ToPrettyString(solutionA)} in one beaker and {SolutionContainerSystem.ToPrettyString(solutionB)} in the other.");
                 }
                 else
                 {

@@ -86,7 +86,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (component.OutputSolution.Contents.Any())
         {
             if (TryComp<SolutionContainerManagerComponent>(args.Used, out var managerComponent) &&
-                managerComponent.Solutions.Any(s => s.Value.AvailableVolume > 0))
+                _solutionContainer.EnumerateSolutions((args.Used, managerComponent)).Any(s => s.Solution.AvailableVolume > 0))
             {
                 if (_openable.IsClosed(args.Used))
                     return;
@@ -243,7 +243,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         // if the item we inserted has reagents, add it in.
         if (TryComp<SolutionContainerManagerComponent>(item, out var solutionContainer))
         {
-            foreach (var solution in solutionContainer.Solutions.Values)
+            foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((item, solutionContainer)))
             {
                 foreach (var quantity in solution.Contents)
                 {

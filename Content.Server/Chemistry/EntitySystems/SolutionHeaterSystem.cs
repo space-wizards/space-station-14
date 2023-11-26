@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Placeable;
 
@@ -13,6 +14,7 @@ public sealed class SolutionHeaterSystem : EntitySystem
 {
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SolutionSystem _solution = default!;
 
     /// <inheritdoc/>
@@ -101,7 +103,7 @@ public sealed class SolutionHeaterSystem : EntitySystem
                     continue;
 
                 var energy = heater.HeatPerSecond * frameTime;
-                foreach (var s in solution.Solutions.Values)
+                foreach (var (_, s) in _solutionContainer.EnumerateSolutions((heatingEntity, solution)))
                 {
                     _solution.AddThermalEnergy(heatingEntity, s, energy);
                 }

@@ -46,7 +46,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
 
-            foreach (var value in contents.Solutions.Values)
+            foreach (var (_, value) in _solutionContainerSystem.EnumerateSolutions((uid, contents)))
             {
                 _reactive.DoEntityReaction(args.OtherEntity, value, ReactionMethod.Touch);
             }
@@ -99,7 +99,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var vaporComp, out var solution, out var xform))
             {
-                foreach (var (_, value) in solution.Solutions)
+                foreach (var (_, value) in _solutionContainerSystem.EnumerateSolutions((uid, solution)))
                 {
                     Update(frameTime, (uid, vaporComp), value, xform);
                 }

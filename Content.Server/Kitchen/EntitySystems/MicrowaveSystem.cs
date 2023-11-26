@@ -12,6 +12,7 @@ using Content.Server.Temperature.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Construction.EntitySystems;
@@ -44,6 +45,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly SolutionSystem _solution = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly TemperatureSystem _temperature = default!;
@@ -110,7 +112,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                     continue;
-                foreach (var (_, solution) in solutions.Solutions)
+                foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((entity, solutions)))
                 {
                     if (solution.Temperature > component.TemperatureUpperThreshold)
                         continue;
@@ -133,7 +135,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     continue;
 
                 // go over every solution
-                foreach (var (_, solution) in solMan.Solutions)
+                foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((item, solMan)))
                 {
                     foreach (var (reagent, _) in recipe.IngredientsReagents)
                     {
@@ -390,7 +392,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
                     continue;
 
-                foreach (var (_, solution) in solMan.Solutions)
+                foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((item, solMan)))
                 {
                     foreach (var (reagent, quantity) in solution.Contents)
                     {

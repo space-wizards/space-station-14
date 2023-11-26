@@ -86,9 +86,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Solution, out var pipeSolution))
                 return false;
 
-            foreach (var reagentSolution in reagents.Solutions)
+            foreach (var (_, reagentSolution) in _solutionContainerSystem.EnumerateSolutions((contents, reagents)))
             {
-                _solutionSystem.TryAddSolution(smokable.Owner, pipeSolution, reagentSolution.Value);
+                _solutionSystem.TryAddSolution(smokable.Owner, pipeSolution, reagentSolution);
             }
 
             EntityManager.DeleteEntity(contents);

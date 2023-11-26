@@ -51,7 +51,7 @@ public sealed partial class SolutionContainerSystem
     )
     {
         if (!Resolve(targetUid, ref manager, ref injectable, false)
-            || !manager.Solutions.TryGetValue(injectable.Solution, out solution))
+            || !TryGetSolution(targetUid, injectable.Solution, out solution, manager))
         {
             solution = null;
             return false;
@@ -66,7 +66,7 @@ public sealed partial class SolutionContainerSystem
         RefillableSolutionComponent? refillable = null)
     {
         if (!Resolve(targetUid, ref solutionManager, ref refillable, false)
-            || !solutionManager.Solutions.TryGetValue(refillable.Solution, out var refillableSolution))
+            || !TryGetSolution(targetUid, refillable.Solution, out var refillableSolution, solutionManager))
         {
             solution = null;
             return false;
@@ -82,7 +82,7 @@ public sealed partial class SolutionContainerSystem
         SolutionContainerManagerComponent? manager = null)
     {
         if (!Resolve(uid, ref drainable, ref manager, false)
-            || !manager.Solutions.TryGetValue(drainable.Solution, out solution))
+            || !TryGetSolution(uid, drainable.Solution, out solution, manager))
         {
             solution = null;
             return false;
@@ -97,7 +97,7 @@ public sealed partial class SolutionContainerSystem
         SolutionContainerManagerComponent? manager = null)
     {
         if (!Resolve(uid, ref dumpable, ref manager, false)
-            || !manager.Solutions.TryGetValue(dumpable.Solution, out solution))
+            || !TryGetSolution(uid, dumpable.Solution, out solution, manager))
         {
             solution = null;
             return false;
@@ -112,7 +112,7 @@ public sealed partial class SolutionContainerSystem
         SolutionContainerManagerComponent? manager = null)
     {
         if (!Resolve(uid, ref drawable, ref manager, false)
-            || !manager.Solutions.TryGetValue(drawable.Solution, out solution))
+            || !TryGetSolution(uid, drawable.Solution, out solution, manager))
         {
             solution = null;
             return false;
@@ -142,7 +142,7 @@ public sealed partial class SolutionContainerSystem
         SolutionContainerManagerComponent? solutionManager = null)
     {
         if (!Resolve(owner, ref dispenserFits, ref solutionManager, false)
-            || !solutionManager.Solutions.TryGetValue(dispenserFits.Solution, out solution))
+            || !TryGetSolution(owner, dispenserFits.Solution, out solution, solutionManager))
         {
             solution = null;
             return false;

@@ -5,6 +5,7 @@ using Content.Server.Cargo.Components;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
@@ -30,6 +31,7 @@ public sealed class PricingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -110,7 +112,7 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        foreach (var solution in component.Solutions.Values)
+        foreach (var (_, solution) in _solutionContainerSystem.EnumerateSolutions(component))
         {
             foreach (var (reagent, quantity) in solution.Contents)
             {

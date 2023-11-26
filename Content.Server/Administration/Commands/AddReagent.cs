@@ -1,10 +1,12 @@
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Administration.Commands
 {
@@ -41,13 +43,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!man.Solutions.ContainsKey(args[1]))
+            var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
+            if (!solutionContainerSystem.TryGetSolution(uid, args[1], out var solution, man))
             {
-                var validSolutions = string.Join(", ", man.Solutions.Keys);
+                var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
                 return;
             }
-            var solution = man.Solutions[args[1]];
 
             if (!_protomanager.HasIndex<ReagentPrototype>(args[2]))
             {
