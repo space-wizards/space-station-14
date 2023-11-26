@@ -12,10 +12,6 @@ namespace Content.Server.Traitor.Uplink.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddUplinkCommand : IConsoleCommand
     {
-        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
         public string Command => "adduplink";
 
         public string Description => Loc.GetString("add-uplink-command-description");
@@ -45,7 +41,7 @@ namespace Content.Server.Traitor.Uplink.Commands
             if (args.Length > 0)
             {
                 // Get player entity
-                if (!_playerManager.TryGetSessionByUsername(args[0], out session))
+                if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(args[0], out session))
                 {
                     shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
                     return;
@@ -64,6 +60,7 @@ namespace Content.Server.Traitor.Uplink.Commands
 
             // Get target item
             EntityUid? uplinkEntity = null;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             if (args.Length >= 2)
             {
                 if (!int.TryParse(args[1], out var itemID))
@@ -72,9 +69,8 @@ namespace Content.Server.Traitor.Uplink.Commands
                     return;
                 }
 
-                var eNet = new NetEntity(itemID);
-
-                if (!_entManager.TryGetEntity(eNet, out var eUid))
+                var eUid = new EntityUid(itemID);
+                if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
                 {
                     shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                     return;
@@ -84,10 +80,11 @@ namespace Content.Server.Traitor.Uplink.Commands
             }
 
             // Get TC count
-            var tcCount = _cfgManager.GetCVar(CCVars.TraitorStartingBalance);
-            Logger.Debug(_entManager.ToPrettyString(user));
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            var tcCount = configManager.GetCVar(CCVars.TraitorStartingBalance);
+            Logger.Debug(entityManager.ToPrettyString(user));
             // Finally add uplink
-            var uplinkSys = _entManager.System<UplinkSystem>();
+            var uplinkSys = entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>();
             if (!uplinkSys.AddUplink(user, FixedPoint2.New(tcCount), uplinkEntity: uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));

@@ -11,7 +11,6 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     sealed class SetMindCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public string Command => "setmind";
 
@@ -27,7 +26,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!int.TryParse(args[0], out var entInt))
+            if (!int.TryParse(args[0], out var entityUid))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
@@ -39,15 +38,17 @@ namespace Content.Server.Administration.Commands
                 ghostOverride = bool.Parse(args[2]);
             }
 
-            var nent = new NetEntity(entInt);
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!_entManager.TryGetEntity(nent, out var eUid))
+            var eUid = new EntityUid(entityUid);
+
+            if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            if (!_entManager.HasComponent<MindContainerComponent>(eUid))
+            if (!entityManager.HasComponent<MindContainerComponent>(eUid))
             {
                 shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
                 return;
@@ -67,8 +68,8 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mindSystem = _entManager.System<SharedMindSystem>();
-            var metadata = _entManager.GetComponent<MetaDataComponent>(eUid.Value);
+            var mindSystem = entityManager.System<SharedMindSystem>();
+            var metadata = entityManager.GetComponent<MetaDataComponent>(eUid);
 
             var mind = playerCData.Mind ?? mindSystem.CreateMind(session.UserId, metadata.EntityName);
 
