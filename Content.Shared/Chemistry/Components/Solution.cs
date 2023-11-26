@@ -14,6 +14,7 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
+    [Obsolete]
     public sealed partial class Solution : IEnumerable<ReagentQuantity>, ISerializationHooks
     {
         // This is a list because it is actually faster to add and remove reagents from
