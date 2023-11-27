@@ -1,4 +1,4 @@
-﻿Name: Admin
+Name: Admin
 AdminOnly: true
 Order: 1
 Entries:
@@ -66,3 +66,7 @@ Entries:
   - {message: 'AME and PA make a sound effect when they are being overloaded. Similar to being sent a fax.', type: Add}
   id: 10
   time: '2023-11-07T15:03:00.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+    - {message: 'The respawn verb now respawns the targeted player instead of the admin', type: Fix}
+  time: '2023-11-22T16:39:00.0000000+00:00'
