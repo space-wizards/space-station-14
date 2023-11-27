@@ -1,15 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: 'Added ears to monkeys, also Pun Pun starts with a service headset',
-    type: Add}
-  id: 4706
-  time: '2023-08-30T06:07:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix trading post not spawning., type: Fix}
-  id: 4707
-  time: '2023-08-30T11:02:58.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Slightly improved the steel monotile sprites., type: Tweak}
@@ -2903,3 +2892,14 @@ Entries:
   - {message: Refrigerators are now nearly immune to explosions and even nukes., type: Tweak}
   id: 5205
   time: '2023-11-27T21:24:43.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Moth accent added! Buzzz!!!, type: Add}
+  id: 5206
+  time: '2023-11-27T21:28:43.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: The Captain's Carapace no longer has a 10% movement speed penalty.,
+    type: Tweak}
+  id: 5207
+  time: '2023-11-27T21:29:30.0000000+00:00'
