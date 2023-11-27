@@ -61,3 +61,36 @@
     solution: tank
   - type: ExaminableSolution
     solution: tank
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpack
+  id: ClothingSatchelSmugglerAbstract
+  name: Smuggling Satchel
+  description: Smuggling Satchel Abstract
+  components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Storage
+    maxItemSize: Large
+    maxTotalWeight: 14
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel.rsi
+    drawdepth: ThinPipe
+    visible: false
+  - type: SubFloorHide
+  - type: Anchorable
+  - type: Appearance
+
+- type: entity
+  parent: ClothingSatchelSmugglerAbstract
+  id: ClothingSatchelSmuggler
+  name: Smuggling Satchel
+  description: A trendy looking satchel, modified to fit under floor tiles.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+  - type: Construction
+    graph: smugglersbag
+    node: smugglersbag

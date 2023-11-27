@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: SmugglersBag
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: smugglersbag
+      steps:
+      - material: Cloth
+        amount: 10
+      - material: Cable
+        amount: 5
+  - node: smugglersbag
+    entity: ClothingSatchelSmuggler
