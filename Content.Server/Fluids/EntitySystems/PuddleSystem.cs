@@ -30,6 +30,11 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Maps;
+using Content.Shared.Effects;
+using Robust.Server.Audio;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -446,8 +451,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return true;
         }
 
-        SoundSystem.Play(puddleComponent.SpillSound.GetSound(),
-            Filter.Pvs(puddleUid), puddleUid);
+        _audio.PlayPvs(puddleComponent.SpillSound, puddleUid);
         return true;
     }
 

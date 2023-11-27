@@ -20,6 +20,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -36,6 +37,8 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [UISystemDependency] private readonly SharedAudioSystem _audio = default!;
+
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     private AudioParams _AHelpParams = new();
     private bool _AHelpSoundsEnabled = true;
@@ -150,7 +153,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
              || (UIHelper!.IsAdmin && !message.IsSenderAdmin) // SS220
              || (!UIHelper!.IsAdmin))) // SS220
         {
-            SoundSystem.Play("/Audio/SS220/Admin_sounds/ahelp_sound.ogg", Filter.Local(), _AHelpParams);
+            _audio.PlayGlobal("/Audio/SS220/Admin_sounds/ahelp_sound.ogg", Filter.Local(), false, _AHelpParams);
             _clyde.RequestWindowAttention();
         }
 

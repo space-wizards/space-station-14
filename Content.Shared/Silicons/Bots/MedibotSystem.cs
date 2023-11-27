@@ -1,5 +1,6 @@
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Silicons.Bots;
 
@@ -22,7 +23,7 @@ public sealed class MedibotSystem : EntitySystem
         if (!TryComp<MedibotComponent>(uid, out var medibot))
             return;
 
-        _audio.PlayPredicted(comp.SparkSound, uid, args.UserUid, AudioParams.Default.WithVolume(8));
+        _audio.PlayPredicted(comp.SparkSound, uid, args.UserUid);
 
         medibot.StandardMed = comp.StandardMed;
         medibot.StandardMedAmount = comp.StandardMedAmount;

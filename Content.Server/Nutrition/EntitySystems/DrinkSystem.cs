@@ -29,6 +29,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.Containers;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

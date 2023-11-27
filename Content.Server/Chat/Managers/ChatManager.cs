@@ -12,10 +12,12 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mind;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Replays;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.Managers
@@ -23,7 +25,7 @@ namespace Content.Server.Chat.Managers
     /// <summary>
     ///     Dispatches chat messages to clients.
     /// </summary>
-    internal sealed class ChatManager : IChatManager
+    internal sealed partial class ChatManager : IChatManager
     {
         private static readonly Dictionary<string, string> PatronOocColors = new()
         {
@@ -43,6 +45,8 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
         [Dependency] private readonly INetConfigurationManager _netConfigManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -61,6 +65,8 @@ namespace Content.Server.Chat.Managers
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
+
+            _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
         private void OnOocEnabledChanged(bool val)
@@ -180,6 +186,9 @@ namespace Content.Server.Chat.Managers
         /// <param name="type">The type of message.</param>
         public void TrySendOOCMessage(ICommonSession player, string message, OOCChatType type)
         {
+            if (!HandleRateLimit(player))
+                return;
+
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
