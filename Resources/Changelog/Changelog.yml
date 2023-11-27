@@ -1,10 +1,4 @@
 Entries:
-- author: Equivocateur
-  changes:
-  - {message: Overdosing on Robust might have unintended effects on plant-based sentient
-      lifeforms., type: Tweak}
-  id: 4713
-  time: '2023-08-31T02:01:56.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Eating some foods no longer creates a plate out of thin air., type: Tweak}
@@ -2905,3 +2899,9 @@ Entries:
       people shown., type: Tweak}
   id: 5212
   time: '2023-11-27T21:43:49.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: 'Fixed janitorial items (wet floor signs, spray bottles, light replacers,
+      and plungers) not fitting in the janitor''s trolley.', type: Fix}
+  id: 5213
+  time: '2023-11-27T22:16:17.0000000+00:00'
