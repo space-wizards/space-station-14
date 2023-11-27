@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Water and lava will now partially occlude your sprite., type: Add}
-  id: 4705
-  time: '2023-08-30T02:32:36.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: 'Added ears to monkeys, also Pun Pun starts with a service headset',
@@ -2903,3 +2898,8 @@ Entries:
   - {message: Fix ahelp audio., type: Fix}
   id: 5204
   time: '2023-11-27T13:42:04.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Refrigerators are now nearly immune to explosions and even nukes., type: Tweak}
+  id: 5205
+  time: '2023-11-27T21:24:43.0000000+00:00'
