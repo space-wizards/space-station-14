@@ -3,9 +3,12 @@
 using Content.Shared.Corvax.CCCVars;
 using Content.Shared.SS220.TTS;
 using Content.Shared.SS220.TTS.Commands;
+using Robust.Client.Audio;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
@@ -22,6 +25,7 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IDependencyCollection _dependencyCollection = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -36,7 +40,7 @@ public sealed partial class TTSSystem : EntitySystem
     private const int MaxQueuedPerEntity = 20;
     private const int MaxEntitiesQueued = 30;
     private readonly Dictionary<EntityUid, Queue<PlayRequest>> _playQueues = new();
-    private readonly Dictionary<EntityUid, AudioSystem.PlayingStream> _playingStreams = new();
+    private readonly Dictionary<EntityUid, EntityUid?> _playingStreams = new();
     private static readonly AudioResource EmptyAudioResource = new();
 
     private EntityUid _fakeRecipient = new();
@@ -95,9 +99,9 @@ public sealed partial class TTSSystem : EntitySystem
 
     public void ResetQueuesAndEndStreams()
     {
-        foreach (var (_, stream) in _playingStreams)
+        foreach (var key in _playingStreams.Keys)
         {
-            stream.Stop();
+            _playingStreams[key] = _audio.Stop(_playingStreams[key]);
         }
 
         _playingStreams.Clear();
@@ -120,8 +124,10 @@ public sealed partial class TTSSystem : EntitySystem
 
         foreach (var (uid, stream) in _playingStreams)
         {
-            if (stream.Done)
+            if (!TryComp(stream, out AudioComponent? _))
+            {
                 streamsToRemove.Add(uid);
+            }
         }
 
         foreach (var uid in streamsToRemove)
@@ -156,14 +162,16 @@ public sealed partial class TTSSystem : EntitySystem
             else
                 continue;
 
-            IPlayingAudioStream? stream;
+            (EntityUid Entity, AudioComponent Component)? stream;
             if (request.PlayGlobal)
                 stream = _audio.PlayGlobal(soundPath, Filter.Local(), false);
             else
                 stream = _audio.PlayEntity(soundPath, _fakeRecipient, uid);
 
-            if (stream is AudioSystem.PlayingStream playingStream)
-                _playingStreams.Add(uid, playingStream);
+            if (stream.HasValue && stream.Value.Component is not null)
+            {
+                _playingStreams.Add(uid, stream.Value.Entity);
+            }
 
             if (tempFilePath.HasValue)
             {
@@ -235,7 +243,7 @@ public sealed partial class TTSSystem : EntitySystem
         // There is no way to go around the cache as of 12.10.2023
         // -TheArturZh
         var res = new AudioResource();
-        res.Load(_resourceCache, Prefix / filePath);
+        res.Load(_dependencyCollection, Prefix / filePath);
         _resourceCache.CacheResource(Prefix / filePath, res);
 
         if (sourceUid == null)

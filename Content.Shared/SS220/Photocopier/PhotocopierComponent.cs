@@ -159,7 +159,7 @@ public sealed partial class PhotocopierComponent : Component
     /// An audio stream of printing sound.
     /// Is saved in a variable so sound can be stopped later.
     /// </summary>
-    public IPlayingAudioStream? PrintAudioStream;
+    public EntityUid? PrintAudioStream;
 
     [ViewVariables(VVAccess.ReadOnly)]
     public PhotocopierState State = PhotocopierState.Idle;
