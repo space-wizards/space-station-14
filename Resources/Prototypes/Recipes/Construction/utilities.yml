@@ -243,6 +243,37 @@
   mirror: DisposalRouter
 
 - type: construction
+  name: disposal signal router
+  description: A signal-controlled three-way router.
+  id: DisposalSignalRouter
+  graph: DisposalPipe
+  startNode: start
+  targetNode: signal_router
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: signal-router-free
+  mirror: DisposalSignalRouterFlipped
+
+- type: construction
+  hide: true
+  name: disposal signal router
+  description: A signal-controlled three-way router.
+  id: DisposalSignalRouterFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: signal_router_flipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: signal-router-flipped-free
+  mirror: DisposalSignalRouter
+
+- type: construction
   name: disposal junction
   description: A three-way junction. The arrow indicates where items exit.
   id: DisposalJunction

@@ -9,6 +9,9 @@ using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
@@ -107,6 +110,7 @@ namespace Content.Server.Paper
                 paperComp.Mode = PaperAction.Write;
                 _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.PlayerSession);
                 UpdateUserInterface(uid, paperComp, actor.PlayerSession);
+                args.Handled = true;
                 return;
             }
 

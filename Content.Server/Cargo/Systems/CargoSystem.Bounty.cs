@@ -89,18 +89,24 @@ public sealed partial class CargoSystem
         if (!_container.TryGetContainingContainer(uid, out var container) || container.ID != LabelSystem.ContainerName)
             return;
 
-        if (_station.GetOwningStation(uid) is not { } station)
+        if (_station.GetOwningStation(uid) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var database))
             return;
 
-        if (!TryGetBountyFromId(station, component.Id, out var bounty))
+        if (database.CheckedBounties.Contains(component.Id))
             return;
 
-        if (!_protoMan.TryIndex<CargoBountyPrototype>(bounty.Value.Bounty, out var bountyProtoype) ||!IsBountyComplete(container.Owner, bountyProtoype))
+        if (!TryGetBountyFromId(station, component.Id, out var bounty, database))
             return;
+
+        if (!_protoMan.TryIndex<CargoBountyPrototype>(bounty.Value.Bounty, out var bountyPrototype) ||
+            !IsBountyComplete(container.Owner, bountyPrototype))
+            return;
+
+        database.CheckedBounties.Add(component.Id);
         args.Handled = true;
 
         component.Calculating = true;
-        args.Price = bountyProtoype.Reward - _pricing.GetPrice(container.Owner);
+        args.Price = bountyPrototype.Reward - _pricing.GetPrice(container.Owner);
         component.Calculating = false;
     }
 
@@ -329,6 +335,7 @@ public sealed partial class CargoSystem
         var query = EntityQueryEnumerator<StationCargoBountyDatabaseComponent>();
         while (query.MoveNext(out var uid, out var bountyDatabase))
         {
+            bountyDatabase.CheckedBounties.Clear();
             var bounties = new ValueList<CargoBountyData>(bountyDatabase.Bounties);
             foreach (var bounty in bounties)
             {

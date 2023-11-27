@@ -47,6 +47,8 @@
       - key: enum.StorageUiKey.Key
         type: StorageBoundUserInterface
     - type: Storage
+      maxItemSize: Normal
+      maxTotalWeight: 40
     - type: TileFrictionModifier
       modifier: 0.4 # makes it slide
 

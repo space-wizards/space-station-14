@@ -1,0 +1,18 @@
+- files: [fireball.ogg]
+  copyright: '"fireball.ogg" by /tg/station'
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/commit/906fb0682bab6a0975b45036001c54f021f58ae7
+
+- files: [disintegrate.ogg]
+  copyright: '"disintegrate.ogg" by /tg/station'
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/commit/6fde7a49fcd56d6edb844cd31a04ce026065de8b
+
+- files:
+  - forcewall.ogg
+  - knock.ogg
+  - blink.ogg
+  copyright: '"ForceWall.ogg", "Knock.ogg", and "blink.ogg" by Citadel Station 13'
+  license: CC-BY-SA-3.0
+  source: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5
+

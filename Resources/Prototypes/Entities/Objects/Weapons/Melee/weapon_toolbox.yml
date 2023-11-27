@@ -9,7 +9,7 @@
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
     state: icon
   - type: Item
-    size: Huge
+    size: Ginormous
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
   - type: MeleeWeapon
     wideAnimationRotation: -135

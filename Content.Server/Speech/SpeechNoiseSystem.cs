@@ -2,6 +2,7 @@ using Robust.Shared.Audio;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Shared.Speech;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -14,6 +15,7 @@ namespace Content.Server.Speech
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -66,7 +68,7 @@ namespace Content.Server.Speech
             var pitchedAudioParams = component.AudioParams.WithPitchScale(scale);
 
             component.LastTimeSoundPlayed = currentTime;
-            SoundSystem.Play(contextSound, Filter.Pvs(uid, entityManager: EntityManager), uid, pitchedAudioParams);
+            _audio.PlayPvs(contextSound, uid, pitchedAudioParams);
         }
     }
 }

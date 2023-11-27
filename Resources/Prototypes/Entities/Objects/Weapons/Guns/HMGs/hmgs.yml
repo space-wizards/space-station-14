@@ -7,7 +7,7 @@
   components:
   - type: Sprite
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: Gun
     fireRate: 20
     selectedMode: FullAuto

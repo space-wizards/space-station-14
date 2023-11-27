@@ -1,6 +1,7 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -16,11 +17,26 @@ namespace Content.Server.Inventory
         {
             base.Initialize();
 
+            SubscribeLocalEvent<InventoryComponent, BeforeExplodeEvent>(OnExploded);
+
             SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
 
             SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
 
             SubscribeLocalEvent<InventoryComponent, SolutionSpilledEvent>(RefRelayInventoryEvent);
+        }
+
+        private void OnExploded(Entity<InventoryComponent> ent, ref BeforeExplodeEvent args)
+        {
+            if (!TryGetContainerSlotEnumerator(ent, out var slots, ent.Comp))
+                return;
+
+            // explode each item in their inventory too
+            while (slots.MoveNext(out var slot))
+            {
+                if (slot.ContainedEntity != null)
+                    args.Contents.Add(slot.ContainedEntity.Value);
+            }
         }
 
         private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)

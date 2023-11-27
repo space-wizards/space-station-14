@@ -18,6 +18,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -153,7 +154,7 @@ public sealed partial class ClimbSystem : VirtualController
     {
         if (component.NextTransition != null)
         {
-            StopClimb(uid, component);
+            FinishTransition(uid, component);
         }
     }
 

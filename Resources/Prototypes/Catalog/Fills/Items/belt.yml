@@ -124,9 +124,10 @@
   suffix: Filled
   components:
   - type: Item
-    size: Large
+    size: Ginormous
   - type: Storage
     maxSlots: 8
+    maxItemSize: Normal
   - type: StorageFill
     contents:
       - id: ExGrenade

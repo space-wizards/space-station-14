@@ -4,7 +4,7 @@
 
 - type: entity
   id: CableStack
-  noSpawn: true
+  abstract: true
   parent: BaseItem
   name: cable stack
   suffix: Full
