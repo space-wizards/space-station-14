@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Ported steel chair sprites from Paradise Station & Shiptest., type: Tweak}
-  id: 4703
-  time: '2023-08-29T23:32:32.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Flavor text now disabled if identity hidden, type: Tweak}
@@ -2894,3 +2889,17 @@ Entries:
   - {message: The ability to put a cakecat on your head., type: Add}
   id: 5202
   time: '2023-11-23T00:41:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Audio rework got re-merged, the changelog has been re-posted here for
+      brevity.', type: Add}
+  - {message: Grid audio will now attenuate properly over distance and won't be ear
+      rupturingly loud., type: Fix}
+  - {message: FTL sound should no longer persist as it's attached to the shuttle instead
+      of being global., type: Fix}
+  - {message: Audio can now start at an offset so if an audio source comes into range
+      so it won't play from the start., type: Fix}
+  - {message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
+      so it's smoother. You may need to adjust your master audio volume., type: Tweak}
+  id: 5203
+  time: '2023-11-27T11:21:23.0000000+00:00'
