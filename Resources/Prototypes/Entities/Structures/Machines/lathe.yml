@@ -255,6 +255,7 @@
       - SynthesizerInstrument
       - RPED
       - ClothingShoesBootsMag
+      - ClothingShoesBootsSpeed
       - NodeScanner
       - HolofanProjector
       - BluespaceBeaker
@@ -412,6 +413,9 @@
     - BorgModuleTool
     - BorgModuleAppraisal
     - BorgModuleConstruction
+    - BorgModuleService
+    - BorgModuleTreatment
+    - BorgModuleCleaning
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -450,8 +454,7 @@
     dynamicRecipes:
     - ProximitySensor
     - BorgModuleLightReplacer
-    - BorgModuleCleaning
-    - BorgModuleTrashCollection
+    - BorgModuleAdvancedCleaning
     - BorgModuleMining
     - BorgModuleGrapplingGun
     - BorgModuleGasAnalyzer
@@ -462,10 +465,8 @@
     - BorgModuleGardening
     - BorgModuleHarvesting
     - BorgModuleMusique
-    - BorgModuleLiteracy
     - BorgModuleClowning
     - BorgModuleDiagnosis
-    - BorgModuleTreatment
     - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
     - RipleyHarness

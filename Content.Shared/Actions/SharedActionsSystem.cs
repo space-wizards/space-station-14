@@ -98,7 +98,9 @@ public abstract class SharedActionsSystem : EntitySystem
         if (result != null)
             return true;
 
-        Log.Error($"Failed to get action from action entity: {ToPrettyString(uid.Value)}");
+        if (logError)
+            Log.Error($"Failed to get action from action entity: {ToPrettyString(uid.Value)}");
+
         return false;
     }
 
@@ -125,6 +127,27 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         action.Cooldown = (start, end);
+        Dirty(actionId.Value, action);
+    }
+
+    public void SetCooldown(EntityUid? actionId, TimeSpan cooldown)
+    {
+        var start = GameTiming.CurTime;
+        SetCooldown(actionId, start, start + cooldown);
+    }
+
+    public void ClearCooldown(EntityUid? actionId)
+    {
+        if (actionId == null)
+            return;
+
+        if (!TryGetActionData(actionId, out var action))
+            return;
+
+        if (action.Cooldown is not { } cooldown)
+            return;
+
+        action.Cooldown = (cooldown.Start, GameTiming.CurTime);
         Dirty(actionId.Value, action);
     }
 
@@ -270,7 +293,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 }
 
                 var entityCoordinatesTarget = GetCoordinates(netCoordinatesTarget);
-                _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.Position);
+                _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.ToMapPos(EntityManager, _transformSystem));
 
                 if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
                     return;
@@ -628,7 +651,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (action.AttachedEntity != performer)
         {
-            DebugTools.Assert(!Resolve(performer, ref comp, false) || !comp.Actions.Contains(actionId.Value));
+            DebugTools.Assert(!Resolve(performer, ref comp, false)
+                              || comp.LifeStage >= ComponentLifeStage.Stopping
+                              || !comp.Actions.Contains(actionId.Value));
 
             if (!GameTiming.ApplyingState)
                 Log.Error($"Attempted to remove an action {ToPrettyString(actionId)} from an entity that it was never attached to: {ToPrettyString(performer)}");
