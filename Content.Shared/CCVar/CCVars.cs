@@ -1438,6 +1438,39 @@ namespace Content.Shared.CCVar
          * CHAT
          */
 
+        /// <summary>
+        /// Chat rate limit values are accounted in periods of this size (seconds).
+        /// After the period has passed, the count resets.
+        /// </summary>
+        /// <seealso cref="ChatRateLimitCount"/>
+        public static readonly CVarDef<int> ChatRateLimitPeriod =
+            CVarDef.Create("chat.rate_limit_period", 2, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How many chat messages are allowed in a single rate limit period.
+        /// </summary>
+        /// <remarks>
+        /// The total rate limit throughput per second is effectively
+        /// <see cref="ChatRateLimitCount"/> divided by <see cref="ChatRateLimitCount"/>.
+        /// </remarks>
+        /// <seealso cref="ChatRateLimitPeriod"/>
+        /// <seealso cref="ChatRateLimitAnnounceAdmins"/>
+        public static readonly CVarDef<int> ChatRateLimitCount =
+            CVarDef.Create("chat.rate_limit_count", 10, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, announce when a player breached chat rate limit to game administrators.
+        /// </summary>
+        /// <seealso cref="ChatRateLimitAnnounceAdminsDelay"/>
+        public static readonly CVarDef<bool> ChatRateLimitAnnounceAdmins =
+            CVarDef.Create("chat.rate_limit_announce_admins", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Minimum delay (in seconds) between announcements from <see cref="ChatRateLimitAnnounceAdmins"/>.
+        /// </summary>
+        public static readonly CVarDef<int> ChatRateLimitAnnounceAdminsDelay =
+            CVarDef.Create("chat.rate_limit_announce_admins_delay", 15, CVar.SERVERONLY);
+
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
 
