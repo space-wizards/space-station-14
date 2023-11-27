@@ -428,6 +428,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - VimPilot
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:
