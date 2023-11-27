@@ -52,7 +52,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     private const string GameRuleId = "Pirates";
 
     [ValidatePrototypeId<EntityPrototype>]
-    private const string PirateId = "MobHuman";
+    private const string MobId = "MobHuman";
 
     [ValidatePrototypeId<SpeciesPrototype>]
     private const string SpeciesId = "Human";
@@ -240,7 +240,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 var newMind = _mindSystem.CreateMind(session.UserId, name);
                 _mindSystem.SetUserId(newMind, session.UserId);
 
-                var mob = Spawn(PirateId, _random.Pick(spawns));
+                var mob = Spawn(MobId, _random.Pick(spawns));
                 _metaData.SetEntityName(mob, name);
 
                 _mindSystem.TransferTo(newMind, mob);
