@@ -32,16 +32,16 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
     {
         // This is so entities that shouldn't get a collision are ignored.
-        if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
-            || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
+        if ((args.OurFixtureId != ProjectileFixture && args.OurFixtureId != ProjectileHitLowFixture)
+            || !args.OtherFixture.Hard
+            || component.DamagedEntity
+            || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
+
+        if (args.OurFixtureId == ProjectileHitLowFixture && args.OtherEntity != component.CursorTarget)
+            return; // Just wait for the regular fixture to collide.
 
         var target = args.OtherEntity;
-
-        if (component.CursorTarget != target
-            && TryComp(target, out MobStateComponent? targetState) // If the thing isn't a mob, hit anyway.
-            && targetState is not { CurrentState: MobState.Alive }) // If the thing is alive, hit anyway.
-            return;
 
         // it's here so this check is only done once before possible hit
         var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);

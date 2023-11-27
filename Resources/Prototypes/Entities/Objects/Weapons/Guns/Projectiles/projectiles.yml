@@ -47,6 +47,17 @@
         mask:
         - Impassable
         - BulletImpassable
+      hitlow:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        layer:
+        - Impassable
+        - LowImpassable
+        - MidImpassable
+        - HighImpassable
+        - BulletImpassable
       fly-by: &flybyfixture
         shape: !type:PhysShapeCircle
           radius: 1.5

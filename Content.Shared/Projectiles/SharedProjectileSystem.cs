@@ -17,6 +17,7 @@ namespace Content.Shared.Projectiles;
 public abstract partial class SharedProjectileSystem : EntitySystem
 {
     public const string ProjectileFixture = "projectile";
+    public const string ProjectileHitLowFixture = "hitlow";
 
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;

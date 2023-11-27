@@ -207,23 +207,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             if (!rayCastResults.Any())
                                 break;
 
-                            RayCastResults? nullResult = null;
-                            foreach (var Hit in rayCastResults)
-                            {
-                                var tHit = Hit.HitEntity;
-                                if (hovered != tHit
-                                    && TryComp(tHit, out MobStateComponent? targetState)
-                                    && targetState is not { CurrentState: MobState.Alive })
-                                    continue;
-
-                                nullResult = Hit;
-                                break;
-                            }
-
-                            if (nullResult is null)
-                                return;
-
-                            var result = nullResult.Value;
+                            var result = rayCastResults[0];
 
                             var hit = result.HitEntity;
                             lastHit = hit;
