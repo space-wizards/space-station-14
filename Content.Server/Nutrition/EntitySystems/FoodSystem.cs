@@ -27,6 +27,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 using System.Linq;
 

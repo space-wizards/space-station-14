@@ -11,6 +11,7 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Stunnable.Systems
 {
