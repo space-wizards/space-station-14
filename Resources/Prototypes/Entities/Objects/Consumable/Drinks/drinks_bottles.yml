@@ -1,3 +1,4 @@
+# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_bottles.yml
 - type: entity
   parent: DrinkBase
   id: DrinkBottleBaseFull
@@ -92,6 +93,21 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkChampagneBottleFull
+  name: champagne bottle
+  description: Only people devoid of imagination can't find an excuse for champagne.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Champagne
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/champagnebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -390,21 +406,6 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkChampagneBottleFull
-  name: champagne bottle
-  description: Only people devoid of imagination can't find an excuse for champagne.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Champagne
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/champagnebottle.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
@@ -419,106 +420,3 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
-
-# Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkJuiceLimeCarton
-  name: lime juice
-  description: Sweet-sour goodness.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceLime
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/limejuice.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkJuiceOrangeCarton
-  name: orange juice
-  description: Full of vitamins and deliciousness!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceOrange
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/orangejuice.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkJuiceTomatoCarton
-  name: tomato juice
-  description: Well, at least it LOOKS like tomato juice. You can't tell with all that redness.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkCreamCarton
-  name: Milk Cream
-  description: It's cream. Made from milk. What else did you think you'd find in there?
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Cream
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cream.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkMilkCarton
-  name: milk
-  description: An opaque white liquid produced by the mammary glands of mammals.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: Milk
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/milk.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkSoyMilkCarton
-  name: soy milk
-  description: White and nutritious soy goodness!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: MilkSoy
-          Quantity: 100
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/soymilk.rsi
