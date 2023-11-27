@@ -42,10 +42,10 @@ public sealed class WoolySystem : EntitySystem
             if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Peckish)
                 continue;
 
-            if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution))
+            if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution, out _))
                 continue;
 
-            _solution.TryAddReagent(uid, solution, comp.ReagentId, comp.Quantity, out _);
+            _solution.TryAddReagent(solution, comp.ReagentId, comp.Quantity, out _);
         }
     }
 

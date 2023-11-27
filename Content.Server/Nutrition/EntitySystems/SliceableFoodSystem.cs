@@ -47,7 +47,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, food.Solution, out var solution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, food.Solution, out var soln, out var solution))
             {
                 return false;
             }
@@ -59,8 +59,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var sliceUid = Spawn(component.Slice, transform.Coordinates);
 
-            var lostSolution = _solutionSystem.SplitSolution(uid, solution,
-                solution.Volume / FixedPoint2.New(component.Count));
+            var lostSolution = _solutionSystem.SplitSolution(soln, solution.Volume / FixedPoint2.New(component.Count));
 
             // Fill new slice
             FillSlice(sliceUid, lostSolution);
@@ -136,12 +135,12 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             // Replace all reagents on prototype not just copying poisons (example: slices of eaten pizza should have less nutrition)
             if (TryComp<FoodComponent>(sliceUid, out var sliceFoodComp) &&
-                _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSolution))
+                _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
             {
-                _solutionSystem.RemoveAllSolution(sliceUid, itsSolution);
+                _solutionSystem.RemoveAllSolution(itsSoln);
 
                 var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
-                _solutionSystem.TryAddSolution(sliceUid, itsSolution, lostSolutionPart);
+                _solutionSystem.TryAddSolution(itsSoln, lostSolutionPart);
             }
         }
 

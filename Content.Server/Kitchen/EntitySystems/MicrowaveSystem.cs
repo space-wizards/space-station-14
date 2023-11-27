@@ -112,12 +112,13 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 if (!TryComp<SolutionContainerComponent>(entity, out var solutions))
                     continue;
-                foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((entity, solutions)))
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
                 {
+                    var solution = soln.Comp.Solution;
                     if (solution.Temperature > component.TemperatureUpperThreshold)
                         continue;
 
-                    _solution.AddThermalEnergy(entity, solution, heatToAdd);
+                    _solution.AddThermalEnergy(soln, heatToAdd);
                 }
             }
         }
@@ -135,8 +136,9 @@ namespace Content.Server.Kitchen.EntitySystems
                     continue;
 
                 // go over every solution
-                foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((item, solMan)))
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
                 {
+                    var solution = soln.Comp.Solution;
                     foreach (var (reagent, _) in recipe.IngredientsReagents)
                     {
                         // removed everything
@@ -155,7 +157,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             totalReagentsToRemove[reagent] -= quant;
                         }
 
-                        _solution.RemoveReagent(item, solution, reagent, quant);
+                        _solution.RemoveReagent(soln, reagent, quant);
                     }
                 }
             }
@@ -392,8 +394,9 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (!TryComp<SolutionContainerComponent>(item, out var solMan))
                     continue;
 
-                foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((item, solMan)))
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
                 {
+                    var solution = soln.Comp.Solution;
                     foreach (var (reagent, quantity) in solution.Contents)
                     {
                         if (reagentDict.ContainsKey(reagent.Prototype))

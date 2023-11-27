@@ -1,7 +1,7 @@
 ﻿using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Toolshed;
@@ -26,10 +26,8 @@ public sealed class SolutionCommand : ToolshedCommand
     {
         _solutionContainer ??= GetSys<SolutionContainerSystem>();
 
-        _solutionContainer.TryGetSolution(input, name.Evaluate(ctx)!, out var solution);
-
-        if (solution is not null)
-            return new SolutionRef(input, solution);
+        if (_solutionContainer.TryGetSolution(input, name.Evaluate(ctx)!, out var solution, out _))
+            return new SolutionRef(solution);
 
         return null;
     }
@@ -57,11 +55,11 @@ public sealed class SolutionCommand : ToolshedCommand
         var amount = amountRef.Evaluate(ctx);
         if (amount > 0)
         {
-            _solution.TryAddReagent(input.Owner, input.Solution, name.Value.ID, amount, out _);
+            _solution.TryAddReagent(input.Solution, name.Value.ID, amount, out _);
         }
         else if (amount < 0)
         {
-            _solution.RemoveReagent(input.Owner, input.Solution, name.Value.ID, -amount);
+            _solution.RemoveReagent(input.Solution, name.Value.ID, -amount);
         }
 
         return input;
@@ -77,10 +75,10 @@ public sealed class SolutionCommand : ToolshedCommand
         => input.Select(x => AdjReagent(ctx, x, name, amountRef));
 }
 
-public readonly record struct SolutionRef(EntityUid Owner, Solution Solution)
+public readonly record struct SolutionRef(Entity<SolutionComponent> Solution)
 {
     public override string ToString()
     {
-        return $"{Owner} {Solution}";
+        return $"{Solution.Owner} {Solution.Comp.Solution}";
     }
 }

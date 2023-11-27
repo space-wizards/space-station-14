@@ -59,12 +59,11 @@ namespace Content.Server.Medical
             // Empty the stomach out into it
             foreach (var stomach in stomachList)
             {
-                if (_solutionContainer.TryGetSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName,
-                        out var sol))
+                if (_solutionContainer.TryGetSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName, out var solEnt, out var sol))
                 {
                     solution.AddSolution(sol, _proto);
                     sol.RemoveAllSolution();
-                    _solution.UpdateChemicals(stomach.Comp.Owner, sol);
+                    _solution.UpdateChemicals(solEnt);
                 }
             }
             // Adds a tiny amount of the chem stream from earlier along with vomit
@@ -75,9 +74,9 @@ namespace Content.Server.Medical
                 var vomitAmount = solutionSize;
 
                 // Takes 10% of the chemicals removed from the chem stream
-                if (_solutionContainer.TryGetSolution(uid, bloodStream.ChemicalSolutionName, out var chemSolution))
+                if (_solutionContainer.TryGetSolution(uid, bloodStream.ChemicalSolutionName, out var chemSolution, out _))
                 {
-                    var vomitChemstreamAmount = _solution.SplitSolution(uid, chemSolution, vomitAmount);
+                    var vomitChemstreamAmount = _solution.SplitSolution(chemSolution, vomitAmount);
                     vomitChemstreamAmount.ScaleSolution(chemMultiplier);
                     solution.AddSolution(vomitChemstreamAmount, _proto);
 

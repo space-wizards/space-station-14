@@ -5,6 +5,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
@@ -47,9 +48,10 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (!EntityManager.TryGetComponent(uid, out SolutionContainerComponent? contents)) return;
 
-            foreach (var (_, value) in _solutionContainerSystem.EnumerateSolutions((uid, contents)))
+            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, contents)))
             {
-                _reactive.DoEntityReaction(args.OtherEntity, value, ReactionMethod.Touch);
+                var solution = soln.Comp.Solution;
+                _reactive.DoEntityReaction(args.OtherEntity, solution, ReactionMethod.Touch);
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
@@ -86,28 +88,27 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor, VaporComponent.SolutionName,
-                out var vaporSolution))
+            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, VaporComponent.SolutionName, out var vaporSolution, out _))
             {
                 return false;
             }
 
-            return _solutionSystem.TryAddSolution(vapor, vaporSolution, solution);
+            return _solutionSystem.TryAddSolution(vaporSolution, solution);
         }
 
         public override void Update(float frameTime)
         {
             var query = EntityQueryEnumerator<VaporComponent, SolutionContainerComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var vaporComp, out var solution, out var xform))
+            while (query.MoveNext(out var uid, out var vaporComp, out var container, out var xform))
             {
-                foreach (var (_, value) in _solutionContainerSystem.EnumerateSolutions((uid, solution)))
+                foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
                 {
-                    Update(frameTime, (uid, vaporComp), value, xform);
+                    Update(frameTime, (uid, vaporComp), soln, xform);
                 }
             }
         }
 
-        private void Update(float frameTime, Entity<VaporComponent> ent, Solution contents, TransformComponent xform)
+        private void Update(float frameTime, Entity<VaporComponent> ent, Entity<SolutionComponent> soln, TransformComponent xform)
         {
             var (entity, vapor) = ent;
             if (!vapor.Active)
@@ -115,6 +116,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             vapor.ReactTimer += frameTime;
 
+            var contents = soln.Comp.Solution;
             if (vapor.ReactTimer >= ReactTime && TryComp(xform.GridUid, out MapGridComponent? gridComp))
             {
                 vapor.ReactTimer = 0;
@@ -134,7 +136,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         reaction = reagentQuantity.Quantity;
                     }
 
-                    _solutionSystem.RemoveReagent(entity, contents, reagentQuantity.Reagent, reaction);
+                    _solutionSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
                 }
             }
 

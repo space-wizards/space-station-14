@@ -45,17 +45,17 @@ public sealed partial class CleanTileReaction : ITileReaction
         foreach (var entity in entities)
         {
             if (!puddleQuery.TryGetComponent(entity, out var puddle) ||
-                !solutionContainerSystem.TryGetSolution(entity, puddle.SolutionName, out var puddleSolution))
+                !solutionContainerSystem.TryGetSolution(entity, puddle.SolutionName, out var puddleSolution, out _))
             {
                 continue;
             }
 
             var purgeable =
-                solutionSystem.SplitSolutionWithout(entity, puddleSolution, purgeAmount, ReplacementReagent, reagent.ID);
+                solutionSystem.SplitSolutionWithout(puddleSolution, purgeAmount, ReplacementReagent, reagent.ID);
 
             purgeAmount -= purgeable.Volume;
 
-            solutionSystem.TryAddSolution(entity, puddleSolution, new Solution(ReplacementReagent, purgeable.Volume));
+            solutionSystem.TryAddSolution(puddleSolution, new Solution(ReplacementReagent, purgeable.Volume));
 
             if (purgeable.Volume <= FixedPoint2.Zero)
                 break;

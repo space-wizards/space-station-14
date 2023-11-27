@@ -68,15 +68,15 @@ public sealed class FireExtinguisherSystem : EntitySystem
         }
 
         if (args.Target is not {Valid: true} target ||
-            !_solutionContainerSystem.TryGetDrainableSolution(target, out var targetSolution) ||
-            !_solutionContainerSystem.TryGetRefillableSolution(uid, out var container))
+            !_solutionContainerSystem.TryGetDrainableSolution(target, out var targetSoln, out var targetSolution) ||
+            !_solutionContainerSystem.TryGetRefillableSolution(uid, out var containerSoln, out var containerSolution))
         {
             return;
         }
 
         args.Handled = true;
 
-        var transfer = container.AvailableVolume;
+        var transfer = containerSolution.AvailableVolume;
         if (TryComp<SolutionTransferComponent>(uid, out var solTrans))
         {
             transfer = solTrans.TransferAmount;
@@ -85,8 +85,8 @@ public sealed class FireExtinguisherSystem : EntitySystem
 
         if (transfer > 0)
         {
-            var drained = _solutionContainerSystem.Drain(target, targetSolution, transfer);
-            _solutionSystem.TryAddSolution(uid, container, drained);
+            var drained = _solutionContainerSystem.Drain(target, targetSoln, transfer);
+            _solutionSystem.TryAddSolution(containerSoln, drained);
 
             SoundSystem.Play(component.RefillSound.GetSound(), Filter.Pvs(uid), uid);
             _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-after-interact-refilled-message", ("owner", uid)),

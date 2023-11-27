@@ -51,13 +51,11 @@ namespace Content.Server.Animals.Systems
                             continue;
                     }
 
-                    if (!_solutionContainerSystem.TryGetSolution(uid, udder.TargetSolutionName,
-                            out var solution))
+                    if (!_solutionContainerSystem.TryGetSolution(uid, udder.TargetSolutionName, out var solution, out _))
                         continue;
 
                     //TODO: toxins from bloodstream !?
-                    _solutionSystem.TryAddReagent(uid, solution, udder.ReagentId,
-                        udder.QuantityPerUpdate, out var accepted);
+                    _solutionSystem.TryAddReagent(solution, udder.ReagentId, udder.QuantityPerUpdate, out var accepted);
                 }
             }
         }
@@ -83,15 +81,15 @@ namespace Content.Server.Animals.Systems
             if (args.Cancelled || args.Handled || args.Args.Used == null)
                 return;
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, component.TargetSolutionName, out var solution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, component.TargetSolutionName, out var soln, out var solution))
                 return;
 
-            if (!_solutionContainerSystem.TryGetRefillableSolution(args.Args.Used.Value, out var targetSolution))
+            if (!_solutionContainerSystem.TryGetRefillableSolution(args.Args.Used.Value, out var targetSoln, out var targetSolution))
                 return;
 
             args.Handled = true;
             var quantity = solution.Volume;
-            if(quantity == 0)
+            if (quantity == 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), uid, args.Args.User);
                 return;
@@ -100,8 +98,8 @@ namespace Content.Server.Animals.Systems
             if (quantity > targetSolution.AvailableVolume)
                 quantity = targetSolution.AvailableVolume;
 
-            var split = _solutionSystem.SplitSolution(uid, solution, quantity);
-            _solutionSystem.TryAddSolution(args.Args.Used.Value, targetSolution, split);
+            var split = _solutionSystem.SplitSolution(soln, quantity);
+            _solutionSystem.TryAddSolution(targetSoln, split);
 
             _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), uid,
                 args.Args.User, PopupType.Medium);

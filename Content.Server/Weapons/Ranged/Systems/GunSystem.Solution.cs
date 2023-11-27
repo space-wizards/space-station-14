@@ -39,7 +39,7 @@ public sealed partial class GunSystem
     {
         var shots = 0;
         var maxShots = 0;
-        if (solution == null && !_solutionContainer.TryGetSolution(uid, component.SolutionId, out solution))
+        if (solution == null && !_solutionContainer.TryGetSolution(uid, component.SolutionId, out _, out solution))
         {
             component.Shots = shots;
             component.MaxShots = maxShots;
@@ -61,10 +61,10 @@ public sealed partial class GunSystem
     {
         var (ent, shootable) = base.GetSolutionShot(uid, component, position);
 
-        if (!_solutionContainer.TryGetSolution(uid, component.SolutionId, out var solution))
+        if (!_solutionContainer.TryGetSolution(uid, component.SolutionId, out var solution, out _))
             return (ent, shootable);
 
-        var newSolution = _solution.SplitSolution(uid, solution, component.FireCost);
+        var newSolution = _solution.SplitSolution(solution, component.FireCost);
 
         if (newSolution.Volume <= FixedPoint2.Zero)
             return (ent, shootable);
@@ -76,9 +76,9 @@ public sealed partial class GunSystem
         }
 
         // Add the solution to the vapor and actually send the thing
-        if (_solutionContainer.TryGetSolution(ent, VaporComponent.SolutionName, out var vaporSolution))
+        if (_solutionContainer.TryGetSolution(ent, VaporComponent.SolutionName, out var vaporSolution, out _))
         {
-            _solution.TryAddSolution(ent, vaporSolution, newSolution);
+            _solution.TryAddSolution(vaporSolution, newSolution);
         }
         return (ent, shootable);
     }

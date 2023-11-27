@@ -37,7 +37,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
-            if (!solutionContainerSystem.TryGetSolution(uid.Value, args[1], out var solution, man))
+            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solutionEnt, out var solution))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
@@ -52,19 +52,19 @@ namespace Content.Server.Administration.Commands
 
             if (solution.GetHeatCapacity(null) <= 0.0f)
             {
-                if(quantity != 0.0f)
+                if (quantity != 0.0f)
                 {
                     shell.WriteLine($"Cannot set the thermal energy of a solution with 0 heat capacity to a non-zero number.");
                     return;
                 }
             }
-            else if(quantity <= 0.0f)
+            else if (quantity <= 0.0f)
             {
                 shell.WriteLine($"Cannot set the thermal energy of a solution with heat capacity to a non-positive number.");
                 return;
             }
 
-            _entManager.System<SolutionSystem>().SetThermalEnergy(uid.Value, solution, quantity);
+            _entManager.System<SolutionSystem>().SetThermalEnergy(solutionEnt, quantity);
         }
     }
 }

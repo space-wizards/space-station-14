@@ -65,7 +65,7 @@ public sealed partial class PuddleSystem
         // If this also has solution transfer, then assume the transfer amount is how much we want to spill.
         // Otherwise let's say they want to spill a quarter of its max volume.
 
-        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var solution))
+        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var soln, out var solution))
             return;
 
         var hitCount = args.HitEntities.Count;
@@ -92,7 +92,7 @@ public sealed partial class PuddleSystem
                 continue;
             }
 
-            var splitSolution = _solutionSystem.SplitSolution(uid, solution, totalSplit / hitCount);
+            var splitSolution = _solutionSystem.SplitSolution(soln, totalSplit / hitCount);
 
             _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(uid):entity} onto {ToPrettyString(hit):target}");
             _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
@@ -123,20 +123,20 @@ public sealed partial class PuddleSystem
         if (!isCorrectSlot)
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var soln, out var solution))
             return;
 
         if (solution.Volume == 0)
             return;
 
         // spill all solution on the player
-        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
+        var drainedSolution = _solutionContainerSystem.Drain(uid, soln, solution.Volume);
         TrySplashSpillAt(uid, Transform(args.Equipee).Coordinates, drainedSolution, out _);
     }
 
     private void SpillOnLand(EntityUid uid, SpillableComponent component, ref LandEvent args)
     {
-        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var soln, out var solution))
             return;
 
         if (_openable.IsClosed(uid))
@@ -148,7 +148,7 @@ public sealed partial class PuddleSystem
                 $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
-        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
+        var drainedSolution = _solutionContainerSystem.Drain(uid, soln, solution.Volume);
         TrySplashSpillAt(uid, Transform(uid).Coordinates, drainedSolution, out _);
     }
 
@@ -157,7 +157,7 @@ public sealed partial class PuddleSystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(args.Target, component.SolutionName, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(args.Target, component.SolutionName, out var soln, out var solution))
             return;
 
         if (_openable.IsClosed(args.Target))
@@ -176,8 +176,7 @@ public sealed partial class PuddleSystem
         {
             verb.Act = () =>
             {
-                var puddleSolution = _solutionSystem.SplitSolution(args.Target,
-                    solution, solution.Volume);
+                var puddleSolution = _solutionSystem.SplitSolution(soln, solution.Volume);
                 TrySpillAt(Transform(args.Target).Coordinates, puddleSolution, out _);
             };
         }
@@ -205,10 +204,10 @@ public sealed partial class PuddleSystem
             return;
 
         //solution gone by other means before doafter completes
-        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var solution) || solution.Volume == 0)
+        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var soln, out var solution) || solution.Volume == 0)
             return;
 
-        var puddleSolution = _solutionSystem.SplitSolution(uid, solution, solution.Volume);
+        var puddleSolution = _solutionSystem.SplitSolution(soln, solution.Volume);
         TrySpillAt(Transform(uid).Coordinates, puddleSolution, out _);
         args.Handled = true;
     }

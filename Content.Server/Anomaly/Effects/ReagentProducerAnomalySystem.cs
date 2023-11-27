@@ -69,7 +69,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (component.AccumulatedFrametime < component.UpdateInterval)
                 continue;
 
-            if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var producerSol))
+            if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var producerSol, out var producerSolution))
                 continue;
 
             Solution newSol = new();
@@ -77,7 +77,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
 
             newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
-            _solution.TryAddSolution(uid, producerSol, newSol); //TO DO - the container is not fully filled. 
+            _solution.TryAddSolution(producerSol, newSol); //TO DO - the container is not fully filled. 
 
             component.AccumulatedFrametime = 0;
 
@@ -88,7 +88,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             // and nothing worked out for me. So for now it will be like this.
             if (component.NeedRecolor)
             {
-                var color = producerSol.GetColor(_prototypeManager);
+                var color = producerSolution.GetColor(_prototypeManager);
                 _light.SetColor(uid, color);
                 if (TryComp<RandomSpriteComponent>(uid, out var randomSprite))
                 {

@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.Components;
 
 namespace Content.Shared.Chemistry.Reaction;
 
@@ -26,4 +26,4 @@ public record struct MixingAttemptEvent(EntityUid Mixed, bool Cancelled = false)
 public readonly record struct AfterMixingEvent(EntityUid Mixed, EntityUid Mixer);
 
 [ByRefEvent]
-public record struct GetMixableSolutionAttemptEvent(EntityUid Mixed, Solution? MixedSolution = null);
+public record struct GetMixableSolutionAttemptEvent(EntityUid Mixed, Entity<SolutionComponent>? MixedSolution = null);

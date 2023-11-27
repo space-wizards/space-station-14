@@ -99,13 +99,13 @@ public sealed class SolutionHeaterSystem : EntitySystem
         {
             foreach (var heatingEntity in placer.PlacedEntities)
             {
-                if (!TryComp<SolutionContainerComponent>(heatingEntity, out var solution))
+                if (!TryComp<SolutionContainerComponent>(heatingEntity, out var container))
                     continue;
 
                 var energy = heater.HeatPerSecond * frameTime;
-                foreach (var (_, s) in _solutionContainer.EnumerateSolutions((heatingEntity, solution)))
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heatingEntity, container)))
                 {
-                    _solution.AddThermalEnergy(heatingEntity, s, energy);
+                    _solution.AddThermalEnergy(soln, energy);
                 }
             }
         }

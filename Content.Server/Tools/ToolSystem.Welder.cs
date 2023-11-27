@@ -48,7 +48,7 @@ namespace Content.Server.Tools
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerComponent? solutionContainer = null)
         {
             if (!Resolve(uid, ref welder, ref solutionContainer)
-                || !_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var fuelSolution, solutionContainer))
+                || !_solutionContainerSystem.TryGetSolution((uid, solutionContainer), welder.FuelSolution, out _, out var fuelSolution))
                 return (FixedPoint2.Zero, FixedPoint2.Zero);
 
             return (_solutionContainerSystem.GetTotalPrototypeQuantity(uid, welder.FuelReagent), fuelSolution.MaxVolume);
@@ -87,7 +87,7 @@ namespace Content.Server.Tools
 
             _light.ResolveLight(uid, ref light);
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution, solutionContainer))
+            if (!_solutionContainerSystem.TryGetSolution((uid, solutionContainer), welder.FuelSolution, out var soln, out var solution))
                 return false;
 
             var fuel = solution.GetTotalPrototypeQuantity(welder.FuelReagent);
@@ -100,7 +100,7 @@ namespace Content.Server.Tools
                 return false;
             }
 
-            solution.RemoveReagent(welder.FuelReagent, welder.FuelLitCost);
+            _solutionSystem.RemoveReagent(soln, welder.FuelReagent, welder.FuelLitCost);
 
             welder.Lit = true;
 
@@ -243,14 +243,14 @@ namespace Content.Server.Tools
 
             if (EntityManager.TryGetComponent(target, out ReagentTankComponent? tank)
                 && tank.TankType == ReagentTankType.Fuel
-                && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetSolution)
-                && _solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var welderSolution))
+                && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetSoln, out var targetSolution)
+                && _solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var soln, out var welderSolution))
             {
                 var trans = FixedPoint2.Min(welderSolution.AvailableVolume, targetSolution.Volume);
                 if (trans > 0)
                 {
-                    var drained = _solutionContainerSystem.Drain(target, targetSolution,  trans);
-                    _solutionSystem.TryAddSolution(uid, welderSolution, drained);
+                    var drained = _solutionContainerSystem.Drain(target, targetSoln, trans);
+                    _solutionSystem.TryAddSolution(soln, drained);
                     _audioSystem.PlayPvs(welder.WelderRefill, uid);
                     _popupSystem.PopupEntity(Loc.GetString("welder-component-after-interact-refueled-message"), uid, args.User);
                 }
@@ -306,10 +306,10 @@ namespace Content.Server.Tools
                     || !EntityManager.TryGetComponent(tool, out TransformComponent? transform))
                     continue;
 
-                if (!_solutionContainerSystem.TryGetSolution(tool, welder.FuelSolution, out var solution, solutionContainer))
+                if (!_solutionContainerSystem.TryGetSolution((tool, solutionContainer), welder.FuelSolution, out var soln, out var solution))
                     continue;
 
-                solution.RemoveReagent(welder.FuelReagent, welder.FuelConsumption * _welderTimer);
+                _solutionSystem.RemoveReagent(soln, welder.FuelReagent, welder.FuelConsumption * _welderTimer);
 
                 if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
                     TryTurnWelderOff(tool, null, welder);

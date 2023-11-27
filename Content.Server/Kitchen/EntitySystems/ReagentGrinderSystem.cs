@@ -72,7 +72,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
                 var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, SharedReagentGrinder.BeakerSlotId);
-                if (outputContainer is null || !_solutionContainersSystem.TryGetFitsInDispenser(outputContainer.Value, out var containerSolution))
+                if (outputContainer is null || !_solutionContainersSystem.TryGetFitsInDispenser(outputContainer.Value, out var containerSoln, out var containerSolution))
                     continue;
 
                 foreach (var item in inputContainer.ContainedEntities.ToList())
@@ -110,7 +110,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         QueueDel(item);
                     }
 
-                    _solutionsSystem.TryAddSolution(outputContainer.Value, containerSolution, solution);
+                    _solutionsSystem.TryAddSolution(containerSoln, solution);
                 }
 
                 _userInterfaceSystem.TrySendUiMessage(uid, ReagentGrinderUiKey.Key,
@@ -195,7 +195,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var canGrind = false;
 
             if (outputContainer is not null
-                && _solutionContainersSystem.TryGetFitsInDispenser(outputContainer.Value, out containerSolution)
+                && _solutionContainersSystem.TryGetFitsInDispenser(outputContainer.Value, out _, out containerSolution)
                 && inputContainer.ContainedEntities.Count > 0)
             {
                 canGrind = inputContainer.ContainedEntities.All(CanGrind);
@@ -301,7 +301,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (TryComp<ExtractableComponent>(uid, out var extractable)
                 && extractable.GrindableSolution is not null
-                && _solutionContainersSystem.TryGetSolution(uid, extractable.GrindableSolution, out var solution))
+                && _solutionContainersSystem.TryGetSolution(uid, extractable.GrindableSolution, out _, out var solution))
             {
                 return solution;
             }
@@ -313,7 +313,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             var solutionName = CompOrNull<ExtractableComponent>(uid)?.GrindableSolution;
 
-            return solutionName is not null && _solutionContainersSystem.TryGetSolution(uid, solutionName, out _);
+            return solutionName is not null && _solutionContainersSystem.TryGetSolution(uid, solutionName, out _, out _);
         }
 
         private bool CanJuice(EntityUid uid)

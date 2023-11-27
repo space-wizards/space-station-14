@@ -34,7 +34,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!EntityManager.HasComponent<SolutionContainerComponent>((component).Owner))
                 return;
 
-            if (_solutionContainerSystem.TryGetSolution(component.Owner, component.Solution, out var solution))
+            if (_solutionContainerSystem.TryGetSolution(component.Owner, component.Solution, out _, out var solution))
                 UpdateTags(component, solution);
         }
 

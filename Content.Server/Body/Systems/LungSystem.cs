@@ -52,7 +52,7 @@ public sealed class LungSystem : EntitySystem
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
-        if (!_solutionContainerSystem.TryGetSolution(uid, lung.Solution, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, lung.Solution, out var solution, out _))
             return;
 
         foreach (var gas in Enum.GetValues<Gas>())
@@ -65,7 +65,7 @@ public sealed class LungSystem : EntitySystem
             if (reagent == null) continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
-            _solutionSystem.TryAddReagent(uid, solution, reagent, amount, out _);
+            _solutionSystem.TryAddReagent(solution, reagent, amount, out _);
 
             // We don't remove the gas from the lung mix,
             // that's the responsibility of whatever gas is being metabolized.

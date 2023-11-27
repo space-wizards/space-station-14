@@ -52,7 +52,7 @@ public sealed partial class PuddleSystem
 
             evaporation.NextTick += EvaporationCooldown;
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, puddle.SolutionName, out var puddleSolution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, puddle.SolutionName, out _, out var puddleSolution))
                 continue;
 
             var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds;

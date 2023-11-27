@@ -83,12 +83,13 @@ namespace Content.Server.Nutrition.EntitySystems
             EntityUid contents = component.BowlSlot.Item.Value;
 
             if (!TryComp<SolutionContainerComponent>(contents, out var reagents) ||
-                !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Solution, out var pipeSolution))
+                !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Solution, out var pipeSolution, out _))
                 return false;
 
-            foreach (var (_, reagentSolution) in _solutionContainerSystem.EnumerateSolutions((contents, reagents)))
+            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((contents, reagents)))
             {
-                _solutionSystem.TryAddSolution(smokable.Owner, pipeSolution, reagentSolution);
+                var reagentSolution = soln.Comp.Solution;
+                _solutionSystem.TryAddSolution(pipeSolution, reagentSolution);
             }
 
             EntityManager.DeleteEntity(contents);

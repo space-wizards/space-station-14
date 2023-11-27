@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
@@ -10,176 +11,136 @@ namespace Content.Shared.Chemistry.Containers.EntitySystems;
 
 public abstract partial class SharedSolutionContainerSystem
 {
-    public bool TryGetInjectableSolution(EntityUid targetUid,
-        [NotNullWhen(true)] out Solution? solution,
-        InjectableSolutionComponent? injectable = null,
-        SolutionContainerComponent? manager = null
-    )
+    public bool TryGetRefillableSolution(Entity<RefillableSolutionComponent?, SolutionContainerComponent?> entity, [MaybeNullWhen(false)] out Entity<SolutionComponent> soln, [MaybeNullWhen(false)] out Solution solution)
     {
-        if (!Resolve(targetUid, ref manager, ref injectable, false)
-            || !TryGetSolution(targetUid, injectable.Solution, out solution, manager))
+        if (!Resolve(entity, ref entity.Comp1, logMissing: false))
         {
-            solution = null;
+            (soln, solution) = (default!, null);
             return false;
         }
 
-        return true;
+        return TryGetSolution((entity.Owner, entity.Comp2), entity.Comp1.Solution, out soln, out solution);
     }
 
-    public bool TryGetRefillableSolution(EntityUid targetUid,
-        [NotNullWhen(true)] out Solution? solution,
-        SolutionContainerComponent? solutionManager = null,
-        RefillableSolutionComponent? refillable = null)
+    public bool TryGetDrainableSolution(Entity<DrainableSolutionComponent?, SolutionContainerComponent?> entity, [MaybeNullWhen(false)] out Entity<SolutionComponent> soln, [MaybeNullWhen(false)] out Solution solution)
     {
-        if (!Resolve(targetUid, ref solutionManager, ref refillable, false)
-            || !TryGetSolution(targetUid, refillable.Solution, out var refillableSolution, solutionManager))
+        if (!Resolve(entity, ref entity.Comp1, logMissing: false))
         {
-            solution = null;
+            (soln, solution) = (default!, null);
             return false;
         }
 
-        solution = refillableSolution;
-        return true;
+        return TryGetSolution((entity.Owner, entity.Comp2), entity.Comp1.Solution, out soln, out solution);
     }
 
-    public bool TryGetDrainableSolution(EntityUid uid,
-        [NotNullWhen(true)] out Solution? solution,
-        DrainableSolutionComponent? drainable = null,
-        SolutionContainerComponent? manager = null)
+    public bool TryGetDumpableSolution(Entity<DumpableSolutionComponent?, SolutionContainerComponent?> entity, [MaybeNullWhen(false)] out Entity<SolutionComponent> soln, [MaybeNullWhen(false)] out Solution solution)
     {
-        if (!Resolve(uid, ref drainable, ref manager, false)
-            || !TryGetSolution(uid, drainable.Solution, out solution, manager))
+        if (!Resolve(entity, ref entity.Comp1, logMissing: false))
         {
-            solution = null;
+            (soln, solution) = (default!, null);
             return false;
         }
 
-        return true;
+        return TryGetSolution((entity.Owner, entity.Comp2), entity.Comp1.Solution, out soln, out solution);
     }
 
-    public bool TryGetDumpableSolution(EntityUid uid,
-        [NotNullWhen(true)] out Solution? solution,
-        DumpableSolutionComponent? dumpable = null,
-        SolutionContainerComponent? manager = null)
+    public bool TryGetDrawableSolution(Entity<DrawableSolutionComponent?, SolutionContainerComponent?> entity, [MaybeNullWhen(false)] out Entity<SolutionComponent> soln, [MaybeNullWhen(false)] out Solution solution)
     {
-        if (!Resolve(uid, ref dumpable, ref manager, false)
-            || !TryGetSolution(uid, dumpable.Solution, out solution, manager))
+        if (!Resolve(entity, ref entity.Comp1, logMissing: false))
         {
-            solution = null;
+            (soln, solution) = (default!, null);
             return false;
         }
 
-        return true;
+        return TryGetSolution((entity.Owner, entity.Comp2), entity.Comp1.Solution, out soln, out solution);
     }
 
-    public bool TryGetDrawableSolution(EntityUid uid,
-        [NotNullWhen(true)] out Solution? solution,
-        DrawableSolutionComponent? drawable = null,
-        SolutionContainerComponent? manager = null)
+    public bool TryGetInjectableSolution(Entity<InjectableSolutionComponent?, SolutionContainerComponent?> entity, [MaybeNullWhen(false)] out Entity<SolutionComponent> soln, [MaybeNullWhen(false)] out Solution solution)
     {
-        if (!Resolve(uid, ref drawable, ref manager, false)
-            || !TryGetSolution(uid, drawable.Solution, out solution, manager))
+        if (!Resolve(entity, ref entity.Comp1, logMissing: false))
         {
-            solution = null;
+            (soln, solution) = (default!, null);
             return false;
         }
 
-        return true;
+        return TryGetSolution((entity.Owner, entity.Comp2), entity.Comp1.Solution, out soln, out solution);
     }
 
-    public bool TryGetFitsInDispenser(EntityUid owner,
-        [NotNullWhen(true)] out Solution? solution,
-        FitsInDispenserComponent? dispenserFits = null,
-        SolutionContainerComponent? solutionManager = null)
+    public bool TryGetFitsInDispenser(Entity<FitsInDispenserComponent?, SolutionContainerComponent?> entity, [MaybeNullWhen(false)] out Entity<SolutionComponent> soln, [MaybeNullWhen(false)] out Solution solution)
     {
-        if (!Resolve(owner, ref dispenserFits, ref solutionManager, false)
-            || !TryGetSolution(owner, dispenserFits.Solution, out solution, solutionManager))
+        if (!Resolve(entity, ref entity.Comp1, logMissing: false))
         {
-            solution = null;
+            (soln, solution) = (default!, null);
             return false;
         }
 
-        return true;
+        return TryGetSolution((entity.Owner, entity.Comp2), entity.Comp1.Solution, out soln, out solution);
     }
 
-    public bool TryGetMixableSolution(EntityUid uid,
-        [NotNullWhen(true)] out Solution? solution,
-        SolutionContainerComponent? solutionsMgr = null)
+    public bool TryGetMixableSolution(Entity<SolutionContainerComponent?> container, [NotNullWhen(true)] out Entity<SolutionComponent> solution)
     {
-
-        if (!Resolve(uid, ref solutionsMgr, false))
-        {
-            solution = null;
-            return false;
-        }
-
-        var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(uid);
-        RaiseLocalEvent(uid, ref getMixableSolutionAttempt);
+        var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(container);
+        RaiseLocalEvent(container, ref getMixableSolutionAttempt);
         if (getMixableSolutionAttempt.MixedSolution != null)
         {
-            solution = getMixableSolutionAttempt.MixedSolution;
+            solution = getMixableSolutionAttempt.MixedSolution.Value;
             return true;
         }
 
-        var tryGetSolution = EnumerateSolutions((uid, solutionsMgr)).FirstOrNull(x => x.Solution.CanMix);
+        if (!Resolve(container, ref container.Comp, false))
+        {
+            solution = default!;
+            return false;
+        }
+
+        var tryGetSolution = EnumerateSolutions(container).FirstOrNull(x => x.Solution.Comp.Solution.CanMix);
         if (tryGetSolution.HasValue)
         {
             solution = tryGetSolution.Value.Solution;
             return true;
         }
 
-        solution = null;
+        solution = default!;
         return false;
     }
 
 
-    public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
-        RefillableSolutionComponent? refillableSolution = null)
+    public void Refill(Entity<RefillableSolutionComponent?> entity, Entity<SolutionComponent> soln, Solution refill)
     {
-        if (!Resolve(targetUid, ref refillableSolution, false))
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return;
 
-        SolutionSystem.TryAddSolution(targetUid, targetSolution, addedSolution);
+        SolutionSystem.AddSolution(soln, refill);
     }
 
-    public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
-        InjectableSolutionComponent? injectableSolution = null)
+    public void Inject(Entity<InjectableSolutionComponent?> entity, Entity<SolutionComponent> soln, Solution inject)
     {
-        if (!Resolve(targetUid, ref injectableSolution, false))
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return;
 
-        SolutionSystem.TryAddSolution(targetUid, targetSolution, addedSolution);
+        SolutionSystem.AddSolution(soln, inject);
     }
 
-    public Solution Draw(EntityUid targetUid, Solution solution, FixedPoint2 amount,
-        DrawableSolutionComponent? drawableSolution = null)
+    public Solution Drain(Entity<DrainableSolutionComponent?> entity, Entity<SolutionComponent> soln, FixedPoint2 quantity)
     {
-        if (!Resolve(targetUid, ref drawableSolution, false))
-            return new Solution();
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+            return new();
 
-        return SolutionSystem.SplitSolution(targetUid, solution, amount);
+        return SolutionSystem.SplitSolution(soln, quantity);
     }
 
-    public Solution Drain(EntityUid targetUid, Solution targetSolution, FixedPoint2 amount,
-        DrainableSolutionComponent? drainableSolution = null)
+    public Solution Draw(Entity<DrawableSolutionComponent?> entity, Entity<SolutionComponent> soln, FixedPoint2 quantity)
     {
-        if (!Resolve(targetUid, ref drainableSolution, false))
-            return new Solution();
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+            return new();
 
-        return SolutionSystem.SplitSolution(targetUid, targetSolution, amount);
+        return SolutionSystem.SplitSolution(soln, quantity);
     }
 
-
-    public FixedPoint2 DrainAvailable(EntityUid uid)
-    {
-        return !TryGetDrainableSolution(uid, out var solution)
-            ? FixedPoint2.Zero
-            : solution.Volume;
-    }
 
     public float PercentFull(EntityUid uid)
     {
-        if (!TryGetDrainableSolution(uid, out var solution) || solution.MaxVolume.Equals(FixedPoint2.Zero))
+        if (!TryGetDrainableSolution(uid, out _, out var solution) || solution.MaxVolume.Equals(FixedPoint2.Zero))
             return 0;
 
         return solution.FillFraction * 100;

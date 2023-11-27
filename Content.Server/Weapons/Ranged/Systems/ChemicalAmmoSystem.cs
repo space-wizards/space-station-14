@@ -1,6 +1,7 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Weapons.Ranged.Events;
 using System.Linq;
@@ -19,18 +20,18 @@ namespace Content.Server.Weapons.Ranged.Systems
 
         private void OnFire(EntityUid uid, ChemicalAmmoComponent component, AmmoShotEvent args)
         {
-            if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var ammoSolution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var ammoSoln, out var ammoSolution))
                 return;
 
             var projectiles = args.FiredProjectiles;
 
-            var projectileSolutionContainers = new List<(EntityUid, Solution)>();
+            var projectileSolutionContainers = new List<(EntityUid, Entity<SolutionComponent>)>();
             foreach (var projectile in projectiles)
             {
                 if (_solutionContainerSystem
-                    .TryGetSolution(projectile, component.SolutionName, out var projectileSolutionContainer))
+                    .TryGetSolution(projectile, component.SolutionName, out var projectileSoln, out _))
                 {
-                    projectileSolutionContainers.Add((uid, projectileSolutionContainer));
+                    projectileSolutionContainers.Add((uid, projectileSoln));
                 }
             }
 
@@ -39,13 +40,13 @@ namespace Content.Server.Weapons.Ranged.Systems
 
             var solutionPerProjectile = ammoSolution.Volume * (1 / projectileSolutionContainers.Count);
 
-            foreach (var (projectileUid, projectileSolution) in projectileSolutionContainers)
+            foreach (var (_, projectileSolution) in projectileSolutionContainers)
             {
-                var solutionToTransfer = _solutionSystem.SplitSolution(uid, ammoSolution, solutionPerProjectile);
-                _solutionSystem.TryAddSolution(projectileUid, projectileSolution, solutionToTransfer);
+                var solutionToTransfer = _solutionSystem.SplitSolution(ammoSoln, solutionPerProjectile);
+                _solutionSystem.TryAddSolution(projectileSolution, solutionToTransfer);
             }
 
-            _solutionSystem.RemoveAllSolution(uid, ammoSolution);
+            _solutionSystem.RemoveAllSolution(ammoSoln);
         }
     }
 }

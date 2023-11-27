@@ -70,7 +70,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (container is not { Valid: true })
                 return null;
 
-            if (_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var solution))
+            if (_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out var solution))
             {
                 return new ContainerInfo(Name(container.Value), solution.Volume, solution.MaxVolume)
                 {
@@ -124,10 +124,10 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
-            if (outputContainer is not {Valid: true} || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution))
+            if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
-            if (_solutionSystem.TryAddReagent(outputContainer.Value, solution, message.ReagentId, (int)reagentDispenser.Comp.DispenseAmount, out var dispensedAmount)
+            if (_solutionSystem.TryAddReagent(solution, message.ReagentId, (int) reagentDispenser.Comp.DispenseAmount, out var dispensedAmount)
                 && message.Session.AttachedEntity is not null)
             {
                 _adminLogger.Add(LogType.ChemicalReaction, LogImpact.Medium,
@@ -141,10 +141,10 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnClearContainerSolutionMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserClearContainerSolutionMessage message)
         {
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
-            if (outputContainer is not {Valid: true} || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution))
+            if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
-            _solutionSystem.RemoveAllSolution(outputContainer.Value, solution);
+            _solutionSystem.RemoveAllSolution(solution);
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser);
         }

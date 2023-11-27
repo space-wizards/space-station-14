@@ -15,9 +15,7 @@ public sealed partial class PuddleSystem
 
     private void OnRefillableDragged(EntityUid uid, RefillableSolutionComponent component, ref DragDropDraggedEvent args)
     {
-        _solutionContainerSystem.TryGetSolution(uid, component.Solution, out var solution);
-
-        if (solution?.Volume == FixedPoint2.Zero)
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.Solution, out var soln, out var solution) || solution.Volume == FixedPoint2.Zero)
         {
             _popups.PopupEntity(Loc.GetString("mopping-system-empty", ("used", uid)), uid, args.User);
             return;
@@ -26,20 +24,20 @@ public sealed partial class PuddleSystem
         // Dump reagents into DumpableSolution
         if (TryComp<DumpableSolutionComponent>(args.Target, out var dump))
         {
-            _solutionContainerSystem.TryGetDumpableSolution(args.Target, out var dumpableSolution, dump);
-            if (dumpableSolution == null || solution == null)
+            _solutionContainerSystem.TryGetDumpableSolution((args.Target, dump, null), out var dumpableSoln, out var dumpableSolution);
+            if (dumpableSolution == null)
                 return;
 
             bool success = true;
             if (dump.Unlimited)
             {
-                var split = _solutionSystem.SplitSolution(uid, solution, solution.Volume);
+                var split = _solutionSystem.SplitSolution(soln, solution.Volume);
                 dumpableSolution.AddSolution(split, _prototypeManager);
             }
             else
             {
-                var split = _solutionSystem.SplitSolution(uid, solution, dumpableSolution.AvailableVolume);
-                success = _solutionSystem.TryAddSolution(args.Target, dumpableSolution, split);
+                var split = _solutionSystem.SplitSolution(soln, dumpableSolution.AvailableVolume);
+                success = _solutionSystem.TryAddSolution(dumpableSoln, split);
             }
 
             if (success)
@@ -54,19 +52,15 @@ public sealed partial class PuddleSystem
             return;
         }
 
-        TryComp<DrainableSolutionComponent>(args.Target, out var drainable);
-
-        _solutionContainerSystem.TryGetDrainableSolution(args.Target, out var drainableSolution, drainable);
-
         // Take reagents from target
-        if (drainable != null)
+        if (!TryComp<DrainableSolutionComponent>(args.Target, out var drainable))
         {
-            if (drainableSolution == null || solution == null)
+            if (!_solutionContainerSystem.TryGetDrainableSolution((args.Target, drainable, null), out var drainableSolution, out _))
                 return;
 
-            var split = _solutionSystem.SplitSolution(args.Target, drainableSolution, solution.AvailableVolume);
+            var split = _solutionSystem.SplitSolution(drainableSolution, solution.AvailableVolume);
 
-            if (_solutionSystem.TryAddSolution(uid, solution, split))
+            if (_solutionSystem.TryAddSolution(soln, split))
             {
                 _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, uid);
             }

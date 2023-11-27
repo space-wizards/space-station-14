@@ -21,6 +21,14 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         SubscribeLocalEvent<ContainerSolutionComponent, ComponentShutdown>(OnComponentShutdown);
     }
 
+    public IEnumerable<(string Name, Solution Solution)> EnumerateSolutions(SolutionContainerManagerComponent container)
+    {
+        foreach (var (name, solution) in container.Solutions)
+        {
+            yield return (name, solution);
+        }
+    }
+
 
     public Solution EnsureSolution(Entity<MetaDataComponent?> entity, string name)
         => EnsureSolution(entity, name, out _);

@@ -41,7 +41,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
 
     private void PulseScalableEffect(EntityUid uid, InjectionAnomalyComponent component, float injectRadius, float maxInject)
     {
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out _, out var sol))
             return;
         //We get all the entity in the radius into which the reagent will be injected.
         var xformQuery = GetEntityQuery<TransformComponent>();
@@ -52,13 +52,12 @@ public sealed class InjectionAnomalySystem : EntitySystem
         //for each matching entity found
         foreach (var ent in allEnts)
         {
-            if (!_solutionContainer.TryGetInjectableSolution(ent, out var injectable))
+            if (!_solutionContainer.TryGetInjectableSolution(ent, out var injectable, out _))
                 continue;
 
             if (_injectableQuery.TryGetComponent(ent, out var injEnt))
             {
-                var buffer = sol;
-                _solution.TryTransferSolution(ent, injectable, buffer, maxInject);
+                _solution.TryTransferSolution(injectable, sol, maxInject);
                 //Spawn Effect
                 var uidXform = Transform(ent);
                 Spawn(component.VisualEffectPrototype, uidXform.Coordinates);

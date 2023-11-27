@@ -1,6 +1,7 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
+using Content.Server.Chemistry.Containers.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
@@ -112,9 +113,29 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        foreach (var (_, solution) in _solutionContainerSystem.EnumerateSolutions(component))
+        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(component))
         {
+            var solution = soln.Comp.Solution;
             foreach (var (reagent, quantity) in solution.Contents)
+            {
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
+                    continue;
+
+                // TODO check ReagentData for price information?
+                price += (float) quantity * reagentProto.PricePerUnit;
+            }
+        }
+
+        return price;
+    }
+
+    private double GetSolutionPrice(SolutionContainerManagerComponent component)
+    {
+        var price = 0.0;
+
+        foreach (var (_, prototype) in _solutionContainerSystem.EnumerateSolutions(component))
+        {
+            foreach (var (reagent, quantity) in prototype.Contents)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
                     continue;
@@ -269,9 +290,9 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(SolutionContainerComponent)), out var solManager))
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(SolutionContainerManagerComponent)), out var solManager))
         {
-            var solComp = (SolutionContainerComponent) solManager.Component;
+            var solComp = (SolutionContainerManagerComponent) solManager.Component;
             price += GetSolutionPrice(solComp);
         }
 

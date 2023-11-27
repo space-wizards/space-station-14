@@ -57,7 +57,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         if (!_entMan.TryGetComponent<DamageableComponent>(target, out var damage))
             return HTNOperatorStatus.Failed;
 
-        if (!_solutionContainer.TryGetInjectableSolution(target, out var injectable))
+        if (!_solutionContainer.TryGetInjectableSolution(target, out var injectable, out _))
             return HTNOperatorStatus.Failed;
 
         if (!_interaction.InRangeUnobstructed(owner, target))
@@ -71,7 +71,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         if (total >= MedibotComponent.EmergencyMedDamageThreshold)
         {
             _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
-            _solution.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedAmount, out var accepted);
+            _solution.TryAddReagent(injectable, botComp.EmergencyMed, botComp.EmergencyMedAmount, out var accepted);
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             _audio.PlayPvs(botComp.InjectSound, target);
             _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit);
@@ -81,7 +81,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         if (total >= MedibotComponent.StandardMedDamageThreshold && total <= MedibotComponent.StandardMedDamageThresholdStop)
         {
             _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
-            _solution.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedAmount, out var accepted);
+            _solution.TryAddReagent(injectable, botComp.StandardMed, botComp.StandardMedAmount, out var accepted);
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             _audio.PlayPvs(botComp.InjectSound, target);
             _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit);

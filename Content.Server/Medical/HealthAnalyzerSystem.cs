@@ -81,7 +81,7 @@ namespace Content.Server.Medical
             _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
                 GetNetEntity(target),
                 temp != null ? temp.CurrentTemperature : float.NaN,
-                (bloodstream != null && _solutionContainerSystem.TryGetSolution(target.Value, bloodstream.BloodSolutionName, out var bloodSolution))
+                (bloodstream != null && _solutionContainerSystem.TryGetSolution(target.Value, bloodstream.BloodSolutionName, out _, out var bloodSolution))
                     ? bloodSolution.FillFraction
                     : float.NaN
             ));

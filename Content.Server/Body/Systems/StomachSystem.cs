@@ -33,11 +33,10 @@ namespace Content.Server.Body.Systems
                 stomach.AccumulatedFrameTime -= stomach.UpdateInterval;
 
                 // Get our solutions
-                if (!_solutionContainerSystem.TryGetSolution(uid, DefaultSolutionName,
-                        out var stomachSolution, sol))
+                if (!_solutionContainerSystem.TryGetSolution((uid, sol), DefaultSolutionName, out var stomachSoln, out var stomachSolution))
                     continue;
 
-                if (organ.Body is not { } body || !_solutionContainerSystem.TryGetSolution(body, stomach.BodySolutionName, out var bodySolution))
+                if (organ.Body is not { } body || !_solutionContainerSystem.TryGetSolution(body, stomach.BodySolutionName, out var bodySolution, out _))
                     continue;
 
                 var transferSolution = new Solution();
@@ -53,7 +52,7 @@ namespace Content.Server.Body.Systems
                             if (reagent.Quantity > delta.ReagentQuantity.Quantity)
                                 reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
 
-                            _solutionSystem.RemoveReagent(uid, stomachSolution, reagent);
+                            stomachSolution.RemoveReagent(reagent);
                             transferSolution.AddReagent(reagent);
                         }
 
@@ -66,8 +65,10 @@ namespace Content.Server.Body.Systems
                     stomach.ReagentDeltas.Remove(item);
                 }
 
+                _solutionSystem.UpdateChemicals(stomachSoln);
+
                 // Transfer everything to the body solution!
-                _solutionSystem.TryAddSolution(body, bodySolution, transferSolution);
+                _solutionSystem.TryAddSolution(bodySolution, transferSolution);
             }
         }
 
@@ -93,7 +94,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref solutions, false))
                 return false;
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, DefaultSolutionName, out var stomachSolution, solutions))
+            if (!_solutionContainerSystem.TryGetSolution((uid, solutions), DefaultSolutionName, out _, out var stomachSolution))
                 return false;
 
             // TODO: For now no partial transfers. Potentially change by design
@@ -110,11 +111,11 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref stomach, ref solutions, false))
                 return false;
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, DefaultSolutionName, out var stomachSolution, solutions)
+            if (!_solutionContainerSystem.TryGetSolution((uid, solutions), DefaultSolutionName, out var stomachSolution, out _)
                 || !CanTransferSolution(uid, solution, solutions))
                 return false;
 
-            _solutionSystem.TryAddSolution(uid, stomachSolution, solution);
+            _solutionSystem.TryAddSolution(stomachSolution, solution);
             // Add each reagent to ReagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {

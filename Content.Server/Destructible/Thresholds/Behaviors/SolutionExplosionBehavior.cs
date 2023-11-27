@@ -15,7 +15,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            if (system.SolutionContainerSystem.TryGetSolution(owner, Solution, out var explodingSolution)
+            if (system.SolutionContainerSystem.TryGetSolution(owner, Solution, out _, out var explodingSolution)
                 && system.EntityManager.TryGetComponent(owner, out ExplosiveComponent? explosiveComponent))
             {
                 // Don't explode if there's no solution

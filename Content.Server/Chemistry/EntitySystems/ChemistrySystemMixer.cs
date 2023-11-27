@@ -19,18 +19,17 @@ public sealed partial class ChemistrySystem
 
         var mixAttemptEvent = new MixingAttemptEvent(uid);
         RaiseLocalEvent(uid, ref mixAttemptEvent);
-        if(mixAttemptEvent.Cancelled)
+        if (mixAttemptEvent.Cancelled)
         {
             return;
         }
 
-        Solution? solution = null;
-        if (!_solutionContainers.TryGetMixableSolution(args.Target.Value, out solution))
-              return;
+        if (!_solutionContainers.TryGetMixableSolution(args.Target.Value, out var solution))
+            return;
 
         _popup.PopupEntity(Loc.GetString(component.MixMessage, ("mixed", Identity.Entity(args.Target.Value, EntityManager)), ("mixer", Identity.Entity(uid, EntityManager))), args.User, args.User);
 
-        _solutions.UpdateChemicals(args.Target.Value, solution, true, component);
+        _solutions.UpdateChemicals(solution, true, component);
 
         var afterMixingEvent = new AfterMixingEvent(uid, args.Target.Value);
         RaiseLocalEvent(uid, afterMixingEvent);

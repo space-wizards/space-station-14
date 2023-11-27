@@ -53,7 +53,7 @@ public sealed class LubeSystem : EntitySystem
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out _, out var solution))
         {
             var quantity = solution.RemoveReagent(component.Reagent, component.Consumption);
             if (quantity > 0)

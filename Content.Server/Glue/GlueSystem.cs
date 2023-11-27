@@ -1,12 +1,13 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Popups;
-using Content.Shared.Item;
-using Content.Shared.Glue;
-using Content.Shared.Interaction;
-using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Glue;
 using Content.Shared.Hands;
+using Content.Shared.Interaction;
+using Content.Shared.Item;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Popups;
 using Robust.Shared.Timing;
 using Content.Shared.Interaction.Components;
 
@@ -17,6 +18,7 @@ public sealed class GlueSystem : SharedGlueSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SolutionSystem _solution = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -59,7 +61,7 @@ public sealed class GlueSystem : SharedGlueSystem
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out _, out var solution))
         {
             var quantity = solution.RemoveReagent(component.Reagent, component.ConsumptionUnit);
             if (quantity > 0)

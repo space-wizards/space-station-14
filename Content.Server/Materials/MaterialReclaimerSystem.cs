@@ -83,10 +83,10 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             return;
 
         // if we're trying to get a solution out of the reclaimer, don't destroy it
-        if (_solutionContainer.TryGetSolution(uid, component.SolutionContainerId, out var outputSolution) && outputSolution.Contents.Any())
+        if (_solutionContainer.TryGetSolution(uid, component.SolutionContainerId, out _, out var outputSolution) && outputSolution.Contents.Any())
         {
             if (TryComp<SolutionContainerComponent>(args.Used, out var managerComponent) &&
-                _solutionContainer.EnumerateSolutions((args.Used, managerComponent)).Any(s => s.Solution.AvailableVolume > 0))
+                _solutionContainer.EnumerateSolutions((args.Used, managerComponent)).Any(s => s.Solution.Comp.Solution.AvailableVolume > 0))
             {
                 if (_openable.IsClosed(args.Used))
                     return;
@@ -226,7 +226,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     {
         if (!Resolve(reclaimer, ref reclaimerComponent, ref xform))
             return;
-        if (!_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution))
+        if (!_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution, out _))
             return;
 
         efficiency *= reclaimerComponent.Efficiency;
@@ -245,8 +245,9 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         // if the item we inserted has reagents, add it in.
         if (TryComp<SolutionContainerComponent>(item, out var solutionContainer))
         {
-            foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((item, solutionContainer)))
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solutionContainer)))
             {
+                var solution = soln.Comp.Solution;
                 foreach (var quantity in solution.Contents)
                 {
                     totalChemicals.AddReagent(quantity.Reagent.Prototype, quantity.Quantity * efficiency, false);
@@ -254,7 +255,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             }
         }
 
-        _solution.TryTransferSolution(reclaimer, outputSolution, totalChemicals, totalChemicals.Volume);
+        _solution.TryTransferSolution(outputSolution, totalChemicals, totalChemicals.Volume);
         if (totalChemicals.Volume > 0)
         {
             _puddle.TrySpillAt(reclaimer, totalChemicals, out _, sound, transformComponent: xform);

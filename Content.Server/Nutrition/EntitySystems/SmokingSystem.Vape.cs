@@ -37,14 +37,12 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnVapeInteraction(EntityUid uid, VapeComponent comp, AfterInteractEvent args)
         {
-            _solutionContainerSystem.TryGetRefillableSolution(uid, out var solution);
-
             var delay = comp.Delay;
             var forced = true;
             var exploded = false;
 
             if (!args.CanReach
-                || solution == null
+                || !_solutionContainerSystem.TryGetRefillableSolution(uid, out _, out var solution)
                 || !HasComp<BloodstreamComponent>(args.Target)
                 || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
             {
@@ -121,7 +119,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 });
             }
             args.Handled = true;
-		}
+        }
 
         private void OnVapeDoAfter(EntityUid uid, VapeComponent comp, VapeDoAfterEvent args)
         {
@@ -169,5 +167,5 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             args.Handled = true;
         }
-	}
+    }
 }

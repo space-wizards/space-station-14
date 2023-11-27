@@ -40,7 +40,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
-                if (_solutions.TryGetSolution(uid, foodComp.Solution, out var solution))
+                if (_solutions.TryGetSolution(uid, foodComp.Solution, out _, out var solution))
                 {
                     _puddle.TrySpillAt(uid, solution, out _, false);
                 }

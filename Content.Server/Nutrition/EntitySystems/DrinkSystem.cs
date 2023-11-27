@@ -79,7 +79,7 @@ public sealed class DrinkSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return FixedPoint2.Zero;
 
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out _, out var sol))
             return FixedPoint2.Zero;
 
         return sol.Volume;
@@ -101,7 +101,7 @@ public sealed class DrinkSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return 0f;
 
-        if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution))
+        if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out _, out var solution))
             return 0f;
 
         var total = 0f;
@@ -185,12 +185,12 @@ public sealed class DrinkSystem : EntitySystem
 
         if (!openable.Opened &&
             _random.Prob(comp.BurstChance) &&
-            _solutionContainer.TryGetSolution(uid, drink.Solution, out var interactions))
+            _solutionContainer.TryGetSolution(uid, drink.Solution, out var soln, out var interactions))
         {
             // using SetOpen instead of TryOpen to not play 2 sounds
             _openable.SetOpen(uid, true, openable);
 
-            var solution = _solution.SplitSolution(uid, interactions, interactions.Volume);
+            var solution = _solution.SplitSolution(soln, interactions.Volume);
             _puddle.TrySpillAt(uid, solution, out _);
 
             _audio.PlayPvs(comp.BurstSound, uid);
@@ -243,8 +243,7 @@ public sealed class DrinkSystem : EntitySystem
         if (_openable.IsClosed(item, user))
             return true;
 
-        if (!_solutionContainer.TryGetSolution(item, drink.Solution, out var drinkSolution) ||
-            drinkSolution.Volume <= 0)
+        if (!_solutionContainer.TryGetSolution(item, drink.Solution, out var drinkSoln, out var drinkSolution) || drinkSolution.Volume <= 0)
         {
             if (drink.IgnoreEmpty)
                 return false;
@@ -252,9 +251,6 @@ public sealed class DrinkSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", item)), item, user);
             return true;
         }
-
-        if (drinkSolution.Name == null)
-            return false;
 
         if (_food.IsMouthBlocked(target, user))
             return true;
@@ -284,7 +280,7 @@ public sealed class DrinkSystem : EntitySystem
         var doAfterEventArgs = new DoAfterArgs(EntityManager,
             user,
             forceDrink ? drink.ForceFeedDelay : drink.Delay,
-            new ConsumeDoAfterEvent(drinkSolution.Name, flavors),
+            new ConsumeDoAfterEvent(drink.Solution, flavors),
             eventTarget: item,
             target: target,
             used: item)
@@ -314,7 +310,7 @@ public sealed class DrinkSystem : EntitySystem
         if (!TryComp<BodyComponent>(args.Target, out var body))
             return;
 
-        if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var solution))
+        if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var soln, out var solution))
             return;
 
         // TODO this should really be checked every tick.
@@ -326,7 +322,7 @@ public sealed class DrinkSystem : EntitySystem
             return;
 
         var transferAmount = FixedPoint2.Min(component.TransferAmount, solution.Volume);
-        var drained = _solution.SplitSolution(uid, solution, transferAmount);
+        var drained = _solution.SplitSolution(soln, transferAmount);
         var forceDrink = args.User != args.Target;
 
         args.Handled = true;
@@ -343,7 +339,7 @@ public sealed class DrinkSystem : EntitySystem
                 return;
             }
 
-            _solutionContainer.Refill(args.Target.Value, solution, drained);
+            _solutionContainer.Refill(args.Target.Value, soln, drained);
             return;
         }
 
@@ -360,7 +356,7 @@ public sealed class DrinkSystem : EntitySystem
                 _puddle.TrySpillAt(args.Target.Value, drained, out _);
             }
             else
-                _solution.TryAddSolution(uid, solution, drained);
+                _solution.TryAddSolution(soln, drained);
 
             return;
         }

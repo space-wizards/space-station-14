@@ -145,8 +145,8 @@ public sealed class PayloadSystem : EntitySystem
             || component.BeakerSlotB.Item is not EntityUid beakerB
             || !TryComp(beakerA, out FitsInDispenserComponent? compA)
             || !TryComp(beakerB, out FitsInDispenserComponent? compB)
-            || !_solutionContainerSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA)
-            || !_solutionContainerSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB)
+            || !_solutionContainerSystem.TryGetSolution(beakerA, compA.Solution, out var solnA, out var solutionA)
+            || !_solutionContainerSystem.TryGetSolution(beakerB, compB.Solution, out var solnB, out var solutionB)
             || solutionA.Volume == 0
             || solutionB.Volume == 0)
         {
@@ -160,14 +160,14 @@ public sealed class PayloadSystem : EntitySystem
             $"Chemical bomb payload {ToPrettyString(uid):payload} at {Transform(uid).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
 
         solutionA.MaxVolume += solutionB.MaxVolume;
-        _solutionSystem.TryAddSolution(beakerA, solutionA, solutionB);
-        _solutionSystem.RemoveAllSolution(beakerB, solutionB);
+        _solutionSystem.TryAddSolution(solnA, solutionB);
+        _solutionSystem.RemoveAllSolution(solnB);
 
         // The grenade might be a dud. Redistribute solution:
-        var tmpSol = _solutionSystem.SplitSolution(beakerA, solutionA, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
-        _solutionSystem.TryAddSolution(beakerB, solutionB, tmpSol);
+        var tmpSol = _solutionSystem.SplitSolution(solnA, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
+        _solutionSystem.TryAddSolution(solnB, tmpSol);
         solutionA.MaxVolume -= solutionB.MaxVolume;
-        _solutionSystem.UpdateChemicals(beakerA, solutionA, false);
+        _solutionSystem.UpdateChemicals(solnA);
 
         args.Handled = true;
     }

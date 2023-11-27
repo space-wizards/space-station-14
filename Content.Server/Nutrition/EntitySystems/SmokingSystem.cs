@@ -103,7 +103,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     continue;
                 }
 
-                if (!_solutionContainerSystem.TryGetSolution(uid, smokable.Solution, out var solution))
+                if (!_solutionContainerSystem.TryGetSolution(uid, smokable.Solution, out var soln, out var solution))
                 {
                     _active.Remove(uid);
                     continue;
@@ -120,7 +120,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     }
                 }
 
-                var inhaledSolution = _solutionSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
+                var inhaledSolution = _solutionSystem.SplitSolution(soln, smokable.InhaleAmount * _timer);
 
                 if (solution.Volume == FixedPoint2.Zero)
                 {

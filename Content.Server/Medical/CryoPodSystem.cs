@@ -105,14 +105,15 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
                 && fitsInDispenserQuery.TryGetComponent(container, out var fitsInDispenserComponent)
                 && solutionContainerManagerQuery.TryGetComponent(container,
                     out var solutionContainerManagerComponent)
-                && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, dispenserFits: fitsInDispenserComponent, solutionManager: solutionContainerManagerComponent))
+                && _solutionContainerSystem.TryGetFitsInDispenser((container.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
+                    out var containerSolution, out _))
             {
                 if (!bloodStreamQuery.TryGetComponent(patient, out var bloodstream))
                 {
                     continue;
                 }
 
-                var solutionToInject = _solutionSystem.SplitSolution(container.Value, containerSolution, cryoPod.BeakerTransferAmount);
+                var solutionToInject = _solutionSystem.SplitSolution(containerSolution, cryoPod.BeakerTransferAmount);
                 _bloodstreamSystem.TryAddToChemicals(patient.Value, solutionToInject, bloodstream);
                 _reactiveSystem.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
             }
@@ -189,7 +190,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
             HealthAnalyzerUiKey.Key,
             new HealthAnalyzerScannedUserMessage(GetNetEntity(cryoPodComponent.BodyContainer.ContainedEntity),
             temp?.CurrentTemperature ?? 0,
-            (bloodstream != null && _solutionContainerSystem.TryGetSolution(uid, bloodstream.BloodSolutionName, out var bloodSolution))
+            (bloodstream != null && _solutionContainerSystem.TryGetSolution(uid, bloodstream.BloodSolutionName, out _, out var bloodSolution))
                 ? bloodSolution.FillFraction
                 : 0
         ));
@@ -206,7 +207,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     private void OnExamined(EntityUid uid, CryoPodComponent component, ExaminedEvent args)
     {
         var container = _itemSlotsSystem.GetItemOrNull(uid, component.SolutionContainerName);
-        if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
+        if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out var containerSolution))
         {
             args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
             if (containerSolution.Volume == 0)

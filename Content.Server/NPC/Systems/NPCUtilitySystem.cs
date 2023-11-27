@@ -491,7 +491,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 foreach (var ent in entities)
                 {
                     if (!_puddleQuery.TryGetComponent(ent, out var puddleComp) ||
-                        !_solutions.TryGetSolution(ent, puddleComp.SolutionName, out var sol) ||
+                        !_solutions.TryGetSolution(ent, puddleComp.SolutionName, out _, out var sol) ||
                         _puddle.CanFullyEvaporate(sol))
                     {
                         _entityList.Add(ent);

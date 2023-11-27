@@ -42,32 +42,31 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
 
-    public bool TryGetSolution(EntityUid uid, string? name, [MaybeNullWhen(false)] out Solution solution, SolutionContainerComponent? solutionsMgr = null)
+    public bool TryGetSolution(Entity<SolutionContainerComponent?> container, string? name, [MaybeNullWhen(false)] out Entity<SolutionComponent> entity, [MaybeNullWhen(false)] out Solution solution)
     {
-        EntityUid solutionEntity;
+        entity = default!;
         if (name is null)
-            solutionEntity = uid;
-        else if (!Resolve(uid, ref solutionsMgr, logMissing: false) || !solutionsMgr.Solutions.TryGetValue(name, out solutionEntity))
+            entity.Owner = container;
+        else if (!Resolve(container, ref container.Comp, logMissing: false) || !container.Comp.Solutions.TryGetValue(name, out entity.Owner))
         {
             solution = null;
             return false;
         }
 
-        if (!TryComp(solutionEntity, out SolutionComponent? solutionComponent))
+        if (!TryComp(entity, out entity.Comp!))
         {
             solution = null;
             return false;
         }
 
-        solution = solutionComponent.Solution;
-        Dirty(solutionEntity, solutionComponent);
+        solution = entity.Comp.Solution;
         return true;
     }
 
-    public IEnumerable<(string? Name, Solution Solution)> EnumerateSolutions(Entity<SolutionContainerComponent?> container, bool includeSelf = true)
+    public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionContainerComponent?> container, bool includeSelf = true)
     {
         if (includeSelf && TryComp(container, out SolutionComponent? solutionComp))
-            yield return (null, solutionComp.Solution);
+            yield return (null, (container.Owner, solutionComp));
 
         if (!Resolve(container, ref container.Comp, logMissing: false))
             yield break;
@@ -78,12 +77,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
-    public IEnumerable<(string Name, Solution Solution)> EnumerateSolutions(SolutionContainerComponent container)
+    public IEnumerable<(string Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(SolutionContainerComponent container)
     {
         foreach (var (name, solutionId) in container.Solutions)
         {
             if (TryComp(solutionId, out SolutionComponent? solutionComp))
-                yield return (name, solutionComp.Solution);
+                yield return (name, (solutionId, solutionComp));
         }
     }
 
@@ -114,8 +113,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (EntityManager.EntityExists(owner)
             && EntityManager.TryGetComponent(owner, out SolutionContainerComponent? managerComponent))
         {
-            foreach (var (_, solution) in EnumerateSolutions((owner, managerComponent)))
+            foreach (var (_, soln) in EnumerateSolutions((owner, managerComponent)))
             {
+                var solution = soln.Comp.Solution;
                 reagentQuantity += solution.GetTotalPrototypeQuantity(reagentId);
             }
         }
@@ -175,7 +175,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent, ExaminedEvent args)
     {
-        if (!TryGetSolution(uid, examinableComponent.Solution, out var solution))
+        if (!TryGetSolution(uid, examinableComponent.Solution, out _, out var solution))
         {
             return;
         }
@@ -259,9 +259,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        SolutionContainerComponent? solutionsManager = null;
-        if (!Resolve(args.Target, ref solutionsManager)
-            || !TryGetSolution(args.Target, component.Solution, out var solutionHolder, solutionsManager))
+        if (!TryGetSolution(args.Target, component.Solution, out _, out var solutionHolder))
         {
             return;
         }

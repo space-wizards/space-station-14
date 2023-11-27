@@ -38,7 +38,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
-            if (!solutionContainerSystem.TryGetSolution(uid.Value, args[1], out var solution, man))
+            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution, out _))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
@@ -51,14 +51,14 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if(quantityFloat < 0.0f)
+            if (quantityFloat < 0.0f)
             {
                 shell.WriteLine($"Cannot set the maximum volume of a solution to a negative number.");
                 return;
             }
 
             var quantity = FixedPoint2.New(quantityFloat);
-            _entManager.System<SolutionSystem>().SetCapacity(uid.Value, solution, quantity);
+            _entManager.System<SolutionSystem>().SetCapacity(solution, quantity);
         }
     }
 }

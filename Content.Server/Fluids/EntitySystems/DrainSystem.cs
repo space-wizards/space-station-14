@@ -68,8 +68,7 @@ public sealed class DrainSystem : SharedDrainSystem
     private void Empty(EntityUid container, SpillableComponent spillable, EntityUid target, DrainComponent drain)
     {
         // Find the solution in the container that is emptied
-        if (!_solutionContainerSystem.TryGetDrainableSolution(container, out var containerSolution) ||
-            containerSolution.Volume == FixedPoint2.Zero)
+        if (!_solutionContainerSystem.TryGetDrainableSolution(container, out var containerSoln, out var containerSolution) || containerSolution.Volume == FixedPoint2.Zero)
         {
             _popupSystem.PopupEntity(
                 Loc.GetString("drain-component-empty-verb-using-is-empty-message", ("object", container)),
@@ -78,17 +77,17 @@ public sealed class DrainSystem : SharedDrainSystem
         }
 
         // try to find the drain's solution
-        if (!_solutionContainerSystem.TryGetSolution(target, DrainComponent.SolutionName, out var drainSolution))
+        if (!_solutionContainerSystem.TryGetSolution(target, DrainComponent.SolutionName, out var drainSoln, out var drainSolution))
         {
             return;
         }
 
         // Try to transfer as much solution as possible to the drain
 
-        var transferSolution = _solutionSystem.SplitSolution(container, containerSolution,
+        var transferSolution = _solutionSystem.SplitSolution(containerSoln,
             FixedPoint2.Min(containerSolution.Volume, drainSolution.AvailableVolume));
 
-        _solutionSystem.TryAddSolution(target, drainSolution, transferSolution);
+        _solutionSystem.TryAddSolution(drainSoln, transferSolution);
 
         _audioSystem.PlayPvs(drain.ManualDrainSound, target);
         _ambientSoundSystem.SetAmbience(target, true);
@@ -133,9 +132,7 @@ public sealed class DrainSystem : SharedDrainSystem
                 continue;
 
             // Best to do this one every second rather than once every tick...
-            _solutionContainerSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution, manager);
-
-            if (drainSolution is null)
+            if (!_solutionContainerSystem.TryGetSolution((uid, manager), DrainComponent.SolutionName, out var drainSoln, out var drainSolution))
                 continue;
 
             if (drainSolution.AvailableVolume <= 0)
@@ -145,7 +142,7 @@ public sealed class DrainSystem : SharedDrainSystem
             }
 
             // Remove a bit from the buffer
-            _solutionSystem.SplitSolution(uid, drainSolution, (drain.UnitsDestroyedPerSecond * drain.DrainFrequency));
+            _solutionSystem.SplitSolution(drainSoln, (drain.UnitsDestroyedPerSecond * drain.DrainFrequency));
 
             // This will ensure that UnitsPerSecond is per second...
             var amount = drain.UnitsPerSecond * drain.DrainFrequency;
@@ -179,7 +176,7 @@ public sealed class DrainSystem : SharedDrainSystem
             {
                 // Queue the solution deletion if it's empty. EvaporationSystem might also do this
                 // but queuedelete should be pretty safe.
-                if (!_solutionContainerSystem.TryGetSolution(puddle, solution, out var puddleSolution))
+                if (!_solutionContainerSystem.TryGetSolution(puddle, solution, out var puddleSoln, out var puddleSolution))
                 {
                     EntityManager.QueueDeleteEntity(puddle);
                     continue;
@@ -189,10 +186,10 @@ public sealed class DrainSystem : SharedDrainSystem
                 // the drain component's units per second adjusted for # of puddles
                 // the puddle's remaining volume (making it cleanly zero)
                 // the drain's remaining volume in its buffer.
-                var transferSolution = _solutionSystem.SplitSolution(puddle, puddleSolution,
+                var transferSolution = _solutionSystem.SplitSolution(puddleSoln,
                     FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
 
-                _solutionSystem.TryAddSolution(uid, drainSolution, transferSolution);
+                _solutionSystem.TryAddSolution(drainSoln, transferSolution);
 
                 if (puddleSolution.Volume <= 0)
                 {
@@ -206,7 +203,7 @@ public sealed class DrainSystem : SharedDrainSystem
     {
         if (!args.IsInDetailsRange ||
             !HasComp<SolutionContainerComponent>(uid) ||
-            !_solutionContainerSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution))
+            !_solutionContainerSystem.TryGetSolution(uid, DrainComponent.SolutionName, out _, out var drainSolution))
         {
             return;
         }
@@ -221,7 +218,7 @@ public sealed class DrainSystem : SharedDrainSystem
     {
         if (!args.CanReach || args.Target == null ||
             !_tagSystem.HasTag(args.Used, DrainComponent.PlungerTag) ||
-            !_solutionContainerSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution))
+            !_solutionContainerSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out _, out var drainSolution))
         {
             return;
         }
@@ -258,14 +255,13 @@ public sealed class DrainSystem : SharedDrainSystem
         }
 
 
-        if (!_solutionContainerSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName,
-                out var drainSolution))
+        if (!_solutionContainerSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution, out _))
         {
             return;
         }
 
 
-        _solutionSystem.RemoveAllSolution(args.Target.Value, drainSolution);
+        _solutionSystem.RemoveAllSolution(drainSolution);
         _audioSystem.PlayPvs(component.UnclogSound, args.Target.Value);
         _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value);
     }

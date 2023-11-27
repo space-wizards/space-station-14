@@ -5,6 +5,7 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -97,6 +98,7 @@ namespace Content.Server.Body.Systems
 
             // First step is get the solution we actually care about
             Solution? solution = null;
+            Entity<SolutionComponent> soln = default!;
             EntityUid? solutionEntityUid = null;
 
             SolutionContainerComponent? manager = null;
@@ -108,7 +110,7 @@ namespace Content.Server.Body.Systems
                     if (!_solutionQuery.Resolve(body, ref manager, false))
                         return;
 
-                    _solutionContainerSystem.TryGetSolution(body, meta.SolutionName, out solution, manager);
+                    _solutionContainerSystem.TryGetSolution((body, manager), meta.SolutionName, out soln, out solution);
                     solutionEntityUid = body;
                 }
             }
@@ -117,7 +119,7 @@ namespace Content.Server.Body.Systems
                 if (!_solutionQuery.Resolve(uid, ref manager, false))
                     return;
 
-                _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution, manager);
+                _solutionContainerSystem.TryGetSolution((uid, manager), meta.SolutionName, out soln, out solution);
                 solutionEntityUid = uid;
             }
 
@@ -140,8 +142,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (meta.RemoveEmpty)
                     {
-                        _solutionSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent,
-                            FixedPoint2.New(1));
+                        solution.RemoveReagent(reagent, FixedPoint2.New(1));
                     }
 
                     continue;
@@ -201,12 +202,14 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
-                    _solutionSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent, mostToRemove);
+                    solution.RemoveReagent(reagent, mostToRemove);
 
                     // We have processed a reagant, so count it towards the cap
                     reagents += 1;
                 }
             }
+
+            _solutionSystem.UpdateChemicals(soln);
         }
     }
 

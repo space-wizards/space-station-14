@@ -48,8 +48,8 @@ public sealed class SolutionSpikableSystem : EntitySystem
     {
         if (!Resolve(source, ref spikableSource, ref managerSource, false)
             || !Resolve(target, ref spikableTarget, ref managerTarget, false)
-            || !_solutionContainerSystem.TryGetRefillableSolution(target, out var targetSolution, managerTarget, spikableTarget)
-            || !_solutionContainerSystem.TryGetSolution(source, spikableSource.SourceSolution, out var sourceSolution, managerSource))
+            || !_solutionContainerSystem.TryGetRefillableSolution((target, spikableTarget, managerTarget), out var targetSoln, out var targetSolution)
+            || !_solutionContainerSystem.TryGetSolution((source, managerSource), spikableSource.SourceSolution, out _, out var sourceSolution))
         {
             return;
         }
@@ -60,7 +60,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
             return;
         }
 
-        if (!_solutionSystem.ForceAddSolution(target, targetSolution, sourceSolution))
+        if (!_solutionSystem.ForceAddSolution(targetSoln, sourceSolution))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);

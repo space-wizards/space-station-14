@@ -33,7 +33,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
 
             // timer ignores if its full, it's just a fixed cycle
             regen.NextRegenTime = _timing.CurTime + regen.Duration;
-            if (_solutionContainer.TryGetSolution(uid, regen.Solution, out var solution, manager))
+            if (_solutionContainer.TryGetSolution((uid, manager), regen.Solution, out var soln, out var solution))
             {
                 var amount = FixedPoint2.Min(solution.AvailableVolume, regen.Generated.Volume);
                 if (amount <= FixedPoint2.Zero)
@@ -50,7 +50,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                     generated = regen.Generated.Clone().SplitSolution(amount);
                 }
 
-                _solution.TryAddSolution(uid, solution, generated);
+                _solution.TryAddSolution(soln, generated);
             }
         }
     }

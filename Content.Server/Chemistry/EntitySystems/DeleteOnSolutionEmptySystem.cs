@@ -31,7 +31,7 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
             if (!EntityManager.HasComponent<SolutionContainerComponent>(uid))
                 return;
 
-            if (_solutionContainerSystem.TryGetSolution(uid, component.Solution, out var solution))
+            if (_solutionContainerSystem.TryGetSolution(uid, component.Solution, out _, out var solution))
                 if (solution.Volume <= 0)
                     EntityManager.QueueDeleteEntity(uid);
         }

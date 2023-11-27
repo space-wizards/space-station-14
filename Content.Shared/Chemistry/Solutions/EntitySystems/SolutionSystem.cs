@@ -5,7 +5,6 @@ using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.Chemistry.Solutions.Events;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Chemistry.Solutions.EntitySystems;
@@ -258,23 +257,6 @@ public sealed partial class SolutionSystem : EntitySystem
     public bool RemoveReagent(Entity<SolutionComponent> soln, ReagentId reagentId, FixedPoint2 quantity)
     {
         return RemoveReagent(soln, new ReagentQuantity(reagentId, quantity));
-    }
-
-    /// <summary>
-    ///     Moves some quantity of a solution from one solution to another.
-    /// </summary>
-    /// <param name="sourceUid">entity holding the source solution</param>
-    /// <param name="targetUid">entity holding the target solution</param>
-    /// <param name="source">source solution</param>
-    /// <param name="target">target solution</param>
-    /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
-    public bool TryTransferSolution(Entity<SolutionComponent> source, Entity<SolutionComponent> target, FixedPoint2 quantity)
-    {
-        if (!TryTransferSolution(target, source.Comp.Solution, quantity))
-            return false;
-
-        UpdateChemicals(source);
-        return true;
     }
 
     /// <summary>

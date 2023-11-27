@@ -33,11 +33,11 @@ public sealed class TransformableContainerSystem : EntitySystem
         }
     }
 
-    private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component,
-        SolutionChangedEvent args)
+    private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component, SolutionChangedEvent args)
     {
-        if (!_solutionsSystem.TryGetFitsInDispenser(owner, out var solution))
+        if (!_solutionsSystem.TryGetFitsInDispenser(owner, out _, out var solution))
             return;
+
         //Transform container into initial state when emptied
         if (component.CurrentReagent != null && solution.Contents.Count == 0)
         {

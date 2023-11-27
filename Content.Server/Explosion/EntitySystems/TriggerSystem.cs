@@ -256,8 +256,8 @@ namespace Content.Server.Explosion.EntitySystems
                         !TryComp(beakerB, out SolutionContainerComponent? containerB) ||
                         !TryComp(beakerA, out FitsInDispenserComponent? fitsA) ||
                         !TryComp(beakerB, out FitsInDispenserComponent? fitsB) ||
-                        !_solutionContainerSystem.TryGetSolution(beakerA, fitsA.Solution, out var solutionA, containerA) ||
-                        !_solutionContainerSystem.TryGetSolution(beakerB, fitsB.Solution, out var solutionB, containerB))
+                        !_solutionContainerSystem.TryGetSolution((beakerA, containerA), fitsA.Solution, out _, out var solutionA) ||
+                        !_solutionContainerSystem.TryGetSolution((beakerB, containerB), fitsB.Solution, out _, out var solutionB))
                         return;
 
                     _adminLogger.Add(LogType.Trigger,

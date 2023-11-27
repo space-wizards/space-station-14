@@ -44,7 +44,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
-            if (!solutionContainerSystem.TryGetSolution(uid.Value, args[1], out var solution, man))
+            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution, out _))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
@@ -65,9 +65,9 @@ namespace Content.Server.Administration.Commands
             var quantity = FixedPoint2.New(MathF.Abs(quantityFloat));
 
             if (quantityFloat > 0)
-                _entManager.System<SolutionSystem>().TryAddReagent(uid.Value, solution, args[2], quantity, out _);
+                _entManager.System<SolutionSystem>().TryAddReagent(solution, args[2], quantity, out _);
             else
-                _entManager.System<SolutionSystem>().RemoveReagent(uid.Value, solution, args[2], quantity);
+                _entManager.System<SolutionSystem>().RemoveReagent(solution, args[2], quantity);
         }
     }
 }

@@ -69,11 +69,11 @@ public sealed class SolutionSystemTests
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
             Assert.That(containerSystem
-                .TryGetSolution(beaker, "beaker", out var solution));
+                .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
             solution.AddSolution(originalWater, protoMan);
             Assert.That(solutionSystem
-                .TryAddSolution(beaker, solution, oilAdded));
+                .TryAddSolution(solutionEnt, oilAdded));
 
             var water = solution.GetTotalPrototypeQuantity("Water");
             var oil = solution.GetTotalPrototypeQuantity("Oil");
@@ -115,11 +115,11 @@ public sealed class SolutionSystemTests
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
             Assert.That(containerSystem
-                .TryGetSolution(beaker, "beaker", out var solution));
+                .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
             solution.AddSolution(originalWater, protoMan);
             Assert.That(solutionSystem
-                .TryAddSolution(beaker, solution, oilAdded), Is.False);
+                .TryAddSolution(solutionEnt, oilAdded), Is.False);
 
             var water = solution.GetTotalPrototypeQuantity("Water");
             var oil = solution.GetTotalPrototypeQuantity("Oil");
@@ -162,11 +162,11 @@ public sealed class SolutionSystemTests
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
             Assert.That(containerSystem
-                .TryGetSolution(beaker, "beaker", out var solution));
+                .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
             solution.AddSolution(originalWater, protoMan);
             Assert.That(solutionSystem
-                .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out var overflowingSolution));
+                .TryMixAndOverflow(solutionEnt, oilAdded, threshold, out var overflowingSolution));
 
             Assert.Multiple(() =>
             {
@@ -217,11 +217,11 @@ public sealed class SolutionSystemTests
 
             beaker = entityManager.SpawnEntity("SolutionTarget", coordinates);
             Assert.That(containerSystem
-                .TryGetSolution(beaker, "beaker", out var solution));
+                .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
             solution.AddSolution(originalWater, protoMan);
             Assert.That(solutionSystem
-                .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out _),
+                .TryMixAndOverflow(solutionEnt, oilAdded, threshold, out _),
                 Is.False);
         });
 

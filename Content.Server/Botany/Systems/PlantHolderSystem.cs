@@ -204,8 +204,8 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_solutionContainerSystem.TryGetDrainableSolution(args.Used, out var solution)
-            && _solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var targetSolution)
+        if (_solutionContainerSystem.TryGetDrainableSolution(args.Used, out var solution, out _)
+            && _solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var targetSolution, out _)
             && TryComp(args.Used, out SprayComponent? spray))
         {
             var amount = FixedPoint2.New(1);
@@ -228,7 +228,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 ("owner", uid),
                 ("amount", split.Volume)), args.User, PopupType.Medium);
 
-            _solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
+            _solutionSystem.TryAddSolution(targetSolution, split);
 
             ForceUpdateByExternalCause(uid, component);
 
@@ -291,16 +291,15 @@ public sealed class PlantHolderSystem : EntitySystem
                 ("usingItem", args.Used),
                 ("owner", uid)), uid, Filter.PvsExcept(args.User), true);
 
-            if (_solutionContainerSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
+            if (_solutionContainerSystem.TryGetSolution(args.Used, produce.SolutionName, out var soln2, out var solution2))
             {
-                if (_solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution1))
+                if (_solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var soln1, out var solution1))
                 {
                     // We try to fit as much of the composted plant's contained solution into the hydroponics tray as we can,
                     // since the plant will be consumed anyway.
 
                     var fillAmount = FixedPoint2.Min(solution2.Volume, solution1.AvailableVolume);
-                    _solutionSystem.TryAddSolution(uid, solution1,
-                        _solutionSystem.SplitSolution(args.Used, solution2, fillAmount));
+                    _solutionSystem.TryAddSolution(soln1, _solutionSystem.SplitSolution(soln2, fillAmount));
 
                     ForceUpdateByExternalCause(uid, component);
                 }
@@ -820,13 +819,13 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.SoilSolutionName, out var soln, out var solution))
             return;
 
         if (solution.Volume > 0 && component.MutationLevel < 25)
         {
             var amt = FixedPoint2.New(1);
-            foreach (var entry in _solutionSystem.RemoveEachReagent(uid, solution, amt))
+            foreach (var entry in _solutionSystem.RemoveEachReagent(soln, amt))
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
                 reagentProto.ReactionPlant(uid, entry, solution);

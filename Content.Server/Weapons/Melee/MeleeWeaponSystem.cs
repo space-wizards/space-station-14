@@ -247,7 +247,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         if (!args.IsHit ||
             !args.HitEntities.Any() ||
-            !_solutions.TryGetSolution(owner, comp.Solution, out var solutionContainer))
+            !_solutions.TryGetSolution(owner, comp.Solution, out _, out var solutionContainer))
         {
             return;
         }

@@ -19,11 +19,11 @@ namespace Content.Server.Chemistry.ReagentEffects
 
             // TODO see if this is correct
             if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer))
+                    .TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer, out _))
                 return;
 
             if (EntitySystem.Get<SolutionSystem>()
-                .TryAddReagent(args.SolutionEntity, solutionContainer, args.Reagent.ID, args.Quantity, out var accepted))
+                .TryAddReagent(solutionContainer, args.Reagent.ID, args.Quantity, out var accepted))
                 args.Source?.RemoveReagent(args.Reagent.ID, accepted);
         }
 

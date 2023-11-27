@@ -47,7 +47,7 @@ public sealed class SpraySystem : EntitySystem
 
         args.Handled = true;
 
-        if (!_solutionContainer.TryGetSolution(uid, SprayComponent.SolutionName, out var solution))
+        if (!_solutionContainer.TryGetSolution(uid, SprayComponent.SolutionName, out var soln, out var solution))
             return;
 
         var ev = new SprayAttemptEvent(args.User);
@@ -112,7 +112,7 @@ public sealed class SpraySystem : EntitySystem
                 target = userMapPos.Offset(diffNorm * component.SprayDistance);
 
             var adjustedSolutionAmount = component.TransferAmount / component.VaporAmount;
-            var newSolution = _solution.SplitSolution(uid, solution, adjustedSolutionAmount);
+            var newSolution = _solution.SplitSolution(soln, adjustedSolutionAmount);
 
             if (newSolution.Volume <= FixedPoint2.Zero)
                 break;
