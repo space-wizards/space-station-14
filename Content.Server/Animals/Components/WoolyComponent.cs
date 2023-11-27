@@ -4,8 +4,10 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
+namespace Content.Server.Animals.Components;
+
 /// <summary>
-/// Lets an animal grow a wool solution when not hungry.
+/// Lets an entity produce wool fibers. Uses hunger if present.
 /// </summary>
 [RegisterComponent, Access(typeof(WoolySystem))]
 public sealed partial class WoolyComponent : Component
@@ -13,20 +15,26 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     /// What reagent to grow.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<ReagentPrototype> ReagentId = "Fiber";
 
     /// <summary>
-    /// How much wool to grow at every growth cycle.
+    /// The solution to add reagent to.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public string Solution = "wool";
+
+    /// <summary>
+    /// The amount of reagent to be generated on update.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public FixedPoint2 Quantity = 25;
 
     /// <summary>
-    /// What solution to add the wool reagent to.
+    ///     The amount of nutrient consumed on update.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string Solution = "wool";
+    public float HungerUsage = 10f;
 
     /// <summary>
     /// How long to wait before growing wool.

@@ -9,15 +9,15 @@ using Robust.Shared.Timing;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-/// Handles regeneration of an animal's wool solution when not hungry.
-/// Shearing is not currently possible so the only use is for moths to eat.
+///     Gives ability to produce fiber reagents, produces endless if the 
+///     owner has no HungerComponent
 /// </summary>
 public sealed class WoolySystem : EntitySystem
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()
     {
@@ -30,24 +30,31 @@ public sealed class WoolySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<WoolyComponent, HungerComponent>();
+        var query = EntityQueryEnumerator<WoolyComponent>();
         var now = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var comp, out var hunger))
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (now < comp.NextGrowth)
                 continue;
 
             comp.NextGrowth = now + comp.GrowthDelay;
 
-            // Is there enough nutrition to produce reagent?
-            if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Peckish)
+            if (_mobState.IsDead(uid))
                 continue;
+
+            // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
+            if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
+            {
+                // Is there enough nutrition to produce reagent?
+                if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
+                    continue;
+
+                _hunger.ModifyHunger(uid, -comp.HungerUsage, hunger);
+            }
 
             if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution))
                 continue;
 
-            if (_mobState.IsDead(uid))
-                continue;
             _solutionContainer.TryAddReagent(uid, solution, comp.ReagentId, comp.Quantity, out _);
         }
     }
