@@ -10,6 +10,8 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
 using Content.Shared.Interaction.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Glue;
 

@@ -28,6 +28,7 @@ using Content.Shared.Tag;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Linq;
@@ -84,7 +85,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SetAppearance(uid, MicrowaveVisualState.Cooking, microwaveComponent);
 
             microwaveComponent.PlayingStream =
-                _audio.PlayPvs(microwaveComponent.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+                _audio.PlayPvs(microwaveComponent.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5)).Value.Entity;
         }
 
         private void OnCookStop(EntityUid uid, ActiveMicrowaveComponent component, ComponentShutdown args)
@@ -93,7 +94,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             SetAppearance(uid, MicrowaveVisualState.Idle, microwaveComponent);
 
-            microwaveComponent.PlayingStream?.Stop();
+            microwaveComponent.PlayingStream = _audio.Stop(microwaveComponent.PlayingStream);
         }
 
         /// <summary>

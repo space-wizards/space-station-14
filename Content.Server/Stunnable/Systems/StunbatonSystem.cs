@@ -11,7 +11,6 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Toggleable;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Stunnable.Systems
 {
@@ -22,7 +21,7 @@ namespace Content.Server.Stunnable.Systems
         [Dependency] private readonly RiggableSystem _riggableSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly BatterySystem _battery = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -95,7 +94,6 @@ namespace Content.Server.Stunnable.Systems
 
         private void TurnOn(EntityUid uid, StunbatonComponent comp, EntityUid user)
         {
-
             if (comp.Activated)
                 return;
 

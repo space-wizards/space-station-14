@@ -4,6 +4,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
@@ -11,6 +12,7 @@ namespace Content.Server.Light.EntitySystems
     public sealed class LightBulbSystem : EntitySystem
     {
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -68,7 +70,7 @@ namespace Content.Server.Light.EntitySystems
             if (!Resolve(uid, ref bulb))
                 return;
 
-            SoundSystem.Play(bulb.BreakSound.GetSound(), Filter.Pvs(uid), uid);
+            _audio.PlayPvs(bulb.BreakSound, uid);
         }
 
         private void UpdateAppearance(EntityUid uid, LightBulbComponent? bulb = null,
