@@ -533,13 +533,13 @@
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
       params:
         volume: -5
-        maxdistance: 10
+        maxDistance: 10
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Machines/Nuke/nuke_alarm.ogg
       params:
         volume: -5
-        maxdistance: 10
+        maxDistance: 10
 
 - type: entity
   parent: BasePlushie
@@ -1067,6 +1067,8 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: BasePlushie
@@ -1088,3 +1090,12 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePenguin
+  name: penguin plushie
+  description: I use arch btw!
+  components:
+  - type: Sprite
+    state: plushie_penguin

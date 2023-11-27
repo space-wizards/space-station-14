@@ -443,6 +443,7 @@
   parent: BaseItem
   id: FoodPacketTrash
   description: This is rubbish.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi

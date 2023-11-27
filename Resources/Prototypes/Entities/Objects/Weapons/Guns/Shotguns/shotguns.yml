@@ -220,6 +220,8 @@
     graph: ShotgunSawn
     node: shotgunsawn
     deconstructionTarget: null
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: blunderbuss
@@ -234,6 +236,8 @@
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 1
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: improvised shotgun
@@ -254,7 +258,7 @@
     graph: ImprovisedShotgunGraph
     node: shotgun
   - type: StaticPrice
-    price: 400
+    price: 20
 
 - type: entity
   name: improvised shotgun
