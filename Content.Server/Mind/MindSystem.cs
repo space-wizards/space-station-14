@@ -363,7 +363,7 @@ public sealed class MindSystem : SharedMindSystem
         if (_players.TryGetSessionById(userId.Value, out var ret))
         {
             mind.Session = ret;
-            _pvsOverride.AddSessionOverride(mindId, ret);
+            _pvsOverride.AddSessionOverride(netMind, ret);
             _players.SetAttachedEntity(ret, mind.CurrentEntity);
         }
 
