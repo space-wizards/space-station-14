@@ -202,7 +202,7 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
     enabled: true
-    reflectProb: .85
+    reflectProb: .75
     spread: 75
   - type: UseDelay
     delay: 1

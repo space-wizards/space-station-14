@@ -151,7 +151,7 @@
   parent: DrinkCanBaseFull
   id: DrinkGrapeCan
   name: grape soda can
-  description: Sweetened drink with a grape flavor and a deep purple color. Tastes like a melted popsicle...
+  description: Sweetened drink with a grape flavor and a deep purple color.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -275,7 +275,7 @@
   parent: DrinkCanBaseFull
   id: DrinkFourteenLokoCan
   name: fourteen loko can
-  description: The MBO has advised crew members that consumption of Fourteen Loko may result in seizures, blindness, drunkeness, hypertension, vomiting, or even death. Please Drink Responsibly. (not approved for human consumption)
+  description: The MBO has advised crew members that consumption of Fourteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
   - type: SolutionContainerManager
     solutions:
