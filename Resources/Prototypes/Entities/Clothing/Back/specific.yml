@@ -76,7 +76,6 @@
     maxTotalWeight: 14
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel.rsi
-    drawdepth: ThinPipe
     visible: false
   - type: SubFloorHide
   - type: Anchorable
