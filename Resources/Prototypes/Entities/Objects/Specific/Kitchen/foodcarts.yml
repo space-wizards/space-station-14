@@ -49,10 +49,6 @@
     - type: Storage
       maxItemSize: Normal
       maxTotalWeight: 40
-      whitelist:
-        components:
-        - Food
-        - Produce
     - type: TileFrictionModifier
       modifier: 0.4 # makes it slide
 
