@@ -147,9 +147,8 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnComponentStartup(EntityUid uid, SliceableFoodComponent component, ComponentStartup args)
         {
             component.Count = component.TotalCount;
-            var foodComp = EnsureComp<FoodComponent>(uid);
 
-            EnsureComp<SolutionContainerComponent>(uid);
+            var foodComp = EnsureComp<FoodComponent>(uid);
             _solutionContainerSystem.EnsureSolution(uid, foodComp.Solution);
         }
 
