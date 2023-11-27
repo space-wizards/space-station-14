@@ -16,9 +16,9 @@ namespace Content.Shared.Eui
         {
             Id = buffer.ReadUInt32();
 
-            var len = buffer.ReadVariableInt32();
-            using var stream = new MemoryStream();
-            buffer.ReadAlignedMemory(stream, len);
+            var length = buffer.ReadVariableInt32();
+            using var stream = new MemoryStream(length);
+            buffer.ReadAlignedMemory(stream, length);
             State = ser.Deserialize<EuiStateBase>(stream);
         }
 
