@@ -217,6 +217,8 @@ public sealed class StorageContainer : BoxContainer
         var boundingGrid = SharedStorageSystem.GetBoundingBox(storageComp.StorageGrid);
         var size = _emptyTexture!.Size * 2;
 
+        //todo. at some point, we may want to only rebuild the pieces that have actually received new data.
+
         _pieceGrid.Children.Clear();
         _pieceGrid.Rows = boundingGrid.Height;
         _pieceGrid.Columns = boundingGrid.Width + 1;
@@ -265,7 +267,7 @@ public sealed class StorageContainer : BoxContainer
             child.ModulateSelfOverride = Color.FromHex("#222222");
         }
 
-        if (!TryGetDraggedPieceLocation(out var origin))
+        if (_storageController.DraggingGhost == null || !TryGetDraggedPieceLocation(out var origin))
             return;
 
         _itemSystem ??= _entity.System<ItemSystem>();
@@ -273,7 +275,7 @@ public sealed class StorageContainer : BoxContainer
 
         var itemShape = _itemSystem.GetAdjustedItemShape(
             (_storageController.CurrentlyDragging!.Entity, null),
-            _storageController.CurrentlyDragging.Location.Rotation,
+            _storageController.DraggingGhost.Location.Rotation,
             origin.Value);
         var itemBounding = SharedStorageSystem.GetBoundingBox(itemShape);
 
@@ -288,7 +290,7 @@ public sealed class StorageContainer : BoxContainer
             (_storageController.CurrentlyDragging!.Entity, null),
             (StorageEntity.Value, storageComponent),
             origin.Value,
-            _storageController.CurrentlyDragging!.Location.Rotation);
+            _storageController.DraggingGhost!.Location.Rotation);
 
         for (var y = itemBounding.Bottom; y <= itemBounding.Top; y++)
         {
@@ -309,7 +311,7 @@ public sealed class StorageContainer : BoxContainer
             if (control is not StorageBackgroundCell cell)
                 continue;
 
-            if (_storageController.CurrentlyDragging is not { } dragging)
+            if (_storageController.DraggingGhost is not { } dragging)
                 continue;
 
             if (cell.SizeBox.Contains(UserInterfaceManager.MousePositionScaled.Position

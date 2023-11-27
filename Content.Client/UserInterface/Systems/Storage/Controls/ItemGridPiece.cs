@@ -19,7 +19,7 @@ public sealed class ItemGridPiece : Control
     private readonly List<(Texture, Vector2)> _texturesPositions = new();
 
     public readonly EntityUid Entity;
-    public readonly ItemStorageLocation Location;
+    public ItemStorageLocation Location;
 
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPiecePressed;
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPieceUnpressed;
@@ -167,7 +167,7 @@ public sealed class ItemGridPiece : Control
 
     public Vector2 GetCenterOffset()
     {
-        var boxSize = SharedStorageSystem.GetBoundingBox(_itemSystem.GetItemShape((Entity, null))).Size;
+        var boxSize = SharedStorageSystem.GetBoundingBox(_itemSystem.GetAdjustedItemShape((Entity, null), Location)).Size;
         var actualSize = new Vector2(boxSize.X + 1, boxSize.Y + 1);
         return actualSize * _centerTexture!.Size * UIScale / 2f;
     }

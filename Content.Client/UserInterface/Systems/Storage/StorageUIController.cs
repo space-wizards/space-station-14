@@ -1,5 +1,4 @@
 using Content.Client.Examine;
-using Content.Client.Gameplay;
 using Content.Client.Interaction;
 using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
@@ -9,7 +8,6 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Storage;
-using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -20,7 +18,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Storage;
 
-public sealed class StorageUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<StorageSystem>
+public sealed class StorageUIController : UIController, IOnSystemChanged<StorageSystem>
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -28,10 +26,11 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
     [Dependency] private readonly IPlayerManager _player = default!;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
-    private ItemGridPiece? _draggedPiece;
     private StorageContainer? _container;
 
     private HotbarGui? Hotbar => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
+
+    public ItemGridPiece? DraggingGhost;
 
     public bool IsDragging => _menuDragHelper.IsDragging;
     public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
@@ -55,6 +54,7 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
 
     public void OnSystemLoaded(StorageSystem system)
     {
+        _input.FirstChanceOnKeyEvent += OnMiddleMouse;
         system.StorageOpened += OnStorageOpened;
         system.StorageClosed += OnStorageClosed;
         system.StorageUpdated += OnStorageUpdated;
@@ -62,14 +62,21 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
 
     public void OnSystemUnloaded(StorageSystem system)
     {
+        _input.FirstChanceOnKeyEvent -= OnMiddleMouse;
         system.StorageOpened -= OnStorageOpened;
         system.StorageClosed -= OnStorageClosed;
         system.StorageUpdated -= OnStorageUpdated;
     }
 
-    public void OnStateEntered(GameplayState state)
+    /// One might ask, Hey Emo, why are you parsing raw keyboard input just to rotate a rectangle?
+    /// The answer is, that input bindings regarding mouse inputs are always intercepted by the UI,
+    /// thus, if i want to be able to rotate my damn piece anywhere on the screen,
+    /// I have to sidestep all of the input handling. Cheers.
+    private void OnMiddleMouse(KeyEventArgs keyEvent, KeyEventType type)
     {
-
+        if (type != KeyEventType.Down || keyEvent.Key != Keyboard.Key.MouseMiddle)
+            return;
+        DraggingGhost?.Location.Rotate(Angle.FromDegrees(90));
     }
 
     private void OnStorageOpened(EntityUid uid, StorageComponent component)
@@ -115,6 +122,9 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
 
     private void OnPiecePressed(GUIBoundKeyEventArgs args, ItemGridPiece control)
     {
+        if (IsDragging)
+            return;
+
         if (args.Function == EngineKeyFunctions.UIClick)
         {
             _menuDragHelper.MouseDown(control);
@@ -133,43 +143,45 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
         }
         else if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
-            _entity.System<ExamineSystem>()
-                .DoExamine(control.Entity);
+            _entity.System<ExamineSystem>().DoExamine(control.Entity);
+            args.Handle();
         }
         else if (args.Function == EngineKeyFunctions.UseSecondary)
         {
             UIManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(control.Entity);
+            args.Handle();
         }
         else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
         {
             _entity.EntityNetManager?.SendSystemNetworkMessage(
                 new InteractInventorySlotEvent(_entity.GetNetEntity(control.Entity), altInteract: false));
+            args.Handle();
         }
         else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
         {
             _entity.RaisePredictiveEvent(new InteractInventorySlotEvent(_entity.GetNetEntity(control.Entity), altInteract: true));
+            args.Handle();
         }
     }
 
     private void OnPieceUnpressed(GUIBoundKeyEventArgs args, ItemGridPiece control)
     {
-        if (args.Function != EngineKeyFunctions.UIClick)
-            return;
-
-        if (_menuDragHelper.Dragged != null)
+        if (args.Function == EngineKeyFunctions.UIClick)
         {
-            if (_container?.StorageEntity != null && _container?.TryGetDraggedPieceLocation(out var location) == true)
+            if (CurrentlyDragging != null && DraggingGhost != null)
             {
-                _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
-                    _entity.GetNetEntity(control.Entity),
-                    _entity.GetNetEntity(_container.StorageEntity.Value),
-                    new ItemStorageLocation(Angle.Zero, location.Value)));
+                if (_container?.StorageEntity != null && _container?.TryGetDraggedPieceLocation(out var position) == true)
+                {
+                    _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
+                        _entity.GetNetEntity(DraggingGhost.Entity),
+                        _entity.GetNetEntity(_container.StorageEntity.Value),
+                        new ItemStorageLocation(DraggingGhost.Location.Rotation, position.Value)));
+                    _container?.BuildItemPieces();
+                }
             }
-
             _menuDragHelper.EndDrag();
-            _container?.BuildItemPieces();
+            args.Handle();
         }
-        args.Handle();
     }
 
     private bool OnMenuBeginDrag()
@@ -177,34 +189,34 @@ public sealed class StorageUIController : UIController, IOnStateEntered<Gameplay
         if (_menuDragHelper.Dragged is not { } dragged)
             return false;
 
-        _draggedPiece = new ItemGridPiece((dragged.Entity, _entity.GetComponent<ItemComponent>(dragged.Entity)),
+        DraggingGhost = new ItemGridPiece((dragged.Entity, _entity.GetComponent<ItemComponent>(dragged.Entity)),
             dragged.Location,
             _entity);
-        _draggedPiece.MouseFilter = Control.MouseFilterMode.Ignore;
-        _draggedPiece.Visible = true;
-        _draggedPiece.Orphan();
+        DraggingGhost.MouseFilter = Control.MouseFilterMode.Ignore;
+        DraggingGhost.Visible = true;
+        DraggingGhost.Orphan();
 
-        UIManager.PopupRoot.AddChild(_draggedPiece);
-        LayoutContainer.SetPosition(_draggedPiece, UIManager.MousePositionScaled.Position / 2 - _draggedPiece.GetCenterOffset());
+        UIManager.PopupRoot.AddChild(DraggingGhost);
+        LayoutContainer.SetPosition(DraggingGhost, UIManager.MousePositionScaled.Position / 2 - DraggingGhost.GetCenterOffset());
         return true;
     }
 
     private bool OnMenuContinueDrag(float frameTime)
     {
-        if (_draggedPiece == null)
+        if (DraggingGhost == null)
             return false;
 
         // I don't know why it divides the position by 2. Hope this helps! -emo
-        LayoutContainer.SetPosition(_draggedPiece, UIManager.MousePositionScaled.Position / 2 - _draggedPiece.GetCenterOffset());
+        LayoutContainer.SetPosition(DraggingGhost, UIManager.MousePositionScaled.Position / 2 - DraggingGhost.GetCenterOffset());
         return true;
     }
 
     private void OnMenuEndDrag()
     {
-        if (_draggedPiece == null)
+        if (DraggingGhost == null)
             return;
-        _draggedPiece.Visible = false;
-        _draggedPiece = null;
+        DraggingGhost.Visible = false;
+        DraggingGhost = null;
     }
 
     public override void FrameUpdate(FrameEventArgs args)

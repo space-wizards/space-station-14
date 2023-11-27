@@ -173,22 +173,25 @@ public abstract class SharedItemSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp))
             return new Box2i[] { };
 
-        if (rotation == Angle.Zero && position == Vector2i.Zero)
-            return GetItemShape(entity);
-
         var shapes = GetItemShape(entity);
+
+        if (rotation == Angle.Zero && position == Vector2i.Zero)
+            return shapes;
+
         var boundingShape = SharedStorageSystem.GetBoundingBox(shapes);
 
+        //todo sloth wanted matrix transformations and this shits itself bad. FIX!
         var adjustedShapes = new List<Box2i>();
         foreach (var shape in shapes)
         {
             var rotatedBox = new Box2Rotated(shape, rotation, boundingShape.Center);
             var box = rotatedBox.CalcBoundingBox();
-            var flooredBox = new Box2i(box.BottomLeft.Floored(), box.TopRight.Floored());
+            var drift = shape.BottomLeft - box.BottomLeft;
+            var driftAdjustedBox = box.Translated(drift);
+            var flooredBox = new Box2i(driftAdjustedBox.BottomLeft.Floored(), driftAdjustedBox.TopRight.Floored());
             var translated = flooredBox.Translated(position);
 
-            var drift = shape.BottomLeft - flooredBox.BottomLeft;
-            adjustedShapes.Add(translated.Translated(drift));
+            adjustedShapes.Add(translated);
         }
 
         return adjustedShapes;

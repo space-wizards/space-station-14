@@ -22,4 +22,14 @@ public partial record struct ItemStorageLocation
         Rotation = rotation;
         Position = position;
     }
+
+    public void Rotate(Angle theta)
+    {
+        Rotation += theta;
+    }
+
+    public bool Equals(ItemStorageLocation? other)
+    {
+        return Rotation == other?.Rotation && Position == other.Value.Position;
+    }
 };
