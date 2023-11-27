@@ -1,19 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Updated traitor guidebook section., type: Tweak}
-  id: 4710
-  time: '2023-08-31T01:07:18.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed revenant siphon damage from poison to cold, type: Tweak}
-  id: 4711
-  time: '2023-08-31T01:07:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Foldable items are now predicted., type: Add}
-  id: 4712
-  time: '2023-08-31T01:56:13.0000000+00:00'
 - author: Equivocateur
   changes:
   - {message: Overdosing on Robust might have unintended effects on plant-based sentient
@@ -2903,3 +2888,20 @@ Entries:
     type: Fix}
   id: 5209
   time: '2023-11-27T21:39:30.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Disabled space wind & atmos tile ripping., type: Remove}
+  id: 5210
+  time: '2023-11-27T21:42:29.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'Gibbed mothroaches wont drop all normal moth species parts, just animal
+      organs.', type: Fix}
+  id: 5211
+  time: '2023-11-27T21:42:53.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: When Revolution rounds end each headrev has their number of converted
+      people shown., type: Tweak}
+  id: 5212
+  time: '2023-11-27T21:43:49.0000000+00:00'
