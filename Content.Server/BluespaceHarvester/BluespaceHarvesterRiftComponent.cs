@@ -9,7 +9,7 @@ public sealed partial class BluespaceHarvesterRiftComponent : Component
     /// The current danger level of the portal with which he will buy things from the Spawn list.
     /// </summary>
     [DataField]
-    public int Danger = 0;
+    public int Danger;
 
     /// <summary>
     /// The portal also periodically generates a random, weak mob from the PassiveSpawn list.
@@ -18,16 +18,22 @@ public sealed partial class BluespaceHarvesterRiftComponent : Component
     public float PassiveSpawnCooldown = 30f;
 
     [DataField]
-    public float PassiveSpawnAccumulator = 0f;
+    public float PassiveSpawnAccumulator;
 
+    /// <summary>
+    /// A list of weak monsters that will encourage breaking rifts.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> PassiveSpawn = new();
+
+    /// <summary>
+    /// Delay between attempts to spawn more than 3 mobs.
+    /// </summary>
     [DataField]
     public float SpawnCooldown = 5f;
 
     [DataField]
-    public float SpawnAccumulator = 0f;
-
-    [DataField]
-    public List<EntProtoId> PassiveSpawn = new();
+    public float SpawnAccumulator;
 
     /// <summary>
     /// Monsters and their cost for purchase through the portal are described here; there may be expensive but very dangerous creatures, for example, kudzu or a dragon.
@@ -43,5 +49,5 @@ public partial struct EntitySpawn
     public EntProtoId? Id = null;
 
     [DataField]
-    public int Cost = 1;
+    public int Cost;
 }

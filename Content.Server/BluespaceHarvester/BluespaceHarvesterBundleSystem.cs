@@ -4,7 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.BluespaceHarvester;
 
-public sealed partial class BluespaceHarvesterBundleSystem : EntitySystem
+public sealed class BluespaceHarvesterBundleSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -32,8 +32,7 @@ public sealed partial class BluespaceHarvesterBundleSystem : EntitySystem
             return;
 
         var content = _random.Pick(bundle.Comp.Contents);
-        var xfrom = Transform(bundle.Owner);
-        var position = xfrom.Coordinates;
+        var position = Transform(bundle.Owner).Coordinates;
 
         for (var i = 0; i < content.Amount; i++)
         {

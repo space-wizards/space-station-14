@@ -6,11 +6,6 @@ public sealed class BluespaceHarvesterRiftSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -29,34 +24,38 @@ public sealed class BluespaceHarvesterRiftSystem : EntitySystem
             }
 
             comp.SpawnAccumulator += frameTime;
-            if (comp.SpawnAccumulator >= comp.SpawnCooldown)
-            {
-                comp.SpawnAccumulator -= comp.SpawnCooldown;
-                comp.PassiveSpawnAccumulator += _random.NextFloat(comp.SpawnCooldown);
 
-                UpdateSpawn(uid, comp, xform);
-            }
+            if (comp.SpawnAccumulator < comp.SpawnCooldown)
+                continue;
+
+            comp.SpawnAccumulator -= comp.SpawnCooldown;
+            comp.PassiveSpawnAccumulator += _random.NextFloat(comp.SpawnCooldown);
+
+            UpdateSpawn((uid, comp, xform));
         }
     }
 
-    private void UpdateSpawn(EntityUid uid, BluespaceHarvesterRiftComponent comp, TransformComponent xform)
+    private void UpdateSpawn(Entity<BluespaceHarvesterRiftComponent, TransformComponent> ent)
     {
+        var rift = ent.Comp1;
+        var xfrom = ent.Comp2;
+
         var count = 0;
-        while (comp.Danger != 0 && count < 3)
+        while (rift.Danger != 0 && count < 3)
         {
             count++;
 
             var pickable = new List<EntitySpawn>();
-            foreach (var spawn in comp.Spawn)
+            foreach (var spawn in rift.Spawn)
             {
-                if (spawn.Cost <= comp.Danger)
+                if (spawn.Cost <= rift.Danger)
                     pickable.Add(spawn);
             }
 
             // If we cannot choose anything, this means that we have used up all the danger sufficient before spawn.
             if (pickable.Count == 0)
             {
-                comp.Danger = 0; // This will disable pointless spawn attempts.
+                rift.Danger = 0; // This will disable pointless spawn attempts.
                 break;
             }
 
@@ -64,8 +63,8 @@ public sealed class BluespaceHarvesterRiftSystem : EntitySystem
             // it should still be a good story,
             // because they still have a whole cart of ordinary ones.
             var pick = _random.Pick(pickable);
-            comp.Danger -= pick.Cost; // Deduct the risk spent on the purchase.
-            Spawn(pick.Id, xform.Coordinates);
+            rift.Danger -= pick.Cost; // Deduct the risk spent on the purchase.
+            Spawn(pick.Id, xfrom.Coordinates);
         }
     }
 }
