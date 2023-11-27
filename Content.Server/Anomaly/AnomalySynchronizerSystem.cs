@@ -5,6 +5,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Anomaly;
 

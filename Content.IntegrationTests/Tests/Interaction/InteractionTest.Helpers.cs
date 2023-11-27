@@ -500,7 +500,7 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Assert whether or not the target has the given component.
     /// </summary>
-    protected void AssertComp<T>(bool hasComp = true, NetEntity? target = null) where T : IComponent
+    protected void AssertComp<T>(bool hasComp = true, NetEntity? target = null)
     {
         target ??= Target;
         if (target == null)
@@ -619,6 +619,9 @@ public abstract partial class InteractionTest
         {
             foreach (var (proto, quantity) in expected.Entities)
             {
+                if (proto == "Audio")
+                    continue;
+
                 if (quantity < 0 && failOnExcess)
                     Assert.Fail($"Unexpected entity/stack: {proto}, quantity: {-quantity}");
 

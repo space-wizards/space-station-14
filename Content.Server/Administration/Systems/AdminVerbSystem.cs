@@ -156,6 +156,19 @@ namespace Content.Server.Administration.Systems
                         Impact = LogImpact.Extreme,
                         ConfirmationPopup = true
                     });
+
+                // Respawn
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-respawn"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            _console.ExecuteCommand(player, $"respawn {targetActor.PlayerSession.Name}");
+                        },
+                        ConfirmationPopup = true,
+                        // No logimpact as the command does it internally.
+                    });
                 }
 
                 // Admin Logs
@@ -211,21 +224,6 @@ namespace Content.Server.Administration.Systems
                     Impact = LogImpact.Low
                 });
 
-                // Respawn
-                if (HasComp<ActorComponent>(args.Target))
-                {
-                    args.Verbs.Add(new Verb()
-                    {
-                        Text = Loc.GetString("admin-player-actions-respawn"),
-                        Category = VerbCategory.Admin,
-                        Act = () =>
-                        {
-                            _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
-                        },
-                        ConfirmationPopup = true,
-                        // No logimpact as the command does it internally.
-                    });
-                }
             }
         }
 
@@ -332,7 +330,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("set-outfit-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-                    Act = () => _euiManager.OpenEui(new SetOutfitEui(GetNetEntity(args.Target)), player),
+                    Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player),
                     Impact = LogImpact.Medium
                 };
                 args.Verbs.Add(verb);
