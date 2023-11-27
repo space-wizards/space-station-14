@@ -226,7 +226,7 @@ public sealed class DrinkSystem : EntitySystem
     public void UpdateAppearance(EntityUid uid, DrinkComponent component)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance) ||
-            !HasComp<SolutionContainerManagerComponent>(uid))
+            !HasComp<SolutionContainerComponent>(uid))
         {
             return;
         }
@@ -314,7 +314,7 @@ public sealed class DrinkSystem : EntitySystem
         if (!TryComp<BodyComponent>(args.Target, out var body))
             return;
 
-        if (!_solutionContainer.TryGetSolution(args.Used, args.Solution, out var solution))
+        if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var solution))
             return;
 
         // TODO this should really be checked every tick.

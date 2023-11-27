@@ -206,7 +206,7 @@ public sealed class FoodSystem : EntitySystem
         if (!_body.TryGetBodyOrganComponents<StomachComponent>(args.Target.Value, out var stomachs, body))
             return;
 
-        if (!_solutionContainer.TryGetSolution(args.Used, args.Solution, out var solution))
+        if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var solution))
             return;
 
         if (!TryGetRequiredUtensils(args.User, component, out var utensils))

@@ -8,9 +8,9 @@ namespace Content.Shared.Administration
     public sealed class EditSolutionsEuiState : EuiStateBase
     {
         public readonly NetEntity Target;
-        public readonly Dictionary<string, Solution>? Solutions;
+        public readonly List<(string, NetEntity)>? Solutions;
 
-        public EditSolutionsEuiState(NetEntity target, Dictionary<string, Solution>? solutions)
+        public EditSolutionsEuiState(NetEntity target, List<(string, NetEntity)>? solutions)
         {
             Target = target;
             Solutions = solutions;

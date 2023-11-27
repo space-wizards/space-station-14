@@ -26,7 +26,6 @@ public sealed class SolutionRandomFillSystem : EntitySystem
         if (component.WeightedRandomId == null)
             return;
 
-        var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
         var pick = _proto.Index<WeightedRandomFillSolutionPrototype>(component.WeightedRandomId).Pick(_random);
 
         var reagent = pick.reagent;
@@ -38,6 +37,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
             return;
         }
 
-        target.AddReagent(reagent, quantity);
+        var target = _solutionsSystem.EnsureSolutionEntity(uid, component.Solution, pick.quantity, out _);
+        target.Comp.Solution.AddReagent(reagent, quantity);
     }
 }

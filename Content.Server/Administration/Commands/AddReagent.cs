@@ -37,14 +37,14 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
+            if (!_entManager.TryGetComponent(uid, out SolutionContainerComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;
             }
 
             var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
-            if (!solutionContainerSystem.TryGetSolution(uid, args[1], out var solution, man))
+            if (!solutionContainerSystem.TryGetSolution(uid.Value, args[1], out var solution, man))
             {
                 var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");

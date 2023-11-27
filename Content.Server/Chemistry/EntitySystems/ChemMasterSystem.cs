@@ -214,10 +214,10 @@ namespace Content.Server.Chemistry.EntitySystems
                 _storageSystem.Insert(container, item, out _, user: user, storage);
                 _labelSystem.Label(item, message.Label);
 
-                var itemSolution = _solutionContainerSystem.EnsureSolution(item, SharedChemMaster.PillSolutionName);
+                var itemSolution = _solutionContainerSystem.EnsureSolutionEntity(item, SharedChemMaster.PillSolutionName, message.Dosage, out _);
+                var solution = itemSolution.Comp.Solution;
 
-                _solutionSystem.TryAddSolution(
-                    item, itemSolution, withdrawal.SplitSolution(message.Dosage));
+                _solutionSystem.TryAddSolution(item, solution, withdrawal.SplitSolution(message.Dosage));
 
                 var pill = EnsureComp<PillComponent>(item);
                 pill.PillType = chemMaster.Comp.PillType;
@@ -227,13 +227,13 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     // Log pill creation by a user
                     _adminLogger.Add(LogType.Action, LogImpact.Low,
-                        $"{ToPrettyString(user.Value):user} printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(itemSolution)}");
+                        $"{ToPrettyString(user.Value):user} printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(solution)}");
                 }
                 else
                 {
                     // Log pill creation by magic? This should never happen... right?
                     _adminLogger.Add(LogType.Action, LogImpact.Low,
-                        $"Unknown printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(itemSolution)}");
+                        $"Unknown printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(solution)}");
                 }
             }
 

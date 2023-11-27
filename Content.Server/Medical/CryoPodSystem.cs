@@ -83,7 +83,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         var metaDataQuery = GetEntityQuery<MetaDataComponent>();
         var itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
         var fitsInDispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
-        var solutionContainerManagerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
+        var solutionContainerManagerQuery = GetEntityQuery<SolutionContainerComponent>();
         var query = EntityQueryEnumerator<ActiveCryoPodComponent, CryoPodComponent>();
 
         while (query.MoveNext(out var uid, out _, out var cryoPod))
@@ -188,7 +188,11 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
             uid,
             HealthAnalyzerUiKey.Key,
             new HealthAnalyzerScannedUserMessage(GetNetEntity(cryoPodComponent.BodyContainer.ContainedEntity),
-            temp?.CurrentTemperature ?? 0, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
+            temp?.CurrentTemperature ?? 0,
+            (bloodstream != null && _solutionContainerSystem.TryGetSolution(uid, bloodstream.BloodSolutionName, out var bloodSolution))
+                ? bloodSolution.FillFraction
+                : 0
+        ));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)

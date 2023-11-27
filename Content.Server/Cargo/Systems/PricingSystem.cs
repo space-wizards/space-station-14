@@ -108,7 +108,7 @@ public sealed class PricingSystem : EntitySystem
         args.Price += (component.Price - partPenalty) * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
-    private double GetSolutionPrice(SolutionContainerManagerComponent component)
+    private double GetSolutionPrice(SolutionContainerComponent component)
     {
         var price = 0.0;
 
@@ -257,7 +257,7 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        if (TryComp<SolutionContainerManagerComponent>(uid, out var solComp))
+        if (TryComp<SolutionContainerComponent>(uid, out var solComp))
         {
             price += GetSolutionPrice(solComp);
         }
@@ -269,9 +269,9 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(SolutionContainerManagerComponent)), out var solManager))
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(SolutionContainerComponent)), out var solManager))
         {
-            var solComp = (SolutionContainerManagerComponent) solManager.Component;
+            var solComp = (SolutionContainerComponent) solManager.Component;
             price += GetSolutionPrice(solComp);
         }
 

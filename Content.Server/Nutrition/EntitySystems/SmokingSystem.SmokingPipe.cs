@@ -82,7 +82,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             EntityUid contents = component.BowlSlot.Item.Value;
 
-            if (!TryComp<SolutionContainerManagerComponent>(contents, out var reagents) ||
+            if (!TryComp<SolutionContainerComponent>(contents, out var reagents) ||
                 !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Solution, out var pipeSolution))
                 return false;
 

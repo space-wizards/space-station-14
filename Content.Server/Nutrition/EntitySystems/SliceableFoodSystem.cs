@@ -150,7 +150,7 @@ namespace Content.Server.Nutrition.EntitySystems
             component.Count = component.TotalCount;
             var foodComp = EnsureComp<FoodComponent>(uid);
 
-            EnsureComp<SolutionContainerManagerComponent>(uid);
+            EnsureComp<SolutionContainerComponent>(uid);
             _solutionContainerSystem.EnsureSolution(uid, foodComp.Solution);
         }
 

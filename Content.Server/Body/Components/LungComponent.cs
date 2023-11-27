@@ -1,7 +1,6 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.Solutions;
 
 namespace Content.Server.Body.Components;
 
@@ -16,7 +15,6 @@ public sealed partial class LungComponent : Component
         Temperature = Atmospherics.NormalBodyTemperature
     };
 
-    [ViewVariables]
-    [Access(typeof(LungSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-    public Solution LungSolution = default!;
+    [DataField]
+    public string Solution = LungSystem.LungSolutionName;
 }

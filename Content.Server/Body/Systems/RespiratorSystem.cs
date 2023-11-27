@@ -2,10 +2,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
@@ -26,6 +28,8 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly LungSystem _lungSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
         public override void Initialize()
         {
@@ -144,7 +148,9 @@ namespace Content.Server.Body.Systems
             {
                 _atmosSys.Merge(outGas, lung.Air);
                 lung.Air.Clear();
-                lung.LungSolution.RemoveAllSolution();
+
+                if (_solutionContainerSystem.TryGetSolution(lung.Owner, lung.Solution, out var lungSolution))
+                    _solutionSystem.RemoveAllSolution(lung.Owner, lungSolution);
             }
 
             _atmosSys.Merge(ev.Gas, outGas);

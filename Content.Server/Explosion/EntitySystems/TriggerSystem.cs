@@ -252,8 +252,8 @@ namespace Content.Server.Explosion.EntitySystems
                     // If a beaker is missing, the entity won't explode, so no reason to log it
                     if (chemicalPayloadComponent?.BeakerSlotA.Item is not { } beakerA ||
                         chemicalPayloadComponent?.BeakerSlotB.Item is not { } beakerB ||
-                        !TryComp(beakerA, out SolutionContainerManagerComponent? containerA) ||
-                        !TryComp(beakerB, out SolutionContainerManagerComponent? containerB) ||
+                        !TryComp(beakerA, out SolutionContainerComponent? containerA) ||
+                        !TryComp(beakerB, out SolutionContainerComponent? containerB) ||
                         !TryComp(beakerA, out FitsInDispenserComponent? fitsA) ||
                         !TryComp(beakerB, out FitsInDispenserComponent? fitsB) ||
                         !_solutionContainerSystem.TryGetSolution(beakerA, fitsA.Solution, out var solutionA, containerA) ||

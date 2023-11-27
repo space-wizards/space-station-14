@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
 using Content.Shared.Audio;
@@ -32,6 +33,7 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {
@@ -171,7 +173,8 @@ public sealed class HealingSystem : EntitySystem
         if (!TryComp<BloodstreamComponent>(target, out var bloodstream))
             return false;
 
-        if (!HasDamage(targetDamage, component) && !(bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && component.ModifyBloodLevel > 0))
+        if (!HasDamage(targetDamage, component) &&
+            !(component.ModifyBloodLevel > 0 && _solutionContainerSystem.TryGetSolution(target, bloodstream.BloodSolutionName, out var bloodSolution) && bloodSolution.Volume < bloodSolution.MaxVolume))
         {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid, user);
             return false;

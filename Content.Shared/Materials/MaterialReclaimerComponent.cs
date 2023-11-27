@@ -85,12 +85,6 @@ public sealed partial class MaterialReclaimerComponent : Component
     public string SolutionContainerId = "output";
 
     /// <summary>
-    /// The solution itself.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public Solution OutputSolution = default!;
-
-    /// <summary>
     /// a whitelist for what entities can be inserted into this reclaimer
     /// </summary>
     [DataField]

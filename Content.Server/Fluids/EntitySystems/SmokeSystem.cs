@@ -266,11 +266,14 @@ public sealed class SmokeSystem : EntitySystem
         if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
             return;
 
-        var blockIngestion =  _internals.AreInternalsWorking(entity);
+        if (!_solutionContainerSystem.TryGetSolution(entity, bloodstream.ChemicalSolutionName, out var chemSolution) || chemSolution.AvailableVolume <= 0)
+            return;
+
+        var blockIngestion = _internals.AreInternalsWorking(entity);
 
         var cloneSolution = solution.Clone();
         var availableTransfer = FixedPoint2.Min(cloneSolution.Volume, component.TransferRate);
-        var transferAmount = FixedPoint2.Min(availableTransfer, bloodstream.ChemicalSolution.AvailableVolume);
+        var transferAmount = FixedPoint2.Min(availableTransfer, chemSolution.AvailableVolume);
         var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
         foreach (var reagentQuantity in transferSolution.Contents.ToArray())

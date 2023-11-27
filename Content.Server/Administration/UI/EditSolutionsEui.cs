@@ -36,8 +36,23 @@ namespace Content.Server.Administration.UI
 
         public override EuiStateBase GetNewState()
         {
-            var solutions = _entityManager.GetComponentOrNull<SolutionContainerManagerComponent>(Target)?.Solutions;
-            return new EditSolutionsEuiState(_entityManager.GetNetEntity(Target), solutions);
+            List<(string Name, NetEntity Solution)>? netSolutions;
+
+            if (_entityManager.GetComponentOrNull<SolutionContainerComponent>(Target)?.Solutions is { Count: > 0 } solutions)
+            {
+                netSolutions = new();
+                foreach (var (name, solution) in solutions)
+                {
+                    if (!_entityManager.TryGetNetEntity(solution, out var netSolution))
+                        continue;
+
+                    netSolutions.Add((name, netSolution.Value));
+                }
+            }
+            else
+                netSolutions = null;
+
+            return new EditSolutionsEuiState(_entityManager.GetNetEntity(Target), netSolutions);
         }
     }
 }

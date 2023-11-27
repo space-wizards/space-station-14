@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Medical.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Damage;
@@ -17,6 +18,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly PowerCellSystem _cell = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
@@ -76,8 +78,13 @@ namespace Content.Server.Medical
 
             OpenUserInterface(user, uid);
 
-            _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(GetNetEntity(target), temp != null ? temp.CurrentTemperature : float.NaN,
-                bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
+            _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(
+                GetNetEntity(target),
+                temp != null ? temp.CurrentTemperature : float.NaN,
+                (bloodstream != null && _solutionContainerSystem.TryGetSolution(target.Value, bloodstream.BloodSolutionName, out var bloodSolution))
+                    ? bloodSolution.FillFraction
+                    : float.NaN
+            ));
         }
     }
 }

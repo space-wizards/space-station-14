@@ -66,7 +66,7 @@ namespace Content.Server.Administration.Systems
         {
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
+            SubscribeLocalEvent<SolutionContainerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
         private void GetVerbs(GetVerbsEvent<Verb> ev)
@@ -402,7 +402,7 @@ namespace Content.Server.Administration.Systems
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                EntityManager.HasComponent<SolutionContainerManagerComponent>(args.Target))
+                EntityManager.HasComponent<SolutionContainerComponent>(args.Target))
             {
                 Verb verb = new()
                 {
@@ -417,7 +417,7 @@ namespace Content.Server.Administration.Systems
         }
 
         #region SolutionsEui
-        private void OnSolutionChanged(EntityUid uid, SolutionContainerManagerComponent component, SolutionChangedEvent args)
+        private void OnSolutionChanged(EntityUid uid, SolutionContainerComponent component, SolutionChangedEvent args)
         {
             foreach (var eui in _openSolutionUis.Values)
             {

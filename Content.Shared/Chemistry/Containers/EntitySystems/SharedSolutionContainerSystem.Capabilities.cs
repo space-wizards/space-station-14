@@ -13,7 +13,7 @@ public abstract partial class SharedSolutionContainerSystem
     public bool TryGetInjectableSolution(EntityUid targetUid,
         [NotNullWhen(true)] out Solution? solution,
         InjectableSolutionComponent? injectable = null,
-        SolutionContainerManagerComponent? manager = null
+        SolutionContainerComponent? manager = null
     )
     {
         if (!Resolve(targetUid, ref manager, ref injectable, false)
@@ -28,7 +28,7 @@ public abstract partial class SharedSolutionContainerSystem
 
     public bool TryGetRefillableSolution(EntityUid targetUid,
         [NotNullWhen(true)] out Solution? solution,
-        SolutionContainerManagerComponent? solutionManager = null,
+        SolutionContainerComponent? solutionManager = null,
         RefillableSolutionComponent? refillable = null)
     {
         if (!Resolve(targetUid, ref solutionManager, ref refillable, false)
@@ -45,7 +45,7 @@ public abstract partial class SharedSolutionContainerSystem
     public bool TryGetDrainableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
         DrainableSolutionComponent? drainable = null,
-        SolutionContainerManagerComponent? manager = null)
+        SolutionContainerComponent? manager = null)
     {
         if (!Resolve(uid, ref drainable, ref manager, false)
             || !TryGetSolution(uid, drainable.Solution, out solution, manager))
@@ -60,7 +60,7 @@ public abstract partial class SharedSolutionContainerSystem
     public bool TryGetDumpableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
         DumpableSolutionComponent? dumpable = null,
-        SolutionContainerManagerComponent? manager = null)
+        SolutionContainerComponent? manager = null)
     {
         if (!Resolve(uid, ref dumpable, ref manager, false)
             || !TryGetSolution(uid, dumpable.Solution, out solution, manager))
@@ -75,7 +75,7 @@ public abstract partial class SharedSolutionContainerSystem
     public bool TryGetDrawableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
         DrawableSolutionComponent? drawable = null,
-        SolutionContainerManagerComponent? manager = null)
+        SolutionContainerComponent? manager = null)
     {
         if (!Resolve(uid, ref drawable, ref manager, false)
             || !TryGetSolution(uid, drawable.Solution, out solution, manager))
@@ -90,7 +90,7 @@ public abstract partial class SharedSolutionContainerSystem
     public bool TryGetFitsInDispenser(EntityUid owner,
         [NotNullWhen(true)] out Solution? solution,
         FitsInDispenserComponent? dispenserFits = null,
-        SolutionContainerManagerComponent? solutionManager = null)
+        SolutionContainerComponent? solutionManager = null)
     {
         if (!Resolve(owner, ref dispenserFits, ref solutionManager, false)
             || !TryGetSolution(owner, dispenserFits.Solution, out solution, solutionManager))
@@ -104,7 +104,7 @@ public abstract partial class SharedSolutionContainerSystem
 
     public bool TryGetMixableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
-        SolutionContainerManagerComponent? solutionsMgr = null)
+        SolutionContainerComponent? solutionsMgr = null)
     {
 
         if (!Resolve(uid, ref solutionsMgr, false))

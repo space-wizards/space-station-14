@@ -28,7 +28,7 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
 
         public void CheckSolutions(EntityUid uid, DeleteOnSolutionEmptyComponent component)
         {
-            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>(uid))
+            if (!EntityManager.HasComponent<SolutionContainerComponent>(uid))
                 return;
 
             if (_solutionContainerSystem.TryGetSolution(uid, component.Solution, out var solution))

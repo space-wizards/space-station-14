@@ -129,25 +129,24 @@ namespace Content.Server.Body.Components
         public string BloodReagent = "Blood";
 
         /// <summary>
-        ///     Internal solution for reagent storage
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(BloodstreamSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-        public Solution ChemicalSolution = default!;
-
-        /// <summary>
         ///     Internal solution for blood storage
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Solution BloodSolution = default!;
+        [DataField]
+        public string BloodSolutionName = DefaultBloodSolutionName;
+
+        /// <summary>
+        ///     Internal solution for reagent storage
+        /// </summary>
+        [DataField]
+        public string ChemicalSolutionName = DefaultChemicalsSolutionName;
 
         /// <summary>
         ///     Temporary blood solution.
         ///     When blood is lost, it goes to this solution, and when this
         ///     solution hits a certain cap, the blood is actually spilled as a puddle.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Solution BloodTemporarySolution = default!;
+        [DataField]
+        public string BloodTemporarySolutionName = DefaultBloodSolutionName;
 
         /// <summary>
         /// Variable that stores the amount of status time added by having a low blood level.

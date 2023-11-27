@@ -45,7 +45,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(EntityUid uid, VaporComponent component, ref StartCollideEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerComponent? contents)) return;
 
             foreach (var (_, value) in _solutionContainerSystem.EnumerateSolutions((uid, contents)))
             {
@@ -97,7 +97,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public override void Update(float frameTime)
         {
-            var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
+            var query = EntityQueryEnumerator<VaporComponent, SolutionContainerComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var vaporComp, out var solution, out var xform))
             {
                 foreach (var (_, value) in _solutionContainerSystem.EnumerateSolutions((uid, solution)))

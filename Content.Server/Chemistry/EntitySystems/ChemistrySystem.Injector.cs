@@ -97,9 +97,10 @@ public sealed partial class ChemistrySystem
         else if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Draw)
         {
             // Draw from a bloodstream, if the target has that
-            if (TryComp<BloodstreamComponent>(target, out var stream))
+            if (TryComp<BloodstreamComponent>(target, out var stream) && 
+                _solutionContainers.TryGetSolution(target, stream.BloodSolutionName, out var bloodSolution))
             {
-                TryDraw(component, injector, target, stream.BloodSolution, user, stream);
+                TryDraw(component, injector, target, bloodSolution, user, stream);
                 return;
             }
 
@@ -146,7 +147,7 @@ public sealed partial class ChemistrySystem
             return;
 
         //Make sure we have the attacking entity
-        if (args.Target is not { Valid: true } target || !HasComp<SolutionContainerManagerComponent>(uid))
+        if (args.Target is not { Valid: true } target || !HasComp<SolutionContainerComponent>(uid))
             return;
 
         // Is the target a mob? If yes, use a do-after to give them time to respond.
@@ -273,8 +274,13 @@ public sealed partial class ChemistrySystem
     private void TryInjectIntoBloodstream(InjectorComponent component, EntityUid injector, EntityUid target, BloodstreamComponent targetBloodstream, EntityUid user)
     {
         // Get transfer amount. May be smaller than _transferAmount if not enough room
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetBloodstream.ChemicalSolution.AvailableVolume);
+        if (!_solutionContainers.TryGetSolution(target, targetBloodstream.ChemicalSolutionName, out var chemSolution))
+        {
+            _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
+            return;
+        }
 
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, chemSolution.AvailableVolume);
         if (realTransferAmount <= 0)
         {
             _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
@@ -282,7 +288,7 @@ public sealed partial class ChemistrySystem
         }
 
         // Move units from attackSolution to targetSolution
-        var removedSolution = _solutions.SplitSolution(user, targetBloodstream.ChemicalSolution, realTransferAmount);
+        var removedSolution = _solutions.SplitSolution(user, chemSolution, realTransferAmount);
 
         _blood.TryAddToChemicals(target, removedSolution, targetBloodstream);
 
@@ -398,19 +404,19 @@ public sealed partial class ChemistrySystem
     private void DrawFromBlood(EntityUid user, EntityUid injector, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, FixedPoint2 transferAmount)
     {
         var drawAmount = (float) transferAmount;
-        var bloodAmount = drawAmount;
-        var chemAmount = 0f;
-        if (stream.ChemicalSolution.Volume > 0f) // If they have stuff in their chem stream, we'll draw some of that
+
+        if (_solutionContainers.TryGetSolution(target, stream.ChemicalSolutionName, out var chemSolution))
         {
-            bloodAmount = drawAmount * 0.85f;
-            chemAmount = drawAmount * 0.15f;
+            var chemTemp = _solutions.SplitSolution(target, chemSolution, drawAmount * 0.15f);
+            _solutions.TryAddSolution(injector, injectorSolution, chemTemp);
+            drawAmount -= (float) chemTemp.Volume;
         }
 
-        var bloodTemp = stream.BloodSolution.SplitSolution(bloodAmount);
-        var chemTemp = stream.ChemicalSolution.SplitSolution(chemAmount);
-
-        _solutions.TryAddSolution(injector, injectorSolution, bloodTemp);
-        _solutions.TryAddSolution(injector, injectorSolution, chemTemp);
+        if (_solutionContainers.TryGetSolution(target, stream.BloodSolutionName, out var bloodSolution))
+        {
+            var bloodTemp = _solutions.SplitSolution(target, bloodSolution, drawAmount);
+            _solutions.TryAddSolution(injector, injectorSolution, bloodTemp);
+        }
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
                 ("amount", transferAmount),

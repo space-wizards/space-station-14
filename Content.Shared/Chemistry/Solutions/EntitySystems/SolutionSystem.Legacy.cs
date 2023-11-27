@@ -1,8 +1,8 @@
 using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Containers.Events;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions.Components;
-using Content.Shared.Chemistry.Solutions.Events;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -12,71 +12,29 @@ namespace Content.Shared.Chemistry.Solutions.EntitySystems;
 
 public sealed partial class SolutionSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ChemicalReactionSystem _chemicalReactionSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-
-
-    public override void Initialize()
+    [Obsolete]
+    public void UpdateAppearance(EntityUid uid, Solution solution,
+        AppearanceComponent? appearanceComponent = null)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnComponentShutdown);
-    }
-
-
-    /// <summary>
-    /// Dirties a solution entity that has been modified and prompts updates to chemical reactions and overflow state.
-    /// Should be invoked whenever a solution entity is modified.
-    /// </summary>
-    /// <remarks>
-    /// 90% of this system is ensuring that this proc is invoked whenever a solution entity is changed. The other 10% <i>is</i> this proc.
-    /// </remarks>
-    /// <param name="soln"></param>
-    /// <param name="needsReactionsProcessing"></param>
-    /// <param name="mixerComponent"></param>
-    public void UpdateChemicals(Entity<SolutionComponent> soln, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
-    {
-        Dirty(soln);
-
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        // Process reactions
-        if (needsReactionsProcessing && solution.CanReact)
-            _chemicalReactionSystem.FullyReactSolution(solution, uid, solution.MaxVolume, mixerComponent);
-
-        var overflow = solution.Volume - solution.MaxVolume;
-        if (overflow > FixedPoint2.Zero)
-        {
-            var overflowEv = new SolutionOverflowEvent(soln, overflow);
-            RaiseLocalEvent(uid, ref overflowEv);
-        }
-
-        UpdateAppearance((uid, comp, null));
-
-        var changedEv = new SolutionChangedEvent(soln);
-        RaiseLocalEvent(uid, ref changedEv);
-    }
-
-    public void UpdateAppearance(Entity<SolutionComponent, AppearanceComponent?> soln)
-    {
-        var (uid, comp, appearanceComponent) = soln;
-        var solution = comp.Solution;
-
-        if (!EntityManager.EntityExists(uid) || !Resolve(uid, ref appearanceComponent, false))
+        if (!EntityManager.EntityExists(uid)
+            || !Resolve(uid, ref appearanceComponent, false))
             return;
 
         _appearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
         _appearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(_prototypeManager), appearanceComponent);
+        if (solution.Name != null)
+        {
+            _appearanceSystem.SetData(uid, SolutionContainerVisuals.SolutionName, solution.Name, appearanceComponent);
+        }
 
         if (solution.GetPrimaryReagentId() is { } reagent)
+        {
             _appearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
+        }
         else
+        {
             _appearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
+        }
     }
 
     /// <summary>
@@ -86,50 +44,66 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="solutionHolder"></param>
     /// <param name="quantity">the volume of solution to remove.</param>
     /// <returns>The solution that was removed.</returns>
-    public Solution SplitSolution(Entity<SolutionComponent> soln, FixedPoint2 quantity)
+    [Obsolete]
+    public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        var splitSol = solution.SplitSolution(quantity);
-        UpdateChemicals(soln);
+        var splitSol = solutionHolder.SplitSolution(quantity);
+        UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
 
-    public Solution SplitStackSolution(Entity<SolutionComponent> soln, FixedPoint2 quantity, int stackCount)
+    [Obsolete]
+    public Solution SplitStackSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity, int stackCount)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        var splitSol = solution.SplitSolution(quantity / stackCount);
-        solution.SplitSolution(quantity - splitSol.Volume);
-        UpdateChemicals(soln);
+        var splitSol = solutionHolder.SplitSolution(quantity / stackCount);
+        solutionHolder.SplitSolution(quantity - splitSol.Volume);
+        UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
 
     /// <summary>
     /// Splits a solution without the specified reagent(s).
     /// </summary>
-    public Solution SplitSolutionWithout(Entity<SolutionComponent> soln, FixedPoint2 quantity, params string[] reagents)
+    [Obsolete]
+    public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
+        params string[] reagents)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        var splitSol = solution.SplitSolutionWithout(quantity, reagents);
-        UpdateChemicals(soln);
+        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagents);
+        UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
 
-    public void RemoveAllSolution(Entity<SolutionComponent> soln)
+    [Obsolete]
+    public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false, ReactionMixerComponent? mixerComponent = null)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        DebugTools.Assert(solutionHolder.Name != null && _solutionContainerSystem.TryGetSolution(uid, solutionHolder.Name, out var tmp) && tmp == solutionHolder);
 
-        if (solution.Volume == 0)
+        // Process reactions
+        if (needsReactionsProcessing && solutionHolder.CanReact)
+        {
+            _chemicalReactionSystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume, mixerComponent);
+        }
+
+        var overflowVol = solutionHolder.Volume - solutionHolder.MaxVolume;
+        if (overflowVol > FixedPoint2.Zero)
+        {
+            var overflow = solutionHolder.SplitSolution(overflowVol);
+            var overflowEv = new SolutionOverflowEvent(uid, solutionHolder, overflow);
+            RaiseLocalEvent(uid, ref overflowEv);
+        }
+
+        UpdateAppearance(uid, solutionHolder);
+        RaiseLocalEvent(uid, new SolutionChangedEvent(solutionHolder, solutionHolder.Name));
+    }
+
+    [Obsolete]
+    public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)
+    {
+        if (solutionHolder.Volume == 0)
             return;
 
-        solution.RemoveAllSolution();
-        UpdateChemicals(soln);
+        solutionHolder.RemoveAllSolution();
+        UpdateChemicals(uid, solutionHolder);
     }
 
     /// <summary>
@@ -138,16 +112,17 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="targetUid">The entity containing the solution.</param>
     /// <param name="targetSolution">The solution to set the capacity of.</param>
     /// <param name="capacity">The value to set the capacity of the solution to.</param>
-    public void SetCapacity(Entity<SolutionComponent> soln, FixedPoint2 capacity)
+    [Obsolete]
+    public void SetCapacity(EntityUid targetUid, Solution targetSolution, FixedPoint2 capacity)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        if (solution.MaxVolume == capacity)
+        if (targetSolution.MaxVolume == capacity)
             return;
 
-        solution.MaxVolume = capacity;
-        UpdateChemicals(soln);
+        targetSolution.MaxVolume = capacity;
+        if (capacity < targetSolution.Volume)
+            targetSolution.RemoveSolution(targetSolution.Volume - capacity);
+
+        UpdateChemicals(targetUid, targetSolution);
     }
 
     /// <summary>
@@ -158,29 +133,28 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="reagentQuantity">The reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity, out FixedPoint2 acceptedQuantity, float? temperature = null)
+    [Obsolete]
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentQuantity reagentQuantity,
+        out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        acceptedQuantity = solution.AvailableVolume > reagentQuantity.Quantity
+        acceptedQuantity = targetSolution.AvailableVolume > reagentQuantity.Quantity
             ? reagentQuantity.Quantity
-            : solution.AvailableVolume;
+            : targetSolution.AvailableVolume;
 
         if (acceptedQuantity <= 0)
             return reagentQuantity.Quantity == 0;
 
         if (temperature == null)
         {
-            solution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
+            targetSolution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
         }
         else
         {
             var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            solution.AddReagent(proto, acceptedQuantity, temperature.Value, _prototypeManager);
+            targetSolution.AddReagent(proto, acceptedQuantity, temperature.Value, _prototypeManager);
         }
 
-        UpdateChemicals(soln);
+        UpdateChemicals(targetUid, targetSolution, true);
         return acceptedQuantity == reagentQuantity.Quantity;
     }
 
@@ -193,10 +167,12 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentData? data = null)
+    [Obsolete]
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,
+        out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentData? data = null)
     {
         var reagent = new ReagentQuantity(prototype, quantity, data);
-        return TryAddReagent(soln, reagent, out acceptedQuantity, temperature);
+        return TryAddReagent(targetUid, targetSolution, reagent, out acceptedQuantity, temperature);
     }
 
     /// <summary>
@@ -208,10 +184,12 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(Entity<SolutionComponent> soln, ReagentId reagentId, FixedPoint2 quantity, out FixedPoint2 acceptedQuantity, float? temperature = null)
+    [Obsolete]
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentId reagentId, FixedPoint2 quantity,
+        out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
         var quant = new ReagentQuantity(reagentId, quantity);
-        return TryAddReagent(soln, quant, out acceptedQuantity, temperature);
+        return TryAddReagent(targetUid, targetSolution, quant, out acceptedQuantity, temperature);
     }
 
     /// <summary>
@@ -221,16 +199,17 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="container">Solution container from which we are removing reagent</param>
     /// <param name="reagentQuantity">The reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity)
+    [Obsolete]
+    public bool RemoveReagent(EntityUid targetUid, Solution? container, ReagentQuantity reagentQuantity)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        if (container == null)
+            return false;
 
-        var quant = solution.RemoveReagent(reagentQuantity);
+        var quant = container.RemoveReagent(reagentQuantity);
         if (quant <= FixedPoint2.Zero)
             return false;
 
-        UpdateChemicals(soln);
+        UpdateChemicals(targetUid, container);
         return true;
     }
 
@@ -242,9 +221,10 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="prototype">The Id of the reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, ReagentData? data = null)
+    [Obsolete]
+    public bool RemoveReagent(EntityUid targetUid, Solution? container, string prototype, FixedPoint2 quantity, ReagentData? data = null)
     {
-        return RemoveReagent(soln, new ReagentQuantity(prototype, quantity, data));
+        return RemoveReagent(targetUid, container, new ReagentQuantity(prototype, quantity, data));
     }
 
     /// <summary>
@@ -255,9 +235,10 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="reagentId">The reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, ReagentId reagentId, FixedPoint2 quantity)
+    [Obsolete]
+    public bool RemoveReagent(EntityUid targetUid, Solution? container, ReagentId reagentId, FixedPoint2 quantity)
     {
-        return RemoveReagent(soln, new ReagentQuantity(reagentId, quantity));
+        return RemoveReagent(targetUid, container, new ReagentQuantity(reagentId, quantity));
     }
 
     /// <summary>
@@ -268,12 +249,13 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="source">source solution</param>
     /// <param name="target">target solution</param>
     /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
-    public bool TryTransferSolution(Entity<SolutionComponent> source, Entity<SolutionComponent> target, FixedPoint2 quantity)
+    [Obsolete]
+    public bool TryTransferSolution(EntityUid sourceUid, EntityUid targetUid, Solution source, Solution target, FixedPoint2 quantity)
     {
-        if (!TryTransferSolution(target, source.Comp.Solution, quantity))
+        if (!TryTransferSolution(targetUid, target, source, quantity))
             return false;
 
-        UpdateChemicals(source);
+        UpdateChemicals(sourceUid, source, false);
         return true;
     }
 
@@ -285,23 +267,21 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="source">source solution</param>
     /// <param name="target">target solution</param>
     /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
-    public bool TryTransferSolution(Entity<SolutionComponent> soln, Solution source, FixedPoint2 quantity)
+    [Obsolete]
+    public bool TryTransferSolution(EntityUid targetUid, Solution target, Solution source, FixedPoint2 quantity)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
         if (quantity < 0)
             throw new InvalidOperationException("Quantity must be positive");
 
-        quantity = FixedPoint2.Min(quantity, solution.AvailableVolume, source.Volume);
+        quantity = FixedPoint2.Min(quantity, target.AvailableVolume, source.Volume);
         if (quantity == 0)
             return false;
 
         // TODO This should be made into a function that directly transfers reagents.
         // Currently this is quite inefficient.
-        solution.AddSolution(source.SplitSolution(quantity), _prototypeManager);
+        target.AddSolution(source.SplitSolution(quantity), _prototypeManager);
 
-        UpdateChemicals(soln);
+        UpdateChemicals(targetUid, target, true);
         return true;
     }
 
@@ -312,17 +292,15 @@ public sealed partial class SolutionSystem : EntitySystem
     ///  <param name="targetSolution">entity holding targetSolution</param>
     /// <param name="toAdd">solution being added</param>
     /// <returns>If the solution could be added.</returns>
-    public bool TryAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
+    [Obsolete]
+    public bool TryAddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
         if (toAdd.Volume == FixedPoint2.Zero)
             return true;
-        if (toAdd.Volume > solution.AvailableVolume)
+        if (toAdd.Volume > targetSolution.AvailableVolume)
             return false;
 
-        ForceAddSolution(soln, toAdd);
+        ForceAddSolution(targetUid, targetSolution, toAdd);
         return true;
     }
 
@@ -333,19 +311,17 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="targetSolution">The solution being added to.</param>
     /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
     /// <returns>The quantity of the solution actually added.</returns>
-    public FixedPoint2 AddSolution(Entity<SolutionComponent> soln, Solution toAdd)
+    [Obsolete]
+    public FixedPoint2 AddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
         if (toAdd.Volume == FixedPoint2.Zero)
             return FixedPoint2.Zero;
 
-        var quantity = FixedPoint2.Max(FixedPoint2.Zero, FixedPoint2.Min(toAdd.Volume, solution.AvailableVolume));
+        var quantity = FixedPoint2.Max(FixedPoint2.Zero, FixedPoint2.Min(toAdd.Volume, targetSolution.AvailableVolume));
         if (quantity < toAdd.Volume)
-            TryTransferSolution(soln, toAdd, quantity);
+            TryTransferSolution(targetUid, targetSolution, toAdd, quantity);
         else
-            ForceAddSolution(soln, toAdd);
+            ForceAddSolution(targetUid, targetSolution, toAdd);
 
         return quantity;
     }
@@ -357,16 +333,14 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="targetSolution">The solution being added to.</param>
     /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
     /// <returns>Whether any reagents were added to the solution.</returns>
-    public bool ForceAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
+    [Obsolete]
+    public bool ForceAddSolution(EntityUid targetUid, Solution targetSolution, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
         if (toAdd.Volume == FixedPoint2.Zero)
             return false;
 
-        solution.AddSolution(toAdd, _prototypeManager);
-        UpdateChemicals(soln);
+        targetSolution.AddSolution(toAdd, _prototypeManager);
+        UpdateChemicals(targetUid, targetSolution, needsReactionsProcessing: true);
         return true;
     }
 
@@ -381,20 +355,21 @@ public sealed partial class SolutionSystem : EntitySystem
     /// If the combined volume is below this an empty solution is returned.</param>
     /// <param name="overflowingSolution">Solution that exceeded overflowThreshold</param>
     /// <returns>Whether any reagents were added to <paramref cref="targetSolution"/>.</returns>
-    public bool TryMixAndOverflow(Entity<SolutionComponent> soln, Solution toAdd, FixedPoint2 overflowThreshold, [MaybeNullWhen(false)] out Solution overflowingSolution)
+    [Obsolete]
+    public bool TryMixAndOverflow(EntityUid targetUid, Solution targetSolution,
+        Solution toAdd,
+        FixedPoint2 overflowThreshold,
+        [NotNullWhen(true)] out Solution? overflowingSolution)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        if (toAdd.Volume == 0 || overflowThreshold > solution.MaxVolume)
+        if (toAdd.Volume == 0 || overflowThreshold > targetSolution.MaxVolume)
         {
             overflowingSolution = null;
             return false;
         }
 
-        solution.AddSolution(toAdd, _prototypeManager);
-        overflowingSolution = solution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero, solution.Volume - overflowThreshold));
-        UpdateChemicals(soln);
+        targetSolution.AddSolution(toAdd, _prototypeManager);
+        overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero, targetSolution.Volume - overflowThreshold));
+        UpdateChemicals(targetUid, targetSolution, true);
         return true;
     }
 
@@ -405,11 +380,9 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="solution">The solution to remove reagents from.</param>
     /// <param name="quantity">The amount to remove from every reagent in the solution.</param>
     /// <returns>A new solution containing every removed reagent from the original solution.</returns>
-    public Solution RemoveEachReagent(Entity<SolutionComponent> soln, FixedPoint2 quantity)
+    [Obsolete]
+    public Solution RemoveEachReagent(EntityUid uid, Solution solution, FixedPoint2 quantity)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
         if (quantity <= 0)
             return new Solution();
 
@@ -423,7 +396,7 @@ public sealed partial class SolutionSystem : EntitySystem
             removedSolution.AddReagent(reagent, removedQuantity);
         }
 
-        UpdateChemicals(soln);
+        UpdateChemicals(uid, solution);
         return removedSolution;
     }
 
@@ -437,16 +410,14 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="owner">The entity in which the solution is located.</param>
     /// <param name="solution">The solution to set the temperature of.</param>
     /// <param name="temperature">The new value to set the temperature to.</param>
-    public void SetTemperature(Entity<SolutionComponent> soln, float temperature)
+    [Obsolete]
+    public void SetTemperature(EntityUid owner, Solution solution, float temperature)
     {
-        var (_, comp) = soln;
-        var solution = comp.Solution;
-
         if (temperature == solution.Temperature)
             return;
 
         solution.Temperature = temperature;
-        UpdateChemicals(soln);
+        UpdateChemicals(owner, solution, true);
     }
 
     /// <summary>
@@ -455,14 +426,12 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="owner">The entity in which the solution is located.</param>
     /// <param name="solution">The solution to set the thermal energy of.</param>
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
-    public void SetThermalEnergy(Entity<SolutionComponent> soln, float thermalEnergy)
+    [Obsolete]
+    public void SetThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
-        var (_, comp) = soln;
-        var solution = comp.Solution;
-
         var heatCap = solution.GetHeatCapacity(_prototypeManager);
         solution.Temperature = heatCap == 0 ? 0 : thermalEnergy / heatCap;
-        UpdateChemicals(soln);
+        UpdateChemicals(owner, solution, true);
     }
 
     /// <summary>
@@ -471,37 +440,16 @@ public sealed partial class SolutionSystem : EntitySystem
     /// <param name="owner">The entity in which the solution is located.</param>
     /// <param name="solution">The solution to set the thermal energy of.</param>
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
-    public void AddThermalEnergy(Entity<SolutionComponent> soln, float thermalEnergy)
+    [Obsolete]
+    public void AddThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
     {
-        var (_, comp) = soln;
-        var solution = comp.Solution;
-
         if (thermalEnergy == 0.0f)
             return;
 
         var heatCap = solution.GetHeatCapacity(_prototypeManager);
         solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
-        UpdateChemicals(soln);
+        UpdateChemicals(owner, solution, true);
     }
 
     #endregion Thermal Energy and Temperature
-
-    #region Event Handlers
-
-    private void OnComponentInit(EntityUid uid, SolutionComponent comp, ComponentInit args)
-    {
-        comp.Solution.ValidateSolution();
-    }
-
-    private void OnComponentStartup(EntityUid uid, SolutionComponent comp, ComponentStartup args)
-    {
-        UpdateChemicals((uid, comp));
-    }
-
-    private void OnComponentShutdown(EntityUid uid, SolutionComponent comp, ComponentShutdown args)
-    {
-        RemoveAllSolution((uid, comp));
-    }
-
-    #endregion Event Handlers
 }

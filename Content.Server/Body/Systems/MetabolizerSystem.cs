@@ -26,14 +26,14 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
         private EntityQuery<OrganComponent> _organQuery;
-        private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
+        private EntityQuery<SolutionContainerComponent> _solutionQuery;
 
         public override void Initialize()
         {
             base.Initialize();
 
             _organQuery = GetEntityQuery<OrganComponent>();
-            _solutionQuery = GetEntityQuery<SolutionContainerManagerComponent>();
+            _solutionQuery = GetEntityQuery<SolutionContainerComponent>();
 
             SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
             SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
@@ -99,7 +99,7 @@ namespace Content.Server.Body.Systems
             Solution? solution = null;
             EntityUid? solutionEntityUid = null;
 
-            SolutionContainerManagerComponent? manager = null;
+            SolutionContainerComponent? manager = null;
 
             if (meta.SolutionOnBody)
             {

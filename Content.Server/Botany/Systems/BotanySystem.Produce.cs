@@ -1,6 +1,5 @@
 using Content.Server.Botany.Components;
 using Content.Shared.FixedPoint;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Botany.Systems;
 
@@ -11,7 +10,7 @@ public sealed partial class BotanySystem
         if (!TryGetSeed(produce, out var seed))
             return;
 
-        var solutionContainer = _solutionContainerSystem.EnsureSolution(uid, produce.SolutionName);
+        var solutionContainer = _solutionContainerSystem.EnsureSolution(uid, produce.SolutionName, FixedPoint2.Zero, out _);
 
         solutionContainer.RemoveAllSolution();
         foreach (var (chem, quantity) in seed.Chemicals)

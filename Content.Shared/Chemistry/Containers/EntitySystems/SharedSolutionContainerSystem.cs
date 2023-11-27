@@ -3,11 +3,13 @@ using System.Text;
 using Content.Shared.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -21,31 +23,52 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
+    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] protected readonly SolutionSystem SolutionSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        InitializeRelays();
+
+        SubscribeLocalEvent<SolutionContainerComponent, ComponentGetState>(OnComponentGetState);
+        SubscribeLocalEvent<SolutionContainerComponent, ComponentHandleState>(OnComponentHandleState);
+        SubscribeLocalEvent<ContainerSolutionComponent, ComponentGetState>(OnComponentGetState);
+        SubscribeLocalEvent<ContainerSolutionComponent, ComponentHandleState>(OnComponentHandleState);
+
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
     }
 
-    public bool TryGetSolution([NotNullWhen(true)] EntityUid? uid, string name,
-        [NotNullWhen(true)] out Solution? solution,
-        SolutionContainerManagerComponent? solutionsMgr = null)
+
+    public bool TryGetSolution(EntityUid uid, string? name, [MaybeNullWhen(false)] out Solution solution, SolutionContainerComponent? solutionsMgr = null)
     {
-        if (uid == null || !Resolve(uid.Value, ref solutionsMgr, false))
+        EntityUid solutionEntity;
+        if (name is null)
+            solutionEntity = uid;
+        else if (!Resolve(uid, ref solutionsMgr, logMissing: false) || !solutionsMgr.Solutions.TryGetValue(name, out solutionEntity))
         {
             solution = null;
             return false;
         }
 
-        return solutionsMgr.Solutions.TryGetValue(name, out solution);
+        if (!TryComp(solutionEntity, out SolutionComponent? solutionComponent))
+        {
+            solution = null;
+            return false;
+        }
+
+        solution = solutionComponent.Solution;
+        Dirty(solutionEntity, solutionComponent);
+        return true;
     }
 
-    public IEnumerable<(string Name, Solution Solution)> EnumerateSolutions(Entity<SolutionContainerManagerComponent?> container)
+    public IEnumerable<(string? Name, Solution Solution)> EnumerateSolutions(Entity<SolutionContainerComponent?> container, bool includeSelf = true)
     {
+        if (includeSelf && TryComp(container, out SolutionComponent? solutionComp))
+            yield return (null, solutionComp.Solution);
+
         if (!Resolve(container, ref container.Comp, logMissing: false))
             yield break;
 
@@ -55,19 +78,41 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
-    public IEnumerable<(string Name, Solution Solution)> EnumerateSolutions(SolutionContainerManagerComponent container)
+    public IEnumerable<(string Name, Solution Solution)> EnumerateSolutions(SolutionContainerComponent container)
     {
-        foreach (var (name, solution) in container.Solutions)
+        foreach (var (name, solutionId) in container.Solutions)
         {
-            yield return (name, solution);
+            if (TryComp(solutionId, out SolutionComponent? solutionComp))
+                yield return (name, solutionComp.Solution);
         }
     }
+
+
+    protected void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent, ContainerSolutionComponent> soln)
+    {
+        var (uid, appearanceComponent) = container;
+        if (!Resolve(uid, ref appearanceComponent, logMissing: false))
+            return;
+
+        var (_, comp, relation) = soln;
+        var solution = comp.Solution;
+
+        AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
+        AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(PrototypeManager), appearanceComponent);
+        AppearanceSystem.SetData(uid, SolutionContainerVisuals.SolutionName, relation.Name, appearanceComponent);
+
+        if (solution.GetPrimaryReagentId() is { } reagent)
+            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
+        else
+            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
+    }
+
 
     public FixedPoint2 GetTotalPrototypeQuantity(EntityUid owner, string reagentId)
     {
         var reagentQuantity = FixedPoint2.New(0);
         if (EntityManager.EntityExists(owner)
-            && EntityManager.TryGetComponent(owner, out SolutionContainerManagerComponent? managerComponent))
+            && EntityManager.TryGetComponent(owner, out SolutionContainerComponent? managerComponent))
         {
             foreach (var (_, solution) in EnumerateSolutions((owner, managerComponent)))
             {
@@ -80,12 +125,57 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     #region Event Handlers
 
-    private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent,
-        ExaminedEvent args)
+    private void OnComponentGetState(EntityUid uid, SolutionContainerComponent comp, ComponentGetState args)
     {
-        SolutionContainerManagerComponent? solutionsManager = null;
-        if (!Resolve(args.Examined, ref solutionsManager)
-            || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solution))
+        if (comp.Solutions is not { Count: > 0 } solutions)
+        {
+            args.State = new SolutionContainerState(null);
+            return;
+        }
+
+        var netSolutions = new List<(string Name, NetEntity Solution)>(solutions.Count);
+        foreach (var (name, solution) in solutions)
+        {
+            if (TryGetNetEntity(solution, out var netSolution))
+                netSolutions.Add((name, netSolution.Value));
+        }
+        args.State = new SolutionContainerState(netSolutions);
+    }
+
+    private void OnComponentHandleState(EntityUid uid, SolutionContainerComponent comp, ComponentHandleState args)
+    {
+        if (args.Current is not SolutionContainerState state)
+            return;
+
+        comp.Solutions.Clear();
+        if (state.Solutions is not { Count: > 0 } solutions)
+            return;
+
+        foreach (var (name, netSolution) in state.Solutions)
+        {
+            if (TryGetEntity(netSolution, out var solution))
+                comp.Solutions.Add(name, solution.Value);
+        }
+    }
+
+    private void OnComponentGetState(EntityUid uid, ContainerSolutionComponent comp, ComponentGetState args)
+    {
+        args.State = new ContainerSolutionState(GetNetEntity(comp.Container), comp.Name);
+    }
+
+    private void OnComponentHandleState(EntityUid uid, ContainerSolutionComponent comp, ComponentHandleState args)
+    {
+        if (args.Current is not ContainerSolutionState state)
+            return;
+
+        comp.Container = GetEntity(state.Container);
+        comp.Name = state.Name;
+    }
+
+
+    private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent, ExaminedEvent args)
+    {
+        if (!TryGetSolution(uid, examinableComponent.Solution, out var solution))
         {
             return;
         }
@@ -169,7 +259,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        SolutionContainerManagerComponent? solutionsManager = null;
+        SolutionContainerComponent? solutionsManager = null;
         if (!Resolve(args.Target, ref solutionsManager)
             || !TryGetSolution(args.Target, component.Solution, out var solutionHolder, solutionsManager))
         {

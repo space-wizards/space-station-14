@@ -71,6 +71,7 @@ public sealed partial class Solution : IEnumerable<ReagentQuantity>, ISerializat
     /// <summary>
     ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
     /// </summary>
+    [ViewVariables]
     public string? Name;
 
     /// <summary>
@@ -158,10 +159,12 @@ public sealed partial class Solution : IEnumerable<ReagentQuantity>, ISerializat
 
     public Solution(Solution solution)
     {
+        Contents = solution.Contents.ShallowClone();
         Volume = solution.Volume;
+        MaxVolume = solution.MaxVolume;
+        Temperature = solution.Temperature;
         _heatCapacity = solution._heatCapacity;
         _heatCapacityDirty = solution._heatCapacityDirty;
-        Contents = solution.Contents.ShallowClone();
         ValidateSolution();
     }
 

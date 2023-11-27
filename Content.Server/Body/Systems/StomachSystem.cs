@@ -22,7 +22,7 @@ namespace Content.Server.Body.Systems
 
         public override void Update(float frameTime)
         {
-            var query = EntityQueryEnumerator<StomachComponent, OrganComponent, SolutionContainerManagerComponent>();
+            var query = EntityQueryEnumerator<StomachComponent, OrganComponent, SolutionContainerComponent>();
             while (query.MoveNext(out var uid, out var stomach, out var organ, out var sol))
             {
                 stomach.AccumulatedFrameTime += frameTime;
@@ -88,7 +88,7 @@ namespace Content.Server.Body.Systems
         }
 
         public bool CanTransferSolution(EntityUid uid, Solution solution,
-            SolutionContainerManagerComponent? solutions = null)
+            SolutionContainerComponent? solutions = null)
         {
             if (!Resolve(uid, ref solutions, false))
                 return false;
@@ -105,7 +105,7 @@ namespace Content.Server.Body.Systems
 
         public bool TryTransferSolution(EntityUid uid, Solution solution,
             StomachComponent? stomach = null,
-            SolutionContainerManagerComponent? solutions = null)
+            SolutionContainerComponent? solutions = null)
         {
             if (!Resolve(uid, ref stomach, ref solutions, false))
                 return false;

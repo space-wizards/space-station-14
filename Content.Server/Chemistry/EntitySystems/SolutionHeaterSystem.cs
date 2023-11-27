@@ -99,7 +99,7 @@ public sealed class SolutionHeaterSystem : EntitySystem
         {
             foreach (var heatingEntity in placer.PlacedEntities)
             {
-                if (!TryComp<SolutionContainerManagerComponent>(heatingEntity, out var solution))
+                if (!TryComp<SolutionContainerComponent>(heatingEntity, out var solution))
                     continue;
 
                 var energy = heater.HeatPerSecond * frameTime;

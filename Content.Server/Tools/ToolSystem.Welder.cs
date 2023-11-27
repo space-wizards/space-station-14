@@ -45,7 +45,7 @@ namespace Content.Server.Tools
                 args.Damage += component.LitMeleeDamageBonus;
         }
 
-        public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
+        public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerComponent? solutionContainer = null)
         {
             if (!Resolve(uid, ref welder, ref solutionContainer)
                 || !_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var fuelSolution, solutionContainer))
@@ -56,7 +56,7 @@ namespace Content.Server.Tools
 
         public bool TryToggleWelder(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
-            SolutionContainerManagerComponent? solutionContainer = null,
+            SolutionContainerComponent? solutionContainer = null,
             ItemComponent? item = null,
             SharedPointLightComponent? light = null,
             AppearanceComponent? appearance = null)
@@ -73,7 +73,7 @@ namespace Content.Server.Tools
 
         public bool TryTurnWelderOn(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
-            SolutionContainerManagerComponent? solutionContainer = null,
+            SolutionContainerComponent? solutionContainer = null,
             ItemComponent? item = null,
             SharedPointLightComponent? light = null,
             AppearanceComponent? appearance = null,
@@ -302,7 +302,7 @@ namespace Content.Server.Tools
             foreach (var tool in _activeWelders.ToArray())
             {
                 if (!EntityManager.TryGetComponent(tool, out WelderComponent? welder)
-                    || !EntityManager.TryGetComponent(tool, out SolutionContainerManagerComponent? solutionContainer)
+                    || !EntityManager.TryGetComponent(tool, out SolutionContainerComponent? solutionContainer)
                     || !EntityManager.TryGetComponent(tool, out TransformComponent? transform))
                     continue;
 
