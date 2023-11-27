@@ -1,48 +1,4 @@
 Entries:
-- author: ItsMeThom
-  changes:
-  - {message: Changed Lathe UI to two column layout to improve readability of materials
-      currently loaded., type: Tweak}
-  id: 4697
-  time: '2023-08-29T00:36:07.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: 'Nanotrasen has decided to purchase their blood packs from a different
-      company, so they now contain real blood.', type: Tweak}
-  id: 4698
-  time: '2023-08-29T04:30:10.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not showing the name of the fellow traitor that you have to keep
-      alive., type: Fix}
-  id: 4699
-  time: '2023-08-29T06:23:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added fultons for salvagers., type: Add}
-  id: 4700
-  time: '2023-08-29T06:34:06.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not tracking job playtime., type: Fix}
-  id: 4701
-  time: '2023-08-29T20:39:18.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed players not getting their round start message telling them their
-      supervisors., type: Add}
-  id: 4702
-  time: '2023-08-29T22:50:23.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Ported steel chair sprites from Paradise Station & Shiptest., type: Tweak}
-  id: 4703
-  time: '2023-08-29T23:32:32.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Flavor text now disabled if identity hidden, type: Tweak}
-  id: 4704
-  time: '2023-08-29T23:38:16.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Water and lava will now partially occlude your sprite., type: Add}
@@ -2897,3 +2853,53 @@ Entries:
   - {message: The Ripley APLU is now Tier 1 Industrial., type: Tweak}
   id: 5196
   time: '2023-11-20T00:58:07.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Shuttle walls and windows can now be constructed., type: Tweak}
+  id: 5197
+  time: '2023-11-21T01:20:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix being unable to FTL dock to planets., type: Fix}
+  id: 5198
+  time: '2023-11-22T01:02:02.0000000+00:00'
+- author: Feluk6174
+  changes:
+  - {message: 'Bananadine is now a psychedelic that can be obtained by grinding baked
+      banana peels, which can be obtained by microwaving banana peels.', type: Add}
+  id: 5199
+  time: '2023-11-22T01:08:53.0000000+00:00'
+- author: Gotimanga
+  changes:
+  - {message: The reagent "egg" is now known as "cooked egg", type: Tweak}
+  id: 5200
+  time: '2023-11-22T04:32:35.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You must now unlock a cyborg's panel to access it, type: Fix}
+  id: 5201
+  time: '2023-11-22T17:16:03.0000000+00:00'
+- author: Nyranu
+  changes:
+  - {message: The ability to put a cakecat on your head., type: Add}
+  id: 5202
+  time: '2023-11-23T00:41:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Audio rework got re-merged, the changelog has been re-posted here for
+      brevity.', type: Add}
+  - {message: Grid audio will now attenuate properly over distance and won't be ear
+      rupturingly loud., type: Fix}
+  - {message: FTL sound should no longer persist as it's attached to the shuttle instead
+      of being global., type: Fix}
+  - {message: Audio can now start at an offset so if an audio source comes into range
+      so it won't play from the start., type: Fix}
+  - {message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
+      so it's smoother. You may need to adjust your master audio volume., type: Tweak}
+  id: 5203
+  time: '2023-11-27T11:21:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ahelp audio., type: Fix}
+  id: 5204
+  time: '2023-11-27T13:42:04.0000000+00:00'

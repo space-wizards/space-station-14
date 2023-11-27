@@ -578,6 +578,13 @@
     horizontalRotation: 0
   - type: Item
     size: Ginormous
+    heldPrefix: cak
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Pets/cat.rsi
+    equippedPrefix: cak
+    slots:
+    - HEAD
   - type: GhostRole
     prob: 1
     name: ghost-role-information-Cak-name
