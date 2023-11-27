@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added the Deathmatch game mode! Brawl it out with other players and
-      try and be the first to 31 kills., type: Add}
-  id: 4709
-  time: '2023-08-31T01:06:16.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Updated traitor guidebook section., type: Tweak}
@@ -2903,3 +2897,9 @@ Entries:
   - {message: Chameleon functionality to Agent and Nukie ID cards, type: Add}
   id: 5208
   time: '2023-11-27T21:34:30.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Revenants can no longer emag evac to instantly launch the shuttle.,
+    type: Fix}
+  id: 5209
+  time: '2023-11-27T21:39:30.0000000+00:00'
