@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Slightly improved the steel monotile sprites., type: Tweak}
-  id: 4708
-  time: '2023-08-31T01:02:35.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added the Deathmatch game mode! Brawl it out with other players and
@@ -2903,3 +2898,8 @@ Entries:
     type: Tweak}
   id: 5207
   time: '2023-11-27T21:29:30.0000000+00:00'
+- author: Rainfey
+  changes:
+  - {message: Chameleon functionality to Agent and Nukie ID cards, type: Add}
+  id: 5208
+  time: '2023-11-27T21:34:30.0000000+00:00'
