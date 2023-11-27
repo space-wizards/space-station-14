@@ -11,6 +11,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 
 namespace Content.Server.BluespaceHarvester;
 
@@ -24,6 +26,7 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     // TODO: Move to component.
     private readonly List<BluespaceHarvesterTap> _taps = new()
@@ -129,16 +132,38 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
 
     private void OnTargetLevel(Entity<BluespaceHarvesterComponent> ent, ref BluespaceHarvesterTargetLevelMessage args)
     {
+        var user = args.Session.AttachedEntity;
+        if (!Exists(user))
+            return;
+
         // If we switch off, we don't need to be switched on.
         if (!ent.Comp.Reseted)
             return;
 
         ent.Comp.TargetLevel = args.TargetLevel;
         UpdateUI(ent);
+
+        if (args.TargetLevel < ent.Comp.StableLevel)
+        {
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):player} set the level less than stable in {ToPrettyString(ent)} to {args.TargetLevel}");
+            return;
+        }
+
+        if (args.TargetLevel == ent.Comp.StableLevel)
+        {
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} set the level equal to the stable in {ToPrettyString(ent)} to {args.TargetLevel}");
+            return;
+        }
+
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user.Value):player} set the level MORE stable in {ToPrettyString(ent)} to {args.TargetLevel}");
     }
 
     private void OnBuy(Entity<BluespaceHarvesterComponent> ent, ref BluespaceHarvesterBuyMessage args)
     {
+        var user = args.Session.AttachedEntity;
+        if (!Exists(user))
+            return;
+
         if (!ent.Comp.Reseted)
             return;
 
@@ -152,6 +177,8 @@ public sealed class BluespaceHarvesterSystem : EntitySystem
 
         ent.Comp.Points -= category.Cost; // Damn capitalism.
         SpawnLoot(ent, category.PrototypeId);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} buys in a {ToPrettyString(ent)}, {Enum.GetName(typeof(BluespaceHarvesterCategory), category.Type)} category");
     }
 
     private void UpdateAppearance(Entity<BluespaceHarvesterComponent> ent)
