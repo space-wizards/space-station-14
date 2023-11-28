@@ -63,7 +63,10 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         }
 
         if (!container.Solutions.TryGetValue(name, out var solutionSlot))
+        {
             solutionSlot = ContainerSystem.EnsureContainer<ContainerSlot>(entity.Owner, $"solution@{name}");
+            container.Solutions.Add(name, solutionSlot);
+        }
 
         var needsInit = false;
         SolutionComponent solutionComp;
