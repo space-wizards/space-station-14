@@ -116253,7 +116253,6 @@ entities:
           busname: Master
           pitchscale: 1
           volume: 0
-          attenuation: Default
         path: /Audio/Weapons/eblade1.ogg
       type: MeleeWeapon
     - type: ItemCooldown
