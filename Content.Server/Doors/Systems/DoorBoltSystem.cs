@@ -72,6 +72,9 @@ public sealed class DoorBoltSystem : SharedDoorBoltSystem
         if (newBolts == component.BoltsDown)
             return;
 
+        if (TerminatingOrDeleted(uid)) // otherwise shuttles that are docked roundstart will break tests
+            return;
+
         component.BoltsDown = newBolts;
         Audio.PlayPvs(newBolts ? component.BoltDownSound : component.BoltUpSound, uid);
         UpdateBoltLightStatus(uid, component);
