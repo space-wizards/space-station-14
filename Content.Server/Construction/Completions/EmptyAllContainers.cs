@@ -3,6 +3,7 @@ using Content.Shared.Construction;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -32,18 +33,18 @@ namespace Content.Server.Construction.Completions
 
             var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
             var handSys = entityManager.EntitySysManager.GetEntitySystem<HandsSystem>();
+            var transformSys = entityManager.EntitySysManager.GetEntitySystem<TransformSystem>();
 
             HandsComponent? hands = null;
             var pickup = Pickup && entityManager.TryGetComponent(userUid, out hands);
 
-            EntityCoordinates? dropCoordinates = null;
-            if (EmptyAtUser && entityManager.TryGetComponent(userUid, out TransformComponent? userXform))
-                dropCoordinates = userXform.Coordinates;
-
             foreach (var container in containerManager.GetAllContainers())
             {
-                foreach (var ent in containerSys.EmptyContainer(container, true, dropCoordinates, reparent: !pickup))
+                foreach (var ent in containerSys.EmptyContainer(container, true, reparent: !pickup))
                 {
+                    if (EmptyAtUser && userUid is not null)
+                        transformSys.DropNextTo(ent, (EntityUid) userUid);
+
                     if (pickup)
                         handSys.PickupOrDrop(userUid, ent, handsComp: hands);
                 }
