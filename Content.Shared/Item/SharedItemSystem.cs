@@ -1,5 +1,3 @@
-using System.Collections.Specialized;
-using System.Numerics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
@@ -174,22 +172,17 @@ public abstract class SharedItemSystem : EntitySystem
             return new Box2i[] { };
 
         var shapes = GetItemShape(entity);
-
-        if (rotation == Angle.Zero && position == Vector2i.Zero)
-            return shapes;
-
         var boundingShape = SharedStorageSystem.GetBoundingBox(shapes);
+        var boundingCenter = ((Box2) boundingShape).Center;
+        var matty = Matrix3.CreateTransform(boundingCenter, rotation);
+        var drift = boundingShape.BottomLeft - matty.TransformBox(boundingShape).BottomLeft;
 
-        //todo sloth wanted matrix transformations and this shits itself bad. FIX!
         var adjustedShapes = new List<Box2i>();
         foreach (var shape in shapes)
         {
-            var rotatedBox = new Box2Rotated(shape, rotation, boundingShape.Center);
-            var box = rotatedBox.CalcBoundingBox();
-            var drift = shape.BottomLeft - box.BottomLeft;
-            var driftAdjustedBox = box.Translated(drift);
-            var flooredBox = new Box2i(driftAdjustedBox.BottomLeft.Floored(), driftAdjustedBox.TopRight.Floored());
-            var translated = flooredBox.Translated(position);
+            var transformed = matty.TransformBox(shape).Translated(drift);
+            var floored = new Box2i(transformed.BottomLeft.Floored(), transformed.TopRight.Floored());
+            var translated = floored.Translated(position);
 
             adjustedShapes.Add(translated);
         }

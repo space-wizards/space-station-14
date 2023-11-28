@@ -6,10 +6,19 @@ namespace Content.Shared.Storage;
 public partial record struct ItemStorageLocation
 {
     /// <summary>
-    /// The rotation of the piece in storage.
+    /// The rotation, stored a cardinal direction in order to reduce rounding errors.
     /// </summary>
     [DataField]
-    public Angle Rotation;
+    private Direction _rotation;
+
+    /// <summary>
+    /// The rotation of the piece in storage.
+    /// </summary>
+    public Angle Rotation
+    {
+        get => _rotation.ToAngle();
+        set => _rotation = value.GetCardinalDir();
+    }
 
     /// <summary>
     /// Where the item is located in storage.

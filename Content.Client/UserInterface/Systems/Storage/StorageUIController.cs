@@ -132,15 +132,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
             args.Handle();
         }
-        else if (args.Function == EngineKeyFunctions.UIRightClick &&
-                 _container?.StorageEntity != null &&
-                 _player.LocalEntity.HasValue)
-        {
-            _entity.RaisePredictiveEvent(new StorageInteractWithItemEvent(
-                _entity.GetNetEntity(control.Entity),
-                _entity.GetNetEntity(_container.StorageEntity.Value)));
-            args.Handle();
-        }
         else if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
             _entity.System<ExamineSystem>().DoExamine(control.Entity);
@@ -166,18 +157,25 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
     private void OnPieceUnpressed(GUIBoundKeyEventArgs args, ItemGridPiece control)
     {
+        if (_container?.StorageEntity is not { } storageEnt)
+            return;
+
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            if (CurrentlyDragging != null && DraggingGhost != null)
+            if (DraggingGhost is { } draggingGhost&&
+                _container.TryGetDraggedPieceLocation(out var position))
             {
-                if (_container?.StorageEntity != null && _container?.TryGetDraggedPieceLocation(out var position) == true)
-                {
-                    _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
-                        _entity.GetNetEntity(DraggingGhost.Entity),
-                        _entity.GetNetEntity(_container.StorageEntity.Value),
-                        new ItemStorageLocation(DraggingGhost.Location.Rotation, position.Value)));
-                    _container?.BuildItemPieces();
-                }
+                _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
+                    _entity.GetNetEntity(draggingGhost.Entity),
+                    _entity.GetNetEntity(storageEnt),
+                    new ItemStorageLocation(draggingGhost.Location.Rotation, position.Value)));
+                _container?.BuildItemPieces();
+            }
+            else //if we just clicked, then take it out of the bag.
+            {
+                _entity.RaisePredictiveEvent(new StorageInteractWithItemEvent(
+                    _entity.GetNetEntity(control.Entity),
+                    _entity.GetNetEntity(storageEnt)));
             }
             _menuDragHelper.EndDrag();
             args.Handle();
