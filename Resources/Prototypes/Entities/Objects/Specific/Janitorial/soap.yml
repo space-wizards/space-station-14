@@ -119,7 +119,7 @@
   - type: SolutionContainerVisuals
     fillBaseName: syndie-
   - type: Slippery
-    paralyzeTime: 5
+    paralyzeTime: 6
     launchForwardsMultiplier: 2.5
   - type: Item
     heldPrefix: syndie
@@ -141,7 +141,7 @@
   - type: SolutionContainerVisuals
     fillBaseName: gibs-
   - type: Slippery
-    paralyzeTime: 2
+    paralyzeTime: 3.5
   - type: StepTrigger
   - type: Item
     heldPrefix: gibs
@@ -154,7 +154,7 @@
   name: omega soap
   id: SoapOmega
   parent: Soap
-  description: The most advanced soap known to mankind. Smells of bluespace.
+  description: The most advanced soap known to the universe. Smells of bluespace. Makes the clown rejoice in slipping pleasure
   components:
   - type: Sprite
     layers:
@@ -163,8 +163,8 @@
   - type: SolutionContainerVisuals
     fillBaseName: omega-
   - type: Slippery
-    paralyzeTime: 7
-    launchForwardsMultiplier: 3
+    paralyzeTime: 8
+    launchForwardsMultiplier: 5
   - type: Item
     heldPrefix: omega
   - type: SolutionContainerManager
