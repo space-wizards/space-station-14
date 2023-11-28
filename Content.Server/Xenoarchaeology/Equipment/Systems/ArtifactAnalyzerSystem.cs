@@ -18,6 +18,7 @@ using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -180,9 +181,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             component.AnalyzerEntity = null;
         }
 
-        // TODO: Yeah this comp relies upon event ordering so we get this for now.
-        if (!TerminatingOrDeleted(uid))
-            UpdateUserInterface(uid, component);
+        UpdateUserInterface(uid, component);
     }
 
     private void UpdateUserInterface(EntityUid uid, AnalysisConsoleComponent? component = null)

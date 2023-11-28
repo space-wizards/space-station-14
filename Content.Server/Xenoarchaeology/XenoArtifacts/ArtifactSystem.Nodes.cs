@@ -204,7 +204,7 @@ public sealed partial class ArtifactSystem
             var temp = (object) comp;
             _serialization.CopyTo(entry.Component, ref temp);
 
-            EntityManager.AddComponent(uid, (Component) temp!);
+            EntityManager.AddComponent(uid, (Component) temp!, true);
         }
 
         node.Discovered = true;
@@ -238,7 +238,7 @@ public sealed partial class ArtifactSystem
                 comp.Owner = uid;
                 var temp = (object) comp;
                 _serialization.CopyTo(entry, ref temp);
-                EntityManager.AddComponent(uid, (Component) temp!);
+                EntityManager.AddComponent(uid, (Component) temp!, true);
                 continue;
             }
 

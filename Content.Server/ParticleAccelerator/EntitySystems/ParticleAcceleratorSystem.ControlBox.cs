@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Content.Server.Administration.Managers;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
 
@@ -17,6 +18,7 @@ public sealed partial class ParticleAcceleratorSystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+
     private void InitializeControlBoxSystem()
     {
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ComponentStartup>(OnComponentStartup);
