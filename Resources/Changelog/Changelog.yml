@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Eating some foods no longer creates a plate out of thin air., type: Tweak}
-  id: 4714
-  time: '2023-08-31T02:14:54.0000000+00:00'
 - author: potato1234x
   changes:
   - {message: Cap now spawns with laceup shoes instead of sneakers, type: Tweak}
@@ -2905,3 +2900,8 @@ Entries:
       and plungers) not fitting in the janitor''s trolley.', type: Fix}
   id: 5213
   time: '2023-11-27T22:16:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ambient audio not playing., type: Fix}
+  id: 5214
+  time: '2023-11-28T03:09:26.0000000+00:00'
