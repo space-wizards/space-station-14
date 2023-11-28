@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Committing suicide no longer makes your body disappear., type: Fix}
-  id: 4719
-  time: '2023-09-01T00:46:05.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Borgs now have robotic speech verbs, type: Fix}
@@ -2900,3 +2895,8 @@ Entries:
   - {message: Fixed riot shield audio and popup spam, type: Fix}
   id: 5218
   time: '2023-11-28T07:06:38.0000000+00:00'
+- author: UbaserB
+  changes:
+  - {message: Blood now has a sprite when placed in metamorphic glasses., type: Add}
+  id: 5219
+  time: '2023-11-28T07:09:56.0000000+00:00'
