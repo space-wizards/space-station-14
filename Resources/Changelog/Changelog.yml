@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
-      dioxide poisoning.
-    type: Tweak
-  id: 4738
-  time: '2023-09-03T06:30:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix fulton parenting, also fix it not checking if the target is reachable.
@@ -3585,3 +3578,27 @@ Entries:
     type: Tweak
   id: 5204
   time: '2023-11-26T14:08:47.0000000+00:00'
+- author: AlexandrSTG
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0443\u0440\u043E\u043D\
+      \ \u0441\u0442\u0430\u043C\u0438\u043D\u043E\u0439 \u0440\u0435\u0437\u0438\u043D\
+      \u043E\u0432\u044B\u043C \u043F\u0443\u043B\u044F\u043C .20 \u043A\u0430\u043B\
+      \u0438\u0431\u0440\u0430. \u0423\u0420\u0410! \u0422\u0435\u043F\u0435\u0440\
+      \u044C \u043E\u043D\u0438 \u043D\u0435 \u0431\u0435\u0441\u043F\u043E\u043B\u0435\
+      \u0437\u043D\u044B\u0439 \u043A\u0443\u0441\u043E\u043A \u043F\u043B\u0430\u0441\
+      \u0442\u0438\u043A\u0430."
+    type: Add
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5205
+  time: '2023-11-28T23:06:21.0000000+00:00'
