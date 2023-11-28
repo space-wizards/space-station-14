@@ -58,7 +58,6 @@
       - id: JetpackCaptainFilled
       - id: MedalCase
       - id: ClothingHeadHatCapcap
-      - id: ClothingShoesBootsWinterCap
 
 - type: entity
   id: LockerCaptainFilled
@@ -91,6 +90,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: ClothingShoesBootsWinterCap
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -151,7 +151,6 @@
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
       - id: AccessConfigurator
-      - id: ClothingShoesBootsWinterCE
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -174,6 +173,7 @@
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
       - id: AccessConfigurator
+      - id: ClothingShoesBootsWinterCE
 
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
@@ -198,7 +198,6 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
-      - id: ClothingShoesBootsWinterCmo
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -222,6 +221,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: ClothingShoesBootsWinterCmo
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit
@@ -244,7 +244,6 @@
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
-      - id: ClothingShoesBootsWinterRd
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -266,6 +265,7 @@
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
+      - id: ClothingShoesBootsWinterRd
 
 - type: entity
   id: LockerHeadOfSecurityFilledHardsuit
@@ -299,7 +299,6 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
-      - id: ClothingShoesBootsWinterHos
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -330,3 +329,4 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: ClothingShoesBootsWinterHos
