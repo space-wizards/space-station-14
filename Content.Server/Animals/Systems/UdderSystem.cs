@@ -1,4 +1,3 @@
-using Arch.Core;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
@@ -11,7 +10,6 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Udder;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Animals.Systems;
