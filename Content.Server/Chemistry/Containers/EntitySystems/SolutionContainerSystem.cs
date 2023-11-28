@@ -66,6 +66,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         {
             solutionSlot = ContainerSystem.EnsureContainer<ContainerSlot>(entity.Owner, $"solution@{name}");
             container.Solutions.Add(name, solutionSlot);
+            Dirty(uid, container);
         }
 
         var needsInit = false;
@@ -87,7 +88,10 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
             existed = false;
         }
         else
+        {
             solutionComp.Solution.MaxVolume = FixedPoint2.Max(solutionComp.Solution.MaxVolume, minVol);
+            Dirty(solutionId, solutionComp);
+        }
 
         if (!TryComp(solutionId, out ContainerSolutionComponent? relation))
         {
@@ -95,7 +99,10 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
             AddComp(solutionId, relation);
         }
         else
+        {
             (relation.Container, relation.Name) = (uid, name);
+            Dirty(solutionId, relation);
+        }
 
         if (needsInit)
             EntityManager.InitializeAndStartEntity(solutionId, Transform(solutionId).MapID);
@@ -124,14 +131,6 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
             prototype.MaxVolume = FixedPoint2.Max(prototype.MaxVolume, minVol);
 
         return prototype;
-    }
-
-
-    private Entity<SolutionComponent> SpawnSolution(EntityUid container, string name, Solution prototype)
-    {
-        var soln = SpawnSolutionUninitialized(container, name, prototype);
-        EntityManager.InitializeAndStartEntity(soln, Transform(soln).MapID);
-        return soln;
     }
 
 
