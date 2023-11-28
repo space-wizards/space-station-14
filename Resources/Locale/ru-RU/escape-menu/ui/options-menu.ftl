@@ -30,6 +30,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ui-options-show-held-item = Показать удерживаемый элемент рядом с курсором?
 ui-options-show-combat-mode-indicators = Показать индикатор боевого режима рядом с курсором?
+ui-options-show-looc-on-head = Показывать LOOC-чат над головами персонажей?
 ui-options-vsync = Вертикальная синхронизация
 ui-options-fullscreen = Полный экран
 ui-options-lighting-label = Качество освещения:
@@ -162,6 +163,7 @@ ui-options-function-show-escape-menu = Переключить игровое м�
 ui-options-function-escape-context = Закрыть текущее окно или переключить игровое меню
 ui-options-function-take-screenshot = Сделать скриншот
 ui-options-function-take-screenshot-no-ui = Сделать скриншот (без интерфейса)
+ui-options-function-toggle-fullscreen = Переключить полноэкранный режим
 ui-options-function-editor-place-object = Разместить объект
 ui-options-function-editor-cancel-place = Отменить размещение
 ui-options-function-editor-grid-place = Размещать в сетке

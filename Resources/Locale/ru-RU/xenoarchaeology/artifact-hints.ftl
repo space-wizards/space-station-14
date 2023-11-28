@@ -36,3 +36,4 @@ artifact-trigger-hint-pressure = Экстремальное давление
 artifact-trigger-hint-regular-gases = Стандартные атмосферные газы
 artifact-trigger-hint-plasma = Газообразная плазма
 artifact-trigger-hint-land = Активное замедление
+artifact-trigger-hint-examine = Внимательное изучение

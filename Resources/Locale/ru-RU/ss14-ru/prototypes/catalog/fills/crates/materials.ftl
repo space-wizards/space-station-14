@@ -14,3 +14,5 @@ ent-CrateMaterialPlasma = ящик твёрдой плазмы
     .desc = 90 единиц плазмы.
 ent-CrateMaterialCardboard = ящик картона
     .desc = 60 единиц картона.
+ent-CrateMaterialPaper = ящик бумаги
+    .desc = 90 листов бумаги.

@@ -70,7 +70,7 @@
     state: state0
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls  # Corvax-Resprite
     base: state
   - type: Icon
     sprite: Structures/Windows/shuttle_window_diagonal.rsi
