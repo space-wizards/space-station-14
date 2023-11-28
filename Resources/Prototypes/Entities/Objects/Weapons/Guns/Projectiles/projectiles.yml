@@ -52,7 +52,7 @@
           !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
         hard: false
-        layer:
+        mask:
         - Impassable
         - LowImpassable
         - MidImpassable

@@ -14,7 +14,7 @@ namespace Content.Shared.Standing
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
-        private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
+        private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable | (int) CollisionGroup.BulletImpassable;
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
