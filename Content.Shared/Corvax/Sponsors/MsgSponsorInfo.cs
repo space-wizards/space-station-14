@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Text.Json.Serialization;
 using Lidgren.Network;
 using Robust.Shared.Network;
@@ -43,7 +43,8 @@ public sealed class MsgSponsorInfo : NetMessage
         buffer.ReadPadBits();
         if (!isSponsor) return;
         var length = buffer.ReadVariableInt32();
-        using var stream = buffer.ReadAlignedMemory(length);
+        using var stream = new MemoryStream();
+        buffer.ReadAlignedMemory(stream, length);
         serializer.DeserializeDirect(stream, out Info);
     }
 
