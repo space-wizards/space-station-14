@@ -120,7 +120,7 @@
     sprite: Clothing/Hands/Gloves/hop.rsi
   - type: Fiber
     fiberMaterial: fibers-durathread
-    fiberColor: fibers-black
+    fiberColor: fibers-blue
   - type: Armor
     modifiers:
       coefficients:
