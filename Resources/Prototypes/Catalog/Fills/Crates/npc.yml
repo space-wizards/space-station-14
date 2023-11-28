@@ -203,4 +203,4 @@
   - type: StorageFill
     contents:
       - id: MobMothroach
-        amount: 6
+        amount: 4
