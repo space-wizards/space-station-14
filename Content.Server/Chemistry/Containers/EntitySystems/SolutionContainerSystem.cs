@@ -4,7 +4,9 @@ using Content.Shared.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Solutions;
 using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using System.Numerics;
 
@@ -12,6 +14,8 @@ namespace Content.Server.Chemistry.Containers.EntitySystems;
 
 public sealed partial class SolutionContainerSystem : SharedSolutionContainerSystem
 {
+    [Dependency] private readonly INetManager _netManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -58,12 +62,15 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
             existed = false;
         }
 
+        if (!container.Solutions.TryGetValue(name, out var solutionSlot))
+            solutionSlot = ContainerSystem.EnsureContainer<ContainerSlot>(entity.Owner, $"solution@{name}");
+
         var needsInit = false;
         SolutionComponent solutionComp;
-        if (!container.Solutions.TryGetValue(name, out var solutionId))
+        if (solutionSlot.ContainedEntity is not { } solutionId)
         {
             (solutionId, solutionComp) = SpawnSolutionUninitialized(uid, name, new Solution() { MaxVolume = minVol, Name = name });
-            container.Solutions.Add(name, solutionId);
+            ContainerSystem.Insert(solutionId, solutionSlot, force: true);
             existed = false;
             needsInit = true;
         }
@@ -169,7 +176,8 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
     {
         while (comp.Solutions.FirstOrNull() is { } solution)
         {
-            Del(solution.Value);
+            solution.Value.Shutdown(EntityManager, _netManager);
+            comp.Solutions.Remove(solution.Key);
         }
     }
 

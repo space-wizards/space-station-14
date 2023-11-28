@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Containers.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -10,6 +11,7 @@ namespace Content.Shared.Chemistry.Containers.Components;
 /// <remarks>
 /// <para>Not for use in prototypes.</para>
 /// <para>This maps strings to <see cref="EntityUid"/>s which cannot be used in prototypes <see cref="MapInitEvent"/>.</para>
+/// <para>Specifying solutions in prototypes should be done through <see cref="Content.Server.Chemistry.Containers.Components.SolutionContainerManagerComponent"/>.</para>
 /// </remarks>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedSolutionContainerSystem))]
@@ -24,8 +26,8 @@ public sealed partial class SolutionContainerComponent : Component
     /// <summary>
     /// A map of solution names to solution entities attached to the owning entity.
     /// </summary>
-    [DataField]
-    public Dictionary<string, EntityUid> Solutions = new(DefaultCapacity);
+    [ViewVariables]
+    public Dictionary<string, ContainerSlot> Solutions = new(DefaultCapacity);
 }
 
 
@@ -36,9 +38,9 @@ public sealed partial class SolutionContainerComponent : Component
 [Serializable, NetSerializable]
 internal sealed partial class SolutionContainerState : ComponentState
 {
-    public List<(string Name, NetEntity Solution)>? Solutions;
+    public List<string>? Solutions;
 
-    public SolutionContainerState(List<(string Name, NetEntity Solution)>? solutions)
+    public SolutionContainerState(List<string>? solutions)
     {
         Solutions = solutions;
     }

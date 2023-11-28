@@ -9,11 +9,14 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Containers.EntitySystems;
+
+public partial record struct Foo();
 
 /// <summary>
 /// Part of Chemistry system deal with SolutionContainers
@@ -24,6 +27,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly SolutionSystem SolutionSystem = default!;
 
     public override void Initialize()
@@ -47,7 +51,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         entity = default!;
         if (name is null)
             entity.Owner = container;
-        else if (!Resolve(container, ref container.Comp, logMissing: false) || !container.Comp.Solutions.TryGetValue(name, out entity.Owner))
+        else if (
+            Resolve(container, ref container.Comp, logMissing: false) &&
+            container.Comp.Solutions.TryGetValue(name, out var solutionSlot) &&
+            solutionSlot.ContainedEntity is not null
+        )
+            entity.Owner = solutionSlot.ContainedEntity.Value;
+        else
         {
             solution = null;
             return false;
@@ -79,10 +89,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     public IEnumerable<(string Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(SolutionContainerComponent container)
     {
-        foreach (var (name, solutionId) in container.Solutions)
+        foreach (var (name, slot) in container.Solutions)
         {
-            if (TryComp(solutionId, out SolutionComponent? solutionComp))
-                yield return (name, (solutionId, solutionComp));
+            if (TryComp(slot.ContainedEntity, out SolutionComponent? solutionComp))
+                yield return (name, (slot.ContainedEntity.Value, solutionComp));
         }
     }
 
@@ -133,11 +143,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        var netSolutions = new List<(string Name, NetEntity Solution)>(solutions.Count);
-        foreach (var (name, solution) in solutions)
+        var netSolutions = new List<string>(solutions.Count);
+        foreach (var name in solutions.Keys)
         {
-            if (TryGetNetEntity(solution, out var netSolution))
-                netSolutions.Add((name, netSolution.Value));
+            netSolutions.Add(name);
         }
         args.State = new SolutionContainerState(netSolutions);
     }
@@ -151,10 +160,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (state.Solutions is not { Count: > 0 } solutions)
             return;
 
-        foreach (var (name, netSolution) in state.Solutions)
+        foreach (var name in solutions)
         {
-            if (TryGetEntity(netSolution, out var solution))
-                comp.Solutions.Add(name, solution.Value);
+            comp.Solutions[name] = ContainerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}");
         }
     }
 

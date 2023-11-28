@@ -1,4 +1,5 @@
 using Content.Server.Administration.Systems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Containers.Components;
@@ -14,11 +15,13 @@ namespace Content.Server.Administration.UI
     public sealed class EditSolutionsEui : BaseEui
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         public readonly EntityUid Target;
 
         public EditSolutionsEui(EntityUid entity)
         {
             IoCManager.InjectDependencies(this);
+            _solutionContainerSystem = _entityManager.System<SolutionContainerSystem>();
             Target = entity;
         }
 
@@ -38,12 +41,12 @@ namespace Content.Server.Administration.UI
         {
             List<(string Name, NetEntity Solution)>? netSolutions;
 
-            if (_entityManager.GetComponentOrNull<SolutionContainerComponent>(Target)?.Solutions is { Count: > 0 } solutions)
+            if (_entityManager.TryGetComponent(Target, out SolutionContainerComponent? container) && container.Solutions.Count > 0)
             {
                 netSolutions = new();
-                foreach (var (name, solution) in solutions)
+                foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions(container))
                 {
-                    if (!_entityManager.TryGetNetEntity(solution, out var netSolution))
+                    if (name is null || !_entityManager.TryGetNetEntity(solution, out var netSolution))
                         continue;
 
                     netSolutions.Add((name, netSolution.Value));
