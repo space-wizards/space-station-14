@@ -118,6 +118,7 @@
     sprite: Clothing/Hands/Gloves/hop.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/hop.rsi
+  - type: Fiber
     fiberMaterial: fibers-durathread
     fiberColor: fibers-black
   - type: Armor
