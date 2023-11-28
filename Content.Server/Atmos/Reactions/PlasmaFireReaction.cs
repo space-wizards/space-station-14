@@ -56,6 +56,7 @@ namespace Content.Server.Atmos.Reactions
                     mixture.AdjustMoles(Gas.CarbonDioxide, plasmaBurnRate * (1.0f - supersaturation));
 
                     energyReleased += Atmospherics.FirePlasmaEnergyReleased * plasmaBurnRate;
+                    energyReleased /= atmosphereSystem.Speedup; // people want all the benefits of buffs without disadvantages
                     mixture.ReactionResults[GasReaction.Fire] += plasmaBurnRate * (1 + oxygenBurnRate);
                 }
             }

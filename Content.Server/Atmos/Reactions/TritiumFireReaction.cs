@@ -47,6 +47,7 @@ namespace Content.Server.Atmos.Reactions
                 mixture.ReactionResults[GasReaction.Fire] += burnedFuel;
             }
 
+            energyReleased /= atmosphereSystem.Speedup; // people want all the benefits of buffs without disadvantages
             if (energyReleased > 0)
             {
                 var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture);
