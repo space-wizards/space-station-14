@@ -32,12 +32,12 @@ public sealed class WoolySystem : EntitySystem
 
         var query = EntityQueryEnumerator<WoolyComponent>();
         var now = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var wooly))
         {
-            if (now < comp.NextGrowth)
+            if (now < wooly.NextGrowth)
                 continue;
 
-            comp.NextGrowth = now + comp.GrowthDelay;
+            wooly.NextGrowth = now + wooly.GrowthDelay;
 
             if (_mobState.IsDead(uid))
                 continue;
@@ -49,13 +49,13 @@ public sealed class WoolySystem : EntitySystem
                 if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
                     continue;
 
-                _hunger.ModifyHunger(uid, -comp.HungerUsage, hunger);
+                _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);
             }
 
-            if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution))
+            if (!_solutionContainer.TryGetSolution(uid, wooly.Solution, out var solution))
                 continue;
 
-            _solutionContainer.TryAddReagent(uid, solution, comp.ReagentId, comp.Quantity, out _);
+            _solutionContainer.TryAddReagent(uid, solution, wooly.ReagentId, wooly.Quantity, out _);
         }
     }
 

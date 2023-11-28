@@ -1,3 +1,4 @@
+using Arch.Core;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
@@ -10,6 +11,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Udder;
 using Content.Shared.Verbs;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Animals.Systems;
@@ -41,12 +43,12 @@ internal sealed class UdderSystem : EntitySystem
 
         var query = EntityQueryEnumerator<UdderComponent>();
         var now = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var udder))
         {
-            if (now < comp.NextGrowth)
+            if (now < udder.NextGrowth)
                 continue;
 
-            comp.NextGrowth = now + comp.GrowthDelay;
+            udder.NextGrowth = now + udder.GrowthDelay;
 
             if (_mobState.IsDead(uid))
                 continue;
@@ -58,25 +60,23 @@ internal sealed class UdderSystem : EntitySystem
                 if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
                     continue;
 
-                _hunger.ModifyHunger(uid, -comp.HungerUsage, hunger);
+                _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, comp.Solution,
-                    out var solution))
+            if (!_solutionContainerSystem.TryGetSolution(uid, udder.Solution, out var solution))
                 continue;
 
             //TODO: toxins from bloodstream !?
-            _solutionContainerSystem.TryAddReagent(uid, solution, comp.ReagentId,
-                comp.QuantityPerUpdate, out _);
+            _solutionContainerSystem.TryAddReagent(uid, solution, udder.ReagentId, udder.QuantityPerUpdate, out _);
         }
     }
 
-    private void AttemptMilk(EntityUid uid, EntityUid userUid, EntityUid containerUid, UdderComponent? udder = null)
+    private void AttemptMilk(Entity<UdderComponent?> udder, EntityUid userUid, EntityUid containerUid)
     {
-        if (!Resolve(uid, ref udder))
+        if (!Resolve(udder, ref udder.Comp))
             return;
 
-        var doargs = new DoAfterArgs(EntityManager, userUid, 5, new MilkingDoAfterEvent(), uid, uid, used: containerUid)
+        var doargs = new DoAfterArgs(EntityManager, userUid, 5, new MilkingDoAfterEvent(), udder, udder, used: containerUid)
         {
             BreakOnUserMove = true,
             BreakOnDamage = true,
@@ -127,7 +127,7 @@ internal sealed class UdderSystem : EntitySystem
         {
             Act = () =>
             {
-                AttemptMilk(uid, args.User, args.Using.Value, component);
+                AttemptMilk(uid, args.User, args.Using.Value);
             },
             Text = Loc.GetString("udder-system-verb-milk"),
             Priority = 2
