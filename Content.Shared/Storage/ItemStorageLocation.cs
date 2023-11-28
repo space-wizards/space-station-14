@@ -39,6 +39,7 @@ public partial record struct ItemStorageLocation
 
     public bool Equals(ItemStorageLocation? other)
     {
-        return Rotation == other?.Rotation && Position == other.Value.Position;
+        return Rotation == other?.Rotation &&
+               Position == other.Value.Position;
     }
 };

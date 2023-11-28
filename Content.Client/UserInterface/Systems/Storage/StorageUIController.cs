@@ -74,9 +74,34 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     /// I have to sidestep all of the input handling. Cheers.
     private void OnMiddleMouse(KeyEventArgs keyEvent, KeyEventType type)
     {
-        if (type != KeyEventType.Down || keyEvent.Key != Keyboard.Key.MouseMiddle)
+        if (type != KeyEventType.Down)
             return;
+
+        //todo there's gotta be a method for this in InputManager just expose it to content I BEG.
+        var binding = _input.GetKeyBinding(ContentKeyFunctions.RotateStoredItem);
+        if (binding.BaseKey != keyEvent.Key)
+            return;
+
+        if (keyEvent.Shift &&
+            !(binding.Mod1 == Keyboard.Key.Shift ||
+              binding.Mod2 == Keyboard.Key.Shift ||
+              binding.Mod3 == Keyboard.Key.Shift))
+            return;
+
+        if (keyEvent.Alt &&
+            !(binding.Mod1 == Keyboard.Key.Alt ||
+              binding.Mod2 == Keyboard.Key.Alt ||
+              binding.Mod3 == Keyboard.Key.Alt))
+            return;
+
+        if (keyEvent.Control &&
+            !(binding.Mod1 == Keyboard.Key.Control ||
+              binding.Mod2 == Keyboard.Key.Control ||
+              binding.Mod3 == Keyboard.Key.Control))
+            return;
+
         DraggingGhost?.Location.Rotate(Angle.FromDegrees(90));
+        keyEvent.Handle();
     }
 
     private void OnStorageOpened(EntityUid uid, StorageComponent component)
@@ -125,7 +150,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (IsDragging)
             return;
 
-        if (args.Function == EngineKeyFunctions.UIClick)
+        if (args.Function == ContentKeyFunctions.MoveStoredItem)
         {
             _menuDragHelper.MouseDown(control);
             _menuDragHelper.Update(0f);
@@ -160,7 +185,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (_container?.StorageEntity is not { } storageEnt)
             return;
 
-        if (args.Function == EngineKeyFunctions.UIClick)
+        if (args.Function == ContentKeyFunctions.MoveStoredItem)
         {
             if (DraggingGhost is { } draggingGhost&&
                 _container.TryGetDraggedPieceLocation(out var position))
