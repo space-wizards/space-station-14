@@ -1,9 +1,4 @@
 Entries:
-- author: potato1234x
-  changes:
-  - {message: Cap now spawns with laceup shoes instead of sneakers, type: Tweak}
-  id: 4715
-  time: '2023-08-31T02:33:40.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Dehydrated space carp's price has been lowered back to 2 telecrystals.,
@@ -2905,3 +2900,8 @@ Entries:
   - {message: Fix ambient audio not playing., type: Fix}
   id: 5214
   time: '2023-11-28T03:09:26.0000000+00:00'
+- author: M3739
+  changes:
+  - {message: An entry regarding cyborgs has been added to the guidebook., type: Add}
+  id: 5215
+  time: '2023-11-28T03:18:22.0000000+00:00'
