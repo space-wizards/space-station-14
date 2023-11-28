@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Borgs now have robotic speech verbs, type: Fix}
-  id: 4720
-  time: '2023-09-01T02:12:04.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix item drops mispredicting., type: Fix}
@@ -2900,3 +2895,10 @@ Entries:
   - {message: Blood now has a sprite when placed in metamorphic glasses., type: Add}
   id: 5219
   time: '2023-11-28T07:09:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix global audio not being global., type: Fix}
+  - {message: Update MIDI audio every frame rather than every 1/10 seconds to fix
+      positioning and occlusion weirdness., type: Tweak}
+  id: 5220
+  time: '2023-11-28T09:48:18.0000000+00:00'
