@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix item drops mispredicting., type: Fix}
-  id: 4721
-  time: '2023-09-01T02:30:29.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Foldable objects (folding chairs, bodybags, wheelchairs) now function
@@ -2902,3 +2897,8 @@ Entries:
       positioning and occlusion weirdness., type: Tweak}
   id: 5220
   time: '2023-11-28T09:48:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix audio not playing during weather., type: Fix}
+  id: 5221
+  time: '2023-11-28T12:35:38.0000000+00:00'
