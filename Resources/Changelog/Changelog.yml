@@ -1,101 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Foldable objects (folding chairs, bodybags, wheelchairs) now function
-      again.', type: Fix}
-  id: 4722
-  time: '2023-09-01T02:30:40.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Spears now have a non-blunt melee sound, type: Fix}
-  id: 4723
-  time: '2023-09-01T03:08:02.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Animal parts & organs now have sprites. They aren''t, like, accurate,
-      but it''s better than being invisible', type: Fix}
-  id: 4724
-  time: '2023-09-01T03:09:22.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: 'Added two new types of speech verbs, mumbling and stuttering. Add the
-      suffix ''..'' or ''-'' respectfully, to the end of your sentences to use them.',
-    type: Add}
-  - {message: Added several more species specific speech verbs. And grants them to
-      a whole slew of new mobs., type: Add}
-  id: 4725
-  time: '2023-09-01T03:15:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Lathes now display material quantity in number of sheets., type: Tweak}
-  - {message: Ejecting materials from lathes now automatically stacks them., type: Tweak}
-  id: 4726
-  time: '2023-09-01T05:28:08.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed nukeops being able to buy job restricted items., type: Fix}
-  id: 4727
-  time: '2023-09-01T07:24:37.0000000+00:00'
-- author: carteblanche4me
-  changes:
-  - {message: Hardsuits could toggle on/off not only helmets but different pieces.,
-    type: Tweak}
-  id: 4728
-  time: '2023-09-01T11:13:00.0000000+00:00'
-- author: Varen
-  changes:
-  - {message: Examining an item now shows its size., type: Add}
-  id: 4729
-  time: '2023-09-01T15:09:59.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'The hot potato now does more damage over time, has a shorter timer,
-      and has a larger explosion.', type: Tweak}
-  id: 4730
-  time: '2023-09-02T00:08:25.0000000+00:00'
-- author: ficcialfaint
-  changes:
-  - {message: Dumping into disposals no longer drops items onto the ground., type: Fix}
-  id: 4731
-  time: '2023-09-02T04:02:36.0000000+00:00'
-- author: ThunderBear2006
-  changes:
-  - {message: The signal button now has new sprites, type: Tweak}
-  id: 4732
-  time: '2023-09-02T13:58:40.0000000+00:00'
-- author: Gotimanga
-  changes:
-  - {message: Winter coats now have hoods, type: Add}
-  id: 4733
-  time: '2023-09-02T17:10:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix context menu not opening if you toggled combat mode immediately
-      prior., type: Fix}
-  id: 4734
-  time: '2023-09-02T20:16:34.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
-  id: 4735
-  time: '2023-09-03T01:59:36.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Technology Disks now sell for considerably less., type: Tweak}
-  id: 4736
-  time: '2023-09-03T02:31:53.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Microwaves now become bloodstained if you microwave animals inside
-      of them. Who was doing this?', type: Add}
-  id: 4737
-  time: '2023-09-03T04:03:05.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
-      dioxide poisoning., type: Tweak}
-  id: 4738
-  time: '2023-09-03T06:30:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix fulton parenting, also fix it not checking if the target is reachable.
@@ -3786,3 +3689,27 @@ Entries:
   - {message: Fix audio not playing during weather., type: Fix}
   id: 5221
   time: '2023-11-28T12:35:38.0000000+00:00'
+- author: AlexandrSTG
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0443\u0440\u043E\u043D\
+      \ \u0441\u0442\u0430\u043C\u0438\u043D\u043E\u0439 \u0440\u0435\u0437\u0438\u043D\
+      \u043E\u0432\u044B\u043C \u043F\u0443\u043B\u044F\u043C .20 \u043A\u0430\u043B\
+      \u0438\u0431\u0440\u0430. \u0423\u0420\u0410! \u0422\u0435\u043F\u0435\u0440\
+      \u044C \u043E\u043D\u0438 \u043D\u0435 \u0431\u0435\u0441\u043F\u043E\u043B\u0435\
+      \u0437\u043D\u044B\u0439 \u043A\u0443\u0441\u043E\u043A \u043F\u043B\u0430\u0441\
+      \u0442\u0438\u043A\u0430."
+    type: Add
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043E \u0432\u0435\u0441\u0435\
+      \u043B\u044C\u0435!"
+    type: Tweak
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\
+      \u0441\u0435\u043B\u044C\u0435!"
+    type: Fix
+  id: 5205
+  time: '2023-11-28T23:06:21.0000000+00:00'
