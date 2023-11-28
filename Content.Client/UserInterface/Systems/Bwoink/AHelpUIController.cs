@@ -13,6 +13,7 @@ using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Administration;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.Audio;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -37,7 +38,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-    [UISystemDependency] private readonly SharedAudioSystem _audio = default!;
+    [UISystemDependency] private readonly AudioSystem _audio = default!;
 
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     private AudioParams _AHelpParams = new();
@@ -141,7 +142,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     private void ReceivedBwoink(object? sender, SharedBwoinkSystem.BwoinkTextMessage message)
     {
         Logger.InfoS("c.s.go.es.bwoink", $"@{message.UserId}: {message.Text}");
-        var localPlayer = _playerManager.LocalPlayer;
+        var localPlayer = _playerManager.LocalSession;
         if (localPlayer == null)
         {
             return;
