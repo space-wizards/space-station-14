@@ -50,6 +50,28 @@ namespace Content.Shared.Movement.Systems
             move.Acceleration = acceleration;
             Dirty(uid, move);
         }
+
+        /// <summary>
+        /// Changes the way being weightless affects your movement.
+        /// Only use this if you want to change the behaviour without changing it back again.
+        /// </summary>
+        public void ChangeWeightless(
+            EntityUid uid,
+            float? weightlessModifier = null,
+            float? weightlessAcceleration = null,
+            float? weightlessFriction = null,
+            float? weightlessFrictionNoInput = null,
+            MovementSpeedModifierComponent? move = null)
+        {
+            if (!Resolve(uid, ref move, false))
+                return;
+
+            move.WeightlessModifier = weightlessModifier ?? move.WeightlessModifier;
+            move.WeightlessAcceleration = weightlessAcceleration ?? move.WeightlessAcceleration;
+            move.WeightlessFriction = weightlessFriction ?? move.WeightlessFriction;
+            move.WeightlessFrictionNoInput = weightlessFrictionNoInput ?? move.WeightlessFrictionNoInput;
+            Dirty(uid, move);
+        }
     }
 
     /// <summary>
