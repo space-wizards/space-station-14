@@ -25,8 +25,7 @@
         font-size: 10pt;
         color: rgb(199, 199, 199);
       }
-      a {
-        text-decoration: none;
+      span {
         color: white;
       }
       .changes li {
@@ -60,12 +59,9 @@
     <div class='description'>
     <xsl:for-each select="*[local-name()='entry']">
       <div class='author'>
-        <a target='_blank' href='https://github.com/space-wizards/space-station-14/commits'>
-          <xsl:attribute name="data-author">
-            <xsl:value-of select="*[local-name()='author']" />
-          </xsl:attribute>
+        <span>
           <xsl:value-of select="*[local-name()='author']"/>
-        </a> updated
+        </span> updated
       </div>
       <div class='changes'>
         <ul>
@@ -82,15 +78,5 @@
     </xsl:for-each>
     </div>
   </xsl:for-each>
-
-  <script>
-    <![CDATA[
-      const authors = document.querySelectorAll('[data-author]');
-      authors.forEach(author => {
-        const authorName = author.getAttribute('data-author');
-        author.setAttribute('href', `https://github.com/space-wizards/space-station-14/commits?author=${authorName}`);
-      });
-    ]]>
-  </script>
 </body>
 </html>

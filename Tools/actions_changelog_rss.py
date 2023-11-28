@@ -17,11 +17,10 @@ import itertools
 import os
 import pathlib
 from datetime import datetime, timedelta, timezone
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Tuple
 
 import paramiko
 import yaml
-# import xml.etree.ElementTree as ET
 from lxml import etree as ET
 
 MAX_ITEM_AGE = timedelta(days=30)
@@ -36,19 +35,26 @@ SSH_USER = "changelog-rss"
 SSH_PORT = 22
 RSS_FILE = "changelog.xml"
 XSL_FILE = "stylesheet.xsl"
-HOST_KEYS = ["AAAAC3NzaC1lZDI1NTE5AAAAIEE8EhnPjb3nIaAPTXAJHbjrwdGGxHoM0f1imCK0SygD"]
+HOST_KEYS = [
+    "AAAAC3NzaC1lZDI1NTE5AAAAIEE8EhnPjb3nIaAPTXAJHbjrwdGGxHoM0f1imCK0SygD"
+]
 
 # RSS feed parameters, change these
-FEED_TITLE = "Space Station 14 Changelog"
-FEED_LINK = "https://github.com/space-wizards/space-station-14/"
+FEED_TITLE       = "Space Station 14 Changelog"
+FEED_LINK        = "https://github.com/space-wizards/space-station-14/"
 FEED_DESCRIPTION = "Changelog for the official Wizard's Den branch of Space Station 14."
-FEED_LANGUAGE = "en-US"
+FEED_LANGUAGE    = "en-US"
 FEED_GUID_PREFIX = "ss14-changelog-wizards-"
-FEED_URL = "https://central.spacestation14.io/changelog.xml"
+FEED_URL         = "https://central.spacestation14.io/changelog.xml"
 
 CHANGELOG_FILE = "Resources/Changelog/Changelog.yml"
 
-TYPES_TO_EMOJI = {"Fix": "🐛", "Add": "🆕", "Remove": "❌", "Tweak": "⚒️"}
+TYPES_TO_EMOJI = {
+    "Fix":    "🐛",
+    "Add":    "🆕",
+    "Remove": "❌",
+    "Tweak":  "⚒️"
+}
 
 XML_NS = "https://spacestation14.com/changelog_rss"
 XML_NS_B = f"{{{XML_NS}}}"
@@ -59,24 +65,21 @@ XML_NS_ATOM_B = f"{{{XML_NS_ATOM}}}"
 ET.register_namespace("ss14", XML_NS)
 ET.register_namespace("atom", XML_NS_ATOM)
 
-
 # From https://stackoverflow.com/a/37958106/4678631
 class NoDatesSafeLoader(yaml.SafeLoader):
     @classmethod
     def remove_implicit_resolver(cls, tag_to_remove):
-        if not "yaml_implicit_resolvers" in cls.__dict__:
+        if not 'yaml_implicit_resolvers' in cls.__dict__:
             cls.yaml_implicit_resolvers = cls.yaml_implicit_resolvers.copy()
 
         for first_letter, mappings in cls.yaml_implicit_resolvers.items():
-            cls.yaml_implicit_resolvers[first_letter] = [
-                (tag, regexp) for tag, regexp in mappings if tag != tag_to_remove
-            ]
-
+            cls.yaml_implicit_resolvers[first_letter] = [(tag, regexp)
+                                                         for tag, regexp in mappings
+                                                         if tag != tag_to_remove]
 
 # Hrm yes let's make the fucking default of our serialization library to PARSE ISO-8601
 # but then output garbage when re-serializing.
-NoDatesSafeLoader.remove_implicit_resolver("tag:yaml.org,2002:timestamp")
-
+NoDatesSafeLoader.remove_implicit_resolver('tag:yaml.org,2002:timestamp')
 
 def main():
     if not CHANGELOG_RSS_KEY:
@@ -115,26 +118,20 @@ def main():
             f.write(fh)
 
 
-def create_feed(
-    changelog: Any, previous_items: List[Any]
-) -> Tuple[Any, bool]:
+def create_feed(changelog: Any, previous_items: List[Any]) -> Tuple[Any, bool]:
     rss = ET.Element("rss", attrib={"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
 
     time_now = datetime.now(timezone.utc)
 
     # Fill out basic channel info
-    ET.SubElement(channel, "title").text = FEED_TITLE
-    ET.SubElement(channel, "link").text = FEED_LINK
+    ET.SubElement(channel, "title").text       = FEED_TITLE
+    ET.SubElement(channel, "link").text        = FEED_LINK
     ET.SubElement(channel, "description").text = FEED_DESCRIPTION
-    ET.SubElement(channel, "language").text = FEED_LANGUAGE
+    ET.SubElement(channel, "language").text    = FEED_LANGUAGE
 
     ET.SubElement(channel, "lastBuildDate").text = email.utils.format_datetime(time_now)
-    ET.SubElement(
-        channel,
-        XML_NS_ATOM_B + "link",
-        {"type": "application/rss+xml", "rel": "self", "href": FEED_URL},
-    )
+    ET.SubElement(channel, XML_NS_ATOM_B + "link", {"type": "application/rss+xml", "rel": "self", "href": FEED_URL})
 
     # Find the last item ID mentioned in the previous changelog
     last_changelog_id = find_last_changelog_id(previous_items)
@@ -144,10 +141,7 @@ def create_feed(
 
     return rss, any
 
-
-def create_new_item_since(
-    changelog: Any, channel: Any, since: int, now: datetime
-) -> bool:
+def create_new_item_since(changelog: Any, channel: Any, since: int, now: datetime) -> bool:
     entries_for_item = [entry for entry in changelog["Entries"] if entry["id"] > since]
     top_entry_id = max(map(lambda e: e["id"], entries_for_item), default=0)
 
@@ -157,13 +151,9 @@ def create_new_item_since(
     attrs = {XML_NS_B + "from-id": str(since), XML_NS_B + "to-id": str(top_entry_id)}
     new_item = ET.SubElement(channel, "item", attrs)
     ET.SubElement(new_item, "pubDate").text = email.utils.format_datetime(now)
-    ET.SubElement(
-        new_item, "guid", {"isPermaLink": "false"}
-    ).text = f"{FEED_GUID_PREFIX}{since}-{top_entry_id}"
+    ET.SubElement(new_item, "guid", {"isPermaLink": "false"}).text = f"{FEED_GUID_PREFIX}{since}-{top_entry_id}"
 
-    ET.SubElement(new_item, "description").text = generate_description_for_entries(
-        entries_for_item
-    )
+    ET.SubElement(new_item, "description").text = generate_description_for_entries(entries_for_item)
 
     # Embed original entries inside the XML so it can be displayed more nicely by specialized tools.
     # Like the website!
@@ -175,12 +165,9 @@ def create_new_item_since(
 
         for change in entry["changes"]:
             attrs = {XML_NS_B + "type": change["type"]}
-            ET.SubElement(xml_entry, XML_NS_B + "change", attrs).text = change[
-                "message"
-            ]
+            ET.SubElement(xml_entry, XML_NS_B + "change", attrs).text = change["message"]
 
     return True
-
 
 def generate_description_for_entries(entries: List[Any]) -> str:
     desc = io.StringIO()
@@ -200,8 +187,7 @@ def generate_description_for_entries(entries: List[Any]) -> str:
 
     return desc.getvalue()
 
-
-def copy_previous_items(channel: ET.Element, previous: List[ET.Element], now: datetime):
+def copy_previous_items(channel: Any, previous: List[Any], now: datetime):
     # Copy in previous items, if we have them.
     for item in previous:
         date_elem = item.find("./pubDate")
@@ -216,10 +202,8 @@ def copy_previous_items(channel: ET.Element, previous: List[ET.Element], now: da
 
         channel.append(item)
 
-
-def find_last_changelog_id(items: List[ET.Element]) -> int:
+def find_last_changelog_id(items: List[Any]) -> int:
     return max(map(lambda i: int(i.get(XML_NS_B + "to-id", "0")), items), default=0)
-
 
 def load_key(key_contents: str) -> paramiko.PKey:
     key_string = io.StringIO()
@@ -230,12 +214,10 @@ def load_key(key_contents: str) -> paramiko.PKey:
 
 def load_host_keys(host_keys: paramiko.HostKeys):
     for key in HOST_KEYS:
-        host_keys.add(
-            SSH_HOST, "ssh-ed25519", paramiko.Ed25519Key(data=base64.b64decode(key))
-        )
+        host_keys.add(SSH_HOST, "ssh-ed25519", paramiko.Ed25519Key(data=base64.b64decode(key)))
 
 
-def load_last_feed_items(client: paramiko.SFTPClient) -> List[ET.Element]:
+def load_last_feed_items(client: paramiko.SFTPClient) -> List[Any]:
     try:
         with client.open(RSS_FILE, "rb") as f:
             feed = ET.parse(f)
@@ -244,6 +226,7 @@ def load_last_feed_items(client: paramiko.SFTPClient) -> List[ET.Element]:
 
     except FileNotFoundError:
         return []
+
 
 
 main()
