@@ -111,7 +111,7 @@
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesHop
-  name: paperwork-proof gloves
+  name: papercut-proof gloves
   description: Perfect for dealing with paperwork and matters with bureaucracy.
   components:
   - type: Sprite
