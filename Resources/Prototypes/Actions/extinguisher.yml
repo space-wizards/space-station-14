@@ -1,0 +1,15 @@
+﻿- type: entity
+  id: ActionToggleSafety
+  name: Toggle Safety
+  description: Turn the safety on and off. Safety must be off to use the extinguisher to spray.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Alerts/internals.rsi
+      state: internal2
+    iconOn:
+      sprite: Interface/Alerts/internals.rsi
+      state: internal1
+    event: !type:ToggleActionEvent
+    useDelay: 1
