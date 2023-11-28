@@ -929,7 +929,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -975,7 +975,7 @@ namespace Content.Shared.CCVar
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
-            CVarDef.Create("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether explosive depressurization will cause the grid to gain an impulse.
