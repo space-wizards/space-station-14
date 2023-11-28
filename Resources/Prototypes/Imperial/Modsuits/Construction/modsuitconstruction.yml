@@ -68,6 +68,8 @@
     graph: ModsuitConstructed
     node: start
     defaultTarget: modsuitconstructed
+  - type: Item
+    size: 60000
 
 - type: entity
   parent: BaseItem
@@ -90,6 +92,8 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+  - type: Item
+    size: 60000
 
 - type: entity
   parent: BaseItem
