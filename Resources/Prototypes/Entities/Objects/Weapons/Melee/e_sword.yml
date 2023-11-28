@@ -2,7 +2,7 @@
   name: energy sword
   parent: BaseItem
   id: EnergySword
-  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Make those without the highground suffer. Cuts through unarmored targets like butter.
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
   - type: EnergySword
     litDamageBonus:
@@ -181,7 +181,7 @@
     litDisarmMalus: 0.7
   - type: MeleeWeapon
     wideAnimationRotation: -135
-    attackRate: 1.2
+    attackRate: 1.5
     angle: 100
     soundHit:
       path: /Audio/Weapons/eblade1.ogg
@@ -202,7 +202,7 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
     enabled: true
-    reflectProb: .85
+    reflectProb: .75
     spread: 75
   - type: UseDelay
     delay: 1

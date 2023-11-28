@@ -21,7 +21,7 @@
       params:
         variation: 0.125
   - type: UseDelay
-    delay: 0.35
+    delay: 0.5
   - type: EmitSoundOnTrigger
     sound:
       collection: BikeHorn
