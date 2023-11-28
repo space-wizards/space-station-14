@@ -32,7 +32,8 @@ public static partial class PoolManager
         (CCVars.GameLobbyEnabled.Name, "false"),
         (CCVars.ConfigPresetDevelopment.Name, "false"),
         (CCVars.AdminLogsEnabled.Name, "false"),
-        (CVars.NetBufferSize.Name, "0")
+        (CVars.NetBufferSize.Name, "0"),
+        (CVars.AudioEnabled.Name, "false"),
     };
 
     public static async Task  SetupCVars(RobustIntegrationTest.IntegrationInstance instance, PoolSettings settings)
