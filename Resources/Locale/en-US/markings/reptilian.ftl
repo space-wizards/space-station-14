@@ -90,3 +90,6 @@ marking-LizardHornsKoboldEars = Lizard Ears (Kobold)
 
 marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Lizard Ears (Floppy Kobold)
 marking-LizardHornsFloppyKoboldEars = Lizard Ears (Floppy Kobold)
+
+marking-LizardTailShort-tail_short = Lizard Tail (Short)
+marking-LizardTailShort = Lizard Tail (Short)
