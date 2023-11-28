@@ -23,6 +23,7 @@
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
       - id: ClothingEyesHudSecurity
+      - id: ClothingShoesBootsWinterWarden
 
 - type: entity
   id: LockerWardenFilled

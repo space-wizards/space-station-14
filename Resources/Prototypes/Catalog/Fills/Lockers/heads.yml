@@ -22,6 +22,7 @@
       - id: RubberStampQm
       - id: ClothingHeadsetAltCargo
       - id: BoxEncryptionKeyCargo
+      - id: ClothingShoesBootsWinterQm
 
 - type: entity
   id: LockerCaptainFilledHardsuit
@@ -57,6 +58,7 @@
       - id: JetpackCaptainFilled
       - id: MedalCase
       - id: ClothingHeadHatCapcap
+      - id: ClothingShoesBootsWinterCap
 
 - type: entity
   id: LockerCaptainFilled
@@ -89,7 +91,6 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
-      - id: ClothingHeadHatCapcap
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -120,6 +121,8 @@
       - id: ClothingBackpackIan
         prob: 0.5
       - id: AccessConfigurator
+      - id: ClothingShoesBootsWinterHop
+
 
 - type: entity
   id: LockerChiefEngineerFilledHardsuit
@@ -148,6 +151,7 @@
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
       - id: AccessConfigurator
+      - id: ClothingShoesBootsWinterCE
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -194,6 +198,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: ClothingShoesBootsWinterCmo
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -239,6 +244,7 @@
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
+      - id: ClothingShoesBootsWinterRd
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -293,6 +299,7 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
+      - id: ClothingShoesBootsWinterHos
 
 - type: entity
   id: LockerHeadOfSecurityFilled
