@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Snow planets can now spawn with ice, which gives you very floaty movement!',
-    type: Add}
-  - {message: 'The nukie planet now spawns with some ice, and a mini rink to let off
-      some steam', type: Add}
-  - {message: Snow now has tile edge support like grass, type: Add}
-  id: 4718
-  time: '2023-08-31T21:31:23.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Committing suicide no longer makes your body disappear., type: Fix}
@@ -2904,3 +2895,8 @@ Entries:
   - {message: The HoP now starts with a pair of papercut-proof gloves., type: Add}
   id: 5217
   time: '2023-11-28T06:21:06.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed riot shield audio and popup spam, type: Fix}
+  id: 5218
+  time: '2023-11-28T07:06:38.0000000+00:00'
