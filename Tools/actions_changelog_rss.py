@@ -9,19 +9,17 @@
 # you can use something like this in Powershell to set up the env var:
 # $env:CHANGELOG_RSS_KEY=[System.IO.File]::ReadAllText($(gci "key"))
 
-import base64
-import email.utils
-import html
-import io
-import itertools
 import os
 import pathlib
-from datetime import datetime, timedelta, timezone
-from typing import Any, List, Tuple
-
-import paramiko
+import io
+import base64
 import yaml
+import itertools
+import html
+import email.utils
+from typing import  List, Any, Tuple
 from lxml import etree as ET
+from datetime import datetime, timedelta, timezone
 
 MAX_ITEM_AGE = timedelta(days=30)
 
