@@ -81,7 +81,7 @@
       path: /Audio/Ambience/Objects/crushing.ogg
       params:
         volume: 5
-        maxdistance: 5
+        maxDistance: 5
         loop: true
   - type: MaterialStorage
     insertOnInteract: false

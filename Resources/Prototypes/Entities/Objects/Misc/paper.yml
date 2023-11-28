@@ -583,7 +583,7 @@
       path: /Audio/Items/Stamp/thick_stamp_sub.ogg
       params:
         volume: -2
-        maxdistance: 5
+        maxDistance: 5
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-mime
@@ -603,7 +603,7 @@
       path: /Audio/Items/Stamp/automatic_stamp.ogg
       params:
         volume: -2
-        maxdistance: 5
+        maxDistance: 5
 
 - type: entity
   name: captain's rubber stamp

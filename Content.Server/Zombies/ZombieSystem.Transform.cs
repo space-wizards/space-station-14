@@ -33,6 +33,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
 using Content.Shared.Prying.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Zombies
 {

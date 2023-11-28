@@ -251,3 +251,11 @@
     sprite: Structures/Doors/Airlocks/Glass/syndicate.rsi
   - type: PaintableAirlock
     group: Glass
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockMiningGlass
+  suffix: Mining
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
