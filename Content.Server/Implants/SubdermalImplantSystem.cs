@@ -9,6 +9,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
+using Content.Server.Forensics;
 
 namespace Content.Server.Implants;
 
@@ -82,6 +83,9 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             _metaData.SetEntityName(ent, newProfile.Name);
             _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup"), ent, ent);
         }
+        
+        RemComp<FingerprintComponent>(ent);
+        EnsureComp<FingerprintComponent>(ent);
 
         args.Handled = true;
         QueueDel(uid);
