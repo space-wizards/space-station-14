@@ -109,6 +109,12 @@ namespace Content.Server.Atmos
         public float MaxFireTemperatureSustained { get; set; }
 
         /// <summary>
+        /// If true, this tile does not actually exist on the grid, it only exists to represent the map's atmosphere for\
+        /// adjacent grid tiles.
+        /// </summary>
+        public bool MapAtmos { get; set; }
+
+        /// <summary>
         /// If true, the cached airtight data is invalid and needs to be recomputed. See <see cref="AirtightData"/>.
         /// </summary>
         public bool AirtightDirty = true;

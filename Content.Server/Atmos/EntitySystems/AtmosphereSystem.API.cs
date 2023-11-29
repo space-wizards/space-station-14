@@ -256,12 +256,6 @@ public partial class AtmosphereSystem
         return ev.Result;
     }
 
-    public void FixTileVacuum(EntityUid gridUid, Vector2i tile)
-    {
-        var ev = new FixTileVacuumMethodEvent(gridUid, tile);
-        RaiseLocalEvent(gridUid, ref ev);
-    }
-
     public void AddPipeNet(EntityUid gridUid, PipeNet pipeNet)
     {
         var ev = new AddPipeNetMethodEvent(gridUid, pipeNet);

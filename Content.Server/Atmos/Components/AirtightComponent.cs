@@ -1,9 +1,10 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Atmos.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, Access(typeof(AirtightSystem))]
     public sealed partial class AirtightComponent : Component
     {
         public (EntityUid Grid, Vector2i Tile) LastPosition { get; set; }

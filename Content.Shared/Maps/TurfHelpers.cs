@@ -14,6 +14,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
+        [Obsolete]
         public static TileRef GetTileRef(this Vector2i vector2i, EntityUid gridId, IMapManager? mapManager = null)
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
