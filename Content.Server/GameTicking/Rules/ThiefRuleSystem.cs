@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Shared.Humanoid;
 using Content.Server.Antag;
+using Robust.Server.Audio;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -24,7 +25,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly SharedJobSystem _jobs = default!;
@@ -175,7 +176,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         // Notificate player about new role assignment
         if (_mindSystem.TryGetSession(mindId, out var session))
         {
-            _audioSystem.PlayGlobal(thiefRule.GreetingSound, session);
+            _audio.PlayGlobal(thiefRule.GreetingSound, session);
             _chatManager.DispatchServerMessage(session, MakeBriefing(mind.OwnedEntity.Value));
         }
 

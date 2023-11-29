@@ -1,14 +1,14 @@
-using Content.Server.Antag;
 using Content.Server.Thief.Components;
 using Content.Shared.Item;
 using Content.Shared.Thief;
 using Robust.Server.GameObjects;
+using Robust.Server.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Thief.Systems;
 public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
