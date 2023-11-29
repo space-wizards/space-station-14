@@ -124,7 +124,6 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         instrument.SequenceDelay = 0;
         instrument.SequenceStartTick = 0;
-        _midiManager.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
         instrument.Renderer = _midiManager.GetNewRenderer();
 
         if (instrument.Renderer != null)
