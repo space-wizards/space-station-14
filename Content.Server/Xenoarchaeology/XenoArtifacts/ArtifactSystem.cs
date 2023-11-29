@@ -33,7 +33,6 @@ public sealed partial class ArtifactSystem : EntitySystem
         _sawmill = Logger.GetSawmill("artifact");
 
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
 
         InitializeCommands();
         InitializeActions();
@@ -293,23 +292,5 @@ public sealed partial class ArtifactSystem : EntitySystem
     public ArtifactNode GetRootNode(List<ArtifactNode> allNodes)
     {
         return allNodes.First(n => n.Depth == 0);
-    }
-
-    /// <summary>
-    /// Make shit go ape on round-end
-    /// </summary>
-    private void OnRoundEnd(RoundEndTextAppendEvent ev)
-    {
-        var RoundEndTimer = _configurationManager.GetCVar(CCVars.ArtifactRoundEndTimer);
-        if (RoundEndTimer > 0)
-        {
-            var query = EntityQueryEnumerator<ArtifactComponent>();
-            while (query.MoveNext(out var ent, out var artifactComp))
-            {
-                artifactComp.CooldownTime = TimeSpan.Zero;
-                var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
-                timerTrigger.ActivationRate = TimeSpan.FromSeconds(RoundEndTimer); //HAHAHAHAHAHAHAHAHAH -emo
-            }
-        }
     }
 }
