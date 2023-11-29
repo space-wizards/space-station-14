@@ -1,22 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Borgs now have robotic speech verbs, type: Fix}
-  id: 4720
-  time: '2023-09-01T02:12:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix item drops mispredicting., type: Fix}
-  id: 4721
-  time: '2023-09-01T02:30:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Foldable objects (folding chairs, bodybags, wheelchairs) now function
-      again.', type: Fix}
-  id: 4722
-  time: '2023-09-01T02:30:40.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Spears now have a non-blunt melee sound, type: Fix}
   id: 4723
   time: '2023-09-01T03:08:02.0000000+00:00'
@@ -2900,3 +2884,21 @@ Entries:
   - {message: Blood now has a sprite when placed in metamorphic glasses., type: Add}
   id: 5219
   time: '2023-11-28T07:09:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix global audio not being global., type: Fix}
+  - {message: Update MIDI audio every frame rather than every 1/10 seconds to fix
+      positioning and occlusion weirdness., type: Tweak}
+  id: 5220
+  time: '2023-11-28T09:48:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix audio not playing during weather., type: Fix}
+  id: 5221
+  time: '2023-11-28T12:35:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some sound sources not playing positionally (e.g. glass breaking).,
+    type: Fix}
+  id: 5222
+  time: '2023-11-28T23:19:23.0000000+00:00'

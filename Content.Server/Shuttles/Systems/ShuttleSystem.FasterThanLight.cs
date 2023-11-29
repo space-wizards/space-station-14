@@ -15,6 +15,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -230,7 +231,8 @@ public sealed partial class ShuttleSystem
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
-        _audio.PlayPvs(_startupSound, uid);
+        var audio = _audio.PlayPvs(_startupSound, uid);
+        audio.Value.Component.Flags |= AudioFlags.GridAudio;
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         SetupHyperspace();
         return true;
@@ -286,7 +288,10 @@ public sealed partial class ShuttleSystem
                     var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
                     RaiseLocalEvent(uid, ref ev, true);
 
-                    comp.TravelStream = _audio.PlayPvs(comp.TravelSound, uid)?.Entity;
+                    var wowdio = _audio.PlayPvs(comp.TravelSound, uid);
+                    comp.TravelStream = wowdio?.Entity;
+                    if (wowdio?.Component != null)
+                        wowdio.Value.Component.Flags |= AudioFlags.GridAudio;
 
                     break;
                 // Arriving, play effects
@@ -374,7 +379,8 @@ public sealed partial class ShuttleSystem
                     }
 
                     comp.TravelStream = _audio.Stop(comp.TravelStream);
-                    _audio.PlayPvs(_arrivalSound, uid);
+                    var audio = _audio.PlayPvs(_arrivalSound, uid);
+                    audio.Value.Component.Flags |= AudioFlags.GridAudio;
 
                     if (TryComp<FTLDestinationComponent>(uid, out var dest))
                     {
