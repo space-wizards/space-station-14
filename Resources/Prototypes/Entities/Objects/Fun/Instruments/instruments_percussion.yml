@@ -96,6 +96,7 @@
   - type: Tag
     tags:
     - KeyedInstrument
+    - PercussionInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -108,6 +109,9 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/woodblock.rsi
     state: icon
+  - type: Tag
+    tags:
+    - PercussionInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -120,6 +124,9 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/reversecymbal.rsi
     state: icon
+  - type: Tag
+    tags:
+    - PercussionInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
