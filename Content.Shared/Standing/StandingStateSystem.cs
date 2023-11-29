@@ -14,7 +14,8 @@ namespace Content.Shared.Standing
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
-        private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable | (int) CollisionGroup.BulletImpassable;
+        private const int StandingCollisionMask = (int) CollisionGroup.MidImpassable;
+        private const int StandingCollisionLayer = (int) CollisionGroup.BulletImpassable | (int) CollisionGroup.Opaque;
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
@@ -66,11 +67,12 @@ namespace Content.Shared.Standing
             {
                 foreach (var (key, fixture) in fixtureComponent.Fixtures)
                 {
-                    if ((fixture.CollisionMask & StandingCollisionLayer) == 0)
+                    if ((fixture.CollisionMask & StandingCollisionMask) == 0 && (fixture.CollisionLayer & StandingCollisionLayer) == 0)
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
-                    _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
+                    _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionMask, manager: fixtureComponent);
+                    _physics.SetCollisionLayer(uid, key, fixture, fixture.CollisionLayer & ~StandingCollisionLayer, manager: fixtureComponent);
                 }
             }
 
@@ -122,7 +124,12 @@ namespace Content.Shared.Standing
                 foreach (var key in standingState.ChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
+                    {
+                        _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionMask,
+                            fixtureComponent);
+                        _physics.SetCollisionLayer(uid, key, fixture, fixture.CollisionLayer | StandingCollisionLayer,
+                            fixtureComponent);
+                    }
                 }
             }
             standingState.ChangedFixtures.Clear();

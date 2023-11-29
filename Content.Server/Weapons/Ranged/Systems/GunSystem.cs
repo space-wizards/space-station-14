@@ -209,6 +209,25 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             var result = rayCastResults[0];
 
+                            if (hovered != result.HitEntity && hovered != null)
+                            {
+                                var allRay = new CollisionRay(from.Position, dir, -1);
+                                var allRayCastResults = Physics
+                                    .IntersectRay(from.MapId, allRay, hitscan.MaxLength, lastUser, false).ToList();
+                                if (allRayCastResults.Any())
+                                    foreach (var allResult in allRayCastResults)
+                                    {
+                                        if (allResult.HitEntity == hovered)
+                                        {
+                                            result = allResult;
+                                            break;
+                                        }
+
+                                        if (allResult.HitEntity == result.HitEntity)
+                                            break;
+                                    }
+                            }
+
                             var hit = result.HitEntity;
                             lastHit = hit;
 

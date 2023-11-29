@@ -53,11 +53,7 @@
           bounds: "-0.1,-0.1,0.1,0.1"
         hard: false
         mask:
-        - Impassable
-        - LowImpassable
-        - MidImpassable
-        - HighImpassable
-        - BulletImpassable
+        - AllMask
       fly-by: &flybyfixture
         shape: !type:PhysShapeCircle
           radius: 1.5
