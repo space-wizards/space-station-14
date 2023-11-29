@@ -173,7 +173,7 @@
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
       - id: AccessConfigurator
-      - id: ClothingShoesBootsWinterCE
+      - id: ClothingShoesBootsWinterCe
 
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
