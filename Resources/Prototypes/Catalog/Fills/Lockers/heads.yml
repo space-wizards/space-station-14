@@ -265,7 +265,7 @@
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
-      - id: ClothingShoesBootsWinterRD
+      - id: ClothingShoesBootsWinterRd
 
 - type: entity
   id: LockerHeadOfSecurityFilledHardsuit
