@@ -106921,13 +106921,6 @@ entities:
     - pos: -18.5,30.5
       parent: 1
       type: Transform
-  - uid: 2645
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -18.5,30.5
-      parent: 1
-      type: Transform
 - proto: VendingMachineRobotics
   entities:
   - uid: 2652
