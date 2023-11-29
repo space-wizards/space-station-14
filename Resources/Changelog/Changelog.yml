@@ -1,13 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: 'Added two new types of speech verbs, mumbling and stuttering. Add the
-      suffix ''..'' or ''-'' respectfully, to the end of your sentences to use them.',
-    type: Add}
-  - {message: Added several more species specific speech verbs. And grants them to
-      a whole slew of new mobs., type: Add}
-  id: 4725
-  time: '2023-09-01T03:15:32.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Lathes now display material quantity in number of sheets., type: Tweak}
@@ -2904,3 +2895,8 @@ Entries:
       audio positioning., type: Fix}
   id: 5224
   time: '2023-11-29T05:44:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix getting stuck between tables., type: Fix}
+  id: 5225
+  time: '2023-11-29T13:23:21.0000000+00:00'
