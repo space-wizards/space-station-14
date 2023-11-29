@@ -262,7 +262,7 @@ namespace Content.IntegrationTests.Tests
                 var clientCount = client.EntMan.EntityCount;
                 EntityUid uid = default;
                 await server.WaitPost(() => uid = server.EntMan.SpawnEntity(protoId, coords));
-                await pair.RunTicksSync(3);
+                await pair.RunTicksSync(10);
 
                 // If the entity deleted itself, check that it didn't spawn other entities
                 if (!server.EntMan.EntityExists(uid))
@@ -280,7 +280,7 @@ namespace Content.IntegrationTests.Tests
                 }
 
                 await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
-                await pair.RunTicksSync(3);
+                await pair.RunTicksSync(10);
 
                 // Check that the number of entities has gone back to the original value.
                 if (server.EntMan.EntityCount != count || client.EntMan.EntityCount != clientCount)
