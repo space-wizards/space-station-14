@@ -108,6 +108,25 @@
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
 
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesHop
+  name: papercut-proof gloves
+  description: Perfect for dealing with paperwork and matters with bureaucracy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/hop.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/hop.rsi
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-black
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+  - type: FingerprintMask
+
 #### Medical
 - type: entity
   parent: ClothingHandsBase
@@ -130,9 +149,9 @@
   description: High-quality nitrile gloves. Expensive medical PPE.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
@@ -213,8 +232,6 @@
     stripTimeReduction: 1
     stealthy: true
   - type: NinjaGloves
-  # not actually electrified, just used to make stun ability work
-  - type: Electrified
 
 - type: entity
   parent: ClothingHandsGlovesColorBlack
@@ -339,7 +356,7 @@
     attackRate: 4
     damage:
       types:
-       Blunt: 7
+       Blunt: 8
     soundHit:
       collection: Punch
     animation: WeaponArcFist

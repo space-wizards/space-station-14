@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
@@ -46,7 +47,7 @@ public partial class SharedBodySystem
     private void OnBodyPartRemoved(EntityUid uid, BodyPartComponent component, EntRemovedFromContainerMessage args)
     {
         // TODO: lifestage shenanigans
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
             return;
 
         // Body part removed from another body part.
@@ -61,7 +62,7 @@ public partial class SharedBodySystem
 
         if (TryComp(entity, out OrganComponent? organ))
         {
-            RemoveOrgan(entity, organ);
+            RemoveOrgan(entity, uid, organ);
         }
     }
 
@@ -85,7 +86,20 @@ public partial class SharedBodySystem
                     {
                         if (TryComp(organ, out OrganComponent? organComp))
                         {
+                            var oldBody = organComp.Body;
                             organComp.Body = bodyUid;
+
+                            if (bodyUid != null)
+                            {
+                                var ev = new AddedToPartInBodyEvent(bodyUid.Value, children.Id);
+                                RaiseLocalEvent(organ, ev);
+                            }
+                            else if (oldBody != null)
+                            {
+                                var ev = new RemovedFromPartInBodyEvent(oldBody.Value, children.Id);
+                                RaiseLocalEvent(organ, ev);
+                            }
+
                             Dirty(organ, organComp);
                         }
                     }
@@ -665,7 +679,7 @@ public partial class SharedBodySystem
     public List<(T Comp, OrganComponent Organ)> GetBodyPartOrganComponents<T>(
         EntityUid uid,
         BodyPartComponent? part = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(uid, ref part))
             return new List<(T Comp, OrganComponent Organ)>();
@@ -695,7 +709,7 @@ public partial class SharedBodySystem
         EntityUid uid,
         [NotNullWhen(true)] out List<(T Comp, OrganComponent Organ)>? comps,
         BodyPartComponent? part = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(uid, ref part))
         {
@@ -737,7 +751,7 @@ public partial class SharedBodySystem
     public IEnumerable<(EntityUid AdjacentId, T Component)> GetBodyPartAdjacentPartsComponents<T>(
         EntityUid partId,
         BodyPartComponent? part = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(partId, ref part, false))
             yield break;
@@ -754,7 +768,7 @@ public partial class SharedBodySystem
         EntityUid partId,
         [NotNullWhen(true)] out List<(EntityUid AdjacentId, T Component)>? comps,
         BodyPartComponent? part = null)
-        where T : Component
+        where T : IComponent
     {
         if (!Resolve(partId, ref part, false))
         {

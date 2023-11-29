@@ -44,6 +44,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenAdminMenu = "OpenAdminMenu";
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
+        public static readonly BoundKeyFunction ToggleFullscreen = "ToggleFullscreen";
         public static readonly BoundKeyFunction Point = "Point";
         public static readonly BoundKeyFunction ZoomOut = "ZoomOut";
         public static readonly BoundKeyFunction ZoomIn = "ZoomIn";
@@ -81,23 +82,6 @@ namespace Content.Shared.Input
             new[]
             {
                 Hotbar1, Hotbar2, Hotbar3, Hotbar4, Hotbar5, Hotbar6, Hotbar7, Hotbar8, Hotbar9, Hotbar0
-            };
-
-        public static readonly BoundKeyFunction Loadout0 = "Loadout0";
-        public static readonly BoundKeyFunction Loadout1 = "Loadout1";
-        public static readonly BoundKeyFunction Loadout2 = "Loadout2";
-        public static readonly BoundKeyFunction Loadout3 = "Loadout3";
-        public static readonly BoundKeyFunction Loadout4 = "Loadout4";
-        public static readonly BoundKeyFunction Loadout5 = "Loadout5";
-        public static readonly BoundKeyFunction Loadout6 = "Loadout6";
-        public static readonly BoundKeyFunction Loadout7 = "Loadout7";
-        public static readonly BoundKeyFunction Loadout8 = "Loadout8";
-        public static readonly BoundKeyFunction Loadout9 = "Loadout9";
-
-        public static BoundKeyFunction[] GetLoadoutBoundKeys() =>
-            new[]
-            {
-                Loadout1, Loadout2, Loadout3, Loadout4, Loadout5, Loadout6, Loadout7, Loadout8, Loadout9, Loadout0
             };
 
         public static readonly BoundKeyFunction Vote0 = "Vote0";

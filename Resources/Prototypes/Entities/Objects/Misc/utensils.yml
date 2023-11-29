@@ -11,7 +11,7 @@
     tags:
     - Metal
   - type: SpaceGarbage
-  
+
 - type: entity
   parent: UtensilBase
   id: UtensilBasePlastic
@@ -42,6 +42,7 @@
     types:
     - Fork
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     attackRate: 1.5
     damage:
       types:
@@ -73,6 +74,7 @@
     types:
     - Spoon
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     attackRate: 1.5
     damage:
       types:

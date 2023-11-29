@@ -12,14 +12,12 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Utility;
@@ -32,7 +30,6 @@ public abstract partial class SharedBuckleSystem
     {
         SubscribeLocalEvent<BuckleComponent, ComponentStartup>(OnBuckleComponentStartup);
         SubscribeLocalEvent<BuckleComponent, ComponentShutdown>(OnBuckleComponentShutdown);
-        SubscribeLocalEvent<BuckleComponent, ComponentGetState>(OnBuckleComponentGetState);
         SubscribeLocalEvent<BuckleComponent, MoveEvent>(OnBuckleMove);
         SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(OnBuckleInteractHand);
         SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
@@ -56,11 +53,6 @@ public abstract partial class SharedBuckleSystem
         TryUnbuckle(uid, uid, true, component);
 
         component.BuckleTime = default;
-    }
-
-    private void OnBuckleComponentGetState(EntityUid uid, BuckleComponent component, ref ComponentGetState args)
-    {
-        args.State = new BuckleComponentState(component.Buckled, GetNetEntity(component.BuckledTo), GetNetEntity(component.LastEntityBuckledTo), component.DontCollide);
     }
 
     private void OnBuckleMove(EntityUid uid, BuckleComponent component, ref MoveEvent ev)
@@ -434,7 +426,7 @@ public abstract partial class SharedBuckleSystem
             if (attemptEvent.Cancelled)
                 return false;
 
-            if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.UnbuckleDelay)
+            if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.Delay)
                 return false;
 
             if (!_interaction.InRangeUnobstructed(userUid, strapUid, buckleComp.Range, popup: true))
@@ -443,9 +435,12 @@ public abstract partial class SharedBuckleSystem
             if (HasComp<SleepingComponent>(buckleUid) && buckleUid == userUid)
                 return false;
 
-            // If the strap is a vehicle and the rider is not the person unbuckling, return.
-            if (TryComp<VehicleComponent>(strapUid, out var vehicle) &&
-                vehicle.Rider != userUid)
+            // If the strap is a vehicle and the rider is not the person unbuckling, return. Unless the rider is crit or dead.
+            if (TryComp<VehicleComponent>(strapUid, out var vehicle) && vehicle.Rider != userUid && !_mobState.IsIncapacitated(buckleUid))
+                return false;
+
+            // If the person is crit or dead in any kind of strap, return. This prevents people from unbuckling themselves while incapacitated.
+            if (_mobState.IsIncapacitated(buckleUid) && userUid == buckleUid)
                 return false;
         }
 
@@ -465,7 +460,7 @@ public abstract partial class SharedBuckleSystem
 
         if (buckleXform.ParentUid == strapUid && !Terminating(buckleXform.ParentUid))
         {
-            _container.AttachParentToContainerOrGrid(buckleXform);
+            _container.AttachParentToContainerOrGrid((buckleUid, buckleXform));
 
             var oldBuckledToWorldRot = _transform.GetWorldRotation(strapUid);
             _transform.SetWorldRotation(buckleXform, oldBuckledToWorldRot);
@@ -501,8 +496,10 @@ public abstract partial class SharedBuckleSystem
 
         _joints.RefreshRelay(buckleUid);
         Appearance.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
-        var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
-        _audio.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);
+
+        // TODO: Buckle listening to moveevents is sussy anyway.
+        if (!TerminatingOrDeleted(strapUid))
+            _audio.PlayPredicted(strapComp.UnbuckleSound, strapUid, userUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);

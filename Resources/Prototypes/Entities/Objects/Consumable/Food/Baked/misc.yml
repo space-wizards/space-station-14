@@ -1,3 +1,4 @@
+# When adding new food also add to the appropriate random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\
 # Base
 
 - type: entity
@@ -16,7 +17,7 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Item
-    size: 1
+    size: Tiny
 
 # Muffins/Buns
 
@@ -37,6 +38,9 @@
   components:
   - type: Sprite
     state: muffin-berry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: cherry muffin
@@ -46,6 +50,9 @@
   components:
   - type: Sprite
     state: muffin-cherry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: bluecherry muffin
@@ -55,6 +62,9 @@
   components:
   - type: Sprite
     state: muffin-bluecherry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: honey bun #TODO honey
@@ -138,6 +148,9 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: sugar cookie
@@ -278,6 +291,7 @@
   - type: Tag
     tags:
     - Pancake
+    - Fruit
 
 - type: entity
   name: chocolate chip pancake
@@ -574,3 +588,27 @@
           Quantity: 3
         - ReagentId: THC
           Quantity: 25
+
+- type: entity
+  name: onion rings
+  parent: FoodBakedBase
+  id: FoodOnionRings
+  description: You can eat it or propose to your loved ones.
+  components:
+    - type: FlavorProfile
+      flavors:
+        - onion
+        - oily
+    - type: Sprite
+      state: onionrings
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 1
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 1
+          - ReagentId: Allicin
+            Quantity: 1
+          - ReagentId: Vitamin
+            Quantity: 1

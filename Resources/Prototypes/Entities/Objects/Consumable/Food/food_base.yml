@@ -28,3 +28,22 @@
     solution: food
   - type: RefillableSolution
     solution: food
+
+# usable by any food that can be opened
+# handles appearance with states "icon" and "icon-open"
+- type: entity
+  id: FoodOpenableBase
+  abstract: true
+  components:
+  - type: Appearance
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["icon"]
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        icon:
+          True: {state: "icon-open"}
+          False: {state: "icon"}
+  - type: Openable

@@ -1,13 +1,12 @@
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
@@ -16,10 +15,11 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Random.Helpers;
+using Content.Shared.Random;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -40,6 +40,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
 
@@ -58,13 +59,14 @@ public sealed class PlantHolderSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var plantHolder in EntityQuery<PlantHolderComponent>())
+        var query = EntityQueryEnumerator<PlantHolderComponent>();
+        while (query.MoveNext(out var uid, out var plantHolder))
         {
             if (plantHolder.NextUpdate > _gameTiming.CurTime)
                 continue;
             plantHolder.NextUpdate = _gameTiming.CurTime + plantHolder.UpdateDelay;
 
-            Update(plantHolder.Owner, plantHolder);
+            Update(uid, plantHolder);
         }
     }
 
@@ -254,7 +256,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
             component.Seed.Unique = false;
             var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
-            seed.RandomOffset(0.25f);
+            _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
@@ -440,12 +442,14 @@ public sealed class PlantHolderSystem : EntitySystem
             component.Health -= 6 * healthMod;
         }
 
-        // Make sure the plant is not starving.
-        if (_random.Prob(0.35f))
+        // Prevents the plant from aging when lacking resources.
+        // Limits the effect on aging so that when resources are added, the plant starts growing in a reasonable amount of time.
+        if (component.SkipAging < 10)
         {
+            // Make sure the plant is not starving.
             if (component.NutritionLevel > 5)
             {
-                component.Health += healthMod;
+                component.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
             }
             else
             {
@@ -453,16 +457,10 @@ public sealed class PlantHolderSystem : EntitySystem
                 component.Health -= healthMod;
             }
 
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        // Make sure the plant is not thirsty.
-        if (_random.Prob(0.35f))
-        {
+            // Make sure the plant is not thirsty.
             if (component.WaterLevel > 10)
             {
-                component.Health += healthMod;
+                component.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
             }
             else
             {

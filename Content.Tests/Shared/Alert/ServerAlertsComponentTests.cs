@@ -57,7 +57,7 @@ namespace Content.Tests.Shared.Alert
             var getty = new ComponentGetState();
             entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
 
-            var alertState = (AlertsComponentState) getty.State!;
+            var alertState = (AlertsComponent.AlertsComponent_AutoState) getty.State!;
             Assert.NotNull(alertState);
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
@@ -66,14 +66,14 @@ namespace Content.Tests.Shared.Alert
 
             // Lazy
             entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
-            alertState = (AlertsComponentState) getty.State!;
+            alertState = (AlertsComponent.AlertsComponent_AutoState) getty.State!;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
             EntitySystem.Get<AlertsSystem>().ClearAlertCategory(alertsComponent.Owner, AlertCategory.Pressure);
 
             entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
-            alertState = (AlertsComponentState) getty.State!;
+            alertState = (AlertsComponent.AlertsComponent_AutoState) getty.State!;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
         }
     }

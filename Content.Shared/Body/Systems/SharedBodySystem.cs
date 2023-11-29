@@ -15,17 +15,17 @@ public abstract partial class SharedBodySystem : EntitySystem
     /// <summary>
     /// Container ID prefix for any body parts.
     /// </summary>
-    protected const string PartSlotContainerIdPrefix = "body_part_slot_";
+    public const string PartSlotContainerIdPrefix = "body_part_slot_";
 
     /// <summary>
     /// Container ID for the ContainerSlot on the body entity itself.
     /// </summary>
-    protected const string BodyRootContainerId = "body_root_part";
+    public const string BodyRootContainerId = "body_root_part";
 
     /// <summary>
     /// Container ID prefix for any body organs.
     /// </summary>
-    protected const string OrganSlotContainerIdPrefix = "body_organ_slot_";
+    public const string OrganSlotContainerIdPrefix = "body_organ_slot_";
 
     [Dependency] protected readonly IPrototypeManager Prototypes = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;

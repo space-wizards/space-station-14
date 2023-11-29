@@ -9,7 +9,7 @@ namespace Content.Shared.Access;
 ///     Used by <see cref="AccessComponent"/> to avoid boilerplate.
 /// </summary>
 [Prototype("accessGroup")]
-public sealed class AccessGroupPrototype : IPrototype
+public sealed partial class AccessGroupPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

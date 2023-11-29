@@ -26,19 +26,19 @@
     speechVerb: Moth
   - type: TypingIndicator
     proto: moth
+  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 5
+  - type: MothAccent
   - type: Vocal
     sounds:
       Male: UnisexMoth
       Female: UnisexMoth
       Unsexed: UnisexMoth
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
     weightlessAcceleration: 1.5 # Move around more easily in space.
     weightlessFriction: 1
     weightlessModifier: 1
@@ -89,13 +89,13 @@
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
         visible: false
-      - map: [ "id" ]
       - map: [ "gloves" ]
       - map: [ "shoes" ]
       - map: [ "ears" ]
       - map: [ "outerClothing" ]
       - map: [ "eyes" ]
       - map: [ "belt" ]
+      - map: [ "id" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] #in the utopian future we should probably have a wings enum inserted here so everyhting doesn't break
       - map: [ "neck" ]
       - map: [ "back" ]

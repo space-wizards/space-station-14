@@ -2,11 +2,13 @@
 using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.ObjectsTab;
+using Content.Client.Administration.UI.Tabs.PanicBunkerTab;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.Administration.Events;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Console;
@@ -30,6 +32,25 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
 
     private AdminMenuWindow? _window;
     private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;
+    private PanicBunkerStatus? _panicBunker;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeNetworkEvent<PanicBunkerChangedEvent>(OnPanicBunkerUpdated);
+    }
+
+    private void OnPanicBunkerUpdated(PanicBunkerChangedEvent msg, EntitySessionEventArgs args)
+    {
+        var showDialog = _panicBunker == null && msg.Status.Enabled;
+        _panicBunker = msg.Status;
+        _window?.PanicBunkerControl.UpdateStatus(msg.Status);
+
+        if (showDialog)
+        {
+            UIManager.CreateWindow<PanicBunkerStatusWindow>().OpenCentered();
+        }
+    }
 
     public void OnStateEntered(GameplayState state)
     {
@@ -72,6 +93,9 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
 
         _window = UIManager.CreateWindow<AdminMenuWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
+
+        if (_panicBunker != null)
+            _window.PanicBunkerControl.UpdateStatus(_panicBunker);
 
         _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
         _window.ObjectsTabControl.OnEntryPressed += ObjectsTabEntryPressed;
@@ -163,7 +187,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {entity}");
         else if (function == EngineKeyFunctions.UseSecondary)
-            _verb.OpenVerbMenu(EntityManager.GetEntity(entity), true);
+            _verb.OpenVerbMenu(entity, true);
         else
             return;
 

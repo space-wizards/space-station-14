@@ -1,11 +1,12 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Server.Radio.EntitySystems;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
@@ -23,6 +24,7 @@ using Robust.Shared.Physics.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -147,7 +149,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (!TryComp<TransformComponent>(uid, out var xform))
                 return;
 
-            _body.GibBody(xform.ParentUid, deleteItems: component.DeleteItems);
+            _body.GibBody(xform.ParentUid, true, deleteItems: component.DeleteItems);
 
             args.Handled = true;
         }

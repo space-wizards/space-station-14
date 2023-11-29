@@ -304,10 +304,10 @@ namespace Content.Server.Medical.SuitSensors
             var userJob = Loc.GetString("suit-sensor-component-unknown-job");
             if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
             {
-                if (card.FullName != null)
-                    userName = card.FullName;
-                if (card.JobTitle != null)
-                    userJob = card.JobTitle;
+                if (card.Comp.FullName != null)
+                    userName = card.Comp.FullName;
+                if (card.Comp.JobTitle != null)
+                    userJob = card.Comp.JobTitle;
             }
 
             // get health mob state

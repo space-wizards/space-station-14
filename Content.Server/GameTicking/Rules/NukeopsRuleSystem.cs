@@ -5,6 +5,7 @@ using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
+using Content.Server.RandomMetadata;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
@@ -44,6 +45,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -67,6 +69,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly RandomMetadataSystem _randomMetadata = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -79,6 +82,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly WarDeclaratorSystem _warDeclarator = default!;
 
+
     [ValidatePrototypeId<CurrencyPrototype>]
     private const string TelecrystalCurrencyPrototype = "Telecrystal";
 
@@ -87,6 +91,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     [ValidatePrototypeId<AntagPrototype>]
     public const string NukeopsId = "Nukeops";
+
+    [ValidatePrototypeId<DatasetPrototype>]
+    private const string OperationPrefixDataset = "operationPrefix";
+
+    [ValidatePrototypeId<DatasetPrototype>]
+    private const string OperationSuffixDataset = "operationSuffix";
 
     public override void Initialize()
     {
@@ -330,23 +340,27 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // we can only currently guarantee that NT stations are the only station to
         // exist in the base game.
 
-        var eligible = EntityQuery<StationEventEligibleComponent, NpcFactionMemberComponent>()
-            .Where(x =>
-                _npcFaction.IsFactionHostile(component.Faction, x.Item2.Owner, x.Item2))
-            .Select(x => x.Item1.Owner)
-            .ToList();
+        var eligible = new List<Entity<StationEventEligibleComponent, NpcFactionMemberComponent>>();
+        var eligibleQuery = EntityQueryEnumerator<StationEventEligibleComponent, NpcFactionMemberComponent>();
+        while (eligibleQuery.MoveNext(out var eligibleUid, out var eligibleComp, out var member))
+        {
+            if (!_npcFaction.IsFactionHostile(component.Faction, eligibleUid, member))
+                continue;
 
-        if (!eligible.Any())
+            eligible.Add((eligibleUid, eligibleComp, member));
+        }
+
+        if (eligible.Count == 0)
             return;
 
         component.TargetStation = _random.Pick(eligible);
+        component.OperationName = _randomMetadata.GetRandomFromSegments(new List<string> {OperationPrefixDataset, OperationSuffixDataset}, " ");
 
         var filter = Filter.Empty();
         var query = EntityQueryEnumerator<NukeOperativeComponent, ActorComponent>();
         while (query.MoveNext(out _, out var nukeops, out var actor))
         {
-            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value)));
-            _audio.PlayGlobal(nukeops.GreetSoundNotification, actor.PlayerSession);
+            NotifyNukie(actor.PlayerSession, nukeops, component);
             filter.AddPlayer(actor.PlayerSession);
         }
     }
@@ -595,14 +609,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             // Basically copied verbatim from traitor code
             var playersPerOperative = nukeops.PlayersPerOperative;
-            var maxOperatives = nukeops.MaxOperatives;
+            var maxOperatives = nukeops.MaxOps;
 
             // Dear lord what is happening HERE.
-            var everyone = new List<IPlayerSession>(ev.PlayerPool);
-            var prefList = new List<IPlayerSession>();
-            var medPrefList = new List<IPlayerSession>();
-            var cmdrPrefList = new List<IPlayerSession>();
-            var operatives = new List<IPlayerSession>();
+            var everyone = new List<ICommonSession>(ev.PlayerPool);
+            var prefList = new List<ICommonSession>();
+            var medPrefList = new List<ICommonSession>();
+            var cmdrPrefList = new List<ICommonSession>();
+            var operatives = new List<ICommonSession>();
 
             // The LINQ expression ReSharper keeps suggesting is completely unintelligible so I'm disabling it
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
@@ -614,15 +628,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 }
 
                 var profile = ev.Profiles[player.UserId];
-                if (profile.AntagPreferences.Contains(nukeops.OperativeRoleProto))
+                if (profile.AntagPreferences.Contains(nukeops.OperativeRoleProto.Id))
                 {
                     prefList.Add(player);
                 }
-                if (profile.AntagPreferences.Contains(nukeops.MedicRoleProto))
+                if (profile.AntagPreferences.Contains(nukeops.MedicRoleProto.Id))
 	            {
 	                medPrefList.Add(player);
 	            }
-                if (profile.AntagPreferences.Contains(nukeops.CommanderRolePrototype))
+                if (profile.AntagPreferences.Contains(nukeops.CommanderRoleProto.Id))
                 {
                     cmdrPrefList.Add(player);
                 }
@@ -633,7 +647,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             for (var i = 0; i < numNukies; i++)
             {
                 // TODO: Please fix this if you touch it.
-                IPlayerSession nukeOp;
+                ICommonSession nukeOp;
                 // Only one commander, so we do it at the start
                 if (i == 0)
                 {
@@ -789,10 +803,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             if (nukeops.TargetStation != null && !string.IsNullOrEmpty(Name(nukeops.TargetStation.Value)))
             {
-                _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value)));
-
-                 // Notificate player about new role assignment
-                 _audio.PlayGlobal(component.GreetSoundNotification, playerSession);
+                NotifyNukie(playerSession, component, nukeops);
             }
         }
     }
@@ -808,8 +819,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (!component.SpawnOutpost)
             return true;
 
-        var path = component.NukieOutpostMap;
-        var shuttlePath = component.NukieShuttleMap;
+        var path = component.OutpostMap;
+        var shuttlePath = component.ShuttleMap;
 
         var mapId = _mapManager.CreateMap();
         var options = new MapLoadOptions
@@ -866,18 +877,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         {
             case 0:
                 name = Loc.GetString("nukeops-role-commander") + " " + _random.PickAndTake(component.OperativeNames[component.EliteNames]);
-                role = component.CommanderRolePrototype;
-                gear = component.CommanderStartGearPrototype;
+                role = component.CommanderRoleProto;
+                gear = component.CommanderStartGearProto;
                 break;
             case 1:
                 name = Loc.GetString("nukeops-role-agent") + " " + _random.PickAndTake(component.OperativeNames[component.NormalNames]);
                 role = component.MedicRoleProto;
-                gear = component.MedicStartGearPrototype;
+                gear = component.MedicStartGearProto;
                 break;
             default:
                 name = Loc.GetString("nukeops-role-operator") + " " + _random.PickAndTake(component.OperativeNames[component.NormalNames]);
                 role = component.OperativeRoleProto;
-                gear = component.OperativeStartGearPrototype;
+                gear = component.OperativeStartGearProto;
                 break;
         }
 
@@ -904,7 +915,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         _npcFaction.AddFaction(mob, "Syndicate");
     }
 
-    private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints, NukeopsRuleComponent component)
+    private void SpawnOperatives(int spawnCount, List<ICommonSession> sessions, bool addSpawnPoints, NukeopsRuleComponent component)
     {
         if (component.NukieOutpost == null)
             return;
@@ -915,7 +926,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // Forgive me for hardcoding prototypes
         foreach (var (_, meta, xform) in EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
-            if (meta.EntityPrototype?.ID != component.SpawnPointPrototype)
+            if (meta.EntityPrototype?.ID != component.SpawnPointProto.Id)
                 continue;
 
             if (xform.ParentUid != component.NukieOutpost)
@@ -969,6 +980,19 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
     }
 
+    /// <summary>
+    /// Display a greeting message and play a sound for a nukie
+    /// </summary>
+    private void NotifyNukie(ICommonSession session, NukeOperativeComponent nukeop, NukeopsRuleComponent nukeopsRule)
+    {
+        if (nukeopsRule.TargetStation is not { } station)
+            return;
+
+        _chatManager.DispatchServerMessage(session, Loc.GetString("nukeops-welcome", ("station", station), ("name", nukeopsRule.OperationName)));
+        _audio.PlayGlobal(nukeop.GreetSoundNotification, session);
+    }
+
+
     private void SpawnOperativesForGhostRoles(EntityUid uid, NukeopsRuleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -981,12 +1005,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
         // Basically copied verbatim from traitor code
         var playersPerOperative = component.PlayersPerOperative;
-        var maxOperatives = component.MaxOperatives;
+        var maxOperatives = component.MaxOps;
 
-        var playerPool = _playerManager.ServerSessions.ToList();
+        var playerPool = _playerManager.Sessions.ToList();
         var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
 
-        var operatives = new List<IPlayerSession>();
+        var operatives = new List<ICommonSession>();
         SpawnOperatives(numNukies, operatives, true, component);
     }
 
@@ -1115,9 +1139,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // TODO: Loot table or something
         foreach (var proto in new[]
                  {
-                     component.CommanderStartGearPrototype,
-                     component.MedicStartGearPrototype,
-                     component.OperativeStartGearPrototype
+                     component.CommanderStartGearProto,
+                     component.MedicStartGearProto,
+                     component.OperativeStartGearProto
                  })
         {
             component.StartingGearPrototypes.Add(proto, _prototypeManager.Index<StartingGearPrototype>(proto));

@@ -16,7 +16,8 @@ namespace Content.IntegrationTests.Tests
             await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 DummyTicker = false,
-                Connected = true
+                Connected = true,
+                Dirty = true
             });
 
             var server = pair.Server;

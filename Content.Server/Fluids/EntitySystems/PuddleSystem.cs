@@ -1,20 +1,25 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
-using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reaction;
 using Content.Server.Spreader;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.Effects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.Popups;
-using Content.Shared.Slippery;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Friction;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Maps;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
+using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.GameObjects;
@@ -22,7 +27,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Solution = Content.Shared.Chemistry.Components.Solution;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -30,6 +34,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Maps;
 using Content.Shared.Effects;
+using Robust.Server.Audio;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -63,9 +68,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     private const string Slime = "Slime";
 
     [ValidatePrototypeId<ReagentPrototype>]
-    private const string SpiderBlood = "SpiderBlood";
+    private const string CopperBlood = "CopperBlood";
 
-    private static string[] _standoutReagents = new[] { Blood, Slime, SpiderBlood };
+    private static string[] _standoutReagents = new[] { Blood, Slime, CopperBlood };
 
     public static float PuddleVolume = 1000;
 
@@ -103,7 +108,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         if (overflow.Volume == FixedPoint2.Zero)
         {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
@@ -137,7 +142,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     continue;
 
                 args.Updates--;
-                EnsureComp<EdgeSpreaderComponent>(neighbor);
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
 
                 if (args.Updates <= 0)
                     break;
@@ -145,7 +150,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             if (overflow.Volume == FixedPoint2.Zero)
             {
-                RemCompDeferred<EdgeSpreaderComponent>(uid);
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
                 return;
             }
         }
@@ -168,7 +173,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     break;
             }
 
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
@@ -192,7 +197,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 if (!_solutionContainerSystem.TryAddSolution(neighbor, neighborSolution, split))
                     continue;
 
-                EnsureComp<EdgeSpreaderComponent>(neighbor);
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
                 args.Updates--;
 
                 if (args.Updates <= 0)
@@ -373,7 +378,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             {
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
             }
-            else if (solution?.ContainsPrototype(EvaporationReagent) == true)
+            else if (solution?.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
             {
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
             }
@@ -438,7 +443,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
         {
-            EnsureComp<EdgeSpreaderComponent>(puddleUid);
+            EnsureComp<ActiveEdgeSpreaderComponent>(puddleUid);
         }
 
         if (!sound)
@@ -446,8 +451,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return true;
         }
 
-        SoundSystem.Play(puddleComponent.SpillSound.GetSound(),
-            Filter.Pvs(puddleUid), puddleUid);
+        _audio.PlayPvs(puddleComponent.SpillSound, puddleUid);
         return true;
     }
 
@@ -509,8 +513,11 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
 
         var targets = new List<EntityUid>();
+        var reactive = new HashSet<Entity<ReactiveComponent>>();
+        _lookup.GetEntitiesInRange(coordinates, 1.0f, reactive);
+
         // Get reactive entities nearby--if there are some, it'll spill a bit on them instead.
-        foreach (var ent in _lookup.GetComponentsInRange<ReactiveComponent>(coordinates, 1.0f))
+        foreach (var ent in reactive)
         {
             // sorry! no overload for returning uid, so .owner must be used
             var owner = ent.Owner;
@@ -599,16 +606,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (tileReact)
         {
             // First, do all tile reactions
-            for (var i = solution.Contents.Count - 1; i >= 0; i--)
-            {
-                var (reagent, quantity) = solution.Contents[i];
-                var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-                var removed = proto.ReactionTile(tileRef, quantity);
-                if (removed <= FixedPoint2.Zero)
-                    continue;
-
-                solution.RemoveReagent(reagent, removed);
-            }
+            DoTileReactions(tileRef, solution);
         }
 
         // Tile reactions used up everything.
@@ -638,7 +636,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             if (TryAddSolution(ent.Value, solution, sound, puddleComponent: puddle))
             {
-                EnsureComp<EdgeSpreaderComponent>(ent.Value);
+                EnsureComp<ActiveEdgeSpreaderComponent>(ent.Value);
             }
 
             puddleUid = ent.Value;
@@ -650,12 +648,27 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         EnsureComp<PuddleComponent>(puddleUid);
         if (TryAddSolution(puddleUid, solution, sound))
         {
-            EnsureComp<EdgeSpreaderComponent>(puddleUid);
+            EnsureComp<ActiveEdgeSpreaderComponent>(puddleUid);
         }
         return true;
     }
 
     #endregion
+
+    public void DoTileReactions(TileRef tileRef, Solution solution)
+    {
+        for (var i = solution.Contents.Count - 1; i >= 0; i--)
+        {
+
+            var (reagent, quantity) = solution.Contents[i];
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+            var removed = proto.ReactionTile(tileRef, quantity);
+            if (removed <= FixedPoint2.Zero)
+                continue;
+
+            solution.RemoveReagent(reagent, removed);
+        }
+    }
 
     /// <summary>
     /// Tries to get the relevant puddle entity for a tile.

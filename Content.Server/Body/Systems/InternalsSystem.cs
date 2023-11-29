@@ -81,7 +81,7 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
-        var tank = FindBestGasTank(uid ,internals);
+        var tank = FindBestGasTank(uid, internals);
 
         if (tank == null)
         {
@@ -95,7 +95,7 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
-        _gasTank.ConnectToInternals(tank);
+        _gasTank.ConnectToInternals(tank.Value);
     }
 
     private void StartToggleInternalsDoAfter(EntityUid user, EntityUid target, InternalsComponent internals)
@@ -139,34 +139,36 @@ public sealed class InternalsSystem : EntitySystem
         if (AreInternalsWorking(component))
         {
             var gasTank = Comp<GasTankComponent>(component.GasTankEntity!.Value);
-            args.Gas = _gasTank.RemoveAirVolume(gasTank, Atmospherics.BreathVolume);
+            args.Gas = _gasTank.RemoveAirVolume((component.GasTankEntity.Value, gasTank), Atmospherics.BreathVolume);
             // TODO: Should listen to gas tank updates instead I guess?
             _alerts.ShowAlert(uid, AlertType.Internals, GetSeverity(component));
         }
     }
-    public void DisconnectBreathTool(InternalsComponent component)
+    public void DisconnectBreathTool(Entity<InternalsComponent> ent)
     {
+        var (owner, component) = ent;
         var old = component.BreathToolEntity;
         component.BreathToolEntity = null;
 
         if (TryComp(old, out BreathToolComponent? breathTool) )
         {
             _atmos.DisconnectInternals(breathTool);
-            DisconnectTank(component);
+            DisconnectTank(ent);
         }
 
-        _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
+        _alerts.ShowAlert(owner, AlertType.Internals, GetSeverity(component));
     }
 
-    public void ConnectBreathTool(InternalsComponent component, EntityUid toolEntity)
+    public void ConnectBreathTool(Entity<InternalsComponent> ent, EntityUid toolEntity)
     {
+        var (owner, component) = ent;
         if (TryComp(component.BreathToolEntity, out BreathToolComponent? tool))
         {
             _atmos.DisconnectInternals(tool);
         }
 
         component.BreathToolEntity = toolEntity;
-        _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
+        _alerts.ShowAlert(owner, AlertType.Internals, GetSeverity(component));
     }
 
     public void DisconnectTank(InternalsComponent? component)
@@ -175,23 +177,32 @@ public sealed class InternalsSystem : EntitySystem
             return;
 
         if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
-            _gasTank.DisconnectFromInternals(tank);
+            _gasTank.DisconnectFromInternals((component.GasTankEntity.Value, tank));
 
         component.GasTankEntity = null;
         _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
     }
 
-    public bool TryConnectTank(InternalsComponent component, EntityUid tankEntity)
+    public bool TryConnectTank(Entity<InternalsComponent> ent, EntityUid tankEntity)
     {
+        var component = ent.Comp;
         if (component.BreathToolEntity == null)
             return false;
 
         if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
-            _gasTank.DisconnectFromInternals(tank);
+            _gasTank.DisconnectFromInternals((component.GasTankEntity.Value, tank));
 
         component.GasTankEntity = tankEntity;
-        _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
+        _alerts.ShowAlert(ent, AlertType.Internals, GetSeverity(component));
         return true;
+    }
+
+    public bool AreInternalsWorking(EntityUid uid, InternalsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        return AreInternalsWorking(component);
     }
 
     public bool AreInternalsWorking(InternalsComponent component)
@@ -213,7 +224,7 @@ public sealed class InternalsSystem : EntitySystem
         return 1;
     }
 
-    public GasTankComponent? FindBestGasTank(EntityUid internalsOwner, InternalsComponent component)
+    public Entity<GasTankComponent>? FindBestGasTank(EntityUid internalsOwner, InternalsComponent component)
     {
         // Prioritise
         // 1. back equipped tanks
@@ -227,27 +238,27 @@ public sealed class InternalsSystem : EntitySystem
             TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
             _gasTank.CanConnectToInternals(backGasTank))
         {
-            return backGasTank;
+            return (backEntity.Value, backGasTank);
         }
 
         if (_inventory.TryGetSlotEntity(internalsOwner, "suitstorage", out var entity, inventory, containerManager) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&
             _gasTank.CanConnectToInternals(gasTank))
         {
-            return gasTank;
+            return (entity.Value, gasTank);
         }
 
-        var tanks = new List<GasTankComponent>();
+        var tanks = new List<Entity<GasTankComponent>>();
 
         foreach (var hand in _hands.EnumerateHands(internalsOwner))
         {
             if (TryComp(hand.HeldEntity, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
-                tanks.Add(gasTank);
+                tanks.Add((hand.HeldEntity.Value, gasTank));
         }
 
         if (tanks.Count > 0)
         {
-            tanks.Sort((x, y) => y.Air.TotalMoles.CompareTo(x.Air.TotalMoles));
+            tanks.Sort((x, y) => y.Comp.Air.TotalMoles.CompareTo(x.Comp.Air.TotalMoles));
             return tanks[0];
         }
 
@@ -258,12 +269,12 @@ public sealed class InternalsSystem : EntitySystem
             while (enumerator.MoveNext(out var container))
             {
                 if (TryComp(container.ContainedEntity, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
-                    tanks.Add(gasTank);
+                    tanks.Add((container.ContainedEntity.Value, gasTank));
             }
 
             if (tanks.Count > 0)
             {
-                tanks.Sort((x, y) => y.Air.TotalMoles.CompareTo(x.Air.TotalMoles));
+                tanks.Sort((x, y) => y.Comp.Air.TotalMoles.CompareTo(x.Comp.Air.TotalMoles));
                 return tanks[0];
             }
         }

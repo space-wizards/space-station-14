@@ -8,6 +8,7 @@ using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
+using Content.Shared.Explosion;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -18,15 +19,11 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Throwing;
-using JetBrains.Annotations;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
@@ -58,6 +55,8 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
+            SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
@@ -75,6 +74,15 @@ namespace Content.Server.Hands.Systems
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands);
+        }
+
+        private void OnExploded(Entity<HandsComponent> ent, ref BeforeExplodeEvent args)
+        {
+            foreach (var hand in ent.Comp.Hands.Values)
+            {
+                if (hand.HeldEntity is {} uid)
+                    args.Contents.Add(uid);
+            }
         }
 
         private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
@@ -97,7 +105,7 @@ namespace Content.Server.Hands.Systems
             base.HandleEntityRemoved(uid, hands, args);
 
             if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
-                _virtualSystem.Delete(@virtual, uid);
+                _virtualSystem.Delete((args.Entity, @virtual), uid);
         }
 
         private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
@@ -162,16 +170,16 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coordinates, EntityUid entity)
+        private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (session is not IPlayerSession playerSession)
+            if (playerSession == null)
                 return false;
 
             if (playerSession.AttachedEntity is not {Valid: true} player ||
                 !Exists(player) ||
-                player.IsInContainer() ||
+                ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
-                hands.ActiveHandEntity is not EntityUid throwEnt ||
+                hands.ActiveHandEntity is not { } throwEnt ||
                 !_actionBlockerSystem.CanThrow(player, throwEnt))
                 return false;
 
@@ -223,7 +231,7 @@ namespace Content.Server.Hands.Systems
         // TODO: move to storage or inventory
         private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
         {
-            if (session is not IPlayerSession playerSession)
+            if (session is not { } playerSession)
                 return;
 
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))

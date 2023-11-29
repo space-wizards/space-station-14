@@ -1,6 +1,5 @@
 using Content.Shared.MouseRotator;
 using Content.Shared.Movement.Components;
-using Content.Shared.Targeting;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -49,8 +48,5 @@ namespace Content.Shared.CombatMode
         /// </summary>
         [DataField, AutoNetworkedField]
         public bool ToggleMouseRotator = true;
-
-        [ViewVariables(VVAccess.ReadWrite), DataField("activeZone"), AutoNetworkedField]
-        public TargetingZone ActiveZone;
     }
 }

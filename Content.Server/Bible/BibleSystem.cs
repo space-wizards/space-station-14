@@ -15,6 +15,7 @@ using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -29,6 +30,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
 
         public override void Initialize()
@@ -65,7 +67,8 @@ namespace Content.Server.Bible
             }
             _remQueue.Clear();
 
-            foreach (var (respawning, summonableComp) in EntityQuery<SummonableRespawningComponent, SummonableComponent>())
+            var query = EntityQueryEnumerator<SummonableRespawningComponent, SummonableComponent>();
+            while (query.MoveNext(out var uid, out var respawning, out var summonableComp))
             {
                 summonableComp.Accumulator += frameTime;
                 if (summonableComp.Accumulator < summonableComp.RespawnTime)
@@ -80,10 +83,10 @@ namespace Content.Server.Bible
                 }
                 summonableComp.AlreadySummoned = false;
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner, PopupType.Medium);
-                SoundSystem.Play("/Audio/Effects/radpulse9.ogg", Filter.Pvs(summonableComp.Owner), summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
+                _audio.PlayPvs("/Audio/Effects/radpulse9.ogg", summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
-                _remQueue.Enqueue(respawning.Owner);
+                _remQueue.Enqueue(uid);
             }
         }
 
@@ -106,7 +109,7 @@ namespace Content.Server.Bible
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, args.User);
 
-                SoundSystem.Play(component.SizzleSoundPath.GetSound(), Filter.Pvs(args.User), args.User);
+                _audio.PlayPvs(component.SizzleSoundPath, args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true, origin: uid);
                 _delay.BeginDelay(uid, delay);
 
@@ -124,7 +127,7 @@ namespace Content.Server.Bible
                     var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                     _popupSystem.PopupEntity(selfFailMessage, args.User, args.User, PopupType.MediumCaution);
 
-                    SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
+                    _audio.PlayPvs("/Audio/Effects/hit_kick.ogg", args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true, origin: uid);
                     _delay.BeginDelay(uid, delay);
                     return;
@@ -133,7 +136,7 @@ namespace Content.Server.Bible
 
             var damage = _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true, origin: uid);
 
-            if (damage == null || damage.Total == 0)
+            if (damage == null || damage.Empty)
             {
                 var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-none-others", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                 _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
@@ -148,7 +151,7 @@ namespace Content.Server.Bible
 
                 var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                 _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
-                SoundSystem.Play(component.HealSoundPath.GetSound(), Filter.Pvs(args.Target.Value), args.User);
+                _audio.PlayPvs(component.HealSoundPath, args.User);
                 _delay.BeginDelay(uid, delay);
             }
         }
@@ -167,7 +170,7 @@ namespace Content.Server.Bible
                 {
                     if (!TryComp<TransformComponent>(args.User, out var userXform)) return;
 
-                    AttemptSummon(component, args.User, userXform);
+                    AttemptSummon((uid, component), args.User, userXform);
                 },
                 Text = Loc.GetString("bible-summon-verb"),
                 Priority = 2
@@ -183,9 +186,9 @@ namespace Content.Server.Bible
             args.AddAction(ref component.SummonActionEntity, component.SummonAction);
         }
 
-        private void OnSummon(EntityUid uid, SummonableComponent component, SummonActionEvent args)
+        private void OnSummon(Entity<SummonableComponent> ent, ref SummonActionEvent args)
         {
-            AttemptSummon(component, args.Performer, Transform(args.Performer));
+            AttemptSummon(ent, args.Performer, Transform(args.Performer));
         }
 
         /// <summary>
@@ -198,9 +201,9 @@ namespace Content.Server.Bible
                 return;
 
             var source = component.Source;
-            if (source != null && TryComp<SummonableComponent>(source, out var summonable))
+            if (source != null && HasComp<SummonableComponent>(source))
             {
-                _addQueue.Enqueue(summonable.Owner);
+                _addQueue.Enqueue(source.Value);
             }
         }
 
@@ -209,24 +212,26 @@ namespace Content.Server.Bible
         /// </summary>
         private void OnSpawned(EntityUid uid, FamiliarComponent component, GhostRoleSpawnerUsedEvent args)
         {
-            if (!TryComp<SummonableComponent>(Transform(args.Spawner).ParentUid, out var summonable))
+            var parent = Transform(args.Spawner).ParentUid;
+            if (!TryComp<SummonableComponent>(parent, out var summonable))
                 return;
 
-            component.Source = summonable.Owner;
+            component.Source = parent;
             summonable.Summon = uid;
         }
 
-        private void AttemptSummon(SummonableComponent component, EntityUid user, TransformComponent? position)
+        private void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
         {
+            var (uid, component) = ent;
             if (component.AlreadySummoned || component.SpecialItemPrototype == null)
                 return;
             if (component.RequiresBibleUser && !HasComp<BibleUserComponent>(user))
                 return;
             if (!Resolve(user, ref position))
                 return;
-            if (component.Deleted || Deleted(component.Owner))
+            if (component.Deleted || Deleted(uid))
                 return;
-            if (!_blocker.CanInteract(user, component.Owner))
+            if (!_blocker.CanInteract(user, uid))
                 return;
 
             // Make this familiar the component's summon
@@ -237,7 +242,7 @@ namespace Content.Server.Bible
             if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, PopupType.Medium);
-                Transform(familiar).AttachParent(component.Owner);
+                Transform(familiar).AttachParent(uid);
             }
             component.AlreadySummoned = true;
             _actionsSystem.RemoveAction(user, component.SummonActionEntity);

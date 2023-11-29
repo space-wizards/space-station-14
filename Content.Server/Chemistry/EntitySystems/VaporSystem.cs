@@ -1,12 +1,12 @@
 using System.Numerics;
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
-using Content.Shared.Spawners.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -15,6 +15,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -55,19 +56,19 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        public void Start(VaporComponent vapor, TransformComponent vaporXform, Vector2 dir, float speed, MapCoordinates target, float aliveTime, EntityUid? user = null)
+        public void Start(Entity<VaporComponent> vapor, TransformComponent vaporXform, Vector2 dir, float speed, MapCoordinates target, float aliveTime, EntityUid? user = null)
         {
-            vapor.Active = true;
-            var despawn = EnsureComp<TimedDespawnComponent>(vapor.Owner);
+            vapor.Comp.Active = true;
+            var despawn = EnsureComp<TimedDespawnComponent>(vapor);
             despawn.Lifetime = aliveTime;
 
             // Set Move
-            if (EntityManager.TryGetComponent(vapor.Owner, out PhysicsComponent? physics))
+            if (EntityManager.TryGetComponent(vapor, out PhysicsComponent? physics))
             {
                 _physics.SetLinearDamping(physics, 0f);
                 _physics.SetAngularDamping(physics, 0f);
 
-                _throwing.TryThrow(vapor.Owner, dir, speed, user: user);
+                _throwing.TryThrow(vapor, dir, speed, user: user);
 
                 var distance = (target.Position - vaporXform.WorldPosition).Length();
                 var time = (distance / physics.LinearVelocity.Length());
@@ -75,40 +76,39 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        internal bool TryAddSolution(VaporComponent vapor, Solution solution)
+        internal bool TryAddSolution(Entity<VaporComponent> vapor, Solution solution)
         {
             if (solution.Volume == 0)
             {
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, VaporComponent.SolutionName,
+            if (!_solutionContainerSystem.TryGetSolution(vapor, VaporComponent.SolutionName,
                 out var vaporSolution))
             {
                 return false;
             }
 
-            return _solutionContainerSystem.TryAddSolution(vapor.Owner, vaporSolution, solution);
+            return _solutionContainerSystem.TryAddSolution(vapor, vaporSolution, solution);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var (vaporComp, solution, xform) in EntityManager
-                .EntityQuery<VaporComponent, SolutionContainerManagerComponent, TransformComponent>())
+            var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out var vaporComp, out var solution, out var xform))
             {
                 foreach (var (_, value) in solution.Solutions)
                 {
-                    Update(frameTime, vaporComp, value, xform);
+                    Update(frameTime, (uid, vaporComp), value, xform);
                 }
             }
         }
 
-        private void Update(float frameTime, VaporComponent vapor, Solution contents, TransformComponent xform)
+        private void Update(float frameTime, Entity<VaporComponent> ent, Solution contents, TransformComponent xform)
         {
+            var (entity, vapor) = ent;
             if (!vapor.Active)
                 return;
-
-            var entity = vapor.Owner;
 
             vapor.ReactTimer += frameTime;
 
@@ -131,7 +131,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         reaction = reagentQuantity.Quantity;
                     }
 
-                    _solutionContainerSystem.RemoveReagent(vapor.Owner, contents, reagentQuantity.Reagent, reaction);
+                    _solutionContainerSystem.RemoveReagent(entity, contents, reagentQuantity.Reagent, reaction);
                 }
             }
 

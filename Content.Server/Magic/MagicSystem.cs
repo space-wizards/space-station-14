@@ -16,13 +16,14 @@ using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Spawners;
 
 namespace Content.Server.Magic;
 
@@ -309,7 +310,7 @@ public sealed class MagicSystem : EntitySystem
                 _boltsSystem.SetBoltsDown(entity, bolts, false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
-                _doorSystem.StartOpening(doorComp.Owner);
+                _doorSystem.StartOpening(entity);
         }
     }
 
