@@ -20,7 +20,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxvol: 100
+        maxVol: 100
         reagents:
         - ReagentId: Phosphorus
           Quantity: 50
@@ -35,7 +35,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxvol: 50
+        maxVol: 50
         reagents:
         - ReagentId: Sugar
           Quantity: 50
@@ -50,7 +50,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxvol: 60
+        maxVol: 60
         reagents:
         - ReagentId: FluorosulfuricAcid
           Quantity: 30
@@ -65,7 +65,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxvol: 90
+        maxVol: 90
         reagents:
         - ReagentId: Iron
           Quantity: 90
@@ -80,7 +80,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxvol: 100
+        maxVol: 100
         reagents:
         - ReagentId: Water
           Quantity: 50
@@ -95,7 +95,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxvol: 50
+        maxVol: 50
         reagents:
         - ReagentId: SpaceLube
           Quantity: 50
