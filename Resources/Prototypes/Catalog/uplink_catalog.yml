@@ -134,7 +134,7 @@
   description: uplink-flash-kit-desc
   productEntity: FlashKit
   cost:
-    Telecrystal: 4 # keeping this cheap for now, nerf it if turns out too strong
+    Telecrystal: 2 # keeping this cheap for now, nerf it if turns out too strong
   categories:
   - UplinkExplosives
 
@@ -144,7 +144,7 @@
   description: uplink-bomb-kit-desc
   productEntity: BombKit
   cost:
-    Telecrystal: 10 # keeping this cheap for now, nerf it if turns out too strong
+    Telecrystal: 9 # keeping this cheap for now, nerf it if turns out too strong
   categories:
   - UplinkExplosives
 
