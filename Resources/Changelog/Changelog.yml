@@ -1,133 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Ported steel chair sprites from Paradise Station & Shiptest., type: Tweak}
-  id: 4703
-  time: '2023-08-29T23:32:32.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Flavor text now disabled if identity hidden, type: Tweak}
-  id: 4704
-  time: '2023-08-29T23:38:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Water and lava will now partially occlude your sprite., type: Add}
-  id: 4705
-  time: '2023-08-30T02:32:36.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: 'Added ears to monkeys, also Pun Pun starts with a service headset',
-    type: Add}
-  id: 4706
-  time: '2023-08-30T06:07:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix trading post not spawning., type: Fix}
-  id: 4707
-  time: '2023-08-30T11:02:58.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Slightly improved the steel monotile sprites., type: Tweak}
-  id: 4708
-  time: '2023-08-31T01:02:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added the Deathmatch game mode! Brawl it out with other players and
-      try and be the first to 31 kills., type: Add}
-  id: 4709
-  time: '2023-08-31T01:06:16.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Updated traitor guidebook section., type: Tweak}
-  id: 4710
-  time: '2023-08-31T01:07:18.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed revenant siphon damage from poison to cold, type: Tweak}
-  id: 4711
-  time: '2023-08-31T01:07:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Foldable items are now predicted., type: Add}
-  id: 4712
-  time: '2023-08-31T01:56:13.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: Overdosing on Robust might have unintended effects on plant-based sentient
-      lifeforms., type: Tweak}
-  id: 4713
-  time: '2023-08-31T02:01:56.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Eating some foods no longer creates a plate out of thin air., type: Tweak}
-  id: 4714
-  time: '2023-08-31T02:14:54.0000000+00:00'
-- author: potato1234x
-  changes:
-  - {message: Cap now spawns with laceup shoes instead of sneakers, type: Tweak}
-  id: 4715
-  time: '2023-08-31T02:33:40.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Dehydrated space carp's price has been lowered back to 2 telecrystals.,
-    type: Tweak}
-  id: 4716
-  time: '2023-08-31T12:41:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix horizontal cut shader not compiling on some systems., type: Fix}
-  id: 4717
-  time: '2023-08-31T13:26:40.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Snow planets can now spawn with ice, which gives you very floaty movement!',
-    type: Add}
-  - {message: 'The nukie planet now spawns with some ice, and a mini rink to let off
-      some steam', type: Add}
-  - {message: Snow now has tile edge support like grass, type: Add}
-  id: 4718
-  time: '2023-08-31T21:31:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Committing suicide no longer makes your body disappear., type: Fix}
-  id: 4719
-  time: '2023-09-01T00:46:05.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Borgs now have robotic speech verbs, type: Fix}
-  id: 4720
-  time: '2023-09-01T02:12:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix item drops mispredicting., type: Fix}
-  id: 4721
-  time: '2023-09-01T02:30:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Foldable objects (folding chairs, bodybags, wheelchairs) now function
-      again.', type: Fix}
-  id: 4722
-  time: '2023-09-01T02:30:40.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Spears now have a non-blunt melee sound, type: Fix}
-  id: 4723
-  time: '2023-09-01T03:08:02.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Animal parts & organs now have sprites. They aren''t, like, accurate,
-      but it''s better than being invisible', type: Fix}
-  id: 4724
-  time: '2023-09-01T03:09:22.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: 'Added two new types of speech verbs, mumbling and stuttering. Add the
-      suffix ''..'' or ''-'' respectfully, to the end of your sentences to use them.',
-    type: Add}
-  - {message: Added several more species specific speech verbs. And grants them to
-      a whole slew of new mobs., type: Add}
-  id: 4725
-  time: '2023-09-01T03:15:32.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Lathes now display material quantity in number of sheets., type: Tweak}
@@ -2894,3 +2765,138 @@ Entries:
   - {message: The ability to put a cakecat on your head., type: Add}
   id: 5202
   time: '2023-11-23T00:41:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Audio rework got re-merged, the changelog has been re-posted here for
+      brevity.', type: Add}
+  - {message: Grid audio will now attenuate properly over distance and won't be ear
+      rupturingly loud., type: Fix}
+  - {message: FTL sound should no longer persist as it's attached to the shuttle instead
+      of being global., type: Fix}
+  - {message: Audio can now start at an offset so if an audio source comes into range
+      so it won't play from the start., type: Fix}
+  - {message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
+      so it's smoother. You may need to adjust your master audio volume., type: Tweak}
+  id: 5203
+  time: '2023-11-27T11:21:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ahelp audio., type: Fix}
+  id: 5204
+  time: '2023-11-27T13:42:04.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Refrigerators are now nearly immune to explosions and even nukes., type: Tweak}
+  id: 5205
+  time: '2023-11-27T21:24:43.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Moth accent added! Buzzz!!!, type: Add}
+  id: 5206
+  time: '2023-11-27T21:28:43.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: The Captain's Carapace no longer has a 10% movement speed penalty.,
+    type: Tweak}
+  id: 5207
+  time: '2023-11-27T21:29:30.0000000+00:00'
+- author: Rainfey
+  changes:
+  - {message: Chameleon functionality to Agent and Nukie ID cards, type: Add}
+  id: 5208
+  time: '2023-11-27T21:34:30.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Revenants can no longer emag evac to instantly launch the shuttle.,
+    type: Fix}
+  id: 5209
+  time: '2023-11-27T21:39:30.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Disabled space wind & atmos tile ripping., type: Remove}
+  id: 5210
+  time: '2023-11-27T21:42:29.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'Gibbed mothroaches wont drop all normal moth species parts, just animal
+      organs.', type: Fix}
+  id: 5211
+  time: '2023-11-27T21:42:53.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: When Revolution rounds end each headrev has their number of converted
+      people shown., type: Tweak}
+  id: 5212
+  time: '2023-11-27T21:43:49.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: 'Fixed janitorial items (wet floor signs, spray bottles, light replacers,
+      and plungers) not fitting in the janitor''s trolley.', type: Fix}
+  id: 5213
+  time: '2023-11-27T22:16:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ambient audio not playing., type: Fix}
+  id: 5214
+  time: '2023-11-28T03:09:26.0000000+00:00'
+- author: M3739
+  changes:
+  - {message: An entry regarding cyborgs has been added to the guidebook., type: Add}
+  id: 5215
+  time: '2023-11-28T03:18:22.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Remove the Captain's spare gloves from his locker., type: Remove}
+  id: 5216
+  time: '2023-11-28T05:45:56.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The HoP now starts with a pair of papercut-proof gloves., type: Add}
+  id: 5217
+  time: '2023-11-28T06:21:06.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed riot shield audio and popup spam, type: Fix}
+  id: 5218
+  time: '2023-11-28T07:06:38.0000000+00:00'
+- author: UbaserB
+  changes:
+  - {message: Blood now has a sprite when placed in metamorphic glasses., type: Add}
+  id: 5219
+  time: '2023-11-28T07:09:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix global audio not being global., type: Fix}
+  - {message: Update MIDI audio every frame rather than every 1/10 seconds to fix
+      positioning and occlusion weirdness., type: Tweak}
+  id: 5220
+  time: '2023-11-28T09:48:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix audio not playing during weather., type: Fix}
+  id: 5221
+  time: '2023-11-28T12:35:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some sound sources not playing positionally (e.g. glass breaking).,
+    type: Fix}
+  id: 5222
+  time: '2023-11-28T23:19:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed artifact spam on roundend due to the ensuing lag., type: Remove}
+  id: 5223
+  time: '2023-11-29T03:39:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix doppler effect on shuttles by also setting player's velocity in
+      the audio API., type: Fix}
+  - {message: Fix left-right ear weirdness caused by floating-point imprecision on
+      audio positioning., type: Fix}
+  id: 5224
+  time: '2023-11-29T05:44:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix getting stuck between tables., type: Fix}
+  id: 5225
+  time: '2023-11-29T13:23:21.0000000+00:00'
