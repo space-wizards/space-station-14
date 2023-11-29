@@ -37,6 +37,7 @@ public sealed class StorageSystem : SharedStorageSystem
     {
         if (_currentStorage is (var ent, { } comp))
         {
+            //todo figure out how to make this more elegant
             CloseStorageUI(ent, comp);
         }
 
@@ -46,12 +47,12 @@ public sealed class StorageSystem : SharedStorageSystem
 
     public void CloseStorageUI(EntityUid uid, StorageComponent component)
     {
+        if (TryComp<UserInterfaceComponent>(uid, out var ui))
+            ui.OpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key)?.Close();
+
         if (_currentStorage?.Item1 != uid)
             return;
         _currentStorage = null;
-
-        if (TryComp<UserInterfaceComponent>(uid, out var ui))
-            ui.OpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key)?.Close();
 
         StorageClosed?.Invoke(uid, component);
     }

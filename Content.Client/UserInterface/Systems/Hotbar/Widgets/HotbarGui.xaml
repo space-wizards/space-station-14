@@ -9,12 +9,14 @@
     VerticalAlignment="Bottom"
     Orientation="Vertical"
     HorizontalAlignment="Center">
-    <storage:StorageContainer
-        Margin="10"
-        Name="StoragePanel"
-        Visible="False"
-        HorizontalAlignment="Center"
-        />
+    <BoxContainer Name="StorageContainer"
+                  Access="Public"
+                  Margin="10"
+                  HorizontalAlignment="Center">
+        <storage:StorageContainer
+            Name="StoragePanel"
+            Visible="False"/>
+    </BoxContainer>
     <inventory:ItemStatusPanel
         Name="StatusPanel"
         Visible="False"

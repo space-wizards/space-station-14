@@ -165,9 +165,9 @@ public sealed class ItemGridPiece : Control
         OnPieceUnpressed?.Invoke(args, this);
     }
 
-    public Vector2 GetCenterOffset()
+    public Vector2 GetCenterOffset(Entity<ItemComponent?> entity, ItemStorageLocation location)
     {
-        var boxSize = SharedStorageSystem.GetBoundingBox(_itemSystem.GetAdjustedItemShape((Entity, null), Location)).Size;
+        var boxSize = SharedStorageSystem.GetBoundingBox(_itemSystem.GetAdjustedItemShape(entity, location)).Size;
         var actualSize = new Vector2(boxSize.X + 1, boxSize.Y + 1);
         return actualSize * _centerTexture!.Size * UIScale / 2f;
     }

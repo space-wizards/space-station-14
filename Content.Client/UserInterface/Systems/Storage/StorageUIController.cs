@@ -1,9 +1,11 @@
+using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Interaction;
 using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Storage.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -13,6 +15,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Timing;
 
@@ -20,17 +23,21 @@ namespace Content.Client.UserInterface.Systems.Storage;
 
 public sealed class StorageUIController : UIController, IOnSystemChanged<StorageSystem>
 {
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
     private StorageContainer? _container;
 
+    private Vector2? _lastContainerPosition { get; set; } = null;
+
     private HotbarGui? Hotbar => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
 
     public ItemGridPiece? DraggingGhost;
+    public bool StaticStorageUIEnabled;
 
     public bool IsDragging => _menuDragHelper.IsDragging;
     public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
@@ -43,6 +50,8 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     public override void Initialize()
     {
         base.Initialize();
+
+        _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
 
         //EntityManager.EventBus.SubscribeLocalEvent<StorageComponent, ComponentShutdown>(OnStorageShutdown);
     }
@@ -66,6 +75,67 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         system.StorageOpened -= OnStorageOpened;
         system.StorageClosed -= OnStorageClosed;
         system.StorageUpdated -= OnStorageUpdated;
+    }
+
+    private void OnStorageOpened(EntityUid uid, StorageComponent component)
+    {
+        if (_container == null)
+            return;
+
+        _container.UpdateContainer((uid, component));
+
+        if (_lastContainerPosition == null)
+            _container.OpenCenteredAt(new Vector2(0.5f, 0.75f));
+        else
+        {
+            _container.Open();
+
+            if (!StaticStorageUIEnabled)
+                LayoutContainer.SetPosition(_container, _lastContainerPosition.Value);
+        }
+
+        if (StaticStorageUIEnabled)
+        {
+            _container.Orphan();
+            Hotbar?.StorageContainer.AddChild(_container);
+        }
+    }
+
+    private void OnStorageClosed(EntityUid uid, StorageComponent component)
+    {
+        if (_container == null)
+            return;
+
+        _lastContainerPosition = _container.GlobalPosition;
+        _container.Close();
+    }
+
+    private void OnStaticStorageChanged(bool obj)
+    {
+        if (StaticStorageUIEnabled == obj)
+            return;
+
+        StaticStorageUIEnabled = obj;
+
+        if (_container == null)
+            return;
+
+        if (!StaticStorageUIEnabled)
+            _lastContainerPosition = _container.GlobalPosition;
+
+        if (!_container.IsOpen)
+            return;
+
+        _container.Orphan();
+        if (StaticStorageUIEnabled)
+        {
+            Hotbar?.StorageContainer.AddChild(_container);
+            _lastContainerPosition = _container.GlobalPosition;
+        }
+        else
+        {
+            _ui.WindowRoot.AddChild(_container);
+        }
     }
 
     /// One might ask, Hey Emo, why are you parsing raw keyboard input just to rotate a rectangle?
@@ -102,23 +172,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         DraggingGhost?.Location.Rotate(Angle.FromDegrees(90));
         keyEvent.Handle();
-    }
-
-    private void OnStorageOpened(EntityUid uid, StorageComponent component)
-    {
-        if (_container == null)
-            return;
-
-        _container.UpdateContainer((uid, component));
-        _container.Visible = true;
-    }
-
-    private void OnStorageClosed(EntityUid uid, StorageComponent component)
-    {
-        if (_container == null)
-            return;
-
-        _container.Visible = false;
     }
 
     private void OnStorageUpdated(EntityUid uid, StorageComponent component)
@@ -188,7 +241,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (args.Function == ContentKeyFunctions.MoveStoredItem)
         {
             if (DraggingGhost is { } draggingGhost&&
-                _container.TryGetDraggedPieceLocation(out var position))
+                _container.TryGetPieceLocation(out var position))
             {
                 _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
                     _entity.GetNetEntity(draggingGhost.Entity),
@@ -220,7 +273,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         DraggingGhost.Orphan();
 
         UIManager.PopupRoot.AddChild(DraggingGhost);
-        LayoutContainer.SetPosition(DraggingGhost, UIManager.MousePositionScaled.Position / 2 - DraggingGhost.GetCenterOffset());
+        SetDraggingRotation();
         return true;
     }
 
@@ -228,10 +281,19 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     {
         if (DraggingGhost == null)
             return false;
+        SetDraggingRotation();
+        return true;
+    }
+
+    private void SetDraggingRotation()
+    {
+        if (DraggingGhost == null)
+            return;
+
+        var offset = DraggingGhost.GetCenterOffset((DraggingGhost.Entity, null), DraggingGhost.Location);
 
         // I don't know why it divides the position by 2. Hope this helps! -emo
-        LayoutContainer.SetPosition(DraggingGhost, UIManager.MousePositionScaled.Position / 2 - DraggingGhost.GetCenterOffset());
-        return true;
+        LayoutContainer.SetPosition(DraggingGhost, UIManager.MousePositionScaled.Position / 2 - offset);
     }
 
     private void OnMenuEndDrag()

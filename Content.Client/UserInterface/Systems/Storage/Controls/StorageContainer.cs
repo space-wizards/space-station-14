@@ -9,12 +9,13 @@ using Content.Shared.Storage.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
-public sealed class StorageContainer : BoxContainer
+public sealed class StorageContainer : BaseWindow
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     private readonly StorageUIController _storageController;
@@ -52,6 +53,8 @@ public sealed class StorageContainer : BoxContainer
 
         OnThemeUpdated();
 
+        MouseFilter = MouseFilterMode.Stop;
+
         _nameLabel = new Label
         {
             ReservesSpace = true,
@@ -80,12 +83,12 @@ public sealed class StorageContainer : BoxContainer
 
         var container = new BoxContainer
         {
-            Orientation = LayoutOrientation.Vertical,
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
             Children =
             {
                 new BoxContainer
                 {
-                    Orientation = LayoutOrientation.Horizontal,
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
                     Children =
                     {
                         _sidebar,
@@ -169,8 +172,7 @@ public sealed class StorageContainer : BoxContainer
         };
         exitButton.OnPressed += _ =>
         {
-            if (_entity.TryGetComponent<UserInterfaceComponent>(entity, out var ui))
-                ui.OpenInterfaces.GetValueOrDefault(StorageComponent.StorageUiKey.Key)?.Close();
+            Close();
         };
         var exitContainer = new BoxContainer
         {
@@ -267,7 +269,7 @@ public sealed class StorageContainer : BoxContainer
             child.ModulateSelfOverride = Color.FromHex("#222222");
         }
 
-        if (_storageController.DraggingGhost == null || !TryGetDraggedPieceLocation(out var origin))
+        if (_storageController.DraggingGhost == null || !TryGetPieceLocation(out var origin))
             return;
 
         _itemSystem ??= _entity.System<ItemSystem>();
@@ -304,18 +306,32 @@ public sealed class StorageContainer : BoxContainer
         }
     }
 
-    public bool TryGetDraggedPieceLocation([NotNullWhen(true)] out Vector2i? location)
+    protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
+    {
+        if (_storageController.StaticStorageUIEnabled)
+            return DragMode.None;
+
+        if (_sidebar.SizeBox.Contains(relativeMousePos - _sidebar.Position))
+        {
+            return DragMode.Move;
+        }
+
+        return DragMode.None;
+    }
+
+    public bool TryGetPieceLocation([NotNullWhen(true)] out Vector2i? location)
     {
         foreach (var control in _backgroundGrid.Children)
         {
             if (control is not StorageBackgroundCell cell)
                 continue;
 
+            //todo this needs to either use the dragged piece or the piece in your hand. FUN!
             if (_storageController.DraggingGhost is not { } dragging)
                 continue;
 
             if (cell.SizeBox.Contains(UserInterfaceManager.MousePositionScaled.Position
-                    - cell.GlobalPosition - dragging.GetCenterOffset() * 2f + _emptyTexture!.Size * UIScale / 2))
+                    - cell.GlobalPosition - dragging.GetCenterOffset((dragging.Entity, null), dragging.Location) * 2f + _emptyTexture!.Size * UIScale / 2))
             {
                 location = cell.Location;
                 return true;
@@ -326,9 +342,19 @@ public sealed class StorageContainer : BoxContainer
         return false;
     }
 
-    public StorageBackgroundCell? GetBackgroundCell(int x, int y)
+    public StorageBackgroundCell GetBackgroundCell(int x, int y)
     {
         return (StorageBackgroundCell) _backgroundGrid.GetChild(y * _backgroundGrid.Columns + x);
+    }
+
+    public override void Close()
+    {
+        base.Close();
+
+        _storageSystem ??= _entity.System<StorageSystem>();
+
+        if (_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComp))
+            _storageSystem?.CloseStorageUI(StorageEntity.Value, storageComp);
     }
 
     public sealed class StorageBackgroundCell : TextureRect
