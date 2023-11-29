@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Humanoid.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Prototypes;
@@ -244,12 +245,8 @@ namespace Content.IntegrationTests.Tests
                 .Select(p => p.ID)
                 .ToList();
 
-            MapCoordinates coords = default;
-            await server.WaitPost(() =>
-            {
-                var map = server.MapMan.CreateMap();
-                coords = new MapCoordinates(default, map);
-            });
+            var mapId = await pair.CreateTestMap();
+            var coords = mapId.MapCoords;
 
             await pair.RunTicksSync(3);
 
