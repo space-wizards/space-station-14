@@ -12,28 +12,27 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 public sealed partial class ArtifactSystem : EntitySystem
 {
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _sawmill = Logger.GetSawmill("artifact");
-
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
 
         InitializeCommands();
         InitializeActions();
@@ -202,8 +201,8 @@ public sealed partial class ArtifactSystem : EntitySystem
         var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
         var allNodes = currentNode.Edges;
-        _sawmill.Debug($"our node: {currentNode.Id}");
-        _sawmill.Debug($"other nodes: {string.Join(", ", allNodes)}");
+        Log.Debug($"our node: {currentNode.Id}");
+        Log.Debug($"other nodes: {string.Join(", ", allNodes)}");
 
         if (TryComp<BiasedArtifactComponent>(uid, out var bias) &&
             TryComp<TraversalDistorterComponent>(bias.Provider, out var trav) &&
@@ -226,14 +225,14 @@ public sealed partial class ArtifactSystem : EntitySystem
         }
 
         var undiscoveredNodes = allNodes.Where(x => !GetNodeFromId(x, component).Discovered).ToList();
-        _sawmill.Debug($"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");
+        Log.Debug($"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");
         var newNode = _random.Pick(allNodes);
         if (undiscoveredNodes.Any() && _random.Prob(0.75f))
         {
             newNode = _random.Pick(undiscoveredNodes);
         }
 
-        _sawmill.Debug($"Going to node {newNode}");
+        Log.Debug($"Going to node {newNode}");
         return GetNodeFromId(newNode, component);
     }
 
@@ -293,23 +292,5 @@ public sealed partial class ArtifactSystem : EntitySystem
     public ArtifactNode GetRootNode(List<ArtifactNode> allNodes)
     {
         return allNodes.First(n => n.Depth == 0);
-    }
-
-    /// <summary>
-    /// Make shit go ape on round-end
-    /// </summary>
-    private void OnRoundEnd(RoundEndTextAppendEvent ev)
-    {
-        var RoundEndTimer = _configurationManager.GetCVar(CCVars.ArtifactRoundEndTimer);
-        if (RoundEndTimer > 0)
-        {
-            var query = EntityQueryEnumerator<ArtifactComponent>();
-            while (query.MoveNext(out var ent, out var artifactComp))
-            {
-                artifactComp.CooldownTime = TimeSpan.Zero;
-                var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
-                timerTrigger.ActivationRate = TimeSpan.FromSeconds(RoundEndTimer); //HAHAHAHAHAHAHAHAHAH -emo
-            }
-        }
     }
 }
