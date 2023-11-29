@@ -1,4 +1,5 @@
 ﻿using Content.Server.Cuffs;
+using Content.Server.Forensics;
 using Content.Server.Humanoid;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
@@ -9,7 +10,6 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
-using Content.Server.Forensics;
 
 namespace Content.Server.Implants;
 
