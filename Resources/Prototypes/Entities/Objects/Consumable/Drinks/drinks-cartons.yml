@@ -1,0 +1,128 @@
+- type: entity
+  parent: DrinkBase
+  id: DrinkCartonBaseFull
+  abstract: true
+  components:
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds #Could use a new sound someday ¯\_(ツ)_/¯
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Normal
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+        #In future maybe add generic plastic scrap trash/debris
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkJuiceLimeCarton
+  name: lime juice
+  description: Sweet-sour goodness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuiceLime
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/limejuice.rsi
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkJuiceOrangeCarton
+  name: orange juice
+  description: Full of vitamins and deliciousness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuiceOrange
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/orangejuice.rsi
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkJuiceTomatoCarton
+  name: tomato juice
+  description: Well, at least it LOOKS like tomato juice. You can't tell with all that redness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkCreamCarton
+  name: Milk Cream
+  description: It's cream. Made from milk. What else did you think you'd find in there?
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Cream
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cream.rsi
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkMilkCarton
+  name: milk
+  description: An opaque white liquid produced by the mammary glands of mammals.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Milk
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/milk.rsi
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkSoyMilkCarton
+  name: soy milk
+  description: White and nutritious soy goodness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: MilkSoy
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/soymilk.rsi

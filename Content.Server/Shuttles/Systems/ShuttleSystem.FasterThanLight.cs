@@ -15,6 +15,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -230,8 +231,8 @@ public sealed partial class ShuttleSystem
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
-        // TODO: Need BroadcastGrid to not be bad.
-        SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(uid)), _startupSound.Params);
+        var audio = _audio.PlayPvs(_startupSound, uid);
+        audio.Value.Component.Flags |= AudioFlags.GridAudio;
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         SetupHyperspace();
         return true;
@@ -287,11 +288,11 @@ public sealed partial class ShuttleSystem
                     var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
                     RaiseLocalEvent(uid, ref ev, true);
 
-                    if (comp.TravelSound != null)
-                    {
-                        comp.TravelStream = SoundSystem.Play(comp.TravelSound.GetSound(),
-                            Filter.Pvs(uid, 4f, entityManager: EntityManager), comp.TravelSound.Params);
-                    }
+                    var wowdio = _audio.PlayPvs(comp.TravelSound, uid);
+                    comp.TravelStream = wowdio?.Entity;
+                    if (wowdio?.Component != null)
+                        wowdio.Value.Component.Flags |= AudioFlags.GridAudio;
+
                     break;
                 // Arriving, play effects
                 case FTLState.Travelling:
@@ -377,13 +378,9 @@ public sealed partial class ShuttleSystem
                         _thruster.DisableLinearThrusters(shuttle);
                     }
 
-                    if (comp.TravelStream != null)
-                    {
-                        comp.TravelStream?.Stop();
-                        comp.TravelStream = null;
-                    }
-
-                    _audio.PlayGlobal(_arrivalSound, Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(uid)), true);
+                    comp.TravelStream = _audio.Stop(comp.TravelStream);
+                    var audio = _audio.PlayPvs(_arrivalSound, uid);
+                    audio.Value.Component.Flags |= AudioFlags.GridAudio;
 
                     if (TryComp<FTLDestinationComponent>(uid, out var dest))
                     {

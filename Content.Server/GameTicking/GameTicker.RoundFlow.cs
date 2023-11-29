@@ -362,7 +362,7 @@ namespace Content.Server.GameTicking
                     playerIcName = icName;
 
                 if (TryGetEntity(mind.OriginalOwnedEntity, out var entity))
-                    _pvsOverride.AddGlobalOverride(entity.Value, recursive: true);
+                    _pvsOverride.AddGlobalOverride(GetNetEntity(entity.Value), recursive: true);
 
                 var roles = _roles.MindGetAllRoles(mindId);
 
@@ -611,7 +611,7 @@ namespace Content.Server.GameTicking
                 _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
 
             if (proto.Sound != null)
-                SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
+                _audio.PlayGlobal(proto.Sound, Filter.Broadcast(), true);
         }
 
         private async void SendRoundStartedDiscordMessage()
