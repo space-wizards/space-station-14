@@ -23,7 +23,7 @@ public sealed partial class DiscordLinkWindow : FancyWindow
         }
         else
         {
-            LinkText.Text = $"/привязка14 {link}";
+            LinkText.Text = $"/привязать14  token:{link}";
         }
     }
 }
