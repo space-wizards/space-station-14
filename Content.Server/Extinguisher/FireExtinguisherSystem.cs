@@ -40,14 +40,14 @@ public sealed class FireExtinguisherSystem : EntitySystem
     private void OnFireExtinguisherInit(EntityUid uid, FireExtinguisherComponent component, ComponentInit args)
     {
         /// <summary>
-        ///     Initially sets Toggled to True so ActionUIController.cs uses "On sprite" via "action.iconOn"
+        ///     Initially sets Toggled so ActionUIController.cs uses "On sprite" via "action.iconOn"
         ///     Action Menu will set Fire Extinguisher's "On sprite" by default instead of "Off sprite".
         /// </summary>
         if (component.HasSafety)
         {
             UpdateAppearance(uid, component);
-            _actions.SetToggled(component.ToggleActionEntity, false);
         }
+        _actions.SetToggled(component.ToggleActionEntity, component.Safety);
     }
 
     private void OnUseInHand(EntityUid uid, FireExtinguisherComponent component, UseInHandEvent args)
@@ -114,7 +114,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
         if (!args.CanInteract)
             return;
 
-        var verb = new InteractionVerb { Act, Text };
+        var verb = new InteractionVerb();
 
         verb.Act = () => ToggleSafety(uid, component);
         verb.Text = Loc.GetString("fire-extinguisher-component-verb-text");
