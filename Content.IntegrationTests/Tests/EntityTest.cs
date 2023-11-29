@@ -279,7 +279,7 @@ namespace Content.IntegrationTests.Tests
                 }
 
                 // Check that the number of entities has increased.
-                if (server.EntMan.EntityCount <= cou nt)
+                if (server.EntMan.EntityCount <= count)
                 {
                     Assert.Fail($"Server prototype {protoId} failed on spawning as entity count didn't increase");
                 }
