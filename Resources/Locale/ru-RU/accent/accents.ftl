@@ -4,6 +4,8 @@ accent-words-cat-2 = Меу.
 accent-words-cat-3 = Мррр!
 accent-words-cat-4 = Хссс!
 accent-words-cat-5 = Грррр.
+accent-words-cat-6 = Меу?
+accent-words-cat-7 = Миау.
 
 # Dog accent
 accent-words-dog-1 = Ряв!
@@ -17,6 +19,9 @@ accent-words-mouse-1 = Кви!
 accent-words-mouse-2 = Пип!
 accent-words-mouse-3 = Чууу!
 accent-words-mouse-4 = Ииии!
+accent-words-mouse-5 = Виип!
+accent-words-mouse-6 = Фиип!
+accent-words-mouse-7 = Хиип!
 
 # Mumble
 accent-words-mumble-1 = Ммммф!
@@ -43,6 +48,9 @@ accent-words-zombie-4 = Гррррр...
 accent-words-zombie-5 = Оууууффф...
 accent-words-zombie-6 = Граааааа...
 accent-words-zombie-7 = Моззгиии... Моооозгиииии...
+accent-words-zombie-8 = Бргааа...
+accent-words-zombie-9 = Бргееееххх...
+accent-words-zombie-10 = Грааакх...
 
 # Generic Aggressive
 accent-words-generic-aggressive-1 = Гррр!
