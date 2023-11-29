@@ -1,6 +1,5 @@
 using Content.Server.Body.Components;
 using Content.Server.DoAfter;
-using Content.Shared.Climbing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Interaction;
