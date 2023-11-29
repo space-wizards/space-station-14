@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Chemistry.Containers.Components;
+namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 /// Allows the entity with this component to be placed in a <c>SharedReagentDispenserComponent</c>.

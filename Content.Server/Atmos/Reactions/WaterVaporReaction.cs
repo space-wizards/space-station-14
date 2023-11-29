@@ -1,6 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
 using JetBrains.Annotations;

@@ -1,8 +1,8 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Chemistry.Solutions;
-using Content.Shared.Chemistry.Solutions.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Sprite;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;

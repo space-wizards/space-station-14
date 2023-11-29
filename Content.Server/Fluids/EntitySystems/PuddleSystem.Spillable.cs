@@ -1,8 +1,8 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
@@ -34,7 +34,7 @@ public sealed partial class PuddleSystem
         SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<SpillableComponent, SolutionOverflowEvent>(OnOverflow);
+        SubscribeLocalEvent<SpillableComponent, SolutionContainerOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
     }
 
@@ -46,7 +46,7 @@ public sealed partial class PuddleSystem
             args.PushMarkup(Loc.GetString("spill-examine-spillable-weapon"));
     }
 
-    private void OnOverflow(EntityUid uid, SpillableComponent component, ref SolutionOverflowEvent args)
+    private void OnOverflow(EntityUid uid, SpillableComponent component, ref SolutionContainerOverflowEvent args)
     {
         if (args.Handled)
             return;

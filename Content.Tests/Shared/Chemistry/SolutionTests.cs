@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

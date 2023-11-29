@@ -1,8 +1,7 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Solutions;
-using Content.Shared.Chemistry.Solutions.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;

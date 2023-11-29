@@ -1,8 +1,7 @@
 using Content.Server.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.Solutions;
-using Content.Shared.Chemistry.Solutions.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;

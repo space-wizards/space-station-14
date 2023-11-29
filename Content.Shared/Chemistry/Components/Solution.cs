@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 using System.Collections;
 using System.Linq;
 
-namespace Content.Shared.Chemistry.Solutions;
+namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 ///     A solution of reagents.

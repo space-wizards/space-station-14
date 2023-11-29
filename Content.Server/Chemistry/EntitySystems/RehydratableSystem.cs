@@ -1,6 +1,6 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
@@ -17,10 +17,10 @@ public sealed class RehydratableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RehydratableComponent, SolutionChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<RehydratableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
     }
 
-    private void OnSolutionChange(EntityUid uid, RehydratableComponent comp, SolutionChangedEvent args)
+    private void OnSolutionChange(EntityUid uid, RehydratableComponent comp, SolutionContainerChangedEvent args)
     {
         var quantity = _solutions.GetTotalPrototypeQuantity(uid, comp.CatalystPrototype);
         if (quantity != FixedPoint2.Zero && quantity >= comp.CatalystMinimum)

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Containers.Components;
+﻿using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

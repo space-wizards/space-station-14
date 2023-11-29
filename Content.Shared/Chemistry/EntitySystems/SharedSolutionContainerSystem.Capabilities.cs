@@ -1,13 +1,12 @@
-using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Solutions;
-using Content.Shared.Chemistry.Solutions.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace Content.Shared.Chemistry.Containers.EntitySystems;
+namespace Content.Shared.Chemistry.EntitySystems;
 
 public abstract partial class SharedSolutionContainerSystem
 {

@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Solutions.Components;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Shared.Chemistry.Reaction;
 

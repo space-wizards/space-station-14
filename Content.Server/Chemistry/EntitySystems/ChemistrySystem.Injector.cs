@@ -2,12 +2,9 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solutions;
-using Content.Shared.Chemistry.Solutions.Components;
-using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
@@ -32,7 +29,7 @@ public sealed partial class ChemistrySystem
     private void InitializeInjector()
     {
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
-        SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<InjectorComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<InjectorComponent, InjectorDoAfterEvent>(OnInjectDoAfter);
         SubscribeLocalEvent<InjectorComponent, ComponentStartup>(OnInjectorStartup);
         SubscribeLocalEvent<InjectorComponent, UseInHandEvent>(OnInjectorUse);
@@ -118,7 +115,7 @@ public sealed partial class ChemistrySystem
         }
     }
 
-    private void OnSolutionChange(EntityUid uid, InjectorComponent component, SolutionChangedEvent args)
+    private void OnSolutionChange(EntityUid uid, InjectorComponent component, SolutionContainerChangedEvent args)
     {
         Dirty(uid, component);
     }

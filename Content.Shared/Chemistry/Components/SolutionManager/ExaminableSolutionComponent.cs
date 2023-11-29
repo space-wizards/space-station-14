@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Chemistry.Containers.Components;
+﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 [RegisterComponent]
 public sealed partial class ExaminableSolutionComponent : Component

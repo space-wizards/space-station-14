@@ -1,5 +1,5 @@
 ﻿using Content.Server.Kitchen.EntitySystems;
-using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Kitchen.Components
 {

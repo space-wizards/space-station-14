@@ -1,7 +1,7 @@
 using Content.Server.Chemistry.Components.DeleteOnSolutionEmptyComponent;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
 {
@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
         {
             base.Initialize();
             SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         }
 
         public void OnStartup(EntityUid uid, DeleteOnSolutionEmptyComponent component, ComponentStartup args)
@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
             CheckSolutions(uid, component);
         }
 
-        public void OnSolutionChange(EntityUid uid, DeleteOnSolutionEmptyComponent component, SolutionChangedEvent args)
+        public void OnSolutionChange(EntityUid uid, DeleteOnSolutionEmptyComponent component, SolutionContainerChangedEvent args)
         {
             CheckSolutions(uid, component);
         }

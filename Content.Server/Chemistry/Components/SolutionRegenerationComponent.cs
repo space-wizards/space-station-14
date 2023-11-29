@@ -1,5 +1,5 @@
 using Content.Server.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Chemistry.Components;

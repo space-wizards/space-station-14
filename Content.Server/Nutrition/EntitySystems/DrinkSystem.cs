@@ -10,10 +10,10 @@ using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -61,7 +61,7 @@ public sealed class DrinkSystem : EntitySystem
         base.Initialize();
 
         // TODO add InteractNoHandEvent for entities like mice.
-        SubscribeLocalEvent<DrinkComponent, SolutionChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<DrinkComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
         // run before inventory so for bucket it always tries to drink before equipping (when empty)
         // run after openable so its always open -> drink
@@ -219,7 +219,7 @@ public sealed class DrinkSystem : EntitySystem
             drainComp.Solution = component.Solution;
     }
 
-    private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangedEvent args)
+    private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionContainerChangedEvent args)
     {
         UpdateAppearance(uid, component);
     }

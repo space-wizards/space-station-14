@@ -2,7 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Rejuvenate;
 
@@ -21,7 +21,7 @@ public sealed class RiggableSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<RiggableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<RiggableComponent, BeingMicrowavedEvent>(OnMicrowaved);
-        SubscribeLocalEvent<RiggableComponent, SolutionChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<RiggableComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
     }
 
     private void OnRejuvenate(EntityUid uid, RiggableComponent component, RejuvenateEvent args)
@@ -43,7 +43,7 @@ public sealed class RiggableSystem : EntitySystem
         Explode(uid, batteryComponent, args.User);
     }
 
-    private void OnSolutionChanged(EntityUid uid, RiggableComponent component, SolutionChangedEvent args)
+    private void OnSolutionChanged(EntityUid uid, RiggableComponent component, SolutionContainerChangedEvent args)
     {
         if (args.SolutionId != component.Solution)
             return;

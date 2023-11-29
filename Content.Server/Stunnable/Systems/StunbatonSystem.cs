@@ -3,7 +3,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Events;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -30,7 +30,7 @@ namespace Content.Server.Stunnable.Systems
 
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<StunbatonComponent, SolutionContainerChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
         }
 
@@ -125,7 +125,7 @@ namespace Content.Server.Stunnable.Systems
         }
 
         // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
-        private void OnSolutionChange(EntityUid uid, StunbatonComponent component, SolutionChangedEvent args)
+        private void OnSolutionChange(EntityUid uid, StunbatonComponent component, SolutionContainerChangedEvent args)
         {
             // Explode if baton is activated and rigged.
             if (!TryComp<RiggableComponent>(uid, out var riggable) || !TryComp<BatteryComponent>(uid, out var battery))

@@ -1,8 +1,8 @@
-using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry.Containers.Components;
+namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
 /// 

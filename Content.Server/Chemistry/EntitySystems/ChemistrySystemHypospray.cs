@@ -1,10 +1,9 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
@@ -27,7 +26,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
-            SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<HyposprayComponent, SolutionContainerChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<HyposprayComponent, ComponentGetState>(OnHypoGetState);
         }
@@ -48,7 +47,7 @@ namespace Content.Server.Chemistry.EntitySystems
             args.Handled = true;
         }
 
-        private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionChangedEvent args)
+        private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionContainerChangedEvent args)
         {
             Dirty(uid, component);
         }

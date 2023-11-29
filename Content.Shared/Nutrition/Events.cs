@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Solutions;
+﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 

@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Chemistry.Containers.Components;
+﻿namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
 ///     Denotes a solution which can be added with syringes.

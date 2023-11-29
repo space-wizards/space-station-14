@@ -1,8 +1,9 @@
 using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Tools.Components;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -30,7 +31,7 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, ComponentStartup>(OnWelderStartup);
             SubscribeLocalEvent<WelderComponent, IsHotEvent>(OnWelderIsHotEvent);
             SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnWelderExamine);
-            SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnWelderSolutionChange);
+            SubscribeLocalEvent<WelderComponent, SolutionContainerChangedEvent>(OnWelderSolutionChange);
             SubscribeLocalEvent<WelderComponent, ActivateInWorldEvent>(OnWelderActivate);
             SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
             SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>(OnWelderToolUseAttempt);
@@ -217,7 +218,7 @@ namespace Content.Server.Tools
             }
         }
 
-        private void OnWelderSolutionChange(EntityUid uid, WelderComponent welder, SolutionChangedEvent args)
+        private void OnWelderSolutionChange(EntityUid uid, WelderComponent welder, SolutionContainerChangedEvent args)
         {
             // TODO what
             // ????

@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Chemistry.Containers.Components;
+namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 ///     Denotes the solution that can be easily removed through any reagent container.

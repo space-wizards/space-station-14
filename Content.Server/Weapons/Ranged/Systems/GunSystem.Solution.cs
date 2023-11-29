@@ -1,8 +1,7 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.Containers.Events;
-using Content.Shared.Chemistry.Solutions;
-using Content.Shared.Chemistry.Solutions.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Vapor;
 using Content.Shared.Weapons.Ranged;
@@ -21,7 +20,7 @@ public sealed partial class GunSystem
         base.InitializeSolution();
 
         SubscribeLocalEvent<SolutionAmmoProviderComponent, MapInitEvent>(OnSolutionMapInit);
-        SubscribeLocalEvent<SolutionAmmoProviderComponent, SolutionChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<SolutionAmmoProviderComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
     }
 
     private void OnSolutionMapInit(EntityUid uid, SolutionAmmoProviderComponent component, MapInitEvent args)
@@ -29,7 +28,7 @@ public sealed partial class GunSystem
         UpdateSolutionShots(uid, component);
     }
 
-    private void OnSolutionChanged(EntityUid uid, SolutionAmmoProviderComponent component, SolutionChangedEvent args)
+    private void OnSolutionChanged(EntityUid uid, SolutionAmmoProviderComponent component, SolutionContainerChangedEvent args)
     {
         if (args.Solution.Name == component.SolutionId)
             UpdateSolutionShots(uid, component, args.Solution);

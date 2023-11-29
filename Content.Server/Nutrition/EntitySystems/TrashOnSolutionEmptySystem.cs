@@ -1,8 +1,8 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Containers.Components;
-using Content.Shared.Chemistry.Containers.Events;
-using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Tag;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -16,7 +16,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<TrashOnSolutionEmptyComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<TrashOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<TrashOnSolutionEmptyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         }
 
         public void OnStartup(EntityUid uid, TrashOnSolutionEmptyComponent component, ComponentStartup args)
@@ -24,7 +24,7 @@ namespace Content.Server.Nutrition.EntitySystems
             CheckSolutions(component);
         }
 
-        public void OnSolutionChange(EntityUid uid, TrashOnSolutionEmptyComponent component, SolutionChangedEvent args)
+        public void OnSolutionChange(EntityUid uid, TrashOnSolutionEmptyComponent component, SolutionContainerChangedEvent args)
         {
             CheckSolutions(component);
         }

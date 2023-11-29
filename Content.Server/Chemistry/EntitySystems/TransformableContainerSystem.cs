@@ -1,6 +1,6 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.Containers.Events;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 
@@ -17,7 +17,7 @@ public sealed class TransformableContainerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TransformableContainerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<TransformableContainerComponent, SolutionChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<TransformableContainerComponent, SolutionContainerChangedEvent>(OnSolutionChange);
     }
 
     private void OnMapInit(EntityUid uid, TransformableContainerComponent component, MapInitEvent args)
@@ -33,7 +33,7 @@ public sealed class TransformableContainerSystem : EntitySystem
         }
     }
 
-    private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component, SolutionChangedEvent args)
+    private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component, SolutionContainerChangedEvent args)
     {
         if (!_solutionsSystem.TryGetFitsInDispenser(owner, out _, out var solution))
             return;

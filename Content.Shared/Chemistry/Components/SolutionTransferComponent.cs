@@ -1,7 +1,7 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Chemistry.Containers.Components;
+namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 ///     Gives click behavior for transferring to/from other reagent containers.

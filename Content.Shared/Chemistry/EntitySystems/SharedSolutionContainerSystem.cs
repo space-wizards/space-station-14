@@ -1,10 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Content.Shared.Chemistry.Containers.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solutions;
-using Content.Shared.Chemistry.Solutions.Components;
-using Content.Shared.Chemistry.Solutions.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
@@ -14,7 +12,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Chemistry.Containers.EntitySystems;
+namespace Content.Shared.Chemistry.EntitySystems;
 
 public partial record struct Foo();
 

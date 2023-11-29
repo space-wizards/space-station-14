@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Text.Json.Serialization;
-using Content.Shared.Chemistry.Solutions;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;

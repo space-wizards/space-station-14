@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Client.Chemistry.Containers.EntitySystems;
 
