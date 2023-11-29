@@ -7,9 +7,12 @@ using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -17,6 +20,8 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+
         public const float PresetFailedCooldownIncrease = 30f;
 
         /// <summary>
@@ -254,7 +259,19 @@ namespace Content.Server.GameTicking
 
                     //todo: what if they dont breathe lol
                     //cry deeply
-                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 200);
+
+                    FixedPoint2 dealtDamage;
+                    if (TryComp<DamageableComponent>(playerEntity, out var damageableComp))
+                    {
+                        TryComp<MobThresholdsComponent>(playerEntity, out var thresholdsComponent);
+                        var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState((EntityUid) playerEntity, MobState.Dead, thresholdsComponent);
+                        dealtDamage = playerDeadThreshold - damageableComp.TotalDamage;
+                    }
+                    else
+                        dealtDamage = 200;
+
+                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), dealtDamage);
+
                     _damageable.TryChangeDamage(playerEntity, damage, true);
                 }
             }
