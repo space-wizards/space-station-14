@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -18,12 +17,11 @@ namespace Content.Server.Chemistry.ReagentEffects
                 return;
 
             // TODO see if this is correct
-            if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer, out _))
+            var solutionContainerSystem = args.EntityManager.System<SolutionContainerSystem>();
+            if (!solutionContainerSystem.TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer, out _))
                 return;
 
-            if (EntitySystem.Get<SolutionSystem>()
-                .TryAddReagent(solutionContainer, args.Reagent.ID, args.Quantity, out var accepted))
+            if (solutionContainerSystem.TryAddReagent(solutionContainer, args.Reagent.ID, args.Quantity, out var accepted))
                 args.Source?.RemoveReagent(args.Reagent.ID, accepted);
         }
 

@@ -4,7 +4,6 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -21,7 +20,6 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class SolutionSpikableSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly TriggerSystem _triggerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -61,7 +59,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
             return;
         }
 
-        if (!_solutionSystem.ForceAddSolution(targetSoln, sourceSolution))
+        if (!_solutionContainerSystem.ForceAddSolution(targetSoln, sourceSolution))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);

@@ -286,7 +286,7 @@ public sealed partial class ChemistrySystem
         }
 
         // Move units from attackSolution to targetSolution
-        var removedSolution = _solutions.SplitSolution(chemSoln, realTransferAmount);
+        var removedSolution = _solutionContainers.SplitSolution(chemSoln, realTransferAmount);
 
         _blood.TryAddToChemicals(target, removedSolution, target.Comp);
 
@@ -318,9 +318,9 @@ public sealed partial class ChemistrySystem
         // Move units from attackSolution to targetSolution
         Solution removedSolution;
         if (TryComp<StackComponent>(targetEntity, out var stack))
-            removedSolution = _solutions.SplitStackSolution(soln, realTransferAmount, stack.Count);
+            removedSolution = _solutionContainers.SplitStackSolution(soln, realTransferAmount, stack.Count);
         else
-            removedSolution = _solutions.SplitSolution(soln, realTransferAmount);
+            removedSolution = _solutionContainers.SplitSolution(soln, realTransferAmount);
 
         _reactiveSystem.DoEntityReaction(targetEntity, removedSolution, ReactionMethod.Injection);
 
@@ -382,7 +382,7 @@ public sealed partial class ChemistrySystem
         // Move units from attackSolution to targetSolution
         var removedSolution = _solutionContainers.Draw(target.Owner, targetSolution, realTransferAmount);
 
-        if (!_solutions.TryAddSolution(soln, removedSolution))
+        if (!_solutionContainers.TryAddSolution(soln, removedSolution))
         {
             return;
         }
@@ -401,15 +401,15 @@ public sealed partial class ChemistrySystem
 
         if (_solutionContainers.TryGetSolution(target.Owner, target.Comp.ChemicalSolutionName, out var chemSolution, out _))
         {
-            var chemTemp = _solutions.SplitSolution(chemSolution, drawAmount * 0.15f);
-            _solutions.TryAddSolution(injectorSolution, chemTemp);
+            var chemTemp = _solutionContainers.SplitSolution(chemSolution, drawAmount * 0.15f);
+            _solutionContainers.TryAddSolution(injectorSolution, chemTemp);
             drawAmount -= (float) chemTemp.Volume;
         }
 
         if (_solutionContainers.TryGetSolution(target.Owner, target.Comp.BloodSolutionName, out var bloodSolution, out _))
         {
-            var bloodTemp = _solutions.SplitSolution(bloodSolution, drawAmount);
-            _solutions.TryAddSolution(injectorSolution, bloodTemp);
+            var bloodTemp = _solutionContainers.SplitSolution(bloodSolution, drawAmount);
+            _solutionContainers.TryAddSolution(injectorSolution, bloodTemp);
         }
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",

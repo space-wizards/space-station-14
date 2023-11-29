@@ -7,7 +7,6 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
@@ -40,7 +39,6 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -229,7 +227,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 ("owner", uid),
                 ("amount", split.Volume)), args.User, PopupType.Medium);
 
-            _solutionSystem.TryAddSolution(targetSolution, split);
+            _solutionContainerSystem.TryAddSolution(targetSolution, split);
 
             ForceUpdateByExternalCause(uid, component);
 
@@ -300,7 +298,7 @@ public sealed class PlantHolderSystem : EntitySystem
                     // since the plant will be consumed anyway.
 
                     var fillAmount = FixedPoint2.Min(solution2.Volume, solution1.AvailableVolume);
-                    _solutionSystem.TryAddSolution(soln1, _solutionSystem.SplitSolution(soln2, fillAmount));
+                    _solutionContainerSystem.TryAddSolution(soln1, _solutionContainerSystem.SplitSolution(soln2, fillAmount));
 
                     ForceUpdateByExternalCause(uid, component);
                 }
@@ -826,7 +824,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (solution.Volume > 0 && component.MutationLevel < 25)
         {
             var amt = FixedPoint2.New(1);
-            foreach (var entry in _solutionSystem.RemoveEachReagent(soln, amt))
+            foreach (var entry in _solutionContainerSystem.RemoveEachReagent(soln, amt))
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
                 reagentProto.ReactionPlant(uid, entry, solution);

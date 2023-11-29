@@ -36,7 +36,6 @@ namespace Content.IntegrationTests.Tests.Chemistry
             var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
             var solutionContainerSystem = entityManager.System<SolutionContainerSystem>();
-            var solutionSystem = server.System<SolutionSystem>();
 
             foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
@@ -55,20 +54,20 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
 #pragma warning disable NUnit2045
-                        Assert.That(solutionSystem
+                        Assert.That(solutionContainerSystem
                             .TryAddReagent(solutionEnt, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
 #pragma warning restore NUnit2045
                     }
 
-                    solutionSystem.SetTemperature(solutionEnt, reactionPrototype.MinimumTemperature);
+                    solutionContainerSystem.SetTemperature(solutionEnt, reactionPrototype.MinimumTemperature);
 
                     if (reactionPrototype.MixingCategories != null)
                     {
                         var dummyEntity = entityManager.SpawnEntity(null, MapCoordinates.Nullspace);
                         var mixerComponent = entityManager.AddComponent<ReactionMixerComponent>(dummyEntity);
                         mixerComponent.ReactionTypes = reactionPrototype.MixingCategories;
-                        solutionSystem.UpdateChemicals(solutionEnt, true, mixerComponent);
+                        solutionContainerSystem.UpdateChemicals(solutionEnt, true, mixerComponent);
                     }
                 });
 

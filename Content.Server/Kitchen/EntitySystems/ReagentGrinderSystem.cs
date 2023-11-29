@@ -5,7 +5,6 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -28,7 +27,6 @@ namespace Content.Server.Kitchen.EntitySystems
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainersSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionsSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
@@ -110,7 +108,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         QueueDel(item);
                     }
 
-                    _solutionsSystem.TryAddSolution(containerSoln, solution);
+                    _solutionContainersSystem.TryAddSolution(containerSoln, solution);
                 }
 
                 _userInterfaceSystem.TrySendUiMessage(uid, ReagentGrinderUiKey.Key,

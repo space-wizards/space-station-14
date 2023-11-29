@@ -2,7 +2,6 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Extinguisher;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -16,7 +15,6 @@ namespace Content.Server.Extinguisher;
 public sealed class FireExtinguisherSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -86,7 +84,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
         if (transfer > 0)
         {
             var drained = _solutionContainerSystem.Drain(target, targetSoln, transfer);
-            _solutionSystem.TryAddSolution(containerSoln, drained);
+            _solutionContainerSystem.TryAddSolution(containerSoln, drained);
 
             _audio.PlayPvs(component.RefillSound, uid);
             _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-after-interact-refilled-message", ("owner", uid)),

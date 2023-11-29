@@ -4,7 +4,6 @@ using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -25,7 +24,6 @@ public sealed class DrainSystem : SharedDrainSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -85,10 +83,10 @@ public sealed class DrainSystem : SharedDrainSystem
 
         // Try to transfer as much solution as possible to the drain
 
-        var transferSolution = _solutionSystem.SplitSolution(containerSoln,
+        var transferSolution = _solutionContainerSystem.SplitSolution(containerSoln,
             FixedPoint2.Min(containerSolution.Volume, drainSolution.AvailableVolume));
 
-        _solutionSystem.TryAddSolution(drainSoln, transferSolution);
+        _solutionContainerSystem.TryAddSolution(drainSoln, transferSolution);
 
         _audioSystem.PlayPvs(drain.ManualDrainSound, target);
         _ambientSoundSystem.SetAmbience(target, true);
@@ -143,7 +141,7 @@ public sealed class DrainSystem : SharedDrainSystem
             }
 
             // Remove a bit from the buffer
-            _solutionSystem.SplitSolution(drainSoln, (drain.UnitsDestroyedPerSecond * drain.DrainFrequency));
+            _solutionContainerSystem.SplitSolution(drainSoln, (drain.UnitsDestroyedPerSecond * drain.DrainFrequency));
 
             // This will ensure that UnitsPerSecond is per second...
             var amount = drain.UnitsPerSecond * drain.DrainFrequency;
@@ -187,10 +185,10 @@ public sealed class DrainSystem : SharedDrainSystem
                 // the drain component's units per second adjusted for # of puddles
                 // the puddle's remaining volume (making it cleanly zero)
                 // the drain's remaining volume in its buffer.
-                var transferSolution = _solutionSystem.SplitSolution(puddleSoln,
+                var transferSolution = _solutionContainerSystem.SplitSolution(puddleSoln,
                     FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
 
-                _solutionSystem.TryAddSolution(drainSoln, transferSolution);
+                _solutionContainerSystem.TryAddSolution(drainSoln, transferSolution);
 
                 if (puddleSolution.Volume <= 0)
                 {
@@ -262,7 +260,7 @@ public sealed class DrainSystem : SharedDrainSystem
         }
 
 
-        _solutionSystem.RemoveAllSolution(drainSolution);
+        _solutionContainerSystem.RemoveAllSolution(drainSolution);
         _audioSystem.PlayPvs(component.UnclogSound, args.Target.Value);
         _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value);
     }

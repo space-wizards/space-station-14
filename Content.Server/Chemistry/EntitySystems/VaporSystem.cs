@@ -4,7 +4,6 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
@@ -28,7 +27,6 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly ReactiveSystem _reactive = default!;
 
@@ -92,7 +90,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            return _solutionSystem.TryAddSolution(vaporSolution, solution);
+            return _solutionContainerSystem.TryAddSolution(vaporSolution, solution);
         }
 
         public override void Update(float frameTime)
@@ -135,7 +133,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         reaction = reagentQuantity.Quantity;
                     }
 
-                    _solutionSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
+                    _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
                 }
             }
 

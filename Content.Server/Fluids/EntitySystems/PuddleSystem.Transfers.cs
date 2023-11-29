@@ -30,13 +30,13 @@ public sealed partial class PuddleSystem
             bool success = true;
             if (dump.Unlimited)
             {
-                var split = _solutionSystem.SplitSolution(soln, solution.Volume);
+                var split = _solutionContainerSystem.SplitSolution(soln, solution.Volume);
                 dumpableSolution.AddSolution(split, _prototypeManager);
             }
             else
             {
-                var split = _solutionSystem.SplitSolution(soln, dumpableSolution.AvailableVolume);
-                success = _solutionSystem.TryAddSolution(dumpableSoln, split);
+                var split = _solutionContainerSystem.SplitSolution(soln, dumpableSolution.AvailableVolume);
+                success = _solutionContainerSystem.TryAddSolution(dumpableSoln, split);
             }
 
             if (success)
@@ -57,9 +57,9 @@ public sealed partial class PuddleSystem
             if (!_solutionContainerSystem.TryGetDrainableSolution((args.Target, drainable, null), out var drainableSolution, out _))
                 return;
 
-            var split = _solutionSystem.SplitSolution(drainableSolution, solution.AvailableVolume);
+            var split = _solutionContainerSystem.SplitSolution(drainableSolution, solution.AvailableVolume);
 
-            if (_solutionSystem.TryAddSolution(soln, split))
+            if (_solutionContainerSystem.TryAddSolution(soln, split))
             {
                 _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, uid);
             }

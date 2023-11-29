@@ -8,7 +8,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
@@ -44,7 +43,6 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private EntityQuery<SmokeComponent> _smokeQuery;
@@ -331,7 +329,7 @@ public sealed class SmokeSystem : EntitySystem
             return;
 
         var addSolution = solution.SplitSolution(FixedPoint2.Min(solution.Volume, solutionArea.AvailableVolume));
-        _solutionSystem.TryAddSolution(solnArea, addSolution);
+        _solutionContainerSystem.TryAddSolution(solnArea, addSolution);
 
         UpdateVisuals(uid);
     }

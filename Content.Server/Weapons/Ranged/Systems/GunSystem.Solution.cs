@@ -13,7 +13,6 @@ namespace Content.Server.Weapons.Ranged.Systems;
 public sealed partial class GunSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SolutionSystem _solution = default!;
 
     protected override void InitializeSolution()
     {
@@ -63,7 +62,7 @@ public sealed partial class GunSystem
         if (!_solutionContainer.TryGetSolution(uid, component.SolutionId, out var solution, out _))
             return (ent, shootable);
 
-        var newSolution = _solution.SplitSolution(solution, component.FireCost);
+        var newSolution = _solutionContainer.SplitSolution(solution, component.FireCost);
 
         if (newSolution.Volume <= FixedPoint2.Zero)
             return (ent, shootable);
@@ -77,7 +76,7 @@ public sealed partial class GunSystem
         // Add the solution to the vapor and actually send the thing
         if (_solutionContainer.TryGetSolution(ent, VaporComponent.SolutionName, out var vaporSolution, out _))
         {
-            _solution.TryAddSolution(vaporSolution, newSolution);
+            _solutionContainer.TryAddSolution(vaporSolution, newSolution);
         }
         return (ent, shootable);
     }

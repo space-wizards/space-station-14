@@ -1,7 +1,6 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using System.Linq;
@@ -58,7 +57,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var quantity = FixedPoint2.New(quantityFloat);
-            _entManager.System<SolutionSystem>().SetCapacity(solution, quantity);
+            solutionContainerSystem.SetCapacity(solution, quantity);
         }
     }
 }

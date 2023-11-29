@@ -4,7 +4,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -23,7 +22,6 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
         private EntityQuery<OrganComponent> _organQuery;
         private EntityQuery<SolutionContainerComponent> _solutionQuery;
@@ -208,7 +206,7 @@ namespace Content.Server.Body.Systems
                 }
             }
 
-            _solutionSystem.UpdateChemicals(soln);
+            _solutionContainerSystem.UpdateChemicals(soln);
         }
     }
 

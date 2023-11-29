@@ -1,7 +1,6 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -15,7 +14,6 @@ namespace Content.Server.Nutrition.EntitySystems
     public sealed class SliceableFoodSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -59,7 +57,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var sliceUid = Spawn(component.Slice, transform.Coordinates);
 
-            var lostSolution = _solutionSystem.SplitSolution(soln, solution.Volume / FixedPoint2.New(component.Count));
+            var lostSolution = _solutionContainerSystem.SplitSolution(soln, solution.Volume / FixedPoint2.New(component.Count));
 
             // Fill new slice
             FillSlice(sliceUid, lostSolution);
@@ -136,10 +134,10 @@ namespace Content.Server.Nutrition.EntitySystems
             if (TryComp<FoodComponent>(sliceUid, out var sliceFoodComp) &&
                 _solutionContainerSystem.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
             {
-                _solutionSystem.RemoveAllSolution(itsSoln);
+                _solutionContainerSystem.RemoveAllSolution(itsSoln);
 
                 var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
-                _solutionSystem.TryAddSolution(itsSoln, lostSolutionPart);
+                _solutionContainerSystem.TryAddSolution(itsSoln, lostSolutionPart);
             }
         }
 

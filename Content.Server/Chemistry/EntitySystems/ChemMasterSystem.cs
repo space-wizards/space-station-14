@@ -8,7 +8,6 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
@@ -35,7 +34,6 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
@@ -143,12 +141,12 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 amount = FixedPoint2.Min(amount, containerSolution.AvailableVolume);
                 amount = bufferSolution.RemoveReagent(id, amount);
-                _solutionSystem.TryAddReagent(containerSoln, id, amount, out var _);
+                _solutionContainerSystem.TryAddReagent(containerSoln, id, amount, out var _);
             }
             else // Container to buffer
             {
                 amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
-                _solutionSystem.RemoveReagent(containerSoln, id, amount);
+                _solutionContainerSystem.RemoveReagent(containerSoln, id, amount);
                 bufferSolution.AddReagent(id, amount);
             }
 
@@ -170,7 +168,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 if (container is not null &&
                     _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, out _))
                 {
-                    _solutionSystem.RemoveReagent(containerSolution, id, amount);
+                    _solutionContainerSystem.RemoveReagent(containerSolution, id, amount);
                 }
                 else
                     return;
@@ -214,7 +212,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 _labelSystem.Label(item, message.Label);
 
                 var itemSolution = _solutionContainerSystem.EnsureSolutionEntity(item, SharedChemMaster.PillSolutionName, message.Dosage, out _);
-                _solutionSystem.TryAddSolution(itemSolution, withdrawal.SplitSolution(message.Dosage));
+                _solutionContainerSystem.TryAddSolution(itemSolution, withdrawal.SplitSolution(message.Dosage));
 
                 var pill = EnsureComp<PillComponent>(item);
                 pill.PillType = chemMaster.Comp.PillType;
@@ -260,7 +258,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             _labelSystem.Label(container, message.Label);
-            _solutionSystem.TryAddSolution(soln, withdrawal);
+            _solutionContainerSystem.TryAddSolution(soln, withdrawal);
 
             if (user.HasValue)
             {

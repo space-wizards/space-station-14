@@ -3,7 +3,6 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
@@ -11,7 +10,6 @@ namespace Content.Server.Body.Systems
     public sealed class StomachSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
 
@@ -65,10 +63,10 @@ namespace Content.Server.Body.Systems
                     stomach.ReagentDeltas.Remove(item);
                 }
 
-                _solutionSystem.UpdateChemicals(stomachSoln);
+                _solutionContainerSystem.UpdateChemicals(stomachSoln);
 
                 // Transfer everything to the body solution!
-                _solutionSystem.TryAddSolution(bodySolution, transferSolution);
+                _solutionContainerSystem.TryAddSolution(bodySolution, transferSolution);
             }
         }
 
@@ -115,7 +113,7 @@ namespace Content.Server.Body.Systems
                 || !CanTransferSolution(uid, solution, solutions))
                 return false;
 
-            _solutionSystem.TryAddSolution(stomachSolution, solution);
+            _solutionContainerSystem.TryAddSolution(stomachSolution, solution);
             // Add each reagent to ReagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {

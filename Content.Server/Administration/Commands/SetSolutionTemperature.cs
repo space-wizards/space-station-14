@@ -1,7 +1,6 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Console;
 using System.Linq;
 
@@ -56,7 +55,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            _entManager.System<SolutionSystem>().SetTemperature(solution, quantity);
+            solutionContainerSystem.SetTemperature(solution, quantity);
         }
     }
 }

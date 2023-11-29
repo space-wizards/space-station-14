@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Payload.Components;
@@ -18,7 +17,6 @@ public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
@@ -160,14 +158,14 @@ public sealed class PayloadSystem : EntitySystem
             $"Chemical bomb payload {ToPrettyString(uid):payload} at {Transform(uid).MapPosition:location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
 
         solutionA.MaxVolume += solutionB.MaxVolume;
-        _solutionSystem.TryAddSolution(solnA, solutionB);
-        _solutionSystem.RemoveAllSolution(solnB);
+        _solutionContainerSystem.TryAddSolution(solnA, solutionB);
+        _solutionContainerSystem.RemoveAllSolution(solnB);
 
         // The grenade might be a dud. Redistribute solution:
-        var tmpSol = _solutionSystem.SplitSolution(solnA, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
-        _solutionSystem.TryAddSolution(solnB, tmpSol);
+        var tmpSol = _solutionContainerSystem.SplitSolution(solnA, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
+        _solutionContainerSystem.TryAddSolution(solnB, tmpSol);
         solutionA.MaxVolume -= solutionB.MaxVolume;
-        _solutionSystem.UpdateChemicals(solnA);
+        _solutionContainerSystem.UpdateChemicals(solnA);
 
         args.Handled = true;
     }

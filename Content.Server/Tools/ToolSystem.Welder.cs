@@ -101,7 +101,7 @@ namespace Content.Server.Tools
                 return false;
             }
 
-            _solutionSystem.RemoveReagent(soln, welder.FuelReagent, welder.FuelLitCost);
+            _solutionContainerSystem.RemoveReagent(soln, welder.FuelReagent, welder.FuelLitCost);
 
             welder.Lit = true;
 
@@ -251,7 +251,7 @@ namespace Content.Server.Tools
                 if (trans > 0)
                 {
                     var drained = _solutionContainerSystem.Drain(target, targetSoln, trans);
-                    _solutionSystem.TryAddSolution(soln, drained);
+                    _solutionContainerSystem.TryAddSolution(soln, drained);
                     _audioSystem.PlayPvs(welder.WelderRefill, uid);
                     _popupSystem.PopupEntity(Loc.GetString("welder-component-after-interact-refueled-message"), uid, args.User);
                 }
@@ -310,7 +310,7 @@ namespace Content.Server.Tools
                 if (!_solutionContainerSystem.TryGetSolution((tool, solutionContainer), welder.FuelSolution, out var soln, out var solution))
                     continue;
 
-                _solutionSystem.RemoveReagent(soln, welder.FuelReagent, welder.FuelConsumption * _welderTimer);
+                _solutionContainerSystem.RemoveReagent(soln, welder.FuelReagent, welder.FuelConsumption * _welderTimer);
 
                 if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
                     TryTurnWelderOff(tool, null, welder);

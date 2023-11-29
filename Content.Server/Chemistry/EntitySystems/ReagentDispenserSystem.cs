@@ -28,7 +28,6 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -127,7 +126,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
-            if (_solutionSystem.TryAddReagent(solution, message.ReagentId, (int) reagentDispenser.Comp.DispenseAmount, out var dispensedAmount)
+            if (_solutionContainerSystem.TryAddReagent(solution, message.ReagentId, (int) reagentDispenser.Comp.DispenseAmount, out var dispensedAmount)
                 && message.Session.AttachedEntity is not null)
             {
                 _adminLogger.Add(LogType.ChemicalReaction, LogImpact.Medium,
@@ -144,7 +143,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
 
-            _solutionSystem.RemoveAllSolution(solution);
+            _solutionContainerSystem.RemoveAllSolution(solution);
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser);
         }

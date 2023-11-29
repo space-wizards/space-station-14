@@ -92,7 +92,7 @@ public sealed partial class PuddleSystem
                 continue;
             }
 
-            var splitSolution = _solutionSystem.SplitSolution(soln, totalSplit / hitCount);
+            var splitSolution = _solutionContainerSystem.SplitSolution(soln, totalSplit / hitCount);
 
             _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(uid):entity} onto {ToPrettyString(hit):target}");
             _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
@@ -176,7 +176,7 @@ public sealed partial class PuddleSystem
         {
             verb.Act = () =>
             {
-                var puddleSolution = _solutionSystem.SplitSolution(soln, solution.Volume);
+                var puddleSolution = _solutionContainerSystem.SplitSolution(soln, solution.Volume);
                 TrySpillAt(Transform(args.Target).Coordinates, puddleSolution, out _);
             };
         }
@@ -207,7 +207,7 @@ public sealed partial class PuddleSystem
         if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var soln, out var solution) || solution.Volume == 0)
             return;
 
-        var puddleSolution = _solutionSystem.SplitSolution(soln, solution.Volume);
+        var puddleSolution = _solutionContainerSystem.SplitSolution(soln, solution.Volume);
         TrySpillAt(Transform(uid).Coordinates, puddleSolution, out _);
         args.Handled = true;
     }

@@ -5,7 +5,6 @@ using Content.Server.Fluids.Components;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -24,18 +23,12 @@ using Content.Shared.Popups;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Maps;
-using Content.Shared.Effects;
 using Robust.Server.Audio;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -59,7 +52,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SlowContactsSystem _slowContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
@@ -141,7 +133,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
                 var split = overflow.SplitSolution(remaining);
 
-                if (!_solutionSystem.TryAddSolution(neighborSoln, split))
+                if (!_solutionContainerSystem.TryAddSolution(neighborSoln, split))
                     continue;
 
                 args.Updates--;
@@ -197,7 +189,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
                 var split = overflow.SplitSolution(spillPerNeighbor);
 
-                if (!_solutionSystem.TryAddSolution(neighborSoln, split))
+                if (!_solutionContainerSystem.TryAddSolution(neighborSoln, split))
                     continue;
 
                 EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
@@ -211,7 +203,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         // Add the remainder back
         if (_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var puddleSolution, out _))
         {
-            _solutionSystem.TryAddSolution(puddleSolution, overflow);
+            _solutionContainerSystem.TryAddSolution(puddleSolution, overflow);
         }
     }
 
@@ -234,7 +226,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             args.Slipped, args.Slipped, PopupType.SmallCaution);
 
         // Take 15% of the puddle solution
-        var splitSol = _solutionSystem.SplitSolution(soln, solution.Volume * 0.15f);
+        var splitSol = _solutionContainerSystem.SplitSolution(soln, solution.Volume * 0.15f);
         _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
     }
 
@@ -432,7 +424,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         solution.AddSolution(addedSolution, _prototypeManager);
-        _solutionSystem.UpdateChemicals(soln);
+        _solutionContainerSystem.UpdateChemicals(soln);
 
         if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
         {
@@ -482,7 +474,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // TODO: This is going to fail with struct solutions.
         var remaining = puddle.OverflowVolume;
-        var split = _solutionSystem.SplitSolution(solution, CurrentVolume(uid, puddle) - remaining);
+        var split = _solutionContainerSystem.SplitSolution(solution, CurrentVolume(uid, puddle) - remaining);
         return split;
     }
 

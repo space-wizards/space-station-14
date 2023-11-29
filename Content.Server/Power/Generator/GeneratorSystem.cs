@@ -5,7 +5,6 @@ using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
@@ -23,7 +22,6 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SolutionSystem _solution = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
 
@@ -72,7 +70,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var soln, out var solution))
             return;
 
-        var spillSolution = _solution.SplitSolution(soln, solution.Volume);
+        var spillSolution = _solutionContainer.SplitSolution(soln, solution.Volume);
         _puddle.TrySpillAt(uid, spillSolution, out _);
     }
 
@@ -103,7 +101,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             component.Multiplier * FixedPoint2.Epsilon.Float(),
             availableReagent);
 
-        _solution.RemoveReagent(soln, component.Reagent, FixedPoint2.FromCents(toRemove));
+        _solutionContainer.RemoveReagent(soln, component.Reagent, FixedPoint2.FromCents(toRemove));
     }
 
     private void ChemicalGetFuel(

@@ -166,7 +166,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
             foreach (var (name, prototype) in prototypes)
             {
                 var solution = EnsureSolutionEntity(uid, name, prototype.MaxVolume, out _);
-                SolutionSystem.AddSolution(solution, prototype);
+                AddSolution(solution, prototype);
             }
         }
 

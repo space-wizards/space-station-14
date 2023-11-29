@@ -53,7 +53,6 @@ public sealed class SolutionSystemTests
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var containerSystem = entityManager.System<SolutionContainerSystem>();
-        var solutionSystem = entityManager.System<SolutionSystem>();
         var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
@@ -72,7 +71,7 @@ public sealed class SolutionSystemTests
                 .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
             solution.AddSolution(originalWater, protoMan);
-            Assert.That(solutionSystem
+            Assert.That(containerSystem
                 .TryAddSolution(solutionEnt, oilAdded));
 
             var water = solution.GetTotalPrototypeQuantity("Water");
@@ -100,7 +99,6 @@ public sealed class SolutionSystemTests
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var containerSystem = entityManager.System<SolutionContainerSystem>();
-        var solutionSystem = entityManager.System<SolutionSystem>();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -118,7 +116,7 @@ public sealed class SolutionSystemTests
                 .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
             solution.AddSolution(originalWater, protoMan);
-            Assert.That(solutionSystem
+            Assert.That(containerSystem
                 .TryAddSolution(solutionEnt, oilAdded), Is.False);
 
             var water = solution.GetTotalPrototypeQuantity("Water");
@@ -145,7 +143,6 @@ public sealed class SolutionSystemTests
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var testMap = await pair.CreateTestMap();
         var containerSystem = entityManager.System<SolutionContainerSystem>();
-        var solutionSystem = entityManager.System<SolutionSystem>();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -165,7 +162,7 @@ public sealed class SolutionSystemTests
                 .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
             solution.AddSolution(originalWater, protoMan);
-            Assert.That(solutionSystem
+            Assert.That(containerSystem
                 .TryMixAndOverflow(solutionEnt, oilAdded, threshold, out var overflowingSolution));
 
             Assert.Multiple(() =>
@@ -199,7 +196,6 @@ public sealed class SolutionSystemTests
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var containerSystem = entityManager.System<SolutionContainerSystem>();
-        var solutionSystem = entityManager.System<SolutionSystem>();
         var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
@@ -220,7 +216,7 @@ public sealed class SolutionSystemTests
                 .TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
 
             solution.AddSolution(originalWater, protoMan);
-            Assert.That(solutionSystem
+            Assert.That(containerSystem
                 .TryMixAndOverflow(solutionEnt, oilAdded, threshold, out _),
                 Is.False);
         });

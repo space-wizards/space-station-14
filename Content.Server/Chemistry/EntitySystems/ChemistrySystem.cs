@@ -5,10 +5,8 @@ using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Shared.CombatMode;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Systems;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -26,7 +24,6 @@ public sealed partial class ChemistrySystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainers = default!;
-    [Dependency] private readonly SolutionSystem _solutions = default!;
 
     public override void Initialize()
     {

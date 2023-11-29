@@ -1,7 +1,6 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Weapons.Ranged.Events;
 using System.Linq;
 
@@ -10,7 +9,6 @@ namespace Content.Server.Weapons.Ranged.Systems
     public sealed class ChemicalAmmoSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
         public override void Initialize()
         {
@@ -41,11 +39,11 @@ namespace Content.Server.Weapons.Ranged.Systems
 
             foreach (var (_, projectileSolution) in projectileSolutionContainers)
             {
-                var solutionToTransfer = _solutionSystem.SplitSolution(ammoSoln, solutionPerProjectile);
-                _solutionSystem.TryAddSolution(projectileSolution, solutionToTransfer);
+                var solutionToTransfer = _solutionContainerSystem.SplitSolution(ammoSoln, solutionPerProjectile);
+                _solutionContainerSystem.TryAddSolution(projectileSolution, solutionToTransfer);
             }
 
-            _solutionSystem.RemoveAllSolution(ammoSoln);
+            _solutionContainerSystem.RemoveAllSolution(ammoSoln);
         }
     }
 }

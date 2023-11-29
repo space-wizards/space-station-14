@@ -27,7 +27,6 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly SolutionSystem _solutionSystem = default!;
 
     public override void Initialize()
     {
@@ -142,7 +141,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         // Remove the non-water reagents.
         // Remove water on target
         // Then do the transfer.
-        var nonWater = _solutionSystem.SplitSolutionWithout(absorberSoln, component.PickupAmount, PuddleSystem.EvaporationReagents);
+        var nonWater = _solutionContainerSystem.SplitSolutionWithout(absorberSoln, component.PickupAmount, PuddleSystem.EvaporationReagents);
         var absorberSolution = absorberSoln.Comp.Solution;
 
         if (nonWater.Volume == FixedPoint2.Zero && absorberSolution.AvailableVolume == FixedPoint2.Zero)
@@ -156,7 +155,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             absorberSolution.AvailableVolume;
 
         var water = refillableSolution.SplitSolutionWithOnly(transferAmount, PuddleSystem.EvaporationReagents);
-        _solutionSystem.UpdateChemicals(refillableSoln);
+        _solutionContainerSystem.UpdateChemicals(refillableSoln);
 
         if (water.Volume == FixedPoint2.Zero && nonWater.Volume == FixedPoint2.Zero)
         {
@@ -164,7 +163,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return false;
         }
 
-        if (water.Volume > 0 && !_solutionSystem.TryAddSolution(absorberSoln, water))
+        if (water.Volume > 0 && !_solutionContainerSystem.TryAddSolution(absorberSoln, water))
         {
             _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", used)), used, user);
         }
@@ -172,7 +171,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         // Attempt to transfer the full nonWater solution to the bucket.
         if (nonWater.Volume > 0)
         {
-            bool fullTransferSuccess = _solutionSystem.TryAddSolution(refillableSoln, nonWater);
+            bool fullTransferSuccess = _solutionContainerSystem.TryAddSolution(refillableSoln, nonWater);
 
             // If full transfer was unsuccessful, try a partial transfer.
             if (!fullTransferSuccess)
@@ -180,20 +179,20 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
                 var partiallyTransferSolution = nonWater.SplitSolution(refillableSolution.AvailableVolume);
 
                 // Try to transfer the split solution to the bucket.
-                if (_solutionSystem.TryAddSolution(refillableSoln, partiallyTransferSolution))
+                if (_solutionContainerSystem.TryAddSolution(refillableSoln, partiallyTransferSolution))
                 {
                     // The transfer was successful. nonWater now contains the amount that wasn't transferred.
                     // If there's any leftover nonWater solution, add it back to the mop.
                     if (nonWater.Volume > 0)
                     {
-                        _solutionSystem.AddSolution(absorberSoln, nonWater);
+                        _solutionContainerSystem.AddSolution(absorberSoln, nonWater);
                     }
                 }
                 else
                 {
                     // If the transfer was unsuccessful, combine both solutions and return them to the mop.
                     nonWater.AddSolution(partiallyTransferSolution, _prototype);
-                    _solutionSystem.AddSolution(absorberSoln, nonWater);
+                    _solutionContainerSystem.AddSolution(absorberSoln, nonWater);
                 }
             }
         }
@@ -249,8 +248,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             _puddleSystem.DoTileReactions(mapGrid.GetTileRef(coordinates), absorberSplit);
         }
 
-        _solutionSystem.AddSolution(puddleSoln, absorberSplit);
-        _solutionSystem.AddSolution(absorberSoln, puddleSplit);
+        _solutionContainerSystem.AddSolution(puddleSoln, absorberSplit);
+        _solutionContainerSystem.AddSolution(absorberSoln, puddleSplit);
 
         _audio.PlayPvs(absorber.PickupSound, target);
         _useDelay.BeginDelay(used);

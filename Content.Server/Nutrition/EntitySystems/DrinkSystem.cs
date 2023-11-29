@@ -53,7 +53,6 @@ public sealed class DrinkSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SolutionSystem _solution = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
 
     public override void Initialize()
@@ -191,7 +190,7 @@ public sealed class DrinkSystem : EntitySystem
             // using SetOpen instead of TryOpen to not play 2 sounds
             _openable.SetOpen(uid, true, openable);
 
-            var solution = _solution.SplitSolution(soln, interactions.Volume);
+            var solution = _solutionContainer.SplitSolution(soln, interactions.Volume);
             _puddle.TrySpillAt(uid, solution, out _);
 
             _audio.PlayPvs(comp.BurstSound, uid);
@@ -323,7 +322,7 @@ public sealed class DrinkSystem : EntitySystem
             return;
 
         var transferAmount = FixedPoint2.Min(component.TransferAmount, solution.Volume);
-        var drained = _solution.SplitSolution(soln, transferAmount);
+        var drained = _solutionContainer.SplitSolution(soln, transferAmount);
         var forceDrink = args.User != args.Target;
 
         args.Handled = true;
@@ -357,7 +356,7 @@ public sealed class DrinkSystem : EntitySystem
                 _puddle.TrySpillAt(args.Target.Value, drained, out _);
             }
             else
-                _solution.TryAddSolution(soln, drained);
+                _solutionContainer.TryAddSolution(soln, drained);
 
             return;
         }

@@ -1,6 +1,5 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -38,7 +37,6 @@ public sealed partial class CleanTileReaction : ITileReaction
         var entities = entMan.System<EntityLookupSystem>().GetEntitiesIntersecting(tile, 0f).ToArray();
         var puddleQuery = entMan.GetEntityQuery<PuddleComponent>();
         var solutionContainerSystem = entMan.System<SolutionContainerSystem>();
-        var solutionSystem = entMan.System<SolutionSystem>();
         // Multiply as the amount we can actually purge is higher than the react amount.
         var purgeAmount = reactVolume / CleanAmountMultiplier;
 
@@ -50,12 +48,11 @@ public sealed partial class CleanTileReaction : ITileReaction
                 continue;
             }
 
-            var purgeable =
-                solutionSystem.SplitSolutionWithout(puddleSolution, purgeAmount, ReplacementReagent, reagent.ID);
+            var purgeable = solutionContainerSystem.SplitSolutionWithout(puddleSolution, purgeAmount, ReplacementReagent, reagent.ID);
 
             purgeAmount -= purgeable.Volume;
 
-            solutionSystem.TryAddSolution(puddleSolution, new Solution(ReplacementReagent, purgeable.Volume));
+            solutionContainerSystem.TryAddSolution(puddleSolution, new Solution(ReplacementReagent, purgeable.Volume));
 
             if (purgeable.Volume <= FixedPoint2.Zero)
                 break;

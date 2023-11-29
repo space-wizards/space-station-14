@@ -1,7 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.NPC.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -18,7 +17,6 @@ public sealed partial class MedibotInjectOperator : HTNOperator
     private SharedInteractionSystem _interaction = default!;
     private SharedPopupSystem _popup = default!;
     private SolutionContainerSystem _solutionContainer = default!;
-    private SolutionSystem _solution = default!;
 
     /// <summary>
     /// Target entity to inject.
@@ -34,7 +32,6 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         _interaction = sysManager.GetEntitySystem<SharedInteractionSystem>();
         _popup = sysManager.GetEntitySystem<SharedPopupSystem>();
         _solutionContainer = sysManager.GetEntitySystem<SolutionContainerSystem>();
-        _solution = sysManager.GetEntitySystem<SolutionSystem>();
     }
 
     public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
@@ -72,7 +69,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         if (total >= MedibotComponent.EmergencyMedDamageThreshold)
         {
             _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
-            _solution.TryAddReagent(injectable, botComp.EmergencyMed, botComp.EmergencyMedAmount, out var accepted);
+            _solutionContainer.TryAddReagent(injectable, botComp.EmergencyMed, botComp.EmergencyMedAmount, out var accepted);
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             _audio.PlayPvs(botComp.InjectSound, target);
             _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit);
@@ -82,7 +79,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         if (total >= MedibotComponent.StandardMedDamageThreshold && total <= MedibotComponent.StandardMedDamageThresholdStop)
         {
             _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
-            _solution.TryAddReagent(injectable, botComp.StandardMed, botComp.StandardMedAmount, out var accepted);
+            _solutionContainer.TryAddReagent(injectable, botComp.StandardMed, botComp.StandardMedAmount, out var accepted);
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             _audio.PlayPvs(botComp.InjectSound, target);
             _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit);

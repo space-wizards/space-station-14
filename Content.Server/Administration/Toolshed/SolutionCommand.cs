@@ -1,7 +1,6 @@
 ﻿using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Toolshed;
@@ -15,7 +14,6 @@ namespace Content.Server.Administration.Toolshed;
 public sealed class SolutionCommand : ToolshedCommand
 {
     private SolutionContainerSystem? _solutionContainer;
-    private SolutionSystem? _solution;
 
     [CommandImplementation("get")]
     public SolutionRef? Get(
@@ -50,16 +48,16 @@ public sealed class SolutionCommand : ToolshedCommand
             [CommandArgument] ValueRef<FixedPoint2> amountRef
         )
     {
-        _solution ??= GetSys<SolutionSystem>();
+        _solutionContainer ??= GetSys<SolutionContainerSystem>();
 
         var amount = amountRef.Evaluate(ctx);
         if (amount > 0)
         {
-            _solution.TryAddReagent(input.Solution, name.Value.ID, amount, out _);
+            _solutionContainer.TryAddReagent(input.Solution, name.Value.ID, amount, out _);
         }
         else if (amount < 0)
         {
-            _solution.RemoveReagent(input.Solution, name.Value.ID, -amount);
+            _solutionContainer.RemoveReagent(input.Solution, name.Value.ID, -amount);
         }
 
         return input;

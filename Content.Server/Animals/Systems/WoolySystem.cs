@@ -1,6 +1,5 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Timing;
@@ -16,7 +15,6 @@ public sealed class WoolySystem : EntitySystem
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SolutionSystem _solution = default!;
 
     public override void Initialize()
     {
@@ -45,7 +43,7 @@ public sealed class WoolySystem : EntitySystem
             if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution, out _))
                 continue;
 
-            _solution.TryAddReagent(solution, comp.ReagentId, comp.Quantity, out _);
+            _solutionContainer.TryAddReagent(solution, comp.ReagentId, comp.Quantity, out _);
         }
     }
 

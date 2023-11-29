@@ -88,7 +88,7 @@ namespace Content.Server.Nutrition.EntitySystems
             foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((contents, reagents)))
             {
                 var reagentSolution = soln.Comp.Solution;
-                _solutionSystem.TryAddSolution(pipeSolution, reagentSolution);
+                _solutionContainerSystem.TryAddSolution(pipeSolution, reagentSolution);
             }
 
             EntityManager.DeleteEntity(contents);

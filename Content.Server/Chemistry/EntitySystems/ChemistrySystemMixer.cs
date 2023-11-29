@@ -29,7 +29,7 @@ public sealed partial class ChemistrySystem
 
         _popup.PopupEntity(Loc.GetString(component.MixMessage, ("mixed", Identity.Entity(args.Target.Value, EntityManager)), ("mixer", Identity.Entity(uid, EntityManager))), args.User, args.User);
 
-        _solutions.UpdateChemicals(solution, true, component);
+        _solutionContainers.UpdateChemicals(solution, true, component);
 
         var afterMixingEvent = new AfterMixingEvent(uid, args.Target.Value);
         RaiseLocalEvent(uid, afterMixingEvent);

@@ -2,7 +2,6 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Events;
@@ -15,7 +14,6 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainersSystem = default!;
-        [Dependency] private readonly SolutionSystem _solutionsSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
@@ -48,7 +46,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
-            var solRemoved = _solutionsSystem.SplitSolution(solution, component.TransferAmount);
+            var solRemoved = _solutionContainersSystem.SplitSolution(solution, component.TransferAmount);
             var solRemovedVol = solRemoved.Volume;
 
             var solToInject = solRemoved.SplitSolution(solRemovedVol * component.TransferEfficiency);
