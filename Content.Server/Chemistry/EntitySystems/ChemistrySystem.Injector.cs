@@ -342,11 +342,8 @@ public sealed partial class ChemistrySystem
         }
 
         // Leave some DNA from the injectee on it
-        if (TryComp<DnaComponent>(target, out var dna))
-        {
-            var comp = EnsureComp<ForensicsComponent>(injector);
-            comp.DNAs.Add(dna.DNA);
-        }
+        var ev = new TransferDnaEvent { Donor = target, Recipient = injector };
+        RaiseLocalEvent(target, ref ev);
     }
 
     private void AfterDraw(InjectorComponent component, EntityUid injector, EntityUid target)
@@ -359,11 +356,8 @@ public sealed partial class ChemistrySystem
         }
 
         // Leave some DNA from the drawee on it
-        if (TryComp<DnaComponent>(target, out var dna))
-        {
-            var comp = EnsureComp<ForensicsComponent>(injector);
-            comp.DNAs.Add(dna.DNA);
-        }
+        var ev = new TransferDnaEvent { Donor = target, Recipient = injector };
+        RaiseLocalEvent(target, ref ev);
     }
 
     private void TryDraw(InjectorComponent component, EntityUid injector, EntityUid targetEntity, Solution targetSolution, EntityUid user, BloodstreamComponent? stream = null)

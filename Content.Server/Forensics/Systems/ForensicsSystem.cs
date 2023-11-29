@@ -27,6 +27,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
+            SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -144,5 +145,28 @@ namespace Content.Server.Forensics
             if (TryComp<FingerprintComponent>(user, out var fingerprint))
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
         }
+
+        private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
+        {
+            var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
+            recipientComp.DNAs.Add(component.DNA);
+        }
+    }
+
+    /// <summary>
+    /// An event to apply DNA evidence from a donor onto some recipient.
+    /// </summary>
+    [ByRefEvent]
+    public record struct TransferDnaEvent()
+    {
+        /// <summary>
+        /// The entity donating the DNA.
+        /// </summary>
+        public EntityUid Donor;
+
+        /// <summary>
+        /// The entity receiving the DNA.
+        /// </summary>
+        public EntityUid Recipient;
     }
 }
