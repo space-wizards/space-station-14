@@ -38,7 +38,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IParallelManager _parallel = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;

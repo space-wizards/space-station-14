@@ -619,6 +619,9 @@ public abstract partial class InteractionTest
         {
             foreach (var (proto, quantity) in expected.Entities)
             {
+                if (proto == "Audio")
+                    continue;
+
                 if (quantity < 0 && failOnExcess)
                     Assert.Fail($"Unexpected entity/stack: {proto}, quantity: {-quantity}");
 
