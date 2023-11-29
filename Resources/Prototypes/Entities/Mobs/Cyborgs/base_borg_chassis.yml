@@ -193,6 +193,9 @@
     - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
   - type: Emoting
+  - type: GuideHelp
+    guides:
+      - Cyborgs
 
 - type: entity
   id: BaseBorgChassisNT
@@ -208,5 +211,6 @@
     - AllAccess
   - type: Lock
     locked: true
+  - type: ActivatableUIRequiresLock
   - type: AccessReader
     access: [["Command"], ["Research"]]
