@@ -277,7 +277,7 @@ public sealed class StorageContainer : BaseWindow
 
         var itemShape = _itemSystem.GetAdjustedItemShape(
             (_storageController.CurrentlyDragging!.Entity, null),
-            _storageController.DraggingGhost.Location.Rotation,
+            _storageController.DraggingRotation,
             origin.Value);
         var itemBounding = SharedStorageSystem.GetBoundingBox(itemShape);
 

@@ -37,6 +37,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     private HotbarGui? Hotbar => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
 
     public ItemGridPiece? DraggingGhost;
+    public Angle DraggingRotation = Angle.Zero;
     public bool StaticStorageUIEnabled;
 
     public bool IsDragging => _menuDragHelper.IsDragging;
@@ -170,7 +171,10 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
               binding.Mod3 == Keyboard.Key.Control))
             return;
 
-        DraggingGhost?.Location.Rotate(Angle.FromDegrees(90));
+        //clamp it to a cardinal.
+        DraggingRotation = (DraggingRotation + Math.PI / 2f).GetCardinalDir().ToAngle();
+        if (DraggingGhost != null)
+            DraggingGhost.Location.Rotation = DraggingRotation;
         keyEvent.Handle();
     }
 
@@ -246,7 +250,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                 _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
                     _entity.GetNetEntity(draggingGhost.Entity),
                     _entity.GetNetEntity(storageEnt),
-                    new ItemStorageLocation(draggingGhost.Location.Rotation, position.Value)));
+                    new ItemStorageLocation(DraggingRotation, position.Value)));
                 _container?.BuildItemPieces();
             }
             else //if we just clicked, then take it out of the bag.
@@ -265,6 +269,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (_menuDragHelper.Dragged is not { } dragged)
             return false;
 
+        DraggingRotation = dragged.Location.Rotation;
         DraggingGhost = new ItemGridPiece((dragged.Entity, _entity.GetComponent<ItemComponent>(dragged.Entity)),
             dragged.Location,
             _entity);
@@ -290,7 +295,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (DraggingGhost == null)
             return;
 
-        var offset = DraggingGhost.GetCenterOffset((DraggingGhost.Entity, null), DraggingGhost.Location);
+        var offset = DraggingGhost.GetCenterOffset(
+            (DraggingGhost.Entity, null),
+            new ItemStorageLocation(DraggingRotation, Vector2i.Zero));
 
         // I don't know why it divides the position by 2. Hope this helps! -emo
         LayoutContainer.SetPosition(DraggingGhost, UIManager.MousePositionScaled.Position / 2 - offset);
@@ -302,6 +309,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             return;
         DraggingGhost.Visible = false;
         DraggingGhost = null;
+        DraggingRotation = Angle.Zero;
     }
 
     public override void FrameUpdate(FrameEventArgs args)
