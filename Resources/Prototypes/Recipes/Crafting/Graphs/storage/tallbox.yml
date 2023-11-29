@@ -1,0 +1,27 @@
+- type: constructionGraph
+  id: ClosetSteel
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 4
+        doAfter: 5
+  - node: done
+    entity: ClosetSteelBase
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
