@@ -68,6 +68,9 @@
   - type: Food
     solution: soap
   - type: BadFood
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-green
 
 
 - type: entity
@@ -91,6 +94,9 @@
         reagents:
         - ReagentId: SoapReagent
           Quantity: 100
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-grey
 
 - type: entity
   name: soap
@@ -106,6 +112,9 @@
     fillBaseName: deluxe-
   - type: Item
     heldPrefix: deluxe
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-brown
 
 - type: entity
   name: soap
@@ -128,6 +137,9 @@
     flavors:
       - clean
       - punishment
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-red
 
 - type: entity
   name: soap
@@ -150,6 +162,9 @@
     flavors:
       - clean
       - meaty
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-red
 
 - type: entity
   name: omega soap
@@ -175,3 +190,6 @@
         reagents:
         - ReagentId: SoapReagent
           Quantity: 240
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-blue

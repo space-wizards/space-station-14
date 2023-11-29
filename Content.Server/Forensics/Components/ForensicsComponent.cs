@@ -12,11 +12,14 @@ namespace Content.Server.Forensics
         [DataField("dnas")]
         public HashSet<string> DNAs = new();
 
+        [DataField("residues")]
+        public HashSet<string> Residues = new();
+
         /// <summary>
         /// How long it takes to wipe the prints/blood/etc. off of this entity
         /// </summary>
         [DataField("cleanDelay")]
-        public float CleanDelay = 8.0f;
+        public float CleanDelay = 12.0f;
 
         /// <summary>
         /// Can the DNA be cleaned off of this entity?

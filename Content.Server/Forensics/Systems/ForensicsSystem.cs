@@ -56,7 +56,8 @@ namespace Content.Server.Forensics
 
         private void OnMeleeHit(EntityUid uid, ForensicsComponent component, MeleeHitEvent args)
         {
-            if((args.BaseDamage.DamageDict.TryGetValue("Slash", out var slashDamage) && slashDamage.Value > 0) ||
+            if((args.BaseDamage.DamageDict.TryGetValue("Blunt", out var bluntDamage) && bluntDamage.Value > 0) ||
+                (args.BaseDamage.DamageDict.TryGetValue("Slash", out var slashDamage) && slashDamage.Value > 0) ||
                 (args.BaseDamage.DamageDict.TryGetValue("Piercing", out var pierceDamage) && pierceDamage.Value > 0))
             {
                 foreach(EntityUid hitEntity in args.HitEntities)
@@ -100,6 +101,13 @@ namespace Content.Server.Forensics
 
             if (component.CanDnaBeCleaned)
                 component.DNAs = new();
+
+            // leave behind evidence it was cleaned
+            if (TryComp<FiberComponent>(args.Used, out var fiber))
+                component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+
+            if (TryComp<ResidueComponent>(args.Used, out var residue))
+                component.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
         }
 
         private string GenerateFingerprint()

@@ -29,6 +29,12 @@ namespace Content.Server.Forensics
         public List<string> DNAs = new();
 
         /// <summary>
+        /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public List<string> Residues = new();
+
+        /// <summary>
         /// What is the name of the entity that was scanned last?
         /// </summary>
         /// <remarks>
