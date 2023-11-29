@@ -16,7 +16,6 @@
         ///     Does this entity need hands to be able to pull something?
         /// </summary>
         [DataField("needsHands")]
-        [Access(Other = AccessPermissions.ReadWriteExecute)]
-        public bool NeedsHands = true;
+        public bool NeedsHands { get; set; } = true;
     }
 }
