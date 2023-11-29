@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -58,7 +59,10 @@ public sealed partial class GameTicker
     public EntityUid AddGameRule(string ruleId)
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
-        _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
+
+        var logMessage = $"Added game rule {ToPrettyString(ruleEntity)}";
+        _sawmill.Info(logMessage);
+        _adminLogger.Add(LogType.GameRule, LogImpact.Medium, $"{logMessage}");
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -101,7 +105,9 @@ public sealed partial class GameTicker
             return false;
 
         _allPreviousGameRules.Add((RoundDuration(), id));
-        _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
+        string logMessage = $"Started game rule {ToPrettyString(ruleEntity)}";
+        _sawmill.Info(logMessage);
+        _adminLogger.Add(LogType.GameRule, LogImpact.Medium, $"{logMessage}");
 
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
         ruleData.ActivatedAt = _gameTiming.CurTime;
@@ -130,7 +136,9 @@ public sealed partial class GameTicker
         RemComp<ActiveGameRuleComponent>(ruleEntity);
         EnsureComp<EndedGameRuleComponent>(ruleEntity);
 
-        _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
+        var logMessage = $"Ended game rule {ToPrettyString(ruleEntity)}";
+        _sawmill.Info(logMessage);
+        _adminLogger.Add(LogType.GameRule, LogImpact.Medium, $"{logMessage}");
 
         var ev = new GameRuleEndedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
