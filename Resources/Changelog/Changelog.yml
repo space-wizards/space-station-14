@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Spears now have a non-blunt melee sound, type: Fix}
-  id: 4723
-  time: '2023-09-01T03:08:02.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Animal parts & organs now have sprites. They aren''t, like, accurate,
       but it''s better than being invisible', type: Fix}
   id: 4724
@@ -2902,3 +2897,8 @@ Entries:
     type: Fix}
   id: 5222
   time: '2023-11-28T23:19:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed artifact spam on roundend due to the ensuing lag., type: Remove}
+  id: 5223
+  time: '2023-11-29T03:39:16.0000000+00:00'
