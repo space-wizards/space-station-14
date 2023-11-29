@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Animal parts & organs now have sprites. They aren''t, like, accurate,
-      but it''s better than being invisible', type: Fix}
-  id: 4724
-  time: '2023-09-01T03:09:22.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: 'Added two new types of speech verbs, mumbling and stuttering. Add the
@@ -2902,3 +2896,11 @@ Entries:
   - {message: Removed artifact spam on roundend due to the ensuing lag., type: Remove}
   id: 5223
   time: '2023-11-29T03:39:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix doppler effect on shuttles by also setting player's velocity in
+      the audio API., type: Fix}
+  - {message: Fix left-right ear weirdness caused by floating-point imprecision on
+      audio positioning., type: Fix}
+  id: 5224
+  time: '2023-11-29T05:44:45.0000000+00:00'
