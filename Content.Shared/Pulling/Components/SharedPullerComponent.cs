@@ -16,6 +16,6 @@
         ///     Does this entity need hands to be able to pull something?
         /// </summary>
         [DataField("needsHands")]
-        public bool NeedsHands { get; set; } = true;
+        public bool NeedsHands = true;
     }
 }

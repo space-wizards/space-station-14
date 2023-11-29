@@ -210,5 +210,24 @@ namespace Content.Shared.Pulling
                 RaiseLocalEvent(pullable.Owner, new PullableMoveMessage(), true);
             }
         }
+
+        /// <summary>
+        /// Changes if the entity needs a hand in order to be able to pull objects.
+        /// </summary>
+        public void ChangeHandRequirement(EntityUid uid, bool needsHands, SharedPullerComponent? comp)
+        {
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            comp.NeedsHands = needsHands;
+        }
+
+        /// <summary>
+        /// Changes if the entity that has this component needs a hand in order to be able to pull objects.
+        /// </summary>
+        public void ChangeHandRequirement(SharedPullerComponent comp, bool needsHands)
+        {
+            comp.NeedsHands = needsHands;
+        }
     }
 }
