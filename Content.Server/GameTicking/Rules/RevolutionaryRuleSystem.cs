@@ -7,6 +7,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
+using Content.Server.Objectives;
 using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
@@ -42,6 +43,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -101,24 +103,19 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var index = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
             ev.AddLine(Loc.GetString(Outcomes[index]));
 
-            ev.AddLine(Loc.GetString("head-rev-initial-count", ("initialCount", headrev.HeadRevs.Count)));
-            foreach (var player in headrev.HeadRevs)
+            ev.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", headrev.HeadRevs.Count)));
+            foreach (var player in headrev.HeadRevs.Values)
             {
-                _mind.TryGetSession(player.Value, out var session);
-                var username = session?.Name;
-                if (username != null)
-                {
-                    ev.AddLine(Loc.GetString("head-rev-initial-name-user",
-                    ("name", player.Key),
-                    ("username", username)));
-                }
-                else
-                {
-                    ev.AddLine(Loc.GetString("head-rev-initial-name",
-                    ("name", player.Key)));
-                }
+                var title = _objectives.GetTitle(player);
+                if (title == null)
+                    continue;
+
+                // TODO: when role entities are a thing this has to change
+                var count = CompOrNull<RevolutionaryRoleComponent>(player)?.ConvertedCount ?? 0;
+                ev.AddLine(Loc.GetString("rev-headrev-player", ("title", title), ("count", count)));
+
+                // TODO: someone suggested listing all alive? revs maybe implement at some point
             }
-            break;
         }
     }
 
@@ -208,6 +205,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (ev.User != null)
         {
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
+
+            if (_mind.TryGetRole<RevolutionaryRoleComponent>(ev.User.Value, out var headrev))
+                headrev.ConvertedCount++;
         }
 
         if (mindId == default || !_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
