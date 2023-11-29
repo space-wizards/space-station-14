@@ -129,12 +129,22 @@
   - UplinkExplosives
 
 - type: listing
-  id: UplinkExplosiveGrenadeFlash
-  name: uplink-flash-grenade-name
-  description: uplink-flash-grenade-desc
-  productEntity: GrenadeFlashBang
+  id: UplinkFlashKit
+  name: uplink-flash-kit-name
+  description: uplink-flash-kit-desc
+  productEntity: FlashKit
   cost:
-    Telecrystal: 1
+    Telecrystal: 4 # keeping this cheap for now, nerf it if turns out too strong
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkBombKit
+  name: uplink-bomb-kit-name
+  description: uplink-bomb-kit-desc
+  productEntity: BombKit
+  cost:
+    Telecrystal: 10 # keeping this cheap for now, nerf it if turns out too strong
   categories:
   - UplinkExplosives
 
@@ -143,16 +153,6 @@
   name: uplink-mini-bomb-name
   description: uplink-mini-bomb-desc
   productEntity: SyndieMiniBomb
-  cost:
-    Telecrystal: 6
-  categories:
-    - UplinkExplosives
-
-- type: listing
-  id: UplinkSupermatterGrenade
-  name: uplink-supermatter-grenade-name
-  description: uplink-supermatter-grenade-desc
-  productEntity: SupermatterGrenade
   cost:
     Telecrystal: 6
   categories:

@@ -10,3 +10,43 @@
           amount: 3
         - id: EmpImplanter
           amount: 1
+
+- type: entity
+  parent: BoxCardboard
+  id: FlashKit
+  name: flash kit
+  suffix: Filled
+  components:
+    - type: Storage
+      maxTotalWeight: 12
+    - type: StorageFill
+      contents:
+        - id: GrenadeFlashBang
+          amount: 2
+        - id: Flash
+          amount: 2
+        - id: ClothingEyesGlassesSunglasses
+          amount: 1
+        - id: ClusterBang
+          amount: 1
+    - type: Sprite
+      layers:
+        - state: box_of_doom
+        - state: flashkit
+
+- type: entity
+  parent: BoxCardboard
+  id: BombKit
+  name: specialized explosive kit
+  suffix: Filled
+  components:
+    - type: StorageFill
+      contents:
+        - id: SupermatterGrenade
+          amount: 1
+        - id: WhiteholeGrenade
+          amount: 2
+    - type: Sprite
+      layers:
+        - state: box_of_doom
+        - state: bombkit

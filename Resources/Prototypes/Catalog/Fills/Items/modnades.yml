@@ -1,0 +1,89 @@
+# PAYLOAD FILLS
+
+- type: entity
+  parent: Beaker
+  id: BasePayloadReactantA
+  abstract: true
+    #this is probably not useful at all but w/e
+- type: entity
+  parent: Beaker
+  id: BasePayloadReactantB
+  abstract: true
+
+###
+
+- type: entity
+  parent: BasePayloadReactantA
+  id: SmokePayloadReactantA
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+         maxvol: 50
+         reagents:
+         - ReagentId: Phosphorous
+           Quantity: 25
+         - ReagentId: Potassium
+           Quantity: 25
+
+- type: entity
+  parent: BasePayloadReactantB
+  id: SmokePayloadReactantB
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxvol: 25
+          reagents:
+          - ReagentId: Sugar
+            Quantity: 25
+
+# PAYLOADS
+- type: entity
+  parent: ChemicalPayload
+  id: BasePayloadFilled
+  abstract: true
+  components:
+   - type: ContainerFill
+     containers:
+        BeakerSlotA: [ BasePayloadReactantA ]
+        BeakerSlotB: [ BasePayloadReactantB ]
+
+###
+
+- type: entity
+  parent: BasePayloadFilled
+  id: SmokePayloadFilled
+  components:
+   - type: ContainerFill
+     containers:
+        BeakerSlotA: [ SmokePayloadReactantA ]
+        BeakerSlotB: [ SmokePayloadReactantB ]
+
+# MODNADES
+
+- type: entity
+  parent: ModularGrenade
+  id: BaseModnadeFilled
+  abstract: true
+  components:
+    - type: ContainerFill
+      containers:
+        payload: [ BasePayloadFilled ]
+        payloadTrigger: [ TimerTrigger ]
+    - type: Construction
+      graph: ModularGrenadeGraph
+      node: grenade
+
+###
+
+- type: entity
+  parent: BaseModnadeFilled
+  id: SmokeGrenade
+  name: Smoke Grenade
+  description: Your all around usual smoke grenade, you can almost hear "dust" and "two" for some reason...
+  components:
+  - type: ContainerFill
+    containers:
+      payload: [ SmokePayloadFilled ]
+      payloadTrigger: [ TimerTrigger ]

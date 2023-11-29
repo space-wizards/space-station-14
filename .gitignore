@@ -306,3 +306,43 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+
+# CUSTOM GREP STUFF, IF THIS IS IN A PR THEN KILL IT WITH FIRE
+Content.Docfx/
+Content.IntegrationTests/
+Content.MapRenderer/
+Content.Packaging/
+Content.PatreonParser/
+Content.Replay/
+Content.Server.Database/
+Content.Shared.Database/
+Content.Tests/
+Content.Tools/
+Content.YAMLLinter/
+Pow3r/
+.git/
+.github/
+.run/
+.vscode/
+bin/
+BuildChecker/
+BuildFiles/
+Content.Benchmarks/
+Content.Docfx/
+Tools/
+SpaceStation14.sln
+SpaceStation14.sln.DotSettings
+shell.nix
+omnisharp.json
+nuget.config
+flake.nix
+flake.lock
+bors.toml
+.envrc
+SECURITY.md
+LICENSE.txt
+RUN_THIS.py
+runclient.bat
+runserver.bat
+Resources/Changelog
+Resources/Maps

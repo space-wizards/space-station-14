@@ -30,8 +30,11 @@ uplink-gloves-north-star-desc = A pair of gloves that reduce your punching coold
 uplink-explosive-grenade-name = Explosive Grenade
 uplink-explosive-grenade-desc = A simplistic grenade with a ten-second fuse that is geared towards injuring personnel. Causes minimal hull damage.
 
-uplink-flash-grenade-name = Flashbang
-uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
+uplink-flash-kit-name = Flash Kit
+uplink-flash-kit-desc = The flash kit includes 2 flashbangs, 2 flashes, a pair of sunglasses for safety, and a clusterflash. Praise the (localized) sun!
+
+uplink-bomb-kit-name = Bomb Kit
+uplink-bomb-kit-desc = The bomb kit includes a supermatter grenade, which is a minibomb that pulls things towards itself, 2 whitehole grenades, a lube modular grenade, and an iron foam grenade.
 
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a five-second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
