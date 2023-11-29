@@ -34,7 +34,7 @@ uplink-flash-kit-name = Flash Kit
 uplink-flash-kit-desc = The flash kit includes 2 flashbangs, 2 flashes, a pair of sunglasses for safety, and a clusterflash. Praise the (localized) sun!
 
 uplink-bomb-kit-name = Bomb Kit
-uplink-bomb-kit-desc = The bomb kit includes a supermatter grenade, which is a minibomb that pulls things towards itself, 2 whitehole grenades, a lube modular grenade, and an iron foam grenade.
+uplink-bomb-kit-desc = The bomb kit includes a supermatter grenade, which is a minibomb that pulls things towards itself, 2 whitehole grenades, a lube modular grenade, a smoke modular grenade, and an iron foam modular grenade.
 
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a five-second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.

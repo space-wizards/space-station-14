@@ -27,7 +27,7 @@
           amount: 2
         - id: ClothingEyesGlassesSunglasses
           amount: 1
-        - id: ClusterBang
+        - id: ClusterBangFull
           amount: 1
     - type: Sprite
       layers:
@@ -40,12 +40,21 @@
   name: specialized explosive kit
   suffix: Filled
   components:
+    - type: Storage
+      maxTotalWeight: 12
     - type: StorageFill
       contents:
         - id: SupermatterGrenade
           amount: 1
         - id: WhiteholeGrenade
           amount: 2
+        - id: SmokeGrenade
+          amount: 1
+        - id: IronFoamGrenade
+          amount: 1
+        - id: LubeFoamGrenade
+          amount: 1
+
     - type: Sprite
       layers:
         - state: box_of_doom

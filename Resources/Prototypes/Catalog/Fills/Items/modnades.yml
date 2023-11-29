@@ -20,12 +20,12 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxvol: 50
+        maxvol: 100
         reagents:
         - ReagentId: Phosphorus
-          Quantity: 25
+          Quantity: 50
         - ReagentId: Potassium
-          Quantity: 25
+          Quantity: 50
 
 - type: entity
   parent: BasePayloadReactantB
@@ -35,10 +35,71 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxvol: 25
+        maxvol: 50
         reagents:
         - ReagentId: Sugar
-          Quantity: 25
+          Quantity: 50
+
+###
+
+- type: entity
+  parent: BasePayloadReactantA
+  id: IronFoamPayloadReactantA
+  name: iron foam payload reactant a
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxvol: 60
+        reagents:
+        - ReagentId: FluorosulfuricAcid
+          Quantity: 30
+        - ReagentId: FoamingAgent
+          Quantity: 30
+
+- type: entity
+  parent: BasePayloadReactantB
+  id: IronFoamPayloadReactantB
+  name: iron foam payload reactant b
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxvol: 90
+        reagents:
+        - ReagentId: Iron
+          Quantity: 90
+
+###
+
+- type: entity
+  parent: BasePayloadReactantA
+  id: LubeFoamPayloadReactantA
+  name: lube foam payload reactant a
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxvol: 100
+        reagents:
+        - ReagentId: Water
+          Quantity: 50
+        - ReagentId: Fluorosurfactant
+          Quantity: 50
+
+- type: entity
+  parent: BasePayloadReactantB
+  id: LubeFoamPayloadReactantB
+  name: lube foam payload reactant b
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxvol: 50
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 50
+
 
 # PAYLOADS
 - type: entity
@@ -63,6 +124,31 @@
         BeakerSlotA: [ SmokePayloadReactantA ]
         BeakerSlotB: [ SmokePayloadReactantB ]
 
+###
+
+- type: entity
+  parent: BasePayloadFilled
+  id: IronFoamPayloadFilled
+  name: iron foam payload
+  components:
+   - type: ContainerFill
+     containers:
+        BeakerSlotA: [ IronFoamPayloadReactantA ]
+        BeakerSlotB: [ IronFoamPayloadReactantB ]
+
+###
+
+- type: entity
+  parent: BasePayloadFilled
+  id: LubeFoamPayloadFilled
+  name: Lube foam payload
+  components:
+   - type: ContainerFill
+     containers:
+        BeakerSlotA: [ LubeFoamPayloadReactantA ]
+        BeakerSlotB: [ LubeFoamPayloadReactantB ]
+
+
 # MODNADES
 
 - type: entity
@@ -74,6 +160,10 @@
       containers:
         payload: [ BasePayloadFilled ]
         payloadTrigger: [ TimerTrigger ]
+    - type: ContainerContainer
+      containers:
+        payload: !type:Container
+        payloadTrigger: !type:Container
     - type: Construction
       graph: ModularGrenadeGraph
       node: grenade
@@ -90,7 +180,29 @@
     containers:
       payload: [ SmokePayloadFilled ]
       payloadTrigger: [ TimerTrigger ]
-  - type: ContainerContainer
+
+###
+
+- type: entity
+  parent: BaseModnadeFilled
+  id: IronFoamGrenade
+  name: iron foam grenade
+  description: Spews foam which hardens after some time.
+  components:
+  - type: ContainerFill
     containers:
-      payload: !type:Container
-      payloadTrigger: !type:Container
+      payload: [ IronFoamPayloadFilled ]
+      payloadTrigger: [ TimerTrigger ]
+###
+
+- type: entity
+  parent: BaseModnadeFilled
+  id: LubeFoamGrenade
+  name: lube foam grenade
+  description: Spews extremely slippery foam.
+  components:
+  - type: ContainerFill
+    containers:
+      payload: [ LubeFoamPayloadFilled ]
+      payloadTrigger: [ TimerTrigger ]
+
