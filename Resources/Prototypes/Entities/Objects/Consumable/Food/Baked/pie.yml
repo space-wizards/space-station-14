@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_baked_whole.yml & food_baked_single.yml
 # Base
 
 - type: entity
@@ -70,9 +71,9 @@
     slice: FoodPieAppleSlice
   - type: Tag
     tags:
-    - Fruit 
-    - Pie 
-  
+    - Fruit
+    - Pie
+
 - type: entity
   name: slice of apple pie
   parent: FoodPieSliceBase
@@ -89,7 +90,7 @@
       color: orange
   - type: Tag
     tags:
-    - Fruit 
+    - Fruit
     - Pie
 # Tastes like pie, apple.
 
@@ -157,8 +158,24 @@
           path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: Tag
     tags:
-    - Fruit 
+    - Fruit
     - Pie
+  - type: SliceableFood
+    slice: FoodPieBananaCreamSlice
+
+- type: entity
+  name: slice of banana cream pie
+  parent: FoodPieSliceBase
+  id: FoodPieBananaCreamSlice
+  description: Just like back home, on clown planet! HONK!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - banana
+      - creamy
+  - type: Sprite
+    state: bananapie-slice
 # Tastes like pie, cream, banana.
 
 - type: entity
@@ -180,7 +197,7 @@
     slice: FoodPieClafoutisSlice
   - type: Tag
     tags:
-    - Fruit 
+    - Fruit
     - Pie
 
 - type: entity
@@ -199,7 +216,7 @@
       color: pink
   - type: Tag
     tags:
-    - Fruit 
+    - Fruit
     - Pie
 # Tastes like pie, blackberries.
 
@@ -220,7 +237,7 @@
     slice: FoodPieCherrySlice
   - type: Tag
     tags:
-    - Fruit 
+    - Fruit
     - Pie
 
 - type: entity
@@ -238,7 +255,7 @@
       color: red
   - type: Tag
     tags:
-    - Fruit 
+    - Fruit
     - Pie
 # Tastes like pie, cherries.
 
@@ -352,6 +369,37 @@
       color: blue
 # Tastes like pie, mint.
 
+- type: entity
+  name: mime tart
+  parent: FoodPieBase
+  id: FoodTartMime
+  description: "\"      \""
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nothing
+  - type: Sprite
+    state: mime
+  - type: Item
+    heldPrefix: mime
+  - type: SliceableFood
+    slice: FoodTartMimeSlice
+
+- type: entity
+  name: slice of mime tart
+  parent: FoodPieSliceBase
+  id: FoodTartMimeSlice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nothing
+  - type: Sprite
+    layers:
+    - state: mimetart-slice
+  - type: Item
+    heldPrefix: mime
+# Tastes like nothing.
+
 # No Slice
 
 - type: entity
@@ -406,22 +454,9 @@
     state: grape
   - type: Tag
     tags:
-    - Fruit 
+    - Fruit
     - Pie
 # Tastes like tart, grape.
-
-- type: entity
-  name: mime tart
-  parent: FoodPieBase
-  id: FoodTartMime
-  description: "\"      \""
-  components:
-  - type: FlavorProfile
-    flavors:
-      - nothing
-  - type: Sprite
-    state: mime
-# Tastes like nothing.
 
 - type: entity
   name: golden apple streusel tart
@@ -436,7 +471,7 @@
     state: gapple
   - type: Tag
     tags:
-    - Fruit 
+    - Fruit
     - Pie
 # Tastes like tart, apple, expensive metal.
 

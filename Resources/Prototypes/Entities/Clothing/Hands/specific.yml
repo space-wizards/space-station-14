@@ -21,3 +21,12 @@
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+ 
+- type: entity
+  parent: ClothingHandsChameleon
+  id: ClothingHandsChameleonThief
+  suffix: Chameleon, Thieving
+  components:
+  - type: Thieving
+    stripTimeReduction: 2
+    stealthy: true

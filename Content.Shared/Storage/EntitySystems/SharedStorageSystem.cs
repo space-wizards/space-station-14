@@ -4,7 +4,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
@@ -17,23 +17,27 @@ using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedStorageSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private   readonly SharedInteractionSystem _sharedInteractionSystem = default!;
     [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
@@ -45,6 +49,9 @@ public abstract class SharedStorageSystem : EntitySystem
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<StackComponent> _stackQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+
+    [ValidatePrototypeId<ItemSizePrototype>]
+    public const string DefaultStorageMaxItemSize = "Normal";
 
     /// <inheritdoc />
     public override void Initialize()
@@ -64,9 +71,11 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
         SubscribeLocalEvent<StorageComponent, StorageComponent.StorageInsertItemMessage>(OnInsertItemMessage);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
+        SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
-        SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnStorageItemInserted);
-        SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
+        SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+        SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnContainerModified);
+        SubscribeLocalEvent<StorageComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
 
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
 
@@ -75,30 +84,11 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
     {
-        // ReSharper disable once StringLiteralTypo
-        storageComp.Container = _containerSystem.EnsureContainer<Container>(uid, "storagebase");
-        UpdateStorage(uid, storageComp);
+        storageComp.Container = _containerSystem.EnsureContainer<Container>(uid, StorageComponent.ContainerId);
+        UpdateAppearance((uid, storageComp, null));
     }
 
-    /// <summary>
-    /// Updates the storage UI, visualizer, etc.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    private void UpdateStorage(EntityUid uid, StorageComponent component)
-    {
-        // TODO: I had this.
-        // We can get states being applied before the container is ready.
-        if (component.Container == default)
-            return;
-
-        RecalculateStorageUsed(uid, component);
-        UpdateStorageVisualization(uid, component);
-        UpdateUI(uid, component);
-        Dirty(uid, component);
-    }
-
-    public virtual void UpdateUI(EntityUid uid, StorageComponent component) {}
+    public virtual void UpdateUI(Entity<StorageComponent?> entity) {}
 
     public virtual void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false) { }
 
@@ -114,7 +104,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         // if the target is storage, add a verb to transfer storage.
         if (TryComp(args.Target, out StorageComponent? targetStorage)
-            && (!TryComp(uid, out LockComponent? targetLock) || !targetLock.Locked))
+            && (!TryComp(args.Target, out LockComponent? targetLock) || !targetLock.Locked))
         {
             UtilityVerb verb = new()
             {
@@ -135,8 +125,6 @@ public abstract class SharedStorageSystem : EntitySystem
     {
         if (args.Handled || !storageComp.ClickInsert || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
             return;
-
-        Log.Debug($"Storage (UID {uid}) attacked by user (UID {args.User}) with entity (UID {args.Used}).");
 
         if (HasComp<PlaceableSurfaceComponent>(uid))
             return;
@@ -178,7 +166,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <returns></returns>
     private void AfterInteract(EntityUid uid, StorageComponent storageComp, AfterInteractEvent args)
     {
-        if (!args.CanReach)
+        if (args.Handled || !args.CanReach)
             return;
 
         // Pick up all entities in a radius around the clicked location.
@@ -211,6 +199,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 };
 
                 _doAfterSystem.TryStartDoAfter(doAfterArgs);
+                args.Handled = true;
             }
 
             return;
@@ -229,7 +218,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 return;
             }
 
-            if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
+            if (_xformQuery.TryGetComponent(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
             {
                 var parent = transformOwner.ParentUid;
 
@@ -239,7 +228,8 @@ public abstract class SharedStorageSystem : EntitySystem
                     _transform
                 );
 
-                if (PlayerInsertEntityInWorld(uid, args.User, target, storageComp))
+                args.Handled = true;
+                if (PlayerInsertEntityInWorld((uid, storageComp), args.User, target))
                 {
                     RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(GetNetEntity(uid),
                         new List<NetEntity> { GetNetEntity(target) },
@@ -255,6 +245,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
+        args.Handled = true;
         var successfullyInserted = new List<EntityUid>();
         var successfullyInsertedPositions = new List<EntityCoordinates>();
         var successfullyInsertedAngles = new List<Angle>();
@@ -285,7 +276,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
             var angle = targetXform.LocalRotation;
 
-            if (PlayerInsertEntityInWorld(uid, args.Args.User, entity, component))
+            if (PlayerInsertEntityInWorld((uid, component), args.Args.User, entity))
             {
                 successfullyInserted.Add(entity);
                 successfullyInsertedPositions.Add(position);
@@ -322,7 +313,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     private void OnInteractWithItem(EntityUid uid, StorageComponent storageComp, StorageInteractWithItemEvent args)
     {
-        if (args.Session.AttachedEntity is not EntityUid player)
+        if (args.Session.AttachedEntity is not { } player)
             return;
 
         var entity = GetEntity(args.InteractedItemUID);
@@ -368,55 +359,61 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!storageComp.IsUiOpen)
         {
             storageComp.IsUiOpen = true;
-            UpdateStorageVisualization(uid, storageComp);
+            UpdateAppearance((uid, storageComp, null));
         }
     }
 
-    private void OnStorageItemInserted(EntityUid uid, StorageComponent component, EntInsertedIntoContainerMessage args)
+    private void OnContainerModified(EntityUid uid, StorageComponent component, ContainerModifiedMessage args)
     {
-        UpdateStorage(uid, component);
-    }
-
-    private void OnStorageItemRemoved(EntityUid uid, StorageComponent storageComp, EntRemovedFromContainerMessage args)
-    {
-        UpdateStorage(uid, storageComp);
-    }
-
-    protected void UpdateStorageVisualization(EntityUid uid, StorageComponent storageComp)
-    {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (component.Container == null)
             return;
 
-        _appearance.SetData(uid, StorageVisuals.Open, storageComp.IsUiOpen, appearance);
-        _appearance.SetData(uid, SharedBagOpenVisuals.BagState, storageComp.IsUiOpen ? SharedBagState.Open : SharedBagState.Closed);
+        if (args.Container.ID != StorageComponent.ContainerId)
+            return;
 
-        if (HasComp<ItemCounterComponent>(uid))
-            _appearance.SetData(uid, StackVisuals.Hide, !storageComp.IsUiOpen);
+        UpdateAppearance((uid, component, null));
+        UpdateUI((uid, component));
     }
 
-    public void RecalculateStorageUsed(EntityUid uid, StorageComponent storageComp)
+    private void OnInsertAttempt(EntityUid uid, StorageComponent component, ContainerIsInsertingAttemptEvent args)
     {
-        storageComp.StorageUsed = 0;
+        if (args.Cancelled || args.Container.ID != StorageComponent.ContainerId)
+            return;
 
-        foreach (var entity in storageComp.Container.ContainedEntities)
+        if (!CanInsert(uid, args.EntityUid, out _, component, ignoreStacks: true))
+            args.Cancel();
+    }
+
+    public void UpdateAppearance(Entity<StorageComponent?, AppearanceComponent?> entity)
+    {
+        // TODO STORAGE remove appearance data and just use the data on the component.
+        var (uid, storage, appearance) = entity;
+        if (!Resolve(uid, ref storage, ref appearance, false))
+            return;
+
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (storage.Container == null)
+            return; // component hasn't yet been initialized.
+
+        int capacity;
+        int used;
+        if (storage.MaxSlots == null)
         {
-            if (!_itemQuery.TryGetComponent(entity, out var itemComp))
-                continue;
-
-            var size = itemComp.Size;
-            storageComp.StorageUsed += size;
+            used = GetCumulativeItemSizes(uid, storage);
+            capacity = storage.MaxTotalWeight;
+        }
+        else
+        {
+            capacity = storage.MaxSlots.Value;
+            used = storage.Container.ContainedEntities.Count;
         }
 
-        _appearance.SetData(uid, StorageVisuals.StorageUsed, storageComp.StorageUsed);
-        _appearance.SetData(uid, StorageVisuals.Capacity, storageComp.StorageCapacityMax);
-    }
-
-    public int GetAvailableSpace(EntityUid uid, StorageComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return 0;
-
-        return component.StorageCapacityMax - component.StorageUsed;
+        _appearance.SetData(uid, StorageVisuals.StorageUsed, used, appearance);
+        _appearance.SetData(uid, StorageVisuals.Capacity, capacity, appearance);
+        _appearance.SetData(uid, StorageVisuals.Open, storage.IsUiOpen, appearance);
+        _appearance.SetData(uid, SharedBagOpenVisuals.BagState, storage.IsUiOpen ? SharedBagState.Open : SharedBagState.Closed, appearance);
+        _appearance.SetData(uid, StackVisuals.Hide, !storage.IsUiOpen, appearance);
     }
 
     /// <summary>
@@ -449,17 +446,20 @@ public abstract class SharedStorageSystem : EntitySystem
     ///     Verifies if an entity can be stored and if it fits
     /// </summary>
     /// <param name="uid">The entity to check</param>
+    /// <param name="insertEnt"></param>
     /// <param name="reason">If returning false, the reason displayed to the player</param>
+    /// <param name="storageComp"></param>
+    /// <param name="item"></param>
     /// <returns>true if it can be inserted, false otherwise</returns>
-    public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, StorageComponent? storageComp = null)
+    public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, StorageComponent? storageComp = null, ItemComponent? item = null, bool ignoreStacks = false)
     {
-        if (!Resolve(uid, ref storageComp))
+        if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
             reason = null;
             return false;
         }
 
-        if (TryComp(insertEnt, out TransformComponent? transformComp) && transformComp.Anchored)
+        if (Transform(insertEnt).Anchored)
         {
             reason = "comp-storage-anchored-failure";
             return false;
@@ -477,15 +477,37 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (TryComp(insertEnt, out StorageComponent? storage) &&
-            storage.StorageCapacityMax >= storageComp.StorageCapacityMax)
+        if (!ignoreStacks
+            && _stackQuery.TryGetComponent(insertEnt, out var stack)
+            && HasSpaceInStacks((uid, storageComp), stack.StackTypeId))
         {
-            reason = "comp-storage-insufficient-capacity";
+            reason = null;
+            return true;
+        }
+
+        var maxSize = _item.GetSizePrototype(GetMaxItemSize((uid, storageComp)));
+        if (_item.GetSizePrototype(item.Size) > maxSize)
+        {
+            reason = "comp-storage-too-big";
             return false;
         }
 
-        if (TryComp(insertEnt, out ItemComponent? itemComp) &&
-            itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
+        if (TryComp<StorageComponent>(insertEnt, out var insertStorage)
+            && _item.GetSizePrototype(GetMaxItemSize((insertEnt, insertStorage))) >= maxSize)
+        {
+            reason = "comp-storage-too-big";
+            return false;
+        }
+
+        if (storageComp.MaxSlots != null)
+        {
+            if (storageComp.Container.ContainedEntities.Count >= storageComp.MaxSlots)
+            {
+                reason = "comp-storage-insufficient-capacity";
+                return false;
+            }
+        }
+        else if (_item.GetItemSizeWeight(item.Size) + GetCumulativeItemSizes(uid, storageComp) > storageComp.MaxTotalWeight)
         {
             reason = "comp-storage-insufficient-capacity";
             return false;
@@ -498,12 +520,37 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <summary>
     ///     Inserts into the storage container
     /// </summary>
-    /// <returns>true if the entity was inserted, false otherwise</returns>
-    public bool Insert(EntityUid uid, EntityUid insertEnt, out EntityUid? stackedEntity, EntityUid? user = null, StorageComponent? storageComp = null, bool playSound = true)
+    /// <returns>true if the entity was inserted, false otherwise. This will also return true if a stack was partially
+    /// inserted.</returns>
+    public bool Insert(
+        EntityUid uid,
+        EntityUid insertEnt,
+        out EntityUid? stackedEntity,
+        EntityUid? user = null,
+        StorageComponent? storageComp = null,
+        bool playSound = true)
+    {
+        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: storageComp, playSound: playSound);
+    }
+
+    /// <summary>
+    ///     Inserts into the storage container
+    /// </summary>
+    /// <returns>true if the entity was inserted, false otherwise. This will also return true if a stack was partially
+    /// inserted</returns>
+    public bool Insert(
+        EntityUid uid,
+        EntityUid insertEnt,
+        out EntityUid? stackedEntity,
+        out string? reason,
+        EntityUid? user = null,
+        StorageComponent? storageComp = null,
+        bool playSound = true)
     {
         stackedEntity = null;
+        reason = null;
 
-        if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp))
+        if (!Resolve(uid, ref storageComp))
             return false;
 
         /*
@@ -515,51 +562,42 @@ public abstract class SharedStorageSystem : EntitySystem
          * For now we just treat items as always being the same size regardless of stack count.
          */
 
-        // If it's stackable then prefer to stack it
-        if (_stackQuery.TryGetComponent(insertEnt, out var insertStack))
+        if (!_stackQuery.TryGetComponent(insertEnt, out var insertStack))
         {
-            var toInsertCount = insertStack.Count;
+            if (!_containerSystem.Insert(insertEnt, storageComp.Container))
+                return false;
 
-            foreach (var ent in storageComp.Container.ContainedEntities)
-            {
-                if (!_stackQuery.TryGetComponent(ent, out var containedStack) || !insertStack.StackTypeId.Equals(containedStack.StackTypeId))
-                    continue;
+            if (playSound)
+                Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user);
 
-                if (!_stack.TryAdd(insertEnt, ent, insertStack, containedStack))
-                    continue;
-
-                stackedEntity = ent;
-                var remaining = insertStack.Count;
-                toInsertCount -= toInsertCount - remaining;
-
-                if (remaining > 0)
-                    continue;
-
-                break;
-            }
-
-            // Still stackable remaining
-            if (insertStack.Count > 0)
-            {
-                // Try to insert it as a new stack.
-                if (TryComp(insertEnt, out ItemComponent? itemComp) &&
-                    itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed ||
-                    !storageComp.Container.Insert(insertEnt))
-                {
-                    // If we also didn't do any stack fills above then just end
-                    // otherwise play sound and update UI anyway.
-                    if (toInsertCount == insertStack.Count)
-                        return false;
-                }
-            }
+            return true;
         }
-        // Non-stackable but no insertion for reasons.
-        else if (!storageComp.Container.Insert(insertEnt))
+
+        var toInsertCount = insertStack.Count;
+
+        foreach (var ent in storageComp.Container.ContainedEntities)
         {
+            if (!_stackQuery.TryGetComponent(ent, out var containedStack))
+                continue;
+
+            if (!_stack.TryAdd(insertEnt, ent, insertStack, containedStack))
+                continue;
+
+            stackedEntity = ent;
+            if (insertStack.Count == 0)
+                break;
+        }
+
+        // Still stackable remaining
+        if (insertStack.Count > 0
+            && !_containerSystem.Insert(insertEnt, storageComp.Container)
+            && toInsertCount == insertStack.Count)
+        {
+            // Failed to insert anything.
             return false;
         }
 
-        if (playSound && storageComp.StorageInsertSound is not null)
+        if (playSound)
             Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user);
 
         return true;
@@ -568,7 +606,9 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <summary>
     ///     Inserts an entity into storage from the player's active hand
     /// </summary>
+    /// <param name="uid"></param>
     /// <param name="player">The player to insert an entity from</param>
+    /// <param name="storageComp"></param>
     /// <returns>true if inserted, false otherwise</returns>
     public bool PlayerInsertHeldEntity(EntityUid uid, EntityUid player, StorageComponent? storageComp = null)
     {
@@ -583,32 +623,134 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
+        if (!_sharedHandsSystem.CanDrop(player, toInsert.Value, hands))
         {
             _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop"), uid, player);
             return false;
         }
 
-        return PlayerInsertEntityInWorld(uid, player, toInsert.Value, storageComp);
+        return PlayerInsertEntityInWorld((uid, storageComp), player, toInsert.Value);
     }
 
     /// <summary>
     ///     Inserts an Entity (<paramref name="toInsert"/>) in the world into storage, informing <paramref name="player"/> if it fails.
-    ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(Robust.Shared.GameObjects.EntityUid)"/>.
+    ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(EntityUid,EntityUid,StorageComponent)"/>.
     /// </summary>
+    /// <param name="uid"></param>
     /// <param name="player">The player to insert an entity with</param>
+    /// <param name="toInsert"></param>
     /// <returns>true if inserted, false otherwise</returns>
-    public bool PlayerInsertEntityInWorld(EntityUid uid, EntityUid player, EntityUid toInsert, StorageComponent? storageComp = null)
+    public bool PlayerInsertEntityInWorld(Entity<StorageComponent?> uid, EntityUid player, EntityUid toInsert)
     {
-        if (!Resolve(uid, ref storageComp) || !_sharedInteractionSystem.InRangeUnobstructed(player, uid))
+        if (!Resolve(uid, ref uid.Comp) || !_interactionSystem.InRangeUnobstructed(player, uid))
             return false;
 
-        if (!Insert(uid, toInsert, out _, user: player, storageComp))
+        if (!Insert(uid, toInsert, out _, user: player, uid.Comp))
         {
             _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-insert"), uid, player);
             return false;
         }
         return true;
+    }
+
+    /// <summary>
+    /// Returns true if there is enough space to theoretically fit another item.
+    /// </summary>
+    public bool HasSpace(Entity<StorageComponent?> uid)
+    {
+        if (!Resolve(uid, ref uid.Comp))
+            return false;
+
+        //todo maybe this shouldn't be authoritative over weight? idk.
+        if (uid.Comp.MaxSlots != null)
+        {
+            return uid.Comp.Container.ContainedEntities.Count < uid.Comp.MaxSlots || HasSpaceInStacks(uid);
+        }
+
+        return GetCumulativeItemSizes(uid, uid.Comp) < uid.Comp.MaxTotalWeight || HasSpaceInStacks(uid);
+    }
+
+    private bool HasSpaceInStacks(Entity<StorageComponent?> uid, string? stackType = null)
+    {
+        if (!Resolve(uid, ref uid.Comp))
+            return false;
+
+        foreach (var contained in uid.Comp.Container.ContainedEntities)
+        {
+            if (!_stackQuery.TryGetComponent(contained, out var stack))
+                continue;
+
+            if (stackType != null && !stack.StackTypeId.Equals(stackType))
+                continue;
+
+            if (_stack.GetAvailableSpace(stack) == 0)
+                continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns the sum of all the ItemSizes of the items inside of a storage.
+    /// </summary>
+    public int GetCumulativeItemSizes(EntityUid uid, StorageComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return 0;
+
+        var sum = 0;
+        foreach (var item in component.Container.ContainedEntities)
+        {
+            if (!_itemQuery.TryGetComponent(item, out var itemComp))
+                continue;
+            sum += _item.GetItemSizeWeight(itemComp.Size);
+        }
+
+        return sum;
+    }
+
+    public ProtoId<ItemSizePrototype> GetMaxItemSize(Entity<StorageComponent?> uid)
+    {
+        if (!Resolve(uid, ref uid.Comp))
+            return DefaultStorageMaxItemSize;
+
+        // If we specify a max item size, use that
+        if (uid.Comp.MaxItemSize != null)
+            return uid.Comp.MaxItemSize.Value;
+
+        if (!_itemQuery.TryGetComponent(uid, out var item))
+            return DefaultStorageMaxItemSize;
+        var size = _item.GetSizePrototype(item.Size);
+
+        // if there is no max item size specified, the value used
+        // is one below the item size of the storage entity, clamped at ItemSize.Tiny
+        var sizes = _prototype.EnumeratePrototypes<ItemSizePrototype>().ToList();
+        sizes.Sort();
+        var currentSizeIndex = sizes.IndexOf(size);
+        return sizes[Math.Max(currentSizeIndex - 1, 0)].ID;
+    }
+
+    private void OnStackCountChanged(EntityUid uid, MetaDataComponent component, StackCountChangedEvent args)
+    {
+        if (_containerSystem.TryGetContainingContainer(uid, out var container, component) &&
+            container.ID == StorageComponent.ContainerId)
+        {
+            UpdateAppearance(container.Owner);
+            UpdateUI(container.Owner);
+        }
+    }
+
+    public FixedPoint2 GetStorageFillPercentage(Entity<StorageComponent?> uid)
+    {
+        if (!Resolve(uid, ref uid.Comp))
+            return 0;
+
+        var slotPercent = FixedPoint2.New(uid.Comp.Container.ContainedEntities.Count) / uid.Comp.MaxSlots ?? FixedPoint2.Zero;
+        var weightPercent = FixedPoint2.New(GetCumulativeItemSizes(uid)) / uid.Comp.MaxTotalWeight;
+
+        return FixedPoint2.Max(slotPercent, weightPercent);
     }
 
     /// <summary>

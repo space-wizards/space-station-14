@@ -1,5 +1,6 @@
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Item;
@@ -13,18 +14,17 @@ namespace Content.Shared.Item;
 [Access(typeof(SharedItemSystem))]
 public sealed partial class ItemComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("size")]
-    [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
-    public int Size = 5;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [Access(typeof(SharedItemSystem))]
+    public ProtoId<ItemSizePrototype> Size = "Small";
 
     [Access(typeof(SharedItemSystem))]
-    [DataField("inhandVisuals")]
+    [DataField]
     public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
     [Access(typeof(SharedItemSystem))]
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("heldPrefix")]
+    [DataField]
     public string? HeldPrefix;
 
     /// <summary>
@@ -39,10 +39,10 @@ public sealed partial class ItemComponent : Component
 [Serializable, NetSerializable]
 public sealed class ItemComponentState : ComponentState
 {
-    public int Size { get; }
+    public ProtoId<ItemSizePrototype> Size { get; }
     public string? HeldPrefix { get; }
 
-    public ItemComponentState(int size, string? heldPrefix)
+    public ItemComponentState(ProtoId<ItemSizePrototype> size, string? heldPrefix)
     {
         Size = size;
         HeldPrefix = heldPrefix;
@@ -64,18 +64,4 @@ public sealed class VisualsChangedEvent : EntityEventArgs
         Item = item;
         ContainerId = containerId;
     }
-}
-
-/// <summary>
-///     Reference sizes for common containers and items.
-/// </summary>
-public enum ReferenceSizes
-{
-    Wallet = 4,
-    Pocket = 12,
-    Box = 24,
-    Belt = 30,
-    Toolbox = 60,
-    Backpack = 100,
-    NoStoring = 9999
 }

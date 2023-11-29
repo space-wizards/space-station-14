@@ -10,7 +10,7 @@
       state: riot-icon
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
-      size: 100
+      size: Ginormous
       heldPrefix: riot
     - type: Blocking
       passiveBlockModifier:
@@ -222,6 +222,59 @@
                   min: 1
                   max: 2
 
+- type: entity
+  name: web shield
+  parent: BaseShield
+  id: WebShield
+  description: A stringy shield. It's weak, and doesn't seem to do well against heat.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/web-shield.rsi
+      state: icon
+    - type: Item
+      sprite: Objects/Weapons/Melee/web-shield.rsi
+      heldPrefix: icon
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.95
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+        flatReductions:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.5
+    - type: Construction
+      graph: WebObjects
+      node: shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                MaterialWebSilk:
+                  min: 1
+                  max: 1
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/woodhit.ogg
+
 #Magic/Cult Shields (give these to wizard for now)
 
 - type: entity
@@ -308,7 +361,7 @@
         path: /Audio/Weapons/ebladeon.ogg
       deActivateSound:
         path: /Audio/Weapons/ebladeoff.ogg
-      offSize: 5
+      offSize: Small
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -319,7 +372,7 @@
           shader: unshaded
           map: [ "shield" ]
     - type: Item
-      size: 5
+      size: Small
       sprite: Objects/Weapons/Melee/e_shield.rsi
       heldPrefix: eshield
     - type: UseDelay
@@ -398,7 +451,7 @@
       state: eshield-icon
     - type: Item
       sprite: Objects/Weapons/Melee/e_shield.rsi
-      size: 5
+      size: Small
       heldPrefix: eshield
 
 - type: entity
@@ -417,7 +470,7 @@
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-      offSize: 10
+      offSize: Small
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:
@@ -426,7 +479,7 @@
           visible: false
           map: [ "shield" ]
     - type: Item
-      size: 10
+      size: Small
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       heldPrefix: teleriot
     - type: UseDelay

@@ -32,6 +32,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -575,7 +576,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     private void HandleAir(EntityUid uid, DisposalUnitComponent component, TransformComponent xform)
     {
         var air = component.Air;
-        var indices = _transformSystem.GetGridOrMapTilePosition(uid, xform);
+        var indices = _transformSystem.GetGridTilePositionOrDefault((uid, xform));
 
         if (_atmosSystem.GetTileMixture(xform.GridUid, xform.MapUid, indices, true) is { Temperature: > 0f } environment)
         {

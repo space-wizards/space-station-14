@@ -11,6 +11,9 @@
       "name": "grille"
     },
     {
+      "name": "grille_diagonal"
+    },
+    {
       "name": "grille_broken"
     },
     {
