@@ -362,7 +362,7 @@ public sealed partial class ClimbSystem : VirtualController
                  continue;
 
              // If still colliding with a climbable, do not stop climbing
-             if (HasComp<ClimbableComponent>(otherFixture!.Owner))
+             if (HasComp<ClimbableComponent>(otherFixture.Owner))
                  return;
          }
 
