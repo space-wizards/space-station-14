@@ -250,7 +250,6 @@ namespace Content.IntegrationTests.Tests
 
             await pair.RunTicksSync(3);
 
-            List<string> badPrototypes = new();
             foreach (var protoId in protoIds)
             {
                 // TODO fix ninja
@@ -262,32 +261,49 @@ namespace Content.IntegrationTests.Tests
                 var clientCount = client.EntMan.EntityCount;
                 EntityUid uid = default;
                 await server.WaitPost(() => uid = server.EntMan.SpawnEntity(protoId, coords));
-                await pair.RunTicksSync(10);
+                await pair.RunTicksSync(3);
 
                 // If the entity deleted itself, check that it didn't spawn other entities
                 if (!server.EntMan.EntityExists(uid))
                 {
-                    if (server.EntMan.EntityCount != count || client.EntMan.EntityCount != clientCount)
-                        badPrototypes.Add(protoId);
+                    if (server.EntMan.EntityCount != count)
+                    {
+                        Assert.Fail($"Server prototype {protoId} failed on deleting itself");
+                    }
+
+                    if (client.EntMan.EntityCount != clientCount)
+                    {
+                        Assert.Fail($"Client prototype {protoId} failed on deleting itself");
+                    }
                     continue;
                 }
 
                 // Check that the number of entities has increased.
-                if (server.EntMan.EntityCount <= count || client.EntMan.EntityCount <= clientCount)
+                if (server.EntMan.EntityCount <= count)
                 {
-                    badPrototypes.Add(protoId);
-                    continue;
+                    Assert.Fail($"Server prototype {protoId} failed on spawning as entity count didn't increase");
+                }
+
+                if (client.EntMan.EntityCount <= clientCount)
+                {
+                    Assert.Fail($"Client prototype {protoId} failed on spawning as entity count didn't increase");
                 }
 
                 await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
-                await pair.RunTicksSync(10);
+                await pair.RunTicksSync(3);
 
                 // Check that the number of entities has gone back to the original value.
-                if (server.EntMan.EntityCount != count || client.EntMan.EntityCount != clientCount)
-                    badPrototypes.Add(protoId);
+                if (server.EntMan.EntityCount != count)
+                {
+                    Assert.Fail($"Server prototype {protoId} failed on deletion count didn't reset properly");
+                }
+
+                if (client.EntMan.EntityCount != clientCount)
+                {
+                    Assert.Fail($"Client prototype {protoId} failed on deletion count didn't reset properly");
+                }
             }
 
-            Assert.That(badPrototypes, Is.Empty);
             await pair.CleanReturnAsync();
         }
 
