@@ -21,6 +21,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     public override void Initialize()
@@ -32,23 +33,19 @@ public sealed class FireExtinguisherSystem : EntitySystem
         SubscribeLocalEvent<FireExtinguisherComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<FireExtinguisherComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<FireExtinguisherComponent, SprayAttemptEvent>(OnSprayAttempt);
-        /// <summary>
-        /// Uses Content.Shared.Actions & Content.Shared.Toggleable to use code related to the Action menu. 
-        /// This makes the component subscribe to events that will activate when the ActionToggleSafety prototype is clicked.
-        /// </summary>
         SubscribeLocalEvent<FireExtinguisherComponent, ToggleActionEvent>(OnToggleAction);
         SubscribeLocalEvent<FireExtinguisherComponent, GetItemActionsEvent>(OnGetActions);
     }
 
     private void OnFireExtinguisherInit(EntityUid uid, FireExtinguisherComponent component, ComponentInit args)
     {
+        /// <summary>
+        ///     Initially sets Toggled to True so ActionUIController.cs uses "On sprite" via "action.iconOn"
+        ///     Action Menu will set Fire Extinguisher's "On sprite" by default instead of "Off sprite".
+        /// </summary>
         if (component.HasSafety)
         {
             UpdateAppearance(uid, component);
-            /// <summary>
-            /// Initially sets Toggled to True so ActionUIController.cs uses "On sprite" via "action.iconOn"
-            /// Action Menu will set Fire Extinguisher's "On sprite" by default instead of "Off sprite".
-            /// </summary>
             _actions.SetToggled(component.ToggleActionEntity, false);
         }
     }
@@ -58,7 +55,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
         if (args.Handled)
             return;
 
-        ToggleSafety(uid, component, args.User);
+        ToggleSafety(uid, component);
 
         args.Handled = true;
     }
@@ -106,10 +103,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
                 uid, args.Target.Value);
         }
     }
-    /// <summary>
-    /// Uses ActionContainerSystem.cs to check if the entity is already an action.
-    /// Uses ActionEvents.cs to create the logic that registers the "ActionToggleSafety" entity in the Actions menu.  
-    /// </summary>
+    
     private void OnGetActions(EntityUid uid, FireExtinguisherComponent component, GetItemActionsEvent args)
     {
         _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
@@ -120,12 +114,10 @@ public sealed class FireExtinguisherSystem : EntitySystem
         if (!args.CanInteract)
             return;
 
-        var verb = new InteractionVerb
-        {
-            Act = () => ToggleSafety(uid, component, args.User),
-            Text = Loc.GetString("fire-extinguisher-component-verb-text"),
-        };
+        var verb = new InteractionVerb { Act, Text };
 
+        verb.Act = () => ToggleSafety(uid, component);
+        verb.Text = Loc.GetString("fire-extinguisher-component-verb-text");
         args.Verbs.Add(verb);
     }
 
@@ -139,15 +131,15 @@ public sealed class FireExtinguisherSystem : EntitySystem
         }
     }
     /// <summary>
-    /// When the user clicks the entity defined by "ActionToggleSafety", a ToggleActionEvent
-    /// recognizes this and activates OnToggleAction, which activates ToggleSafety.
+    ///     When the user clicks the entity defined by "ActionToggleSafety", a ToggleActionEvent
+    ///     recognizes this and activates OnToggleAction, which activates ToggleSafety.
     /// </summary>
     private void OnToggleAction(EntityUid uid, FireExtinguisherComponent component, ToggleActionEvent args)
     {
         if (args.Handled)
             return;
 
-        ToggleSafety(uid, component, null);
+        ToggleSafety(uid, component);
 
         args.Handled = true;
     }
@@ -164,7 +156,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
     }
 
     public void ToggleSafety(EntityUid uid,
-        FireExtinguisherComponent? extinguisher = null, EntityUid? user = null)
+        FireExtinguisherComponent? extinguisher = null)
     {
         if (!Resolve(uid, ref extinguisher))
             return;
@@ -173,7 +165,6 @@ public sealed class FireExtinguisherSystem : EntitySystem
         _audio.PlayPvs(extinguisher.SafetySound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-4f));
         UpdateAppearance(uid, extinguisher);
 
-        // Change the sprite from Off to On or On to Off via SharedActionSystem.cs & ActionUIController.cs StartTargeting()
         _actions.SetToggled(extinguisher.ToggleActionEntity, extinguisher.Safety);
 
     }

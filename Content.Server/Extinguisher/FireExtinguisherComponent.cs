@@ -10,11 +10,11 @@ namespace Content.Server.Extinguisher;
 public sealed partial class FireExtinguisherComponent : SharedFireExtinguisherComponent
 {
     /// <summary>
-    /// "ActionToggleSafety" refers to an entity created in Resources/Prototypes/Actions/extinguisher.yml
-    /// This configures the visual appearance of the button, including text description & sprites.
+    ///     "ActionToggleSafety" refers to an entity created in Resources/Prototypes/Actions/extinguisher.yml
+    ///     This configures the visual appearance of the button, including text description & sprites.
     /// </summary>
-    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleAction = "ActionToggleSafety";
+    [DataField]
+    public EntProtoId ToggleAction = "ActionToggleSafety";
 
-    [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
+    [DataField] public EntityUid? ToggleActionEntity;
 }
