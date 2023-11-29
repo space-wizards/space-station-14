@@ -118,7 +118,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
     private void SetAmbienceVolume(float value)
     {
-        _ambienceVolume = value;
+        _ambienceVolume = SharedAudioSystem.GainToVolume(value);
 
         foreach (var (comp, values) in _playingSounds)
         {
