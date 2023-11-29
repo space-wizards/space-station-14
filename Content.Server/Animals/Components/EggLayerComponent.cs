@@ -1,5 +1,6 @@
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Animals.Components;
 
@@ -12,7 +13,7 @@ namespace Content.Server.Animals.Components;
 public sealed partial class EggLayerComponent : Component
 {
     [DataField]
-    public string EggLayAction = "ActionAnimalLayEgg";
+    public EntProtoId EggLayAction = "ActionAnimalLayEgg";
 
     /// <summary>
     ///     The amount of nutrient consumed on update.
