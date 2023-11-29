@@ -4,6 +4,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Map;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -14,9 +15,18 @@ public sealed class ChasingWalkSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
+    private EntityQuery<TransformComponent> _xformQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _xformQuery = GetEntityQuery<TransformComponent>();
+    }
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -46,14 +56,28 @@ public sealed class ChasingWalkSystem : EntitySystem
         //We find our coordinates and calculate the radius of the target search.
         var xform = Transform(uid);
         var range = component.MaxChaseRadius;
-        var compType = _random.Pick(component.ChasingComponent.Values).Component.GetType();
-        var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range).ToList();
+        var compType = _random.Pick(component.ChasingComponent.Values).GetType();
+        var mapId = Transform(uid).MapID;
+
+        var allEnts = new List<EntityUid>();
+
+        foreach (var (otherId, _) in EntityManager.GetAllComponents(compType))
+        {
+            if (!_xformQuery.TryGetComponent(otherId, out var compXform) || compXform.MapID != mapId)
+                continue;
+
+            var dist = (_transform.GetWorldPosition(compXform) - _transform.GetWorldPosition(uid)).LengthSquared();
+            if (dist > range)
+                continue;
+
+            allEnts.Add(otherId);
+        }
 
         //If there are no required components in the radius, don't moving.
         if (allEnts.Count <= 0) return;
 
         //In the case of finding required components, we choose a random one of them and remember its uid.
-        component.ChasingEntity = _random.Pick(allEnts).Owner;
+        component.ChasingEntity = _random.Pick(allEnts);
         component.Speed = _random.NextFloat(component.MinSpeed, component.MaxSpeed);
     }
 

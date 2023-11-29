@@ -7,6 +7,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Physics.Events;
 using Content.Server.Lightning.Components;
+using Robust.Server.Audio;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -16,7 +17,7 @@ namespace Content.Server.Tesla.EntitySystems;
 public sealed class TeslaEnergyBallSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
