@@ -15,6 +15,8 @@ using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using System.Linq;
+using Content.Shared.Inventory.Events;
+using Content.Server.Forensics;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -44,6 +46,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
+            SubscribeLocalEvent<SmokableComponent, GotEquippedEvent>(OnSmokeableEquipEvent);
 
             InitializeCigars();
             InitializePipes();
@@ -83,6 +86,16 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnSmokableShutdownEvent(EntityUid uid, SmokableComponent component, ComponentShutdown args)
         {
             _active.Remove(uid);
+        }
+
+        private void OnSmokeableEquipEvent(EntityUid uid, SmokableComponent component, GotEquippedEvent args)
+        {
+            if (args.Slot == "mask" && TryComp<DnaComponent>(args.Equipee, out var dna))
+            {
+                var comp = EnsureComp<ForensicsComponent>(uid);
+                comp.DNAs.Add(dna.DNA);
+                comp.CanDnaBeCleaned = false;
+            }
         }
 
         public override void Update(float frameTime)

@@ -1,5 +1,13 @@
+using Content.Server.Body.Components;
+using Content.Server.DoAfter;
+using Content.Shared.Climbing.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.Forensics;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Tag;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Forensics
@@ -8,11 +16,18 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         public override void Initialize()
         {
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
             SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
+
+            SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
+            SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ForensicsComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -28,6 +43,64 @@ namespace Content.Server.Forensics
         private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
         {
             component.DNA = GenerateDNA();
+        }
+
+        private void OnBeingGibbed(EntityUid uid, DnaComponent component, BeingGibbedEvent args)
+        {
+            foreach(EntityUid part in args.GibbedParts)
+            {
+                var partComp = EnsureComp<ForensicsComponent>(part);
+                partComp.DNAs.Add(component.DNA);
+                partComp.CanDnaBeCleaned = false;
+            }
+        }
+
+        private void OnMeleeHit(EntityUid uid, ForensicsComponent component, MeleeHitEvent args)
+        {
+            if((args.BaseDamage.DamageDict.TryGetValue("Slash", out var slashDamage) && slashDamage.Value > 0) ||
+                (args.BaseDamage.DamageDict.TryGetValue("Piercing", out var pierceDamage) && pierceDamage.Value > 0))
+            {
+                foreach(EntityUid hitEntity in args.HitEntities)
+                {
+                    if(TryComp<DnaComponent>(hitEntity, out var hitEntityComp))
+                    component.DNAs.Add(hitEntityComp.DNA);
+                }
+            }
+        }
+
+        private void OnInteractUsing(EntityUid uid, ForensicsComponent component, InteractUsingEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (!_tagSystem.HasTag(args.Used, "CleansForensics"))
+                return;
+
+            if((component.DNAs.Count > 0 && component.CanDnaBeCleaned) || (component.Fingerprints.Count + component.Fibers.Count > 0))
+            {
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: args.Target, used: args.Used)
+                {
+                    BreakOnTargetMove = true,
+                    BreakOnDamage = true
+                };
+
+
+                _doAfterSystem.TryStartDoAfter(doAfterArgs);
+
+                args.Handled = true;
+            }
+        }
+
+        private void OnCleanForensicsDoAfter(EntityUid uid, ForensicsComponent component, CleanForensicsDoAfterEvent args)
+        {
+            if (args.Handled || args.Cancelled || args.Args.Target == null)
+                return;
+
+            component.Fibers = new();
+            component.Fingerprints = new();
+
+            if (component.CanDnaBeCleaned)
+                component.DNAs = new();
         }
 
         private string GenerateFingerprint()

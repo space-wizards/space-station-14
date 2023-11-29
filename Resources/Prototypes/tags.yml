@@ -1106,3 +1106,6 @@
 
 - type: Tag
   id: MindShield
+
+- type: Tag
+  id: CleansForensics

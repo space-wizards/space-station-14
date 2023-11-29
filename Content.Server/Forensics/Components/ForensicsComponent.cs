@@ -11,5 +11,18 @@ namespace Content.Server.Forensics
 
         [DataField("dnas")]
         public HashSet<string> DNAs = new();
+
+        /// <summary>
+        /// How long it takes to wipe the prints/blood/etc. off of this entity
+        /// </summary>
+        [DataField("cleanDelay")]
+        public float CleanDelay = 8.0f;
+
+        /// <summary>
+        /// Can the DNA be cleaned off of this entity?
+        /// e.g. you can clean the DNA off of a knife, but not a puddle
+        /// </summary>
+        [DataField("canDnaBeCleaned")]
+        public bool CanDnaBeCleaned = true;
     }
 }

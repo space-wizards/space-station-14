@@ -22,6 +22,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Server.Audio;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Body.Systems;
 
@@ -326,6 +327,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 {
                     var comp = EnsureComp<ForensicsComponent>(puddleUid);
                     comp.DNAs.Add(dna.DNA);
+                    comp.CanDnaBeCleaned = false;
                 }
             }
 
@@ -382,6 +384,7 @@ public sealed class BloodstreamSystem : EntitySystem
             {
                 var comp = EnsureComp<ForensicsComponent>(puddleUid);
                 comp.DNAs.Add(dna.DNA);
+                comp.CanDnaBeCleaned = false;
             }
         }
     }

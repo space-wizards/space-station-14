@@ -15,6 +15,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Stacks;
 using Robust.Shared.Player;
+using Content.Server.Forensics;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -290,7 +291,7 @@ public sealed partial class ChemistrySystem
                 ("target", Identity.Entity(target, EntityManager))), injector, user);
 
         Dirty(component);
-        AfterInject(component, injector);
+        AfterInject(component, injector, target);
     }
 
     private void TryInject(InjectorComponent component, EntityUid injector, EntityUid targetEntity, Solution targetSolution, EntityUid user, bool asRefill)
@@ -328,10 +329,10 @@ public sealed partial class ChemistrySystem
                 ("target", Identity.Entity(targetEntity, EntityManager))), injector, user);
 
         Dirty(component);
-        AfterInject(component, injector);
+        AfterInject(component, injector, targetEntity);
     }
 
-    private void AfterInject(InjectorComponent component, EntityUid injector)
+    private void AfterInject(InjectorComponent component, EntityUid injector, EntityUid target)
     {
         // Automatically set syringe to draw after completely draining it.
         if (_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution)
@@ -339,15 +340,29 @@ public sealed partial class ChemistrySystem
         {
             component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Draw;
         }
+
+        // Leave some DNA from the injectee on it
+        if (TryComp<DnaComponent>(target, out var dna))
+        {
+            var comp = EnsureComp<ForensicsComponent>(injector);
+            comp.DNAs.Add(dna.DNA);
+        }
     }
 
-    private void AfterDraw(InjectorComponent component, EntityUid injector)
+    private void AfterDraw(InjectorComponent component, EntityUid injector, EntityUid target)
     {
         // Automatically set syringe to inject after completely filling it.
         if (_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution)
             && solution.AvailableVolume == 0)
         {
             component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Inject;
+        }
+
+        // Leave some DNA from the drawee on it
+        if (TryComp<DnaComponent>(target, out var dna))
+        {
+            var comp = EnsureComp<ForensicsComponent>(injector);
+            comp.DNAs.Add(dna.DNA);
         }
     }
 
@@ -389,7 +404,7 @@ public sealed partial class ChemistrySystem
                 ("target", Identity.Entity(targetEntity, EntityManager))), injector, user);
 
         Dirty(component);
-        AfterDraw(component, injector);
+        AfterDraw(component, injector, targetEntity);
     }
 
     private void DrawFromBlood(EntityUid user, EntityUid injector, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, FixedPoint2 transferAmount)
@@ -414,7 +429,7 @@ public sealed partial class ChemistrySystem
                 ("target", Identity.Entity(target, EntityManager))), injector, user);
 
         Dirty(component);
-        AfterDraw(component, injector);
+        AfterDraw(component, injector, target);
     }
 
 }
