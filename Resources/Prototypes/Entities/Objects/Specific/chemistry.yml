@@ -408,9 +408,6 @@
     injectOnly: false
     minTransferAmount: 5
     maxTransferAmount: 10
-  - type: SolutionContainerVisuals
-    maxFillLevels: 0
-    fillBaseName: syringe
   - type: Tag
     tags:
     - Syringe
