@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'The hot potato now does more damage over time, has a shorter timer,
-      and has a larger explosion.', type: Tweak}
-  id: 4730
-  time: '2023-09-02T00:08:25.0000000+00:00'
 - author: ficcialfaint
   changes:
   - {message: Dumping into disposals no longer drops items onto the ground., type: Fix}
@@ -2898,3 +2892,9 @@ Entries:
   - {message: Core has been reworked and added back into the map pool., type: Add}
   id: 5229
   time: '2023-11-30T08:13:13.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Nuclear operative agents now spawn with a PDA that can scan for injuries.,
+    type: Add}
+  id: 5230
+  time: '2023-11-30T21:39:08.0000000+00:00'
