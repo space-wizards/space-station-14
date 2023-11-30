@@ -1201,10 +1201,10 @@
   - UplinkMisc
 
 - type: listing
-  id: UplinkSlipocalypseClusterBang
-  name: uplink-slipocalypse-clusterbang-name
-  description: uplink-slipocalypse-clusterbang-desc
-  productEntity: SlipocalypseClusterBang
+  id: UplinkSlipocalypseClusterSoap
+  name: uplink-slipocalypse-clustersoap-name
+  description: uplink-slipocalypse-clustersoap-desc
+  productEntity: SlipocalypseClusterSoap
   cost:
     Telecrystal: 3
   categories:

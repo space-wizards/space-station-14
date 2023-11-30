@@ -314,8 +314,8 @@ uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
 uplink-syndicate-sponge-box-name = Syndicate Sponge Box
 uplink-syndicate-sponge-box-desc = A box containing 6 syndicate sponges disguised as monkey cubes, these cubes turn into a variety of angry wildlife after coming into contact with water.
 
-uplink-slipocalypse-clusterbang-name = Slipocalypse Clusterbang
-uplink-slipocalypse-clusterbang-desc = Scatters arounds small pieces of syndicate-brand soap after being thrown, these pieces of soap evaporate after 60 seconds.
+uplink-slipocalypse-clustersoap-name = Slipocalypse Clusterbang
+uplink-slipocalypse-clustersoap-desc = Scatters arounds small pieces of syndicate-brand soap after being thrown, these pieces of soap evaporate after 60 seconds.
 
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun
