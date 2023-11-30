@@ -408,6 +408,7 @@
     injectOnly: false
     minTransferAmount: 5
     maxTransferAmount: 10
+    transferAmount: 10
   - type: Tag
     tags:
     - Syringe
