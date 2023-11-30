@@ -202,6 +202,28 @@ namespace Content.Server.Administration.Systems
                         ConfirmationPopup = true,
                         Impact = LogImpact.High,
                     });
+
+                    // Clone - Spawn but without the mind transfer, also spawns at the user's coordinates not the target's
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-clone"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.User, out var coords))
+                            {
+                                _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
+                                return;
+                            }
+
+                            var stationUid = _stations.GetOwningStation(args.Target);
+
+                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                            _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                        },
+                        ConfirmationPopup = true,
+                        Impact = LogImpact.High,
+                    });
                 }
 
                 // Admin Logs
