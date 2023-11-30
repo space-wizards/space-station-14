@@ -264,6 +264,19 @@
           Quantity: 30
 
 - type: entity
+  parent: BaseChemistryBottleFilled
+  id: OblivizineChemistryBottle
+  name: oblivizine bottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Oblivizine
+          Quantity: 30
+
+- type: entity
   id: PaxChemistryBottle
   name: pax bottle
   parent: BaseChemistryBottleFilled
