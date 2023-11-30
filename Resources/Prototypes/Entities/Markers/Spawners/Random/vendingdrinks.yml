@@ -23,3 +23,6 @@
       - VendingMachineStarkist
       - VendingMachineSpaceUp
     chance: 1
+    rarePrototypes:
+      - MobMimic
+    rareChance: 0.001
