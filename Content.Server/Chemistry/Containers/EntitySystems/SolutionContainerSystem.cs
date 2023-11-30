@@ -75,7 +75,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         }
         else
         {
-            DebugTools.Assert(TryComp(solutionId, out solutionComp!));
+            solutionComp = Comp<SolutionComponent>(solutionId);
             DebugTools.Assert(TryComp(solutionId, out SolutionContainerComponent? relation) && relation.Container == uid && relation.Name == name);
 
             var solution = solutionComp.Solution;
