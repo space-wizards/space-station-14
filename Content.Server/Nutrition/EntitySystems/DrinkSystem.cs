@@ -226,7 +226,7 @@ public sealed class DrinkSystem : EntitySystem
     public void UpdateAppearance(EntityUid uid, DrinkComponent component)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance) ||
-            !HasComp<SolutionContainerComponent>(uid))
+            !HasComp<SolutionContainerManagerComponent>(uid))
         {
             return;
         }

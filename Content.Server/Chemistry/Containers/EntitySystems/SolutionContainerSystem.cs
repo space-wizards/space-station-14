@@ -1,4 +1,3 @@
-using Content.Server.Chemistry.Containers.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -20,16 +19,8 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         base.Initialize();
 
         SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<SolutionContainerComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<ContainerSolutionComponent, ComponentShutdown>(OnComponentShutdown);
-    }
-
-    public IEnumerable<(string Name, Solution Solution)> EnumerateSolutions(SolutionContainerManagerComponent container)
-    {
-        foreach (var (name, solution) in container.Solutions)
-        {
-            yield return (name, solution);
-        }
     }
 
 
@@ -40,31 +31,36 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         => EnsureSolution(entity, name, FixedPoint2.Zero, out existed);
 
     public Solution EnsureSolution(Entity<MetaDataComponent?> entity, string name, FixedPoint2 minVol, out bool existed)
+        => EnsureSolution(entity, name, minVol, null, out existed);
+
+    public Solution EnsureSolution(Entity<MetaDataComponent?> entity, string name, FixedPoint2 minVol, Solution? prototype, out bool existed)
     {
         var (uid, meta) = entity;
         DebugTools.Assert(Resolve(uid, ref meta), $"Attempted to ensure solution on invalid entity {ToPrettyString(entity.Owner)}");
 
+        var manager = EnsureComp<SolutionContainerManagerComponent>(uid);
         if (meta.EntityLifeStage >= EntityLifeStage.MapInitialized)
-            return EnsureSolutionEntity(uid, name, minVol, out existed).Comp.Solution;
+            return EnsureSolutionEntity((uid, manager), name, minVol, prototype, out existed).Comp.Solution;
         else
-            return EnsureSolutionPrototype(uid, name, minVol, out existed);
+            return EnsureSolutionPrototype((uid, manager), name, minVol, prototype, out existed);
     }
 
-    public Entity<SolutionComponent> EnsureSolutionEntity(Entity<SolutionContainerComponent?> entity, string name, FixedPoint2 minVol, out bool existed)
+    public Entity<SolutionComponent> EnsureSolutionEntity(Entity<SolutionContainerManagerComponent?> entity, string name, FixedPoint2 minVol, Solution? prototype, out bool existed)
     {
         existed = true;
 
         var (uid, container) = entity;
+
+        var solutionSlot = ContainerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}", out existed);
         if (!Resolve(uid, ref container, logMissing: false))
         {
-            container = AddComp<SolutionContainerComponent>(uid);
             existed = false;
+            container = AddComp<SolutionContainerManagerComponent>(uid);
+            container.Containers.Add(name);
         }
-
-        if (!container.Solutions.TryGetValue(name, out var solutionSlot))
+        else if (!existed)
         {
-            solutionSlot = ContainerSystem.EnsureContainer<ContainerSlot>(entity.Owner, $"solution@{name}");
-            container.Solutions.Add(name, solutionSlot);
+            container.Containers.Add(name);
             Dirty(uid, container);
         }
 
@@ -72,35 +68,25 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         SolutionComponent solutionComp;
         if (solutionSlot.ContainedEntity is not { } solutionId)
         {
-            (solutionId, solutionComp) = SpawnSolutionUninitialized(uid, name, new Solution() { MaxVolume = minVol, Name = name });
-            ContainerSystem.Insert(solutionId, solutionSlot, force: true);
+            (solutionId, solutionComp, _) = SpawnSolutionUninitialized(solutionSlot, name, minVol, prototype ?? new() { Name = name, MaxVolume = minVol });
             existed = false;
             needsInit = true;
-        }
-        else if (!TryComp(solutionId, out solutionComp!))
-        {
-            solutionComp = new SolutionComponent()
-            {
-                Solution = new Solution() { MaxVolume = minVol, Name = name },
-            };
-            AddComp(solutionId, solutionComp);
-            existed = false;
+            Dirty(uid, container);
         }
         else
         {
-            solutionComp.Solution.MaxVolume = FixedPoint2.Max(solutionComp.Solution.MaxVolume, minVol);
-            Dirty(solutionId, solutionComp);
-        }
+            DebugTools.Assert(TryComp(solutionId, out solutionComp!));
+            DebugTools.Assert(TryComp(solutionId, out SolutionContainerComponent? relation) && relation.Container == uid && relation.Name == name);
 
-        if (!TryComp(solutionId, out ContainerSolutionComponent? relation))
-        {
-            relation = new ContainerSolutionComponent() { Container = uid, Name = name };
-            AddComp(solutionId, relation);
-        }
-        else
-        {
-            (relation.Container, relation.Name) = (uid, name);
-            Dirty(solutionId, relation);
+            var solution = solutionComp.Solution;
+            solution.MaxVolume = FixedPoint2.Max(solution.MaxVolume, minVol);
+
+            // Depending on MapInitEvent order some systems can ensure solution empty solutions and conflict with the prototype solutions.
+            // We want the reagents from the prototype to exist even if something else already created the solution.
+            if (prototype is { Volume.Value: > 0 })
+                solution.AddSolution(prototype, PrototypeManager);
+
+            Dirty(solutionId, solutionComp);
         }
 
         if (needsInit)
@@ -109,7 +95,7 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
         return (solutionId, solutionComp);
     }
 
-    private Solution EnsureSolutionPrototype(Entity<SolutionContainerManagerComponent?> entity, string name, FixedPoint2 minVol, out bool existed)
+    private Solution EnsureSolutionPrototype(Entity<SolutionContainerManagerComponent?> entity, string name, FixedPoint2 minVol, Solution? prototype, out bool existed)
     {
         existed = true;
 
@@ -120,40 +106,37 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
             existed = false;
         }
 
-        if (!container.Solutions.TryGetValue(name, out var prototype))
+        if (container.Solutions is null)
+            container.Solutions = new(SolutionContainerManagerComponent.DefaultCapacity);
+
+        if (!container.Solutions.TryGetValue(name, out var solution))
         {
-            prototype = new Solution() { MaxVolume = minVol, Name = name };
-            container.Solutions.Add(name, prototype);
+            solution = prototype ?? new() { Name = name, MaxVolume = minVol };
+            container.Solutions.Add(name, solution);
             existed = false;
         }
         else
-            prototype.MaxVolume = FixedPoint2.Max(prototype.MaxVolume, minVol);
+            solution.MaxVolume = FixedPoint2.Max(solution.MaxVolume, minVol);
 
-        return prototype;
+        Dirty(uid, container);
+        return solution;
     }
 
 
-    private Entity<SolutionComponent> SpawnSolutionUninitialized(EntityUid container, string name, Solution prototype)
+    private Entity<SolutionComponent, SolutionContainerComponent> SpawnSolutionUninitialized(ContainerSlot container, string name, FixedPoint2 minVol, Solution prototype)
     {
-        var coords = new EntityCoordinates(container, Vector2.Zero);
+        var coords = new EntityCoordinates(container.Owner, Vector2.Zero);
         var uid = EntityManager.CreateEntityUninitialized(null, coords, null);
-        if (!TryComp(uid, out SolutionComponent? comp))
-        {
-            var solution = prototype.Clone();
-            solution.Name = name;
-            comp = new SolutionComponent() { Solution = solution };
-            AddComp(uid, comp);
-        }
 
-        if (!TryComp(uid, out ContainerSolutionComponent? relation))
-        {
-            relation = new ContainerSolutionComponent() { Container = container, Name = name };
-            AddComp(uid, relation);
-        }
-        else
-            (relation.Container, relation.Name) = (container, name);
+        var solution = new SolutionComponent() { Solution = prototype };
+        AddComp(uid, solution);
 
-        return (uid, comp);
+        var relation = new SolutionContainerComponent() { Container = container.Owner, Name = name };
+        AddComp(uid, relation);
+
+        ContainerSystem.Insert(uid, container, force: true);
+
+        return (uid, solution, relation);
     }
 
 
@@ -161,34 +144,37 @@ public sealed partial class SolutionContainerSystem : SharedSolutionContainerSys
 
     private void OnMapInit(EntityUid uid, SolutionContainerManagerComponent comp, MapInitEvent args)
     {
-        if (comp.Solutions is { Count: > 0 } prototypes)
-        {
-            foreach (var (name, prototype) in prototypes)
-            {
-                var solution = EnsureSolutionEntity(uid, name, prototype.MaxVolume, out _);
-                AddSolution(solution, prototype);
-            }
-        }
+        if (comp.Solutions is not { } prototypes)
+            return;
 
-        RemComp(uid, comp);
+        foreach (var (name, prototype) in prototypes)
+        {
+            EnsureSolutionEntity(uid, name, prototype.MaxVolume, prototype, out _);
+        }
+        comp.Solutions = null;
+        Dirty(uid, comp);
+    }
+
+    private void OnComponentShutdown(EntityUid uid, SolutionContainerManagerComponent comp, ComponentShutdown args)
+    {
+        foreach (var name in comp.Containers)
+        {
+            if (ContainerSystem.TryGetContainer(uid, $"solution@{name}", out var solutionContainer))
+                solutionContainer.Shutdown(EntityManager, _netManager);
+        }
+        comp.Containers.Clear();
     }
 
     private void OnComponentShutdown(EntityUid uid, SolutionContainerComponent comp, ComponentShutdown args)
     {
-        while (comp.Solutions.FirstOrNull() is { } solution)
+        if (TryComp(comp.Container, out SolutionContainerManagerComponent? container))
         {
-            solution.Value.Shutdown(EntityManager, _netManager);
-            comp.Solutions.Remove(solution.Key);
+            container.Containers.Remove(comp.Name);
+            Dirty(comp.Container, container);
         }
-    }
 
-    private void OnComponentShutdown(EntityUid uid, ContainerSolutionComponent comp, ComponentShutdown args)
-    {
-        if (!TryComp(comp.Container, out SolutionContainerComponent? container))
-            return;
-
-        container.Solutions.Remove(comp.Name);
-        Dirty(comp.Container, container);
+        if (ContainerSystem.TryGetContainer(uid, $"solution@{comp.Name}", out var solutionContainer))
+            solutionContainer.Shutdown(EntityManager, _netManager);
     }
 
     #endregion Event Handlers

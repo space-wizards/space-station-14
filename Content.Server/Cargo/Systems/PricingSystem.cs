@@ -1,7 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
-using Content.Server.Chemistry.Containers.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
@@ -109,11 +108,14 @@ public sealed class PricingSystem : EntitySystem
         args.Price += (component.Price - partPenalty) * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
-    private double GetSolutionPrice(SolutionContainerComponent component)
+    private double GetSolutionPrice(Entity<SolutionContainerManagerComponent> entity)
     {
+        if (Comp<MetaDataComponent>(entity).EntityLifeStage < EntityLifeStage.MapInitialized)
+            return GetSolutionPrice(entity.Comp);
+
         var price = 0.0;
 
-        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(component))
+        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, entity.Comp)))
         {
             var solution = soln.Comp.Solution;
             foreach (var (reagent, quantity) in solution.Contents)
@@ -278,9 +280,9 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        if (TryComp<SolutionContainerComponent>(uid, out var solComp))
+        if (TryComp<SolutionContainerManagerComponent>(uid, out var solComp))
         {
-            price += GetSolutionPrice(solComp);
+            price += GetSolutionPrice((uid, solComp));
         }
 
         return price;

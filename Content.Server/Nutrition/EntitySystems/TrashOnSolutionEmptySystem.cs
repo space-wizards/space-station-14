@@ -31,7 +31,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void CheckSolutions(TrashOnSolutionEmptyComponent component)
         {
-            if (!EntityManager.HasComponent<SolutionContainerComponent>((component).Owner))
+            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>((component).Owner))
                 return;
 
             if (_solutionContainerSystem.TryGetSolution(component.Owner, component.Solution, out _, out var solution))

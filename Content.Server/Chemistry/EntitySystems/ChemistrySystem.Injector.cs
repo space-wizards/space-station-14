@@ -145,7 +145,7 @@ public sealed partial class ChemistrySystem
             return;
 
         //Make sure we have the attacking entity
-        if (args.Target is not { Valid: true } target || !HasComp<SolutionContainerComponent>(uid))
+        if (args.Target is not { Valid: true } target || !HasComp<SolutionContainerManagerComponent>(uid))
             return;
 
         // Is the target a mob? If yes, use a do-after to give them time to respond.

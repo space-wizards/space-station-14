@@ -37,7 +37,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
             return;
         }
 
-        var target = _solutionsSystem.EnsureSolutionEntity(uid, component.Solution, pick.quantity, out _);
-        target.Comp.Solution.AddReagent(reagent, quantity);
+        var target = _solutionsSystem.EnsureSolutionEntity(uid, component.Solution, pick.quantity, null, out _);
+        _solutionsSystem.TryAddReagent(target, reagent, quantity, out _);
     }
 }

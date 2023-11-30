@@ -105,7 +105,7 @@ public sealed class DrainSystem : SharedDrainSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var managerQuery = GetEntityQuery<SolutionContainerComponent>();
+        var managerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
         var puddleQuery = GetEntityQuery<PuddleComponent>();
         var puddles = new ValueList<(EntityUid Entity, string Solution)>();
@@ -201,7 +201,7 @@ public sealed class DrainSystem : SharedDrainSystem
     private void OnExamined(EntityUid uid, DrainComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange ||
-            !HasComp<SolutionContainerComponent>(uid) ||
+            !HasComp<SolutionContainerManagerComponent>(uid) ||
             !_solutionContainerSystem.TryGetSolution(uid, DrainComponent.SolutionName, out _, out var drainSolution))
         {
             return;

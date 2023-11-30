@@ -82,7 +82,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         var metaDataQuery = GetEntityQuery<MetaDataComponent>();
         var itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
         var fitsInDispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
-        var solutionContainerManagerQuery = GetEntityQuery<SolutionContainerComponent>();
+        var solutionContainerManagerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
         var query = EntityQueryEnumerator<ActiveCryoPodComponent, CryoPodComponent>();
 
         while (query.MoveNext(out var uid, out _, out var cryoPod))

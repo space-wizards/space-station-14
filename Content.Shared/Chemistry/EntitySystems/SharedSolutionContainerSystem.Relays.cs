@@ -41,12 +41,12 @@ public abstract partial class SharedSolutionContainerSystem
 {
     protected void InitializeRelays()
     {
-        SubscribeLocalEvent<ContainerSolutionComponent, SolutionChangedEvent>(OnSolutionChanged);
-        SubscribeLocalEvent<ContainerSolutionComponent, SolutionOverflowEvent>(OnSolutionOverflow);
+        SubscribeLocalEvent<SolutionContainerComponent, SolutionChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<SolutionContainerComponent, SolutionOverflowEvent>(OnSolutionOverflow);
     }
 
 
-    protected virtual void OnSolutionChanged(EntityUid uid, ContainerSolutionComponent comp, ref SolutionChangedEvent args)
+    protected virtual void OnSolutionChanged(EntityUid uid, SolutionContainerComponent comp, ref SolutionChangedEvent args)
     {
         var (solutionId, solutionComp) = args.Solution;
         var solution = solutionComp.Solution;
@@ -55,7 +55,7 @@ public abstract partial class SharedSolutionContainerSystem
         RaiseLocalEvent(comp.Container, new SolutionContainerChangedEvent(solution, comp.Name));
     }
 
-    protected virtual void OnSolutionOverflow(EntityUid uid, ContainerSolutionComponent comp, ref SolutionOverflowEvent args)
+    protected virtual void OnSolutionOverflow(EntityUid uid, SolutionContainerComponent comp, ref SolutionOverflowEvent args)
     {
         var solution = args.Solution.Comp.Solution;
         var overflow = solution.SplitSolution(args.Overflow);

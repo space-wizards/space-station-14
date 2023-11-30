@@ -65,25 +65,25 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         SubscribeLocalEvent<SolutionContainerComponent, ComponentGetState>(OnComponentGetState);
         SubscribeLocalEvent<SolutionContainerComponent, ComponentHandleState>(OnComponentHandleState);
-        SubscribeLocalEvent<ContainerSolutionComponent, ComponentGetState>(OnComponentGetState);
-        SubscribeLocalEvent<ContainerSolutionComponent, ComponentHandleState>(OnComponentHandleState);
+
+        SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(OnComponentInit);
 
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
     }
 
 
-    public bool TryGetSolution(Entity<SolutionContainerComponent?> container, string? name, [MaybeNullWhen(false)] out Entity<SolutionComponent> entity, [MaybeNullWhen(false)] out Solution solution)
+    public bool TryGetSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [MaybeNullWhen(false)] out Entity<SolutionComponent> entity, [MaybeNullWhen(false)] out Solution solution)
     {
         entity = default!;
         if (name is null)
             entity.Owner = container;
         else if (
-            Resolve(container, ref container.Comp, logMissing: false) &&
-            container.Comp.Solutions.TryGetValue(name, out var solutionSlot) &&
-            solutionSlot.ContainedEntity is not null
+            ContainerSystem.TryGetContainer(container, $"solution@{name}", out var solutionContainer) &&
+            solutionContainer is ContainerSlot solutionSlot &&
+            solutionSlot.ContainedEntity is { } containedSolution
         )
-            entity.Owner = solutionSlot.ContainedEntity.Value;
+            entity.Owner = containedSolution;
         else
         {
             solution = null;
@@ -100,7 +100,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
-    public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionContainerComponent?> container, bool includeSelf = true)
+    public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionContainerManagerComponent?> container, bool includeSelf = true)
     {
         if (includeSelf && TryComp(container, out SolutionComponent? solutionComp))
             yield return (null, (container.Owner, solutionComp));
@@ -108,23 +108,26 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (!Resolve(container, ref container.Comp, logMissing: false))
             yield break;
 
-        foreach (var (name, solution) in EnumerateSolutions(container.Comp))
+        foreach (var name in container.Comp.Containers)
+        {
+            if (ContainerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId)
+                yield return (name, (solutionId, Comp<SolutionComponent>(solutionId)));
+        }
+    }
+
+    public IEnumerable<(string Name, Solution Solution)> EnumerateSolutions(SolutionContainerManagerComponent container)
+    {
+        if (container.Solutions is not { Count: > 0 } solutions)
+            yield break;
+
+        foreach (var (name, solution) in solutions)
         {
             yield return (name, solution);
         }
     }
 
-    public IEnumerable<(string Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(SolutionContainerComponent container)
-    {
-        foreach (var (name, slot) in container.Solutions)
-        {
-            if (TryComp(slot.ContainedEntity, out SolutionComponent? solutionComp))
-                yield return (name, (slot.ContainedEntity.Value, solutionComp));
-        }
-    }
 
-
-    protected void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent, ContainerSolutionComponent> soln)
+    protected void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent, SolutionContainerComponent> soln)
     {
         var (uid, appearanceComponent) = container;
         if (!Resolve(uid, ref appearanceComponent, logMissing: false))
@@ -148,7 +151,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         var reagentQuantity = FixedPoint2.New(0);
         if (EntityManager.EntityExists(owner)
-            && EntityManager.TryGetComponent(owner, out SolutionContainerComponent? managerComponent))
+            && EntityManager.TryGetComponent(owner, out SolutionContainerManagerComponent? managerComponent))
         {
             foreach (var (_, soln) in EnumerateSolutions((owner, managerComponent)))
             {
@@ -619,45 +622,28 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         RemoveAllSolution((uid, comp));
     }
 
+    private void OnComponentInit(EntityUid uid, SolutionContainerManagerComponent comp, ComponentInit args)
+    {
+        if (comp.Containers is not { Count: > 0 } containers)
+            return;
+
+        var containerManager = EnsureComp<ContainerManagerComponent>(uid);
+        foreach (var name in containers)
+        {
+            // The actual solution entity should be directly held within the corresponding slot.
+            ContainerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}", containerManager);
+        }
+    }
+
+
     private void OnComponentGetState(EntityUid uid, SolutionContainerComponent comp, ComponentGetState args)
     {
-        if (comp.Solutions is not { Count: > 0 } solutions)
-        {
-            args.State = new SolutionContainerState(null);
-            return;
-        }
-
-        var netSolutions = new List<string>(solutions.Count);
-        foreach (var name in solutions.Keys)
-        {
-            netSolutions.Add(name);
-        }
-        args.State = new SolutionContainerState(netSolutions);
+        args.State = new SolutionContainerState(GetNetEntity(comp.Container), comp.Name);
     }
 
     private void OnComponentHandleState(EntityUid uid, SolutionContainerComponent comp, ComponentHandleState args)
     {
         if (args.Current is not SolutionContainerState state)
-            return;
-
-        comp.Solutions.Clear();
-        if (state.Solutions is not { Count: > 0 } solutions)
-            return;
-
-        foreach (var name in solutions)
-        {
-            comp.Solutions[name] = ContainerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}");
-        }
-    }
-
-    private void OnComponentGetState(EntityUid uid, ContainerSolutionComponent comp, ComponentGetState args)
-    {
-        args.State = new ContainerSolutionState(GetNetEntity(comp.Container), comp.Name);
-    }
-
-    private void OnComponentHandleState(EntityUid uid, ContainerSolutionComponent comp, ComponentHandleState args)
-    {
-        if (args.Current is not ContainerSolutionState state)
             return;
 
         comp.Container = GetEntity(state.Container);

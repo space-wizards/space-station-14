@@ -41,10 +41,10 @@ namespace Content.Server.Administration.UI
         {
             List<(string Name, NetEntity Solution)>? netSolutions;
 
-            if (_entityManager.TryGetComponent(Target, out SolutionContainerComponent? container) && container.Solutions.Count > 0)
+            if (_entityManager.TryGetComponent(Target, out SolutionContainerManagerComponent? container) && container.Containers.Count > 0)
             {
                 netSolutions = new();
-                foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions(container))
+                foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions((Target, container)))
                 {
                     if (name is null || !_entityManager.TryGetNetEntity(solution, out var netSolution))
                         continue;

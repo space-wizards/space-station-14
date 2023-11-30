@@ -23,7 +23,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<SolutionRegenerationComponent, SolutionContainerComponent>();
+        var query = EntityQueryEnumerator<SolutionRegenerationComponent, SolutionContainerManagerComponent>();
         while (query.MoveNext(out var uid, out var regen, out var manager))
         {
             if (_timing.CurTime < regen.NextRegenTime)

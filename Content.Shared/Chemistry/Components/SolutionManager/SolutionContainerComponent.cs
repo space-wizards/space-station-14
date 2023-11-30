@@ -1,47 +1,48 @@
-﻿using Content.Shared.Chemistry.EntitySystems;
-using Robust.Shared.Containers;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components.SolutionManager;
 
 /// <summary>
-/// A map of the solution entities contained within this entity.
+/// Component used to relate a solution to its container.
 /// </summary>
 /// <remarks>
-/// <para>Not for use in prototypes.</para>
-/// <para>This maps strings to <see cref="EntityUid"/>s which cannot be used in prototypes <see cref="MapInitEvent"/>.</para>
-/// <para>Specifying solutions in prototypes should be done through <see cref="Content.Server.Chemistry.Containers.Components.SolutionContainerManagerComponent"/>.</para>
+/// When containers are finally ECS'd have this attach to the container entity.
+/// The <see cref="Solution.MaxVolume"/> field should then be extracted out into this component.
+/// Solution entities would just become an apporpriately composed entity hanging out in the container.
+/// Will probably require entities in components being given a relation to associate themselves with their container.
 /// </remarks>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedSolutionContainerSystem))]
 public sealed partial class SolutionContainerComponent : Component
 {
     /// <summary>
-    /// The default amount of space that will be allocated for solutions in solution containers.
-    /// Most solution containers will only contain 1-2 solutions.
+    /// The entity that the solution is contained in.
     /// </summary>
-    public const int DefaultCapacity = 2;
+    [DataField]
+    public EntityUid Container;
 
     /// <summary>
-    /// A map of solution names to solution entities attached to the owning entity.
+    /// The name/key of the container the solution is located in.
     /// </summary>
-    [ViewVariables]
-    public Dictionary<string, ContainerSlot> Solutions = new(DefaultCapacity);
+    [DataField]
+    public string Name = default!;
 }
 
-
 /// <summary>
-/// Component state wrapper for <see cref="SolutionContainerComponent"/>
-/// Exists because <see cref="EntityUid"/> are not <see cref="NetSerializableAttribute"/>.
+/// State wrapper to allow networking <see cref="SolutionContainerComponent"/>.
+/// Exists entirely because <see cref="EntityUid"/> is not <see cref="NetSerializableAttribute"/>.
 /// </summary>
 [Serializable, NetSerializable]
-internal sealed partial class SolutionContainerState : ComponentState
+public sealed partial class SolutionContainerState : ComponentState
 {
-    public List<string>? Solutions;
+    public NetEntity Container;
+    public string Name;
 
-    public SolutionContainerState(List<string>? solutions)
+    public SolutionContainerState(NetEntity container, string name)
     {
-        Solutions = solutions;
+        Container = container;
+        Name = name;
     }
 }

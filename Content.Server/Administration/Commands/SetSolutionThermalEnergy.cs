@@ -29,7 +29,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_entManager.TryGetComponent(uid, out SolutionContainerComponent? man))
+            if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;

@@ -109,7 +109,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
                     _temperature.ChangeHeat(entity, heatToAdd, false, tempComp);
 
-                if (!TryComp<SolutionContainerComponent>(entity, out var solutions))
+                if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                     continue;
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
                 {
@@ -131,7 +131,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // this is spaghetti ngl
             foreach (var item in component.Storage.ContainedEntities)
             {
-                if (!TryComp<SolutionContainerComponent>(item, out var solMan))
+                if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
                     continue;
 
                 // go over every solution
@@ -390,7 +390,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     solidsDict.Add(metaData.EntityPrototype.ID, 1);
                 }
 
-                if (!TryComp<SolutionContainerComponent>(item, out var solMan))
+                if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
                     continue;
 
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))

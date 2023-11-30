@@ -19,7 +19,7 @@ public sealed partial class ChemicalFuelGeneratorAdapterComponent : Component
     public string Reagent = "WeldingFuel";
 
     /// <summary>
-    /// The solution on the <see cref="SolutionContainerComponent"/> to use.
+    /// The solution on the <see cref="SolutionContainerManagerComponent"/> to use.
     /// </summary>
     [DataField("solution")]
     [ViewVariables(VVAccess.ReadWrite)]
