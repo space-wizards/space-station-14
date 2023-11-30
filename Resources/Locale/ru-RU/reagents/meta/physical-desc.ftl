@@ -89,3 +89,4 @@ reagent-physical-desc-exotic-smelling = экзотично пахнущее
 reagent-physical-desc-energizing = заряжающее энергией
 reagent-physical-desc-exhilarating = бодрящее
 reagent-physical-desc-vibrant = вибрирующее
+reagent-physical-desc-fluffy = пушистое

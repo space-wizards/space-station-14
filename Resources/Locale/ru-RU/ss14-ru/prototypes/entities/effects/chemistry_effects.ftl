@@ -1,11 +1,13 @@
 ent-Smoke = дым
-    .desc = { "" }
+    .desc = { ent-BaseFoam.desc }
 ent-Foam = пена
-    .desc = { "" }
+    .desc = { ent-BaseFoam.desc }
+ent-MetalFoam = металлическая пена
+    .desc = { ent-Foam.desc }
 ent-IronMetalFoam = железная пена
-    .desc = { ent-Foam.desc }
+    .desc = { ent-MetalFoam.desc }
 ent-AluminiumMetalFoam = алюминиевая пена
-    .desc = { ent-Foam.desc }
+    .desc = { ent-MetalFoam.desc }
 ent-BaseFoamedMetal = base foamed metal
     .desc = { "" }
 ent-FoamedIronMetal = вспененное железо

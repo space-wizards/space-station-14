@@ -10,5 +10,5 @@ ent-PartRodMetal1 = металлический стержень
     .suffix = Один
     .desc = { ent-PartRodMetal.desc }
 ent-PartRodMetalLingering0 = { ent-PartRodMetal }
-    .suffix = Lingering(Борги), 0
+    .suffix = Сохраняющийся(Борги), 0
     .desc = { ent-PartRodMetal.desc }

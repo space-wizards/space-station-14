@@ -176,6 +176,15 @@ namespace Content.Server.Body.Systems
 
             _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 
+            //SS220 air_fix
+            TryComp<DamageableComponent>(uid,  out var damageable);
+            if (damageable != null) {
+                damageable.DamagePerGroup.TryGetValue("Airloss", out var airloss);
+                if (airloss == 0)
+                    return;
+            }
+            //SS220 air_fix
+
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery);
         }
 

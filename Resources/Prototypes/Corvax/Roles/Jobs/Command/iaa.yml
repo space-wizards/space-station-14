@@ -3,22 +3,23 @@
   name: job-name-iaa
   playTimeTracker: JobIAA
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 72000 # SS220-RoleTime
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 72000 # SS220-RoleTime
+  - !type:DepartmentTimeRequirement
+    department: Command
+    time: 72000 # SS220-RoleTime
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 72000 # SS220-RoleTime
   startingGear: IAAGear
   icon: "JobIconIAA"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   access:
-    - Service
-    - Brig
-    - Maintenance
-    - Command
-    - External
+  - Service
+  - Brig
+  - Maintenance
+  - Command
+  - External
+  - Lawyer
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

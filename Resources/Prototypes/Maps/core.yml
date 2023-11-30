@@ -52,7 +52,7 @@
             SecurityOfficer: [ 3, 3 ]
             Warden: [ 1, 1 ]
             IAA: [ 1, 1 ]
-            SecurityCadet: [ 21 1 ]
+            SecurityCadet: [ 1, 1 ]
             Detective: [ 1, 1 ]
             SeniorOfficer: [ 1, 1 ]
             #supply

@@ -1,11 +1,11 @@
 ent-CrateVendingMachineRestockBoozeFilled = ящик пополнения АлкоМат
     .desc = Содержит набор пополнения торгомата АлкоМат.
 ent-CrateVendingMachineRestockChefvendFilled = ящик пополнения ШефВенд
-    .desc = { ent-CratePlastic.desc }
+    .desc = Содержит набор пополнения торгомата ШефВенд.
 ent-CrateVendingMachineRestockClothesFilled = ящик пополнения одежды
     .desc = Содержит несколько наборов пополнения торгоматов, ОдеждоМата и ТеатроШкафа.
 ent-CrateVendingMachineRestockCondimentStationFilled = ящик пополнения Островок соусов
-    .desc = { ent-CratePlastic.desc }
+    .desc = Содержит набор пополнения торгомата Островок соусов.
 ent-CrateVendingMachineRestockDinnerwareFilled = ящик пополнения ПосудоМат
     .desc = Содержит набор пополнения торгомата ПосудоМат.
 ent-CrateVendingMachineRestockEngineeringFilled = ящик пополнения ИнжеМат

@@ -1,82 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'The hot potato now does more damage over time, has a shorter timer,
-      and has a larger explosion.', type: Tweak}
-  id: 4730
-  time: '2023-09-02T00:08:25.0000000+00:00'
-- author: ficcialfaint
-  changes:
-  - {message: Dumping into disposals no longer drops items onto the ground., type: Fix}
-  id: 4731
-  time: '2023-09-02T04:02:36.0000000+00:00'
-- author: ThunderBear2006
-  changes:
-  - {message: The signal button now has new sprites, type: Tweak}
-  id: 4732
-  time: '2023-09-02T13:58:40.0000000+00:00'
-- author: Gotimanga
-  changes:
-  - {message: Winter coats now have hoods, type: Add}
-  id: 4733
-  time: '2023-09-02T17:10:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix context menu not opening if you toggled combat mode immediately
-      prior., type: Fix}
-  id: 4734
-  time: '2023-09-02T20:16:34.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
-  id: 4735
-  time: '2023-09-03T01:59:36.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Technology Disks now sell for considerably less., type: Tweak}
-  id: 4736
-  time: '2023-09-03T02:31:53.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Microwaves now become bloodstained if you microwave animals inside
-      of them. Who was doing this?', type: Add}
-  id: 4737
-  time: '2023-09-03T04:03:05.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
-      dioxide poisoning., type: Tweak}
-  id: 4738
-  time: '2023-09-03T06:30:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix fulton parenting, also fix it not checking if the target is reachable.
-    type: Fix
-  - message: Added fultons to salvage vendor.
-    type: Add
-  - message: Make fultons easy to craft temporarily to get better feedback on it for
-      expeditions.
-    type: Tweak
-  id: 4739
-  time: '2023-09-03T12:18:09.0000000+00:00'
-- author: lzk228
-  changes:
-  - message: Added spoons and forks to the dinnerware vendor!
-    type: Add
-  id: 4740
-  time: '2023-09-03T14:22:28.0000000+00:00'
-- author: Diebek
-  changes:
-  - message: Updated Taxibot sprites.
-    type: Tweak
-  id: 4741
-  time: '2023-09-03T14:31:24.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Portable generators no longer rotate with the camera.
-    type: Tweak
-  id: 4742
-  time: '2023-09-03T17:55:42.0000000+00:00'
 - author: Jark255
   changes:
   - message: The firmware bug that wiped critical system parts of pAI alongside the
@@ -3806,3 +3728,41 @@ Entries:
   - {message: Core has been reworked and added back into the map pool., type: Add}
   id: 5229
   time: '2023-11-30T08:13:13.0000000+00:00'
+- author: TheArturZh
+  changes:
+  - message: "\u041F\u043E\u0434\u0442\u044F\u043D\u0443\u0442\u044B \u0444\u0438\u043A\
+      \u0441\u044B, \u0440\u0435\u0442\u0435\u043A\u0441\u0442\u0443\u0440\u044B \u0438\
+      \ \u043F\u0435\u0440\u0435\u0432\u043E\u0434\u044B \u0441 \u041A\u043E\u0440\
+      \u0432\u0430\u043A\u0441\u0430"
+    type: Add
+  id: 5206
+  time: '2023-11-28T23:15:24.0000000+00:00'
+- author: ZoNeSRuS
+  changes:
+  - message: "\u0422\u0435\u043F\u0435\u0440\u044C \u043A\u0443\u043A\u043B\u044B\
+      \ \u0443 \u043A\u043E\u0442\u043E\u0440\u044B\u0445 0 Airloss \u043F\u0435\u0440\
+      \u0435\u0441\u0442\u0430\u044E\u0442 \u0435\u0433\u043E \u0440\u0435\u0433\u0435\
+      \u043D\u0435\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C."
+    type: Fix
+  id: 5207
+  time: '2023-11-30T16:08:48.0000000+00:00'
+- author: Dexler
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0430\u043D\u043E\
+      \u043D\u0438\u043C\u043D\u0430\u044F \u0444\u043E\u0440\u043C\u0430 \u0434\u043E\
+      \u043D\u043E\u0441\u0430 \u0432 \u043F\u0440\u0438\u043D\u0442\u0435\u0440\u0435\
+      ."
+    type: Add
+  id: 5208
+  time: '2023-11-30T16:15:55.0000000+00:00'
+- author: Dexler
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D \u0444\u0438\u043B\
+      \u044C\u0442\u0440 \u043A\u043E\u043D\u0441\u043E\u043B\u0438 \u043A\u0440\u0438\
+      \u043C\u0438\u043D\u0430\u043B\u044C\u043D\u044B\u0445 \u0437\u0430\u043F\u0438\
+      \u0441\u0435\u0439 (\u0432\u0435\u0440\u0445\u043D\u0438\u0439/\u043D\u0438\u0436\
+      \u043D\u0438\u0439 \u0440\u0435\u0433\u0438\u0441\u0442\u0440, \u0431\u0443\u043A\
+      \u0432\u044B \u0435/\u0451)."
+    type: Fix
+  id: 5209
+  time: '2023-11-30T16:29:34.0000000+00:00'
