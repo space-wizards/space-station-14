@@ -82,6 +82,7 @@ namespace Content.Server.Forensics
             {
                 var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: args.Target, used: args.Used)
                 {
+                    BreakOnHandChange = true;
                     NeedHand = true,
                     BreakOnDamage = true,
                     BreakOnTargetMove = true,
