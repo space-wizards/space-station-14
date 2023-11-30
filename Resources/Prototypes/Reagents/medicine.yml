@@ -875,7 +875,7 @@
       - !type:MakeGhostRole
         conditions:
         - !type:ReagentThreshold
-          min: 5
+          min: 15
 
 - type: reagent
   id: Ethyloxyephedrine
