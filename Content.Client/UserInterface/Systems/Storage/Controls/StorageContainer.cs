@@ -47,6 +47,8 @@ public sealed class StorageContainer : BaseWindow
     private Texture? _sidebarMiddleTexture;
     private readonly string _sidebarBottomTexturePath = "Storage/sidebar_bottom";
     private Texture? _sidebarBottomTexture;
+    private readonly string _sidebarFatTexturePath = "Storage/sidebar_fat";
+    private Texture? _sidebarFatTexture;
 
     public StorageContainer()
     {
@@ -122,6 +124,7 @@ public sealed class StorageContainer : BaseWindow
         _sidebarTopTexture = Theme.ResolveTextureOrNull(_sidebarTopTexturePath)?.Texture;
         _sidebarMiddleTexture = Theme.ResolveTextureOrNull(_sidebarMiddleTexturePath)?.Texture;
         _sidebarBottomTexture = Theme.ResolveTextureOrNull(_sidebarBottomTexturePath)?.Texture;
+        _sidebarFatTexture = Theme.ResolveTextureOrNull(_sidebarFatTexturePath)?.Texture;
     }
 
     public void UpdateContainer(Entity<StorageComponent>? entity)
@@ -143,11 +146,10 @@ public sealed class StorageContainer : BaseWindow
             return;
 
         var boundingGrid = SharedStorageSystem.GetBoundingBox(comp.StorageGrid);
-        var totalWidth = boundingGrid.Width + 1;
 
         _backgroundGrid.Children.Clear();
-        _backgroundGrid.Rows = boundingGrid.Height;
-        _backgroundGrid.Columns = totalWidth;
+        _backgroundGrid.Rows = boundingGrid.Height + 1;
+        _backgroundGrid.Columns = boundingGrid.Width + 1;
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
         {
             for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
@@ -156,7 +158,7 @@ public sealed class StorageContainer : BaseWindow
                     ? _emptyTexture
                     : _blockedTexture;
 
-                _backgroundGrid.AddChild(new StorageBackgroundCell(new Vector2i(x, y))
+                _backgroundGrid.AddChild(new TextureRect
                 {
                     Texture = texture,
                     TextureScale = new Vector2(2, 2)
@@ -183,7 +185,9 @@ public sealed class StorageContainer : BaseWindow
             {
                 new TextureRect
                 {
-                    Texture = _sidebarTopTexture,
+                    Texture = boundingGrid.Height != 0
+                        ? _sidebarTopTexture
+                        : _sidebarFatTexture,
                     TextureScale = new Vector2(2, 2),
                     Children =
                     {
@@ -201,11 +205,16 @@ public sealed class StorageContainer : BaseWindow
                 TextureScale = new Vector2(2, 2),
             });
         }
-        _sidebar.AddChild(new TextureRect
+
+        if (boundingGrid.Height > 0)
         {
-            Texture = _sidebarBottomTexture,
-            TextureScale = new Vector2(2, 2),
-        });
+            _sidebar.AddChild(new TextureRect
+            {
+                Texture = _sidebarBottomTexture,
+                TextureScale = new Vector2(2, 2),
+            });
+        }
+
         #endregion
 
         BuildItemPieces();
@@ -225,7 +234,8 @@ public sealed class StorageContainer : BaseWindow
         //todo. at some point, we may want to only rebuild the pieces that have actually received new data.
 
         _pieceGrid.Children.Clear();
-        _pieceGrid.Rows = boundingGrid.Height;
+        _pieceGrid.Rows = boundingGrid.Height + 1;
+        _pieceGrid.Rows = boundingGrid.Height + 1;
         _pieceGrid.Columns = boundingGrid.Width + 1;
         for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
         {
@@ -366,7 +376,7 @@ public sealed class StorageContainer : BaseWindow
         return position;
     }
 
-    public bool TryGetBackgroundCell(int x, int y, [NotNullWhen(true)] out StorageBackgroundCell? cell)
+    public bool TryGetBackgroundCell(int x, int y, [NotNullWhen(true)] out Control? cell)
     {
         cell = null;
 
@@ -384,7 +394,7 @@ public sealed class StorageContainer : BaseWindow
             return false;
         }
 
-        cell = (StorageBackgroundCell) _backgroundGrid.GetChild(y * _backgroundGrid.Columns + x);
+        cell = _backgroundGrid.GetChild(y * _backgroundGrid.Columns + x);
         return true;
     }
 
@@ -412,9 +422,8 @@ public sealed class StorageContainer : BaseWindow
                     _entity.GetNetEntity(handEntity),
                     _entity.GetNetEntity(StorageEntity.Value),
                     new ItemStorageLocation(_storageController.DraggingRotation, pos)));
+                args.Handle();
             }
-
-            args.Handle();
         }
     }
 
@@ -426,18 +435,5 @@ public sealed class StorageContainer : BaseWindow
 
         if (_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComp))
             _storageSystem?.CloseStorageUI(StorageEntity.Value, storageComp);
-    }
-
-    //todo re-examine if this is necessary at all
-    public sealed class StorageBackgroundCell : TextureRect
-    {
-        public readonly Vector2i Location;
-
-        public StorageBackgroundCell(Vector2i location)
-        {
-            Location = location;
-            MouseFilter = MouseFilterMode.Pass;
-            ReservesSpace = true;
-        }
     }
 }

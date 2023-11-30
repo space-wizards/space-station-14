@@ -144,6 +144,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     /// I have to sidestep all of the input handling. Cheers.
     private void OnMiddleMouse(KeyEventArgs keyEvent, KeyEventType type)
     {
+        if (keyEvent.Handled)
+            return;
+
         _hands ??= _entity.System<HandsSystem>();
         if (!IsDragging && _hands.GetActiveHandEntity() == null)
             return;
@@ -179,6 +182,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         DraggingRotation = (DraggingRotation + Math.PI / 2f).GetCardinalDir().ToAngle();
         if (DraggingGhost != null)
             DraggingGhost.Location.Rotation = DraggingRotation;
+
+        if (IsDragging || (_container != null && UIManager.CurrentlyHovered == _container))
+            keyEvent.Handle();
     }
 
     private void OnStorageUpdated(EntityUid uid, StorageComponent component)

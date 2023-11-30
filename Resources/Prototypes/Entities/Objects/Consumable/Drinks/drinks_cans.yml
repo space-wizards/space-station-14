@@ -403,6 +403,8 @@
   - type: Item
     size: Normal
   - type: Storage
+    storageGrid:
+    - 0,0,5,1
     maxSlots: 6
     whitelist:
       tags:

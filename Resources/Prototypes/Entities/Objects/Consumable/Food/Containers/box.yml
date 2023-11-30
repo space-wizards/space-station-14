@@ -38,7 +38,8 @@
       map: ["pink-box6"]
       visible: false
   - type: Storage
-    maxSlots: 6
+    storageGrid:
+    - 0,0,2,1
     whitelist:
       tags:
       - Donut
@@ -118,7 +119,8 @@
       map: ["box12"]
       visible: false
   - type: Storage
-    maxSlots: 12
+    storageGrid:
+    - 0,0,5,1
     whitelist:
       tags:
       - Egg
@@ -206,11 +208,9 @@
       map: ["enum.StorageVisualLayers.Door"]
   # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
-    maxSlots: 1
+    storageGrid:
+    - 0,0,1,1
     maxItemSize: Normal
-    whitelist:
-      tags:
-      - Pizza
   - type: Item
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     heldPrefix: box
