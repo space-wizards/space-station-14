@@ -9,18 +9,21 @@ using Content.Shared.Radio.Components;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Shared.Radio.EntitySystems;
 
 /// <summary>
 ///     This system manages encryption keys & key holders for use with radio channels.
 /// </summary>
-public sealed class EncryptionKeySystem : EntitySystem
+public sealed partial class EncryptionKeySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -245,7 +248,7 @@ public sealed class EncryptionKeySystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    public sealed class EncryptionRemovalFinishedEvent : SimpleDoAfterEvent
+    public sealed partial class EncryptionRemovalFinishedEvent : SimpleDoAfterEvent
     {
     }
 }

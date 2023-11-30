@@ -39,6 +39,7 @@
   - addview
   - removeview
   - hwid
+  - showaudio
   - showpos
   - showray
   - showchunkbb
@@ -65,6 +66,7 @@
   - net_entityreport
   - scene
   - replay_recording_stats
+  - print_pvs_ack
 
 
 - Flags: MAPPING
@@ -126,7 +128,10 @@
 
 - Flags: QUERY
   Commands:
-  - forall
   - uploadfile
   - loadprototype
   - uploadfolder
+
+- Commands:
+  - "|"
+  - oldhelp

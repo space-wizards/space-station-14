@@ -8,7 +8,6 @@
     state: rods
   - type: Item
     sprite: Objects/Materials/parts.rsi
-  - type: ItemStatus
   - type: Tag
     tags:
       - DroneUsable
@@ -45,7 +44,7 @@
     - state: rods_5
       map: ["base"]
   - type: Item
-    size: 30
+    size: Normal
 #    heldPrefix: rods
   - type: Construction
     graph: MetalRod
@@ -62,6 +61,21 @@
 
 - type: entity
   parent: PartRodMetal
+  id: PartRodMetal10
+  name: metal rod
+  suffix: 10
+  components:
+  - type: Tag
+    tags:
+    - RodMetal1
+    - DroneUsable
+  - type: Sprite
+    state: rods
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: PartRodMetal
   id: PartRodMetal1
   name: metal rod
   suffix: Single
@@ -74,5 +88,12 @@
     state: rods
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
+
+- type: entity
+  parent: PartRodMetal
+  id: PartRodMetalLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Stack
+    lingering: true
+    count: 0

@@ -5,7 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class AdjustAlert : ReagentEffect
+public sealed partial class AdjustAlert : ReagentEffect
 {
     [DataField("alertType", required: true)]
     public AlertType Type;

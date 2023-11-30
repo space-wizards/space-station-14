@@ -1,4 +1,4 @@
-﻿using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Shared.Chat.TypingIndicator;
@@ -11,8 +11,9 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
     /// <summary>
     ///     Default ID of <see cref="TypingIndicatorPrototype"/>
     /// </summary>
+    [ValidatePrototypeId<TypingIndicatorPrototype>]
     public const string InitialIndicatorId = "default";
-    
+
     public override void Initialize()
     {
         base.Initialize();
@@ -25,7 +26,7 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
         if (!TryComp<ClothingComponent>(uid, out var clothing) ||
             !TryComp<TypingIndicatorComponent>(args.Equipee, out var indicator))
             return;
-        
+
         var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
         if (!isCorrectSlot) return;
 

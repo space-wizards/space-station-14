@@ -12,8 +12,6 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: ScrambledAccent
-    Alcohol:
-      effects:
       - !type:Drunk
         slurSpeech: false
         boozePower: 20
@@ -57,8 +55,6 @@
         - !type:ReagentThreshold
           min: 20
         probability: 0.02
-    Alcohol:
-      effects:
       - !type:Drunk
         conditions:
         - !type:ReagentThreshold
@@ -162,8 +158,6 @@
         conditions:
         - !type:ReagentThreshold
           min: 15
-    Alcohol:
-      effects:
       - !type:Drunk
 
 - type: reagent
@@ -407,6 +401,9 @@
     Medicine:
       effects:
       - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 4
         probability: 0.3
 
 - type: reagent
@@ -547,6 +544,13 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: medicine
   color: "#c8ff75"
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 6
+    - !type:PlantPhalanximine
+      conditions:
+      - !type:ReagentThreshold
+        min: 4
   metabolisms:
     Medicine:
       effects:
@@ -636,22 +640,6 @@
         damage:
           types:
             Caustic: -5
-
-- type: reagent
-  id: Spaceacillin
-  name: reagent-name-spaceacillin
-  group: Medicine
-  desc: reagent-desc-spaceacillin
-  physicalDesc: reagent-physical-desc-opaque
-  flavor: medicine
-  color: "#9942f5"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 0.5
 
 - type: reagent
   id: Stellibinin

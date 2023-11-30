@@ -7,7 +7,7 @@ namespace Content.Shared.Prayer;
 /// Allows an entity to be prayed on in the context menu
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class PrayableComponent : Component
+public sealed partial class PrayableComponent : Component
 {
     /// <summary>
     /// If bible users are only allowed to use this prayable entity

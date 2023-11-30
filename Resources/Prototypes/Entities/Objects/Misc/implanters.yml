@@ -1,8 +1,8 @@
-﻿# Implanters
+# Implanters
 
 - type: entity
   name: implanter
-  description: a syringe fitted to be used exclusively with implants
+  description: A syringe exclusively designed for the injection and extraction of subdermal implants.
   id: BaseImplanter
   parent: BaseItem
   abstract: true
@@ -12,26 +12,34 @@
       containers:
         implanter_slot: !type:ContainerSlot { }
     - type: Implanter
+      whitelist:
+        components:
+        - Body # no chair microbomb
+      blacklist:
+        components:
+        - Guardian # no holoparasite macrobomb wombo combo
       currentMode: Draw
       implanterSlot:
         name: Implant
+        locked: True
         priority: 0
         whitelist:
           tags:
             - SubdermalImplant
     - type: Sprite
-      sprite: Objects/Specific/Chemistry/syringe.rsi
-      state: syringe_base0
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
       layers:
-        - state: syringe2
-          map: [ "implantFull" ]
-          color: '#1cd94e'
-          visible: false
-        - state: syringe_base0
+        - state: implanter0
           map: [ "implantOnly" ]
+          visible: true
+        - state: implanter1
+          map: [ "implantFull" ]
+          visible: false
     - type: Item
-      sprite: Objects/Specific/Chemistry/syringe.rsi
+      sprite: Objects/Specific/Medical/implanter.rsi
       heldPrefix: 0
+      size: Small
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -42,42 +50,79 @@
         enum.ImplanterImplantOnlyVisuals.ImplantOnly:
           implantOnly:
             True: {state: broken}
-            False: {state: syringe_base0}
+            False: {state: implanter0}
 
 - type: entity
   id: Implanter
   parent: BaseImplanter
+  description: A disposable syringe exclusively designed for the injection and extraction of subdermal implants.
   components:
     - type: Tag
       tags:
         - Trash
 
 - type: entity
+  parent: Implanter
+  id: ImplanterAdmeme
+  suffix: Admeme
+  components:
+  - type: Implanter
+    # go wild with sentient chairs with macrobombs
+    whitelist: null
+    blacklist: null
+
+- type: entity
   id: BaseImplantOnlyImplanter
   parent: Implanter
-  description: a single use implanter
+  description: A disposable syringe exclusively designed for the injection of subdermal implants.
   abstract: true
   components:
     - type: Sprite
-      sprite: Objects/Specific/Chemistry/syringe.rsi
-      state: syringe_base0
+      sprite: Objects/Specific/Medical/implanter.rsi
+      state: implanter0
       layers:
-        - state: syringe2
+        - state: implanter1
           map: [ "implantFull" ]
-          color: '#1cd94e'
           visible: true
-        - state: syringe_base0
+        - state: implanter0
           map: [ "implantOnly" ]
     - type: Implanter
       currentMode: Inject
       implantOnly: true
+
+- type: entity
+  id: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
+  description: A compact disposable syringe exclusively designed for the injection of subdermal implants.
+  abstract: true
+  components:
+    - type: Item
+      sprite: Objects/Specific/Medical/syndi_implanter.rsi
+    - type: Sprite
+      sprite: Objects/Specific/Medical/syndi_implanter.rsi
+      state: implanter1
+      layers:
+        - state: implanter0
+          map: [ "implantFull" ]
+          visible: true
+        - state: implanter1
+          map: [ "implantOnly" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.ImplanterVisuals.Full:
+          implantFull:
+            True: {visible: true}
+            False: {visible: false}
+        enum.ImplanterImplantOnlyVisuals.ImplantOnly:
+          implantOnly:
+            True: {state: broken}
+            False: {state: implanter1}
 
 #Fun implanters
 
 - type: entity
   id: SadTromboneImplanter
   name: sad trombone implanter
-  description: a single use implanter, the implant plays a sad tune on death
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -86,7 +131,6 @@
 - type: entity
   id: LightImplanter
   name: light implanter
-  description: a single use implanter, the implant emits light on activation
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -95,7 +139,6 @@
 - type: entity
   id: BikeHornImplanter
   name: bike horn implanter
-  description: a single use implanter, the implant makes you able to honk anywhere at any time
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -106,7 +149,6 @@
 - type: entity
   id: TrackingImplanter
   name: tracking implanter
-  description: a single use implanter, the implant tracks
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -117,8 +159,7 @@
 - type: entity
   id: StorageImplanter
   name: storage implanter
-  description: a single use implanter, the implant grants hidden storage
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: StorageImplant
@@ -126,8 +167,7 @@
 - type: entity
   id: FreedomImplanter
   name: freedom implanter
-  description: a single use implanter, the implant lets the user break out of hand restraints three times
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: FreedomImplant
@@ -135,8 +175,7 @@
 - type: entity
   id: UplinkImplanter
   name: uplink implanter
-  description: a single use implanter, the implant lets the user access a syndicate uplink at will
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
   - type: Implanter
     implant: UplinkImplant
@@ -144,48 +183,51 @@
 - type: entity
   id: EmpImplanter
   name: EMP implanter
-  description: a single use implanter, the implant creates an EMP pulse when you activate it.
-  parent: BaseImplantOnlyImplanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: EmpImplant
 
 - type: entity
   id: DnaScramblerImplanter
-  name: dna scrambler implanter
-  description: a single use implanter, the implant allows you to randomly change your appearance and name once.
-  parent: BaseImplantOnlyImplanter
+  name: DNA scrambler implanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: DnaScramblerImplant
-      currentMode: Inject
-      implantOnly: false
 
 #Nuclear Operative/Special implanters
 
 - type: entity
   id: MicroBombImplanter
-  name: micro bomb implanter
-  description: a single use implanter, the implant is permanent and blows the user up on death
-  parent: BaseImplantOnlyImplanter
+  name: micro-bomb implanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: MicroBombImplant
 
 - type: entity
   id: MacroBombImplanter
-  name: macro bomb implanter
-  description: a single use implanter, the implant creates a large explosion on death after the alloted time
-  parent: BaseImplantOnlyImplanter
+  name: macro-bomb implanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: MacroBombImplant
 
 - type: entity
   id: DeathRattleImplanter
-  name: Deathrattle implanter
-  description: a single use implanter, the implant will inform anyone with access to the syndicate radio channel of your death.
-  parent: BaseImplantOnlyImplanter
+  name: death rattle implanter
+  parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
       implant: DeathRattleImplant
+
+# Security and Command implanters
+
+- type: entity
+  id: MindShieldImplanter
+  name: mind-shield implanter
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: MindShieldImplant

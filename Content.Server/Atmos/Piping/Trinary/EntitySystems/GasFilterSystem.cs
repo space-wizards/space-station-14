@@ -15,14 +15,12 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasFilterSystem : EntitySystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -62,16 +60,16 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 || !_nodeContainer.TryGetNode(nodeContainer, filter.OutletName, out PipeNode? outletNode)
                 || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
             {
-                _ambientSoundSystem.SetAmbience(filter.Owner, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVol = (float)(filter.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds);
+            var transferVol = filter.TransferRate * args.dt;
 
             if (transferVol <= 0)
             {
-                _ambientSoundSystem.SetAmbience(filter.Owner, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
@@ -86,7 +84,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
                 var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
                 _atmosphereSystem.Merge(target.Air, filteredOut);
-                _ambientSoundSystem.SetAmbience(filter.Owner, filteredOut.TotalMoles > 0f);
+                _ambientSoundSystem.SetAmbience(uid, filteredOut.TotalMoles > 0f);
             }
 
             _atmosphereSystem.Merge(outletNode.Air, removed);
@@ -97,7 +95,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             filter.Enabled = false;
 
             UpdateAppearance(uid, filter);
-            _ambientSoundSystem.SetAmbience(filter.Owner, false);
+            _ambientSoundSystem.SetAmbience(uid, false);
 
             DirtyUI(uid, filter);
             _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
@@ -108,7 +106,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (EntityManager.GetComponent<TransformComponent>(filter.Owner).Anchored)
+            if (EntityManager.GetComponent<TransformComponent>(uid).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, filter);
@@ -127,7 +125,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(filter.Owner).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
         }
 
         private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null)

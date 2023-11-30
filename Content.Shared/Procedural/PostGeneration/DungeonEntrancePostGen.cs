@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Selects [count] rooms and places external doors to them.
 /// </summary>
-public sealed class DungeonEntrancePostGen : IPostDunGen
+public sealed partial class DungeonEntrancePostGen : IPostDunGen
 {
     /// <summary>
     /// How many rooms we place doors on.

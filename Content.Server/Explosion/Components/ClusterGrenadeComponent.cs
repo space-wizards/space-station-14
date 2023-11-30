@@ -7,7 +7,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent, Access(typeof(ClusterGrenadeSystem))]
-    public sealed class ClusterGrenadeComponent : Component
+    public sealed partial class ClusterGrenadeComponent : Component
     {
         public Container GrenadesContainer = default!;
 

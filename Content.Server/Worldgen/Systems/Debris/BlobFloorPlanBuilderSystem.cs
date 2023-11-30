@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Worldgen.Components.Debris;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -14,6 +14,7 @@ public sealed class BlobFloorPlanBuilderSystem : BaseWorldSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinition = default!;
+    [Dependency] private readonly TileSystem _tiles = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -30,6 +31,8 @@ public sealed class BlobFloorPlanBuilderSystem : BaseWorldSystem
     private void PlaceFloorplanTiles(BlobFloorPlanBuilderComponent comp, MapGridComponent grid)
     {
         // NO MORE THAN TWO ALLOCATIONS THANK YOU VERY MUCH.
+        // TODO: Just put these on a field instead then?
+        // Also the end of the method has a big LINQ which is gonna blow this out the water.
         var spawnPoints = new HashSet<Vector2i>(comp.FloorPlacements * 6);
         var taken = new Dictionary<Vector2i, Tile>(comp.FloorPlacements * 5);
 
@@ -56,7 +59,7 @@ public sealed class BlobFloorPlanBuilderSystem : BaseWorldSystem
                 spawnPoints.Add(west);
 
             var tileDef = _tileDefinition[_random.Pick(comp.FloorTileset)];
-            taken.Add(point, new Tile(tileDef.TileId, 0, _random.Pick(((ContentTileDefinition)tileDef).PlacementVariants)));
+            taken.Add(point, new Tile(tileDef.TileId, 0, _tiles.PickVariant((ContentTileDefinition) tileDef)));
         }
 
         PlaceTile(Vector2i.Zero);

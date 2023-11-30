@@ -120,12 +120,12 @@
   boilingPoint: 78.2
   meltingPoint: -114.1
   metabolisms:
-    Poison:
+    Alcohol:
       effects:
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 5
+          min: 15
         - !type:OrganType
           type: Dwarf
           shouldHave: false
@@ -136,7 +136,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 5
+          min: 15
         - !type:OrganType
           type: Dwarf
         damage:
@@ -145,7 +145,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 5
+          min: 15
         - !type:OrganType
           type: Dwarf
         damage:
@@ -156,15 +156,13 @@
         conditions:
         - !type:ReagentThreshold
           reagent: Ethanol
-          min: 3
+          min: 12
         # dwarves immune to vomiting from alcohol
         - !type:OrganType
           type: Dwarf
           shouldHave: false
-    Alcohol:
-      effects:
       - !type:Drunk
-        boozePower: 20
+        boozePower: 2
 
 - type: reagent
   id: Gin
@@ -363,6 +361,27 @@
     sprite: Objects/Consumable/Drinks/wineglass.rsi
     state: icon
 
+- type: reagent
+  id: Champagne
+  name: reagent-name-champagne
+  parent: BaseAlcohol
+  desc: reagent-desc-champagne
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: champagne
+  color: "#FCFCEE"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/champagneglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+
 # Mixed Alcohol
 
 - type: reagent
@@ -466,7 +485,7 @@
         reagent: Ethanol
         amount: 0.15
       - !type:AdjustReagent
-        reagent: Radium
+        reagent: Uranium
         amount: 0.05
 
 - type: reagent
@@ -627,7 +646,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: DemonsBlood
@@ -754,7 +773,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: GinTonic
@@ -774,7 +793,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: Goldschlager
@@ -1121,7 +1140,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: CogChamp
@@ -1235,6 +1254,18 @@
         amount: 0.15
 
 - type: reagent
+  id: TheMartinez
+  name: reagent-name-the-martinez
+  parent: BaseAlcohol
+  desc: reagent-desc-the-martinez
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: themartinez
+  color: "#75b1f0"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/the_martinez.rsi
+    state: icon
+
+- type: reagent
   id: ThreeMileIsland
   name: reagent-name-three-mile-island
   parent: BaseAlcohol
@@ -1307,7 +1338,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: WhiskeyCola
@@ -1327,7 +1358,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
 
 - type: reagent
   id: WhiskeySoda
@@ -1347,7 +1378,24 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15
+        amount: 0.07
+
+- type: reagent
+  id: WhiteGilgamesh
+  name: reagent-name-white-gilgamesh
+  parent: BaseDrink
+  desc: reagent-desc-white-gilgamesh
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: white-gilgamesh
+  color: "#e5d27e"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
 
 - type: reagent
   id: WhiteRussian

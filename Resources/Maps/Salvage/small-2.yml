@@ -54,11 +54,41 @@ entities:
           -1,-1:
             0: 65535
           0,-1:
-            0: 30583
+            0: 65535
           -1,0:
-            0: 4095
+            0: 65535
           0,0:
-            0: 1911
+            0: 65535
+          -2,-1:
+            0: 52428
+          -2,-2:
+            0: 32768
+          -1,-2:
+            0: 61440
+          0,-2:
+            0: 61440
+          1,-2:
+            0: 4096
+          1,-1:
+            0: 65535
+          -2,0:
+            0: 52428
+          -2,1:
+            0: 140
+          -1,1:
+            0: 65535
+          -1,2:
+            0: 15
+          0,1:
+            0: 65535
+          0,2:
+            0: 15
+          1,0:
+            0: 65535
+          1,1:
+            0: 32767
+          1,2:
+            0: 2
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -78,8 +108,7 @@ entities:
         chunkSize: 4
       type: GridAtmosphere
     - type: GasTileOverlay
-    - nextUpdate: 0
-      type: SpreaderGrid
+    - type: SpreaderGrid
     - type: GridPathfinding
 - proto: APCBasic
   entities:
@@ -533,10 +562,6 @@ entities:
     - pos: 4.5020123,6.4660482
       parent: 55
       type: Transform
-    - nextAttack: 127.5495911
-      type: MeleeWeapon
-    - nextSound: 127.7495911
-      type: EmitSoundOnCollide
 - proto: WallWood
   entities:
   - uid: 3

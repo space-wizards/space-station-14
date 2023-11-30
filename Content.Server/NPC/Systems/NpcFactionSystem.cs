@@ -1,15 +1,15 @@
-using Content.Server.NPC.Components;
-using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.NPC.Components;
+using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Systems;
 
 /// <summary>
 ///     Outlines faction relationships with each other.
 /// </summary>
-public sealed class NpcFactionSystem : EntitySystem
+public sealed partial class NpcFactionSystem : EntitySystem
 {
-    [Dependency] private readonly FactionExceptionSystem _factionException = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
@@ -26,6 +26,8 @@ public sealed class NpcFactionSystem : EntitySystem
         _sawmill = Logger.GetSawmill("faction");
         SubscribeLocalEvent<NpcFactionMemberComponent, ComponentStartup>(OnFactionStartup);
         _protoManager.PrototypesReloaded += OnProtoReload;
+
+        InitializeException();
         RefreshFactions();
     }
 
@@ -111,6 +113,20 @@ public sealed class NpcFactionSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Remove this entity from all factions.
+    /// </summary>
+    public void ClearFactions(EntityUid uid, bool dirty = true)
+    {
+        if (!TryComp<NpcFactionMemberComponent>(uid, out var component))
+            return;
+
+        component.Factions.Clear();
+
+        if (dirty)
+            RefreshFactions(component);
+    }
+
     public IEnumerable<EntityUid> GetNearbyHostiles(EntityUid entity, float range, NpcFactionMemberComponent? component = null)
     {
         if (!Resolve(entity, ref component, false))
@@ -120,12 +136,15 @@ public sealed class NpcFactionSystem : EntitySystem
         if (TryComp<FactionExceptionComponent>(entity, out var factionException))
         {
             // ignore anything from enemy faction that we are explicitly friendly towards
-            return hostiles.Where(target => !_factionException.IsIgnored(factionException, target));
+            return hostiles
+                .Union(GetHostiles(entity, factionException))
+                .Where(target => !IsIgnored(entity, target, factionException));
         }
 
         return hostiles;
     }
 
+    [PublicAPI]
     public IEnumerable<EntityUid> GetNearbyFriendlies(EntityUid entity, float range, NpcFactionMemberComponent? component = null)
     {
         if (!Resolve(entity, ref component, false))
@@ -141,15 +160,15 @@ public sealed class NpcFactionSystem : EntitySystem
         if (!xformQuery.TryGetComponent(entity, out var entityXform))
             yield break;
 
-        foreach (var comp in _lookup.GetComponentsInRange<NpcFactionMemberComponent>(entityXform.MapPosition, range))
+        foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(entityXform.MapPosition, range))
         {
-            if (comp.Owner == entity)
+            if (ent.Owner == entity)
                 continue;
 
-            if (!factions.Overlaps(comp.Factions))
+            if (!factions.Overlaps(ent.Comp.Factions))
                 continue;
 
-            yield return comp.Owner;
+            yield return ent.Owner;
         }
     }
 

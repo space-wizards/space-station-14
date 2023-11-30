@@ -4,6 +4,7 @@ using Content.Shared.Mech.Equipment.Systems;
 using Content.Shared.Timing;
 using Robust.Shared.Audio;
 using System.Linq;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Mech.Equipment.Systems;
 
@@ -31,7 +32,7 @@ public sealed class MechSoundboardSystem : EntitySystem
         {
             Sounds = sounds.ToList()
         };
-        args.States.Add(uid, state);
+        args.States.Add(GetNetEntity(uid), state);
     }
 
     private void OnSoundboardMessage(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiMessageRelayEvent args)

@@ -9,14 +9,14 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Forces you to vomit.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ChemVomit : ReagentEffect
+    public sealed partial class ChemVomit : ReagentEffect
     {
         /// How many units of thirst to add each time we vomit
         [DataField("thirstAmount")]
-        public float ThirstAmount = -40f;
+        public float ThirstAmount = -8f;
         /// How many units of hunger to add each time we vomit
         [DataField("hungerAmount")]
-        public float HungerAmount = -40f;
+        public float HungerAmount = -8f;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
             => Loc.GetString("reagent-effect-guidebook-chem-vomit", ("chance", Probability));

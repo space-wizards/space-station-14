@@ -1,14 +1,11 @@
-using Content.Server.Guardian;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Implants;
 
@@ -24,7 +21,6 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         InitializeImplanted();
 
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
-        SubscribeLocalEvent<ImplanterComponent, ComponentGetState>(OnImplanterGetState);
 
         SubscribeLocalEvent<ImplanterComponent, ImplantEvent>(OnImplant);
         SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
@@ -35,28 +31,39 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         if (args.Target == null || !args.CanReach || args.Handled)
             return;
 
-        //Simplemobs and regular mobs should be injectable, but only regular mobs have mind.
-        //So just don't implant/draw anything that isn't living or is a guardian
-        //TODO: Rework a bit when surgery is in to work with implant cases
-        if (!HasComp<MobStateComponent>(args.Target.Value) || HasComp<GuardianComponent>(args.Target.Value))
+        var target = args.Target.Value;
+        if (!CheckTarget(target, component.Whitelist, component.Blacklist))
             return;
 
         //TODO: Rework when surgery is in for implant cases
         if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly)
         {
-            TryDraw(component, args.User, args.Target.Value, uid);
+            TryDraw(component, args.User, target, uid);
         }
         else
         {
-            if (!CanImplant(args.User, args.Target.Value, uid, component, out _, out _))
+            if (!CanImplant(args.User, target, uid, component, out var implant, out _))
+            {
+                // no popup if implant doesn't exist
+                if (implant == null)
+                    return;
+
+                // show popup to the user saying implant failed
+                var name = Identity.Name(target, EntityManager, args.User);
+                var msg = Loc.GetString("implanter-component-implant-failed", ("implant", implant), ("target", name));
+                _popup.PopupEntity(msg, target, args.User);
+                // prevent further interaction since popup was shown
+                args.Handled = true;
                 return;
+            }
 
             //Implant self instantly, otherwise try to inject the target.
-            if (args.User == args.Target)
-                Implant(args.User, args.Target.Value, uid, component);
+            if (args.User == target)
+                Implant(target, target, uid, component);
             else
-                TryImplant(component, args.User, args.Target.Value, uid);
+                TryImplant(component, args.User, target, uid);
         }
+
         args.Handled = true;
     }
 
@@ -69,7 +76,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        var args = new DoAfterArgs(user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
+        var args = new DoAfterArgs(EntityManager, user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
@@ -96,7 +103,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        var args = new DoAfterArgs(user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
+        var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
@@ -107,11 +114,6 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         if (_doAfter.TryStartDoAfter(args))
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
-    }
-
-    private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
-    {
-        args.State = new ImplanterComponentState(component.CurrentMode, component.ImplantOnly);
     }
 
     private void OnImplant(EntityUid uid, ImplanterComponent component, ImplantEvent args)

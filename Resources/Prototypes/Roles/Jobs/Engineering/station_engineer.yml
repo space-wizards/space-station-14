@@ -8,7 +8,7 @@
       department: Engineering
       time: 14400 #4 hrs
   startingGear: StationEngineerGear
-  icon: "StationEngineer"
+  icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce
   access:
   - Maintenance
@@ -29,6 +29,6 @@
     eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  innerclothingskirt: ClothingUniformJumpskirtEngineering
+  innerClothingSkirt: ClothingUniformJumpskirtEngineering
   satchel: ClothingBackpackSatchelEngineeringFilled
   duffelbag: ClothingBackpackDuffelEngineeringFilled

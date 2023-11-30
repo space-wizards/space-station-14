@@ -272,6 +272,27 @@
   itemSize: 5
 
 - type: stack
+  id: FloorTileMining
+  name: mining floor tile
+  spawn: FloorTileItemMining
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileMiningDark
+  name: dark mining floor tile
+  spawn: FloorTileItemMiningDark
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileMiningLight
+  name: light mining floor tile
+  spawn: FloorTileItemMiningLight
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
   id: FloorTileBar
   name: item bar floor tile
   spawn: FloorTileItemBar
@@ -303,6 +324,27 @@
   id: FloorTileLaundry
   name: laundry floor tile
   spawn: FloorTileItemLaundry
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileConcrete
+  name: concrete tile
+  spawn: FloorTileItemGrayConcrete
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileGrayConcrete
+  name: gray concrete tile
+  spawn: FloorTileItemLaundry
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileOldConcrete
+  name: old concrete tile
+  spawn: FloorTileItemOldConcrete
   maxCount: 30
   itemSize: 5
 
@@ -366,5 +408,12 @@
   id: FloorTileGratingMaint
   name: grating maint floor
   spawn: FloorTileItemGratingMaint
+  maxCount: 30
+  itemSize: 5
+
+- type: stack
+  id: FloorTileWeb
+  name: web tile
+  spawn: FloorTileItemWeb
   maxCount: 30
   itemSize: 5

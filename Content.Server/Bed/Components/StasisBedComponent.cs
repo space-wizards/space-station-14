@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Bed.Components
 {
     [RegisterComponent]
-    public sealed class StasisBedComponent : Component
+    public sealed partial class StasisBedComponent : Component
     {
         [DataField("baseMultiplier", required: true), ViewVariables(VVAccess.ReadWrite)]
         public float BaseMultiplier = 10f;

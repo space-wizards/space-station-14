@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -10,6 +10,10 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class VariantizeCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+
     public string Command => "variantize";
 
     public string Description => Loc.GetString("variantize-command-description");
@@ -24,26 +28,26 @@ public sealed class VariantizeCommand : IConsoleCommand
             return;
         }
 
-        var entMan = IoCManager.Resolve<IEntityManager>();
-        var random = IoCManager.Resolve<IRobustRandom>();
-
-        if (!EntityUid.TryParse(args[0], out var euid))
+        if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
         {
             shell.WriteError($"Failed to parse euid '{args[0]}'.");
             return;
         }
 
-        if (!entMan.TryGetComponent(euid, out MapGridComponent? gridComp))
+        if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
             shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
             return;
         }
 
-        foreach (var tile in gridComp.GetAllTiles())
+        var mapsSystem = _entManager.System<SharedMapSystem>();
+        var tileSystem = _entManager.System<TileSystem>();
+
+        foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
         {
-            var def = tile.GetContentTileDefinition();
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, random.Pick(def.PlacementVariants));
-            gridComp.SetTile(tile.GridIndices, newTile);
+            var def = tile.GetContentTileDefinition(_tileDefManager);
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def));
+            mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
     }
 }

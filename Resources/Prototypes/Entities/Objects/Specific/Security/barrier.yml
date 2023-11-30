@@ -5,6 +5,7 @@
   parent: BaseStructure
   components:
   - type: Transform
+    anchored: false
     noRot: true
   - type: Sprite
     sprite: Objects/Specific/Security/barrier.rsi
@@ -24,21 +25,26 @@
     canCollide: false
   - type: Fixtures
     fixtures:
-      fix1:
+      base:
         shape:
           !type:PhysShapeCircle
           radius: 0.45
         density: 75
         mask:
         - MachineMask
+      barrier:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
         layer:
         - WallLayer
+  - type: DeployableBarrier
+    fixture: barrier
   - type: AccessReader
     access: [["Security"]]
   - type: Lock
     locked: false
     lockOnClick: true # toggle lock just by clicking on barrier
-  - type: DeployableBarrier
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

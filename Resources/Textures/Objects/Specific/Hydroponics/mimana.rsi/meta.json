@@ -1,0 +1,67 @@
+{
+  "version": 1,
+   "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/6be7633abca9f1a51cab1020500cf0776ce78e5c",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "dead"
+    },
+    {
+      "name": "harvest"
+    },
+    {
+      "name": "produce"
+    },
+    {
+      "name": "peel"
+    },
+    {
+      "name": "peel2"
+    },
+    {
+      "name": "peel3"
+    },
+    {
+      "name": "peel-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "peel-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "seed"
+    },
+    {
+      "name": "stage-1"
+    },
+    {
+      "name": "stage-2"
+    },
+    {
+      "name": "stage-3"
+    },
+    {
+      "name": "stage-4"
+    },
+    {
+      "name": "stage-5"
+    },
+    {
+      "name": "stage-6"
+    },
+    {
+      "name": "primed",
+      "delays": [
+        [
+          4.9,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

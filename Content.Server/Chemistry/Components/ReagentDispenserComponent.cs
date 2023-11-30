@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(ReagentDispenserSystem))]
-    public sealed class ReagentDispenserComponent : Component
+    public sealed partial class ReagentDispenserComponent : Component
     {
 
         [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))]

@@ -6,7 +6,7 @@ namespace Content.Server.Speech.Components;
 ///     This component is used to relay speech events to other systems.
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveListenerComponent : Component
+public sealed partial class ActiveListenerComponent : Component
 {
     [DataField("range")]
     public float Range = ChatSystem.VoiceRange;

@@ -1,31 +1,11 @@
 - type: entity
-  parent: Clothing
+  parent: ClothingBackpack
   id: ClothingBackpackSatchel
   name: satchel
   description: A trendy looking satchel.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel.rsi
-    state: icon
-  - type: Item
-    size: 9999
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
-  - type: Storage
-    capacity: 100
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
-  # to prevent bag open/honk spam
-  - type: UseDelay
-    delay: 0.5
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -44,6 +24,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/engineering.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelAtmospherics
+  name: atmospherics satchel
+  description: A tough satchel made of fire resistant fibers. Smells like plasma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/atmospherics.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -149,6 +138,15 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelCargo
+  name: cargo satchel
+  description: A robust satchel for stealing cargo's loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Satchels/cargo.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelSalvage
   name: salvage satchel
   description: A robust satchel for stashing your loot.
@@ -169,5 +167,8 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
+  - type: Item
+    size: Ginormous
   - type: Storage
-    capacity: 9999
+    maxItemSize: Huge
+    maxTotalWeight: 200 #5 duffels worth of gear

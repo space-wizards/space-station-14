@@ -7,31 +7,31 @@
     - to: half
       steps:
       - material: Steel
-        amount: 2
+        amount: 1
         doAfter: 1
 
     - to: straight
       steps:
       - material: Steel
-        amount: 2
+        amount: 1
         doAfter: 1
 
     - to: bend
       steps:
       - material: Steel
-        amount: 2
+        amount: 1
         doAfter: 1
 
     - to: tjunction
       steps:
       - material: Steel
-        amount: 2
+        amount: 1
         doAfter: 1
 
     - to: fourway
       steps:
       - material: Steel
-        amount: 2
+        amount: 1
         doAfter: 1
 
   - node: half
@@ -44,7 +44,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 2
+        amount: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -60,7 +60,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 2
+        amount: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -76,7 +76,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 2
+        amount: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -92,7 +92,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 2
+        amount: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -108,7 +108,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 2
+        amount: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding

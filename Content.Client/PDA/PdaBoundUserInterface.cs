@@ -1,8 +1,6 @@
 using Content.Client.CartridgeLoader;
 using Content.Shared.CartridgeLoader;
-using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.CrewManifest;
 using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -13,8 +11,6 @@ namespace Content.Client.PDA
     [UsedImplicitly]
     public sealed class PdaBoundUserInterface : CartridgeLoaderBoundUserInterface
     {
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-
         [ViewVariables]
         private PdaMenu? _menu;
 
@@ -33,15 +29,6 @@ namespace Content.Client.PDA
             {
                 SendMessage(new PdaToggleFlashlightMessage());
             };
-
-            if (_configManager.GetCVar(CCVars.CrewManifestUnsecure))
-            {
-                _menu.CrewManifestButton.Visible = true;
-                _menu.CrewManifestButton.OnPressed += _ =>
-                {
-                    SendMessage(new CrewManifestOpenUiMessage());
-                };
-            }
 
             _menu.EjectIdButton.OnPressed += _ =>
             {

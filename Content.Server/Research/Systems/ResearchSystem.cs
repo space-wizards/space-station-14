@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Shared.Access.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
@@ -13,6 +14,7 @@ namespace Content.Server.Research.Systems
     [UsedImplicitly]
     public sealed partial class ResearchSystem : SharedResearchSystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLog = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -40,11 +42,13 @@ namespace Content.Server.Research.Systems
         {
             serverUid = null;
             serverComponent = null;
-            foreach (var server in EntityQuery<ResearchServerComponent>())
+
+            var query = EntityQueryEnumerator<ResearchServerComponent>();
+            while (query.MoveNext(out var uid, out var server))
             {
                 if (server.Id != id)
                     continue;
-                serverUid = server.Owner;
+                serverUid = uid;
                 serverComponent = server;
                 return true;
             }
@@ -87,13 +91,14 @@ namespace Content.Server.Research.Systems
 
         public override void Update(float frameTime)
         {
-            foreach (var server in EntityQuery<ResearchServerComponent>())
+            var query = EntityQueryEnumerator<ResearchServerComponent>();
+            while (query.MoveNext(out var uid, out var server))
             {
                 if (server.NextUpdateTime > _timing.CurTime)
                     continue;
                 server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
 
-                UpdateServer(server.Owner, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
+                UpdateServer(uid, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
             }
         }
     }

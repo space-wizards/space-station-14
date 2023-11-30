@@ -3,13 +3,13 @@
 namespace Content.Server.Advertisements
 {
     [Serializable, Prototype("advertisementsPack")]
-    public sealed class AdvertisementsPackPrototype : IPrototype
+    public sealed partial class AdvertisementsPackPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("advertisements")]
-        public List<string> Advertisements { get; } = new();
+        public List<string> Advertisements { get; private set; } = new();
     }
 }

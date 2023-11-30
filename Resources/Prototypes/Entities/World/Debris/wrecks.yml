@@ -45,8 +45,6 @@
             prob: 0.2
           - id: SalvageMobSpawner
             prob: 0.7
-    - type: GCAbleObject
-      queue: SpaceDebris
     - type: IFF
       flags: HideLabel
       color: "#88b0d1"

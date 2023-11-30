@@ -15,14 +15,6 @@
       uiWindowPos: 0,2
       strippingWindowPos: 0,2
       displayName: Jumpsuit
-    - name: outerClothing
-      slotTexture: suit
-      slotFlags: OUTERCLOTHING
-      slotGroup: MainHotbar
-      stripTime: 6
-      uiWindowPos: 1,2
-      strippingWindowPos: 1,2
-      displayName: Suit
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES
@@ -61,6 +53,65 @@
       uiWindowPos: 1,0
       strippingWindowPos: 1,0
       displayName: Head
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags:   SUITSTORAGE
+      stripTime: 3
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,5
+      dependsOn: outerClothing
+      displayName: Suit Storage
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      dependsOn: jumpsuit
+      displayName: ID
+    - name: belt
+      slotTexture: belt
+      slotFlags: BELT
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,1
+      strippingWindowPos: 2,3
+      displayName: Belt
+    - name: back
+      slotTexture: back
+      slotFlags: BACK
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 3,0
+      strippingWindowPos: 0,3
+      displayName: Back
+
+    - name: pocket4
+      slotTexture: web
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,4
+      strippingWindowPos: 1,5
+      displayName: Pocket 4
+    - name: pocket3
+      slotTexture: web
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 0,4
+      strippingWindowPos: 0,5
+      displayName: Pocket 3
+
+    - name: outerClothing
+      slotTexture: suit
+      slotFlags: OUTERCLOTHING
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 1,2
+      strippingWindowPos: 1,2
+      displayName: Suit
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
@@ -81,42 +132,3 @@
       dependsOn: jumpsuit
       displayName: Pocket 2
       stripHidden: true
-    - name: id
-      slotTexture: id
-      slotFlags: IDCARD
-      slotGroup: SecondHotbar
-      stripTime: 6
-      uiWindowPos: 2,1
-      strippingWindowPos: 2,4
-      dependsOn: jumpsuit
-      displayName: ID
-    - name: belt
-      slotTexture: belt
-      slotFlags: BELT
-      slotGroup: SecondHotbar
-      stripTime: 6
-      uiWindowPos: 3,1
-      strippingWindowPos: 1,5
-      displayName: Belt
-    - name: back
-      slotTexture: back
-      slotFlags: BACK
-      slotGroup: SecondHotbar
-      stripTime: 6
-      uiWindowPos: 3,0
-      strippingWindowPos: 0,5
-      displayName: Back
-    - name: web1
-      slotTexture: web
-      slotFlags: POCKET
-      stripTime: 3
-      uiWindowPos: 0,3
-      strippingWindowPos: 0,3
-      displayName: Left Web
-    - name: web2
-      slotTexture: web
-      slotFlags: POCKET
-      stripTime: 3
-      uiWindowPos: 6,3
-      strippingWindowPos: 2,3
-      displayName: Right Web

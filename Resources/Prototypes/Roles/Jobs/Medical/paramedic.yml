@@ -10,7 +10,7 @@
     - !type:OverallPlaytimeRequirement
       time: 54000 # 15 hrs
   startingGear: ParamedicGear
-  icon: "Paramedic"
+  icon: "JobIconParamedic"
   supervisors: job-supervisors-cmo
   access:
   - Medical
@@ -28,6 +28,6 @@
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltParamedicFilled
-  innerclothingskirt: ClothingUniformJumpskirtParamedic
+  innerClothingSkirt: ClothingUniformJumpskirtParamedic
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

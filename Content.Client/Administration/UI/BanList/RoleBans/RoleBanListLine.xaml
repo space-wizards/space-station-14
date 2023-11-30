@@ -1,0 +1,46 @@
+﻿<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Orientation="Horizontal"
+    HorizontalExpand="True"
+    SeparationOverride="4">
+    <BoxContainer Orientation="Vertical"
+                  SizeFlagsStretchRatio="1"
+                  HorizontalExpand="True"
+                  RectClipContent="True">
+        <Button Name="IdsHidden"
+                Text="{Loc 'ban-list-view'}"
+                HorizontalExpand="True"
+                VerticalExpand="True"
+                MouseFilter="Pass"/>
+    </BoxContainer>
+    <cc:VSeparator/>
+    <Label Name="Reason"
+           Access="Public"
+           SizeFlagsStretchRatio="4.5"
+           HorizontalExpand="True"
+           VerticalExpand="True"/>
+    <cc:VSeparator/>
+    <Label Name="Role"
+           SizeFlagsStretchRatio="1.5"
+           HorizontalExpand="True"
+           VerticalExpand="True"/>
+    <cc:VSeparator/>
+    <Label Name="BanTime"
+           Access="Public"
+           SizeFlagsStretchRatio="2"
+           HorizontalExpand="True"
+           ClipText="True"/>
+    <cc:VSeparator/>
+    <Label Name="Expires"
+           Access="Public"
+           SizeFlagsStretchRatio="4"
+           HorizontalExpand="True"
+           ClipText="True"/>
+    <cc:VSeparator/>
+    <Label Name="BanningAdmin"
+           Access="Public"
+           SizeFlagsStretchRatio="2"
+           HorizontalExpand="True"
+           ClipText="True"/>
+</BoxContainer>

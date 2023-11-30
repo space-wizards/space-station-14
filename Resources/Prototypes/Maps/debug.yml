@@ -31,3 +31,20 @@
           - Captain
           availableJobs:
             Captain: [ -1, -1 ]
+
+- type: gameMap
+  id: TestTeg
+  mapName: Test TEG
+  mapPath: /Maps/Test/test_teg.yml
+  minPlayers: 0
+  stations:
+    TEG:
+      stationProto: TestStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "TEG"
+        - type: StationJobs
+          overflowJobs:
+            - ChiefEngineer
+          availableJobs:
+            ChiefEngineer: [ -1, -1 ]

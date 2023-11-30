@@ -12,7 +12,7 @@ namespace Content.Server.NPC.Components;
 /// Added to NPCs that are moving.
 /// </summary>
 [RegisterComponent]
-public sealed class NPCSteeringComponent : Component
+public sealed partial class NPCSteeringComponent : Component
 {
     #region Context Steering
 
@@ -38,6 +38,12 @@ public sealed class NPCSteeringComponent : Component
     public readonly List<Vector2> DangerPoints = new();
 
     #endregion
+
+    /// <summary>
+    /// Set to true from other systems if you wish to force the NPC to move closer.
+    /// </summary>
+    [DataField("forceMove")]
+    public bool ForceMove = false;
 
     /// <summary>
     /// Next time we can change our steering direction.
@@ -69,6 +75,22 @@ public sealed class NPCSteeringComponent : Component
     /// </summary>
     [ViewVariables]
     public bool Pathfind => PathfindToken != null;
+
+    /// <summary>
+    /// Are we considered arrived if we have line of sight of the target.
+    /// </summary>
+    [DataField("arriveOnLineOfSight")]
+    public bool ArriveOnLineOfSight = false;
+
+    /// <summary>
+    /// How long the target has been in line of sight if applicable.
+    /// </summary>
+    [DataField("lineOfSightTimer")]
+    public float LineOfSightTimer = 0f;
+
+    [DataField("lineOfSightTimeRequired")]
+    public float LineOfSightTimeRequired = 0.5f;
+
     [ViewVariables] public CancellationTokenSource? PathfindToken = null;
 
     /// <summary>

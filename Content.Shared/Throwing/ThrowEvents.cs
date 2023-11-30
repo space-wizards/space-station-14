@@ -5,26 +5,15 @@ namespace Content.Shared.Throwing
     /// </summary>
     public abstract class ThrowEvent : HandledEntityEventArgs
     {
-        /// <summary>
-        ///     The entity that threw <see cref="Thrown"/>.
-        /// </summary>
-        public EntityUid? User { get; }
+        public readonly EntityUid Thrown;
+        public readonly EntityUid Target;
+        public ThrownItemComponent Component;
 
-        /// <summary>
-        ///     The entity thrown by <see cref="User"/> that hit <see cref="Target"/>
-        /// </summary>
-        public EntityUid Thrown { get; }
-
-        /// <summary>
-        ///     The entity hit with <see cref="Thrown"/> by <see cref="User"/>
-        /// </summary>
-        public EntityUid Target { get; }
-
-        public ThrowEvent(EntityUid? user, EntityUid thrown, EntityUid target)
+        public ThrowEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component)
         {
-            User = user;
             Thrown = thrown;
             Target = target;
+            Component = component;
         }
     }
 
@@ -33,7 +22,7 @@ namespace Content.Shared.Throwing
     /// </summary>
     public sealed class ThrowHitByEvent : ThrowEvent
     {
-        public ThrowHitByEvent(EntityUid? user, EntityUid thrown, EntityUid target) : base(user, thrown, target)
+        public ThrowHitByEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component) : base(thrown, target, component)
         {
         }
     }
@@ -43,7 +32,7 @@ namespace Content.Shared.Throwing
     /// </summary>
     public sealed class ThrowDoHitEvent : ThrowEvent
     {
-        public ThrowDoHitEvent(EntityUid? user, EntityUid thrown, EntityUid target) : base(user, thrown, target)
+        public ThrowDoHitEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component) : base(thrown, target, component)
         {
         }
     }

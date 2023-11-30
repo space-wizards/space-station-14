@@ -6,7 +6,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Specific/Medical/medical.rsi
     heldPrefix: ointment
   # Inherited
@@ -54,8 +54,15 @@
   - type: Stack
     stackType: Ointment
     count: 1
-  - type: Item
-    size: 1
+
+- type: entity
+  id: Ointment10Lingering
+  parent: Ointment
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
 
 - type: entity
   name: regenerative mesh
@@ -96,8 +103,6 @@
   - type: Stack
     stackType: RegenerativeMesh
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   name: bruise pack
@@ -135,8 +140,15 @@
   - type: Stack
     stackType: Brutepack
     count: 1
-  - type: Item
-    size: 1
+
+- type: entity
+  id: Brutepack10Lingering
+  parent: Brutepack
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
 
 - type: entity
   name: medicated suture
@@ -175,8 +187,6 @@
   - type: Stack
     stackType: MedicatedSuture
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   name: blood pack
@@ -208,6 +218,14 @@
     price: 10
 
 - type: entity
+  parent: Bloodpack
+  id: Bloodpack10Lingering
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+
+- type: entity
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
   parent: BaseHealingItem
@@ -227,8 +245,8 @@
       - Biological
     damage:
       types:
-        Slash: -2.5
-        Piercing: -2.5
+        Slash: -5
+        Piercing: -10
     bloodlossModifier: -10
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
@@ -247,8 +265,15 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
+
+- type: entity
+  id: Gauze10Lingering
+  parent: Gauze
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
 
 - type: entity
   name: aloe cream
@@ -262,6 +287,32 @@
   - type: Stack
     stackType: AloeCream
     count: 10
+
+- type: entity
+  parent: BaseHealingItem
+  id: HealingToolbox
+  name: healing toolbox
+  description: A powerful toolbox imbued with robust energy. It can heal your wounds and fill you with murderous intent.
+  suffix: Do Not Map
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/healing_toolbox.rsi
+    state: icon
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      groups: # these are all split across multiple types
+        Brute: -150
+        Burn: -150
+        Toxin: -150
+    bloodlossModifier: -20
+    delay: 1
+    selfHealPenaltyMultiplier: 0
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
 
 # Pills
 - type: entity
@@ -278,6 +329,16 @@
           Quantity: 10
 
 - type: entity
+  parent: PillCanister
+  id: PillCanisterDexalin
+  suffix: Dexalin, 7
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillDexalin
+      amount: 7
+
+- type: entity
   name: dylovene pill (10u)
   parent: Pill
   id: PillDylovene
@@ -289,6 +350,16 @@
         reagents:
         - ReagentId: Dylovene
           Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterDylovene
+  suffix: Dylovene, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillDylovene
+      amount: 5
 
 - type: entity
   name: hyronalin pill (10u)
@@ -304,6 +375,16 @@
           Quantity: 10
 
 - type: entity
+  parent: PillCanister
+  id: PillCanisterHyronalin
+  suffix: Hyronalin, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillHyronalin
+      amount: 5
+
+- type: entity
   name: iron pill (10u)
   parent: Pill
   id: PillIron
@@ -315,6 +396,39 @@
         reagents:
         - ReagentId: Iron
           Quantity: 10
+
+- type: entity
+  name: copper pill (10u)
+  parent: Pill
+  id: PillCopper
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Copper
+          Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterIron
+  suffix: Iron, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillIron
+      amount: 5
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterCopper
+  suffix: Copper, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCopper
+      amount: 5
 
 - type: entity
   name: kelotane pill (10u)
@@ -330,6 +444,16 @@
           Quantity: 10
 
 - type: entity
+  parent: PillCanister
+  id: PillCanisterKelotane
+  suffix: Kelotane, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillKelotane
+      amount: 5
+
+- type: entity
   name: dermaline pill (10u)
   parent: Pill
   id: PillDermaline
@@ -341,6 +465,16 @@
         reagents:
         - ReagentId: Dermaline
           Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterDermaline
+  suffix: Dermaline, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillDermaline
+      amount: 5
 
 - type: entity
   name: space drugs
@@ -369,6 +503,16 @@
           Quantity: 10
 
 - type: entity
+  parent: PillCanister
+  id: PillCanisterTricordrazine
+  suffix: Tricordrazine, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillTricordrazine
+      amount: 5
+
+- type: entity
   name: bicaridine pill (10u)
   parent: Pill
   id: PillBicaridine
@@ -380,6 +524,42 @@
         reagents:
         - ReagentId: Bicaridine
           Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterBicaridine
+  suffix: Bicaridine, 5
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillBicaridine
+      amount: 5
+
+- type: entity
+  name: charcoal pill (10u)
+  parent: Pill
+  id: PillCharcoal
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    state: pill21
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Charcoal
+          Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PillCanisterCharcoal
+  suffix: Charcoal, 3
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCharcoal
+      amount: 3
 
 - type: entity
   name: romerol pill
@@ -461,19 +641,6 @@
           Quantity: 15
 
 - type: entity
-  name: spaceacillin syringe
-  parent: BaseSyringe
-  id: SyringeSpaceacillin
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Spaceacillin
-          Quantity: 15
-
-- type: entity
   name: bicaridine syringe
   parent: BaseSyringe
   id: SyringeBicaridine
@@ -536,6 +703,58 @@
           maxVol: 15
           reagents:
             - ReagentId: Ambuzol
+              Quantity: 15
+
+- type: entity
+  name: sigynate syringe
+  parent: BaseSyringe
+  id: SyringeSigynate
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Sigynate
+              Quantity: 15
+
+- type: entity
+  name: ethylredoxrazine syringe
+  parent: BaseSyringe
+  id: SyringeEthylredoxrazine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Ethylredoxrazine
+              Quantity: 15
+
+- type: entity
+  name: phalanximine syringe
+  parent: BaseSyringe
+  id: SyringePhalanximine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Phalanximine
+              Quantity: 15
+
+- type: entity
+  name: saline syringe
+  parent: BaseSyringe
+  id: SyringeSaline
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Saline
               Quantity: 15
 
 #this is where all the syringes are so i didn't know where to put it

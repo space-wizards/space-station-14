@@ -56,7 +56,7 @@ namespace Content.Client.Atmos.EntitySystems
 
         private void HandleAtmosDebugOverlayMessage(AtmosDebugOverlayMessage message)
         {
-            _tileData[message.GridId] = message;
+            _tileData[GetEntity(message.GridId)] = message;
         }
 
         private void HandleAtmosDebugOverlayDisableMessage(AtmosDebugOverlayDisableMessage ev)

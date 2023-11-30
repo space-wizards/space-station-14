@@ -1,21 +1,19 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Content.Shared.MachineLinking;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
+    // The world if people documented their shit.
     [RegisterComponent]
-    public sealed class GasVentPumpComponent : Component
+    public sealed partial class GasVentPumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Welded { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
@@ -122,12 +120,12 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Whether or not machine linking is enabled for this component.
         /// </summary>
         [DataField("canLink")]
-        public readonly bool CanLink = false;
+        public bool CanLink = false;
 
-        [DataField("pressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        [DataField("pressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string PressurizePort = "Pressurize";
 
-        [DataField("depressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        [DataField("depressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string DepressurizePort = "Depressurize";
 
         [ViewVariables(VVAccess.ReadWrite)]

@@ -21,7 +21,12 @@ public enum PathFlags : byte
     Smashing = 1 << 2,
 
     /// <summary>
+    /// Can we climb it like a table or railing.
+    /// </summary>
+    Climbing = 1 << 3,
+
+    /// <summary>
     /// Can we open stuff that requires interaction (e.g. click-open doors).
     /// </summary>
-    Interact = 1 << 3,
+    Interact = 1 << 4,
 }

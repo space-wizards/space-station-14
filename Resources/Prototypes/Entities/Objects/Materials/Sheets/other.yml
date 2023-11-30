@@ -8,8 +8,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
-    size: 30
-  - type: ItemStatus
+    size: Normal
   - type: Tag
     tags:
     - Sheet
@@ -38,6 +37,10 @@
     - paper
     - paper_2
     - paper_3
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 100
   - type: Sprite
     state: paper_3
     layers:
@@ -57,8 +60,6 @@
     state: paper
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -107,8 +108,6 @@
     state: plasma
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -139,8 +138,18 @@
       map: ["base"]
   - type: Item
     heldPrefix: plastic
-    size: 30
   - type: Appearance
+
+- type: entity
+  parent: SheetPlastic
+  id: SheetPlastic10
+  name: plastic
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plastic
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: SheetPlastic
@@ -150,8 +159,6 @@
   components:
   - type: Sprite
     state: plastic
-  - type: Item
-    size: 1
   - type: Stack
     count: 1
 
@@ -200,8 +207,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -243,5 +248,3 @@
       state: meat
     - type: Stack
       count: 1
-    - type: Item
-      size: 1

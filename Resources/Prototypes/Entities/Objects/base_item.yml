@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Item
-    size: 5
+    size: Small
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -43,6 +43,7 @@
     drawdepth: Items
     noRot: false
   - type: Pullable
+  - type: DamageExaminable
 
 - type: entity
   name: "storage item"

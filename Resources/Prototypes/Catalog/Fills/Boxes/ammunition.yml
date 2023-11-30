@@ -20,18 +20,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolCaselessRifle
-        amount: 6
-
-- type: entity
-  name: box of .25 caseless (high-velocity) magazines
-  parent: BoxMagazine
-  id: BoxMagazinePistolCaselessRifleHighVelocity
-  description: A box full of .25 caseless high-velocity magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazinePistolCaselessRifleHighVelocity
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .25 caseless (practice) magazines
@@ -42,7 +31,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolCaselessRiflePractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .25 caseless (rubber) magazines
@@ -53,7 +42,7 @@
   - type: StorageFill
     contents:
       - id: MagazineCaselessRifleRubber
-        amount: 6
+        amount: 4
 
 # LightRifle
 - type: entity
@@ -65,18 +54,7 @@
   - type: StorageFill
     contents:
       - id: MagazineLightRifle
-        amount: 6
-
-- type: entity
-  name: box of .30 rifle (high-velocity) magazines
-  parent: BoxMagazine
-  id: BoxMagazineLightRifleHighVelocity
-  description: A box full of .30 rifle (high-velocity) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazineLightRifleHighVelocity
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .30 rifle (practice) magazines
@@ -87,7 +65,7 @@
   - type: StorageFill
     contents:
       - id: MagazineLightRiflePractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .30 rifle (rubber) magazines
@@ -98,7 +76,7 @@
   - type: StorageFill
     contents:
       - id: MagazineLightRifleRubber
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of Vector magazines
@@ -109,32 +87,6 @@
   - type: StorageFill
     contents:
       - id: MagazineMagnumSubMachineGun
-        amount: 3
-
-- type: entity
-  name: box of omega particle cartridges
-  parent: BoxMagazine
-  id: BoxMagazineChimpOmega
-  description: A box full of omega particle cartridges for the CHIMP.
-  components:
-  - type: StorageFill
-    contents:
-      - id: CartridgeAnomalousParticleOmega
-        amount: 10
-  - type: Sprite
-    layers:
-      - state: box_science
-      - state: omegacart
-
-- type: entity
-  name: box of Vector (high-velocity) magazines
-  parent: BoxMagazine
-  id: BoxMagazineMagnumSubMachineGunHighVelocity
-  description: A box full of Vector (high-velocity) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazineMagnumSubMachineGunHighVelocity
         amount: 3
 
 - type: entity
@@ -180,18 +132,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistol
-        amount: 6
-
-- type: entity
-  name: box of pistol .35 auto (high-velocity) magazines
-  parent: BoxMagazine
-  id: BoxMagazinePistolHighVelocity
-  description: A box full of pistol .35 auto (high-velocity) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazinePistolHighVelocity
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of pistol .35 auto (practice) magazines
@@ -202,7 +143,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolPractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of pistol .35 auto (rubber) magazines
@@ -213,7 +154,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolRubber
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of machine pistol .35 auto magazines
@@ -224,18 +165,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolHighCapacity
-        amount: 6
-
-- type: entity
-  name: box of machine pistol .35 auto (high-velocity) magazines
-  parent: BoxMagazine
-  id: BoxMagazinePistolHighCapacityHighVelocity
-  description: A box full of machine pistol .35 auto (high-velocity) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazinePistolHighCapacityHighVelocity
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of machine pistol .35 auto (practice) magazines
@@ -246,7 +176,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolHighCapacityPractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of machine pistol .35 auto (rubber) magazines
@@ -257,7 +187,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolHighCapacityRubber
-        amount: 6
+        amount: 4
 
 
 - type: entity
@@ -269,17 +199,6 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolSubMachineGun
-        amount: 3
-
-- type: entity
-  name: box of SMG .35 auto (high-velocity) magazines
-  parent: BoxMagazine
-  id: BoxMagazinePistolSubMachineGunHighVelocity
-  description: A box full of SMG .35 auto (high-velocity) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazinePistolSubMachineGunHighVelocity
         amount: 3
 
 - type: entity
@@ -314,7 +233,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgun
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of (.50 beanbag) ammo drums
@@ -325,7 +244,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunBeanbag
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of (.50 slug) ammo drums
@@ -336,7 +255,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunSlug
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of (.50 incendiary) ammo drums
@@ -347,7 +266,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunIncendiary
-        amount: 6
+        amount: 4
 
 # base BallisticAmmoProvider dispensers
 - type: entity
@@ -359,7 +278,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Item
-    size: 30
+    size: Normal
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
 
@@ -477,18 +396,7 @@
   - type: StorageFill
     contents:
       - id: MagazineRifle
-        amount: 6
-
-- type: entity
-  name: box of .20 rifle (high-velocity) magazines
-  parent: BoxMagazine
-  id: BoxMagazineRifleHighVelocity
-  description: A box full of .20 rifle (high-velocity) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazineRifleHighVelocity
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .20 rifle (practice) magazines
@@ -499,7 +407,7 @@
   - type: StorageFill
     contents:
       - id: MagazineRiflePractice
-        amount: 6
+        amount: 4
 
 - type: entity
   name: box of .20 rifle (rubber) magazines
@@ -510,4 +418,4 @@
   - type: StorageFill
     contents:
       - id: MagazineRifleRubber
-        amount: 6
+        amount: 4

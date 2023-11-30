@@ -1,0 +1,67 @@
+- type: gameMap
+  id: Europa
+  mapName: 'Europa'
+  mapPath: /Maps/europa.yml
+  minPlayers: 0
+  maxPlayers: 40
+  stations:
+    Europa:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Europa {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_transit.yml
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            #service
+            Bartender: [ 1, 1 ]
+            Botanist: [ 2, 2]
+            Chef: [ 1, 1 ]
+            Janitor: [ 2, 2 ]
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 3, 4 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            StationEngineer: [ 2, 2 ]
+            AtmosphericTechnician: [ 2, 2 ]
+            TechnicalAssistant: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            MedicalDoctor: [ 1, 2 ]
+            Chemist: [ 1, 2 ]
+            MedicalIntern: [ 1, 1 ]
+            Paramedic: [ 1, 2 ]
+            SeniorPhysician: [ 1, 1 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 1, 2 ]
+            ResearchAssistant: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ] 
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            SecurityOfficer: [ 2, 2 ]
+            Warden: [ 1, 1 ]
+            Lawyer: [ 1, 1 ]
+            SecurityCadet: [ 3, 3 ]
+            Detective: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            #supply
+            CargoTechnician: [ 3, 3 ]
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Reporter: [ 1, 1 ]

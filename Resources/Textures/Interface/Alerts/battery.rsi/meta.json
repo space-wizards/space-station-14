@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage404 (github) for Space Station 14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "battery0",
+      "delays": [
+        [
+            0.5,
+            0.5
+        ]
+      ]
+    },
+    {
+      "name": "battery1"
+    },
+    {
+      "name": "battery2"
+    },
+    {
+      "name": "battery3"
+    },
+    {
+      "name": "battery4"
+    },
+    {
+      "name": "battery5"
+    },
+    {
+      "name": "battery6"
+    },
+    {
+      "name": "battery7"
+    },
+    {
+      "name": "battery8"
+    },
+    {
+      "name": "battery9"
+    },
+    {
+      "name": "battery10"
+    },
+    {
+      "name": "battery-none"
+    }
+  ]
+}

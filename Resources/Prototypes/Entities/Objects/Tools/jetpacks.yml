@@ -31,12 +31,13 @@
       weightlessAcceleration: 1
       weightlessFriction: 0.3
       weightlessModifier: 1.2
+    - type: CanMoveInAir
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       state: icon
     - type: Item
       sprite: Objects/Tanks/Jetpacks/blue.rsi
-      size: 100
+      size: Huge
     - type: UserInterface
       interfaces:
         - key: enum.SharedGasTankUiKey.Key
@@ -47,25 +48,31 @@
       slots:
         - Back
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 21.3
       air:
-        volume: 70
+        volume: 5
         temperature: 293.15
     - type: Jetpack
-      toggleAction:
-        icon:
-          sprite: Objects/Tanks/Jetpacks/blue.rsi
-          state: icon
-        iconOn:
-          sprite: Objects/Tanks/Jetpacks/blue.rsi
-          state: icon-on
-        name: action-name-jetpack-toggle
-        description: action-description-jetpack-toggle
-        useDelay: 1.0
-        event: !type:ToggleJetpackEvent
+      moleUsage: 0.00085
     - type: Appearance
     - type: StaticPrice
       price: 100
+
+- type: entity
+  id: ActionToggleJetpack
+  name: Toggle jetpack
+  description: Toggles the jetpack, giving you movement outside the station.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Tanks/Jetpacks/blue.rsi
+      state: icon
+    iconOn:
+      sprite: Objects/Tanks/Jetpacks/blue.rsi
+      state: icon-on
+    useDelay: 1.0
+    event: !type:ToggleJetpackEvent
 
 #Empty blue
 - type: entity
@@ -91,11 +98,12 @@
   - type: GasTank
     outputPressure: 42.6
     air:
-      volume: 70
+      # 13 minutes of thrust
+      volume: 5
       temperature: 293.15
       moles:
-        - 11.315
-        - 11.315
+        - 1.025689525 # oxygen
+        - 1.025689525 # nitrogen
 
 #Empty black
 - type: entity
@@ -123,11 +131,12 @@
   - type: GasTank
     outputPressure: 42.6
     air:
-      volume: 70
+      # 13 minutes of thrust
+      volume: 5
       temperature: 293.15
       moles:
-        - 11.315
-        - 11.315
+        - 1.025689525 # oxygen
+        - 1.025689525 # nitrogen
 
 #Empty captain
 - type: entity
@@ -144,7 +153,7 @@
       - Back
   - type: Item
     sprite: Objects/Tanks/Jetpacks/captain.rsi
-    size: 30
+    size: Normal
   - type: Tag
     tags:
     - HighRiskItem
@@ -159,11 +168,12 @@
   - type: GasTank
     outputPressure: 42.6
     air:
-      volume: 70
+      # 13 minutes of thrust
+      volume: 5
       temperature: 293.15
       moles:
-        - 11.315
-        - 11.315
+        - 1.025689525 # oxygen
+        - 1.025689525 # nitrogen
 
 #Empty mini
 - type: entity
@@ -184,7 +194,7 @@
     - type: GasTank
       outputPressure: 42.6
       air:
-        volume: 20
+        volume: 1.5
 
 # Filled mini
 - type: entity
@@ -196,11 +206,12 @@
   - type: GasTank
     outputPressure: 42.6
     air:
+      # 4 minutes of thrust
+      volume: 1.5
       temperature: 293.15
-      volume: 20
       moles:
-      - 0.747
-      - 0.747
+        - 0.307706858 # oxygen
+        - 0.307706858 # nitrogen
 
 #Empty security
 - type: entity
@@ -228,11 +239,12 @@
   - type: GasTank
     outputPressure: 42.6
     air:
-      volume: 70
+      # 13 minutes thrust
+      volume: 5
       temperature: 293.15
       moles:
-        - 11.315
-        - 11.315
+        - 1.025689525 # oxygen
+        - 1.025689525 # nitrogen
 
 #Empty void
 - type: entity
@@ -261,8 +273,9 @@
   - type: GasTank
     outputPressure: 42.6
     air:
-      volume: 70
+      # 13 minutes of thrust
+      volume: 5
       temperature: 293.15
       moles:
-        - 11.315
-        - 11.315
+        - 1.025689525 # oxygen
+        - 1.025689525 # nitrogen

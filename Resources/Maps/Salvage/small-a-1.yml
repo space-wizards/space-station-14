@@ -39,8 +39,7 @@ entities:
     - fixtures: {}
       type: Fixtures
     - type: OccluderTree
-    - nextUpdate: 0
-      type: SpreaderGrid
+    - type: SpreaderGrid
     - type: Shuttle
     - type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
@@ -58,20 +57,42 @@ entities:
             color: '#0000006C'
             id: footprint
           decals:
-            3: -0.23038638,-6.8572307
-            4: -0.027261376,-6.4509807
-            5: -0.32413638,-6.1541057
-            6: 0.050863624,-5.7478557
-            7: -0.18351138,-5.2634807
-            8: 0.16023862,-4.6384807
-            9: -0.18351138,-4.4197307
-            10: 0.16023862,-4.0603557
+            1: -0.23038638,-6.8572307
+            2: -0.027261376,-6.4509807
+            3: -0.32413638,-6.1541057
+            4: 0.050863624,-5.7478557
+            5: -0.18351138,-5.2634807
+            6: 0.16023862,-4.6384807
+            7: -0.18351138,-4.4197307
+            8: 0.16023862,-4.0603557
       type: DecalGrid
     - version: 2
       data:
         tiles:
           1,-2:
-            0: 4096
+            0: 12544
+          0,-2:
+            0: 65392
+          0,-1:
+            0: 65535
+          1,-1:
+            0: 65527
+          0,0:
+            0: 65535
+          1,0:
+            0: 14335
+          -2,-1:
+            0: 65535
+          -2,-2:
+            0: 60416
+          -1,-2:
+            0: 65520
+          -1,-1:
+            0: 65535
+          -2,0:
+            0: 36078
+          -1,0:
+            0: 65535
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -348,8 +369,6 @@ entities:
     - pos: 2.6230414,-3.5249228
       parent: 1
       type: Transform
-    - nextSound: 278.0330687
-      type: EmitSoundOnCollide
 - proto: Bed
   entities:
   - uid: 18
@@ -390,8 +409,6 @@ entities:
     - pos: 5.3232183,-0.93719935
       parent: 1
       type: Transform
-    - nextSound: 477.4480649
-      type: EmitSoundOnCollide
 - proto: ClothingHeadHelmetCosmonaut
   entities:
   - uid: 92
@@ -399,8 +416,6 @@ entities:
     - pos: 3.5415258,-4.5207634
       parent: 1
       type: Transform
-    - nextSound: 620.3410615
-      type: EmitSoundOnCollide
 - proto: ClothingNeckCloakMiner
   entities:
   - uid: 38
@@ -408,8 +423,6 @@ entities:
     - pos: -3.4428544,1.5165057
       parent: 1
       type: Transform
-    - nextSound: 371.125919
-      type: EmitSoundOnCollide
 - proto: ClothingOuterHardsuitAncientEVA
   entities:
   - uid: 88
@@ -417,8 +430,6 @@ entities:
     - pos: 5.3544683,-1.0153244
       parent: 1
       type: Transform
-    - nextSound: 472.2613766
-      type: EmitSoundOnCollide
 - proto: ClothingShoesBootsWork
   entities:
   - uid: 27
@@ -426,8 +437,6 @@ entities:
     - pos: 0.087199986,-1.6184053
       parent: 1
       type: Transform
-    - nextSound: 149.0334977
-      type: EmitSoundOnCollide
 - proto: ClothingUniformJumpsuitFlannel
   entities:
   - uid: 26
@@ -435,10 +444,6 @@ entities:
     - pos: 1.5246999,-0.77465534
       parent: 1
       type: Transform
-    - nextUpdate: 142.5329308
-      type: SuitSensor
-    - nextSound: 142.7329308
-      type: EmitSoundOnCollide
 - proto: ComfyChair
   entities:
   - uid: 21
@@ -501,8 +506,6 @@ entities:
     - pos: -0.5958574,-0.040280342
       parent: 1
       type: Transform
-    - nextSound: 121.0380995
-      type: EmitSoundOnCollide
 - proto: RandomCargoCorpseSpawner
   entities:
   - uid: 91
@@ -613,10 +616,6 @@ entities:
     - pos: -4.82792,-1.5621994
       parent: 1
       type: Transform
-    - nextFire: 495.3193206
-      type: Gun
-    - nextSound: 495.5193206
-      type: EmitSoundOnCollide
 - proto: WeaponTurretSyndicateBroken
   entities:
   - uid: 87

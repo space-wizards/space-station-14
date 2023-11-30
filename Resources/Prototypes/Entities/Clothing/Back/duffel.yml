@@ -1,34 +1,17 @@
 - type: entity
-  parent: Clothing
+  parent: ClothingBackpack
   id: ClothingBackpackDuffel
   name: duffel bag
   description: A large duffel bag for holding extra things.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
-    state: icon
-  - type: Item
-    size: 9999
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
   - type: Storage
-    capacity: 120
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
+    maxItemSize: Huge
+    maxTotalWeight: 40
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
-  # to prevent bag open/honk spam
-  - type: UseDelay
-    delay: 0.5
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -38,6 +21,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelAtmospherics
+  name: atmospherics duffel bag
+  description: A large duffel bag made of fire resistant fibers. Smells like plasma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/atmospherics.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -147,6 +139,15 @@
 
 - type: entity
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCargo
+  name: cargo duffel bag
+  description: A large duffel bag for stealing cargo's precious loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Duffels/cargo.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSalvage
   name: salvage duffel bag
   description: A large duffel bag for holding extra exotic treasures.
@@ -162,8 +163,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
-  - type: Storage
-    capacity: 131
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -228,7 +227,23 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
+  - type: Item
+    size: Ginormous
   - type: Storage
-    capacity: 9999
+    maxItemSize: Huge
+    maxTotalWeight: 200 #5 duffels worth of gear
   - type: ClothingSpeedModifier
     sprintModifier: 1 # makes its stats identical to other variants of bag of holding
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCBURN
+  name: CBURN duffel bag
+  description: A duffel bag containing a variety of biological containment equipment.
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    maxTotalWeight: 40
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1

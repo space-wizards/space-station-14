@@ -8,7 +8,7 @@ import os
 import psycopg2
 from uuid import UUID
 
-LATEST_DB_MIGRATION = "20230402214647_BanAutoDelete"
+LATEST_DB_MIGRATION = "20230725193102_AdminNotesImprovementsForeignKeys"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -33,7 +33,9 @@ def main():
 
     dump_admin(cur, user_id, arg_output)
     dump_admin_log(cur, user_id, arg_output)
+    dump_admin_messages(cur, user_id, arg_output)
     dump_admin_notes(cur, user_id, arg_output)
+    dump_admin_watchlists(cur, user_id, arg_output)
     dump_connection_log(cur, user_id, arg_output)
     dump_play_time(cur, user_id, arg_output)
     dump_player(cur, user_id, arg_output)
@@ -291,7 +293,7 @@ FROM (
     FROM
         server_ban
     WHERE
-        user_id = %s
+        player_user_id = %s
 ) as data
 """, (user_id,))
 
@@ -339,7 +341,7 @@ FROM (
     FROM
         server_role_ban
     WHERE
-        user_id = %s
+        player_user_id = %s
 ) as data
 """, (user_id,))
 
@@ -390,6 +392,50 @@ FROM (
     json_data = cur.fetchall()[0][0]
 
     with open(os.path.join(outdir, "whitelist.json"), "w", encoding="utf-8") as f:
+        f.write(json_data)
+
+
+def dump_admin_messages(cur: "psycopg2.cursor", user_id: str, outdir: str):
+    print("Dumping admin_messages...")
+
+    cur.execute("""
+SELECT
+    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+FROM (
+    SELECT
+        *
+    FROM
+        admin_messages
+    WHERE
+        player_user_id = %s
+) as data
+""", (user_id,))
+
+    json_data = cur.fetchall()[0][0]
+
+    with open(os.path.join(outdir, "admin_messages.json"), "w", encoding="utf-8") as f:
+        f.write(json_data)
+
+
+def dump_admin_watchlists(cur: "psycopg2.cursor", user_id: str, outdir: str):
+    print("Dumping admin_watchlists...")
+
+    cur.execute("""
+SELECT
+    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+FROM (
+    SELECT
+        *
+    FROM
+        admin_watchlists
+    WHERE
+        player_user_id = %s
+) as data
+""", (user_id,))
+
+    json_data = cur.fetchall()[0][0]
+
+    with open(os.path.join(outdir, "admin_watchlists.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 

@@ -8,7 +8,7 @@ namespace Content.Server.StationEvents.Components;
 /// Used an event that spawns an anomaly somewhere random on the map.
 /// </summary>
 [RegisterComponent, Access(typeof(AnomalySpawnRule))]
-public sealed class AnomalySpawnRuleComponent : Component
+public sealed partial class AnomalySpawnRuleComponent : Component
 {
     [DataField("anomalySpawnerPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string AnomalySpawnerPrototype = "RandomAnomalySpawner";

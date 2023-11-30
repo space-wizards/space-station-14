@@ -4,9 +4,9 @@ namespace Content.Server.Forensics
     /// This component is for mobs that leave fingerprints.
     /// </summary>
     [RegisterComponent]
-    public sealed class FingerprintComponent : Component
+    public sealed partial class FingerprintComponent : Component
     {
-        [DataField("fingerprint")]
+        [DataField("fingerprint"), ViewVariables(VVAccess.ReadWrite)]
         public string? Fingerprint;
     }
 }

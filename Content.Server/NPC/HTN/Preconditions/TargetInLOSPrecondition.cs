@@ -2,13 +2,13 @@ using Content.Server.Interaction;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
-public sealed class TargetInLOSPrecondition : HTNPrecondition
+public sealed partial class TargetInLOSPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private InteractionSystem _interaction = default!;
 
     [DataField("targetKey")]
-    public string TargetKey = "CombatTarget";
+    public string TargetKey = "Target";
 
     [DataField("rangeKey")]
     public string RangeKey = "RangeKey";

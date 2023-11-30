@@ -135,7 +135,7 @@ accent-archaic-replaced-43 = onto
 accent-archaic-replacement-43 = unto
 
 accent-archaic-replaced-44 = can i
-accent-archaic-replacement-44 = am i allowed to
+accent-archaic-replacement-44 = am I allowed to
 
 accent-archaic-replaced-45 = upon
 accent-archaic-replacement-45 = unto
@@ -185,9 +185,6 @@ accent-archaic-replacement-59 = bemadding
 accent-archaic-replaced-60 = suggest
 accent-archaic-replacement-60 = bespeak
 
-accent-archaic-replaced-53 = request
-accent-archaic-replacement-53 = bespeak
-
 accent-archaic-replaced-61 = indicate
 accent-archaic-replacement-61 = bespeak
 
@@ -224,35 +221,11 @@ accent-archaic-replacement-71 = cozen
 accent-archaic-replaced-72 = swindler
 accent-archaic-replacement-72 = cog
 
-accent-archaic-replaced-73 = swindle
-accent-archaic-replacement-73 = cozen
-
-accent-archaic-replaced-74 = cheating
-accent-archaic-replacement-74 = cozenage
-
-accent-archaic-replaced-75 = decieving
-accent-archaic-replacement-75 = cozenage
-
-accent-archaic-replaced-76 = duping
-accent-archaic-replacement-76 = cozenage
-
-accent-archaic-replaced-77 = scheming
-accent-archaic-replacement-77 = cozenage
-
-accent-archaic-replaced-78 = trickery
-accent-archaic-replacement-78 = cozenage
-
-accent-archaic-replaced-79 = company
-accent-archaic-replacement-79 = consort
-
 accent-archaic-replaced-80 = ilk
 accent-archaic-replacement-80 = consort
 
 accent-archaic-replaced-81 = partnership
 accent-archaic-replacement-81 = consort
-
-accent-archaic-replaced-82 = group
-accent-archaic-replacement-82 = consort
 
 accent-archaic-replaced-83 = crown
 accent-archaic-replacement-83 = coronal
@@ -534,7 +507,7 @@ accent-archaic-replaced-175 = will
 accent-archaic-replacement-175 = shall
 
 accent-archaic-replaced-176 = i am thirsty
-accent-archaic-replacement-176 = i require a drink
+accent-archaic-replacement-176 = I require a drink
 
 accent-archaic-replaced-177 = hate
 accent-archaic-replacement-177 = loathe
@@ -562,9 +535,6 @@ accent-archaic-replacement-184 = traitor
 
 accent-archaic-replaced-185 = good
 accent-archaic-replacement-185 = well
-
-accent-archaic-replaced-186 = like
-accent-archaic-replacement-186 = enjoy
 
 accent-archaic-replaced-187 = fate
 accent-archaic-replacement-187 = doom
@@ -618,7 +588,7 @@ accent-archaic-replaced-204 = airlock
 accent-archaic-replacement-204 = door
 
 accent-archaic-replaced-205 = sorry
-accent-archaic-replacement-205 = i apologise
+accent-archaic-replacement-205 = I apologise
 
 accent-archaic-replaced-206 = hey
 accent-archaic-replacement-206 = pardon me
@@ -642,7 +612,7 @@ accent-archaic-replaced-212 = why
 accent-archaic-replacement-212 = for what reason
 
 accent-archaic-replaced-213 = im
-accent-archaic-replacement-213 = i am
+accent-archaic-replacement-213 = I am
 
 accent-archaic-replaced-214 = sink
 accent-archaic-replacement-214 = taps
@@ -672,13 +642,13 @@ accent-archaic-replaced-222 = myself
 accent-archaic-replacement-222 = mineself
 
 accent-archaic-replaced-223 = i am hungry
-accent-archaic-replacement-223 = i require grub
+accent-archaic-replacement-223 = I require grub
 
 accent-archaic-replaced-224 = you suck
 accent-archaic-replacement-224 = thou are foul
 
 accent-archaic-replaced-225 = please
-accent-archaic-replacement-225 = i request of thee
+accent-archaic-replacement-225 = I request of thee
 
 accent-archaic-replaced-226 = secway
 accent-archaic-replacement-226 = patrol cart

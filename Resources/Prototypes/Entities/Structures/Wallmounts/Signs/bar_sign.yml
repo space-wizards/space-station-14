@@ -26,7 +26,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-        
+
 - type: entity
   parent: BaseBarSign
   id: BarSign
@@ -48,7 +48,7 @@
 #  - type: ApcPowerReceiver
 #  - type: ExtensionCableReceiver
 #  - type: BarSign
-   
+
 - type: entity
   parent: BaseBarSign
   id: BarSignComboCafe
@@ -57,7 +57,7 @@
   components:
   - type: BarSign
     current: ComboCafe
-   
+
 - type: entity
   parent: BaseBarSign
   id: BarSignEmergencyRumParty
@@ -84,7 +84,7 @@
   components:
   - type: BarSign
     current: MaidCafe
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignMalteseFalcon
@@ -138,7 +138,7 @@
   components:
   - type: BarSign
     current: TheCoderbus
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignTheDrunkCarp
@@ -147,7 +147,7 @@
   components:
   - type: BarSign
     current: TheDrunkCarp
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignEngineChange
@@ -156,7 +156,7 @@
   components:
   - type: BarSign
     current: EngineChange
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignTheHarmbaton
@@ -165,7 +165,7 @@
   components:
   - type: BarSign
     current: Harmbaton
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignTheLightbulb
@@ -174,7 +174,7 @@
   components:
   - type: BarSign
     current: TheLightbulb
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignTheLooseGoose
@@ -192,7 +192,7 @@
   components:
   - type: BarSign
     current: TheNet
- 
+
 - type: entity
   parent: BaseBarSign
   id: BarSignTheOuterSpess
@@ -201,7 +201,7 @@
   components:
   - type: BarSign
     current: TheOuterSpess
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignTheSingulo
@@ -210,7 +210,7 @@
   components:
   - type: BarSign
     current: TheSingulo
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignTheSun
@@ -219,7 +219,7 @@
   components:
   - type: BarSign
     current: TheSun
-   
+
 - type: entity
   parent: BaseBarSign
   id: BarSignWiggleRoom
@@ -228,7 +228,7 @@
   components:
   - type: BarSign
     current: WiggleRoom
-   
+
 - type: entity
   parent: BaseBarSign
   id: BarSignZocalo
@@ -237,7 +237,7 @@
   components:
   - type: BarSign
     current: Zocalo
-    
+
 - type: entity
   parent: BaseBarSign
   id: BarSignEmprah
@@ -251,7 +251,7 @@
   parent: BaseBarSign
   id: BarSignSpacebucks
   name: Spacebucks
-  description: You can't get away from them, even in space.
+  description: You can't get away from them, even in space, and even after we started calling them 'spesos' instead.
   components:
   - type: BarSign
     current: Spacebucks

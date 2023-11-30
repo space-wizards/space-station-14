@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.Message;
+using Content.Client.UserInterface.ControlExtensions;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -20,7 +21,7 @@ namespace Content.Client.Guidebook.Controls;
 ///     Control for embedding a reagent into a guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
-public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag
+public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISearchableControl
 {
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -43,6 +44,16 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag
     public GuideReagentEmbed(ReagentPrototype reagent) : this()
     {
         GenerateControl(reagent);
+    }
+
+    public bool CheckMatchesSearch(string query)
+    {
+        return this.ChildrenContainText(query);
+    }
+
+    public void SetHiddenState(bool state, string query)
+    {
+        this.Visible = CheckMatchesSearch(query) ? state : !state;
     }
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
@@ -104,6 +115,12 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag
             }
             reactantMsg.Pop();
             ReactantsLabel.SetMessage(reactantMsg);
+
+            if (reactionPrototype.MinimumTemperature > 0.0f)
+            {
+                MixLabel.Text = Loc.GetString("guidebook-reagent-recipes-mix-and-heat",
+                    ("temperature", reactionPrototype.MinimumTemperature));
+            }
 
             var productMsg = new FormattedMessage();
             var productCount = reactionPrototype.Products.Count;

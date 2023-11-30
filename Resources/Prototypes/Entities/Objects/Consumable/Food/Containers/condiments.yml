@@ -13,7 +13,7 @@
     sprite: Objects/Consumable/Food/condiments.rsi
   - type: Icon
     sprite: Objects/Consumable/Food/condiments.rsi
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: food
   - type: SpaceGarbage
   - type: StaticPrice
@@ -31,7 +31,8 @@
   - type: Drink
     solution: food
     refillable: false
-    openSounds:
+  - type: Openable
+    sound:
       collection: packetOpenSounds
   # Since this one is closed, the only way to insert liquid is with a syringe.
   - type: InjectableSolution
@@ -236,6 +237,31 @@
 
 - type: entity
   parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketMustard
+  name: mustard
+  description: A condiment made from the ground-up seeds of the Mustard plant.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Mustard
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-solid-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-mustard
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketPepper
   name: black pepper
   description: Often used to flavor food or make people sneeze.
@@ -347,7 +373,8 @@
   components:
   - type: Drink
     solution: food
-    openSounds:
+  - type: Openable
+    sound:
       collection: pop
   - type: SolutionContainerManager
     solutions:
@@ -392,6 +419,9 @@
       visible: true
   - type: Icon
     state: bottle-coldsauce
+  - type: Tag
+    tags:
+      - Coldsauce
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -458,6 +488,9 @@
       visible: true
   - type: Icon
     state: bottle-hotsauce
+  - type: Tag
+    tags:
+      - Hotsauce
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -480,6 +513,9 @@
       visible: true
   - type: Icon
     state: bottle-ketchup
+  - type: Tag
+    tags:
+      - Ketchup
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -503,6 +539,9 @@
   # So there's no error.
   - type: Icon
     state: bottle-ketchup
+  - type: Tag
+    tags:
+      - BBQsauce
 
 # Shakers
 
@@ -515,7 +554,6 @@
   components:
   - type: Drink
     solution: food
-    isOpen: true
   - type: SolutionContainerManager
     solutions:
       food:

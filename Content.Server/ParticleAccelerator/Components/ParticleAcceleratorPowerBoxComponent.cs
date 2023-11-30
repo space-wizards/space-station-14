@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.ParticleAccelerator.Components;
 
 [RegisterComponent]
-public sealed class ParticleAcceleratorPowerBoxComponent : Component
+public sealed partial class ParticleAcceleratorPowerBoxComponent : Component
 {
 }

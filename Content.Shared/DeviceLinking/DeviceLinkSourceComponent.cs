@@ -6,7 +6,7 @@ namespace Content.Shared.DeviceLinking;
 [RegisterComponent]
 [NetworkedComponent] // for interactions. Actual state isn't currently synced.
 [Access(typeof(SharedDeviceLinkSystem))]
-public sealed class DeviceLinkSourceComponent : Component
+public sealed partial class DeviceLinkSourceComponent : Component
 {
     /// <summary>
     /// The ports the device link source sends signals from
@@ -17,7 +17,7 @@ public sealed class DeviceLinkSourceComponent : Component
     /// <summary>
     /// A list of sink uids that got linked for each port
     /// </summary>
-    [DataField("registeredSinks")]
+    [ViewVariables]
     public Dictionary<string, HashSet<EntityUid>> Outputs = new();
 
     /// <summary>

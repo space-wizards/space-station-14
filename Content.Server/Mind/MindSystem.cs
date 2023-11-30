@@ -1,79 +1,148 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
-using Content.Server.Ghost;
-using Content.Server.Ghost.Components;
-using Content.Server.Mind.Components;
-using Content.Server.Objectives;
-using Content.Server.Players;
-using Content.Server.Roles;
+using Content.Server.Mind.Commands;
 using Content.Shared.Database;
-using Content.Shared.Examine;
-using Content.Shared.GameTicking;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Mobs.Components;
-using Robust.Server.GameObjects;
+using Content.Shared.Ghost;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
+using Content.Shared.Players;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Mind;
 
-public sealed class MindSystem : EntitySystem
+public sealed class MindSystem : SharedMindSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-
-    // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
-    private readonly Dictionary<NetUserId, Mind> _userMinds = new();
+    [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedGhostSystem _ghosts = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MindContainerComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
-        SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnVisitingTerminating);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
+        SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
     }
 
-    public override void Shutdown()
+    private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
     {
-        base.Shutdown();
-        WipeAllMinds();
+        if (mind.UserId is {} user)
+        {
+            UserMinds.Remove(user);
+            if (_players.TryGetPlayerData(user, out var data) && data.ContentData() is { } oldData)
+                oldData.Mind = null;
+            mind.UserId = null;
+        }
+
+        if (mind.OwnedEntity != null && !TerminatingOrDeleted(mind.OwnedEntity.Value))
+            TransferTo(uid, null, mind: mind, createGhost: false);
+
+        mind.OwnedEntity = null;
     }
 
-    public void SetGhostOnShutdown(EntityUid uid, bool value, MindContainerComponent? mind = null)
+    private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
-        if (!Resolve(uid, ref mind))
+        if (!TryGetMind(uid, out var mindId, out var mind, component))
             return;
 
-        mind.GhostOnShutdown = value;
-    }
-
-    private void OnReset(RoundRestartCleanupEvent ev)
-    {
-        WipeAllMinds();
-    }
-
-    public void WipeAllMinds()
-    {
-        foreach (var mind in _userMinds.Values)
+        // If the player is currently visiting some other entity, simply attach to that entity.
+        if (mind.VisitingEntity is {Valid: true} visiting
+            && visiting != uid
+            && !Deleted(visiting)
+            && !Terminating(visiting))
         {
-            WipeMind(mind);
+            TransferTo(mindId, visiting, mind: mind);
+            if (TryComp(visiting, out GhostComponent? ghost))
+                _ghosts.SetCanReturnToBody(ghost, false);
+            return;
         }
-        DebugTools.Assert(_userMinds.Count == 0);
 
-        foreach (var unCastData in _playerManager.GetAllPlayerData())
+        TransferTo(mindId, null, createGhost: false, mind: mind);
+        DebugTools.AssertNull(mind.OwnedEntity);
+
+        if (!component.GhostOnShutdown || mind.Session == null || _gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+            return;
+
+        var xform = Transform(uid);
+        var gridId = xform.GridUid;
+        var spawnPosition = Transform(uid).Coordinates;
+
+        // Use a regular timer here because the entity has probably been deleted.
+        Timer.Spawn(0, () =>
+        {
+            // Make extra sure the round didn't end between spawning the timer and it being executed.
+            if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+                return;
+
+            // Async this so that we don't throw if the grid we're on is being deleted.
+            if (!HasComp<MapGridComponent>(gridId))
+                spawnPosition = _gameTicker.GetObserverSpawnPoint();
+
+            // TODO refactor observer spawning.
+            // please.
+            if (!spawnPosition.IsValid(EntityManager))
+            {
+                // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+                Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
+                TransferTo(mindId, null, createGhost: false, mind: mind);
+                return;
+            }
+
+            var ghost = Spawn(GameTicker.ObserverPrototypeName, spawnPosition);
+            var ghostComponent = Comp<GhostComponent>(ghost);
+            _ghosts.SetCanReturnToBody(ghostComponent, false);
+
+            // Log these to make sure they're not causing the GameTicker round restart bugs...
+            Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
+            _metaData.SetEntityName(ghost, mind.CharacterName ?? string.Empty);
+            TransferTo(mindId, ghost, mind: mind);
+        });
+    }
+
+    public override bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
+    {
+        if (base.TryGetMind(user, out mindId, out mind))
+        {
+            DebugTools.Assert(_players.GetPlayerData(user).ContentData() is not { } data || data.Mind == mindId);
+            return true;
+        }
+
+        DebugTools.Assert(_players.GetPlayerData(user).ContentData()?.Mind == null);
+        return false;
+    }
+
+    public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
+    {
+        session = null;
+        return TryComp(mindId, out MindComponent? mind) && (session = mind.Session) != null;
+    }
+
+    public ICommonSession? GetSession(MindComponent mind)
+    {
+        return mind.Session;
+    }
+
+    public bool TryGetSession(MindComponent mind, [NotNullWhen(true)] out ICommonSession? session)
+    {
+        return (session = GetSession(mind)) != null;
+    }
+
+    public override void WipeAllMinds()
+    {
+        base.WipeAllMinds();
+
+        foreach (var unCastData in _players.GetAllPlayerData())
         {
             if (unCastData.ContentData()?.Mind is not { } mind)
                 continue;
@@ -83,204 +152,13 @@ public sealed class MindSystem : EntitySystem
         }
     }
 
-    public Mind? GetMind(NetUserId user)
+    public override void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
     {
-        TryGetMind(user, out var mind);
-        return mind;
-    }
+        base.Visit(mindId, entity, mind);
 
-    public bool TryGetMind(NetUserId user, [NotNullWhen(true)] out Mind? mind)
-    {
-        if (_userMinds.TryGetValue(user, out mind))
-        {
-            DebugTools.Assert(mind.UserId == user);
-            DebugTools.Assert(_playerManager.GetPlayerData(user).ContentData() is not {} data
-                              || data.Mind == mind);
-            return true;
-        }
-
-        DebugTools.Assert(_playerManager.GetPlayerData(user).ContentData()?.Mind == null);
-        return false;
-    }
-
-    /// <summary>
-    ///     Don't call this unless you know what the hell you're doing.
-    ///     Use <see cref="MindSystem.TransferTo(Mind,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
-    ///     If that doesn't cover it, make something to cover it.
-    /// </summary>
-    private void InternalAssignMind(EntityUid uid, Mind value, MindContainerComponent? mind = null)
-    {
-        if (!Resolve(uid, ref mind))
+        if (!Resolve(mindId, ref mind))
             return;
 
-        mind.Mind = value;
-        RaiseLocalEvent(uid, new MindAddedMessage(), true);
-    }
-
-    /// <summary>
-    ///     Don't call this unless you know what the hell you're doing.
-    ///     Use <see cref="MindSystem.TransferTo(Mind,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
-    ///     If that doesn't cover it, make something to cover it.
-    /// </summary>
-    private void InternalEjectMind(EntityUid uid, MindContainerComponent? mind = null)
-    {
-        if (!Resolve(uid, ref mind, false))
-            return;
-
-        RaiseLocalEvent(uid, new MindRemovedMessage(), true);
-        mind.Mind = null;
-    }
-
-    private void OnVisitingTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
-    {
-        if (component.Mind != null)
-            UnVisit(component.Mind);
-    }
-
-    private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
-    {
-        // Let's not create ghosts if not in the middle of the round.
-        if (_gameTicker.RunLevel != GameRunLevel.InRound)
-            return;
-
-        if (component.Mind is not { } mind)
-            return;
-
-        // If the player is currently visiting some other entity, simply attach to that entity.
-        if (mind.VisitingEntity is {Valid: true} visiting
-            && visiting != uid
-            && !Deleted(visiting)
-            && !Terminating(visiting))
-        {
-            TransferTo(mind, visiting);
-            if (TryComp(visiting, out GhostComponent? ghost))
-                _ghostSystem.SetCanReturnToBody(ghost, false);
-            return;
-        }
-
-        TransferTo(mind, null);
-
-        if (component.GhostOnShutdown && mind.Session != null)
-        {
-            var xform = Transform(uid);
-            var gridId = xform.GridUid;
-            var spawnPosition = Transform(uid).Coordinates;
-
-            // Use a regular timer here because the entity has probably been deleted.
-            Timer.Spawn(0, () =>
-            {
-                // Make extra sure the round didn't end between spawning the timer and it being executed.
-                if (_gameTicker.RunLevel != GameRunLevel.InRound)
-                    return;
-
-                // Async this so that we don't throw if the grid we're on is being deleted.
-                if (!_mapManager.GridExists(gridId))
-                    spawnPosition = _gameTicker.GetObserverSpawnPoint();
-
-                // TODO refactor observer spawning.
-                // please.
-                if (!spawnPosition.IsValid(EntityManager))
-                {
-                    // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-                    Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
-                    TransferTo(mind, null);
-                    return;
-                }
-
-                var ghost = Spawn("MobObserver", spawnPosition);
-                var ghostComponent = Comp<GhostComponent>(ghost);
-                _ghostSystem.SetCanReturnToBody(ghostComponent, false);
-
-                // Log these to make sure they're not causing the GameTicker round restart bugs...
-                Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
-
-                var val = mind.CharacterName ?? string.Empty;
-                MetaData(ghost).EntityName = val;
-                TransferTo(mind, ghost);
-            });
-        }
-    }
-
-    private void OnExamined(EntityUid uid, MindContainerComponent mindContainer, ExaminedEvent args)
-    {
-        if (!mindContainer.ShowExamineInfo || !args.IsInDetailsRange)
-            return;
-
-        var dead = _mobStateSystem.IsDead(uid);
-        var hasSession = mindContainer.Mind?.Session;
-
-        if (dead && hasSession == null)
-            args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
-        else if (dead)
-            args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
-        else if (!mindContainer.HasMind)
-            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
-        else if (hasSession == null)
-            args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
-    }
-
-    private void OnSuicide(EntityUid uid, MindContainerComponent component, SuicideEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (component.HasMind && component.Mind.PreventSuicide)
-        {
-            args.BlockSuicideAttempt(true);
-        }
-    }
-
-    public Mind? GetMind(EntityUid uid, MindContainerComponent? mind = null)
-    {
-        if (!Resolve(uid, ref mind))
-            return null;
-
-        if (mind.HasMind)
-            return mind.Mind;
-        return null;
-    }
-
-    public Mind CreateMind(NetUserId? userId, string? name = null)
-    {
-        var mind = new Mind();
-        mind.CharacterName = name;
-        SetUserId(mind, userId);
-
-        return mind;
-    }
-
-    /// <summary>
-    ///     True if the OwnedEntity of this mind is physically dead.
-    ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.
-    /// </summary>
-    public bool IsCharacterDeadPhysically(Mind mind)
-    {
-        // This is written explicitly so that the logic can be understood.
-        // But it's also weird and potentially situational.
-        // Specific considerations when updating this:
-        //  + Does being turned into a borg (if/when implemented) count as dead?
-        //    *If not, add specific conditions to users of this property where applicable.*
-        //  + Is being transformed into a donut 'dead'?
-        //    TODO: Consider changing the way ghost roles work.
-        //    Mind is an *IC* mind, therefore ghost takeover is IC revival right now.
-        //  + Is it necessary to have a reference to a specific 'mind iteration' to cycle when certain events happen?
-        //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
-
-        if (mind.OwnedEntity == null)
-            return true;
-
-        // This can be null if they're deleted (spike / brain nom)
-        var targetMobState = EntityManager.GetComponentOrNull<MobStateComponent>(mind.OwnedEntity);
-        // This can be null if it's a brain (this happens very often)
-        // Brains are the result of gibbing so should definitely count as dead
-        if (targetMobState == null)
-            return true;
-        // They might actually be alive.
-        return _mobStateSystem.IsDead(mind.OwnedEntity.Value, targetMobState);
-    }
-
-    public void Visit(Mind mind, EntityUid entity)
-    {
         if (mind.VisitingEntity != null)
         {
             Log.Error($"Attempted to visit an entity ({ToPrettyString(entity)}) while already visiting another ({ToPrettyString(mind.VisitingEntity.Value)}).");
@@ -293,30 +171,35 @@ public sealed class MindSystem : EntitySystem
             return;
         }
 
-        mind.Session?.AttachToEntity(entity);
+        if (GetSession(mind) is { } session)
+            _players.SetAttachedEntity(session, entity);
+
         mind.VisitingEntity = entity;
 
         // EnsureComp instead of AddComp to deal with deferred deletions.
         var comp = EnsureComp<VisitingMindComponent>(entity);
-        comp.Mind = mind;
+        comp.MindId = mindId;
         Log.Info($"Session {mind.Session?.Name} visiting entity {entity}.");
     }
 
-    /// <summary>
-    /// Returns the mind to its original entity.
-    /// </summary>
-    public void UnVisit(Mind? mind)
+    public override void UnVisit(EntityUid mindId, MindComponent? mind = null)
     {
-        if (mind == null || mind.VisitingEntity == null)
+        base.UnVisit(mindId, mind);
+
+        if (!Resolve(mindId, ref mind))
             return;
 
-        RemoveVisitingEntity(mind);
+        if (mind.VisitingEntity == null)
+            return;
+
+        RemoveVisitingEntity(mindId, mind);
 
         if (mind.Session == null || mind.Session.AttachedEntity == mind.VisitingEntity)
             return;
 
         var owned = mind.OwnedEntity;
-        mind.Session.AttachToEntity(owned);
+        if (GetSession(mind) is { } session)
+            _players.SetAttachedEntity(session, owned);
 
         if (owned.HasValue)
         {
@@ -325,66 +208,16 @@ public sealed class MindSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Cleans up the VisitingEntity.
-    /// </summary>
-    /// <param name="mind"></param>
-    private void RemoveVisitingEntity(Mind mind)
+    public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
+        MindComponent? mind = null)
     {
-        if (mind.VisitingEntity == null)
+        if (mind == null && !Resolve(mindId, ref mind))
             return;
 
-        var oldVisitingEnt = mind.VisitingEntity.Value;
-        // Null this before removing the component to avoid any infinite loops.
-        mind.VisitingEntity = null;
-
-        if (TryComp(oldVisitingEnt, out VisitingMindComponent? visitComp))
-        {
-            visitComp.Mind = null;
-            RemCompDeferred(oldVisitingEnt, visitComp);
-        }
-
-        RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage(), true);
-    }
-
-    public void WipeMind(IPlayerSession player)
-    {
-        var mind = player.ContentData()?.Mind;
-        DebugTools.Assert(GetMind(player.UserId) == mind);
-        WipeMind(mind);
-    }
-
-    /// <summary>
-    /// Detaches a mind from all entities and clears the user ID.
-    /// </summary>
-    public void WipeMind(Mind? mind)
-    {
-        if (mind == null)
-            return;
-
-        TransferTo(mind, null);
-        SetUserId(mind, null);
-    }
-
-    /// <summary>
-    ///     Transfer this mind's control over to a new entity.
-    /// </summary>
-    /// <param name="mind">The mind to transfer</param>
-    /// <param name="entity">
-    ///     The entity to control.
-    ///     Can be null, in which case it will simply detach the mind from any entity.
-    /// </param>
-    /// <param name="ghostCheckOverride">
-    ///     If true, skips ghost check for Visiting Entity
-    /// </param>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if <paramref name="entity"/> is already owned by another mind.
-    /// </exception>
-    public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
-    {
         if (entity == mind.OwnedEntity)
             return;
 
+        Dirty(mindId, mind);
         MindContainerComponent? component = null;
         var alreadyAttached = false;
 
@@ -393,7 +226,7 @@ public sealed class MindSystem : EntitySystem
             component = EnsureComp<MindContainerComponent>(entity.Value);
 
             if (component.HasMind)
-                _gameTicker.OnGhostAttempt(component.Mind, false);
+                _gameTicker.OnGhostAttempt(component.Mind.Value, false);
 
             if (TryComp<ActorComponent>(entity.Value, out var actor))
             {
@@ -406,15 +239,34 @@ public sealed class MindSystem : EntitySystem
                 alreadyAttached = true;
             }
         }
+        else if (createGhost)
+        {
+            // TODO remove this option.
+            // Transfer-to-null should just detach a mind.
+            // If people want to create a ghost, that should be done explicitly via some TransferToGhost() method, not
+            // not implicitly via optional arguments.
 
-        var oldComp = mind.OwnedComponent;
+            var position = Deleted(mind.OwnedEntity)
+                ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
+                : Transform(mind.OwnedEntity.Value).MapPosition;
+
+            entity = Spawn(GameTicker.ObserverPrototypeName, position);
+            component = EnsureComp<MindContainerComponent>(entity.Value);
+            var ghostComponent = Comp<GhostComponent>(entity.Value);
+            _ghosts.SetCanReturnToBody(ghostComponent, false);
+        }
+
         var oldEntity = mind.OwnedEntity;
-        if(oldComp != null && oldEntity != null)
-            InternalEjectMind(oldEntity.Value, oldComp);
-
-        SetOwnedEntity(mind, entity, component);
-        if (mind.OwnedComponent != null)
-            InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
+        if (TryComp(oldEntity, out MindContainerComponent? oldContainer))
+        {
+            oldContainer.Mind = null;
+            mind.OwnedEntity = null;
+            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindContainerComponent> containerEnt = (oldEntity.Value, oldContainer);
+            RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindId, new MindGotRemovedEvent(mindEnt, containerEnt));
+            Dirty(oldEntity.Value, oldContainer);
+        }
 
         // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
         if (alreadyAttached)
@@ -429,170 +281,48 @@ public sealed class MindSystem : EntitySystem
                   || !TryComp(mind.VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
                   || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
         {
-            RemoveVisitingEntity(mind);
+            RemoveVisitingEntity(mindId, mind);
         }
 
         // Player is CURRENTLY connected.
-        if (mind.Session != null && !alreadyAttached && mind.VisitingEntity == null)
+        var session = GetSession(mind);
+        if (session != null && !alreadyAttached && mind.VisitingEntity == null)
         {
-            mind.Session.AttachToEntity(entity);
-            Log.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
+            _players.SetAttachedEntity(session, entity, true);
+            DebugTools.Assert(session.AttachedEntity == entity, $"Failed to attach entity.");
+            Log.Info($"Session {session.Name} transferred to entity {entity}.");
+        }
+
+        if (entity != null)
+        {
+            component!.Mind = mindId;
+            mind.OwnedEntity = entity;
+            mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);
+            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindContainerComponent> containerEnt = (entity.Value, component);
+            RaiseLocalEvent(entity.Value, new MindAddedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindId, new MindGotAddedEvent(mindEnt, containerEnt));
+            Dirty(entity.Value, component);
         }
     }
 
     /// <summary>
-    /// Adds an objective to this mind.
+    /// Sets the Mind's UserId, Session, and updates the player's PlayerData. This should have no direct effect on the
+    /// entity that any mind is connected to, except as a side effect of the fact that it may change a player's
+    /// attached entity. E.g., ghosts get deleted.
     /// </summary>
-    public bool TryAddObjective(Mind mind, ObjectivePrototype objectivePrototype)
+    public override void SetUserId(EntityUid mindId, NetUserId? userId, MindComponent? mind = null)
     {
-        if (!objectivePrototype.CanBeAssigned(mind))
-            return false;
-        var objective = objectivePrototype.GetObjective(mind);
-        if (mind.Objectives.Contains(objective))
-            return false;
+        if (!Resolve(mindId, ref mind))
+            return;
 
-        foreach (var condition in objective.Conditions)
-        {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString(mind)}");
-        }
-
-
-        mind.Objectives.Add(objective);
-        return true;
-    }
-
-    /// <summary>
-    /// Removes an objective to this mind.
-    /// </summary>
-    /// <returns>Returns true if the removal succeeded.</returns>
-    public bool TryRemoveObjective(Mind mind, int index)
-    {
-        if (index < 0 || index >= mind.Objectives.Count) return false;
-
-        var objective = mind.Objectives[index];
-
-        foreach (var condition in objective.Conditions)
-        {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {MindOwnerLoggingString(mind)}");
-        }
-
-        mind.Objectives.Remove(objective);
-        return true;
-    }
-
-    /// <summary>
-    ///     Gives this mind a new role.
-    /// </summary>
-    /// <param name="mind">The mind to add the role to.</param>
-    /// <param name="role">The type of the role to give.</param>
-    /// <returns>The instance of the role.</returns>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if we already have a role with this type.
-    /// </exception>
-    public void AddRole(Mind mind, Role role)
-    {
-        if (mind.Roles.Contains(role))
-        {
-            throw new ArgumentException($"We already have this role: {role}");
-        }
-
-        mind.Roles.Add(role);
-        role.Greet();
-
-        var message = new RoleAddedEvent(mind, role);
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
-
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'{role.Name}' added to mind of {MindOwnerLoggingString(mind)}");
-    }
-
-    /// <summary>
-    ///     Removes a role from this mind.
-    /// </summary>
-    /// <param name="mind">The mind to remove the role from.</param>
-    /// <param name="role">The type of the role to remove.</param>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if we do not have this role.
-    /// </exception>
-    public void RemoveRole(Mind mind, Role role)
-    {
-        if (!mind.Roles.Contains(role))
-        {
-            throw new ArgumentException($"We do not have this role: {role}");
-        }
-
-        mind.Roles.Remove(role);
-
-        var message = new RoleRemovedEvent(mind, role);
-
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'{role.Name}' removed from mind of {MindOwnerLoggingString(mind)}");
-    }
-
-    public bool HasRole<T>(Mind mind) where T : Role
-    {
-        return mind.Roles.Any(role => role is T);
-    }
-
-    public bool TryGetSession(Mind mind, [NotNullWhen(true)] out IPlayerSession? session)
-    {
-        return (session = mind.Session) != null;
-    }
-
-    /// <summary>
-    /// Gets a mind from uid and/or MindContainerComponent. Used for null checks.
-    /// </summary>
-    /// <param name="uid">Entity UID that owns the mind.</param>
-    /// <param name="mind">The returned mind.</param>
-    /// <param name="mindContainerComponent">Mind component on <paramref name="uid"/> to get the mind from.</param>
-    /// <returns>True if mind found. False if not.</returns>
-    public bool TryGetMind(EntityUid uid, [NotNullWhen(true)] out Mind? mind, MindContainerComponent? mindContainerComponent = null)
-    {
-        mind = null;
-        if (!Resolve(uid, ref mindContainerComponent))
-            return false;
-
-        if (!mindContainerComponent.HasMind)
-            return false;
-
-        mind = mindContainerComponent.Mind;
-        return true;
-    }
-
-    /// <summary>
-    /// Sets the Mind's OwnedComponent and OwnedEntity
-    /// </summary>
-    /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>
-    /// <param name="uid">Entity owned by <paramref name="mind"/></param>
-    /// <param name="mindContainerComponent">MindContainerComponent owned by <paramref name="mind"/></param>
-    private void SetOwnedEntity(Mind mind, EntityUid? uid, MindContainerComponent? mindContainerComponent)
-    {
-        if (uid != null)
-            Resolve(uid.Value, ref mindContainerComponent);
-
-        mind.OwnedEntity = uid;
-        mind.OwnedComponent = mindContainerComponent;
-    }
-
-    /// <summary>
-    /// Sets the Mind's UserId, Session, and updates the player's PlayerData.
-    /// This should have no direct effect on the entity that any mind is connected to, but it may change a player's attached entity.
-    /// </summary>
-    /// <param name="mind"></param>
-    /// <param name="userId"></param>
-    public void SetUserId(Mind mind, NetUserId? userId)
-    {
         if (mind.UserId == userId)
             return;
 
-        if (userId != null && !_playerManager.TryGetPlayerData(userId.Value, out _))
+        Dirty(mindId, mind);
+        var netMind = GetNetEntity(mindId);
+        _pvsOverride.ClearOverride(netMind);
+        if (userId != null && !_players.TryGetPlayerData(userId.Value, out _))
         {
             Log.Error($"Attempted to set mind user to invalid value {userId}");
             return;
@@ -600,14 +330,14 @@ public sealed class MindSystem : EntitySystem
 
         if (mind.Session != null)
         {
-            mind.Session.AttachToEntity(null);
+            _players.SetAttachedEntity(GetSession(mind), null);
             mind.Session = null;
         }
 
         if (mind.UserId != null)
         {
-            _userMinds.Remove(mind.UserId.Value);
-            if (_playerManager.GetPlayerData(mind.UserId.Value).ContentData() is { } oldData)
+            UserMinds.Remove(mind.UserId.Value);
+            if (_players.GetPlayerData(mind.UserId.Value).ContentData() is { } oldData)
                 oldData.Mind = null;
             mind.UserId = null;
         }
@@ -618,43 +348,50 @@ public sealed class MindSystem : EntitySystem
             return;
         }
 
-        if (_userMinds.TryGetValue(userId.Value, out var oldMind))
-            SetUserId(oldMind, null);
+        if (UserMinds.TryGetValue(userId.Value, out var oldMindId) &&
+            TryComp(oldMindId, out MindComponent? oldMind))
+        {
+            SetUserId(oldMindId, null, oldMind);
+        }
 
-        DebugTools.AssertNull(_playerManager.GetPlayerData(userId.Value).ContentData()?.Mind);
+        DebugTools.AssertNull(_players.GetPlayerData(userId.Value).ContentData()?.Mind);
 
-        _userMinds[userId.Value] = mind;
+        UserMinds[userId.Value] = mindId;
         mind.UserId = userId;
         mind.OriginalOwnerUserId ??= userId;
 
-        _playerManager.TryGetSessionById(userId.Value, out var ret);
-        mind.Session = ret;
+        if (_players.TryGetSessionById(userId.Value, out var ret))
+        {
+            mind.Session = ret;
+            _pvsOverride.AddSessionOverride(netMind, ret);
+            _players.SetAttachedEntity(ret, mind.CurrentEntity);
+        }
 
         // session may be null, but user data may still exist for disconnected players.
-        if (_playerManager.GetPlayerData(userId.Value).ContentData() is { } data)
-            data.Mind = mind;
+        if (_players.GetPlayerData(userId.Value).ContentData() is { } data)
+            data.Mind = mindId;
     }
 
-    /// <summary>
-    ///     True if this Mind is 'sufficiently dead' IC (Objectives, EndText).
-    ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
-    ///     "If administrators decide that zombies are dead, this returns true for zombies."
-    ///     (Maybe you were looking for the action blocker system?)
-    /// </summary>
-    public bool IsCharacterDeadIc(Mind mind)
+    public void ControlMob(EntityUid user, EntityUid target)
     {
-        return IsCharacterDeadPhysically(mind);
+        if (TryComp(user, out ActorComponent? actor))
+            ControlMob(actor.PlayerSession.UserId, target);
     }
 
-    /// <summary>
-    ///     A string to represent the mind for logging
-    /// </summary>
-    private string MindOwnerLoggingString(Mind mind)
+    public void ControlMob(NetUserId user, EntityUid target)
     {
-        if (mind.OwnedEntity != null)
-            return ToPrettyString(mind.OwnedEntity.Value);
-        if (mind.UserId != null)
-            return mind.UserId.Value.ToString();
-        return "(originally " + mind.OriginalOwnerUserId + ")";
+        var (mindId, mind) = GetOrCreateMind(user);
+
+        if (mind.CurrentEntity == target)
+            return;
+
+        if (mind.OwnedEntity == target)
+        {
+            UnVisit(mindId, mind);
+            return;
+        }
+
+        MakeSentientCommand.MakeSentient(target, EntityManager);
+        TransferTo(mindId, target, ghostCheckOverride: true, mind: mind);
     }
 }

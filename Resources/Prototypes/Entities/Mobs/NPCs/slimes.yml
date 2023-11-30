@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: basic slime
   id: MobAdultSlimes
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
@@ -9,7 +9,8 @@
     factions:
     - SimpleNeutral
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/slimes.rsi
@@ -93,9 +94,10 @@
         type: Local
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
-  - type: CombatMode
+  - type: Body
+    prototype: Slimes
+    requiredLegs: 1
   - type: MeleeWeapon
-    hidden: true
     soundHit:
         path: /Audio/Weapons/punch3.ogg
     angle: 0
@@ -116,6 +118,8 @@
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
+  - type: Speech
+    speechVerb: Slime
 
 - type: entity
   name: blue slime

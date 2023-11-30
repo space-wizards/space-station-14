@@ -316,7 +316,10 @@
     energy: 1.6
     color: "#1f8c28"
   - type: Computer
-    board: CriminalRecordsComputerCircuitboard
+    board: StationRecordsComputerCircuitboard
+  - type: GuideHelp
+    guides:
+    - DNA
 
 - type: entity
   parent: BaseComputer
@@ -391,6 +394,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b53ca1"
+  - type: GuideHelp
+    guides:
+    - Science
 
 - type: entity
   parent: BaseComputer
@@ -516,7 +522,7 @@
   parent: BaseComputer
   id: ComputerComms
   name: communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
   components:
   - type: Sprite
     layers:
@@ -552,7 +558,7 @@
   parent: ComputerComms
   id: SyndicateComputerComms
   name: syndicate communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
   components:
   - type: Sprite
     layers:
@@ -673,6 +679,9 @@
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   id: ComputerCargoOrders
@@ -714,6 +723,9 @@
     range: 200
     ports:
       - OrderSender
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   id: ComputerCargoBounty
@@ -788,6 +800,7 @@
       - key: enum.CloningConsoleUiKey.Key
         type: CloningConsoleBoundUserInterface
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
   - type: Damageable
     damageContainer: Inorganic
@@ -900,6 +913,7 @@
     range: 200
   - type: DeviceNetworkRequiresPower
   - type: Speech
+    speechVerb: Robotic
   - type: SurveillanceCameraSpeaker
   - type: SurveillanceCameraMonitor
     speechEnabled: true
@@ -940,3 +954,81 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: GuideHelp
+    guides:
+    - Cargo
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerMassMedia
+  name: mass-media console
+  description: Write your message to the world!
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: service
+    - map: ["computerLayerKeys"]
+      state: service_keys
+  - type: Computer
+    board: ComputerMassMediaCircuitboard
+  - type: DeviceNetworkRequiresPower
+  - type: NewsWrite
+  - type: AccessReader
+    access: [[ "Command" ]]
+  - type: ActivatableUI
+    key: enum.NewsWriteUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: Transform
+    anchored: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.NewsWriteUiKey.Key
+        type: NewsWriteBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerSensorMonitoring
+  name: sensor monitoring computer
+  description: A flexible console for monitoring all kinds of sensors.
+  # Putting this as "DO NOT MAP" until the performance issues are fixed.
+  # And it's more fleshed out.
+  suffix: TESTING, DO NOT MAP
+  components:
+    - type: Sprite
+      layers:
+        - map: ["computerLayerBody"]
+          state: computer
+        - map: ["computerLayerKeyboard"]
+          state: generic_keyboard
+        - map: ["computerLayerScreen"]
+          state: sensors
+        - map: ["computerLayerKeys"]
+          state: atmos_key
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#43ccb5"
+    - type: Computer
+      board: SensorConsoleCircuitboard
+    - type: SensorMonitoringConsole
+    - type: ActivatableUI
+      key: enum.SensorMonitoringConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.SensorMonitoringConsoleUiKey.Key
+          type: SensorMonitoringConsoleBoundUserInterface
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-sensor-monitor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+    - type: DeviceList
+    - type: AtmosDevice

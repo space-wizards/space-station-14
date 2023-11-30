@@ -5,6 +5,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
@@ -15,8 +16,8 @@ public sealed class QueryTests
     [Test]
     public async Task QuerySingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(AddTests.LogTestSettings);
+        var server = pair.Server;
 
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
         var sPlayers = server.ResolveDependency<IPlayerManager>();
@@ -27,11 +28,11 @@ public sealed class QueryTests
         var date = DateTime.UtcNow;
         var guid = Guid.NewGuid();
 
-        IPlayerSession player = default;
+        ICommonSession player = default;
 
         await server.WaitPost(() =>
         {
-            player = sPlayers.ServerSessions.First();
+            player = sPlayers.Sessions.First();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
         });
@@ -55,6 +56,6 @@ public sealed class QueryTests
             return false;
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

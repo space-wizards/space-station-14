@@ -4,7 +4,6 @@ using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Throwing;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Content.Server.Weapons.Ranged.Systems;
@@ -34,18 +33,22 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         component.GrenadesContainer = _container.EnsureContainer<Container>(uid, "cluster-payload");
     }
 
-    private void OnClugStartup(EntityUid uid, ClusterGrenadeComponent component, ComponentStartup args)
+    private void OnClugStartup(Entity<ClusterGrenadeComponent> clug, ref ComponentStartup args)
     {
+        var component = clug.Comp;
         if (component.FillPrototype != null)
         {
             component.UnspawnedCount = Math.Max(0, component.MaxGrenades - component.GrenadesContainer.ContainedEntities.Count);
-            UpdateAppearance(uid, component);
+            UpdateAppearance(clug);
         }
     }
 
-    private void OnClugUsing(EntityUid uid, ClusterGrenadeComponent component, InteractUsingEvent args)
+    private void OnClugUsing(Entity<ClusterGrenadeComponent> clug, ref InteractUsingEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
+
+        var component = clug.Comp;
 
         // TODO: Should use whitelist.
         if (component.GrenadesContainer.ContainedEntities.Count >= component.MaxGrenades ||
@@ -53,12 +56,13 @@ public sealed class ClusterGrenadeSystem : EntitySystem
             return;
 
         component.GrenadesContainer.Insert(args.Used);
-        UpdateAppearance(uid, component);
+        UpdateAppearance(clug);
         args.Handled = true;
     }
 
-    private void OnClugTrigger(EntityUid uid, ClusterGrenadeComponent component, TriggerEvent args)
+    private void OnClugTrigger(Entity<ClusterGrenadeComponent> clug, TriggerEvent args)
     {
+        var component = clug.Comp;
         component.CountDown = true;
         args.Handled = true;
     }
@@ -68,7 +72,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         base.Update(frameTime);
         var query = EntityQueryEnumerator<ClusterGrenadeComponent>();
 
-        while (query.MoveNext(out var uid, out var clug))
+        while (query.MoveNext(out Entity<ClusterGrenadeComponent> clug))
         {
             if (clug.CountDown && clug.UnspawnedCount > 0)
             {
@@ -77,7 +81,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                 var segmentAngle = 360 / grenadesInserted;
                 var bombletDelay = 0f;
 
-                while (TryGetGrenade(uid, clug, out var grenade))
+                while (TryGetGrenade(clug, out var grenade))
                 {
                     // var distance = random.NextFloat() * _throwDistance;
                     var angleMin = segmentAngle * thrownCount;
@@ -124,14 +128,15 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         else _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * clug.Distance, clug.Velocity);
     }
 
-    private bool TryGetGrenade(EntityUid clugUid, ClusterGrenadeComponent component, out EntityUid grenade)
+    private bool TryGetGrenade(Entity<ClusterGrenadeComponent> ent, out EntityUid grenade)
     {
         grenade = default;
+        var component = ent.Comp;
 
         if (component.UnspawnedCount > 0)
         {
             component.UnspawnedCount--;
-            grenade = EntityManager.SpawnEntity(component.FillPrototype, Transform(clugUid).MapPosition);
+            grenade = EntityManager.SpawnEntity(component.FillPrototype, Transform(ent).MapPosition);
             return true;
         }
 
@@ -149,10 +154,12 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         return false;
     }
 
-    private void UpdateAppearance(EntityUid uid, ClusterGrenadeComponent component)
+    private void UpdateAppearance(Entity<ClusterGrenadeComponent> ent)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
+        var component = ent.Comp;
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+            return;
 
-        _appearance.SetData(uid, ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount, appearance);
+        _appearance.SetData(ent, ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount, appearance);
     }
 }

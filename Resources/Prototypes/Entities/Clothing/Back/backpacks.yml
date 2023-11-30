@@ -8,13 +8,14 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
   - type: Item
-    size: 9999
+    size: Huge
   - type: Clothing
     quickEquip: false
     slots:
     - back
   - type: Storage
-    capacity: 100
+    maxItemSize: Huge
+    maxTotalWeight: 28
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -77,6 +78,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/engineering.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackAtmospherics
+  name: atmospherics backpack
+  description: It's a backpack made of fire resistant fibers. Smells like plasma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/atmospherics.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -152,6 +162,15 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackCargo
+  name: cargo backpack
+  description: A robust backpack for stealing cargo's loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/cargo.rsi
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackSalvage
   name: salvage bag
   description: A robust backpack for stashing your loot.
@@ -178,7 +197,7 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
-    capacity: 250
+    maxTotalWeight: 44
 
 - type: entity
   parent: ClothingBackpackERTLeader
@@ -241,8 +260,11 @@
       shader: unshaded
   - type: Clothing
     equippedPrefix: holding
+  - type: Item
+    size: Ginormous
   - type: Storage
-    capacity: 9999
+    maxItemSize: Huge
+    maxTotalWeight: 200 #5 duffels worth of gear
 
 - type: entity
   parent: ClothingBackpackClown

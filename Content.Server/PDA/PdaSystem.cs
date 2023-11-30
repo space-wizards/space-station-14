@@ -4,17 +4,16 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
-using Content.Server.Mind;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Access.Components;
+using Content.Shared.CartridgeLoader;
+using Content.Shared.Light.Components;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
-using Content.Shared.Light.Component;
 
 namespace Content.Server.PDA
 {
@@ -27,7 +26,6 @@ namespace Content.Server.PDA
         [Dependency] private readonly StoreSystem _store = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -51,7 +49,7 @@ namespace Content.Server.PDA
         {
             base.OnComponentInit(uid, pda, args);
 
-            if (!HasComp<ServerUserInterfaceComponent>(uid))
+            if (!HasComp<UserInterfaceComponent>(uid))
                 return;
 
             UpdateAlertLevel(uid, pda);
@@ -66,6 +64,13 @@ namespace Content.Server.PDA
 
         protected override void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
         {
+            if (args.Container.ID != pda.IdSlot.ID && args.Container.ID != pda.PenSlot.ID)
+                return;
+
+            // TODO: This is super cursed just use compstates please.
+            if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
+
             base.OnItemRemoved(uid, pda, args);
             UpdatePdaUi(uid, pda);
         }
@@ -104,9 +109,12 @@ namespace Content.Server.PDA
         /// <summary>
         /// Send new UI state to clients, call if you modify something like uplink.
         /// </summary>
-        public void UpdatePdaUi(EntityUid uid, PdaComponent pda)
+        public void UpdatePdaUi(EntityUid uid, PdaComponent? pda = null)
         {
-            if (!_ui.TryGetUi(uid, PdaUiKey.Key, out _))
+            if (!Resolve(uid, ref pda, false))
+                return;
+
+            if (!_ui.TryGetUi(uid, PdaUiKey.Key, out var ui))
                 return;
 
             var address = GetDeviceNetAddress(uid);
@@ -118,8 +126,15 @@ namespace Content.Server.PDA
             // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
             // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
 
+            // TODO don't make this depend on cartridge loader!?!?
+            if (!TryComp(uid, out CartridgeLoaderComponent? loader))
+                return;
+
+            var programs = _cartridgeLoader.GetAvailablePrograms(uid, loader);
             var id = CompOrNull<IdCardComponent>(pda.ContainedId);
             var state = new PdaUpdateState(
+                programs,
+                GetNetEntity(loader.ActiveProgram),
                 pda.FlashlightOn,
                 pda.PenSlot.HasItem,
                 new PdaIdInfoText
@@ -135,7 +150,7 @@ namespace Content.Server.PDA
                 hasInstrument,
                 address);
 
-            _cartridgeLoader?.UpdateUiState(uid, state);
+            _ui.SetUiState(ui, state);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaRequestUpdateInterfaceMessage msg)
@@ -161,7 +176,7 @@ namespace Content.Server.PDA
                 return;
 
             if (HasComp<RingerComponent>(uid))
-                _ringer.ToggleRingerUI(uid, (IPlayerSession) msg.Session);
+                _ringer.ToggleRingerUI(uid, msg.Session);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowMusicMessage msg)
@@ -170,7 +185,7 @@ namespace Content.Server.PDA
                 return;
 
             if (TryComp<InstrumentComponent>(uid, out var instrument))
-                _instrument.ToggleInstrumentUi(uid, (IPlayerSession) msg.Session, instrument);
+                _instrument.ToggleInstrumentUi(uid, msg.Session, instrument);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowUplinkMessage msg)

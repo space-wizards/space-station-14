@@ -1,7 +1,8 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using static Robust.Shared.Prototypes.EntityPrototype; // don't worry about it
+
+// don't worry about it
 
 namespace Content.Shared.Traits
 {
@@ -9,11 +10,11 @@ namespace Content.Shared.Traits
     ///     Describes a trait.
     /// </summary>
     [Prototype("trait")]
-    public sealed class TraitPrototype : IPrototype
+    public sealed partial class TraitPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     The name of this trait.
@@ -43,12 +44,12 @@ namespace Content.Shared.Traits
         ///     The components that get added to the player, when they pick this trait.
         /// </summary>
         [DataField("components")]
-        public ComponentRegistry Components { get; } = default!;
+        public ComponentRegistry Components { get; private set; } = default!;
 
         /// <summary>
         ///     Gear that is given to the player, when they pick this trait.
         /// </summary>
         [DataField("traitGear", required: false, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string TraitGear = string.Empty;
+        public string? TraitGear;
     }
 }

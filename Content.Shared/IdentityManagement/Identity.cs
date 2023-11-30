@@ -54,7 +54,7 @@ public static class Identity
     {
         // Would check for uid == viewer here but I think it's better for you to see yourself
         // how everyone else will see you, otherwise people will probably get confused and think they aren't disguised
-        return ent.HasComponent<SharedGhostComponent>(viewer);
+        return ent.HasComponent<GhostComponent>(viewer);
     }
 
 }

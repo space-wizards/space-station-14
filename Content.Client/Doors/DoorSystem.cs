@@ -22,8 +22,9 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    protected override void OnComponentInit(EntityUid uid, DoorComponent comp, ComponentInit args)
+    protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
     {
+        var comp = ent.Comp;
         comp.OpenSpriteStates = new(2);
         comp.ClosedSpriteStates = new(2);
 
@@ -111,11 +112,11 @@ public sealed class DoorSystem : SharedDoorSystem
                 }
                 break;
             case DoorState.Opening:
-                if (animPlayer != null && comp.OpeningAnimation != default)
+                if (animPlayer != null && comp.OpeningAnimationTime != 0.0)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.OpeningAnimation, DoorComponent.AnimationKey);
                 break;
             case DoorState.Closing:
-                if (animPlayer != null && comp.ClosingAnimation != default && comp.CurrentlyCrushing.Count == 0)
+                if (animPlayer != null && comp.ClosingAnimationTime != 0.0 && comp.CurrentlyCrushing.Count == 0)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.ClosingAnimation, DoorComponent.AnimationKey);
                 break;
             case DoorState.Denying:
@@ -137,6 +138,6 @@ public sealed class DoorSystem : SharedDoorSystem
     protected override void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
     {
         if (GameTiming.InPrediction && GameTiming.IsFirstTimePredicted)
-            Audio.Play(soundSpecifier, Filter.Local(), uid, false, audioParams);
+            Audio.PlayEntity(soundSpecifier, Filter.Local(), uid, false, audioParams);
     }
 }

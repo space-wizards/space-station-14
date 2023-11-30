@@ -7,7 +7,7 @@ namespace Content.Server.Shuttles.Components;
 /// Spawns Central Command (emergency destination) for a station.
 /// </summary>
 [RegisterComponent]
-public sealed class StationCentcommComponent : Component
+public sealed partial class StationCentcommComponent : Component
 {
     /// <summary>
     /// Crude shuttle offset spawning.

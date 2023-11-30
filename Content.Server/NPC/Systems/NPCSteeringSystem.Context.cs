@@ -3,12 +3,14 @@ using System.Numerics;
 using Content.Server.Examine;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Climbing;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using ClimbingComponent = Content.Shared.Climbing.Components.ClimbingComponent;
 
 namespace Content.Server.NPC.Systems;
 
@@ -36,6 +38,30 @@ public sealed partial class NPCSteeringSystem
     #region Seek
 
     /// <summary>
+    /// Takes into account agent-specific context that may allow it to bypass a node which is not FreeSpace.
+    /// </summary>
+    private bool IsFreeSpace(
+        EntityUid uid,
+        NPCSteeringComponent steering,
+        PathPoly node)
+    {
+        if (node.Data.IsFreeSpace)
+        {
+            return true;
+        }
+        // Handle the case where the node is a climb, we can climb, and we are climbing.
+        else if ((node.Data.Flags & PathfindingBreadcrumbFlag.Climb) != 0x0 &&
+            (steering.Flags & PathFlags.Climbing) != 0x0 &&
+            TryComp<ClimbingComponent>(uid, out var climbing) &&
+            climbing.IsClimbing)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Attempts to head to the target destination, either via the next pathfinding node or the final target.
     /// </summary>
     private bool TrySeek(
@@ -52,12 +78,44 @@ public sealed partial class NPCSteeringSystem
     {
         var ourCoordinates = xform.Coordinates;
         var destinationCoordinates = steering.Coordinates;
+        var inLos = true;
+
+        // Check if we're in LOS if that's required.
+        // TODO: Need something uhh better not sure on the interaction between these.
+        if (!steering.ForceMove && steering.ArriveOnLineOfSight)
+        {
+            // TODO: use vision range
+            inLos = _interaction.InRangeUnobstructed(uid, steering.Coordinates, 10f);
+
+            if (inLos)
+            {
+                steering.LineOfSightTimer += frameTime;
+
+                if (steering.LineOfSightTimer >= steering.LineOfSightTimeRequired)
+                {
+                    steering.Status = SteeringStatus.InRange;
+                    ResetStuck(steering, ourCoordinates);
+                    return true;
+                }
+            }
+            else
+            {
+                steering.LineOfSightTimer = 0f;
+            }
+        }
+        else
+        {
+            steering.LineOfSightTimer = 0f;
+            steering.ForceMove = false;
+        }
 
         // We've arrived, nothing else matters.
-        if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
-            distance <= steering.Range)
+        if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) &&
+            inLos &&
+            targetDistance <= steering.Range)
         {
             steering.Status = SteeringStatus.InRange;
+            ResetStuck(steering, ourCoordinates);
             return true;
         }
 
@@ -90,9 +148,9 @@ public sealed partial class NPCSteeringSystem
         }
         // If next node is a free tile then get within its bounds.
         // This is to avoid popping it too early
-        else if (steering.CurrentPath.TryPeek(out var node) && node.Data.IsFreeSpace)
+        else if (steering.CurrentPath.TryPeek(out var node) && IsFreeSpace(uid, steering, node))
         {
-            arrivalDistance = MathF.Min(node.Box.Width / 2f, node.Box.Height / 2f) - 0.01f;
+            arrivalDistance = MathF.Max(0.05f, MathF.Min(node.Box.Width / 2f, node.Box.Height / 2f) - 0.05f);
         }
         // Try getting into blocked range I guess?
         // TODO: Consider melee range or the likes.
@@ -117,7 +175,7 @@ public sealed partial class NPCSteeringSystem
         if (direction.Length() <= arrivalDistance)
         {
             // Node needs some kind of special handling like access or smashing.
-            if (steering.CurrentPath.TryPeek(out var node) && !node.Data.IsFreeSpace)
+            if (steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
             {
                 // Ignore stuck while handling obstacles.
                 ResetStuck(steering, ourCoordinates);
@@ -147,7 +205,7 @@ public sealed partial class NPCSteeringSystem
                         steering.Status = SteeringStatus.NoPath;
                         return false;
                     case SteeringObstacleStatus.Continuing:
-                        CheckPath(uid, steering, xform, needsPath, distance);
+                        CheckPath(uid, steering, xform, needsPath, targetDistance);
                         return true;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -180,9 +238,7 @@ public sealed partial class NPCSteeringSystem
             }
             else
             {
-                // This probably shouldn't happen as we check above but eh.
-                steering.Status = SteeringStatus.NoPath;
-                return false;
+                needsPath = true;
             }
         }
         // Stuck detection
@@ -203,8 +259,13 @@ public sealed partial class NPCSteeringSystem
                 // B) NPCs still try to move in locked containers (e.g. cow, hamster)
                 // and I don't want to spam grafana even harder than it gets spammed rn.
                 Log.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}");
-                steering.Status = SteeringStatus.NoPath;
-                return false;
+                needsPath = true;
+
+                if (stuckTime.TotalSeconds > maxStuckTime * 3)
+                {
+                    steering.Status = SteeringStatus.NoPath;
+                    return false;
+                }
             }
         }
         else
@@ -212,14 +273,14 @@ public sealed partial class NPCSteeringSystem
             ResetStuck(steering, ourCoordinates);
         }
 
-        // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
-        if (!needsPath)
+        // If not in LOS and no path then get a new one fam.
+        if (!inLos && steering.CurrentPath.Count == 0)
         {
-            needsPath = steering.CurrentPath.Count == 0 || (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
+            needsPath = true;
         }
 
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-        CheckPath(uid, steering, xform, needsPath, distance);
+        CheckPath(uid, steering, xform, needsPath, targetDistance);
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
         // available but we assume there was.
@@ -270,8 +331,10 @@ public sealed partial class NPCSteeringSystem
             return;
         }
 
-        if (!needsPath)
+        if (!needsPath && steering.CurrentPath.Count > 0)
         {
+            needsPath = steering.CurrentPath.Count > 0 && (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
+
             // If the target has sufficiently moved.
             var lastNode = GetCoordinates(steering.CurrentPath.Last());
 
@@ -331,10 +394,6 @@ public sealed partial class NPCSteeringSystem
         {
             mask = (CollisionGroup) physics.CollisionMask;
         }
-
-        // If we have to backtrack (for example, we're behind a table and the target is on the other side)
-        // Then don't consider pruning.
-        var goal = nodes.Last().Coordinates.ToMap(EntityManager, _transform);
 
         for (var i = 0; i < nodes.Count; i++)
         {
@@ -426,7 +485,9 @@ public sealed partial class NPCSteeringSystem
 
             var xformB = _xformQuery.GetComponent(ent);
 
-            if (!_physics.TryGetNearest(uid, ent, out var pointA, out var pointB, out var distance, xform, xformB))
+            if (!_physics.TryGetNearest(uid, ent,
+                    out var pointA, out var pointB, out var distance,
+                    xform, xformB))
             {
                 continue;
             }
@@ -483,8 +544,7 @@ public sealed partial class NPCSteeringSystem
         var objectRadius = 0.25f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
         var ourVelocity = body.LinearVelocity;
-        var factionQuery = GetEntityQuery<NpcFactionMemberComponent>();
-        factionQuery.TryGetComponent(uid, out var ourFaction);
+        _factionQuery.TryGetComponent(uid, out var ourFaction);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Dynamic))
         {
@@ -495,7 +555,7 @@ public sealed partial class NPCSteeringSystem
                 !otherBody.CanCollide ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
-                !factionQuery.TryGetComponent(ent, out var otherFaction) ||
+                !_factionQuery.TryGetComponent(ent, out var otherFaction) ||
                 !_npcFaction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)

@@ -9,13 +9,15 @@
       time: 21600 #6 hrs
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 21600 #6 hrs
+      time: 10800 #3 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 108000 # 30 hrs
+      time: 36000 #10 hours
+    - !type:OverallPlaytimeRequirement
+      time: 144000 #40 hrs
   weight: 10
   startingGear: QuartermasterGear
-  icon: "QuarterMaster"
+  icon: "JobIconQuarterMaster"
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -23,8 +25,13 @@
   - Salvage
   - Quartermaster
   - Maintenance
-  - External
   - Command
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: QuartermasterGear
@@ -35,7 +42,8 @@
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
     ears: ClothingHeadsetQM
+    belt: BoxFolderClipboard
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtQM
+  innerClothingSkirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelQuartermasterFilled
   duffelbag: ClothingBackpackDuffelQuartermasterFilled

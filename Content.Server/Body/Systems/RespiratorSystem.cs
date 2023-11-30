@@ -10,7 +10,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
@@ -41,10 +40,9 @@ namespace Content.Server.Body.Systems
         {
             base.Update(frameTime);
 
-            foreach (var (respirator, body) in EntityManager.EntityQuery<RespiratorComponent, BodyComponent>())
+            var query = EntityQueryEnumerator<RespiratorComponent, BodyComponent>();
+            while (query.MoveNext(out var uid, out var respirator, out var body))
             {
-                var uid = respirator.Owner;
-
                 if (_mobState.IsDead(uid))
                 {
                     continue;
@@ -55,7 +53,7 @@ namespace Content.Server.Body.Systems
                 if (respirator.AccumulatedFrametime < respirator.CycleDelay)
                     continue;
                 respirator.AccumulatedFrametime -= respirator.CycleDelay;
-                UpdateSaturation(respirator.Owner, -respirator.CycleDelay, respirator);
+                UpdateSaturation(uid, -respirator.CycleDelay, respirator);
 
                 if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
                 {
@@ -99,7 +97,7 @@ namespace Content.Server.Body.Systems
 
             // Inhale gas
             var ev = new InhaleLocationEvent();
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ev);
 
             ev.Gas ??= _atmosSys.GetContainingMixture(uid, false, true);
 
@@ -162,7 +160,7 @@ namespace Content.Server.Body.Systems
                 _alertsSystem.ShowAlert(uid, AlertType.LowOxygen);
             }
 
-            _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
+            _damageableSys.TryChangeDamage(uid, respirator.Damage, false, false);
         }
 
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
@@ -172,7 +170,7 @@ namespace Content.Server.Body.Systems
 
             _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 
-            _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);
+            _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery);
         }
 
         public void UpdateSaturation(EntityUid uid, float amount,

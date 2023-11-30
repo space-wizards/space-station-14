@@ -68,7 +68,7 @@ public abstract partial class SharedGunSystem
 
         TakeCharge(uid, component);
         UpdateBatteryAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnBatteryAmmoCount(EntityUid uid, BatteryAmmoProviderComponent component, ref GetAmmoCountEvent args)
@@ -98,7 +98,7 @@ public abstract partial class SharedGunSystem
         {
             case ProjectileBatteryAmmoProviderComponent proj:
                 var ent = Spawn(proj.Prototype, coordinates);
-                return (ent, EnsureComp<AmmoComponent>(ent));
+                return (ent, EnsureShootable(ent));
             case HitscanBatteryAmmoProviderComponent hitscan:
                 return (null, ProtoManager.Index<HitscanPrototype>(hitscan.Prototype));
             default:

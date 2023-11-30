@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Flash.Components
 {
     [RegisterComponent, Access(typeof(FlashSystem))]
-    public sealed class FlashComponent : Component
+    public sealed partial class FlashComponent : Component
     {
         [DataField("duration")]
         [ViewVariables(VVAccess.ReadWrite)]

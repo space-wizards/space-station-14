@@ -1,0 +1,10 @@
+﻿- type: entity
+  id: ActionVehicleHorn
+  name: Honk
+  description: Honk!
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 3.4
+    icon: Objects/Fun/bikehorn.rsi/icon.png
+    event: !type:HonkActionEvent

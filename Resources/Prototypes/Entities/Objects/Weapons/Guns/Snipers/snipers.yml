@@ -10,7 +10,7 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 50
+    size: Huge
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
     quickEquip: false
@@ -18,14 +18,13 @@
     - Back
   - type: AmmoCounter
   - type: Gun
-    fireRate: 1
+    fireRate: 0.75
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
-    autoCycle: false
     capacity: 10
     proto: CartridgeLightRifle
     whitelist:
@@ -101,3 +100,5 @@
         - CartridgeAntiMateriel
     capacity: 1
     proto: CartridgeAntiMateriel
+  - type: StaticPrice
+    price: 0

@@ -1775,39 +1775,27 @@ entities:
       pos: -2.5,-3.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 202
-      type: SignalReceiver
+    - links:
+      - 202
+      type: DeviceLinkSink
   - uid: 484
     components:
     - rot: -1.5707963267948966 rad
       pos: -3.5,-3.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 202
-      type: SignalReceiver
+    - links:
+      - 202
+      type: DeviceLinkSink
   - uid: 581
     components:
     - rot: -1.5707963267948966 rad
       pos: -1.5,-3.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 202
-      type: SignalReceiver
+    - links:
+      - 202
+      type: DeviceLinkSink
 - proto: Bucket
   entities:
   - uid: 358
@@ -3591,109 +3579,73 @@ entities:
     - pos: 4.5,-3.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 53
-      type: SignalReceiver
+    - links:
+      - 53
+      type: DeviceLinkSink
   - uid: 51
     components:
     - pos: 5.5,-3.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 53
-      type: SignalReceiver
+    - links:
+      - 53
+      type: DeviceLinkSink
   - uid: 52
     components:
     - pos: 6.5,-3.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 53
-      type: SignalReceiver
+    - links:
+      - 53
+      type: DeviceLinkSink
   - uid: 118
     components:
     - pos: 2.5,2.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 464
-      type: SignalReceiver
+    - links:
+      - 464
+      type: DeviceLinkSink
   - uid: 179
     components:
     - pos: -1.5,2.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 463
-      type: SignalReceiver
+    - links:
+      - 463
+      type: DeviceLinkSink
   - uid: 180
     components:
     - pos: 0.5,2.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 464
-      type: SignalReceiver
+    - links:
+      - 464
+      type: DeviceLinkSink
   - uid: 181
     components:
     - pos: 1.5,2.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 464
-      type: SignalReceiver
+    - links:
+      - 464
+      type: DeviceLinkSink
   - uid: 458
     components:
     - pos: -3.5,2.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 463
-      type: SignalReceiver
+    - links:
+      - 463
+      type: DeviceLinkSink
   - uid: 459
     components:
     - pos: -2.5,2.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 463
-      type: SignalReceiver
+    - links:
+      - 463
+      type: DeviceLinkSink
 - proto: ShuttersRadiation
   entities:
   - uid: 675
@@ -3701,13 +3653,9 @@ entities:
     - pos: 6.5,7.5
       parent: 16
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 584
-      type: SignalReceiver
+    - links:
+      - 584
+      type: DeviceLinkSink
 - proto: SignalButton
   entities:
   - uid: 53
@@ -3715,15 +3663,14 @@ entities:
     - pos: 3.5,-3.5
       parent: 16
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 50
-        - port: Toggle
-          uid: 51
-        - port: Toggle
-          uid: 52
-      type: SignalTransmitter
+    - linkedPorts:
+        50:
+        - Pressed: Toggle
+        51:
+        - Pressed: Toggle
+        52:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 202
     components:
     - name: Vault Unlock
@@ -3731,53 +3678,49 @@ entities:
     - pos: 1.5,-7.5
       parent: 16
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 581
-        - port: Toggle
-          uid: 139
-        - port: Toggle
-          uid: 484
-      type: SignalTransmitter
+    - linkedPorts:
+        581:
+        - Pressed: Toggle
+        139:
+        - Pressed: Toggle
+        484:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 463
     components:
     - pos: -0.5,2.5
       parent: 16
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 179
-        - port: Toggle
-          uid: 459
-        - port: Toggle
-          uid: 458
-      type: SignalTransmitter
+    - linkedPorts:
+        179:
+        - Pressed: Toggle
+        459:
+        - Pressed: Toggle
+        458:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 464
     components:
     - pos: 3.5,2.5
       parent: 16
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 118
-        - port: Toggle
-          uid: 181
-        - port: Toggle
-          uid: 180
-      type: SignalTransmitter
+    - linkedPorts:
+        118:
+        - Pressed: Toggle
+        181:
+        - Pressed: Toggle
+        180:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 584
     components:
     - pos: 5.5,7.5
       parent: 16
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 675
-      type: SignalTransmitter
+    - linkedPorts:
+        675:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SignCargo
   entities:
   - uid: 582

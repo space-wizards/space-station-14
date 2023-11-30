@@ -15,7 +15,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
     ///     Can be used for things like adding accents or something. I don't know. Go wild.
     /// </remarks>
     [UsedImplicitly]
-    public sealed class GenericStatusEffect : ReagentEffect
+    public sealed partial class GenericStatusEffect : ReagentEffect
     {
         [DataField("key", required: true)]
         public string Key = default!;

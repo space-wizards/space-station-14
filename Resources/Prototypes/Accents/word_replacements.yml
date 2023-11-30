@@ -319,7 +319,6 @@
     accent-archaic-replaced-50: accent-archaic-replacement-50
     accent-archaic-replaced-51: accent-archaic-replacement-51
     accent-archaic-replaced-52: accent-archaic-replacement-52
-    accent-archaic-replaced-53: accent-archaic-replacement-53
     accent-archaic-replaced-54: accent-archaic-replacement-54
     accent-archaic-replaced-55: accent-archaic-replacement-55
     accent-archaic-replaced-56: accent-archaic-replacement-56
@@ -339,16 +338,8 @@
     accent-archaic-replaced-70: accent-archaic-replacement-70
     accent-archaic-replaced-71: accent-archaic-replacement-71
     accent-archaic-replaced-72: accent-archaic-replacement-72
-    accent-archaic-replaced-73: accent-archaic-replacement-73
-    accent-archaic-replaced-74: accent-archaic-replacement-74
-    accent-archaic-replaced-75: accent-archaic-replacement-75
-    accent-archaic-replaced-76: accent-archaic-replacement-76
-    accent-archaic-replaced-77: accent-archaic-replacement-77
-    accent-archaic-replaced-78: accent-archaic-replacement-78
-    accent-archaic-replaced-79: accent-archaic-replacement-79
     accent-archaic-replaced-80: accent-archaic-replacement-80
     accent-archaic-replaced-81: accent-archaic-replacement-81
-    accent-archaic-replaced-82: accent-archaic-replacement-82
     accent-archaic-replaced-83: accent-archaic-replacement-83
     accent-archaic-replaced-84: accent-archaic-replacement-84
     accent-archaic-replaced-85: accent-archaic-replacement-85
@@ -452,7 +443,6 @@
     accent-archaic-replaced-183: accent-archaic-replacement-183
     accent-archaic-replaced-184: accent-archaic-replacement-184
     accent-archaic-replaced-185: accent-archaic-replacement-185
-    accent-archaic-replaced-186: accent-archaic-replacement-186
     accent-archaic-replaced-187: accent-archaic-replacement-187
     accent-archaic-replaced-188: accent-archaic-replacement-188
     accent-archaic-replaced-189: accent-archaic-replacement-189
@@ -500,4 +490,49 @@
     accent-archaic-replaced-231: accent-archaic-replacement-231
     accent-archaic-replaced-232: accent-archaic-replacement-232
 
-
+# For the chat sanitization system
+- type: accent
+  id: chatsanitize
+  wordReplacements:
+    chatsan-word-1: chatsan-replacement-1
+    chatsan-word-2: chatsan-replacement-2
+    chatsan-word-3: chatsan-replacement-3
+    chatsan-word-4: chatsan-replacement-4
+    chatsan-word-5: chatsan-replacement-5
+    chatsan-word-6: chatsan-replacement-6
+    chatsan-word-7: chatsan-replacement-7
+    chatsan-word-8: chatsan-replacement-8
+    chatsan-word-9: chatsan-replacement-9
+    chatsan-word-10: chatsan-replacement-10
+    chatsan-word-11: chatsan-replacement-11
+    chatsan-word-12: chatsan-replacement-12
+    chatsan-word-13: chatsan-replacement-13
+    chatsan-word-14: chatsan-replacement-14
+    chatsan-word-15: chatsan-replacement-15
+    chatsan-word-16: chatsan-replacement-16
+    chatsan-word-17: chatsan-replacement-17
+    chatsan-word-18: chatsan-replacement-18
+    chatsan-word-19: chatsan-replacement-19
+    chatsan-word-20: chatsan-replacement-20
+    chatsan-word-21: chatsan-replacement-please
+    chatsan-word-22: chatsan-replacement-please
+    chatsan-word-23: chatsan-replacement-please
+    chatsan-word-24: chatsan-replacement-24
+    chatsan-word-25: chatsan-replacement-25
+    chatsan-word-26: chatsan-replacement-26
+    chatsan-word-27: chatsan-replacement-27
+    chatsan-word-28: chatsan-replacement-28
+    chatsan-word-29: chatsan-replacement-29
+    chatsan-word-30: chatsan-replacement-30
+    chatsan-word-31: chatsan-replacement-31
+    chatsan-word-32: chatsan-replacement-32
+    chatsan-word-33: chatsan-replacement-33
+    chatsan-word-34: chatsan-replacement-34
+    chatsan-word-35: chatsan-replacement-35
+    chatsan-word-36: chatsan-replacement-36
+    chatsan-word-37: chatsan-replacement-37
+    chatsan-word-38: chatsan-replacement-38
+    chatsan-word-39: chatsan-replacement-etcetera
+    chatsan-word-40: chatsan-replacement-etcetera
+    chatsan-word-41: chatsan-replacement-41
+    chatsan-word-42: chatsan-replacement-42

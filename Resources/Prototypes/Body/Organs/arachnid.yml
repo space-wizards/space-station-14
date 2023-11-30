@@ -16,6 +16,14 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Tag
+    tags:
+      - Meat
 
 - type: entity
   id: OrganArachnidStomach
@@ -32,6 +40,11 @@
     solutions:
       stomach:
         maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
   - type: Metabolizer
     updateFrequency: 1.5
 
@@ -45,7 +58,6 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Organ
   - type: Lung
   - type: Metabolizer
     updateFrequency: 1.5
@@ -65,6 +77,11 @@
       Lung:
         maxVol: 100.0
         canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
 
 - type: entity
   id: OrganArachnidHeart
@@ -74,11 +91,10 @@
   components:
   - type: Sprite
     state: heart-on
-  - type: Organ
   - type: Metabolizer
     updateFrequency: 1.5
     maxReagents: 2
-    metabolizerTypes: [Animal]
+    metabolizerTypes: [Arachnid]
     groups:
     - id: Medicine
     - id: Poison
@@ -93,7 +109,6 @@
   components:
   - type: Sprite
     state: liver
-  - type: Organ
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     updateFrequency: 1.5
     maxReagents: 1
@@ -113,7 +128,6 @@
     layers:
       - state: kidney-l
       - state: kidney-r
-  - type: Organ
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     updateFrequency: 1.5
@@ -131,7 +145,6 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
-  - type: Organ
 
 - type: entity
   id: OrganArachnidTongue
@@ -141,4 +154,3 @@
   components:
   - type: Sprite
     state: tongue
-  - type: Organ

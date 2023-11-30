@@ -1,6 +1,7 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Components;
 using Content.Shared.Anomaly;
 using Content.Shared.CCVar;
 using Content.Shared.Materials;
@@ -80,7 +81,7 @@ public sealed partial class AnomalySystem
 
         var generating = EnsureComp<GeneratingAnomalyGeneratorComponent>(uid);
         generating.EndTime = Timing.CurTime + component.GenerationLength;
-        generating.AudioStream = Audio.PlayPvs(component.GeneratingSound, uid, AudioParams.Default.WithLoop(true));
+        generating.AudioStream = Audio.PlayPvs(component.GeneratingSound, uid, AudioParams.Default.WithLoop(true))?.Entity;
         component.CooldownEndTime = Timing.CurTime + component.CooldownLength;
         UpdateGeneratorUi(uid, component);
     }
@@ -93,8 +94,7 @@ public sealed partial class AnomalySystem
         var xform = Transform(grid);
 
         var targetCoords = xform.Coordinates;
-        var gridBounds = gridComp.LocalAABB;
-        gridBounds.Scale(_configuration.GetCVar(CCVars.AnomalyGenerationGridBoundsScale));
+        var gridBounds = gridComp.LocalAABB.Scale(_configuration.GetCVar(CCVars.AnomalyGenerationGridBoundsScale));
 
         for (var i = 0; i < 25; i++)
         {
@@ -147,11 +147,18 @@ public sealed partial class AnomalySystem
 
     private void OnGeneratingFinished(EntityUid uid, AnomalyGeneratorComponent component)
     {
-        var grid = Transform(uid).GridUid;
-        if (grid == null)
-            return;
+        var xform = Transform(uid);
 
-        SpawnOnRandomGridLocation(grid.Value, component.SpawnerPrototype);
+        if (_station.GetStationInMap(xform.MapID) is not { } station ||
+            !TryComp<StationDataComponent>(station, out var data) ||
+            _station.GetLargestGrid(data) is not { } grid)
+        {
+            if (xform.GridUid == null)
+                return;
+            grid = xform.GridUid.Value;
+        }
+
+        SpawnOnRandomGridLocation(grid, component.SpawnerPrototype);
         RemComp<GeneratingAnomalyGeneratorComponent>(uid);
         Appearance.SetData(uid, AnomalyGeneratorVisuals.Generating, false);
         Audio.PlayPvs(component.GeneratingFinishedSound, uid);
@@ -167,7 +174,8 @@ public sealed partial class AnomalySystem
         {
             if (Timing.CurTime < active.EndTime)
                 continue;
-            active.AudioStream?.Stop();
+
+            active.AudioStream = _audio.Stop(active.AudioStream);
             OnGeneratingFinished(ent, gen);
         }
     }

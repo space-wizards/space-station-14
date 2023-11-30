@@ -17,17 +17,17 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: Tiny
   - type: Construction
     graph: smokeableJoint
     node: joint
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 30
         reagents:
           - ReagentId: THC
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: Blunt
@@ -48,14 +48,14 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: Tiny
   - type: Construction
     graph: smokeableBlunt
     node: blunt
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 30
         reagents:
           - ReagentId: THC
-            Quantity: 10
+            Quantity: 20

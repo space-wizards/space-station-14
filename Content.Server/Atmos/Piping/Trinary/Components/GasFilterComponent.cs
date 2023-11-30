@@ -3,7 +3,7 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
     [RegisterComponent]
-    public sealed class GasFilterComponent : Component
+    public sealed partial class GasFilterComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]

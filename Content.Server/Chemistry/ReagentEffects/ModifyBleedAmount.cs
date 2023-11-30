@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class ModifyBleedAmount : ReagentEffect
+public sealed partial class ModifyBleedAmount : ReagentEffect
 {
     [DataField("scaled")]
     public bool Scaled = false;

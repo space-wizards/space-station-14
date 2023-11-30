@@ -13,12 +13,16 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 3
+            Poison: 2
+            Caustic: 2
       - !type:PopupMessage
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.15
 
 - type: reagent
   id: SpaceCleaner
@@ -33,6 +37,62 @@
   tileReactions:
     - !type:CleanTileReaction {}
     - !type:CleanDecalsReaction {}
+
+- type: reagent
+  id: SoapReagent
+  name: reagent-name-soap
+  desc: reagent-desc-soap
+  physicalDesc: reagent-physical-desc-soapy
+  flavor: clean
+  color: "#c8dfc9"
+  recognizable: true
+  boilingPoint: 100.0
+  meltingPoint: 60.0
+  metabolisms:
+    Food:
+      effects:
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        probability: 0.20
+    Drink:
+      effects:
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        probability: 0.20
+
+- type: reagent
+  id: SoapyWater
+  parent: Water
+  name: reagent-name-soapy-water
+  desc: reagent-desc-soapy-water
+  physicalDesc: reagent-physical-desc-soapy
+  flavor: clean
+  color: "#9ec8dc"
+  recognizable: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        probability: 0.10
+        thirstAmount: -5.0
+        hungerAmount: -5.0
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: .8
+  tileReactions:
+    - !type:CleanDecalsReaction
+      cleanCost: 5
+    - !type:ExtinguishTileReaction { }
+    - !type:SpillIfPuddlePresentTileReaction { }
 
 - type: reagent
   id: SpaceLube
@@ -63,6 +123,13 @@
   viscosity: 0.5
   tileReactions:
     - !type:SpillTileReaction
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      # pva glue? no, antibiotic glue for sealing wounds
+      - !type:ModifyBleedAmount
+        amount: -1.5
   metabolisms:
     Narcotic:
       effects:
@@ -72,6 +139,8 @@
         type: Add
         time: 5
         refresh: false
+    Drink:
+      effects:
       - !type:GenericStatusEffect
         key: Muted
         component: Muted

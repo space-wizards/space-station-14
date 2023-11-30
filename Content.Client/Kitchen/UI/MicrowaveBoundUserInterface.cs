@@ -1,9 +1,11 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -17,10 +19,13 @@ namespace Content.Client.Kitchen.UI
         private readonly Dictionary<int, EntityUid> _solids = new();
 
         [ViewVariables]
-        private readonly Dictionary<int, Solution.ReagentQuantity> _reagents = new();
+        private readonly Dictionary<int, ReagentQuantity> _reagents = new();
+
+        private IEntityManager _entManager;
 
         public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
         protected override void Open()
@@ -33,7 +38,7 @@ namespace Content.Client.Kitchen.UI
             _menu.EjectButton.OnPressed += _ => SendMessage(new MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
             {
-                SendMessage(new MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
+                SendMessage(new MicrowaveEjectSolidIndexedMessage(EntMan.GetNetEntity(_solids[args.ItemIndex])));
             };
 
             _menu.OnCookTimeSelected += (args, buttonIndex) =>
@@ -56,7 +61,6 @@ namespace Content.Client.Kitchen.UI
             _menu?.Dispose();
         }
 
-
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
@@ -66,7 +70,9 @@ namespace Content.Client.Kitchen.UI
             }
 
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
-            RefreshContentsDisplay(cState.ContainedSolids);
+
+            // TODO move this to a component state and ensure the net ids.
+            RefreshContentsDisplay(_entManager.GetEntityArray(cState.ContainedSolids));
 
             if (_menu == null) return;
 

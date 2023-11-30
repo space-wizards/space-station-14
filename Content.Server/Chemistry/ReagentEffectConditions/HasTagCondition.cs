@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEffectConditions;
 
 [UsedImplicitly]
-public sealed class HasTag : ReagentEffectCondition
+public sealed partial class HasTag : ReagentEffectCondition
 {
     [DataField("tag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     public string Tag = default!;

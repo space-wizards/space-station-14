@@ -5,7 +5,7 @@
   description: Linked together with some spare cuffs and metal.
   components:
   - type: Item
-    size: 20
+    size: Normal
   - type: Sprite
     sprite: Objects/Weapons/Throwable/bola.rsi
     state: icon
@@ -13,8 +13,6 @@
     sound: /Audio/Weapons/bolathrow.ogg
   - type: EmitSoundOnLand
     sound: /Audio/Effects/snap.ogg
-  - type: StaminaDamageOnCollide
-    damage: 80
   - type: Construction
     graph: Bola
     node: bola
@@ -45,5 +43,7 @@
     breakoutTime: 3.5 #all bola should generally be fast to remove
     walkSpeed: 0.7 #makeshift bola shouldn't slow too much
     sprintSpeed: 0.7
+    staminaDamage: 55 # Sudden weight increase sapping stamina
     canThrowTrigger: true
+    canMoveBreakout: true
 

@@ -8,12 +8,11 @@
     sprite: Objects/Materials/materials.rsi
   - type: Item
     sprite: Objects/Materials/materials.rsi
-    size: 30
-  - type: ItemStatus
+    size: Normal
   - type: Tag
     tags:
-      - RawMaterial
       - DroneUsable
+      - RawMaterial
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -48,8 +47,16 @@
     - state: cardboard_3
       map: ["base"]
   - type: Appearance
-  - type: Item
-    size: 30
+
+- type: entity
+  parent: MaterialCardboard
+  id: MaterialCardboard10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: cardboard
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: MaterialCardboard
@@ -60,8 +67,6 @@
     state: cardboard
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -69,11 +74,6 @@
   name: cloth
   suffix: Full
   components:
-  - type: Tag
-    tags:
-    - RawMaterial
-    - DroneUsable
-    - Gauze
   - type: Healing
     damageContainers:
       - Biological
@@ -108,8 +108,34 @@
     - state: cloth_3
       map: ["base"]
   - type: Appearance
-  - type: Item
-    size: 30
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - Gauze
+      - RawMaterial
+  - type: Construction
+    graph: WebObjects # not sure if I should either keep this here or just make another prototype. Will keep it here just in case.
+    node: cloth
+
+- type: entity
+  parent: MaterialCloth
+  id: MaterialCloth10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: cloth
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: MaterialCloth
@@ -120,8 +146,6 @@
     state: cloth
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -149,6 +173,20 @@
   - type: Construction
     graph: Durathread
     node: MaterialDurathread
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 - type: entity
   parent: MaterialDurathread
@@ -159,8 +197,6 @@
     state: durathread
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -187,6 +223,19 @@
   - type: Appearance
   - type: Item
     heldPrefix: wood
+  - type: Tag
+    tags:
+    - Wooden
+    - DroneUsable
+    - RawMaterial
+
+- type: entity
+  parent: MaterialWoodPlank
+  id: MaterialWoodPlank10
+  suffix: 10
+  components:
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: MaterialWoodPlank
@@ -195,8 +244,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -218,8 +265,6 @@
   - type: GuideHelp
     guides:
     - Cloning
-  - type: Item
-    size: 100
 
 - type: entity
   parent: MaterialBiomass
@@ -228,8 +273,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 # Following not used currently
 - type: entity
@@ -261,6 +304,27 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialHideCorgi
+  name: corgi hide
+  description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a corgi is sent to the nice farm.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: corgihide
+  - type: Item
+    sprite: Clothing/Head/Misc/hides.rsi
+    heldPrefix: corgi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hides.rsi
+    equippedPrefix: corgi2
+    slots:
+    - HEAD
+  - type: Tag
+    tags:
+    - HideCorgi
+
+- type: entity
+  parent: MaterialBase
   id: MaterialDiamond
   name: refined diamond
   suffix: Full
@@ -271,7 +335,6 @@
     state: diamond
   - type: Item
     heldPrefix: diamond
-    size: 60
 
 - type: entity
   parent: MaterialDiamond
@@ -280,8 +343,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
 
 - type: entity
   parent: MaterialBase
@@ -302,8 +363,20 @@
     - state: cotton_3
       map: ["base"]
   - type: Appearance
-  - type: Item
-    size: 30
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 
 - type: entity
@@ -315,8 +388,6 @@
     state: cotton
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -341,7 +412,7 @@
       - bananium
       - bananium_1
   - type: RadiationSource
-    intensity: 0.3
+    intensity: 0.1
   - type: FlavorProfile
     flavors:
       - banana
@@ -367,8 +438,6 @@
       - ReagentId: Honk
         Quantity: 5
   - type: Appearance
-  - type: Item
-    size: 20
 
 - type: entity
   parent: MaterialBananium
@@ -379,5 +448,92 @@
     state: bananium
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialWebSilk
+  name: silk
+  description: A webby material
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      WebSilk: 100
+  - type: Sprite
+    sprite: Objects/Materials/silk.rsi
+    state: icon
+  - type: Stack
+    count: 50
+    stackType: WebSilk
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
+
+- type: entity
+  parent: MaterialWebSilk
+  id: MaterialWebSilk25
+  suffix: 25
+  components:
+  - type: Stack
+    count: 25
+
+- type: entity
+  parent: MaterialWebSilk
+  id: MaterialWebSilk1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBones
+  name: bones
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Bones
+    baseLayer: base
+    layerStates:
+    - bones
+    - bones_2
+    - bones_3
+  - type: Sprite
+    state: cotton_3
+    layers:
+    - state: cotton_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Vitamin
+          Quantity: 3
+
+- type: entity
+  parent: MaterialBones
+  id: MaterialBones1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1

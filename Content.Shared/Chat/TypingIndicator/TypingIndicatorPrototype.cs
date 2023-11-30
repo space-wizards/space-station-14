@@ -8,10 +8,10 @@ namespace Content.Shared.Chat.TypingIndicator;
 ///     Prototype to store chat typing indicator visuals.
 /// </summary>
 [Prototype("typingIndicator")]
-public sealed class TypingIndicatorPrototype : IPrototype
+public sealed partial class TypingIndicatorPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("spritePath")]
     public ResPath SpritePath = new("/Textures/Effects/speech.rsi");
@@ -20,7 +20,7 @@ public sealed class TypingIndicatorPrototype : IPrototype
     public string TypingState = default!;
 
     [DataField("offset")]
-    public Vector2 Offset = new(0.5f, 0.5f);
+    public Vector2 Offset = new(0, 0);
 
     [DataField("shader")]
     public string Shader = "unshaded";

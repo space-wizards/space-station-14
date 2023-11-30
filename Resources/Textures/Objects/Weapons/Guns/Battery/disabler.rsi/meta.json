@@ -32,6 +32,10 @@
             ]
         },
         {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
             "name": "inhand-left-0"
         },
         {
@@ -45,6 +49,10 @@
         },
         {
             "name": "inhand-left-4"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         },
         {
             "name": "inhand-right-0"

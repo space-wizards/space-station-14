@@ -168,44 +168,12 @@
     supplyRate: 3000
 
 - type: entity
-  parent: [ BaseGenerator, ConstructibleMachine ]
-  id: GeneratorPlasma
-  suffix: Plasma, 5kW
+  parent: BaseGenerator
+  id: GeneratorBasic15kW
+  suffix: Basic, 15kW
   components:
-  - type: PowerSupplier
-    supplyRate: 5000 # 260 sec / sheet
-  - type: Sprite
-    sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen0_1
-  - type: WiresPanel
-  - type: Wires
-    BoardName: "GeneratorPlasma"
-    LayoutId: GeneratorPlasma
-  - type: Machine
-    board: GeneratorPlasmaMachineCircuitboard
-  - type: UpgradePowerSupplier
-    powerSupplyMultiplier: 1.25
-    scaling: Exponential
-
-- type: entity
-  parent: [ BaseGenerator, ConstructibleMachine ]
-  id: GeneratorUranium
-  suffix: Uranium, 15kW
-  components:
-  - type: PowerSupplier
-    supplyRate: 15000 # 85 sec / sheet
-  - type: Sprite
-    sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen1_1
-  - type: WiresPanel
-  - type: Wires
-    BoardName: "GeneratorUranium"
-    LayoutId: GeneratorUranium
-  - type: Machine
-    board: GeneratorUraniumMachineCircuitboard
-  - type: UpgradePowerSupplier
-    powerSupplyMultiplier: 1.25
-    scaling: Exponential
+    - type: PowerSupplier
+      supplyRate: 15000
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -219,6 +187,12 @@
     node: generator
   - type: StaticPrice
     price: 14
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -234,6 +208,12 @@
     node: APU
   - type: StaticPrice
     price: 38
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorAPUElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
 
 # RTG - no fuel requirement
 

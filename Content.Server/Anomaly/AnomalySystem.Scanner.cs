@@ -3,7 +3,7 @@ using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Anomaly;
@@ -19,9 +19,7 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyScannerComponent, AfterInteractEvent>(OnScannerAfterInteract);
         SubscribeLocalEvent<AnomalyScannerComponent, ScannerDoAfterEvent>(OnDoAfter);
 
-        SubscribeLocalEvent<AnomalyShutdownEvent>(OnScannerAnomalyShutdown);
         SubscribeLocalEvent<AnomalySeverityChangedEvent>(OnScannerAnomalySeverityChanged);
-        SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnScannerAnomalyStabilityChanged);
         SubscribeLocalEvent<AnomalyHealthChangedEvent>(OnScannerAnomalyHealthChanged);
     }
 
@@ -81,7 +79,7 @@ public sealed partial class AnomalySystem
         if (!HasComp<AnomalyComponent>(target))
             return;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)
         {
             DistanceThreshold = 2f
         });

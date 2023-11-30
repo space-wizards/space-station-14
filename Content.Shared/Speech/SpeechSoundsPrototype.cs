@@ -4,11 +4,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Speech
 {
     [Prototype("speechSounds")]
-    public sealed class SpeechSoundsPrototype : IPrototype
+    public sealed partial class SpeechSoundsPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         //Variation is here instead of in SharedSpeechComponent since some sets of
         //sounds may require more fine tuned pitch variation than others.

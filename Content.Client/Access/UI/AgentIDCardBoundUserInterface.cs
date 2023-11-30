@@ -18,7 +18,8 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            _window = new AgentIDCardWindow();
+            _window?.Dispose();
+            _window = new AgentIDCardWindow(this);
             if (State != null)
                 UpdateState(State);
 
@@ -39,6 +40,11 @@ namespace Content.Client.Access.UI
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
+        public void OnJobIconChanged(string newJobIcon)
+        {
+            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIcon));
+        }
+
         /// <summary>
         /// Update the UI state based on server-sent info
         /// </summary>
@@ -51,6 +57,7 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
+            _window.SetAllowedIcons(cast.Icons);
         }
 
         protected override void Dispose(bool disposing)

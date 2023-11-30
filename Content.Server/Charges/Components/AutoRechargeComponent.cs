@@ -9,7 +9,7 @@ namespace Content.Server.Charges.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(ChargesSystem))]
-public sealed class AutoRechargeComponent : Component
+public sealed partial class AutoRechargeComponent : Component
 {
     /// <summary>
     /// The time it takes to regain a single charge

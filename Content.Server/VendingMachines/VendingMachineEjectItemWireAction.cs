@@ -4,7 +4,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.VendingMachines;
 
-public sealed class VendingMachineEjectItemWireAction : ComponentWireAction<VendingMachineComponent>
+public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAction<VendingMachineComponent>
 {
     private VendingMachineSystem _vendingMachineSystem = default!;
 

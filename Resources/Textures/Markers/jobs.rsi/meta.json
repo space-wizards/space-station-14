@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi, librarian by Peptide. cburn and cluwne made by brainfood1183 (github). brigmed made by PuroSlavKing (Github)",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi | cburn and cluwne made by brainfood1183 (github). brigmed made by PuroSlavKing (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -14,9 +14,6 @@
       "name": "ai"
     },
     {
-      "name": "passenger"
-    },
-    {
       "name": "atmospherics"
     },
     {
@@ -27,6 +24,9 @@
     },
     {
       "name": "boxer"
+    },
+    {
+      "name": "brigmedic"
     },
     {
       "name": "captain"
@@ -56,6 +56,9 @@
       "name": "clown"
     },
     {
+      "name": "cluwne"
+    },
+    {
       "name": "chef"
     },
     {
@@ -66,6 +69,9 @@
     },
     {
       "name": "detective"
+    },
+    {
+      "name": "doctor"
     },
     {
       "name": "ertengineer"
@@ -98,6 +104,9 @@
       "name": "ertsecurityeva"
     },
     {
+      "name": "engineer"
+    },
+    {
       "name": "geneticist"
     },
     {
@@ -113,19 +122,28 @@
       "name": "lawyer"
     },
     {
-      "name": "doctor"
+      "name": "librarian"
+    },
+    {
+      "name": "medicalintern"
     },
     {
       "name": "mime"
     },
     {
-      "name": "zookeeper"
+      "name": "miner"
+    },
+    {
+      "name": "musician"
     },
     {
       "name": "reporter"
     },
     {
       "name": "paramedic"
+    },
+    {
+      "name": "passenger"
     },
     {
       "name": "prisoner"
@@ -140,7 +158,13 @@
       "name": "rd"
     },
     {
+      "name": "researchassistant"
+    },
+    {
       "name": "roboticist"
+    },
+    {
+      "name": "salvagespecialist"
     },
     {
       "name": "scientist"
@@ -152,28 +176,31 @@
       "name": "security_officer"
     },
     {
-      "name": "brigmedic"
+      "name": "serviceworker"
     },
     {
-      "name": "miner"
+      "name": "seniorengineer"
     },
     {
-      "name": "engineer"
+      "name": "seniorresearcher"
+    },
+    {
+      "name": "seniorphysician"
+    },
+    {
+      "name": "seniorofficer"
+    },
+    {
+      "name": "technicalassistant"
     },
     {
       "name": "virologist"
     },
     {
-      "name": "librarian"
-    },
-    {
       "name": "warden"
     },
-	{
-      "name": "cluwne"
-    },
     {
-      "name": "musician"
+      "name": "zookeeper"
     }
   ]
 }

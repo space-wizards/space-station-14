@@ -9,7 +9,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: Item
-    size: 5
+    size: Small
   - type: Clothing
     quickEquip: false
     slots:
@@ -77,6 +77,9 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   id: GrenadeFlashEffect
@@ -116,6 +119,116 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+
+- type: entity
+  name: supermatter grenade
+  description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
+  parent: GrenadeBase
+  id: SupermatterGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/supermattergrenade.rsi
+  - type: OnUseTimerTrigger
+    delay: 3
+    beepInterval: 0.46
+    beepSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 200
+    intensitySlope: 30
+    maxIntensity: 120
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
+      volume: 5
+  - type: AnchorOnTrigger
+    removeOnTrigger: true
+  - type: TwoStageTrigger
+    triggerDelay: 10.45
+    components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+      - type: GravityWell
+        maxRange: 8
+        baseRadialAcceleration: 145
+        baseTangentialAcceleration: 5
+        gravPulsePeriod: 0.01
+      - type: SingularityDistortion
+        intensity: 150
+        falloffPower: 1.5
+      - type: PointLight
+        enabled: true
+        color: "#ffaa44"
+        energy: 8
+        radius: 6
+        softness: 1
+        offset: "0, 0"
+      - type: SoundOnTrigger
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
+          params:
+            volume: 5
+      - type: ExplodeOnTrigger
+
+- type: entity
+  name: whitehole grenade
+  description: Grenade that repulses everything around for some time.
+  parent: SupermatterGrenade
+  id: WhiteholeGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
+  - type: OnUseTimerTrigger
+    delay: 3
+    beepInterval: 0.69
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
+      volume: 5
+  - type: TwoStageTrigger
+    triggerDelay: 11.14
+    components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
+      - type: GravityWell
+        maxRange: 10
+        baseRadialAcceleration: -180
+        baseTangentialAcceleration: -5
+        gravPulsePeriod: 0.01
+      - type: SingularityDistortion
+        intensity: -200
+        falloffPower: 1.5
+      - type: PointLight
+        enabled: true
+        color: "#ffffff"
+        energy: 8
+        radius: 6
+        softness: 1
+        offset: "0, 0"
+      - type: SoundOnTrigger
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
+          params:
+            volume: 15
+      - type: DeleteOnTrigger
 
 - type: entity
   name: the nuclear option
@@ -159,7 +272,7 @@
     - state: empty
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
-    size: 8
+    size: Small
   - type: PayloadCase
   - type: Construction
     graph: ModularGrenadeGraph

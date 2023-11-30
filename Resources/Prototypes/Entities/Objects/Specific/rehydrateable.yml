@@ -132,7 +132,6 @@
         solution: cube
   - type: Rehydratable
     possibleSpawns:
-    - MobRatServant
     - MobCarpHolo
     - MobXenoRavager
     - MobAngryBee

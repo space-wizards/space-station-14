@@ -20,6 +20,19 @@
         - CrateSalvageEquipment
         - CrateMaterialSteel
         - CrateMaterialGlass
+        - CrateServiceJanitorialSupplies
+        - CrateHydroponicsSeedsMedicinal
+        - CrateEmergencyInternals
+        - CrateFoodMRE
+        - CrateMaterialTextiles
+        - CrateMedicalSupplies
+        - CrateEngineeringCableBulk
+        - CrateMaterialCardboard
+        - CrateServiceBooks
+        - CrateServiceSmokeables
+        - CrateTrashCartFilled
+        - ClosetMaintenanceFilledRandom
+        - ClosetEmergencyFilledRandom
       rareChance: 0.4
       prototypes:
         - CrateSalvageAssortedGoodies
@@ -134,6 +147,9 @@
         - sprite: Mobs/Aliens/Carps/space.rsi
           state: icon
     - type: RandomSpawner
+      rarePrototypes:
+      - MobSharkSalvage
+      rareChance: 0.2
       prototypes:
         - MobCarpSalvage
         - MobCarpSalvage
@@ -183,6 +199,9 @@
   suffix: 75
   components:
   - type: RandomSpawner
+    rarePrototypes:
+    - MobSharkSalvage
+    rareChance: 0.2
     prototypes:
     - MobCarpSalvage
     - MobCarpSalvage

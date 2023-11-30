@@ -7,6 +7,6 @@ namespace Content.Server.Nutrition.Components;
 /// See MobMouseAdmeme for usage.
 /// </summary>
 [RegisterComponent, Access(typeof(FoodSystem))]
-public sealed class IgnoreBadFoodComponent : Component
+public sealed partial class IgnoreBadFoodComponent : Component
 {
 }

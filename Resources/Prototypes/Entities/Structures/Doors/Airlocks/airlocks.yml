@@ -69,6 +69,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command.rsi
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
 
 - type: entity
   parent: Airlock
@@ -85,6 +87,22 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockSyndicate
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockMining
+  suffix: Mining(Salvage)
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
 
 # Glass
 
@@ -126,7 +144,10 @@
     group: Glass
   - type: RadiationBlocker
     resistance: 2
-
+  - type: Tag
+    tags:
+      - GlassAirlock
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
 - type: entity
   parent: AirlockGlass
   id: AirlockEngineeringGlass
@@ -169,6 +190,16 @@
 
 - type: entity
   parent: AirlockGlass
+  id: AirlockChemistryGlass
+  suffix: Chemistry
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+  - type: PaintableAirlock
+    group: Glass
+
+- type: entity
+  parent: AirlockGlass
   id: AirlockMedicalGlass
   suffix: Medical
   components:
@@ -206,6 +237,8 @@
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
   - type: PaintableAirlock
     group: Glass
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
 
 - type: entity
   parent: AirlockGlass
@@ -216,3 +249,21 @@
     sprite: Structures/Doors/Airlocks/Glass/security.rsi
   - type: PaintableAirlock
     group: Glass
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSyndicateGlass
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/syndicate.rsi
+  - type: PaintableAirlock
+    group: Glass
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockMiningGlass
+  suffix: Mining(Salvage)
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/mining.rsi

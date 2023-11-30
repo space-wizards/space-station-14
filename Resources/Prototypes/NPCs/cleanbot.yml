@@ -2,40 +2,37 @@
   id: CleanbotCompound
   branches:
     - tasks:
-        - id: BufferNearbyPuddlesCompound
+        - !type:HTNCompoundTask
+          task: BufferNearbyPuddlesCompound
     - tasks:
-        - id: IdleCompound
+        - !type:HTNCompoundTask
+          task: IdleCompound
 
 # Picks a random puddle in range to move to and idle
 - type: htnCompound
   id: BufferNearbyPuddlesCompound
   branches:
     - tasks:
-        - id: PickPuddlePrimitive
-        - id: MoveToCombatTargetPrimitive
-        - id: MopPrimitive
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyPuddles
 
-- type: htnPrimitive
-  id: PickPuddlePrimitive
-  operator: !type:UtilityOperator
-    proto: NearbyPuddles
-
-- type: htnPrimitive
-  id: SetIdleTimePrimitive
-  operator: !type:SetFloatOperator
-    targetKey: IdleTime
-    amount: 3
-
-- type: htnPrimitive
-  id: MopPrimitive
-  preconditions:
-    - !type:TargetInRangePrecondition
-      targetKey: CombatTarget
-      rangeKey: InteractRange
-  operator: !type:InteractWithOperator
-    targetKey: CombatTarget
-  services:
-    - !type:UtilityService
-      id: PuddleService
-      proto: NearbyPuddles
-      key: CombatTarget
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: InteractRange
+          operator: !type:InteractWithOperator
+            targetKey: Target
+          services:
+            - !type:UtilityService
+              id: PuddleService
+              proto: NearbyPuddles
+              key: Target

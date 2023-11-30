@@ -1,7 +1,7 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Mind.Components;
 using Content.Shared.Administration;
+using Content.Shared.Mind.Components;
 using Robust.Shared.Console;
 
 namespace Content.Server.Ghost.Roles
@@ -9,6 +9,8 @@ namespace Content.Server.Ghost.Roles
     [AdminCommand(AdminFlags.Admin)]
     public sealed class MakeGhostRoleCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "makeghostrole";
         public string Description => "Turns an entity into a ghost role.";
         public string Help => $"Usage: {Command} <entity uid> <name> <description> [<rules>]";
@@ -21,21 +23,19 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!EntityUid.TryParse(args[0], out var uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
                 shell.WriteLine($"{args[0]} is not a valid entity uid.");
                 return;
             }
 
-            if (!entityManager.TryGetComponent(uid, out MetaDataComponent? metaData))
+            if (!_entManager.TryGetComponent(uid, out MetaDataComponent? metaData))
             {
                 shell.WriteLine($"No entity found with uid {uid}");
                 return;
             }
 
-            if (entityManager.TryGetComponent(uid, out MindContainerComponent? mind) &&
+            if (_entManager.TryGetComponent(uid, out MindContainerComponent? mind) &&
                 mind.HasMind)
             {
                 shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a mind.");
@@ -46,20 +46,20 @@ namespace Content.Server.Ghost.Roles
             var description = args[2];
             var rules = args.Length >= 4 ? args[3] : Loc.GetString("ghost-role-component-default-rules");
 
-            if (entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
+            if (_entManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
             {
                 shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostRoleComponent)}");
                 return;
             }
 
-            if (entityManager.TryGetComponent(uid, out GhostTakeoverAvailableComponent? takeOver))
+            if (_entManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
                 shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostTakeoverAvailableComponent)}");
                 return;
             }
 
-            ghostRole = entityManager.AddComponent<GhostRoleComponent>(uid);
-            entityManager.AddComponent<GhostTakeoverAvailableComponent>(uid);
+            ghostRole = _entManager.AddComponent<GhostRoleComponent>(uid.Value);
+            _entManager.AddComponent<GhostTakeoverAvailableComponent>(uid.Value);
             ghostRole.RoleName = name;
             ghostRole.RoleDescription = description;
             ghostRole.RoleRules = rules;

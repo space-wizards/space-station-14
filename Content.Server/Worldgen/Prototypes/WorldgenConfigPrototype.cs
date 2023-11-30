@@ -8,17 +8,17 @@ namespace Content.Server.Worldgen.Prototypes;
 ///     The components included are applied to the map that world generation is configured on.
 /// </summary>
 [Prototype("worldgenConfig")]
-public sealed class WorldgenConfigPrototype : IPrototype
+public sealed partial class WorldgenConfigPrototype : IPrototype
 {
     /// <inheritdoc />
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     The components that get added to the target map.
     /// </summary>
     [DataField("components", required: true)]
-    public ComponentRegistry Components { get; } = default!;
+    public ComponentRegistry Components { get; private set; } = default!;
 
     //TODO: Get someone to make this a method on componentregistry that does it Correctly.
     /// <summary>

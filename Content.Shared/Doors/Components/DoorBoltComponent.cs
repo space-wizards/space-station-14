@@ -1,9 +1,6 @@
 using Content.Shared.Doors.Systems;
-using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Doors.Components;
 
@@ -12,7 +9,7 @@ namespace Content.Shared.Doors.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDoorBoltSystem))]
-public sealed class DoorBoltComponent : Component
+public sealed partial class DoorBoltComponent : Component
 {
     /// <summary>
     /// Sound to play when the bolts on the airlock go up.

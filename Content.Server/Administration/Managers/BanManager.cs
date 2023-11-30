@@ -1,20 +1,23 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
-using Microsoft.CodeAnalysis;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers;
 
@@ -46,28 +49,25 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        if (e.NewStatus != SessionStatus.Connected
-            || _cachedRoleBans.ContainsKey(e.Session.UserId))
+        if (e.NewStatus != SessionStatus.Connected || _cachedRoleBans.ContainsKey(e.Session.UserId))
             return;
 
         var netChannel = e.Session.ConnectedClient;
-        await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId);
+        ImmutableArray<byte>? hwId = netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId;
+        await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, hwId);
+
+        SendRoleBans(e.Session);
     }
 
     private async Task<bool> AddRoleBan(ServerRoleBanDef banDef)
     {
+        banDef = await _db.AddServerRoleBanAsync(banDef);
+
         if (banDef.UserId != null)
         {
-            if (!_cachedRoleBans.TryGetValue(banDef.UserId.Value, out var roleBans))
-            {
-                roleBans = new HashSet<ServerRoleBanDef>();
-                _cachedRoleBans.Add(banDef.UserId.Value, roleBans);
-            }
-            if (!roleBans.Contains(banDef))
-                roleBans.Add(banDef);
+            _cachedRoleBans.GetOrNew(banDef.UserId.Value).Add(banDef);
         }
 
-        await _db.AddServerRoleBanAsync(banDef);
         return true;
     }
 
@@ -151,9 +151,18 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             : "null";
         var expiresString = expires == null ? Loc.GetString("server-ban-string-never") : $"{expires}";
 
-        var logMessage = Loc.GetString("server-ban-string", ("admin", adminName), ("severity", severity),
-            ("expires", expiresString), ("name", targetName), ("ip", addressRangeString),
-            ("hwid", hwidString), ("reason", reason));
+        var key = _cfg.GetCVar(CCVars.AdminShowPIIOnBan) ? "server-ban-string" : "server-ban-string-no-pii";
+
+        var logMessage = Loc.GetString(
+            key,
+            ("admin", adminName),
+            ("severity", severity),
+            ("expires", expiresString),
+            ("name", targetName),
+            ("ip", addressRangeString),
+            ("hwid", hwidString),
+            ("reason", reason));
+
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);
 
@@ -221,6 +230,39 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         }
     }
 
+    public async Task<string> PardonRoleBan(int banId, NetUserId? unbanningAdmin, DateTimeOffset unbanTime)
+    {
+        var ban = await _db.GetServerRoleBanAsync(banId);
+
+        if (ban == null)
+        {
+            return $"No ban found with id {banId}";
+        }
+
+        if (ban.Unban != null)
+        {
+            var response = new StringBuilder("This ban has already been pardoned");
+
+            if (ban.Unban.UnbanningAdmin != null)
+            {
+                response.Append($" by {ban.Unban.UnbanningAdmin.Value}");
+            }
+
+            response.Append($" in {ban.Unban.UnbanTime}.");
+            return response.ToString();
+        }
+
+        await _db.AddServerRoleUnbanAsync(new ServerRoleUnbanDef(banId, unbanningAdmin, DateTimeOffset.Now));
+
+        if (ban.UserId is { } player && _cachedRoleBans.TryGetValue(player, out var roleBans))
+        {
+            roleBans.RemoveWhere(roleBan => roleBan.Id == ban.Id);
+            SendRoleBans(player);
+        }
+
+        return $"Pardoned ban with id {banId}";
+    }
+
     public HashSet<string>? GetJobBans(NetUserId playerUserId)
     {
         if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
@@ -242,14 +284,9 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         SendRoleBans(player);
     }
 
-    public void SendRoleBans(IPlayerSession pSession)
+    public void SendRoleBans(ICommonSession pSession)
     {
-        if (!_cachedRoleBans.TryGetValue(pSession.UserId, out var roleBans))
-        {
-            _sawmill.Error($"Tried to send rolebans for {pSession.Name} but none cached?");
-            return;
-        }
-
+        var roleBans = _cachedRoleBans.GetValueOrDefault(pSession.UserId) ?? new HashSet<ServerRoleBanDef>();
         var bans = new MsgRoleBans()
         {
             Bans = roleBans.Select(o => o.Role).ToList()

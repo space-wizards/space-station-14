@@ -6,6 +6,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
 using Robust.Shared.Utility;
 
 namespace Content.Client.CombatMode;
@@ -60,7 +61,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         var mouseScreenPosition = _inputManager.MouseScreenPosition;
-        var mousePosMap = _eye.ScreenToMap(mouseScreenPosition);
+        var mousePosMap = _eye.PixelToMap(mouseScreenPosition);
         if (mousePosMap.MapId != args.MapId)
             return;
 

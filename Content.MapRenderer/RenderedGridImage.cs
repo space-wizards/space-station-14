@@ -6,7 +6,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.MapRenderer;
 
-public sealed class RenderedGridImage <T> where T : unmanaged, IPixel<T>
+public sealed class RenderedGridImage<T> where T : unmanaged, IPixel<T>
 {
     public Image<T> Image;
     public Vector2 Offset { get; set; } = Vector2.Zero;

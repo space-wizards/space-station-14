@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-	"copyright": "Taken/modified from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/56cbafd6ad8c013ccd5472d6c4a0db790f7f872a/icons/obj/guns/projectile/drozd.dmi",
+	"copyright": "Taken/modified from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/56cbafd6ad8c013ccd5472d6c4a0db790f7f872a/icons/obj/guns/projectile/drozd.dmi, sprite modification by Jaсkal 298/TaralGit, backpack sling sprite edited by Boaz1111",
 	"size": {
 		"x": 32,
 		"y": 32
@@ -12,6 +12,9 @@
 		},
 		{
 			"name": "base"
+		},
+		{
+			"name": "bolt-open"
 		},
 		{
 			"name": "mag-0"
@@ -26,6 +29,10 @@
 		{
 			"name": "inhand-right",
 			"directions": 4
-		}
-	]
+	},
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    }
+    ]
 }

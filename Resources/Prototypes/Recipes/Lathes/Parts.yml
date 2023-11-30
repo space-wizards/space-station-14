@@ -29,8 +29,8 @@
   result: AdvancedCapacitorStockPart
   completetime: 3
   materials:
-    Steel: 150
-    Plastic: 150
+    Steel: 80
+    Plastic: 80
     Plasma: 75
 
 - type: latheRecipe
@@ -38,8 +38,8 @@
   result: AdvancedMatterBinStockPart
   completetime: 3
   materials:
-    Steel: 150
-    Plastic: 150
+    Steel: 80
+    Plastic: 80
     Plasma: 75
 
 - type: latheRecipe
@@ -47,37 +47,37 @@
   result: NanoManipulatorStockPart
   completetime: 3
   materials:
-    Steel: 150
-    Plastic: 150
+    Steel: 80
+    Plastic: 80
     Plasma: 75
-    
+
 #Rating 3
 - type: latheRecipe
   id: SuperCapacitorStockPart
   result: SuperCapacitorStockPart
   completetime: 3
   materials:
-    Steel: 250
-    Plastic: 250
-    Plasma: 100
-    Gold: 125
+    Steel: 150
+    Plastic: 150
+    Plasma: 75
+    Gold: 75
 
 - type: latheRecipe
   id: SuperMatterBinStockPart
   result: SuperMatterBinStockPart
   completetime: 3
   materials:
-    Steel: 250
-    Plastic: 250
-    Plasma: 100
-    Gold: 125
+    Steel: 150
+    Plastic: 150
+    Plasma: 75
+    Gold: 75
 
 - type: latheRecipe
   id: PicoManipulatorStockPart
   result: PicoManipulatorStockPart
   completetime: 3
   materials:
-    Steel: 250
-    Plastic: 250
-    Plasma: 100
-    Gold: 125
+    Steel: 150
+    Plastic: 150
+    Plasma: 75
+    Gold: 75

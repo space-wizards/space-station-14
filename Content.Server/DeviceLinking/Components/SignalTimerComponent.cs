@@ -1,11 +1,11 @@
-using Content.Shared.MachineLinking;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.DeviceLinking.Components;
 
 [RegisterComponent]
-public sealed class SignalTimerComponent : Component
+public sealed partial class SignalTimerComponent : Component
 {
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
     public double Delay = 5;
@@ -25,13 +25,13 @@ public sealed class SignalTimerComponent : Component
     /// <summary>
     ///     The port that gets signaled when the timer triggers.
     /// </summary>
-    [DataField("triggerPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("triggerPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string TriggerPort = "Timer";
 
     /// <summary>
     ///     The port that gets signaled when the timer starts.
     /// </summary>
-    [DataField("startPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("startPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string StartPort = "Start";
 
     /// <summary>

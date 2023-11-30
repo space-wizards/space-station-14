@@ -8,7 +8,7 @@
                 <BoxContainer Orientation="Horizontal" Margin="0 0 0 2">
                     <CheckBox Name="CEnableDevice" Text="{Loc 'air-alarm-ui-widget-enable'}" />
                 </BoxContainer>
-                <!-- Upper row: toggle, direction, volume rate, widenet -->
+                <!-- Upper row: toggle, direction, volume rate, widenet, copy settings -->
                 <BoxContainer Orientation="Horizontal" Margin="0 0 0 2" HorizontalExpand="True">
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                         <Label Text="{Loc 'air-alarm-ui-scrubber-pump-direction-label'}" Margin="0 0 0 1"/>
@@ -21,6 +21,9 @@
                 </BoxContainer>
                 <BoxContainer>
                     <CheckBox Name="CWideNet" Text="{Loc 'air-alarm-ui-scrubber-wide-net-label'}" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
+                    <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
                 </BoxContainer>
                 <!-- Lower row: every single gas -->
                 <Collapsible Orientation="Vertical" Margin="2 2 2 2">

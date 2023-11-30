@@ -1,16 +1,14 @@
 using System.Numerics;
-using Content.Server.Cargo.Components;
 using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -33,13 +31,13 @@ namespace Content.Server.Physics.Controllers
 
         private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
         {
-            if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
+            if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
         private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
         {
-            if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
+            if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
@@ -62,24 +60,16 @@ namespace Content.Server.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, frameTime);
 
-            var bodyQuery = GetEntityQuery<PhysicsComponent>();
-            var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
-            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var moverQuery = GetEntityQuery<InputMoverComponent>();
-            var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
-            var pullableQuery = GetEntityQuery<SharedPullableComponent>();
             var inputQueryEnumerator = AllEntityQuery<InputMoverComponent>();
-            var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
 
             while (inputQueryEnumerator.MoveNext(out var uid, out var mover))
             {
                 var physicsUid = uid;
 
-                if (relayQuery.HasComponent(uid))
+                if (RelayQuery.HasComponent(uid))
                     continue;
 
-                if (!xformQuery.TryGetComponent(uid, out var xform))
+                if (!XformQuery.TryGetComponent(uid, out var xform))
                 {
                     continue;
                 }
@@ -87,17 +77,17 @@ namespace Content.Server.Physics.Controllers
                 PhysicsComponent? body;
                 var xformMover = xform;
 
-                if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
+                if (mover.ToParent && RelayQuery.HasComponent(xform.ParentUid))
                 {
-                    if (!bodyQuery.TryGetComponent(xform.ParentUid, out body) ||
-                        !TryComp(xform.ParentUid, out xformMover))
+                    if (!PhysicsQuery.TryGetComponent(xform.ParentUid, out body) ||
+                        !XformQuery.TryGetComponent(xform.ParentUid, out xformMover))
                     {
                         continue;
                     }
 
                     physicsUid = xform.ParentUid;
                 }
-                else if (!bodyQuery.TryGetComponent(uid, out body))
+                else if (!PhysicsQuery.TryGetComponent(uid, out body))
                 {
                     continue;
                 }
@@ -107,13 +97,7 @@ namespace Content.Server.Physics.Controllers
                     physicsUid,
                     body,
                     xformMover,
-                    frameTime,
-                    xformQuery,
-                    moverQuery,
-                    mobMoverQuery,
-                    relayTargetQuery,
-                    pullableQuery,
-                    modifierQuery);
+                    frameTime);
             }
 
             HandleShuttleMovement(frameTime);
@@ -244,6 +228,29 @@ namespace Content.Server.Physics.Controllers
             }
 
             component.CurTickBraking += brake * fraction;
+        }
+
+        /// <summary>
+        /// Helper function to extrapolate max velocity for a given Vector2 (really, its angle) and shuttle.
+        /// </summary>
+        private Vector2 ObtainMaxVel(Vector2 vel, ShuttleComponent shuttle)
+        {
+            if (vel.Length() == 0f)
+                return Vector2.Zero;
+
+            // this math could PROBABLY be simplified for performance
+            // probably
+            //             __________________________________
+            //            / /    __   __ \2   /    __   __ \2
+            // O = I : _ /  |I * | 1/H | |  + |I * |  0  | |
+            //          V   \    |_ 0 _| /    \    |_1/V_| /
+
+            var horizIndex = vel.X > 0 ? 1 : 3; // east else west
+            var vertIndex = vel.Y > 0 ? 2 : 0; // north else south
+            var horizComp = vel.X != 0 ? MathF.Pow(Vector2.Dot(vel, new (shuttle.BaseLinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2) : 0;
+            var vertComp = vel.Y != 0 ? MathF.Pow(Vector2.Dot(vel, new (0f, shuttle.BaseLinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2) : 0;
+
+            return shuttle.BaseMaxLinearVelocity * vel * MathF.ReciprocalSqrtEstimate(horizComp + vertComp);
         }
 
         private void HandleShuttleMovement(float frameTime)
@@ -414,7 +421,7 @@ namespace Content.Server.Physics.Controllers
                         }
                         else
                         {
-                            torque = MathF.Max(body.AngularVelocity / torqueMul, torque);
+                            torque = MathF.Min(-body.AngularVelocity / torqueMul, torque);
                         }
 
                         if (!torque.Equals(0f))
@@ -492,19 +499,27 @@ namespace Content.Server.Physics.Controllers
                         totalForce += impulse;
                     }
 
-                    totalForce = shuttleNorthAngle.RotateVec(totalForce);
-
                     var forceMul = frameTime * body.InvMass;
-                    var maxVelocity = (ShuttleComponent.MaxLinearVelocity - body.LinearVelocity.Length()) / forceMul;
 
-                    if (maxVelocity != 0f)
-                    {
-                        // Don't overshoot
-                        if (totalForce.Length() > maxVelocity)
-                            totalForce = totalForce.Normalized() * maxVelocity;
+                    var localVel = (-shuttleNorthAngle).RotateVec(body.LinearVelocity);
+                    var maxVelocity = ObtainMaxVel(localVel, shuttle); // max for current travel dir
+                    var maxWishVelocity = ObtainMaxVel(totalForce, shuttle);
+                    var properAccel = (maxWishVelocity - localVel) / forceMul;
 
-                        PhysicsSystem.ApplyForce(shuttleUid, totalForce, body: body);
-                    }
+                    var finalForce = Vector2.Dot(totalForce, properAccel.Normalized()) * properAccel.Normalized();
+
+                    if (localVel.Length() >= maxVelocity.Length() && Vector2.Dot(totalForce, localVel) > 0f)
+                        finalForce = Vector2.Zero; // burn would be faster if used as such
+
+                    if (finalForce.Length() > properAccel.Length())
+                        finalForce = properAccel; // don't overshoot
+
+                    //Logger.Info($"shuttle: maxVelocity {maxVelocity} totalForce {totalForce} finalForce {finalForce} forceMul {forceMul} properAccel {properAccel}");
+
+                    finalForce = shuttleNorthAngle.RotateVec(finalForce);
+
+                    if (finalForce.Length() > 0f)
+                        PhysicsSystem.ApplyForce(shuttleUid, finalForce, body: body);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))

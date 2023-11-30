@@ -32,7 +32,7 @@ public partial class SharedGunSystem
     private bool TryGetClothingSlotEntity(EntityUid uid, ClothingSlotAmmoProviderComponent component, [NotNullWhen(true)] out EntityUid? slotEntity)
     {
         slotEntity = null;
-        if (!_container.TryGetContainingContainer(uid, out var container))
+        if (!Containers.TryGetContainingContainer(uid, out var container))
             return false;
         var user = container.Owner;
 

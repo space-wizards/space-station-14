@@ -4,6 +4,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Roles;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems
@@ -36,6 +37,7 @@ namespace Content.Server.Access.Systems
                     return;
 
                 SetupIdAccess(uid, card, true);
+                SetupIdName(uid, card);
             }
         }
 
@@ -52,6 +54,14 @@ namespace Content.Server.Access.Systems
                 extended = Comp<StationJobsComponent>(station.Value).ExtendedAccess;
 
             SetupIdAccess(uid, id, extended);
+            SetupIdName(uid, id);
+        }
+
+        private void SetupIdName(EntityUid uid, PresetIdCardComponent id)
+        {
+            if (id.IdName == null)
+                return;
+            _cardSystem.TryChangeFullName(uid, id.IdName);
         }
 
         private void SetupIdAccess(EntityUid uid, PresetIdCardComponent id, bool extended)
@@ -67,8 +77,12 @@ namespace Content.Server.Access.Systems
 
             _accessSystem.SetAccessToJob(uid, job, extended);
 
-            // and also change job title on a card id
             _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
+
+            if (_prototypeManager.TryIndex<StatusIconPrototype>(job.Icon, out var jobIcon))
+            {
+                _cardSystem.TryChangeJobIcon(uid, jobIcon);
+            }
         }
     }
 }

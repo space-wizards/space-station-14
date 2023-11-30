@@ -8,7 +8,7 @@ namespace Content.Shared.Explosion;
 ///     Component that is used to send explosion overlay/visual data to an abstract explosion entity.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class ExplosionVisualsComponent : Component
+public sealed partial class ExplosionVisualsComponent : Component
 {
     public MapCoordinates Epicenter;
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
@@ -24,7 +24,7 @@ public sealed class ExplosionVisualsState : ComponentState
 {
     public MapCoordinates Epicenter;
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
-    public Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles;
+    public Dictionary<NetEntity, Dictionary<int, List<Vector2i>>> Tiles;
     public List<float> Intensity;
     public string ExplosionType = string.Empty;
     public Matrix3 SpaceMatrix;
@@ -35,7 +35,7 @@ public sealed class ExplosionVisualsState : ComponentState
         string typeID,
         List<float> intensity,
         Dictionary<int, List<Vector2i>>? spaceTiles,
-        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tiles,
+        Dictionary<NetEntity, Dictionary<int, List<Vector2i>>> tiles,
         Matrix3 spaceMatrix,
         ushort spaceTileSize)
     {

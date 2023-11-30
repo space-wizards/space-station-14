@@ -11,7 +11,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// in order to analyze artifacts and extract points.
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactAnalyzerComponent : Component
+public sealed partial class ArtifactAnalyzerComponent : Component
 {
     /// <summary>
     /// How long it takes to analyze an artifact
@@ -45,17 +45,11 @@ public sealed class ArtifactAnalyzerComponent : Component
     [ViewVariables]
     public EntityUid? Console;
 
-    /// <summary>
-    /// All of the valid artifacts currently touching the analyzer.
-    /// </summary>
-    [ViewVariables]
-    public HashSet<EntityUid> Contacts = new();
-
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ReadyToPrint = false;
 
     [DataField("scanFinishedSound")]
-    public readonly SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
+    public SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
     #region Analysis Data
     [ViewVariables]

@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Teleportation;
@@ -22,7 +23,6 @@ public sealed class HandTeleporterSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
-
         SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
     }
 
@@ -55,7 +55,7 @@ public sealed class HandTeleporterSystem : EntitySystem
             if (xform.ParentUid != xform.GridUid)
                 return;
 
-            var doafterArgs = new DoAfterArgs(args.User, component.PortalCreationDelay, new TeleporterDoAfterEvent(), uid, used: uid)
+            var doafterArgs = new DoAfterArgs(EntityManager, args.User, component.PortalCreationDelay, new TeleporterDoAfterEvent(), uid, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnUserMove = true,
@@ -78,7 +78,7 @@ public sealed class HandTeleporterSystem : EntitySystem
         var xform = Transform(user);
 
         // Create the first portal.
-        if (component.FirstPortal == null && component.SecondPortal == null)
+        if (Deleted(component.FirstPortal) && Deleted(component.SecondPortal))
         {
             // don't portal
             if (xform.ParentUid != xform.GridUid)
@@ -90,7 +90,7 @@ public sealed class HandTeleporterSystem : EntitySystem
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):player} opened {ToPrettyString(component.FirstPortal.Value)} at {Transform(component.FirstPortal.Value).Coordinates} using {ToPrettyString(uid)}");
             _audio.PlayPvs(component.NewPortalSound, uid);
         }
-        else if (component.SecondPortal == null)
+        else if (Deleted(component.SecondPortal))
         {
             var timeout = EnsureComp<PortalTimeoutComponent>(user);
             timeout.EnteredPortal = null;

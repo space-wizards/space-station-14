@@ -1,38 +1,46 @@
-- type: weightedRandom
+- type: weightedRandomFillSolution
   id: RandomFillStrangePill
-  weights:
-    # Elements
-    Aluminium: 1
-    Carbon: 1
-    Chlorine: 1
-    Copper: 1
-    Fluorine: 1
-    Hydrogen: 1
-    Iodine: 1
-    Lithium: 1
-    Mercury: 1
-    Potassium: 1
-    Phosphorus: 1
-    Radium: 1
-    Silicon: 1
-    Sulfur: 1
-    Sodium: 1
-    # Medicines
-    Ipecac: 3
-    Omnizine: 2
-    Tricordrazine: 3
-    # Narcotics
-    Desoxyephedrine: 3
-    Ephedrine: 3
-    SpaceDrugs: 5
-    Nocturine: 3
-    MuteToxin: 3
-    NorepinephricAcid: 3
-    # Toxins
-    ChloralHydrate: 3
-    Mold: 3
-    Pax: 3
-    Toxin: 5
+  fills:
+  - quantity: 20
+    weight: 1
+    reagents:
+    - Aluminium
+    - Carbon
+    - Chlorine
+    - Copper
+    - Fluorine
+    - Hydrogen
+    - Iodine
+    - Lithium
+    - Mercury
+    - Potassium
+    - Phosphorus
+    - Radium
+    - Silicon
+    - Sulfur
+    - Sodium
+  - quantity: 20
+    weight: 2
+    reagents:
+    - Omnizine
+  - quantity: 20
+    weight: 3
+    reagents:
+    - ChloralHydrate
+    - Desoxyephedrine
+    - Ephedrine
+    - Ipecac
+    - Mold
+    - MuteToxin
+    - Nocturine
+    - NorepinephricAcid
+    - Pax
+    - Tricordrazine
+  - quantity: 20
+    weight: 5
+    reagents:
+    - SpaceDrugs
+    - Toxin
 
 - type: entity
   name: strange pill
@@ -47,7 +55,6 @@
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillStrangePill
-    quantity: 20
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
     layers:

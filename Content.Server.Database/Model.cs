@@ -96,8 +96,7 @@ namespace Content.Server.Database
                 .HasKey(log => new {log.Id, log.RoundId});
 
             modelBuilder.Entity<AdminLog>()
-                .Property(log => log.Id)
-                .ValueGeneratedOnAdd();
+                .Property(log => log.Id);
 
             modelBuilder.Entity<AdminLog>()
                 .HasIndex(log => log.Date);
@@ -111,6 +110,13 @@ namespace Content.Server.Database
                 .WithMany(player => player.AdminLogs)
                 .HasForeignKey(player => player.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId);
+
+            modelBuilder.Entity<Round>()
+                .HasIndex(round => round.StartDate);
+
+            modelBuilder.Entity<Round>()
+                .Property(round => round.StartDate)
+                .HasDefaultValue(default(DateTime));
 
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
@@ -162,13 +168,15 @@ namespace Content.Server.Database
             modelBuilder.Entity<ConnectionLog>()
                 .HasIndex(p => p.UserId);
 
-            // SetNull is necessary here so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
+            // SetNull is necessary for created by/edited by-s here,
+            // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
+
             modelBuilder.Entity<AdminNote>()
                 .HasOne(note => note.Player)
                 .WithMany(player => player.AdminNotesReceived)
                 .HasForeignKey(note => note.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<AdminNote>()
                 .HasOne(version => version.CreatedBy)
@@ -196,7 +204,7 @@ namespace Content.Server.Database
                 .WithMany(player => player.AdminWatchlistsReceived)
                 .HasForeignKey(note => note.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<AdminWatchlist>()
                 .HasOne(version => version.CreatedBy)
@@ -224,7 +232,7 @@ namespace Content.Server.Database
                 .WithMany(player => player.AdminMessagesReceived)
                 .HasForeignKey(note => note.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<AdminMessage>()
                 .HasOne(version => version.CreatedBy)
@@ -467,6 +475,8 @@ namespace Content.Server.Database
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public DateTime StartDate { get; set; }
+
         public List<Player> Players { get; set; } = default!;
 
         public List<AdminLog> AdminLogs { get; set; } = default!;
@@ -489,7 +499,7 @@ namespace Content.Server.Database
     [Index(nameof(Type))]
     public class AdminLog
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int Id { get; set; }
 
         [Key, ForeignKey("Round")] public int RoundId { get; set; }
@@ -506,8 +516,6 @@ namespace Content.Server.Database
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
 
         public List<AdminLogPlayer> Players { get; set; } = default!;
-
-        public List<AdminLogEntity> Entities { get; set; } = default!;
     }
 
     public class AdminLogPlayer
@@ -518,12 +526,6 @@ namespace Content.Server.Database
         [Required, Key] public int LogId { get; set; }
         [Required, Key] public int RoundId { get; set; }
         [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
-    }
-
-    public class AdminLogEntity
-    {
-        [Required, Key] public int Uid { get; set; }
-        public string? Name { get; set; } = default!;
     }
 
     // Used by SS14.Admin

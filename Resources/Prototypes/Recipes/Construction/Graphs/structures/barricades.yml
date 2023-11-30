@@ -1,23 +1,25 @@
-﻿- type: constructionGraph
+﻿#Due to limitations with placement conditions in the construction system, the other kinds of non-fulltile barricades are currently not constructible.
+#This may make it sound like it needs some big refactor to be possible, but make no mistake, it is 100% due to my own technical incompetence.
+- type: constructionGraph
   id: Barricade
   start: start
   graph:
     - node: start
       edges:
-        - to: barricadewooden
+        - to: barricadefull
           steps:
             - material: WoodPlank
-              amount: 5
+              amount: 4
               doAfter: 3
               
-    - node: barricadewooden
+    - node: barricadefull
       entity: Barricade
       edges:
         - to: start
           completed:
             - !type:SpawnPrototype
               prototype: MaterialWoodPlank1
-              amount: 4 #returns 1 less as one breaks
+              amount: 3 #returns 1 less as one breaks
             - !type:DeleteEntity {}
           conditions:
             - !type:EntityAnchored
@@ -25,3 +27,4 @@
           steps:
             - tool: Prying
               doAfter: 5
+

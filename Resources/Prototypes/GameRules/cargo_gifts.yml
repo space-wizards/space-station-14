@@ -184,7 +184,7 @@
       sender: cargo-gift-default-sender
       dest: cargo-gift-dest-sec
       gifts:
-        CrateSecurityArmor: 3
+        SecurityArmor: 3
         ArmorySmg: 1
         ArmoryShotgun: 1
         ArmoryLaser: 1
@@ -206,5 +206,5 @@
       dest: cargo-gift-dest-sec
       gifts:
         SecurityRiot: 2
-        CrateRestraints: 2
-        CrateSecurityNonlethal: 2
+        SecurityRestraints: 2
+        SecurityNonLethal: 2

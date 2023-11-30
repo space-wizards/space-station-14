@@ -7,7 +7,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     ///     Requires the solution to be above or below a certain temperature.
     ///     Used for things like explosives.
     /// </summary>
-    public sealed class SolutionTemperature : ReagentEffectCondition
+    public sealed partial class SolutionTemperature : ReagentEffectCondition
     {
         [DataField("min")]
         public float Min = 0.0f;

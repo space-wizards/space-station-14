@@ -1,10 +1,7 @@
-using Content.Server.Storage.Components;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -17,8 +14,6 @@ namespace Content.Server.Stack
     [UsedImplicitly]
     public sealed class StackSystem : SharedStackSystem
     {
-        [Dependency] private readonly ContainerSystem _container = default!;
-        [Dependency] private readonly StorageSystem _storage = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
@@ -38,7 +33,7 @@ namespace Content.Server.Stack
             base.SetCount(uid, amount, component);
 
             // Queue delete stack if count reaches zero.
-            if (component.Count <= 0)
+            if (component.Count <= 0 && !component.Lingering)
                 QueueDel(uid);
         }
 
@@ -50,14 +45,14 @@ namespace Content.Server.Stack
             if (!Resolve(uid, ref stack))
                 return null;
 
+            // Try to remove the amount of things we want to split from the original stack...
+            if (!Use(uid, amount, stack))
+                return null;
+
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
                 : Prototype(uid)?.ID;
-
-            // Try to remove the amount of things we want to split from the original stack...
-            if (!Use(uid, amount, stack))
-                return null;
 
             // Set the output parameter in the event instance to the newly split stack.
             var entity = Spawn(prototype, spawnPosition);
@@ -69,6 +64,9 @@ namespace Content.Server.Stack
                 // Don't let people dupe unlimited stacks
                 stackComp.Unlimited = false;
             }
+
+            var ev = new StackSplitEvent(entity);
+            RaiseLocalEvent(uid, ref ev);
 
             return entity;
         }
@@ -161,12 +159,6 @@ namespace Content.Server.Stack
 
             if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
                 return;
-
-            if (_container.TryGetContainingContainer(uid, out var container) &&
-                TryComp<ServerStorageComponent>(container.Owner, out var storage))
-            {
-                _storage.UpdateStorageUI(container.Owner, storage);
-            }
 
             Hands.PickupOrDrop(userUid, split);
 

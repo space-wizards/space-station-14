@@ -85,9 +85,3 @@ public record struct GetMeleeAttackRateEvent(EntityUid Weapon, float Rate, float
 /// </summary>
 [ByRefEvent]
 public record struct GetHeavyDamageModifierEvent(EntityUid Weapon, FixedPoint2 DamageModifier, float Multipliers, EntityUid User);
-
-/// <summary>
-/// Raised on a melee weapon to calculate the heavy windup modifier.
-/// </summary>
-[ByRefEvent]
-public record struct GetHeavyWindupModifierEvent(EntityUid Weapon, float WindupModifier, float Multipliers, EntityUid User);
