@@ -1,4 +1,5 @@
 ﻿using Content.Server.Cuffs;
+using Content.Server.Forensics;
 using Content.Server.Humanoid;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
@@ -82,6 +83,9 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             _metaData.SetEntityName(ent, newProfile.Name);
             _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup"), ent, ent);
         }
+        
+        RemComp<FingerprintComponent>(ent);
+        EnsureComp<FingerprintComponent>(ent);
 
         args.Handled = true;
         QueueDel(uid);
