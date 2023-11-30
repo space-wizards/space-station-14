@@ -1,10 +1,4 @@
 Entries:
-- author: carteblanche4me
-  changes:
-  - {message: Hardsuits could toggle on/off not only helmets but different pieces.,
-    type: Tweak}
-  id: 4728
-  time: '2023-09-01T11:13:00.0000000+00:00'
 - author: Varen
   changes:
   - {message: Examining an item now shows its size., type: Add}
@@ -2899,3 +2893,8 @@ Entries:
   - {message: Skeletons are zombie immune now., type: Tweak}
   id: 5227
   time: '2023-11-30T02:40:39.0000000+00:00'
+- author: MACMAN2003
+  changes:
+  - {message: Added a green central command cap like the captain's blue one., type: Add}
+  id: 5228
+  time: '2023-11-30T07:20:45.0000000+00:00'
