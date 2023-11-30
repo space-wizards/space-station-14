@@ -106,5 +106,5 @@ reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soo
 reagent-name-saline = saline
 reagent-desc-saline = "A mixture of salt and water. Commonly used to treat dehydration or low fluid presence in blood."
 
-reagent-name-amnesia = amnesia
+reagent-name-amnesia = oblivizine
 reagent-desc-amnesia = "A chemical which will make the user forget."
