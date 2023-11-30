@@ -150,7 +150,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitMedic
     shoes: ClothingShoesBootsMagSyndie
-    id: SyndiPDA
+    id: SyndiAgentPDA
     pocket1: DoubleEmergencyOxygenTankFilled
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbingMedFilled
