@@ -847,7 +847,7 @@
           min: 5
 
 - type: reagent
-  id: Amnesia
+  id: Oblivizine
   name: reagent-name-amnesia
   desc: reagent-desc-amnesia
   group: Medicine
@@ -870,7 +870,7 @@
         time: 3
         conditions:
         - !type:ReagentThreshold
-          reagent: Amnesia
+          reagent: Oblivizine
           min: 1
       - !type:MakeGhostRole
         conditions:
