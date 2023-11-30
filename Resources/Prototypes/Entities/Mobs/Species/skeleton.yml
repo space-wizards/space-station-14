@@ -46,6 +46,7 @@
       80: 0.7
   - type: Speech
     speechVerb: Skeleton
+  - type: ZombieImmune
   - type: Vocal
     sounds:
       Male: Skeleton
