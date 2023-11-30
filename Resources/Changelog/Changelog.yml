@@ -1,10 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - message: Added spoons and forks to the dinnerware vendor!
-    type: Add
-  id: 4740
-  time: '2023-09-03T14:22:28.0000000+00:00'
 - author: Diebek
   changes:
   - message: Updated Taxibot sprites.
@@ -3600,3 +3594,12 @@ Entries:
     type: Add
   id: 5206
   time: '2023-11-28T23:15:24.0000000+00:00'
+- author: ZoNeSRuS
+  changes:
+  - message: "\u0422\u0435\u043F\u0435\u0440\u044C \u043A\u0443\u043A\u043B\u044B\
+      \ \u0443 \u043A\u043E\u0442\u043E\u0440\u044B\u0445 0 Airloss \u043F\u0435\u0440\
+      \u0435\u0441\u0442\u0430\u044E\u0442 \u0435\u0433\u043E \u0440\u0435\u0433\u0435\
+      \u043D\u0435\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C."
+    type: Fix
+  id: 5207
+  time: '2023-11-30T16:08:48.0000000+00:00'
