@@ -4,3 +4,5 @@ radio-jammer-component-off-state = off
 
 radio-jammer-component-examine-on-state = The light is currently [color=darkgreen]on[/color].
 radio-jammer-component-examine-off-state = The light is currently [color=darkred]off[/color].
+
+radio-jammer-component-no-charge = The jammer's battery is dead
