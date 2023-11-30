@@ -281,15 +281,9 @@ namespace Content.IntegrationTests.Tests
 
                     if (client.EntMan.EntityCount != clientCount)
                     {
-                        var clientEnts = string.Join(", ", client.EntMan.GetEntities().Select(o => client.EntMan.ToPrettyString(o)));
-                        var serverEnts =  string.Join(", ", server.EntMan.GetEntities().Select(o => client.EntMan.ToPrettyString(o)));
-
-
                         Assert.Fail($"Client prototype {protoId} failed on deleting itself\n" +
                                     $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
-                                    $"Server was {count}.\n" +
-                                    $"Client entities are: {clientEnts}.\n" +
-                                    $"Server entities are: {serverEnts}.");
+                                    $"Server was {count}.");
                     }
                     continue;
                 }
@@ -318,14 +312,9 @@ namespace Content.IntegrationTests.Tests
 
                 if (client.EntMan.EntityCount != clientCount)
                 {
-                    var clientEnts = string.Join(", ", client.EntMan.GetEntities().Select(o => client.EntMan.ToPrettyString(o)));
-                    var serverEnts =  string.Join(", ", server.EntMan.GetEntities().Select(o => client.EntMan.ToPrettyString(o)));
-
                     Assert.Fail($"Client prototype {protoId} failed on deletion count didn't reset properly:\n" +
                                 $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
-                                $"Server was {count}.\n" +
-                                $"Client entities are: {clientEnts}.\n" +
-                                $"Server entities are: {serverEnts}.");
+                                $"Server was {count}.");
                 }
             }
 
