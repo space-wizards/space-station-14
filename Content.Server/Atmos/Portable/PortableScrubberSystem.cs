@@ -79,8 +79,7 @@ namespace Content.Server.Atmos.Portable
             if (xform.GridUid == null)
                 return;
 
-            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
-
+            var position = _transformSystem.GetGridTilePositionOrDefault((uid,xform));
             var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
             var running = Scrub(timeDelta, component, environment);

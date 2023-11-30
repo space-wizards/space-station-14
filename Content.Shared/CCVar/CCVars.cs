@@ -81,6 +81,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> AHelpSoundsEnabled =
             CVarDef.Create("audio.ahelp_sounds_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public const float MasterMultiplier = 2f;
+
         // Midi is on engine so deal
         public const float MidiMultiplier = 3f;
 
@@ -336,12 +339,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> GameAlertLevelChangeDelay =
             CVarDef.Create("game.alert_level_change_delay", 30, CVar.SERVERONLY);
-
-        /// <summary>
-        /// How many times per second artifacts when the round is over.
-        /// If set to 0, they won't activate (on a timer) when the round ends.
-        /// </summary>
-        public static readonly CVarDef<float> ArtifactRoundEndTimer = CVarDef.Create("game.artifact_round_end_timer", 0.5f, CVar.NOTIFY | CVar.REPLICATED);
 
         /// <summary>
         /// The time in seconds that the server should wait before restarting the round.
@@ -939,7 +936,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -985,7 +982,7 @@ namespace Content.Shared.CCVar
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
-            CVarDef.Create("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether explosive depressurization will cause the grid to gain an impulse.
@@ -1496,6 +1493,39 @@ namespace Content.Shared.CCVar
         /*
          * CHAT
          */
+
+        /// <summary>
+        /// Chat rate limit values are accounted in periods of this size (seconds).
+        /// After the period has passed, the count resets.
+        /// </summary>
+        /// <seealso cref="ChatRateLimitCount"/>
+        public static readonly CVarDef<int> ChatRateLimitPeriod =
+            CVarDef.Create("chat.rate_limit_period", 2, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How many chat messages are allowed in a single rate limit period.
+        /// </summary>
+        /// <remarks>
+        /// The total rate limit throughput per second is effectively
+        /// <see cref="ChatRateLimitCount"/> divided by <see cref="ChatRateLimitCount"/>.
+        /// </remarks>
+        /// <seealso cref="ChatRateLimitPeriod"/>
+        /// <seealso cref="ChatRateLimitAnnounceAdmins"/>
+        public static readonly CVarDef<int> ChatRateLimitCount =
+            CVarDef.Create("chat.rate_limit_count", 10, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, announce when a player breached chat rate limit to game administrators.
+        /// </summary>
+        /// <seealso cref="ChatRateLimitAnnounceAdminsDelay"/>
+        public static readonly CVarDef<bool> ChatRateLimitAnnounceAdmins =
+            CVarDef.Create("chat.rate_limit_announce_admins", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Minimum delay (in seconds) between announcements from <see cref="ChatRateLimitAnnounceAdmins"/>.
+        /// </summary>
+        public static readonly CVarDef<int> ChatRateLimitAnnounceAdminsDelay =
+            CVarDef.Create("chat.rate_limit_announce_admins_delay", 15, CVar.SERVERONLY);
 
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);

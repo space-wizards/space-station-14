@@ -5,6 +5,9 @@
   desc: reagent-desc-blood
   flavor: metallic
   color: "#800000"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bloodglass.rsi
+    state: icon
   recognizable: true
   physicalDesc: reagent-physical-desc-ferrous
   slippery: false

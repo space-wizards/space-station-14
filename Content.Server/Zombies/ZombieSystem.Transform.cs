@@ -36,6 +36,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Audio;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Prying.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Zombies
 {

@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_produce.yml
 # For produce that can't be immediately eaten
 
 - type: entity
@@ -468,6 +469,37 @@
   - type: Tag
     tags:
     - Lemon
+    - Fruit
+
+- type: entity
+  name: lemoon
+  parent: FoodProduceBase
+  id: FoodLemoon
+  description: People says Moon is made out of cheese, but Moon is actually made out of milk and laurel!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - lemoon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Milk
+          Quantity: 16
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lemoon.rsi
+  - type: Produce
+    seedId: lemoon
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Sake #the best drink while watching moon
+        Quantity: 10
+  - type: Tag
+    tags:
     - Fruit
 
 - type: entity

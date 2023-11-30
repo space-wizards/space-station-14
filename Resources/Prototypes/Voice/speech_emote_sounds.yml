@@ -317,7 +317,7 @@
     #SS220 emote sounds end
   params:
     variation: 0.125
-    pitchscale: 0.75
+    pitch: 0.75
 
 - type: emoteSounds
   id: FemaleDwarf
@@ -355,7 +355,7 @@
     #SS220 emote sounds end
   params:
     variation: 0.125
-    pitchscale: 0.75
+    pitch: 0.75
 
 - type: emoteSounds
   id: UnisexMoth

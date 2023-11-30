@@ -23,6 +23,8 @@ using Content.Shared.Roles.Jobs;
 using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

@@ -289,10 +289,10 @@ public sealed partial class DarkReaperComponent : Component
     public EntityUid? ActivePortal;
 
     [ViewVariables, NonSerialized]
-    public IPlayingAudioStream? PlayingPortalAudio;
+    public EntityUid? PlayingPortalAudio;
 
     [ViewVariables, NonSerialized]
-    public IPlayingAudioStream? ConsoomAudio;
+    public EntityUid? ConsoomAudio;
 
     [ViewVariables]
     public TimeSpan? MaterializedStart;

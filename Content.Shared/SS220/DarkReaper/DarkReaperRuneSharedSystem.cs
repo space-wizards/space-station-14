@@ -1,6 +1,7 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using Content.Shared.Actions;
 using Content.Shared.Mind;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -53,7 +54,7 @@ public sealed class DarkReaperRuneSharedSystem : EntitySystem
 
         var reaper = Spawn(component.DarkReaperPrototypeId, Transform(uid).Coordinates);
         _mindSystem.TransferTo(mindId, reaper, mind: mind);
-        _audio.Play(component.SpawnSound, Filter.Pvs(reaper), reaper, true);
+        _audio.PlayPvs(component.SpawnSound, reaper);
 
         QueueDel(uid);
     }

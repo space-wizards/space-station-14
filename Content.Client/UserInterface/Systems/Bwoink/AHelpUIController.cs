@@ -13,6 +13,7 @@ using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Administration;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.Audio;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -20,6 +21,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -36,6 +38,8 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [UISystemDependency] private readonly AudioSystem _audio = default!;
+
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     private AudioParams _AHelpParams = new();
     private bool _AHelpSoundsEnabled = true;
@@ -138,7 +142,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     private void ReceivedBwoink(object? sender, SharedBwoinkSystem.BwoinkTextMessage message)
     {
         Logger.InfoS("c.s.go.es.bwoink", $"@{message.UserId}: {message.Text}");
-        var localPlayer = _playerManager.LocalPlayer;
+        var localPlayer = _playerManager.LocalSession;
         if (localPlayer == null)
         {
             return;
@@ -150,7 +154,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
              || (UIHelper!.IsAdmin && !message.IsSenderAdmin) // SS220
              || (!UIHelper!.IsAdmin))) // SS220
         {
-            SoundSystem.Play("/Audio/SS220/Admin_sounds/ahelp_sound.ogg", Filter.Local(), _AHelpParams);
+            _audio.PlayGlobal("/Audio/SS220/Admin_sounds/ahelp_sound.ogg", Filter.Local(), false, _AHelpParams);
             _clyde.RequestWindowAttention();
         }
 

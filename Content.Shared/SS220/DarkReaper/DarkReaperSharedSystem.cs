@@ -15,6 +15,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -121,7 +122,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         var started = _doAfter.TryStartDoAfter(doafterArgs);
         if (started)
         {
-            comp.ConsoomAudio = _audio.PlayPredicted(comp.ConsumeAbilitySound, uid, uid);
+            comp.ConsoomAudio = _audio.PlayPredicted(comp.ConsumeAbilitySound, uid, uid)?.Entity;
         }
     }
 
@@ -220,7 +221,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
         if (comp.ConsoomAudio != null)
         {
-            comp.ConsoomAudio.Stop();
+            comp.ConsoomAudio = _audio.Stop(comp.ConsoomAudio);
             comp.ConsoomAudio = null;
         }
     }
@@ -308,7 +309,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
                 var diff = comp.MaterializedStart.Value + maxDuration - _timing.CurTime;
                 if (diff.TotalSeconds < 4.14 && comp.PlayingPortalAudio == null)
                 {
-                    comp.PlayingPortalAudio = _audio.PlayPredicted(comp.PortalCloseSound, uid, uid);
+                    comp.PlayingPortalAudio = _audio.PlayPredicted(comp.PortalCloseSound, uid, uid)?.Entity;
                 }
                 if (diff <= TimeSpan.Zero)
                 {
@@ -469,8 +470,8 @@ public abstract class SharedDarkReaperSystem : EntitySystem
         if (args.NewMobState != MobState.Dead)
             return;
 
-        component.ConsoomAudio?.Stop();
-        component.PlayingPortalAudio?.Stop();
+        component.ConsoomAudio = _audio.Stop(component.ConsoomAudio);
+        component.PlayingPortalAudio = _audio.Stop(component.PlayingPortalAudio);
 
         if (_net.IsServer)
         {
@@ -478,7 +479,7 @@ public abstract class SharedDarkReaperSystem : EntitySystem
 
             // play at coordinates because entity is getting deleted
             var coordinates = Transform(uid).Coordinates;
-            _audio.Play(component.SoundDeath, Filter.Pvs(coordinates), coordinates, true);
+            _audio.PlayPvs(component.SoundDeath, coordinates);
 
             // Get everthing that was consumed out before deleting
             if (_container.TryGetContainer(uid, DarkReaperComponent.ConsumedContainerId, out var container))

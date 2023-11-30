@@ -109,4 +109,4 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/winterboots.rsi
   - type: TemperatureProtection
-    coefficient: 0.05
+    coefficient: 0.2

@@ -4,16 +4,19 @@ using Content.Server.Station.Systems;
 using Content.Shared.PDA;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.AlertLevel;
 
 public sealed class AlertLevelSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
     public const string DefaultAlertLevelSet = "stationAlerts";
@@ -173,7 +176,7 @@ public sealed class AlertLevelSystem : EntitySystem
             if (detail.Sound != null)
             {
                 var filter = _stationSystem.GetInOwningStation(station);
-                _sharedAudioSystem.PlayGlobal(detail.Sound, filter, false);
+                _audio.PlayGlobal(detail.Sound.GetSound(), filter, true, detail.Sound.Params);
             }
             else
             {

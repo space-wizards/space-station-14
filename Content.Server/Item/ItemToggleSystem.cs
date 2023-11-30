@@ -4,6 +4,8 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Weapons.Melee.ItemToggle;
@@ -53,7 +55,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
             malus.Malus -= comp.ActivatedDisarmMalus;
 
-        _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
+        _audio.PlayEntity(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
         comp.Activated = false;
     }
@@ -66,7 +68,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
             malus.Malus += comp.ActivatedDisarmMalus;
 
-        _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
+        _audio.PlayEntity(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
 
         comp.Activated = true;
     }
