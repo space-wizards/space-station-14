@@ -1,7 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Forensics;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Alert;
@@ -23,6 +22,7 @@ using Robust.Shared.Random;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Server.Audio;
 using Robust.Shared.GameObjects;
+using Content.Shared.Forensics;
 
 namespace Content.Server.Body.Systems;
 
@@ -323,12 +323,8 @@ public sealed class BloodstreamSystem : EntitySystem
             component.BloodTemporarySolution.AddSolution(temp, _prototypeManager);
             if (_puddleSystem.TrySpillAt(uid, component.BloodTemporarySolution, out var puddleUid, false))
             {
-                if (TryComp<DnaComponent>(uid, out var dna))
-                {
-                    var comp = EnsureComp<ForensicsComponent>(puddleUid);
-                    comp.DNAs.Add(dna.DNA);
-                    comp.CanDnaBeCleaned = false;
-                }
+                var ev = new TransferDnaEvent { Donor = uid, Recipient = puddleUid, CanDnaBeCleaned = false };
+                RaiseLocalEvent(uid, ref ev);
             }
 
             component.BloodTemporarySolution.RemoveAllSolution();
@@ -380,12 +376,8 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (_puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid))
         {
-            if (TryComp<DnaComponent>(uid, out var dna))
-            {
-                var comp = EnsureComp<ForensicsComponent>(puddleUid);
-                comp.DNAs.Add(dna.DNA);
-                comp.CanDnaBeCleaned = false;
-            }
+            var ev = new TransferDnaEvent { Donor = uid, Recipient = puddleUid, CanDnaBeCleaned = false };
+            RaiseLocalEvent(uid, ref ev);
         }
     }
 

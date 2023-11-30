@@ -14,7 +14,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
 using Robust.Shared.GameStates;
-using Content.Server.Forensics;
+using Content.Shared.Forensics;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -139,11 +139,8 @@ namespace Content.Server.Chemistry.EntitySystems
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
             _solutions.TryAddSolution(target.Value, targetSolution, removedSolution);
 
-            if (TryComp<DnaComponent>(target, out var dna))
-            {
-                var comp = EnsureComp<ForensicsComponent>(uid);
-                comp.DNAs.Add(dna.DNA);
-            }
+            var ev = new TransferDnaEvent { Donor = target.Value, Recipient = uid };
+            RaiseLocalEvent(target.Value, ref ev);
 
             // same LogType as syringes...
             _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(uid):using}");

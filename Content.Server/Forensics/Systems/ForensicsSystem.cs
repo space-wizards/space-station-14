@@ -27,7 +27,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);//, after: new[] { typeof(SolutionTransferSystem) });
+            SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
         }
 
@@ -158,6 +158,7 @@ namespace Content.Server.Forensics
         {
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
             recipientComp.DNAs.Add(component.DNA);
+            recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
         }
     }
 }

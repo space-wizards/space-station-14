@@ -17,6 +17,7 @@ using Robust.Shared.Containers;
 using System.Linq;
 using Content.Shared.Inventory.Events;
 using Content.Server.Forensics;
+using Content.Shared.Forensics;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -90,11 +91,10 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnSmokeableEquipEvent(EntityUid uid, SmokableComponent component, GotEquippedEvent args)
         {
-            if (args.Slot == "mask" && TryComp<DnaComponent>(args.Equipee, out var dna))
+            if (args.Slot == "mask")
             {
-                var comp = EnsureComp<ForensicsComponent>(uid);
-                comp.DNAs.Add(dna.DNA);
-                comp.CanDnaBeCleaned = false;
+                var ev = new TransferDnaEvent { Donor = args.Equipee, Recipient = uid, CanDnaBeCleaned = false };
+                RaiseLocalEvent(args.Equipee, ref ev);
             }
         }
 

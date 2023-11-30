@@ -1,11 +1,11 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Forensics;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -85,9 +85,8 @@ namespace Content.Server.Medical
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
             {
-                var forensics = EnsureComp<ForensicsComponent>(puddle);
-                if (TryComp<DnaComponent>(uid, out var dna))
-                    forensics.DNAs.Add(dna.DNA);
+                var ev = new TransferDnaEvent { Donor = uid, Recipient = puddle };
+                RaiseLocalEvent(uid, ref ev);
             }
 
             // Force sound to play as spill doesn't work if solution is empty.

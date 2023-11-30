@@ -18,6 +18,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -399,9 +400,8 @@ public sealed class DrinkSystem : EntitySystem
         //TODO: Grab the stomach UIDs somehow without using Owner
         _stomach.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
 
-        var comp = EnsureComp<ForensicsComponent>(uid);
-        if (TryComp<DnaComponent>(args.Target, out var dna))
-            comp.DNAs.Add(dna.DNA);
+        var ev = new TransferDnaEvent { Donor = args.Target.Value, Recipient = uid };
+        RaiseLocalEvent(uid, ref ev);
 
         if (!forceDrink && solution.Volume > 0)
             args.Repeat = true;

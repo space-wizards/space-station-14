@@ -45,4 +45,9 @@ public record struct TransferDnaEvent()
     /// The entity receiving the DNA.
     /// </summary>
     public EntityUid Recipient;
+
+    /// <summary>
+    /// Can the DNA be cleaned off?
+    /// </summary>
+    public bool CanDnaBeCleaned = true;
 }
