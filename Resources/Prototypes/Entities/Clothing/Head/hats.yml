@@ -782,6 +782,22 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatCentcomcap
+  name: CentCom cap
+  description: An extravagant, fancy Central Commander cap.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/comcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/comcap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+    - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatGladiator
   name: Gladiator helmet
   description: Protects the head from harsh ash winds and toy spears.
