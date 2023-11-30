@@ -11,9 +11,6 @@
   - type: ShowHealthBars
     damageContainers: 
     - Inorganic
-  - type: ShowHealthIcons
-    damageContainers: 
-    - Inorganic
 
 - type: entity
   parent: ClothingEyesBase
