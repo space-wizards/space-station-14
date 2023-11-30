@@ -5,10 +5,12 @@ using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Prayer;
+using Content.Server.Station.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
@@ -50,6 +52,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly AdminSystem _adminSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubes = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -59,6 +62,8 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly StationSystem _stations = default!;
+        [Dependency] private readonly StationSpawningSystem _spawning = default!;
 
         private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -168,6 +173,56 @@ namespace Content.Server.Administration.Systems
                         },
                         ConfirmationPopup = true,
                         // No logimpact as the command does it internally.
+                    });
+
+                    // Spawn - Like respawn but on the spot.
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-spawn"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.Target, out var coords))
+                            {
+                                _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
+                                return;
+                            }
+
+                            var stationUid = _stations.GetOwningStation(args.Target);
+
+                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                            var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                            var targetMind = _mindSystem.GetMind(args.Target);
+
+                            if (targetMind != null)
+                            {
+                                _mindSystem.TransferTo(targetMind.Value, mobUid);
+                            }
+                        },
+                        ConfirmationPopup = true,
+                        Impact = LogImpact.High,
+                    });
+
+                    // Clone - Spawn but without the mind transfer, also spawns at the user's coordinates not the target's
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-clone"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.User, out var coords))
+                            {
+                                _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
+                                return;
+                            }
+
+                            var stationUid = _stations.GetOwningStation(args.Target);
+
+                            var profile = _ticker.GetPlayerProfile(targetActor.PlayerSession);
+                            _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
+                        },
+                        ConfirmationPopup = true,
+                        Impact = LogImpact.High,
                     });
                 }
 
