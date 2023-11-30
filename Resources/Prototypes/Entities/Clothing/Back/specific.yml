@@ -85,7 +85,7 @@
   parent: ClothingSatchelSmugglerAbstract
   id: ClothingSatchelSmuggler
   name: Smuggling Satchel
-  description: A trendy looking satchel, modified to fit under floor tiles.
+  description: A makeshift satchel, slim enough to fit under floor tiles.
   components:
   - type: Sprite
     layers:
