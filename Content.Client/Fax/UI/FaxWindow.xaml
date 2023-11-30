@@ -20,6 +20,10 @@
         </BoxContainer>
         <Control HorizontalExpand="True" MinHeight="20" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Button Name="CopyButton"
+                    Text="{Loc 'fax-machine-ui-copy-button'}"
+                    HorizontalExpand="False"
+                    Disabled="True" />
             <Button Name="SendButton"
                     Text="{Loc 'fax-machine-ui-send-button'}"
                     HorizontalExpand="True"
