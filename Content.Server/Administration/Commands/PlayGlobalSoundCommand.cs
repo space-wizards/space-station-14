@@ -1,6 +1,8 @@
+using System.IO;
 using System.Linq;
 using Content.Server.Audio;
 using Content.Shared.Administration;
+using Robust.Server.Audio;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
@@ -9,6 +11,50 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands;
+
+// This is for debugging nothing more.
+[AdminCommand(AdminFlags.Debug)]
+public sealed class PlayGlobalAudioCommand : IConsoleCommand
+{
+    public string Command => "playaudio";
+    public string Description => "Plays audio globally for debugging";
+    public string Help => $"{Command}";
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        var entManager = IoCManager.Resolve<IEntityManager>();
+        var protoManager = IoCManager.Resolve<IPrototypeManager>();
+        var resourceManager = IoCManager.Resolve<IResourceManager>();
+        var audioSystem = entManager.System<AudioSystem>();
+        var fileName = args[0];
+
+        shell.WriteLine($"Checking {fileName} global audio");
+
+        var audioLength = audioSystem.GetAudioLength(fileName);
+
+        shell.WriteLine($"Cached audio length is: {audioLength}");
+
+        // Copied code to get the actual length determination
+        // Check shipped metadata from packaging.
+        if (protoManager.TryIndex(fileName, out AudioMetadataPrototype? metadata))
+        {
+            shell.WriteLine($"Used prototype, length is: {metadata.Length}");
+        }
+        else if (!resourceManager.TryContentFileRead(fileName, out var stream))
+        {
+            throw new FileNotFoundException($"Unable to find metadata for audio file {fileName}");
+        }
+        else
+        {
+            shell.WriteLine("Looks like audio stream used and cached.");
+        }
+
+        var broadcastFilter = Filter.Broadcast();
+
+        shell.WriteLine($"Playing filter to {broadcastFilter.Count} players");
+
+        audioSystem.PlayGlobal(fileName, broadcastFilter, true);
+    }
+}
 
 [AdminCommand(AdminFlags.Fun)]
 public sealed class PlayGlobalSoundCommand : IConsoleCommand
