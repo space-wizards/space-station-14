@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Client.Hands.Systems;
 using Content.Client.Items.Systems;
 using Content.Client.Storage.Systems;
+using Content.Shared.Input;
 using Content.Shared.Item;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -21,6 +23,7 @@ public sealed class StorageContainer : BaseWindow
     private readonly StorageUIController _storageController;
     private ItemSystem? _itemSystem;
     private StorageSystem? _storageSystem;
+    private HandsSystem? _handsSystem;
 
     public EntityUid? StorageEntity;
 
@@ -264,43 +267,70 @@ public sealed class StorageContainer : BaseWindow
     {
         base.FrameUpdate(args);
 
+        if (!IsOpen)
+            return;
+
+        _itemSystem ??= _entity.System<ItemSystem>();
+        _storageSystem ??= _entity.System<StorageSystem>();
+        _handsSystem ??= _entity.System<HandsSystem>();
+
         foreach (var child in _backgroundGrid.Children)
         {
             child.ModulateSelfOverride = Color.FromHex("#222222");
         }
 
-        if (_storageController.DraggingGhost == null || !TryGetPieceLocation(out var origin))
+        if (UserInterfaceManager.CurrentlyHovered is StorageContainer con && con != this)
             return;
-
-        _itemSystem ??= _entity.System<ItemSystem>();
-        _storageSystem ??= _entity.System<StorageSystem>();
-
-        var itemShape = _itemSystem.GetAdjustedItemShape(
-            (_storageController.CurrentlyDragging!.Entity, null),
-            _storageController.DraggingRotation,
-            origin.Value);
-        var itemBounding = SharedStorageSystem.GetBoundingBox(itemShape);
 
         if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComponent))
             return;
 
-        var storageBounding = (Box2) SharedStorageSystem.GetBoundingBox(storageComponent.StorageGrid);
-        if (!storageBounding.Contains(itemBounding))
+        EntityUid currentEnt;
+        ItemStorageLocation currentLocation;
+        var usingInHand = false;
+        if (_storageController.IsDragging && _storageController.DraggingGhost is { } dragging)
+        {
+            currentEnt = dragging.Entity;
+            currentLocation = dragging.Location;
+        }
+        else if (_handsSystem.GetActiveHandEntity() is { } handEntity &&
+                 _storageSystem.CanInsert(StorageEntity.Value, handEntity, out _, storageComp: storageComponent, ignoreLocation: true))
+        {
+            currentEnt = handEntity;
+            currentLocation = new ItemStorageLocation(_storageController.DraggingRotation, Vector2i.Zero);
+            usingInHand = true;
+        }
+        else
+        {
+            return;
+        }
+
+        if (!_entity.TryGetComponent<ItemComponent>(currentEnt, out var itemComp))
             return;
 
+        var origin = GetMouseGridPieceLocation((currentEnt, itemComp), currentLocation);
+
+        var itemShape = _itemSystem.GetAdjustedItemShape(
+            (currentEnt, itemComp),
+            currentLocation.Rotation,
+            origin);
+        var itemBounding = SharedStorageSystem.GetBoundingBox(itemShape);
+
         var validLocation = _storageSystem.ItemFitsInGridLocation(
-            (_storageController.CurrentlyDragging!.Entity, null),
+            (currentEnt, itemComp),
             (StorageEntity.Value, storageComponent),
-            origin.Value,
-            _storageController.DraggingGhost!.Location.Rotation);
+            origin,
+            currentLocation.Rotation);
+
+        var validColor = usingInHand ? Color.Goldenrod : Color.Green;
 
         for (var y = itemBounding.Bottom; y <= itemBounding.Top; y++)
         {
             for (var x = itemBounding.Left; x <= itemBounding.Right; x++)
             {
-                if (GetBackgroundCell(x, y) is { } cell && itemShape.Any(b => b.Contains(x, y)))
+                if (TryGetBackgroundCell(x, y, out var cell) && itemShape.Any(b => b.Contains(x, y)))
                 {
-                    cell.ModulateSelfOverride = validLocation ? Color.Green : Color.Red;
+                    cell.ModulateSelfOverride = validLocation ? validColor : Color.Red;
                 }
             }
         }
@@ -319,32 +349,73 @@ public sealed class StorageContainer : BaseWindow
         return DragMode.None;
     }
 
-    public bool TryGetPieceLocation([NotNullWhen(true)] out Vector2i? location)
+    public Vector2i GetMouseGridPieceLocation(Entity<ItemComponent?> entity, ItemStorageLocation location)
     {
-        foreach (var control in _backgroundGrid.Children)
-        {
-            if (control is not StorageBackgroundCell cell)
-                continue;
+        _itemSystem ??= _entity.System<ItemSystem>();
+        var origin = Vector2i.Zero;
 
-            //todo this needs to either use the dragged piece or the piece in your hand. FUN!
-            if (_storageController.DraggingGhost is not { } dragging)
-                continue;
+        if (StorageEntity != null)
+            origin = SharedStorageSystem.GetBoundingBox(_entity.GetComponent<StorageComponent>(StorageEntity.Value).StorageGrid).BottomLeft;
 
-            if (cell.SizeBox.Contains(UserInterfaceManager.MousePositionScaled.Position
-                    - cell.GlobalPosition - dragging.GetCenterOffset((dragging.Entity, null), dragging.Location) * 2f + _emptyTexture!.Size * UIScale / 2))
-            {
-                location = cell.Location;
-                return true;
-            }
-        }
-
-        location = null;
-        return false;
+        var textureSize = (Vector2) _emptyTexture!.Size * 2;
+        var position = ((UserInterfaceManager.MousePositionScaled.Position
+                         - _backgroundGrid.GlobalPosition
+                         - ItemGridPiece.GetCenterOffset(entity, location, _entity) * 2
+                         + textureSize / 2f)
+                        / textureSize).Floored() + origin;
+        return position;
     }
 
-    public StorageBackgroundCell GetBackgroundCell(int x, int y)
+    public bool TryGetBackgroundCell(int x, int y, [NotNullWhen(true)] out StorageBackgroundCell? cell)
     {
-        return (StorageBackgroundCell) _backgroundGrid.GetChild(y * _backgroundGrid.Columns + x);
+        cell = null;
+
+        if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComponent))
+            return false;
+        var boundingBox = SharedStorageSystem.GetBoundingBox(storageComponent.StorageGrid);
+        x -= boundingBox.Left;
+        y -= boundingBox.Bottom;
+
+        if (x < 0 ||
+            x >= _backgroundGrid.Columns ||
+            y < 0 ||
+            y >= _backgroundGrid.Rows)
+        {
+            return false;
+        }
+
+        cell = (StorageBackgroundCell) _backgroundGrid.GetChild(y * _backgroundGrid.Columns + x);
+        return true;
+    }
+
+    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+    {
+        base.KeyBindDown(args);
+
+        if (!IsOpen)
+            return;
+
+        _itemSystem ??= _entity.System<ItemSystem>();
+        _storageSystem ??= _entity.System<StorageSystem>();
+        _handsSystem ??= _entity.System<HandsSystem>();
+
+        if (args.Function == ContentKeyFunctions.MoveStoredItem && StorageEntity != null)
+        {
+            //todo de-dup this idk
+            if (_handsSystem.GetActiveHandEntity() is { } handEntity &&
+                _storageSystem.CanInsert(StorageEntity.Value, handEntity, out _))
+            {
+                var pos = GetMouseGridPieceLocation((handEntity, null),
+                    new ItemStorageLocation(_storageController.DraggingRotation, Vector2i.Zero));
+
+                _entity.RaisePredictiveEvent(new StorageInsertItemIntoLocationEvent(
+                    _entity.GetNetEntity(handEntity),
+                    _entity.GetNetEntity(StorageEntity.Value),
+                    new ItemStorageLocation(_storageController.DraggingRotation, pos)));
+            }
+
+            args.Handle();
+        }
     }
 
     public override void Close()
@@ -357,6 +428,7 @@ public sealed class StorageContainer : BaseWindow
             _storageSystem?.CloseStorageUI(StorageEntity.Value, storageComp);
     }
 
+    //todo re-examine if this is necessary at all
     public sealed class StorageBackgroundCell : TextureRect
     {
         public readonly Vector2i Location;

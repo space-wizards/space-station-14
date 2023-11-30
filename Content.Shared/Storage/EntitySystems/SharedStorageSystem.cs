@@ -83,6 +83,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
+        SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
@@ -356,7 +357,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnSetItemLocation(StorageSetItemLocationEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession?.AttachedEntity is not { } player)
+        if (args.SenderSession.AttachedEntity is not { } player)
             return;
 
         var storageEnt = GetEntity(msg.StorageEnt);
@@ -375,6 +376,29 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
 
         TrySetItemStorageLocation((itemEnt, null), (storageEnt, storageComp), msg.Location);
+    }
+
+    private void OnInsertItemIntoLocation(StorageInsertItemIntoLocationEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        var storageEnt = GetEntity(msg.StorageEnt);
+        var itemEnt = GetEntity(msg.ItemEnt);
+
+        if (!TryComp<StorageComponent>(storageEnt, out var storageComp))
+            return;
+
+        if (!Exists(itemEnt))
+        {
+            Log.Error($"Player {args.SenderSession} set location of non-existent item {msg.ItemEnt} stored in {ToPrettyString(storageEnt)}");
+            return;
+        }
+
+        if (!_actionBlockerSystem.CanInteract(player, itemEnt) || !_sharedHandsSystem.IsHolding(player, itemEnt, out _))
+            return;
+
+        InsertAt((storageEnt, storageComp), (itemEnt, null), msg.Location, out _, player);
     }
 
     private void OnInsertItemMessage(EntityUid uid, StorageComponent storageComp, StorageComponent.StorageInsertItemMessage args)
@@ -396,9 +420,12 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnEntInserted(Entity<StorageComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
+        if (args.Container.ID != StorageComponent.ContainerId)
+            return;
+
         if (_net.IsServer)
         {
-            if (!entity.Comp.StoredItems.ContainsKey(GetNetEntity(entity.Owner)))
+            if (!entity.Comp.StoredItems.ContainsKey(GetNetEntity(args.Entity)))
             {
                 if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
                 {
@@ -416,6 +443,9 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnEntRemoved(Entity<StorageComponent> entity, ref EntRemovedFromContainerMessage args)
     {
+        if (args.Container.ID != StorageComponent.ContainerId)
+            return;
+
         entity.Comp.StoredItems.Remove(GetNetEntity(args.Entity));
         Dirty(entity, entity.Comp);
 
@@ -511,7 +541,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <param name="storageComp"></param>
     /// <param name="item"></param>
     /// <returns>true if it can be inserted, false otherwise</returns>
-    public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, StorageComponent? storageComp = null, ItemComponent? item = null, bool ignoreStacks = false)
+    public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, StorageComponent? storageComp = null, ItemComponent? item = null, bool ignoreStacks = false, bool ignoreLocation = false)
     {
         if (!Resolve(uid, ref storageComp) || !Resolve(insertEnt, ref item, false))
         {
@@ -559,10 +589,13 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (!TryGetAvailableGridSpace((uid, storageComp), (insertEnt, item), out _))
+        if (!ignoreLocation && !storageComp.StoredItems.ContainsKey(GetNetEntity(insertEnt)))
         {
-            reason = "comp-storage-insufficient-capacity";
-            return false;
+            if (!TryGetAvailableGridSpace((uid, storageComp), (insertEnt, item), out _))
+            {
+                reason = "comp-storage-insufficient-capacity";
+                return false;
+            }
         }
 
         if (storageComp.MaxSlots != null)
@@ -581,6 +614,31 @@ public abstract class SharedStorageSystem : EntitySystem
 
         reason = null;
         return true;
+    }
+
+    /// <summary>
+    ///     Inserts into the storage container at a given location
+    /// </summary>
+    /// <returns>true if the entity was inserted, false otherwise. This will also return true if a stack was partially
+    /// inserted.</returns>
+    public bool InsertAt(
+        Entity<StorageComponent?> uid,
+        Entity<ItemComponent?> insertEnt,
+        ItemStorageLocation location,
+        out EntityUid? stackedEntity,
+        EntityUid? user = null,
+        bool playSound = true)
+    {
+        stackedEntity = null;
+        if (!Resolve(uid, ref uid.Comp))
+            return false;
+
+        if (!ItemFitsInGridLocation(insertEnt, uid, location))
+            return false;
+
+        uid.Comp.StoredItems[GetNetEntity(insertEnt)] = location;
+        Dirty(uid, uid.Comp);
+        return Insert(uid, insertEnt, out stackedEntity, out _, user: user, storageComp: uid.Comp, playSound: playSound);
     }
 
     /// <summary>
@@ -747,6 +805,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         var storageBounding = GetBoundingBox(storageEnt.Comp.StorageGrid);
 
+        //todo rotate 4 times in place
         for (var angle = Angle.Zero; angle <= Angle.FromDegrees(360); angle += Angle.FromDegrees(90))
         {
             var baseItemShape = _item.GetAdjustedItemShape(itemEnt, angle, Vector2i.Zero);
@@ -777,10 +836,22 @@ public abstract class SharedStorageSystem : EntitySystem
     public bool ItemFitsInGridLocation(
         Entity<ItemComponent?> itemEnt,
         Entity<StorageComponent?> storageEnt,
+        ItemStorageLocation location)
+    {
+        return ItemFitsInGridLocation(itemEnt, storageEnt, location.Position, location.Rotation);
+    }
+
+    public bool ItemFitsInGridLocation(
+        Entity<ItemComponent?> itemEnt,
+        Entity<StorageComponent?> storageEnt,
         Vector2i position,
         Angle rotation)
     {
-        if (!Resolve(itemEnt, ref itemEnt.Comp))
+        if (!Resolve(itemEnt, ref itemEnt.Comp) || !Resolve(storageEnt, ref storageEnt.Comp))
+            return false;
+
+        var gridBounds = GetBoundingBox(storageEnt.Comp.StorageGrid);
+        if (!gridBounds.Contains(position))
             return false;
 
         var itemShape = _item.GetAdjustedItemShape(itemEnt, rotation, position);

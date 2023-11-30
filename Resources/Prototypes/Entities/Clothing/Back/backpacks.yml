@@ -329,3 +329,14 @@
     - 9,0,9,1
     - 8,2,8,3
     - 10,2,10,3
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDebug4
+  name: offset wackpack
+  description: What the fuck is this?
+  suffix: Debug
+  components:
+  - type: Storage
+    storageGrid:
+    - 5,5,11,8

@@ -148,6 +148,23 @@ namespace Content.Shared.Storage
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class StorageInsertItemIntoLocationEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        public readonly NetEntity StorageEnt;
+
+        public readonly ItemStorageLocation Location;
+
+        public StorageInsertItemIntoLocationEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
+            Location = location;
+        }
+    }
+
 
     /// <summary>
     /// Network event for displaying an animation of entities flying into a storage entity

@@ -169,7 +169,7 @@ binds:
   canFocus: true
 - function: RotateStoredItem
   type: State
-  key: MouseMiddle
+  key: MouseRight
 - function: Drop
   type: State
   key: Q

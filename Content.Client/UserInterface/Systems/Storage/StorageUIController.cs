@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Examine;
+using Content.Client.Hands.Systems;
 using Content.Client.Interaction;
 using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
@@ -28,6 +29,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
+    private HandsSystem? _hands;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
     private StorageContainer? _container;
@@ -121,9 +123,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (_container == null)
             return;
 
-        if (!StaticStorageUIEnabled)
-            _lastContainerPosition = _container.GlobalPosition;
-
         if (!_container.IsOpen)
             return;
 
@@ -131,7 +130,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (StaticStorageUIEnabled)
         {
             Hotbar?.StorageContainer.AddChild(_container);
-            _lastContainerPosition = _container.GlobalPosition;
+            _lastContainerPosition = null;
         }
         else
         {
@@ -145,11 +144,16 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     /// I have to sidestep all of the input handling. Cheers.
     private void OnMiddleMouse(KeyEventArgs keyEvent, KeyEventType type)
     {
+        _hands ??= _entity.System<HandsSystem>();
+        if (!IsDragging && _hands.GetActiveHandEntity() == null)
+            return;
+
         if (type != KeyEventType.Down)
             return;
 
         //todo there's gotta be a method for this in InputManager just expose it to content I BEG.
-        var binding = _input.GetKeyBinding(ContentKeyFunctions.RotateStoredItem);
+        if (!_input.TryGetKeyBinding(ContentKeyFunctions.RotateStoredItem, out var binding))
+            return;
         if (binding.BaseKey != keyEvent.Key)
             return;
 
@@ -175,7 +179,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         DraggingRotation = (DraggingRotation + Math.PI / 2f).GetCardinalDir().ToAngle();
         if (DraggingGhost != null)
             DraggingGhost.Location.Rotation = DraggingRotation;
-        keyEvent.Handle();
     }
 
     private void OnStorageUpdated(EntityUid uid, StorageComponent component)
@@ -204,7 +207,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
     private void OnPiecePressed(GUIBoundKeyEventArgs args, ItemGridPiece control)
     {
-        if (IsDragging)
+        if (IsDragging || !_container?.IsOpen == true)
             return;
 
         if (args.Function == ContentKeyFunctions.MoveStoredItem)
@@ -244,13 +247,13 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         if (args.Function == ContentKeyFunctions.MoveStoredItem)
         {
-            if (DraggingGhost is { } draggingGhost&&
-                _container.TryGetPieceLocation(out var position))
+            if (DraggingGhost is { } draggingGhost)
             {
+                var position = _container.GetMouseGridPieceLocation(draggingGhost.Entity, draggingGhost.Location);
                 _entity.RaisePredictiveEvent(new StorageSetItemLocationEvent(
                     _entity.GetNetEntity(draggingGhost.Entity),
                     _entity.GetNetEntity(storageEnt),
-                    new ItemStorageLocation(DraggingRotation, position.Value)));
+                    new ItemStorageLocation(DraggingRotation, position)));
                 _container?.BuildItemPieces();
             }
             else //if we just clicked, then take it out of the bag.
@@ -270,7 +273,8 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             return false;
 
         DraggingRotation = dragged.Location.Rotation;
-        DraggingGhost = new ItemGridPiece((dragged.Entity, _entity.GetComponent<ItemComponent>(dragged.Entity)),
+        DraggingGhost = new ItemGridPiece(
+            (dragged.Entity, _entity.GetComponent<ItemComponent>(dragged.Entity)),
             dragged.Location,
             _entity);
         DraggingGhost.MouseFilter = Control.MouseFilterMode.Ignore;
@@ -295,12 +299,13 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (DraggingGhost == null)
             return;
 
-        var offset = DraggingGhost.GetCenterOffset(
+        var offset = ItemGridPiece.GetCenterOffset(
             (DraggingGhost.Entity, null),
-            new ItemStorageLocation(DraggingRotation, Vector2i.Zero));
+            new ItemStorageLocation(DraggingRotation, Vector2i.Zero),
+            _entity);
 
         // I don't know why it divides the position by 2. Hope this helps! -emo
-        LayoutContainer.SetPosition(DraggingGhost, UIManager.MousePositionScaled.Position / 2 - offset);
+        LayoutContainer.SetPosition(DraggingGhost, UIManager.MousePositionScaled.Position / 2 - offset );
     }
 
     private void OnMenuEndDrag()

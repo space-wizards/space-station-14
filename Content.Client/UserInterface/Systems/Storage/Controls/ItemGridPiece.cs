@@ -165,13 +165,6 @@ public sealed class ItemGridPiece : Control
         OnPieceUnpressed?.Invoke(args, this);
     }
 
-    public Vector2 GetCenterOffset(Entity<ItemComponent?> entity, ItemStorageLocation location)
-    {
-        var boxSize = SharedStorageSystem.GetBoundingBox(_itemSystem.GetAdjustedItemShape(entity, location)).Size;
-        var actualSize = new Vector2(boxSize.X + 1, boxSize.Y + 1);
-        return actualSize * _centerTexture!.Size * UIScale / 2f;
-    }
-
     private Texture? GetTexture(IReadOnlyList<Box2i> boxes, Vector2i position, Direction corner)
     {
         var top = !boxes.Any(b => b.Contains(position - Vector2i.Up));
@@ -216,5 +209,12 @@ public sealed class ItemGridPiece : Control
             default:
                 return null;
         }
+    }
+
+    public static Vector2 GetCenterOffset(Entity<ItemComponent?> entity, ItemStorageLocation location, IEntityManager entMan)
+    {
+        var boxSize = SharedStorageSystem.GetBoundingBox(entMan.System<ItemSystem>().GetAdjustedItemShape(entity, location)).Size;
+        var actualSize = new Vector2(boxSize.X + 1, boxSize.Y + 1);
+        return actualSize * new Vector2i(8, 8);
     }
 }
