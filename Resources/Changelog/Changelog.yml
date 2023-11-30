@@ -1,9 +1,4 @@
 Entries:
-- author: ThunderBear2006
-  changes:
-  - {message: The signal button now has new sprites, type: Tweak}
-  id: 4732
-  time: '2023-09-02T13:58:40.0000000+00:00'
 - author: Gotimanga
   changes:
   - {message: Winter coats now have hoods, type: Add}
@@ -2898,3 +2893,9 @@ Entries:
   - {message: Agent ID not longer resets name when changing its appearance, type: Fix}
   id: 5231
   time: '2023-11-30T21:42:44.0000000+00:00'
+- author: eddiedd
+  changes:
+  - {message: 'Lemon has been discovered a mutation species, lemoon, which could be
+      grind for milk', type: Add}
+  id: 5232
+  time: '2023-11-30T21:44:23.0000000+00:00'
