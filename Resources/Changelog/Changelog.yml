@@ -1,9 +1,4 @@
 Entries:
-- author: ficcialfaint
-  changes:
-  - {message: Dumping into disposals no longer drops items onto the ground., type: Fix}
-  id: 4731
-  time: '2023-09-02T04:02:36.0000000+00:00'
 - author: ThunderBear2006
   changes:
   - {message: The signal button now has new sprites, type: Tweak}
@@ -2898,3 +2893,8 @@ Entries:
     type: Add}
   id: 5230
   time: '2023-11-30T21:39:08.0000000+00:00'
+- author: Rainfey
+  changes:
+  - {message: Agent ID not longer resets name when changing its appearance, type: Fix}
+  id: 5231
+  time: '2023-11-30T21:42:44.0000000+00:00'
