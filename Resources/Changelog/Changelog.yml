@@ -1,9 +1,4 @@
 Entries:
-- author: Varen
-  changes:
-  - {message: Examining an item now shows its size., type: Add}
-  id: 4729
-  time: '2023-09-01T15:09:59.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'The hot potato now does more damage over time, has a shorter timer,
@@ -2898,3 +2893,8 @@ Entries:
   - {message: Added a green central command cap like the captain's blue one., type: Add}
   id: 5228
   time: '2023-11-30T07:20:45.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Core has been reworked and added back into the map pool., type: Add}
+  id: 5229
+  time: '2023-11-30T08:13:13.0000000+00:00'
