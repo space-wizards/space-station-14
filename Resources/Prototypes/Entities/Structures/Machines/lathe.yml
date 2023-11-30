@@ -698,6 +698,7 @@
       - BluespaceBeaker
       - SyringeBluespace
       - Jug
+      - SyringeCryostasis
   - type: Machine
     board: MedicalTechFabCircuitboard
 
