@@ -1,277 +1,4 @@
 Entries:
-- author: Gotimanga
-  changes:
-  - {message: Winter coats now have hoods, type: Add}
-  id: 4733
-  time: '2023-09-02T17:10:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix context menu not opening if you toggled combat mode immediately
-      prior., type: Fix}
-  id: 4734
-  time: '2023-09-02T20:16:34.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
-  id: 4735
-  time: '2023-09-03T01:59:36.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Technology Disks now sell for considerably less., type: Tweak}
-  id: 4736
-  time: '2023-09-03T02:31:53.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Microwaves now become bloodstained if you microwave animals inside
-      of them. Who was doing this?', type: Add}
-  id: 4737
-  time: '2023-09-03T04:03:05.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
-      dioxide poisoning., type: Tweak}
-  id: 4738
-  time: '2023-09-03T06:30:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Fix fulton parenting, also fix it not checking if the target is reachable.',
-    type: Fix}
-  - {message: Added fultons to salvage vendor., type: Add}
-  - {message: Make fultons easy to craft temporarily to get better feedback on it
-      for expeditions., type: Tweak}
-  id: 4739
-  time: '2023-09-03T12:18:09.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Added spoons and forks to the dinnerware vendor!, type: Add}
-  id: 4740
-  time: '2023-09-03T14:22:28.0000000+00:00'
-- author: Diebek
-  changes:
-  - {message: Updated Taxibot sprites., type: Tweak}
-  id: 4741
-  time: '2023-09-03T14:31:24.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Portable generators no longer rotate with the camera., type: Tweak}
-  id: 4742
-  time: '2023-09-03T17:55:42.0000000+00:00'
-- author: Jark255
-  changes:
-  - message: The firmware bug that wiped critical system parts of pAI alongside the
-      module itself is now fixed.
-    type: Fix
-  id: 4743
-  time: '2023-09-03T18:32:41.0000000+00:00'
-- author: KingFroozy
-  changes:
-  - message: Added Chief Engineer's Turtleneck. You can find it in their locker or
-      sew it at the Uniform Printer!
-    type: Add
-  id: 4744
-  time: '2023-09-03T18:38:28.0000000+00:00'
-- author: FinnishPaladin
-  changes:
-  - message: The station's bardrobes have been stocked with new darker coloured aprons!
-    type: Add
-  id: 4745
-  time: '2023-09-03T21:27:19.0000000+00:00'
-- author: Flareguy
-  changes:
-  - message: Changed a bunch of events to be more common.
-    type: Tweak
-  id: 4746
-  time: '2023-09-04T03:38:23.0000000+00:00'
-- author: qwerltaz
-  changes:
-  - message: Air vents and scrubbers can be welded to stop gas flow.
-    type: Add
-  id: 4747
-  time: '2023-09-04T04:23:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix crusher showing popups on 1-handed swings.
-    type: Fix
-  id: 4748
-  time: '2023-09-04T04:24:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix NPCs not juking properly if you stand on top of them.
-    type: Fix
-  id: 4749
-  time: '2023-09-04T04:34:20.0000000+00:00'
-- author: lzk228
-  changes:
-  - message: Fixed steel stack sprite
-    type: Fix
-  id: 4750
-  time: '2023-09-04T04:48:00.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Refilling magazines is now done automatically rather than spam clicking
-      each bullet.
-    type: Tweak
-  id: 4751
-  time: '2023-09-04T04:49:49.0000000+00:00'
-- author: qwerltaz
-  changes:
-  - message: Anomalies and artifacts cannot push observers anymore.
-    type: Fix
-  id: 4752
-  time: '2023-09-04T04:52:11.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: The Syndicate is now offering carp suit bundles to its operatives to
-      improve morale.
-    type: Add
-  id: 4753
-  time: '2023-09-04T05:16:36.0000000+00:00'
-- author: AlexMorgan3817
-  changes:
-  - message: Fixed gravitational wells of supermatter and whitehole grenade
-    type: Fix
-  id: 4754
-  time: '2023-09-04T12:23:49.0000000+00:00'
-- author: JustTNE
-  changes:
-  - message: The ChemMaster 4000 has been upgraded to allow drag-and-drop insertion
-      of reagents!
-    type: Tweak
-  id: 4755
-  time: '2023-09-04T12:53:13.0000000+00:00'
-- author: liltenhead
-  changes:
-  - message: Rebalanced the conversion rates of gold, silver, uranium, and bananium
-      ores.
-    type: Tweak
-  id: 4756
-  time: '2023-09-04T12:57:52.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - message: Radiation collectors now need an inserted gas tank filled with plasma
-      to function. The plasma gas will turn into tritium over time, so replace it
-      with fresh plasma as needed.
-    type: Tweak
-  id: 4757
-  time: '2023-09-04T13:11:58.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Emagging disposal units both works again and makes them silent.
-    type: Tweak
-  id: 4758
-  time: '2023-09-04T14:11:35.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Armed nuclear bombs now have warning lights. Set off a nuke and watch
-      the light spin!!!
-    type: Tweak
-  id: 4759
-  time: '2023-09-04T14:14:10.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: A fracture in bluespace is now causing spacemen that hitchhike on shuttles
-      to be gibbed before and after FTL travel. Keep legs inside the vehicle at all
-      times.
-    type: Tweak
-  id: 4760
-  time: '2023-09-04T14:16:10.0000000+00:00'
-- author: lzk228
-  changes:
-  - message: All bots now uses robot typing indicator
-    type: Tweak
-  id: 4761
-  time: '2023-09-04T14:21:53.0000000+00:00'
-- author: DrTeaSpoon
-  changes:
-  - message: Plant mutations can now alter plant gas and chemical production.
-    type: Add
-  id: 4762
-  time: '2023-09-04T16:24:39.0000000+00:00'
-- author: router
-  changes:
-  - message: Shuttles no longer go hog wild whenever they're above their former maximum
-      velocity of 20.
-    type: Fix
-  - message: Upgraded thrusters now contribute to a direction-specific thrust factor,
-      calculated by dividing total thrust over thrust if every thruster was T1. The
-      maximum speed with T4 parts is 67.5.
-    type: Add
-  id: 4763
-  time: '2023-09-04T19:33:47.0000000+00:00'
-- author: PixelTK
-  changes:
-  - message: Arachnids no longer have two additional hands as well as their damage
-      modifiers.
-    type: Remove
-  - message: Arachnids can now craft more structures, unique clothes, and cloth using
-      their webs.
-    type: Add
-  - message: Arachnids now get more hungry when spinning webs.
-    type: Tweak
-  - message: Moths can now eat silk.
-    type: Tweak
-  id: 4764
-  time: '2023-09-04T20:02:54.0000000+00:00'
-- author: Doru991
-  changes:
-  - message: Genetically damaged plants can now be repaired with small amounts of
-      phalanximine.
-    type: Add
-  id: 4765
-  time: '2023-09-04T20:11:41.0000000+00:00'
-- author: Fromoriss
-  changes:
-  - message: Added cute and fluffy moth plushie!
-    type: Add
-  id: 4766
-  time: '2023-09-04T20:18:03.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - message: Fix deployable barriers.
-    type: Fix
-  id: 4767
-  time: '2023-09-04T22:33:40.0000000+00:00'
-- author: Endecc
-  changes:
-  - message: Added the luxury mining hardsuit, a lighter and more versatile mining
-      hardsuit styled after the Quartermaster.
-    type: Add
-  - message: Added luxury mining hardsuit cargo order, because this ELITE cargo suit
-      is too expensive to stock on every station.
-    type: Add
-  id: 4768
-  time: '2023-09-05T03:42:09.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Magnets can no longer be deconstructed while active, preventing a few
-      bugs.
-    type: Fix
-  id: 4769
-  time: '2023-09-05T16:20:55.0000000+00:00'
-- author: Slava0135
-  changes:
-  - message: Gas tanks now have valves, which can be used to vent their contents.
-    type: Add
-  id: 4770
-  time: '2023-09-05T17:20:05.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Constructed hydroponics trays now start empty.
-    type: Tweak
-  id: 4771
-  time: '2023-09-05T20:15:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Revert 25% click attack buff.
-    type: Tweak
-  id: 4772
-  time: '2023-09-06T08:30:23.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Fixes crates requiring to be welded to deconstruct them.
-    type: Fix
-  id: 4773
-  time: '2023-09-06T18:18:14.0000000+00:00'
 - author: potato1234x
   changes:
   - message: Added back the old glass tiles while keeping the new ones as a fancier
@@ -3595,6 +3322,25 @@ Entries:
     type: Tweak
   id: 5203
   time: '2023-11-26T12:03:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Audio rework got re-merged, the changelog has been re-posted here for
+      brevity.
+    type: Add
+  - message: Grid audio will now attenuate properly over distance and won't be ear
+      rupturingly loud.
+    type: Fix
+  - message: FTL sound should no longer persist as it's attached to the shuttle instead
+      of being global.
+    type: Fix
+  - message: Audio can now start at an offset so if an audio source comes into range
+      so it won't play from the start.
+    type: Fix
+  - message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
+      so it's smoother. You may need to adjust your master audio volume.
+    type: Tweak
+  id: 5203
+  time: '2023-11-27T11:21:23.0000000+00:00'
 - author: AlexandrSTG
   changes:
   - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u044B \u043D\u0430\u0437\u0432\
@@ -3608,139 +3354,16 @@ Entries:
   time: '2023-11-26T14:08:47.0000000+00:00'
 - author: metalgearsloth
   changes:
-  - {message: 'Audio rework got re-merged, the changelog has been re-posted here for
-      brevity.', type: Add}
-  - {message: Grid audio will now attenuate properly over distance and won't be ear
-      rupturingly loud., type: Fix}
-  - {message: FTL sound should no longer persist as it's attached to the shuttle instead
-      of being global., type: Fix}
-  - {message: Audio can now start at an offset so if an audio source comes into range
-      so it won't play from the start., type: Fix}
-  - {message: Changed audio attenuation from InverseDistanceClamped to LinearDistanceClamped
-      so it's smoother. You may need to adjust your master audio volume., type: Tweak}
-  id: 5203
-  time: '2023-11-27T11:21:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix ahelp audio., type: Fix}
+  - message: Fix ahelp audio.
+    type: Fix
   id: 5204
   time: '2023-11-27T13:42:04.0000000+00:00'
 - author: Ilya246
   changes:
-  - {message: Refrigerators are now nearly immune to explosions and even nukes., type: Tweak}
+  - message: Refrigerators are now nearly immune to explosions and even nukes.
+    type: Tweak
   id: 5205
   time: '2023-11-27T21:24:43.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Moth accent added! Buzzz!!!, type: Add}
-  id: 5206
-  time: '2023-11-27T21:28:43.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: The Captain's Carapace no longer has a 10% movement speed penalty.,
-    type: Tweak}
-  id: 5207
-  time: '2023-11-27T21:29:30.0000000+00:00'
-- author: Rainfey
-  changes:
-  - {message: Chameleon functionality to Agent and Nukie ID cards, type: Add}
-  id: 5208
-  time: '2023-11-27T21:34:30.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Revenants can no longer emag evac to instantly launch the shuttle.,
-    type: Fix}
-  id: 5209
-  time: '2023-11-27T21:39:30.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Disabled space wind & atmos tile ripping., type: Remove}
-  id: 5210
-  time: '2023-11-27T21:42:29.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: 'Gibbed mothroaches wont drop all normal moth species parts, just animal
-      organs.', type: Fix}
-  id: 5211
-  time: '2023-11-27T21:42:53.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: When Revolution rounds end each headrev has their number of converted
-      people shown., type: Tweak}
-  id: 5212
-  time: '2023-11-27T21:43:49.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - {message: 'Fixed janitorial items (wet floor signs, spray bottles, light replacers,
-      and plungers) not fitting in the janitor''s trolley.', type: Fix}
-  id: 5213
-  time: '2023-11-27T22:16:17.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix ambient audio not playing., type: Fix}
-  id: 5214
-  time: '2023-11-28T03:09:26.0000000+00:00'
-- author: M3739
-  changes:
-  - {message: An entry regarding cyborgs has been added to the guidebook., type: Add}
-  id: 5215
-  time: '2023-11-28T03:18:22.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: Remove the Captain's spare gloves from his locker., type: Remove}
-  id: 5216
-  time: '2023-11-28T05:45:56.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: The HoP now starts with a pair of papercut-proof gloves., type: Add}
-  id: 5217
-  time: '2023-11-28T06:21:06.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed riot shield audio and popup spam, type: Fix}
-  id: 5218
-  time: '2023-11-28T07:06:38.0000000+00:00'
-- author: UbaserB
-  changes:
-  - {message: Blood now has a sprite when placed in metamorphic glasses., type: Add}
-  id: 5219
-  time: '2023-11-28T07:09:56.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix global audio not being global., type: Fix}
-  - {message: Update MIDI audio every frame rather than every 1/10 seconds to fix
-      positioning and occlusion weirdness., type: Tweak}
-  id: 5220
-  time: '2023-11-28T09:48:18.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix audio not playing during weather., type: Fix}
-  id: 5221
-  time: '2023-11-28T12:35:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some sound sources not playing positionally (e.g. glass breaking).,
-    type: Fix}
-  id: 5222
-  time: '2023-11-28T23:19:23.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Removed artifact spam on roundend due to the ensuing lag., type: Remove}
-  id: 5223
-  time: '2023-11-29T03:39:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix doppler effect on shuttles by also setting player's velocity in
-      the audio API., type: Fix}
-  - {message: Fix left-right ear weirdness caused by floating-point imprecision on
-      audio positioning., type: Fix}
-  id: 5224
-  time: '2023-11-29T05:44:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix getting stuck between tables., type: Fix}
-  id: 5225
-  time: '2023-11-29T13:23:21.0000000+00:00'
 - author: AlexandrSTG
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0443\u0440\u043E\u043D\
@@ -3765,26 +3388,12 @@ Entries:
     type: Fix
   id: 5205
   time: '2023-11-28T23:06:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix remaining audio left-right transitioning too quickly., type: Fix}
-  id: 5226
-  time: '2023-11-30T00:56:08.0000000+00:00'
 - author: lzk228
   changes:
-  - {message: Skeletons are zombie immune now., type: Tweak}
-  id: 5227
-  time: '2023-11-30T02:40:39.0000000+00:00'
-- author: MACMAN2003
-  changes:
-  - {message: Added a green central command cap like the captain's blue one., type: Add}
-  id: 5228
-  time: '2023-11-30T07:20:45.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: Core has been reworked and added back into the map pool., type: Add}
-  id: 5229
-  time: '2023-11-30T08:13:13.0000000+00:00'
+  - message: Moth accent added! Buzzz!!!
+    type: Add
+  id: 5206
+  time: '2023-11-27T21:28:43.0000000+00:00'
 - author: TheArturZh
   changes:
   - message: "\u041F\u043E\u0434\u0442\u044F\u043D\u0443\u0442\u044B \u0444\u0438\u043A\
@@ -3794,6 +3403,12 @@ Entries:
     type: Add
   id: 5206
   time: '2023-11-28T23:15:24.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - message: The Captain's Carapace no longer has a 10% movement speed penalty.
+    type: Tweak
+  id: 5207
+  time: '2023-11-27T21:29:30.0000000+00:00'
 - author: ZoNeSRuS
   changes:
   - message: "\u0422\u0435\u043F\u0435\u0440\u044C \u043A\u0443\u043A\u043B\u044B\
@@ -3803,6 +3418,12 @@ Entries:
     type: Fix
   id: 5207
   time: '2023-11-30T16:08:48.0000000+00:00'
+- author: Rainfey
+  changes:
+  - message: Chameleon functionality to Agent and Nukie ID cards
+    type: Add
+  id: 5208
+  time: '2023-11-27T21:34:30.0000000+00:00'
 - author: Dexler
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u0430\u043D\u043E\
@@ -3812,6 +3433,12 @@ Entries:
     type: Add
   id: 5208
   time: '2023-11-30T16:15:55.0000000+00:00'
+- author: deltanedas
+  changes:
+  - message: Revenants can no longer emag evac to instantly launch the shuttle.
+    type: Fix
+  id: 5209
+  time: '2023-11-27T21:39:30.0000000+00:00'
 - author: Dexler
   changes:
   - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D \u0444\u0438\u043B\
@@ -3823,20 +3450,159 @@ Entries:
     type: Fix
   id: 5209
   time: '2023-11-30T16:29:34.0000000+00:00'
+- author: Flareguy
+  changes:
+  - message: Disabled space wind & atmos tile ripping.
+    type: Remove
+  id: 5210
+  time: '2023-11-27T21:42:29.0000000+00:00'
+- author: Vasilis
+  changes:
+  - message: Gibbed mothroaches wont drop all normal moth species parts, just animal
+      organs.
+    type: Fix
+  id: 5211
+  time: '2023-11-27T21:42:53.0000000+00:00'
+- author: deltanedas
+  changes:
+  - message: When Revolution rounds end each headrev has their number of converted
+      people shown.
+    type: Tweak
+  id: 5212
+  time: '2023-11-27T21:43:49.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - message: Fixed janitorial items (wet floor signs, spray bottles, light replacers,
+      and plungers) not fitting in the janitor's trolley.
+    type: Fix
+  id: 5213
+  time: '2023-11-27T22:16:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix ambient audio not playing.
+    type: Fix
+  id: 5214
+  time: '2023-11-28T03:09:26.0000000+00:00'
+- author: M3739
+  changes:
+  - message: An entry regarding cyborgs has been added to the guidebook.
+    type: Add
+  id: 5215
+  time: '2023-11-28T03:18:22.0000000+00:00'
 - author: Ubaser
   changes:
-  - {message: Nuclear operative agents now spawn with a PDA that can scan for injuries.,
-    type: Add}
+  - message: Remove the Captain's spare gloves from his locker.
+    type: Remove
+  id: 5216
+  time: '2023-11-28T05:45:56.0000000+00:00'
+- author: Ubaser
+  changes:
+  - message: The HoP now starts with a pair of papercut-proof gloves.
+    type: Add
+  id: 5217
+  time: '2023-11-28T06:21:06.0000000+00:00'
+- author: themias
+  changes:
+  - message: Fixed riot shield audio and popup spam
+    type: Fix
+  id: 5218
+  time: '2023-11-28T07:06:38.0000000+00:00'
+- author: UbaserB
+  changes:
+  - message: Blood now has a sprite when placed in metamorphic glasses.
+    type: Add
+  id: 5219
+  time: '2023-11-28T07:09:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix global audio not being global.
+    type: Fix
+  - message: Update MIDI audio every frame rather than every 1/10 seconds to fix positioning
+      and occlusion weirdness.
+    type: Tweak
+  id: 5220
+  time: '2023-11-28T09:48:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix audio not playing during weather.
+    type: Fix
+  id: 5221
+  time: '2023-11-28T12:35:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix some sound sources not playing positionally (e.g. glass breaking).
+    type: Fix
+  id: 5222
+  time: '2023-11-28T23:19:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Removed artifact spam on roundend due to the ensuing lag.
+    type: Remove
+  id: 5223
+  time: '2023-11-29T03:39:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix doppler effect on shuttles by also setting player's velocity in the
+      audio API.
+    type: Fix
+  - message: Fix left-right ear weirdness caused by floating-point imprecision on
+      audio positioning.
+    type: Fix
+  id: 5224
+  time: '2023-11-29T05:44:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix getting stuck between tables.
+    type: Fix
+  id: 5225
+  time: '2023-11-29T13:23:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - message: Fix remaining audio left-right transitioning too quickly.
+    type: Fix
+  id: 5226
+  time: '2023-11-30T00:56:08.0000000+00:00'
+- author: lzk228
+  changes:
+  - message: Skeletons are zombie immune now.
+    type: Tweak
+  id: 5227
+  time: '2023-11-30T02:40:39.0000000+00:00'
+- author: MACMAN2003
+  changes:
+  - message: Added a green central command cap like the captain's blue one.
+    type: Add
+  id: 5228
+  time: '2023-11-30T07:20:45.0000000+00:00'
+- author: Ubaser
+  changes:
+  - message: Core has been reworked and added back into the map pool.
+    type: Add
+  id: 5229
+  time: '2023-11-30T08:13:13.0000000+00:00'
+- author: Ubaser
+  changes:
+  - message: Nuclear operative agents now spawn with a PDA that can scan for injuries.
+    type: Add
   id: 5230
   time: '2023-11-30T21:39:08.0000000+00:00'
 - author: Rainfey
   changes:
-  - {message: Agent ID not longer resets name when changing its appearance, type: Fix}
+  - message: Agent ID not longer resets name when changing its appearance
+    type: Fix
   id: 5231
   time: '2023-11-30T21:42:44.0000000+00:00'
 - author: eddiedd
   changes:
-  - {message: 'Lemon has been discovered a mutation species, lemoon, which could be
-      grind for milk', type: Add}
+  - message: Lemon has been discovered a mutation species, lemoon, which could be
+      grind for milk
+    type: Add
   id: 5232
   time: '2023-11-30T21:44:23.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - message: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 NSS Nox."
+    type: Tweak
+  id: 5233
+  time: '2023-11-30T23:06:30.0000000+00:00'
