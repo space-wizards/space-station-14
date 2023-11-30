@@ -1,4 +1,5 @@
 using Content.Server.Body.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
@@ -25,8 +26,8 @@ namespace Content.Server.Forensics
 
             SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
-            SubscribeLocalEvent<ForensicsComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
+            SubscribeLocalEvent<ForensicsComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);//, after: new[] { typeof(SolutionTransferSystem) });
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
         }
 
@@ -69,7 +70,7 @@ namespace Content.Server.Forensics
             }
         }
 
-        private void OnInteractUsing(EntityUid uid, ForensicsComponent component, InteractUsingEvent args)
+        private void OnAfterInteract(EntityUid uid, ForensicsComponent component, AfterInteractEvent args)
         {
             if (args.Handled)
                 return;
@@ -81,8 +82,11 @@ namespace Content.Server.Forensics
             {
                 var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.CleanDelay, new CleanForensicsDoAfterEvent(), uid, target: args.Target, used: args.Used)
                 {
+                    NeedHand = true,
+                    BreakOnDamage = true,
                     BreakOnTargetMove = true,
-                    BreakOnDamage = true
+                    MovementThreshold = 0.01f,
+                    DistanceThreshold = component.CleanDistance,
                 };
 
 
@@ -97,18 +101,21 @@ namespace Content.Server.Forensics
             if (args.Handled || args.Cancelled || args.Args.Target == null)
                 return;
 
-            component.Fibers = new();
-            component.Fingerprints = new();
+            if (!TryComp<ForensicsComponent>(args.Target, out var targetComp))
+                return;
 
-            if (component.CanDnaBeCleaned)
-                component.DNAs = new();
+            targetComp.Fibers = new();
+            targetComp.Fingerprints = new();
+
+            if (targetComp.CanDnaBeCleaned)
+                targetComp.DNAs = new();
 
             // leave behind evidence it was cleaned
             if (TryComp<FiberComponent>(args.Used, out var fiber))
-                component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+                targetComp.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
 
             if (TryComp<ResidueComponent>(args.Used, out var residue))
-                component.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
+                targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
         }
 
         private string GenerateFingerprint()
