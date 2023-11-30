@@ -500,7 +500,6 @@
         Quantity: 10
   - type: Tag
     tags:
-    - Lemoon
     - Fruit
 
 - type: entity
