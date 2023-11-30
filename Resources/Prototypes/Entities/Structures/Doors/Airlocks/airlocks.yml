@@ -96,6 +96,14 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
 
+- type: entity
+  parent: Airlock
+  id: AirlockMining
+  suffix: Mining(Salvage)
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+
 # Glass
 
 - type: entity
@@ -255,7 +263,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMiningGlass
-  suffix: Mining
+  suffix: Mining(Salvage)
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/mining.rsi

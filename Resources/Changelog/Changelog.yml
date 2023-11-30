@@ -1,4 +1,53 @@
 Entries:
+- author: EmoGarbage404
+  changes:
+  - {message: 'The hot potato now does more damage over time, has a shorter timer,
+      and has a larger explosion.', type: Tweak}
+  id: 4730
+  time: '2023-09-02T00:08:25.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: Dumping into disposals no longer drops items onto the ground., type: Fix}
+  id: 4731
+  time: '2023-09-02T04:02:36.0000000+00:00'
+- author: ThunderBear2006
+  changes:
+  - {message: The signal button now has new sprites, type: Tweak}
+  id: 4732
+  time: '2023-09-02T13:58:40.0000000+00:00'
+- author: Gotimanga
+  changes:
+  - {message: Winter coats now have hoods, type: Add}
+  id: 4733
+  time: '2023-09-02T17:10:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix context menu not opening if you toggled combat mode immediately
+      prior., type: Fix}
+  id: 4734
+  time: '2023-09-02T20:16:34.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
+  id: 4735
+  time: '2023-09-03T01:59:36.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Technology Disks now sell for considerably less., type: Tweak}
+  id: 4736
+  time: '2023-09-03T02:31:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Microwaves now become bloodstained if you microwave animals inside
+      of them. Who was doing this?', type: Add}
+  id: 4737
+  time: '2023-09-03T04:03:05.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
+      dioxide poisoning., type: Tweak}
+  id: 4738
+  time: '2023-09-03T06:30:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - message: Fix fulton parenting, also fix it not checking if the target is reachable.
@@ -3737,3 +3786,23 @@ Entries:
     type: Fix
   id: 5205
   time: '2023-11-28T23:06:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix remaining audio left-right transitioning too quickly., type: Fix}
+  id: 5226
+  time: '2023-11-30T00:56:08.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Skeletons are zombie immune now., type: Tweak}
+  id: 5227
+  time: '2023-11-30T02:40:39.0000000+00:00'
+- author: MACMAN2003
+  changes:
+  - {message: Added a green central command cap like the captain's blue one., type: Add}
+  id: 5228
+  time: '2023-11-30T07:20:45.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Core has been reworked and added back into the map pool., type: Add}
+  id: 5229
+  time: '2023-11-30T08:13:13.0000000+00:00'
