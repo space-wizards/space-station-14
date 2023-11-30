@@ -847,6 +847,37 @@
           min: 5
 
 - type: reagent
+  id: Amnesia
+  name: reagent-name-amnesia
+  desc: reagent-desc-amnesia
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#cf8263"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "amnesia-effect-forget" ]
+        probability: 1
+      - !type:GenericStatusEffect
+        key: ForcedSleep
+        component: ForcedSleeping
+        type: Add
+        refresh: false
+        time: 3
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Amnesia
+          min: 1
+      - !type:MakeGhostRole
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+- type: reagent
   id: Ethyloxyephedrine
   name: reagent-name-ethyloxyephedrine
   desc: reagent-desc-ethyloxyephedrine

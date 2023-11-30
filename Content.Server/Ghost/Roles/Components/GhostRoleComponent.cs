@@ -86,6 +86,7 @@ namespace Content.Server.Ghost.Roles.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reregister")]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
         public bool ReregisterOnGhost { get; set; } = true;
     }
 }

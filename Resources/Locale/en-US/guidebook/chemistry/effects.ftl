@@ -267,6 +267,12 @@ reagent-effect-guidebook-make-sentient =
         *[other] make
     } the metabolizer sentient
 
+reagent-effect-guidebook-make-ghost-role =
+    { $chance ->
+        [1] Makes
+        *[other] make
+    } the metabolizer forget who they are
+
 reagent-effect-guidebook-make-polymorph =
     { $chance ->
         [1] Polymorphs
